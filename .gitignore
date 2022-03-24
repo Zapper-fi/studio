@@ -1,0 +1,44 @@
+# compiled output
+dist
+tmp
+/out-tsc
+
+# dependencies
+node_modules
+/.pnp
+.pnp.js
+.pnpm-debug.log
+
+# IDEs and editors
+*~undo-tree~
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+.#*
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# misc
+/connect.lock
+npm-debug.log
+/typings
+debug.log
+.clinic
+.log
+*.out
+
+# System Files
+.DS_Store
+Thumbs.db
+
+# local env files
+.env
