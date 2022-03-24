@@ -1,6 +1,7 @@
 lockfileVersion: 5.3
 
 specifiers:
+  '@golevelup/nestjs-modules': ^0.5.0
   '@nestjs/cli': 8.2.4
   '@nestjs/common': 8.4.2
   '@nestjs/core': 8.4.2
@@ -22,8 +23,10 @@ specifiers:
   ts-node: ^10.0.0
   tsconfig-paths: ^3.10.1
   typescript: ^4.6.2
+  webpack: ^5.0.0
 
 dependencies:
+  '@golevelup/nestjs-modules': 0.5.0_@nestjs+common@8.4.2+rxjs@7.5.5
   '@nestjs/common': 8.4.2_e7ea248743279784063e3708d703abc5
   '@nestjs/core': 8.4.2_c19d2ec2e65d58045ebcb73ac916a0e0
   '@nestjs/platform-express': 8.4.2_44cf05fcc0e49f3653826a45aec0eb54
@@ -43,10 +46,11 @@ devDependencies:
   eslint-plugin-unused-imports: 2.0.0_0d92ebcd20257249efc95aa75e3847d0
   prettier: 2.6.0
   source-map-support: 0.5.21
-  ts-loader: 9.2.8_typescript@4.6.2
+  ts-loader: 9.2.8_typescript@4.6.2+webpack@5.70.0
   ts-node: 10.7.0_045cabcbf8818eda83522fe731c87088
   tsconfig-paths: 3.14.1
   typescript: 4.6.2
+  webpack: 5.70.0
 
 packages:
 
@@ -176,6 +180,17 @@ packages:
     transitivePeerDependencies:
       - supports-color
     dev: true
+
+  /@golevelup/nestjs-modules/0.5.0_@nestjs+common@8.4.2+rxjs@7.5.5:
+    resolution: {integrity: sha512-6ZGjPtm0KwJ7Txa3Z14IzILi7pfvGrLZHv/q9/4tt7T5ngcCe71wJp32TG0/b3UkJX3/LEm4AtYjcfwiIrfSlg==}
+    peerDependencies:
+      '@nestjs/common': ^8.x
+      rxjs: ^7.x
+    dependencies:
+      '@nestjs/common': 8.4.2_e7ea248743279784063e3708d703abc5
+      lodash: 4.17.21
+      rxjs: 7.5.5
+    dev: false
 
   /@humanwhocodes/config-array/0.9.5:
     resolution: {integrity: sha512-ObyMyWxZiCu/yTisA7uzx81s40xR2fD5Cg/2Kq7G02ajkNubJf6BopgDTmDyc3U7sXpNKM8cYOw7s7Tyr+DnCw==}
@@ -729,7 +744,7 @@ packages:
       ajv:
         optional: true
     dependencies:
-      ajv: 8.9.0
+      ajv: 8.11.0
     dev: true
 
   /ajv-keywords/3.5.2_ajv@6.12.6:
@@ -2211,7 +2226,6 @@ packages:
 
   /lodash/4.17.21:
     resolution: {integrity: sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==}
-    dev: true
 
   /log-symbols/4.1.0:
     resolution: {integrity: sha512-8XPvpAA8uyhfteu8pIvQxpJZ7SYYdpUivZpGy6sFsBuKRY/7rQGavedeB8aK+Zkyq6upMFVL/9AW6vOYzfRyLg==}
@@ -3085,7 +3099,7 @@ packages:
     hasBin: true
     dev: true
 
-  /ts-loader/9.2.8_typescript@4.6.2:
+  /ts-loader/9.2.8_typescript@4.6.2+webpack@5.70.0:
     resolution: {integrity: sha512-gxSak7IHUuRtwKf3FIPSW1VpZcqF9+MBrHOvBp9cjHh+525SjtCIJKVGjRKIAfxBwDGDGCFF00rTfzB1quxdSw==}
     engines: {node: '>=12.0.0'}
     peerDependencies:
@@ -3097,6 +3111,7 @@ packages:
       micromatch: 4.0.5
       semver: 7.3.5
       typescript: 4.6.2
+      webpack: 5.70.0
     dev: true
 
   /ts-node/10.7.0_045cabcbf8818eda83522fe731c87088:
