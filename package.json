@@ -1,0 +1,19 @@
+{
+  "name": "agora",
+  "version": "1.0.0",
+  "description": "Zapper Open Source App Integrations",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Zapper-fi/agora.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Zapper-fi/agora/issues"
+  },
+  "homepage": "https://github.com/Zapper-fi/agora#readme"
+}
