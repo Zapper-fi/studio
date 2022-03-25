@@ -19,8 +19,6 @@ export type AppGroupsDefinition = {
 export class PositionService {
   private readonly axios: AxiosInstance;
 
-  onApplicationBootstrap() {}
-
   constructor(@Inject(ConfigService) private readonly configService: ConfigService) {
     this.axios = Axios.create({
       baseURL: this.configService.get('zapperApi.url'),
