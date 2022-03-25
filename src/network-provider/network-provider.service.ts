@@ -15,7 +15,8 @@ export class NetworkProviderService {
     this.providers = mapValues(DEFAULT_REGISTRY, url => new ethers.providers.StaticJsonRpcProvider(url));
   }
 
-  getProvider(network: Network) {
+  getProvider(network: Network): StaticJsonRpcProvider {
+    if (!this.providers[network]) throw new Error(`No provider found for network "${network}"`);
     return this.providers[network];
   }
 }
