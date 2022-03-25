@@ -16,6 +16,15 @@ export class AppService {
     const multicall = this.appToolkit.getMulticall(Network.ETHEREUM_MAINNET);
     const usdcSymbol = await multicall.wrap(erc).symbol();
 
-    return usdcSymbol;
+    const positions = await this.appToolkit.getAppTokens({
+      appId: 'uniswap-v2',
+      groupIds: ['pool'],
+      network: Network.ETHEREUM_MAINNET,
+    });
+
+    return {
+      usdcSymbol,
+      positions,
+    };
   }
 }
