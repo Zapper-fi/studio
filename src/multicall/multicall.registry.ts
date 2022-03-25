@@ -1,0 +1,16 @@
+import { Network } from '~types/network.interface';
+
+export const MULTICALL_ADDRESSES: Record<Network, string | null> = {
+  [Network.AVALANCHE_MAINNET]: '0x12ab889eb2886d76bc609f930d4dcb759e515bfc',
+  [Network.ARBITRUM_MAINNET]: '0x2a8be97eb1029eab52ec743004f82e95612f2d3a',
+  [Network.BINANCE_SMART_CHAIN_MAINNET]: '0xb94858b0bb5437498f5453a16039337e5fdc269c',
+  [Network.ETHEREUM_MAINNET]: '0x5eb3fa2dfecdde21c950813c665e9364fa609bd2',
+  [Network.GNOSIS_MAINNET]: '0x2a8be97eb1029eab52ec743004f82e95612f2d3a',
+  [Network.POLYGON_MAINNET]: '0x2a8be97eb1029eab52ec743004f82e95612f2d3a',
+  [Network.FANTOM_OPERA_MAINNET]: '0x2a8be97eb1029eab52ec743004f82e95612f2d3a',
+  [Network.CELO_MAINNET]: '0x2a8be97eb1029eab52ec743004f82e95612f2d3a',
+  [Network.HARMONY_MAINNET]: '0xfc7e92958262d3078acfcccb89c615ae6995f96a',
+  [Network.OPTIMISM_MAINNET]: '0x2a8be97eb1029eab52ec743004f82e95612f2d3a',
+  [Network.MOONRIVER_MAINNET]: '0x2a8be97eb1029eab52ec743004f82e95612f2d3a',
+  [Network.BITCOIN_MAINNET]: null,
+};
