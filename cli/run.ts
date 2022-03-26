@@ -3,6 +3,7 @@ import chalk from 'chalk';
 import HelloCommand from './commands/hello';
 import PotatoCommand from './commands/potato';
 import NewCommand from './commands/new-command';
+import { strings } from './utils/strings';
 
 class Cli extends Command {
   // Add your commands here...
@@ -13,12 +14,12 @@ class Cli extends Command {
   };
 
   getCommandHelp(cmd: string) {
-    return [
+    return strings.lines([
       chalk.bold(`./agora.sh ${cmd}`),
       `  Description - ${this.commands[cmd].description}`,
       `  Example:`,
       `${this.commands[cmd].examples.map(e => `  ${e}`)}`,
-    ].join('\n');
+    ]);
   }
 
   async run(): Promise<void> {
