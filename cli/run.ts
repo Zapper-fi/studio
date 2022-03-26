@@ -2,12 +2,14 @@ import { Command } from '@oclif/core';
 import chalk from 'chalk';
 import HelloCommand from './commands/hello';
 import PotatoCommand from './commands/potato';
+import NewCommand from './commands/new-command';
 
 class Cli extends Command {
   // Add your commands here...
   private commands: Record<string, typeof Command> = {
     hello: HelloCommand,
     potato: PotatoCommand,
+    'create:command': NewCommand,
   };
 
   getCommandHelp(cmd: string) {
@@ -38,6 +40,7 @@ class Cli extends Command {
     this.log(`Usage: ./agora.sh ${chalk.bold('[command]')}
 
 ${Object.keys(this.commands)
+  .filter(key => !this.commands[key].hidden)
   .map(key => this.getCommandHelp(key))
   .join('\n')}
 `);

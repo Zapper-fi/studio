@@ -43,3 +43,11 @@ You can quickly spin up a typescript library for using an ABI by running the fol
 pnpm run codegen:contract-factory {path/to/your/app}
 ```
 
+## Contributing new commands
+
+You can generate a new cli command by running the hidden command:
+
+```
+./agora new:command [my-command-name]
+```
+
