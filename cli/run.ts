@@ -1,12 +1,13 @@
 import { Command } from '@oclif/core';
 import chalk from 'chalk';
 import HelloCommand from './commands/hello';
+import PotatoCommand from './commands/potato';
 
 class Cli extends Command {
   // Add your commands here...
   private commands: Record<string, typeof Command> = {
     hello: HelloCommand,
-    potato: HelloCommand,
+    potato: PotatoCommand,
   };
 
   getCommandHelp(cmd: string) {
@@ -23,7 +24,7 @@ class Cli extends Command {
     process.argv = process.argv.filter((_, index) => index !== 2);
 
     if (this.commands[cmd] && process.argv.includes('--help')) {
-      console.log(this.getCommandHelp(cmd));
+      this.log(this.getCommandHelp(cmd));
       return;
     }
 
@@ -32,7 +33,9 @@ class Cli extends Command {
       return;
     }
 
-    console.log(`Usage: ./agora.sh ${chalk.bold('[command]')}
+    this.log(`${chalk.yellow('Command not found')}: "./agora.sh ${cmd} [...]"\n`);
+
+    this.log(`Usage: ./agora.sh ${chalk.bold('[command]')}
 
 ${Object.keys(this.commands)
   .map(key => this.getCommandHelp(key))
@@ -45,7 +48,7 @@ async function main() {
   try {
     await Cli.run();
   } catch (e) {
-    console.error(e.message);
+    this.error(e.message);
   }
 }
 
