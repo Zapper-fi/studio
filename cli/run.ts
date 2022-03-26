@@ -1,17 +1,13 @@
 import { Command } from '@oclif/core';
 import chalk from 'chalk';
-import HelloCommand from './commands/hello';
-import PotatoCommand from './commands/potato';
-import NewCommand from './commands/new-command';
+
+import { commands } from './commands';
 import { strings } from './utils/strings';
 
-class Cli extends Command {
-  // Add your commands here...
-  private commands: Record<string, typeof Command> = {
-    hello: HelloCommand,
-    potato: PotatoCommand,
-    'create:command': NewCommand,
-  };
+export type CommandRecord = Record<string, typeof Command>;
+
+class CLI extends Command {
+  private commands = commands;
 
   getCommandHelp(cmd: string) {
     return strings.lines([
@@ -50,7 +46,7 @@ ${Object.keys(this.commands)
 
 async function main() {
   try {
-    await Cli.run();
+    await CLI.run();
   } catch (e) {
     this.error(e.message);
   }
