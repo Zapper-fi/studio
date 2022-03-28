@@ -40,7 +40,7 @@ to quickly spin up a typescript library for interacting with a given smart contr
 You can quickly spin up a typescript library for using an ABI by running the following command:
 
 ```bash
-pnpm run codegen:contract-factory {path/to/your/app}
+./agora generate:contract-factory [app-id]
 ```
 
 ## Contributing new commands
