@@ -1,8 +1,9 @@
 import * as fs from 'fs';
 import { Command } from '@oclif/core';
-import { strings } from '../utils/strings';
 import dedent from 'dedent';
 import chalk from 'chalk';
+
+import { strings } from '../strings';
 
 export default class NewCommand extends Command {
   static description = 'Create a new command';
