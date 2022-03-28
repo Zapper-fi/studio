@@ -1,3 +1,4 @@
+import * as fs from 'fs';
 import path from 'path';
 
 /**
@@ -6,5 +7,11 @@ import path from 'path';
  * @returns path to the app
  */
 export function appPath(appId: string) {
-  return path.resolve('src', 'apps', appId);
+  const location = path.resolve('src', 'apps', appId);
+
+  if (!fs.existsSync(location)) {
+    throw new Error(`Application does not exist at ${location}`);
+  }
+
+  return location;
 }

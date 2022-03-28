@@ -1,10 +1,15 @@
-import { execSync } from 'child_process';
 import fs from 'fs';
 import path from 'path';
 import util from 'util';
 
 import { camelCase, kebabCase, sortBy, upperFirst } from 'lodash';
 import { glob, runTypeChain } from 'typechain';
+import { Command } from '@oclif/core';
+import chalk from 'chalk';
+
+import { appPath } from '../paths/app-path';
+import { strings } from '../strings';
+import { execCodeFormatting } from '../format/exec-code-formatting';
 
 const writeFile = util.promisify(fs.writeFile);
 const mkdir = util.promisify(fs.mkdir);
@@ -104,27 +109,33 @@ const generateContractFactory = async (location: string) => {
   await renderer.ethers();
 };
 
-const run = async () => {
-  if (!process.argv[2]) {
-    throw new Error('LOCATION is required. Please specify the location where to generate the contract interfaces.');
+export default class NewCommand extends Command {
+  static description =
+    'Generate typescript contract factories for a given app based on the ABIs contained within the contracts/abis folder.';
+
+  static examples = [`$ ./agora.sh generate:contract-factory my-app`];
+
+  static flags = {};
+
+  static args = [{ name: 'appid', description: 'The application id (just the folder name)', required: true }];
+
+  async run(): Promise<void> {
+    const { args } = await this.parse(NewCommand);
+    const appId = args.appid;
+
+    try {
+      const location = appPath(appId);
+      await generateContract(location);
+      console.log(chalk.green(`Contract generated at ${location}`));
+
+      await generateContractFactory(location);
+      console.log(chalk.green(`Factory function generated at ${location}`));
+
+      console.log(chalk.green(`Formatting newly generated files at ${location}`));
+      execCodeFormatting(`${location}/contracts`);
+    } catch (e) {
+      const err = strings.lines([chalk.red('generate-contract-factory.ts - Failed'), e.message]);
+      console.error(err);
+    }
   }
-
-  const location = path.resolve(process.argv[2]);
-
-  await generateContract(location);
-  await generateContractFactory(location);
-
-  execSync(`eslint --fix ${location}/contracts`, {
-    cwd: process.cwd(),
-    stdio: 'inherit',
-  });
-  execSync(`prettier --write ${location}/contracts`, {
-    cwd: process.cwd(),
-    stdio: 'inherit',
-  });
-};
-
-run().catch(err => {
-  // eslint-disable-next-line no-console
-  console.log('generate-contract-factory.ts - Failed: ', err);
-});
+}

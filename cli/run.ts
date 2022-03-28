@@ -1,6 +1,5 @@
 import { Command } from '@oclif/core';
 import chalk from 'chalk';
-import dedent from 'dedent';
 
 import { commands } from './commands';
 import { strings } from './strings';
@@ -35,16 +34,12 @@ class CLI extends Command {
 
     this.log(`${chalk.yellow('Command not found')}: "./agora.sh ${cmd} [...]"\n`);
 
-    const commandStrings = strings.lines(
-      Object.keys(this.commands)
-        .filter(key => !this.commands[key].hidden)
-        .map(key => this.getCommandHelp(key)),
-    );
-
-    this.log(dedent`
-    Usage: ./agora.sh ${chalk.bold('[command]')}
-
-    ${commandStrings}`);
+    this.log(`Usage: ./agora.sh ${chalk.bold('[command]')}
+    
+    ${Object.keys(this.commands)
+      .filter(key => !this.commands[key].hidden)
+      .map(key => this.getCommandHelp(key))
+      .join('\n\n')}`);
   }
 }
 
