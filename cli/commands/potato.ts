@@ -1,6 +1,6 @@
 import { Command } from '@oclif/core';
 
-import { appPath } from '../utils/app-path';
+import { appPath } from '../paths/app-path';
 
 export default class Potato extends Command {
   static description = 'Potato';
