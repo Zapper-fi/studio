@@ -1,14 +1,19 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { DiscoveryModule } from '@nestjs/core';
 
 import { AppToolkitModule } from '~app-toolkit/app-toolkit.module';
+import { AppsModule } from '~apps/apps.module';
 
 import { AppController } from './app.controller';
+import { AppRegistry } from './app.registry';
 import { AppService } from './app.service';
 
 @Module({
   imports: [
     AppToolkitModule,
+    AppsModule.registerAsync(),
+    DiscoveryModule,
     ConfigModule.forRoot({
       isGlobal: true,
       load: [
@@ -22,6 +27,6 @@ import { AppService } from './app.service';
     }),
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, AppRegistry],
 })
 export class AppModule {}
