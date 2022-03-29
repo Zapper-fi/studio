@@ -1,4 +1,4 @@
-import { Injectable, OnModuleInit } from '@nestjs/common';
+import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
 import { DiscoveryService } from '@nestjs/core';
 
 import { APP_NAME } from './app-definition.decorator';
@@ -8,7 +8,7 @@ import { AppDefinition } from './app.definition';
 export class AppRegistry implements OnModuleInit {
   private registry = new Map<string, AppDefinition & { disabled?: boolean }>();
 
-  constructor(private readonly discoveryService: DiscoveryService) {}
+  constructor(@Inject(DiscoveryService) private readonly discoveryService: DiscoveryService) {}
 
   onModuleInit() {
     const wrappers = this.discoveryService.getProviders();

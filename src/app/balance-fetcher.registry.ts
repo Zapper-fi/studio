@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, OnModuleInit } from '@nestjs/common';
 import { DiscoveryService } from '@nestjs/core';
 
 import {
@@ -11,7 +11,7 @@ import { Network } from '~types/network.interface';
 import { BalanceFetcher } from './balance-fetcher.interface';
 
 @Injectable()
-export class AppBalanceFetcherRegistry {
+export class AppBalanceFetcherRegistry implements OnModuleInit {
   private readonly registry = new Map<Network, Map<string, BalanceFetcher>>();
 
   constructor(private readonly discoveryService: DiscoveryService) {}

@@ -3,7 +3,7 @@ import { applyDecorators, SetMetadata } from '@nestjs/common';
 export const CACHE_KEY = 'CACHE_KEY';
 export const CACHE_TTL = 'CACHE_TTL';
 export const CACHE_INSTANCE = 'CACHE_INSTANCE';
-export const CACHE_FAIL_ON_MISSING_CACHE = 'CACHE_FAIL_ON_MISSING_CACHE';
+const CACHE_FAIL_ON_MISSING_CACHE = 'CACHE_FAIL_ON_MISSING_CACHE';
 
 type CacheKeyBuilder = (...args: any) => string;
 type CacheTtlBuilder = (...args: any) => number;

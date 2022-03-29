@@ -1,12 +1,12 @@
-import { CACHE_MANAGER, Inject, Injectable } from '@nestjs/common';
+import { CACHE_MANAGER, Inject, Injectable, OnModuleInit } from '@nestjs/common';
 import { DiscoveryService, MetadataScanner, Reflector } from '@nestjs/core';
 import { Cache } from 'cache-manager';
 import { isNil } from 'lodash';
 
-import { CacheOptions, CACHE_INSTANCE, CACHE_KEY, CACHE_TTL } from './cache.decorator';
+import { CacheOptions, CACHE_KEY, CACHE_TTL } from './cache.decorator';
 
 @Injectable()
-export class CacheService {
+export class CacheService implements OnModuleInit {
   constructor(
     @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
     @Inject(DiscoveryService) private readonly discoveryService: DiscoveryService,
@@ -22,8 +22,8 @@ export class CacheService {
         this.metadataScanner.scanFromPrototype(
           wrapper.instance,
           Object.getPrototypeOf(wrapper.instance),
-          (key: string) => {
-            this.registerCache(wrapper.instance, key);
+          (methodName: string) => {
+            this.registerCache(wrapper.instance, methodName);
           },
         );
       });
@@ -38,14 +38,13 @@ export class CacheService {
     return typeof cacheTtl === 'function' ? cacheTtl(...args) : cacheTtl;
   }
 
-  private registerCache(instance: any, key: string) {
-    const methodRef = instance[key];
+  private registerCache(instance: any, methodName: string) {
+    const methodRef = instance[methodName];
     const rawCacheKey: CacheOptions['key'] = this.reflector.get(CACHE_KEY, methodRef);
     const rawCacheTtl: CacheOptions['ttl'] = this.reflector.get(CACHE_TTL, methodRef);
-    const cacheInstance: string = this.reflector.get(CACHE_INSTANCE, methodRef);
 
     // Don't register cache on interval when missing parameters
-    if (!rawCacheKey || !isNil(rawCacheTtl) || !cacheInstance) return;
+    if (!rawCacheKey || !isNil(rawCacheTtl)) return;
 
     // Service references
     const cacheManager = this.cacheManager;
@@ -53,7 +52,7 @@ export class CacheService {
     const extractTtl = this.extractTtl;
 
     // Augment the method to be cached with caching mechanism
-    instance[key] = async function (...args: any[]) {
+    instance[methodName] = async function (...args: any[]) {
       const cacheKey = extractKey(rawCacheKey, args);
       const cachedValue = await cacheManager.get(cacheKey);
 
