@@ -1,5 +1,5 @@
 import { DefaultDataProps, WithMetaType } from './display.interface';
-import { AppToken, ContractPosition, NonFungibleToken } from './position.interface';
+import { AppTokenPosition, ContractPosition, NonFungibleToken } from './position.interface';
 import { BaseToken } from './token.interface';
 
 //  POSITION BALANCES
@@ -13,7 +13,7 @@ export type BaseTokenBalance = WithTokenBalance<BaseToken>;
 
 export type NonFungibleTokenBalance = WithTokenBalance<NonFungibleToken>;
 
-export type AppTokenBalance<T = DefaultDataProps> = Omit<WithTokenBalance<AppToken<T>>, 'tokens'> & {
+export type AppTokenBalance<T = DefaultDataProps> = Omit<WithTokenBalance<AppTokenPosition<T>>, 'tokens'> & {
   tokens: (BaseTokenBalance | AppTokenBalance | NonFungibleTokenBalance)[];
 };
 

@@ -23,7 +23,7 @@ export interface ContractPosition<T = Record<string, unknown>> extends AbstractP
   type: ContractType.POSITION;
 }
 
-export interface AppToken<T = DefaultDataProps> extends AbstractToken, AbstractPosition<T> {
+export interface AppTokenPosition<T = DefaultDataProps> extends AbstractToken, AbstractPosition<T> {
   type: ContractType.APP_TOKEN;
   supply: number;
   pricePerShare: number | number[]; // @TODO Make strictly an array
@@ -59,5 +59,5 @@ export interface NonFungibleToken extends AbstractToken {
   };
 }
 
-export type Token = BaseToken | AppToken | NonFungibleToken;
-export type Position<T = DefaultDataProps> = ContractPosition<T> | AppToken<T>;
+export type Token = BaseToken | AppTokenPosition | NonFungibleToken;
+export type Position<T = DefaultDataProps> = ContractPosition<T> | AppTokenPosition<T>;

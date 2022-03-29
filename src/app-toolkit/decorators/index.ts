@@ -1,5 +1,12 @@
-import { AppDefinition } from './app-defintion.decorator';
-import { BalanceFetcher } from './balance-fetcher.decorator';
-import { PositionFetcher } from './position-fetcher.decorator';
+import { AppDefinition } from '~app/app-definition.decorator';
+import { ContractType } from '~position/contract.interface';
+import { PositionFetcher } from '~position/position-fetcher.decorator';
 
-export const Register = { BalanceFetcher, PositionFetcher, AppDefinition };
+import { BalanceFetcher } from './balance-fetcher.decorator';
+
+export const Register = {
+  AppDefinition,
+  BalanceFetcher,
+  ContractPositionFetcher: PositionFetcher(ContractType.POSITION),
+  TokenPositionFetcher: PositionFetcher(ContractType.APP_TOKEN),
+};
