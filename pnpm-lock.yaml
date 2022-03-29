@@ -44,6 +44,7 @@ specifiers:
   ts-loader: ^9.2.3
   ts-node: ^10.7.0
   tsconfig-paths: ^3.10.1
+  type-fest: ^2.12.1
   typechain: ^8.0.0
   typescript: ^4.6.2
   webpack: ^5.0.0
@@ -67,6 +68,7 @@ dependencies:
   reflect-metadata: 0.1.13
   rimraf: 3.0.2
   rxjs: 7.5.5
+  type-fest: 2.12.1
 
 devDependencies:
   '@ethersproject/abi': 5.6.0
@@ -4437,6 +4439,11 @@ packages:
     resolution: {integrity: sha512-cUGJnCdr4STbePCgqNFbpVNCepa+kAVohJs1sLhxzdH+gnEoOd8VhbYa7pD3zZYGiURWM2xzEII3fQcRizDkYQ==}
     engines: {node: '>=6'}
     dev: true
+
+  /type-fest/2.12.1:
+    resolution: {integrity: sha512-AiknQSEqKVGDDjtZqeKrUoTlcj7FKhupmnVUgz6KoOKtvMwRGE6hUNJ/nVear+h7fnUPO1q/htSkYKb1pyntkQ==}
+    engines: {node: '>=12.20'}
+    dev: false
 
   /type-is/1.6.18:
     resolution: {integrity: sha512-TkRKr9sUTxEH8MdfuCSP7VizJyzRNMjj2J2do2Jr3Kym598JVdEksuzPQCnlFPW4ky9Q+iA+ma9BGm06XQBy8g==}
