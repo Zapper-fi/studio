@@ -17,12 +17,6 @@ export class TokenService {
     });
   }
 
-  onApplicationBootstrap() {
-    setInterval(() => {
-      this.getTokenPrices(Network.ETHEREUM_MAINNET);
-    }, 2000);
-  }
-
   @Cache({ key: (network: Network) => `token-prices:${network}` })
   async getTokenPrices(network: Network) {
     const { data: tokenPrices } = await this.axios.get<BaseToken[]>('/v1/prices-v3', { params: { network } });
