@@ -2,7 +2,8 @@ import { Inject, Injectable } from '@nestjs/common';
 import BigNumber from 'bignumber.js';
 import { isArray, pick } from 'lodash';
 
-import { AppToolkit } from '~app-toolkit/app-toolkit.service';
+import { APP_TOOLKIT } from '~app-toolkit/app-toolkit.constants';
+import { IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { EthersMulticall } from '~multicall/multicall.ethers';
 import { ContractType } from '~position/contract.interface';
 import { StatsItem, WithMetaType } from '~position/display.interface';
@@ -96,7 +97,7 @@ export const drillBalance = <T extends Token>(
 
 @Injectable()
 export class TokenBalanceHelper {
-  constructor(@Inject(AppToolkit) private readonly appToolkit: AppToolkit) {}
+  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
   async getTokenBalances({
     network,

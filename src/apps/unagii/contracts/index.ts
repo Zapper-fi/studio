@@ -1,6 +1,7 @@
 import { Injectable, Inject } from '@nestjs/common';
 
-import { AppToolkit } from '~app-toolkit/app-toolkit.service';
+import { APP_TOOLKIT } from '~app-toolkit/app-toolkit.constants';
+import { IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
@@ -10,7 +11,7 @@ type ContractOpts = { address: string; network: Network };
 
 @Injectable()
 export class UnagiiContractFactory extends ContractFactory {
-  constructor(@Inject(AppToolkit) protected readonly appToolkit: AppToolkit) {
+  constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) {
     super((network: Network) => appToolkit.getNetworkProvider(network));
   }
 

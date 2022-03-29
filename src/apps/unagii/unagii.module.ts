@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 
-import { AppToolkitModule } from '~app-toolkit/app-toolkit.module';
+import { AbstractDynamicApp } from '~app/app.dynamic-module';
 
 import { UnagiiContractFactory } from './contracts';
 import { EthereumUnagiiBalanceFetcher } from './ethereum/unagii.balance-fetcher';
@@ -8,7 +8,6 @@ import { EthereumUnagiiPoolTokenFetcher } from './ethereum/unagii.pool.token-fet
 import { UnagiiAppDefinition } from './unagii.definition';
 
 @Module({
-  imports: [AppToolkitModule],
   providers: [UnagiiAppDefinition, UnagiiContractFactory, EthereumUnagiiPoolTokenFetcher, EthereumUnagiiBalanceFetcher],
 })
-export class UnagiiAppModule {}
+export class UnagiiAppModule extends AbstractDynamicApp<UnagiiAppModule>() {}

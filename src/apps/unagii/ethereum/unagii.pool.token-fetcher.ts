@@ -1,7 +1,8 @@
 import { Inject } from '@nestjs/common';
 import { compact } from 'lodash';
 
-import { AppToolkit } from '~app-toolkit/app-toolkit.service';
+import { APP_TOOLKIT } from '~app-toolkit/app-toolkit.constants';
+import { IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ETH_ADDR_ALIAS, ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { Register } from '~app-toolkit/decorators';
 import { buildDollarDisplayItem, buildNumberDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
@@ -30,7 +31,7 @@ const vaultAddresses = [
 })
 export class EthereumUnagiiPoolTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
-    @Inject(AppToolkit) private readonly appToolkit: AppToolkit,
+    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(UnagiiContractFactory)
     private readonly unagiiContractFactory: UnagiiContractFactory,
   ) {}
