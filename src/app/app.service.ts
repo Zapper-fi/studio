@@ -23,7 +23,6 @@ export class AppService {
   async getAppBalances({ appId, addresses, network }: GetAppBalancesQuery & { appId: string }) {
     try {
       const fetcher = this.balanceFetcherRegistry.get(appId, network);
-
       const balances = await Promise.all(
         addresses.map(async address =>
           fetcher
