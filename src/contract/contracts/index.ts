@@ -1,11 +1,16 @@
 import { StaticJsonRpcProvider } from '@ethersproject/providers';
+import { Injectable } from '@nestjs/common';
 
 import { Network } from '~types/network.interface';
 
-import { Erc1155, Erc1155__factory, Erc20, Erc721, Multicall } from './ethers';
+import { Erc1155__factory } from './ethers';
 import { Erc20__factory } from './ethers';
 import { Erc721__factory } from './ethers';
 import { Multicall__factory } from './ethers';
+import type { Erc1155 } from './ethers';
+import type { Erc20 } from './ethers';
+import type { Erc721 } from './ethers';
+import type { Multicall } from './ethers';
 
 type ContractOpts = { address: string; network: Network };
 type NetworkProviderResolver = (network: Network) => StaticJsonRpcProvider;
@@ -17,6 +22,7 @@ export interface IContractFactory {
   multicall(opts: ContractOpts): Multicall;
 }
 
+@Injectable()
 export class ContractFactory implements IContractFactory {
   constructor(protected readonly networkProviderResolver: NetworkProviderResolver) {}
 
@@ -34,4 +40,7 @@ export class ContractFactory implements IContractFactory {
   }
 }
 
-export type { Erc1155, Erc20, Erc721, Multicall };
+export type { Erc1155 } from './ethers';
+export type { Erc20 } from './ethers';
+export type { Erc721 } from './ethers';
+export type { Multicall } from './ethers';
