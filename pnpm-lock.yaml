@@ -46,6 +46,7 @@ specifiers:
   ts-generator: ^0.1.1
   ts-loader: ^9.2.3
   ts-node: ^10.7.0
+  tsc-alias: ^1.6.5
   tsconfig-paths: ^3.10.1
   type-fest: ^2.12.1
   typechain: ^8.0.0
@@ -101,6 +102,7 @@ devDependencies:
   ts-generator: 0.1.1
   ts-loader: 9.2.8_typescript@4.6.2+webpack@5.70.0
   ts-node: 10.7.0_045cabcbf8818eda83522fe731c87088
+  tsc-alias: 1.6.5
   tsconfig-paths: 3.14.1
   typechain: 8.0.0_typescript@4.6.2
   typescript: 4.6.2
@@ -1711,6 +1713,11 @@ packages:
   /commander/4.1.1:
     resolution: {integrity: sha512-NOKm8xhkzAjzFx8B2v5OAHT+u5pRQc2UCa2Vq9jYL/31o2wi9mxBA7LIFs3sV5VSC49z6pEhfbMULvShKj26WA==}
     engines: {node: '>= 6'}
+    dev: true
+
+  /commander/9.1.0:
+    resolution: {integrity: sha512-i0/MaqBtdbnJ4XQs4Pmyb+oFQl+q0lsAmokVUH92SlSw4fkeAcG3bVon+Qt7hmtF+u3Het6o4VgrcY3qAoEB6w==}
+    engines: {node: ^12.20.0 || >=14}
     dev: true
 
   /concat-map/0.0.1:
@@ -3464,6 +3471,11 @@ packages:
     resolution: {integrity: sha512-nnbWWOkoWyUsTjKrhgD0dcz22mdkSnpYqbEjIm2nhwhuxlSkpywJmBo8h0ZqJdkp73mb90SssHkN4rsRaBAfAA==}
     dev: true
 
+  /mylas/2.1.9:
+    resolution: {integrity: sha512-pa+cQvmhoM8zzgitPYZErmDt9EdTNVnXsH1XFjMeM4TyG4FFcgxrvK1+jwabVFwUOEDaSWuXBMjg43kqt/Ydlg==}
+    engines: {node: '>=12.0.0'}
+    dev: true
+
   /natural-compare/1.4.0:
     resolution: {integrity: sha1-Sr6/7tdUHywnrPspvbvRXI1bpPc=}
     dev: true
@@ -4393,6 +4405,17 @@ packages:
       typescript: 4.6.2
       v8-compile-cache-lib: 3.0.0
       yn: 3.1.1
+    dev: true
+
+  /tsc-alias/1.6.5:
+    resolution: {integrity: sha512-0ECpqsxu3fsW0NwRDiBfsq4MDmdo0CXU9fzKv6UOvQFruh1OgEAkDEqCTDFTDjLBN9ZiHHrl5RpuQo+/RFCNqw==}
+    hasBin: true
+    dependencies:
+      chokidar: 3.5.3
+      commander: 9.1.0
+      globby: 11.1.0
+      mylas: 2.1.9
+      normalize-path: 3.0.0
     dev: true
 
   /tsconfig-paths-webpack-plugin/3.5.2:

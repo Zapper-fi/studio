@@ -9,7 +9,7 @@
   "types": "dist/lib/index.d.ts",
   "scripts": {
     "prebuild": "rimraf dist",
-    "build": "nest build",
+    "build": "tsc && tsc-alias -p tsconfig.aliases.json",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "dev": "nest start --watch",
@@ -64,6 +64,7 @@
     "ts-generator": "^0.1.1",
     "ts-loader": "^9.2.3",
     "ts-node": "^10.7.0",
+    "tsc-alias": "^1.6.5",
     "tsconfig-paths": "^3.10.1",
     "typechain": "^8.0.0",
     "typescript": "^4.6.2",
