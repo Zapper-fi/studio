@@ -24,6 +24,8 @@ export class ApiPositionSource implements PositionSource {
     definitions: AppGroupsDefinition[],
     contractType: ContractType,
   ): Promise<T[]> {
+    if (!definitions.length) return [];
+
     const pathParam = contractType === ContractType.APP_TOKEN ? 'tokens' : 'contract-positions';
     const query = qs.stringify({ definitions });
     const { data: positions } = await this.axios.get<T[]>(`/v1/positions/${pathParam}?${query}`);
