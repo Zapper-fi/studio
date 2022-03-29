@@ -92,7 +92,7 @@ const generateContractFactory = async (location: string) => {
         `
         import { Injectable, Inject } from '@nestjs/common';
         import { StaticJsonRpcProvider } from '@ethersproject/providers';
-        import { AppToolkit } from '~app-toolkit/app-toolkit.service';
+        import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 
         import { NetworkProviderService } from '~network-provider/network-provider.service';
         import { Network } from '~types/network.interface';
@@ -117,7 +117,7 @@ ${
 constructor(${
           isRoot
             ? 'protected readonly networkProviderResolver: NetworkProviderResolver'
-            : '@Inject(AppToolkit) protected readonly appToolkit: AppToolkit'
+            : '@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit'
         }) { ${isRoot ? '' : 'super((network: Network) => appToolkit.getNetworkProvider(network));'} }
 
           ${factoryMethods.join('\n')}
