@@ -2,6 +2,7 @@ import { readdirSync } from 'fs';
 
 import { DynamicModule, Module, Type } from '@nestjs/common';
 import { DiscoveryModule } from '@nestjs/core';
+import { compact } from 'lodash';
 
 import { DynamicApps } from '~app/app.dynamic-module';
 import { importAppDefinition, importAppModule } from '~app/app.importer';
@@ -35,15 +36,12 @@ export class AppsModule {
       }),
     );
 
-    const validAppsModules = appsModules.filter((m): m is NonNullable<typeof m> => !!m);
-
     return {
       module: AppsModule,
       imports: [
         DiscoveryModule,
         ...DynamicApps({
-          // @ts-ignore
-          apps: [...validAppsModules],
+          apps: [...compact(appsModules)],
           imports: [appToolkitModule],
         }),
       ],

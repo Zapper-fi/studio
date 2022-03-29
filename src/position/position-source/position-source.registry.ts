@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { partition, groupBy, map } from 'lodash';
+import { partition, groupBy, map, compact } from 'lodash';
 
 import { ContractType } from '~position/contract.interface';
 import { PositionFetcherRegistry } from '~position/position-fetcher.registry';
@@ -54,19 +54,18 @@ export class RegistryPositionSource implements PositionSource {
   ): Promise<T[]> {
     if (!definitions.length) return [];
 
-    const fetchers = definitions
-      .flatMap(({ appId, groupIds, network }) =>
-        groupIds.map(groupId => {
-          try {
-            return this.positionFetcherRegistry.get({ type: contractType, appId, groupId, network });
-          } catch (e) {
-            return null;
-          }
-        }),
-      )
-      .filter((fetcher): fetcher is NonNullable<typeof fetcher> => !!fetcher);
+    const fetchers = definitions.flatMap(({ appId, groupIds, network }) =>
+      groupIds.map(groupId => {
+        try {
+          return this.positionFetcherRegistry.get({ type: contractType, appId, groupId, network });
+        } catch (e) {
+          return null;
+        }
+      }),
+    );
 
-    const positions = (await Promise.all(fetchers.map(fetcher => fetcher.getPositions()))) as T[][];
+    const validFetchers = compact(fetchers);
+    const positions = (await Promise.all(validFetchers.map(fetcher => fetcher.getPositions()))) as T[][];
     return positions.flat();
   }
 }
