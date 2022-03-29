@@ -2,14 +2,14 @@ import fs from 'fs';
 import path from 'path';
 import util from 'util';
 
-import { camelCase, kebabCase, sortBy, upperFirst } from 'lodash';
-import { glob, runTypeChain } from 'typechain';
 import { Command } from '@oclif/core';
 import chalk from 'chalk';
+import { camelCase, kebabCase, sortBy, upperFirst } from 'lodash';
+import { glob, runTypeChain } from 'typechain';
 
+import { execCodeFormatting } from '../format/exec-code-formatting';
 import { appPath } from '../paths/app-path';
 import { strings } from '../strings';
-import { execCodeFormatting } from '../format/exec-code-formatting';
 
 const writeFile = util.promisify(fs.writeFile);
 const mkdir = util.promisify(fs.mkdir);
@@ -94,7 +94,7 @@ const generateContractFactory = async (location: string) => {
         @Injectable()
         export class ${factoryFullName} ${isRoot ? '' : 'extends ContractFactory'} {
           constructor(@Inject(NetworkProviderService) protected readonly networkProviderService:  NetworkProviderService) { ${
-            isRoot ? '' : 'super(web3Service);'
+            isRoot ? '' : 'super(networkProviderService);'
           } }
 
           ${factoryMethods.join('\n')}
