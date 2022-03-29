@@ -11,16 +11,16 @@ type CacheTtlBuilder = (...args: any) => number;
 export type CacheOptions = {
   key: string | CacheKeyBuilder;
   ttl?: number | null | CacheTtlBuilder;
+  instance?: 'business' | 'user';
   failOnMissingData?: boolean;
 };
 
 export const Cache = (options: CacheOptions) => {
-  const { failOnMissingData = false, ttl = null } = options;
+  const { failOnMissingData = false, ttl = null, instance = 'business' } = options;
 
-  console.log('options', options.key, ttl);
   return applyDecorators(
     SetMetadata(CACHE_KEY, options.key),
-    SetMetadata(CACHE_INSTANCE, 'business'),
+    SetMetadata(CACHE_INSTANCE, instance),
     SetMetadata(CACHE_TTL, ttl),
     SetMetadata(
       CACHE_FAIL_ON_MISSING_CACHE,
