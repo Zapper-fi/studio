@@ -5,6 +5,7 @@ import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
 import { UnagiiV2Vault__factory } from './ethers';
+
 type ContractOpts = { address: string; network: Network };
 
 @Injectable()
