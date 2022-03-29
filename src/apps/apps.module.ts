@@ -8,8 +8,8 @@ import { importAppDefinition, importAppModule } from '~app/app.importer';
 
 @Module({})
 export class AppsModule {
-  static async registerAsync(opts: { enabledAppIds?: string[]; appToolkitModule: Type }): Promise<DynamicModule> {
-    const { enabledAppIds = [], appToolkitModule } = opts;
+  static async registerAsync(opts: { appToolkitModule: Type }): Promise<DynamicModule> {
+    const { appToolkitModule } = opts;
 
     // Find all apps available to be registered
     const allAppIds = readdirSync(__dirname, { withFileTypes: true })
@@ -17,6 +17,9 @@ export class AppsModule {
       .map(dirent => dirent.name);
 
     // Activate only apps that are requested to be active (for focused local dev)
+    const enabledAppIds =
+      process.env.NODE_ENV === 'production' ? [] : (process.env.ENABLED_APPS ?? '').split(',').filter(Boolean);
+
     const filteredAppIds = enabledAppIds.length ? allAppIds.filter(appId => enabledAppIds.includes(appId)) : allAppIds;
 
     // Dynamically import the apps
