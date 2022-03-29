@@ -90,26 +90,27 @@ function generateDefinitionFile(appName: string, supportedNetworks: string) {
   const appClassName = strings.titleCase(appName);
 
   return dedent`
-  import { ProtocolTag, ProtocolAction } from '@zapper-fi/types/balances';
-  import { Network } from '@zapper-fi/types/networks';
-
-  import { RegisterAppV3Definition } from '~apps-v3/apps-definition.decorator';
-  import { AppDefinition } from '~apps/app-definition.interface';
+  import { Register } from '~app-toolkit/decorators';
+  import { AppDefinition } from '~app/app.definition';
+  import { ProtocolAction, ProtocolTag } from '~app/app.interface';
+  import { Network } from '~types/network.interface';
 
   export const ${appNameConstant}_DEFINITION = {
     id: '${appName}',
     name: '${appId}',
     description: '',
     groups: {
-      camelCase: 'kebab-case',
+      camelCase: { id: 'kebab-case', network: Network.ETHEREUM_MAINNET } 
     },
     url: '',
     tags: [ProtocolTag.LENDING],
     supportedNetworks: {${supportedNetworks}
     },
+    primaryColor: '#fff',
+    token: null,
   };
 
-  @RegisterAppV3Definition(${appNameConstant}_DEFINITION.id)
+  @Register.AppDefinition(${appNameConstant}_DEFINITION.id)
   export class ${appClassName}AppDefinition extends AppDefinition {
     constructor() {
       super(${appNameConstant}_DEFINITION);
