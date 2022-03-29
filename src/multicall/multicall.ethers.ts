@@ -4,7 +4,7 @@ import { ethers } from 'ethers';
 
 import { Multicall as MulticallContract } from '~contract/contracts';
 
-export type MulticallConfig = {
+export type EthersMulticallConfig = {
   batchInterval?: number;
   batchMaxSize?: number;
 };
@@ -38,7 +38,7 @@ export class EthersMulticall {
   private readonly multicallContract: MulticallContract;
   private batchRequests: BatchItem[] | null;
 
-  constructor(multicallContact: MulticallContract, opts: MulticallConfig = {}) {
+  constructor(multicallContact: MulticallContract, opts: EthersMulticallConfig = {}) {
     const { batchInterval = 10, batchMaxSize = 250 } = opts;
 
     this.multicallContract = multicallContact;

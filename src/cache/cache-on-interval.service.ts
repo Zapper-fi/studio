@@ -74,7 +74,7 @@ export class CacheOnIntervalService implements OnModuleInit, OnModuleDestroy {
       if (cachedValue) {
         return cachedValue;
       } else {
-        const liveData = await methodRef.apply(this, args);
+        const liveData = await methodRef.apply(instance, args);
         await cacheManager.set(cacheKey, liveData, { ttl });
         return liveData;
       }
@@ -82,7 +82,7 @@ export class CacheOnIntervalService implements OnModuleInit, OnModuleDestroy {
 
     // Save the interval
     const interval = setInterval(async () => {
-      const liveData = await methodRef();
+      const liveData = await methodRef.apply(instance);
       await cacheManager.set(cacheKey, liveData, { ttl });
     }, cacheTimeout);
     this.intervals.push(interval);
