@@ -8,6 +8,7 @@ import { AppsModule } from '~apps/apps.module';
 import { AppController } from './app.controller';
 import { AppRegistry } from './app.registry';
 import { AppService } from './app.service';
+import { AppBalanceFetcherRegistry } from './balance-fetcher.registry';
 
 @Module({
   imports: [
@@ -27,6 +28,6 @@ import { AppService } from './app.service';
     }),
   ],
   controllers: [AppController],
-  providers: [AppService, AppRegistry],
+  providers: [AppService, AppRegistry, AppBalanceFetcherRegistry],
 })
 export class AppModule {}
