@@ -9,4 +9,8 @@ export class AppService {
   async getApps() {
     return this.appRegistry.getSupported();
   }
+
+  getApp(appId: string) {
+    return this.appRegistry.get(appId);
+  }
 }

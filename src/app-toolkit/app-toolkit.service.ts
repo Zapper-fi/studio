@@ -42,8 +42,8 @@ export class AppToolkit {
 
   // Positions
 
-  getAppTokens<T = DefaultDataProps>(...appTokenDefinition: AppGroupsDefinition[]) {
-    return this.positionService.getAppTokens<T>(...appTokenDefinition);
+  getAppTokenPositions<T = DefaultDataProps>(...appTokenDefinition: AppGroupsDefinition[]) {
+    return this.positionService.getAppTokenPositions<T>(...appTokenDefinition);
   }
 
   getAppContractPositions<T = DefaultDataProps>(...appTokenDefinition: AppGroupsDefinition[]) {

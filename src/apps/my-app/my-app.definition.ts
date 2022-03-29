@@ -1,16 +1,16 @@
 import { Register } from '~app-toolkit/decorators';
 import { AppDefinition } from '~app/app.definition';
-import { AppDefinitionObject, ProtocolAction, ProtocolTag } from '~app/app.interface';
+import { ProtocolAction, ProtocolTag } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
-export const MY_APP_DEFINITION: AppDefinitionObject = {
+export const MY_APP_DEFINITION = {
   id: 'my-app',
   name: 'my-app',
   description: 'My app is pretty decent',
   tags: [ProtocolTag.LENDING],
   groups: {
-    pool: { id: 'pool', network: Network.ETHEREUM_MAINNET },
-  },
+    pool: { id: 'pool', network: Network.ETHEREUM_MAINNET } as const,
+  } as const,
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [ProtocolAction.VIEW, ProtocolAction.TRANSACT],
   },
