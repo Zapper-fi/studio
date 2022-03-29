@@ -52,6 +52,8 @@ export class RegistryPositionSource implements PositionSource {
     definitions: AppGroupsDefinition[],
     contractType: ContractType,
   ): Promise<T[]> {
+    if (!definitions.length) return [];
+
     const fetchers = definitions
       .flatMap(({ appId, groupIds, network }) =>
         groupIds.map(groupId => {

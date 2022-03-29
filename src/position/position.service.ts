@@ -26,7 +26,6 @@ export class PositionService {
     contractType: ContractType,
   ): Promise<T[]> {
     const { supported, unsupported } = this.registryPositionSource.getSupported(appGroupDefinitions, contractType);
-
     const positions = await Promise.all([
       this.registryPositionSource.getPositions<T>(supported, contractType),
       this.apiPositionSource.getPositions<T>(unsupported, contractType),
