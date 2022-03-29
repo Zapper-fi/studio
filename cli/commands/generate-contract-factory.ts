@@ -2,14 +2,14 @@ import fs from 'fs';
 import path from 'path';
 import util from 'util';
 
+import { Command, Flags } from '@oclif/core';
+import chalk from 'chalk';
 import { camelCase, kebabCase, sortBy, upperFirst } from 'lodash';
 import { glob, runTypeChain } from 'typechain';
-import { Command } from '@oclif/core';
-import chalk from 'chalk';
 
+import { execCodeFormatting } from '../format/exec-code-formatting';
 import { appPath } from '../paths/app-path';
 import { strings } from '../strings';
-import { execCodeFormatting } from '../format/exec-code-formatting';
 
 const writeFile = util.promisify(fs.writeFile);
 const mkdir = util.promisify(fs.mkdir);
@@ -71,7 +71,15 @@ const generateContractFactory = async (location: string) => {
       const factoryMethods = abis.map(abi => {
         const methodName = camelCase(abi);
         const typeName = upperFirst(methodName);
-        return `${methodName}({address, network}: ContractOpts) { return ${typeName}__factory.connect(address, this.networkProviderService.getProvider(network)); }`;
+        return `${methodName}({address, network}: ContractOpts) { return ${typeName}__factory.connect(address, ${
+          isRoot ? 'this.networkProviderResolver(network)' : 'this.appToolkit.getNetworkProvider(network)'
+        }); }`;
+      });
+
+      const interfaceRows = abis.map(abi => {
+        const methodName = camelCase(abi);
+        const typeName = upperFirst(methodName);
+        return `${methodName}(opts: ContractOpts): ${typeName};`;
       });
 
       const reexports = abis.map(abi => {
@@ -83,6 +91,8 @@ const generateContractFactory = async (location: string) => {
         path.join(location, `/contracts/index.ts`),
         `
         import { Injectable, Inject } from '@nestjs/common';
+        import { StaticJsonRpcProvider } from '@ethersproject/providers';
+        import { AppToolkit } from '~app-toolkit/app-toolkit.service';
 
         import { NetworkProviderService } from '~network-provider/network-provider.service';
         import { Network } from '~types/network.interface';
@@ -90,12 +100,25 @@ const generateContractFactory = async (location: string) => {
         ${imports.join('\n')}
         ${isRoot ? '' : "import { ContractFactory } from '~contract/contracts'"}
         type ContractOpts = {address: string, network: Network};
+        ${!isRoot ? '' : 'type NetworkProviderResolver = (network: Network) => StaticJsonRpcProvider;'}
+
+${
+  isRoot
+    ? `
+        export interface IContractFactory {
+          ${interfaceRows.join('\n')}
+        }
+        `
+    : ''
+}
 
         @Injectable()
-        export class ${factoryFullName} ${isRoot ? '' : 'extends ContractFactory'} {
-          constructor(@Inject(NetworkProviderService) protected readonly networkProviderService:  NetworkProviderService) { ${
-            isRoot ? '' : 'super(web3Service);'
-          } }
+        export class ${factoryFullName} ${isRoot ? 'implements IContractFactory' : 'extends ContractFactory'} {
+constructor(${
+          isRoot
+            ? 'protected readonly networkProviderResolver: NetworkProviderResolver'
+            : '@Inject(AppToolkit) protected readonly appToolkit: AppToolkit'
+        }) { ${isRoot ? '' : 'super((network: Network) => appToolkit.getNetworkProvider(network));'} }
 
           ${factoryMethods.join('\n')}
         }
@@ -113,18 +136,26 @@ export default class NewCommand extends Command {
   static description =
     'Generate typescript contract factories for a given app based on the ABIs contained within the contracts/abis folder.';
 
-  static examples = [`$ ./agora.sh generate:contract-factory my-app`];
+  static examples = [`$ ./agora.sh generate:contract-factory my-app`, `$ ./agora.sh generate:contract-factory -g`];
 
-  static flags = {};
+  static flags = {
+    global: Flags.boolean({ char: 'g' }),
+  };
 
-  static args = [{ name: 'appid', description: 'The application id (just the folder name)', required: true }];
+  static args = [{ name: 'appid', description: 'The application id (just the folder name)', required: false }];
 
   async run(): Promise<void> {
-    const { args } = await this.parse(NewCommand);
+    const { args, flags } = await this.parse(NewCommand);
     const appId = args.appid;
 
+    if (!flags.global && !appId) {
+      console.log(chalk.red(`An app ID or --global needs to be provided`));
+      return;
+    }
+
+    const location = !flags.global ? appPath(appId) : path.resolve(__dirname, '../src/contract');
+
     try {
-      const location = appPath(appId);
       await generateContract(location);
       console.log(chalk.green(`Contract generated at ${location}`));
 

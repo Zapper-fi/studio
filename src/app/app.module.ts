@@ -13,7 +13,7 @@ import { AppBalanceFetcherRegistry } from './balance-fetcher.registry';
 
 @Module({
   imports: [
-    AppsModule.registerAsync(),
+    AppsModule.registerAsync({ appToolkitModule: AppToolkitModule }),
     CacheModule,
     DiscoveryModule,
     AppToolkitModule,

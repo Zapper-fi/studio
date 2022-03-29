@@ -5,6 +5,8 @@
   "author": "",
   "private": true,
   "license": "UNLICENSED",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
@@ -21,6 +23,7 @@
     "@nestjs/core": "8.4.2",
     "@nestjs/platform-express": "8.4.2",
     "axios": "^0.26.1",
+    "bignumber.js": "^9.0.2",
     "bitcoin-address-validation": "^2.2.1",
     "cache-manager": "^3.6.0",
     "class-transformer": "^0.5.1",

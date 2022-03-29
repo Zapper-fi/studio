@@ -25,6 +25,7 @@ specifiers:
   '@typescript-eslint/eslint-plugin': ^5.16.0
   '@typescript-eslint/parser': ^5.16.0
   axios: ^0.26.1
+  bignumber.js: ^9.0.2
   bitcoin-address-validation: ^2.2.1
   cache-manager: ^3.6.0
   chalk: '4'
@@ -64,6 +65,7 @@ dependencies:
   '@nestjs/core': 8.4.2_c19d2ec2e65d58045ebcb73ac916a0e0
   '@nestjs/platform-express': 8.4.2_44cf05fcc0e49f3653826a45aec0eb54
   axios: 0.26.1
+  bignumber.js: 9.0.2
   bitcoin-address-validation: 2.2.1
   cache-manager: 3.6.0
   class-transformer: 0.5.1
@@ -1454,6 +1456,10 @@ packages:
 
   /bech32/2.0.0:
     resolution: {integrity: sha512-LcknSilhIGatDAsY1ak2I8VtGaHNhgMSYVxFrGLXv+xLHytaKZKcaUJJUE7qmBr7h33o5YQwP55pMI0xmkpJwg==}
+    dev: false
+
+  /bignumber.js/9.0.2:
+    resolution: {integrity: sha512-GAcQvbpsM0pUb0zw1EI0KhQEZ+lRwR5fYaAp3vPOYuP7aDvGy6cVN6XHLauvF8SOga2y0dcLcjt3iQDTSEliyw==}
     dev: false
 
   /binary-extensions/2.2.0:

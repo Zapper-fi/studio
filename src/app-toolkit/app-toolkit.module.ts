@@ -1,16 +1,16 @@
 import { Module } from '@nestjs/common';
 
-import { ContractModule } from '~contract/contract.module';
-import { MulticallModule } from '~multicall/multicall.module';
 import { NetworkProviderModule } from '~network-provider/network-provider.module';
 import { PositionModule } from '~position/position.module';
 import { TokenModule } from '~token/token.module';
 
+import { APP_TOOLKIT } from './app-toolkit.constants';
+import { AppToolkitHelperRegistry, AppToolkitHelpers } from './app-toolkit.helpers';
 import { AppToolkit } from './app-toolkit.service';
 
 @Module({
-  imports: [ContractModule, MulticallModule, NetworkProviderModule, TokenModule, PositionModule],
-  providers: [AppToolkit],
-  exports: [AppToolkit],
+  imports: [NetworkProviderModule, TokenModule, PositionModule],
+  providers: [{ provide: APP_TOOLKIT, useClass: AppToolkit }, AppToolkitHelperRegistry, ...AppToolkitHelpers],
+  exports: [APP_TOOLKIT],
 })
 export class AppToolkitModule {}

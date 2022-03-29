@@ -1,3 +1,5 @@
+import { MetaType } from './position.interface';
+
 //  DISPLAY PROPS
 export type TranslationDisplayItem = {
   type: 'translation';
@@ -23,6 +25,13 @@ export type PercentageDisplayItem = {
   type: 'pct';
   value: number;
 };
+
+export type MetadataItem =
+  | StringDisplayItem
+  | NumberDisplayItem
+  | DollarDisplayItem
+  | PercentageDisplayItem
+  | TranslationDisplayItem;
 
 export type StatsItem = {
   label: string | TranslationDisplayItem;
@@ -51,19 +60,7 @@ export interface DisplayProps {
   balanceDisplayMode?: BalanceDisplayMode;
 }
 
-//  DATA PROPS
 export type DefaultDataProps = Record<string, unknown>;
-
-//  METATYPES
-export enum MetaType {
-  WALLET = 'wallet',
-  SUPPLIED = 'supplied',
-  BORROWED = 'borrowed',
-  CLAIMABLE = 'claimable',
-  VESTING = 'vesting',
-  LOCKED = 'locked',
-  NFT = 'nft',
-}
 
 export type WithMetaType<T> = T & {
   metaType?: MetaType;
