@@ -1,10 +1,9 @@
 import { createConfigurableDynamicRootModule, IConfigurableDynamicRootModule } from '@golevelup/nestjs-modules';
 import { Type } from '@nestjs/common';
 
-import { APP_TOOLKIT } from '~app-toolkit/app-toolkit.constants';
-import { IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 
-export const APP_OPTIONS = 'APP_OPTIONS';
+const APP_OPTIONS = 'APP_OPTIONS';
 const DYNAMIC_APP_TOOLKIT = Symbol('DYNAMIC_APP_TOOLKIT');
 
 export interface AppModuleOptions {
