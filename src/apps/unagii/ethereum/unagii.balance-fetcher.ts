@@ -1,7 +1,6 @@
 import { Inject } from '@nestjs/common';
 
-import { APP_TOOLKIT } from '~app-toolkit/app-toolkit.constants';
-import { IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
 import { BalanceFetcher } from '~app/balance-fetcher.interface';

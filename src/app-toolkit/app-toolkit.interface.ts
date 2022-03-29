@@ -10,6 +10,8 @@ import { Network } from '~types/network.interface';
 
 import { AppToolkitHelperRegistry } from './app-toolkit.helpers';
 
+export const APP_TOOLKIT = Symbol('APP_TOOLKIT');
+
 export interface IAppToolkit {
   get globalContracts(): IContractFactory;
 

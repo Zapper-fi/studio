@@ -4,8 +4,8 @@ import { NetworkProviderModule } from '~network-provider/network-provider.module
 import { PositionModule } from '~position/position.module';
 import { TokenModule } from '~token/token.module';
 
-import { APP_TOOLKIT } from './app-toolkit.constants';
 import { AppToolkitHelperRegistry, AppToolkitHelpers } from './app-toolkit.helpers';
+import { APP_TOOLKIT } from './app-toolkit.interface';
 import { AppToolkit } from './app-toolkit.service';
 
 @Module({

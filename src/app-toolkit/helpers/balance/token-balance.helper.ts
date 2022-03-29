@@ -2,8 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import BigNumber from 'bignumber.js';
 import { isArray, pick } from 'lodash';
 
-import { APP_TOOLKIT } from '~app-toolkit/app-toolkit.constants';
-import { IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { EthersMulticall } from '~multicall/multicall.ethers';
 import { ContractType } from '~position/contract.interface';
 import { StatsItem, WithMetaType } from '~position/display.interface';
