@@ -1,14 +1,15 @@
 import { readdirSync } from 'fs';
 
-import { DynamicModule, Module } from '@nestjs/common';
+import { DynamicModule, Module, Type } from '@nestjs/common';
 import { DiscoveryModule } from '@nestjs/core';
 
+import { DynamicApps } from '~app/app.dynamic-module';
 import { importAppDefinition, importAppModule } from '~app/app.importer';
 
 @Module({})
 export class AppsModule {
-  static async registerAsync(opts: { enabledAppIds?: string[] } = {}): Promise<DynamicModule> {
-    const { enabledAppIds = [] } = opts;
+  static async registerAsync(opts: { enabledAppIds?: string[]; appToolkitModule: Type }): Promise<DynamicModule> {
+    const { enabledAppIds = [], appToolkitModule } = opts;
 
     // Find all apps available to be registered
     const allAppIds = readdirSync(__dirname, { withFileTypes: true })
@@ -35,7 +36,14 @@ export class AppsModule {
 
     return {
       module: AppsModule,
-      imports: [DiscoveryModule, ...validAppsModules],
+      imports: [
+        DiscoveryModule,
+        ...DynamicApps({
+          // @ts-ignore
+          apps: [...validAppsModules],
+          imports: [appToolkitModule],
+        }),
+      ],
     };
   }
 }

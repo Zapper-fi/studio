@@ -1,8 +1,6 @@
 import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { fromPairs } from 'lodash';
 
-import { AppToolkit } from '~app-toolkit/app-toolkit.service';
-
 import { AppRegistry } from './app.registry';
 import { AppBalanceFetcherRegistry } from './balance-fetcher.registry';
 import { GetAppBalancesQuery } from './dto/get-app-balances-query.dto';
@@ -12,7 +10,6 @@ export class AppService {
   constructor(
     @Inject(AppRegistry) private readonly appRegistry: AppRegistry,
     @Inject(AppBalanceFetcherRegistry) private readonly balanceFetcherRegistry: AppBalanceFetcherRegistry,
-    @Inject(AppToolkit) private readonly appToolkit: AppToolkit,
   ) {}
 
   async getApps() {
