@@ -4,6 +4,7 @@ import { DiscoveryModule } from '@nestjs/core';
 
 import { AppToolkitModule } from '~app-toolkit/app-toolkit.module';
 import { AppsModule } from '~apps/apps.module';
+import { CacheModule } from '~cache/cache.module';
 
 import { AppController } from './app.controller';
 import { AppRegistry } from './app.registry';
@@ -12,9 +13,10 @@ import { AppBalanceFetcherRegistry } from './balance-fetcher.registry';
 
 @Module({
   imports: [
-    AppToolkitModule,
     AppsModule.registerAsync(),
+    CacheModule,
     DiscoveryModule,
+    AppToolkitModule,
     ConfigModule.forRoot({
       isGlobal: true,
       load: [

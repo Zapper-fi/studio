@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import Axios, { AxiosInstance } from 'axios';
 
+import { Cache } from '~cache/cache.decorator';
 import { BaseToken } from '~position/token.interface';
 import { Network } from '~types/network.interface';
 
@@ -16,6 +17,13 @@ export class TokenService {
     });
   }
 
+  onApplicationBootstrap() {
+    setInterval(() => {
+      this.getTokenPrices(Network.ETHEREUM_MAINNET);
+    }, 2000);
+  }
+
+  @Cache({ key: (network: Network) => `token-prices:${network}` })
   async getTokenPrices(network: Network) {
     const { data: tokenPrices } = await this.axios.get<BaseToken[]>('/v1/prices-v3', { params: { network } });
     return tokenPrices;

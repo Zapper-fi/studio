@@ -1,6 +1,6 @@
 import { applyDecorators, Injectable, SetMetadata } from '@nestjs/common';
 
-import { CacheOnIntervalBuilder } from '~cache/cache.decorator';
+import { CacheOnIntervalBuilder } from '~cache/cache-on-interval.decorator';
 import { Network } from '~types/network.interface';
 
 import { ContractType } from './contract.interface';
@@ -29,7 +29,6 @@ export const PositionFetcher =
       SetMetadata(POSITION_FETCHER_TYPE, type),
       CacheOnIntervalBuilder<IPositionFetcher<Position>>({
         targetMethod: 'getPositions',
-        instance: 'business',
         key: buildAppPositionsCacheKey({ type, network, appId, groupId }),
         timeout: 45 * 1000,
         failOnMissingData: process.env.NODE_ENV === 'production',
