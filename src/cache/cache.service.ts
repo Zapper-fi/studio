@@ -47,8 +47,6 @@ export class CacheService {
     // Don't register cache on interval when missing parameters
     if (!rawCacheKey || !isNil(rawCacheTtl) || !cacheInstance) return;
 
-    // Don't register cache on interval when cache conflict
-
     // Service references
     const cacheManager = this.cacheManager;
     const extractKey = this.extractKey;
