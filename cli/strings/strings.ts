@@ -13,13 +13,35 @@ const titleCase = (s: string) => {
 /**
  * Takes an array of strings and join them within new lines.
  * @param xs string[]
- * @returns 
+ * @returns
  */
 const lines = (xs: string[]) => {
   return xs.join('\n');
 };
 
+/**
+ * Converts a given string to kebab-case
+ *
+ * @param s given string
+ * @returns KebabCased string
+ */
+const kebabCase = (s: string) => {
+  return _.kebabCase(s);
+};
+
+/**
+ * Converts a given string to UPPER_CASE
+ *
+ * @param s given string
+ * @returns UpperCased string
+ */
+const upperCase = (s: string) => {
+  return _.upperCase(s).replace(' ', '_');
+};
+
 export const strings = {
+  kebabCase,
+  upperCase,
   titleCase,
   lines,
 };

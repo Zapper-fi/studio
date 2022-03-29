@@ -1,8 +1,9 @@
-import fs from 'fs';
-
 import { CliUx, Command } from '@oclif/core';
 import dedent from 'dedent';
+import fse from 'fs-extra';
 import * as inquirer from 'inquirer';
+
+import { strings } from '../strings';
 
 enum Network {
   ETHEREUM_MAINNET = 'ethereum',
@@ -27,7 +28,7 @@ export default class CreateApp extends Command {
 
   async run(): Promise<void> {
     const appNameRaw = await CliUx.ux.prompt('What is the name of the app ', { required: true });
-    const appName = convertToKebabCase(appNameRaw);
+    const appName = strings.kebabCase(appNameRaw);
     const response: any = await inquirer.prompt([
       {
         name: 'network',
@@ -59,7 +60,7 @@ export default class CreateApp extends Command {
       createFolder(`./src/apps/${appName}/${network}`);
     }
     const generatedCode = generateDefinitionFile(appName, generatedNetworks);
-    fs.writeFileSync(`./src/apps/${appName}/${appName}.definition.ts`, `${generatedCode}\n`);
+    fse.writeFileSync(`./src/apps/${appName}/${appName}.definition.ts`, `${generatedCode}\n`);
     this.log(`You can now fill/update ${appName}.definition.ts`);
   }
 }
@@ -74,9 +75,8 @@ function generateSupportedNetworks(supportedNetworks: string[]): string {
 }
 
 function formatNetworks(userInputNetworks: string[]): string[] {
-  const supportedNetworks = userInputNetworks.map(x => {
-    const kebabCaseNetworks = convertToKebabCase(x);
-    const choices = kebabCaseNetworks.split(',');
+  const supportedNetworks = userInputNetworks.map(network => {
+    const choices = strings.kebabCase(network).split(',');
 
     return Object.keys(Network as Record<string, unknown>).filter(k => choices.includes(Network[k]));
   });
@@ -85,9 +85,9 @@ function formatNetworks(userInputNetworks: string[]): string[] {
 }
 
 function generateDefinitionFile(appName: string, supportedNetworks: string) {
-  const appId = convertToKebabCase(appName);
-  const appNameConstant = convertToUpperCase(appName);
-  const appClassName = convertToPascalCase(appName);
+  const appId = strings.kebabCase(appName);
+  const appNameConstant = strings.upperCase(appName);
+  const appClassName = strings.titleCase(appName);
 
   return dedent`
   import { ProtocolTag, ProtocolAction } from '@zapper-fi/types/balances';
@@ -119,33 +119,5 @@ function generateDefinitionFile(appName: string, supportedNetworks: string) {
 }
 
 function createFolder(path: string) {
-  if (!fs.existsSync(path)) {
-    fs.mkdirSync(path);
-  }
-}
-
-function convertToKebabCase(text: string): string {
-  return text
-    .replace(/([a-z])([A-Z])/g, '$1-$2')
-    .replace(/[\s_]+/g, '-')
-    .toLowerCase();
-}
-
-function convertToUpperCase(text: string): string {
-  return (
-    text &&
-    text
-      .match(/[A-Z]{2,}(?=[A-Z][a-z]+[0-9]*|\b)|[A-Z]?[a-z]+[0-9]*|[A-Z]|[0-9]+/g)!
-      .map(s => s.toLowerCase())
-      .join('_')
-      .toUpperCase()
-  );
-}
-
-function convertToPascalCase(text: string): string {
-  return text
-    .replace(/\w+/g, function (w) {
-      return w[0].toUpperCase() + w.slice(1).toLowerCase();
-    })
-    .replace('-', '');
+  fse.ensureDir(path);
 }
