@@ -46,13 +46,13 @@ export type AppDefinitionObject = {
   name: string;
   tags: ProtocolTag[];
   description: string;
-  groups: Record<string, AppGroup>;
+  groups: Record<string, string>;
   supportedNetworks: { [N in Network]?: ProtocolAction[] };
   primaryColor: string;
   url: string;
   compatibleAddressFormat?: { [N in Network]?: AddressFormat };
-  token: {
+  token?: {
     address: string;
     network: Network;
-  } | null;
+  };
 };

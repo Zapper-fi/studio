@@ -18,7 +18,7 @@ export class EthereumUnagiiBalanceFetcher implements BalanceFetcher {
     const balances = await this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
       network,
       appId: UNAGII_DEFINITION.id,
-      groupId: UNAGII_DEFINITION.groups.vault.id,
+      groupId: UNAGII_DEFINITION.groups.vault,
       address,
     });
 
