@@ -3,7 +3,7 @@ import { uniq, keys, mapValues, zipObject } from 'lodash';
 
 import { Network } from '~types/network.interface';
 
-import { AddressFormat, AppDefinitionObject, AppGroup, ProtocolAction, ProtocolTag } from './app.interface';
+import { AddressFormat, AppDefinitionObject, ProtocolAction, ProtocolTag } from './app.interface';
 
 function toNetworkWithActionsArray(
   supportedNetworks: Record<string, ProtocolAction[]>,
@@ -39,7 +39,7 @@ export class AppDefinition {
     this.groups = definitionRaw.groups;
     this.supportedNetworks = toNetworkWithActionsArray(definitionRaw.supportedNetworks);
     this.primaryColor = definitionRaw.primaryColor;
-    this.token = definitionRaw.token;
+    this.token = definitionRaw.token ?? null;
     this.compatibleAddressFormats = mapValues(
       zipObject(specifiedNetworks, specifiedNetworks),
       (_, network) => definitionRaw.compatibleAddressFormat?.[network] ?? AddressFormat.EVM,
@@ -56,7 +56,7 @@ export class AppDefinition {
   readonly id: string;
   readonly name: string;
   readonly description?: string;
-  readonly groups: Record<string, AppGroup>;
+  readonly groups: Record<string, string>;
   readonly url: string;
   readonly deprecated?: boolean;
   readonly tags: ProtocolTag[];
