@@ -56,8 +56,8 @@ export type AppDefinitionObject = {
   primaryColor: string;
   url: string;
   compatibleAddressFormat?: { [N in Network]?: AddressFormat };
-  token: {
+  token?: {
     address: string;
     network: Network;
-  } | null;
+  };
 };

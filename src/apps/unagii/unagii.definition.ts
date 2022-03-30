@@ -16,7 +16,6 @@ export const UNAGII_DEFINITION = {
     [Network.ETHEREUM_MAINNET]: [ProtocolAction.VIEW],
   },
   primaryColor: '#fff',
-  token: null,
 };
 
 @Register.AppDefinition(UNAGII_DEFINITION.id)
