@@ -1,7 +1,6 @@
 import { readdirSync } from 'fs';
 
 import { DynamicModule, Module, Type } from '@nestjs/common';
-import { DiscoveryModule } from '@nestjs/core';
 import { compact } from 'lodash';
 
 import { DynamicApps } from '~app/app.dynamic-module';
@@ -39,7 +38,6 @@ export class AppsModule {
     return {
       module: AppsModule,
       imports: [
-        DiscoveryModule,
         ...DynamicApps({
           apps: [...compact(appsModules)],
           imports: [appToolkitModule],
