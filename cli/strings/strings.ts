@@ -39,9 +39,20 @@ const upperCase = (s: string) => {
   return _.upperCase(s).replace(' ', '_');
 };
 
+/**
+ * Convert a given string to camelCase
+ *
+ * @param s given string
+ * @returns CamelCased string
+ */
+const camelCase = (s: string) => {
+  return _.camelCase(s);
+};
+
 export const strings = {
   kebabCase,
   upperCase,
   titleCase,
+  camelCase,
   lines,
 };

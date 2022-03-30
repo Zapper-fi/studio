@@ -36,9 +36,14 @@ export enum ProtocolTag {
   YIELD_AGGREGATOR = 'yield-aggregator',
 }
 
+export enum GroupType {
+  TOKEN = 'token',
+  POSITION = 'position',
+}
+
 export type AppGroup = {
   id: string;
-  network: Network;
+  type: GroupType;
 };
 
 export type AppDefinitionObject = {

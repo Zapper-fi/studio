@@ -1,5 +1,6 @@
 import { Command } from '@oclif/core';
 
+import CodegenApp from './codegen-app';
 import CreateAppCommand from './create-app';
 import GenerateContractFactory from './generate-contract-factory';
 import HelloCommand from './hello';
@@ -17,4 +18,5 @@ export const commands: Record<string, typeof Command> = {
   'create:command': NewCommand,
   'generate:contract-factory': GenerateContractFactory,
   'create-app': CreateAppCommand,
+  'codegen-app': CodegenApp,
 };
