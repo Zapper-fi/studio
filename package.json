@@ -12,7 +12,7 @@
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "prebuild": "rimraf dist",
     "prepublish:npm": "pnpm build",
-    "publish:npm": "pnpm publish",
+    "publish:npm": "pnpm publish --access public",
     "start": "nest start"
   },
   "dependencies": {
