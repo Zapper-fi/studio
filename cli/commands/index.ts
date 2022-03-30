@@ -1,9 +1,10 @@
 import { Command } from '@oclif/core';
 
-import HelloCommand from './hello';
-import PotatoCommand from './potato';
-import NewCommand from './new-command';
+import CreateAppCommand from './create-app';
 import GenerateContractFactory from './generate-contract-factory';
+import HelloCommand from './hello';
+import NewCommand from './new-command';
+import PotatoCommand from './potato';
 
 /**
  * Record of invocation string and the associated command.
@@ -15,4 +16,5 @@ export const commands: Record<string, typeof Command> = {
   potato: PotatoCommand,
   'create:command': NewCommand,
   'generate:contract-factory': GenerateContractFactory,
+  'create-app': CreateAppCommand,
 };
