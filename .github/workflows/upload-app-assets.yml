@@ -3,7 +3,7 @@ name: Upload assets
 on:
   push:
     paths:
-      - src/apps/*/assets
+      - src/apps/*/assets/*.png
     branches: ['master']
 
 jobs:
