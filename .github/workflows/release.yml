@@ -83,7 +83,6 @@ jobs:
           echo "::set-output name=target_branch::$TARGET_BRANCH"
 
       - name: Create Pull Request
-        if: ${{ needs.publish_packages.outputs.package_changed == 'true' }}
         uses: peter-evans/create-pull-request@v3
         with:
           token: ${{ secrets.GH_ZAPPER_BOT }}
@@ -95,3 +94,4 @@ jobs:
 
             ${{ needs.publish_packages.outputs.changelog }}
           base: master
+          delete-branch: true
