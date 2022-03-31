@@ -3,7 +3,7 @@ name: Release
 on:
   push:
     paths:
-      - 'src/apps/*/assets/*.png'
+      - 'package.json'
     branches: ['main']
 
 jobs:
