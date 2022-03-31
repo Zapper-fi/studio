@@ -1,8 +1,10 @@
 name: Release
+
 on:
   push:
-    - package.json
-  branches: ['main']
+    paths:
+      - 'src/apps/*/assets/*.png'
+    branches: ['main']
 
 jobs:
   release:
