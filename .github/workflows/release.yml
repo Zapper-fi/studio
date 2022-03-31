@@ -46,7 +46,7 @@ jobs:
 
 
   bump_zapper_studio:
-    name: Bump @zapper-fi/studio on Zapper API
+    name: Bump on Zapper API
     needs: [release]
     runs-on: ubuntu-latest
     strategy:
