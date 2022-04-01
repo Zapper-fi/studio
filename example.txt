@@ -1,0 +1,6 @@
+- 68aae3b Output release ID in workflow (#101)
+- a081eda Add manual step for release workflow (#100)
+- e014d3d Fix typing related to group ids
+- f0e0959 Bump to 0.0.7 to test PR description (#99)
+- 80dcdd7 Use the release body for the opened PR's description (#98)
+- 6ff4ffd added codegen-app <appId> command to the CLI (#63)
