@@ -2,7 +2,6 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
-import { SORBET_DEFINITION } from '~apps/sorbet/sorbet.definition';
 import { SynthetixSingleStakingFarmContractPositionHelper } from '~apps/synthetix/helpers/synthetix.single-staking-farm-contract-position-helper';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
@@ -42,7 +41,7 @@ export class OptimismAelinFarmContractPositionFetcher implements PositionFetcher
       appId,
       groupId,
       network,
-      dependencies: [{ appId: SORBET_DEFINITION.id, groupIds: [SORBET_DEFINITION.groups.pool.id], network }],
+      dependencies: [{ appId: 'sorbet', groupIds: ['pool'], network }],
       farmDefinitions: FARMS,
     });
   }
