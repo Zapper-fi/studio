@@ -11,8 +11,6 @@ jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
-    env:
-      REPO_URL: 'https://github.com/${{ github.repository_owner }}/${{ github.repository }}'
     outputs:
       released: ${{ steps.persist_release.outputs.released }}
       changelog: ${{ steps.rewrite_changelog.outputs.changelog }}
@@ -72,6 +70,7 @@ jobs:
         id: rewrite_changelog
         env:
           RAW_CHANGELOG: ${{ steps.fetch_release.outputs.body }}
+          REPO_URL: ${{ github.repositoryUrl }}
         run: | 
           echo "::set-output name=changelog::$(node ./scripts/rewrite-changelog.js RAW_CHANGELOG $REPO_URL)"
 
