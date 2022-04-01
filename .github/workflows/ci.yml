@@ -1,0 +1,66 @@
+name: Zapper Police 👮🏻‍♂️🚨
+
+on:
+  push:
+    paths:
+      - '!**.md'
+      - src/**
+      - package.json
+      - pnpm-lock.yaml
+      - .github/workflows/ci.yml
+    branches-ignore:
+      - main
+      - refs/tags/*
+
+jobs:
+  build:
+    name: Build Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Cache pnpm modules
+        uses: actions/cache@v2
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-
+
+      - uses: pnpm/action-setup@v2.0.1
+        with:
+          version: 6.23.2
+          run_install: true
+
+      - name: Backend Background Check 🚓
+        run: pnpm build
+
+  lint:
+    name: Lint Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Cache pnpm modules
+        uses: actions/cache@v2
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-
+
+      - uses: pnpm/action-setup@v2.0.1
+        with:
+          version: 6.23.2
+          run_install: true
+
+      - name: Backend linting tests
+        run: pnpm lint
