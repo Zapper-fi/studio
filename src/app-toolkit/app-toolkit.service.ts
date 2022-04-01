@@ -59,11 +59,11 @@ export class AppToolkit implements IAppToolkit {
   }
 
   // Positions
-  getAppTokenPositions<T = DefaultDataProps>(...appTokenDefinition: AppGroupsDefinition[]) {
-    return this.positionService.getAppTokenPositions<T>(...appTokenDefinition);
+  getAppTokenPositions<T = DefaultDataProps>(...appTokenDefinitions: AppGroupsDefinition[]) {
+    return this.positionService.getAppTokenPositions<T>(...appTokenDefinitions);
   }
 
-  getAppContractPositions<T = DefaultDataProps>(...appTokenDefinition: AppGroupsDefinition[]) {
-    return this.positionService.getAppContractPositions<T>(...appTokenDefinition);
+  getAppContractPositions<T = DefaultDataProps>(...appTokenDefinitions: AppGroupsDefinition[]) {
+    return this.positionService.getAppContractPositions<T>(...appTokenDefinitions);
   }
 }

@@ -6,26 +6,30 @@ import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation
 import { BalanceFetcher } from '~app/balance-fetcher.interface';
 import { Network } from '~types/network.interface';
 
-import { UNAGII_DEFINITION } from '../unagii.definition';
+import { AELIN_DEFINITION } from '../aelin.definition';
 
 const network = Network.ETHEREUM_MAINNET;
 
-@Register.BalanceFetcher(UNAGII_DEFINITION.id, network)
-export class EthereumUnagiiBalanceFetcher implements BalanceFetcher {
+@Register.BalanceFetcher(AELIN_DEFINITION.id, Network.ETHEREUM_MAINNET)
+export class EthereumAelinBalanceFetcher implements BalanceFetcher {
   constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
-  async getBalances(address: string) {
-    const balances = await this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
+  private async getPoolTokenBalances(address: string) {
+    return this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
       network,
-      appId: UNAGII_DEFINITION.id,
-      groupId: UNAGII_DEFINITION.groups.vault.id,
+      appId: AELIN_DEFINITION.id,
+      groupId: AELIN_DEFINITION.groups.pool.id,
       address,
     });
+  }
+
+  async getBalances(address: string) {
+    const [poolTokenBalances] = await Promise.all([this.getPoolTokenBalances(address)]);
 
     return presentBalanceFetcherResponse([
       {
-        label: 'Vault',
-        assets: balances,
+        label: 'Pools',
+        assets: poolTokenBalances,
       },
     ]);
   }

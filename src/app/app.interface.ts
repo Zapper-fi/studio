@@ -53,7 +53,7 @@ export type AppDefinitionObject = {
   description: string;
   groups: Record<string, AppGroup>;
   supportedNetworks: { [N in Network]?: ProtocolAction[] };
-  primaryColor: string;
+  primaryColor?: string;
   url: string;
   compatibleAddressFormat?: { [N in Network]?: AddressFormat };
   token?: {
