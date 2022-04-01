@@ -3,23 +3,9 @@ import dedent from 'dedent';
 import fse from 'fs-extra';
 
 import { AppGroup, GroupType } from '../../src/app/app.interface';
+import { Network } from '../../src/types/network.interface';
 import * as appsDefinitionsRegistry from '../imports/apps-definition-registry';
 import { strings } from '../strings';
-
-enum Network {
-  ETHEREUM_MAINNET = 'ethereum',
-  POLYGON_MAINNET = 'polygon',
-  OPTIMISM_MAINNET = 'optimism',
-  GNOSIS_MAINNET = 'gnosis',
-  BINANCE_SMART_CHAIN_MAINNET = 'binance-smart-chain',
-  FANTOM_OPERA_MAINNET = 'fantom',
-  AVALANCHE_MAINNET = 'avalanche',
-  ARBITRUM_MAINNET = 'arbitrum',
-  CELO_MAINNET = 'celo',
-  HARMONY_MAINNET = 'harmony',
-  MOONRIVER_MAINNET = 'moonriver',
-  BITCOIN_MAINNET = 'bitcoin',
-}
 
 export default class CodegenApp extends Command {
   static description = '';
