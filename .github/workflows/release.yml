@@ -10,6 +10,8 @@ jobs:
   release:
     name: Release
     runs-on: ubuntu-latest
+    outputs:
+      release_id: ${{ steps.persist_release.outputs.release_id }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -44,6 +46,9 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
+      - id: persist_release
+        run: echo "::set-output name=release_id::${{ steps.release.outputs.release_id }}"
+
 
   bump_zapper_studio:
     name: Bump on Zapper API
@@ -60,6 +65,14 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.GH_ZAPPER_BOT }}
           ref: master
+
+      - name: Fetch Release
+        uses: cardinalby/git-get-release-action@v1
+        id: fetch_release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          releaseId: ${{ needs.release.outputs.release_id }}
 
       - name: Setup Node
         uses: actions/setup-node@v2
@@ -92,6 +105,6 @@ jobs:
           body: |
             ⚙️ _This pull request was opened automatically from Zapper-fi/studio._
 
-            ${{ needs.publish_packages.outputs.changelog }}
+            ${{ steps.fetch_release.outputs.body }}
           base: master
           delete-branch: true
