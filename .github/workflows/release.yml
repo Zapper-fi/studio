@@ -70,9 +70,12 @@ jobs:
           mkdir tmp
           touch tmp/changelog.txt
           echo "${{ steps.fetch_release.outputs.body }}" > tmp/changelog.txt
-          cat tmp/changelog.txt
+          export CHANGELOG="$(node ./scripts/rewrite-changelog.js ./tmp/changelog.txt $REPO_URL)"
+          CHANGELOG="${CHANGELOG//'%'/'%25'}"
+          CHANGELOG="${CHANGELOG//$'\n'/'%0A'}"
+          CHANGELOG="${CHANGELOG//$'\r'/'%0D'}"
           echo "::set-output name=released::${{ steps.release.outputs.released }}"
-          echo "::set-output name=changelog::$(node ./scripts/rewrite-changelog.js ./tmp/changelog.txt $REPO_URL)"
+          echo "::set-output name=changelog::$CHANGELOG"
 
   bump_zapper_studio:
     name: Bump on Zapper API
