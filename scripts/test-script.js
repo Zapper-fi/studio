@@ -6,7 +6,6 @@ function run() {
   const prSectionExpr = /.*(\(#(\d.*)\))$/;
 
   const lines = rawChangelog.split('\n');
-  console.log('LINES', lines);
   const rewrittenLines = lines
     .map(line => {
       try {
