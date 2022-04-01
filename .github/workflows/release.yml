@@ -13,6 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       release_id: ${{ steps.persist_release.outputs.release_id }}
+      released: ${{ steps.persist_release.outputs.released }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -48,12 +49,15 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - id: persist_release
-        run: echo "::set-output name=release_id::${{ steps.release.outputs.release_id }}"
+        run: |
+          echo "::set-output name=release_id::${{ steps.release.outputs.release_id }}"
+          echo "::set-output name=released::${{ steps.release.outputs.released }}"
 
   bump_zapper_studio:
     name: Bump on Zapper API
     needs: [release]
     runs-on: ubuntu-latest
+    if: ${{ needs.release.outputs.released == 'true' }}
     strategy:
       matrix:
         repository: [Zapper-fi/zapper-api]  
