@@ -65,11 +65,14 @@ jobs:
         if: steps.release.outputs.released == 'true'
         id: persist_release
         env:
-          RAW_CHANGELOG: ${{ steps.fetch_release.outputs.body }}
           REPO_URL: 'https://github.com/${{ github.repository }}'
         run: |
+          mkdir tmp
+          touch tmp/changelog.txt
+          echo "${{ steps.fetch_release.outputs.body }}" > tmp/changelog.txt
+          cat tmp/changelog.txt
           echo "::set-output name=released::${{ steps.release.outputs.released }}"
-          echo "::set-output name=changelog::$(node ./scripts/rewrite-changelog.js RAW_CHANGELOG $REPO_URL)"
+          echo "::set-output name=changelog::$(node ./scripts/rewrite-changelog.js ./tmp/changelog.txt $REPO_URL)"
 
   bump_zapper_studio:
     name: Bump on Zapper API

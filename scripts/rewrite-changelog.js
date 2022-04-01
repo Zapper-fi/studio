@@ -1,7 +1,8 @@
-const [envVarTarget, repoUrl] = process.argv.slice(2);
+const fs = require('fs');
+const [changelogFile, repoUrl] = process.argv.slice(2);
 
 function run() {
-  const rawChangelog = process.env[envVarTarget];
+  const rawChangelog = fs.readFileSync(changelogFile).toString();
   const prSectionExpr = /.*(\(#(\d.*)\))$/;
 
   const lines = rawChangelog.split('\n');
