@@ -3,11 +3,8 @@ name: Test Changelog
 on:
   push:
     paths:
-      - '!**.md'
-      - src/**
-      - package.json
-      - pnpm-lock.yaml
-      - .github/workflows/ci.yml
+      - scripts/**
+      - .github/**
     branches-ignore:
       - main
       - refs/tags/*
