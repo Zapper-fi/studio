@@ -3,7 +3,7 @@ import { uniq, keys, mapValues, zipObject } from 'lodash';
 
 import { Network } from '~types/network.interface';
 
-import { AddressFormat, AppDefinitionObject, ProtocolAction, ProtocolTag } from './app.interface';
+import { AddressFormat, AppDefinitionObject, AppGroup, ProtocolAction, ProtocolTag } from './app.interface';
 
 function toNetworkWithActionsArray(
   supportedNetworks: Record<string, ProtocolAction[]>,
@@ -56,7 +56,7 @@ export class AppDefinition {
   readonly id: string;
   readonly name: string;
   readonly description?: string;
-  readonly groups: Record<string, string>;
+  readonly groups: Record<string, AppGroup>;
   readonly url: string;
   readonly deprecated?: boolean;
   readonly tags: ProtocolTag[];

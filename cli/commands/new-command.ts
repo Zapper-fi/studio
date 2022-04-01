@@ -1,7 +1,8 @@
 import * as fs from 'fs';
+
 import { Command } from '@oclif/core';
-import dedent from 'dedent';
 import chalk from 'chalk';
+import dedent from 'dedent';
 
 import { strings } from '../strings';
 

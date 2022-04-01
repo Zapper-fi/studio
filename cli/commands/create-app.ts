@@ -3,22 +3,8 @@ import dedent from 'dedent';
 import fse from 'fs-extra';
 import * as inquirer from 'inquirer';
 
+import { Network } from '../../src/types/network.interface';
 import { strings } from '../strings';
-
-enum Network {
-  ETHEREUM_MAINNET = 'ethereum',
-  POLYGON_MAINNET = 'polygon',
-  OPTIMISM_MAINNET = 'optimism',
-  GNOSIS_MAINNET = 'gnosis',
-  BINANCE_SMART_CHAIN_MAINNET = 'binance-smart-chain',
-  FANTOM_OPERA_MAINNET = 'fantom',
-  AVALANCHE_MAINNET = 'avalanche',
-  ARBITRUM_MAINNET = 'arbitrum',
-  CELO_MAINNET = 'celo',
-  HARMONY_MAINNET = 'harmony',
-  MOONRIVER_MAINNET = 'moonriver',
-  BITCOIN_MAINNET = 'bitcoin',
-}
 
 export default class CreateApp extends Command {
   static description = '';
@@ -51,18 +37,34 @@ export default class CreateApp extends Command {
       },
     ]);
     const supportedNetworksRaw: string[] = response.network;
-    const supportedNetworks = formatNetworks(supportedNetworksRaw);
-    const generatedNetworks = generateSupportedNetworks(supportedNetworks);
-
     createFolder(`./src/apps/${appName}`);
+    createFolder(`./src/apps/${appName}/assets`);
 
     for (const network of supportedNetworksRaw) {
       createFolder(`./src/apps/${appName}/${network}`);
     }
+
+    const supportedNetworks = formatNetworks(supportedNetworksRaw);
+    const generatedNetworks = generateSupportedNetworks(supportedNetworks);
     const generatedCode = generateDefinitionFile(appName, generatedNetworks);
     fse.writeFileSync(`./src/apps/${appName}/${appName}.definition.ts`, `${generatedCode}\n`);
+
+    appendAppDefinitionToRegistry(appName);
+
     this.log(`You can now fill/update ${appName}.definition.ts`);
   }
+}
+
+function appendAppDefinitionToRegistry(appName: string) {
+  const appDefinitionName = `${strings.upperCase(appName)}_DEFINITION`;
+
+  const appExportStatement = `export { default as ${appDefinitionName} } from '../../src/apps/${appName}/${appName}.definition';\n`;
+
+  fse.appendFileSync(
+    './cli/imports/apps-definition-registry.ts',
+    dedent`${appExportStatement}
+    `,
+  );
 }
 
 function generateSupportedNetworks(supportedNetworks: string[]): string {
@@ -86,36 +88,38 @@ function formatNetworks(userInputNetworks: string[]): string[] {
 
 function generateDefinitionFile(appName: string, supportedNetworks: string) {
   const appId = strings.kebabCase(appName);
-  const appNameConstant = strings.upperCase(appName);
+  const appDefinitionName = `${strings.upperCase(appName)}_DEFINITION`;
   const appClassName = strings.titleCase(appName);
 
   return dedent`
   import { Register } from '~app-toolkit/decorators';
   import { AppDefinition } from '~app/app.definition';
-  import { ProtocolAction, ProtocolTag } from '~app/app.interface';
+  import { GroupType, ProtocolAction, ProtocolTag } from '~app/app.interface';
   import { Network } from '~types/network.interface';
 
-  export const ${appNameConstant}_DEFINITION = {
+  export const ${appDefinitionName} = {
     id: '${appName}',
     name: '${appId}',
     description: '',
     groups: {
-      camelCase: { id: 'kebab-case', network: Network.ETHEREUM_MAINNET } 
+      camelCase: { id: 'kebab-case', type: GroupType.TOKEN },
+      camelCase2: { id: 'kebab-case2', type: GroupType.POSITION },
     },
     url: '',
     tags: [ProtocolTag.LENDING],
     supportedNetworks: {${supportedNetworks}
     },
     primaryColor: '#fff',
-    token: null,
   };
 
-  @Register.AppDefinition(${appNameConstant}_DEFINITION.id)
+  @Register.AppDefinition(${appDefinitionName}.id)
   export class ${appClassName}AppDefinition extends AppDefinition {
     constructor() {
-      super(${appNameConstant}_DEFINITION);
+      super(${appDefinitionName});
     }
   }
+
+  export default ${appDefinitionName};
 `;
 }
 
