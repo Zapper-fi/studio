@@ -49,7 +49,6 @@ jobs:
       - id: persist_release
         run: echo "::set-output name=release_id::${{ steps.release.outputs.release_id }}"
 
-
   bump_zapper_studio:
     name: Bump on Zapper API
     needs: [release]
