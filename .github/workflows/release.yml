@@ -42,7 +42,6 @@ jobs:
         uses: justincy/github-action-npm-release@2.0.1
         id: release
 
-
       - name: Publish
         if: steps.release.outputs.released == 'true'
         run: pnpm publish:npm
