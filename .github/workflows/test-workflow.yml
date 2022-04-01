@@ -27,7 +27,6 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
 
       - name: Fetch Release
-        if: steps.release.outputs.released == 'true'
         uses: cardinalby/git-get-release-action@v1
         id: fetch_release
         env:
