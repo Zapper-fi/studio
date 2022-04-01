@@ -66,6 +66,9 @@ jobs:
           token: ${{ secrets.GH_ZAPPER_BOT }}
           ref: master
 
+      - name: Output Release ID
+        run: echo "Release ID ${{ needs.release.outputs.release_id }}"
+
       - name: Fetch Release
         uses: cardinalby/git-get-release-action@v1
         id: fetch_release
