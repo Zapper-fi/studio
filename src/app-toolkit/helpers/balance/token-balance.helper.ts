@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import BigNumber from 'bignumber.js';
+import BigNumberJS from 'bignumber.js';
 import { isArray, pick } from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
@@ -75,7 +75,7 @@ export const drillBalance = <T extends Token>(
     balanceUSD,
     tokens: tokens.map((underlyingToken, i) => {
       const pricePerShare = isArray(token.pricePerShare) ? token.pricePerShare[i] : token.pricePerShare;
-      const underlyingBalanceRawBN = new BigNumber(balanceRaw)
+      const underlyingBalanceRawBN = new BigNumberJS(balanceRaw)
         .div(10 ** token.decimals)
         .times(10 ** underlyingToken.decimals)
         .times(pricePerShare);

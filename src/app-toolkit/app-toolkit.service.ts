@@ -1,4 +1,6 @@
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
+import { BigNumber as BigNumberJS } from 'bignumber.js';
+import { ethers } from 'ethers';
 
 import { ContractFactory } from '~contract';
 import { EthersMulticall, MULTICALL_ADDRESSES } from '~multicall';
@@ -24,12 +26,10 @@ export class AppToolkit implements IAppToolkit {
     this.contractFactory = new ContractFactory((network: Network) => this.networkProviderService.getProvider(network));
   }
 
+  // Network Related
+
   get globalContracts() {
     return this.contractFactory;
-  }
-
-  get helpers() {
-    return this.helperRegistry;
   }
 
   getNetworkProvider(network: Network) {
@@ -59,11 +59,23 @@ export class AppToolkit implements IAppToolkit {
   }
 
   // Positions
+
   getAppTokenPositions<T = DefaultDataProps>(...appTokenDefinition: AppGroupsDefinition[]) {
     return this.positionService.getAppTokenPositions<T>(...appTokenDefinition);
   }
 
   getAppContractPositions<T = DefaultDataProps>(...appTokenDefinition: AppGroupsDefinition[]) {
     return this.positionService.getAppContractPositions<T>(...appTokenDefinition);
+  }
+
+  // Global Helpers
+
+  get helpers() {
+    return this.helperRegistry;
+  }
+
+  getBigNumber(source: BigNumberJS.Value | ethers.BigNumber): BigNumberJS {
+    if (source instanceof ethers.BigNumber) return new BigNumberJS(source.toString());
+    return new BigNumberJS(source);
   }
 }
