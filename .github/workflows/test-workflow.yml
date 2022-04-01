@@ -33,7 +33,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          releaseId: '63423309'
+          releaseId: 63423309
 
       - name: Output Release Changelog
         run: echo "${{ steps.fetch_release.outputs.body }}"
