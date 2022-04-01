@@ -1,0 +1,104 @@
+name: Test Changelog
+
+on:
+  push:
+    paths:
+      - scripts/**
+      - .github/**
+    branches-ignore:
+      - main
+      - refs/tags/*
+
+jobs:
+  release:
+    name: TESTTT
+    runs-on: ubuntu-latest
+    outputs:
+      changelog: ${{ steps.persist_release.outputs.changelog }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Fetch Release
+        uses: cardinalby/git-get-release-action@v1
+        id: fetch_release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          releaseId: 63423309
+
+      - name: Output Release Changelog
+        run: echo "${{ steps.fetch_release.outputs.body }}"
+
+      - name: Persist Release
+        id: persist_release
+        env:
+          REPO_URL: 'https://github.com/${{ github.repository }}'
+        run: |
+          mkdir tmp
+          touch tmp/changelog.txt
+          echo "${{ steps.fetch_release.outputs.body }}" > tmp/changelog.txt
+          export CHANGELOG="$(node ./scripts/rewrite-changelog.js ./tmp/changelog.txt $REPO_URL)"
+          CHANGELOG="${CHANGELOG//'%'/'%25'}"
+          CHANGELOG="${CHANGELOG//$'\n'/'%0A'}"
+          CHANGELOG="${CHANGELOG//$'\r'/'%0D'}"
+          echo "changelog $CHANGELOG" 
+          echo "::set-output name=changelog::$CHANGELOG"
+          
+
+  bump_zapper_studio:
+    name: Bump on Zapper API
+    needs: [release]
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        repository: [Zapper-fi/zapper-api]  
+    steps:
+      - name: Checkout ${{ matrix.repository }}
+        uses: actions/checkout@v2
+        with:
+          repository: ${{ matrix.repository }}
+          fetch-depth: 0
+          token: ${{ secrets.GH_ZAPPER_BOT }}
+          ref: master
+
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+          registry-url: 'https://registry.npmjs.org'
+
+      - uses: pnpm/action-setup@v2.0.1
+        with:
+          version: 6.23.2
+
+      - name: Upgrade dependencies
+        run: |
+          pnpm up @zapper-fi/studio@latest
+
+      - name: Set Target Branch
+        id: set_target_branch
+        run: |
+          TARGET_BRANCH=bump-zapper-studio
+          echo "::set-output name=target_branch::$TARGET_BRANCH"
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ secrets.GH_ZAPPER_BOT }}
+          branch: ${{ steps.set_target_branch.outputs.target_branch }}
+          title: 🎨🖌️ Bump Zapper Studio
+          commit-message: Bump Zapper Studio
+          body: |
+            ⚙️ _This pull request was opened automatically from Zapper-fi/studio._
+
+            ${{ needs.release.outputs.changelog }}
+          base: master
+          delete-branch: true
