@@ -1,0 +1,53 @@
+name: Test Changelog
+
+on:
+  push:
+    paths:
+      - '!**.md'
+      - src/**
+      - package.json
+      - pnpm-lock.yaml
+      - .github/workflows/ci.yml
+    branches-ignore:
+      - main
+      - refs/tags/*
+
+jobs:
+  release:
+    name: TESTTT
+    runs-on: ubuntu-latest
+    outputs:
+      changelog: ${{ steps.persist_release.outputs.changelog }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Fetch Release
+        if: steps.release.outputs.released == 'true'
+        uses: cardinalby/git-get-release-action@v1
+        id: fetch_release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          releaseId: '63423309'
+
+      - name: Output Release Changelog
+        run: echo "${{ steps.fetch_release.outputs.body }}"
+
+      - name: Persist Release
+        id: persist_release
+        env:
+          REPO_URL: 'https://github.com/${{ github.repository }}'
+        run: |
+          mkdir tmp
+          touch tmp/changelog.txt
+          echo "${{ steps.fetch_release.outputs.body }}" > tmp/changelog.txt
+          cat tmp/changelog.txt
+          node ./scripts/rewrite-changelog.js ./tmp/changelog.txt $REPO_URL
