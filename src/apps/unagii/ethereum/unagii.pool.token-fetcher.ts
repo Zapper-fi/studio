@@ -25,7 +25,7 @@ const vaultAddresses = [
 
 @Register.TokenPositionFetcher({
   appId: UNAGII_DEFINITION.id,
-  groupId: UNAGII_DEFINITION.groups.vault,
+  groupId: UNAGII_DEFINITION.groups.vault.id,
   network,
 })
 export class EthereumUnagiiPoolTokenFetcher implements PositionFetcher<AppTokenPosition> {
@@ -102,7 +102,7 @@ export class EthereumUnagiiPoolTokenFetcher implements PositionFetcher<AppTokenP
           type: ContractType.APP_TOKEN,
           network: Network.ETHEREUM_MAINNET,
           appId: UNAGII_DEFINITION.id,
-          groupId: UNAGII_DEFINITION.groups.vault,
+          groupId: UNAGII_DEFINITION.groups.vault.id,
           symbol,
           decimals: Number(decimalsRaw),
           supply: totalSupply,
