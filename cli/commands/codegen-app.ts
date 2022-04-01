@@ -2,18 +2,9 @@ import { Command } from '@oclif/core';
 import dedent from 'dedent';
 import fse from 'fs-extra';
 
+import { AppGroup } from '../../src/app/app.interface';
 import * as appsDefinitionsRegistry from '../imports/apps-definition-registry';
 import { strings } from '../strings';
-
-export enum GroupType {
-  TOKEN = 'token',
-  POSITION = 'position',
-}
-
-export type AppGroup = {
-  id: string;
-  type: GroupType;
-};
 
 enum Network {
   ETHEREUM_MAINNET = 'ethereum',
@@ -56,6 +47,7 @@ export default class CodegenApp extends Command {
             generateContractPosition(appId, id, type.id, network);
             break;
           default:
+            break;
         }
       }
     }
@@ -78,14 +70,16 @@ function generateTokenFetcher(appId: string, groupdId: string, groupdValue: stri
 
   import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
   import { Register } from '~app-toolkit/decorators';
-  //import { buildDollarDisplayItem, buildNumberDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
-  //import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
+  // helpers for displayProps
+  /*import { buildDollarDisplayItem, buildNumberDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
+  import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';*/
   //import { ContractType } from '~position/contract.interface';
   import { PositionFetcher } from '~position/position-fetcher.interface';
   import { AppTokenPosition } from '~position/position.interface';
   import { Network } from '~types/network.interface';
   
-  //import { UnagiiContractFactory } from '../contracts';
+  // Once interfaces have been generated from the abis of the contracts, you will be able to use the contract factory
+  //import { ${appTitleCase}ContractFactory } from '../contracts';
   import { ${appDefinitionName} } from '../${appId}.definition';
   
   const appId = ${appDefinitionName}.id;
@@ -95,11 +89,12 @@ function generateTokenFetcher(appId: string, groupdId: string, groupdValue: stri
   @Register.TokenPositionFetcher({ appId, groupId, network })
   export class ${networkTitleCase}${appTitleCase}${groupTitleCase}TokenFetcher implements PositionFetcher<AppTokenPosition> {
     constructor(
-      @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit, //@Inject(UnagiiContractFactory) private readonly ${appCamelCase}ContractFactory: ${appTitleCase}ContractFactory,
+      @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit, //@Inject(${appTitleCase}ContractFactory) private readonly ${appCamelCase}ContractFactory: ${appTitleCase}ContractFactory,
     ) {}
   
     async getPositions() {
-      //onst multicall = this.appToolkit.getMulticall(network);
+      // Use this multicall to call functions on contract
+      // const multicall = this.appToolkit.getMulticall(network);
   
       // Underlying token
       /*const underlyingTokenAddress = '0x0000000000000000000000000000000000000000'.toLowerCase();
@@ -109,7 +104,7 @@ function generateTokenFetcher(appId: string, groupdId: string, groupdValue: stri
       });
       if (!underlyingToken) return null;*/
   
-      // Call on contract
+      // Here's how you can deckare, wrap and call functions on a contract
       /* const tokenContract = this.${appCamelCase}ContractFactory.erc20({ address: tokenAddressRaw, network });
       const [totalSupplyRaw, decimalsRaw, symbol] = await Promise.all([
         multicall.wrap(tokenContract).totalSupply(),
@@ -139,7 +134,7 @@ function generateTokenFetcher(appId: string, groupdId: string, groupdValue: stri
           //getTokenImg(underlyingToken.address)
         ],
         statsItems: [
-          // Here you can add additionnal metrics like liquidity or totalSupply
+          // Here, you can add additionnal metrics like liquidity or totalSupply
           {
             label: 'Liquidity',
             value: buildDollarDisplayItem(liquidity),
@@ -147,8 +142,10 @@ function generateTokenFetcher(appId: string, groupdId: string, groupdValue: stri
         ],
       };*/
   
+      // You can provide additional properties like liquidity or reserves
       /*const dataProps = {};*/
   
+      // Here's the shape of the object you need to return
       /*const token: AppTokenPosition = {
         address,
         type: ContractType.APP_TOKEN,
@@ -190,6 +187,7 @@ function generateContractPosition(appId: string, groupId: string, groupdValue: s
 
   import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
   import { Register } from '~app-toolkit/decorators';
+  // helper for displayProps
   //import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
   //import { ContractType } from '~position/contract.interface';
   import { PositionFetcher } from '~position/position-fetcher.interface';
@@ -207,12 +205,14 @@ function generateContractPosition(appId: string, groupId: string, groupdValue: s
     constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
   
     async getPositions() {
+      // In case you need tokens defined in the token-fetchers, here's how you can get those
       /*const appTokens = await this.appToolkit.getAppTokenPositions({
         appId: ${appDefinitionName}.id,
         groupIds: [${appDefinitionName}.groups.token],
         network,
       });*/
   
+      // This is the shape of a position the function could return
       /*const positions = appTokens.map(token => {
         const position = {
           address: token.address,
@@ -237,11 +237,10 @@ function generateContractPosition(appId: string, groupId: string, groupdValue: s
       return [];
     }
   }
-  
 
 `;
   fse.writeFileSync(
-    `./src/apps/${appId}/${networkRaw}/${appId}.${groupId}.contract-position-fetcher.ts`,
+    `./src/apps/${appId}/${networkRaw}/${appId}.${groupdValue}.contract-position-fetcher.ts`,
     `${generatedContent}\n`,
   );
 }

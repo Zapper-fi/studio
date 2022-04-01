@@ -3,22 +3,8 @@ import dedent from 'dedent';
 import fse from 'fs-extra';
 import * as inquirer from 'inquirer';
 
+import { Network } from '../../src/types/network.interface';
 import { strings } from '../strings';
-
-enum Network {
-  ETHEREUM_MAINNET = 'ethereum',
-  POLYGON_MAINNET = 'polygon',
-  OPTIMISM_MAINNET = 'optimism',
-  GNOSIS_MAINNET = 'gnosis',
-  BINANCE_SMART_CHAIN_MAINNET = 'binance-smart-chain',
-  FANTOM_OPERA_MAINNET = 'fantom',
-  AVALANCHE_MAINNET = 'avalanche',
-  ARBITRUM_MAINNET = 'arbitrum',
-  CELO_MAINNET = 'celo',
-  HARMONY_MAINNET = 'harmony',
-  MOONRIVER_MAINNET = 'moonriver',
-  BITCOIN_MAINNET = 'bitcoin',
-}
 
 export default class CreateApp extends Command {
   static description = '';
@@ -54,27 +40,29 @@ export default class CreateApp extends Command {
     createFolder(`./src/apps/${appName}`);
     createFolder(`./src/apps/${appName}/assets`);
 
-    supportedNetworksRaw.forEach(network => {
+    for (const network of supportedNetworksRaw) {
       createFolder(`./src/apps/${appName}/${network}`);
-    });
+    }
 
     const supportedNetworks = formatNetworks(supportedNetworksRaw);
     const generatedNetworks = generateSupportedNetworks(supportedNetworks);
     const generatedCode = generateDefinitionFile(appName, generatedNetworks);
     fse.writeFileSync(`./src/apps/${appName}/${appName}.definition.ts`, `${generatedCode}\n`);
 
-    AddAppDefinitionToRegistry(appName);
+    appendAppDefinitionToRegistry(appName);
 
     this.log(`You can now fill/update ${appName}.definition.ts`);
   }
 }
 
-function AddAppDefinitionToRegistry(appName: string) {
+function appendAppDefinitionToRegistry(appName: string) {
   const appDefinitionName = `${strings.upperCase(appName)}_DEFINITION`;
+
+  const appExportStatement = `export { default as ${appDefinitionName} } from '../../src/apps/${appName}/${appName}.definition';\n`;
 
   fse.appendFileSync(
     './cli/imports/apps-definition-registry.ts',
-    dedent`export { default as ${appDefinitionName} } from '../../src/apps/${appName}/${appName}.definition';\n
+    dedent`${appExportStatement}
     `,
   );
 }
@@ -122,7 +110,6 @@ function generateDefinitionFile(appName: string, supportedNetworks: string) {
     supportedNetworks: {${supportedNetworks}
     },
     primaryColor: '#fff',
-    token: null,
   };
 
   @Register.AppDefinition(${appDefinitionName}.id)
