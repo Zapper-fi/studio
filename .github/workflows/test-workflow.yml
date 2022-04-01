@@ -44,6 +44,7 @@ jobs:
         run: |
           mkdir tmp
           touch tmp/changelog.txt
+          echo "${{ steps.fetch_release.outputs.body }}" > tmp/changelog.txt
           export CHANGELOG="$(node ./scripts/rewrite-changelog.js ./tmp/changelog.txt $REPO_URL)"
           CHANGELOG="${CHANGELOG//'%'/'%25'}"
           CHANGELOG="${CHANGELOG//$'\n'/'%0A'}"
