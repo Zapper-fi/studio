@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import {
-  SingleStakingFarmContractPositionHelper,
   SingleStakingFarmDefinition,
   SingleStakingFarmResolveIsActiveParams,
   SingleStakingFarmResolveRoisParams,
@@ -33,8 +33,8 @@ export class SynthetixSingleStakingFarmContractPositionHelper {
     private readonly isActiveStrategy: SynthetixSingleStakingIsActiveStrategy,
     @Inject(SynthetixSingleStakingRoiStrategy)
     private readonly roiStrategy: SynthetixSingleStakingRoiStrategy,
-    @Inject(SingleStakingFarmContractPositionHelper)
-    private readonly singleStakingFarmContractPositionHelper: SingleStakingFarmContractPositionHelper,
+    @Inject(APP_TOOLKIT)
+    private readonly appToolkit: IAppToolkit,
   ) {}
 
   getContractPositions({
@@ -44,7 +44,7 @@ export class SynthetixSingleStakingFarmContractPositionHelper {
     resolveRois = this.defaultRois(),
     ...opts
   }: SynthetixSingleStakingFarmContractPositionHelperParams<SynthetixRewards>) {
-    return this.singleStakingFarmContractPositionHelper.getContractPositions<SynthetixRewards>({
+    return this.appToolkit.helpers.singleStakingFarmContractPositionHelper.getContractPositions<SynthetixRewards>({
       ...opts,
       dependencies,
       resolveFarmDefinitions: async () => farmDefinitions,

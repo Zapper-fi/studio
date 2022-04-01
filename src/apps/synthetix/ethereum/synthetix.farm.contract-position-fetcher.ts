@@ -1,7 +1,7 @@
 import { Inject } from '@nestjs/common';
 
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
-import { SingleStakingFarmContractPositionHelper } from '~app-toolkit/helpers/position/single-staking-farm.contract-position-helper';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
@@ -51,8 +51,8 @@ const FARMS = [
 })
 export class EthereumSynthetixFarmContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
-    @Inject(SingleStakingFarmContractPositionHelper)
-    private readonly singleStakingFarmContractPositionHelper: SingleStakingFarmContractPositionHelper,
+    @Inject(APP_TOOLKIT)
+    private readonly appToolkit: IAppToolkit,
     @Inject(SynthetixContractFactory)
     private readonly synthetixContractFactory: SynthetixContractFactory,
     @Inject(SynthetixSingleStakingIsActiveStrategy)
@@ -62,7 +62,7 @@ export class EthereumSynthetixFarmContractPositionFetcher implements PositionFet
   ) {}
 
   async getPositions() {
-    return this.singleStakingFarmContractPositionHelper.getContractPositions<SynthetixRewards>({
+    return this.appToolkit.helpers.singleStakingFarmContractPositionHelper.getContractPositions<SynthetixRewards>({
       network: Network.ETHEREUM_MAINNET,
       appId: SYNTHETIX_DEFINITION.id,
       groupId: SYNTHETIX_DEFINITION.groups.farm.id,

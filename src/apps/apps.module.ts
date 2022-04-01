@@ -16,6 +16,8 @@ export class AppsModule {
       .filter(dirent => dirent.isDirectory())
       .map(dirent => dirent.name);
 
+    console.log(process.env.ENABLED_APPS);
+
     // Activate only apps that are requested to be active (for focused local dev)
     const enabledAppIds =
       process.env.NODE_ENV === 'production' ? [] : (process.env.ENABLED_APPS ?? '').split(',').filter(Boolean);

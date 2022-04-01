@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import {
-  SingleStakingContractPositionBalanceHelper,
   SingleStakingContractStrategy,
   SingleStakingRewardTokenBalanceStrategy,
   SingleStakingStakedTokenBalanceStrategy,
@@ -23,8 +23,8 @@ export type SynthetixSingleStakingFarmContractPositionBalanceHelperParams = {
 @Injectable()
 export class SynthetixSingleStakingFarmContractPositionBalanceHelper {
   constructor(
-    @Inject(SingleStakingContractPositionBalanceHelper)
-    private readonly singleStakingContractPositionBalanceHelper: SingleStakingContractPositionBalanceHelper,
+    @Inject(APP_TOOLKIT)
+    private readonly appToolkit: IAppToolkit,
     @Inject(SynthetixContractFactory)
     private readonly synthetixContractFactory: SynthetixContractFactory,
   ) {}
@@ -38,7 +38,7 @@ export class SynthetixSingleStakingFarmContractPositionBalanceHelper {
     resolveStakedTokenBalance = ({ contract, address, multicall }) => multicall.wrap(contract).balanceOf(address),
     resolveRewardTokenBalances = ({ contract, address, multicall }) => multicall.wrap(contract).earned(address),
   }: SynthetixSingleStakingFarmContractPositionBalanceHelperParams) {
-    return this.singleStakingContractPositionBalanceHelper.getBalances<SynthetixRewards>({
+    return this.appToolkit.helpers.singleStakingContractPositionBalanceHelper.getBalances<SynthetixRewards>({
       address,
       appId,
       groupId,
