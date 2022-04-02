@@ -38,7 +38,7 @@ export class AppDefinition {
     this.description = definitionRaw.description ?? '';
     this.groups = definitionRaw.groups;
     this.supportedNetworks = toNetworkWithActionsArray(definitionRaw.supportedNetworks);
-    this.primaryColor = definitionRaw.primaryColor;
+    this.primaryColor = definitionRaw.primaryColor ?? '';
     this.token = definitionRaw.token ?? null;
     this.compatibleAddressFormats = mapValues(
       zipObject(specifiedNetworks, specifiedNetworks),

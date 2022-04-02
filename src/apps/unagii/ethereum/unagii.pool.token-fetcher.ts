@@ -13,6 +13,7 @@ import { Network } from '~types/network.interface';
 
 import { UnagiiContractFactory } from '../contracts';
 import { UNAGII_DEFINITION } from '../unagii.definition';
+
 const network = Network.ETHEREUM_MAINNET;
 
 const vaultAddresses = [
