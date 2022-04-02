@@ -12,8 +12,8 @@ jobs:
     name: Release
     runs-on: ubuntu-latest
     outputs:
-      release_id: ${{ steps.persist_release.outputs.release_id }}
       released: ${{ steps.persist_release.outputs.released }}
+      changelog: ${{ steps.persist_release.outputs.changelog }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -48,10 +48,34 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - id: persist_release
+      - name: Fetch Release
+        if: steps.release.outputs.released == 'true'
+        uses: cardinalby/git-get-release-action@v1
+        id: fetch_release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          releaseId: ${{ steps.release.outputs.release_id }}
+
+      - name: Output Release Changelog
+        if: steps.release.outputs.released == 'true'
+        run: echo "${{ steps.fetch_release.outputs.body }}"
+
+      - name: Persist Release
+        if: steps.release.outputs.released == 'true'
+        id: persist_release
+        env:
+          REPO_URL: 'https://github.com/${{ github.repository }}'
         run: |
-          echo "::set-output name=release_id::${{ steps.release.outputs.release_id }}"
+          mkdir tmp
+          touch tmp/changelog.txt
+          echo "${{ steps.fetch_release.outputs.body }}" > tmp/changelog.txt
+          export CHANGELOG="$(node ./scripts/rewrite-changelog.js ./tmp/changelog.txt $REPO_URL)"
+          CHANGELOG="${CHANGELOG//'%'/'%25'}"
+          CHANGELOG="${CHANGELOG//$'\n'/'%0A'}"
+          CHANGELOG="${CHANGELOG//$'\r'/'%0D'}"
           echo "::set-output name=released::${{ steps.release.outputs.released }}"
+          echo "::set-output name=changelog::$CHANGELOG"
 
   bump_zapper_studio:
     name: Bump on Zapper API
@@ -69,17 +93,6 @@ jobs:
           fetch-depth: 0
           token: ${{ secrets.GH_ZAPPER_BOT }}
           ref: master
-
-      - name: Output Release ID
-        run: echo "Release ID ${{ needs.release.outputs.release_id }}"
-
-      - name: Fetch Release
-        uses: cardinalby/git-get-release-action@v1
-        id: fetch_release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          releaseId: ${{ needs.release.outputs.release_id }}
 
       - name: Setup Node
         uses: actions/setup-node@v2
@@ -112,6 +125,6 @@ jobs:
           body: |
             ⚙️ _This pull request was opened automatically from Zapper-fi/studio._
 
-            ${{ steps.fetch_release.outputs.body }}
+            ${{ needs.release.outputs.changelog }}
           base: master
           delete-branch: true
