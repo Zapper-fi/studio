@@ -6,7 +6,6 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { EthersMulticall as Multicall } from '~multicall/multicall.ethers';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { ContractPosition, MetaType } from '~position/position.interface';
-import { PositionService } from '~position/position.service';
 import { Network } from '~types/network.interface';
 
 import { SingleStakingFarmDataProps } from '../position/single-staking-farm.contract-position-helper';
@@ -45,10 +44,7 @@ export type SingleStakingContractPositionBalanceHelperParams<T> = {
 
 @Injectable()
 export class SingleStakingContractPositionBalanceHelper {
-  constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(PositionService) private readonly positionService: PositionService,
-  ) {}
+  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
   async getBalances<T>({
     address,
@@ -61,8 +57,7 @@ export class SingleStakingContractPositionBalanceHelper {
     resolveRewardTokenBalances,
   }: SingleStakingContractPositionBalanceHelperParams<T>): Promise<ContractPositionBalance[]> {
     const multicall = this.appToolkit.getMulticall(network);
-
-    const contractPositions = await this.positionService.getAppContractPositions<SingleStakingFarmDataProps>({
+    const contractPositions = await this.appToolkit.getAppContractPositions<SingleStakingFarmDataProps>({
       network,
       appId,
       groupIds: [groupId],
