@@ -1,6 +1,5 @@
 import { Inject } from '@nestjs/common';
 
-import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { SynthetixSingleStakingFarmContractPositionHelper } from '~apps/synthetix/helpers/synthetix.single-staking-farm-contract-position-helper';
 import { PositionFetcher } from '~position/position-fetcher.interface';
@@ -8,7 +7,6 @@ import { ContractPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
 import { AELIN_DEFINITION } from '../aelin.definition';
-import { AelinContractFactory } from '../contracts';
 
 const FARMS = [
   {
@@ -30,10 +28,8 @@ const network = Network.OPTIMISM_MAINNET;
 @Register.ContractPositionFetcher({ appId, groupId, network })
 export class OptimismAelinFarmContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
-    @Inject(AelinContractFactory) private readonly aelinContractFactory: AelinContractFactory,
     @Inject(SynthetixSingleStakingFarmContractPositionHelper)
     private readonly synthetixSingleStakingFarmContractPositionHelper: SynthetixSingleStakingFarmContractPositionHelper,
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
   ) {}
 
   async getPositions() {

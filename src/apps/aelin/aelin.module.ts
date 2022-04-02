@@ -13,7 +13,7 @@ import { OptimismAelinPoolTokenFetcher } from './optimism/aelin.pool.token-fetch
 import { OptimismAelinVAelinTokenFetcher } from './optimism/aelin.v-aelin.token-fetcher';
 
 @Module({
-  imports: [SynthetixAppModule],
+  imports: [SynthetixAppModule.externallyConfigured(SynthetixAppModule, 0)],
   providers: [
     AelinAppDefinition,
     AelinContractFactory,
