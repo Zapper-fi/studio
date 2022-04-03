@@ -1,6 +1,6 @@
 {
   "name": "@zapper-fi/studio",
-  "version": "0.0.17",
+  "version": "0.0.16",
   "description": "Community build apps for Zapper.fi",
   "license": "MIT",
   "main": "dist/lib/index.js",
