@@ -12,6 +12,7 @@ import { BaseToken } from '~position/token.interface';
 import { Network } from '~types/network.interface';
 
 import { buildPercentageDisplayItem } from '../presentation/display-item.present';
+
 type GetTokenBalancesParams = {
   network: Network;
   appId: string;
