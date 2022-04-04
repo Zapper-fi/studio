@@ -11,6 +11,6 @@ import { AppToolkit } from './app-toolkit.service';
 @Module({
   imports: [NetworkProviderModule, TokenModule, PositionModule],
   providers: [{ provide: APP_TOOLKIT, useClass: AppToolkit }, AppToolkitHelperRegistry, ...AppToolkitHelpers],
-  exports: [APP_TOOLKIT],
+  exports: [APP_TOOLKIT, ...AppToolkitHelpers],
 })
 export class AppToolkitModule {}
