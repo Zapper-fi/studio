@@ -39,6 +39,8 @@ export default class CreateApp extends Command {
     const supportedNetworksRaw: string[] = response.network;
     createFolder(`./src/apps/${appName}`);
     createFolder(`./src/apps/${appName}/assets`);
+    createFolder(`./src/apps/${appName}/contracts`);
+    createFolder(`./src/apps/${appName}/contracts/abis`);
 
     for (const network of supportedNetworksRaw) {
       createFolder(`./src/apps/${appName}/${network}`);

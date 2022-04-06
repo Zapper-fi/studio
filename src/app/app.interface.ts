@@ -38,7 +38,7 @@ export enum ProtocolTag {
 
 export enum GroupType {
   TOKEN = 'token',
-  POSITION = 'position',
+  POSITION = 'contract-position',
 }
 
 export type AppGroup = {
