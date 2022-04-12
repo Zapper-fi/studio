@@ -25,7 +25,7 @@ export class MasterChefRewarderClaimableTokenStrategy {
     resolveRewarderAddress,
     resolveRewarderContract,
     resolveSecondaryClaimableToken,
-  }: MasterChefRewarderClaimableBalanceStrategyParams<T, V>): MasterChefRewardTokenAddressesStrategy<T> {
+  }: MasterChefRewarderClaimableTokenStrategyParams<T, V>): MasterChefRewardTokenAddressesStrategy<T> {
     return async opts => {
       // Resolve the reward token address from the primary chef contract
       const primaryRewardTokenAddress = await resolvePrimaryClaimableToken(opts);

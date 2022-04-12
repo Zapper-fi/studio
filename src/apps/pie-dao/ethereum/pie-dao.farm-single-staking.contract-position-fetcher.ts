@@ -1,7 +1,7 @@
 import { Inject } from '@nestjs/common';
-import { SynthetixSingleStakingFarmContractPositionHelper } from '@zapper-fi/studio/dist/apps/synthetix';
 
 import { Register } from '~app-toolkit/decorators';
+import { SynthetixSingleStakingFarmContractPositionHelper } from '~apps/synthetix';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';

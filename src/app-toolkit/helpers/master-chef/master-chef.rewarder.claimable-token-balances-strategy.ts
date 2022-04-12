@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { BigNumberish } from 'ethers';
 
 import { drillBalance } from '~app-toolkit';
@@ -36,7 +36,7 @@ export type MasterChefRewarderClaimableBalanceStrategyParams<T, V> = {
 @Injectable()
 export class MasterChefRewarderClaimableBalanceStrategy {
   constructor(
-    @Inject(MasterChefDefaultClaimableBalanceStrategy)
+    @Inject(forwardRef(() => MasterChefDefaultClaimableBalanceStrategy))
     private readonly masterChefDefaultClaimableBalanceStrategy: MasterChefDefaultClaimableBalanceStrategy,
   ) {}
 
