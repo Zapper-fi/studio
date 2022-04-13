@@ -9,13 +9,14 @@ import { Network } from '~types/network.interface';
 import { buildDollarDisplayItem } from '../presentation/display-item.present';
 import { getTokenImg } from '../presentation/image.present';
 
-type SingleVaultTokenHelperParams = {
+type SingleVaultTokenHelperParams<T> = {
   address: string;
   network: Network;
   appId: string;
   groupId: string;
   dependencies?: AppGroupsDefinition[];
-  resolveUnderlyingTokenAddress: (opts: { address: string; network: Network }) => string | Promise<string>;
+  resolveContract: (opts: { address: string; network: Network }) => T;
+  resolveUnderlyingTokenAddress: (opts: { contract: T }) => string | Promise<string>;
   resolveReserve?: (opts: { underlyingToken: Token; address: string; network: Network }) => Promise<number>;
   resolvePricePerShare?: (opts: {
     reserve: number;
@@ -34,12 +35,13 @@ export type SingleVaultTokenDataProps = {
 export class SingleVaultTokenHelper {
   constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
-  async getTokens({
+  async getTokens<T>({
     address,
     network,
     appId,
     groupId,
     dependencies = [],
+    resolveContract,
     resolveUnderlyingTokenAddress,
     resolveReserve = async ({ underlyingToken, address, network }) => {
       const contract = this.appToolkit.globalContracts.erc20({ address: underlyingToken.address, network });
@@ -48,7 +50,7 @@ export class SingleVaultTokenHelper {
     },
     resolvePricePerShare = ({ reserve, supply }) => reserve / supply,
     resolveImages = ({ address }) => [getTokenImg(address, network)],
-  }: SingleVaultTokenHelperParams) {
+  }: SingleVaultTokenHelperParams<T>) {
     // Supports implementations forked (or similar) to xSUSHI
     const type = ContractType.APP_TOKEN;
     const multicall = this.appToolkit.getMulticall(network);
@@ -56,7 +58,8 @@ export class SingleVaultTokenHelper {
     const appTokens = await this.appToolkit.getAppTokenPositions(...dependencies);
     const allTokens = [...appTokens, ...baseTokens];
 
-    const underlyingTokenAddressRaw = await resolveUnderlyingTokenAddress({ address, network });
+    const contract = resolveContract({ address, network });
+    const underlyingTokenAddressRaw = await resolveUnderlyingTokenAddress({ contract });
     const underlyingTokenAddress = underlyingTokenAddressRaw.toLowerCase();
     const underlyingToken = allTokens.find(p => p.address === underlyingTokenAddress);
     if (!underlyingToken) return [];
@@ -74,7 +77,6 @@ export class SingleVaultTokenHelper {
     const pricePerShare = await resolvePricePerShare({ reserve, supply, address, network });
     const price = Number(pricePerShare) * underlyingToken.price;
     const liquidity = supply * price;
-
     const tokens = [underlyingToken];
 
     // Display properties
