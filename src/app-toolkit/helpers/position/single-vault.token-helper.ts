@@ -17,7 +17,12 @@ type SingleVaultTokenHelperParams<T> = {
   dependencies?: AppGroupsDefinition[];
   resolveContract: (opts: { address: string; network: Network }) => T;
   resolveUnderlyingTokenAddress: (opts: { contract: T }) => string | Promise<string>;
-  resolveReserve?: (opts: { underlyingToken: Token; address: string; network: Network }) => Promise<number>;
+  resolveReserve?: (opts: {
+    contract: T;
+    underlyingToken: Token;
+    address: string;
+    network: Network;
+  }) => Promise<number>;
   resolvePricePerShare?: (opts: {
     reserve: number;
     supply: number;
@@ -71,7 +76,7 @@ export class SingleVaultTokenHelper {
       multicall.wrap(tokenContract).totalSupply(),
     ]);
 
-    const reserveRaw = await resolveReserve({ underlyingToken, address, network });
+    const reserveRaw = await resolveReserve({ contract, underlyingToken, address, network });
     const supply = Number(supplyRaw) / 10 ** decimals;
     const reserve = Number(reserveRaw) / 10 ** underlyingToken.decimals;
     const pricePerShare = await resolvePricePerShare({ reserve, supply, address, network });
