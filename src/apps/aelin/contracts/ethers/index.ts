@@ -3,6 +3,8 @@
 /* eslint-disable */
 export type { AelinPool } from './AelinPool';
 export type { AelinStaking } from './AelinStaking';
+export type { AelinVAelin } from './AelinVAelin';
 export * as factories from './factories';
 export { AelinPool__factory } from './factories/AelinPool__factory';
 export { AelinStaking__factory } from './factories/AelinStaking__factory';
+export { AelinVAelin__factory } from './factories/AelinVAelin__factory';

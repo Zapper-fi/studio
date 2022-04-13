@@ -3,3 +3,4 @@
 /* eslint-disable */
 export { AelinPool__factory } from './AelinPool__factory';
 export { AelinStaking__factory } from './AelinStaking__factory';
+export { AelinVAelin__factory } from './AelinVAelin__factory';

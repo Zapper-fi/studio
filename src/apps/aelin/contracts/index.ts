@@ -6,6 +6,7 @@ import { Network } from '~types/network.interface';
 
 import { AelinPool__factory } from './ethers';
 import { AelinStaking__factory } from './ethers';
+import { AelinVAelin__factory } from './ethers';
 
 type ContractOpts = { address: string; network: Network };
 
@@ -21,7 +22,11 @@ export class AelinContractFactory extends ContractFactory {
   aelinStaking({ address, network }: ContractOpts) {
     return AelinStaking__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  aelinVAelin({ address, network }: ContractOpts) {
+    return AelinVAelin__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
 }
 
 export type { AelinPool } from './ethers';
 export type { AelinStaking } from './ethers';
+export type { AelinVAelin } from './ethers';
