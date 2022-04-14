@@ -6,8 +6,9 @@ import _ from 'lodash';
  * @param s given string
  * @returns TitleCased string
  */
-const titleCase = (s: string) => {
-  return _.startCase(s).replace(/\s/g, '');
+const titleCase = (s: string, spaceSeparator = false) => {
+  const separator = spaceSeparator === true ? ' ' : '';
+  return _.startCase(s).replace(/\s/g, separator);
 };
 
 /**

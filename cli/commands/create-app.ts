@@ -36,6 +36,7 @@ export default class CreateApp extends Command {
         ],
       },
     ]);
+
     const supportedNetworksRaw: string[] = response.network;
     createFolder(`./src/apps/${appName}`);
     createFolder(`./src/apps/${appName}/assets`);
@@ -89,7 +90,7 @@ function formatNetworks(userInputNetworks: string[]): string[] {
 }
 
 function generateDefinitionFile(appName: string, supportedNetworks: string) {
-  const appId = strings.kebabCase(appName);
+  const appId = strings.titleCase(appName, true);
   const appDefinitionName = `${strings.upperCase(appName)}_DEFINITION`;
   const appClassName = strings.titleCase(appName);
 
@@ -102,6 +103,7 @@ function generateDefinitionFile(appName: string, supportedNetworks: string) {
   export const ${appDefinitionName} = {
     id: '${appName}',
     name: '${appId}',
+    // Don't forget to add a description for the app
     description: '',
     groups: {
       camelCase: { id: 'kebab-case', type: GroupType.TOKEN },

@@ -5,8 +5,8 @@ import { Network } from '~types/network.interface';
 
 export const ENZYME_FINANCE_DEFINITION = {
   id: 'enzyme-finance',
-  name: 'enzyme-finance',
-  description: '',
+  name: 'Enzyme Finance',
+  description: 'Enzyme empowers you to build and scale vaults based on the investment strategies of your choice.',
   groups: {
     vault: { id: 'vault', type: GroupType.TOKEN },
   },
