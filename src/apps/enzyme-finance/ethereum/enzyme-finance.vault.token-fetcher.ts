@@ -1,7 +1,6 @@
 import { Inject } from '@nestjs/common';
 import { gql } from 'graphql-request';
-import _ from 'lodash';
-import { compact } from 'lodash';
+import _, { compact } from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
@@ -19,14 +18,6 @@ import { ENZYME_FINANCE_DEFINITION } from '../enzyme-finance.definition';
 type EnzymeFinanceVaultsResponse = {
   funds: {
     id: string;
-    portfolio: {
-      holdings: {
-        asset: {
-          id: string;
-        };
-        amount: number;
-      }[];
-    };
   }[];
 };
 
@@ -34,14 +25,6 @@ const query = gql`
   query fetchEnzymeVaults {
     funds(first: 100, orderBy: investmentCount, orderDirection: desc) {
       id
-      portfolio {
-        holdings {
-          asset {
-            id
-          }
-          amount
-        }
-      }
     }
   }
 `;
@@ -74,29 +57,37 @@ export class EthereumEnzymeFinanceVaultTokenFetcher implements PositionFetcher<A
 
     const tokens = await Promise.all(
       poolAddresses.map(async vault => {
-        const tokenContract = this.enzymeFinanceContractFactory.enzymeFinanceVault({ address: vault.id, network });
-        const [name, symbol, decimals, supplyRaw] = await Promise.all([
+        const vaultAddress = vault.id.toLowerCase();
+        const tokenContract = this.enzymeFinanceContractFactory.enzymeFinanceVault({ address: vaultAddress, network });
+        const [name, symbol, decimals, supplyRaw, trackedAssetAddresses] = await Promise.all([
           multicall.wrap(tokenContract).name(),
           multicall.wrap(tokenContract).symbol(),
           multicall.wrap(tokenContract).decimals(),
           multicall.wrap(tokenContract).totalSupply(),
+          multicall.wrap(tokenContract).getTrackedAssets(),
         ]);
 
-        // Filter only holdings for which we know the underlying asset price
-        const validHoldings = vault.portfolio.holdings.filter(
-          holding => !!baseTokens.find(v => v.address === holding.asset.id),
+        const totalAssetUnderManagement = _.sum(
+          await Promise.all(
+            trackedAssetAddresses.map(async tokenAddressRaw => {
+              const tokenAddress = tokenAddressRaw.toLowerCase();
+              const uTokenContract = this.enzymeFinanceContractFactory.erc20({ address: tokenAddress, network });
+              const [tokenAmountRaw, decimals] = await Promise.all([
+                multicall.wrap(uTokenContract).balanceOf(vaultAddress),
+                multicall.wrap(uTokenContract).decimals(),
+              ]);
+
+              const amount = Number(tokenAmountRaw) / 10 ** decimals;
+              const baseToken = baseTokens.find(v => v.address === tokenAddress);
+              if (!baseToken) return 0;
+
+              return baseToken.price * amount;
+            }),
+          ),
         );
 
-        // Sum over the prices
-        const totalAssetUnderManagement = _.sumBy(validHoldings, holding => {
-          const underlyingToken = baseTokens.find(v => v.address === holding.asset.id);
-          if (!underlyingToken) return 0;
-
-          return underlyingToken.price * holding.amount;
-        });
-
-        const underlyingTokens = validHoldings.map(token => {
-          return baseTokens.find(x => x.address === token.asset.id);
+        const underlyingTokens = trackedAssetAddresses.map(token => {
+          return baseTokens.find(x => x.address === token.toLowerCase());
         });
 
         const supply = Number(supplyRaw) / 10 ** decimals;
@@ -114,7 +105,7 @@ export class EthereumEnzymeFinanceVaultTokenFetcher implements PositionFetcher<A
 
         const token: AppTokenPosition = {
           type: ContractType.APP_TOKEN,
-          address: vault.id,
+          address: vaultAddress,
           appId,
           groupId,
           network,
