@@ -8,7 +8,6 @@ import { Network } from '~types/network.interface';
 import { SYNTHETIX_DEFINITION } from '../synthetix.definition';
 
 const ENDPOINT = 'https://api.thegraph.com/subgraphs/name/synthetixio-team/mainnet-main';
-// https://api.thegraph.com/subgraphs/name/synthetixio-team/optimism-main
 
 type Holder = {
   id: string;
