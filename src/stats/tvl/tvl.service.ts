@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 
-import { AppService } from '~app/apps.service';
+import { AppService } from '~app/app.service';
 import { Network } from '~types/network.interface';
 
 import { TvlFetcherRegistry } from './tvl-fetcher.registry';

@@ -1,6 +1,6 @@
 import { Controller, Get, Inject, NotFoundException, Param } from '@nestjs/common';
 
-import { AppService } from './apps.service';
+import { AppService } from './app.service';
 
 @Controller('/apps')
 export class AppController {

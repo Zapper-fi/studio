@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 
-import { AppRegistry } from './apps.registry';
+import { AppRegistry } from './app.registry';
 
 @Injectable()
 export class AppService {
