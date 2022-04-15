@@ -38,6 +38,10 @@ export interface IAppToolkit {
     ...appTokenDefinition: AppGroupsDefinition[]
   ): Promise<ContractPosition<T>[]>;
 
+  // Cache
+
+  getFromCache<T = any>(key: string): Promise<T | undefined>;
+
   // Global Helpers
 
   get helpers(): AppToolkitHelperRegistry;
