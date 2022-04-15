@@ -1,16 +1,10 @@
-import { Inject, Injectable, NotFoundException } from '@nestjs/common';
-import { fromPairs } from 'lodash';
+import { Inject, Injectable } from '@nestjs/common';
 
 import { AppRegistry } from './app.registry';
-import { AppBalanceFetcherRegistry } from './balance-fetcher.registry';
-import { GetAppBalancesQuery } from './dto/get-app-balances-query.dto';
 
 @Injectable()
 export class AppService {
-  constructor(
-    @Inject(AppRegistry) private readonly appRegistry: AppRegistry,
-    @Inject(AppBalanceFetcherRegistry) private readonly balanceFetcherRegistry: AppBalanceFetcherRegistry,
-  ) {}
+  constructor(@Inject(AppRegistry) private readonly appRegistry: AppRegistry) {}
 
   async getApps() {
     return this.appRegistry.getSupported();
@@ -18,23 +12,5 @@ export class AppService {
 
   getApp(appId: string) {
     return this.appRegistry.get(appId);
-  }
-
-  async getAppBalances({ appId, addresses, network }: GetAppBalancesQuery & { appId: string }) {
-    try {
-      const fetcher = this.balanceFetcherRegistry.get(appId, network);
-      const balances = await Promise.all(
-        addresses.map(async address =>
-          fetcher
-            .getBalances(address)
-            .then(balance => [address, balance])
-            .catch(e => [address, { error: e }]),
-        ),
-      );
-
-      return fromPairs(balances);
-    } catch (e) {
-      throw new NotFoundException(e.message);
-    }
   }
 }

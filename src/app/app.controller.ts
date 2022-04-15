@@ -1,7 +1,6 @@
-import { Controller, Get, Inject, NotFoundException, Param, Query } from '@nestjs/common';
+import { Controller, Get, Inject, NotFoundException, Param } from '@nestjs/common';
 
 import { AppService } from './app.service';
-import { GetAppBalancesQuery } from './dto/get-app-balances-query.dto';
 
 @Controller('/apps')
 export class AppController {
@@ -19,10 +18,5 @@ export class AppController {
     } catch (e) {
       throw new NotFoundException(e.message);
     }
-  }
-
-  @Get(`/:appId/balances`)
-  getAppBalances(@Param('appId') appId: string, @Query() query: GetAppBalancesQuery) {
-    return this.appService.getAppBalances({ ...query, appId });
   }
 }

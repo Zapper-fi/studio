@@ -1,6 +1,6 @@
 import _ from 'lodash';
 
-import { MetadataItemWithLabel, TokenBalanceResponse } from '~app/balance-fetcher.interface';
+import { MetadataItemWithLabel, TokenBalanceResponse } from '~balance/balance-fetcher.interface';
 import { ContractType } from '~position/contract.interface';
 import {
   AppTokenPositionBalance,

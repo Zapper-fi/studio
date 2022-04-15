@@ -1,7 +1,7 @@
 import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
 import { DiscoveryService } from '@nestjs/core';
 
-import { APP_NAME } from './app-definition.decorator';
+import { APP_NAME } from './app.decorator';
 import { AppDefinition } from './app.definition';
 
 @Injectable()

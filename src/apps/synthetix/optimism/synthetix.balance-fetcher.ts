@@ -2,7 +2,7 @@ import { Inject } from '@nestjs/common';
 
 import { Register } from '~app-toolkit/decorators';
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
-import { BalanceFetcher } from '~app/balance-fetcher.interface';
+import { BalanceFetcher } from '~balance/balance-fetcher.interface';
 import { Network } from '~types/network.interface';
 
 import { SynthetixMintrBalanceHelper } from '../helpers/synthetix.mintr.balance-helper';
