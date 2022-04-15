@@ -14,7 +14,7 @@ const appId = SYNTHETIX_DEFINITION.id;
 const network = Network.ETHEREUM_MAINNET;
 
 @Register.TvlFetcher({ appId, network })
-export class EthereumSynthetixTvlFetcher extends TvlFetcher {
+export class OptimismSynthetixTvlFetcher extends TvlFetcher {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(OptimismSynthetixHoldersCacheManager)

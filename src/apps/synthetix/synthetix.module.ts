@@ -16,7 +16,9 @@ import { SynthetixSingleStakingRoiStrategy } from './helpers/synthetix.single-st
 import { SynthetixSynthBalanceHelper } from './helpers/synthetix.synth.balance-helper';
 import { SynthetixSynthTokenHelper } from './helpers/synthetix.synth.token-helper';
 import { OptimismSynthetixBalanceFetcher } from './optimism/synthetix.balance-fetcher';
+import { OptimismSynthetixHoldersCacheManager } from './optimism/synthetix.holders.cache-manager';
 import { OptimismSynthetixSynthTokenFetcher } from './optimism/synthetix.synth.token-fetcher';
+import { OptimismSynthetixTvlFetcher } from './optimism/synthetix.tvl-fetcher';
 import { SynthetixAppDefinition } from './synthetix.definition';
 
 @Module({
@@ -39,6 +41,8 @@ import { SynthetixAppDefinition } from './synthetix.definition';
     // Optimism
     OptimismSynthetixBalanceFetcher,
     OptimismSynthetixSynthTokenFetcher,
+    OptimismSynthetixTvlFetcher,
+    OptimismSynthetixHoldersCacheManager,
   ],
   exports: [
     SynthetixContractFactory,
