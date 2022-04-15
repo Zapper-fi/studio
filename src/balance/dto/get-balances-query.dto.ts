@@ -2,7 +2,7 @@ import { ArrayMinSize, IsEnum, IsString } from 'class-validator';
 
 import { Network } from '~types/network.interface';
 
-export class GetAppBalancesQuery {
+export class GetBalancesQuery {
   @IsEnum(Network)
   network: Network = Network.ETHEREUM_MAINNET;
 

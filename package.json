@@ -26,6 +26,7 @@
     "fs-extra": "^10.0.1",
     "inquirer": "^8.2.2",
     "lodash": "^4.17.21",
+    "moment": "^2.29.2",
     "rimraf": "^3.0.2"
   },
   "devDependencies": {
