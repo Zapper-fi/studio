@@ -19,9 +19,7 @@ export class EthereumSynthetixTvlFetcher implements TvlFetcher {
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(EthereumSynthetixHoldersCacheManager)
     private readonly holdersCacheManager: EthereumSynthetixHoldersCacheManager,
-  ) {
-    super();
-  }
+  ) {}
 
   async getTvl() {
     // Total Locked SNX
