@@ -70,7 +70,6 @@ dependencies:
   fs-extra: 10.0.1
   inquirer: 8.2.2
   lodash: 4.17.21
-  moment: 2.29.2
   rimraf: 3.0.2
 
 devDependencies:
@@ -109,6 +108,7 @@ devDependencies:
   ethers: 5.6.2
   graphql: 15.8.0
   graphql-request: 3.7.0_graphql@15.8.0
+  moment: 2.29.2
   prettier: 2.6.0
   reflect-metadata: 0.1.13
   rxjs: 7.5.5
@@ -4389,7 +4389,7 @@ packages:
 
   /moment/2.29.2:
     resolution: {integrity: sha512-UgzG4rvxYpN15jgCmVJwac49h9ly9NurikMWGPdVxm8GZD6XjkKPxDTjQQ43gtGgnV3X0cAyWDdP2Wexoquifg==}
-    dev: false
+    dev: true
 
   /ms/2.0.0:
     resolution: {integrity: sha1-VgiurfwAvmwpAd9fmGF4jeDVl8g=}
