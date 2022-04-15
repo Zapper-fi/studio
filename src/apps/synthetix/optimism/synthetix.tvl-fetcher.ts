@@ -11,7 +11,7 @@ import { SYNTHETIX_DEFINITION } from '../synthetix.definition';
 import { OptimismSynthetixHoldersCacheManager } from './synthetix.holders.cache-manager';
 
 const appId = SYNTHETIX_DEFINITION.id;
-const network = Network.ETHEREUM_MAINNET;
+const network = Network.OPTIMISM_MAINNET;
 
 @Register.TvlFetcher({ appId, network })
 export class OptimismSynthetixTvlFetcher extends TvlFetcher {
