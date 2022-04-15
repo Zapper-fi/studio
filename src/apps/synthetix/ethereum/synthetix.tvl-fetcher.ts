@@ -3,7 +3,7 @@ import { sumBy } from 'lodash';
 
 import { Register } from '~app-toolkit/decorators';
 import { APP_TOOLKIT, IAppToolkit } from '~lib';
-import { TvlFetcher } from '~stats/tvl/tvl-fetcher';
+import { TvlFetcher } from '~stats/tvl/tvl-fetcher.interface';
 import { Network } from '~types/network.interface';
 
 import { SYNTHETIX_DEFINITION } from '../synthetix.definition';
@@ -14,7 +14,7 @@ const appId = SYNTHETIX_DEFINITION.id;
 const network = Network.ETHEREUM_MAINNET;
 
 @Register.TvlFetcher({ appId, network })
-export class EthereumSynthetixTvlFetcher extends TvlFetcher {
+export class EthereumSynthetixTvlFetcher implements TvlFetcher {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(EthereumSynthetixHoldersCacheManager)

@@ -3,7 +3,7 @@ import { sumBy } from 'lodash';
 
 import { Register } from '~app-toolkit/decorators';
 import { APP_TOOLKIT, IAppToolkit } from '~lib';
-import { TvlFetcher } from '~stats/tvl/tvl-fetcher';
+import { TvlFetcher } from '~stats/tvl/tvl-fetcher.interface';
 import { Network } from '~types/network.interface';
 
 import { SYNTHETIX_DEFINITION } from '../synthetix.definition';
@@ -14,14 +14,12 @@ const appId = SYNTHETIX_DEFINITION.id;
 const network = Network.OPTIMISM_MAINNET;
 
 @Register.TvlFetcher({ appId, network })
-export class OptimismSynthetixTvlFetcher extends TvlFetcher {
+export class OptimismSynthetixTvlFetcher implements TvlFetcher {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(OptimismSynthetixHoldersCacheManager)
     private readonly holdersCacheManager: OptimismSynthetixHoldersCacheManager,
-  ) {
-    super();
-  }
+  ) {}
 
   async getTvl() {
     // Total Locked SNX
