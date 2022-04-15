@@ -4,7 +4,7 @@ import { BalanceService } from './balance.service';
 import { GetBalancesQuery } from './dto/get-balances-query.dto';
 
 @Controller()
-export class BalancesController {
+export class BalanceController {
   constructor(@Inject(BalanceService) private readonly balanceService: BalanceService) {}
 
   @Get(`/apps/:appId/balances`)
