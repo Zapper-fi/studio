@@ -42,7 +42,7 @@ export class EthereumSynthetixHoldersCacheManager {
 
   @CacheOnInterval({
     key: `studio:${SYNTHETIX_DEFINITION.id}:${Network.ETHEREUM_MAINNET}:snx-holders`,
-    timeout: 60 * 60 * 1000,
+    timeout: 15 * 60 * 1000,
   })
   private async cacheHolders() {
     const client = new GraphQLClient(ENDPOINT);
