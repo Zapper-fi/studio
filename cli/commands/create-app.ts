@@ -26,20 +26,9 @@ export default class CreateApp extends Command {
         name: 'network',
         message: 'Select networks supported by the app',
         type: 'checkbox',
-        choices: [
-          { name: 'ethereum' },
-          { name: 'polygon' },
-          { name: 'optimism' },
-          { name: 'gnosis' },
-          { name: 'binance-smart-chain' },
-          { name: 'fantom' },
-          { name: 'avalanche' },
-          { name: 'arbitrum' },
-          { name: 'celo' },
-          { name: 'harmony' },
-          { name: 'moonriver' },
-          { name: 'bitcoin' },
-        ],
+        choices: Object.values(Network)
+          .filter(v => v !== Network.BITCOIN_MAINNET)
+          .map(name => ({ name })),
       },
     ]);
 
