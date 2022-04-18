@@ -13,8 +13,14 @@ export default class CreateApp extends Command {
   static args = [];
 
   async run(): Promise<void> {
-    const appNameRaw = await CliUx.ux.prompt('What is the name of the app ', { required: true });
-    const appName = strings.kebabCase(appNameRaw);
+    const appName = await CliUx.ux.prompt('What is the name of the app ', { required: true });
+    const appId = await CliUx.ux.prompt('What is the ID of the app ', {
+      required: true,
+      default: strings.kebabCase(appName),
+    });
+    const appDescription = await CliUx.ux.prompt('What is the description of your app ', { required: true });
+    const appUrl = await CliUx.ux.prompt('What is the URL of your app ', { required: true });
+
     const response: any = await inquirer.prompt([
       {
         name: 'network',
@@ -38,20 +44,20 @@ export default class CreateApp extends Command {
     ]);
 
     const supportedNetworksRaw: string[] = response.network;
-    createFolder(`./src/apps/${appName}`);
-    createFolder(`./src/apps/${appName}/assets`);
-    createFolder(`./src/apps/${appName}/contracts`);
-    createFolder(`./src/apps/${appName}/contracts/abis`);
+    createFolder(`./src/apps/${appId}`);
+    createFolder(`./src/apps/${appId}/assets`);
+    createFolder(`./src/apps/${appId}/contracts`);
+    createFolder(`./src/apps/${appId}/contracts/abis`);
 
     for (const network of supportedNetworksRaw) {
-      createFolder(`./src/apps/${appName}/${network}`);
+      createFolder(`./src/apps/${appId}/${network}`);
     }
 
     const supportedNetworks = formatNetworks(supportedNetworksRaw);
     const generatedNetworks = generateSupportedNetworks(supportedNetworks);
-    const generatedCode = generateDefinitionFile(appName, generatedNetworks);
-    fse.writeFileSync(`./src/apps/${appName}/${appName}.definition.ts`, `${generatedCode}\n`);
-    this.log(`You can now fill/update ${appName}.definition.ts`);
+    const generatedCode = generateDefinitionFile(appId, appName, appDescription, appUrl, generatedNetworks);
+    fse.writeFileSync(`./src/apps/${appId}/${appId}.definition.ts`, `${generatedCode}\n`);
+    this.log(`You can now fill/update ${appId}.definition.ts`);
   }
 }
 
@@ -74,9 +80,14 @@ function formatNetworks(userInputNetworks: string[]): string[] {
   return supportedNetworks.flat();
 }
 
-function generateDefinitionFile(appName: string, supportedNetworks: string) {
-  const appId = strings.titleCase(appName, true);
-  const appDefinitionName = `${strings.upperCase(appName)}_DEFINITION`;
+function generateDefinitionFile(
+  appId: string,
+  appName: string,
+  appDescription: string,
+  appUrl: string,
+  supportedNetworks: string,
+) {
+  const appDefinitionName = `${strings.upperCase(appId)}_DEFINITION`;
   const appClassName = strings.titleCase(appName);
 
   return dedent`
@@ -86,16 +97,15 @@ function generateDefinitionFile(appName: string, supportedNetworks: string) {
   import { Network } from '~types/network.interface';
 
   export const ${appDefinitionName} = {
-    id: '${appName}',
-    name: '${appId}',
-    // Don't forget to add a description for the app
-    description: '',
+    id: '${appId}',
+    name: '${appName}',
+    description: '${appDescription}',
+    url: '${appUrl}',
     groups: {
       camelCase: { id: 'kebab-case', type: GroupType.TOKEN },
       camelCase2: { id: 'kebab-case2', type: GroupType.POSITION },
     },
-    url: '',
-    tags: [ProtocolTag.LENDING],
+    tags: [],
     supportedNetworks: {${supportedNetworks}
     },
     primaryColor: '#fff',
