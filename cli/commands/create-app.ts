@@ -8,7 +8,7 @@ import { strings } from '../strings';
 
 export default class CreateApp extends Command {
   static description = '';
-  static examples = [`$ ./agora create-app`];
+  static examples = [`$ ./studio create-app`];
   static flags = {};
   static args = [];
 

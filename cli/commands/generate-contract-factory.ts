@@ -136,7 +136,7 @@ export default class NewCommand extends Command {
   static description =
     'Generate typescript contract factories for a given app based on the ABIs contained within the contracts/abis folder.';
 
-  static examples = [`$ ./agora.sh generate:contract-factory my-app`, `$ ./agora.sh generate:contract-factory -g`];
+  static examples = [`$ ./studio.sh generate:contract-factory my-app`, `$ ./studio.sh generate:contract-factory -g`];
 
   static flags = {
     global: Flags.boolean({ char: 'g' }),

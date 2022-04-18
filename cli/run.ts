@@ -11,7 +11,7 @@ class CLI extends Command {
 
   getCommandHelp(cmd: string) {
     return strings.lines([
-      chalk.bold(`./agora.sh ${cmd}`),
+      chalk.bold(`./studio.sh ${cmd}`),
       `  Description - ${this.commands[cmd].description}`,
       `  Example:`,
       `${this.commands[cmd].examples.map(e => `  ${e}`)}`,
@@ -32,9 +32,9 @@ class CLI extends Command {
       return;
     }
 
-    this.log(`${chalk.yellow('Command not found')}: "./agora.sh ${cmd} [...]"\n`);
+    this.log(`${chalk.yellow('Command not found')}: "./studio.sh ${cmd} [...]"\n`);
 
-    this.log(`Usage: ./agora.sh ${chalk.bold('[command]')}
+    this.log(`Usage: ./studio.sh ${chalk.bold('[command]')}
     
     ${Object.keys(this.commands)
       .filter(key => !this.commands[key].hidden)
