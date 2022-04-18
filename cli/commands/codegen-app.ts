@@ -4,7 +4,6 @@ import fse from 'fs-extra';
 
 import { AppGroup, GroupType } from '../../src/app/app.interface';
 import { Network } from '../../src/types/network.interface';
-import * as appsDefinitionsRegistry from '../imports/apps-definition-registry';
 import { strings } from '../strings';
 
 export default class CodegenApp extends Command {
@@ -18,10 +17,13 @@ export default class CodegenApp extends Command {
 
     const appId = args.appId;
     const appDefinitionName = `${strings.upperCase(appId)}_DEFINITION`;
-    const networksRaw = appsDefinitionsRegistry[appDefinitionName].supportedNetworks;
+
+    const definitionModule = require(`../src/apps/${appId}/${appId}.definition`);
+    const definition = definitionModule[appDefinitionName];
+    const networksRaw = definition.supportedNetworks;
 
     const networks = Object.keys(networksRaw);
-    const groups = appsDefinitionsRegistry[appDefinitionName].groups;
+    const groups = definition.groups;
     let moduleImports = '';
     let moduleProviders = '';
 

@@ -37,7 +37,7 @@ const kebabCase = (s: string) => {
  * @returns UpperCased string
  */
 const upperCase = (s: string) => {
-  return _.upperCase(s).replace(' ', '_');
+  return _.upperCase(s).replace(' ', '_').replace('-', '_');
 };
 
 /**

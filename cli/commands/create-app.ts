@@ -51,23 +51,8 @@ export default class CreateApp extends Command {
     const generatedNetworks = generateSupportedNetworks(supportedNetworks);
     const generatedCode = generateDefinitionFile(appName, generatedNetworks);
     fse.writeFileSync(`./src/apps/${appName}/${appName}.definition.ts`, `${generatedCode}\n`);
-
-    appendAppDefinitionToRegistry(appName);
-
     this.log(`You can now fill/update ${appName}.definition.ts`);
   }
-}
-
-function appendAppDefinitionToRegistry(appName: string) {
-  const appDefinitionName = `${strings.upperCase(appName)}_DEFINITION`;
-
-  const appExportStatement = `export { default as ${appDefinitionName} } from '../../src/apps/${appName}/${appName}.definition';\n`;
-
-  fse.appendFileSync(
-    './cli/imports/apps-definition-registry.ts',
-    dedent`${appExportStatement}
-    `,
-  );
 }
 
 function generateSupportedNetworks(supportedNetworks: string[]): string {
