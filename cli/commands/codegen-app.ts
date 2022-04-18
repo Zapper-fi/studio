@@ -9,7 +9,7 @@ import { strings } from '../strings';
 
 export default class CodegenApp extends Command {
   static description = '';
-  static examples = [`$ ./agora codegen-app appId`];
+  static examples = [`$ ./studio codegen-app appId`];
   static flags = {};
   static args = [{ name: 'appId', description: 'The application id ', required: true }];
 

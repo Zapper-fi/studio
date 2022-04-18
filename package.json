@@ -6,7 +6,7 @@
   "main": "dist/lib/index.js",
   "types": "dist/lib/index.d.ts",
   "scripts": {
-    "agora": "./agora.sh",
+    "studio": "./studio.sh",
     "prebuild": "rimraf dist",
     "build": "tsc && tsc-alias -p tsconfig.aliases.json",
     "dev": "nest start --watch",

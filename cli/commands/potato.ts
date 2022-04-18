@@ -5,7 +5,7 @@ import { appPath } from '../paths/app-path';
 export default class Potato extends Command {
   static description = 'Potato';
 
-  static examples = [`$ ./agora potato my-app`];
+  static examples = [`$ ./studio potato my-app`];
 
   static flags = {};
 
