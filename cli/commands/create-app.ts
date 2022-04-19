@@ -2,6 +2,8 @@ import { CliUx, Command } from '@oclif/core';
 import dedent from 'dedent';
 import fse from 'fs-extra';
 import * as inquirer from 'inquirer';
+import { zipObject } from 'lodash';
+import prettier from 'prettier';
 
 import { Network } from '../../src/types/network.interface';
 import { strings } from '../strings';
@@ -21,9 +23,9 @@ export default class CreateApp extends Command {
     const appDescription = await CliUx.ux.prompt('What is the description of your app ', { required: true });
     const appUrl = await CliUx.ux.prompt('What is the URL of your app ', { required: true });
 
-    const response: any = await inquirer.prompt([
+    const { networks } = await inquirer.prompt([
       {
-        name: 'network',
+        name: 'networks',
         message: 'Select networks supported by the app',
         type: 'checkbox',
         choices: Object.values(Network)
@@ -32,41 +34,19 @@ export default class CreateApp extends Command {
       },
     ]);
 
-    const supportedNetworksRaw: string[] = response.network;
     createFolder(`./src/apps/${appId}`);
     createFolder(`./src/apps/${appId}/assets`);
     createFolder(`./src/apps/${appId}/contracts`);
     createFolder(`./src/apps/${appId}/contracts/abis`);
-
-    for (const network of supportedNetworksRaw) {
+    for (const network of networks) {
       createFolder(`./src/apps/${appId}/${network}`);
     }
 
-    const supportedNetworks = formatNetworks(supportedNetworksRaw);
-    const generatedNetworks = generateSupportedNetworks(supportedNetworks);
-    const generatedCode = generateDefinitionFile(appId, appName, appDescription, appUrl, generatedNetworks);
-    fse.writeFileSync(`./src/apps/${appId}/${appId}.definition.ts`, `${generatedCode}\n`);
+    const generatedCode = generateDefinitionFile(appId, appName, appDescription, appUrl, networks);
+    const config = await prettier.resolveConfig(process.cwd());
+    fse.writeFileSync(`./src/apps/${appId}/${appId}.definition.ts`, prettier.format(generatedCode, config));
     this.log(`You can now fill/update ${appId}.definition.ts`);
   }
-}
-
-function generateSupportedNetworks(supportedNetworks: string[]): string {
-  let formattedNetworks = '';
-  for (const network of supportedNetworks) {
-    formattedNetworks += `\n      [Network.${network}]: [ProtocolAction.VIEW],`;
-  }
-
-  return `${formattedNetworks}`;
-}
-
-function formatNetworks(userInputNetworks: string[]): string[] {
-  const supportedNetworks = userInputNetworks.map(network => {
-    const choices = strings.kebabCase(network).split(',');
-
-    return Object.keys(Network as Record<string, unknown>).filter(k => choices.includes(Network[k]));
-  });
-
-  return supportedNetworks.flat();
 }
 
 function generateDefinitionFile(
@@ -74,15 +54,16 @@ function generateDefinitionFile(
   appName: string,
   appDescription: string,
   appUrl: string,
-  supportedNetworks: string,
+  networks: string[],
 ) {
   const appDefinitionName = `${strings.upperCase(appId)}_DEFINITION`;
   const appClassName = strings.titleCase(appName);
+  const networkToKey = zipObject(Object.values(Network), Object.keys(Network));
 
   return dedent`
   import { Register } from '~app-toolkit/decorators';
   import { AppDefinition } from '~app/app.definition';
-  import { GroupType, ProtocolAction, ProtocolTag } from '~app/app.interface';
+  import { ProtocolAction } from '~app/app.interface';
   import { Network } from '~types/network.interface';
 
   export const ${appDefinitionName} = {
@@ -90,12 +71,10 @@ function generateDefinitionFile(
     name: '${appName}',
     description: '${appDescription}',
     url: '${appUrl}',
-    groups: {
-      camelCase: { id: 'kebab-case', type: GroupType.TOKEN },
-      camelCase2: { id: 'kebab-case2', type: GroupType.POSITION },
-    },
+    groups: {},
     tags: [],
-    supportedNetworks: {${supportedNetworks}
+    supportedNetworks: {
+      ${networks.map(n => `[Network.${networkToKey[n]}]: [ProtocolAction.VIEW]`).join(',\n')}
     },
     primaryColor: '#fff',
   };
