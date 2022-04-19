@@ -1,6 +1,8 @@
 import { Command } from '@oclif/core';
 import dedent from 'dedent';
+import { ESLint } from 'eslint';
 import fse from 'fs-extra';
+import prettier from 'prettier';
 
 import { AppGroup, GroupType } from '../../src/app/app.interface';
 import { Network } from '../../src/types/network.interface';
@@ -51,7 +53,7 @@ export default class CodegenApp extends Command {
       }
       generateBalanceFetcher(appId, network);
     }
-    generateModule(appId, moduleImports, moduleProviders);
+    await generateModule(appId, moduleImports, moduleProviders);
     this.log(`Files for ${appId} were generated !`);
   }
 }
@@ -82,7 +84,7 @@ function generateImportStatementForModule(
   return dedent`import { ${networkTitleCase}${appTitleCase}${appGroupIdTitleCase}${typeTitleCase}Fetcher } from './${networkRaw}/${filename}';\n`;
 }
 
-function generateModule(appId: string, importStatement: string, providers: string) {
+async function generateModule(appId: string, importStatement: string, providers: string) {
   const appTitleCase = strings.titleCase(appId);
 
   const generatedContent = dedent`
@@ -90,20 +92,24 @@ function generateModule(appId: string, importStatement: string, providers: strin
 
   import { AbstractDynamicApp } from '~app/app.dynamic-module';
   
-  // You will need to generate interfaces from contract's abi in order to use the contract factory
-  //import { ${appTitleCase}ContractFactory } from './contracts';
+  import { ${appTitleCase}ContractFactory } from './contracts';
   import { ${appTitleCase}AppDefinition } from './${appId}.definition';
 ${importStatement}
   @Module({
     providers: [
       ${appTitleCase}AppDefinition,
-      //${appTitleCase}ContractFactory,${providers}
+      ${appTitleCase}ContractFactory,${providers}
     ],
   })
   export class ${appTitleCase}AppModule extends AbstractDynamicApp<${appTitleCase}AppModule>() {}
   
   `;
-  fse.writeFileSync(`./src/apps/${appId}/${appId}.module.ts`, `${generatedContent}\n`);
+
+  const eslint = new ESLint({ fix: true });
+  const config = await prettier.resolveConfig(process.cwd());
+  fse.writeFileSync(`./src/apps/${appId}/${appId}.module.ts`, prettier.format(generatedContent, config));
+  const results = await eslint.lintFiles(`./src/apps/${appId}/${appId}.module.ts`);
+  await ESLint.outputFixes(results);
 }
 
 function generateBalanceFetcher(appId: string, networkRaw: string) {
@@ -131,21 +137,7 @@ function generateBalanceFetcher(appId: string, networkRaw: string) {
     constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
   
     async getBalances(address: string) {
-      // fetch balances of an app token
-      const balances = await this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
-        network,
-        appId: ${appDefinitionName}.id,
-        // replace "vault" with the id of a token-fetcher
-        groupId: ${appDefinitionName}.groups.vault.id,
-        address,
-      });
-  
-      return presentBalanceFetcherResponse([
-        {
-          label: 'Vault',
-          assets: balances,
-        },
-      ]);
+      return presentBalanceFetcherResponse([]);
     }
   }
   
