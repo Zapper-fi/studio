@@ -168,16 +168,11 @@ function generateTokenFetcher(appId: string, groupdId: string, groupdValue: stri
 
   import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
   import { Register } from '~app-toolkit/decorators';
-  // helpers for displayProps
-  /*import { buildDollarDisplayItem, buildNumberDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
-  import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';*/
-  //import { ContractType } from '~position/contract.interface';
   import { PositionFetcher } from '~position/position-fetcher.interface';
   import { AppTokenPosition } from '~position/position.interface';
   import { Network } from '~types/network.interface';
   
-  // Once interfaces have been generated from the abis of the contracts, you will be able to use the contract factory
-  //import { ${appTitleCase}ContractFactory } from '../contracts';
+  import { ${appTitleCase}ContractFactory } from '../contracts';
   import { ${appDefinitionName} } from '../${appId}.definition';
   
   const appId = ${appDefinitionName}.id;
@@ -187,79 +182,11 @@ function generateTokenFetcher(appId: string, groupdId: string, groupdValue: stri
   @Register.TokenPositionFetcher({ appId, groupId, network })
   export class ${networkTitleCase}${appTitleCase}${groupTitleCase}TokenFetcher implements PositionFetcher<AppTokenPosition> {
     constructor(
-      @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit, //@Inject(${appTitleCase}ContractFactory) private readonly ${appCamelCase}ContractFactory: ${appTitleCase}ContractFactory,
+      @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
+      @Inject(${appTitleCase}ContractFactory) private readonly ${appCamelCase}ContractFactory: ${appTitleCase}ContractFactory,
     ) {}
   
     async getPositions() {
-      // Use this multicall to call functions on contract
-      // const multicall = this.appToolkit.getMulticall(network);
-  
-      // Underlying token
-      /*const underlyingTokenAddress = '0x0000000000000000000000000000000000000000'.toLowerCase();
-      const underlyingToken = await this.appToolkit.getBaseTokenPrice({
-        network,
-        address: underlyingTokenAddress,
-      });
-      if (!underlyingToken) return null;*/
-  
-      // Here's how you can deckare, wrap and call functions on a contract
-      /* const tokenContract = this.${appCamelCase}ContractFactory.erc20({ address: tokenAddressRaw, network });
-      const [totalSupplyRaw, decimalsRaw, symbol] = await Promise.all([
-        multicall.wrap(tokenContract).totalSupply(),
-        multicall.wrap(tokenContract).decimals(),
-        multicall.wrap(tokenContract).symbol(),
-      ]); */
-  
-      // Determine total supply
-      /*const underlyingPrice = underlyingToken.price;
-      const totalSupply = Number(totalSupplyRaw) / 10 ** Number(decimalsRaw);
-      const underlyingAssets = Number(totalAssetsRaw) / 10 ** underlyingToken.decimals;*/
-  
-      // Determine the price per share
-      /*const pricePerShare = underlyingAssets / totalSupply;
-      const price = pricePerShare * underlyingToken.price;
-  
-      const reserve = totalSupply * pricePerShare;
-      const liquidity = reserve * underlyingPrice;
-  
-      const tokens = [{ ...underlyingToken, reserve }];
-      const secondaryLabel = symbol;*/
-  
-      /*const displayProps = {
-        label: symbol,
-        secondaryLabel: '',
-        images: [
-          //getTokenImg(underlyingToken.address)
-        ],
-        statsItems: [
-          // Here, you can add additionnal metrics like liquidity or totalSupply
-          {
-            label: 'Liquidity',
-            value: buildDollarDisplayItem(liquidity),
-          },
-        ],
-      };*/
-  
-      // You can provide additional properties like liquidity or reserves
-      /*const dataProps = {};*/
-  
-      // Here's the shape of the object you need to return
-      /*const token: AppTokenPosition = {
-        address,
-        type: ContractType.APP_TOKEN,
-        network,
-        appId,
-        groupId,
-        symbol,
-        decimals,
-        supply,
-        price,
-        pricePerShare,
-        tokens,
-        dataProps,
-        displayProps,
-      };
-      return [token];*/
       return [];
     }
   }

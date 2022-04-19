@@ -47,7 +47,7 @@ async function main() {
   try {
     await CLI.run();
   } catch (e) {
-    console.error(e.message);
+    console.error(e);
   }
 }
 

@@ -32,11 +32,6 @@ const getAbis = async (location: string) => {
 };
 
 const generateContract = async (location: string) => {
-  const abis = await getAbis(location);
-  if (abis.length === 0) {
-    throw new Error('no ABI to generate');
-  }
-
   const providerDir = path.join(location, `/contracts/ethers`);
   const providerDirExists = await exists(providerDir);
   if (providerDirExists) {
@@ -46,6 +41,7 @@ const generateContract = async (location: string) => {
 
   const cwd = process.cwd();
   const allFiles = glob(cwd, [path.join(location, '/contracts/abis/*.json')]);
+  if (!allFiles.length) return;
 
   await runTypeChain({
     cwd,
@@ -100,6 +96,7 @@ const generateContractFactory = async (location: string) => {
 
         ${imports.join('\n')}
         ${isRoot ? '' : "import { ContractFactory } from '~contract/contracts'"}
+        // eslint-disable-next-line
         type ContractOpts = {address: string, network: Network};
         ${!isRoot ? '' : 'type NetworkProviderResolver = (network: Network) => StaticJsonRpcProvider;'}
 
@@ -166,7 +163,7 @@ export default class NewCommand extends Command {
       console.log(chalk.green(`Formatting newly generated files at ${location}`));
       execCodeFormatting(`${location}/contracts`);
     } catch (e) {
-      const err = strings.lines([chalk.red('generate-contract-factory.ts - Failed'), e.message]);
+      const err = strings.lines([chalk.red(`generate-contract-factory.ts - Failed: ${e.message}`), e.stack]);
       console.error(err);
     }
   }
