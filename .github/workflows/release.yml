@@ -49,11 +49,25 @@ jobs:
         id: package-version
         uses: martinbeentjes/npm-get-version-action@master
 
-      - name: Commit & Push changes
-        uses: actions-js/push@master
+      - name: Set Target Branch
+        id: set_target_branch
+        run: |
+          TARGET_BRANCH=auto-publish
+          echo "::set-output name=target_branch::$TARGET_BRANCH"
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
         with:
-          github_token: ${{ secrets.GH_ZAPPER_BOT }}
-          message: Auto-Publish ${{ steps.package-version.outputs.current-version }}
+          token: ${{ secrets.GH_ZAPPER_BOT }}
+          branch: ${{ steps.set_target_branch.outputs.target_branch }}
+          title: Auto-Publish ${{ steps.package-version.outputs.current-version }}
+          commit-message: Auto-Publish ${{ steps.package-version.outputs.current-version }}
+          body: |
+            ⚙️ _This pull request was opened automatically_
+
+            Auto-Publish ${{ steps.package-version.outputs.current-version }}
+          base: master
+          delete-branch: true
 
       - name: Automatic GitHub Release
         uses: justincy/github-action-npm-release@2.0.1
