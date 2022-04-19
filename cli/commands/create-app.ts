@@ -57,7 +57,7 @@ function generateDefinitionFile(
   networks: string[],
 ) {
   const appDefinitionName = `${strings.upperCase(appId)}_DEFINITION`;
-  const appClassName = strings.titleCase(appName);
+  const appClassName = strings.titleCase(appId);
   const networkToKey = zipObject(Object.values(Network), Object.keys(Network));
 
   return dedent`
