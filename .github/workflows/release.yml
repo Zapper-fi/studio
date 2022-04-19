@@ -43,7 +43,7 @@ jobs:
           run_install: true
 
       - name: Bump Version
-        run: pnpm version ${{ github.event.inputs.version }}
+        run: npm --no-git-tag-version version ${{ github.event.inputs.version }}
 
       - name: Get Package Version
         id: package-version
