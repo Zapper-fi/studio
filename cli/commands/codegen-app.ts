@@ -119,7 +119,7 @@ function generateBalanceFetcher(appId: string, networkRaw: string) {
   import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
   import { Register } from '~app-toolkit/decorators';
   import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
-  import { BalanceFetcher } from '~app/balance-fetcher.interface';
+  import { BalanceFetcher } from '~balance/balance-fetcher.interface';
   import { Network } from '~types/network.interface';
   
   import { ${appDefinitionName} } from '../${appId}.definition';
