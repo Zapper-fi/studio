@@ -2,11 +2,15 @@ name: Release
 
 on:
   workflow_dispatch:
-  push:
-    paths:
-      - 'package.json'
-    branches: ['main']
-
+    inputs:
+      version:
+        type: choice
+        required: true
+        description: Semantic Version Type
+        options:
+        - major
+        - minor
+        - patch
 jobs:
   release:
     name: Release
@@ -37,6 +41,19 @@ jobs:
         with:
           version: 6.23.2
           run_install: true
+
+      - name: Bump Version
+        run: pnpm version ${{ github.event.inputs.version }}
+
+      - name: Get Package Version
+        id: package-version
+        uses: martinbeentjes/npm-get-version-action@master
+
+      - name: Commit & Push changes
+        uses: actions-js/push@master
+        with:
+          github_token: ${{ secrets.GH_ZAPPER_BOT }}
+          message: Auto-Publish ${{ steps.package-version.outputs.current-version }}
 
       - name: Automatic GitHub Release
         uses: justincy/github-action-npm-release@2.0.1
