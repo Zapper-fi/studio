@@ -13,9 +13,12 @@
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\"",
     "lint:fix": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
+    "test": "jest --runInBand --forceExit",
     "prepublish:npm": "pnpm build",
+    "test:watch": "jest --watch",
     "publish:npm": "pnpm publish --access public",
-    "start": "nest start"
+    "start": "nest start",
+    "test:integration": "jest --runInBand --forceExit --config jest.integration.config.js"
   },
   "dependencies": {
     "@golevelup/nestjs-modules": "^0.5.0",
@@ -46,6 +49,7 @@
     "@types/express": "^4.17.13",
     "@types/fs-extra": "^9.0.13",
     "@types/inquirer": "^8.2.0",
+    "@types/jest": "^27.4.1",
     "@types/lodash": "^4.14.180",
     "@types/node": "^16.0.0",
     "@typescript-eslint/eslint-plugin": "^5.16.0",
@@ -65,6 +69,7 @@
     "ethers": "^5.5.1",
     "graphql": "^15.5.1",
     "graphql-request": "^3.4.0",
+    "jest": "^27.5.1",
     "moment": "^2.29.2",
     "nodemon": "^2.0.15",
     "prettier": "^2.6.0",
@@ -73,6 +78,7 @@
     "rxjs": "^7.5.5",
     "source-map-support": "^0.5.20",
     "ts-generator": "^0.1.1",
+    "ts-jest": "^27.1.4",
     "ts-loader": "^9.2.3",
     "ts-node": "^10.7.0",
     "tsc-alias": "^1.6.5",
