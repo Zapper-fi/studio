@@ -32,6 +32,7 @@
     "rimraf": "^3.0.2"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.22.0",
     "@ethersproject/abi": "^5.5.0",
     "@ethersproject/bytes": "^5.5.0",
     "@ethersproject/contracts": "^5.5.0",
