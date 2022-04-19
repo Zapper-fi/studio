@@ -70,5 +70,3 @@ pnpm studio new:command [my-command-name]
 Join our community on discord
 
 ## License
-
-This repository is available under our [License](LICENSE.md)
