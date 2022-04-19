@@ -5,7 +5,8 @@
 </h1>
 
 <p align="center">
-    <a href="https://twitter.com/zapper_fi"><b>Twitter</b></a>
+    <a href="https://twitter.com/zapper_fi"><b>Twitter</b></a> •
+    <a href="https://zapper.fi/discord"><b>Discord</b></a>
 </p>
 
 ## Description
@@ -67,7 +68,7 @@ pnpm studio new:command [my-command-name]
 
 ## Need help ?
 
-Join our community on discord
+Join our community on <a href="https://zapper.fi/discord">Discord</a>
 
 ## License
 
