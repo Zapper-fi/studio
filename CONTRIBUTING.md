@@ -77,6 +77,11 @@ Please provide thoughtful comments and some sample API code. Proposals that
 don't line up with our roadmap or don't have a thoughtful explanation will be
 closed.
 
+## Found a typo or want to contribute to the docs?
+
+Head to the [documentation repo](https://github.com/Zapper-fi/studio-docs) and open a PR against
+that repo.
+
 ### Commit Convention
 
 Before you create a Pull Request, please check whether your commits comply with
