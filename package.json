@@ -9,7 +9,7 @@
     "studio": "./studio.sh",
     "prebuild": "rimraf dist",
     "build": "tsc && tsc-alias -p tsconfig.aliases.json",
-    "dev": "NODE_ENV=development nodemon --config nodemon-default.json",
+    "dev": "NODE_ENV=development nodemon --config nodemon.json",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\"",
     "lint:fix": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
