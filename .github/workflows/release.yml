@@ -60,7 +60,7 @@ jobs:
             ⚙️ _This pull request was opened automatically_
 
             Auto-Publish ${{ steps.package-version.outputs.current-version }}
-          base: master
+          base: main
           delete-branch: true
 
       - name: Automatic GitHub Release
