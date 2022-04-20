@@ -4,8 +4,8 @@
 
 ## Checklist
 
-- [] I have followed the [Contributing Guidelines](../CONTRIBUTING.md)
-- [] (optional) As a contributor, my Ethereum address/ENS is:
+- [ ] I have followed the [Contributing Guidelines](../CONTRIBUTING.md)
+- [ ] (optional) As a contributor, my Ethereum address/ENS is:
 
 ## How to test?
 
