@@ -109,7 +109,7 @@ ${importStatement}
   const config = await prettier.resolveConfig(process.cwd());
   fse.writeFileSync(
     `./src/apps/${appId}/${appId}.module.ts`,
-    prettier.format(generatedContent, { ...config, parser: 'typescript ' }),
+    prettier.format(generatedContent, { ...config, parser: 'typescript' }),
   );
   const results = await eslint.lintFiles(`./src/apps/${appId}/${appId}.module.ts`);
   await ESLint.outputFixes(results);
