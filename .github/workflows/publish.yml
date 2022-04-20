@@ -1,4 +1,4 @@
-name: Release Hook
+name: Publish Studio
 
 on:
   workflow_dispatch:
@@ -8,11 +8,11 @@ on:
     branches: ['main']
 
 jobs:
-  release:
-    name: Release
+  publish:
+    name: Publish
     runs-on: ubuntu-latest
     outputs:
-      released: ${{ steps.persist_release.outputs.released }}
+      published: ${{ steps.persist_release.outputs.published }}
       changelog: ${{ steps.persist_release.outputs.changelog }}
     steps:
       - name: Checkout repository
@@ -61,22 +61,27 @@ jobs:
         if: steps.release.outputs.released == 'true'
         run: echo "${{ steps.fetch_release.outputs.body }}"
 
-
       - name: Persist Release
         if: steps.release.outputs.released == 'true'
         id: persist_release
         env:
-          RAW_CHANGELOG: ${{ steps.fetch_release.outputs.body }}
           REPO_URL: 'https://github.com/${{ github.repository }}'
         run: |
-          echo "::set-output name=released::${{ steps.release.outputs.released }}"
-          echo "::set-output name=changelog::$(node ./scripts/rewrite-changelog.js RAW_CHANGELOG $REPO_URL)"
+          mkdir tmp
+          touch tmp/changelog.txt
+          echo "${{ steps.fetch_release.outputs.body }}" > tmp/changelog.txt
+          export CHANGELOG="$(node ./scripts/rewrite-changelog.js ./tmp/changelog.txt $REPO_URL)"
+          CHANGELOG="${CHANGELOG//'%'/'%25'}"
+          CHANGELOG="${CHANGELOG//$'\n'/'%0A'}"
+          CHANGELOG="${CHANGELOG//$'\r'/'%0D'}"
+          echo "::set-output name=published::${{ steps.release.outputs.released }}"
+          echo "::set-output name=changelog::$CHANGELOG"
 
   bump_zapper_studio:
     name: Bump on Zapper API
     needs: [release]
     runs-on: ubuntu-latest
-    if: ${{ needs.release.outputs.released == 'true' }}
+    if: ${{ needs.release.outputs.published == 'true' }}
     strategy:
       matrix:
         repository: [Zapper-fi/zapper-api]  

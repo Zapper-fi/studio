@@ -6,20 +6,20 @@
   "main": "dist/lib/index.js",
   "types": "dist/lib/index.d.ts",
   "scripts": {
-    "studio": "./studio.sh",
     "prebuild": "rimraf dist",
     "build": "tsc && tsc-alias -p tsconfig.aliases.json",
     "dev": "NODE_ENV=development nodemon --config nodemon.json",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\"",
     "lint:fix": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-    "test": "jest --runInBand --forceExit",
     "prepublish:npm": "pnpm build",
-    "test:watch": "jest --watch",
     "publish:npm": "pnpm publish --access public",
+    "release": "semantic-release",
     "start": "nest start",
-    "semantic-release": "semantic-release",
-    "test:integration": "jest --runInBand --forceExit --config jest.integration.config.js"
+    "studio": "./studio.sh",
+    "test": "jest --runInBand --forceExit",
+    "test:integration": "jest --runInBand --forceExit --config jest.integration.config.js",
+    "test:watch": "jest --watch"
   },
   "dependencies": {
     "@golevelup/nestjs-modules": "^0.5.0",
