@@ -12,7 +12,7 @@
         {"revert": true, "release": "patch"},
         {"type": "feat", "release": "minor"},
         {"type": "feature", "release": "minor"},
-        {"type": "fix", "release": "minor"},
+        {"type": "fix", "release": "patch"},
         {"type": "refactor", "release": "patch"},
         {"type": "docs", "release": "patch"},
         {"type": "build", "release": "patch"},
