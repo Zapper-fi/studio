@@ -1,5 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 
+import { ContractPositionBalanceHelper } from './helpers/balance/contract-position-balance.helper';
 import { SingleStakingContractPositionBalanceHelper } from './helpers/balance/single-staking-farm.contract-position-balance-helper';
 import { TokenBalanceHelper } from './helpers/balance/token-balance.helper';
 import { MasterChefContractPositionBalanceHelper } from './helpers/master-chef/master-chef.contract-position-balance-helper';
@@ -15,6 +16,7 @@ import { TheGraphHelper } from './helpers/the-graph/the-graph.helper';
 
 export const AppToolkitHelpers = [
   TokenBalanceHelper,
+  ContractPositionBalanceHelper,
   TheGraphHelper,
   SingleStakingContractPositionBalanceHelper,
   SingleStakingFarmContractPositionHelper,
@@ -32,6 +34,7 @@ export const AppToolkitHelpers = [
 export class AppToolkitHelperRegistry {
   constructor(
     @Inject(TokenBalanceHelper) public readonly tokenBalanceHelper: TokenBalanceHelper,
+    @Inject(ContractPositionBalanceHelper) public readonly contractPositionBalanceHelper: ContractPositionBalanceHelper,
     @Inject(TheGraphHelper) public readonly theGraphHelper: TheGraphHelper,
     @Inject(SingleStakingContractPositionBalanceHelper)
     public readonly singleStakingContractPositionBalanceHelper: SingleStakingContractPositionBalanceHelper,
