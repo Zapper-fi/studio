@@ -18,6 +18,7 @@
     "test:watch": "jest --watch",
     "publish:npm": "pnpm publish --access public",
     "start": "nest start",
+    "semantic-release": "semantic-release -d",
     "test:integration": "jest --runInBand --forceExit --config jest.integration.config.js"
   },
   "dependencies": {
@@ -77,6 +78,7 @@
     "qs": "^6.10.3",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.5.5",
+    "semantic-release": "^19.0.2",
     "source-map-support": "^0.5.20",
     "ts-generator": "^0.1.1",
     "ts-jest": "^27.1.4",
