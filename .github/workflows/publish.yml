@@ -1,7 +1,6 @@
 name: Publish Studio
 
 on:
-  workflow_dispatch:
   push:
     paths:
       - 'package.json'
