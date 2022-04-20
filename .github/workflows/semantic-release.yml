@@ -7,7 +7,7 @@ jobs:
     name: Release
     runs-on: ubuntu-latest
     env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GITHUB_TOKEN: ${{ secrets.GH_ZAPPER_BOT }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -34,3 +34,21 @@ jobs:
 
       - name: Bump Version
         run: pnpm semantic-release
+
+      - name: Get Package Version
+        id: package-version
+        uses: martinbeentjes/npm-get-version-action@master
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ secrets.GH_ZAPPER_BOT }}
+          branch: semantic-release
+          title: Semantic Release
+          commit-message: "chore(release): Release ${{ steps.package-version.outputs.current-version }}"
+          body: |
+            ⚙️ _This pull request was opened automatically from Zapper-fi/studio._
+
+            ${{ needs.release.outputs.changelog }}
+          base: master
+          delete-branch: true
