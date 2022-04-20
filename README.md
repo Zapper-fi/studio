@@ -1,6 +1,8 @@
 <h1 align="center" style="border-bottom: none">
     <b>
-        <a href="https://zapper.fi/">Zapper Studio</a><br>
+        <a href="https://zapper.fi/">
+            <img alt="Zapper Studio" width="408px" src="https://user-images.githubusercontent.com/22452366/164318940-1c49ceaf-4160-49bb-ac57-f217bce47831.png" />
+        </a><br>
     </b>
 </h1>
 
