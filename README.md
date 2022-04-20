@@ -14,7 +14,9 @@
 </p>
 
 <div>
-    <img src="https://img.shields.io/npm/v/@zapper-fi/studio?color=%23784FFE&style=flat-square" />
+    <a href="https://www.npmjs.com/package/@zapper-fi/studio">
+        <img src="https://img.shields.io/npm/v/@zapper-fi/studio?color=%23784FFE&style=flat-square" />
+    </a>
 </div>
 
 ## Description
