@@ -18,5 +18,6 @@ import { LiquityAppDefinition } from './liquity.definition';
     LiquityTroveBalanceHelper,
     LiquityStabilityPoolBalanceHelper,
   ],
+  exports: [LiquityContractFactory, LiquityTroveBalanceHelper, LiquityStabilityPoolBalanceHelper],
 })
 export class LiquityAppModule extends AbstractDynamicApp<LiquityAppModule>() {}

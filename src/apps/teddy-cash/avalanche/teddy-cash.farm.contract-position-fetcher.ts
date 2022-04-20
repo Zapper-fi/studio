@@ -3,27 +3,27 @@ import { Inject } from '@nestjs/common';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { Register } from '~app-toolkit/decorators';
+import { LiquityContractFactory, LiquityStaking } from '~apps/liquity/contracts';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
-import { LiquityContractFactory, LiquityStaking } from '../contracts';
-import { LIQUITY_DEFINITION } from '../liquity.definition';
+import { TEDDY_CASH_DEFINITION } from '../teddy-cash.definition';
 
 const FARMS = [
   {
-    address: '0x4f9fbb3f1e99b56e0fe2892e623ed36a76fc605d',
-    stakedTokenAddress: '0x6dea81c8171d0ba574754ef6f8b412f2ed88c54d',
-    rewardTokenAddresses: ['0x5f98805a4e8be255a32880fdec7f6728c6568ba0', ZERO_ADDRESS], // LUSD and ETH
+    address: '0xb4387d93b5a9392f64963cd44389e7d9d2e1053c',
+    stakedTokenAddress: '0x094bd7B2D99711A1486FB94d4395801C6d0fdDcC',
+    rewardTokenAddresses: ['0x4fbf0429599460D327BD5F55625E30E4fC066095', ZERO_ADDRESS], // TSD and AVAX
   },
 ];
 
-const appId = LIQUITY_DEFINITION.id;
-const groupId = LIQUITY_DEFINITION.groups.farm.id;
-const network = Network.ETHEREUM_MAINNET;
+const appId = TEDDY_CASH_DEFINITION.id;
+const groupId = TEDDY_CASH_DEFINITION.groups.farm.id;
+const network = Network.AVALANCHE_MAINNET;
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
-export class EthereumLiquityFarmContractPositionFetcher implements PositionFetcher<ContractPosition> {
+export class AvalancheTeddyCashFarmContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(LiquityContractFactory)
@@ -32,12 +32,12 @@ export class EthereumLiquityFarmContractPositionFetcher implements PositionFetch
 
   async getPositions() {
     return this.appToolkit.helpers.singleStakingFarmContractPositionHelper.getContractPositions<LiquityStaking>({
+      network,
       appId,
       groupId,
-      network,
       dependencies: [],
       resolveFarmDefinitions: async () => FARMS,
-      resolveFarmContract: ({ address, network }) => this.liquityContractFactory.liquityStaking({ address, network }),
+      resolveFarmContract: ({ network, address }) => this.liquityContractFactory.liquityStaking({ address, network }),
       resolveIsActive: async () => true,
       resolveRois: async () => ({ dailyROI: 0, weeklyROI: 0, yearlyROI: 0 }),
     });
