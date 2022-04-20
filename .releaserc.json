@@ -1,7 +1,5 @@
 {
-  "release": {
-    "branches": ["semantic-release"]
-  },
+  "branches": ["semantic-release"],
   "plugins": [
     ["@semantic-release/npm", {
       "npmPublish": false
