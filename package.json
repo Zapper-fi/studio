@@ -14,7 +14,7 @@
     "lint:fix": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "prepublish:npm": "pnpm build",
     "publish:npm": "pnpm publish --access public",
-    "release": "semantic-release -d",
+    "release": "semantic-release",
     "start": "nest start",
     "studio": "./studio.sh",
     "test": "jest --runInBand --forceExit",
