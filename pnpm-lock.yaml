@@ -34,6 +34,7 @@ specifiers:
   chalk: '4'
   class-transformer: ^0.5.1
   class-validator: ^0.13.2
+  conventional-changelog-conventionalcommits: ^4.6.3
   dedent: ^0.7.0
   dotenv: ^16.0.0
   esbuild: ^0.14.27
@@ -112,6 +113,7 @@ devDependencies:
   chalk: 4.1.2
   class-transformer: 0.5.1
   class-validator: 0.13.2
+  conventional-changelog-conventionalcommits: 4.6.3
   dedent: 0.7.0
   dotenv: 16.0.0
   eslint: 8.11.0
@@ -3250,6 +3252,15 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       compare-func: 2.0.0
+      q: 1.5.1
+    dev: true
+
+  /conventional-changelog-conventionalcommits/4.6.3:
+    resolution: {integrity: sha512-LTTQV4fwOM4oLPad317V/QNQ1FY4Hju5qeBIM1uTHbrnCE+Eg4CdRZ3gO2pUeR+tzWdp80M2j3qFFEDWVqOV4g==}
+    engines: {node: '>=10'}
+    dependencies:
+      compare-func: 2.0.0
+      lodash: 4.17.21
       q: 1.5.1
     dev: true
 
