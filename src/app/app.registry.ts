@@ -23,7 +23,7 @@ export class AppRegistry implements OnModuleInit {
 
   get(appId: string) {
     const app = this.registry.get(appId);
-    if (!app) throw new Error('No application registered with id');
+    if (!app) throw new Error(`No application registered with id ${appId}`);
 
     return app;
   }
