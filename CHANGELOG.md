@@ -1,3 +1,13 @@
+## [0.1.1](https://github.com/Zapper-fi/studio/compare/0.1.0...0.1.1) (2022-04-20)
+
+
+### Bug Fixes
+
+* Disable manual workflow for publishing ([#178](https://github.com/Zapper-fi/studio/issues/178)) ([db5733d](https://github.com/Zapper-fi/studio/commit/db5733daf4441c06a99f665dd138f62c5decb1ad))
+* Fix the changelog not being forwarded to Zapper API ([#176](https://github.com/Zapper-fi/studio/issues/176)) ([8e2d7f8](https://github.com/Zapper-fi/studio/commit/8e2d7f82577253710d3a54505d6ac4c732dcb02e))
+* Fix wrong job dependency for publish action ([#177](https://github.com/Zapper-fi/studio/issues/177)) ([08dd40c](https://github.com/Zapper-fi/studio/commit/08dd40c162cb5d59abd66d6c91ed903ab749dc59))
+* Remove Semantic Release legacy GH action ([#180](https://github.com/Zapper-fi/studio/issues/180)) ([44cd4bf](https://github.com/Zapper-fi/studio/commit/44cd4bfc1c53db1add1b70781f956fe740954c08))
+
 # [0.1.0](https://github.com/Zapper-fi/studio/compare/0.0.26...0.1.0) (2022-04-20)
 
 
