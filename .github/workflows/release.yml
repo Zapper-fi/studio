@@ -2,11 +2,15 @@ name: Release
 
 on:
   workflow_dispatch:
-  push:
-    paths:
-      - 'package.json'
-    branches: ['main']
-
+    inputs:
+      version:
+        type: choice
+        required: true
+        description: Semantic Version Type
+        options:
+        - major
+        - minor
+        - patch
 jobs:
   release:
     name: Release
@@ -82,16 +86,21 @@ jobs:
         if: steps.release.outputs.released == 'true'
         run: echo "${{ steps.fetch_release.outputs.body }}"
 
-
       - name: Persist Release
         if: steps.release.outputs.released == 'true'
         id: persist_release
         env:
-          RAW_CHANGELOG: ${{ steps.fetch_release.outputs.body }}
           REPO_URL: 'https://github.com/${{ github.repository }}'
         run: |
+          mkdir tmp
+          touch tmp/changelog.txt
+          echo "${{ steps.fetch_release.outputs.body }}" > tmp/changelog.txt
+          export CHANGELOG="$(node ./scripts/rewrite-changelog.js ./tmp/changelog.txt $REPO_URL)"
+          CHANGELOG="${CHANGELOG//'%'/'%25'}"
+          CHANGELOG="${CHANGELOG//$'\n'/'%0A'}"
+          CHANGELOG="${CHANGELOG//$'\r'/'%0D'}"
           echo "::set-output name=released::${{ steps.release.outputs.released }}"
-          echo "::set-output name=changelog::$(node ./scripts/rewrite-changelog.js RAW_CHANGELOG $REPO_URL)"
+          echo "::set-output name=changelog::$CHANGELOG"
 
   bump_zapper_studio:
     name: Bump on Zapper API
