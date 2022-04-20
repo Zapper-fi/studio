@@ -193,6 +193,7 @@ function generateTokenFetcher(appId: string, groupdId: string, groupdValue: stri
 function generateContractPosition(appId: string, groupId: string, groupdValue: string, networkRaw: string) {
   const appDefinitionName = `${strings.upperCase(appId)}_DEFINITION`;
   const appTitleCase = strings.titleCase(appId);
+  const appCamelCase = strings.camelCase(appTitleCase);
 
   const groupTitleCase = strings.titleCase(groupdValue);
 
@@ -204,13 +205,11 @@ function generateContractPosition(appId: string, groupId: string, groupdValue: s
 
   import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
   import { Register } from '~app-toolkit/decorators';
-  // helper for displayProps
-  //import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
-  //import { ContractType } from '~position/contract.interface';
   import { PositionFetcher } from '~position/position-fetcher.interface';
   import { ContractPosition } from '~position/position.interface';
   import { Network } from '~types/network.interface';
   
+  import { ${appTitleCase}ContractFactory } from '../contracts';
   import { ${appDefinitionName} } from '../${appId}.definition';
   
   const appId = ${appDefinitionName}.id;
@@ -219,39 +218,12 @@ function generateContractPosition(appId: string, groupId: string, groupdValue: s
   
   @Register.ContractPositionFetcher({ appId, groupId, network })
   export class ${networkTitleCase}${appTitleCase}${groupTitleCase}ContractPositionFetcher implements PositionFetcher<ContractPosition> {
-    constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
+    constructor(
+      @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
+      @Inject(${appTitleCase}ContractFactory) private readonly ${appCamelCase}ContractFactory: ${appTitleCase}ContractFactory,
+    ) {}
   
     async getPositions() {
-      // In case you need tokens defined in the token-fetchers, here's how you can get those
-      /*const appTokens = await this.appToolkit.getAppTokenPositions({
-        appId: ${appDefinitionName}.id,
-        // replace "token" with the appropriate group id in order to fetch app tokens
-        groupIds: [${appDefinitionName}.groups.token.id],
-        network,
-      });*/
-  
-      // This is the shape of a position the function could return
-      /*const positions = appTokens.map(token => {
-        const position = {
-          address: token.address,
-          type: ContractType.POSITION,
-          network,
-          appId,
-          groupId,
-          tokens: [token],
-  
-          dataProps: {},
-  
-          displayProps: {
-            label: token.symbol,
-            images: token.displayProps.images,
-            secondaryLabel: buildDollarDisplayItem(token.price),
-          },
-        };
-        return position;
-      });
-  
-      return positions;*/
       return [];
     }
   }
