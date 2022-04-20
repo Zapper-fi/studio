@@ -37,7 +37,7 @@ jobs:
 
       - name: Get Package Version
         id: package-version
-        uses: martinbeentjes/npm-get-version-action@master
+        uses: martinbeentjes/npm-get-version-action@main
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
