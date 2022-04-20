@@ -1,7 +1,12 @@
 ## Description
 
-Which problem(s) does it solve and how? What does this PR add?
+<!-- Provide a description of your changeset -->
+
+## Checklist
+
+- [] I have followed the [Contributing Guidelines](../CONTRIBUTING.md)
+- [] (optional) As a contributor, my Ethereum address/ENS is:
 
 ## How to test?
 
-What steps can be followed to test this feature? What block chain addresses can be used to test this feature?
+<!-- Provide a way to test your changeset, perhaps addresses -->
