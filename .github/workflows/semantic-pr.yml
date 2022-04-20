@@ -20,16 +20,3 @@ jobs:
           wip: true
           validateSingleCommit: true
           validateSingleCommitMatchesPrTitle: true
-          types: |
-            breaking
-            revert
-            feat
-            feature
-            fix
-            refactor
-            docs
-            build
-            test
-            ci
-            chore
-          
