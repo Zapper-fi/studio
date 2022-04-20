@@ -1,8 +1,7 @@
-name: Release Test
+name: Semantic Release
 
 on:
-  push:
-    branches: ['semantic-release']
+  workflow_dispatch:
 jobs:
   release:
     name: Release
