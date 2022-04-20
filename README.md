@@ -9,6 +9,8 @@
     <a href="https://zapper.fi/discord"><b>Discord</b></a>
 </p>
 
+bleh
+
 ## Description
 
 Zapper Studio is a platform which enables developers in our community to integrate Web3 applications into Zapper. Integrations can support fetching tokens and contract positions, retrieving a wallet's balances, calculating TVL, and more to come in the future. These adapters enrich the Zapper API, and all of its consumers, including our own mobile and web apps.
