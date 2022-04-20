@@ -21,7 +21,7 @@ export const DEFAULT_REGISTRY: Record<
   [Network.AVALANCHE_MAINNET]: 'https://avalanche.public-rpc.com',
   [Network.BINANCE_SMART_CHAIN_MAINNET]: 'https://bsc-dataseed.binance.org/',
   [Network.CELO_MAINNET]: 'https://forno.celo.org',
-  [Network.ETHEREUM_MAINNET]: 'https://nodes.mewapi.io/rpc/eth',
+  [Network.ETHEREUM_MAINNET]: 'https://eth-rpc.gateway.pokt.network',
   [Network.FANTOM_OPERA_MAINNET]: 'https://rpc.ftm.tools/',
   [Network.GNOSIS_MAINNET]: 'https://rpc.gnosischain.com/',
   [Network.HARMONY_MAINNET]: 'https://harmony.public-rpc.com',
