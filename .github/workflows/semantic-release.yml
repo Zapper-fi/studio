@@ -50,5 +50,5 @@ jobs:
             ⚙️ _This pull request was opened automatically from Zapper-fi/studio._
 
             ${{ needs.release.outputs.changelog }}
-          base: master
+          base: main
           delete-branch: true
