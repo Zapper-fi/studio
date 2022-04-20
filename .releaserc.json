@@ -1,5 +1,6 @@
 {
   "branches": ["main"],
+  "tagFormat": "${version}",
   "plugins": [
     ["@semantic-release/npm", {
       "npmPublish": false

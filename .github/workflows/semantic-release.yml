@@ -35,6 +35,9 @@ jobs:
       - name: Bump Version
         run: pnpm semantic-release
 
+      - name: Delete Automatic Tag
+        run: "git push --delete origin $(git describe --tags $(git rev-list --tags --max-count=1))"
+
       - name: Get Package Version
         id: package-version
         uses: martinbeentjes/npm-get-version-action@main
@@ -48,7 +51,5 @@ jobs:
           commit-message: "chore(release): Release ${{ steps.package-version.outputs.current-version }}"
           body: |
             ⚙️ _This pull request was opened automatically from Zapper-fi/studio._
-
-            ${{ needs.release.outputs.changelog }}
           base: main
           delete-branch: true
