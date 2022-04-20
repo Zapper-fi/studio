@@ -3,6 +3,5 @@
   "arrowParens": "avoid",
   "trailingComma": "all",
   "printWidth": 120,
-  "semi": true,
-  "parser": "typescript"
+  "semi": true
 }

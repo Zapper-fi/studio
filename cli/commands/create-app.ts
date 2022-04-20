@@ -44,7 +44,10 @@ export default class CreateApp extends Command {
 
     const generatedCode = generateDefinitionFile(appId, appName, appDescription, appUrl, networks);
     const config = await prettier.resolveConfig(process.cwd());
-    fse.writeFileSync(`./src/apps/${appId}/${appId}.definition.ts`, prettier.format(generatedCode, config));
+    fse.writeFileSync(
+      `./src/apps/${appId}/${appId}.definition.ts`,
+      prettier.format(generatedCode, { ...config, parser: 'typescript ' }),
+    );
     this.log(`You can now fill/update ${appId}.definition.ts`);
   }
 }
