@@ -18,7 +18,7 @@
     "test:watch": "jest --watch",
     "publish:npm": "pnpm publish --access public",
     "start": "nest start",
-    "semantic-release": "semantic-release -d",
+    "semantic-release": "semantic-release",
     "test:integration": "jest --runInBand --forceExit --config jest.integration.config.js"
   },
   "dependencies": {
