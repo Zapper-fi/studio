@@ -11,9 +11,12 @@
 
 ## Description
 
-Zapper Studio is an open-source github repo, housing the code for defi integrations, such as fetching balances for tokens and contract positions, that populate the information shown in Zapper’s frontend UI, Zapper’s data APIs, and the entities who rely on this data for their own app experiences
+Zapper Studio is a platform which enables developers in our community to integrate Web3 applications into Zapper. Integrations can support fetching tokens and contract positions, retrieving a wallet's balances, calculating TVL, and more to come in the future. These adapters enrich the Zapper API, and all of its consumers, including our own mobile and web apps.
 
 ## Getting Started
+
+You can get started building immediately! </br>
+See <a href="https://studio-docs.zapper.fi/">Zapper Studio docs</a> for more details
 
 ### Installation
 
