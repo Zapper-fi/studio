@@ -79,9 +79,9 @@ jobs:
 
   bump_zapper_studio:
     name: Bump on Zapper API
-    needs: [release]
+    needs: [publish]
     runs-on: ubuntu-latest
-    if: ${{ needs.release.outputs.published == 'true' }}
+    if: ${{ needs.publish.outputs.published == 'true' }}
     strategy:
       matrix:
         repository: [Zapper-fi/zapper-api]  
