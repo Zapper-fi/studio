@@ -6,7 +6,7 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
-    "lib": ["ES2020"],
+    "lib": ["ES2020", "ES2021.String"],
     "target": "es6",
     "noLib": false,
     "esModuleInterop": true,
@@ -24,5 +24,5 @@
       "~*": ["./*"]
     }
   },
-  "include": ["./src/**/*"]
+  "include": ["./src/**/*", "./cli/**/*"]
 }
