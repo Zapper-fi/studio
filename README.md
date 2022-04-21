@@ -1,5 +1,3 @@
-
-
 <h1 align="center" style="border-bottom: none">
     <b>
         <a href="https://zapper.fi/">
@@ -65,7 +63,7 @@ pnpm studio generate:contract-factory [app-id]
 
 ## Contributing
 
-Read our [Contribution Guide](contribution.md)
+Read our [Contribution Guide](./CONTRIBUTING.md)
 
 ### Contributing new commands
 
