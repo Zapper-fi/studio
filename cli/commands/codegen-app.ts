@@ -62,7 +62,7 @@ function generateClassNamesForModule(appId: string, appGroupType: string, networ
   const appTitleCase = strings.titleCase(appId);
   const typeTitleCase = strings.titleCase(appGroupType);
   const networkTitleCase = strings.titleCase(networkRaw);
-  const appGroupIdTitleCase = strings.titleCase(appGroupId);
+  const appGroupIdTitleCase = strings.titleCase(appGroupId || '');
 
   return dedent`\n      ${networkTitleCase}${appTitleCase}${appGroupIdTitleCase}${typeTitleCase}Fetcher,`;
 }
@@ -76,7 +76,7 @@ function generateImportStatementForModule(
   const appTitleCase = strings.titleCase(appId);
   const networkTitleCase = strings.titleCase(networkRaw);
   const typeTitleCase = strings.titleCase(appGroupType);
-  const appGroupIdTitleCase = strings.titleCase(appGroupId);
+  const appGroupIdTitleCase = strings.titleCase(appGroupId || '');
 
   const filename =
     appGroupType === 'balance' ? `${appId}.${appGroupType}-fetcher` : `${appId}.${appGroupId}.${appGroupType}-fetcher`;
