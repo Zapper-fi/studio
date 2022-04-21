@@ -1,0 +1,78 @@
+{
+  "projectName": "studio",
+  "projectOwner": "Zapper-fi",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 64,
+  "commit": false,
+  "commitConvention": "angular",
+  "contributors": [
+    {
+      "login": "JForsaken",
+      "name": "Justin D'Errico",
+      "avatar_url": "https://avatars.githubusercontent.com/u/17734052?v=4",
+      "profile": "https://www.linkedin.com/in/justin-d-errico-33b76113a/",
+      "contributions": [
+        "code",
+        "question",
+        "maintenance"
+      ]
+    },
+    {
+      "login": "immasandwich",
+      "name": "immasandwich",
+      "avatar_url": "https://avatars.githubusercontent.com/u/22452366?v=4",
+      "profile": "https://github.com/immasandwich",
+      "contributions": [
+        "code",
+        "question",
+        "maintenance"
+      ]
+    },
+    {
+      "login": "wpoulin",
+      "name": "William Poulin",
+      "avatar_url": "https://avatars.githubusercontent.com/u/18474228?v=4",
+      "profile": "https://github.com/wpoulin",
+      "contributions": [
+        "code",
+        "question",
+        "maintenance"
+      ]
+    },
+    {
+      "login": "xdrdak",
+      "name": "Xavier Drdak",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1198051?v=4",
+      "profile": "http://xdrdak.github.io/",
+      "contributions": [
+        "code",
+        "question",
+        "maintenance"
+      ]
+    },
+    {
+      "login": "0xMaxim",
+      "name": "0xMaxim",
+      "avatar_url": "https://avatars.githubusercontent.com/u/57536175?v=4",
+      "profile": "https://github.com/0xMaxim",
+      "contributions": [
+        "doc",
+        "question"
+      ]
+    },
+    {
+      "login": "0xYYY",
+      "name": "YYY",
+      "avatar_url": "https://avatars.githubusercontent.com/u/86655648?v=4",
+      "profile": "https://github.com/0xYYY",
+      "contributions": [
+        "bug"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7
+}
