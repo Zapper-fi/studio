@@ -1,4 +1,7 @@
 <h1 align="center" style="border-bottom: none">
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-6-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
     <b>
         <a href="https://zapper.fi/">
             <img alt="Zapper Studio" width="408px" src="https://user-images.githubusercontent.com/22452366/164318940-1c49ceaf-4160-49bb-ac57-f217bce47831.png" />
@@ -80,3 +83,28 @@ Join our community on <a href="https://zapper.fi/discord">Discord</a>
 ## License
 
 This repository is under the [Business Source License 1.1](LICENSE)
+
+## Contributors ✨
+
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="https://www.linkedin.com/in/justin-d-errico-33b76113a/"><img src="https://avatars.githubusercontent.com/u/17734052?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Justin D'Errico</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=JForsaken" title="Code">💻</a> <a href="#question-JForsaken" title="Answering Questions">💬</a> <a href="#maintenance-JForsaken" title="Maintenance">🚧</a></td>
+    <td align="center"><a href="https://github.com/immasandwich"><img src="https://avatars.githubusercontent.com/u/22452366?v=4?s=64" width="64px;" alt=""/><br /><sub><b>immasandwich</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=immasandwich" title="Code">💻</a> <a href="#question-immasandwich" title="Answering Questions">💬</a> <a href="#maintenance-immasandwich" title="Maintenance">🚧</a></td>
+    <td align="center"><a href="https://github.com/wpoulin"><img src="https://avatars.githubusercontent.com/u/18474228?v=4?s=64" width="64px;" alt=""/><br /><sub><b>William Poulin</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=wpoulin" title="Code">💻</a> <a href="#question-wpoulin" title="Answering Questions">💬</a> <a href="#maintenance-wpoulin" title="Maintenance">🚧</a></td>
+    <td align="center"><a href="http://xdrdak.github.io/"><img src="https://avatars.githubusercontent.com/u/1198051?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Xavier Drdak</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=xdrdak" title="Code">💻</a> <a href="#question-xdrdak" title="Answering Questions">💬</a> <a href="#maintenance-xdrdak" title="Maintenance">🚧</a></td>
+    <td align="center"><a href="https://github.com/0xMaxim"><img src="https://avatars.githubusercontent.com/u/57536175?v=4?s=64" width="64px;" alt=""/><br /><sub><b>0xMaxim</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=0xMaxim" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/0xYYY"><img src="https://avatars.githubusercontent.com/u/86655648?v=4?s=64" width="64px;" alt=""/><br /><sub><b>YYY</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/issues?q=author%3A0xYYY" title="Bug reports">🐛</a></td>
+  </tr>
+</table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
