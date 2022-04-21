@@ -81,4 +81,4 @@ Join our community on <a href="https://zapper.fi/discord">Discord</a>
 
 ## License
 
-This repository is under the [Business Source License](LICENSE)
+This repository is under the [Business Source License 1.1](LICENSE)
