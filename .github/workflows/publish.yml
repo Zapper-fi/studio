@@ -37,9 +37,6 @@ jobs:
           version: 6.23.2
           run_install: true
 
-      - name: Prepare Build
-        run: pnpm build
-
       - name: Automatic GitHub Release
         uses: justincy/github-action-npm-release@2.0.1
         id: release
