@@ -1,3 +1,10 @@
+## [0.2.4](https://github.com/Zapper-fi/studio/compare/0.2.3...0.2.4) (2022-04-22)
+
+
+### Bug Fixes
+
+* Use single quotes for release body on publish in case commit message has double quotes ([#216](https://github.com/Zapper-fi/studio/issues/216)) ([20927f3](https://github.com/Zapper-fi/studio/commit/20927f37ad292b48148f5f9a01e4c6a5c1461130))
+
 ## [0.2.3](https://github.com/Zapper-fi/studio/compare/0.2.2...0.2.3) (2022-04-22)
 
 
