@@ -5,6 +5,13 @@
 
 * Use single quotes for release body on publish in case commit message has double quotes ([#216](https://github.com/Zapper-fi/studio/issues/216)) ([20927f3](https://github.com/Zapper-fi/studio/commit/20927f37ad292b48148f5f9a01e4c6a5c1461130))
 
+### [0.2.5](https://github.com/Zapper-fi/studio/compare/0.2.4...v0.2.5) (2022-04-22)
+
+
+### Bug Fixes
+
+* Use release-please in favor of semantic-release ([#221](https://github.com/Zapper-fi/studio/issues/221)) ([aa25404](https://github.com/Zapper-fi/studio/commit/aa25404564f7438fef5d88ef45e1834d5fd50aa0))
+
 ## [0.2.3](https://github.com/Zapper-fi/studio/compare/0.2.2...0.2.3) (2022-04-22)
 
 
