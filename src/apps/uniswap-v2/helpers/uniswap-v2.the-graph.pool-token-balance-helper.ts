@@ -113,7 +113,7 @@ export class UniswapV2TheGraphPoolTokenBalanceHelper {
     const prices = await this.appToolkit.getBaseTokenPrices(network);
     const pricesByAddress = keyBy(prices, p => p.address);
     const graphHelper = this.appToolkit.helpers.theGraphHelper;
-    const data = await graphHelper.request<BalanceData>({
+    const data = await graphHelper.requestGraph<BalanceData>({
       endpoint: subgraphUrl,
       query: GET_BALANCE_QUERY,
       variables: { address: address.toLowerCase() },
