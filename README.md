@@ -74,6 +74,16 @@ You can quickly spin up a typescript library for using an ABI by running the fol
 pnpm studio generate:contract-factory [app-id]
 ```
 
+## Enabling environment specific configuration
+
+Simply copy `.env.sample` to `.env` and edit the configuration file.
+
+### ENABLED_APPS
+
+Control which app to enable on startup. Particularly useful to keep local build times snappy.
+When developing your own app, it's recommended to add its identifier (aka: the folder name) and it's dependant apps
+(also their respective folder name) into this configuration key. See the `.env` file for further details.
+
 ## Contributing
 
 Read our [Contribution Guide](./CONTRIBUTING.md)
