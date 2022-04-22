@@ -1,4 +1,4 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 
 import { AppTokenPosition } from '~position/position.interface';
 import { AppGroupsDefinition } from '~position/position.service';
@@ -23,6 +23,7 @@ type CurveV1PoolTokenHelperParams = {
   baseCurveTokens?: AppTokenPosition[];
 };
 
+@Injectable()
 export class CurveV1PoolTokenHelper {
   constructor(
     @Inject(CurvePoolTokenHelper)

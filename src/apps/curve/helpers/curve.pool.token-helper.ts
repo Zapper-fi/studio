@@ -1,4 +1,4 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { BigNumber, BigNumberish } from 'ethers';
 import { compact, isUndefined } from 'lodash';
 
@@ -64,6 +64,7 @@ const isMetaPool = (token: Token) =>
   token.appId === CURVE_DEFINITION.id &&
   token.groupId === CURVE_DEFINITION.groups.pool.id;
 
+@Injectable()
 export class CurvePoolTokenHelper {
   constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
