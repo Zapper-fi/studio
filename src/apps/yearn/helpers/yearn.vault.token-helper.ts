@@ -37,10 +37,6 @@ export class YearnVaultTokenHelper {
     private readonly tokenDefinitionsResolver: YearnVaultTokenDefinitionsResolver,
   ) {}
 
-  onApplicationBootstrap() {
-    console.log('douille');
-  }
-
   private async resolvePricePerShare({
     vaultDefinition,
     network,
