@@ -16,7 +16,7 @@ jobs:
         id: release
         with:
           release-type: node
-          package-name: test-release-please
+          package-name: '@zapper-fi/studio'
 
       - name: Checkout repository
         uses: actions/checkout@v2
