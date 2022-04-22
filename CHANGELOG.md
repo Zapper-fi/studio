@@ -1,3 +1,10 @@
+## [0.2.1](https://github.com/Zapper-fi/studio/compare/0.2.0...0.2.1) (2022-04-22)
+
+
+### Bug Fixes
+
+* Move build step to publish step ([#207](https://github.com/Zapper-fi/studio/pull/207)) ([085694a](https://github.com/Zapper-fi/studio/commit/085694a1d457f902497e806ed411e056f34585cd))
+
 # [0.2.0](https://github.com/Zapper-fi/studio/compare/0.1.1...0.2.0) (2022-04-22)
 
 
