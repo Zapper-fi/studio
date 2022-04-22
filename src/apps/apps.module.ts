@@ -1,6 +1,7 @@
 import { readdirSync } from 'fs';
 
 import { DynamicModule, Module, Type } from '@nestjs/common';
+import chalk from 'chalk';
 import { compact } from 'lodash';
 
 import { DynamicApps } from '~app/app.dynamic-module';
@@ -25,9 +26,12 @@ export class AppsModule {
     // Dynamically import the apps
     const appsModules = await Promise.all(
       filteredAppIds.map(async appId => {
-        // Do not include any deprecated apps
-        const definition = await importAppDefinition(appId);
-        if (!definition || definition.deprecated) return null;
+        try {
+          const definition = await importAppDefinition(appId);
+          if (definition?.deprecated) return null;
+        } catch (e) {
+          console.error(chalk.yellow(`No definition file found for "${appId}"`));
+        }
 
         // Dynamically import the module
         const klass = await importAppModule(appId);

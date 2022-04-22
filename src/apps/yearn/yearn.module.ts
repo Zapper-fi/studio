@@ -8,7 +8,12 @@ import { YearnVaultTokenDefinitionsResolver } from './helpers/yearn.vault.token-
 import { YearnVaultTokenHelper } from './helpers/yearn.vault.token-helper';
 
 @Module({
-  providers: [YearnVaultTokenHelper, YearnLikeVaultTokenHelper, YearnVaultTokenDefinitionsResolver],
+  providers: [
+    YearnVaultTokenHelper,
+    YearnLikeVaultTokenHelper,
+    YearnVaultTokenDefinitionsResolver,
+    YearnContractFactory,
+  ],
   exports: [YearnLikeVaultTokenHelper, YearnContractFactory],
 })
 export class YearnAppModule extends AbstractDynamicApp<YearnAppModule>() {}

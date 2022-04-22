@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 
 import { AbstractDynamicApp } from '~app/app.dynamic-module';
+import { CurveAppModule } from '~apps/curve';
 import { SynthetixAppModule } from '~apps/synthetix';
 import { YearnAppModule } from '~apps/yearn/yearn.module';
 
@@ -23,6 +24,7 @@ import { PolygonPickleJarTokenFetcher } from './polygon/pickle.jar.token-fetcher
 @Module({
   imports: [
     SynthetixAppModule.externallyConfigured(SynthetixAppModule, 0),
+    CurveAppModule.externallyConfigured(CurveAppModule, 0),
     YearnAppModule.externallyConfigured(YearnAppModule, 0),
   ],
   providers: [
