@@ -1,3 +1,16 @@
+# [0.2.0](https://github.com/Zapper-fi/studio/compare/0.1.1...0.2.0) (2022-04-22)
+
+
+### Bug Fixes
+
+* **cli:** string upperCase and kebabCase error ([#199](https://github.com/Zapper-fi/studio/issues/199)) ([c765c78](https://github.com/Zapper-fi/studio/commit/c765c78a7ef2e865929674d1e97eaf893ce1d7f4))
+* Studio CLI failing on prettier ([#194](https://github.com/Zapper-fi/studio/issues/194)) ([a03425c](https://github.com/Zapper-fi/studio/commit/a03425c16901ca01ce6109c5bb070307030f017f))
+
+
+### Features
+
+* Extract Tokemak to Studio ([#204](https://github.com/Zapper-fi/studio/issues/204)) ([42a7f80](https://github.com/Zapper-fi/studio/commit/42a7f8074bafbabe3b1e519e8258fc86ff949844))
+
 ## [0.1.1](https://github.com/Zapper-fi/studio/compare/0.1.0...0.1.1) (2022-04-20)
 
 
