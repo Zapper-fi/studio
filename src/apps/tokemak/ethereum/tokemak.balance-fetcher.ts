@@ -67,7 +67,7 @@ export class EthereumTokemakBalanceFetcher implements BalanceFetcher {
       `studio:${TOKEMAK_DEFINITION.id}:${TOKEMAK_DEFINITION.groups.farm}:${network}:${address}:claimable`,
     ttl: 15 * 60, // 15 min
   })
-  async getCurrentCycleRewardsHash() {
+  async getCycleRewardsHash() {
     const multicall = this.appToolkit.getMulticall(network);
     const rewardsHashContract = this.tokemakContractFactory.tokemakRewardsHash({
       network,
@@ -88,7 +88,7 @@ export class EthereumTokemakBalanceFetcher implements BalanceFetcher {
   }
 
   async getClaimableBalanceData(address: string) {
-    const [latestClaimableRewardsHash, _] = await this.getCurrentCycleRewardsHash();
+    const [latestClaimableRewardsHash, _] = await this.getCycleRewardsHash();
     const url = `https://ipfs.tokemaklabs.xyz/ipfs/${latestClaimableRewardsHash}/${address.toLowerCase()}.json`;
     const data: ClaimableDataResponse['payload'] | null = await Axios.get<ClaimableDataResponse>(url)
       .then(t => t.data.payload)
