@@ -80,7 +80,7 @@ export class CacheOnIntervalService implements OnModuleInit, OnModuleDestroy {
           await cacheManager.set(cacheKey, liveData, { ttl });
           return liveData;
         } catch (e) {
-          logger.error(`@CacheOnInterval error for ${instance.name}#${methodName}`, e);
+          logger.error(`@CacheOnInterval error for ${instance.constructor.name}#${methodName}`, e);
         }
       }
     };
