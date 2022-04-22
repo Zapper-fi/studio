@@ -37,6 +37,9 @@ jobs:
           version: 6.23.2
           run_install: true
 
+      - name: Prepare Build
+        run: pnpm build
+
       - name: Automatic GitHub Release
         uses: justincy/github-action-npm-release@2.0.1
         id: release
@@ -83,7 +86,7 @@ jobs:
     if: ${{ needs.publish.outputs.published == 'true' }}
     strategy:
       matrix:
-        repository: [Zapper-fi/zapper-api]  
+        repository: [Zapper-fi/zapper-api]
     steps:
       - name: Checkout ${{ matrix.repository }}
         uses: actions/checkout@v2
