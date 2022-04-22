@@ -4,12 +4,47 @@ on:
   push:
     branches:
       - main
-
+name: release-please
 jobs:
   release-please:
     runs-on: ubuntu-latest
+    env:
+      NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
     steps:
       - uses: google-github-actions/release-please-action@v3
         id: release
         with:
           release-type: node
+          package-name: test-release-please
+
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+        if: ${{ steps.release.outputs.release_created }}
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+          registry-url: 'https://registry.npmjs.org'
+        if: ${{ steps.release.outputs.release_created }}
+
+      - name: Cache pnpm modules
+        uses: actions/cache@v2
+        with:
+          path: ~/.pnpm-store
+          key: ${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-
+        if: ${{ steps.release.outputs.release_created }}
+
+      - uses: pnpm/action-setup@v2.0.1
+        with:
+          version: 6.23.2
+          run_install: true
+        if: ${{ steps.release.outputs.release_created }}
+
+      - name: Publish to NPM
+        run: pnpm publish:npm
+        if: ${{ steps.release.outputs.release_created }}
