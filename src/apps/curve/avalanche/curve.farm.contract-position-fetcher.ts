@@ -1,5 +1,4 @@
 import { Inject } from '@nestjs/common';
-import { compact } from 'lodash';
 
 import { SingleStakingFarmContractPositionHelper } from '~app-toolkit';
 import { Register } from '~app-toolkit/decorators';
@@ -38,7 +37,7 @@ export class AvalancheCurveFarmContractPositionFetcher implements PositionFetche
       appId,
       groupId,
       dependencies: [{ appId: CURVE_DEFINITION.id, groupIds: [CURVE_DEFINITION.groups.pool.id], network }],
-      resolveFarmAddresses: () => compact(definitions.map(v => v.gaugeAddress)),
+      resolveFarmAddresses: () => definitions.map(v => v.gaugeAddress ?? null),
       resolveFarmContract: ({ address, network }) => this.curveContractFactory.curveGaugeV2({ address, network }),
       resolveStakedTokenAddress: ({ contract, multicall }) => multicall.wrap(contract).lp_token(),
       resolveRewardTokenAddresses: this.curveGaugeV2RewardTokenStrategy.build(),
