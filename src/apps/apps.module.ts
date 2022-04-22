@@ -19,7 +19,8 @@ export class AppsModule {
     // Activate only apps that are requested to be active (for focused local dev)
     const enabledAppIds =
       process.env.NODE_ENV === 'production' ? [] : (process.env.ENABLED_APPS ?? '').split(',').filter(Boolean);
-    const enabledHelpersAppIds = (process.env.ENABLED_HELPERS ?? '').split(',').filter(Boolean);
+    const enabledHelpersAppIds =
+      process.env.NODE_ENV === 'production' ? [] : (process.env.ENABLED_HELPERS ?? '').split(',').filter(Boolean);
 
     const filteredAppIds = enabledAppIds.length ? allAppIds.filter(appId => enabledAppIds.includes(appId)) : allAppIds;
 
