@@ -30,7 +30,6 @@ export class EthereumOlympusSOhmTokenFetcher implements PositionFetcher<AppToken
       appId: OLYMPUS_DEFINITION.id,
       groupId: OLYMPUS_DEFINITION.groups.gOhm.id,
       network: Network.ETHEREUM_MAINNET,
-      dependencies: [{ appId, groupIds: [OLYMPUS_DEFINITION.groups.sOhm.id], network }],
       address: '0x04906695d6d12cf5459975d7c3c03356e4ccd460', // sOHM
       resolveContract: ({ address, network }) => this.contractFactory.olympusSOhmToken({ address, network }),
       resolveUnderlyingTokenAddress: () => '0x64aa3364f17a4d01c6f1751fd97c2bd3d7e7f1d5', // OHM
