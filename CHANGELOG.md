@@ -1,3 +1,10 @@
+## [0.2.3](https://github.com/Zapper-fi/studio/compare/0.2.2...0.2.3) (2022-04-22)
+
+
+### Bug Fixes
+
+* Add Tokemak, Liquity, and Teddy Cash indexes ([#213](https://github.com/Zapper-fi/studio/issues/213)) ([1f1ab78](https://github.com/Zapper-fi/studio/commit/1f1ab789c58957e5e21b77d0e404c2336da9a366))
+
 ## [0.2.2](https://github.com/Zapper-fi/studio/compare/0.2.1...0.2.2) (2022-04-22)
 
 
