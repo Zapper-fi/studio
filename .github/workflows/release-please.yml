@@ -7,15 +7,19 @@ on:
 
 jobs:
   release-please:
+    name: Release
     runs-on: ubuntu-latest
-    env:
-      NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+    outputs:
+      published: ${{ steps.set_outputs.outputs.published }}
+      release: ${{ steps.set_outputs.outputs.release }}
+      changelog: ${{ steps.set_outputs.outputs.changelog }}
 
     steps:
       - uses: google-github-actions/release-please-action@v3
         id: release
         with:
           release-type: node
+          token: ${{ secrets.GH_ZAPPER_BOT }}
           package-name: '@zapper-fi/studio'
 
       - name: Checkout repository
@@ -47,4 +51,69 @@ jobs:
 
       - name: Publish to NPM
         run: pnpm publish:npm
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         if: ${{ steps.release.outputs.release_created }}
+    
+
+      - name: Fetch Release
+        id: fetch-latest-release
+        uses: thebritican/fetch-latest-release@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+        if: ${{ steps.release.outputs.release_created }}
+
+      - name: Set Outputs
+        id: set_outputs
+        run: |
+          echo "::set-output name=published::${{ steps.release.outputs.release_created }}"
+          echo "::set-output name=release::${{ steps.fetch-latest-release.outputs.name }}"
+          echo "::set-output name=changelog::${{ steps.fetch-latest-release.outputs.body }}"
+        if: ${{ steps.release.outputs.release_created }}
+
+  bump_zapper_studio:
+    name: Bump on Zapper API
+    needs: [release-please]
+    runs-on: ubuntu-latest
+    if: ${{ needs.release-please.outputs.published == 'true' }}
+    strategy:
+      matrix:
+        repository: [Zapper-fi/zapper-api]
+    steps:
+      - name: Checkout ${{ matrix.repository }}
+        uses: actions/checkout@v2
+        with:
+          repository: ${{ matrix.repository }}
+          fetch-depth: 0
+          token: ${{ secrets.GH_ZAPPER_BOT }}
+          ref: master
+
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+          registry-url: 'https://registry.npmjs.org'
+
+      - uses: pnpm/action-setup@v2.0.1
+        with:
+          version: 6.23.2
+          run_install: true
+
+      - name: Upgrade dependencies
+        run: |
+          pnpm up @zapper-fi/studio@latest
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ secrets.GH_ZAPPER_BOT }}
+          branch: ${{ steps.set_target_branch.outputs.target_branch }}
+          branch: bump-zapper-studio
+          title: '🎨🖌️ Bump Zapper Studio ${{ needs.release-please.outputs.release }}'
+          commit-message: Bump Zapper Studio
+          body: |
+            ⚙️ _This pull request was opened automatically from Zapper-fi/studio._
+
+            ${{ needs.release-please.outputs.changelog }}
+          base: master
+          delete-branch: true
