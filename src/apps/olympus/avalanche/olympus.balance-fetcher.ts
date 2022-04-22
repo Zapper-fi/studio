@@ -15,7 +15,7 @@ export class AvalancheOlympusBalanceFetcher implements BalanceFetcher {
   async getBalances(address: string) {
     const appId = OLYMPUS_DEFINITION.id;
     const network = Network.AVALANCHE_MAINNET;
-    const groupIds = [OLYMPUS_DEFINITION.groups.gOhm, OLYMPUS_DEFINITION.groups.wsOhmV1];
+    const groupIds = [OLYMPUS_DEFINITION.groups.gOhm.id, OLYMPUS_DEFINITION.groups.wsOhmV1.id];
 
     const assets = await Promise.all(
       groupIds.map(groupId =>
