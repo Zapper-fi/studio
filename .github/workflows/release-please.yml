@@ -106,7 +106,6 @@ jobs:
         uses: peter-evans/create-pull-request@v3
         with:
           token: ${{ secrets.GH_ZAPPER_BOT }}
-          branch: ${{ steps.set_target_branch.outputs.target_branch }}
           branch: bump-zapper-studio
           title: '🎨🖌️ Bump Zapper Studio ${{ needs.release-please.outputs.release }}'
           commit-message: Bump Zapper Studio
