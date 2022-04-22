@@ -17,7 +17,7 @@ export const DEFAULT_REGISTRY: Record<
   >,
   string
 > = {
-  [Network.ARBITRUM_MAINNET]: 'https://arbitrum.public-rpc.com',
+  [Network.ARBITRUM_MAINNET]: 'https://arb1.arbitrum.io/rpc',
   [Network.AVALANCHE_MAINNET]: 'https://avalanche.public-rpc.com',
   [Network.BINANCE_SMART_CHAIN_MAINNET]: 'https://bsc-dataseed.binance.org/',
   [Network.CELO_MAINNET]: 'https://forno.celo.org',
