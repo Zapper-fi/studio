@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 
 import { AbstractDynamicApp } from '~app/app.dynamic-module';
 import { SynthetixAppModule } from '~apps/synthetix';
-import { PositionModule } from '~position/position.module';
 
 import { TokemakContractFactory } from './contracts';
 import { EthereumTokemakBalanceFetcher } from './ethereum/tokemak.balance-fetcher';
@@ -12,7 +11,7 @@ import { EthereumTokemakTvlFetcher } from './ethereum/tokemak.tvl-fetcher';
 import { TokemakAppDefinition } from './tokemak.definition';
 
 @Module({
-  imports: [SynthetixAppModule.externallyConfigured(SynthetixAppModule, 0), PositionModule],
+  imports: [SynthetixAppModule.externallyConfigured(SynthetixAppModule, 0)],
   providers: [
     TokemakAppDefinition,
     TokemakContractFactory,
