@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import Axios from 'axios';
 
 import { Cache } from '~cache/cache.decorator';
-import { Network } from '~types/network.interface';
+import { Network, NETWORK_IDS } from '~types/network.interface';
 
 export type YearnVaultData = {
   inception: number;
@@ -77,7 +77,7 @@ type GetVaultDefinitionsParams = {
 export class YearnVaultTokenDefinitionsResolver {
   @Cache({
     instance: 'business',
-    key: network => `apps-v3:yearn:${network}:vault-data`,
+    key: network => `studio:yearn:${network}:vault-data`,
     ttl: 5 * 60, // 60 minutes
   })
   private async getVaultDefinitionsData(network: Network) {
