@@ -57,7 +57,7 @@ jobs:
 
       - name: Fetch Release
         id: fetch-latest-release
-        uses: thebritican/fetch-latest-release@v2
+        uses: gregziegan/fetch-latest-release@v2.0.0
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
         if: ${{ steps.release.outputs.release_created }}
