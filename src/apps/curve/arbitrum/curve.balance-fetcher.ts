@@ -1,9 +1,9 @@
 import { Inject } from '@nestjs/common';
 
-import { SingleStakingContractPositionBalanceHelper, TokenBalanceHelper } from '~app-toolkit';
 import { Register } from '~app-toolkit/decorators';
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
 import { BalanceFetcher } from '~balance/balance-fetcher.interface';
+import { APP_TOOLKIT, IAppToolkit } from '~lib';
 import { isClaimable } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 
@@ -13,14 +13,12 @@ import { CURVE_DEFINITION } from '../curve.definition';
 @Register.BalanceFetcher(CURVE_DEFINITION.id, Network.ARBITRUM_MAINNET)
 export class ArbitrumCurveBalanceFetcher implements BalanceFetcher {
   constructor(
-    @Inject(TokenBalanceHelper) private readonly tokenBalanceHelper: TokenBalanceHelper,
+    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(CurveContractFactory) private readonly curveContractFactory: CurveContractFactory,
-    @Inject(SingleStakingContractPositionBalanceHelper)
-    private readonly singleStakingContractPositionBalanceHelper: SingleStakingContractPositionBalanceHelper,
   ) {}
 
   private async getPoolTokenBalances(address: string) {
-    return this.tokenBalanceHelper.getTokenBalances({
+    return this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
       network: Network.ARBITRUM_MAINNET,
       appId: CURVE_DEFINITION.id,
       groupId: CURVE_DEFINITION.groups.pool.id,
@@ -29,7 +27,7 @@ export class ArbitrumCurveBalanceFetcher implements BalanceFetcher {
   }
 
   private async getStakedBalances(address: string) {
-    return this.singleStakingContractPositionBalanceHelper.getBalances<CurveGaugeV2>({
+    return this.appToolkit.helpers.singleStakingContractPositionBalanceHelper.getBalances<CurveGaugeV2>({
       address,
       appId: CURVE_DEFINITION.id,
       groupId: CURVE_DEFINITION.groups.farm.id,

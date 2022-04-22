@@ -1,8 +1,8 @@
 import { Inject } from '@nestjs/common';
 
-import { SingleStakingFarmContractPositionHelper } from '~app-toolkit';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { Register } from '~app-toolkit/decorators';
+import { APP_TOOLKIT, IAppToolkit } from '~lib';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
@@ -23,8 +23,7 @@ const network = Network.OPTIMISM_MAINNET;
 @Register.ContractPositionFetcher({ appId, groupId, network })
 export class OptimismCurveFarmContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
-    @Inject(SingleStakingFarmContractPositionHelper)
-    private readonly singleStakingFarmContractPositionHelper: SingleStakingFarmContractPositionHelper,
+    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(CurveContractFactory)
     private readonly curveContractFactory: CurveContractFactory,
     @Inject(CurveGaugeV2RoiStrategy)
@@ -38,7 +37,7 @@ export class OptimismCurveFarmContractPositionFetcher implements PositionFetcher
   ) {}
 
   private async getNGaugeFarms() {
-    return this.singleStakingFarmContractPositionHelper.getContractPositions<CurveNGauge>({
+    return this.appToolkit.helpers.singleStakingFarmContractPositionHelper.getContractPositions<CurveNGauge>({
       network,
       appId,
       groupId,
@@ -66,7 +65,7 @@ export class OptimismCurveFarmContractPositionFetcher implements PositionFetcher
 
   async getSingleGaugeFarms() {
     const definitions = [CURVE_V1_POOL_DEFINITIONS].flat().filter(v => !!v.gaugeAddress);
-    return this.singleStakingFarmContractPositionHelper.getContractPositions<CurveGaugeV2>({
+    return this.appToolkit.helpers.singleStakingFarmContractPositionHelper.getContractPositions<CurveGaugeV2>({
       network,
       appId,
       groupId,

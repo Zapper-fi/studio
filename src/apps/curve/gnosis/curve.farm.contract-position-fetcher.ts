@@ -1,7 +1,7 @@
 import { Inject } from '@nestjs/common';
 
-import { SingleStakingFarmContractPositionHelper } from '~app-toolkit';
 import { Register } from '~app-toolkit/decorators';
+import { APP_TOOLKIT, IAppToolkit } from '~lib';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
@@ -20,8 +20,7 @@ const network = Network.GNOSIS_MAINNET;
 @Register.ContractPositionFetcher({ appId, groupId, network })
 export class GnosisCurveFarmContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
-    @Inject(SingleStakingFarmContractPositionHelper)
-    private readonly singleStakingFarmContractPositionHelper: SingleStakingFarmContractPositionHelper,
+    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(CurveContractFactory)
     private readonly curveContractFactory: CurveContractFactory,
     @Inject(CurveGaugeV2RoiStrategy)
@@ -32,7 +31,7 @@ export class GnosisCurveFarmContractPositionFetcher implements PositionFetcher<C
 
   async getPositions() {
     const definitions = [CURVE_V1_POOL_DEFINITIONS].flat().filter(v => !!v.gaugeAddress);
-    return this.singleStakingFarmContractPositionHelper.getContractPositions<CurveGaugeV2>({
+    return this.appToolkit.helpers.singleStakingFarmContractPositionHelper.getContractPositions<CurveGaugeV2>({
       network,
       appId,
       groupId,
