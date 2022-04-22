@@ -1,7 +1,6 @@
 import { Inject } from '@nestjs/common';
 
 import { Register } from '~app-toolkit/decorators';
-import ALPHA_V1_DEFINITION from '~apps/alpha-v1/alpha-v1.definition';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
@@ -39,8 +38,8 @@ export class EthereumUniswapV2PoolTokenFetcher implements PositionFetcher<AppTok
       blockedPools: ['0x9cbfb60a09a9a33a10312da0f39977cbdb7fde23'], // Uniswap V2: SAITAMA - has a transfer fee (not supported by our zap)
       appTokenDependencies: [
         {
-          appId: ALPHA_V1_DEFINITION.id,
-          groupIds: [ALPHA_V1_DEFINITION.groups.lending.id],
+          appId: 'alpha-v1',
+          groupIds: ['lending'],
           network,
         },
       ],
