@@ -54,7 +54,6 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         if: ${{ steps.release.outputs.release_created }}
-    
 
       - name: Fetch Release
         id: fetch-latest-release
