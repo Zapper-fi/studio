@@ -1,6 +1,5 @@
 import { Inject } from '@nestjs/common';
 
-import { SingleStakingContractPositionBalanceHelper, TokenBalanceHelper } from '~app-toolkit';
 import { Register } from '~app-toolkit/decorators';
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
 import { BalanceFetcher } from '~balance/balance-fetcher.interface';
@@ -32,14 +31,11 @@ export class EthereumCurveBalanceFetcher implements BalanceFetcher {
     private readonly curveVotingEscrowContractPositionBalanceHelper: CurveVotingEscrowContractPositionBalanceHelper,
     @Inject(CurveVestingEscrowContractPositionBalanceHelper)
     private readonly curveVestingEscrowContractPositionBalanceHelper: CurveVestingEscrowContractPositionBalanceHelper,
-    @Inject(TokenBalanceHelper) private readonly tokenBalanceHelper: TokenBalanceHelper,
     @Inject(CurveContractFactory) private readonly curveContractFactory: CurveContractFactory,
-    @Inject(SingleStakingContractPositionBalanceHelper)
-    private readonly singleStakingContractPositionBalanceHelper: SingleStakingContractPositionBalanceHelper,
   ) {}
 
   private async getPoolTokenBalances(address: string) {
-    return this.tokenBalanceHelper.getTokenBalances({
+    return this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
       network,
       appId: CURVE_DEFINITION.id,
       groupId: CURVE_DEFINITION.groups.pool.id,
@@ -50,7 +46,7 @@ export class EthereumCurveBalanceFetcher implements BalanceFetcher {
   private async getStakedBalances(address: string) {
     return Promise.all([
       // Single Gauge
-      this.singleStakingContractPositionBalanceHelper.getBalances<CurveGauge>({
+      this.appToolkit.helpers.singleStakingContractPositionBalanceHelper.getBalances<CurveGauge>({
         address,
         network,
         appId: CURVE_DEFINITION.id,
@@ -62,7 +58,7 @@ export class EthereumCurveBalanceFetcher implements BalanceFetcher {
           multicall.wrap(contract).claimable_tokens(address),
       }),
       // Double Gauge
-      this.singleStakingContractPositionBalanceHelper.getBalances<CurveDoubleGauge>({
+      this.appToolkit.helpers.singleStakingContractPositionBalanceHelper.getBalances<CurveDoubleGauge>({
         address,
         network,
         appId: CURVE_DEFINITION.id,
@@ -92,7 +88,7 @@ export class EthereumCurveBalanceFetcher implements BalanceFetcher {
           return rewardBalances;
         },
       }),
-      this.singleStakingContractPositionBalanceHelper.getBalances<CurveNGauge>({
+      this.appToolkit.helpers.singleStakingContractPositionBalanceHelper.getBalances<CurveNGauge>({
         address,
         network,
         appId: CURVE_DEFINITION.id,
@@ -114,7 +110,7 @@ export class EthereumCurveBalanceFetcher implements BalanceFetcher {
           return rewardBalances;
         },
       }),
-      this.singleStakingContractPositionBalanceHelper.getBalances<CurveGaugeV2>({
+      this.appToolkit.helpers.singleStakingContractPositionBalanceHelper.getBalances<CurveGaugeV2>({
         address,
         network,
         appId: CURVE_DEFINITION.id,

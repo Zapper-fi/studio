@@ -1,8 +1,8 @@
 import { Inject } from '@nestjs/common';
 
-import { SingleStakingFarmContractPositionHelper } from '~app-toolkit';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { Register } from '~app-toolkit/decorators';
+import { APP_TOOLKIT, IAppToolkit } from '~lib';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
@@ -75,8 +75,7 @@ const network = Network.ETHEREUM_MAINNET;
 @Register.ContractPositionFetcher({ appId, groupId, network })
 export class EthereumCurveFarmContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
-    @Inject(SingleStakingFarmContractPositionHelper)
-    private readonly singleStakingFarmContractPositionHelper: SingleStakingFarmContractPositionHelper,
+    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(CurveContractFactory)
     private readonly curveContractFactory: CurveContractFactory,
     @Inject(CurveGaugeRoiStrategy)
@@ -88,7 +87,7 @@ export class EthereumCurveFarmContractPositionFetcher implements PositionFetcher
   ) {}
 
   private async getSingleGaugeFarms() {
-    return this.singleStakingFarmContractPositionHelper.getContractPositions<CurveGauge>({
+    return this.appToolkit.helpers.singleStakingFarmContractPositionHelper.getContractPositions<CurveGauge>({
       network,
       appId,
       groupId,
@@ -116,7 +115,7 @@ export class EthereumCurveFarmContractPositionFetcher implements PositionFetcher
   }
 
   private async getDoubleGaugeFarms() {
-    return this.singleStakingFarmContractPositionHelper.getContractPositions<CurveDoubleGauge>({
+    return this.appToolkit.helpers.singleStakingFarmContractPositionHelper.getContractPositions<CurveDoubleGauge>({
       network,
       appId,
       groupId,
@@ -149,7 +148,7 @@ export class EthereumCurveFarmContractPositionFetcher implements PositionFetcher
   }
 
   private async getNGaugeFarms() {
-    return this.singleStakingFarmContractPositionHelper.getContractPositions<CurveNGauge>({
+    return this.appToolkit.helpers.singleStakingFarmContractPositionHelper.getContractPositions<CurveNGauge>({
       network,
       appId,
       groupId,
@@ -189,7 +188,7 @@ export class EthereumCurveFarmContractPositionFetcher implements PositionFetcher
   }
 
   private async getNGaugeV2Farms() {
-    return this.singleStakingFarmContractPositionHelper.getContractPositions<CurveNGauge>({
+    return this.appToolkit.helpers.singleStakingFarmContractPositionHelper.getContractPositions<CurveNGauge>({
       network,
       appId,
       groupId,
