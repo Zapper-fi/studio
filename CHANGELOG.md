@@ -1,3 +1,15 @@
+## [0.2.2](https://github.com/Zapper-fi/studio/compare/0.2.1...0.2.2) (2022-04-22)
+
+
+### Bug Fixes
+
+* Removed CLI from tsconfig to fix dist structure in build ([#211](https://github.com/Zapper-fi/studio/issues/211)) ([858e51d](https://github.com/Zapper-fi/studio/commit/858e51d0188355fe26ddefdf406c4fd5fe7ded86))
+
+
+### Reverts
+
+* Revert "bug-fix: Removed CLI from tsconfig to fix dist structure in build (#209)" (#210) ([9cf6aec](https://github.com/Zapper-fi/studio/commit/9cf6aec1500d7d08832b177f851234d829e93808)), closes [#209](https://github.com/Zapper-fi/studio/issues/209) [#210](https://github.com/Zapper-fi/studio/issues/210)
+
 ## [0.2.1](https://github.com/Zapper-fi/studio/compare/0.2.0...0.2.1) (2022-04-22)
 
 
