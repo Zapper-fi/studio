@@ -1,4 +1,4 @@
-import { CACHE_MANAGER, Inject, Injectable, OnModuleInit } from '@nestjs/common';
+import { CACHE_MANAGER, Inject, Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { DiscoveryService, MetadataScanner, Reflector } from '@nestjs/core';
 import { Cache } from 'cache-manager';
 import { isNil } from 'lodash';
@@ -7,6 +7,8 @@ import { CacheOptions, CACHE_KEY, CACHE_TTL } from './cache.decorator';
 
 @Injectable()
 export class CacheService implements OnModuleInit {
+  private logger = new Logger(CacheService.name);
+
   constructor(
     @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
     @Inject(DiscoveryService) private readonly discoveryService: DiscoveryService,
@@ -39,6 +41,7 @@ export class CacheService implements OnModuleInit {
   }
 
   private registerCache(instance: any, methodName: string) {
+    const logger = this.logger;
     const methodRef = instance[methodName];
     const rawCacheKey: CacheOptions['key'] = this.reflector.get(CACHE_KEY, methodRef);
     const rawCacheTtl: CacheOptions['ttl'] = this.reflector.get(CACHE_TTL, methodRef);
@@ -59,10 +62,14 @@ export class CacheService implements OnModuleInit {
       if (cachedValue) {
         return cachedValue;
       } else {
-        const cacheTtl = extractTtl(rawCacheTtl, args);
-        const liveData = await methodRef.apply(this, args);
-        await cacheManager.set(cacheKey, liveData, { ttl: cacheTtl });
-        return liveData;
+        try {
+          const cacheTtl = extractTtl(rawCacheTtl, args);
+          const liveData = await methodRef.apply(this, args);
+          await cacheManager.set(cacheKey, liveData, { ttl: cacheTtl });
+          return liveData;
+        } catch (e) {
+          logger.error(`@Cache error for ${instance.constructor.name}#${methodName}`, e);
+        }
       }
     };
   }

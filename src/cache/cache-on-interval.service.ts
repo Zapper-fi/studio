@@ -49,6 +49,7 @@ export class CacheOnIntervalService implements OnModuleInit, OnModuleDestroy {
   }
 
   private registerCache(instance: any, methodName: string) {
+    const logger = this.logger;
     const methodRef = instance[methodName];
     const cacheKey: CacheOnIntervalOptions['key'] = this.reflector.get(CACHE_ON_INTERVAL_KEY, methodRef);
     const cacheTimeout: CacheOnIntervalOptions['timeout'] = this.reflector.get(CACHE_ON_INTERVAL_TIMEOUT, methodRef);
@@ -74,16 +75,24 @@ export class CacheOnIntervalService implements OnModuleInit, OnModuleDestroy {
       if (cachedValue) {
         return cachedValue;
       } else {
-        const liveData = await methodRef.apply(instance, args);
-        await cacheManager.set(cacheKey, liveData, { ttl });
-        return liveData;
+        try {
+          const liveData = await methodRef.apply(instance, args);
+          await cacheManager.set(cacheKey, liveData, { ttl });
+          return liveData;
+        } catch (e) {
+          logger.error(`@CacheOnInterval error for ${instance.name}#${methodName}`, e);
+        }
       }
     };
 
     // Save the interval
     const interval = setInterval(async () => {
-      const liveData = await methodRef.apply(instance);
-      await cacheManager.set(cacheKey, liveData, { ttl });
+      try {
+        const liveData = await methodRef.apply(instance);
+        await cacheManager.set(cacheKey, liveData, { ttl });
+      } catch (e) {
+        logger.error(`@CacheOnInterval error for ${instance.constructor.name}#${methodName}`, e);
+      }
     }, cacheTimeout);
     this.intervals.push(interval);
   }
