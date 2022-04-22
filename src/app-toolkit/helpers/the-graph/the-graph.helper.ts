@@ -4,15 +4,20 @@ import { Variables } from 'graphql-request/dist/types';
 
 type RequestParams = {
   endpoint: string;
-  query: string;
+  query: string | { present: string; past: string };
   variables?: Variables;
   headers?: Record<string, string>;
 };
 
 @Injectable()
 export class TheGraphHelper {
-  async request<T>({ endpoint, query, variables, headers }: RequestParams) {
+  async request<T>({ endpoint, query, variables = {}, headers }: RequestParams) {
     const client = new GraphQLClient(endpoint, { headers });
-    return client.request<T>(query, variables);
+
+    const presentQuery = typeof query === 'string' ? query : query.present;
+    const pastQuery = typeof query === 'string' ? null : query.past;
+    const finalQuery = typeof variables.blockTag === 'number' && pastQuery ? pastQuery : presentQuery;
+
+    return client.request<T>(finalQuery, variables);
   }
 }
