@@ -56,7 +56,6 @@ export class EthereumTokemakBalanceFetcher implements BalanceFetcher {
       network,
       resolveContract: ({ address, network }) => this.tokemakContractFactory.tokemakTokeStaking({ address, network }),
       resolveStakedTokenBalance: ({ contract, address, multicall }) => multicall.wrap(contract).balanceOf(address),
-      //Below will always equal to zero, since rewards are global
       resolveRewardTokenBalances: () => 0,
     });
   }
