@@ -29,6 +29,7 @@ type ClaimableDataResponse = {
 
 const network = Network.ETHEREUM_MAINNET;
 const rewardContractAddress = '0x79dd22579112d8a5f7347c5ed7e609e60da713c5';
+const rewardsHashContractAddress = '0x5ec3EC6A8aC774c7d53665ebc5DDf89145d02fB6';
 
 @Register.BalanceFetcher(TOKEMAK_DEFINITION.id, Network.ETHEREUM_MAINNET)
 export class EthereumTokemakBalanceFetcher implements BalanceFetcher {
@@ -65,8 +66,29 @@ export class EthereumTokemakBalanceFetcher implements BalanceFetcher {
       `studio:${TOKEMAK_DEFINITION.id}:${TOKEMAK_DEFINITION.groups.farm}:${network}:${address}:claimable`,
     ttl: 15 * 60, // 15 min
   })
+  async getCycleRewardsHash() {
+    const multicall = this.appToolkit.getMulticall(network);
+    const rewardsHashContract = this.tokemakContractFactory.tokemakRewardsHash({
+      network,
+      address: rewardsHashContractAddress,
+    });
+
+    const currentCycleIndex = await multicall
+      .wrap(rewardsHashContract)
+      .latestCycleIndex()
+      .catch(() => 0);
+
+    const [latestClaimableRewardsHash, currentCycleRewardsHash] = await multicall
+      .wrap(rewardsHashContract)
+      .cycleHashes(currentCycleIndex)
+      .catch(() => [null, null]);
+
+    return [latestClaimableRewardsHash, currentCycleRewardsHash];
+  }
+
   async getClaimableBalanceData(address: string) {
-    const url = `https://ipfs.tokemaklabs.xyz/ipfs/QmdqcvmvpJHkos6EecUkDEsjynFrXuQUMGNdbMk1XaadQF/${address}.json`;
+    const [latestClaimableRewardsHash, _] = await this.getCycleRewardsHash();
+    const url = `https://ipfs.tokemaklabs.xyz/ipfs/${latestClaimableRewardsHash}/${address.toLowerCase()}.json`;
     const data: ClaimableDataResponse['payload'] | null = await Axios.get<ClaimableDataResponse>(url)
       .then(t => t.data.payload)
       .catch(() => null);
