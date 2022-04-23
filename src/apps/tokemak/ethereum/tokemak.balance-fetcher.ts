@@ -87,7 +87,7 @@ export class EthereumTokemakBalanceFetcher implements BalanceFetcher {
   }
 
   async getClaimableBalanceData(address: string) {
-    const [latestClaimableRewardsHash, _] = await this.getCycleRewardsHash();
+    const [latestClaimableRewardsHash] = await this.getCycleRewardsHash();
     const url = `https://ipfs.tokemaklabs.xyz/ipfs/${latestClaimableRewardsHash}/${address.toLowerCase()}.json`;
     const data: ClaimableDataResponse['payload'] | null = await Axios.get<ClaimableDataResponse>(url)
       .then(t => t.data.payload)

@@ -17,7 +17,8 @@ import { EthereumOlympusSOhmTokenFetcher } from './ethereum/olympus.s-ohm.token-
 import { EthereumOlympusWsOhmV1TokenFetcher } from './ethereum/olympus.ws-ohm-v1.token-fetcher';
 import { FantomOlympusBalanceFetcher } from './fantom/olympus.balance-fetcher';
 import { FantomOlympusGOhmTokenFetcher } from './fantom/olympus.g-ohm.token-fetcher';
-import { OlympusBondContractPositionBalanceHelper } from './helpers/olympus.bond.contract-position-balance-helper';
+import { OlympusBondV1ContractPositionBalanceHelper } from './helpers/olympus.bond-v1.contract-position-balance-helper';
+import { OlympusBondV2ContractPositionBalanceHelper } from './helpers/olympus.bond-v2.contract-position-balance-helper';
 import { OlympusBondContractPositionHelper } from './helpers/olympus.bond.contract-position-helper';
 import { OlympusBridgeTokenHelper } from './helpers/olympus.bridge-token-helper';
 import { OlympusAppDefinition } from './olympus.definition';
@@ -52,13 +53,15 @@ import { PolygonOlympusGOhmTokenFetcher } from './polygon/olympus.g-ohm.token-fe
     // Helpers
     OlympusBridgeTokenHelper,
     OlympusBondContractPositionHelper,
-    OlympusBondContractPositionBalanceHelper,
+    OlympusBondV1ContractPositionBalanceHelper,
+    OlympusBondV2ContractPositionBalanceHelper,
   ],
   exports: [
     OlympusAppDefinition,
     OlympusContractFactory,
     OlympusBondContractPositionHelper,
-    OlympusBondContractPositionBalanceHelper,
+    OlympusBondV1ContractPositionBalanceHelper,
+    OlympusBondV2ContractPositionBalanceHelper,
     OlympusBridgeTokenHelper,
   ],
 })
