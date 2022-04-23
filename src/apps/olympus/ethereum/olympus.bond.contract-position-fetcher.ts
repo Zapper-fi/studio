@@ -25,8 +25,10 @@ export class EthereumOlympusBondContractPositionFetcher implements PositionFetch
     return this.olympusContractPositionHelper.getPositions({
       appId: OLYMPUS_DEFINITION.id,
       network,
+      mintedTokenAddress: '0x0ab87046fbb341d058f17cbc4c1133f25a20a52f', // gOHM
       groupId: OLYMPUS_DEFINITION.groups.bond.id,
       depositories,
+      dependencies: [{ appId: OLYMPUS_DEFINITION.id, groupIds: [OLYMPUS_DEFINITION.groups.gOhm.id], network }],
     });
   }
 }

@@ -6,8 +6,8 @@ import { BalanceFetcher } from '~balance/balance-fetcher.interface';
 import { APP_TOOLKIT, IAppToolkit } from '~lib';
 import { Network } from '~types/network.interface';
 
-import { OlympusContractFactory, OlympusV2BondDepository } from '../contracts';
-import { OlympusBondContractPositionBalanceHelper } from '../helpers/olympus.bond.contract-position-balance-helper';
+import { OlympusContractFactory } from '../contracts';
+import { OlympusBondV2ContractPositionBalanceHelper } from '../helpers/olympus.bond-v2.contract-position-balance-helper';
 import { OLYMPUS_DEFINITION } from '../olympus.definition';
 
 @Register.BalanceFetcher(OLYMPUS_DEFINITION.id, Network.ETHEREUM_MAINNET)
@@ -15,8 +15,8 @@ export class EthereumOlympusBalanceFetcher implements BalanceFetcher {
   constructor(
     @Inject(OlympusContractFactory) private readonly contractFactory: OlympusContractFactory,
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(OlympusBondContractPositionBalanceHelper)
-    private readonly contractPositionBalanceHelper: OlympusBondContractPositionBalanceHelper,
+    @Inject(OlympusBondV2ContractPositionBalanceHelper)
+    private readonly contractPositionBalanceHelper: OlympusBondV2ContractPositionBalanceHelper,
   ) {}
 
   private async getTokenBalances(address: string) {
@@ -45,35 +45,23 @@ export class EthereumOlympusBalanceFetcher implements BalanceFetcher {
 
   private async getBonds(address: string) {
     const network = Network.ETHEREUM_MAINNET;
-    return this.contractPositionBalanceHelper.getBalances<OlympusV2BondDepository>({
+    return this.contractPositionBalanceHelper.getBalances({
       network,
       groupId: OLYMPUS_DEFINITION.groups.bond.id,
       appId: OLYMPUS_DEFINITION.id,
       address,
-      resolveDepositoryContract: ({ depositoryAddress: address }) => {
-        return this.contractFactory.olympusV2BondDepository({ address, network });
-      },
-      resolveClaimablePayout: ({ multicall, contract, address }) =>
-        multicall
-          .wrap(contract)
-          .indexesFor(address)
-          .then(
-            async indexes =>
-              await Promise.all(indexes.map(index => multicall.wrap(contract).pendingFor(address, index))),
-          ),
     });
   }
 
   async getBalances(address: string) {
     const [stakedAssets, bonds] = await Promise.all([this.getTokenBalances(address), this.getBonds(address)]);
-
     return presentBalanceFetcherResponse([
       {
         label: 'Staked',
         assets: stakedAssets,
       },
       {
-        label: 'Bond',
+        label: 'Bonds',
         assets: bonds,
       },
     ]);
