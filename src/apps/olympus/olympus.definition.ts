@@ -15,7 +15,6 @@ export const OLYMPUS_DEFINITION = {
     wsOhmV1: { id: 'ws-ohm-v1', type: GroupType.TOKEN },
     gOhm: { id: 'g-ohm', type: GroupType.TOKEN },
     bond: { id: 'bond', type: GroupType.POSITION },
-    bondV2: { id: 'bond-v2', type: GroupType.POSITION },
   },
   supportedNetworks: {
     [Network.ARBITRUM_MAINNET]: [ProtocolAction.VIEW],
