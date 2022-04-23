@@ -10,6 +10,7 @@ import { AvalancheOlympusGOhmTokenFetcher } from './avalanche/olympus.g-ohm.toke
 import { AvalancheOlympusWsOhmV1TokenFetcher } from './avalanche/olympus.ws-ohm-v1.token-fetcher';
 import { OlympusContractFactory } from './contracts';
 import { EthereumOlympusBalanceFetcher } from './ethereum/olympus.balance-fetcher';
+import { EthereumOlympusBondV2ContractPositionFetcher } from './ethereum/olympus.bond-v2.contract-position-fetcher';
 import { EthereumOlympusBondContractPositionFetcher } from './ethereum/olympus.bond.contract-position-fetcher';
 import { EthereumOlympusGOhmTokenFetcher } from './ethereum/olympus.g-ohm.token-fetcher';
 import { EthereumOlympusSOhmV1TokenFetcher } from './ethereum/olympus.s-ohm-v1.token-fetcher';
@@ -19,6 +20,8 @@ import { FantomOlympusBalanceFetcher } from './fantom/olympus.balance-fetcher';
 import { FantomOlympusGOhmTokenFetcher } from './fantom/olympus.g-ohm.token-fetcher';
 import { OlympusBondContractPositionBalanceHelper } from './helpers/olympus.bond.contract-position-balance-helper';
 import { OlympusBondContractPositionHelper } from './helpers/olympus.bond.contract-position-helper';
+import { OlympusBondV2ContractPositionBalanceHelper } from './helpers/olympus.bondV2.contract-position-balance-helper';
+import { OlympusBondV2ContractPositionHelper } from './helpers/olympus.bondV2.contract-position-helper';
 import { OlympusBridgeTokenHelper } from './helpers/olympus.bridge-token-helper';
 import { OlympusAppDefinition } from './olympus.definition';
 import { PolygonOlympusBalanceFetcher } from './polygon/olympus.balance-fetcher';
@@ -39,6 +42,7 @@ import { PolygonOlympusGOhmTokenFetcher } from './polygon/olympus.g-ohm.token-fe
     // // Ethereum
     EthereumOlympusBalanceFetcher,
     EthereumOlympusBondContractPositionFetcher,
+    EthereumOlympusBondV2ContractPositionFetcher,
     EthereumOlympusSOhmTokenFetcher,
     EthereumOlympusSOhmV1TokenFetcher,
     EthereumOlympusWsOhmV1TokenFetcher,
@@ -52,13 +56,17 @@ import { PolygonOlympusGOhmTokenFetcher } from './polygon/olympus.g-ohm.token-fe
     // Helpers
     OlympusBridgeTokenHelper,
     OlympusBondContractPositionHelper,
+    OlympusBondV2ContractPositionHelper,
     OlympusBondContractPositionBalanceHelper,
+    OlympusBondV2ContractPositionBalanceHelper,
   ],
   exports: [
     OlympusAppDefinition,
     OlympusContractFactory,
     OlympusBondContractPositionHelper,
+    OlympusBondV2ContractPositionHelper,
     OlympusBondContractPositionBalanceHelper,
+    OlympusBondV2ContractPositionBalanceHelper,
     OlympusBridgeTokenHelper,
   ],
 })

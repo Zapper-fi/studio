@@ -8,6 +8,7 @@ import { OlympusBondDepository__factory } from './ethers';
 import { OlympusGOhmToken__factory } from './ethers';
 import { OlympusSOhmToken__factory } from './ethers';
 import { OlympusSOhmV1Token__factory } from './ethers';
+import { OlympusV2BondDepository__factory } from './ethers';
 import { OlympusWsOhmV1Token__factory } from './ethers';
 import { OlympusZapperZap__factory } from './ethers';
 
@@ -32,6 +33,9 @@ export class OlympusContractFactory extends ContractFactory {
   olympusSOhmV1Token({ address, network }: ContractOpts) {
     return OlympusSOhmV1Token__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  olympusV2BondDepository({ address, network }: ContractOpts) {
+    return OlympusV2BondDepository__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   olympusWsOhmV1Token({ address, network }: ContractOpts) {
     return OlympusWsOhmV1Token__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
@@ -44,5 +48,6 @@ export type { OlympusBondDepository } from './ethers';
 export type { OlympusGOhmToken } from './ethers';
 export type { OlympusSOhmToken } from './ethers';
 export type { OlympusSOhmV1Token } from './ethers';
+export type { OlympusV2BondDepository } from './ethers';
 export type { OlympusWsOhmV1Token } from './ethers';
 export type { OlympusZapperZap } from './ethers';
