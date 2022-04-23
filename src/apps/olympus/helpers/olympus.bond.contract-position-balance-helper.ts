@@ -1,6 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import BigNumber from 'bignumber.js';
-import { BigNumberish } from 'ethers';
+import { BigNumber } from 'ethers';
 import { sumBy } from 'lodash';
 
 import { drillBalance } from '~app-toolkit';
@@ -18,18 +17,12 @@ type OlympusBondContractPositionBalanceHelperParams<T, V> = {
   groupId: string;
   network: Network;
   resolveDepositoryContract: (opts: { depositoryAddress: string; network: Network }) => T;
-  resolveTotalPayout: (opts: {
-    multicall: Multicall;
-    contract: T;
-    address: string;
-    contractPosition: ContractPosition<V>;
-  }) => Promise<BigNumberish>;
   resolveClaimablePayout: (opts: {
     multicall: Multicall;
     contract: T;
     address: string;
     contractPosition: ContractPosition<V>;
-  }) => Promise<BigNumberish>;
+  }) => Promise<any>;
 };
 
 @Injectable()
@@ -39,32 +32,28 @@ export class OlympusBondContractPositionBalanceHelper {
   async getBalances<T, V = DefaultDataProps>(
     opts: OlympusBondContractPositionBalanceHelperParams<T, V>,
   ): Promise<ContractPositionBalance<V>[]> {
-    const { address, appId, groupId, network, resolveDepositoryContract, resolveTotalPayout, resolveClaimablePayout } =
-      opts;
-
+    const { address, appId, groupId, network, resolveDepositoryContract, resolveClaimablePayout } = opts;
     const multicall = this.appToolkit.getMulticall(network);
     const contractPositions = await this.appToolkit.getAppContractPositions<V>({ network, appId, groupIds: [groupId] });
-
     const contractPositionBalances = await Promise.all(
       contractPositions.map(async contractPosition => {
         const contract = resolveDepositoryContract({ depositoryAddress: contractPosition.address, network });
-
         const vestingToken = contractPosition.tokens.find(isVesting)!;
         const claimableToken = contractPosition.tokens.find(isClaimable)!;
 
-        const [pendingPayoutRaw, claimableBalanceRaw] = await Promise.all([
-          resolveTotalPayout({ multicall, contract, address, contractPosition }),
+        const [claimableBalanceRaw] = await Promise.all([
           resolveClaimablePayout({ multicall, contract, address, contractPosition }),
         ]);
 
-        const pendingPayoutRawBN = new BigNumber(pendingPayoutRaw.toString());
-        const claimableBalanceRawBN = new BigNumber(claimableBalanceRaw.toString());
+        const claimableBonds = claimableBalanceRaw.filter(p => p.matured_);
+        const vestingBonds = claimableBalanceRaw.filter(p => !p.matured_);
 
-        const vestingBalanceRaw = pendingPayoutRawBN.gt(claimableBalanceRawBN)
-          ? pendingPayoutRawBN.minus(claimableBalanceRawBN).toFixed(0)
-          : '0';
-        const claimableTokenBalance = drillBalance(claimableToken, claimableBalanceRaw.toString());
-        const vestingTokenBalance = drillBalance(vestingToken, vestingBalanceRaw);
+        const claimableAmount = claimableBonds.reduce((acc, bond) => acc.add(bond.payout_), BigNumber.from('0'));
+        const vestingAmount = vestingBonds.reduce((acc, bond) => {
+          return acc.add(bond.payout_);
+        }, BigNumber.from('0'));
+        const claimableTokenBalance = drillBalance(claimableToken, claimableAmount.toString());
+        const vestingTokenBalance = drillBalance(vestingToken, vestingAmount.toString());
         const tokens = [claimableTokenBalance, vestingTokenBalance].filter(v => v.balanceUSD > 0);
         const balanceUSD = sumBy(tokens, t => t.balanceUSD);
 

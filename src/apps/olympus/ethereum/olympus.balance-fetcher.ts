@@ -6,7 +6,7 @@ import { BalanceFetcher } from '~balance/balance-fetcher.interface';
 import { APP_TOOLKIT, IAppToolkit } from '~lib';
 import { Network } from '~types/network.interface';
 
-import { OlympusBondDepository, OlympusContractFactory } from '../contracts';
+import { OlympusContractFactory, OlympusV2BondDepository } from '../contracts';
 import { OlympusBondContractPositionBalanceHelper } from '../helpers/olympus.bond.contract-position-balance-helper';
 import { OLYMPUS_DEFINITION } from '../olympus.definition';
 
@@ -45,19 +45,22 @@ export class EthereumOlympusBalanceFetcher implements BalanceFetcher {
 
   private async getBonds(address: string) {
     const network = Network.ETHEREUM_MAINNET;
-    return this.contractPositionBalanceHelper.getBalances<OlympusBondDepository>({
+    return this.contractPositionBalanceHelper.getBalances<OlympusV2BondDepository>({
       network,
       groupId: OLYMPUS_DEFINITION.groups.bond.id,
       appId: OLYMPUS_DEFINITION.id,
       address,
-      resolveDepositoryContract: ({ depositoryAddress: address }) =>
-        this.contractFactory.olympusBondDepository({ network, address }),
-      resolveClaimablePayout: ({ multicall, contract, address }) => multicall.wrap(contract).pendingPayoutFor(address),
-      resolveTotalPayout: ({ multicall, contract, address }) =>
+      resolveDepositoryContract: ({ depositoryAddress: address }) => {
+        return this.contractFactory.olympusV2BondDepository({ address, network });
+      },
+      resolveClaimablePayout: ({ multicall, contract, address }) =>
         multicall
           .wrap(contract)
-          .bondInfo(address)
-          .then(v => v.payout),
+          .indexesFor(address)
+          .then(
+            async indexes =>
+              await Promise.all(indexes.map(index => multicall.wrap(contract).pendingFor(address, index))),
+          ),
     });
   }
 

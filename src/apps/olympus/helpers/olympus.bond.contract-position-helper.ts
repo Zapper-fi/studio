@@ -9,6 +9,8 @@ import { AppGroupsDefinition } from '~position/position.service';
 import { claimable, vesting } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 
+import { OLYMPUS_DEFINITION } from '../olympus.definition';
+
 type OlympusDepository = {
   depositoryAddress: string;
   symbol: string;
@@ -20,7 +22,6 @@ type OlympusBondContractPositionHelperParams = {
   groupId: string;
   network: Network;
   depositories: OlympusDepository[];
-  mintedTokenAddress: string;
   dependencies?: AppGroupsDefinition[];
 };
 
@@ -33,8 +34,8 @@ export class OlympusBondContractPositionHelper {
     groupId,
     network,
     depositories,
-    mintedTokenAddress,
-    dependencies = [],
+
+    dependencies = [{ appId, groupIds: [OLYMPUS_DEFINITION.groups.gOhm.id], network }],
   }: OlympusBondContractPositionHelperParams) {
     const [baseTokens, appTokens] = await Promise.all([
       this.appToolkit.getBaseTokenPrices(network),
@@ -42,9 +43,9 @@ export class OlympusBondContractPositionHelper {
     ]);
     const allTokens = [...appTokens, ...baseTokens];
 
-    const mintedToken = allTokens.find(price => price.address === mintedTokenAddress);
+    const mintedToken = allTokens.find(token => token.symbol === 'gOHM');
     if (!mintedToken) {
-      throw new Error(`minted token with address ${mintedTokenAddress} is missing`);
+      throw new Error(`minted token with address gOHM is missing`);
     }
 
     const depositoryContractPositions = await Promise.all(
@@ -58,7 +59,7 @@ export class OlympusBondContractPositionHelper {
           tokens: [vesting(mintedToken), claimable(mintedToken)],
           dataProps: {},
           displayProps: {
-            label: `${symbol} Bond`,
+            label: `Bond`,
             images: images || [getTokenImg(symbol, network)],
             statsItems: [],
           },
