@@ -76,7 +76,7 @@ export type SingleStakingFarmContractPositionHelperParams<T> = {
     network: Network;
   }) => SingleStakingFarmDefinition[] | Promise<SingleStakingFarmDefinition[]>;
   resolveImplementation?: () => string;
-  resolveFarmAddresses?: (opts: { network: Network }) => string[] | Promise<string[]>;
+  resolveFarmAddresses?: (opts: { network: Network }) => (string | null)[] | Promise<(string | null)[]>;
   resolveStakedTokenAddress?: (opts: { contract: T; multicall: Multicall; index: number }) => Promise<string>;
   resolveRewardTokenAddresses?: (opts: { contract: T; multicall: Multicall }) => Promise<string | string[]>;
   resolveTotalValueLocked?: SingleStakingFarmResolveTotalValueLockedParams<T>;
@@ -117,7 +117,9 @@ export class SingleStakingFarmContractPositionHelper {
 
     const contractPositions = await Promise.all(
       farmDefinitionsOrAddresses.map(
-        async (definitionOrAddress: string | SingleStakingFarmDefinition, index: number) => {
+        async (definitionOrAddress: string | SingleStakingFarmDefinition | null, index: number) => {
+          if (!definitionOrAddress) return null;
+
           const type = ContractType.POSITION;
           const address = typeof definitionOrAddress === 'string' ? definitionOrAddress : definitionOrAddress.address;
           const contract = resolveFarmContract({ address, network });

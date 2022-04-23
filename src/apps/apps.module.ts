@@ -19,6 +19,8 @@ export class AppsModule {
     // Activate only apps that are requested to be active (for focused local dev)
     const enabledAppIds =
       process.env.NODE_ENV === 'production' ? [] : (process.env.ENABLED_APPS ?? '').split(',').filter(Boolean);
+    const enabledHelpersAppIds =
+      process.env.NODE_ENV === 'production' ? [] : (process.env.ENABLED_HELPERS ?? '').split(',').filter(Boolean);
 
     const filteredAppIds = enabledAppIds.length ? allAppIds.filter(appId => enabledAppIds.includes(appId)) : allAppIds;
 
@@ -35,11 +37,19 @@ export class AppsModule {
       }),
     );
 
+    const helperModules = await Promise.all(
+      enabledHelpersAppIds.map(async appId => {
+        // Dynamically import the module
+        const klass = await importAppModule(appId);
+        return klass;
+      }),
+    );
+
     return {
       module: AppsModule,
       imports: [
         ...DynamicApps({
-          apps: [...compact(appsModules)],
+          apps: [...compact([...appsModules, ...helperModules])],
           imports: [appToolkitModule],
         }),
       ],

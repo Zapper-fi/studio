@@ -1,3 +1,55 @@
+### [0.2.5](https://github.com/Zapper-fi/studio/compare/0.2.4...v0.2.5) (2022-04-22)
+
+
+### Bug Fixes
+
+* Use release-please in favor of semantic-release ([#221](https://github.com/Zapper-fi/studio/issues/221)) ([aa25404](https://github.com/Zapper-fi/studio/commit/aa25404564f7438fef5d88ef45e1834d5fd50aa0))
+
+## [0.2.4](https://github.com/Zapper-fi/studio/compare/0.2.3...0.2.4) (2022-04-22)
+
+### Bug Fixes
+
+* Use single quotes for release body on publish in case commit message has double quotes ([#216](https://github.com/Zapper-fi/studio/issues/216)) ([20927f3](https://github.com/Zapper-fi/studio/commit/20927f37ad292b48148f5f9a01e4c6a5c1461130))
+
+## [0.2.3](https://github.com/Zapper-fi/studio/compare/0.2.2...0.2.3) (2022-04-22)
+
+
+### Bug Fixes
+
+* Add Tokemak, Liquity, and Teddy Cash indexes ([#213](https://github.com/Zapper-fi/studio/issues/213)) ([1f1ab78](https://github.com/Zapper-fi/studio/commit/1f1ab789c58957e5e21b77d0e404c2336da9a366))
+
+## [0.2.2](https://github.com/Zapper-fi/studio/compare/0.2.1...0.2.2) (2022-04-22)
+
+
+### Bug Fixes
+
+* Removed CLI from tsconfig to fix dist structure in build ([#211](https://github.com/Zapper-fi/studio/issues/211)) ([858e51d](https://github.com/Zapper-fi/studio/commit/858e51d0188355fe26ddefdf406c4fd5fe7ded86))
+
+
+### Reverts
+
+* Revert "bug-fix: Removed CLI from tsconfig to fix dist structure in build (#209)" (#210) ([9cf6aec](https://github.com/Zapper-fi/studio/commit/9cf6aec1500d7d08832b177f851234d829e93808)), closes [#209](https://github.com/Zapper-fi/studio/issues/209) [#210](https://github.com/Zapper-fi/studio/issues/210)
+
+## [0.2.1](https://github.com/Zapper-fi/studio/compare/0.2.0...0.2.1) (2022-04-22)
+
+
+### Bug Fixes
+
+* Move build step to publish step ([#207](https://github.com/Zapper-fi/studio/pull/207)) ([085694a](https://github.com/Zapper-fi/studio/commit/085694a1d457f902497e806ed411e056f34585cd))
+
+# [0.2.0](https://github.com/Zapper-fi/studio/compare/0.1.1...0.2.0) (2022-04-22)
+
+
+### Bug Fixes
+
+* **cli:** string upperCase and kebabCase error ([#199](https://github.com/Zapper-fi/studio/issues/199)) ([c765c78](https://github.com/Zapper-fi/studio/commit/c765c78a7ef2e865929674d1e97eaf893ce1d7f4))
+* Studio CLI failing on prettier ([#194](https://github.com/Zapper-fi/studio/issues/194)) ([a03425c](https://github.com/Zapper-fi/studio/commit/a03425c16901ca01ce6109c5bb070307030f017f))
+
+
+### Features
+
+* Extract Tokemak to Studio ([#204](https://github.com/Zapper-fi/studio/issues/204)) ([42a7f80](https://github.com/Zapper-fi/studio/commit/42a7f8074bafbabe3b1e519e8258fc86ff949844))
+
 ## [0.1.1](https://github.com/Zapper-fi/studio/compare/0.1.0...0.1.1) (2022-04-20)
 
 

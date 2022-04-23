@@ -1,22 +1,29 @@
 import { Register } from '~app-toolkit/decorators';
 import { AppDefinition } from '~app/app.definition';
-import { GroupType, ProtocolAction } from '~app/app.interface';
+import { GroupType, ProtocolAction, ProtocolTag } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
 export const OLYMPUS_DEFINITION = {
   id: 'olympus',
-  name: 'olympus',
-  description:
-    '" a community-owned, decentralized and censorship-resistant reserve currency that is deeply liquid, asset-backed, and used widely across Web3."',
-  url: 'https://app.olympusdao.finance',
+  name: 'Olympus',
+  description: `Olympus is a decentralized reserve currency protocol based on the OHM token. Each OHM token is backed by a basket of assets in the Olympus treasury, giving it an intrinsic value that it cannot fall below.`,
+  url: 'https://www.olympusdao.finance/',
+  tags: [ProtocolTag.ELASTIC_FINANCE],
   groups: {
-    bonds: { id: 'bonds', type: GroupType.POSITION },
+    sOhmV1: { id: 's-ohm-v1', type: GroupType.TOKEN },
+    sOhm: { id: 's-ohm', type: GroupType.TOKEN },
+    wsOhmV1: { id: 'ws-ohm-v1', type: GroupType.TOKEN },
+    gOhm: { id: 'g-ohm', type: GroupType.TOKEN },
+    bond: { id: 'bond', type: GroupType.POSITION },
+    bondV2: { id: 'bond-v2', type: GroupType.POSITION },
   },
-  tags: [],
   supportedNetworks: {
+    [Network.ARBITRUM_MAINNET]: [ProtocolAction.VIEW],
+    [Network.AVALANCHE_MAINNET]: [ProtocolAction.VIEW],
     [Network.ETHEREUM_MAINNET]: [ProtocolAction.VIEW],
+    [Network.FANTOM_OPERA_MAINNET]: [ProtocolAction.VIEW],
+    [Network.POLYGON_MAINNET]: [ProtocolAction.VIEW],
   },
-  primaryColor: '#fff',
 };
 
 @Register.AppDefinition(OLYMPUS_DEFINITION.id)
@@ -25,5 +32,3 @@ export class OlympusAppDefinition extends AppDefinition {
     super(OLYMPUS_DEFINITION);
   }
 }
-
-export default OLYMPUS_DEFINITION;

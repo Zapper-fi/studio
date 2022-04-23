@@ -1,6 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { EthersMulticall as Multicall } from '~multicall';
 import { ContractType } from '~position/contract.interface';
 import { AppTokenPosition, Token } from '~position/position.interface';
 import { AppGroupsDefinition } from '~position/position.service';
@@ -18,12 +19,16 @@ type SingleVaultTokenHelperParams<T> = {
   resolveContract: (opts: { address: string; network: Network }) => T;
   resolveUnderlyingTokenAddress: (opts: { contract: T }) => string | Promise<string>;
   resolveReserve?: (opts: {
+    multicall: Multicall;
     contract: T;
     underlyingToken: Token;
     address: string;
     network: Network;
   }) => Promise<number>;
   resolvePricePerShare?: (opts: {
+    multicall: Multicall;
+    contract: T;
+    underlyingToken: Token;
     reserve: number;
     supply: number;
     address: string;
@@ -76,10 +81,18 @@ export class SingleVaultTokenHelper {
       multicall.wrap(tokenContract).totalSupply(),
     ]);
 
-    const reserveRaw = await resolveReserve({ contract, underlyingToken, address, network });
+    const reserveRaw = await resolveReserve({ multicall, contract, underlyingToken, address, network });
     const supply = Number(supplyRaw) / 10 ** decimals;
     const reserve = Number(reserveRaw) / 10 ** underlyingToken.decimals;
-    const pricePerShare = await resolvePricePerShare({ reserve, supply, address, network });
+    const pricePerShare = await resolvePricePerShare({
+      multicall,
+      contract,
+      underlyingToken,
+      reserve,
+      supply,
+      address,
+      network,
+    });
     const price = Number(pricePerShare) * underlyingToken.price;
     const liquidity = supply * price;
     const tokens = [underlyingToken];
