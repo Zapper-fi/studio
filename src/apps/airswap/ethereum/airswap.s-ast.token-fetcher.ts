@@ -3,7 +3,7 @@ import { Inject } from '@nestjs/common';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { PositionFetcher } from '~position/position-fetcher.interface';
-import { AppTokenPosition } from '~position/position.interface';
+import { AppTokenPosition, ContractPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
 import { AirswapContractFactory } from '../contracts';
@@ -20,12 +20,14 @@ export class EthereumAirswapSAstTokenFetcher implements PositionFetcher<AppToken
     @Inject(AirswapContractFactory) private readonly airswapContractFactory: AirswapContractFactory,
   ) {}
 
-  // Why can't I get the user address from getPositions?
-  async getPositions({ address }) {
-    // Am I doing this correctly?
+  async getPositions() {
+    const address = '0x579120871266ccd8De6c85EF59E2fF6743E7CD15';
+
+    // How to get user account?
+    const account = '0xfd72d3071e1056aad6d076518c483200d2f9ad65';
+
     const contract = this.airswapContractFactory.staking({ address, network });
-    // balance is null
-    const balance = await contract.balanceOf(address);
+    const balance = await contract.balanceOf(account);
 
     return [balance];
   }
