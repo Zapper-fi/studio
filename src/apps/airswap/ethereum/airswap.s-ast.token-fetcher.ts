@@ -9,6 +9,8 @@ import { Network } from '~types/network.interface';
 import { AirswapContractFactory } from '../contracts';
 import { AIRSWAP_DEFINITION } from '../airswap.definition';
 import { ContractType } from '~position/contract.interface';
+import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
+import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
 
 const appId = AIRSWAP_DEFINITION.id;
 const groupId = AIRSWAP_DEFINITION.groups.sAST.id;
@@ -32,17 +34,12 @@ export class EthereumAirswapSAstTokenFetcher implements PositionFetcher<AppToken
       multicall.wrap(contract).totalSupply(),
     ]);
 
-    const appTokenDependencies = await this.appToolkit.getAppTokenPositions(
-        { appId: 'airswap', groupIds: ['ast'], network },
-    );
+    const baseTokenDependencies = await this.appToolkit.getBaseTokenPrices(network);
+    const underlyingToken = baseTokenDependencies.find(v => v.symbol === AIRSWAP_DEFINITION.symbol);
 
-    const [underlyingTokenAddressRaw] = await multicall
-      .wrap(contract)
-      .token()
-      .catch(() => '');
-
-    const underlyingTokenAddress = underlyingTokenAddressRaw.toLowerCase();
-    const underlyingToken = appTokenDependencies.find(v => v.address === underlyingTokenAddress)
+    if (!underlyingToken) {
+      return [];
+    }
 
     const supply = Number(supplyRaw) / 10 ** decimals;
 
@@ -55,8 +52,15 @@ export class EthereumAirswapSAstTokenFetcher implements PositionFetcher<AppToken
       symbol,
       decimals,
       supply,
-      tokens: underlyingToken ? [underlyingToken] : [],
+      tokens: [underlyingToken],
+      price: underlyingToken.price,
       pricePerShare: 1,
+      dataProps: {},
+      displayProps: {
+        label: 'sAST',
+        secondaryLabel: buildDollarDisplayItem(underlyingToken.price),
+        images: [getTokenImg(underlyingToken.address, network)],
+      },
     };
 
     return [token];
