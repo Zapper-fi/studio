@@ -36,8 +36,7 @@ export class EthereumPieDaoFarmMasterChefContractPositionFetcher implements Posi
       resolveDepositTokenAddress: ({ poolIndex, contract, multicall }) =>
         multicall.wrap(contract).getPoolToken(poolIndex),
       resolveRewardTokenAddresses: ({ multicall, contract }) => multicall.wrap(contract).reward(),
-      resolveRewardsPerBlock: ({ multicall, contract, poolIndex }) =>
-        multicall.wrap(contract).getPoolRewardRate(poolIndex),
+      resolveRewardRate: ({ multicall, contract, poolIndex }) => multicall.wrap(contract).getPoolRewardRate(poolIndex),
     });
   }
 }
