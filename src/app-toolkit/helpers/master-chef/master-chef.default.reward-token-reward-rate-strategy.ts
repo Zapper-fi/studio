@@ -20,7 +20,7 @@ export type MasterChefDefaultRewardRateStrategyParams<T> = {
     multicall: Multicall;
     poolIndex: number;
   }) => BigNumberish | Promise<BigNumberish>;
-  resolveTotalRewardPerBlock: (opts: {
+  resolveTotalRewardRate: (opts: {
     network: Network;
     contract: T;
     multicall: Multicall;
@@ -39,13 +39,13 @@ export class MasterChefDefaultRewardRateStrategy {
   build<T>({
     resolvePoolAllocPoints,
     resolveTotalAllocPoints,
-    resolveTotalRewardPerBlock,
+    resolveTotalRewardRate,
     resolveRewardMultiplier = async () => [1],
   }: MasterChefDefaultRewardRateStrategyParams<T>): MasterChefRewardRateStrategy<T> {
     return async ({ multicall, poolIndex, contract, network }) => {
       const [totalAllocPoints, totalRewardPerBlock, poolAllocPoints, rewardMultiplier] = await Promise.all([
         resolveTotalAllocPoints({ contract, multicall, poolIndex, network }),
-        resolveTotalRewardPerBlock({ contract, multicall, poolIndex, network }),
+        resolveTotalRewardRate({ contract, multicall, poolIndex, network }),
         resolvePoolAllocPoints({ contract, multicall, poolIndex, network }),
         resolveRewardMultiplier({ contract, multicall, poolIndex, network }),
       ]);

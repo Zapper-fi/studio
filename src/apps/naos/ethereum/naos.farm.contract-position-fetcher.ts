@@ -42,7 +42,7 @@ export class EthereumNaosFarmContractPositionFetcher implements PositionFetcher<
         resolvePoolAllocPoints: async ({ poolIndex, contract, multicall }) =>
           multicall.wrap(contract).getPoolRewardWeight(poolIndex),
         resolveTotalAllocPoints: ({ multicall, contract }) => multicall.wrap(contract).totalRewardWeight(),
-        resolveTotalRewardPerBlock: ({ multicall, contract }) => multicall.wrap(contract).rewardRate(),
+        resolveTotalRewardRate: ({ multicall, contract }) => multicall.wrap(contract).rewardRate(),
       }),
     });
   }
