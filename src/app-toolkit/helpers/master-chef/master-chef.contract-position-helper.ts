@@ -17,9 +17,9 @@ import { buildDollarDisplayItem, buildPercentageDisplayItem } from '../presentat
 import { getImagesFromToken, getLabelFromToken } from '../presentation/image.present';
 
 import {
-  MasterChefDefaultRewardsPerBlockStrategy,
-  MasterChefDefaultRewardsPerBlockStrategyParams,
-} from './master-chef.default.reward-token-rewards-per-block-strategy';
+  MasterChefDefaultRewardRateStrategy,
+  MasterChefDefaultRewardRateStrategyParams,
+} from './master-chef.default.reward-token-reward-rate-strategy';
 
 export type MasterChefContractStrategy<T> = (opts: { address: string; network: Network }) => T;
 
@@ -57,7 +57,7 @@ export type MasterChefRewardTokenAddressesStrategy<T> = (opts: {
   network: Network;
 }) => Promise<string | string[]>;
 
-export type MasterChefRewardsPerBlockStrategy<T> = (opts: {
+export type MasterChefRewardRateStrategy<T> = (opts: {
   network: Network;
   contract: T;
   address: string;
@@ -79,6 +79,11 @@ export type MasterChefTotalValueLockedStrategy<T> = (opts: {
   appTokens: AppTokenPosition[];
 }) => Promise<BigNumberish>;
 
+export enum RewardRateUnit {
+  BLOCK = 'block',
+  SECOND = 'second',
+}
+
 export type MasterChefLabelStrategy = (opts: { stakedToken: Token; rewardTokens: Token[] }) => string;
 
 type MasterChefContractPositionHelperParams<T> = {
@@ -88,6 +93,7 @@ type MasterChefContractPositionHelperParams<T> = {
   groupId: string;
   minimumTvl?: number;
   dependencies?: AppGroupsDefinition[];
+  rewardRateUnit?: RewardRateUnit;
   resolveContract: MasterChefContractStrategy<T>;
   resolveAddress?: MasterChefRewardAddressStrategy<T>;
   resolvePoolLength: MasterChefPoolLengthStrategy<T>;
@@ -95,7 +101,7 @@ type MasterChefContractPositionHelperParams<T> = {
   resolveEndBlock?: MasterChefEndBlockStrategy<T>;
   resolveDepositTokenAddress: MasterChefDespositTokenAddressStrategy<T>;
   resolveRewardTokenAddresses: MasterChefRewardTokenAddressesStrategy<T>;
-  resolveRewardsPerBlock?: MasterChefRewardsPerBlockStrategy<T>;
+  resolveRewardRate?: MasterChefRewardRateStrategy<T>;
   resolveTotalValueLocked?: MasterChefTotalValueLockedStrategy<T>;
   resolveLabel?: MasterChefLabelStrategy;
 };
@@ -113,8 +119,8 @@ export type MasterChefContractPositionDataProps = {
 export class MasterChefContractPositionHelper {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(MasterChefDefaultRewardsPerBlockStrategy)
-    private readonly defaultRewardsPerBlockStrategy: MasterChefDefaultRewardsPerBlockStrategy,
+    @Inject(MasterChefDefaultRewardRateStrategy)
+    private readonly defaultRewardsPerBlockStrategy: MasterChefDefaultRewardRateStrategy,
   ) {}
 
   async getContractPositions<T>({
@@ -124,11 +130,12 @@ export class MasterChefContractPositionHelper {
     groupId,
     minimumTvl = 0,
     dependencies = [],
+    rewardRateUnit = RewardRateUnit.BLOCK,
     resolveContract,
     resolvePoolLength,
     resolveDepositTokenAddress,
     resolveRewardTokenAddresses,
-    resolveRewardsPerBlock = async () => 0,
+    resolveRewardRate = async () => 0,
     resolvePoolIndexIsValid = async () => true,
     resolveEndBlock = async () => 0,
     resolveTotalValueLocked = async ({ depositTokenAddress, address, multicall }) =>
@@ -215,7 +222,7 @@ export class MasterChefContractPositionHelper {
         }).then(v => Number(v));
 
         // Resolve reward token amounts per block
-        const rewardsPerBlock = await resolveRewardsPerBlock({
+        const rewardsPerBlock = await resolveRewardRate({
           network,
           multicall,
           poolIndex,
@@ -242,7 +249,10 @@ export class MasterChefContractPositionHelper {
         if (totalValueLocked !== 0 && isActive) {
           const roisPerToken = rewardTokens.map((rewardToken, index) => {
             const rewardPerBlock = (rewardsPerBlock[index] ?? 0) / 10 ** rewardToken.decimals;
-            const dailyRewardRate = rewardPerBlock * BLOCKS_PER_DAY[network];
+            const dailyRewardRate =
+              rewardRateUnit === RewardRateUnit.BLOCK
+                ? rewardPerBlock * BLOCKS_PER_DAY[network]
+                : rewardPerBlock * 86_400;
             const dailyRewardRateUSD = dailyRewardRate * rewardToken.price;
 
             const dailyROI = (dailyRewardRateUSD + totalValueLocked) / totalValueLocked - 1;
@@ -287,7 +297,7 @@ export class MasterChefContractPositionHelper {
     return compact(contractPositions).filter(f => f.dataProps.totalValueLocked >= minimumTvl);
   }
 
-  buildDefaultRewardsPerBlockStrategy<T>(opts: MasterChefDefaultRewardsPerBlockStrategyParams<T>) {
+  buildDefaultRewardsPerBlockStrategy<T>(opts: MasterChefDefaultRewardRateStrategyParams<T>) {
     return this.defaultRewardsPerBlockStrategy.build(opts);
   }
 }

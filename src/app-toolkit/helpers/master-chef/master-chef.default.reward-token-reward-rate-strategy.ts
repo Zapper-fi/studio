@@ -5,9 +5,9 @@ import { isArray } from 'lodash';
 import { EthersMulticall as Multicall } from '~multicall/multicall.ethers';
 import { Network } from '~types/network.interface';
 
-import { MasterChefRewardsPerBlockStrategy } from './master-chef.contract-position-helper';
+import { MasterChefRewardRateStrategy } from './master-chef.contract-position-helper';
 
-export type MasterChefDefaultRewardsPerBlockStrategyParams<T> = {
+export type MasterChefDefaultRewardRateStrategyParams<T> = {
   resolveTotalAllocPoints: (opts: {
     network: Network;
     contract: T;
@@ -35,13 +35,13 @@ export type MasterChefDefaultRewardsPerBlockStrategyParams<T> = {
 };
 
 @Injectable()
-export class MasterChefDefaultRewardsPerBlockStrategy {
+export class MasterChefDefaultRewardRateStrategy {
   build<T>({
     resolvePoolAllocPoints,
     resolveTotalAllocPoints,
     resolveTotalRewardPerBlock,
     resolveRewardMultiplier = async () => [1],
-  }: MasterChefDefaultRewardsPerBlockStrategyParams<T>): MasterChefRewardsPerBlockStrategy<T> {
+  }: MasterChefDefaultRewardRateStrategyParams<T>): MasterChefRewardRateStrategy<T> {
     return async ({ multicall, poolIndex, contract, network }) => {
       const [totalAllocPoints, totalRewardPerBlock, poolAllocPoints, rewardMultiplier] = await Promise.all([
         resolveTotalAllocPoints({ contract, multicall, poolIndex, network }),

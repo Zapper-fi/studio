@@ -38,7 +38,7 @@ export class EthereumNaosFarmContractPositionFetcher implements PositionFetcher<
       resolveDepositTokenAddress: ({ poolIndex, contract, multicall }) =>
         multicall.wrap(contract).getPoolToken(poolIndex),
       resolveRewardTokenAddresses: ({ multicall, contract }) => multicall.wrap(contract).reward(),
-      resolveRewardsPerBlock: this.appToolkit.helpers.masterChefDefaultRewardsPerBlockStrategy.build({
+      resolveRewardRate: this.appToolkit.helpers.masterChefDefaultRewardsPerBlockStrategy.build({
         resolvePoolAllocPoints: async ({ poolIndex, contract, multicall }) =>
           multicall.wrap(contract).getPoolRewardWeight(poolIndex),
         resolveTotalAllocPoints: ({ multicall, contract }) => multicall.wrap(contract).totalRewardWeight(),
