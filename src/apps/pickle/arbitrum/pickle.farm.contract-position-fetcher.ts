@@ -39,7 +39,7 @@ export class ArbitrumPickleFarmContractPositionFetcher implements PositionFetche
         }),
       resolvePoolLength: ({ multicall, contract }) => multicall.wrap(contract).poolLength(),
       resolveDepositTokenAddress: ({ poolIndex, contract, multicall }) => multicall.wrap(contract).lpToken(poolIndex),
-      resolveRewardTokenAddresses: this.appToolkit.helpers.masterChefRewarderClaimableTokenStrategy.build<
+      resolveRewardTokenAddresses: this.appToolkit.helpers.masterChefV2ClaimableTokenStrategy.build<
         PickleMiniChefV2,
         PickleRewarder
       >({

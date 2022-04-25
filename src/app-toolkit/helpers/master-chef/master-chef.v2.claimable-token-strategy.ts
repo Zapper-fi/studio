@@ -7,7 +7,7 @@ import { Network } from '~types/network.interface';
 
 import { MasterChefRewardTokenAddressesStrategy } from './master-chef.contract-position-helper';
 
-export type MasterChefRewarderClaimableTokenStrategyParams<T, V> = {
+export type MasterChefV2ClaimableTokenStrategyParams<T, V> = {
   resolvePrimaryClaimableToken: (opts: { multicall: Multicall; contract: T }) => Promise<string>;
   resolveRewarderAddress: (opts: { multicall: Multicall; poolIndex: number; contract: T }) => Promise<string>;
   resolveRewarderContract: (opts: { rewarderAddress: string; network: Network }) => V;
@@ -19,13 +19,13 @@ export type MasterChefRewarderClaimableTokenStrategyParams<T, V> = {
 };
 
 @Injectable()
-export class MasterChefRewarderClaimableTokenStrategy {
+export class MasterChefV2ClaimableTokenStrategy {
   build<T, V>({
     resolvePrimaryClaimableToken,
     resolveRewarderAddress,
     resolveRewarderContract,
     resolveSecondaryClaimableToken,
-  }: MasterChefRewarderClaimableTokenStrategyParams<T, V>): MasterChefRewardTokenAddressesStrategy<T> {
+  }: MasterChefV2ClaimableTokenStrategyParams<T, V>): MasterChefRewardTokenAddressesStrategy<T> {
     return async opts => {
       // Resolve the reward token address from the primary chef contract
       const primaryRewardTokenAddress = await resolvePrimaryClaimableToken(opts);

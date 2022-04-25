@@ -42,7 +42,7 @@ export class AvalancheTraderJoeChefBoostedFarmContractPositionFetcher implements
           .wrap(contract)
           .poolInfo(poolIndex)
           .then(v => v.lpToken),
-      resolveRewardTokenAddresses: this.appToolkit.helpers.masterChefRewarderClaimableTokenStrategy.build<
+      resolveRewardTokenAddresses: this.appToolkit.helpers.masterChefV2ClaimableTokenStrategy.build<
         TraderJoeChefBoosted,
         TraderJoeChefV2Rewarder
       >({

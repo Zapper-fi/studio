@@ -9,7 +9,7 @@ import { MasterChefDefaultClaimableBalanceStrategy } from './helpers/master-chef
 import { MasterChefDefaultRewardRateStrategy } from './helpers/master-chef/master-chef.default.reward-token-reward-rate-strategy';
 import { MasterChefDefaultStakedBalanceStrategy } from './helpers/master-chef/master-chef.default.staked-token-balance-strategy';
 import { MasterChefRewarderClaimableBalanceStrategy } from './helpers/master-chef/master-chef.rewarder.claimable-token-balances-strategy';
-import { MasterChefRewarderClaimableTokenStrategy } from './helpers/master-chef/master-chef.rewarder.claimable-token-strategy';
+import { MasterChefV2ClaimableTokenStrategy } from './helpers/master-chef/master-chef.v2.claimable-token-strategy';
 import { MasterChefV2RewardRateStrategy } from './helpers/master-chef/master-chef.v2.reward-rate-strategy';
 import { SingleStakingFarmContractPositionHelper } from './helpers/position/single-staking-farm.contract-position-helper';
 import { SingleVaultTokenHelper } from './helpers/position/single-vault.token-helper';
@@ -28,7 +28,7 @@ export const AppToolkitHelpers = [
   MasterChefDefaultRewardRateStrategy,
   MasterChefDefaultStakedBalanceStrategy,
   MasterChefRewarderClaimableBalanceStrategy,
-  MasterChefRewarderClaimableTokenStrategy,
+  MasterChefV2ClaimableTokenStrategy,
   MasterChefV2RewardRateStrategy,
 ];
 
@@ -56,8 +56,8 @@ export class AppToolkitHelperRegistry {
     public readonly masterChefDefaultStakedBalanceStrategy: MasterChefDefaultStakedBalanceStrategy,
     @Inject(MasterChefRewarderClaimableBalanceStrategy)
     public readonly masterChefRewarderClaimableBalanceStrategy: MasterChefRewarderClaimableBalanceStrategy,
-    @Inject(MasterChefRewarderClaimableTokenStrategy)
-    public readonly masterChefRewarderClaimableTokenStrategy: MasterChefRewarderClaimableTokenStrategy,
+    @Inject(MasterChefV2ClaimableTokenStrategy)
+    public readonly masterChefV2ClaimableTokenStrategy: MasterChefV2ClaimableTokenStrategy,
     @Inject(MasterChefV2RewardRateStrategy)
     public readonly masterChefV2RewardRateStrategy: MasterChefV2RewardRateStrategy,
   ) {}
