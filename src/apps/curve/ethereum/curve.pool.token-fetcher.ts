@@ -1,8 +1,9 @@
 import { Inject } from '@nestjs/common';
-import { uniqBy } from 'lodash';
+import { compact, uniqBy } from 'lodash';
 
 import { Register } from '~app-toolkit/decorators';
 import { SYNTHETIX_DEFINITION } from '~apps/synthetix';
+import { YEARN_DEFINITION } from '~apps/yearn/yearn.definition';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
@@ -49,7 +50,7 @@ export class EthereumCurvePoolTokenFetcher implements PositionFetcher<AppTokenPo
           { appId: 'aave-v2', groupIds: ['supply'], network },
           { appId: 'compound', groupIds: ['supply'], network },
           { appId: 'iron-bank', groupIds: ['supply'], network },
-          { appId: 'yearn', groupIds: ['yield'], network },
+          { appId: YEARN_DEFINITION.id, groupIds: [YEARN_DEFINITION.groups.yield.id], network },
           { appId: 'convex', groupIds: ['deposit'], network },
         ],
       }),
@@ -92,7 +93,7 @@ export class EthereumCurvePoolTokenFetcher implements PositionFetcher<AppTokenPo
           { appId: 'iron-bank', groupIds: ['supply'], network },
           { appId: SYNTHETIX_DEFINITION.id, groupIds: [SYNTHETIX_DEFINITION.groups.farm.id], network },
           { appId: 'convex', groupIds: ['farm'], network },
-          { appId: 'yearn', groupIds: ['vault'], network },
+          { appId: YEARN_DEFINITION.id, groupIds: [YEARN_DEFINITION.groups.vault.id], network },
         ],
       }),
       this.curveCryptoFactoryPoolTokenHelper.getTokens({
@@ -104,9 +105,7 @@ export class EthereumCurvePoolTokenFetcher implements PositionFetcher<AppTokenPo
       }),
     ]);
 
-    return uniqBy(
-      [v1Pools, v1MetaPools, v2Pools, v1FactoryPools, v2FactoryPools, cryptoFactoryPools].flat(),
-      v => v.address,
-    );
+    const tokens = compact([v1Pools, v1MetaPools, v2Pools, v1FactoryPools, v2FactoryPools, cryptoFactoryPools].flat());
+    return uniqBy(tokens, v => v.address);
   }
 }

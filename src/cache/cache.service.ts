@@ -65,7 +65,7 @@ export class CacheService implements OnModuleInit {
         try {
           const cacheTtl = extractTtl(rawCacheTtl, args);
           const liveData = await methodRef.apply(this, args);
-          await cacheManager.set(cacheKey, liveData, { ttl: cacheTtl });
+          await cacheManager.set(cacheKey, liveData);
           return liveData;
         } catch (e) {
           logger.error(`@Cache error for ${instance.constructor.name}#${methodName}`, e);
