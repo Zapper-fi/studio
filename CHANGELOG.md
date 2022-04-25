@@ -5,6 +5,14 @@
 
 * Use release-please in favor of semantic-release ([#221](https://github.com/Zapper-fi/studio/issues/221)) ([aa25404](https://github.com/Zapper-fi/studio/commit/aa25404564f7438fef5d88ef45e1834d5fd50aa0))
 
+### [0.3.1](https://github.com/Zapper-fi/studio/compare/v0.3.0...v0.3.1) (2022-04-25)
+
+
+### Bug Fixes
+
+* Create index files for Uniswap V2 and Olympus modules ([#255](https://github.com/Zapper-fi/studio/issues/255)) ([dfb00ce](https://github.com/Zapper-fi/studio/commit/dfb00cea82c3c5bf63e6e9e2c779d24243bae8db))
+* init cache earlier to prevent infinite loop ([#252](https://github.com/Zapper-fi/studio/issues/252)) ([a2f1152](https://github.com/Zapper-fi/studio/commit/a2f115207e3e70a8275275943e2a1b6e4be753a2))
+
 ## [0.3.0](https://github.com/Zapper-fi/studio/compare/v0.2.5...v0.3.0) (2022-04-25)
 
 
