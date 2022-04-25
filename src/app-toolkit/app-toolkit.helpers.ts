@@ -10,6 +10,7 @@ import { MasterChefDefaultRewardRateStrategy } from './helpers/master-chef/maste
 import { MasterChefDefaultStakedBalanceStrategy } from './helpers/master-chef/master-chef.default.staked-token-balance-strategy';
 import { MasterChefRewarderClaimableBalanceStrategy } from './helpers/master-chef/master-chef.rewarder.claimable-token-balances-strategy';
 import { MasterChefRewarderClaimableTokenStrategy } from './helpers/master-chef/master-chef.rewarder.claimable-token-strategy';
+import { MasterChefV2RewardRateStrategy } from './helpers/master-chef/master-chef.v2.reward-rate-strategy';
 import { SingleStakingFarmContractPositionHelper } from './helpers/position/single-staking-farm.contract-position-helper';
 import { SingleVaultTokenHelper } from './helpers/position/single-vault.token-helper';
 import { TheGraphHelper } from './helpers/the-graph/the-graph.helper';
@@ -28,6 +29,7 @@ export const AppToolkitHelpers = [
   MasterChefDefaultStakedBalanceStrategy,
   MasterChefRewarderClaimableBalanceStrategy,
   MasterChefRewarderClaimableTokenStrategy,
+  MasterChefV2RewardRateStrategy,
 ];
 
 @Injectable()
@@ -56,5 +58,7 @@ export class AppToolkitHelperRegistry {
     public readonly masterChefRewarderClaimableBalanceStrategy: MasterChefRewarderClaimableBalanceStrategy,
     @Inject(MasterChefRewarderClaimableTokenStrategy)
     public readonly masterChefRewarderClaimableTokenStrategy: MasterChefRewarderClaimableTokenStrategy,
+    @Inject(MasterChefV2RewardRateStrategy)
+    public readonly masterChefV2RewardRateStrategy: MasterChefV2RewardRateStrategy,
   ) {}
 }
