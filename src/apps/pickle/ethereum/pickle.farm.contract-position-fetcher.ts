@@ -48,14 +48,14 @@ export class EthereumPickleFarmContractPositionFetcher implements PositionFetche
           .poolInfo(poolIndex)
           .then(v => v.lpToken),
       resolveRewardTokenAddresses: ({ multicall, contract }) => multicall.wrap(contract).pickle(),
-      resolveRewardsPerBlock: this.appToolkit.helpers.masterChefDefaultRewardsPerBlockStrategy.build({
+      resolveRewardRate: this.appToolkit.helpers.masterChefDefaultRewardsPerBlockStrategy.build({
+        resolveTotalRewardRate: ({ multicall, contract }) => multicall.wrap(contract).picklePerBlock(),
         resolvePoolAllocPoints: async ({ poolIndex, contract, multicall }) =>
           multicall
             .wrap(contract)
             .poolInfo(poolIndex)
             .then(v => v.allocPoint),
         resolveTotalAllocPoints: ({ multicall, contract }) => multicall.wrap(contract).totalAllocPoint(),
-        resolveTotalRewardPerBlock: ({ multicall, contract }) => multicall.wrap(contract).picklePerBlock(),
       }),
     });
   }

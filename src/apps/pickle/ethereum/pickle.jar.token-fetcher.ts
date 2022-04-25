@@ -5,6 +5,7 @@ import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.prese
 import { CURVE_DEFINITION } from '~apps/curve';
 import UNISWAP_V2_DEFINITION from '~apps/uniswap-v2/uniswap-v2.definition';
 import { YearnLikeVaultTokenHelper } from '~apps/yearn/helpers/yearn-like.vault.token-helper';
+import { YEARN_DEFINITION } from '~apps/yearn/yearn.definition';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
@@ -37,9 +38,10 @@ export class EthereumPickleJarTokenFetcher implements PositionFetcher<AppTokenPo
       network,
       dependencies: [
         { appId: CURVE_DEFINITION.id, groupIds: [CURVE_DEFINITION.groups.pool.id], network },
+        { appId: YEARN_DEFINITION.id, groupIds: [YEARN_DEFINITION.groups.vault.id], network },
         { appId: UNISWAP_V2_DEFINITION.id, groupIds: [UNISWAP_V2_DEFINITION.groups.pool.id], network },
+        // @TODO: Migrate these over
         { appId: 'sushiswap', groupIds: ['pool'], network },
-        { appId: 'yearn', groupIds: ['vault'], network },
       ],
       resolvePrimaryLabel: ({ underlyingToken }) => `${getLabelFromToken(underlyingToken)} Jar`,
       resolvePricePerShare: async ({ multicall, contract }) => multicall.wrap(contract).getRatio(),

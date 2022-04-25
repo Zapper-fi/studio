@@ -30,7 +30,7 @@ const NETWORK_MAPPING = {
 @Injectable()
 export class PickleApiJarRegistry {
   @CacheOnInterval({
-    key: `apps-v3:${PICKLE_DEFINITION.id}:${PICKLE_DEFINITION.groups.jar}:jar-definitions-data`,
+    key: `studio:${PICKLE_DEFINITION.id}:${PICKLE_DEFINITION.groups.jar}:jar-definitions-data`,
     timeout: 5 * 60 * 1000,
   })
   private async getJarDefinitionsData() {

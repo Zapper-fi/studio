@@ -1,12 +1,9 @@
 import { Inject } from '@nestjs/common';
 
-import {
-  MasterChefContractPositionHelper,
-  MasterChefDefaultRewardsPerBlockStrategy,
-  MasterChefRewarderClaimableTokenStrategy,
-} from '~app-toolkit';
+import { MasterChefRewarderClaimableTokenStrategy } from '~app-toolkit';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { Register } from '~app-toolkit/decorators';
+import { APP_TOOLKIT, IAppToolkit } from '~lib';
 import { DefaultDataProps } from '~position/display.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
@@ -22,10 +19,7 @@ import { PICKLE_DEFINITION } from '../pickle.definition';
 })
 export class ArbitrumPickleFarmContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
-    @Inject(MasterChefContractPositionHelper)
-    private readonly masterchefFarmContractPositionHelper: MasterChefContractPositionHelper,
-    @Inject(MasterChefDefaultRewardsPerBlockStrategy)
-    private readonly masterChefDefaultRewardsPerBlockStrategy: MasterChefDefaultRewardsPerBlockStrategy,
+    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(PickleContractFactory) private readonly contractFactory: PickleContractFactory,
     @Inject(MasterChefRewarderClaimableTokenStrategy)
     private readonly masterChefRewarderClaimableTokenStrategy: MasterChefRewarderClaimableTokenStrategy,
@@ -34,7 +28,7 @@ export class ArbitrumPickleFarmContractPositionFetcher implements PositionFetche
   async getPositions(): Promise<ContractPosition<DefaultDataProps>[]> {
     const network = Network.ARBITRUM_MAINNET;
 
-    return this.masterchefFarmContractPositionHelper.getContractPositions<PickleMiniChefV2>({
+    return this.appToolkit.helpers.masterChefContractPositionHelper.getContractPositions<PickleMiniChefV2>({
       address: '0x7ecc7163469f37b777d7b8f45a667314030ace24',
       appId: PICKLE_DEFINITION.id,
       groupId: PICKLE_DEFINITION.groups.masterchefV2Farm.id,
@@ -62,14 +56,14 @@ export class ArbitrumPickleFarmContractPositionFetcher implements PositionFetche
             .then(v => v.rewardTokens[0]),
       }),
       // @TODO Support multi-reward ROIs
-      resolveRewardsPerBlock: this.masterChefDefaultRewardsPerBlockStrategy.build({
+      resolveRewardRate: this.appToolkit.helpers.masterChefDefaultRewardsPerBlockStrategy.build({
+        resolveTotalRewardRate: ({ multicall, contract }) => multicall.wrap(contract).picklePerSecond(),
         resolvePoolAllocPoints: async ({ poolIndex, contract, multicall }) =>
           multicall
             .wrap(contract)
             .poolInfo(poolIndex)
             .then(v => v.allocPoint),
         resolveTotalAllocPoints: ({ multicall, contract }) => multicall.wrap(contract).totalAllocPoint(),
-        resolveTotalRewardPerBlock: ({ multicall, contract }) => multicall.wrap(contract).picklePerSecond(),
       }),
     });
   }

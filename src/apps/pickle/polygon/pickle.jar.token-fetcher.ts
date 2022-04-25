@@ -36,6 +36,7 @@ export class PolygonPickleJarTokenFetcher implements PositionFetcher<AppTokenPos
       network,
       dependencies: [
         { appId: CURVE_DEFINITION.id, groupIds: [CURVE_DEFINITION.groups.pool.id], network },
+        // @TODO: Migrate these over
         { appId: 'quickswap', groupIds: ['pool'], network },
         { appId: 'sushiswap', groupIds: ['pool'], network },
       ],

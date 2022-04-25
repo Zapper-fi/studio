@@ -53,14 +53,14 @@ export class PolygonPickleFarmContractPositionFetcher implements PositionFetcher
             .then(v => v.rewardTokens[0]),
       }),
       // @TODO Support multi-reward ROIs
-      resolveRewardsPerBlock: this.appToolkit.helpers.masterChefDefaultRewardsPerBlockStrategy.build({
+      resolveRewardRate: this.appToolkit.helpers.masterChefDefaultRewardsPerBlockStrategy.build({
+        resolveTotalRewardRate: ({ multicall, contract }) => multicall.wrap(contract).picklePerSecond(),
         resolvePoolAllocPoints: async ({ poolIndex, contract, multicall }) =>
           multicall
             .wrap(contract)
             .poolInfo(poolIndex)
             .then(v => v.allocPoint),
         resolveTotalAllocPoints: ({ multicall, contract }) => multicall.wrap(contract).totalAllocPoint(),
-        resolveTotalRewardPerBlock: ({ multicall, contract }) => multicall.wrap(contract).picklePerSecond(),
       }),
     });
   }

@@ -36,13 +36,14 @@ export class ArbitrumPickleJarTokenFetcher implements PositionFetcher<AppTokenPo
       network,
       dependencies: [
         {
-          appId: 'balance-v2',
-          groupIds: ['pool'],
-          network,
-        },
-        {
           appId: CURVE_DEFINITION.id,
           groupIds: [CURVE_DEFINITION.groups.pool.id],
+          network,
+        },
+        // @TODO: Migrate these over
+        {
+          appId: 'balance-v2',
+          groupIds: ['pool'],
           network,
         },
         {
