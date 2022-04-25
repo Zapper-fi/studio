@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 
 import { MasterChefContractPositionDataProps } from '~app-toolkit';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
+import { RewardRateUnit } from '~app-toolkit/helpers/master-chef/master-chef.contract-position-helper';
 import { ContractPosition } from '~position/position.interface';
 import { AppGroupsDefinition } from '~position/position.service';
 import { Network } from '~types/network.interface';
@@ -28,6 +29,7 @@ export class WbanFarmContractPositionFetcherHelper {
       groupId,
       network,
       dependencies,
+      rewardRateUnit: RewardRateUnit.SECOND,
       resolveContract: ({ address, network }) => this.contractFactory.benis({ address, network }),
       resolvePoolLength: ({ multicall, contract }) => multicall.wrap(contract).poolLength(),
       resolveDepositTokenAddress: ({ poolIndex, contract, multicall }) =>
