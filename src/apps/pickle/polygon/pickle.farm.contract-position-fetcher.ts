@@ -2,6 +2,7 @@ import { Inject } from '@nestjs/common';
 
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { Register } from '~app-toolkit/decorators';
+import { RewardRateUnit } from '~app-toolkit/helpers/master-chef/master-chef.contract-position-helper';
 import { APP_TOOLKIT, IAppToolkit } from '~lib';
 import { DefaultDataProps } from '~position/display.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
@@ -53,6 +54,7 @@ export class PolygonPickleFarmContractPositionFetcher implements PositionFetcher
             .then(v => v.rewardTokens[0]),
       }),
       // @TODO Support multi-reward ROIs
+      rewardRateUnit: RewardRateUnit.SECOND,
       resolveRewardRate: this.appToolkit.helpers.masterChefDefaultRewardsPerBlockStrategy.build({
         resolveTotalRewardRate: ({ multicall, contract }) => multicall.wrap(contract).picklePerSecond(),
         resolvePoolAllocPoints: async ({ poolIndex, contract, multicall }) =>
