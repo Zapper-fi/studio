@@ -1,8 +1,10 @@
 import { Inject } from '@nestjs/common';
+
 import { Register } from '~app-toolkit/decorators';
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
 import { BalanceFetcher } from '~balance/balance-fetcher.interface';
 import { Network } from '~types/network.interface';
+
 import { WbanFarmBalanceFetcherHelper } from '../helpers/wban.farm.balance-fetcher-helper';
 import { WBAN_DEFINITION } from '../wban.definition';
 
