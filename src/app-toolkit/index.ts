@@ -4,7 +4,7 @@ export { ContractPositionBalanceHelper } from './helpers/balance/contract-positi
 export { MasterChefContractPositionBalanceHelper } from './helpers/master-chef/master-chef.contract-position-balance-helper';
 export { MasterChefContractPositionHelper } from './helpers/master-chef/master-chef.contract-position-helper';
 export { MasterChefDefaultClaimableBalanceStrategy } from './helpers/master-chef/master-chef.default.claimable-token-balances-strategy';
-export { MasterChefDefaultRewardsPerBlockStrategy } from './helpers/master-chef/master-chef.default.reward-token-rewards-per-block-strategy';
+export { MasterChefDefaultRewardRateStrategy as MasterChefDefaultRewardsPerBlockStrategy } from './helpers/master-chef/master-chef.default.reward-token-reward-rate-strategy';
 export { MasterChefDefaultStakedBalanceStrategy } from './helpers/master-chef/master-chef.default.staked-token-balance-strategy';
 export { MasterChefRewarderClaimableBalanceStrategy } from './helpers/master-chef/master-chef.rewarder.claimable-token-balances-strategy';
 export { MasterChefRewarderClaimableTokenStrategy } from './helpers/master-chef/master-chef.rewarder.claimable-token-strategy';
@@ -25,13 +25,13 @@ export type {
   MasterChefEndBlockStrategy,
   MasterChefDespositTokenAddressStrategy,
   MasterChefRewardTokenAddressesStrategy,
-  MasterChefRewardsPerBlockStrategy,
+  MasterChefRewardRateStrategy,
   MasterChefTotalValueLockedStrategy,
   MasterChefLabelStrategy,
   MasterChefContractPositionDataProps,
 } from './helpers/master-chef/master-chef.contract-position-helper';
 export type { MasterChefDefaultClaimableBalanceStrategyParams } from './helpers/master-chef/master-chef.default.claimable-token-balances-strategy';
-export type { MasterChefDefaultRewardsPerBlockStrategyParams } from './helpers/master-chef/master-chef.default.reward-token-rewards-per-block-strategy';
+export type { MasterChefDefaultRewardRateStrategyParams as MasterChefDefaultRewardsPerBlockStrategyParams } from './helpers/master-chef/master-chef.default.reward-token-reward-rate-strategy';
 export type { MasterChefDefaultStakedBalanceStrategyParams } from './helpers/master-chef/master-chef.default.staked-token-balance-strategy';
 export type { MasterChefRewarderClaimableBalanceStrategyParams } from './helpers/master-chef/master-chef.rewarder.claimable-token-balances-strategy';
 export type { MasterChefRewarderClaimableTokenStrategyParams } from './helpers/master-chef/master-chef.rewarder.claimable-token-strategy';
