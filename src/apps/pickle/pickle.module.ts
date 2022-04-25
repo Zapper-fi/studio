@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 
-import { AbstractDynamicApp } from '~app/app.dynamic-module';
+import { AbstractApp, ExternalAppImport } from '~app/app.dynamic-module';
 import { CurveAppModule } from '~apps/curve';
 import { SynthetixAppModule } from '~apps/synthetix';
 import { YearnAppModule } from '~apps/yearn/yearn.module';
@@ -22,11 +22,7 @@ import { PolygonPickleFarmContractPositionFetcher } from './polygon/pickle.farm.
 import { PolygonPickleJarTokenFetcher } from './polygon/pickle.jar.token-fetcher';
 
 @Module({
-  imports: [
-    SynthetixAppModule.externallyConfigured(SynthetixAppModule, 0),
-    CurveAppModule.externallyConfigured(CurveAppModule, 0),
-    YearnAppModule.externallyConfigured(YearnAppModule, 0),
-  ],
+  imports: ExternalAppImport(SynthetixAppModule, CurveAppModule, YearnAppModule),
   providers: [
     PickleAppDefinition,
     PickleApiJarRegistry,
@@ -48,4 +44,4 @@ import { PolygonPickleJarTokenFetcher } from './polygon/pickle.jar.token-fetcher
     PolygonPickleBalanceFetcher,
   ],
 })
-export class PickleAppModule extends AbstractDynamicApp<PickleAppModule>() {}
+export class PickleAppModule extends AbstractApp() {}

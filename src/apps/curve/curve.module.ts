@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 
-import { AbstractDynamicApp } from '~app/app.dynamic-module';
+import { AbstractApp } from '~app/app.dynamic-module';
 
 import { ArbitrumCurveBalanceFetcher } from './arbitrum/curve.balance-fetcher';
 import { ArbitrumCurveFarmContractPositionFetcher } from './arbitrum/curve.farm.contract-position-fetcher';
@@ -148,4 +148,4 @@ import { PolygonCurvePoolTokenFetcher } from './polygon/curve.pool.token-fetcher
     CurveVestingEscrowContractPositionBalanceHelper,
   ],
 })
-export class CurveAppModule extends AbstractDynamicApp<CurveAppModule>() {}
+export class CurveAppModule extends AbstractApp() {}

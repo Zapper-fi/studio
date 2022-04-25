@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 
-import { AbstractDynamicApp } from '~app/app.dynamic-module';
+import { AbstractApp, ExternalAppImport } from '~app/app.dynamic-module';
 import { UniswapV2AppModule } from '~apps/uniswap-v2/uniswap-v2.module';
 
 import { BinanceSmartChainWbanBalanceFetcher } from './binance-smart-chain/wban.balance-fetcher';
@@ -15,7 +15,7 @@ import { PolygonWbanFarmContractPositionFetcher } from './polygon/wban.farm.cont
 import { WbanAppDefinition } from './wban.definition';
 
 @Module({
-  imports: [UniswapV2AppModule.externallyConfigured(UniswapV2AppModule, 0)],
+  imports: ExternalAppImport(UniswapV2AppModule),
   providers: [
     WbanAppDefinition,
     WbanContractFactory,
@@ -32,4 +32,4 @@ import { WbanAppDefinition } from './wban.definition';
     FantomWbanFarmContractPositionFetcher,
   ],
 })
-export class WbanAppModule extends AbstractDynamicApp<WbanAppModule>() {}
+export class WbanAppModule extends AbstractApp() {}

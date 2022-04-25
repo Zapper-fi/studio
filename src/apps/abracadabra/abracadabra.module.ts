@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 
-import { AbstractDynamicApp } from '~app/app.dynamic-module';
+import { AbstractApp, ExternalAppImport } from '~app/app.dynamic-module';
 import { OlympusAppModule } from '~apps/olympus';
 
 import { AbracadabraAppDefinition } from './abracadabra.definition';
@@ -25,7 +25,7 @@ import { AbracadabraCauldronBalanceHelper } from './helpers/abracadabra.cauldron
 import { AbracadabraCauldronContractPositionHelper } from './helpers/abracadabra.cauldron.contract-position-helper';
 
 @Module({
-  imports: [OlympusAppModule.externallyConfigured(OlympusAppModule, 0)],
+  imports: ExternalAppImport(OlympusAppModule),
   providers: [
     AbracadabraAppDefinition,
     AbracadabraContractFactory,
@@ -54,4 +54,4 @@ import { AbracadabraCauldronContractPositionHelper } from './helpers/abracadabra
     AbracadabraCauldronContractPositionHelper,
   ],
 })
-export class AbracadabraAppModule extends AbstractDynamicApp<AbracadabraAppModule>() {}
+export class AbracadabraAppModule extends AbstractApp() {}

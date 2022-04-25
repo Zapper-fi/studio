@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 
-import { AbstractDynamicApp } from '~app/app.dynamic-module';
+import { AbstractApp } from '~app/app.dynamic-module';
 
 import { ArbitrumOlympusBalanceFetcher } from './arbitrum/olympus.balance-fetcher';
 import { ArbitrumOlympusGOhmTokenFetcher } from './arbitrum/olympus.g-ohm.token-fetcher';
@@ -65,4 +65,4 @@ import { PolygonOlympusGOhmTokenFetcher } from './polygon/olympus.g-ohm.token-fe
     OlympusBridgeTokenHelper,
   ],
 })
-export class OlympusAppModule extends AbstractDynamicApp<OlympusAppModule>() {}
+export class OlympusAppModule extends AbstractApp() {}

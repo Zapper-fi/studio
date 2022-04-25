@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 
-import { AbstractDynamicApp } from '~app/app.dynamic-module';
+import { AbstractApp, ExternalAppImport } from '~app/app.dynamic-module';
 import { SynthetixAppModule } from '~apps/synthetix';
 
 import { TokemakContractFactory } from './contracts';
@@ -11,7 +11,7 @@ import { EthereumTokemakTvlFetcher } from './ethereum/tokemak.tvl-fetcher';
 import { TokemakAppDefinition } from './tokemak.definition';
 
 @Module({
-  imports: [SynthetixAppModule.externallyConfigured(SynthetixAppModule, 0)],
+  imports: ExternalAppImport(SynthetixAppModule),
   providers: [
     TokemakAppDefinition,
     TokemakContractFactory,
@@ -21,4 +21,4 @@ import { TokemakAppDefinition } from './tokemak.definition';
     EthereumTokemakTvlFetcher,
   ],
 })
-export class TokemakAppModule extends AbstractDynamicApp<TokemakAppModule>() {}
+export class TokemakAppModule extends AbstractApp() {}

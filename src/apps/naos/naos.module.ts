@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 
-import { AbstractDynamicApp } from '~app/app.dynamic-module';
+import { AbstractApp } from '~app/app.dynamic-module';
 
 import { NaosContractFactory } from './contracts';
 import { EthereumNaosBalanceFetcher } from './ethereum/naos.balance-fetcher';
@@ -16,4 +16,4 @@ import { NaosAppDefinition } from './naos.definition';
   ],
   exports: [NaosContractFactory],
 })
-export class NaosAppModule extends AbstractDynamicApp<NaosAppModule>() {}
+export class NaosAppModule extends AbstractApp() {}

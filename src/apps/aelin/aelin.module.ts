@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 
-import { AbstractDynamicApp } from '~app/app.dynamic-module';
+import { AbstractApp, ExternalAppImport } from '~app/app.dynamic-module';
 import { SynthetixAppModule } from '~apps/synthetix/synthetix.module';
 
 import { AelinAppDefinition } from './aelin.definition';
@@ -13,7 +13,7 @@ import { OptimismAelinPoolTokenFetcher } from './optimism/aelin.pool.token-fetch
 import { OptimismAelinVAelinTokenFetcher } from './optimism/aelin.v-aelin.token-fetcher';
 
 @Module({
-  imports: [SynthetixAppModule.externallyConfigured(SynthetixAppModule, 0)],
+  imports: ExternalAppImport(SynthetixAppModule),
   providers: [
     AelinAppDefinition,
     AelinContractFactory,
@@ -27,4 +27,4 @@ import { OptimismAelinVAelinTokenFetcher } from './optimism/aelin.v-aelin.token-
     OptimismAelinFarmContractPositionFetcher,
   ],
 })
-export class AelinAppModule extends AbstractDynamicApp<AelinAppModule>() {}
+export class AelinAppModule extends AbstractApp() {}
