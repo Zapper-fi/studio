@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { OlympusBondDepository, OlympusBondDepositoryInterface } from '../OlympusBondDepository';
+import type { OlympusV1BondDepository, OlympusV1BondDepositoryInterface } from '../OlympusV1BondDepository';
 
 const _abi = [
   {
@@ -805,12 +805,12 @@ const _abi = [
   },
 ];
 
-export class OlympusBondDepository__factory {
+export class OlympusV1BondDepository__factory {
   static readonly abi = _abi;
-  static createInterface(): OlympusBondDepositoryInterface {
-    return new utils.Interface(_abi) as OlympusBondDepositoryInterface;
+  static createInterface(): OlympusV1BondDepositoryInterface {
+    return new utils.Interface(_abi) as OlympusV1BondDepositoryInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): OlympusBondDepository {
-    return new Contract(address, _abi, signerOrProvider) as OlympusBondDepository;
+  static connect(address: string, signerOrProvider: Signer | Provider): OlympusV1BondDepository {
+    return new Contract(address, _abi, signerOrProvider) as OlympusV1BondDepository;
   }
 }

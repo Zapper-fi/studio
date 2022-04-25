@@ -1,4 +1,5 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
+import { compact } from 'lodash';
 
 import {
   buildDollarDisplayItem,
@@ -29,6 +30,7 @@ export type YearnVaultTokenHelperParams = {
   dependencies?: AppGroupsDefinition[];
 };
 
+@Injectable()
 export class YearnVaultTokenHelper {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
@@ -137,6 +139,6 @@ export class YearnVaultTokenHelper {
       }),
     );
 
-    return vaultTokens.filter(v => !!v && v.price > 0 && v.dataProps.liquidity > 1000);
+    return compact(vaultTokens).filter(v => v.price > 0 && v.dataProps.liquidity > 1000);
   }
 }

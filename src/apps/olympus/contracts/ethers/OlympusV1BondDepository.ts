@@ -17,7 +17,7 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
 
-export interface OlympusBondDepositoryInterface extends utils.Interface {
+export interface OlympusV1BondDepositoryInterface extends utils.Interface {
   functions: {
     'DAO()': FunctionFragment;
     'OHM()': FunctionFragment;
@@ -247,12 +247,12 @@ export type OwnershipPushedEvent = TypedEvent<[string, string], OwnershipPushedE
 
 export type OwnershipPushedEventFilter = TypedEventFilter<OwnershipPushedEvent>;
 
-export interface OlympusBondDepository extends BaseContract {
+export interface OlympusV1BondDepository extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: OlympusBondDepositoryInterface;
+  interface: OlympusV1BondDepositoryInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

@@ -12,7 +12,7 @@ import { ContractPosition } from '~position/position.interface';
 import { isClaimable, isVesting } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 
-type OlympusBondContractPositionBalanceHelperParams<T, V> = {
+type OlympusBondV1ContractPositionBalanceHelperParams<T, V> = {
   address: string;
   appId: string;
   groupId: string;
@@ -33,11 +33,11 @@ type OlympusBondContractPositionBalanceHelperParams<T, V> = {
 };
 
 @Injectable()
-export class OlympusBondContractPositionBalanceHelper {
+export class OlympusBondV1ContractPositionBalanceHelper {
   constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
   async getBalances<T, V = DefaultDataProps>(
-    opts: OlympusBondContractPositionBalanceHelperParams<T, V>,
+    opts: OlympusBondV1ContractPositionBalanceHelperParams<T, V>,
   ): Promise<ContractPositionBalance<V>[]> {
     const { address, appId, groupId, network, resolveDepositoryContract, resolveTotalPayout, resolveClaimablePayout } =
       opts;

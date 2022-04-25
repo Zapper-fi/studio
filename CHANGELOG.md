@@ -5,6 +5,49 @@
 
 * Use release-please in favor of semantic-release ([#221](https://github.com/Zapper-fi/studio/issues/221)) ([aa25404](https://github.com/Zapper-fi/studio/commit/aa25404564f7438fef5d88ef45e1834d5fd50aa0))
 
+### [0.3.2](https://github.com/Zapper-fi/studio/compare/v0.3.1...v0.3.2) (2022-04-25)
+
+
+### Bug Fixes
+
+* **olympus:** Add V1 bond depository contract ([#258](https://github.com/Zapper-fi/studio/issues/258)) ([44ba840](https://github.com/Zapper-fi/studio/commit/44ba840bbcc043248761d73f0ef78e25ed19e7ac))
+
+### [0.3.1](https://github.com/Zapper-fi/studio/compare/v0.3.0...v0.3.1) (2022-04-25)
+
+
+### Bug Fixes
+
+* Create index files for Uniswap V2 and Olympus modules ([#255](https://github.com/Zapper-fi/studio/issues/255)) ([dfb00ce](https://github.com/Zapper-fi/studio/commit/dfb00cea82c3c5bf63e6e9e2c779d24243bae8db))
+* init cache earlier to prevent infinite loop ([#252](https://github.com/Zapper-fi/studio/issues/252)) ([a2f1152](https://github.com/Zapper-fi/studio/commit/a2f115207e3e70a8275275943e2a1b6e4be753a2))
+
+## [0.3.0](https://github.com/Zapper-fi/studio/compare/v0.2.5...v0.3.0) (2022-04-25)
+
+
+### Features
+
+* Add Olympus V2 bonds ([#203](https://github.com/Zapper-fi/studio/issues/203)) ([cbde9d4](https://github.com/Zapper-fi/studio/commit/cbde9d49f51ff7b3acabd7552be1e1b653540227))
+* add tokemak tvl fetcher ([#215](https://github.com/Zapper-fi/studio/issues/215)) ([3f4da77](https://github.com/Zapper-fi/studio/commit/3f4da77e44155c8e7af432329a2cf7097f099c00))
+* Extract Naos to Studio for MasterChef example ([#247](https://github.com/Zapper-fi/studio/issues/247)) ([0650871](https://github.com/Zapper-fi/studio/commit/065087160fa41ae5b44a35da8a9b1539606eeeb4))
+* Extract Olympus to Studio ([#228](https://github.com/Zapper-fi/studio/issues/228)) ([2b9b887](https://github.com/Zapper-fi/studio/commit/2b9b887a872a4572058847cba42f9aa06074719c))
+* Extract uniswap-v2 to Studio ([#218](https://github.com/Zapper-fi/studio/issues/218)) ([8c2bbec](https://github.com/Zapper-fi/studio/commit/8c2bbec5decfff0f9ac20fabf73b0992dbeb5186))
+* Migrate Curve over ([#229](https://github.com/Zapper-fi/studio/issues/229)) ([1043bc8](https://github.com/Zapper-fi/studio/commit/1043bc8780bf999d53e7b7aab2a55c2e0d08ff39))
+* wBAN integration ([#246](https://github.com/Zapper-fi/studio/issues/246)) ([81837ef](https://github.com/Zapper-fi/studio/commit/81837ef18f1296c7648cd69f7827850f5d4f45a1))
+
+
+### Bug Fixes
+
+* Catch @Cache & @CacheOnInterval errors ([#234](https://github.com/Zapper-fi/studio/issues/234)) ([ec71d80](https://github.com/Zapper-fi/studio/commit/ec71d80d5f09310c0af3dacf7cc87ba893124a8c))
+* **curve:** Replace helper references for app toolkit ([#240](https://github.com/Zapper-fi/studio/issues/240)) ([c7a6064](https://github.com/Zapper-fi/studio/commit/c7a60642fd10802ebb2cf861cf475a25002e24cb))
+* Fix linting and logo in wBAN ([#249](https://github.com/Zapper-fi/studio/issues/249)) ([b3a170f](https://github.com/Zapper-fi/studio/commit/b3a170f52a440356865464093a11625ac8b52269))
+* Fix Olympus module not loading ([#230](https://github.com/Zapper-fi/studio/issues/230)) ([ba2d565](https://github.com/Zapper-fi/studio/commit/ba2d56575d3a0fad5ff25f14966f087306dca824))
+* Fix rewards to be per second and not per block ([#251](https://github.com/Zapper-fi/studio/issues/251)) ([d6f9553](https://github.com/Zapper-fi/studio/commit/d6f9553e89c2a2089e382a665ad5b6e7282c5e57))
+* Rename resolveTotalRewardPerBlock to resolveTotalRewardRate ([#248](https://github.com/Zapper-fi/studio/issues/248)) ([371841a](https://github.com/Zapper-fi/studio/commit/371841abfe7dd4db02de418995397b090e8ce94d))
+* Resolve circular dependencies in Olympus ([#232](https://github.com/Zapper-fi/studio/issues/232)) ([ee54d2a](https://github.com/Zapper-fi/studio/commit/ee54d2a4d95e1281ab7742734629d5a5b8d6c47f))
+* Split Olympus bond balance helper for v1 and v2 bonds, keep bond position fetcher generic, fix lint error ([#242](https://github.com/Zapper-fi/studio/issues/242)) ([0ea4021](https://github.com/Zapper-fi/studio/commit/0ea4021b5c0221ae3f68321ff66c3df0bd26ebfd))
+* Temporarily disable Olympus ([#231](https://github.com/Zapper-fi/studio/issues/231)) ([2ec6cfb](https://github.com/Zapper-fi/studio/commit/2ec6cfba7c71e50a90d894a5fbde563aadd3e99c))
+* Tokemak - add missing reactors & fix claimable rewards ([#237](https://github.com/Zapper-fi/studio/issues/237)) ([1792cdd](https://github.com/Zapper-fi/studio/commit/1792cddb2eabcdbffba89409fe682806bc715e60))
+* **tokemak:** Use App Toolkit instead of position service ([#239](https://github.com/Zapper-fi/studio/issues/239)) ([2d4e54a](https://github.com/Zapper-fi/studio/commit/2d4e54a639cb4ea4ff9a02be8e705f38850d6ae1))
+
 ## [0.2.4](https://github.com/Zapper-fi/studio/compare/0.2.3...0.2.4) (2022-04-22)
 
 ### Bug Fixes
