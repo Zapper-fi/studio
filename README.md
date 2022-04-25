@@ -18,7 +18,7 @@
 </div>
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-8-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-9-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 ## Description
@@ -121,6 +121,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   </tr>
   <tr>
     <td align="center"><a href="https://github.com/brightiron"><img src="https://avatars.githubusercontent.com/u/95196612?v=4?s=64" width="64px;" alt=""/><br /><sub><b>brightiron</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=brightiron" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/wrap-that-potassium"><img src="https://avatars.githubusercontent.com/u/83176631?v=4?s=64" width="64px;" alt=""/><br /><sub><b>wrap-that-potassium</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=wrap-that-potassium" title="Code">💻</a></td>
   </tr>
 </table>
 
