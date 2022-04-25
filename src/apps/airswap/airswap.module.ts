@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 
-import { AbstractDynamicApp } from '~app/app.dynamic-module';
+import { AbstractApp } from '~app/app.dynamic-module';
 
 import { AirswapAppDefinition } from './airswap.definition';
 import { AirswapContractFactory } from './contracts';
@@ -15,4 +15,4 @@ import { EthereumAirswapSAstTokenFetcher } from './ethereum/airswap.s-ast.token-
     EthereumAirswapSAstTokenFetcher,
   ],
 })
-export class AirswapAppModule extends AbstractDynamicApp<AirswapAppModule>() {}
+export class AirswapAppModule extends AbstractApp() {}
