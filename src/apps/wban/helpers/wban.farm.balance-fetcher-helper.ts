@@ -1,6 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
+
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Network } from '~types/network.interface';
+
 import { Benis, WbanContractFactory } from '../contracts';
 
 @Injectable()
@@ -17,14 +19,17 @@ export class WbanFarmBalanceFetcherHelper {
       appId,
       groupId,
       resolveChefContract: ({ contractAddress }) =>
-        this.wbanContractFactory.benis({ address: contractAddress, network}),
+        this.wbanContractFactory.benis({ address: contractAddress, network }),
       resolveStakedTokenBalance: this.appToolkit.helpers.masterChefDefaultStakedBalanceStrategy.build({
         resolveStakedBalance: ({ contract, multicall, contractPosition }) =>
-          multicall.wrap(contract).userInfo(contractPosition.dataProps.poolIndex, address).then(userInfo => userInfo.amount)
+          multicall
+            .wrap(contract)
+            .userInfo(contractPosition.dataProps.poolIndex, address)
+            .then(userInfo => userInfo.amount),
       }),
       resolveClaimableTokenBalances: this.appToolkit.helpers.masterChefDefaultClaimableBalanceStrategy.build({
         resolveClaimableBalance: ({ multicall, contract, contractPosition, address }) =>
-          multicall.wrap(contract).pendingWBAN(contractPosition.dataProps.poolIndex, address)
+          multicall.wrap(contract).pendingWBAN(contractPosition.dataProps.poolIndex, address),
       }),
     });
   }

@@ -6,7 +6,8 @@ import { Network } from '~types/network.interface';
 export const WBAN_DEFINITION = {
   id: 'wban',
   name: 'wBAN',
-  description: 'Wrapped Banano',
+  description:
+    'Banano is a feeless, instant, rich in potassium cryptocurrency powered by DAG technology disrupting the meme economy.',
   url: 'https://wrap.banano.cc',
   groups: {
     farm: { id: 'farm', type: GroupType.POSITION },

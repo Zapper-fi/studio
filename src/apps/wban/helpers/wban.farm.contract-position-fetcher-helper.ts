@@ -1,9 +1,11 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { Network } from '~types/network.interface';
+
 import { MasterChefContractPositionDataProps } from '~app-toolkit';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractPosition } from '~position/position.interface';
 import { AppGroupsDefinition } from '~position/position.service';
+import { Network } from '~types/network.interface';
+
 import { Benis, WbanContractFactory } from '../contracts';
 
 @Injectable()
@@ -13,8 +15,13 @@ export class WbanFarmContractPositionFetcherHelper {
     @Inject(WbanContractFactory) private readonly contractFactory: WbanContractFactory,
   ) {}
 
-  async getPools(network: Network, appId: string, groupId: string, benisAddress: string, dependencies: AppGroupsDefinition[])
-  : Promise<ContractPosition<MasterChefContractPositionDataProps>[]> {
+  async getPools(
+    network: Network,
+    appId: string,
+    groupId: string,
+    benisAddress: string,
+    dependencies: AppGroupsDefinition[],
+  ): Promise<ContractPosition<MasterChefContractPositionDataProps>[]> {
     return this.appToolkit.helpers.masterChefContractPositionHelper.getContractPositions<Benis>({
       address: benisAddress,
       appId,
@@ -24,13 +31,19 @@ export class WbanFarmContractPositionFetcherHelper {
       resolveContract: ({ address, network }) => this.contractFactory.benis({ address, network }),
       resolvePoolLength: ({ multicall, contract }) => multicall.wrap(contract).poolLength(),
       resolveDepositTokenAddress: ({ poolIndex, contract, multicall }) =>
-        multicall.wrap(contract).poolInfo(poolIndex).then(poolInfo => poolInfo.stakingToken),
+        multicall
+          .wrap(contract)
+          .poolInfo(poolIndex)
+          .then(poolInfo => poolInfo.stakingToken),
       resolveRewardTokenAddresses: ({ multicall, contract }) => multicall.wrap(contract).wban(),
       resolveRewardRate: this.appToolkit.helpers.masterChefDefaultRewardsPerBlockStrategy.build({
         resolvePoolAllocPoints: async ({ poolIndex, contract, multicall }) =>
-          multicall.wrap(contract).poolInfo(poolIndex).then(poolInfo => poolInfo.allocPoint),
+          multicall
+            .wrap(contract)
+            .poolInfo(poolIndex)
+            .then(poolInfo => poolInfo.allocPoint),
         resolveTotalAllocPoints: ({ multicall, contract }) => multicall.wrap(contract).totalAllocPoint(),
-        resolveTotalRewardPerBlock: ({ multicall, contract }) => multicall.wrap(contract).wbanPerSecond(),
+        resolveTotalRewardRate: ({ multicall, contract }) => multicall.wrap(contract).wbanPerSecond(),
       }),
     });
   }
