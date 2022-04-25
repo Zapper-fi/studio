@@ -40,6 +40,6 @@ export const DynamicApps = ({
     }),
   );
 
-export const ExternalAppImport = <T extends IConfigurableDynamicRootModule<any, AppModuleOptions>>(
+export const ExternalAppImport = <T extends IConfigurableDynamicRootModule<Type, AppModuleOptions>>(
   ...appModules: T[]
 ) => appModules.map(appModule => appModule.externallyConfigured(appModule, 0));
