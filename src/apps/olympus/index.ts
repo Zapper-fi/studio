@@ -7,6 +7,7 @@ export { OlympusBondV2ContractPositionBalanceHelper } from './helpers/olympus.bo
 export { OlympusBondContractPositionHelper } from './helpers/olympus.bond.contract-position-helper';
 export { OlympusBridgeTokenHelper } from './helpers/olympus.bridge-token-helper';
 
+export type { OlympusV1BondDepository } from './contracts';
 export type { OlympusV2BondDepository } from './contracts';
 export type { OlympusGOhmToken } from './contracts';
 export type { OlympusSOhmToken } from './contracts';
