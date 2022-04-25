@@ -5,6 +5,13 @@
 
 * Use release-please in favor of semantic-release ([#221](https://github.com/Zapper-fi/studio/issues/221)) ([aa25404](https://github.com/Zapper-fi/studio/commit/aa25404564f7438fef5d88ef45e1834d5fd50aa0))
 
+### [0.3.2](https://github.com/Zapper-fi/studio/compare/v0.3.1...v0.3.2) (2022-04-25)
+
+
+### Bug Fixes
+
+* **olympus:** Add V1 bond depository contract ([#258](https://github.com/Zapper-fi/studio/issues/258)) ([44ba840](https://github.com/Zapper-fi/studio/commit/44ba840bbcc043248761d73f0ef78e25ed19e7ac))
+
 ### [0.3.1](https://github.com/Zapper-fi/studio/compare/v0.3.0...v0.3.1) (2022-04-25)
 
 
