@@ -2,15 +2,15 @@ import { Inject } from '@nestjs/common';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
-import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
-import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
-import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
-import { AIRSWAP_DEFINITION } from '../airswap.definition';
 import { AirswapContractFactory } from '../contracts';
+import { AIRSWAP_DEFINITION } from '../airswap.definition';
+import { ContractType } from '~position/contract.interface';
+import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
+import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
 
 const appId = AIRSWAP_DEFINITION.id;
 const groupId = AIRSWAP_DEFINITION.groups.sAST.id;
