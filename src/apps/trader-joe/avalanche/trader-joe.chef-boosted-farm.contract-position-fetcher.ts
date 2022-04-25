@@ -57,7 +57,6 @@ export class AvalancheTraderJoeChefBoostedFarmContractPositionFetcher implements
         resolveSecondaryClaimableToken: ({ multicall, rewarderContract }) =>
           multicall.wrap(rewarderContract).rewardToken(),
       }),
-      // resolveRewardsPerBlock
       rewardRateUnit: RewardRateUnit.SECOND,
       resolveRewardRate: this.appToolkit.helpers.masterChefV2RewardRateStrategy.build<
         TraderJoeChefBoosted,
@@ -69,7 +68,7 @@ export class AvalancheTraderJoeChefBoostedFarmContractPositionFetcher implements
             .poolInfo(poolIndex)
             .then(v => v.allocPoint),
         resolveTotalAllocPoints: ({ multicall, contract }) => multicall.wrap(contract).totalAllocPoint(),
-        resolvePrimaryTotalRewardPerBlock: async ({ multicall, contract }) => multicall.wrap(contract).joePerSec(),
+        resolvePrimaryTotalRewardRate: async ({ multicall, contract }) => multicall.wrap(contract).joePerSec(),
         resolveRewarderAddress: ({ multicall, contract, poolIndex }) =>
           multicall
             .wrap(contract)
@@ -77,7 +76,7 @@ export class AvalancheTraderJoeChefBoostedFarmContractPositionFetcher implements
             .then(v => v.rewarder),
         resolveRewarderContract: ({ network, rewarderAddress }) =>
           this.traderJoeContractFactory.traderJoeChefV2Rewarder({ address: rewarderAddress, network }),
-        resolveSecondaryTotalRewardPerBlock: async ({ multicall, rewarderContract }) => {
+        resolveSecondaryTotalRewardRate: async ({ multicall, rewarderContract }) => {
           return multicall
             .wrap(rewarderContract)
             .rewardPerSecond()

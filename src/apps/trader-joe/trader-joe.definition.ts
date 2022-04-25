@@ -9,7 +9,7 @@ export const TRADER_JOE_DEFINITION = {
   name: 'Trader Joe',
   description: `Trader Joe is your one-stop decentralized trading platform on the Avalanche network.`,
   groups: {
-    pool: { id: 'pool', type: GroupType.POSITION },
+    pool: { id: 'pool', type: GroupType.TOKEN },
     xJoe: { id: 'x-joe', type: GroupType.TOKEN },
     sJoe: { id: 's-joe', type: GroupType.POSITION },
     veJoeFarm: { id: 've-joe-farm', type: GroupType.POSITION },

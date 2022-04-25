@@ -65,7 +65,7 @@ export class AvalancheTraderJoeChefV3FarmContractPositionFetcher implements Posi
             .poolInfo(poolIndex)
             .then(v => v.allocPoint),
         resolveTotalAllocPoints: ({ multicall, contract }) => multicall.wrap(contract).totalAllocPoint(),
-        resolvePrimaryTotalRewardPerBlock: async ({ multicall, contract }) => multicall.wrap(contract).joePerSec(),
+        resolvePrimaryTotalRewardRate: async ({ multicall, contract }) => multicall.wrap(contract).joePerSec(),
         resolveRewarderAddress: ({ multicall, contract, poolIndex }) =>
           multicall
             .wrap(contract)
@@ -73,7 +73,7 @@ export class AvalancheTraderJoeChefV3FarmContractPositionFetcher implements Posi
             .then(v => v.rewarder),
         resolveRewarderContract: ({ network, rewarderAddress }) =>
           this.traderJoeContractFactory.traderJoeChefV2Rewarder({ address: rewarderAddress, network }),
-        resolveSecondaryTotalRewardPerBlock: async ({ multicall, rewarderContract }) =>
+        resolveSecondaryTotalRewardRate: async ({ multicall, rewarderContract }) =>
           multicall
             .wrap(rewarderContract)
             .rewardPerSecond()
