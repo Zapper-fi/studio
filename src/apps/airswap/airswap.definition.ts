@@ -11,7 +11,7 @@ export const AIRSWAP_DEFINITION = {
   url: 'https://airswap.io',
   symbol: 'AST',
   groups: {
-    sAST: {id: 's-ast', type: GroupType.TOKEN},
+    sAST: { id: 's-ast', type: GroupType.TOKEN },
   },
   tags: [ProtocolTag.EXCHANGE],
   supportedNetworks: {
