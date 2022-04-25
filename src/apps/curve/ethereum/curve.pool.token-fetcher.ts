@@ -1,5 +1,5 @@
 import { Inject } from '@nestjs/common';
-import { uniqBy } from 'lodash';
+import { compact, uniqBy } from 'lodash';
 
 import { Register } from '~app-toolkit/decorators';
 import { SYNTHETIX_DEFINITION } from '~apps/synthetix';
@@ -104,9 +104,7 @@ export class EthereumCurvePoolTokenFetcher implements PositionFetcher<AppTokenPo
       }),
     ]);
 
-    return uniqBy(
-      [v1Pools, v1MetaPools, v2Pools, v1FactoryPools, v2FactoryPools, cryptoFactoryPools].flat(),
-      v => v.address,
-    );
+    const tokens = compact([v1Pools, v1MetaPools, v2Pools, v1FactoryPools, v2FactoryPools, cryptoFactoryPools].flat());
+    return uniqBy(tokens, v => v.address);
   }
 }

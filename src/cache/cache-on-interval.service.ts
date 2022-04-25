@@ -53,7 +53,6 @@ export class CacheOnIntervalService implements OnModuleInit, OnModuleDestroy {
     const methodRef = instance[methodName];
     const cacheKey: CacheOnIntervalOptions['key'] = this.reflector.get(CACHE_ON_INTERVAL_KEY, methodRef);
     const cacheTimeout: CacheOnIntervalOptions['timeout'] = this.reflector.get(CACHE_ON_INTERVAL_TIMEOUT, methodRef);
-    const ttl = Math.floor(cacheTimeout / 1000);
 
     // Don't register cache on interval when missing parameters
     if (!cacheKey || !cacheTimeout) return;
@@ -88,7 +87,7 @@ export class CacheOnIntervalService implements OnModuleInit, OnModuleDestroy {
     }
     liveData
       .then(d => {
-        return cacheManager.set(cacheKey, d, { ttl });
+        return cacheManager.set(cacheKey, d);
       })
       .then(() => {
         logger.log(`Cache ready for for ${instance.constructor.name}#${methodName}`);
@@ -101,7 +100,7 @@ export class CacheOnIntervalService implements OnModuleInit, OnModuleDestroy {
     const interval = setInterval(async () => {
       try {
         const liveData = await methodRef.apply(instance);
-        await cacheManager.set(cacheKey, liveData, { ttl });
+        await cacheManager.set(cacheKey, liveData);
       } catch (e) {
         logger.error(`@CacheOnInterval error for ${instance.constructor.name}#${methodName}`, e);
       }
