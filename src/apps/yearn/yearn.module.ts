@@ -18,7 +18,7 @@ import { YearnVaultTokenHelper } from './helpers/yearn.vault.token-helper';
 import { YearnAppDefinition } from './yearn.definition';
 
 @Module({
-  imports: [...ExternalAppImport(SynthetixAppModule)],
+  imports: ExternalAppImport(SynthetixAppModule),
   providers: [
     YearnAppDefinition,
     YearnContractFactory,
