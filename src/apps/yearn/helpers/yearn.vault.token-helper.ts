@@ -14,6 +14,7 @@ import { AppGroupsDefinition } from '~position/position.service';
 import { Network } from '~types/network.interface';
 
 import { YearnContractFactory } from '../contracts';
+import { YEARN_DEFINITION } from '../yearn.definition';
 
 import { YearnVaultData, YearnVaultTokenDefinitionsResolver } from './yearn.vault.token-definitions-resolver';
 
@@ -80,8 +81,8 @@ export class YearnVaultTokenHelper {
         if (!underlyingToken) return null;
 
         const type = ContractType.APP_TOKEN;
-        const appId = 'yearn';
-        const groupId = 'vault';
+        const appId = YEARN_DEFINITION.id;
+        const groupId = YEARN_DEFINITION.groups.vault.id;
         const vaultAddress = vault.address.toLowerCase();
         const erc20Contract = this.yearnContractFactory.erc20({ address: vaultAddress, network });
 

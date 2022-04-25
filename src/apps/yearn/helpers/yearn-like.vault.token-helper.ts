@@ -30,7 +30,7 @@ export type YearnVaultTokenHelperParams<T> = {
   resolvePrimaryLabel?: (opts: { symbol: string; vaultAddress: string; underlyingToken: Token }) => string;
   resolveVaultAddresses: (opts: { multicall: EthersMulticall; network: Network }) => Promise<string[]>;
   resolveContract?: (opts: { address: string; network: Network }) => T;
-  resolveUnderlyingToken?: (opts: { multicall: EthersMulticall; contract: T }) => Promise<string>;
+  resolveUnderlyingToken?: (opts: { multicall: EthersMulticall; contract: T }) => Promise<string | null>;
   resolvePricePerShare?: (opts: { multicall: EthersMulticall; contract: T }) => Promise<BigNumberish>;
   resolvePricePerShareActual?: (opts: { pricePerShareRaw: BigNumberish; decimals: number }) => number;
   resolveApy?: (opts: { vaultAddress: string; multicall: EthersMulticall; contract: T }) => Promise<number>;
@@ -52,7 +52,11 @@ export class YearnLikeVaultTokenHelper {
     resolveContract = ({ address, network }) =>
       this.yearnContractFactory.yearnVault({ address, network }) as unknown as T,
     resolvePrimaryLabel = ({ underlyingToken }) => `${getLabelFromToken(underlyingToken)} Vault`,
-    resolveUnderlyingToken = ({ contract, multicall }) => multicall.wrap(contract as unknown as YearnVault).token(),
+    resolveUnderlyingToken = ({ contract, multicall }) =>
+      multicall
+        .wrap(contract as unknown as YearnVault)
+        .token()
+        .catch(() => null),
     resolvePricePerShare = ({ contract, multicall }) =>
       multicall.wrap(contract as unknown as YearnVault).getPricePerFullShare(),
     resolvePricePerShareActual = ({ pricePerShareRaw, decimals }) => Number(pricePerShareRaw) / 10 ** decimals,
@@ -79,6 +83,8 @@ export class YearnLikeVaultTokenHelper {
           resolvePricePerShare({ multicall, contract: vaultContract }),
           resolveApy ? resolveApy({ multicall, contract: vaultContract, vaultAddress }) : Promise.resolve(0),
         ]);
+
+        if (!underlyingTokenAddressRaw) return null;
 
         // Find underlying token in dependencies
         const underlyingTokenAddress = underlyingTokenAddressRaw.toLowerCase();
