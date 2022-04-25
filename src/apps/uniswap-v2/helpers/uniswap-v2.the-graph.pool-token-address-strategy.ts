@@ -45,7 +45,6 @@ export class UniswapV2TheGraphPoolTokenAddressStrategy {
   constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
   @Cache({
-    instance: 'business',
     key: (network: Network) => `studio-uniswap-v2-the-graph-pool-token-addresses:${network}:uniswap-v2`,
     ttl: 5 * 60,
   })

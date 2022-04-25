@@ -61,7 +61,6 @@ export class EthereumTokemakBalanceFetcher implements BalanceFetcher {
   }
 
   @Cache({
-    instance: 'business',
     key: (address: string) =>
       `studio:${TOKEMAK_DEFINITION.id}:${TOKEMAK_DEFINITION.groups.farm}:${network}:${address}:claimable`,
     ttl: 15 * 60, // 15 min
