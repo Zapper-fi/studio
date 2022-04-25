@@ -76,7 +76,6 @@ type GetVaultDefinitionsParams = {
 @Injectable()
 export class YearnVaultTokenDefinitionsResolver {
   @Cache({
-    instance: 'business',
     key: network => `studio:yearn:${network}:vault-data`,
     ttl: 5 * 60, // 60 minutes
   })

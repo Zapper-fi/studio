@@ -1,4 +1,4 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { BigNumberish } from 'ethers';
 import { compact } from 'lodash';
 
@@ -36,6 +36,7 @@ export type YearnVaultTokenHelperParams<T> = {
   resolveApy?: (opts: { vaultAddress: string; multicall: EthersMulticall; contract: T }) => Promise<number>;
 };
 
+@Injectable()
 export class YearnLikeVaultTokenHelper {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,

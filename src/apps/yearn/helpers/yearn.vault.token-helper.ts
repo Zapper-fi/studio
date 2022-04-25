@@ -1,4 +1,4 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { compact } from 'lodash';
 
 import {
@@ -30,6 +30,7 @@ export type YearnVaultTokenHelperParams = {
   dependencies?: AppGroupsDefinition[];
 };
 
+@Injectable()
 export class YearnVaultTokenHelper {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
