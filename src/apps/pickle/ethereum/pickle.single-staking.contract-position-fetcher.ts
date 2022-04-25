@@ -37,11 +37,13 @@ export class EthereumPickleSingleRewardPositionFetcher implements PositionFetche
         groupId: PICKLE_DEFINITION.groups.singleStakingFarm.id,
         dependencies: [{ appId: PICKLE_DEFINITION.id, groupIds: [PICKLE_DEFINITION.groups.jar.id], network }],
         resolveFarmDefinitions: async () =>
-          vaults.map(({ vaultAddress, gaugeAddress }) => ({
-            address: gaugeAddress ?? '',
-            stakedTokenAddress: vaultAddress,
-            rewardTokenAddresses: [PICKLE_DEFINITION.token.address],
-          })),
+          vaults
+            .filter(v => v.gaugeAddress!)
+            .map(({ vaultAddress, gaugeAddress }) => ({
+              address: gaugeAddress!,
+              stakedTokenAddress: vaultAddress,
+              rewardTokenAddresses: [PICKLE_DEFINITION.token.address],
+            })),
         resolveFarmContract: ({ address }) =>
           this.pickleContractFactory.pickleJarSingleRewardStaking({ network, address }),
         resolveRois: this.synthetixSingleStakingRoiStrategy.build({
