@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 
-import { AbstractDynamicApp } from '~app/app.dynamic-module';
+import { AbstractApp, ExternalAppImport } from '~app/app.dynamic-module';
 import { LiquityAppModule } from '~apps/liquity/liquity.module';
 
 import { AvalancheTeddyCashBalanceFetcher } from './avalanche/teddy-cash.balance-fetcher';
@@ -8,7 +8,7 @@ import { AvalancheTeddyCashFarmContractPositionFetcher } from './avalanche/teddy
 import { TeddyCashAppDefinition } from './teddy-cash.definition';
 
 @Module({
-  imports: [LiquityAppModule.externallyConfigured(LiquityAppModule, 0)],
+  imports: ExternalAppImport(LiquityAppModule),
   providers: [TeddyCashAppDefinition, AvalancheTeddyCashBalanceFetcher, AvalancheTeddyCashFarmContractPositionFetcher],
 })
-export class TeddyCashAppModule extends AbstractDynamicApp<TeddyCashAppModule>() {}
+export class TeddyCashAppModule extends AbstractApp() {}
