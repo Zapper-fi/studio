@@ -11,7 +11,6 @@ export const JPEGD_DEFINITION = {
   groups: {
     pool: { id: 'pool', type: GroupType.POSITION },
     bond: { id: 'bond', type: GroupType.POSITION },
-    staking: { id: 'staking', type: GroupType.POSITION },
   },
   tags: [ProtocolTag.LENDING],
   supportedNetworks: {

@@ -28,14 +28,12 @@ export class EthereumJpegdBondContractPositionFetcher implements PositionFetcher
     const jpegToken = baseTokens.find(x => x.address === '0xe80c0cd204d654cebe8dd64a4857cab6be8345a3');
     if (!jpegToken) return [];
 
-    const test = this.olympusContractPositionHelper.getPositions({
+    return this.olympusContractPositionHelper.getPositions({
       appId,
       network,
       groupId,
       depositories,
       mintedTokenAddress: jpegToken.address,
     });
-
-    return test;
   }
 }
