@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 
-import { AbstractDynamicApp } from '~app/app.dynamic-module';
+import { AbstractApp, ExternalAppImport } from '~app/app.dynamic-module';
 import { OlympusAppModule } from '~apps/olympus';
 
 import { JpegdContractFactory } from './contracts';
@@ -10,7 +10,7 @@ import { EthereumJpegdPoolContractPositionFetcher } from './ethereum/jpegd.pool.
 import { JpegdAppDefinition } from './jpegd.definition';
 
 @Module({
-  imports: [OlympusAppModule.externallyConfigured(OlympusAppModule, 0)],
+  imports: ExternalAppImport(OlympusAppModule),
   providers: [
     JpegdAppDefinition,
     JpegdContractFactory,
@@ -19,4 +19,4 @@ import { JpegdAppDefinition } from './jpegd.definition';
     EthereumJpegdBondContractPositionFetcher,
   ],
 })
-export class JpegdAppModule extends AbstractDynamicApp<JpegdAppModule>() {}
+export class JpegdAppModule extends AbstractApp() {}
