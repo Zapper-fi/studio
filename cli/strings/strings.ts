@@ -27,7 +27,7 @@ const lines = (xs: string[]) => {
  * @returns KebabCased string
  */
 const kebabCase = (s: string) => {
-  return _.kebabCase(s).replaceAll(' ', '-');
+  return _.kebabCase(s).replace(/ /g, '-');
 };
 
 /**
@@ -37,7 +37,7 @@ const kebabCase = (s: string) => {
  * @returns UpperCased string
  */
 const upperCase = (s: string) => {
-  return _.upperCase(s).replaceAll(' ', '_').replaceAll('-', '_');
+  return _.upperCase(s).replace(/ /g, '_');
 };
 
 /**

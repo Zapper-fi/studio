@@ -18,9 +18,7 @@
 </div>
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-
-[![All Contributors](https://img.shields.io/badge/all_contributors-6-orange.svg?style=flat-square)](#contributors-)
-
+[![All Contributors](https://img.shields.io/badge/all_contributors-10-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 ## Description
@@ -74,6 +72,16 @@ You can quickly spin up a typescript library for using an ABI by running the fol
 pnpm studio generate:contract-factory [app-id]
 ```
 
+## Enabling environment specific configuration
+
+Simply copy `.env.sample` to `.env` and edit the configuration file.
+
+### ENABLED_APPS
+
+Control which app to enable on startup. Particularly useful to keep local build times snappy.
+When developing your own app, it's recommended to add its identifier (aka: the folder name) and it's dependant apps
+(also their respective folder name) into this configuration key. See the `.env` file for further details.
+
 ## Contributing
 
 Read our [Contribution Guide](./CONTRIBUTING.md)
@@ -109,6 +117,12 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="http://xdrdak.github.io/"><img src="https://avatars.githubusercontent.com/u/1198051?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Xavier Drdak</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=xdrdak" title="Code">💻</a> <a href="#question-xdrdak" title="Answering Questions">💬</a> <a href="#maintenance-xdrdak" title="Maintenance">🚧</a></td>
     <td align="center"><a href="https://github.com/0xMaxim"><img src="https://avatars.githubusercontent.com/u/57536175?v=4?s=64" width="64px;" alt=""/><br /><sub><b>0xMaxim</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=0xMaxim" title="Documentation">📖</a> <a href="#question-0xMaxim" title="Answering Questions">💬</a></td>
     <td align="center"><a href="https://github.com/0xYYY"><img src="https://avatars.githubusercontent.com/u/86655648?v=4?s=64" width="64px;" alt=""/><br /><sub><b>YYY</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/issues?q=author%3A0xYYY" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://github.com/zeJabun"><img src="https://avatars.githubusercontent.com/u/86205416?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Jabun</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/issues?q=author%3AzeJabun" title="Bug reports">🐛</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/brightiron"><img src="https://avatars.githubusercontent.com/u/95196612?v=4?s=64" width="64px;" alt=""/><br /><sub><b>brightiron</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=brightiron" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/wrap-that-potassium"><img src="https://avatars.githubusercontent.com/u/83176631?v=4?s=64" width="64px;" alt=""/><br /><sub><b>wrap-that-potassium</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=wrap-that-potassium" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/piersss"><img src="https://avatars.githubusercontent.com/u/86911296?v=4?s=64" width="64px;" alt=""/><br /><sub><b>piersss</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=piersss" title="Code">💻</a></td>
   </tr>
 </table>
 

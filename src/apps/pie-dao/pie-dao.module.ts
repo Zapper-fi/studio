@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 
-import { AbstractDynamicApp } from '~app/app.dynamic-module';
+import { AbstractApp, ExternalAppImport } from '~app/app.dynamic-module';
 import { SynthetixAppModule } from '~apps/synthetix';
 
 import { PieDaoContractFactory } from './contracts';
@@ -11,7 +11,7 @@ import { EthereumPieDaoFarmSingleStakingContractPositionFetcher } from './ethere
 import { PieDaoAppDefinition } from './pie-dao.definition';
 
 @Module({
-  imports: [SynthetixAppModule.externallyConfigured(SynthetixAppModule, 0)],
+  imports: ExternalAppImport(SynthetixAppModule),
   providers: [
     PieDaoAppDefinition,
     PieDaoContractFactory,
@@ -22,4 +22,4 @@ import { PieDaoAppDefinition } from './pie-dao.definition';
     EthereumPieDaoFarmMasterChefContractPositionFetcher,
   ],
 })
-export class PieDaoAppModule extends AbstractDynamicApp<PieDaoAppModule>() {}
+export class PieDaoAppModule extends AbstractApp() {}

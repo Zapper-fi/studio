@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 
-import { AbstractDynamicApp } from '~app/app.dynamic-module';
+import { AbstractApp } from '~app/app.dynamic-module';
 
 import { LiquityContractFactory } from './contracts';
 import { EthereumLiquityBalanceFetcher } from './ethereum/liquity.balance-fetcher';
@@ -20,4 +20,4 @@ import { LiquityAppDefinition } from './liquity.definition';
   ],
   exports: [LiquityContractFactory, LiquityTroveBalanceHelper, LiquityStabilityPoolBalanceHelper],
 })
-export class LiquityAppModule extends AbstractDynamicApp<LiquityAppModule>() {}
+export class LiquityAppModule extends AbstractApp() {}

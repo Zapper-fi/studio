@@ -6,7 +6,7 @@ import { TokenBalanceHelper } from './helpers/balance/token-balance.helper';
 import { MasterChefContractPositionBalanceHelper } from './helpers/master-chef/master-chef.contract-position-balance-helper';
 import { MasterChefContractPositionHelper } from './helpers/master-chef/master-chef.contract-position-helper';
 import { MasterChefDefaultClaimableBalanceStrategy } from './helpers/master-chef/master-chef.default.claimable-token-balances-strategy';
-import { MasterChefDefaultRewardsPerBlockStrategy } from './helpers/master-chef/master-chef.default.reward-token-rewards-per-block-strategy';
+import { MasterChefDefaultRewardRateStrategy } from './helpers/master-chef/master-chef.default.reward-token-reward-rate-strategy';
 import { MasterChefDefaultStakedBalanceStrategy } from './helpers/master-chef/master-chef.default.staked-token-balance-strategy';
 import { MasterChefRewarderClaimableBalanceStrategy } from './helpers/master-chef/master-chef.rewarder.claimable-token-balances-strategy';
 import { MasterChefRewarderClaimableTokenStrategy } from './helpers/master-chef/master-chef.rewarder.claimable-token-strategy';
@@ -24,7 +24,7 @@ export const AppToolkitHelpers = [
   MasterChefContractPositionBalanceHelper,
   MasterChefContractPositionHelper,
   MasterChefDefaultClaimableBalanceStrategy,
-  MasterChefDefaultRewardsPerBlockStrategy,
+  MasterChefDefaultRewardRateStrategy,
   MasterChefDefaultStakedBalanceStrategy,
   MasterChefRewarderClaimableBalanceStrategy,
   MasterChefRewarderClaimableTokenStrategy,
@@ -48,8 +48,8 @@ export class AppToolkitHelperRegistry {
     public readonly masterChefContractPositionHelper: MasterChefContractPositionHelper,
     @Inject(MasterChefDefaultClaimableBalanceStrategy)
     public readonly masterChefDefaultClaimableBalanceStrategy: MasterChefDefaultClaimableBalanceStrategy,
-    @Inject(MasterChefDefaultRewardsPerBlockStrategy)
-    public readonly masterChefDefaultRewardsPerBlockStrategy: MasterChefDefaultRewardsPerBlockStrategy,
+    @Inject(MasterChefDefaultRewardRateStrategy)
+    public readonly masterChefDefaultRewardsPerBlockStrategy: MasterChefDefaultRewardRateStrategy,
     @Inject(MasterChefDefaultStakedBalanceStrategy)
     public readonly masterChefDefaultStakedBalanceStrategy: MasterChefDefaultStakedBalanceStrategy,
     @Inject(MasterChefRewarderClaimableBalanceStrategy)

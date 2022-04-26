@@ -90,7 +90,7 @@ async function generateModule(appId: string, importStatement: string, providers:
   const generatedContent = dedent`
   import { Module } from '@nestjs/common';
 
-  import { AbstractDynamicApp } from '~app/app.dynamic-module';
+  import { AbstractApp } from '~app/app.dynamic-module';
   
   import { ${appTitleCase}ContractFactory } from './contracts';
   import { ${appTitleCase}AppDefinition } from './${appId}.definition';
@@ -101,7 +101,7 @@ ${importStatement}
       ${appTitleCase}ContractFactory,${providers}
     ],
   })
-  export class ${appTitleCase}AppModule extends AbstractDynamicApp<${appTitleCase}AppModule>() {}
+  export class ${appTitleCase}AppModule extends AbstractApp() {}
   
   `;
 

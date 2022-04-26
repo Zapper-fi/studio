@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 
-import { AbstractDynamicApp } from '~app/app.dynamic-module';
+import { AbstractApp } from '~app/app.dynamic-module';
 
 import { SynthetixContractFactory } from './contracts';
 import { EthereumSynthetixBalanceFetcher } from './ethereum/synthetix.balance-fetcher';
@@ -52,4 +52,4 @@ import { SynthetixAppDefinition } from './synthetix.definition';
     SynthetixSingleStakingFarmContractPositionBalanceHelper,
   ],
 })
-export class SynthetixAppModule extends AbstractDynamicApp<SynthetixAppModule>() {}
+export class SynthetixAppModule extends AbstractApp() {}
