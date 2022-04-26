@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 
-import { AbstractDynamicApp } from '~app/app.dynamic-module';
+import { AbstractApp } from '~app/app.dynamic-module';
 
 import { AvalanchePoolTogetherV4VaultTokenFetcher } from './avalanche/pool-together-v4.vault.token-fetcher';
 import { AvalanchePoolTogetherBalanceFetcher } from './avalanche/pool-together.balance-fetcher';
@@ -45,4 +45,4 @@ import { PoolTogetherAppDefinition } from './pool-together.definition';
     PolygonPoolTogetherV4VaultTokenFetcher,
   ],
 })
-export class PoolTogetherAppModule extends AbstractDynamicApp<PoolTogetherAppModule>() {}
+export class PoolTogetherAppModule extends AbstractApp() {}
