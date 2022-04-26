@@ -11,6 +11,12 @@ export const ENZYME_FINANCE_DEFINITION = {
     vault: { id: 'vault', type: GroupType.TOKEN },
   },
   url: 'https://enzyme.finance/',
+  links: {
+    github: '',
+    twitter: '',
+    discord: '',
+    telegram: '',
+  },
   tags: [ProtocolTag.ASSET_MANAGEMENT],
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [ProtocolAction.VIEW],

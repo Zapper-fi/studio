@@ -8,6 +8,12 @@ export const CURVE_DEFINITION = {
   name: 'Curve',
   description: `An exchange liquidity pool on Ethereum designed for: extremely efficient stablecoin trading, low risk, supplemental fee income for liquidity providers`,
   url: 'https://curve.fi',
+  links: {
+    github: '',
+    twitter: '',
+    discord: '',
+    telegram: '',
+  },
   groups: {
     farm: { id: 'farm', type: GroupType.POSITION },
     pool: { id: 'pool', type: GroupType.TOKEN },

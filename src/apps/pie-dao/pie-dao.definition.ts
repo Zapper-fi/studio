@@ -14,6 +14,12 @@ export const PIE_DAO_DEFINITION = {
     voting: { id: 'voting', type: GroupType.POSITION },
   },
   url: 'https://www.piedao.org/',
+  links: {
+    github: '',
+    twitter: '',
+    discord: '',
+    telegram: '',
+  },
   tags: [ProtocolTag.LIQUIDITY_POOL],
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [ProtocolAction.VIEW],

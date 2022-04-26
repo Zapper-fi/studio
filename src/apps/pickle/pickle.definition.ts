@@ -8,6 +8,12 @@ export const PICKLE_DEFINITION = {
   name: 'Pickle',
   description: `Pickle Finance helps users to maximize their DeFi yields by auto-compounding their rewards, saving them time and gas.`,
   url: 'https://pickle.finance/',
+  links: {
+    github: '',
+    twitter: '',
+    discord: '',
+    telegram: '',
+  },
   groups: {
     jar: { id: 'jar', type: GroupType.TOKEN },
     votingEscrow: { id: 'voting-escrow', type: GroupType.POSITION },

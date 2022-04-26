@@ -11,6 +11,12 @@ export const UNISWAP_V2_DEFINITION = {
     pool: { id: 'pool', type: GroupType.TOKEN },
   },
   url: 'https://uniswap.org/',
+  links: {
+    github: '',
+    twitter: '',
+    discord: '',
+    telegram: '',
+  },
   tags: [ProtocolTag.LIQUIDITY_POOL],
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [ProtocolAction.VIEW],

@@ -12,6 +12,12 @@ export const TOKEMAK_DEFINITION = {
     reactor: { id: 'reactor', type: GroupType.TOKEN },
   },
   url: 'https://www.tokemak.xyz/',
+  links: {
+    github: '',
+    twitter: '',
+    discord: '',
+    telegram: '',
+  },
   tags: [ProtocolTag.LIQUIDITY_POOL],
   supportedNetworks: { [Network.ETHEREUM_MAINNET]: [ProtocolAction.VIEW] },
 };

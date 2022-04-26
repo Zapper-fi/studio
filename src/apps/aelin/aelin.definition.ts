@@ -13,6 +13,12 @@ export const AELIN_DEFINITION = {
     farm: { id: 'farm', type: GroupType.POSITION },
   },
   url: 'https://aelin.xyz/',
+  links: {
+    github: '',
+    twitter: '',
+    discord: '',
+    telegram: '',
+  },
   tags: [ProtocolTag.LENDING],
   supportedNetworks: {
     [Network.OPTIMISM_MAINNET]: [ProtocolAction.VIEW],

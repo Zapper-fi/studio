@@ -9,6 +9,12 @@ export const AIRSWAP_DEFINITION = {
   description:
     'AirSwap is an open community of developers, designers, writers, and tinkerers building decentralized trading systems. Protocol fees are automatically distributed to contributors.',
   url: 'https://airswap.io',
+  links: {
+    github: '',
+    twitter: '',
+    discord: '',
+    telegram: '',
+  },
   symbol: 'AST',
   groups: {
     sAST: { id: 's-ast', type: GroupType.TOKEN },

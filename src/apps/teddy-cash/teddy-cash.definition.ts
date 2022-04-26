@@ -8,6 +8,12 @@ export const TEDDY_CASH_DEFINITION = {
   name: 'Teddy Cash',
   description: 'Borrow up to 90% on your AVAX with Teddy, a decentralized borrowing protocol on Avalanche',
   url: 'https://teddy.cash/',
+  links: {
+    github: '',
+    twitter: '',
+    discord: '',
+    telegram: '',
+  },
   groups: {
     farm: { id: 'farm', type: GroupType.POSITION },
     trove: { id: 'trove', type: GroupType.POSITION },

@@ -13,6 +13,12 @@ export const SYNTHETIX_DEFINITION = {
     mintr: { id: 'mintr', type: GroupType.POSITION },
   },
   url: 'https://synthetix.io/',
+  links: {
+    github: '',
+    twitter: '',
+    discord: '',
+    telegram: '',
+  },
   tags: [ProtocolTag.LIQUIDITY_POOL],
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [ProtocolAction.VIEW, ProtocolAction.STAKE, ProtocolAction.TRANSACT],

@@ -11,6 +11,12 @@ export const UNAGII_DEFINITION = {
     vault: { id: 'vault', type: GroupType.TOKEN },
   },
   url: 'https://www.unagii.com/',
+  links: {
+    github: '',
+    twitter: '',
+    discord: '',
+    telegram: '',
+  },
   tags: [ProtocolTag.YIELD_AGGREGATOR],
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [ProtocolAction.VIEW],

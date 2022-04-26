@@ -13,6 +13,12 @@ export const YEARN_DEFINITION = {
     yield: { id: 'yield', type: GroupType.TOKEN },
   },
   url: 'https://yearn.finance/',
+  links: {
+    github: '',
+    twitter: '',
+    discord: '',
+    telegram: '',
+  },
   tags: [ProtocolTag.YIELD_AGGREGATOR],
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [ProtocolAction.VIEW, ProtocolAction.TRANSACT],

@@ -8,6 +8,12 @@ export const ILLUVIUM_DEFINITION = {
   name: 'Illuvium',
   description: `Illuvium is a collectible NFT RPG game and auto-battler rolled into one. There is an open-world RPG experience in the overworld, where you mine, harvest, capture, and fight Illuvials.`,
   url: 'https://www.illuvium.io/',
+  links: {
+    github: '',
+    twitter: '',
+    discord: '',
+    telegram: '',
+  },
   tags: [ProtocolTag.GAMING],
   groups: {
     farm: { id: 'farm', type: GroupType.POSITION },

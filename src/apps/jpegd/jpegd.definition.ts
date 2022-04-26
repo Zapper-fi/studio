@@ -8,6 +8,12 @@ export const JPEGD_DEFINITION = {
   name: 'Jpegd',
   description: 'JPEGd is the leading NFT lending platform in the decentralized finance space.',
   url: 'https://jpegd.io/',
+  links: {
+    github: '',
+    twitter: '',
+    discord: '',
+    telegram: '',
+  },
   groups: {
     pool: { id: 'pool', type: GroupType.POSITION },
     bond: { id: 'bond', type: GroupType.POSITION },

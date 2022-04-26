@@ -8,6 +8,12 @@ export const OLYMPUS_DEFINITION = {
   name: 'Olympus',
   description: `Olympus is a decentralized reserve currency protocol based on the OHM token. Each OHM token is backed by a basket of assets in the Olympus treasury, giving it an intrinsic value that it cannot fall below.`,
   url: 'https://www.olympusdao.finance/',
+  links: {
+    github: '',
+    twitter: '',
+    discord: '',
+    telegram: '',
+  },
   tags: [ProtocolTag.ELASTIC_FINANCE],
   groups: {
     sOhmV1: { id: 's-ohm-v1', type: GroupType.TOKEN },
