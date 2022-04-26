@@ -4,6 +4,24 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.4.0](https://github.com/Zapper-fi/studio/compare/v0.3.2...v0.4.0) (2022-04-26)
+
+
+### Features
+
+* **abracadabra:** Migrate Abracadabra to Studio ([#264](https://github.com/Zapper-fi/studio/issues/264)) ([5a4c596](https://github.com/Zapper-fi/studio/commit/5a4c596c8a4bc35ba315aed9b7266c99be91a567))
+* Airswap integration ([#245](https://github.com/Zapper-fi/studio/issues/245)) ([d34cbaa](https://github.com/Zapper-fi/studio/commit/d34cbaa5b0dd6d25f1479b6b09ed6004793dd036))
+* **airswap:** Fix linting in Airswap ([#266](https://github.com/Zapper-fi/studio/issues/266)) ([543f388](https://github.com/Zapper-fi/studio/commit/543f3886fe8c4fe6e818a9ca7d5882ab9b4111ca))
+* **dev-experience:** Ease app module creation and external app imports ([#268](https://github.com/Zapper-fi/studio/issues/268)) ([bf6d8b4](https://github.com/Zapper-fi/studio/commit/bf6d8b4961aa5e384501988c4ec1dac96bba2f91))
+* Implemented Jpeg'd's pools and bonds ([#272](https://github.com/Zapper-fi/studio/issues/272)) ([afc2dd8](https://github.com/Zapper-fi/studio/commit/afc2dd8dc166f37169b8e0e024f5bf60b7e5489c))
+* Migrate Pickle over ([#238](https://github.com/Zapper-fi/studio/issues/238)) ([84b5c4e](https://github.com/Zapper-fi/studio/commit/84b5c4e939725afd01fa463c288da18f1e568643))
+* **yearn:** Migrate Yearn over ([#256](https://github.com/Zapper-fi/studio/issues/256)) ([2c773e7](https://github.com/Zapper-fi/studio/commit/2c773e72bb09aa70f6fac5d36bd75e7ad7aff56e))
+
+
+### Bug Fixes
+
+* **cache:** Cache improvements ([#260](https://github.com/Zapper-fi/studio/issues/260)) ([a90887c](https://github.com/Zapper-fi/studio/commit/a90887c66bc1d51cc950a5f3b8717794bb25e39d))
+
 ### [0.3.2](https://github.com/Zapper-fi/studio/compare/v0.3.1...v0.3.2) (2022-04-25)
 
 ### Bug Fixes
