@@ -35,11 +35,6 @@ export class CacheService implements OnModuleInit {
     return typeof cacheKey === 'function' ? cacheKey(...args) : cacheKey;
   }
 
-  private extractTtl(cacheTtl: CacheOptions['ttl'], args: any[]) {
-    if (isNil(cacheTtl)) return 0;
-    return typeof cacheTtl === 'function' ? cacheTtl(...args) : cacheTtl;
-  }
-
   private registerCache(instance: any, methodName: string) {
     const logger = this.logger;
     const methodRef = instance[methodName];
@@ -52,7 +47,6 @@ export class CacheService implements OnModuleInit {
     // Service references
     const cacheManager = this.cacheManager;
     const extractKey = this.extractKey;
-    const extractTtl = this.extractTtl;
 
     // Augment the method to be cached with caching mechanism
     instance[methodName] = async function (...args: any[]) {
@@ -63,9 +57,8 @@ export class CacheService implements OnModuleInit {
         return cachedValue;
       } else {
         try {
-          const cacheTtl = extractTtl(rawCacheTtl, args);
           const liveData = await methodRef.apply(this, args);
-          await cacheManager.set(cacheKey, liveData, { ttl: cacheTtl });
+          await cacheManager.set(cacheKey, liveData);
           return liveData;
         } catch (e) {
           logger.error(`@Cache error for ${instance.constructor.name}#${methodName}`, e);

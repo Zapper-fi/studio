@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 
-import { AbstractDynamicApp } from '~app/app.dynamic-module';
+import { AbstractApp } from '~app/app.dynamic-module';
 
 import { UniswapV2ContractFactory } from './contracts';
 import { EthereumUniswapV2BalanceFetcher } from './ethereum/uniswap-v2.balance-fetcher';
@@ -34,4 +34,4 @@ import { UniswapV2AppDefinition } from './uniswap-v2.definition';
     UniswapV2TheGraphPoolTokenBalanceHelper,
   ],
 })
-export class UniswapV2AppModule extends AbstractDynamicApp<UniswapV2AppModule>() {}
+export class UniswapV2AppModule extends AbstractApp() {}

@@ -6,6 +6,7 @@ import { Network } from '~types/network.interface';
 
 import { TokemakReactor__factory } from './ethers';
 import { TokemakRewards__factory } from './ethers';
+import { TokemakRewardsHash__factory } from './ethers';
 import { TokemakTokeStaking__factory } from './ethers';
 
 // eslint-disable-next-line
@@ -23,6 +24,9 @@ export class TokemakContractFactory extends ContractFactory {
   tokemakRewards({ address, network }: ContractOpts) {
     return TokemakRewards__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  tokemakRewardsHash({ address, network }: ContractOpts) {
+    return TokemakRewardsHash__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   tokemakTokeStaking({ address, network }: ContractOpts) {
     return TokemakTokeStaking__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
@@ -30,4 +34,5 @@ export class TokemakContractFactory extends ContractFactory {
 
 export type { TokemakReactor } from './ethers';
 export type { TokemakRewards } from './ethers';
+export type { TokemakRewardsHash } from './ethers';
 export type { TokemakTokeStaking } from './ethers';

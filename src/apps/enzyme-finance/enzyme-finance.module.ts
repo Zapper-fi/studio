@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 
-import { AbstractDynamicApp } from '~app/app.dynamic-module';
+import { AbstractApp } from '~app/app.dynamic-module';
 
 import { EnzymeFinanceContractFactory } from './contracts';
 import { EnzymeFinanceAppDefinition } from './enzyme-finance.definition';
@@ -15,4 +15,4 @@ import { EthereumEnzymeFinanceVaultTokenFetcher } from './ethereum/enzyme-financ
     EthereumEnzymeFinanceVaultTokenFetcher,
   ],
 })
-export class EnzymeFinanceAppModule extends AbstractDynamicApp<EnzymeFinanceAppModule>() {}
+export class EnzymeFinanceAppModule extends AbstractApp() {}

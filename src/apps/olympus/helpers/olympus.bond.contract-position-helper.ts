@@ -19,8 +19,8 @@ type OlympusBondContractPositionHelperParams = {
   appId: string;
   groupId: string;
   network: Network;
-  depositories: OlympusDepository[];
   mintedTokenAddress: string;
+  depositories: OlympusDepository[];
   dependencies?: AppGroupsDefinition[];
 };
 
@@ -42,7 +42,7 @@ export class OlympusBondContractPositionHelper {
     ]);
     const allTokens = [...appTokens, ...baseTokens];
 
-    const mintedToken = allTokens.find(price => price.address === mintedTokenAddress);
+    const mintedToken = allTokens.find(token => token.address === mintedTokenAddress);
     if (!mintedToken) {
       throw new Error(`minted token with address ${mintedTokenAddress} is missing`);
     }

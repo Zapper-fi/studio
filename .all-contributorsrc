@@ -72,6 +72,42 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "zeJabun",
+      "name": "Jabun",
+      "avatar_url": "https://avatars.githubusercontent.com/u/86205416?v=4",
+      "profile": "https://github.com/zeJabun",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "brightiron",
+      "name": "brightiron",
+      "avatar_url": "https://avatars.githubusercontent.com/u/95196612?v=4",
+      "profile": "https://github.com/brightiron",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "wrap-that-potassium",
+      "name": "wrap-that-potassium",
+      "avatar_url": "https://avatars.githubusercontent.com/u/83176631?v=4",
+      "profile": "https://github.com/wrap-that-potassium",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "piersss",
+      "name": "piersss",
+      "avatar_url": "https://avatars.githubusercontent.com/u/86911296?v=4",
+      "profile": "https://github.com/piersss",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7
