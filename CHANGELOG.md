@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+### [0.5.1](https://github.com/Zapper-fi/studio/compare/v0.5.0...v0.5.1) (2022-04-26)
+
+
+### Bug Fixes
+
+* import things in a specific way to prevent transpiler issue ([#281](https://github.com/Zapper-fi/studio/issues/281)) ([21d5a79](https://github.com/Zapper-fi/studio/commit/21d5a794c7685ac7c910ec48a34c93214641d12a))
+* **pickle:** Use app toolkit for all helpers ([4dfa5c2](https://github.com/Zapper-fi/studio/commit/4dfa5c2c75b2addaad239e31f732931627135323))
+
 ## [0.5.0](https://github.com/Zapper-fi/studio/compare/v0.4.1...v0.5.0) (2022-04-26)
 
 
