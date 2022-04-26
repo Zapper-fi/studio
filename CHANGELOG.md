@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+### [0.4.1](https://github.com/Zapper-fi/studio/compare/v0.4.0...v0.4.1) (2022-04-26)
+
+
+### Bug Fixes
+
+* **yearn:** Add app index file ([#275](https://github.com/Zapper-fi/studio/issues/275)) ([ba1f7ec](https://github.com/Zapper-fi/studio/commit/ba1f7ecfdd0b583a4cf2239d000646bd840d3e08))
+
 ## [0.4.0](https://github.com/Zapper-fi/studio/compare/v0.3.2...v0.4.0) (2022-04-26)
 
 
