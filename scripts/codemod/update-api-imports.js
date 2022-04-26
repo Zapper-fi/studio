@@ -3,42 +3,62 @@
  * @example node ./scripts/codemod/update-api-imports.js [glob-path]
  */
 
+const dedent = require('dedent');
 const fs = require('fs');
 
 ///////////////////////
 // General utility func
 ///////////////////////
 function deleteLinesContaining(content, targets) {
+  const next = [];
   const byLine = content.split('\n');
-  content = byLine
-    .filter(line => {
-      for (const t of targets) {
-        if (!line.includes(t)) {
-          return true;
-        }
+  for (const line of byLine) {
+    let skip = false;
+    for (const target of targets) {
+      if (line.includes(target)) {
+        skip = true;
+        continue;
       }
+    }
+    if (!skip) {
+      next.push(line);
+    }
+  }
 
-      return false;
-    })
-    .join('\n');
-  return content;
+  return next.join('\n');
 }
 
 function append(content, injectString) {
   return `${injectString}\n${content}`;
 }
 
+function lineModifier(s, cb) {
+  let next = s;
+  const lines = next.split('\n');
+  const nextLines = [];
+  for (const line of lines) {
+    const modifiedLine = cb(line);
+    nextLines.push(modifiedLine);
+  }
+  next = nextLines.join('\n');
+  return next;
+}
+
 ///////////////////////
 // Codemod & Strategies
 ///////////////////////
 class CodeModder {
-  constructor(contents) {
+  constructor(contents = '') {
     this.contents = contents;
     this.modifiers = [];
   }
 
   addModifier(fn) {
     this.modifiers.push(fn);
+  }
+
+  setContents(contents) {
+    this.contents = contents;
   }
 
   exec() {
@@ -56,12 +76,36 @@ function replaceNetworkImport(s) {
 
 function injectAppToolkit(s) {
   let next = s;
-  next = s.replace('constructor(', 'constructor(\n@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,\n');
+  next = next.replace('constructor(', 'constructor(\n@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,\n');
   next = append(next, `import { APP_TOOLKIT, IAppToolkit } from '~lib';`);
-  next = s.replaceAll('this.multicallService.multicall({ network })', 'this.appToolkit.getMulticall(network)');
-  next = s.replaceAll(
+
+  next = next.replaceAll('this.multicallService.multicall({ network })', 'this.appToolkit.getMulticall(network)');
+
+  next = next.replaceAll(
     'this.priceService.getBaseTokenV3Prices({ network })',
     'this.appToolkit.getBaseTokenPrices(network)',
+  );
+
+  next = next.replaceAll(' this.tokenBalanceHelper.getVaultBalances', 'this.appToolkit.getBaseTokenPrices(network)');
+
+  next = next.replaceAll(
+    'this.masterChefFarmContractPositionBalanceHelper.getBalances',
+    'this.appToolkit.helpers.masterChefContractPositionBalanceHelper.getBalances',
+  );
+
+  next = next.replaceAll(
+    'this.masterChefFarmContractPositionDefaultStakedBalanceStrategy.build',
+    'this.appToolkit.helpers.masterChefDefaultStakedBalanceStrategy.build',
+  );
+
+  next = next.replaceAll(
+    'this.masterChefFarmContractPositionDefaultStakedBalanceStrategy.build',
+    'this.appToolkit.helpers.masterChefDefaultStakedBalanceStrategy.build',
+  );
+
+  next = next.replaceAll(
+    'this.masterchefFarmContractPositionHelper.getContractPositions',
+    'this.appToolkit.helpers.masterChefContractPositionHelper.getContractPositions',
   );
 
   next = deleteLinesContaining(next, ['@Inject(PRICES_SERVICE)', '@Inject(MulticallService)']);
@@ -71,15 +115,20 @@ function injectAppToolkit(s) {
 
 function replaceRegistration(s) {
   let next = s;
-  next = s.replace('@RegisterAppV3Definition', '@Register.AppDefinition');
-  next = s.replace('@AppsV3BalanceFetcher', '@Register.BalanceFetcher');
+  next = next.replace('@RegisterAppV3Definition', '@Register.AppDefinition');
+  next = next.replace('@AppsV3BalanceFetcher', '@Register.BalanceFetcher');
+
   if (next.includes('implements PositionFetcher<ContractPosition>')) {
-    next = s.replace('@RegisterPositionFetcher', '@Register.ContractPositionFetcher');
+    next = next.replace('@RegisterPositionFetcher', '@Register.ContractPositionFetcher');
+    next.replace('type: ContractType.POSITION', '');
+    append(next, `import { PositionFetcher } from '~position/position-fetcher.interface';`);
+    append(next, `import { ContractPosition } from '~position/position.interface';`);
   }
 
   if (next.includes('implements PositionFetcher<AppToken>')) {
-    next = s.replace('@RegisterPositionFetcher', '@Register.TokenPositionFetcher');
-    next = s.replace('implements PositionFetcher<AppToken>', 'implements PositionFetcher<AppTokenPosition>');
+    next = next.replace('@RegisterPositionFetcher', '@Register.TokenPositionFetcher');
+    next = next.replace('type: ContractType.APP_TOKEN', '');
+    next = next.replace('implements PositionFetcher<AppToken>', 'implements PositionFetcher<AppTokenPosition>');
     append(next, `import { AppTokenPosition } from '~position/position.interface';`);
   }
 
@@ -87,8 +136,9 @@ function replaceRegistration(s) {
     `import { RegisterAppV3Definition } from '~apps-v3/apps-definition.decorator';`,
     `import { AppsV3BalanceFetcher } from '~balance/fetchers/balance-fetcher.decorator';`,
     `import { RegisterPositionFetcher } from '~position/position-fetcher.decorator';`,
+    `from '~position/position-fetcher.interface'`,
   ]);
-  next = append(next, `import { Register } from '~app-toolkit/decorators'`);
+  next = append(next, `import { Register } from '~app-toolkit/decorators';`);
 
   return next;
 }
@@ -108,6 +158,110 @@ function replaceZeroAddressImport(s) {
   );
 }
 
+function reshapeGroups(s) {
+  let isGroups = false;
+  return lineModifier(s, line => {
+    if (line.includes('groups: {')) {
+      isGroups = true;
+      return line;
+    }
+
+    if (line.includes('},')) {
+      isGroups = false;
+      return line;
+    }
+
+    if (isGroups) {
+      const [key, value] = line.split(':').map(l => l.toLowerCase());
+      return `${key}: { id: ${value.replace(',', '')}, type: GroupType.REPLACE_ME },`;
+    }
+
+    return line;
+  });
+}
+
+function augmentBalanceImport(s) {
+  let next = s;
+  next = deleteLinesContaining(next, ['@zapper-fi/types/balances']);
+  next = append(next, `import { GroupType, ProtocolAction, ProtocolTag } from '~app/app.interface';`);
+  return next;
+}
+
+function replaceAppDefinitionImport(s) {
+  let next = s;
+  next = next.replace('~apps/app-definition.interface', '~app/app.definition');
+  next = deleteLinesContaining(next, ['~apps-v3/apps-definition.decorator']);
+  return next;
+}
+
+function appendAbstractDynamicApp(s) {
+  let next = s;
+  next = append(next, `import { AbstractDynamicApp } from '~app/app.dynamic-module';`);
+  next = lineModifier(next, line => {
+    if (line.includes('export class ')) {
+      const [_export, _class, identifier] = line.split(' ');
+      return `export class ${identifier} extends AbstractDynamicApp<${identifier}>() {};`;
+    } else {
+      return line;
+    }
+  });
+  return next;
+}
+
+function replaceAppsV3Import(s) {
+  return s.replaceAll('~apps-v3/', '~apps/');
+}
+
+function warnAboutExternallyConfiguredAppModules(s) {
+  if (s.includes('~apps-v3')) {
+    return append(
+      s,
+      dedent`
+    // @warning: External module is possibly present, please use the "ExternalAppImport" helper to inject them within imports
+    //           Import it as such: import { ExternalAppImport } from '~app/app.dynamic-module.ts'
+    //           Use it as such: @Module({ imports: [...ExternalAppImport(AppleAppModule, BananaAppModule)]
+    `,
+    );
+  }
+  return s;
+}
+
+function removeMasterChefImports(s) {
+  if (!s.includes('helpers/master-chef.')) {
+    return s;
+  }
+  let next = s;
+
+  next = lineModifier(next, line => {
+    if (line.includes('~position/helpers/master-chef.contract-position-balance-helper')) {
+      return '';
+    }
+
+    if (line.includes('~position/helpers/master-chef.default.staked-token-balance-strategy')) {
+      return '';
+    }
+
+    if (line.includes('~position/helpers/master-chef.rewarder.claimable-token-balances-strategy')) {
+      return '';
+    }
+
+    return line;
+  });
+}
+
+function removeLegacyModulesFromModuleDefinition(s) {
+  let next = s;
+  next = deleteLinesContaining(next, [
+    `from '~web3/web3.module';`,
+    `from '~multicall/multicall.module';`,
+    `from '~prices/prices.module';`,
+  ]);
+  next = next.replace(/Web3Module,?/, '');
+  next = next.replace(/PricesModule,?/, '');
+  next = next.replace(/MulticallModule,?/, '');
+  return next;
+}
+
 //////////////////////////
 // Actual script execution
 //////////////////////////
@@ -120,13 +274,39 @@ if (!files) {
 
 for (const file of files) {
   const contents = fs.readFileSync(file, 'utf-8');
-  const r = new CodeModder(contents);
-  r.addModifier(replaceNetworkImport);
-  r.addModifier(replaceImageUtilityImport);
-  r.addModifier(replacePositionFetcherUtilityImport);
-  r.addModifier(injectAppToolkit);
-  r.addModifier(replaceRegistration);
-  r.addModifier(replaceZeroAddressImport);
+  const strategy = new CodeModder(contents);
 
-  fs.writeFileSync(file, r.exec(), 'utf-8');
+  // Definition file strategies
+  if (file.endsWith('.definition.ts')) {
+    strategy.addModifier(reshapeGroups);
+    strategy.addModifier(augmentBalanceImport);
+    strategy.addModifier(replaceAppDefinitionImport);
+    strategy.addModifier(replaceRegistration);
+  }
+
+  // Module strategies
+  if (file.endsWith('.module.ts')) {
+    strategy.addModifier(appendAbstractDynamicApp);
+    strategy.addModifier(removeLegacyModulesFromModuleDefinition);
+    strategy.addModifier(warnAboutExternallyConfiguredAppModules);
+  }
+
+  if (
+    file.endsWith('.balance-fetcher.t') ||
+    file.endsWith('.token-fetcher.ts') ||
+    file.endsWith('.contract-position-fetcher.ts')
+  ) {
+    strategy.addModifier(injectAppToolkit);
+    strategy.addModifier(removeMasterChefImports);
+    strategy.addModifier(replaceRegistration);
+  }
+
+  // Globally applicable strategies
+  strategy.addModifier(replaceAppsV3Import);
+  strategy.addModifier(replaceNetworkImport);
+  strategy.addModifier(replaceImageUtilityImport);
+  strategy.addModifier(replacePositionFetcherUtilityImport);
+  strategy.addModifier(replaceZeroAddressImport);
+
+  fs.writeFileSync(file, strategy.exec(), 'utf-8');
 }
