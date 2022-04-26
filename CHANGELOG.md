@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.5.0](https://github.com/Zapper-fi/studio/compare/v0.4.1...v0.5.0) (2022-04-26)
+
+
+### Features
+
+* **illuvium:** Extract Illuvium to Studio and fix the staked/claimable amounts ([#273](https://github.com/Zapper-fi/studio/issues/273)) ([3da8a03](https://github.com/Zapper-fi/studio/commit/3da8a033bdd53bbfc6b43362e716fd353bc56952))
+
+
+### Bug Fixes
+
+* Resolve conflict in rename of AbstractApp ([#279](https://github.com/Zapper-fi/studio/issues/279)) ([989b3f5](https://github.com/Zapper-fi/studio/commit/989b3f5887d220b63e01a1d35faaac0246c923e1))
+
 ### [0.4.1](https://github.com/Zapper-fi/studio/compare/v0.4.0...v0.4.1) (2022-04-26)
 
 
