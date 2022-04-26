@@ -1,15 +1,10 @@
 import { Inject } from '@nestjs/common';
 
-import {
-  drillBalance,
-  MasterChefContractPositionBalanceHelper,
-  MasterChefDefaultStakedBalanceStrategy,
-  SingleStakingContractPositionBalanceHelper,
-  TokenBalanceHelper,
-} from '~app-toolkit';
+import { drillBalance } from '~app-toolkit';
 import { Register } from '~app-toolkit/decorators';
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
 import { BalanceFetcher } from '~balance/balance-fetcher.interface';
+import { APP_TOOLKIT, IAppToolkit } from '~lib';
 import { MetaType } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
@@ -29,18 +24,12 @@ const network = Network.AVALANCHE_MAINNET;
 @Register.BalanceFetcher(TRADER_JOE_DEFINITION.id, Network.AVALANCHE_MAINNET)
 export class AvalancheTraderJoeBalanceFetcher implements BalanceFetcher {
   constructor(
-    @Inject(TokenBalanceHelper) private readonly tokenBalanceHelper: TokenBalanceHelper,
-    @Inject(MasterChefContractPositionBalanceHelper)
-    private readonly masterChefFarmContractPositionBalanceHelper: MasterChefContractPositionBalanceHelper,
-    @Inject(MasterChefDefaultStakedBalanceStrategy)
-    private readonly masterChefFarmContractPositionDefaultStakedBalanceStrategy: MasterChefDefaultStakedBalanceStrategy,
-    @Inject(SingleStakingContractPositionBalanceHelper)
-    private readonly stakingBalanceHelper: SingleStakingContractPositionBalanceHelper,
+    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(TraderJoeContractFactory) private readonly traderJoeContractFactory: TraderJoeContractFactory,
   ) {}
 
   private async getXJoeBalances(address: string) {
-    return this.tokenBalanceHelper.getTokenBalances({
+    return this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
       appId: TRADER_JOE_DEFINITION.id,
       groupId: TRADER_JOE_DEFINITION.groups.xJoe.id,
       network: Network.AVALANCHE_MAINNET,
@@ -49,7 +38,7 @@ export class AvalancheTraderJoeBalanceFetcher implements BalanceFetcher {
   }
 
   private async getSJoeBalances(address: string) {
-    return this.stakingBalanceHelper.getBalances<TraderJoeStableStaking>({
+    return this.appToolkit.helpers.singleStakingContractPositionBalanceHelper.getBalances<TraderJoeStableStaking>({
       address,
       appId,
       network,
@@ -76,7 +65,7 @@ export class AvalancheTraderJoeBalanceFetcher implements BalanceFetcher {
   }
 
   private async getVeJoeStakingBalances(address: string) {
-    return this.stakingBalanceHelper.getBalances<TraderJoeVeJoeStaking>({
+    return this.appToolkit.helpers.singleStakingContractPositionBalanceHelper.getBalances<TraderJoeVeJoeStaking>({
       address,
       appId,
       network,
@@ -92,7 +81,7 @@ export class AvalancheTraderJoeBalanceFetcher implements BalanceFetcher {
   }
 
   private async getPoolBalances(address: string) {
-    return this.tokenBalanceHelper.getTokenBalances({
+    return this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
       appId: TRADER_JOE_DEFINITION.id,
       groupId: TRADER_JOE_DEFINITION.groups.pool.id,
       network: Network.AVALANCHE_MAINNET,
@@ -101,14 +90,14 @@ export class AvalancheTraderJoeBalanceFetcher implements BalanceFetcher {
   }
 
   private async getChefV2FarmBalances(address: string) {
-    return this.masterChefFarmContractPositionBalanceHelper.getBalances<TraderJoeChefV2>({
+    return this.appToolkit.helpers.masterChefContractPositionBalanceHelper.getBalances<TraderJoeChefV2>({
       address,
       appId: TRADER_JOE_DEFINITION.id,
       groupId: TRADER_JOE_DEFINITION.groups.chefV2Farm.id,
       network: Network.AVALANCHE_MAINNET,
       resolveChefContract: ({ contractAddress }) =>
         this.traderJoeContractFactory.traderJoeChefV2({ network: Network.AVALANCHE_MAINNET, address: contractAddress }),
-      resolveStakedTokenBalance: this.masterChefFarmContractPositionDefaultStakedBalanceStrategy.build({
+      resolveStakedTokenBalance: this.appToolkit.helpers.masterChefDefaultStakedBalanceStrategy.build({
         resolveStakedBalance: ({ contract, multicall, contractPosition }) =>
           multicall
             .wrap(contract)
@@ -128,14 +117,14 @@ export class AvalancheTraderJoeBalanceFetcher implements BalanceFetcher {
   }
 
   private async getChefV3FarmBalances(address: string) {
-    return this.masterChefFarmContractPositionBalanceHelper.getBalances<TraderJoeChefV3>({
+    return this.appToolkit.helpers.masterChefContractPositionBalanceHelper.getBalances<TraderJoeChefV3>({
       address,
       appId: TRADER_JOE_DEFINITION.id,
       groupId: TRADER_JOE_DEFINITION.groups.chefV3Farm.id,
       network: Network.AVALANCHE_MAINNET,
       resolveChefContract: ({ contractAddress }) =>
         this.traderJoeContractFactory.traderJoeChefV3({ network: Network.AVALANCHE_MAINNET, address: contractAddress }),
-      resolveStakedTokenBalance: this.masterChefFarmContractPositionDefaultStakedBalanceStrategy.build({
+      resolveStakedTokenBalance: this.appToolkit.helpers.masterChefDefaultStakedBalanceStrategy.build({
         resolveStakedBalance: ({ contract, multicall, contractPosition }) =>
           multicall
             .wrap(contract)
@@ -155,7 +144,7 @@ export class AvalancheTraderJoeBalanceFetcher implements BalanceFetcher {
   }
 
   private async getChefBoostedFarmBalances(address: string) {
-    return this.masterChefFarmContractPositionBalanceHelper.getBalances<TraderJoeChefBoosted>({
+    return this.appToolkit.helpers.masterChefContractPositionBalanceHelper.getBalances<TraderJoeChefBoosted>({
       address,
       appId: TRADER_JOE_DEFINITION.id,
       groupId: TRADER_JOE_DEFINITION.groups.chefBoostedFarm.id,
@@ -165,7 +154,7 @@ export class AvalancheTraderJoeBalanceFetcher implements BalanceFetcher {
           network: Network.AVALANCHE_MAINNET,
           address: contractAddress,
         }),
-      resolveStakedTokenBalance: this.masterChefFarmContractPositionDefaultStakedBalanceStrategy.build({
+      resolveStakedTokenBalance: this.appToolkit.helpers.masterChefDefaultStakedBalanceStrategy.build({
         resolveStakedBalance: ({ contract, multicall, contractPosition }) =>
           multicall
             .wrap(contract)

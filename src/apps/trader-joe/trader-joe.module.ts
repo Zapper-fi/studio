@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 
 import { AppToolkitModule } from '~app-toolkit/app-toolkit.module';
-import { AbstractDynamicApp } from '~app/app.dynamic-module';
+import { AbstractApp, ExternalAppImport } from '~app/app.dynamic-module';
 import { UniswapV2AppModule } from '~apps/uniswap-v2';
 import { PositionModule } from '~position/position.module';
 
@@ -18,7 +18,7 @@ import { TraderJoeContractFactory } from './contracts';
 import { TraderJoeAppDefinition } from './trader-joe.definition';
 
 @Module({
-  imports: [PositionModule, AppToolkitModule, UniswapV2AppModule.externallyConfigured(UniswapV2AppModule, 0)],
+  imports: [PositionModule, AppToolkitModule, ...ExternalAppImport(UniswapV2AppModule)],
   providers: [
     TraderJoeAppDefinition,
     TraderJoeContractFactory,
@@ -33,4 +33,4 @@ import { TraderJoeAppDefinition } from './trader-joe.definition';
     AvalancheTraderJoeVeJoeFarmContractPositionFetcher,
   ],
 })
-export class TraderJoeAppModule extends AbstractDynamicApp<TraderJoeAppModule>() {}
+export class TraderJoeAppModule extends AbstractApp() {}
