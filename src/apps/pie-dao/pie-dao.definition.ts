@@ -19,6 +19,7 @@ export const PIE_DAO_DEFINITION = {
     twitter: '',
     discord: '',
     telegram: '',
+    medium: '',
   },
   tags: [ProtocolTag.LIQUIDITY_POOL],
   supportedNetworks: {

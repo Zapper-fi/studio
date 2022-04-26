@@ -8,10 +8,11 @@ export const NAOS_DEFINITION = {
   name: 'NAOS Finance',
   description: `Earn competitive yield from income generating real world financial assets.`,
   links: {
-    github: '',
-    twitter: '',
-    discord: '',
-    telegram: '',
+    github: 'https://github.com/NAOS-Finance',
+    twitter: 'https://twitter.com/naos_finance',
+    discord: 'https://discord.com/invite/qThcuS7FBd',
+    telegram: 'https://t.me/naos_finance',
+    medium: 'https://naosfinance.medium.com/',
   },
   groups: {
     farm: { id: 'farm', type: GroupType.POSITION },

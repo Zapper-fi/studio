@@ -1,18 +1,18 @@
 import { Register } from '~app-toolkit/decorators';
 import { AppDefinition } from '~app/app.definition';
-import { GroupType, ProtocolAction, ProtocolTag } from '~app/app.interface';
+import { AppDefinitionObject, GroupType, ProtocolAction, ProtocolTag } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
-export const CURVE_DEFINITION = {
+export const CURVE_DEFINITION: AppDefinitionObject = {
   id: 'curve',
   name: 'Curve',
   description: `An exchange liquidity pool on Ethereum designed for: extremely efficient stablecoin trading, low risk, supplemental fee income for liquidity providers`,
   url: 'https://curve.fi',
   links: {
-    github: '',
-    twitter: '',
-    discord: '',
-    telegram: '',
+    github: 'https://github.com/curvefi/',
+    twitter: 'https://twitter.com/curvefinance',
+    discord: 'https://discord.com/invite/rgrfS7W',
+    telegram: 'https://t.me/curvefi',
   },
   groups: {
     farm: { id: 'farm', type: GroupType.POSITION },

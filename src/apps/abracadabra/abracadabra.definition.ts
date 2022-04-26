@@ -1,9 +1,9 @@
 import { Register } from '~app-toolkit/decorators';
 import { AppDefinition } from '~app/app.definition';
-import { GroupType, ProtocolAction, ProtocolTag } from '~app/app.interface';
+import { AppDefinitionObject, GroupType, ProtocolAction, ProtocolTag } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
-export const ABRACADABRA_DEFINITION = {
+export const ABRACADABRA_DEFINITION: AppDefinitionObject = {
   id: 'abracadabra',
   groups: {
     stakedSpell: { id: 'staked-spell', type: GroupType.TOKEN },

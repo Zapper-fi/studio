@@ -1,9 +1,9 @@
 import { Register } from '~app-toolkit/decorators';
 import { AppDefinition } from '~app/app.definition';
-import { GroupType, ProtocolTag, ProtocolAction } from '~app/app.interface';
+import { GroupType, ProtocolTag, ProtocolAction, AppDefinitionObject } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
-export const AELIN_DEFINITION = {
+export const AELIN_DEFINITION: AppDefinitionObject = {
   id: 'aelin',
   name: 'Aelin',
   description: `Aelin is a fundraising protocol built on Ethereum and launched on Optimism.`,
@@ -14,10 +14,10 @@ export const AELIN_DEFINITION = {
   },
   url: 'https://aelin.xyz/',
   links: {
-    github: '',
-    twitter: '',
-    discord: '',
-    telegram: '',
+    github: 'https://github.com/AelinXYZ',
+    twitter: 'https://twitter.com/aelinprotocol',
+    discord: 'https://t.co/kG6zsC0zaR',
+    medium: 'https://medium.com/@aelinprotocol',
   },
   tags: [ProtocolTag.LENDING],
   supportedNetworks: {

@@ -1,18 +1,18 @@
 import { Register } from '~app-toolkit/decorators';
 import { AppDefinition } from '~app/app.definition';
-import { GroupType, ProtocolAction, ProtocolTag } from '~app/app.interface';
+import { AppDefinitionObject, GroupType, ProtocolAction, ProtocolTag } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
-export const JPEGD_DEFINITION = {
+export const JPEGD_DEFINITION: AppDefinitionObject = {
   id: 'jpegd',
   name: 'Jpegd',
   description: 'JPEGd is the leading NFT lending platform in the decentralized finance space.',
   url: 'https://jpegd.io/',
   links: {
-    github: '',
-    twitter: '',
-    discord: '',
-    telegram: '',
+    twitter: 'https://twitter.com/JPEGd_69',
+    discord: 'https://discord.com/invite/jpegd',
+    telegram: 'https://t.me/jpegd',
+    medium: 'https://medium.com/@jpegd',
   },
   groups: {
     pool: { id: 'pool', type: GroupType.POSITION },

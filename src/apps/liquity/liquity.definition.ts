@@ -10,10 +10,11 @@ export const LIQUITY_DEFINITION = {
     'Liquity is a decentralized borrowing protocol that allows you to draw interest-free loans against Ether used as collateral.',
   url: 'https://www.liquity.org/',
   links: {
-    github: '',
-    twitter: '',
-    discord: '',
-    telegram: '',
+    github: 'https://github.com/liquity',
+    twitter: 'https://twitter.com/LiquityProtocol',
+    discord: 'https://t.co/0iKGcr4kyK',
+    telegram: 'https://t.me/liquityprotocol',
+    medium: 'https://medium.com/liquity',
   },
   groups: {
     farm: { id: 'farm', type: GroupType.POSITION },
