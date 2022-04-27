@@ -9,7 +9,7 @@ import { CeloPoolTogetherV3TicketTokenFetcher } from './celo/pool-together.v3-ti
 import { PoolTogetherContractFactory } from './contracts';
 import { EthereumPoolTogetherV4TicketTokenFetcher } from './ethereum/pool-together.v4-ticket.token-fetcher';
 import { EthereumPoolTogetherBalanceFetcher } from './ethereum/pool-together.balance-fetcher';
-import { EthereumPoolTogetherPodTokenFetcher } from './ethereum/pool-together.pod.token-fetcher';
+import { EthereumPoolTogetherPodTokenFetcher } from './ethereum/pool-together.v3-pod.token-fetcher';
 import { EthereumPoolTogetherV3TicketTokenFetcher } from './ethereum/pool-together.v3-ticket.token-fetcher';
 import { PoolTogetherV4PrizePoolTokenHelper } from './helpers/pool-together-v4.prize-pool.token-helper';
 import { PoolTogetherAirdropTokenBalancesHelper } from './helpers/pool-together.airdrop.balance-helper';
@@ -21,10 +21,16 @@ import { PolygonPoolTogetherV4TicketTokenFetcher } from './polygon/pool-together
 import { PolygonPoolTogetherBalanceFetcher } from './polygon/pool-together.balance-fetcher';
 import { PolygonPoolTogetherV3TicketTokenFetcher } from './polygon/pool-together.v3-ticket.token-fetcher';
 import { PoolTogetherAppDefinition } from './pool-together.definition';
+import { PoolTogetherApiPrizePoolRegistry } from './helpers/pool-together.api.prize-pool-registry';
+import { PolygonPoolTogetherTvlFetcher } from './polygon/pool-together.tvl-fetcher';
+import { EthereumPoolTogetherTvlFetcher } from './ethereum/pool-together.tvl-fetcher';
+import { CeloPoolTogetherTvlFetcher } from './celo/pool-together.tvl-fetcher';
+import { AvalanchePoolTogetherTvlFetcher } from './avalanche/pool-together.tvl-fetcher';
 
 @Module({
   providers: [
     PoolTogetherAppDefinition,
+    PoolTogetherApiPrizePoolRegistry,
     PoolTogetherContractFactory,
     PoolTogetherAirdropTokenBalancesHelper,
     PoolTogetherClaimableTokenBalancesHelper,
@@ -32,14 +38,18 @@ import { PoolTogetherAppDefinition } from './pool-together.definition';
     PoolTogetherV3PodTokenHelper,
     PoolTogetherV3PrizePoolTokenHelper,
     PoolTogetherV4PrizePoolTokenHelper,
+    AvalanchePoolTogetherTvlFetcher,
     AvalanchePoolTogetherBalanceFetcher,
     AvalanchePoolTogetherV4TicketTokenFetcher,
+    CeloPoolTogetherTvlFetcher,
     CeloPoolTogetherBalanceFetcher,
     CeloPoolTogetherV3TicketTokenFetcher,
+    EthereumPoolTogetherTvlFetcher,
     EthereumPoolTogetherBalanceFetcher,
     EthereumPoolTogetherPodTokenFetcher,
     EthereumPoolTogetherV3TicketTokenFetcher,
     EthereumPoolTogetherV4TicketTokenFetcher,
+    PolygonPoolTogetherTvlFetcher,
     PolygonPoolTogetherBalanceFetcher,
     PolygonPoolTogetherV3TicketTokenFetcher,
     PolygonPoolTogetherV4TicketTokenFetcher,

@@ -6,6 +6,7 @@ import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
 import { PoolTogetherV4PrizePoolTokenHelper } from '../helpers/pool-together-v4.prize-pool.token-helper';
+import { PoolTogetherApiPrizePoolRegistry } from '../helpers/pool-together.api.prize-pool-registry';
 import { POOL_TOGETHER_DEFINITION } from '../pool-together.definition';
 
 const appId = POOL_TOGETHER_DEFINITION.id;
@@ -16,13 +17,16 @@ const network = Network.AVALANCHE_MAINNET;
 export class AvalanchePoolTogetherV4TicketTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(PoolTogetherV4PrizePoolTokenHelper)
-    private readonly poolTogetherTicketTokenHelper: PoolTogetherV4PrizePoolTokenHelper,
+    private readonly poolTogetherV4PrizePoolTokenHelper: PoolTogetherV4PrizePoolTokenHelper,
+    @Inject(PoolTogetherApiPrizePoolRegistry) private readonly prizePoolRegistry: PoolTogetherApiPrizePoolRegistry,
   ) {}
 
   async getPositions() {
-    return this.poolTogetherTicketTokenHelper.getAppTokens({
+    const prizePools = await this.prizePoolRegistry.getV4PrizePools(network);
+
+    return this.poolTogetherV4PrizePoolTokenHelper.getAppTokens({
       network: Network.AVALANCHE_MAINNET,
-      prizePoolAddresses: ['0xf830f5cb2422d555ec34178e27094a816c8f95ec'],
+      prizePoolAddresses: prizePools?.map(prizePoolAddresses => prizePoolAddresses.prizePoolAddress) || [],
     });
   }
 }

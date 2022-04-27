@@ -2,40 +2,37 @@ import { Inject } from '@nestjs/common';
 import { compact, sum } from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { AppGroupsDefinition } from '~position/position.service';
 import { Network } from '~types/network.interface';
-
 import { PoolTogetherContractFactory } from '../contracts';
+
 import { POOL_TOGETHER_DEFINITION } from '../pool-together.definition';
 
-import { PoolTogetherFaucetAddressHelper } from './pool-together-v3.faucet.address-helper';
+import { V3PrizePool } from './pool-together.api.prize-pool-registry';
 
 export type PoolTogetherV3TicketTokenDataProps = {
   apy: number;
-  liquidity: number;
+  totalLiquidity: number;
   faucetAddresses: string[];
 };
 
 type GetTicketTokensParams = {
   network: Network;
   dependencies: AppGroupsDefinition[];
-  prizePoolAddresses: string[];
+  prizePools: V3PrizePool[];
 };
 
 export class PoolTogetherV3PrizePoolTokenHelper {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(PoolTogetherContractFactory) private readonly poolTogetherContractFactory: PoolTogetherContractFactory,
-    @Inject(PoolTogetherFaucetAddressHelper)
-    private readonly faucetAddressFetchStrategy: PoolTogetherFaucetAddressHelper,
+    @Inject(PoolTogetherContractFactory) private readonly contractFactory: PoolTogetherContractFactory,
   ) {}
 
-  async getTokens({ network, dependencies, prizePoolAddresses }: GetTicketTokensParams) {
+  async getTokens({ network, dependencies, prizePools }: GetTicketTokensParams) {
     const multicall = this.appToolkit.getMulticall(network);
 
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
@@ -43,52 +40,36 @@ export class PoolTogetherV3PrizePoolTokenHelper {
     const allTokens = [...appTokens, ...baseTokens];
 
     const vaultTokens = await Promise.all(
-      prizePoolAddresses.map(async poolAddress => {
-        const poolContract = this.poolTogetherContractFactory.poolTogetherV3PrizePool({
-          address: poolAddress,
-          network,
-        });
-        const faucetAddresses = await this.faucetAddressFetchStrategy.getAddresses({ network, poolAddress });
+      prizePools.map(async prizePool => {
+        const { tokenFaucets, ticketAddress, sponsorshipAddress, underlyingTokenAddress } = prizePool;
 
-        const [ticketTokenAddressesRaw, underlyingTokenAddressRaw] = await Promise.all([
-          multicall.wrap(poolContract).tokens(),
-          multicall.wrap(poolContract).token(),
-        ]);
-
-        // Find the pool ticket address
-        const maybeTicketContract = this.poolTogetherContractFactory.poolTogetherV3Ticket({
-          address: ticketTokenAddressesRaw[1],
-          network,
-        });
-
-        const ticketAddressRaw = await multicall
-          .wrap(maybeTicketContract)
-          .chanceOf(ZERO_ADDRESS)
-          .then(() => ticketTokenAddressesRaw[1])
-          .catch(() => ticketTokenAddressesRaw[0]);
-
-        const ticketAddress = ticketAddressRaw.toLowerCase();
-        const underlyingTokenAddress = underlyingTokenAddressRaw.toLowerCase();
-
-        // Calculate the supply by the amount of available tickets
+        // Calculate the total supply by the amount of available tickets & sponsorship tickets
         const ticketTokenContract = this.appToolkit.globalContracts.erc20({ address: ticketAddress, network });
-        const [symbol, supplyRaw, decimals] = await Promise.all([
-          multicall.wrap(ticketTokenContract).symbol(),
-          multicall.wrap(ticketTokenContract).totalSupply(),
-          multicall.wrap(ticketTokenContract).decimals(),
-        ]);
+        const sponsorshipTokenContract = this.appToolkit.globalContracts.erc20({
+          address: sponsorshipAddress,
+          network,
+        });
+        const [ticketSymbol, ticketSupplyRaw, ticketDecimals, sponsorshipSymbol, sponsorshipSupplyRaw] =
+          await Promise.all([
+            multicall.wrap(ticketTokenContract).symbol(),
+            multicall.wrap(ticketTokenContract).totalSupply(),
+            multicall.wrap(ticketTokenContract).decimals(),
+            multicall.wrap(sponsorshipTokenContract).symbol(),
+            multicall.wrap(sponsorshipTokenContract).totalSupply(),
+          ]);
 
-        const supply = Number(supplyRaw) / 10 ** decimals;
+        const ticketSupply = Number(ticketSupplyRaw) / 10 ** ticketDecimals;
+        const sponsorshipSupply = Number(sponsorshipSupplyRaw) / 10 ** ticketDecimals;
+        const totalSupply = ticketSupply + sponsorshipSupply;
         const underlyingToken = allTokens.find(p => p?.address === underlyingTokenAddress);
         if (!underlyingToken) return null;
 
         const pricePerShare = 1; // Minted 1:1
         const price = underlyingToken.price * pricePerShare;
-        const liquidity = supply * underlyingToken.price;
+        const totalLiquidity = totalSupply * underlyingToken.price;
         const tokens = [underlyingToken];
 
         // Display Props
-        const label = symbol;
         const secondaryLabel = buildDollarDisplayItem(price);
         const images =
           underlyingToken.type === ContractType.BASE_TOKEN
@@ -96,60 +77,87 @@ export class PoolTogetherV3PrizePoolTokenHelper {
             : underlyingToken.displayProps.images;
 
         const apys = await Promise.all(
-          faucetAddresses.map(async address => {
-            if (!address) {
+          tokenFaucets.map(async tokenFaucet => {
+            const { tokenFaucetAddress, assetAddress } = tokenFaucet;
+            if (!tokenFaucetAddress || !assetAddress) {
               return 0;
             }
-            const faucetContract = this.poolTogetherContractFactory.poolTogetherV3TokenFaucet({ address, network });
-            const [dripRatePerSecond, rewardTokenAddressRaw] = await Promise.all([
-              multicall.wrap(faucetContract).dripRatePerSecond(),
-              multicall.wrap(faucetContract).asset(),
-            ]);
 
-            if (rewardTokenAddressRaw === ZERO_ADDRESS) return 0;
-            const rewardTokenAddress = rewardTokenAddressRaw.toLowerCase();
+            const tokenFaucetContract = this.contractFactory.poolTogetherV3TokenFaucet({
+              address: tokenFaucetAddress,
+              network,
+            });
+            const dripRatePerSecond = await tokenFaucetContract.dripRatePerSecond();
+
             const totalDripPerDay = (Number(dripRatePerSecond) / 10 ** 18) * 86400;
-            const rewardPriceObj = baseTokens.find(p => p?.address === rewardTokenAddress);
-            const rewardMarketObj = appTokens.find(p => p?.address === rewardTokenAddress);
+            const rewardPriceObj = baseTokens.find(p => p?.address === assetAddress);
+            const rewardMarketObj = appTokens.find(p => p?.address === assetAddress);
             const rewardTokenPrice = rewardMarketObj?.price ?? rewardPriceObj?.price ?? 0;
 
             const totalDripDailyValue = totalDripPerDay * rewardTokenPrice;
-            return (totalDripDailyValue / liquidity) * 365;
+            return (totalDripDailyValue / totalLiquidity) * 365;
           }),
         );
 
         const apy = sum(apys);
+        const faucetAddresses = compact(tokenFaucets.map(tokenFaucet => tokenFaucet.tokenFaucetAddress));
 
-        const token: AppTokenPosition<PoolTogetherV3TicketTokenDataProps> = {
+        const ticket: AppTokenPosition<PoolTogetherV3TicketTokenDataProps> = {
           type: ContractType.APP_TOKEN,
           address: ticketAddress,
           appId: POOL_TOGETHER_DEFINITION.id,
           groupId: POOL_TOGETHER_DEFINITION.groups.v3.id,
           network,
-          symbol,
-          decimals,
-          supply,
+          symbol: ticketSymbol,
+          decimals: ticketDecimals,
+          supply: ticketSupply,
           price,
           pricePerShare,
           tokens,
 
           dataProps: {
             apy,
-            liquidity,
-            faucetAddresses: compact(faucetAddresses),
+            totalLiquidity,
+            faucetAddresses,
           },
 
           displayProps: {
-            label,
+            label: ticketSymbol,
             secondaryLabel,
             images,
           },
         };
 
-        return token;
+        const sponsorship: AppTokenPosition<PoolTogetherV3TicketTokenDataProps> = {
+          type: ContractType.APP_TOKEN,
+          address: sponsorshipAddress,
+          appId: POOL_TOGETHER_DEFINITION.id,
+          groupId: POOL_TOGETHER_DEFINITION.groups.v3.id,
+          network,
+          symbol: sponsorshipSymbol,
+          decimals: ticketDecimals,
+          supply: sponsorshipSupply,
+          price,
+          pricePerShare,
+          tokens,
+
+          dataProps: {
+            apy,
+            totalLiquidity,
+            faucetAddresses,
+          },
+
+          displayProps: {
+            label: sponsorshipSymbol,
+            secondaryLabel,
+            images,
+          },
+        };
+
+        return [ticket, sponsorship];
       }),
     );
 
-    return compact(vaultTokens);
+    return compact(vaultTokens.flat());
   }
 }
