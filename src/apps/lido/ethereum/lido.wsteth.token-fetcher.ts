@@ -24,11 +24,11 @@ export class EthereumLidoWstethTokenFetcher implements PositionFetcher<AppTokenP
   ) {}
 
   async getPositions() {
-    const address = LIDO_DEFINITION.wstethAddress;
+    const address = '0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0';
     const multicall = this.appToolkit.getMulticall(network);
     const contract = this.lidoContractFactory.steth({ address: address, network });
     const baseTokenDependencies = await this.appToolkit.getBaseTokenPrices(network);
-    const wstethToken = baseTokenDependencies.find(v => v.symbol === LIDO_DEFINITION.wstethSymbol)!;
+    const wstethToken = baseTokenDependencies.find(v => v.symbol === 'wstETH')!;
     const [symbol, decimals, totalSupply] = await Promise.all([
       multicall.wrap(contract).symbol(),
       multicall.wrap(contract).decimals(),
@@ -49,7 +49,7 @@ export class EthereumLidoWstethTokenFetcher implements PositionFetcher<AppTokenP
       price: wstethToken.price,
       type: ContractType.APP_TOKEN,
       displayProps: {
-        label: LIDO_DEFINITION.wstethSymbol,
+        label: symbol,
         secondaryLabel: buildDollarDisplayItem(wstethToken.price),
         images: [getTokenImg(address, network)],
       },

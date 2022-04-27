@@ -42,7 +42,7 @@ export class EthereumPickleSingleRewardPositionFetcher implements PositionFetche
             .map(({ vaultAddress, gaugeAddress }) => ({
               address: gaugeAddress!,
               stakedTokenAddress: vaultAddress,
-              rewardTokenAddresses: [PICKLE_DEFINITION.token.address],
+              rewardTokenAddresses: [PICKLE_DEFINITION.token!.address],
             })),
         resolveFarmContract: ({ address }) =>
           this.pickleContractFactory.pickleJarSingleRewardStaking({ network, address }),

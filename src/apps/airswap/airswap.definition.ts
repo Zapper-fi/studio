@@ -1,15 +1,20 @@
 import { Register } from '~app-toolkit/decorators';
 import { AppDefinition } from '~app/app.definition';
-import { GroupType, ProtocolAction, ProtocolTag } from '~app/app.interface';
+import { AppDefinitionObject, GroupType, ProtocolAction, ProtocolTag } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
-export const AIRSWAP_DEFINITION = {
+export const AIRSWAP_DEFINITION: AppDefinitionObject = {
   id: 'airswap',
   name: 'Airswap',
   description:
     'AirSwap is an open community of developers, designers, writers, and tinkerers building decentralized trading systems. Protocol fees are automatically distributed to contributors.',
   url: 'https://airswap.io',
-  symbol: 'AST',
+  links: {
+    github: 'https://github.com/airswap',
+    twitter: 'https://twitter.com/airswap',
+    discord: 'https://chat.airswap.io/',
+    medium: 'https://airswap.medium.com/',
+  },
   groups: {
     sAST: { id: 's-ast', type: GroupType.TOKEN },
   },

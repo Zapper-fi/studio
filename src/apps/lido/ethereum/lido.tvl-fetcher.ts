@@ -19,10 +19,10 @@ export class EthereumLidoTvlFetcher implements TvlFetcher {
   ) {}
 
   async getTvl() {
-    const address = LIDO_DEFINITION.stethAddress;
+    const stethAddress = '0xae7ab96520de3a18e5e111b5eaab095312d7fe84';
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
-    const stethToken = baseTokens.find(v => v.symbol === LIDO_DEFINITION.stethSymbol)!;
-    const contract = this.lidoContractFactory.steth({ address: address, network });
+    const stethToken = baseTokens.find(v => v.symbol === 'stETH')!;
+    const contract = this.lidoContractFactory.steth({ address: stethAddress, network });
     const multicall = this.appToolkit.getMulticall(network);
     const [decimals, totalSupply] = await Promise.all([
       multicall.wrap(contract).decimals(),

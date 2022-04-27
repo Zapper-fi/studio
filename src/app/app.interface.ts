@@ -55,6 +55,14 @@ export type AppDefinitionObject = {
   supportedNetworks: { [N in Network]?: ProtocolAction[] };
   primaryColor?: string;
   url: string;
+  links: {
+    learn?: string;
+    github?: string;
+    twitter?: string;
+    telegram?: string;
+    discord?: string;
+    medium?: string;
+  };
   compatibleAddressFormat?: { [N in Network]?: AddressFormat };
   token?: {
     address: string;
