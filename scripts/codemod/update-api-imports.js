@@ -4,7 +4,6 @@
  */
 const fs = require('fs');
 const recast = require('recast');
-
 const dedent = require('dedent');
 
 ///////////////////////
@@ -15,9 +14,21 @@ const createAST = source =>
     parser: require('recast/parsers/typescript'),
   });
 
+const b = recast.types.builders;
+
+/**
+ *
+ * @param {recast.types.Visitor<{}>} p
+ */
+function createVisitor(p) {
+  return p;
+}
+
 ///////////////////////
 // General utility func
 ///////////////////////
+const noop = () => {};
+
 function deleteLinesContaining(content, targets) {
   const next = [];
   const byLine = content.split('\n');
@@ -56,6 +67,7 @@ function lineModifier(s, cb) {
 ///////////////////////
 // Codemod & Strategies
 ///////////////////////
+
 class CodeMod {
   constructor(contents = '') {
     this.contents = contents;
@@ -97,37 +109,16 @@ class CodeMod {
 
 function injectAppToolkit(s) {
   let next = s;
-  next = next.replace('constructor(', 'constructor(\n@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,\n');
-  next = append(next, `import { APP_TOOLKIT, IAppToolkit } from '~lib';`);
 
-  next = next.replaceAll('this.multicallService.multicall({ network })', 'this.appToolkit.getMulticall(network)');
-
-  next = next.replaceAll(
-    'this.priceService.getBaseTokenV3Prices({ network })',
-    'this.appToolkit.getBaseTokenPrices(network)',
-  );
+  if (!next.includes('@Inject(APP_TOOLKIT')) {
+    next = next.replace(
+      'constructor(',
+      'constructor(\n@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,\n',
+    );
+    next = append(next, `import { APP_TOOLKIT, IAppToolkit } from '~lib';`);
+  }
 
   next = next.replaceAll(' this.tokenBalanceHelper.getVaultBalances', 'this.appToolkit.getBaseTokenPrices(network)');
-
-  next = next.replaceAll(
-    'this.masterChefFarmContractPositionBalanceHelper.getBalances',
-    'this.appToolkit.helpers.masterChefContractPositionBalanceHelper.getBalances',
-  );
-
-  next = next.replaceAll(
-    'this.masterChefFarmContractPositionDefaultStakedBalanceStrategy.build',
-    'this.appToolkit.helpers.masterChefDefaultStakedBalanceStrategy.build',
-  );
-
-  next = next.replaceAll(
-    'this.masterChefFarmContractPositionDefaultStakedBalanceStrategy.build',
-    'this.appToolkit.helpers.masterChefDefaultStakedBalanceStrategy.build',
-  );
-
-  next = next.replaceAll(
-    'this.masterchefFarmContractPositionHelper.getContractPositions',
-    'this.appToolkit.helpers.masterChefContractPositionHelper.getContractPositions',
-  );
 
   next = deleteLinesContaining(next, ['@Inject(PRICES_SERVICE)', '@Inject(MulticallService)']);
 
@@ -205,11 +196,11 @@ function replaceAppDefinitionImport(s) {
 
 function appendAbstractDynamicApp(s) {
   let next = s;
-  next = append(next, `import { AbstractDynamicApp } from '~app/app.dynamic-module';`);
+  next = append(next, `import { AbstractApp } from '~app/app.dynamic-module';`);
   next = lineModifier(next, line => {
     if (line.includes('export class ')) {
       const [_export, _class, identifier] = line.split(' ');
-      return `export class ${identifier} extends AbstractDynamicApp<${identifier}>() {};`;
+      return `export class ${identifier} extends AbstractApp() {};`;
     } else {
       return line;
     }
@@ -271,17 +262,6 @@ function removeLegacyModulesFromModuleDefinition(s) {
   return next;
 }
 
-const b = recast.types.builders;
-const noop = () => {};
-
-/**
- *
- * @param {recast.types.Visitor<{}>} p
- */
-function createVisitor(p) {
-  return p;
-}
-
 function extractConstantsCommonStrategy() {
   function extractConstantsCommon(specifiers, cb = noop) {
     const importDeclarations = [];
@@ -329,17 +309,23 @@ function extractConstantsCommonStrategy() {
     visitImportDeclaration(path) {
       const importedFrom = path.node.source.value;
 
-      const shortSpecifiers = path.node.specifiers.map(specifier => {
-        const originalImportedName = specifier.imported.name;
-        const renamedImport = specifier.local.name;
-        const from = importedFrom;
+      const shortSpecifiers = path.node.specifiers
+        .map(specifier => {
+          if (!specifier.imported) {
+            return null;
+          }
 
-        return {
-          originalImportedName,
-          renamedImport,
-          from,
-        };
-      });
+          const originalImportedName = specifier.imported.name;
+          const renamedImport = specifier.local.name;
+          const from = importedFrom;
+
+          return {
+            originalImportedName,
+            renamedImport,
+            from,
+          };
+        })
+        .filter(Boolean);
 
       extractConstantsCommon(shortSpecifiers, next => {
         for (const n of next) {
@@ -407,6 +393,128 @@ function renameNetworkImportStrategy() {
   return createGenericImportRenamingStrategy('@zapper-fi/types/networks', '~types/network.interface');
 }
 
+function appToolkitStrategy() {
+  const injectableClasses = {};
+
+  return createVisitor({
+    visitProgram(path) {
+      this.traverse(path);
+    },
+    visitClassDeclaration(path) {
+      this.traverse(path);
+    },
+    visitClassMethod(path) {
+      if (path.node.kind === 'constructor') {
+        path.node.params.forEach(param => {
+          let injectable = '';
+          param.decorators.forEach(decorator => {
+            if (decorator.expression.callee.name === 'Inject') {
+              injectable = decorator.expression.arguments[0].name;
+            }
+          });
+
+          if (injectable) {
+            const thisInvocation = param.parameter.name;
+            injectableClasses[thisInvocation] = injectable;
+          }
+        });
+        return false;
+      }
+
+      recast.visit(path.node, {
+        visitMemberExpression(path) {
+          this.traverse(path);
+        },
+
+        visitCallExpression(path) {
+          const methodName = path.node.callee.property?.name;
+
+          if (!methodName) {
+            return false;
+          }
+
+          function createThisCallExpression({ stringPath = '', method = methodName, args = path.node.arguments }) {
+            let memberExpression = b.thisExpression();
+            for (const content of stringPath.split('.')) {
+              memberExpression = b.memberExpression(memberExpression, b.identifier(content));
+            }
+
+            return b.callExpression(b.memberExpression(memberExpression, b.identifier(method)), args);
+          }
+
+          let replacement = null;
+
+          recast.visit(path.node, {
+            visitThisExpression(path) {
+              const thisInvocation = path.parentPath.node.property.name;
+              const itIsThisClass = className => injectableClasses[thisInvocation] === className;
+
+              if (itIsThisClass('TokenBalanceHelper') && methodName === 'getVaultBalances') {
+                replacement = createThisCallExpression({ stringPath: 'appToolkit.helpers.tokenBalanceHelper' });
+              }
+
+              if (itIsThisClass('MasterChefContractPositionHelper')) {
+                replacement = createThisCallExpression({
+                  stringPath: 'appToolkit.helpers.masterChefContractPositionHelper',
+                });
+              }
+
+              if (itIsThisClass('MasterChefRewarderClaimableTokenStrategy')) {
+                replacement = createThisCallExpression({
+                  stringPath: 'appToolkit.helpers.masterChefV2ClaimableTokenStrategy',
+                });
+              }
+
+              if (itIsThisClass('MasterChefContractPositionBalanceHelper')) {
+                replacement = createThisCallExpression({
+                  stringPath: 'appToolkit.helpers.masterChefContractPositionBalanceHelper',
+                });
+              }
+
+              if (itIsThisClass('MasterChefDefaultStakedBalanceStrategy')) {
+                replacement = createThisCallExpression({
+                  stringPath: 'appToolkit.helpers.masterChefDefaultStakedBalanceStrategy',
+                });
+              }
+              if (itIsThisClass('MasterChefContractPositionHelper')) {
+                replacement = createThisCallExpression({
+                  stringPath: 'appToolkit.helpers.masterChefContractPositionHelper',
+                });
+              }
+
+              if (itIsThisClass('PRICES_SERVICE')) {
+                replacement = createThisCallExpression({
+                  stringPath: 'appToolkit',
+                  method: 'getBaseTokenPrices',
+                  args: [b.identifier('network')],
+                });
+              }
+
+              if (itIsThisClass('MulticallService')) {
+                replacement = createThisCallExpression({
+                  stringPath: 'appToolkit',
+                  method: 'getMulticall',
+                  args: [b.identifier('network')],
+                });
+              }
+
+              return false;
+            },
+          });
+
+          // Rename the method
+          if (replacement) {
+            path.replace(replacement);
+          }
+
+          this.traverse(path);
+        },
+      });
+      this.traverse(path);
+    },
+  });
+}
+
 //////////////////////////
 // Actual script execution
 //////////////////////////
@@ -420,7 +528,6 @@ if (!files) {
 for (const file of files) {
   const contents = fs.readFileSync(file, 'utf-8');
 
-  // Naive code mods
   const strategy = new CodeMod(contents);
 
   // Definition file strategies
@@ -443,6 +550,7 @@ for (const file of files) {
     file.endsWith('.token-fetcher.ts') ||
     file.endsWith('.contract-position-fetcher.ts')
   ) {
+    strategy.addAstVisitor(appToolkitStrategy);
     strategy.addModifier(injectAppToolkit);
     strategy.addModifier(removeMasterChefImports);
     strategy.addModifier(replaceRegistration);
