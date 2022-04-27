@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+### [0.7.2](https://github.com/Zapper-fi/studio/compare/v0.7.1...v0.7.2) (2022-04-27)
+
+
+### Bug Fixes
+
+* Update AppDefinition class with links ([#291](https://github.com/Zapper-fi/studio/issues/291)) ([0fd76cf](https://github.com/Zapper-fi/studio/commit/0fd76cf02250f9f13e62b7afa7b77d0d63ddeddc))
+
 ### [0.7.1](https://github.com/Zapper-fi/studio/compare/v0.7.0...v0.7.1) (2022-04-27)
 
 
