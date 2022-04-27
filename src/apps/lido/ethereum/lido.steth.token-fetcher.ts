@@ -2,12 +2,12 @@ import { Inject } from '@nestjs/common';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractType } from '~position/contract.interface';
-import { AppTokenPosition } from '~position/position.interface';
-import { Network } from '~types/network.interface';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
+import { ContractType } from '~position/contract.interface';
+import { PositionFetcher } from '~position/position-fetcher.interface';
+import { AppTokenPosition } from '~position/position.interface';
+import { Network } from '~types/network.interface';
 
 import { LidoContractFactory } from '../contracts';
 import { LIDO_DEFINITION } from '../lido.definition';
