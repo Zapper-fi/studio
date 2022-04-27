@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+### [0.8.1](https://github.com/Zapper-fi/studio/compare/v0.8.0...v0.8.1) (2022-04-27)
+
+
+### Bug Fixes
+
+* Rename wBAN to Banano ([#299](https://github.com/Zapper-fi/studio/issues/299)) ([6b1e265](https://github.com/Zapper-fi/studio/commit/6b1e265dba2fcb83968c22f25755815af556459d))
+
 ## [0.8.0](https://github.com/Zapper-fi/studio/compare/v0.7.3...v0.8.0) (2022-04-27)
 
 
