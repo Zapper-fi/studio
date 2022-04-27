@@ -1,9 +1,9 @@
 import { Register } from '~app-toolkit/decorators';
 import { AppDefinition } from '~app/app.definition';
-import { GroupType, ProtocolAction, ProtocolTag } from '~app/app.interface';
+import { AppDefinitionObject, GroupType, ProtocolAction, ProtocolTag } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
-export const LIQUITY_DEFINITION = {
+export const LIQUITY_DEFINITION: AppDefinitionObject = {
   id: 'liquity',
   name: 'Liquity',
   description:

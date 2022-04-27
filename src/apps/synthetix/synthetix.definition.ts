@@ -1,9 +1,9 @@
 import { Register } from '~app-toolkit/decorators';
 import { AppDefinition } from '~app/app.definition';
-import { GroupType, ProtocolAction, ProtocolTag } from '~app/app.interface';
+import { AppDefinitionObject, GroupType, ProtocolAction, ProtocolTag } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
-export const SYNTHETIX_DEFINITION = {
+export const SYNTHETIX_DEFINITION: AppDefinitionObject = {
   id: 'synthetix',
   name: 'Synthetix',
   description: `A new financial primitive enabling the creation of synthetic assets, offering unique derivatives and exposure to real-world assets on the blockchain.`,

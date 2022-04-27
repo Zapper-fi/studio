@@ -1,9 +1,9 @@
 import { Register } from '~app-toolkit/decorators';
 import { AppDefinition } from '~app/app.definition';
-import { GroupType, ProtocolAction, ProtocolTag } from '~app/app.interface';
+import { AppDefinitionObject, GroupType, ProtocolAction, ProtocolTag } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
-export const PICKLE_DEFINITION = {
+export const PICKLE_DEFINITION: AppDefinitionObject = {
   id: 'pickle',
   name: 'Pickle',
   description: `Pickle Finance helps users to maximize their DeFi yields by auto-compounding their rewards, saving them time and gas.`,

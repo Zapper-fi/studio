@@ -1,9 +1,9 @@
 import { Register } from '~app-toolkit/decorators';
 import { AppDefinition } from '~app/app.definition';
-import { GroupType, ProtocolAction, ProtocolTag } from '~app/app.interface';
+import { AppDefinitionObject, GroupType, ProtocolAction, ProtocolTag } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
-export const UNISWAP_V2_DEFINITION = {
+export const UNISWAP_V2_DEFINITION: AppDefinitionObject = {
   id: 'uniswap-v2',
   name: 'Uniswap V2',
   description: `A protocol for trading and automated liquidity provision on Ethereum.`,

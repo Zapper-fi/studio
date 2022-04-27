@@ -1,9 +1,9 @@
 import { Register } from '~app-toolkit/decorators';
 import { AppDefinition } from '~app/app.definition';
-import { GroupType, ProtocolAction, ProtocolTag } from '~app/app.interface';
+import { AppDefinitionObject, GroupType, ProtocolAction, ProtocolTag } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
-export const TOKEMAK_DEFINITION = {
+export const TOKEMAK_DEFINITION: AppDefinitionObject = {
   id: 'tokemak',
   name: 'Tokemak',
   description: `Tokemak creates sustainable DeFi liquidity and capital efficient markets through a convenient decentralized market making protocol.`,

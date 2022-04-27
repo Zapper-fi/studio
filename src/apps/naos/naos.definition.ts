@@ -1,9 +1,9 @@
 import { Register } from '~app-toolkit/decorators';
 import { AppDefinition } from '~app/app.definition';
-import { GroupType, ProtocolAction, ProtocolTag } from '~app/app.interface';
+import { AppDefinitionObject, GroupType, ProtocolAction, ProtocolTag } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
-export const NAOS_DEFINITION = {
+export const NAOS_DEFINITION: AppDefinitionObject = {
   id: 'naos',
   name: 'NAOS Finance',
   description: `Earn competitive yield from income generating real world financial assets.`,

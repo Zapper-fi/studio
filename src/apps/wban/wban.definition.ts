@@ -1,9 +1,9 @@
 import { Register } from '~app-toolkit/decorators';
 import { AppDefinition } from '~app/app.definition';
-import { GroupType, ProtocolAction } from '~app/app.interface';
+import { AppDefinitionObject, GroupType, ProtocolAction } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
-export const WBAN_DEFINITION = {
+export const WBAN_DEFINITION: AppDefinitionObject = {
   id: 'wban',
   name: 'wBAN',
   description:

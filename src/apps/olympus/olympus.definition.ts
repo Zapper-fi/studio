@@ -1,9 +1,9 @@
 import { Register } from '~app-toolkit/decorators';
 import { AppDefinition } from '~app/app.definition';
-import { GroupType, ProtocolAction, ProtocolTag } from '~app/app.interface';
+import { AppDefinitionObject, GroupType, ProtocolAction, ProtocolTag } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
-export const OLYMPUS_DEFINITION = {
+export const OLYMPUS_DEFINITION: AppDefinitionObject = {
   id: 'olympus',
   name: 'Olympus',
   description: `Olympus is a decentralized reserve currency protocol based on the OHM token. Each OHM token is backed by a basket of assets in the Olympus treasury, giving it an intrinsic value that it cannot fall below.`,

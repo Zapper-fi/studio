@@ -1,9 +1,9 @@
 import { Register } from '~app-toolkit/decorators';
 import { AppDefinition } from '~app/app.definition';
-import { GroupType, ProtocolAction, ProtocolTag } from '~app/app.interface';
+import { AppDefinitionObject, GroupType, ProtocolAction, ProtocolTag } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
-export const YEARN_DEFINITION = {
+export const YEARN_DEFINITION: AppDefinitionObject = {
   id: 'yearn',
   name: 'Yearn',
   description: `Automate your yield. DeFi made simple.`,
@@ -26,7 +26,7 @@ export const YEARN_DEFINITION = {
     [Network.ARBITRUM_MAINNET]: [ProtocolAction.VIEW],
   },
   primaryColor: '#036eef',
-  tokenDefinition: {
+  token: {
     address: '0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e',
     network: Network.ETHEREUM_MAINNET,
   },

@@ -56,6 +56,7 @@ export type AppDefinitionObject = {
   primaryColor?: string;
   url: string;
   links: {
+    learn?: string;
     github?: string;
     twitter?: string;
     telegram?: string;
