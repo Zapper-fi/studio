@@ -7,8 +7,6 @@ import { Network } from '~types/network.interface';
 import { IlluviumContractFactory } from '../contracts';
 import { ILLUVIUM_DEFINITION } from '../illuvium.definition';
 
-import merkleBalances from './illuvium.merkle-balances.json';
-
 type MerkleBalanceEntry = {
   account: string;
   pendingV1Rewards: {
@@ -39,7 +37,8 @@ export class EthereumIlluviumMigrationManager {
   }
 
   async hasMigrated(address: string) {
-    const index = (merkleBalances as MerkleBalanceEntry[]).findIndex(v => v.account.toLowerCase() === address);
+    const merkleBalances = await this.getMerkleBalances();
+    const index = merkleBalances.findIndex(v => v.account.toLowerCase() === address);
     if (index === -1) return false;
 
     const migrateContract = this.contractFactory.illuviumIlvPoolV2({
