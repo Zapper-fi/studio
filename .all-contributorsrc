@@ -108,6 +108,24 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "rkolpakov",
+      "name": "Roman Kolpakov",
+      "avatar_url": "https://avatars.githubusercontent.com/u/13422270?v=4",
+      "profile": "https://github.com/rkolpakov",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "mehdi-loup",
+      "name": "mehdi-loup",
+      "avatar_url": "https://avatars.githubusercontent.com/u/5024228?v=4",
+      "profile": "https://github.com/mehdi-loup",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7
