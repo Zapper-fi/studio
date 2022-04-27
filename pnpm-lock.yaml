@@ -25,6 +25,7 @@ specifiers:
   '@types/node': ^16.0.0
   '@typescript-eslint/eslint-plugin': ^5.16.0
   '@typescript-eslint/parser': ^5.16.0
+  ast-types: ^0.14.2
   axios: ^0.26.1
   bignumber.js: ^9.0.2
   bitcoin-address-validation: ^2.2.1
@@ -52,6 +53,7 @@ specifiers:
   nodemon: ^2.0.15
   prettier: ^2.6.0
   qs: ^6.10.3
+  recast: ^0.20.5
   reflect-metadata: ^0.1.13
   rimraf: ^3.0.2
   rxjs: ^7.5.5
@@ -102,6 +104,7 @@ devDependencies:
   '@types/node': 16.11.26
   '@typescript-eslint/eslint-plugin': 5.16.0_3fed250b11519414a4c7d52468dd6bf5
   '@typescript-eslint/parser': 5.16.0_eslint@8.11.0+typescript@4.6.2
+  ast-types: 0.14.2
   axios: 0.26.1
   bignumber.js: 9.0.2
   cache-manager: 3.6.0
@@ -123,6 +126,7 @@ devDependencies:
   nodemon: 2.0.15
   prettier: 2.6.0
   qs: 6.10.3
+  recast: 0.20.5
   reflect-metadata: 0.1.13
   rxjs: 7.5.5
   source-map-support: 0.5.21
@@ -2210,6 +2214,13 @@ packages:
   /assert-plus/1.0.0:
     resolution: {integrity: sha1-8S4PPF13sLHN2RRpQuTpbB5N1SU=}
     engines: {node: '>=0.8'}
+    dev: true
+
+  /ast-types/0.14.2:
+    resolution: {integrity: sha512-O0yuUDnZeQDL+ncNGlJ78BiO4jnYI3bvMsD5prT0/nsgijG/LpNBIr63gTjVTNsiGkgQhiyCShTgxt8oXOrklA==}
+    engines: {node: '>=4'}
+    dependencies:
+      tslib: 2.3.1
     dev: true
 
   /async-limiter/1.0.1:
@@ -6877,6 +6888,16 @@ packages:
     engines: {node: '>=8.10.0'}
     dependencies:
       picomatch: 2.3.1
+    dev: true
+
+  /recast/0.20.5:
+    resolution: {integrity: sha512-E5qICoPoNL4yU0H0NoBDntNB0Q5oMSNh9usFctYniLBluTthi3RsQVBXIJNbApOlvSwW/RGxIuokPcAc59J5fQ==}
+    engines: {node: '>= 4'}
+    dependencies:
+      ast-types: 0.14.2
+      esprima: 4.0.1
+      source-map: 0.6.1
+      tslib: 2.3.1
     dev: true
 
   /rechoir/0.6.2:

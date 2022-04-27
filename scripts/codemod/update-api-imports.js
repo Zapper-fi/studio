@@ -3,8 +3,17 @@
  * @example node ./scripts/codemod/update-api-imports.js [glob-path]
  */
 const fs = require('fs');
+const recast = require('recast');
 
 const dedent = require('dedent');
+
+///////////////////////
+// AST magic
+///////////////////////
+const createAST = source =>
+  recast.parse(source, {
+    parser: require('recast/parsers/typescript'),
+  });
 
 ///////////////////////
 // General utility func
@@ -47,14 +56,25 @@ function lineModifier(s, cb) {
 ///////////////////////
 // Codemod & Strategies
 ///////////////////////
-class CodeModder {
+class CodeMod {
   constructor(contents = '') {
     this.contents = contents;
     this.modifiers = [];
+    this.visitors = [];
+    this.originalSource = contents;
+    this.ast = createAST(contents);
   }
 
   addModifier(fn) {
     this.modifiers.push(fn);
+  }
+
+  /**
+   *
+   * @param {() => recast.types.Visitor<{}>} visitor
+   */
+  addAstVisitor(visitor) {
+    this.visitors.push(visitor);
   }
 
   setContents(contents) {
@@ -62,16 +82,17 @@ class CodeModder {
   }
 
   exec() {
-    let nextContents = this.contents;
+    for (const visitor of this.visitors) {
+      recast.visit(this.ast, visitor());
+    }
+
+    let nextContents = recast.print(this.ast).code;
+
     for (const modifier of this.modifiers) {
       nextContents = modifier(nextContents);
     }
     return nextContents;
   }
-}
-
-function replaceNetworkImport(s) {
-  return s.replace('@zapper-fi/types/networks', '~types/network.interface');
 }
 
 function injectAppToolkit(s) {
@@ -144,21 +165,6 @@ function replaceRegistration(s) {
   next = append(next, `import { Register } from '~app-toolkit/decorators';`);
 
   return next;
-}
-
-function replaceImageUtilityImport(s) {
-  return s.replace('~util/images.utility', '~app-toolkit/helpers/presentation/image.present');
-}
-
-function replacePositionFetcherUtilityImport(s) {
-  return s.replace('~position/position-fetcher.utils', '~app-toolkit/helpers/presentation/display-item.present');
-}
-
-function replaceZeroAddressImport(s) {
-  return s.replace(
-    `import { ZERO_ADDRESS } from '~constants/common';`,
-    `import { ZERO_ADDRESS } from '~app-toolkit/constants/address';`,
-  );
 }
 
 function reshapeGroups(s) {
@@ -265,6 +271,142 @@ function removeLegacyModulesFromModuleDefinition(s) {
   return next;
 }
 
+const b = recast.types.builders;
+const noop = () => {};
+
+/**
+ *
+ * @param {recast.types.Visitor<{}>} p
+ */
+function createVisitor(p) {
+  return p;
+}
+
+function extractConstantsCommonStrategy() {
+  function extractConstantsCommon(specifiers, cb = noop) {
+    const importDeclarations = [];
+    const addressSpecifiers = [];
+    const addressImportPath = b.literal('~app-toolkit/constants/address');
+
+    const blocksSpecifiers = [];
+    const blocksImportPath = b.literal('~app-toolkit/constants/blocks');
+
+    for (const { from, originalImportedName, renamedImport } of specifiers) {
+      if (from === '~constants/common') {
+        if (originalImportedName === 'ZERO_ADDRESS') {
+          addressSpecifiers.push(b.importSpecifier(b.identifier(originalImportedName), b.identifier(renamedImport)));
+        }
+        if (originalImportedName === 'ETH_ADDR_ALIAS') {
+          addressSpecifiers.push(b.importSpecifier(b.identifier(originalImportedName), b.identifier(renamedImport)));
+        }
+
+        if (originalImportedName === 'BLOCKS_PER_DAY') {
+          blocksSpecifiers.push(b.importSpecifier(b.identifier(originalImportedName), b.identifier(renamedImport)));
+        }
+      }
+    }
+
+    if (addressSpecifiers.length) {
+      importDeclarations.push(b.importDeclaration(addressSpecifiers, addressImportPath));
+    }
+
+    if (blocksSpecifiers.length) {
+      importDeclarations.push(b.importDeclaration(blocksSpecifiers, blocksImportPath));
+    }
+
+    if (importDeclarations.length) {
+      cb(importDeclarations);
+    }
+  }
+
+  return createVisitor({
+    visitProgram(path) {
+      this.traverse(path);
+    },
+    visitImportSpecifier(path) {
+      this.traverse(path);
+    },
+    visitImportDeclaration(path) {
+      const importedFrom = path.node.source.value;
+
+      const shortSpecifiers = path.node.specifiers.map(specifier => {
+        const originalImportedName = specifier.imported.name;
+        const renamedImport = specifier.local.name;
+        const from = importedFrom;
+
+        return {
+          originalImportedName,
+          renamedImport,
+          from,
+        };
+      });
+
+      extractConstantsCommon(shortSpecifiers, next => {
+        for (const n of next) {
+          path.parentPath.insertAt(0, n);
+        }
+        path.prune();
+      });
+
+      this.traverse(path);
+    },
+  });
+}
+
+function createGenericImportRenamingStrategy(original, next) {
+  return createVisitor({
+    visitProgram(path) {
+      this.traverse(path);
+    },
+    visitImportSpecifier(path) {
+      this.traverse(path);
+    },
+    visitImportDeclaration(path) {
+      const importedFrom = path.node.source.value;
+      if (importedFrom !== original) {
+        return false;
+      }
+
+      const shortSpecifiers = path.node.specifiers.map(specifier => {
+        const originalImportedName = specifier.imported.name;
+        const renamedImport = specifier.local.name;
+        const from = importedFrom;
+
+        return {
+          originalImportedName,
+          renamedImport,
+          from,
+        };
+      });
+
+      const specifiers = shortSpecifiers.map(specifier => {
+        return b.importSpecifier(b.identifier(specifier.originalImportedName), b.identifier(specifier.renamedImport));
+      });
+
+      const importDeclaration = b.importDeclaration(specifiers, b.literal(next));
+
+      path.replace(importDeclaration);
+
+      this.traverse(path);
+    },
+  });
+}
+
+function renameUtilityImportStrategy() {
+  return createGenericImportRenamingStrategy('~util/images.utility', '~app-toolkit/helpers/presentation/image.present');
+}
+
+function renamePositionFetcherImportStrategy() {
+  return createGenericImportRenamingStrategy(
+    '~position/position-fetcher.utils',
+    '~app-toolkit/helpers/presentation/display-item.present',
+  );
+}
+
+function renameNetworkImportStrategy() {
+  return createGenericImportRenamingStrategy('@zapper-fi/types/networks', '~types/network.interface');
+}
+
 //////////////////////////
 // Actual script execution
 //////////////////////////
@@ -277,7 +419,9 @@ if (!files) {
 
 for (const file of files) {
   const contents = fs.readFileSync(file, 'utf-8');
-  const strategy = new CodeModder(contents);
+
+  // Naive code mods
+  const strategy = new CodeMod(contents);
 
   // Definition file strategies
   if (file.endsWith('.definition.ts')) {
@@ -306,10 +450,11 @@ for (const file of files) {
 
   // Globally applicable strategies
   strategy.addModifier(replaceAppsV3Import);
-  strategy.addModifier(replaceNetworkImport);
-  strategy.addModifier(replaceImageUtilityImport);
-  strategy.addModifier(replacePositionFetcherUtilityImport);
-  strategy.addModifier(replaceZeroAddressImport);
+
+  strategy.addAstVisitor(renameNetworkImportStrategy);
+  strategy.addAstVisitor(renameUtilityImportStrategy);
+  strategy.addAstVisitor(extractConstantsCommonStrategy);
+  strategy.addAstVisitor(renamePositionFetcherImportStrategy);
 
   fs.writeFileSync(file, strategy.exec(), 'utf-8');
 }
