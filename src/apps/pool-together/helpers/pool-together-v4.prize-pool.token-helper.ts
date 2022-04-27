@@ -12,7 +12,7 @@ import { PoolTogetherContractFactory } from '../contracts';
 import { POOL_TOGETHER_DEFINITION } from '../pool-together.definition';
 
 const appId = POOL_TOGETHER_DEFINITION.id;
-const groupId = POOL_TOGETHER_DEFINITION.groups.vault.id;
+const groupId = POOL_TOGETHER_DEFINITION.groups.v4.id;
 
 type GetTokenMarketDataParams = {
   network: Network;
@@ -20,7 +20,7 @@ type GetTokenMarketDataParams = {
 };
 
 @Injectable()
-export class PoolTogetherV4VaultTokenHelper {
+export class PoolTogetherV4PrizePoolTokenHelper {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(PoolTogetherContractFactory) private readonly contractFactory: PoolTogetherContractFactory,

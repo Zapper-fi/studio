@@ -6,22 +6,22 @@ import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
-import { PoolTogetherPrizeTicketTokenHelper } from '../helpers/pool-together.prize-ticket.token-helper';
+import { PoolTogetherV3PrizePoolTokenHelper } from '../helpers/pool-together-v3.prize-pool.token-helper';
 import { POOL_TOGETHER_DEFINITION } from '../pool-together.definition';
 
 const appId = POOL_TOGETHER_DEFINITION.id;
-const groupId = POOL_TOGETHER_DEFINITION.groups.prizeTicket.id;
+const groupId = POOL_TOGETHER_DEFINITION.groups.v3.id;
 const network = Network.ETHEREUM_MAINNET;
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
-export class EthereumPoolTogetherPrizeTicketTokenFetcher implements PositionFetcher<AppTokenPosition> {
+export class EthereumPoolTogetherV3TicketTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
-    @Inject(PoolTogetherPrizeTicketTokenHelper)
-    private readonly poolTogetherPrizeTicketTokenHelper: PoolTogetherPrizeTicketTokenHelper,
+    @Inject(PoolTogetherV3PrizePoolTokenHelper)
+    private readonly poolTogetherV3PrizePoolTokenHelper: PoolTogetherV3PrizePoolTokenHelper,
   ) {}
 
   async getPositions() {
-    return this.poolTogetherPrizeTicketTokenHelper.getTokens({
+    return this.poolTogetherV3PrizePoolTokenHelper.getTokens({
       network,
       prizePoolAddresses: [
         '0xebfb47a7ad0fd6e57323c8a42b2e5a6a4f68fc1a',
@@ -42,7 +42,7 @@ export class EthereumPoolTogetherPrizeTicketTokenFetcher implements PositionFetc
         },
         {
           appId: POOL_TOGETHER_DEFINITION.id,
-          groupIds: [POOL_TOGETHER_DEFINITION.groups.prizeTicket.id], // For pPOOL drip
+          groupIds: [POOL_TOGETHER_DEFINITION.groups.v3.id], // For pPOOL drip
           network,
         },
       ],

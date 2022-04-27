@@ -11,7 +11,7 @@ import { Network } from '~types/network.interface';
 import { PoolTogetherContractFactory } from '../contracts';
 import { POOL_TOGETHER_DEFINITION } from '../pool-together.definition';
 
-import { PoolTogetherPrizeTicketTokenDataProps } from './pool-together.prize-ticket.token-helper';
+import { PoolTogetherV3TicketTokenDataProps } from './pool-together-v3.prize-pool.token-helper';
 
 type GetClaimableTokenBalanceParams = {
   address: string;
@@ -28,16 +28,16 @@ export class PoolTogetherClaimableTokenBalancesHelper {
     const multicall = this.appToolkit.getMulticall(network);
     const prices = await this.appToolkit.getBaseTokenPrices(network);
 
-    const poolTogetherTokens = await this.appToolkit.getAppTokenPositions<PoolTogetherPrizeTicketTokenDataProps>({
+    const poolTogetherTokens = await this.appToolkit.getAppTokenPositions<PoolTogetherV3TicketTokenDataProps>({
       appId: POOL_TOGETHER_DEFINITION.id,
-      groupIds: [POOL_TOGETHER_DEFINITION.groups.prizeTicket.id],
+      groupIds: [POOL_TOGETHER_DEFINITION.groups.v3.id],
       network: network,
     });
 
     const allFaucetAddresses = poolTogetherTokens.flatMap(token => token.dataProps.faucetAddresses);
     const claimableBalances = await Promise.all(
       allFaucetAddresses.map(async faucetAddress => {
-        const faucetContract = this.contractFactory.poolTogetherPoolFaucet({ address: faucetAddress, network });
+        const faucetContract = this.contractFactory.poolTogetherV3TokenFaucet({ address: faucetAddress, network });
         const [rewardTokenAddressRaw, claimableBalanceRaw] = await Promise.all([
           multicall.wrap(faucetContract).asset(),
           multicall.wrap(faucetContract).callStatic.claim(address),

@@ -13,21 +13,21 @@ import { Network } from '~types/network.interface';
 import { PoolTogetherContractFactory } from '../contracts';
 import { POOL_TOGETHER_DEFINITION } from '../pool-together.definition';
 
-import { PoolTogetherFaucetAddressHelper } from './pool-together.faucet.address-helper';
+import { PoolTogetherFaucetAddressHelper } from './pool-together-v3.faucet.address-helper';
 
-export type PoolTogetherPrizeTicketTokenDataProps = {
+export type PoolTogetherV3TicketTokenDataProps = {
   apy: number;
   liquidity: number;
   faucetAddresses: string[];
 };
 
-type GetPrizeTicketTokensParams = {
+type GetTicketTokensParams = {
   network: Network;
   dependencies: AppGroupsDefinition[];
   prizePoolAddresses: string[];
 };
 
-export class PoolTogetherPrizeTicketTokenHelper {
+export class PoolTogetherV3PrizePoolTokenHelper {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(PoolTogetherContractFactory) private readonly poolTogetherContractFactory: PoolTogetherContractFactory,
@@ -35,7 +35,7 @@ export class PoolTogetherPrizeTicketTokenHelper {
     private readonly faucetAddressFetchStrategy: PoolTogetherFaucetAddressHelper,
   ) {}
 
-  async getTokens({ network, dependencies, prizePoolAddresses }: GetPrizeTicketTokensParams) {
+  async getTokens({ network, dependencies, prizePoolAddresses }: GetTicketTokensParams) {
     const multicall = this.appToolkit.getMulticall(network);
 
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
@@ -44,7 +44,10 @@ export class PoolTogetherPrizeTicketTokenHelper {
 
     const vaultTokens = await Promise.all(
       prizePoolAddresses.map(async poolAddress => {
-        const poolContract = this.poolTogetherContractFactory.poolTogetherPrizePool({ address: poolAddress, network });
+        const poolContract = this.poolTogetherContractFactory.poolTogetherV3PrizePool({
+          address: poolAddress,
+          network,
+        });
         const faucetAddresses = await this.faucetAddressFetchStrategy.getAddresses({ network, poolAddress });
 
         const [ticketTokenAddressesRaw, underlyingTokenAddressRaw] = await Promise.all([
@@ -53,7 +56,7 @@ export class PoolTogetherPrizeTicketTokenHelper {
         ]);
 
         // Find the pool ticket address
-        const maybeTicketContract = this.poolTogetherContractFactory.poolTogetherPrizeTicket({
+        const maybeTicketContract = this.poolTogetherContractFactory.poolTogetherV3Ticket({
           address: ticketTokenAddressesRaw[1],
           network,
         });
@@ -97,7 +100,7 @@ export class PoolTogetherPrizeTicketTokenHelper {
             if (!address) {
               return 0;
             }
-            const faucetContract = this.poolTogetherContractFactory.poolTogetherPoolFaucet({ address, network });
+            const faucetContract = this.poolTogetherContractFactory.poolTogetherV3TokenFaucet({ address, network });
             const [dripRatePerSecond, rewardTokenAddressRaw] = await Promise.all([
               multicall.wrap(faucetContract).dripRatePerSecond(),
               multicall.wrap(faucetContract).asset(),
@@ -117,11 +120,11 @@ export class PoolTogetherPrizeTicketTokenHelper {
 
         const apy = sum(apys);
 
-        const token: AppTokenPosition<PoolTogetherPrizeTicketTokenDataProps> = {
+        const token: AppTokenPosition<PoolTogetherV3TicketTokenDataProps> = {
           type: ContractType.APP_TOKEN,
           address: ticketAddress,
           appId: POOL_TOGETHER_DEFINITION.id,
-          groupId: POOL_TOGETHER_DEFINITION.groups.prizeTicket.id,
+          groupId: POOL_TOGETHER_DEFINITION.groups.v3.id,
           network,
           symbol,
           decimals,

@@ -27,10 +27,10 @@ export class PoolTogetherFaucetAddressHelper {
 
     // PoolTogether associates "faucets" for rewards to each prize pool. These are associated as listeners
     // on the assigned prize strategy of the pool.
-    const poolContract = this.contractFactory.poolTogetherPrizePool({ address: poolAddress, network });
+    const poolContract = this.contractFactory.poolTogetherV3PrizePool({ address: poolAddress, network });
     const prizeStrategyAddressRaw = await multicall.wrap(poolContract).prizeStrategy();
     const prizeStrategyAddress = prizeStrategyAddressRaw.toLowerCase();
-    const prizeStrategyContract = this.contractFactory.poolTogetherMultipleWinnersPrizeStrategy({
+    const prizeStrategyContract = this.contractFactory.poolTogetherV3MultipleWinnersPrizeStrategy({
       address: prizeStrategyAddress,
       network,
     });
@@ -40,7 +40,7 @@ export class PoolTogetherFaucetAddressHelper {
     // fails, we just treat the assigned token listener as the faucet address.
     const tokenListenerAddressRaw = await multicall.wrap(prizeStrategyContract).tokenListener();
     const tokenListenerAddress = tokenListenerAddressRaw.toLowerCase();
-    const tokenListenerContract = this.contractFactory.poolTogetherMultiTokenListener({
+    const tokenListenerContract = this.contractFactory.poolTogetherV3MultiTokenListener({
       address: tokenListenerAddress,
       network,
     });
@@ -54,7 +54,7 @@ export class PoolTogetherFaucetAddressHelper {
     // For each faucet address, validate that it is in fact a faucet by attempting to call dripPerSecond
     const validFaucetAddressesRaw = await Promise.all(
       faucetAddresses.map(async faucetAddress => {
-        const faucetContract = this.contractFactory.poolTogetherPoolFaucet({ address: faucetAddress, network });
+        const faucetContract = this.contractFactory.poolTogetherV3TokenFaucet({ address: faucetAddress, network });
         const maybeFaucetAddress: string | null = await multicall
           .wrap(faucetContract)
           .dripRatePerSecond()

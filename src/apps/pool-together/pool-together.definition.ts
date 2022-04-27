@@ -16,10 +16,10 @@ export const POOL_TOGETHER_DEFINITION: AppDefinitionObject = {
     medium: 'https://medium.com/pooltogether',
   },
   groups: {
-    pod: { id: 'pod', type: GroupType.POSITION },
-    prizeTicket: { id: 'prize-ticket', type: GroupType.TOKEN },
+    v3: { id: 'v3', type: GroupType.TOKEN },
+    v4: { id: 'v4', type: GroupType.TOKEN },
     claimable: { id: 'claimable', type: GroupType.TOKEN },
-    vault: { id: 'vault', type: GroupType.TOKEN },
+    v3Pod: { id: 'v3-pod', type: GroupType.POSITION },
   },
   tags: [ProtocolTag.NO_LOSS_LOTTERY],
   supportedNetworks: {

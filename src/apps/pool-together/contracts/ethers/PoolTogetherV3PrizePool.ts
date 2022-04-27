@@ -17,7 +17,7 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
 
-export interface PoolTogetherPrizePoolInterface extends utils.Interface {
+export interface PoolTogetherV3PrizePoolInterface extends utils.Interface {
   functions: {
     'accountedBalance()': FunctionFragment;
     'addControlledToken(address)': FunctionFragment;
@@ -473,12 +473,12 @@ export type TransferredExternalERC20Event = TypedEvent<
 
 export type TransferredExternalERC20EventFilter = TypedEventFilter<TransferredExternalERC20Event>;
 
-export interface PoolTogetherPrizePool extends BaseContract {
+export interface PoolTogetherV3PrizePool extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: PoolTogetherPrizePoolInterface;
+  interface: PoolTogetherV3PrizePoolInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

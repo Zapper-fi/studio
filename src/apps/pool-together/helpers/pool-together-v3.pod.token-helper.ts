@@ -20,7 +20,7 @@ type GetPodTokensParams = {
   registryAddress: string;
 };
 
-export class PoolTogetherPodTokenHelper {
+export class PoolTogetherV3PodTokenHelper {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(PoolTogetherContractFactory) private readonly contractFactory: PoolTogetherContractFactory,
@@ -30,13 +30,13 @@ export class PoolTogetherPodTokenHelper {
     const multicall = this.appToolkit.getMulticall(network);
 
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
-    const registryContract = this.contractFactory.poolTogetherPodRegistry({ address: registryAddress, network });
+    const registryContract = this.contractFactory.poolTogetherV3PodRegistry({ address: registryAddress, network });
     const podAddresses = await registryContract.getAddresses();
 
     const vaultTokens = await Promise.all(
       podAddresses.map(async podAddressRaw => {
         const podAddress = podAddressRaw.toLowerCase();
-        const podContract = this.contractFactory.poolTogetherPod({ address: podAddress, network });
+        const podContract = this.contractFactory.poolTogetherV3Pod({ address: podAddress, network });
 
         const [pricePerShareRaw, underlyingTokenAddressRaw, decimals, symbol, label, totalSupplyRaw] =
           await Promise.all([
@@ -70,7 +70,7 @@ export class PoolTogetherPodTokenHelper {
           type: ContractType.APP_TOKEN,
           address: podAddress,
           appId: POOL_TOGETHER_DEFINITION.id,
-          groupId: POOL_TOGETHER_DEFINITION.groups.prizeTicket.id,
+          groupId: POOL_TOGETHER_DEFINITION.groups.v3.id,
           network,
           symbol,
           decimals,

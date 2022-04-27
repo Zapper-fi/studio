@@ -7,7 +7,7 @@ import { BalanceFetcher } from '~balance/balance-fetcher.interface';
 import { Network } from '~types/network.interface';
 
 import { PoolTogetherAirdropTokenBalancesHelper } from '../helpers/pool-together.airdrop.balance-helper';
-import { PoolTogetherClaimableTokenBalancesHelper } from '../helpers/pool-together.claimable.balance-helper';
+import { PoolTogetherClaimableTokenBalancesHelper } from '../helpers/pool-together-v3.claimable.balance-helper';
 import { POOL_TOGETHER_DEFINITION } from '../pool-together.definition';
 
 @Register.BalanceFetcher(POOL_TOGETHER_DEFINITION.id, Network.AVALANCHE_MAINNET)
@@ -20,29 +20,29 @@ export class AvalanchePoolTogetherBalanceFetcher implements BalanceFetcher {
     private readonly airdropTokenBalancesHelper: PoolTogetherAirdropTokenBalancesHelper,
   ) {}
 
-  async getV4TokenBalance(address: string) {
+  async getV4TokenBalances(address: string) {
     return this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
       network: Network.AVALANCHE_MAINNET,
       appId: POOL_TOGETHER_DEFINITION.id,
-      groupId: POOL_TOGETHER_DEFINITION.groups.vault.id,
+      groupId: POOL_TOGETHER_DEFINITION.groups.v4.id,
       address,
     });
   }
 
-  async getPrizeTicketTokenBalances(address: string) {
+  async getV3TokenBalances(address: string) {
     return this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
       network: Network.AVALANCHE_MAINNET,
       appId: POOL_TOGETHER_DEFINITION.id,
-      groupId: POOL_TOGETHER_DEFINITION.groups.prizeTicket.id,
+      groupId: POOL_TOGETHER_DEFINITION.groups.v3.id,
       address,
     });
   }
 
-  async getPodTokenBalances(address: string) {
+  async getV3PodTokenBalances(address: string) {
     return this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
       network: Network.AVALANCHE_MAINNET,
       appId: POOL_TOGETHER_DEFINITION.id,
-      groupId: POOL_TOGETHER_DEFINITION.groups.pod.id,
+      groupId: POOL_TOGETHER_DEFINITION.groups.v3Pod.id,
       address,
     });
   }
@@ -62,7 +62,7 @@ export class AvalanchePoolTogetherBalanceFetcher implements BalanceFetcher {
   }
 
   async getBalances(address: string) {
-    const [v4TokenBalance] = await Promise.all([this.getV4TokenBalance(address)]);
+    const [v4TokenBalance] = await Promise.all([this.getV4TokenBalances(address)]);
 
     return presentBalanceFetcherResponse([
       {

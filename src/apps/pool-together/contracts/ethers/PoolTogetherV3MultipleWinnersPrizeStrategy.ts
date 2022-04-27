@@ -17,7 +17,7 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
 
-export interface PoolTogetherMultipleWinnersPrizeStrategyInterface extends utils.Interface {
+export interface PoolTogetherV3MultipleWinnersPrizeStrategyInterface extends utils.Interface {
   functions: {
     'addExternalErc20Award(address)': FunctionFragment;
     'addExternalErc20Awards(address[])': FunctionFragment;
@@ -418,12 +418,12 @@ export type TokenListenerUpdatedEvent = TypedEvent<[string], TokenListenerUpdate
 
 export type TokenListenerUpdatedEventFilter = TypedEventFilter<TokenListenerUpdatedEvent>;
 
-export interface PoolTogetherMultipleWinnersPrizeStrategy extends BaseContract {
+export interface PoolTogetherV3MultipleWinnersPrizeStrategy extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: PoolTogetherMultipleWinnersPrizeStrategyInterface;
+  interface: PoolTogetherV3MultipleWinnersPrizeStrategyInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
