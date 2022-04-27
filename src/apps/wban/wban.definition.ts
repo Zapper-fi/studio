@@ -10,10 +10,11 @@ export const WBAN_DEFINITION = {
     'Banano is a feeless, instant, rich in potassium cryptocurrency powered by DAG technology disrupting the meme economy.',
   url: 'https://wrap.banano.cc',
   links: {
-    github: '',
-    twitter: '',
-    discord: '',
-    telegram: '',
+    github: 'https://github.com/BananoCoin',
+    twitter: 'https://twitter.com/bananocoin',
+    discord: 'http://chat.banano.cc/',
+    telegram: 'https://t.me/banano_official',
+    medium: 'https://medium.com/banano',
   },
   groups: {
     farm: { id: 'farm', type: GroupType.POSITION },

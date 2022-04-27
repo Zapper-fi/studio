@@ -14,10 +14,10 @@ export const YEARN_DEFINITION = {
   },
   url: 'https://yearn.finance/',
   links: {
-    github: '',
-    twitter: '',
-    discord: '',
-    telegram: '',
+    github: 'https://github.com/yearn',
+    twitter: 'https://twitter.com/iearnfinance',
+    discord: 'https://discord.yearn.finance/',
+    medium: 'https://medium.com/iearn',
   },
   tags: [ProtocolTag.YIELD_AGGREGATOR],
   supportedNetworks: {

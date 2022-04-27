@@ -8,6 +8,13 @@ export const POOL_TOGETHER_DEFINITION = {
   name: 'PoolTogether',
   description: `PoolTogether is a crypto-powered savings protocol based on Premium Bonds. Save money and have a chance to win every week.`,
   url: 'https://pooltogether.com/',
+  links: {
+    github: 'https://github.com/pooltogether',
+    twitter: 'https://twitter.com/PoolTogether_',
+    discord: 'https://pooltogether.com/discord',
+    telegram: 'https://t.me/pooltogether',
+    medium: 'https://medium.com/pooltogether',
+  },
   groups: {
     pod: { id: 'pod', type: GroupType.POSITION },
     prizeTicket: { id: 'prize-ticket', type: GroupType.TOKEN },

@@ -15,7 +15,6 @@ export const AIRSWAP_DEFINITION: AppDefinitionObject = {
     discord: 'https://chat.airswap.io/',
     medium: 'https://airswap.medium.com/',
   },
-  symbol: 'AST',
   groups: {
     sAST: { id: 's-ast', type: GroupType.TOKEN },
   },

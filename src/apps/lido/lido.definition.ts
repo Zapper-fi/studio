@@ -8,6 +8,13 @@ export const LIDO_DEFINITION = {
   name: 'Lido',
   description: 'Liquidity for staked assets',
   url: 'https://lido.fi/',
+  links: {
+    github: 'https://github.com/lidofinance',
+    twitter: 'https://twitter.com/lidofinance',
+    discord: 'https://discord.com/invite/lido',
+    telegram: 'https://t.me/lidofinance',
+    medium: 'https://lidofinance.medium.com/',
+  },
   stethSymbol: 'stETH',
   wstethSymbol: 'wstETH',
   groups: {

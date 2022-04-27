@@ -12,10 +12,9 @@ export const UNISWAP_V2_DEFINITION = {
   },
   url: 'https://uniswap.org/',
   links: {
-    github: '',
-    twitter: '',
-    discord: '',
-    telegram: '',
+    github: 'https://github.com/Uniswap',
+    twitter: 'https://twitter.com/Uniswap',
+    discord: 'https://discord.gg/FCfyBSbCU5',
   },
   tags: [ProtocolTag.LIQUIDITY_POOL],
   supportedNetworks: {

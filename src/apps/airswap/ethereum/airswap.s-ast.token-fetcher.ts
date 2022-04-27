@@ -35,7 +35,7 @@ export class EthereumAirswapSAstTokenFetcher implements PositionFetcher<AppToken
     ]);
 
     const baseTokenDependencies = await this.appToolkit.getBaseTokenPrices(network);
-    const underlyingToken = baseTokenDependencies.find(v => v.symbol === AIRSWAP_DEFINITION.symbol);
+    const underlyingToken = baseTokenDependencies.find(v => v.symbol === 'AST');
 
     if (!underlyingToken) {
       return [];

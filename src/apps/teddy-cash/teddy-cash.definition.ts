@@ -9,10 +9,11 @@ export const TEDDY_CASH_DEFINITION = {
   description: 'Borrow up to 90% on your AVAX with Teddy, a decentralized borrowing protocol on Avalanche',
   url: 'https://teddy.cash/',
   links: {
-    github: '',
-    twitter: '',
-    discord: '',
-    telegram: '',
+    github: 'https://github.com/teddy-cash/',
+    twitter: 'https://twitter.com/teddycashlive',
+    discord: 'https://discord.gg/TJXnyPXQxf',
+    telegram: 'https://t.me/teddycashofficial',
+    medium: 'https://medium.com/teddy-cash',
   },
   groups: {
     farm: { id: 'farm', type: GroupType.POSITION },

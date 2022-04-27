@@ -15,11 +15,11 @@ export const PIE_DAO_DEFINITION = {
   },
   url: 'https://www.piedao.org/',
   links: {
-    github: '',
-    twitter: '',
-    discord: '',
-    telegram: '',
-    medium: '',
+    github: 'https://github.com/pie-dao',
+    twitter: 'https://twitter.com/PieDAO_DeFi',
+    discord: 'https://discord.com/invite/eJTYNUF',
+    telegram: 'https://t.me/piedao',
+    medium: 'https://medium.com/piedao',
   },
   tags: [ProtocolTag.LIQUIDITY_POOL],
   supportedNetworks: {

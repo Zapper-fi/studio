@@ -12,10 +12,9 @@ export const UNAGII_DEFINITION = {
   },
   url: 'https://www.unagii.com/',
   links: {
-    github: '',
-    twitter: '',
-    discord: '',
-    telegram: '',
+    github: 'https://github.com/stakewithus',
+    twitter: 'https://twitter.com/unagiidotcom',
+    telegram: 'https://t.me/unagiidotcom',
   },
   tags: [ProtocolTag.YIELD_AGGREGATOR],
   supportedNetworks: {
