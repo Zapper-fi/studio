@@ -46,7 +46,7 @@ export class EthereumIlluviumBalanceFetcher implements BalanceFetcher {
           voidAmountBN = voidDeposits.reduce((acc, v) => acc.plus(v.tokenAmount.toString()), new BigNumber(0));
         }
 
-        const stakedBalance = multicall.wrap(contract).balanceOf(address);
+        const stakedBalance = await multicall.wrap(contract).balanceOf(address);
         return new BigNumber(stakedBalance.toString()).minus(voidAmountBN).toString();
       },
       resolveRewardTokenBalances: () => 0,
