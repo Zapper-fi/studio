@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+### [0.7.1](https://github.com/Zapper-fi/studio/compare/v0.7.0...v0.7.1) (2022-04-27)
+
+
+### Bug Fixes
+
+* **apps:** Add social links to all apps ([#280](https://github.com/Zapper-fi/studio/issues/280)) ([0bb0453](https://github.com/Zapper-fi/studio/commit/0bb0453b6b4d9b248c52f6e6a5449eb02d58fc17))
+
 ## [0.7.0](https://github.com/Zapper-fi/studio/compare/v0.6.1...v0.7.0) (2022-04-27)
 
 
