@@ -2,9 +2,9 @@
  * @description Quick and dirty code modification when importing things from zapper-api
  * @example node ./scripts/codemod/update-api-imports.js [glob-path]
  */
+const fs = require('fs');
 
 const dedent = require('dedent');
-const fs = require('fs');
 
 ///////////////////////
 // General utility func
@@ -117,6 +117,8 @@ function replaceRegistration(s) {
   let next = s;
   next = next.replace('@RegisterAppV3Definition', '@Register.AppDefinition');
   next = next.replace('@AppsV3BalanceFetcher', '@Register.BalanceFetcher');
+  next = next.replace('BalanceFetcherV3', 'BalanceFetcher');
+  next = next.replace('buildBalanceFetcherV3Response', 'presentBalanceFetcherResponse');
 
   if (next.includes('implements PositionFetcher<ContractPosition>')) {
     next = next.replace('@RegisterPositionFetcher', '@Register.ContractPositionFetcher');
@@ -128,7 +130,7 @@ function replaceRegistration(s) {
   if (next.includes('implements PositionFetcher<AppToken>')) {
     next = next.replace('@RegisterPositionFetcher', '@Register.TokenPositionFetcher');
     next = next.replace('type: ContractType.APP_TOKEN', '');
-    next = next.replace('implements PositionFetcher<AppToken>', 'implements PositionFetcher<AppTokenPosition>');
+    next = next.replace('<AppToken>', '<AppTokenPosition>');
     append(next, `import { AppTokenPosition } from '~position/position.interface';`);
   }
 
@@ -137,6 +139,7 @@ function replaceRegistration(s) {
     `import { AppsV3BalanceFetcher } from '~balance/fetchers/balance-fetcher.decorator';`,
     `import { RegisterPositionFetcher } from '~position/position-fetcher.decorator';`,
     `from '~position/position-fetcher.interface'`,
+    `from '~position/balance-fetcher.utils'`,
   ]);
   next = append(next, `import { Register } from '~app-toolkit/decorators';`);
 
@@ -292,7 +295,7 @@ for (const file of files) {
   }
 
   if (
-    file.endsWith('.balance-fetcher.t') ||
+    file.endsWith('.balance-fetcher.ts') ||
     file.endsWith('.token-fetcher.ts') ||
     file.endsWith('.contract-position-fetcher.ts')
   ) {
