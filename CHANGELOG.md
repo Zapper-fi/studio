@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.7.0](https://github.com/Zapper-fi/studio/compare/v0.6.1...v0.7.0) (2022-04-27)
+
+
+### Features
+
+* port over KeeperDao ([#284](https://github.com/Zapper-fi/studio/issues/284)) ([a0936ab](https://github.com/Zapper-fi/studio/commit/a0936abeb5dfa8e591af703b5852162c951a735c))
+
 ### [0.6.1](https://github.com/Zapper-fi/studio/compare/v0.6.0...v0.6.1) (2022-04-27)
 
 
