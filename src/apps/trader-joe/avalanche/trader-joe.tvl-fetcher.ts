@@ -1,42 +1,35 @@
 import { Inject } from '@nestjs/common';
-import { gql, request } from 'graphql-request';
-import { sumBy } from 'lodash';
 
+import { SingleVaultTokenDataProps } from '~app-toolkit';
 import { Register } from '~app-toolkit/decorators';
+import { UniswapV2TheGraphTvlHelper } from '~apps/uniswap-v2/helpers/uniswap-v2.the-graph.tvl-helper';
+import { APP_TOOLKIT, IAppToolkit } from '~lib';
 import { TvlFetcher } from '~stats/tvl/tvl-fetcher.interface';
 import { Network } from '~types/network.interface';
 
 import { TRADER_JOE_DEFINITION } from '../trader-joe.definition';
 
-import { AvalancheTraderJoeXJoeTokenFetcher } from './trader-joe.x-joe.token-fetcher';
-
 @Register.TvlFetcher({ appId: TRADER_JOE_DEFINITION.id, network: Network.AVALANCHE_MAINNET })
 export class AvalancheTraderJoeTvlFetcher implements TvlFetcher {
   constructor(
-    @Inject(AvalancheTraderJoeXJoeTokenFetcher)
-    private readonly avalancheTraderJoeXJoeTokenFetcher: AvalancheTraderJoeXJoeTokenFetcher,
+    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
+    @Inject(UniswapV2TheGraphTvlHelper) private readonly uniswapV2TheGraphTvlHelper: UniswapV2TheGraphTvlHelper,
   ) {}
 
   async getTvl() {
-    const graphPromise = request<{ factories: { liquidityUSD: string }[] }>(
-      `https://api.thegraph.com/subgraphs/name/traderjoe-xyz/exchange`,
-      gql`
-        query getTraderJoeTvl {
-          factories {
-            liquidityUSD
-          }
-        }
-      `,
-      {},
-    );
+    const xJoeTokens = await this.appToolkit.getAppTokenPositions<SingleVaultTokenDataProps>({
+      appId: TRADER_JOE_DEFINITION.id,
+      groupIds: [TRADER_JOE_DEFINITION.groups.xJoe.id],
+      network: Network.AVALANCHE_MAINNET,
+    });
 
-    const xJoePromise = this.avalancheTraderJoeXJoeTokenFetcher.getPositions();
+    const xJoeTvl = xJoeTokens[0]?.dataProps.liquidity ?? 0;
+    const poolTvl = await this.uniswapV2TheGraphTvlHelper.getTvl({
+      subgraphUrl: 'https://api.thegraph.com/subgraphs/name/traderjoe-xyz/exchange',
+      factoryObjectName: 'factories',
+      tvlObjectName: 'liquidityUSD',
+    });
 
-    const [resp, xJoePositions] = await Promise.all([graphPromise, xJoePromise]);
-
-    const poolTVL = parseFloat(resp.factories[0].liquidityUSD);
-    const xJoeTvl = sumBy(xJoePositions, p => p.dataProps.liquidity);
-
-    return poolTVL + xJoeTvl;
+    return xJoeTvl + poolTvl;
   }
 }
