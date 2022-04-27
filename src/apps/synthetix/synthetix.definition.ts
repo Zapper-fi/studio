@@ -14,10 +14,10 @@ export const SYNTHETIX_DEFINITION = {
   },
   url: 'https://synthetix.io/',
   links: {
-    github: '',
-    twitter: '',
-    discord: '',
-    telegram: '',
+    github: 'https://github.com/Synthetixio/synthetix',
+    twitter: 'https://twitter.com/synthetix_io',
+    discord: 'https://discord.com/invite/AEdUHzt',
+    telegram: 'https://t.me/s/havven_news',
   },
   tags: [ProtocolTag.LIQUIDITY_POOL],
   supportedNetworks: {
