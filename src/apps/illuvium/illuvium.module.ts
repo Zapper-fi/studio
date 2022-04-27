@@ -6,6 +6,7 @@ import { IlluviumContractFactory } from './contracts';
 import { EthereumIlluviumBalanceFetcher } from './ethereum/illuvium.balance-fetcher';
 import { EthereumIlluviumFarmV2ContractPositionFetcher } from './ethereum/illuvium.farm-v2.contract-position-fetcher';
 import { EthereumIlluviumFarmContractPositionFetcher } from './ethereum/illuvium.farm.contract-position-fetcher';
+import { EthereumIlluviumMigrationManager } from './ethereum/illuvium.migration-manager';
 import { IlluviumAppDefinition } from './illuvium.definition';
 
 @Module({
@@ -15,6 +16,7 @@ import { IlluviumAppDefinition } from './illuvium.definition';
     EthereumIlluviumFarmContractPositionFetcher,
     EthereumIlluviumFarmV2ContractPositionFetcher,
     EthereumIlluviumBalanceFetcher,
+    EthereumIlluviumMigrationManager,
   ],
 })
 export class IlluviumAppModule extends AbstractApp() {}

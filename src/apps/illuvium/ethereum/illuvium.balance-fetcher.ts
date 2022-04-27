@@ -13,11 +13,6 @@ import { IlluviumContractFactory, IlluviumCorePool, IlluviumIlvPoolV2 } from '..
 import { ILLUVIUM_DEFINITION } from '../illuvium.definition';
 
 const network = Network.ETHEREUM_MAINNET;
-// const LAST_V1_YIELD_CREATED = 1642660625;
-// 0: {ticker: 'ILV', name: 'ILV', type: 'core', contractId: '0x7f5f854FfB6b7701540a00C69c4AB2De2B34291D', tokenContractId: '0x767FE9EDC9E0dF98E07454847909b5E959D7ca0E', …}
-// 1: {ticker: 'SLP', name: 'ILV/ETH', type: 'core', contractId: '0xe98477bDc16126bB0877c6e3882e3Edd72571Cc2', tokenContractId: '0x6a091a3406E0073C3CD6340122143009aDac0EDa', …}
-// 0: {ticker: 'ILV', name: 'ILV', type: 'core', contractId: '0x25121EDDf746c884ddE4619b573A7B10714E2a36', tokenContractId: '0x767FE9EDC9E0dF98E07454847909b5E959D7ca0E', …}
-// 1: {ticker: 'SLP', name: 'ILV/ETH', type: 'core', contractId: '0x8B4d8443a0229349A9892D4F7CbE89eF5f843F72', tokenContractId: '0x6a091a3406E0073C3CD6340122143009aDac0EDa', …}
 
 @Register.BalanceFetcher(ILLUVIUM_DEFINITION.id, Network.ETHEREUM_MAINNET)
 export class EthereumIlluviumBalanceFetcher implements BalanceFetcher {
@@ -46,7 +41,7 @@ export class EthereumIlluviumBalanceFetcher implements BalanceFetcher {
           voidAmountBN = voidDeposits.reduce((acc, v) => acc.plus(v.tokenAmount.toString()), new BigNumber(0));
         }
 
-        const stakedBalance = multicall.wrap(contract).balanceOf(address);
+        const stakedBalance = await multicall.wrap(contract).balanceOf(address);
         return new BigNumber(stakedBalance.toString()).minus(voidAmountBN).toString();
       },
       resolveRewardTokenBalances: () => 0,
