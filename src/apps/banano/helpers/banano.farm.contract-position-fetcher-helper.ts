@@ -7,13 +7,13 @@ import { ContractPosition } from '~position/position.interface';
 import { AppGroupsDefinition } from '~position/position.service';
 import { Network } from '~types/network.interface';
 
-import { Benis, WbanContractFactory } from '../contracts';
+import { Benis, BananoContractFactory } from '../contracts';
 
 @Injectable()
-export class WbanFarmContractPositionFetcherHelper {
+export class BananoFarmContractPositionFetcherHelper {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(WbanContractFactory) private readonly contractFactory: WbanContractFactory,
+    @Inject(BananoContractFactory) private readonly contractFactory: BananoContractFactory,
   ) {}
 
   async getPools(
