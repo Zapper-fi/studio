@@ -76,6 +76,7 @@
     "nodemon": "^2.0.15",
     "prettier": "^2.6.0",
     "qs": "^6.10.3",
+    "recast": "^0.20.5",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.5.5",
     "source-map-support": "^0.5.20",
