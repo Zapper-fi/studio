@@ -8,8 +8,9 @@ import { MasterChefContractPositionHelper } from './helpers/master-chef/master-c
 import { MasterChefDefaultClaimableBalanceStrategy } from './helpers/master-chef/master-chef.default.claimable-token-balances-strategy';
 import { MasterChefDefaultRewardRateStrategy } from './helpers/master-chef/master-chef.default.reward-token-reward-rate-strategy';
 import { MasterChefDefaultStakedBalanceStrategy } from './helpers/master-chef/master-chef.default.staked-token-balance-strategy';
-import { MasterChefRewarderClaimableBalanceStrategy } from './helpers/master-chef/master-chef.rewarder.claimable-token-balances-strategy';
-import { MasterChefRewarderClaimableTokenStrategy } from './helpers/master-chef/master-chef.rewarder.claimable-token-strategy';
+import { MasterChefV2ClaimableBalanceStrategy } from './helpers/master-chef/master-chef.v2.claimable-token-balance-strategy';
+import { MasterChefV2ClaimableTokenStrategy } from './helpers/master-chef/master-chef.v2.claimable-token-strategy';
+import { MasterChefV2RewardRateStrategy } from './helpers/master-chef/master-chef.v2.reward-rate-strategy';
 import { SingleStakingFarmContractPositionHelper } from './helpers/position/single-staking-farm.contract-position-helper';
 import { SingleVaultTokenHelper } from './helpers/position/single-vault.token-helper';
 import { TheGraphHelper } from './helpers/the-graph/the-graph.helper';
@@ -26,8 +27,9 @@ export const AppToolkitHelpers = [
   MasterChefDefaultClaimableBalanceStrategy,
   MasterChefDefaultRewardRateStrategy,
   MasterChefDefaultStakedBalanceStrategy,
-  MasterChefRewarderClaimableBalanceStrategy,
-  MasterChefRewarderClaimableTokenStrategy,
+  MasterChefV2ClaimableBalanceStrategy,
+  MasterChefV2ClaimableTokenStrategy,
+  MasterChefV2RewardRateStrategy,
 ];
 
 @Injectable()
@@ -52,9 +54,11 @@ export class AppToolkitHelperRegistry {
     public readonly masterChefDefaultRewardsPerBlockStrategy: MasterChefDefaultRewardRateStrategy,
     @Inject(MasterChefDefaultStakedBalanceStrategy)
     public readonly masterChefDefaultStakedBalanceStrategy: MasterChefDefaultStakedBalanceStrategy,
-    @Inject(MasterChefRewarderClaimableBalanceStrategy)
-    public readonly masterChefRewarderClaimableBalanceStrategy: MasterChefRewarderClaimableBalanceStrategy,
-    @Inject(MasterChefRewarderClaimableTokenStrategy)
-    public readonly masterChefRewarderClaimableTokenStrategy: MasterChefRewarderClaimableTokenStrategy,
+    @Inject(MasterChefV2ClaimableBalanceStrategy)
+    public readonly masterChefV2ClaimableBalanceStrategy: MasterChefV2ClaimableBalanceStrategy,
+    @Inject(MasterChefV2ClaimableTokenStrategy)
+    public readonly masterChefV2ClaimableTokenStrategy: MasterChefV2ClaimableTokenStrategy,
+    @Inject(MasterChefV2RewardRateStrategy)
+    public readonly masterChefV2RewardRateStrategy: MasterChefV2RewardRateStrategy,
   ) {}
 }

@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 
-import { AbstractDynamicApp } from '~app/app.dynamic-module';
+import { AbstractApp } from '~app/app.dynamic-module';
 
 import { IlluviumContractFactory } from './contracts';
 import { EthereumIlluviumBalanceFetcher } from './ethereum/illuvium.balance-fetcher';
@@ -17,4 +17,4 @@ import { IlluviumAppDefinition } from './illuvium.definition';
     EthereumIlluviumBalanceFetcher,
   ],
 })
-export class IlluviumAppModule extends AbstractDynamicApp<IlluviumAppModule>() {}
+export class IlluviumAppModule extends AbstractApp() {}

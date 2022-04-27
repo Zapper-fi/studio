@@ -12,7 +12,7 @@ import { MasterChefClaimableTokenBalanceStrategy } from './master-chef.contract-
 import { MasterChefContractPositionDataProps } from './master-chef.contract-position-helper';
 import { MasterChefDefaultClaimableBalanceStrategy } from './master-chef.default.claimable-token-balances-strategy';
 
-export type MasterChefRewarderClaimableBalanceStrategyParams<T, V> = {
+export type MasterChefV2ClaimableBalanceStrategyParams<T, V> = {
   resolvePrimaryClaimableBalance: (opts: {
     address: string;
     multicall: Multicall;
@@ -34,7 +34,7 @@ export type MasterChefRewarderClaimableBalanceStrategyParams<T, V> = {
 };
 
 @Injectable()
-export class MasterChefRewarderClaimableBalanceStrategy {
+export class MasterChefV2ClaimableBalanceStrategy {
   constructor(
     @Inject(forwardRef(() => MasterChefDefaultClaimableBalanceStrategy))
     private readonly masterChefDefaultClaimableBalanceStrategy: MasterChefDefaultClaimableBalanceStrategy,
@@ -45,7 +45,7 @@ export class MasterChefRewarderClaimableBalanceStrategy {
     resolveRewarderAddress,
     resolveRewarderContract,
     resolveSecondaryClaimableBalance,
-  }: MasterChefRewarderClaimableBalanceStrategyParams<T, V>): MasterChefClaimableTokenBalanceStrategy<T> {
+  }: MasterChefV2ClaimableBalanceStrategyParams<T, V>): MasterChefClaimableTokenBalanceStrategy<T> {
     const primaryStrategy = this.masterChefDefaultClaimableBalanceStrategy.build({
       resolveClaimableBalance: resolvePrimaryClaimableBalance,
     });
