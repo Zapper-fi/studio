@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.8.0](https://github.com/Zapper-fi/studio/compare/v0.7.3...v0.8.0) (2022-04-27)
+
+
+### Features
+
+* Uniswap V2 TVL helper ([#295](https://github.com/Zapper-fi/studio/issues/295)) ([d47847a](https://github.com/Zapper-fi/studio/commit/d47847a13de31d9608e7bb899d2fc8d708bf04b0))
+
+
+### Bug Fixes
+
+* **illuvium:** Fix missing await in v1 staked balances ([#298](https://github.com/Zapper-fi/studio/issues/298)) ([45b40cc](https://github.com/Zapper-fi/studio/commit/45b40cc16f47291a0ee67daed77ee9abe311e735))
+
 ### [0.7.3](https://github.com/Zapper-fi/studio/compare/v0.7.2...v0.7.3) (2022-04-27)
 
 
