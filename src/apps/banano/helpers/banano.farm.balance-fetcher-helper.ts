@@ -3,13 +3,13 @@ import { Inject, Injectable } from '@nestjs/common';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Network } from '~types/network.interface';
 
-import { Benis, WbanContractFactory } from '../contracts';
+import { Benis, BananoContractFactory } from '../contracts';
 
 @Injectable()
-export class WbanFarmBalanceFetcherHelper {
+export class BananoFarmBalanceFetcherHelper {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(WbanContractFactory) private readonly wbanContractFactory: WbanContractFactory,
+    @Inject(BananoContractFactory) private readonly bananoContractFactory: BananoContractFactory,
   ) {}
 
   async getFarmBalances(network: Network, appId: string, groupId: string, address: string) {
@@ -19,7 +19,7 @@ export class WbanFarmBalanceFetcherHelper {
       appId,
       groupId,
       resolveChefContract: ({ contractAddress }) =>
-        this.wbanContractFactory.benis({ address: contractAddress, network }),
+        this.bananoContractFactory.benis({ address: contractAddress, network }),
       resolveStakedTokenBalance: this.appToolkit.helpers.masterChefDefaultStakedBalanceStrategy.build({
         resolveStakedBalance: ({ contract, multicall, contractPosition }) =>
           multicall

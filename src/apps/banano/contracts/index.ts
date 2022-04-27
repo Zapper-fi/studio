@@ -10,7 +10,7 @@ import { Benis__factory } from './ethers';
 type ContractOpts = { address: string; network: Network };
 
 @Injectable()
-export class WbanContractFactory extends ContractFactory {
+export class BananoContractFactory extends ContractFactory {
   constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) {
     super((network: Network) => appToolkit.getNetworkProvider(network));
   }

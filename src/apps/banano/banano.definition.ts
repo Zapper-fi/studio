@@ -3,9 +3,9 @@ import { AppDefinition } from '~app/app.definition';
 import { AppDefinitionObject, GroupType, ProtocolAction } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
-export const WBAN_DEFINITION: AppDefinitionObject = {
-  id: 'wban',
-  name: 'wBAN',
+export const BANANO_DEFINITION: AppDefinitionObject = {
+  id: 'banano',
+  name: 'Banano',
   description:
     'Banano is a feeless, instant, rich in potassium cryptocurrency powered by DAG technology disrupting the meme economy.',
   url: 'https://wrap.banano.cc',
@@ -28,11 +28,11 @@ export const WBAN_DEFINITION: AppDefinitionObject = {
   primaryColor: '#fff',
 };
 
-@Register.AppDefinition(WBAN_DEFINITION.id)
-export class WbanAppDefinition extends AppDefinition {
+@Register.AppDefinition(BANANO_DEFINITION.id)
+export class BananoAppDefinition extends AppDefinition {
   constructor() {
-    super(WBAN_DEFINITION);
+    super(BANANO_DEFINITION);
   }
 }
 
-export default WBAN_DEFINITION;
+export default BANANO_DEFINITION;

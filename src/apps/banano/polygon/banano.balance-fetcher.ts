@@ -5,16 +5,16 @@ import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation
 import { BalanceFetcher } from '~balance/balance-fetcher.interface';
 import { Network } from '~types/network.interface';
 
-import { WbanFarmBalanceFetcherHelper } from '../helpers/wban.farm.balance-fetcher-helper';
-import { WBAN_DEFINITION } from '../wban.definition';
+import { BANANO_DEFINITION } from '../banano.definition';
+import { BananoFarmBalanceFetcherHelper } from '../helpers/banano.farm.balance-fetcher-helper';
 
-const appId = WBAN_DEFINITION.id;
-const groupId = WBAN_DEFINITION.groups.farm.id;
-const network = Network.BINANCE_SMART_CHAIN_MAINNET;
+const appId = BANANO_DEFINITION.id;
+const groupId = BANANO_DEFINITION.groups.farm.id;
+const network = Network.POLYGON_MAINNET;
 
-@Register.BalanceFetcher(WBAN_DEFINITION.id, network)
-export class BinanceSmartChainWbanBalanceFetcher implements BalanceFetcher {
-  constructor(@Inject(WbanFarmBalanceFetcherHelper) private readonly helper: WbanFarmBalanceFetcherHelper) {}
+@Register.BalanceFetcher(BANANO_DEFINITION.id, network)
+export class PolygonBananoBalanceFetcher implements BalanceFetcher {
+  constructor(@Inject(BananoFarmBalanceFetcherHelper) private readonly helper: BananoFarmBalanceFetcherHelper) {}
 
   async getBalances(address: string) {
     const farmBalances = await this.helper.getFarmBalances(network, appId, groupId, address);
