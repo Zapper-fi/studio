@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+### [0.7.3](https://github.com/Zapper-fi/studio/compare/v0.7.2...v0.7.3) (2022-04-27)
+
+
+### Bug Fixes
+
+* **trader-joe:** Fix xJOE price ([#293](https://github.com/Zapper-fi/studio/issues/293)) ([00a6f90](https://github.com/Zapper-fi/studio/commit/00a6f90bee46ab5054c274b9f2c370d464aba064))
+
 ### [0.7.2](https://github.com/Zapper-fi/studio/compare/v0.7.1...v0.7.2) (2022-04-27)
 
 
