@@ -4,6 +4,20 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.6.0](https://github.com/Zapper-fi/studio/compare/v0.5.1...v0.6.0) (2022-04-27)
+
+
+### Features
+
+* Add lido integration ([#250](https://github.com/Zapper-fi/studio/issues/250)) ([66219c4](https://github.com/Zapper-fi/studio/commit/66219c4be5df4230da364bc0f1b74bb2bb0aaf53))
+* add trader-joe app ([#265](https://github.com/Zapper-fi/studio/issues/265)) ([0082a26](https://github.com/Zapper-fi/studio/commit/0082a268d26ac8d741f573d399eeadccca1b0ef8))
+* port over pool-together ([#254](https://github.com/Zapper-fi/studio/issues/254)) ([6ba4e19](https://github.com/Zapper-fi/studio/commit/6ba4e195cb29975de98a43559db226cc3cc6fda6))
+
+
+### Bug Fixes
+
+* Lido merge conflicts and linting ([#285](https://github.com/Zapper-fi/studio/issues/285)) ([98b22a0](https://github.com/Zapper-fi/studio/commit/98b22a06093b767e540745ac051cf48298da40a4))
+
 ### [0.5.1](https://github.com/Zapper-fi/studio/compare/v0.5.0...v0.5.1) (2022-04-26)
 
 
