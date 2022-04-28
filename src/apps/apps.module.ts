@@ -127,6 +127,8 @@ export class AppsModule {
 
     const appModules = await this.resolveAppModules();
     const appHelperModules = await this.resolveAppHelperModules();
+    // eslint-disable-next-line no-console
+    console.log(chalk.yellow(`Enabled app modules: ${appModules.map(v => v.name).join(',')}`));
 
     return {
       module: AppsModule,
