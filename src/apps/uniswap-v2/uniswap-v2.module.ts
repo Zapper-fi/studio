@@ -1,6 +1,6 @@
-import { Module } from '@nestjs/common';
-
+import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
+import { TeddyCashAppModule } from '~apps/teddy-cash';
 
 import { UniswapV2ContractFactory } from './contracts';
 import { EthereumUniswapV2BalanceFetcher } from './ethereum/uniswap-v2.balance-fetcher';
@@ -14,7 +14,8 @@ import { UniswapV2TheGraphPoolVolumeStrategy } from './helpers/uniswap-v2.the-gr
 import { UniswapV2TheGraphTvlHelper } from './helpers/uniswap-v2.the-graph.tvl-helper';
 import { UniswapV2AppDefinition } from './uniswap-v2.definition';
 
-@Module({
+@Register.AppModule({
+  imports: [TeddyCashAppModule],
   providers: [
     UniswapV2AppDefinition,
     UniswapV2ContractFactory,
