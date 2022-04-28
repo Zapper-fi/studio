@@ -105,7 +105,7 @@ export class PoolTogetherV3PrizePoolTokenHelper {
 
             if (remainingSeconds <= 0) return 0;
 
-            const totalDripPerDay = (Number(dripRatePerSecond) / 10 ** decimals) * 86400;
+            const totalDripPerDay = dripRatePerSecond * 86400;
             const rewardPriceObj = baseTokens.find(p => p?.address === assetAddress);
             const rewardMarketObj = appTokens.find(p => p?.address === assetAddress);
             const rewardTokenPrice = rewardMarketObj?.price ?? rewardPriceObj?.price ?? 0;
