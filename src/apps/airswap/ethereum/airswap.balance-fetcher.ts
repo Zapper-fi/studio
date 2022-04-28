@@ -9,7 +9,7 @@ import { Network } from '~types/network.interface';
 import { AIRSWAP_DEFINITION } from '../airswap.definition';
 
 const appId = AIRSWAP_DEFINITION.id;
-const groupId = AIRSWAP_DEFINITION.groups.sAST.id;
+const groupId = AIRSWAP_DEFINITION.groups.sASTv2.id;
 const network = Network.ETHEREUM_MAINNET;
 
 @Register.BalanceFetcher(AIRSWAP_DEFINITION.id, network)

@@ -5,7 +5,7 @@ import { Network } from '~types/network.interface';
 
 export const AIRSWAP_DEFINITION: AppDefinitionObject = {
   id: 'airswap',
-  name: 'Airswap',
+  name: 'AirSwap',
   description:
     'AirSwap is an open community of developers, designers, writers, and tinkerers building decentralized trading systems. Protocol fees are automatically distributed to contributors.',
   url: 'https://airswap.io',
@@ -16,7 +16,8 @@ export const AIRSWAP_DEFINITION: AppDefinitionObject = {
     medium: 'https://airswap.medium.com/',
   },
   groups: {
-    sAST: { id: 's-ast', type: GroupType.TOKEN },
+    sASTv2: { id: 's-ast-v2', type: GroupType.TOKEN},
+    sASTv3: {id: 's-ast-v3', type: GroupType.TOKEN },
   },
   tags: [ProtocolTag.EXCHANGE],
   supportedNetworks: {
