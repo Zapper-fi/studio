@@ -1,0 +1,157 @@
+import { Inject, Injectable } from '@nestjs/common';
+import { gql } from 'graphql-request';
+
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { BLOCKS_PER_DAY } from '~app-toolkit/constants/blocks';
+import { Cache } from '~cache/cache.decorator';
+import { Network } from '~types/network.interface';
+
+type GetPoolsResponse = {
+  pools: {
+    address: string;
+    poolType: string;
+    swapFee: string;
+    tokensList: string;
+    totalLiquidity: string;
+    totalSwapVolume: string;
+    totalSwapFee: string;
+    totalShares: string;
+    tokens: {
+      address: string;
+      symbol: string;
+      decimals: number;
+      balance: string;
+      weight: string;
+    }[];
+  }[];
+};
+
+const DEFAULT_GET_CURRENT_POOLS_QUERY = gql`
+  query getPools($minLiquidity: Int) {
+    pools(
+      first: 250
+      skip: 0
+      orderBy: totalLiquidity
+      orderDirection: desc
+      where: { totalShares_gt: 0.01, totalLiquidity_gt: $minLiquidity }
+    ) {
+      address
+      poolType
+      swapFee
+      tokensList
+      totalLiquidity
+      totalSwapVolume
+      totalSwapFee
+      totalShares
+      tokens {
+        address
+        symbol
+        decimals
+        balance
+        weight
+      }
+    }
+  }
+`;
+
+const DEFAULT_GET_PAST_POOLS_QUERY = gql`
+  query getPools($minLiquidity: Int, $blockYesterday: Int) {
+    pools(
+      first: 250
+      skip: 0
+      orderBy: totalLiquidity
+      orderDirection: desc
+      where: { totalShares_gt: 0.01, totalLiquidity_gt: $minLiquidity }
+      block: { number: $blockYesterday }
+    ) {
+      address
+      poolType
+      swapFee
+      tokensList
+      totalLiquidity
+      totalSwapVolume
+      totalSwapFee
+      totalShares
+      tokens {
+        address
+        symbol
+        decimals
+        balance
+        weight
+      }
+    }
+  }
+`;
+
+type BalancerV2TheGraphPoolTokenDataStrategyParams = {
+  subgraphUrl: string;
+  minLiquidity?: number;
+  currentPoolsQuery?: string;
+  pastPoolsQuery?: string;
+};
+
+@Injectable()
+export class BalancerV2TheGraphPoolTokenDataStrategy {
+  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
+
+  @Cache({
+    instance: 'business',
+    key: (network: Network) => `studio-balancer-v2-events-pool-token-addresses:${network}:balancer-v2`,
+    ttl: 5 * 60,
+  })
+  async getPoolAddresses(
+    subgraphUrl: string,
+    minLiquidity: number,
+    currentPoolsQuery: string,
+    pastPoolsQuery: string,
+    network: Network,
+  ) {
+    const provider = this.appToolkit.getNetworkProvider(network);
+    const graphHelper = this.appToolkit.helpers.theGraphHelper;
+    const blockToday = await provider.getBlockNumber();
+    const blockYesterday = blockToday - BLOCKS_PER_DAY[network];
+
+    const [currentPoolsResponse, pastPoolsResponse] = await Promise.all([
+      graphHelper.request<GetPoolsResponse>({
+        endpoint: subgraphUrl,
+        query: currentPoolsQuery,
+        variables: {
+          minLiquidity,
+        },
+      }),
+      graphHelper.request<GetPoolsResponse>({
+        endpoint: subgraphUrl,
+        query: pastPoolsQuery,
+        variables: {
+          blockYesterday,
+          minLiquidity,
+        },
+      }),
+    ]);
+
+    return currentPoolsResponse.pools.map(pool => {
+      const pastPool = pastPoolsResponse.pools.find(p => p.address === pool.address);
+      const volume = pastPool ? Number(pool.totalSwapVolume) - Number(pastPool.totalSwapVolume) : 0;
+      return { address: pool.address, volume };
+    });
+  }
+
+  build({
+    subgraphUrl,
+    minLiquidity = 0,
+    currentPoolsQuery = DEFAULT_GET_CURRENT_POOLS_QUERY,
+    pastPoolsQuery = DEFAULT_GET_PAST_POOLS_QUERY,
+  }: BalancerV2TheGraphPoolTokenDataStrategyParams) {
+    return async ({ network }: { network: Network }) => {
+      const poolAddresses = this.getPoolAddresses(
+        subgraphUrl,
+        minLiquidity,
+        currentPoolsQuery,
+        pastPoolsQuery,
+        network,
+      );
+
+      return poolAddresses;
+    };
+  }
+}
