@@ -16,8 +16,7 @@
     "prepublish:npm": "pnpm build",
     "publish:npm": "pnpm publish --access public",
     "start": "nest start",
-    "studio": "./studio.sh",
-    "studio-n": "node ./scripts/run-cli.js",
+    "studio": "node ./scripts/run-cli.js",
     "test": "jest --runInBand --forceExit",
     "test:integration": "jest --runInBand --forceExit --config jest.integration.config.js",
     "test:watch": "jest --watch"
