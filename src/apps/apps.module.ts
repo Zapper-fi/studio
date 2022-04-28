@@ -1,5 +1,6 @@
 import { readdirSync } from 'fs';
 
+import { IConfigurableDynamicRootModule } from '@golevelup/nestjs-modules';
 import { DynamicModule, ForwardReference, Module, Type } from '@nestjs/common';
 import { MODULE_METADATA } from '@nestjs/common/constants';
 import chalk from 'chalk';
@@ -9,9 +10,6 @@ import { APP_ID } from '~app/app.decorator';
 import { DynamicApps } from '~app/app.dynamic-module';
 import { importAppDefinition, importAppModule } from '~app/app.importer';
 
-// 1. If already `externallyConfigured` in imports, Reflect.getMetadata will fail
-// 2. Need to reflect metadata on synchronous app modules to retrieve metadata
-
 type ModuleImport = Type<any> | DynamicModule | Promise<DynamicModule> | ForwardReference;
 
 @Module({})
@@ -20,12 +18,29 @@ export class AppsModule {
     return module && !!(module as ForwardReference).forwardRef;
   }
 
-  static async resolveModulesByAppIds(appIds: string[]) {
+  static isExternallyConfigurable(module: ModuleImport): module is IConfigurableDynamicRootModule<any, any> {
+    return module && !!(module as IConfigurableDynamicRootModule<any, any>).externallyConfigured;
+  }
+
+  static async externalizeAppModuleDependencies(modules: IConfigurableDynamicRootModule<any, any>[]) {
+    modules.forEach(module => {
+      const imports = Reflect.getMetadata(MODULE_METADATA.IMPORTS, module) ?? [];
+      const updatedImports = imports.map(v => (this.isExternallyConfigurable(v) ? v.externallyConfigured(v, 0) : v));
+      Reflect.defineMetadata(MODULE_METADATA.IMPORTS, updatedImports, module);
+    });
+
+    return modules;
+  }
+
+  static async resolveModulesByAppIds(appIds: string[], requireDefinition = true) {
     const appsModules = await Promise.all(
       appIds.map(async appId => {
-        const definition = await importAppDefinition(appId).catch(() => null);
-        if (!definition) console.error(chalk.yellow(`No definition file found for "${appId}"`));
-        if (definition?.deprecated) return null;
+        if (requireDefinition) {
+          const definition = await importAppDefinition(appId).catch(() => null);
+          if (!definition) console.error(chalk.yellow(`No definition file found for "${appId}"`));
+          if (definition?.deprecated) return null;
+        }
+
         const klass = await importAppModule(appId);
         return klass;
       }),
@@ -70,53 +85,54 @@ export class AppsModule {
       .filter(dirent => dirent.isDirectory())
       .map(dirent => dirent.name);
 
-    // Enable all apps in prod, or if no subset is selected in the environment
+    // If we're in prod, or if there is no enabled apps subset configured, enable everything
     const isProd = process.env.NODE_ENV === 'production';
     const enabledAppIds = compact((process.env.ENABLED_APPS ?? '').split(','));
-    if (isProd || !enabledAppIds.length) return AppsModule.resolveModulesByAppIds(allAppIds);
+    if (isProd || !enabledAppIds.length) {
+      const appModules = await this.resolveModulesByAppIds(allAppIds);
+      return this.externalizeAppModuleDependencies(appModules);
+    }
 
     // Resolve modules, and dependency modules
     const validEnabledAppIds = intersection(enabledAppIds, allAppIds);
-    const enabledApps = await AppsModule.resolveModulesByAppIds(validEnabledAppIds);
-    console.log(enabledApps);
-    const enabledDependencies = await Promise.all(enabledApps.map(v => AppsModule.resolveDependencies(v)));
-    const enabledAppsAndDependencies = await AppsModule.resolveModulesByAppIds(uniq(enabledDependencies.flat()));
+    const enabledApps = await this.resolveModulesByAppIds(validEnabledAppIds);
+    const enabledDependencies = await Promise.all(enabledApps.map(v => this.resolveDependencies(v)));
+    const enabledAppsAndDependencies = await this.resolveModulesByAppIds(uniq(enabledDependencies.flat()));
 
-    return enabledAppsAndDependencies;
+    return this.externalizeAppModuleDependencies(enabledAppsAndDependencies);
+  }
+
+  static async resolveAppHelperModules() {
+    // Find all apps available to be registered
+    const allAppIds = readdirSync(__dirname, { withFileTypes: true })
+      .filter(dirent => dirent.isDirectory())
+      .map(dirent => dirent.name);
+
+    // If we're in prod, or if there is no enabled app helpers subset configured, enable nothing
+    const isProd = process.env.NODE_ENV === 'production';
+    const enabledHelpersAppIds = (process.env.ENABLED_HELPERS ?? '').split(',').filter(Boolean);
+    if (isProd || !enabledHelpersAppIds.length) return [];
+
+    // Resolve modules, and dependency modules
+    const validEnabledAppIds = intersection(enabledHelpersAppIds, allAppIds);
+    const enabledApps = await this.resolveModulesByAppIds(validEnabledAppIds, false);
+    const enabledDependencies = await Promise.all(enabledApps.map(v => this.resolveDependencies(v)));
+    const enabledAppsAndDependencies = await this.resolveModulesByAppIds(uniq(enabledDependencies.flat()));
+
+    return this.externalizeAppModuleDependencies(enabledAppsAndDependencies);
   }
 
   static async registerAsync(opts: { appToolkitModule: Type }): Promise<DynamicModule> {
     const { appToolkitModule } = opts;
 
-    console.log('SUP??');
-    const appModules = await AppsModule.resolveAppModules();
-    console.log('HERE: ', appModules);
-
-    const enabledHelpersAppIds =
-      process.env.NODE_ENV === 'production' ? [] : (process.env.ENABLED_HELPERS ?? '').split(',').filter(Boolean);
-
-    console.log('SUP: ', enabledAppIds);
-
-    const helperModules = await Promise.all(
-      enabledHelpersAppIds.map(async appId => {
-        // Dynamically import the module
-        const klass = await importAppModule(appId);
-        return klass;
-      }),
-    );
-
-    // console.log('HI: ', appsModules[0]);
-    const test = await AppsModule.visitModule(appsModules[0]);
-    // const meta = Reflect.getMetadataKeys(appsModules[0]);
-    // const asdf = Reflect.getMetadata('imports', appsModules[0]);
-    // const asdf2 = Reflect.getMetadata(APP_ID, appsModules[0]);
-    console.log('Resolved dependencies: ', test);
+    const appModules = await this.resolveAppModules();
+    const appHelperModules = await this.resolveAppHelperModules();
 
     return {
       module: AppsModule,
       imports: [
         ...DynamicApps({
-          apps: [...compact([...appsModules, ...helperModules])],
+          apps: [...compact([...appModules, ...appHelperModules])],
           imports: [appToolkitModule],
         }),
       ],
