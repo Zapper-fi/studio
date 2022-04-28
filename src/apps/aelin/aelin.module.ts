@@ -2,7 +2,7 @@ import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
 import { SynthetixAppModule } from '~apps/synthetix/synthetix.module';
 
-import { AelinAppDefinition } from './aelin.definition';
+import { AelinAppDefinition, AELIN_DEFINITION } from './aelin.definition';
 import { AelinContractFactory } from './contracts';
 import { EthereumAelinBalanceFetcher } from './ethereum/aelin.balance-fetcher';
 import { EthereumAelinPoolTokenFetcher } from './ethereum/aelin.pool.token-fetcher';
@@ -12,6 +12,7 @@ import { OptimismAelinPoolTokenFetcher } from './optimism/aelin.pool.token-fetch
 import { OptimismAelinVAelinTokenFetcher } from './optimism/aelin.v-aelin.token-fetcher';
 
 @Register.AppModule({
+  appId: AELIN_DEFINITION.id,
   imports: [SynthetixAppModule],
   providers: [
     AelinAppDefinition,

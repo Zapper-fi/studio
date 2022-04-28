@@ -1,5 +1,4 @@
-import { Module } from '@nestjs/common';
-
+import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { IlluviumContractFactory } from './contracts';
@@ -7,9 +6,10 @@ import { EthereumIlluviumBalanceFetcher } from './ethereum/illuvium.balance-fetc
 import { EthereumIlluviumFarmV2ContractPositionFetcher } from './ethereum/illuvium.farm-v2.contract-position-fetcher';
 import { EthereumIlluviumFarmContractPositionFetcher } from './ethereum/illuvium.farm.contract-position-fetcher';
 import { EthereumIlluviumMigrationManager } from './ethereum/illuvium.migration-manager';
-import { IlluviumAppDefinition } from './illuvium.definition';
+import { IlluviumAppDefinition, ILLUVIUM_DEFINITION } from './illuvium.definition';
 
-@Module({
+@Register.AppModule({
+  appId: ILLUVIUM_DEFINITION.id,
   providers: [
     IlluviumAppDefinition,
     IlluviumContractFactory,

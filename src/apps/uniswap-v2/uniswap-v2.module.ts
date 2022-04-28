@@ -1,6 +1,5 @@
 import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
-import { TeddyCashAppModule } from '~apps/teddy-cash';
 
 import { UniswapV2ContractFactory } from './contracts';
 import { EthereumUniswapV2BalanceFetcher } from './ethereum/uniswap-v2.balance-fetcher';
@@ -12,10 +11,10 @@ import { UniswapV2TheGraphPoolTokenAddressStrategy } from './helpers/uniswap-v2.
 import { UniswapV2TheGraphPoolTokenBalanceHelper } from './helpers/uniswap-v2.the-graph.pool-token-balance-helper';
 import { UniswapV2TheGraphPoolVolumeStrategy } from './helpers/uniswap-v2.the-graph.pool-volume-strategy';
 import { UniswapV2TheGraphTvlHelper } from './helpers/uniswap-v2.the-graph.tvl-helper';
-import { UniswapV2AppDefinition } from './uniswap-v2.definition';
+import { UNISWAP_V2_DEFINITION, UniswapV2AppDefinition } from './uniswap-v2.definition';
 
 @Register.AppModule({
-  imports: [TeddyCashAppModule],
+  appId: UNISWAP_V2_DEFINITION.id,
   providers: [
     UniswapV2AppDefinition,
     UniswapV2ContractFactory,

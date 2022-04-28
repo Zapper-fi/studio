@@ -9,9 +9,8 @@ export function AppDefinition(name: string) {
   return applyDecorators(SetMetadata(APP_NAME, name), Injectable);
 }
 
-export function AppModule(metadata: ModuleMetadata) {
-  const stack = new Error().stack!.split('\n');
-  const callSite = stack[2].slice(stack[2].lastIndexOf('(') + 1, stack[2].lastIndexOf(')'));
-  const appId = callSite.split('/').reverse()[1];
-  return applyDecorators(SetMetadata(APP_ID, appId), Module(omit(metadata, 'appId')));
+export type AppModuleMetadata = ModuleMetadata & { appId: string };
+
+export function AppModule(metadata: AppModuleMetadata) {
+  return applyDecorators(SetMetadata(APP_ID, metadata.appId), Module(omit(metadata, 'appId')));
 }

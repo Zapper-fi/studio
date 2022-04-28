@@ -1,13 +1,13 @@
-import { Module } from '@nestjs/common';
-
+import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { NaosContractFactory } from './contracts';
 import { EthereumNaosBalanceFetcher } from './ethereum/naos.balance-fetcher';
 import { EthereumNaosFarmContractPositionFetcher } from './ethereum/naos.farm.contract-position-fetcher';
-import { NaosAppDefinition } from './naos.definition';
+import { NaosAppDefinition, NAOS_DEFINITION } from './naos.definition';
 
-@Module({
+@Register.AppModule({
+  appId: NAOS_DEFINITION.id,
   providers: [
     NaosAppDefinition,
     NaosContractFactory,

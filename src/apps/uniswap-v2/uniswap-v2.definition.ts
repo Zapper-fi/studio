@@ -33,5 +33,3 @@ export class UniswapV2AppDefinition extends AppDefinition {
     super(UNISWAP_V2_DEFINITION);
   }
 }
-
-export default UNISWAP_V2_DEFINITION;
