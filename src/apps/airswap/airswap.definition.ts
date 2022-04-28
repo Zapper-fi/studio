@@ -16,8 +16,8 @@ export const AIRSWAP_DEFINITION: AppDefinitionObject = {
     medium: 'https://airswap.medium.com/',
   },
   groups: {
-    sASTv2: { id: 's-ast-v2', type: GroupType.TOKEN},
-    sASTv3: {id: 's-ast-v3', type: GroupType.TOKEN },
+    sASTv2: { id: 's-ast-v2', type: GroupType.TOKEN },
+    sASTv3: { id: 's-ast-v3', type: GroupType.TOKEN },
   },
   tags: [ProtocolTag.EXCHANGE],
   supportedNetworks: {

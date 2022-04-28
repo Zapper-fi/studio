@@ -18,51 +18,51 @@ const network = Network.ETHEREUM_MAINNET;
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
 export class EthereumAirswapSAstV3TokenFetcher implements PositionFetcher<AppTokenPosition> {
-    constructor(
-        @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-        @Inject(AirswapContractFactory) private readonly airswapContractFactory: AirswapContractFactory,
-    ) {}
+  constructor(
+    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
+    @Inject(AirswapContractFactory) private readonly airswapContractFactory: AirswapContractFactory,
+  ) {}
 
-    async getPositions() {
-        const address = '0x6d88B09805b90dad911E5C5A512eEDd984D6860B';
-        const multicall = this.appToolkit.getMulticall(network);
-        const contract = this.airswapContractFactory.stakingV3({ address, network });
+  async getPositions() {
+    const address = '0x6d88B09805b90dad911E5C5A512eEDd984D6860B';
+    const multicall = this.appToolkit.getMulticall(network);
+    const contract = this.airswapContractFactory.stakingV3({ address, network });
 
-        const [symbol, decimals, supplyRaw] = await Promise.all([
-            multicall.wrap(contract).symbol(),
-            multicall.wrap(contract).decimals(),
-            multicall.wrap(contract).totalSupply(),
-        ]);
+    const [symbol, decimals, supplyRaw] = await Promise.all([
+      multicall.wrap(contract).symbol(),
+      multicall.wrap(contract).decimals(),
+      multicall.wrap(contract).totalSupply(),
+    ]);
 
-        const baseTokenDependencies = await this.appToolkit.getBaseTokenPrices(network);
-        const underlyingToken = baseTokenDependencies.find(v => v.symbol === AIRSWAP_DEFINITION.symbol);
+    const baseTokenDependencies = await this.appToolkit.getBaseTokenPrices(network);
+    const underlyingToken = baseTokenDependencies.find(v => v.symbol === AIRSWAP_DEFINITION.symbol);
 
-        if (!underlyingToken) {
-            return [];
-        }
-
-        const supply = Number(supplyRaw) / 10 ** decimals;
-
-        const token: AppTokenPosition = {
-            type: ContractType.APP_TOKEN,
-            appId,
-            groupId,
-            address,
-            network,
-            symbol,
-            decimals,
-            supply,
-            tokens: [underlyingToken],
-            price: underlyingToken.price,
-            pricePerShare: 1,
-            dataProps: {},
-            displayProps: {
-                label: 'sAST v3',
-                secondaryLabel: buildDollarDisplayItem(underlyingToken.price),
-                images: [getTokenImg(underlyingToken.address, network)],
-            },
-        };
-
-        return [token];
+    if (!underlyingToken) {
+      return [];
     }
+
+    const supply = Number(supplyRaw) / 10 ** decimals;
+
+    const token: AppTokenPosition = {
+      type: ContractType.APP_TOKEN,
+      appId,
+      groupId,
+      address,
+      network,
+      symbol,
+      decimals,
+      supply,
+      tokens: [underlyingToken],
+      price: underlyingToken.price,
+      pricePerShare: 1,
+      dataProps: {},
+      displayProps: {
+        label: 'sAST v3',
+        secondaryLabel: buildDollarDisplayItem(underlyingToken.price),
+        images: [getTokenImg(underlyingToken.address, network)],
+      },
+    };
+
+    return [token];
+  }
 }
