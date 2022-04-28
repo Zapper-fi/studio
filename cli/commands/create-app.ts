@@ -83,7 +83,7 @@ function generateDefinitionFile(
       telegram: '',
       discord: '',
       medium: '',
-    };
+    },
     supportedNetworks: {
       ${networks.map(n => `[Network.${networkToKey[n]}]: [ProtocolAction.VIEW]`).join(',\n')}
     },
