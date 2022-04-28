@@ -87,9 +87,25 @@ export class PoolTogetherV3PrizePoolTokenHelper {
               address: tokenFaucetAddress,
               network,
             });
-            const dripRatePerSecond = await tokenFaucetContract.dripRatePerSecond();
+            const assetContract = this.contractFactory.erc20({
+              address: assetAddress,
+              network,
+            });
 
-            const totalDripPerDay = (Number(dripRatePerSecond) / 10 ** 18) * 86400;
+            const [_dripRatePerSecond, totalUnclaimed, faucetBalance, decimals] = await Promise.all([
+              multicall.wrap(tokenFaucetContract).dripRatePerSecond(),
+              multicall.wrap(tokenFaucetContract).totalUnclaimed(),
+              multicall.wrap(assetContract).balanceOf(tokenFaucetAddress),
+              multicall.wrap(assetContract).decimals(),
+            ]);
+            const dripRatePerSecond = Number(_dripRatePerSecond) / 10 ** decimals;
+            const remainingAssetTokens =
+              Number(faucetBalance) / 10 ** decimals - Number(totalUnclaimed) / 10 ** decimals;
+            const remainingSeconds = remainingAssetTokens / dripRatePerSecond;
+
+            if (remainingSeconds <= 0) return 0;
+
+            const totalDripPerDay = (Number(dripRatePerSecond) / 10 ** decimals) * 86400;
             const rewardPriceObj = baseTokens.find(p => p?.address === assetAddress);
             const rewardMarketObj = appTokens.find(p => p?.address === assetAddress);
             const rewardTokenPrice = rewardMarketObj?.price ?? rewardPriceObj?.price ?? 0;
