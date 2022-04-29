@@ -27,15 +27,15 @@ export class EthereumAirswapBalanceFetcher implements BalanceFetcher {
   }
 
   async getBalances(address: string) {
-    const [airswapTokenBalances] = await Promise.all([
+    const [sASTv2Balances, sASTv3Balnaces] = await Promise.all([
       this.getAirswapTokenBalances(address, sASTv2GroupId),
       this.getAirswapTokenBalances(address, sASTv3GroupId),
     ]);
 
     return presentBalanceFetcherResponse([
       {
-        label: AIRSWAP_DEFINITION.name,
-        assets: airswapTokenBalances,
+        label: 'Staking',
+        assets: [...sASTv2Balances, ...sASTv3Balnaces],
       },
     ]);
   }
