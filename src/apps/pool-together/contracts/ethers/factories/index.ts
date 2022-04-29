@@ -2,11 +2,12 @@
 /* tslint:disable */
 /* eslint-disable */
 export { PoolTogetherMerkleDistributor__factory } from './PoolTogetherMerkleDistributor__factory';
-export { PoolTogetherMultiTokenListener__factory } from './PoolTogetherMultiTokenListener__factory';
-export { PoolTogetherMultipleWinnersPrizeStrategy__factory } from './PoolTogetherMultipleWinnersPrizeStrategy__factory';
-export { PoolTogetherPod__factory } from './PoolTogetherPod__factory';
-export { PoolTogetherPodRegistry__factory } from './PoolTogetherPodRegistry__factory';
-export { PoolTogetherPoolFaucet__factory } from './PoolTogetherPoolFaucet__factory';
-export { PoolTogetherPrizePool__factory } from './PoolTogetherPrizePool__factory';
-export { PoolTogetherPrizeTicket__factory } from './PoolTogetherPrizeTicket__factory';
+export { PoolTogetherV3MultiTokenListener__factory } from './PoolTogetherV3MultiTokenListener__factory';
+export { PoolTogetherV3MultipleWinnersPrizeStrategy__factory } from './PoolTogetherV3MultipleWinnersPrizeStrategy__factory';
+export { PoolTogetherV3Pod__factory } from './PoolTogetherV3Pod__factory';
+export { PoolTogetherV3PodRegistry__factory } from './PoolTogetherV3PodRegistry__factory';
+export { PoolTogetherV3PrizePool__factory } from './PoolTogetherV3PrizePool__factory';
+export { PoolTogetherV3Ticket__factory } from './PoolTogetherV3Ticket__factory';
+export { PoolTogetherV3TokenFaucet__factory } from './PoolTogetherV3TokenFaucet__factory';
 export { PoolTogetherV4PrizePool__factory } from './PoolTogetherV4PrizePool__factory';
+export { PoolTogetherV4Ticket__factory } from './PoolTogetherV4Ticket__factory';

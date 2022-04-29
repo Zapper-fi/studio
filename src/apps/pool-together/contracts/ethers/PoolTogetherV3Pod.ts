@@ -17,7 +17,7 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
 
-export interface PoolTogetherPodInterface extends utils.Interface {
+export interface PoolTogetherV3PodInterface extends utils.Interface {
   functions: {
     'allowance(address,address)': FunctionFragment;
     'approve(address,uint256)': FunctionFragment;
@@ -302,12 +302,12 @@ export type WithdrawalEvent = TypedEvent<[string, BigNumber, BigNumber], Withdra
 
 export type WithdrawalEventFilter = TypedEventFilter<WithdrawalEvent>;
 
-export interface PoolTogetherPod extends BaseContract {
+export interface PoolTogetherV3Pod extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: PoolTogetherPodInterface;
+  interface: PoolTogetherV3PodInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

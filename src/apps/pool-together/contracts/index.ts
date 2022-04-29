@@ -5,14 +5,15 @@ import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
 import { PoolTogetherMerkleDistributor__factory } from './ethers';
-import { PoolTogetherMultiTokenListener__factory } from './ethers';
-import { PoolTogetherMultipleWinnersPrizeStrategy__factory } from './ethers';
-import { PoolTogetherPod__factory } from './ethers';
-import { PoolTogetherPodRegistry__factory } from './ethers';
-import { PoolTogetherPoolFaucet__factory } from './ethers';
-import { PoolTogetherPrizePool__factory } from './ethers';
-import { PoolTogetherPrizeTicket__factory } from './ethers';
+import { PoolTogetherV3MultiTokenListener__factory } from './ethers';
+import { PoolTogetherV3MultipleWinnersPrizeStrategy__factory } from './ethers';
+import { PoolTogetherV3Pod__factory } from './ethers';
+import { PoolTogetherV3PodRegistry__factory } from './ethers';
+import { PoolTogetherV3PrizePool__factory } from './ethers';
+import { PoolTogetherV3Ticket__factory } from './ethers';
+import { PoolTogetherV3TokenFaucet__factory } from './ethers';
 import { PoolTogetherV4PrizePool__factory } from './ethers';
+import { PoolTogetherV4Ticket__factory } from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
@@ -26,41 +27,45 @@ export class PoolTogetherContractFactory extends ContractFactory {
   poolTogetherMerkleDistributor({ address, network }: ContractOpts) {
     return PoolTogetherMerkleDistributor__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
-  poolTogetherMultiTokenListener({ address, network }: ContractOpts) {
-    return PoolTogetherMultiTokenListener__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  poolTogetherV3MultiTokenListener({ address, network }: ContractOpts) {
+    return PoolTogetherV3MultiTokenListener__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
-  poolTogetherMultipleWinnersPrizeStrategy({ address, network }: ContractOpts) {
-    return PoolTogetherMultipleWinnersPrizeStrategy__factory.connect(
+  poolTogetherV3MultipleWinnersPrizeStrategy({ address, network }: ContractOpts) {
+    return PoolTogetherV3MultipleWinnersPrizeStrategy__factory.connect(
       address,
       this.appToolkit.getNetworkProvider(network),
     );
   }
-  poolTogetherPod({ address, network }: ContractOpts) {
-    return PoolTogetherPod__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  poolTogetherV3Pod({ address, network }: ContractOpts) {
+    return PoolTogetherV3Pod__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
-  poolTogetherPodRegistry({ address, network }: ContractOpts) {
-    return PoolTogetherPodRegistry__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  poolTogetherV3PodRegistry({ address, network }: ContractOpts) {
+    return PoolTogetherV3PodRegistry__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
-  poolTogetherPoolFaucet({ address, network }: ContractOpts) {
-    return PoolTogetherPoolFaucet__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  poolTogetherV3PrizePool({ address, network }: ContractOpts) {
+    return PoolTogetherV3PrizePool__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
-  poolTogetherPrizePool({ address, network }: ContractOpts) {
-    return PoolTogetherPrizePool__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  poolTogetherV3Ticket({ address, network }: ContractOpts) {
+    return PoolTogetherV3Ticket__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
-  poolTogetherPrizeTicket({ address, network }: ContractOpts) {
-    return PoolTogetherPrizeTicket__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  poolTogetherV3TokenFaucet({ address, network }: ContractOpts) {
+    return PoolTogetherV3TokenFaucet__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
   poolTogetherV4PrizePool({ address, network }: ContractOpts) {
     return PoolTogetherV4PrizePool__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  poolTogetherV4Ticket({ address, network }: ContractOpts) {
+    return PoolTogetherV4Ticket__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
 }
 
 export type { PoolTogetherMerkleDistributor } from './ethers';
-export type { PoolTogetherMultiTokenListener } from './ethers';
-export type { PoolTogetherMultipleWinnersPrizeStrategy } from './ethers';
-export type { PoolTogetherPod } from './ethers';
-export type { PoolTogetherPodRegistry } from './ethers';
-export type { PoolTogetherPoolFaucet } from './ethers';
-export type { PoolTogetherPrizePool } from './ethers';
-export type { PoolTogetherPrizeTicket } from './ethers';
+export type { PoolTogetherV3MultiTokenListener } from './ethers';
+export type { PoolTogetherV3MultipleWinnersPrizeStrategy } from './ethers';
+export type { PoolTogetherV3Pod } from './ethers';
+export type { PoolTogetherV3PodRegistry } from './ethers';
+export type { PoolTogetherV3PrizePool } from './ethers';
+export type { PoolTogetherV3Ticket } from './ethers';
+export type { PoolTogetherV3TokenFaucet } from './ethers';
 export type { PoolTogetherV4PrizePool } from './ethers';
+export type { PoolTogetherV4Ticket } from './ethers';

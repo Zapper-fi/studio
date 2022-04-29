@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { PoolTogetherPodRegistry, PoolTogetherPodRegistryInterface } from '../PoolTogetherPodRegistry';
+import type { PoolTogetherV3PodRegistry, PoolTogetherV3PodRegistryInterface } from '../PoolTogetherV3PodRegistry';
 
 const _abi = [
   {
@@ -237,12 +237,12 @@ const _abi = [
   },
 ];
 
-export class PoolTogetherPodRegistry__factory {
+export class PoolTogetherV3PodRegistry__factory {
   static readonly abi = _abi;
-  static createInterface(): PoolTogetherPodRegistryInterface {
-    return new utils.Interface(_abi) as PoolTogetherPodRegistryInterface;
+  static createInterface(): PoolTogetherV3PodRegistryInterface {
+    return new utils.Interface(_abi) as PoolTogetherV3PodRegistryInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): PoolTogetherPodRegistry {
-    return new Contract(address, _abi, signerOrProvider) as PoolTogetherPodRegistry;
+  static connect(address: string, signerOrProvider: Signer | Provider): PoolTogetherV3PodRegistry {
+    return new Contract(address, _abi, signerOrProvider) as PoolTogetherV3PodRegistry;
   }
 }

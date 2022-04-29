@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { PoolTogetherPrizePool, PoolTogetherPrizePoolInterface } from '../PoolTogetherPrizePool';
+import type { PoolTogetherV3PrizePool, PoolTogetherV3PrizePoolInterface } from '../PoolTogetherV3PrizePool';
 
 const _abi = [
   {
@@ -1391,12 +1391,12 @@ const _abi = [
   },
 ];
 
-export class PoolTogetherPrizePool__factory {
+export class PoolTogetherV3PrizePool__factory {
   static readonly abi = _abi;
-  static createInterface(): PoolTogetherPrizePoolInterface {
-    return new utils.Interface(_abi) as PoolTogetherPrizePoolInterface;
+  static createInterface(): PoolTogetherV3PrizePoolInterface {
+    return new utils.Interface(_abi) as PoolTogetherV3PrizePoolInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): PoolTogetherPrizePool {
-    return new Contract(address, _abi, signerOrProvider) as PoolTogetherPrizePool;
+  static connect(address: string, signerOrProvider: Signer | Provider): PoolTogetherV3PrizePool {
+    return new Contract(address, _abi, signerOrProvider) as PoolTogetherV3PrizePool;
   }
 }
