@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+### [0.11.5](https://github.com/Zapper-fi/studio/compare/v0.11.4...v0.11.5) (2022-04-29)
+
+
+### Bug Fixes
+
+* **balancer:** Helpers should not accept multicall, resolve internally ([#336](https://github.com/Zapper-fi/studio/issues/336)) ([a30c5ef](https://github.com/Zapper-fi/studio/commit/a30c5efdfdbe7fee87d041803462d751f316a1e1))
+
 ### [0.11.4](https://github.com/Zapper-fi/studio/compare/v0.11.3...v0.11.4) (2022-04-29)
 
 
