@@ -1,6 +1,6 @@
-import { CACHE_MANAGER, Inject, Injectable, Logger, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
+import { Inject, Injectable, Logger, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
 import { DiscoveryService, MetadataScanner, Reflector } from '@nestjs/core';
-import { Cache } from 'cache-manager';
+import Cache from 'file-system-cache';
 
 import {
   CacheOnIntervalOptions,
@@ -13,9 +13,12 @@ export class CacheOnIntervalService implements OnModuleInit, OnModuleDestroy {
   private readonly intervals: NodeJS.Timer[] = [];
   private readonly registeredCacheKeys: string[] = [];
   private logger = new Logger(CacheOnIntervalService.name);
+  private cacheManager = Cache({
+    basePath: './.cache', // Optional. Path where cache files are stored (default).
+    ns: '@CacheOnInterval', // Optional. A grouping namespace for items.
+  });
 
   constructor(
-    @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
     @Inject(DiscoveryService) private readonly discoveryService: DiscoveryService,
     @Inject(MetadataScanner) private readonly metadataScanner: MetadataScanner,
     @Inject(Reflector) private readonly reflector: Reflector,

@@ -1,6 +1,6 @@
-import { CACHE_MANAGER, Inject, Injectable, Logger, OnModuleInit } from '@nestjs/common';
+import { Inject, Injectable, Logger, OnModuleInit } from '@nestjs/common';
 import { DiscoveryService, MetadataScanner, Reflector } from '@nestjs/core';
-import { Cache } from 'cache-manager';
+import Cache from 'file-system-cache';
 import { isNil } from 'lodash';
 
 import { CacheOptions, CACHE_KEY, CACHE_TTL } from './cache.decorator';
@@ -8,15 +8,20 @@ import { CacheOptions, CACHE_KEY, CACHE_TTL } from './cache.decorator';
 @Injectable()
 export class CacheService implements OnModuleInit {
   private logger = new Logger(CacheService.name);
+  private cacheManager = Cache({
+    basePath: './.cache', // Optional. Path where cache files are stored (default).
+    ns: '@Cache', // Optional. A grouping namespace for items.
+  });
 
   constructor(
-    @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
     @Inject(DiscoveryService) private readonly discoveryService: DiscoveryService,
     @Inject(MetadataScanner) private readonly metadataScanner: MetadataScanner,
     @Inject(Reflector) private readonly reflector: Reflector,
   ) {}
 
-  onModuleInit() {
+  async onModuleInit() {
+    await this.cacheManager.load();
+
     const instanceWrappers = this.discoveryService.getProviders();
     instanceWrappers
       .filter(wrapper => wrapper.isDependencyTreeStatic() && !!wrapper.instance)
