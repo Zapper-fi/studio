@@ -17,7 +17,7 @@ export class BalancerV2CacheManager {
     const { address, network, rewardTokenAddress } = opts;
 
     const url = `https://us-west1-zapper-backend.cloudfunctions.net/balancer-v2-claimable`;
-    const response = await Axios.get(url, { params: { address, network, rewardTokenAddress } });
+    const response = await Axios.get<{ amounts: number[] }>(url, { params: { address, network, rewardTokenAddress } });
 
     return response.data.amounts;
   }
