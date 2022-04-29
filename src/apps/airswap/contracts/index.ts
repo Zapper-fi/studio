@@ -4,7 +4,7 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { Staking__factory } from './ethers';
+import { Stakingv2__factory, Stakingv3__factory } from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
@@ -15,9 +15,13 @@ export class AirswapContractFactory extends ContractFactory {
     super((network: Network) => appToolkit.getNetworkProvider(network));
   }
 
-  staking({ address, network }: ContractOpts) {
-    return Staking__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  stakingV2({ address, network }: ContractOpts) {
+    return Stakingv2__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
+
+  stakingV3({ address, network }: ContractOpts) {
+    return Stakingv3__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
 }
 
-export type { Staking } from './ethers';
+export type { Stakingv2 } from './ethers';
