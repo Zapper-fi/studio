@@ -9,7 +9,7 @@ import { Network } from '../../src/types/network.interface';
 import { strings } from '../strings';
 
 export default class CreateApp extends Command {
-  static description = '';
+  static description = 'Creates the starting point for an app integration';
   static examples = [`$ ./studio create-app`];
   static flags = {};
   static args = [];
