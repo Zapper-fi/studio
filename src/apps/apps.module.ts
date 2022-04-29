@@ -102,8 +102,8 @@ export class AppsModule {
     const enabledApps = await this.resolveModulesByAppIds(validEnabledAppIds);
 
     // Resolve enabled modules and their dependencies
-    const enabledDependencies = await Promise.all(enabledApps.map(v => this.resolveDependencies(v)));
-    const enabledAppsAndDependencies = await this.resolveModulesByAppIds(uniq(enabledDependencies.flat()));
+    const enabledAppAndDependencyIds = await Promise.all(enabledApps.map(v => this.resolveDependencies(v)));
+    const enabledAppsAndDependencies = await this.resolveModulesByAppIds(uniq(enabledAppAndDependencyIds.flat()));
 
     return this.externalizeAppModuleDependencies(enabledAppsAndDependencies);
   }
