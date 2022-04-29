@@ -107,59 +107,7 @@ export class SingleStakingContractPositionBalanceHelper {
           drillBalance(v, rewardTokenBalancesRaw[i]?.toString() ?? '0'),
         );
 
-        const tokens = [stakedTokenBalance, ...rewardTokenBalances];
-        const balanceUSD = sumBy(tokens, t => t.balanceUSD);
-
-        return {
-          ...contractPosition,
-          displayProps: {
-            ...contractPosition.displayProps,
-            images: getImagesFromToken(stakedToken),
-          },
-          balanceUSD,
-          tokens,
-        };
-      }),
-    );
-
-    return compact(balances);
-  }
-
-  async getBalancesWithoutRewards<T>({
-    address,
-    network,
-    appId,
-    groupId,
-    farmFilter,
-    resolveContract,
-    resolveStakedTokenBalance,
-  }: SingleStakingContractPositionBalanceWithoutRewardsHelperParams<T>): Promise<ContractPositionBalance[]> {
-    const multicall = this.appToolkit.getMulticall(network);
-    const contractPositions = await this.appToolkit.getAppContractPositions<SingleStakingFarmDataProps>({
-      network,
-      appId,
-      groupIds: [groupId],
-    });
-
-    const filteredContractPositions = contractPositions.filter(farmFilter ? farmFilter : () => true);
-
-    const balances = await Promise.all(
-      filteredContractPositions.map(async contractPosition => {
-        const contract = resolveContract({ address: contractPosition.address, network });
-        const stakedTokenBalanceRaw = await resolveStakedTokenBalance({
-          address,
-          network,
-          contract,
-          contractPosition,
-          multicall,
-        });
-
-        const stakedToken = contractPosition.tokens.find(v => v.metaType === MetaType.SUPPLIED);
-        if (!stakedToken) return null;
-
-        const stakedTokenBalance = drillBalance(stakedToken, stakedTokenBalanceRaw.toString());
-
-        const tokens = [stakedTokenBalance];
+        const tokens = [stakedTokenBalance, ...rewardTokenBalances].filter(v => v.balanceUSD > 0);
         const balanceUSD = sumBy(tokens, t => t.balanceUSD);
 
         return {

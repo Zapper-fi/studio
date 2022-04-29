@@ -49,16 +49,15 @@ export class EthereumTokemakBalanceFetcher implements BalanceFetcher {
 
   private async getFarmBalances(address: string) {
     // @TODO Waiting on TOKE team to reply with how to get earned rewards
-    return this.appToolkit.helpers.singleStakingContractPositionBalanceHelper.getBalancesWithoutRewards<TokemakTokeStaking>(
-      {
-        address,
-        appId: TOKEMAK_DEFINITION.id,
-        groupId: TOKEMAK_DEFINITION.groups.farm.id,
-        network,
-        resolveContract: ({ address, network }) => this.tokemakContractFactory.tokemakTokeStaking({ address, network }),
-        resolveStakedTokenBalance: ({ contract, address, multicall }) => multicall.wrap(contract).balanceOf(address),
-      },
-    );
+    return this.appToolkit.helpers.singleStakingContractPositionBalanceHelper.getBalances<TokemakTokeStaking>({
+      address,
+      appId: TOKEMAK_DEFINITION.id,
+      groupId: TOKEMAK_DEFINITION.groups.farm.id,
+      network,
+      resolveContract: ({ address, network }) => this.tokemakContractFactory.tokemakTokeStaking({ address, network }),
+      resolveStakedTokenBalance: ({ contract, address, multicall }) => multicall.wrap(contract).balanceOf(address),
+      resolveRewardTokenBalances: () => 0,
+    });
   }
 
   @Cache({
