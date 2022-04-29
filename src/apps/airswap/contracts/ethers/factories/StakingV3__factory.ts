@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { Stakingv3, Stakingv3Interface } from '../Stakingv3';
+import type { StakingV3, StakingV3Interface } from '../StakingV3';
 
 const _abi = [
   {
@@ -530,12 +530,12 @@ const _abi = [
   },
 ];
 
-export class Stakingv3__factory {
+export class StakingV3__factory {
   static readonly abi = _abi;
-  static createInterface(): Stakingv3Interface {
-    return new utils.Interface(_abi) as Stakingv3Interface;
+  static createInterface(): StakingV3Interface {
+    return new utils.Interface(_abi) as StakingV3Interface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): Stakingv3 {
-    return new Contract(address, _abi, signerOrProvider) as Stakingv3;
+  static connect(address: string, signerOrProvider: Signer | Provider): StakingV3 {
+    return new Contract(address, _abi, signerOrProvider) as StakingV3;
   }
 }

@@ -31,7 +31,7 @@ export declare namespace IStaking {
   };
 }
 
-export interface Stakingv3Interface extends utils.Interface {
+export interface StakingV2Interface extends utils.Interface {
   functions: {
     'accountDelegates(address)': FunctionFragment;
     'available(address)': FunctionFragment;
@@ -212,12 +212,12 @@ export type TransferEvent = TypedEvent<[string, string, BigNumber], TransferEven
 
 export type TransferEventFilter = TypedEventFilter<TransferEvent>;
 
-export interface Stakingv3 extends BaseContract {
+export interface StakingV2 extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: Stakingv3Interface;
+  interface: StakingV2Interface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
