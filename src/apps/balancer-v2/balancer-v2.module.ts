@@ -46,6 +46,6 @@ import { PolygonBalancerV2PoolTokenFetcher } from './polygon/balancer-v2.pool.to
     BalancerV2EventsPoolTokenDataStrategy,
     BalancerV2GaugeAddressesGetter,
   ],
-  exports: [BalancerV2SpotPriceHelper, BalancerV2PoolTokensHelper],
+  exports: [BalancerV2SpotPriceHelper, BalancerV2PoolTokensHelper, BalancerV2ContractFactory],
 })
 export class BalancerV2AppModule extends AbstractApp() {}
