@@ -18,7 +18,9 @@
 </div>
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
 [![All Contributors](https://img.shields.io/badge/all_contributors-13-orange.svg?style=flat-square)](#contributors-)
+
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 ## Description
@@ -34,8 +36,13 @@ Ensure the following have been installed on your system:
 
 ## Getting Started
 
-You can get started building immediately! </br>
-See <a href="https://studio-docs.zapper.fi/">Zapper Studio docs</a> for more details
+You can get started building immediately!
+
+OpenAPI docs for studio is available on <a href="http:localhost:5001/docs">localhost:5001/docs</a>. Which will give
+you a rough overview of all exposed endpoints you can test out.
+
+If you wish to know how to integrate your application, please check out
+<a href="https://studio-docs.zapper.fi/">Zapper Studio docs</a> for more details.
 
 ### Installation
 
