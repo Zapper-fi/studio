@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+### [0.11.6](https://github.com/Zapper-fi/studio/compare/v0.11.5...v0.11.6) (2022-04-29)
+
+
+### Bug Fixes
+
+* **balancer:** Export contract factory ([#339](https://github.com/Zapper-fi/studio/issues/339)) ([b6bf6d5](https://github.com/Zapper-fi/studio/commit/b6bf6d57cf8cd51c238c211b29510b51b482a245))
+
 ### [0.11.5](https://github.com/Zapper-fi/studio/compare/v0.11.4...v0.11.5) (2022-04-29)
 
 
