@@ -1,6 +1,15 @@
 import { Network } from '~types/network.interface';
 
-import { ClaimableTokenConfig } from './helpers/balancer-v2.cache-manager';
+export type ClaimableTokenConfig = {
+  label: string;
+  network: Network;
+  legacyMerkleRedeemAddress?: string;
+  distributorAddress?: string;
+  merkleOrchardAddress?: string;
+  rewardTokenAddress: string;
+  manifestUrl: string;
+  weekStart?: number;
+};
 
 export const BALANCER_V2_CLAIMABLE_CONFIG: ClaimableTokenConfig[] = [
   // Ethereum

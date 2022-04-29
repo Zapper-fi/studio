@@ -2,8 +2,7 @@ import { Injectable } from '@nestjs/common';
 import axios from 'axios';
 
 import { Cache } from '~cache/cache.decorator';
-import { chainIdByNetwork } from '~types/constant';
-import { Network } from '~types/network.interface';
+import { Network, NETWORK_IDS } from '~types/network.interface';
 
 import { BALANCER_V2_DEFINITION } from '../balancer-v2.definition';
 
@@ -47,7 +46,7 @@ export class BalancerV2GaugeAddressesGetter {
     return data
       .filter(
         ({ address, network: gaugeNetwork }) =>
-          chainIdByNetwork[network] === gaugeNetwork &&
+          NETWORK_IDS[network] === gaugeNetwork &&
           address.toLowerCase() !== '0xe867ad0a48e8f815dc0cda2cdb275e0f163a480b', // Single recipient gauge
       )
       .map(gaugeData => {

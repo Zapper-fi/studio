@@ -1,11 +1,10 @@
-import { Module } from '@nestjs/common';
-
-import { AbstractApp, ExternalAppImport } from '~app/app.dynamic-module';
+import { Register } from '~app-toolkit/decorators';
+import { AbstractApp } from '~app/app.dynamic-module';
 import { CurveAppModule } from '~apps/curve';
 
 import { ArbitrumBalancerV2BalanceFetcher } from './arbitrum/balancer-v2.balance-fetcher';
 import { ArbitrumBalancerV2PoolTokenFetcher } from './arbitrum/balancer-v2.pool.token-fetcher';
-import { BalancerV2AppDefinition } from './balancer-v2.definition';
+import BALANCER_V2_DEFINITION, { BalancerV2AppDefinition } from './balancer-v2.definition';
 import { BalancerV2ContractFactory } from './contracts';
 import { EthereumBalancerV2BalanceFetcher } from './ethereum/balancer-v2.balance-fetcher';
 import { EthereumBalancerV2PoolTokenFetcher } from './ethereum/balancer-v2.pool.token-fetcher';
@@ -21,8 +20,9 @@ import { BalancerV2TheGraphPoolTokenDataStrategy } from './helpers/balancer-v2.t
 import { PolygonBalancerV2BalanceFetcher } from './polygon/balancer-v2.balance-fetcher';
 import { PolygonBalancerV2PoolTokenFetcher } from './polygon/balancer-v2.pool.token-fetcher';
 
-@Module({
-  imports: ExternalAppImport(CurveAppModule),
+@Register.AppModule({
+  appId: BALANCER_V2_DEFINITION.id,
+  imports: [CurveAppModule],
   providers: [
     BalancerV2AppDefinition,
     BalancerV2ContractFactory,
