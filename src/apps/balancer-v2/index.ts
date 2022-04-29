@@ -1,4 +1,5 @@
 export { BALANCER_V2_DEFINITION, BalancerV2AppDefinition } from './balancer-v2.definition';
+export { BalancerV2AppModule } from './balancer-v2.module';
 export { BalancerV2ContractFactory } from './contracts';
 
 // Helpers
