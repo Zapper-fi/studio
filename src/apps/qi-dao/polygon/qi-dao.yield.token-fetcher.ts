@@ -13,6 +13,10 @@ import { Network } from '~types/network.interface';
 import { QiDaoContractFactory } from '../contracts';
 import { QI_DAO_DEFINITION } from '../qi-dao.definition';
 
+export type QiDaoYieldTokenDataProps = {
+  liquidity: number;
+};
+
 const YIELD_TOKEN_ADDRESSES = [
   '0x22965e296d9a0cd0e917d6d70ef2573009f8a1bb', // camUSDC
   '0x7068ea5255cb05931efa8026bd04b18f3deb8b0b', // camWMATIC
@@ -73,8 +77,9 @@ export class PolygonQiDaoYieldTokenFetcher implements PositionFetcher<AppTokenPo
         const label = symbol;
         const secondaryLabel = buildDollarDisplayItem(price);
         const images = [getTokenImg(underlyingToken.tokens[0].address, network)];
+        const statsItems = [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }];
 
-        const vaultToken: AppTokenPosition = {
+        const vaultToken: AppTokenPosition<QiDaoYieldTokenDataProps> = {
           type: ContractType.APP_TOKEN,
           address: tokenAddress,
           appId: QI_DAO_DEFINITION.id,
@@ -87,12 +92,15 @@ export class PolygonQiDaoYieldTokenFetcher implements PositionFetcher<AppTokenPo
           pricePerShare,
           tokens,
 
-          dataProps: {},
+          dataProps: {
+            liquidity,
+          },
 
           displayProps: {
             label,
             secondaryLabel,
             images,
+            statsItems,
           },
         };
 

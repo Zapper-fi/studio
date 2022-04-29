@@ -4,12 +4,14 @@ import { AbstractApp } from '~app/app.dynamic-module';
 import { QiDaoContractFactory } from './contracts';
 import { FantomQiDaoBalanceFetcher } from './fantom/qi-dao.balance-fetcher';
 import { FantomQiDaoFarmContractPositionFetcher } from './fantom/qi-dao.farm.contract-position-fetcher';
+import { FantomQiDaoTvlFetcher } from './fantom/qi-dao.tvl-fetcher';
 import { FantomQiDaoVaultPositionFetcher } from './fantom/qi-dao.vault.position-fetcher';
 import { QiDaoVaultPositionBalanceHelper } from './helpers/qi-dao.vault.position-balance-helper';
 import { QiDaoVaultPositionHelper } from './helpers/qi-dao.vault.position-helper';
 import { PolygonQiDaoBalanceFetcher } from './polygon/qi-dao.balance-fetcher';
 import { PolygonQiDaoEscrowedQiContractPositionFetcher } from './polygon/qi-dao.escrowed-qi.contract-position-fetcher';
 import { PolygonQiDaoFarmContractPositionFetcher } from './polygon/qi-dao.farm.contract-position-fetcher';
+import { PolygonQiDaoTvlFetcher } from './polygon/qi-dao.tvl-fetcher';
 import { PolygonQiDaoVaultPositionFetcher } from './polygon/qi-dao.vault.contract-position-fetcher';
 import { PolygonQiDaoYieldTokenFetcher } from './polygon/qi-dao.yield.token-fetcher';
 import { QiDaoAppDefinition, QI_DAO_DEFINITION } from './qi-dao.definition';
@@ -21,14 +23,18 @@ import { QiDaoAppDefinition, QI_DAO_DEFINITION } from './qi-dao.definition';
     QiDaoContractFactory,
     QiDaoVaultPositionHelper,
     QiDaoVaultPositionBalanceHelper,
+    // Fantom
     FantomQiDaoBalanceFetcher,
     FantomQiDaoFarmContractPositionFetcher,
     FantomQiDaoVaultPositionFetcher,
+    FantomQiDaoTvlFetcher,
+    // Polygon
     PolygonQiDaoBalanceFetcher,
     PolygonQiDaoEscrowedQiContractPositionFetcher,
     PolygonQiDaoFarmContractPositionFetcher,
     PolygonQiDaoVaultPositionFetcher,
     PolygonQiDaoYieldTokenFetcher,
+    PolygonQiDaoTvlFetcher,
   ],
 })
 export class QiDaoAppModule extends AbstractApp() {}

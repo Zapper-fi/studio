@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { compact } from 'lodash';
 
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
+import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken, getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
 import { APP_TOOLKIT, IAppToolkit } from '~lib';
 import { ContractType } from '~position/contract.interface';
@@ -14,6 +15,7 @@ import { QiDaoContractFactory } from '../contracts';
 import { QI_DAO_DEFINITION } from '../qi-dao.definition';
 
 export type QiDaoVaultPositionDataProps = {
+  liquidity: number;
   vaultInfoAddress: string;
 };
 
@@ -38,48 +40,58 @@ export class QiDaoVaultPositionHelper {
 
   async getPositions({ network, vaults, debtTokenAddress, dependencies = [] }: QiDaoVaultPositionHelperParams) {
     const multicall = this.appToolkit.getMulticall(network);
-    const prices = await this.appToolkit.getBaseTokenPrices(network);
-    const tokens = await this.appToolkit.getAppTokenPositions(...dependencies);
+    const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
+    const appTokens = await this.appToolkit.getAppTokenPositions(...dependencies);
+    const allTokens = [...appTokens, ...baseTokens];
 
     const positions = await Promise.all(
-      vaults.map(async vaultAddress => {
-        const vaultContract = this.contractFactory.qiDaoVaultInfo({
-          address: vaultAddress.vaultInfoAddress,
-          network,
-        });
+      vaults.map(async ({ vaultInfoAddress, nftAddress }) => {
+        const vaultContract = this.contractFactory.qiDaoVaultInfo({ address: vaultInfoAddress, network });
 
-        const underlyingTokenAddress = await multicall
+        const underlyingTokenAddressRaw = await multicall
           .wrap(vaultContract)
           .collateral()
-          .catch(() => ZERO_ADDRESS)
-          .then(a => a.toLowerCase());
+          .catch(() => ZERO_ADDRESS);
 
-        const appTokenMatch = tokens.find(p => p.address === underlyingTokenAddress);
-        const tokenMatch = prices.find(p => p.address === underlyingTokenAddress);
-        const collateralToken = appTokenMatch ?? tokenMatch;
-        const borrowedToken = prices.find(p => p.address === debtTokenAddress);
+        // Resolve collateral token
+        const underlyingTokenAddress = underlyingTokenAddressRaw.toLowerCase();
+        const collateralToken = allTokens.find(p => p.address === underlyingTokenAddress);
+        const borrowedToken = baseTokens.find(p => p.address === debtTokenAddress);
+        if (!collateralToken || !borrowedToken) return null;
 
-        if (!collateralToken || !borrowedToken) {
-          return null;
-        }
+        // Resolve collateral token amount in vault
+        const collateralTokenContract = this.contractFactory.erc20({ address: collateralToken.address, network });
+        const reserveRaw = await (underlyingTokenAddress === ZERO_ADDRESS
+          ? multicall.wrap(multicall.contract).getEthBalance(nftAddress)
+          : multicall.wrap(collateralTokenContract).balanceOf(nftAddress));
+        const reserve = Number(reserveRaw) / 10 ** collateralToken.decimals;
+        const liquidity = reserve * collateralToken.price;
+        const tokens = [supplied(collateralToken), borrowed(borrowedToken)];
 
         // Display Props
         const label = `${collateralToken.symbol} Vault`;
         const secondaryLabel = '';
         const images = [...getImagesFromToken(collateralToken), getTokenImg(borrowedToken.address, network)];
+        const statsItems = [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }];
 
         const position: ContractPosition<QiDaoVaultPositionDataProps> = {
           type: ContractType.POSITION,
-          address: vaultAddress.nftAddress,
+          address: nftAddress,
           appId: QI_DAO_DEFINITION.id,
           groupId: QI_DAO_DEFINITION.groups.vault.id,
           network,
-          tokens: [supplied(collateralToken), borrowed(borrowedToken)],
-          dataProps: { vaultInfoAddress: vaultAddress.vaultInfoAddress },
+          tokens,
+
+          dataProps: {
+            liquidity,
+            vaultInfoAddress,
+          },
+
           displayProps: {
             label,
             secondaryLabel,
             images,
+            statsItems,
           },
         };
 
