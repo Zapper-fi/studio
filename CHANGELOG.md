@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+### [0.11.4](https://github.com/Zapper-fi/studio/compare/v0.11.3...v0.11.4) (2022-04-29)
+
+
+### Bug Fixes
+
+* **balancer:** Also export the app module ([#333](https://github.com/Zapper-fi/studio/issues/333)) ([8107ea8](https://github.com/Zapper-fi/studio/commit/8107ea8448feafa54c1a0b597e1658ac97335a28))
+
 ### [0.11.3](https://github.com/Zapper-fi/studio/compare/v0.11.2...v0.11.3) (2022-04-29)
 
 
