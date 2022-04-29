@@ -9,6 +9,12 @@ export const BALANCER_V1_DEFINITION = {
   description:
     'Balancer is a flexible and versatile Automated Market Maker, giving developers customizability over the weights of the underlying tokens in AMM pools. This project is deprecated in favour of V2.',
   url: 'https://pools.balancer.exchange/',
+  links: {
+    github: 'https://github.com/balancer-labs/',
+    twitter: 'https://twitter.com/BalancerLabs',
+    discord: 'https://discord.balancer.fi/',
+    medium: 'https://medium.com/balancer-protocol',
+  },
   groups: {
     pool: { id: 'pool', type: GroupType.TOKEN },
   },
