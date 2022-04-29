@@ -1,8 +1,6 @@
-import { AppToolkitModule } from '~app-toolkit/app-toolkit.module';
 import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
 import { UniswapV2AppModule } from '~apps/uniswap-v2';
-import { PositionModule } from '~position/position.module';
 
 import { AvalancheTraderJoeBalanceFetcher } from './avalanche/trader-joe.balance-fetcher';
 import { AvalancheTraderJoeChefBoostedFarmContractPositionFetcher } from './avalanche/trader-joe.chef-boosted-farm.contract-position-fetcher';
@@ -18,7 +16,7 @@ import { TraderJoeAppDefinition, TRADER_JOE_DEFINITION } from './trader-joe.defi
 
 @Register.AppModule({
   appId: TRADER_JOE_DEFINITION.id,
-  imports: [PositionModule, AppToolkitModule, UniswapV2AppModule],
+  imports: [UniswapV2AppModule],
   providers: [
     TraderJoeAppDefinition,
     TraderJoeContractFactory,

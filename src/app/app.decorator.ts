@@ -2,7 +2,6 @@ import { applyDecorators, Injectable, Module, ModuleMetadata, SetMetadata } from
 import { omit } from 'lodash';
 
 export const APP_NAME = 'APP_NAME_V3';
-export const APP_DEPENDENCIES = 'APP_DEPENDENCIES';
 export const APP_ID = 'APP_ID';
 
 export function AppDefinition(name: string) {

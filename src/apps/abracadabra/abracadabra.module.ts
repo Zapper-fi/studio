@@ -1,5 +1,5 @@
 import { Register } from '~app-toolkit/decorators';
-import { AbstractApp, ExternalAppImport } from '~app/app.dynamic-module';
+import { AbstractApp } from '~app/app.dynamic-module';
 import { OlympusAppModule } from '~apps/olympus';
 
 import { AbracadabraAppDefinition, ABRACADABRA_DEFINITION } from './abracadabra.definition';
@@ -25,7 +25,7 @@ import { AbracadabraCauldronContractPositionHelper } from './helpers/abracadabra
 
 @Register.AppModule({
   appId: ABRACADABRA_DEFINITION.id,
-  imports: ExternalAppImport(OlympusAppModule),
+  imports: [OlympusAppModule],
   providers: [
     AbracadabraAppDefinition,
     AbracadabraContractFactory,
