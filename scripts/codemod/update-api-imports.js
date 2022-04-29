@@ -3,8 +3,8 @@
  * @example node ./scripts/codemod/update-api-imports.js [glob-path]
  */
 const fs = require('fs');
+
 const recast = require('recast');
-const dedent = require('dedent');
 
 ///////////////////////
 // AST magic
@@ -210,20 +210,6 @@ function appendAbstractDynamicApp(s) {
 
 function replaceAppsV3Import(s) {
   return s.replaceAll('~apps-v3/', '~apps/');
-}
-
-function warnAboutExternallyConfiguredAppModules(s) {
-  if (s.includes('~apps-v3')) {
-    return append(
-      s,
-      dedent`
-    // @warning: External module is possibly present, please use the "ExternalAppImport" helper to inject them within imports
-    //           Import it as such: import { ExternalAppImport } from '~app/app.dynamic-module.ts'
-    //           Use it as such: @Module({ imports: [...ExternalAppImport(AppleAppModule, BananaAppModule)]
-    `,
-    );
-  }
-  return s;
 }
 
 function removeMasterChefImports(s) {
@@ -542,7 +528,6 @@ for (const file of files) {
   if (file.endsWith('.module.ts')) {
     strategy.addModifier(appendAbstractDynamicApp);
     strategy.addModifier(removeLegacyModulesFromModuleDefinition);
-    strategy.addModifier(warnAboutExternallyConfiguredAppModules);
   }
 
   if (
