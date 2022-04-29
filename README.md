@@ -134,7 +134,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/piersss"><img src="https://avatars.githubusercontent.com/u/86911296?v=4?s=64" width="64px;" alt=""/><br /><sub><b>piersss</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=piersss" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/rkolpakov"><img src="https://avatars.githubusercontent.com/u/13422270?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Roman Kolpakov</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=rkolpakov" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/mehdi-loup"><img src="https://avatars.githubusercontent.com/u/5024228?v=4?s=64" width="64px;" alt=""/><br /><sub><b>mehdi-loup</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=mehdi-loup" title="Code">💻</a></td>
-    <td align="center"><a href="https://github.com/dylandesrosiers"><img src="https://avatars.githubusercontent.com/u/34945226?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Dylan Desrosiers</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=dylandesrosiers" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/dylandesrosier"><img src="https://avatars.githubusercontent.com/u/13701258?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Dylan</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=dylandesrosier" title="Code">💻</a></td>
   </tr>
 </table>
 
