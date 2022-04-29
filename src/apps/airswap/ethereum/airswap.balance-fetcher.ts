@@ -9,14 +9,15 @@ import { Network } from '~types/network.interface';
 import { AIRSWAP_DEFINITION } from '../airswap.definition';
 
 const appId = AIRSWAP_DEFINITION.id;
-const groupId = AIRSWAP_DEFINITION.groups.sAST.id;
+const sASTv2GroupId = AIRSWAP_DEFINITION.groups.sASTv2.id;
+const sASTv3GroupId = AIRSWAP_DEFINITION.groups.sASTv3.id;
 const network = Network.ETHEREUM_MAINNET;
 
 @Register.BalanceFetcher(AIRSWAP_DEFINITION.id, network)
 export class EthereumAirswapBalanceFetcher implements BalanceFetcher {
   constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
-  async getAirswapTokenBalances(address: string) {
+  async getAirswapTokenBalances(address: string, groupId: string) {
     return this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
       address,
       appId,
@@ -26,7 +27,10 @@ export class EthereumAirswapBalanceFetcher implements BalanceFetcher {
   }
 
   async getBalances(address: string) {
-    const [airswapTokenBalances] = await Promise.all([this.getAirswapTokenBalances(address)]);
+    const [airswapTokenBalances] = await Promise.all([
+      this.getAirswapTokenBalances(address, sASTv2GroupId),
+      this.getAirswapTokenBalances(address, sASTv3GroupId),
+    ]);
 
     return presentBalanceFetcherResponse([
       {
