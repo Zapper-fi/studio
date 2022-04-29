@@ -2,7 +2,6 @@ import { Inject, Injectable } from '@nestjs/common';
 import { partition } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { EthersMulticall as Multicall } from '~multicall/multicall.ethers';
 import { Network } from '~types/network.interface';
 
 import { BalancerV2ContractFactory } from '../contracts';
@@ -14,19 +13,8 @@ export class BalancerV2SpotPriceHelper {
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
   ) {}
 
-  async getReserves({
-    network,
-    lpAddress,
-    tokens,
-    multicall,
-  }: {
-    network: Network;
-    lpAddress: string;
-
-    tokens: string[];
-    multicall?: Multicall;
-  }) {
-    const mc = multicall ?? this.appToolkit.getMulticall(network);
+  async getReserves({ network, lpAddress, tokens }: { network: Network; lpAddress: string; tokens: string[] }) {
+    const mc = this.appToolkit.getMulticall(network);
 
     const poolContract = this.balancerV2ContractFactory.balancerPool({ address: lpAddress, network });
     const poolId = await mc.wrap(poolContract).getPoolId();
