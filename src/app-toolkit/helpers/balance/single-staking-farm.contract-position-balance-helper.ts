@@ -42,16 +42,6 @@ export type SingleStakingContractPositionBalanceHelperParams<T> = {
   resolveRewardTokenBalances: SingleStakingRewardTokenBalanceStrategy<T>;
 };
 
-export type SingleStakingContractPositionBalanceWithoutRewardsHelperParams<T> = {
-  address: string;
-  network: Network;
-  appId: string;
-  groupId: string;
-  farmFilter?: (farm: ContractPosition<SingleStakingFarmDataProps>) => boolean;
-  resolveContract: SingleStakingContractStrategy<T>;
-  resolveStakedTokenBalance: SingleStakingStakedTokenBalanceStrategy<T>;
-};
-
 @Injectable()
 export class SingleStakingContractPositionBalanceHelper {
   constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
