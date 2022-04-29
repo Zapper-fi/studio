@@ -4,6 +4,24 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.11.0](https://github.com/Zapper-fi/studio/compare/v0.10.0...v0.11.0) (2022-04-29)
+
+
+### Features
+
+* Balancer v2 to studio ([#318](https://github.com/Zapper-fi/studio/issues/318)) ([d582317](https://github.com/Zapper-fi/studio/commit/d5823172e522bcea3a379ef25366995f41960382))
+* **caching:** Add `clear-cache` command ([9fe7dfe](https://github.com/Zapper-fi/studio/commit/9fe7dfe3cf6f5a582f5f1a132c9bd7401701c535))
+* **caching:** Add file system cache ([#316](https://github.com/Zapper-fi/studio/issues/316)) ([4168929](https://github.com/Zapper-fi/studio/commit/41689293a509503a0ec9a811e08872a47ab73f6d))
+* **cli:** Add the ability to set custom network providers ([#325](https://github.com/Zapper-fi/studio/issues/325)) ([f4f0d08](https://github.com/Zapper-fi/studio/commit/f4f0d0890ff88bd61666f1e4ce36bbe4a02ec616))
+* migrate balancer-v1 to studio ([#236](https://github.com/Zapper-fi/studio/issues/236)) ([ef15509](https://github.com/Zapper-fi/studio/commit/ef15509c98898559fa17a5bfb9c96367f2563906))
+* **PoolTogether:** Add TVL. Refactor naming. Add PoolTogether contract registry. Fix APR.  ([#304](https://github.com/Zapper-fi/studio/issues/304)) ([5273348](https://github.com/Zapper-fi/studio/commit/527334882e3b9ea9ac2b988d772f5cab81c601e8))
+
+
+### Bug Fixes
+
+* **caching:** No need to load the cache on start ([#321](https://github.com/Zapper-fi/studio/issues/321)) ([3055589](https://github.com/Zapper-fi/studio/commit/3055589182c458a98e46e64a34a9d40767578036))
+* **tokemak:** Remove claimable balance of "Staked TOKE" label ([#320](https://github.com/Zapper-fi/studio/issues/320)) ([ccc4d73](https://github.com/Zapper-fi/studio/commit/ccc4d7347d76cddf5a4b313abf67c87850b6a500))
+
 ## [0.10.0](https://github.com/Zapper-fi/studio/compare/v0.9.1...v0.10.0) (2022-04-29)
 
 
