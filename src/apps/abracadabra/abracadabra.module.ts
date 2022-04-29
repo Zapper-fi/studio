@@ -1,9 +1,8 @@
-import { Module } from '@nestjs/common';
-
-import { AbstractApp, ExternalAppImport } from '~app/app.dynamic-module';
+import { Register } from '~app-toolkit/decorators';
+import { AbstractApp } from '~app/app.dynamic-module';
 import { OlympusAppModule } from '~apps/olympus';
 
-import { AbracadabraAppDefinition } from './abracadabra.definition';
+import { AbracadabraAppDefinition, ABRACADABRA_DEFINITION } from './abracadabra.definition';
 import { ArbitrumAbracadabraBalanceFetcher } from './arbitrum/abracadabra.balance-fetcher';
 import { ArbitrumAbracadabraCauldronContractPositionFetcher } from './arbitrum/abracadabra.cauldron.contract-position-fetcher';
 import { ArbitrumAbracadabraFarmContractPositionFetcher } from './arbitrum/abracadabra.farm.contract-position-fetcher';
@@ -24,8 +23,9 @@ import { FantomAbracadabraStakedSpellTokenFetcher } from './fantom/abracadbra.st
 import { AbracadabraCauldronBalanceHelper } from './helpers/abracadabra.cauldron.balance-helper';
 import { AbracadabraCauldronContractPositionHelper } from './helpers/abracadabra.cauldron.contract-position-helper';
 
-@Module({
-  imports: ExternalAppImport(OlympusAppModule),
+@Register.AppModule({
+  appId: ABRACADABRA_DEFINITION.id,
+  imports: [OlympusAppModule],
   providers: [
     AbracadabraAppDefinition,
     AbracadabraContractFactory,
