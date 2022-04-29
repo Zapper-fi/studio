@@ -42,7 +42,7 @@ export class PolygonPickleBalanceFetcher implements BalanceFetcher {
             .userInfo(contractPosition.dataProps.poolIndex, address)
             .then(v => v.amount),
       }),
-      resolveClaimableTokenBalances: this.appToolkit.helpers.masterChefRewarderClaimableBalanceStrategy.build<
+      resolveClaimableTokenBalances: this.appToolkit.helpers.masterChefV2ClaimableBalanceStrategy.build<
         PickleMiniChefV2,
         PickleRewarder
       >({

@@ -1,9 +1,9 @@
 import { Register } from '~app-toolkit/decorators';
 import { AppDefinition } from '~app/app.definition';
-import { GroupType, ProtocolAction, ProtocolTag } from '~app/app.interface';
+import { AppDefinitionObject, GroupType, ProtocolAction, ProtocolTag } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
-export const UNISWAP_V2_DEFINITION = {
+export const UNISWAP_V2_DEFINITION: AppDefinitionObject = {
   id: 'uniswap-v2',
   name: 'Uniswap V2',
   description: `A protocol for trading and automated liquidity provision on Ethereum.`,
@@ -11,6 +11,11 @@ export const UNISWAP_V2_DEFINITION = {
     pool: { id: 'pool', type: GroupType.TOKEN },
   },
   url: 'https://uniswap.org/',
+  links: {
+    github: 'https://github.com/Uniswap',
+    twitter: 'https://twitter.com/Uniswap',
+    discord: 'https://discord.gg/FCfyBSbCU5',
+  },
   tags: [ProtocolTag.LIQUIDITY_POOL],
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [ProtocolAction.VIEW],

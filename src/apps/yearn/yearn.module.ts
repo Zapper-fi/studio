@@ -1,6 +1,5 @@
-import { Module } from '@nestjs/common';
-
-import { AbstractApp, ExternalAppImport } from '~app/app.dynamic-module';
+import { Register } from '~app-toolkit/decorators';
+import { AbstractApp } from '~app/app.dynamic-module';
 import { SynthetixAppModule } from '~apps/synthetix';
 
 import { ArbitrumYearnBalanceFetcher } from './arbitrum/yearn.balance-fetcher';
@@ -15,10 +14,11 @@ import { FantomYearnVaultTokenFetcher } from './fantom/yearn.vault.token-fetcher
 import { YearnLikeVaultTokenHelper } from './helpers/yearn-like.vault.token-helper';
 import { YearnVaultTokenDefinitionsResolver } from './helpers/yearn.vault.token-definitions-resolver';
 import { YearnVaultTokenHelper } from './helpers/yearn.vault.token-helper';
-import { YearnAppDefinition } from './yearn.definition';
+import { YearnAppDefinition, YEARN_DEFINITION } from './yearn.definition';
 
-@Module({
-  imports: ExternalAppImport(SynthetixAppModule),
+@Register.AppModule({
+  appId: YEARN_DEFINITION.id,
+  imports: [SynthetixAppModule],
   providers: [
     YearnAppDefinition,
     YearnContractFactory,

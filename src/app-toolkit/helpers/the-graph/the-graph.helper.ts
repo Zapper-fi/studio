@@ -18,7 +18,7 @@ type RequestGraphParams = {
 
 @Injectable()
 export class TheGraphHelper {
-  async request<T>({ endpoint, query, variables, headers }: RequestParams) {
+  async request<T = any>({ endpoint, query, variables, headers }: RequestParams) {
     const client = new GraphQLClient(endpoint, { headers });
     return client.request<T>(query, variables);
   }

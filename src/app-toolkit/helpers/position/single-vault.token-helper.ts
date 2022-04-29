@@ -81,9 +81,8 @@ export class SingleVaultTokenHelper {
       multicall.wrap(tokenContract).totalSupply(),
     ]);
 
-    const reserveRaw = await resolveReserve({ multicall, contract, underlyingToken, address, network });
+    const reserve = await resolveReserve({ multicall, contract, underlyingToken, address, network });
     const supply = Number(supplyRaw) / 10 ** decimals;
-    const reserve = Number(reserveRaw) / 10 ** underlyingToken.decimals;
     const pricePerShare = await resolvePricePerShare({
       multicall,
       contract,

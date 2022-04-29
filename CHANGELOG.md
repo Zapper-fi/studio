@@ -4,6 +4,129 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.10.0](https://github.com/Zapper-fi/studio/compare/v0.9.1...v0.10.0) (2022-04-29)
+
+
+### Features
+
+* Dynamically infer app dependencies at boot, dynamically use externallyConfigured ([#302](https://github.com/Zapper-fi/studio/issues/302)) ([9e9e203](https://github.com/Zapper-fi/studio/commit/9e9e203a9bf50ea92d4d35b6b981b3a6e0cbd3cf))
+
+### [0.9.1](https://github.com/Zapper-fi/studio/compare/v0.9.0...v0.9.1) (2022-04-29)
+
+
+### Bug Fixes
+
+* AirSwap sAST V3 balances ([#313](https://github.com/Zapper-fi/studio/issues/313)) ([e5ef04b](https://github.com/Zapper-fi/studio/commit/e5ef04b210ffe8bba4bd2c9ed5915b14650a2bc6))
+
+## [0.9.0](https://github.com/Zapper-fi/studio/compare/v0.8.1...v0.9.0) (2022-04-29)
+
+
+### Features
+
+* Airswap integration for sAst v3 ([#303](https://github.com/Zapper-fi/studio/issues/303)) ([a5f7c26](https://github.com/Zapper-fi/studio/commit/a5f7c265393890a52e6f5385540475bc9868e4f2))
+* **pancakeswap:** Port pancakeswap into Studio ([#305](https://github.com/Zapper-fi/studio/issues/305)) ([6d0019b](https://github.com/Zapper-fi/studio/commit/6d0019b9d3a7ed7850d29b4371b1526c8c3df3c7))
+
+
+### Bug Fixes
+
+* Fix undefined positions when cache is not primed ([#312](https://github.com/Zapper-fi/studio/issues/312)) ([7f82b34](https://github.com/Zapper-fi/studio/commit/7f82b34e807591e8cc4ae6f5b1c076f097c8bf89))
+* Small fixes to Airswap ([#311](https://github.com/Zapper-fi/studio/issues/311)) ([8003105](https://github.com/Zapper-fi/studio/commit/800310566cdf0fd21934f852a208cdb2ea9b73e7))
+
+### [0.8.1](https://github.com/Zapper-fi/studio/compare/v0.8.0...v0.8.1) (2022-04-27)
+
+
+### Bug Fixes
+
+* Rename wBAN to Banano ([#299](https://github.com/Zapper-fi/studio/issues/299)) ([6b1e265](https://github.com/Zapper-fi/studio/commit/6b1e265dba2fcb83968c22f25755815af556459d))
+
+## [0.8.0](https://github.com/Zapper-fi/studio/compare/v0.7.3...v0.8.0) (2022-04-27)
+
+
+### Features
+
+* Uniswap V2 TVL helper ([#295](https://github.com/Zapper-fi/studio/issues/295)) ([d47847a](https://github.com/Zapper-fi/studio/commit/d47847a13de31d9608e7bb899d2fc8d708bf04b0))
+
+
+### Bug Fixes
+
+* **illuvium:** Fix missing await in v1 staked balances ([#298](https://github.com/Zapper-fi/studio/issues/298)) ([45b40cc](https://github.com/Zapper-fi/studio/commit/45b40cc16f47291a0ee67daed77ee9abe311e735))
+
+### [0.7.3](https://github.com/Zapper-fi/studio/compare/v0.7.2...v0.7.3) (2022-04-27)
+
+
+### Bug Fixes
+
+* **trader-joe:** Fix xJOE price ([#293](https://github.com/Zapper-fi/studio/issues/293)) ([00a6f90](https://github.com/Zapper-fi/studio/commit/00a6f90bee46ab5054c274b9f2c370d464aba064))
+
+### [0.7.2](https://github.com/Zapper-fi/studio/compare/v0.7.1...v0.7.2) (2022-04-27)
+
+
+### Bug Fixes
+
+* Update AppDefinition class with links ([#291](https://github.com/Zapper-fi/studio/issues/291)) ([0fd76cf](https://github.com/Zapper-fi/studio/commit/0fd76cf02250f9f13e62b7afa7b77d0d63ddeddc))
+
+### [0.7.1](https://github.com/Zapper-fi/studio/compare/v0.7.0...v0.7.1) (2022-04-27)
+
+
+### Bug Fixes
+
+* **apps:** Add social links to all apps ([#280](https://github.com/Zapper-fi/studio/issues/280)) ([0bb0453](https://github.com/Zapper-fi/studio/commit/0bb0453b6b4d9b248c52f6e6a5449eb02d58fc17))
+
+## [0.7.0](https://github.com/Zapper-fi/studio/compare/v0.6.1...v0.7.0) (2022-04-27)
+
+
+### Features
+
+* port over KeeperDao ([#284](https://github.com/Zapper-fi/studio/issues/284)) ([a0936ab](https://github.com/Zapper-fi/studio/commit/a0936abeb5dfa8e591af703b5852162c951a735c))
+
+### [0.6.1](https://github.com/Zapper-fi/studio/compare/v0.6.0...v0.6.1) (2022-04-27)
+
+
+### Bug Fixes
+
+* **logos:** Add missing logos ([#286](https://github.com/Zapper-fi/studio/issues/286)) ([675925e](https://github.com/Zapper-fi/studio/commit/675925e526ee47883c9764d130bf0cd905a4a324))
+
+## [0.6.0](https://github.com/Zapper-fi/studio/compare/v0.5.1...v0.6.0) (2022-04-27)
+
+
+### Features
+
+* Add lido integration ([#250](https://github.com/Zapper-fi/studio/issues/250)) ([66219c4](https://github.com/Zapper-fi/studio/commit/66219c4be5df4230da364bc0f1b74bb2bb0aaf53))
+* add trader-joe app ([#265](https://github.com/Zapper-fi/studio/issues/265)) ([0082a26](https://github.com/Zapper-fi/studio/commit/0082a268d26ac8d741f573d399eeadccca1b0ef8))
+* port over pool-together ([#254](https://github.com/Zapper-fi/studio/issues/254)) ([6ba4e19](https://github.com/Zapper-fi/studio/commit/6ba4e195cb29975de98a43559db226cc3cc6fda6))
+
+
+### Bug Fixes
+
+* Lido merge conflicts and linting ([#285](https://github.com/Zapper-fi/studio/issues/285)) ([98b22a0](https://github.com/Zapper-fi/studio/commit/98b22a06093b767e540745ac051cf48298da40a4))
+
+### [0.5.1](https://github.com/Zapper-fi/studio/compare/v0.5.0...v0.5.1) (2022-04-26)
+
+
+### Bug Fixes
+
+* import things in a specific way to prevent transpiler issue ([#281](https://github.com/Zapper-fi/studio/issues/281)) ([21d5a79](https://github.com/Zapper-fi/studio/commit/21d5a794c7685ac7c910ec48a34c93214641d12a))
+* **pickle:** Use app toolkit for all helpers ([4dfa5c2](https://github.com/Zapper-fi/studio/commit/4dfa5c2c75b2addaad239e31f732931627135323))
+
+## [0.5.0](https://github.com/Zapper-fi/studio/compare/v0.4.1...v0.5.0) (2022-04-26)
+
+
+### Features
+
+* **illuvium:** Extract Illuvium to Studio and fix the staked/claimable amounts ([#273](https://github.com/Zapper-fi/studio/issues/273)) ([3da8a03](https://github.com/Zapper-fi/studio/commit/3da8a033bdd53bbfc6b43362e716fd353bc56952))
+
+
+### Bug Fixes
+
+* Resolve conflict in rename of AbstractApp ([#279](https://github.com/Zapper-fi/studio/issues/279)) ([989b3f5](https://github.com/Zapper-fi/studio/commit/989b3f5887d220b63e01a1d35faaac0246c923e1))
+
+### [0.4.1](https://github.com/Zapper-fi/studio/compare/v0.4.0...v0.4.1) (2022-04-26)
+
+
+### Bug Fixes
+
+* **yearn:** Add app index file ([#275](https://github.com/Zapper-fi/studio/issues/275)) ([ba1f7ec](https://github.com/Zapper-fi/studio/commit/ba1f7ecfdd0b583a4cf2239d000646bd840d3e08))
+
 ## [0.4.0](https://github.com/Zapper-fi/studio/compare/v0.3.2...v0.4.0) (2022-04-26)
 
 
