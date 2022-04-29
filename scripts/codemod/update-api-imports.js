@@ -4,11 +4,31 @@
  */
 const fs = require('fs');
 
-const dedent = require('dedent');
+const recast = require('recast');
+
+///////////////////////
+// AST magic
+///////////////////////
+const createAST = source =>
+  recast.parse(source, {
+    parser: require('recast/parsers/typescript'),
+  });
+
+const b = recast.types.builders;
+
+/**
+ *
+ * @param {recast.types.Visitor<{}>} p
+ */
+function createVisitor(p) {
+  return p;
+}
 
 ///////////////////////
 // General utility func
 ///////////////////////
+const noop = () => {};
+
 function deleteLinesContaining(content, targets) {
   const next = [];
   const byLine = content.split('\n');
@@ -47,14 +67,26 @@ function lineModifier(s, cb) {
 ///////////////////////
 // Codemod & Strategies
 ///////////////////////
-class CodeModder {
+
+class CodeMod {
   constructor(contents = '') {
     this.contents = contents;
     this.modifiers = [];
+    this.visitors = [];
+    this.originalSource = contents;
+    this.ast = createAST(contents);
   }
 
   addModifier(fn) {
     this.modifiers.push(fn);
+  }
+
+  /**
+   *
+   * @param {() => recast.types.Visitor<{}>} visitor
+   */
+  addAstVisitor(visitor) {
+    this.visitors.push(visitor);
   }
 
   setContents(contents) {
@@ -62,7 +94,12 @@ class CodeModder {
   }
 
   exec() {
-    let nextContents = this.contents;
+    for (const visitor of this.visitors) {
+      recast.visit(this.ast, visitor());
+    }
+
+    let nextContents = recast.print(this.ast).code;
+
     for (const modifier of this.modifiers) {
       nextContents = modifier(nextContents);
     }
@@ -70,43 +107,18 @@ class CodeModder {
   }
 }
 
-function replaceNetworkImport(s) {
-  return s.replace('@zapper-fi/types/networks', '~types/network.interface');
-}
-
 function injectAppToolkit(s) {
   let next = s;
-  next = next.replace('constructor(', 'constructor(\n@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,\n');
-  next = append(next, `import { APP_TOOLKIT, IAppToolkit } from '~lib';`);
 
-  next = next.replaceAll('this.multicallService.multicall({ network })', 'this.appToolkit.getMulticall(network)');
-
-  next = next.replaceAll(
-    'this.priceService.getBaseTokenV3Prices({ network })',
-    'this.appToolkit.getBaseTokenPrices(network)',
-  );
+  if (!next.includes('@Inject(APP_TOOLKIT')) {
+    next = next.replace(
+      'constructor(',
+      'constructor(\n@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,\n',
+    );
+    next = append(next, `import { APP_TOOLKIT, IAppToolkit } from '~lib';`);
+  }
 
   next = next.replaceAll(' this.tokenBalanceHelper.getVaultBalances', 'this.appToolkit.getBaseTokenPrices(network)');
-
-  next = next.replaceAll(
-    'this.masterChefFarmContractPositionBalanceHelper.getBalances',
-    'this.appToolkit.helpers.masterChefContractPositionBalanceHelper.getBalances',
-  );
-
-  next = next.replaceAll(
-    'this.masterChefFarmContractPositionDefaultStakedBalanceStrategy.build',
-    'this.appToolkit.helpers.masterChefDefaultStakedBalanceStrategy.build',
-  );
-
-  next = next.replaceAll(
-    'this.masterChefFarmContractPositionDefaultStakedBalanceStrategy.build',
-    'this.appToolkit.helpers.masterChefDefaultStakedBalanceStrategy.build',
-  );
-
-  next = next.replaceAll(
-    'this.masterchefFarmContractPositionHelper.getContractPositions',
-    'this.appToolkit.helpers.masterChefContractPositionHelper.getContractPositions',
-  );
 
   next = deleteLinesContaining(next, ['@Inject(PRICES_SERVICE)', '@Inject(MulticallService)']);
 
@@ -144,21 +156,6 @@ function replaceRegistration(s) {
   next = append(next, `import { Register } from '~app-toolkit/decorators';`);
 
   return next;
-}
-
-function replaceImageUtilityImport(s) {
-  return s.replace('~util/images.utility', '~app-toolkit/helpers/presentation/image.present');
-}
-
-function replacePositionFetcherUtilityImport(s) {
-  return s.replace('~position/position-fetcher.utils', '~app-toolkit/helpers/presentation/display-item.present');
-}
-
-function replaceZeroAddressImport(s) {
-  return s.replace(
-    `import { ZERO_ADDRESS } from '~constants/common';`,
-    `import { ZERO_ADDRESS } from '~app-toolkit/constants/address';`,
-  );
 }
 
 function reshapeGroups(s) {
@@ -199,11 +196,11 @@ function replaceAppDefinitionImport(s) {
 
 function appendAbstractDynamicApp(s) {
   let next = s;
-  next = append(next, `import { AbstractDynamicApp } from '~app/app.dynamic-module';`);
+  next = append(next, `import { AbstractApp } from '~app/app.dynamic-module';`);
   next = lineModifier(next, line => {
     if (line.includes('export class ')) {
       const [_export, _class, identifier] = line.split(' ');
-      return `export class ${identifier} extends AbstractDynamicApp<${identifier}>() {};`;
+      return `export class ${identifier} extends AbstractApp() {};`;
     } else {
       return line;
     }
@@ -213,20 +210,6 @@ function appendAbstractDynamicApp(s) {
 
 function replaceAppsV3Import(s) {
   return s.replaceAll('~apps-v3/', '~apps/');
-}
-
-function warnAboutExternallyConfiguredAppModules(s) {
-  if (s.includes('~apps-v3')) {
-    return append(
-      s,
-      dedent`
-    // @warning: External module is possibly present, please use the "ExternalAppImport" helper to inject them within imports
-    //           Import it as such: import { ExternalAppImport } from '~app/app.dynamic-module.ts'
-    //           Use it as such: @Module({ imports: [...ExternalAppImport(AppleAppModule, BananaAppModule)]
-    `,
-    );
-  }
-  return s;
 }
 
 function removeMasterChefImports(s) {
@@ -265,6 +248,259 @@ function removeLegacyModulesFromModuleDefinition(s) {
   return next;
 }
 
+function extractConstantsCommonStrategy() {
+  function extractConstantsCommon(specifiers, cb = noop) {
+    const importDeclarations = [];
+    const addressSpecifiers = [];
+    const addressImportPath = b.literal('~app-toolkit/constants/address');
+
+    const blocksSpecifiers = [];
+    const blocksImportPath = b.literal('~app-toolkit/constants/blocks');
+
+    for (const { from, originalImportedName, renamedImport } of specifiers) {
+      if (from === '~constants/common') {
+        if (originalImportedName === 'ZERO_ADDRESS') {
+          addressSpecifiers.push(b.importSpecifier(b.identifier(originalImportedName), b.identifier(renamedImport)));
+        }
+        if (originalImportedName === 'ETH_ADDR_ALIAS') {
+          addressSpecifiers.push(b.importSpecifier(b.identifier(originalImportedName), b.identifier(renamedImport)));
+        }
+
+        if (originalImportedName === 'BLOCKS_PER_DAY') {
+          blocksSpecifiers.push(b.importSpecifier(b.identifier(originalImportedName), b.identifier(renamedImport)));
+        }
+      }
+    }
+
+    if (addressSpecifiers.length) {
+      importDeclarations.push(b.importDeclaration(addressSpecifiers, addressImportPath));
+    }
+
+    if (blocksSpecifiers.length) {
+      importDeclarations.push(b.importDeclaration(blocksSpecifiers, blocksImportPath));
+    }
+
+    if (importDeclarations.length) {
+      cb(importDeclarations);
+    }
+  }
+
+  return createVisitor({
+    visitProgram(path) {
+      this.traverse(path);
+    },
+    visitImportSpecifier(path) {
+      this.traverse(path);
+    },
+    visitImportDeclaration(path) {
+      const importedFrom = path.node.source.value;
+
+      const shortSpecifiers = path.node.specifiers
+        .map(specifier => {
+          if (!specifier.imported) {
+            return null;
+          }
+
+          const originalImportedName = specifier.imported.name;
+          const renamedImport = specifier.local.name;
+          const from = importedFrom;
+
+          return {
+            originalImportedName,
+            renamedImport,
+            from,
+          };
+        })
+        .filter(Boolean);
+
+      extractConstantsCommon(shortSpecifiers, next => {
+        for (const n of next) {
+          path.parentPath.insertAt(0, n);
+        }
+        path.prune();
+      });
+
+      this.traverse(path);
+    },
+  });
+}
+
+function createGenericImportRenamingStrategy(original, next) {
+  return createVisitor({
+    visitProgram(path) {
+      this.traverse(path);
+    },
+    visitImportSpecifier(path) {
+      this.traverse(path);
+    },
+    visitImportDeclaration(path) {
+      const importedFrom = path.node.source.value;
+      if (importedFrom !== original) {
+        return false;
+      }
+
+      const shortSpecifiers = path.node.specifiers.map(specifier => {
+        const originalImportedName = specifier.imported.name;
+        const renamedImport = specifier.local.name;
+        const from = importedFrom;
+
+        return {
+          originalImportedName,
+          renamedImport,
+          from,
+        };
+      });
+
+      const specifiers = shortSpecifiers.map(specifier => {
+        return b.importSpecifier(b.identifier(specifier.originalImportedName), b.identifier(specifier.renamedImport));
+      });
+
+      const importDeclaration = b.importDeclaration(specifiers, b.literal(next));
+
+      path.replace(importDeclaration);
+
+      this.traverse(path);
+    },
+  });
+}
+
+function renameUtilityImportStrategy() {
+  return createGenericImportRenamingStrategy('~util/images.utility', '~app-toolkit/helpers/presentation/image.present');
+}
+
+function renamePositionFetcherImportStrategy() {
+  return createGenericImportRenamingStrategy(
+    '~position/position-fetcher.utils',
+    '~app-toolkit/helpers/presentation/display-item.present',
+  );
+}
+
+function renameNetworkImportStrategy() {
+  return createGenericImportRenamingStrategy('@zapper-fi/types/networks', '~types/network.interface');
+}
+
+function appToolkitStrategy() {
+  const injectableClasses = {};
+
+  return createVisitor({
+    visitProgram(path) {
+      this.traverse(path);
+    },
+    visitClassDeclaration(path) {
+      this.traverse(path);
+    },
+    visitClassMethod(path) {
+      if (path.node.kind === 'constructor') {
+        path.node.params.forEach(param => {
+          let injectable = '';
+          param.decorators.forEach(decorator => {
+            if (decorator.expression.callee.name === 'Inject') {
+              injectable = decorator.expression.arguments[0].name;
+            }
+          });
+
+          if (injectable) {
+            const thisInvocation = param.parameter.name;
+            injectableClasses[thisInvocation] = injectable;
+          }
+        });
+        return false;
+      }
+
+      recast.visit(path.node, {
+        visitMemberExpression(path) {
+          this.traverse(path);
+        },
+
+        visitCallExpression(path) {
+          const methodName = path.node.callee.property?.name;
+
+          if (!methodName) {
+            return false;
+          }
+
+          function createThisCallExpression({ stringPath = '', method = methodName, args = path.node.arguments }) {
+            let memberExpression = b.thisExpression();
+            for (const content of stringPath.split('.')) {
+              memberExpression = b.memberExpression(memberExpression, b.identifier(content));
+            }
+
+            return b.callExpression(b.memberExpression(memberExpression, b.identifier(method)), args);
+          }
+
+          let replacement = null;
+
+          recast.visit(path.node, {
+            visitThisExpression(path) {
+              const thisInvocation = path.parentPath.node.property.name;
+              const itIsThisClass = className => injectableClasses[thisInvocation] === className;
+
+              if (itIsThisClass('TokenBalanceHelper') && methodName === 'getVaultBalances') {
+                replacement = createThisCallExpression({ stringPath: 'appToolkit.helpers.tokenBalanceHelper' });
+              }
+
+              if (itIsThisClass('MasterChefContractPositionHelper')) {
+                replacement = createThisCallExpression({
+                  stringPath: 'appToolkit.helpers.masterChefContractPositionHelper',
+                });
+              }
+
+              if (itIsThisClass('MasterChefRewarderClaimableTokenStrategy')) {
+                replacement = createThisCallExpression({
+                  stringPath: 'appToolkit.helpers.masterChefV2ClaimableTokenStrategy',
+                });
+              }
+
+              if (itIsThisClass('MasterChefContractPositionBalanceHelper')) {
+                replacement = createThisCallExpression({
+                  stringPath: 'appToolkit.helpers.masterChefContractPositionBalanceHelper',
+                });
+              }
+
+              if (itIsThisClass('MasterChefDefaultStakedBalanceStrategy')) {
+                replacement = createThisCallExpression({
+                  stringPath: 'appToolkit.helpers.masterChefDefaultStakedBalanceStrategy',
+                });
+              }
+              if (itIsThisClass('MasterChefContractPositionHelper')) {
+                replacement = createThisCallExpression({
+                  stringPath: 'appToolkit.helpers.masterChefContractPositionHelper',
+                });
+              }
+
+              if (itIsThisClass('PRICES_SERVICE')) {
+                replacement = createThisCallExpression({
+                  stringPath: 'appToolkit',
+                  method: 'getBaseTokenPrices',
+                  args: [b.identifier('network')],
+                });
+              }
+
+              if (itIsThisClass('MulticallService')) {
+                replacement = createThisCallExpression({
+                  stringPath: 'appToolkit',
+                  method: 'getMulticall',
+                  args: [b.identifier('network')],
+                });
+              }
+
+              return false;
+            },
+          });
+
+          // Rename the method
+          if (replacement) {
+            path.replace(replacement);
+          }
+
+          this.traverse(path);
+        },
+      });
+      this.traverse(path);
+    },
+  });
+}
+
 //////////////////////////
 // Actual script execution
 //////////////////////////
@@ -277,7 +513,8 @@ if (!files) {
 
 for (const file of files) {
   const contents = fs.readFileSync(file, 'utf-8');
-  const strategy = new CodeModder(contents);
+
+  const strategy = new CodeMod(contents);
 
   // Definition file strategies
   if (file.endsWith('.definition.ts')) {
@@ -291,7 +528,6 @@ for (const file of files) {
   if (file.endsWith('.module.ts')) {
     strategy.addModifier(appendAbstractDynamicApp);
     strategy.addModifier(removeLegacyModulesFromModuleDefinition);
-    strategy.addModifier(warnAboutExternallyConfiguredAppModules);
   }
 
   if (
@@ -299,6 +535,7 @@ for (const file of files) {
     file.endsWith('.token-fetcher.ts') ||
     file.endsWith('.contract-position-fetcher.ts')
   ) {
+    strategy.addAstVisitor(appToolkitStrategy);
     strategy.addModifier(injectAppToolkit);
     strategy.addModifier(removeMasterChefImports);
     strategy.addModifier(replaceRegistration);
@@ -306,10 +543,11 @@ for (const file of files) {
 
   // Globally applicable strategies
   strategy.addModifier(replaceAppsV3Import);
-  strategy.addModifier(replaceNetworkImport);
-  strategy.addModifier(replaceImageUtilityImport);
-  strategy.addModifier(replacePositionFetcherUtilityImport);
-  strategy.addModifier(replaceZeroAddressImport);
+
+  strategy.addAstVisitor(renameNetworkImportStrategy);
+  strategy.addAstVisitor(renameUtilityImportStrategy);
+  strategy.addAstVisitor(extractConstantsCommonStrategy);
+  strategy.addAstVisitor(renamePositionFetcherImportStrategy);
 
   fs.writeFileSync(file, strategy.exec(), 'utf-8');
 }

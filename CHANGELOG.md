@@ -4,6 +4,41 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.10.0](https://github.com/Zapper-fi/studio/compare/v0.9.1...v0.10.0) (2022-04-29)
+
+
+### Features
+
+* Dynamically infer app dependencies at boot, dynamically use externallyConfigured ([#302](https://github.com/Zapper-fi/studio/issues/302)) ([9e9e203](https://github.com/Zapper-fi/studio/commit/9e9e203a9bf50ea92d4d35b6b981b3a6e0cbd3cf))
+
+### [0.9.1](https://github.com/Zapper-fi/studio/compare/v0.9.0...v0.9.1) (2022-04-29)
+
+
+### Bug Fixes
+
+* AirSwap sAST V3 balances ([#313](https://github.com/Zapper-fi/studio/issues/313)) ([e5ef04b](https://github.com/Zapper-fi/studio/commit/e5ef04b210ffe8bba4bd2c9ed5915b14650a2bc6))
+
+## [0.9.0](https://github.com/Zapper-fi/studio/compare/v0.8.1...v0.9.0) (2022-04-29)
+
+
+### Features
+
+* Airswap integration for sAst v3 ([#303](https://github.com/Zapper-fi/studio/issues/303)) ([a5f7c26](https://github.com/Zapper-fi/studio/commit/a5f7c265393890a52e6f5385540475bc9868e4f2))
+* **pancakeswap:** Port pancakeswap into Studio ([#305](https://github.com/Zapper-fi/studio/issues/305)) ([6d0019b](https://github.com/Zapper-fi/studio/commit/6d0019b9d3a7ed7850d29b4371b1526c8c3df3c7))
+
+
+### Bug Fixes
+
+* Fix undefined positions when cache is not primed ([#312](https://github.com/Zapper-fi/studio/issues/312)) ([7f82b34](https://github.com/Zapper-fi/studio/commit/7f82b34e807591e8cc4ae6f5b1c076f097c8bf89))
+* Small fixes to Airswap ([#311](https://github.com/Zapper-fi/studio/issues/311)) ([8003105](https://github.com/Zapper-fi/studio/commit/800310566cdf0fd21934f852a208cdb2ea9b73e7))
+
+### [0.8.1](https://github.com/Zapper-fi/studio/compare/v0.8.0...v0.8.1) (2022-04-27)
+
+
+### Bug Fixes
+
+* Rename wBAN to Banano ([#299](https://github.com/Zapper-fi/studio/issues/299)) ([6b1e265](https://github.com/Zapper-fi/studio/commit/6b1e265dba2fcb83968c22f25755815af556459d))
+
 ## [0.8.0](https://github.com/Zapper-fi/studio/compare/v0.7.3...v0.8.0) (2022-04-27)
 
 

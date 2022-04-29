@@ -1,5 +1,4 @@
-import { Module } from '@nestjs/common';
-
+import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { AvalanchePoolTogetherV4TicketTokenFetcher } from './avalanche/pool-together.v4-ticket.token-fetcher';
@@ -20,14 +19,15 @@ import { PoolTogetherV3PrizePoolTokenHelper } from './helpers/pool-together-v3.p
 import { PolygonPoolTogetherV4TicketTokenFetcher } from './polygon/pool-together.v4-ticket.token-fetcher';
 import { PolygonPoolTogetherBalanceFetcher } from './polygon/pool-together.balance-fetcher';
 import { PolygonPoolTogetherV3TicketTokenFetcher } from './polygon/pool-together.v3-ticket.token-fetcher';
-import { PoolTogetherAppDefinition } from './pool-together.definition';
 import { PoolTogetherApiPrizePoolRegistry } from './helpers/pool-together.api.prize-pool-registry';
 import { PolygonPoolTogetherTvlFetcher } from './polygon/pool-together.tvl-fetcher';
 import { EthereumPoolTogetherTvlFetcher } from './ethereum/pool-together.tvl-fetcher';
 import { CeloPoolTogetherTvlFetcher } from './celo/pool-together.tvl-fetcher';
 import { AvalanchePoolTogetherTvlFetcher } from './avalanche/pool-together.tvl-fetcher';
+import POOL_TOGETHER_DEFINITION, { PoolTogetherAppDefinition } from './pool-together.definition';
 
-@Module({
+@Register.AppModule({
+  appId: POOL_TOGETHER_DEFINITION.id,
   providers: [
     PoolTogetherAppDefinition,
     PoolTogetherApiPrizePoolRegistry,
