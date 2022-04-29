@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 
-import { AbstractDynamicApp } from '~app/app.dynamic-module';
+import { AbstractApp } from '~app/app.dynamic-module';
 
 import { AlphaV1AppDefinition } from './alpha-v1.definition';
 import { AlphaV1ContractFactory } from './contracts';
@@ -15,4 +15,4 @@ import { EthereumAlphaV1LendingTokenFetcher } from './ethereum/alpha-v1.lending.
     EthereumAlphaV1LendingTokenFetcher,
   ],
 })
-export class AlphaV1AppModule extends AbstractDynamicApp<AlphaV1AppModule>() {}
+export class AlphaV1AppModule extends AbstractApp() {}
