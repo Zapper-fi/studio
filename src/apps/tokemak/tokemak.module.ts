@@ -1,6 +1,5 @@
-import { Module } from '@nestjs/common';
-
-import { AbstractApp, ExternalAppImport } from '~app/app.dynamic-module';
+import { Register } from '~app-toolkit/decorators';
+import { AbstractApp } from '~app/app.dynamic-module';
 import { SynthetixAppModule } from '~apps/synthetix';
 
 import { TokemakContractFactory } from './contracts';
@@ -8,10 +7,11 @@ import { EthereumTokemakBalanceFetcher } from './ethereum/tokemak.balance-fetche
 import { EthereumTokemakFarmContractPositionFetcher } from './ethereum/tokemak.farm.contract-position-fetcher';
 import { EthereumTokemakReactorTokenFetcher } from './ethereum/tokemak.reactor.token-fetcher';
 import { EthereumTokemakTvlFetcher } from './ethereum/tokemak.tvl-fetcher';
-import { TokemakAppDefinition } from './tokemak.definition';
+import { TokemakAppDefinition, TOKEMAK_DEFINITION } from './tokemak.definition';
 
-@Module({
-  imports: ExternalAppImport(SynthetixAppModule),
+@Register.AppModule({
+  appId: TOKEMAK_DEFINITION.id,
+  imports: [SynthetixAppModule],
   providers: [
     TokemakAppDefinition,
     TokemakContractFactory,

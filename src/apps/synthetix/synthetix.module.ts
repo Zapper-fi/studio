@@ -1,5 +1,4 @@
-import { Module } from '@nestjs/common';
-
+import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { SynthetixContractFactory } from './contracts';
@@ -19,9 +18,10 @@ import { OptimismSynthetixBalanceFetcher } from './optimism/synthetix.balance-fe
 import { OptimismSynthetixHoldersCacheManager } from './optimism/synthetix.holders.cache-manager';
 import { OptimismSynthetixSynthTokenFetcher } from './optimism/synthetix.synth.token-fetcher';
 import { OptimismSynthetixTvlFetcher } from './optimism/synthetix.tvl-fetcher';
-import { SynthetixAppDefinition } from './synthetix.definition';
+import { SynthetixAppDefinition, SYNTHETIX_DEFINITION } from './synthetix.definition';
 
-@Module({
+@Register.AppModule({
+  appId: SYNTHETIX_DEFINITION.id,
   providers: [
     SynthetixAppDefinition,
     SynthetixContractFactory,

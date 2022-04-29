@@ -1,5 +1,4 @@
-import { Module } from '@nestjs/common';
-
+import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { AvalanchePoolTogetherV4VaultTokenFetcher } from './avalanche/pool-together-v4.vault.token-fetcher';
@@ -20,9 +19,10 @@ import { PoolTogetherPrizeTicketTokenHelper } from './helpers/pool-together.priz
 import { PolygonPoolTogetherV4VaultTokenFetcher } from './polygon/pool-together-v4.vault.token-fetcher';
 import { PolygonPoolTogetherBalanceFetcher } from './polygon/pool-together.balance-fetcher';
 import { PolygonPoolTogetherPrizeTicketTokenFetcher } from './polygon/pool-together.prize-ticket.token-fetcher';
-import { PoolTogetherAppDefinition } from './pool-together.definition';
+import POOL_TOGETHER_DEFINITION, { PoolTogetherAppDefinition } from './pool-together.definition';
 
-@Module({
+@Register.AppModule({
+  appId: POOL_TOGETHER_DEFINITION.id,
   providers: [
     PoolTogetherAppDefinition,
     PoolTogetherContractFactory,
