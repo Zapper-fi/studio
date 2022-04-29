@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import Axios from 'axios';
+
 import { Network, NETWORK_IDS } from '~types/network.interface';
 
 export type V4PrizePool = {

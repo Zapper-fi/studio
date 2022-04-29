@@ -8,8 +8,8 @@ import { ContractType } from '~position/contract.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { AppGroupsDefinition } from '~position/position.service';
 import { Network } from '~types/network.interface';
-import { PoolTogetherContractFactory } from '../contracts';
 
+import { PoolTogetherContractFactory } from '../contracts';
 import { POOL_TOGETHER_DEFINITION } from '../pool-together.definition';
 
 import { V3PrizePool } from './pool-together.api.prize-pool-registry';

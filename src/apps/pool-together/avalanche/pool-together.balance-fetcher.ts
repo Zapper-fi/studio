@@ -6,8 +6,8 @@ import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation
 import { BalanceFetcher } from '~balance/balance-fetcher.interface';
 import { Network } from '~types/network.interface';
 
-import { PoolTogetherAirdropTokenBalancesHelper } from '../helpers/pool-together.airdrop.balance-helper';
 import { PoolTogetherClaimableTokenBalancesHelper } from '../helpers/pool-together-v3.claimable.balance-helper';
+import { PoolTogetherAirdropTokenBalancesHelper } from '../helpers/pool-together.airdrop.balance-helper';
 import { POOL_TOGETHER_DEFINITION } from '../pool-together.definition';
 
 @Register.BalanceFetcher(POOL_TOGETHER_DEFINITION.id, Network.AVALANCHE_MAINNET)
