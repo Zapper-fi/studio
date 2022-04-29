@@ -9,8 +9,8 @@ import { CacheOptions, CACHE_KEY, CACHE_TTL } from './cache.decorator';
 export class CacheService implements OnModuleInit {
   private logger = new Logger(CacheService.name);
   private cacheManager = Cache({
-    basePath: './.cache', // Optional. Path where cache files are stored (default).
-    ns: '@Cache', // Optional. A grouping namespace for items.
+    basePath: './.cache',
+    ns: '@Cache',
   });
 
   constructor(

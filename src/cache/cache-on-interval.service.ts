@@ -14,8 +14,8 @@ export class CacheOnIntervalService implements OnModuleInit, OnModuleDestroy {
   private readonly registeredCacheKeys: string[] = [];
   private logger = new Logger(CacheOnIntervalService.name);
   private cacheManager = Cache({
-    basePath: './.cache', // Optional. Path where cache files are stored (default).
-    ns: '@CacheOnInterval', // Optional. A grouping namespace for items.
+    basePath: './.cache',
+    ns: '@CacheOnInterval',
   });
 
   constructor(
@@ -24,7 +24,9 @@ export class CacheOnIntervalService implements OnModuleInit, OnModuleDestroy {
     @Inject(Reflector) private readonly reflector: Reflector,
   ) {}
 
-  onModuleInit() {
+  async onModuleInit() {
+    await this.cacheManager.load();
+
     const instanceWrappers = this.discoveryService.getProviders();
     instanceWrappers
       .filter(wrapper => wrapper.isDependencyTreeStatic() && !!wrapper.instance)
