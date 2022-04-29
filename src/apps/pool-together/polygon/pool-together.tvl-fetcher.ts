@@ -1,14 +1,13 @@
 import { Inject } from '@nestjs/common';
-import { BigNumber } from 'ethers';
 import { sum } from 'lodash';
 
 import { Register } from '~app-toolkit/decorators';
 import { APP_TOOLKIT, IAppToolkit } from '~lib';
 import { TvlFetcher } from '~stats/tvl/tvl-fetcher.interface';
 import { Network } from '~types/network.interface';
+
 import { PoolTogetherContractFactory } from '../contracts';
 import { PoolTogetherApiPrizePoolRegistry } from '../helpers/pool-together.api.prize-pool-registry';
-
 import { POOL_TOGETHER_DEFINITION } from '../pool-together.definition';
 
 const appId = POOL_TOGETHER_DEFINITION.id;
