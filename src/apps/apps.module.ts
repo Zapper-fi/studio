@@ -18,14 +18,20 @@ export class AppsModule {
     return module && !!(module as ForwardReference).forwardRef;
   }
 
-  static isExternallyConfigurable(module: ModuleImport): module is IConfigurableDynamicRootModule<any, any> {
+  static isAppModule(module: ModuleImport) {
+    return module && !!Reflect.getMetadata(APP_ID, module);
+  }
+
+  static isDynamic(module: ModuleImport): module is IConfigurableDynamicRootModule<any, any> {
     return module && !!(module as IConfigurableDynamicRootModule<any, any>).externallyConfigured;
   }
 
   static async externalizeAppModuleDependencies(modules: IConfigurableDynamicRootModule<any, any>[]) {
     modules.forEach(module => {
-      const imports = Reflect.getMetadata(MODULE_METADATA.IMPORTS, module) ?? [];
-      const updatedImports = imports.map(v => (this.isExternallyConfigurable(v) ? v.externallyConfigured(v, 0) : v));
+      // Configure dependents of dynamic app modules to resolve the pre-configured instance of that module
+      const imports: ModuleImport[] = Reflect.getMetadata(MODULE_METADATA.IMPORTS, module) ?? [];
+      const externalize = (v: IConfigurableDynamicRootModule<any, any>) => v.externallyConfigured(v, 0);
+      const updatedImports = imports.map(v => (this.isDynamic(v) && this.isAppModule(v) ? externalize(v) : v));
       Reflect.defineMetadata(MODULE_METADATA.IMPORTS, updatedImports, module);
     });
 
@@ -55,9 +61,7 @@ export class AppsModule {
 
     const visit = async (module: ModuleImport) => {
       let moduleClass = module instanceof Promise ? await module : module;
-      if (AppsModule.isForwardReference(moduleClass)) {
-        moduleClass = moduleClass.forwardRef();
-      }
+      if (this.isForwardReference(moduleClass)) moduleClass = moduleClass.forwardRef();
 
       // If we have already visited this module, ignore it
       if (memory.has(moduleClass)) return;
@@ -72,7 +76,7 @@ export class AppsModule {
 
       // And recursively visit the dependencies
       const moduleDependencies: ModuleImport[] = Reflect.getMetadata(MODULE_METADATA.IMPORTS, module) ?? [];
-      moduleDependencies.forEach(async v => visit(v));
+      await Promise.all(moduleDependencies.map(v => visit(v)));
     };
 
     await visit(module);
@@ -93,9 +97,11 @@ export class AppsModule {
       return this.externalizeAppModuleDependencies(appModules);
     }
 
-    // Resolve modules, and dependency modules
+    // Resolve enabled modules
     const validEnabledAppIds = intersection(enabledAppIds, allAppIds);
     const enabledApps = await this.resolveModulesByAppIds(validEnabledAppIds);
+
+    // Resolve enabled modules and their dependencies
     const enabledDependencies = await Promise.all(enabledApps.map(v => this.resolveDependencies(v)));
     const enabledAppsAndDependencies = await this.resolveModulesByAppIds(uniq(enabledDependencies.flat()));
 
