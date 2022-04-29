@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+### [0.9.1](https://github.com/Zapper-fi/studio/compare/v0.9.0...v0.9.1) (2022-04-29)
+
+
+### Bug Fixes
+
+* AirSwap sAST V3 balances ([#313](https://github.com/Zapper-fi/studio/issues/313)) ([e5ef04b](https://github.com/Zapper-fi/studio/commit/e5ef04b210ffe8bba4bd2c9ed5915b14650a2bc6))
+
 ## [0.9.0](https://github.com/Zapper-fi/studio/compare/v0.8.1...v0.9.0) (2022-04-29)
 
 
