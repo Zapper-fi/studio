@@ -1,6 +1,6 @@
 {
   "name": "@zapper-fi/studio",
-  "version": "0.3.2",
+  "version": "0.10.0",
   "description": "Community build apps for Zapper.fi",
   "license": "MIT",
   "main": "dist/lib/index.js",
@@ -16,7 +16,7 @@
     "prepublish:npm": "pnpm build",
     "publish:npm": "pnpm publish --access public",
     "start": "nest start",
-    "studio": "./studio.sh",
+    "studio": "node ./scripts/run-cli.js",
     "test": "jest --runInBand --forceExit",
     "test:integration": "jest --runInBand --forceExit --config jest.integration.config.js",
     "test:watch": "jest --watch"
@@ -27,6 +27,7 @@
     "bitcoin-address-validation": "^2.2.1",
     "esbuild": "^0.14.27",
     "esbuild-runner": "^2.2.1",
+    "file-system-cache": "^1.0.5",
     "fs-extra": "^10.0.1",
     "inquirer": "^8.2.2",
     "lodash": "^4.17.21",
@@ -76,6 +77,7 @@
     "nodemon": "^2.0.15",
     "prettier": "^2.6.0",
     "qs": "^6.10.3",
+    "recast": "^0.20.5",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.5.5",
     "source-map-support": "^0.5.20",

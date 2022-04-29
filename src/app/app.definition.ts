@@ -3,7 +3,7 @@ import { uniq, keys, mapValues, zipObject } from 'lodash';
 
 import { Network } from '~types/network.interface';
 
-import { AddressFormat, AppDefinitionObject, AppGroup, ProtocolAction, ProtocolTag } from './app.interface';
+import { AddressFormat, AppDefinitionObject, AppGroup, AppLinks, ProtocolAction, ProtocolTag } from './app.interface';
 
 function toNetworkWithActionsArray(
   supportedNetworks: Record<string, ProtocolAction[]>,
@@ -35,6 +35,7 @@ export class AppDefinition {
     this.tags = definitionRaw.tags;
     this.name = definitionRaw.name;
     this.url = definitionRaw.url;
+    this.links = definitionRaw.links;
     this.description = definitionRaw.description ?? '';
     this.groups = definitionRaw.groups;
     this.supportedNetworks = toNetworkWithActionsArray(definitionRaw.supportedNetworks);
@@ -58,6 +59,7 @@ export class AppDefinition {
   readonly description?: string;
   readonly groups: Record<string, AppGroup>;
   readonly url: string;
+  readonly links: AppLinks;
   readonly deprecated?: boolean;
   readonly tags: ProtocolTag[];
   readonly supportedNetworks: AppSupportedNetwork[];

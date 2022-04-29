@@ -1,6 +1,5 @@
-import { Module } from '@nestjs/common';
-
-import { AbstractDynamicApp } from '~app/app.dynamic-module';
+import { Register } from '~app-toolkit/decorators';
+import { AbstractApp } from '~app/app.dynamic-module';
 
 import { SynthetixContractFactory } from './contracts';
 import { EthereumSynthetixBalanceFetcher } from './ethereum/synthetix.balance-fetcher';
@@ -19,9 +18,10 @@ import { OptimismSynthetixBalanceFetcher } from './optimism/synthetix.balance-fe
 import { OptimismSynthetixHoldersCacheManager } from './optimism/synthetix.holders.cache-manager';
 import { OptimismSynthetixSynthTokenFetcher } from './optimism/synthetix.synth.token-fetcher';
 import { OptimismSynthetixTvlFetcher } from './optimism/synthetix.tvl-fetcher';
-import { SynthetixAppDefinition } from './synthetix.definition';
+import { SynthetixAppDefinition, SYNTHETIX_DEFINITION } from './synthetix.definition';
 
-@Module({
+@Register.AppModule({
+  appId: SYNTHETIX_DEFINITION.id,
   providers: [
     SynthetixAppDefinition,
     SynthetixContractFactory,
@@ -52,4 +52,4 @@ import { SynthetixAppDefinition } from './synthetix.definition';
     SynthetixSingleStakingFarmContractPositionBalanceHelper,
   ],
 })
-export class SynthetixAppModule extends AbstractDynamicApp<SynthetixAppModule>() {}
+export class SynthetixAppModule extends AbstractApp() {}

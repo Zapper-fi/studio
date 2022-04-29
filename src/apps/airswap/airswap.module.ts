@@ -1,18 +1,20 @@
-import { Module } from '@nestjs/common';
+import { Register } from '~app-toolkit/decorators';
+import { AbstractApp } from '~app/app.dynamic-module';
 
-import { AbstractDynamicApp } from '~app/app.dynamic-module';
-
-import { AirswapAppDefinition } from './airswap.definition';
+import AIRSWAP_DEFINITION, { AirswapAppDefinition } from './airswap.definition';
 import { AirswapContractFactory } from './contracts';
 import { EthereumAirswapBalanceFetcher } from './ethereum/airswap.balance-fetcher';
-import { EthereumAirswapSAstTokenFetcher } from './ethereum/airswap.s-ast.token-fetcher';
+import { EthereumAirswapSAstV2TokenFetcher } from './ethereum/airswap.s-ast-v2.token-fetcher';
+import { EthereumAirswapSAstV3TokenFetcher } from './ethereum/airswap.s-ast-v3.token-fetcher';
 
-@Module({
+@Register.AppModule({
+  appId: AIRSWAP_DEFINITION.id,
   providers: [
     AirswapAppDefinition,
     AirswapContractFactory,
     EthereumAirswapBalanceFetcher,
-    EthereumAirswapSAstTokenFetcher,
+    EthereumAirswapSAstV2TokenFetcher,
+    EthereumAirswapSAstV3TokenFetcher,
   ],
 })
-export class AirswapAppModule extends AbstractDynamicApp<AirswapAppModule>() {}
+export class AirswapAppModule extends AbstractApp() {}

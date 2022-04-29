@@ -18,8 +18,8 @@ const DYNAMIC_PROVIDERS = [
   },
 ];
 
-export const AbstractDynamicApp = <T>() =>
-  createConfigurableDynamicRootModule<T, AppModuleOptions>(APP_OPTIONS, {
+export const AbstractApp = () =>
+  createConfigurableDynamicRootModule<Type, AppModuleOptions>(APP_OPTIONS, {
     providers: DYNAMIC_PROVIDERS,
   });
 

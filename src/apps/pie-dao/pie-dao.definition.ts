@@ -1,9 +1,9 @@
 import { Register } from '~app-toolkit/decorators';
 import { AppDefinition } from '~app/app.definition';
-import { GroupType, ProtocolAction, ProtocolTag } from '~app/app.interface';
+import { AppDefinitionObject, GroupType, ProtocolAction, ProtocolTag } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
-export const PIE_DAO_DEFINITION = {
+export const PIE_DAO_DEFINITION: AppDefinitionObject = {
   id: 'pie-dao',
   name: 'PieDAO',
   description: `PieDAO is the asset allocation DAO for decentralized market-weighted portfolio allocations.`,
@@ -14,6 +14,13 @@ export const PIE_DAO_DEFINITION = {
     voting: { id: 'voting', type: GroupType.POSITION },
   },
   url: 'https://www.piedao.org/',
+  links: {
+    github: 'https://github.com/pie-dao',
+    twitter: 'https://twitter.com/PieDAO_DeFi',
+    discord: 'https://discord.com/invite/eJTYNUF',
+    telegram: 'https://t.me/piedao',
+    medium: 'https://medium.com/piedao',
+  },
   tags: [ProtocolTag.LIQUIDITY_POOL],
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [ProtocolAction.VIEW],

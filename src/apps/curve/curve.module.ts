@@ -1,6 +1,5 @@
-import { Module } from '@nestjs/common';
-
-import { AbstractDynamicApp } from '~app/app.dynamic-module';
+import { Register } from '~app-toolkit/decorators';
+import { AbstractApp } from '~app/app.dynamic-module';
 
 import { ArbitrumCurveBalanceFetcher } from './arbitrum/curve.balance-fetcher';
 import { ArbitrumCurveFarmContractPositionFetcher } from './arbitrum/curve.farm.contract-position-fetcher';
@@ -9,7 +8,7 @@ import { AvalancheCurveBalanceFetcher } from './avalanche/curve.balance-fetcher'
 import { AvalancheCurveFarmContractPositionFetcher } from './avalanche/curve.farm.contract-position-fetcher';
 import { AvalancheCurvePoolTokenFetcher } from './avalanche/curve.pool.token-fetcher';
 import { CurveContractFactory } from './contracts';
-import { CurveAppDefinition } from './curve.definition';
+import { CurveAppDefinition, CURVE_DEFINITION } from './curve.definition';
 import { EthereumCurveBalanceFetcher } from './ethereum/curve.balance-fetcher';
 import { EthereumCurveFarmContractPositionFetcher } from './ethereum/curve.farm.contract-position-fetcher';
 import { EthereumCurvePoolTokenFetcher } from './ethereum/curve.pool.token-fetcher';
@@ -53,7 +52,8 @@ import { PolygonCurveBalanceFetcher } from './polygon/curve.balance-fetcher';
 import { PolygonCurveFarmContractPositionFetcher } from './polygon/curve.farm.contract-position-fetcher';
 import { PolygonCurvePoolTokenFetcher } from './polygon/curve.pool.token-fetcher';
 
-@Module({
+@Register.AppModule({
+  appId: CURVE_DEFINITION.id,
   providers: [
     CurveAppDefinition,
     CurveContractFactory,
@@ -148,4 +148,4 @@ import { PolygonCurvePoolTokenFetcher } from './polygon/curve.pool.token-fetcher
     CurveVestingEscrowContractPositionBalanceHelper,
   ],
 })
-export class CurveAppModule extends AbstractDynamicApp<CurveAppModule>() {}
+export class CurveAppModule extends AbstractApp() {}

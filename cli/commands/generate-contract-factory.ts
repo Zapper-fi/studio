@@ -31,6 +31,25 @@ const getAbis = async (location: string) => {
   return abis;
 };
 
+const normalizeAbis = async (location: string) => {
+  const abisDir = path.join(location, '/contracts/abis');
+  await mkdir(abisDir, { recursive: true });
+
+  const abis = (await readdir(abisDir, { withFileTypes: true }))
+    .filter(f => f.isFile())
+    .filter(f => path.extname(f.name) === '.json')
+    .map(f => `${path.basename(f.name, '.json')}.json`);
+
+  for (const abi of abis) {
+    const originalPath = path.join(abisDir, abi);
+    const nextFilename = strings.kebabCase(abi.replace('.json', ''));
+    const nextPath = path.join(abisDir, `${nextFilename}.json`);
+    fs.renameSync(originalPath, nextPath);
+  }
+
+  return abis;
+};
+
 const generateContract = async (location: string) => {
   const providerDir = path.join(location, `/contracts/ethers`);
   const providerDirExists = await exists(providerDir);
@@ -154,6 +173,9 @@ export default class NewCommand extends Command {
     const location = !flags.global ? appPath(appId) : path.resolve(__dirname, '../src/contract');
 
     try {
+      console.log(chalk.green(`Contracts abis have been normalized at ${location}`));
+      await normalizeAbis(location);
+
       await generateContract(location);
       console.log(chalk.green(`Contract generated at ${location}`));
 

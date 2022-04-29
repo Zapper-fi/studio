@@ -1,13 +1,13 @@
-import { Module } from '@nestjs/common';
-
-import { AbstractDynamicApp } from '~app/app.dynamic-module';
+import { Register } from '~app-toolkit/decorators';
+import { AbstractApp } from '~app/app.dynamic-module';
 
 import { EnzymeFinanceContractFactory } from './contracts';
-import { EnzymeFinanceAppDefinition } from './enzyme-finance.definition';
+import ENZYME_FINANCE_DEFINITION, { EnzymeFinanceAppDefinition } from './enzyme-finance.definition';
 import { EthereumEnzymeFinanceBalanceFetcher } from './ethereum/enzyme-finance.balance-fetcher';
 import { EthereumEnzymeFinanceVaultTokenFetcher } from './ethereum/enzyme-finance.vault.token-fetcher';
 
-@Module({
+@Register.AppModule({
+  appId: ENZYME_FINANCE_DEFINITION.id,
   providers: [
     EnzymeFinanceAppDefinition,
     EnzymeFinanceContractFactory,
@@ -15,4 +15,4 @@ import { EthereumEnzymeFinanceVaultTokenFetcher } from './ethereum/enzyme-financ
     EthereumEnzymeFinanceVaultTokenFetcher,
   ],
 })
-export class EnzymeFinanceAppModule extends AbstractDynamicApp<EnzymeFinanceAppModule>() {}
+export class EnzymeFinanceAppModule extends AbstractApp() {}

@@ -1,6 +1,5 @@
-import { Module } from '@nestjs/common';
-
-import { AbstractDynamicApp } from '~app/app.dynamic-module';
+import { Register } from '~app-toolkit/decorators';
+import { AbstractApp } from '~app/app.dynamic-module';
 
 import { ArbitrumOlympusBalanceFetcher } from './arbitrum/olympus.balance-fetcher';
 import { ArbitrumOlympusGOhmTokenFetcher } from './arbitrum/olympus.g-ohm.token-fetcher';
@@ -21,11 +20,12 @@ import { OlympusBondV1ContractPositionBalanceHelper } from './helpers/olympus.bo
 import { OlympusBondV2ContractPositionBalanceHelper } from './helpers/olympus.bond-v2.contract-position-balance-helper';
 import { OlympusBondContractPositionHelper } from './helpers/olympus.bond.contract-position-helper';
 import { OlympusBridgeTokenHelper } from './helpers/olympus.bridge-token-helper';
-import { OlympusAppDefinition } from './olympus.definition';
+import { OlympusAppDefinition, OLYMPUS_DEFINITION } from './olympus.definition';
 import { PolygonOlympusBalanceFetcher } from './polygon/olympus.balance-fetcher';
 import { PolygonOlympusGOhmTokenFetcher } from './polygon/olympus.g-ohm.token-fetcher';
 
-@Module({
+@Register.AppModule({
+  appId: OLYMPUS_DEFINITION.id,
   providers: [
     OlympusAppDefinition,
     OlympusContractFactory,
@@ -65,4 +65,4 @@ import { PolygonOlympusGOhmTokenFetcher } from './polygon/olympus.g-ohm.token-fe
     OlympusBridgeTokenHelper,
   ],
 })
-export class OlympusAppModule extends AbstractDynamicApp<OlympusAppModule>() {}
+export class OlympusAppModule extends AbstractApp() {}

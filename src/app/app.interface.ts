@@ -46,6 +46,15 @@ export type AppGroup = {
   type: GroupType;
 };
 
+export type AppLinks = {
+  learn?: string;
+  github?: string;
+  twitter?: string;
+  telegram?: string;
+  discord?: string;
+  medium?: string;
+};
+
 export type AppDefinitionObject = {
   id: string;
   name: string;
@@ -55,6 +64,7 @@ export type AppDefinitionObject = {
   supportedNetworks: { [N in Network]?: ProtocolAction[] };
   primaryColor?: string;
   url: string;
+  links: AppLinks;
   compatibleAddressFormat?: { [N in Network]?: AddressFormat };
   token?: {
     address: string;
