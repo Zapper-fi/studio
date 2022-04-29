@@ -2,7 +2,11 @@ name: Zapper Police 👮🏻‍♂️🚨
 
 on:
   pull_request_target:
-    types: [opened, synchronize, edited, reopened]
+    types:
+      - opened
+      - reopened
+      - edited
+      - synchronize
 
 jobs:
   build:
