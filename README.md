@@ -61,6 +61,15 @@ pnpm studio create-app
 pnpm studio codegen-app [app-id]
 ```
 
+## Clearing the cache
+
+Clears the file-system cache that persists app tokens, contract positions and any other app related data.
+Useful when your are doing modification to an app and it keeps on returning stale data.
+
+```bash
+pnpm studio clear-cache
+```
+
 ## Generating a typescript contract from an ABI
 
 ABIs that are contained within the `contracts/abis` folder of your application can be leveraged
