@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+### [0.11.1](https://github.com/Zapper-fi/studio/compare/v0.11.0...v0.11.1) (2022-04-29)
+
+
+### Bug Fixes
+
+* **balancer:** Add index files for Zapper API ([#327](https://github.com/Zapper-fi/studio/issues/327)) ([6fcec84](https://github.com/Zapper-fi/studio/commit/6fcec8450d8301bd983e333cac215436a9ce90ed))
+
 ## [0.11.0](https://github.com/Zapper-fi/studio/compare/v0.10.0...v0.11.0) (2022-04-29)
 
 
