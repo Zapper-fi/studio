@@ -11,7 +11,7 @@ import { Network } from '~types/network.interface';
 
 import { BalancerV2ContractFactory } from '../contracts';
 
-export enum PoolLabelStrategy {
+export enum BalancerV2PoolLabelStrategy {
   TOKEN_SYMBOLS = 'token-symbols',
   POOL_NAME = 'pool-name',
 }
@@ -35,7 +35,7 @@ type GetBalancerV2PoolTokensParams = {
     appId: string;
     network: Network;
   }) => Promise<{ address: string; volume: number }[]>;
-  resolvePoolLabelStrategy?: () => PoolLabelStrategy;
+  resolvePoolLabelStrategy?: () => BalancerV2PoolLabelStrategy;
 };
 
 @Injectable()
@@ -53,7 +53,7 @@ export class BalancerV2PoolTokensHelper {
     vaultAddress,
     minLiquidity = 0,
     resolvePoolTokenAddresses,
-    resolvePoolLabelStrategy = () => PoolLabelStrategy.TOKEN_SYMBOLS,
+    resolvePoolLabelStrategy = () => BalancerV2PoolLabelStrategy.TOKEN_SYMBOLS,
   }: GetBalancerV2PoolTokensParams) {
     const multicall = this.appToolkit.getMulticall(network);
     const prices = await this.appToolkit.getBaseTokenPrices(network);
@@ -109,7 +109,7 @@ export class BalancerV2PoolTokensHelper {
         // Display Props
         const labelStrategy = resolvePoolLabelStrategy();
         const label =
-          labelStrategy === PoolLabelStrategy.POOL_NAME
+          labelStrategy === BalancerV2PoolLabelStrategy.POOL_NAME
             ? await multicall.wrap(poolContract).name()
             : tokens.map(v => v.symbol).join(' / ');
         const secondaryLabel = reservePercentages.map(p => `${Math.round(p * 100)}%`).join(' / ');
