@@ -1,16 +1,8 @@
 name: Zapper Police 👮🏻‍♂️🚨
 
 on:
-  push:
-    paths:
-      - '!**.md'
-      - src/**
-      - package.json
-      - pnpm-lock.yaml
-      - .github/workflows/ci.yml
-    branches-ignore:
-      - main
-      - refs/tags/*
+  pull_request_target:
+    types: [opened, synchronize, edited, reopened]
 
 jobs:
   build:
