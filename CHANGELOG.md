@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.10.0](https://github.com/Zapper-fi/studio/compare/v0.9.1...v0.10.0) (2022-04-29)
+
+
+### Features
+
+* Dynamically infer app dependencies at boot, dynamically use externallyConfigured ([#302](https://github.com/Zapper-fi/studio/issues/302)) ([9e9e203](https://github.com/Zapper-fi/studio/commit/9e9e203a9bf50ea92d4d35b6b981b3a6e0cbd3cf))
+
 ### [0.9.1](https://github.com/Zapper-fi/studio/compare/v0.9.0...v0.9.1) (2022-04-29)
 
 
