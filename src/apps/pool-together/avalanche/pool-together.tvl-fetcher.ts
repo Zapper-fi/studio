@@ -1,5 +1,6 @@
 import { Inject } from '@nestjs/common';
 import { BigNumber } from 'ethers';
+import { sum } from 'lodash';
 
 import { Register } from '~app-toolkit/decorators';
 import { APP_TOOLKIT, IAppToolkit } from '~lib';
@@ -26,29 +27,26 @@ export class AvalanchePoolTogetherTvlFetcher implements TvlFetcher {
     const allPrizePoolAddresses = await this.prizePoolRegistry.getV4PrizePools(network);
 
     const multicall = this.appToolkit.getMulticall(network);
-    const promises: Promise<number | BigNumber>[] = [];
-    allPrizePoolAddresses.forEach(prizePool => {
-      const contract = this.poolTogetherContractFactory.erc20({
-        address: prizePool.ticketAddress,
-        network,
-      });
-      promises.push(multicall.wrap(contract).decimals(), multicall.wrap(contract).totalSupply());
-    });
 
-    const results = await Promise.all(promises);
+    const toSum = await Promise.all(
+      allPrizePoolAddresses.map(async prizePool => {
+        const baseToken = baseTokens.find(baseToken => baseToken.address === prizePool.underlyingTokenAddress);
+        if (!baseToken) return 0;
 
-    let tvl = 0;
-    for (let i = 0; i < allPrizePoolAddresses.length; i++) {
-      const addresses = allPrizePoolAddresses[i];
-      const baseToken = baseTokens.find(baseToken => baseToken.address === addresses.underlyingTokenAddress);
+        const contract = this.poolTogetherContractFactory.erc20({
+          address: prizePool.ticketAddress,
+          network,
+        });
 
-      if (baseToken) {
-        const decimals = results[i * 2] as number;
-        const totalSupply = results[i * 2 + 1] as BigNumber;
-        tvl += (Number(totalSupply) / 10 ** decimals) * baseToken.price;
-      }
-    }
+        const [decimals, totalSupply] = await Promise.all([
+          multicall.wrap(contract).decimals(),
+          multicall.wrap(contract).totalSupply(),
+        ]);
 
-    return tvl;
+        return (Number(totalSupply) / 10 ** decimals) * baseToken.price;
+      }),
+    );
+
+    return sum(toSum);
   }
 }
