@@ -4,7 +4,7 @@ import { IConfigurableDynamicRootModule } from '@golevelup/nestjs-modules';
 import { DynamicModule, ForwardReference, Module, Type } from '@nestjs/common';
 import { MODULE_METADATA } from '@nestjs/common/constants';
 import chalk from 'chalk';
-import { compact, intersection, uniq } from 'lodash';
+import { compact, intersection } from 'lodash';
 
 import { APP_ID } from '~app/app.decorator';
 import { DynamicApps } from '~app/app.dynamic-module';
@@ -55,7 +55,7 @@ export class AppsModule {
     return compact(appsModules);
   }
 
-  static async resolveDependencies(module: ModuleImport) {
+  static async resolveDependencies(appIds: string[]) {
     const memory = new Set<ModuleImport>();
     const dependencies = new Set<string>();
 
@@ -79,7 +79,8 @@ export class AppsModule {
       await Promise.all(moduleDependencies.map(v => visit(v)));
     };
 
-    await visit(module);
+    const appModules = await this.resolveModulesByAppIds(appIds);
+    await Promise.all(appModules.map(v => visit(v)));
     return Array.from(dependencies);
   }
 
@@ -91,21 +92,18 @@ export class AppsModule {
 
     // If we're in prod, or if there is no enabled apps subset configured, enable everything
     const isProd = process.env.NODE_ENV === 'production';
-    const enabledAppIds = compact((process.env.ENABLED_APPS ?? '').split(','));
-    if (isProd || !enabledAppIds.length) {
+    const configuredAppIds = compact((process.env.ENABLED_APPS ?? '').split(','));
+    if (isProd || !configuredAppIds.length) {
       const appModules = await this.resolveModulesByAppIds(allAppIds);
       return this.externalizeAppModuleDependencies(appModules);
     }
 
-    // Resolve enabled modules
-    const validEnabledAppIds = intersection(enabledAppIds, allAppIds);
-    const enabledApps = await this.resolveModulesByAppIds(validEnabledAppIds);
+    // Resolve enabled app modules and their dependencies
+    const enabledAppIds = intersection(configuredAppIds, allAppIds);
+    const enabledAppIdsAndDependencies = await this.resolveDependencies(enabledAppIds);
+    const enabledApps = await this.resolveModulesByAppIds(enabledAppIdsAndDependencies);
 
-    // Resolve enabled modules and their dependencies
-    const enabledAppAndDependencyIds = await Promise.all(enabledApps.map(v => this.resolveDependencies(v)));
-    const enabledAppsAndDependencies = await this.resolveModulesByAppIds(uniq(enabledAppAndDependencyIds.flat()));
-
-    return this.externalizeAppModuleDependencies(enabledAppsAndDependencies);
+    return this.externalizeAppModuleDependencies(enabledApps);
   }
 
   static async resolveAppHelperModules() {
@@ -116,16 +114,15 @@ export class AppsModule {
 
     // If we're in prod, or if there is no enabled app helpers subset configured, enable nothing
     const isProd = process.env.NODE_ENV === 'production';
-    const enabledHelpersAppIds = (process.env.ENABLED_HELPERS ?? '').split(',').filter(Boolean);
-    if (isProd || !enabledHelpersAppIds.length) return [];
+    const configuredHelpersAppIds = (process.env.ENABLED_HELPERS ?? '').split(',').filter(Boolean);
+    if (isProd || !configuredHelpersAppIds.length) return [];
 
     // Resolve modules, and dependency modules
-    const validEnabledAppIds = intersection(enabledHelpersAppIds, allAppIds);
-    const enabledApps = await this.resolveModulesByAppIds(validEnabledAppIds, false);
-    const enabledDependencies = await Promise.all(enabledApps.map(v => this.resolveDependencies(v)));
-    const enabledAppsAndDependencies = await this.resolveModulesByAppIds(uniq(enabledDependencies.flat()));
+    const enabledAppHelperIds = intersection(configuredHelpersAppIds, allAppIds);
+    const enabledAppHelperIdsAndDependencies = await this.resolveDependencies(enabledAppHelperIds);
+    const enabledAppHelpers = await this.resolveModulesByAppIds(enabledAppHelperIdsAndDependencies, false);
 
-    return this.externalizeAppModuleDependencies(enabledAppsAndDependencies);
+    return this.externalizeAppModuleDependencies(enabledAppHelpers);
   }
 
   static async registerAsync(opts: { appToolkitModule: Type }): Promise<DynamicModule> {
