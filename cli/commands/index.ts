@@ -4,6 +4,7 @@ import ClearCache from './clear-cache';
 import CodegenApp from './codegen-app';
 import CreateAppCommand from './create-app';
 import GenerateContractFactory from './generate-contract-factory';
+import SetNetworkProvider from './set-network-provider';
 
 /**
  * Record of invocation string and the associated command.
@@ -15,4 +16,5 @@ export const commands: Record<string, typeof Command> = {
   'create-app': CreateAppCommand,
   'codegen-app': CodegenApp,
   'clear-cache': ClearCache,
+  'set-network-provider': SetNetworkProvider,
 };

@@ -70,6 +70,14 @@ Useful when your are doing modification to an app and it keeps on returning stal
 pnpm studio clear-cache
 ```
 
+## Setting custom network providers
+
+If default network providers are too slow or are failing, you can use customize your setup.
+
+```bash
+pnpm studio set-network-provider
+```
+
 ## Generating a typescript contract from an ABI
 
 ABIs that are contained within the `contracts/abis` folder of your application can be leveraged
