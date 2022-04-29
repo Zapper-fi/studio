@@ -43,7 +43,7 @@ export class BalancerV2ClaimableContractPositionBalanceHelper {
         if (!rewardToken) return null;
 
         const amounts = await this.balancerV2CacheManager.getCachedClaimableAmounts({
-          rewardTokenAddress: config.rewardTokenAddress,
+          rewardTokenAddress: rewardToken.address,
           address,
           network,
         });
@@ -76,6 +76,7 @@ export class BalancerV2ClaimableContractPositionBalanceHelper {
 
         const contractPositionAddress = config.distributorAddress;
         if (!contractPositionAddress) return null;
+
         const unclaimedAmounts = amounts.filter((_, i) => !claimed[i]);
         const balanceRaw = new BigNumber(sum(unclaimedAmounts)).times(10 ** rewardToken.decimals).toFixed(0);
         const tokens = [drillBalance(claimable(rewardToken), balanceRaw)];

@@ -9,7 +9,7 @@ import { Network } from '~types/network.interface';
 import { BALANCER_V2_DEFINITION } from '../balancer-v2.definition';
 
 const appId = BALANCER_V2_DEFINITION.id;
-const network = Network.ARBITRUM_MAINNET;
+const network = Network.POLYGON_MAINNET;
 
 @Register.BalanceFetcher(appId, network)
 export class PolygonBalancerV2BalanceFetcher implements BalanceFetcher {

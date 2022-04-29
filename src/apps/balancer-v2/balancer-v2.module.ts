@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 
-import { AbstractDynamicApp } from '~app/app.dynamic-module';
+import { AbstractApp, ExternalAppImport } from '~app/app.dynamic-module';
+import { CurveAppModule } from '~apps/curve';
 
 import { ArbitrumBalancerV2BalanceFetcher } from './arbitrum/balancer-v2.balance-fetcher';
 import { ArbitrumBalancerV2PoolTokenFetcher } from './arbitrum/balancer-v2.pool.token-fetcher';
@@ -21,6 +22,7 @@ import { PolygonBalancerV2BalanceFetcher } from './polygon/balancer-v2.balance-f
 import { PolygonBalancerV2PoolTokenFetcher } from './polygon/balancer-v2.pool.token-fetcher';
 
 @Module({
+  imports: ExternalAppImport(CurveAppModule),
   providers: [
     BalancerV2AppDefinition,
     BalancerV2ContractFactory,
@@ -45,4 +47,4 @@ import { PolygonBalancerV2PoolTokenFetcher } from './polygon/balancer-v2.pool.to
     BalancerV2GaugeAddressesGetter,
   ],
 })
-export class BalancerV2AppModule extends AbstractDynamicApp<BalancerV2AppModule>() {}
+export class BalancerV2AppModule extends AbstractApp() {}

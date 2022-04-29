@@ -11,10 +11,10 @@ import { BALANCER_V2_DEFINITION } from '../balancer-v2.definition';
 import { BalancerGauge, BalancerV2ContractFactory, BalancerVeBal } from '../contracts';
 import { BalancerV2ClaimableContractPositionBalanceHelper } from '../helpers/balancer-v2.claimable.contract-position-balance-helper';
 
-const { id } = BALANCER_V2_DEFINITION;
+const appId = BALANCER_V2_DEFINITION.id;
 const network = Network.ETHEREUM_MAINNET;
 
-@Register.BalanceFetcher(id, network)
+@Register.BalanceFetcher(appId, network)
 export class EthereumBalancerV2BalanceFetcher implements BalanceFetcher {
   constructor(
     @Inject(SingleStakingContractPositionBalanceHelper)
@@ -32,7 +32,7 @@ export class EthereumBalancerV2BalanceFetcher implements BalanceFetcher {
     return this.singleStakingContractPositionBalanceHelper.getBalances<BalancerGauge>({
       address,
       network,
-      appId: id,
+      appId,
       groupId: BALANCER_V2_DEFINITION.groups.farm.id,
       resolveContract: ({ address, network }) => this.balancerV2ContractFactory.balancerGauge({ address, network }),
       resolveStakedTokenBalance: ({ contract, address, multicall }) => multicall.wrap(contract).balanceOf(address),

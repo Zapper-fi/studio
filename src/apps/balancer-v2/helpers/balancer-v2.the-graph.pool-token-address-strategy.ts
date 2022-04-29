@@ -143,7 +143,7 @@ export class BalancerV2TheGraphPoolTokenDataStrategy {
     pastPoolsQuery = DEFAULT_GET_PAST_POOLS_QUERY,
   }: BalancerV2TheGraphPoolTokenDataStrategyParams) {
     return async ({ network }: { network: Network }) => {
-      const poolAddresses = this.getPoolAddresses(
+      const poolAddresses = await this.getPoolAddresses(
         subgraphUrl,
         minLiquidity,
         currentPoolsQuery,

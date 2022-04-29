@@ -1,4 +1,4 @@
-import { Inject, Injectable, Logger } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import Axios from 'axios';
 
 import { Network } from '~types/network.interface';
@@ -32,14 +32,14 @@ type Opts = {
 
 @Injectable()
 export class BalancerV2CacheManager {
-  constructor(@Inject(Logger) private readonly logger: Logger) {}
+  constructor() {}
 
-  async getCachedClaimableAmounts(opts: Opts) {
+  async getCachedClaimableAmounts(opts: Opts): Promise<number[]> {
     const { address, network, rewardTokenAddress } = opts;
 
     const url = `https://us-west1-zapper-backend.cloudfunctions.net/balancer-v2-claimable`;
     const response = await Axios.get(url, { params: { address, network, rewardTokenAddress } });
 
-    return response.data;
+    return response.data.amounts;
   }
 }
