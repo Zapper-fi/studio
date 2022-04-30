@@ -10,7 +10,7 @@ import { ABRACADABRA_DEFINITION } from '../abracadabra.definition';
 import { AbracadabraContractFactory, PopsicleChef } from '../contracts';
 import { AbracadabraCauldronBalanceHelper } from '../helpers/abracadabra.cauldron.balance-helper';
 
-const network = Network.AVALANCHE_MAINNET;
+const network = Network.BINANCE_SMART_CHAIN_MAINNET;
 
 @Register.BalanceFetcher(ABRACADABRA_DEFINITION.id, network)
 export class BinanceSmartChainAbracadabraBalanceFetcher implements BalanceFetcher {
@@ -26,15 +26,13 @@ export class BinanceSmartChainAbracadabraBalanceFetcher implements BalanceFetche
   }
 
   async getBalances(address: string) {
-    const [cauldronBalances] = await Promise.all([
-      this.getCauldronBalances(address),
-    ]);
+    const [cauldronBalances] = await Promise.all([this.getCauldronBalances(address)]);
 
     return presentBalanceFetcherResponse([
       {
         label: 'Cauldrons',
         assets: cauldronBalances,
-      }
+      },
     ]);
   }
 }
