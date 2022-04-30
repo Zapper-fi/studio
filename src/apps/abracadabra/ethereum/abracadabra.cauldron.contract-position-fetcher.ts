@@ -41,6 +41,8 @@ const CAULDRONS = [
   '0x59e9082e068ddb27fc5ef1690f9a9f22b32e573f', // UST V2
   '0x390db10e65b5ab920c19149c919d970ad9d18a41', // WETH
   '0x5ec47ee69bede0b6c2a2fc0d9d094df16c192498', // WBTC
+  '0xf179fe36a36b32a4644587b8cdee7a23af98ed37', // yvCVXETH
+  '0x7ce7d9ed62b9a6c5ace1c6ec9aeb115fa3064757', // yvDAI
 ];
 
 const appId = ABRACADABRA_DEFINITION.id;
