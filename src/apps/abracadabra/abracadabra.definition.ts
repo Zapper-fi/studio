@@ -26,6 +26,7 @@ export const ABRACADABRA_DEFINITION: AppDefinitionObject = {
     [Network.AVALANCHE_MAINNET]: [ProtocolAction.VIEW],
     [Network.ETHEREUM_MAINNET]: [ProtocolAction.VIEW],
     [Network.FANTOM_OPERA_MAINNET]: [ProtocolAction.VIEW],
+    [Network.BINANCE_SMART_CHAIN_MAINNET]: [ProtocolAction.VIEW],
   },
 };
 

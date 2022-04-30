@@ -20,6 +20,8 @@ import { FantomAbracadabraBalanceFetcher } from './fantom/abracadabra.balance-fe
 import { FantomAbracadabraCauldronContractPositionFetcher } from './fantom/abracadabra.cauldron.contract-position-fetcher';
 import { FantomAbracadabraFarmContractPositionFetcher } from './fantom/abracadbra.farm.contract-position-fetcher';
 import { FantomAbracadabraStakedSpellTokenFetcher } from './fantom/abracadbra.staked-spell.token-fetcher';
+import { BinanceSmartChainAbracadabraBalanceFetcher } from './binance-smart-chain/abracadabra.balance-fetcher';
+import { BinanceSmartChainAbracadabraCauldronContractPositionFetcher } from './binance-smart-chain/abracadabra.cauldron.contract-position-fetcher';
 import { AbracadabraCauldronBalanceHelper } from './helpers/abracadabra.cauldron.balance-helper';
 import { AbracadabraCauldronContractPositionHelper } from './helpers/abracadabra.cauldron.contract-position-helper';
 
@@ -49,6 +51,9 @@ import { AbracadabraCauldronContractPositionHelper } from './helpers/abracadabra
     FantomAbracadabraCauldronContractPositionFetcher,
     FantomAbracadabraFarmContractPositionFetcher,
     FantomAbracadabraBalanceFetcher,
+    // Binance Smart Chain
+    BinanceSmartChainAbracadabraCauldronContractPositionFetcher,
+    BinanceSmartChainAbracadabraBalanceFetcher,
     // Helpers
     AbracadabraCauldronBalanceHelper,
     AbracadabraCauldronContractPositionHelper,
