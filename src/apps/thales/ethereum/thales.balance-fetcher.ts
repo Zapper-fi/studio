@@ -12,7 +12,7 @@ const network = Network.ETHEREUM_MAINNET;
 
 @Register.BalanceFetcher(THALES_DEFINITION.id, network)
 export class EthereumThalesBalanceFetcher implements BalanceFetcher {
-  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
+  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) { }
 
   async getBalances(address: string) {
     return presentBalanceFetcherResponse([]);
