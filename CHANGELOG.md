@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+### [0.11.7](https://github.com/Zapper-fi/studio/compare/v0.11.6...v0.11.7) (2022-05-01)
+
+
+### Bug Fixes
+
+* Fix Olympus gOHM price ([#341](https://github.com/Zapper-fi/studio/issues/341)) ([2842321](https://github.com/Zapper-fi/studio/commit/2842321547a88b939171143a37b8cd3a8d4a23c3))
+
 ### [0.11.6](https://github.com/Zapper-fi/studio/compare/v0.11.5...v0.11.6) (2022-04-29)
 
 
