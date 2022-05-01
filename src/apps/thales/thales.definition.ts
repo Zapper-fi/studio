@@ -9,7 +9,7 @@ export const THALES_DEFINITION = {
   description: 'Novel on-chain, permissionless, and non-custodial Parimutuel Markets.',
   url: 'https://thalesmarket.io/',
   groups: {
-    market: { id: 'market', type: GroupType.POSITION },
+    market: { id: 'market', type: GroupType.TOKEN },
   },
   tags: [ProtocolTag.OPTIONS],
   links: {
