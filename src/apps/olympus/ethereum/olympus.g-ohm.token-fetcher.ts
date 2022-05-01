@@ -15,7 +15,7 @@ const appId = OLYMPUS_DEFINITION.id;
 const network = Network.ETHEREUM_MAINNET;
 const groupId = OLYMPUS_DEFINITION.groups.gOhm.id;
 
-@Register.ContractPositionFetcher({
+@Register.TokenPositionFetcher({
   appId,
   groupId,
   network,

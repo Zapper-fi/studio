@@ -9,7 +9,7 @@ import { Network } from '../../src/types/network.interface';
 import { strings } from '../strings';
 
 export default class CodegenApp extends Command {
-  static description = '';
+  static description = 'Scaffolds the file structure for a newly created app';
   static examples = [`$ ./studio codegen-app appId`];
   static flags = {};
   static args = [{ name: 'appId', description: 'The application id ', required: true }];
@@ -86,23 +86,22 @@ function generateImportStatementForModule(
 
 async function generateModule(appId: string, importStatement: string, providers: string) {
   const appTitleCase = strings.titleCase(appId);
-  const appUpperSnakeCase = strings.upperCase(appId);
 
   const generatedContent = dedent`
-  import { Register } from '~app-toolkit/decorators';
-  import { AbstractApp } from '~app/app.dynamic-module';
+  import { Module } from '@nestjs/common';
+
+  import { AbstractDynamicApp } from '~app/app.dynamic-module';
   
   import { ${appTitleCase}ContractFactory } from './contracts';
-  import { ${appTitleCase}AppDefinition, ${appUpperSnakeCase}_DEFINITION } from './${appId}.definition';
+  import { ${appTitleCase}AppDefinition } from './${appId}.definition';
 ${importStatement}
-  @Register.AppModule({
-    appId: ${appUpperSnakeCase}_DEFINITION.id,
+  @Module({
     providers: [
       ${appTitleCase}AppDefinition,
       ${appTitleCase}ContractFactory,${providers}
     ],
   })
-  export class ${appTitleCase}AppModule extends AbstractApp() {}
+  export class ${appTitleCase}AppModule extends AbstractDynamicApp<${appTitleCase}AppModule>() {}
   
   `;
 

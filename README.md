@@ -18,7 +18,9 @@
 </div>
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-12-orange.svg?style=flat-square)](#contributors-)
+
+[![All Contributors](https://img.shields.io/badge/all_contributors-13-orange.svg?style=flat-square)](#contributors-)
+
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 ## Description
@@ -34,8 +36,13 @@ Ensure the following have been installed on your system:
 
 ## Getting Started
 
-You can get started building immediately! </br>
-See <a href="https://studio-docs.zapper.fi/">Zapper Studio docs</a> for more details
+You can get started building immediately!
+
+OpenAPI docs for studio is available on <a href="http:localhost:5001/docs">localhost:5001/docs</a>. Which will give
+you a rough overview of all exposed endpoints you can test out.
+
+If you wish to know how to integrate your application, please check out
+<a href="https://studio-docs.zapper.fi/">Zapper Studio docs</a> for more details.
 
 ### Installation
 
@@ -59,6 +66,23 @@ pnpm studio create-app
 
 ```bash
 pnpm studio codegen-app [app-id]
+```
+
+## Clearing the cache
+
+Clears the file-system cache that persists app tokens, contract positions and any other app related data.
+Useful when your are doing modification to an app and it keeps on returning stale data.
+
+```bash
+pnpm studio clear-cache
+```
+
+## Setting custom network providers
+
+If default network providers are too slow or are failing, you can use customize your setup.
+
+```bash
+pnpm studio set-network-provider
 ```
 
 ## Generating a typescript contract from an ABI
@@ -125,6 +149,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/piersss"><img src="https://avatars.githubusercontent.com/u/86911296?v=4?s=64" width="64px;" alt=""/><br /><sub><b>piersss</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=piersss" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/rkolpakov"><img src="https://avatars.githubusercontent.com/u/13422270?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Roman Kolpakov</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=rkolpakov" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/mehdi-loup"><img src="https://avatars.githubusercontent.com/u/5024228?v=4?s=64" width="64px;" alt=""/><br /><sub><b>mehdi-loup</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=mehdi-loup" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/dylandesrosier"><img src="https://avatars.githubusercontent.com/u/13701258?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Dylan</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=dylandesrosier" title="Code">💻</a></td>
   </tr>
 </table>
 

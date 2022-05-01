@@ -4,6 +4,73 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+### [0.11.7](https://github.com/Zapper-fi/studio/compare/v0.11.6...v0.11.7) (2022-05-01)
+
+
+### Bug Fixes
+
+* Fix Olympus gOHM price ([#341](https://github.com/Zapper-fi/studio/issues/341)) ([2842321](https://github.com/Zapper-fi/studio/commit/2842321547a88b939171143a37b8cd3a8d4a23c3))
+
+### [0.11.6](https://github.com/Zapper-fi/studio/compare/v0.11.5...v0.11.6) (2022-04-29)
+
+
+### Bug Fixes
+
+* **balancer:** Export contract factory ([#339](https://github.com/Zapper-fi/studio/issues/339)) ([b6bf6d5](https://github.com/Zapper-fi/studio/commit/b6bf6d57cf8cd51c238c211b29510b51b482a245))
+
+### [0.11.5](https://github.com/Zapper-fi/studio/compare/v0.11.4...v0.11.5) (2022-04-29)
+
+
+### Bug Fixes
+
+* **balancer:** Helpers should not accept multicall, resolve internally ([#336](https://github.com/Zapper-fi/studio/issues/336)) ([a30c5ef](https://github.com/Zapper-fi/studio/commit/a30c5efdfdbe7fee87d041803462d751f316a1e1))
+
+### [0.11.4](https://github.com/Zapper-fi/studio/compare/v0.11.3...v0.11.4) (2022-04-29)
+
+
+### Bug Fixes
+
+* **balancer:** Also export the app module ([#333](https://github.com/Zapper-fi/studio/issues/333)) ([8107ea8](https://github.com/Zapper-fi/studio/commit/8107ea8448feafa54c1a0b597e1658ac97335a28))
+
+### [0.11.3](https://github.com/Zapper-fi/studio/compare/v0.11.2...v0.11.3) (2022-04-29)
+
+
+### Bug Fixes
+
+* **balancer:** Forgot to add export in module - it's Friday ([#331](https://github.com/Zapper-fi/studio/issues/331)) ([d11e4e0](https://github.com/Zapper-fi/studio/commit/d11e4e03f43f14ae1093c140e3e5e038d616748e))
+
+### [0.11.2](https://github.com/Zapper-fi/studio/compare/v0.11.1...v0.11.2) (2022-04-29)
+
+
+### Bug Fixes
+
+* **balancer:** Add missing exports for zapper api ([#329](https://github.com/Zapper-fi/studio/issues/329)) ([be0e820](https://github.com/Zapper-fi/studio/commit/be0e820b46bc43bfe521275ca78d05f25bc87002))
+
+### [0.11.1](https://github.com/Zapper-fi/studio/compare/v0.11.0...v0.11.1) (2022-04-29)
+
+
+### Bug Fixes
+
+* **balancer:** Add index files for Zapper API ([#327](https://github.com/Zapper-fi/studio/issues/327)) ([6fcec84](https://github.com/Zapper-fi/studio/commit/6fcec8450d8301bd983e333cac215436a9ce90ed))
+
+## [0.11.0](https://github.com/Zapper-fi/studio/compare/v0.10.0...v0.11.0) (2022-04-29)
+
+
+### Features
+
+* Balancer v2 to studio ([#318](https://github.com/Zapper-fi/studio/issues/318)) ([d582317](https://github.com/Zapper-fi/studio/commit/d5823172e522bcea3a379ef25366995f41960382))
+* **caching:** Add `clear-cache` command ([9fe7dfe](https://github.com/Zapper-fi/studio/commit/9fe7dfe3cf6f5a582f5f1a132c9bd7401701c535))
+* **caching:** Add file system cache ([#316](https://github.com/Zapper-fi/studio/issues/316)) ([4168929](https://github.com/Zapper-fi/studio/commit/41689293a509503a0ec9a811e08872a47ab73f6d))
+* **cli:** Add the ability to set custom network providers ([#325](https://github.com/Zapper-fi/studio/issues/325)) ([f4f0d08](https://github.com/Zapper-fi/studio/commit/f4f0d0890ff88bd61666f1e4ce36bbe4a02ec616))
+* migrate balancer-v1 to studio ([#236](https://github.com/Zapper-fi/studio/issues/236)) ([ef15509](https://github.com/Zapper-fi/studio/commit/ef15509c98898559fa17a5bfb9c96367f2563906))
+* **PoolTogether:** Add TVL. Refactor naming. Add PoolTogether contract registry. Fix APR.  ([#304](https://github.com/Zapper-fi/studio/issues/304)) ([5273348](https://github.com/Zapper-fi/studio/commit/527334882e3b9ea9ac2b988d772f5cab81c601e8))
+
+
+### Bug Fixes
+
+* **caching:** No need to load the cache on start ([#321](https://github.com/Zapper-fi/studio/issues/321)) ([3055589](https://github.com/Zapper-fi/studio/commit/3055589182c458a98e46e64a34a9d40767578036))
+* **tokemak:** Remove claimable balance of "Staked TOKE" label ([#320](https://github.com/Zapper-fi/studio/issues/320)) ([ccc4d73](https://github.com/Zapper-fi/studio/commit/ccc4d7347d76cddf5a4b313abf67c87850b6a500))
+
 ## [0.10.0](https://github.com/Zapper-fi/studio/compare/v0.9.1...v0.10.0) (2022-04-29)
 
 
