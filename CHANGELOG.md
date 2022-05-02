@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+### [0.11.8](https://github.com/Zapper-fi/studio/compare/v0.11.7...v0.11.8) (2022-05-02)
+
+
+### Bug Fixes
+
+* add missing mirror pools to uniswap pool token fetcher ([#343](https://github.com/Zapper-fi/studio/issues/343)) ([b56fad3](https://github.com/Zapper-fi/studio/commit/b56fad342a92110cb8a679501c9d5c292ec58da3))
+
 ### [0.11.7](https://github.com/Zapper-fi/studio/compare/v0.11.6...v0.11.7) (2022-05-01)
 
 
