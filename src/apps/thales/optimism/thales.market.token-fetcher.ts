@@ -1,10 +1,7 @@
 import { Inject } from '@nestjs/common';
-import { compact } from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
-import { getAppImg } from '~app-toolkit/helpers/presentation/image.present';
-import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
@@ -21,7 +18,7 @@ export class OptimismThalesMarketTokenFetcher implements PositionFetcher<AppToke
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(ThalesContractFactory) private readonly thalesContractFactory: ThalesContractFactory,
-  ) { }
+  ) {}
 
   async getPositions() {
     return [];

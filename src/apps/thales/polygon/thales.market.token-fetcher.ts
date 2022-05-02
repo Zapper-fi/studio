@@ -18,7 +18,7 @@ export class PolygonThalesMarketTokenFetcher implements PositionFetcher<AppToken
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(ThalesContractFactory) private readonly thalesContractFactory: ThalesContractFactory,
-  ) { }
+  ) {}
 
   async getPositions() {
     return [];
