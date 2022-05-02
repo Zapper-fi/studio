@@ -59,6 +59,20 @@ export class EthereumUniswapV2PoolTokenFetcher implements PositionFetcher<AppTok
           '0x0bf46ba06dc1d33c3bd80ff42497ebff13a88900', // rDPX- ETH
           '0xfd0a40bc83c5fae4203dec7e5929b446b07d1c76', // FRAX-ETH
           '0x97c4adc5d28a86f9470c70dd91dc6cc2f20d2d4d', // FRAX-USDC
+          '0x5d447fc0f8965ced158bab42414af10139edf0af', // MIR/UST
+          '0xbc07342d01ff5d72021bb4cb95f07c252e575309', // mVIXY/UST
+          '0x1fabef2c2dab77f01053e9600f70be1f3f657f51', // mAMZN/UST
+          '0x29cf719d134c1c18dab61c2f4c0529c4895ecf44', // mNFLX/UST
+          '0x43dfb87a26ba812b0988ebdf44e3e341144722ab', // mTSLA/UST
+          '0x27a14c03c364d3265e0788f536ad8d7afb0695f7', // mMSFT/UST
+          '0xc1d2ca26a59e201814bf6af633c3b3478180e91f', // mQQQ/UST
+          '0x2221518288af8c5d5a87fd32717fab154240d942', // mUSO/UST
+          '0x5b64bb4f69c8c03250ac560aac4c7401d78a1c32', // mGOOGL/UST
+          '0x99d737ab0df10cdc99c6f64d0384acd5c03aef7f', // mTWTR/UST
+          '0x769325e8498bf2c2c3cfd6464a60fa213f26afcc', // mBABA/UST
+          '0xdb278fb5f7d4a7c3b83f80d18198d872bbf7b923', // mSLV/UST
+          '0xe214a6ca22be90f011f34fdddc7c5a07800f8bcd', // mIAU/UST
+          '0x735659c8576d88a2eb5c810415ea51cb06931696', // mAAPL/UST
         ],
       }),
       resolvePoolTokenSymbol: ({ multicall, poolContract }) => multicall.wrap(poolContract).symbol(),
