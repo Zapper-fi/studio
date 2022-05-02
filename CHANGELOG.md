@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.12.0](https://github.com/Zapper-fi/studio/compare/v0.11.8...v0.12.0) (2022-05-02)
+
+
+### Features
+
+* migrate alpha-v1 to studio ([#235](https://github.com/Zapper-fi/studio/issues/235)) ([b9ab776](https://github.com/Zapper-fi/studio/commit/b9ab77666d7cee6c083f18ea39ba08005f537960))
+
 ### [0.11.8](https://github.com/Zapper-fi/studio/compare/v0.11.7...v0.11.8) (2022-05-02)
 
 
