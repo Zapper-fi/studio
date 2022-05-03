@@ -1,4 +1,4 @@
-// Test address: http://localhost:5001/apps/dfx/tokens?groupIds[]=curve&network=ethereum
+// Test address: http://localhost:5001/apps/dfx/tokens?groupIds[]=dfx-curve&network=ethereum
 //
 import { Inject } from '@nestjs/common';
 import _ from 'lodash';
@@ -39,8 +39,8 @@ export class EthereumDfxCurveTokenFetcher implements PositionFetcher<AppTokenPos
       curveAddresses.map(async curveAddress => {
         // Fetch data from DFX curve contract
         const contract = this.dfxContractFactory.dfxCurve({ address: curveAddress, network });
-        const [name, symbol, decimals, supplyRaw, token0AddressRaw, token1AddressRaw, liquidityRaw] = await Promise.all(
-          [
+        const [name, symbol, decimals, supplyRaw, token0AddressRaw, token1AddressRaw, [totalLiquidityRaw]] =
+          await Promise.all([
             multicall.wrap(contract).name(),
             multicall.wrap(contract).symbol(),
             multicall.wrap(contract).decimals(),
@@ -48,10 +48,8 @@ export class EthereumDfxCurveTokenFetcher implements PositionFetcher<AppTokenPos
             multicall.wrap(contract).numeraires(0),
             multicall.wrap(contract).numeraires(1),
             multicall.wrap(contract).liquidity(),
-          ],
-        );
+          ]);
         const underlyingTokenAddresses = [token0AddressRaw.toLowerCase(), token1AddressRaw.toLowerCase()];
-        const totalLiquidityRaw = liquidityRaw[0];
 
         // Find underlying tokens from base dependencies
         const [token0, token1] = underlyingTokenAddresses.map(tokenAddress =>
@@ -69,7 +67,8 @@ export class EthereumDfxCurveTokenFetcher implements PositionFetcher<AppTokenPos
         const price = totalLiquidity / supply;
 
         // Prepare display props
-        const label = name;
+        const [, baseToken, quoteToken] = name.split('-');
+        const label = `DFX ${baseToken.toUpperCase()}/${quoteToken.toUpperCase()} LP`;
         const secondaryLabel = buildDollarDisplayItem(price);
         const images = [getAppImg(appId)];
 
