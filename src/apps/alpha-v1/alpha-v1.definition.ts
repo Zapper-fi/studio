@@ -16,7 +16,7 @@ export const ALPHA_V1_DEFINITION: AppDefinitionObject = {
     discord: 'https://discord.com/invite/2My6wKt',
     telegram: 'https://t.me/AlphaFinanceLab',
   },
-  tags: [AppTag.LENDING],
+  tags: [AppTag.LENDING, AppTag.FARMING],
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
   },

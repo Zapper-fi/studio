@@ -19,7 +19,7 @@ export const BANANO_DEFINITION: AppDefinitionObject = {
   groups: {
     farm: { id: 'farm', type: GroupType.POSITION },
   },
-  tags: [AppTag.FARM],
+  tags: [AppTag.FARMING],
   supportedNetworks: {
     [Network.POLYGON_MAINNET]: [AppAction.VIEW],
     [Network.BINANCE_SMART_CHAIN_MAINNET]: [AppAction.VIEW],

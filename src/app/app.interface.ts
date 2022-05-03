@@ -23,7 +23,7 @@ export enum AppTag {
   DECENTRALIZED_EXCHANGE = 'decentralized-exchange',
   DERIVATIVES = 'derivatives',
   ELASTIC_FINANCE = 'elastic-finance',
-  FARM = 'farm',
+  FARMING = 'farming',
   FUND_MANAGER = 'fund-manager',
   GAMING = 'gaming',
   INFRASTRUCTURE = 'infrastructure',
