@@ -1,3 +1,5 @@
+// Test address: http://localhost:5001/apps/dfx/balances?addresses[]=0x1867608e55a862e96e468b51dc6983bca8688f3d&network=ethereum
+//
 import { Inject } from '@nestjs/common';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
@@ -28,7 +30,7 @@ export class EthereumDfxBalanceFetcher implements BalanceFetcher {
 
     return presentBalanceFetcherResponse([
       {
-        label: 'Curves',
+        label: 'DfxCurves',
         assets: curveTokenBalances,
       },
     ]);

@@ -1,3 +1,5 @@
+// Test address: http://localhost:5001/apps/dfx/positions?groupIds[]=staking&network=ethereum
+//
 import { Inject } from '@nestjs/common';
 import _ from 'lodash';
 
@@ -19,7 +21,7 @@ const appId = DFX_DEFINITION.id;
 const groupId = DFX_DEFINITION.groups.staking.id;
 const network = Network.ETHEREUM_MAINNET;
 
-export type DfxCurveContractPositionDataProps = {
+type DfxCurveContractPositionDataProps = {
   totalValueLocked: number;
 };
 
@@ -31,7 +33,7 @@ export class EthereumDfxStakingContractPositionFetcher implements PositionFetche
   ) {}
 
   async getPositions() {
-    const stakingDefinitions = Addresses[network].contracts.map(({ staking: stakingAddress, curve: curveAddress }) => ({
+    const stakingDefinitions = Addresses[network].amm.map(({ staking: stakingAddress, curve: curveAddress }) => ({
       address: stakingAddress.toLowerCase(),
       stakedTokenAddress: curveAddress.toLowerCase(),
       rewardTokenAddress: Addresses[network].dfx.toLowerCase(),
@@ -39,8 +41,8 @@ export class EthereumDfxStakingContractPositionFetcher implements PositionFetche
 
     // Reward token is DFX which is a base token
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
-    // Staked tokens are DFX LPs so resolve these
-    const appTokens = await this.appToolkit.getAppTokenPositions({ appId: 'dfx', groupIds: ['curve'], network });
+    // Staked tokens are AMM LPs so resolve these
+    const appTokens = await this.appToolkit.getAppTokenPositions({ appId: 'dfx', groupIds: ['dfx-curve'], network });
     const allTokens = [...baseTokens, ...appTokens];
 
     // Create a multicall wrapper instance to batch chain RPC calls together
@@ -68,7 +70,7 @@ export class EthereumDfxStakingContractPositionFetcher implements PositionFetche
         const images = getImagesFromToken(stakedToken);
         const secondaryLabel = buildDollarDisplayItem(stakedToken.price);
 
-        const position: ContractPosition = {
+        const position: ContractPosition<DfxCurveContractPositionDataProps> = {
           type: ContractType.POSITION,
           appId,
           groupId,

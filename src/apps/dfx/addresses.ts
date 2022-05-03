@@ -1,7 +1,6 @@
 const ethereum = {
-  usdc: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
   dfx: '0x888888435FDe8e7d4c54cAb67f206e4199454c60',
-  contracts: [
+  amm: [
     {
       pair: 'cadcUsdc',
       curve: '0xa6C0CbCaebd93AD3C6c94412EC06aaA37870216d',
@@ -36,9 +35,8 @@ const ethereum = {
 };
 
 const polygon = {
-  usdc: '0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174',
   dfx: '0xE7804D91dfCDE7F776c90043E03eAa6Df87E6395',
-  contracts: [
+  amm: [
     {
       pair: 'cadcUsdc',
       curve: '0x288Ab1b113C666Abb097BB2bA51B8f3759D7729e',

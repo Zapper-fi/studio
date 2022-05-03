@@ -1,3 +1,5 @@
+// Test address: http://localhost:5001/apps/dfx/balances?addresses[]=0x903103Ef92b5C227D6f3E6eab4311b6d7460F134&network=polygon
+//
 import { Inject } from '@nestjs/common';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
@@ -14,7 +16,24 @@ const network = Network.POLYGON_MAINNET;
 export class PolygonDfxBalanceFetcher implements BalanceFetcher {
   constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
+  async getCurveTokenBalances(address: string) {
+    return this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
+      address,
+      appId: DFX_DEFINITION.id,
+      groupId: DFX_DEFINITION.groups.curve.id,
+      network,
+    });
+  }
+
   async getBalances(address: string) {
-    return presentBalanceFetcherResponse([]);
+    const [curveTokenBalances] = await Promise.all([this.getCurveTokenBalances(address)]);
+    console.log(curveTokenBalances);
+
+    return presentBalanceFetcherResponse([
+      {
+        label: 'DfxCurves',
+        assets: curveTokenBalances,
+      },
+    ]);
   }
 }

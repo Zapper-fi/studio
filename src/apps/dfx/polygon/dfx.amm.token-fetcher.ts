@@ -1,3 +1,5 @@
+// Test address: http://localhost:5001/apps/dfx/tokens?groupIds[]=dfx-curve&network=polygon
+//
 import { Inject } from '@nestjs/common';
 import _ from 'lodash';
 
@@ -16,17 +18,17 @@ import { DFX_DEFINITION } from '../dfx.definition';
 
 const appId = DFX_DEFINITION.id;
 const groupId = DFX_DEFINITION.groups.curve.id;
-const network = Network.ETHEREUM_MAINNET;
+const network = Network.POLYGON_MAINNET;
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
-export class EthereumDfxCurveTokenFetcher implements PositionFetcher<AppTokenPosition> {
+export class PolygonDfxCurveTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(DfxContractFactory) private readonly dfxContractFactory: DfxContractFactory,
   ) {}
 
   async getPositions() {
-    const curveAddresses = Addresses[network].contracts.map(v => v.curve);
+    const curveAddresses = Addresses[network].amm.map(v => v.curve);
 
     const baseTokenDependencies = await this.appToolkit.getBaseTokenPrices(network);
 
@@ -37,16 +39,23 @@ export class EthereumDfxCurveTokenFetcher implements PositionFetcher<AppTokenPos
       curveAddresses.map(async curveAddress => {
         // Fetch data from DFX curve contract
         const contract = this.dfxContractFactory.dfxCurve({ address: curveAddress, network });
-        const [name, symbol, decimals, supplyRaw, token0AddressRaw, token1AddressRaw, totalLiquidityRaw] =
-          await Promise.all([
-            multicall.wrap(contract).name(),
-            multicall.wrap(contract).symbol(),
-            multicall.wrap(contract).decimals(),
-            multicall.wrap(contract).totalSupply(),
-            multicall.wrap(contract).numeraires(0),
-            multicall.wrap(contract).numeraires(1),
-            multicall.wrap(contract).liquidity()[0],
-          ]);
+        const [
+          name,
+          symbol,
+          decimals,
+          supplyRaw,
+          token0AddressRaw,
+          token1AddressRaw,
+          [totalLiquidityRaw, [liquidity0Raw, liquidity1Raw]],
+        ] = await Promise.all([
+          multicall.wrap(contract).name(),
+          multicall.wrap(contract).symbol(),
+          multicall.wrap(contract).decimals(),
+          multicall.wrap(contract).totalSupply(),
+          multicall.wrap(contract).numeraires(0),
+          multicall.wrap(contract).numeraires(1),
+          multicall.wrap(contract).liquidity(),
+        ]);
         const underlyingTokenAddresses = [token0AddressRaw.toLowerCase(), token1AddressRaw.toLowerCase()];
 
         // Find underlying tokens from base dependencies
