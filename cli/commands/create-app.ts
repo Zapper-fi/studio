@@ -105,7 +105,7 @@ function generateDefinitionFile({
   return dedent`
   import { Register } from '~app-toolkit/decorators';
   import { AppDefinition } from '~app/app.definition';
-import { AppAction, AppTag, AppDefinitionObject } from '~app/app.interface';
+  import { AppAction, AppTag, AppDefinitionObject } from '~app/app.interface';
   import { Network } from '~types/network.interface';
 
   export const ${appDefinitionName}: AppDefinitionObject = {
