@@ -15,7 +15,7 @@ import { DfxContractFactory } from '../contracts';
 import { DFX_DEFINITION } from '../dfx.definition';
 
 const appId = DFX_DEFINITION.id;
-const groupId = DFX_DEFINITION.groups.curve.id;
+const groupId = DFX_DEFINITION.groups.dfxCurve.id;
 const network = Network.ETHEREUM_MAINNET;
 
 @Register.TokenPositionFetcher({ appId, groupId, network })

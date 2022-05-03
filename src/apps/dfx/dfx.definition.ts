@@ -9,7 +9,7 @@ export const DFX_DEFINITION = {
   description: 'DFX.Finance is a decentralized foreign exchange protocol optimized for stablecoins',
   url: 'https://app.dfx.finance/',
   groups: {
-    curve: { id: 'dfxCurve', type: GroupType.TOKEN },
+    dfxCurve: { id: 'dfx-curve', type: GroupType.TOKEN },
     staking: { id: 'staking', type: GroupType.POSITION },
   },
   tags: [],

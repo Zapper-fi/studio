@@ -40,7 +40,7 @@ export class PolygonDfxStakingContractPositionFetcher implements PositionFetcher
     // Reward token is DFX which is a base token
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
     // Staked tokens are DFX LPs so resolve these
-    const appTokens = await this.appToolkit.getAppTokenPositions({ appId: 'dfx', groupIds: ['dfxCurve'], network });
+    const appTokens = await this.appToolkit.getAppTokenPositions({ appId: 'dfx', groupIds: ['dfx-curve'], network });
     const allTokens = [...baseTokens, ...appTokens];
 
     // Create a multicall wrapper instance to batch chain RPC calls together
