@@ -28,7 +28,7 @@ export class EthereumDfxBalanceFetcher implements BalanceFetcher {
 
     return presentBalanceFetcherResponse([
       {
-        label: 'DfxCurves',
+        label: 'DFX Curves',
         assets: curveTokenBalances,
       },
     ]);
