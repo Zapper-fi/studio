@@ -26,7 +26,7 @@ export class BinanceSmartChainPancakeSwapTvlFetcher implements TvlFetcher {
   async getTvl() {
     const multicall = this.toolkit.getMulticall(Network.BINANCE_SMART_CHAIN_MAINNET);
     const contract = this.toolkit.globalContracts.erc20({
-      address: PANCAKESWAP_DEFINITION.token.address,
+      address: PANCAKESWAP_DEFINITION.token!.address,
       network: Network.BINANCE_SMART_CHAIN_MAINNET,
     });
 
@@ -41,7 +41,7 @@ export class BinanceSmartChainPancakeSwapTvlFetcher implements TvlFetcher {
         },
       ),
       this.toolkit.getBaseTokenPrice({
-        address: PANCAKESWAP_DEFINITION.token.address,
+        address: PANCAKESWAP_DEFINITION.token!.address,
         network: Network.BINANCE_SMART_CHAIN_MAINNET,
       }),
       multicall.wrap(contract).balanceOf(MASTERCHEF_ADDRESS),

@@ -1,9 +1,9 @@
 import { Register } from '~app-toolkit/decorators';
 import { AppDefinition } from '~app/app.definition';
-import { GroupType, ProtocolAction, ProtocolTag } from '~app/app.interface';
+import { AppDefinitionObject, GroupType, AppAction, AppTag } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
-export const ALPHA_V1_DEFINITION = {
+export const ALPHA_V1_DEFINITION: AppDefinitionObject = {
   id: 'alpha-v1',
   name: 'Alpha',
   description: `Alpha Homora is a leveraged yield farming leveraged liquidity providing protocol. Lenders can earn high interest, and yield farmers can get even higher farming APY and trading fees through leverage. This project is deprecated in favour of V2.`,
@@ -16,9 +16,9 @@ export const ALPHA_V1_DEFINITION = {
     discord: 'https://discord.com/invite/2My6wKt',
     telegram: 'https://t.me/AlphaFinanceLab',
   },
-  tags: [ProtocolTag.LENDING],
+  tags: [AppTag.LENDING, AppTag.FARMING],
   supportedNetworks: {
-    [Network.ETHEREUM_MAINNET]: [ProtocolAction.VIEW],
+    [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
   },
   primaryColor: '#fff',
 };

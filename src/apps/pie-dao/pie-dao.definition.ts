@@ -1,6 +1,6 @@
 import { Register } from '~app-toolkit/decorators';
 import { AppDefinition } from '~app/app.definition';
-import { AppDefinitionObject, GroupType, ProtocolAction, ProtocolTag } from '~app/app.interface';
+import { AppDefinitionObject, GroupType, AppAction, AppTag } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
 export const PIE_DAO_DEFINITION: AppDefinitionObject = {
@@ -21,9 +21,9 @@ export const PIE_DAO_DEFINITION: AppDefinitionObject = {
     telegram: 'https://t.me/piedao',
     medium: 'https://medium.com/piedao',
   },
-  tags: [ProtocolTag.LIQUIDITY_POOL],
+  tags: [AppTag.ASSET_MANAGEMENT],
   supportedNetworks: {
-    [Network.ETHEREUM_MAINNET]: [ProtocolAction.VIEW],
+    [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
   },
 };
 

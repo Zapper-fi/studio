@@ -1,6 +1,6 @@
 import { Register } from '~app-toolkit/decorators';
 import { AppDefinition } from '~app/app.definition';
-import { AppDefinitionObject, GroupType, ProtocolAction, ProtocolTag } from '~app/app.interface';
+import { AppDefinitionObject, GroupType, AppAction, AppTag } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
 export const KEEPER_DAO_DEFINITION: AppDefinitionObject = {
@@ -20,8 +20,8 @@ export const KEEPER_DAO_DEFINITION: AppDefinitionObject = {
     v3Pool: { id: 'v3-pool', type: GroupType.TOKEN },
     farm: { id: 'farm', type: GroupType.POSITION },
   },
-  tags: [ProtocolTag.YIELD_AGGREGATOR],
-  supportedNetworks: { [Network.ETHEREUM_MAINNET]: [ProtocolAction.VIEW] },
+  tags: [AppTag.YIELD_AGGREGATOR, AppTag.DECENTRALIZED_EXCHANGE],
+  supportedNetworks: { [Network.ETHEREUM_MAINNET]: [AppAction.VIEW] },
 };
 
 @Register.AppDefinition(KEEPER_DAO_DEFINITION.id)

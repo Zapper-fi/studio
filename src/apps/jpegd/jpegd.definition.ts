@@ -1,6 +1,6 @@
 import { Register } from '~app-toolkit/decorators';
 import { AppDefinition } from '~app/app.definition';
-import { AppDefinitionObject, GroupType, ProtocolAction, ProtocolTag } from '~app/app.interface';
+import { AppDefinitionObject, GroupType, AppAction, AppTag } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
 export const JPEGD_DEFINITION: AppDefinitionObject = {
@@ -18,9 +18,9 @@ export const JPEGD_DEFINITION: AppDefinitionObject = {
     pool: { id: 'pool', type: GroupType.POSITION },
     bond: { id: 'bond', type: GroupType.POSITION },
   },
-  tags: [ProtocolTag.LENDING],
+  tags: [AppTag.COLLATERALIZED_DEBT_POSITION],
   supportedNetworks: {
-    [Network.ETHEREUM_MAINNET]: [ProtocolAction.VIEW],
+    [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
   },
   primaryColor: '#fff',
 };

@@ -1,9 +1,9 @@
 import { Register } from '~app-toolkit/decorators';
 import { AppDefinition } from '~app/app.definition';
-import { GroupType, ProtocolAction, ProtocolTag } from '~app/app.interface';
+import { AppDefinitionObject, GroupType, AppAction, AppTag } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
-export const BALANCER_V1_DEFINITION = {
+export const BALANCER_V1_DEFINITION: AppDefinitionObject = {
   id: 'balancer-v1',
   name: 'Balancer V1',
   description:
@@ -18,9 +18,9 @@ export const BALANCER_V1_DEFINITION = {
   groups: {
     pool: { id: 'pool', type: GroupType.TOKEN },
   },
-  tags: [ProtocolTag.LIQUIDITY_POOL],
+  tags: [AppTag.LIQUIDITY_POOL],
   supportedNetworks: {
-    [Network.ETHEREUM_MAINNET]: [ProtocolAction.VIEW],
+    [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
   },
   token: {
     address: '0xba100000625a3754423978a60c9317c58a424e3d',
