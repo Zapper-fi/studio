@@ -1,7 +1,7 @@
 import { Register } from '~app-toolkit/decorators';
 import { AppDefinition } from '~app/app.definition';
 import { AppDefinitionObject, GroupType } from '~app/app.interface';
-import { ProtocolTag, ProtocolAction } from '~app/app.interface';
+import { AppTag, AppAction } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
 export const TRADER_JOE_DEFINITION: AppDefinitionObject = {
@@ -25,8 +25,8 @@ export const TRADER_JOE_DEFINITION: AppDefinitionObject = {
     discord: 'https://discord.gg/GHZceZhbZU',
     medium: 'https://traderjoe-xyz.medium.com/',
   },
-  tags: [ProtocolTag.LIQUIDITY_POOL],
-  supportedNetworks: { [Network.AVALANCHE_MAINNET]: [ProtocolAction.VIEW] },
+  tags: [AppTag.LIQUIDITY_POOL],
+  supportedNetworks: { [Network.AVALANCHE_MAINNET]: [AppAction.VIEW] },
   primaryColor: '#ee6662',
   token: {
     address: '0x6e84a6216ea6dacc71ee8e6b0a5b7322eebc0fdd',

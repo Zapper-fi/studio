@@ -1,6 +1,6 @@
 import { Register } from '~app-toolkit/decorators';
 import { AppDefinition } from '~app/app.definition';
-import { AppDefinitionObject, GroupType, ProtocolAction, ProtocolTag } from '~app/app.interface';
+import { AppDefinitionObject, GroupType, AppAction, AppTag } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
 export const PICKLE_DEFINITION: AppDefinitionObject = {
@@ -23,11 +23,11 @@ export const PICKLE_DEFINITION: AppDefinitionObject = {
     singleStakingFarm: { id: 'single-staking-farm', type: GroupType.POSITION },
   },
   primaryColor: '#1b8d54',
-  tags: [ProtocolTag.YIELD_AGGREGATOR],
+  tags: [AppTag.YIELD_AGGREGATOR],
   supportedNetworks: {
-    [Network.ETHEREUM_MAINNET]: [ProtocolAction.VIEW],
-    [Network.ARBITRUM_MAINNET]: [ProtocolAction.VIEW],
-    [Network.POLYGON_MAINNET]: [ProtocolAction.VIEW],
+    [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
+    [Network.ARBITRUM_MAINNET]: [AppAction.VIEW],
+    [Network.POLYGON_MAINNET]: [AppAction.VIEW],
   },
   token: {
     address: '0x429881672b9ae42b8eba0e26cd9c73711b891ca5',

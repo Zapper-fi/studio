@@ -1,6 +1,6 @@
 import { Register } from '~app-toolkit/decorators';
 import { AppDefinition } from '~app/app.definition';
-import { GroupType, ProtocolTag, ProtocolAction, AppDefinitionObject } from '~app/app.interface';
+import { GroupType, AppTag, AppAction, AppDefinitionObject } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
 export const AELIN_DEFINITION: AppDefinitionObject = {
@@ -19,10 +19,10 @@ export const AELIN_DEFINITION: AppDefinitionObject = {
     discord: 'https://t.co/kG6zsC0zaR',
     medium: 'https://medium.com/@aelinprotocol',
   },
-  tags: [ProtocolTag.LENDING],
+  tags: [AppTag.LENDING],
   supportedNetworks: {
-    [Network.OPTIMISM_MAINNET]: [ProtocolAction.VIEW],
-    [Network.ETHEREUM_MAINNET]: [ProtocolAction.VIEW],
+    [Network.OPTIMISM_MAINNET]: [AppAction.VIEW],
+    [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
   },
 };
 

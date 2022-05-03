@@ -1,6 +1,6 @@
 import { Register } from '~app-toolkit/decorators';
 import { AppDefinition } from '~app/app.definition';
-import { AppDefinitionObject, GroupType, ProtocolAction, ProtocolTag } from '~app/app.interface';
+import { AppDefinitionObject, GroupType, AppAction, AppTag } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
 export const UNAGII_DEFINITION: AppDefinitionObject = {
@@ -16,9 +16,9 @@ export const UNAGII_DEFINITION: AppDefinitionObject = {
     twitter: 'https://twitter.com/unagiidotcom',
     telegram: 'https://t.me/unagiidotcom',
   },
-  tags: [ProtocolTag.YIELD_AGGREGATOR],
+  tags: [AppTag.YIELD_AGGREGATOR],
   supportedNetworks: {
-    [Network.ETHEREUM_MAINNET]: [ProtocolAction.VIEW],
+    [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
   },
   primaryColor: '#fff',
 };

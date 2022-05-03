@@ -1,6 +1,6 @@
 import { Register } from '~app-toolkit/decorators';
 import { AppDefinition } from '~app/app.definition';
-import { AppDefinitionObject, GroupType, ProtocolAction } from '~app/app.interface';
+import { AppDefinitionObject, GroupType, AppAction, AppTag } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
 export const BANANO_DEFINITION: AppDefinitionObject = {
@@ -19,11 +19,11 @@ export const BANANO_DEFINITION: AppDefinitionObject = {
   groups: {
     farm: { id: 'farm', type: GroupType.POSITION },
   },
-  tags: [],
+  tags: [AppTag.FARM],
   supportedNetworks: {
-    [Network.POLYGON_MAINNET]: [ProtocolAction.VIEW],
-    [Network.BINANCE_SMART_CHAIN_MAINNET]: [ProtocolAction.VIEW],
-    [Network.FANTOM_OPERA_MAINNET]: [ProtocolAction.VIEW],
+    [Network.POLYGON_MAINNET]: [AppAction.VIEW],
+    [Network.BINANCE_SMART_CHAIN_MAINNET]: [AppAction.VIEW],
+    [Network.FANTOM_OPERA_MAINNET]: [AppAction.VIEW],
   },
   primaryColor: '#fff',
 };

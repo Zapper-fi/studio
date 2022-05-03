@@ -1,9 +1,9 @@
 import { Register } from '~app-toolkit/decorators';
 import { AppDefinition } from '~app/app.definition';
-import { GroupType, ProtocolAction, ProtocolTag } from '~app/app.interface';
+import { AppDefinitionObject, GroupType, AppAction, AppTag } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
-export const BALANCER_V2_DEFINITION = {
+export const BALANCER_V2_DEFINITION: AppDefinitionObject = {
   id: 'balancer-v2',
   name: 'Balancer V2',
   description:
@@ -21,11 +21,11 @@ export const BALANCER_V2_DEFINITION = {
     votingEscrow: { id: 'voting-escrow', type: GroupType.POSITION },
     claimable: { id: 'claimable', type: GroupType.POSITION },
   },
-  tags: [ProtocolTag.LIQUIDITY_POOL],
+  tags: [AppTag.LIQUIDITY_POOL],
   supportedNetworks: {
-    [Network.ETHEREUM_MAINNET]: [ProtocolAction.VIEW],
-    [Network.POLYGON_MAINNET]: [ProtocolAction.VIEW],
-    [Network.ARBITRUM_MAINNET]: [ProtocolAction.VIEW],
+    [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
+    [Network.POLYGON_MAINNET]: [AppAction.VIEW],
+    [Network.ARBITRUM_MAINNET]: [AppAction.VIEW],
   },
   primaryColor: '#1c1d26',
   token: {
