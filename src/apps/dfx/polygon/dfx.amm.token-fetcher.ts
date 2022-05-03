@@ -68,7 +68,7 @@ export class PolygonDfxCurveTokenFetcher implements PositionFetcher<AppTokenPosi
 
         // Prepare display props
         const [, baseToken, quoteToken] = name.split('-');
-        const label = `DFX ${baseToken.toUpperCase()}/${quoteToken.toUpperCase()} LP`;
+        const label = `${baseToken.toUpperCase()}/${quoteToken.toUpperCase()} LP`;
         const secondaryLabel = buildDollarDisplayItem(price);
         const images = [getAppImg(appId)];
 
