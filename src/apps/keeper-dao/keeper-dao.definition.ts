@@ -20,7 +20,7 @@ export const KEEPER_DAO_DEFINITION: AppDefinitionObject = {
     v3Pool: { id: 'v3-pool', type: GroupType.TOKEN },
     farm: { id: 'farm', type: GroupType.POSITION },
   },
-  tags: [AppTag.YIELD_AGGREGATOR],
+  tags: [AppTag.YIELD_AGGREGATOR, AppTag.DECENTRALIZED_EXCHANGE],
   supportedNetworks: { [Network.ETHEREUM_MAINNET]: [AppAction.VIEW] },
 };
 
