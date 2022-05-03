@@ -1,5 +1,3 @@
-// Test address: http://localhost:5001/apps/dfx/positions?groupIds[]=staking&network=polygon
-//
 import { Inject } from '@nestjs/common';
 import _ from 'lodash';
 

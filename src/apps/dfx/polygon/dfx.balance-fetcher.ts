@@ -1,5 +1,3 @@
-// Test address: http://localhost:5001/apps/dfx/balances?addresses[]=0x903103Ef92b5C227D6f3E6eab4311b6d7460F134&network=polygon
-//
 import { Inject } from '@nestjs/common';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';

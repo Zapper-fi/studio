@@ -1,5 +1,3 @@
-// Test address: http://localhost:5001/apps/dfx/tokens?groupIds[]=dfx-curve&network=polygon
-//
 import { Inject } from '@nestjs/common';
 import _ from 'lodash';
 
@@ -39,16 +37,23 @@ export class PolygonDfxCurveTokenFetcher implements PositionFetcher<AppTokenPosi
       curveAddresses.map(async curveAddress => {
         // Fetch data from DFX curve contract
         const contract = this.dfxContractFactory.dfxCurve({ address: curveAddress, network });
-        const [name, symbol, decimals, supplyRaw, token0AddressRaw, token1AddressRaw, [totalLiquidityRaw]] =
-          await Promise.all([
-            multicall.wrap(contract).name(),
-            multicall.wrap(contract).symbol(),
-            multicall.wrap(contract).decimals(),
-            multicall.wrap(contract).totalSupply(),
-            multicall.wrap(contract).numeraires(0),
-            multicall.wrap(contract).numeraires(1),
-            multicall.wrap(contract).liquidity(),
-          ]);
+        const [
+          name,
+          symbol,
+          decimals,
+          supplyRaw,
+          token0AddressRaw,
+          token1AddressRaw,
+          [totalLiquidityRaw, underlyingLiquidityRaw],
+        ] = await Promise.all([
+          multicall.wrap(contract).name(),
+          multicall.wrap(contract).symbol(),
+          multicall.wrap(contract).decimals(),
+          multicall.wrap(contract).totalSupply(),
+          multicall.wrap(contract).numeraires(0),
+          multicall.wrap(contract).numeraires(1),
+          multicall.wrap(contract).liquidity(),
+        ]);
         const underlyingTokenAddresses = [token0AddressRaw.toLowerCase(), token1AddressRaw.toLowerCase()];
 
         // Find underlying tokens from base dependencies
@@ -63,7 +68,8 @@ export class PolygonDfxCurveTokenFetcher implements PositionFetcher<AppTokenPosi
         // Denormalize big integer values
         const supply = Number(supplyRaw) / 10 ** decimals;
         const totalLiquidity = Number(totalLiquidityRaw) / 1e18;
-        const pricePerShare = 1;
+        const reserves = underlyingLiquidityRaw.map(reserveRaw => Number(reserveRaw) / 10 ** 18); // DFX report all token liquidity in 10**18
+        const pricePerShare = reserves.map(r => r / supply);
         const price = totalLiquidity / supply;
 
         // Prepare display props
