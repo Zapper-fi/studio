@@ -115,6 +115,7 @@ import { AppAction, AppTag, AppDefinitionObject } from '~app/app.interface';
     url: '${appUrl}',
     groups: {},
     tags: [${tags.map(n => `AppTag.${tagToKey[n]}`).join(',')}],
+    keywords: [],
     links: {
       learn: '',
       github: '',
