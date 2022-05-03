@@ -1,9 +1,9 @@
 import { Register } from '~app-toolkit/decorators';
-import { AppDefinition } from '~app/app.definition';
-import { AppDefinitionObject, GroupType, ProtocolAction, ProtocolTag } from '~app/app.interface';
+import { appDefinition, AppDefinition } from '~app/app.definition';
+import { GroupType, ProtocolAction, ProtocolTag } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
-export const JPEGD_DEFINITION: AppDefinitionObject = {
+export const JPEGD_DEFINITION = appDefinition({
   id: 'jpegd',
   name: 'Jpegd',
   description: 'JPEGd is the leading NFT lending platform in the decentralized finance space.',
@@ -23,7 +23,7 @@ export const JPEGD_DEFINITION: AppDefinitionObject = {
     [Network.ETHEREUM_MAINNET]: [ProtocolAction.VIEW],
   },
   primaryColor: '#fff',
-};
+});
 
 @Register.AppDefinition(JPEGD_DEFINITION.id)
 export class JpegdAppDefinition extends AppDefinition {

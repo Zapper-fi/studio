@@ -1,9 +1,9 @@
 import { Register } from '~app-toolkit/decorators';
-import { AppDefinition } from '~app/app.definition';
-import { ProtocolAction, GroupType, ProtocolTag, AppDefinitionObject } from '~app/app.interface';
+import { appDefinition, AppDefinition } from '~app/app.definition';
+import { ProtocolAction, GroupType, ProtocolTag } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
-export const LIDO_DEFINITION: AppDefinitionObject = {
+export const LIDO_DEFINITION = appDefinition({
   id: 'lido',
   name: 'Lido',
   description: 'Liquidity for staked assets',
@@ -24,7 +24,7 @@ export const LIDO_DEFINITION: AppDefinitionObject = {
     [Network.ETHEREUM_MAINNET]: [ProtocolAction.VIEW],
   },
   primaryColor: '#fff',
-};
+});
 
 @Register.AppDefinition(LIDO_DEFINITION.id)
 export class LidoAppDefinition extends AppDefinition {

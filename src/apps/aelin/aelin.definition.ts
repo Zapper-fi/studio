@@ -1,9 +1,9 @@
 import { Register } from '~app-toolkit/decorators';
-import { AppDefinition } from '~app/app.definition';
-import { GroupType, ProtocolTag, ProtocolAction, AppDefinitionObject } from '~app/app.interface';
+import { appDefinition, AppDefinition } from '~app/app.definition';
+import { GroupType, ProtocolTag, ProtocolAction } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
-export const AELIN_DEFINITION: AppDefinitionObject = {
+export const AELIN_DEFINITION = appDefinition({
   id: 'aelin',
   name: 'Aelin',
   description: `Aelin is a fundraising protocol built on Ethereum and launched on Optimism.`,
@@ -24,7 +24,7 @@ export const AELIN_DEFINITION: AppDefinitionObject = {
     [Network.OPTIMISM_MAINNET]: [ProtocolAction.VIEW],
     [Network.ETHEREUM_MAINNET]: [ProtocolAction.VIEW],
   },
-};
+});
 
 @Register.AppDefinition(AELIN_DEFINITION.id)
 export class AelinAppDefinition extends AppDefinition {

@@ -1,9 +1,9 @@
 import { Register } from '~app-toolkit/decorators';
-import { AppDefinition } from '~app/app.definition';
+import { appDefinition, AppDefinition } from '~app/app.definition';
 import { GroupType, ProtocolAction, ProtocolTag } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
-export const BALANCER_V2_DEFINITION = {
+export const BALANCER_V2_DEFINITION = appDefinition({
   id: 'balancer-v2',
   name: 'Balancer V2',
   description:
@@ -32,7 +32,7 @@ export const BALANCER_V2_DEFINITION = {
     address: '0xba100000625a3754423978a60c9317c58a424e3d',
     network: Network.ETHEREUM_MAINNET,
   },
-};
+});
 
 @Register.AppDefinition(BALANCER_V2_DEFINITION.id)
 export class BalancerV2AppDefinition extends AppDefinition {

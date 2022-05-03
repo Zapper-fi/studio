@@ -1,9 +1,9 @@
 import { Register } from '~app-toolkit/decorators';
-import { AppDefinition } from '~app/app.definition';
-import { AppDefinitionObject, GroupType, ProtocolAction, ProtocolTag } from '~app/app.interface';
+import { appDefinition, AppDefinition } from '~app/app.definition';
+import { GroupType, ProtocolAction, ProtocolTag } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
-export const CURVE_DEFINITION: AppDefinitionObject = {
+export const CURVE_DEFINITION = appDefinition({
   id: 'curve',
   name: 'Curve',
   description: `An exchange liquidity pool on Ethereum designed for: extremely efficient stablecoin trading, low risk, supplemental fee income for liquidity providers`,
@@ -36,7 +36,7 @@ export const CURVE_DEFINITION: AppDefinitionObject = {
     address: '0xd533a949740bb3306d119cc777fa900ba034cd52',
     network: Network.ETHEREUM_MAINNET,
   },
-};
+});
 
 @Register.AppDefinition(CURVE_DEFINITION.id)
 export class CurveAppDefinition extends AppDefinition {
