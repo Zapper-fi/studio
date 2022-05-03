@@ -21,7 +21,7 @@ export const PIE_DAO_DEFINITION: AppDefinitionObject = {
     telegram: 'https://t.me/piedao',
     medium: 'https://medium.com/piedao',
   },
-  tags: [AppTag.LIQUIDITY_POOL],
+  tags: [AppTag.ASSET_MANAGEMENT],
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
   },

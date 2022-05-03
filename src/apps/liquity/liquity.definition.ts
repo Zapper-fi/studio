@@ -21,7 +21,7 @@ export const LIQUITY_DEFINITION: AppDefinitionObject = {
     trove: { id: 'trove', type: GroupType.POSITION },
     stabilityPool: { id: 'stability-pool', type: GroupType.POSITION },
   },
-  tags: [AppTag.LENDING],
+  tags: [AppTag.COLLATERALIZED_DEBT_POSITION],
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
   },

@@ -19,7 +19,7 @@ export const SYNTHETIX_DEFINITION: AppDefinitionObject = {
     discord: 'https://discord.com/invite/AEdUHzt',
     telegram: 'https://t.me/s/havven_news',
   },
-  tags: [AppTag.LIQUIDITY_POOL],
+  tags: [AppTag.SYNTHETICS],
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW, AppAction.STAKE, AppAction.TRANSACT],
     [Network.OPTIMISM_MAINNET]: [AppAction.VIEW, AppAction.STAKE],

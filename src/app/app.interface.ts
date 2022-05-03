@@ -14,7 +14,6 @@ export enum AddressFormat {
 
 export enum AppTag {
   ALGORITHMIC_STABLECOIN = 'algorithmic-stablecoin',
-  ASSET_INDEXES = 'asset-indexes',
   ASSET_MANAGEMENT = 'asset-management',
   BONDS = 'bonds',
   BRIDGE = 'bridge',

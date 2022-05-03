@@ -18,7 +18,7 @@ export const JPEGD_DEFINITION: AppDefinitionObject = {
     pool: { id: 'pool', type: GroupType.POSITION },
     bond: { id: 'bond', type: GroupType.POSITION },
   },
-  tags: [AppTag.LENDING],
+  tags: [AppTag.COLLATERALIZED_DEBT_POSITION],
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
   },
