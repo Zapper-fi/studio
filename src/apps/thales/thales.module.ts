@@ -1,5 +1,4 @@
-import { Module } from '@nestjs/common';
-
+import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { ThalesContractFactory } from './contracts';
@@ -10,9 +9,10 @@ import { OptimismThalesMarketTokenFetcher } from './optimism/thales.market.token
 import { OptimismThalesTvlFetcher } from './optimism/thales.tvl-fetcher';
 import { PolygonThalesBalanceFetcher } from './polygon/thales.balance-fetcher';
 import { PolygonThalesMarketTokenFetcher } from './polygon/thales.market.token-fetcher';
-import { ThalesAppDefinition } from './thales.definition';
+import THALES_DEFINITION, { ThalesAppDefinition } from './thales.definition';
 
-@Module({
+@Register.AppModule({
+  appId: THALES_DEFINITION.id,
   providers: [
     ThalesAppDefinition,
     ThalesContractFactory,
