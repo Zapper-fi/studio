@@ -1,6 +1,6 @@
 import { Register } from '~app-toolkit/decorators';
 import { appDefinition, AppDefinition } from '~app/app.definition';
-import { GroupType, ProtocolAction, ProtocolTag } from '~app/app.interface';
+import { GroupType, AppAction, AppTag } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
 export const YEARN_DEFINITION = appDefinition({
@@ -19,11 +19,11 @@ export const YEARN_DEFINITION = appDefinition({
     discord: 'https://discord.yearn.finance/',
     medium: 'https://medium.com/iearn',
   },
-  tags: [ProtocolTag.YIELD_AGGREGATOR],
+  tags: [AppTag.YIELD_AGGREGATOR],
   supportedNetworks: {
-    [Network.ETHEREUM_MAINNET]: [ProtocolAction.VIEW, ProtocolAction.TRANSACT],
-    [Network.FANTOM_OPERA_MAINNET]: [ProtocolAction.VIEW],
-    [Network.ARBITRUM_MAINNET]: [ProtocolAction.VIEW],
+    [Network.ETHEREUM_MAINNET]: [AppAction.VIEW, AppAction.TRANSACT],
+    [Network.FANTOM_OPERA_MAINNET]: [AppAction.VIEW],
+    [Network.ARBITRUM_MAINNET]: [AppAction.VIEW],
   },
   primaryColor: '#036eef',
   token: {

@@ -1,6 +1,6 @@
 import { Register } from '~app-toolkit/decorators';
 import { appDefinition, AppDefinition } from '~app/app.definition';
-import { ProtocolAction, GroupType, ProtocolTag } from '~app/app.interface';
+import { GroupType, AppAction, AppTag } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
 export const LIDO_DEFINITION = appDefinition({
@@ -19,9 +19,9 @@ export const LIDO_DEFINITION = appDefinition({
     steth: { id: 'steth', type: GroupType.TOKEN },
     wsteth: { id: 'wsteth', type: GroupType.TOKEN },
   },
-  tags: [ProtocolTag.DERIVATIVES],
+  tags: [AppTag.LIQUID_STAKING],
   supportedNetworks: {
-    [Network.ETHEREUM_MAINNET]: [ProtocolAction.VIEW],
+    [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
   },
   primaryColor: '#fff',
 });

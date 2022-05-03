@@ -1,6 +1,6 @@
 import { Register } from '~app-toolkit/decorators';
 import { appDefinition, AppDefinition } from '~app/app.definition';
-import { GroupType, ProtocolAction, ProtocolTag } from '~app/app.interface';
+import { GroupType, AppAction, AppTag } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
 export const CURVE_DEFINITION = appDefinition({
@@ -20,16 +20,16 @@ export const CURVE_DEFINITION = appDefinition({
     votingEscrow: { id: 'votingEscrow', type: GroupType.POSITION },
     vestingEscrow: { id: 'vestingEscrow', type: GroupType.POSITION },
   },
-  tags: [ProtocolTag.LIQUIDITY_POOL],
+  tags: [AppTag.LIQUIDITY_POOL],
   supportedNetworks: {
-    [Network.ARBITRUM_MAINNET]: [ProtocolAction.VIEW],
-    [Network.AVALANCHE_MAINNET]: [ProtocolAction.VIEW],
-    [Network.ETHEREUM_MAINNET]: [ProtocolAction.VIEW],
-    [Network.FANTOM_OPERA_MAINNET]: [ProtocolAction.VIEW],
-    [Network.GNOSIS_MAINNET]: [ProtocolAction.VIEW],
-    [Network.HARMONY_MAINNET]: [ProtocolAction.VIEW],
-    [Network.OPTIMISM_MAINNET]: [ProtocolAction.VIEW],
-    [Network.POLYGON_MAINNET]: [ProtocolAction.VIEW],
+    [Network.ARBITRUM_MAINNET]: [AppAction.VIEW],
+    [Network.AVALANCHE_MAINNET]: [AppAction.VIEW],
+    [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
+    [Network.FANTOM_OPERA_MAINNET]: [AppAction.VIEW],
+    [Network.GNOSIS_MAINNET]: [AppAction.VIEW],
+    [Network.HARMONY_MAINNET]: [AppAction.VIEW],
+    [Network.OPTIMISM_MAINNET]: [AppAction.VIEW],
+    [Network.POLYGON_MAINNET]: [AppAction.VIEW],
   },
   primaryColor: '#34649c',
   token: {

@@ -1,6 +1,6 @@
 import { Register } from '~app-toolkit/decorators';
 import { appDefinition, AppDefinition } from '~app/app.definition';
-import { GroupType, ProtocolAction, ProtocolTag } from '~app/app.interface';
+import { GroupType, AppAction, AppTag } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
 export const OLYMPUS_DEFINITION = appDefinition({
@@ -15,7 +15,7 @@ export const OLYMPUS_DEFINITION = appDefinition({
     telegram: 'https://t.me/OlympusTG',
     medium: 'https://olympusdao.medium.com/',
   },
-  tags: [ProtocolTag.ELASTIC_FINANCE],
+  tags: [AppTag.ELASTIC_FINANCE],
   groups: {
     sOhmV1: { id: 's-ohm-v1', type: GroupType.TOKEN },
     sOhm: { id: 's-ohm', type: GroupType.TOKEN },
@@ -24,11 +24,11 @@ export const OLYMPUS_DEFINITION = appDefinition({
     bond: { id: 'bond', type: GroupType.POSITION },
   },
   supportedNetworks: {
-    [Network.ARBITRUM_MAINNET]: [ProtocolAction.VIEW],
-    [Network.AVALANCHE_MAINNET]: [ProtocolAction.VIEW],
-    [Network.ETHEREUM_MAINNET]: [ProtocolAction.VIEW],
-    [Network.FANTOM_OPERA_MAINNET]: [ProtocolAction.VIEW],
-    [Network.POLYGON_MAINNET]: [ProtocolAction.VIEW],
+    [Network.ARBITRUM_MAINNET]: [AppAction.VIEW],
+    [Network.AVALANCHE_MAINNET]: [AppAction.VIEW],
+    [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
+    [Network.FANTOM_OPERA_MAINNET]: [AppAction.VIEW],
+    [Network.POLYGON_MAINNET]: [AppAction.VIEW],
   },
 });
 

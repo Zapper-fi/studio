@@ -1,6 +1,6 @@
 import { Register } from '~app-toolkit/decorators';
 import { appDefinition, AppDefinition } from '~app/app.definition';
-import { GroupType, ProtocolAction, ProtocolTag } from '~app/app.interface';
+import { GroupType, AppAction, AppTag } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
 export const ENZYME_FINANCE_DEFINITION = appDefinition({
@@ -18,9 +18,9 @@ export const ENZYME_FINANCE_DEFINITION = appDefinition({
     telegram: 'https://telegram.enzyme.finance/',
     medium: 'https://medium.com/enzymefinance',
   },
-  tags: [ProtocolTag.ASSET_MANAGEMENT],
+  tags: [AppTag.ASSET_MANAGEMENT],
   supportedNetworks: {
-    [Network.ETHEREUM_MAINNET]: [ProtocolAction.VIEW],
+    [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
   },
   primaryColor: '#8167e0',
 });

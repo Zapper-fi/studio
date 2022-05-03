@@ -66,10 +66,10 @@ function generateDefinitionFile(
   return dedent`
   import { Register } from '~app-toolkit/decorators';
   import { AppDefinition } from '~app/app.definition';
-  import { ProtocolAction } from '~app/app.interface';
+  import { AppAction, AppDefinitionObject } from '~app/app.interface';
   import { Network } from '~types/network.interface';
 
-  export const ${appDefinitionName} = {
+  export const ${appDefinitionName}: AppDefinitionObject = {
     id: '${appId}',
     name: '${appName}',
     description: '${appDescription}',
@@ -85,7 +85,7 @@ function generateDefinitionFile(
       medium: '',
     },
     supportedNetworks: {
-      ${networks.map(n => `[Network.${networkToKey[n]}]: [ProtocolAction.VIEW]`).join(',\n')}
+      ${networks.map(n => `[Network.${networkToKey[n]}]: [AppAction.VIEW]`).join(',\n')}
     },
     primaryColor: '#fff',
   };

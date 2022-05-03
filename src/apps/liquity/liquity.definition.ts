@@ -1,6 +1,6 @@
 import { Register } from '~app-toolkit/decorators';
 import { appDefinition, AppDefinition } from '~app/app.definition';
-import { GroupType, ProtocolAction, ProtocolTag } from '~app/app.interface';
+import { GroupType, AppAction, AppTag } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
 export const LIQUITY_DEFINITION = appDefinition({
@@ -21,9 +21,9 @@ export const LIQUITY_DEFINITION = appDefinition({
     trove: { id: 'trove', type: GroupType.POSITION },
     stabilityPool: { id: 'stability-pool', type: GroupType.POSITION },
   },
-  tags: [ProtocolTag.LENDING],
+  tags: [AppTag.COLLATERALIZED_DEBT_POSITION],
   supportedNetworks: {
-    [Network.ETHEREUM_MAINNET]: [ProtocolAction.VIEW],
+    [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
   },
   primaryColor: '#fff',
   token: {

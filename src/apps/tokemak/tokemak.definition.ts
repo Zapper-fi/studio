@@ -1,6 +1,6 @@
 import { Register } from '~app-toolkit/decorators';
 import { appDefinition, AppDefinition } from '~app/app.definition';
-import { GroupType, ProtocolAction, ProtocolTag } from '~app/app.interface';
+import { GroupType, AppAction, AppTag } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
 export const TOKEMAK_DEFINITION = appDefinition({
@@ -18,8 +18,8 @@ export const TOKEMAK_DEFINITION = appDefinition({
     discord: 'https://discord.com/invite/Z5f92tfzh4',
     medium: 'https://medium.com/tokemak',
   },
-  tags: [ProtocolTag.LIQUIDITY_POOL],
-  supportedNetworks: { [Network.ETHEREUM_MAINNET]: [ProtocolAction.VIEW] },
+  tags: [AppTag.LIQUIDITY_POOL],
+  supportedNetworks: { [Network.ETHEREUM_MAINNET]: [AppAction.VIEW] },
 });
 
 @Register.AppDefinition(TOKEMAK_DEFINITION.id)

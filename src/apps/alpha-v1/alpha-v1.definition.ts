@@ -1,6 +1,6 @@
 import { Register } from '~app-toolkit/decorators';
 import { appDefinition, AppDefinition } from '~app/app.definition';
-import { GroupType, ProtocolAction, ProtocolTag } from '~app/app.interface';
+import { GroupType, AppAction, AppTag } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
 export const ALPHA_V1_DEFINITION = appDefinition({
@@ -16,9 +16,9 @@ export const ALPHA_V1_DEFINITION = appDefinition({
     discord: 'https://discord.com/invite/2My6wKt',
     telegram: 'https://t.me/AlphaFinanceLab',
   },
-  tags: [ProtocolTag.LENDING],
+  tags: [AppTag.LENDING, AppTag.FARMING],
   supportedNetworks: {
-    [Network.ETHEREUM_MAINNET]: [ProtocolAction.VIEW],
+    [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
   },
   primaryColor: '#fff',
 });

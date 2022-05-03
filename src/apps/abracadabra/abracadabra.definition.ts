@@ -1,6 +1,6 @@
 import { Register } from '~app-toolkit/decorators';
 import { appDefinition, AppDefinition } from '~app/app.definition';
-import { GroupType, ProtocolAction, ProtocolTag } from '~app/app.interface';
+import { GroupType, AppAction, AppTag } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
 export const ABRACADABRA_DEFINITION = appDefinition({
@@ -20,12 +20,12 @@ export const ABRACADABRA_DEFINITION = appDefinition({
     telegram: 'https://t.me/abracadabramoney',
     medium: 'https://abracadabramoney.medium.com/',
   },
-  tags: [ProtocolTag.LENDING],
+  tags: [AppTag.LENDING],
   supportedNetworks: {
-    [Network.ARBITRUM_MAINNET]: [ProtocolAction.VIEW],
-    [Network.AVALANCHE_MAINNET]: [ProtocolAction.VIEW],
-    [Network.ETHEREUM_MAINNET]: [ProtocolAction.VIEW],
-    [Network.FANTOM_OPERA_MAINNET]: [ProtocolAction.VIEW],
+    [Network.ARBITRUM_MAINNET]: [AppAction.VIEW],
+    [Network.AVALANCHE_MAINNET]: [AppAction.VIEW],
+    [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
+    [Network.FANTOM_OPERA_MAINNET]: [AppAction.VIEW],
   },
 });
 

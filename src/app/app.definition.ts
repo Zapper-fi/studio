@@ -2,12 +2,13 @@ import { validate as validateBtc } from 'bitcoin-address-validation';
 import { uniq, keys, mapValues, zipObject } from 'lodash';
 
 import { Network } from '~types/network.interface';
+import { ArrayOfOneOrMore } from '~types/utils';
 
-import { AddressFormat, AppDefinitionObject, AppGroup, AppLinks, ProtocolAction, ProtocolTag } from './app.interface';
+import { AddressFormat, AppDefinitionObject, AppGroup, AppLinks, AppAction, AppTag } from './app.interface';
 
 function toNetworkWithActionsArray(
-  supportedNetworks: Record<string, ProtocolAction[]>,
-): { network: Network; actions: ProtocolAction[] }[] {
+  supportedNetworks: Record<string, AppAction[]>,
+): { network: Network; actions: AppAction[] }[] {
   return Object.keys(supportedNetworks).map((network: Network) => ({
     network,
     actions: supportedNetworks[network],
@@ -29,7 +30,7 @@ class AppDefinitionToken {
 
 class AppSupportedNetwork {
   readonly network: Network;
-  readonly actions: ProtocolAction[];
+  readonly actions: AppAction[];
 }
 
 export class AppDefinition {
@@ -41,6 +42,7 @@ export class AppDefinition {
 
     this.id = definitionRaw.id;
     this.tags = definitionRaw.tags;
+    this.keywords = definitionRaw.keywords ?? [];
     this.name = definitionRaw.name;
     this.url = definitionRaw.url;
     this.links = definitionRaw.links;
@@ -69,7 +71,8 @@ export class AppDefinition {
   readonly url: string;
   readonly links: AppLinks;
   readonly deprecated?: boolean;
-  readonly tags: ProtocolTag[];
+  readonly tags: ArrayOfOneOrMore<AppTag>;
+  readonly keywords: string[];
   readonly supportedNetworks: AppSupportedNetwork[];
   readonly compatibleAddressFormats?: { [N in Network]?: AddressFormat };
   readonly primaryColor: string;

@@ -1,6 +1,6 @@
 import { Register } from '~app-toolkit/decorators';
 import { appDefinition, AppDefinition } from '~app/app.definition';
-import { GroupType, ProtocolAction, ProtocolTag } from '~app/app.interface';
+import { GroupType, AppAction, AppTag } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
 export const AIRSWAP_DEFINITION = appDefinition({
@@ -19,9 +19,9 @@ export const AIRSWAP_DEFINITION = appDefinition({
     sASTv2: { id: 's-ast-v2', type: GroupType.TOKEN },
     sASTv3: { id: 's-ast-v3', type: GroupType.TOKEN },
   },
-  tags: [ProtocolTag.EXCHANGE],
+  tags: [AppTag.DECENTRALIZED_EXCHANGE],
   supportedNetworks: {
-    [Network.ETHEREUM_MAINNET]: [ProtocolAction.VIEW],
+    [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
   },
   primaryColor: '#2B71FF',
 });
