@@ -19,7 +19,7 @@ export const LIDO_DEFINITION: AppDefinitionObject = {
     steth: { id: 'steth', type: GroupType.TOKEN },
     wsteth: { id: 'wsteth', type: GroupType.TOKEN },
   },
-  tags: [AppTag.DERIVATIVES],
+  tags: [AppTag.LIQUID_STAKING],
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
   },
