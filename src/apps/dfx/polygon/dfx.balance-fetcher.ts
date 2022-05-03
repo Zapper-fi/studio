@@ -27,7 +27,6 @@ export class PolygonDfxBalanceFetcher implements BalanceFetcher {
 
   async getBalances(address: string) {
     const [curveTokenBalances] = await Promise.all([this.getCurveTokenBalances(address)]);
-    console.log(curveTokenBalances);
 
     return presentBalanceFetcherResponse([
       {

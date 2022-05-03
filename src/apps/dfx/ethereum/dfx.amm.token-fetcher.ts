@@ -39,24 +39,19 @@ export class EthereumDfxCurveTokenFetcher implements PositionFetcher<AppTokenPos
       curveAddresses.map(async curveAddress => {
         // Fetch data from DFX curve contract
         const contract = this.dfxContractFactory.dfxCurve({ address: curveAddress, network });
-        const [
-          name,
-          symbol,
-          decimals,
-          supplyRaw,
-          token0AddressRaw,
-          token1AddressRaw,
-          [totalLiquidityRaw, [liquidity0Raw, liquidity1Raw]],
-        ] = await Promise.all([
-          multicall.wrap(contract).name(),
-          multicall.wrap(contract).symbol(),
-          multicall.wrap(contract).decimals(),
-          multicall.wrap(contract).totalSupply(),
-          multicall.wrap(contract).numeraires(0),
-          multicall.wrap(contract).numeraires(1),
-          multicall.wrap(contract).liquidity(),
-        ]);
+        const [name, symbol, decimals, supplyRaw, token0AddressRaw, token1AddressRaw, liquidityRaw] = await Promise.all(
+          [
+            multicall.wrap(contract).name(),
+            multicall.wrap(contract).symbol(),
+            multicall.wrap(contract).decimals(),
+            multicall.wrap(contract).totalSupply(),
+            multicall.wrap(contract).numeraires(0),
+            multicall.wrap(contract).numeraires(1),
+            multicall.wrap(contract).liquidity(),
+          ],
+        );
         const underlyingTokenAddresses = [token0AddressRaw.toLowerCase(), token1AddressRaw.toLowerCase()];
+        const totalLiquidityRaw = liquidityRaw[0];
 
         // Find underlying tokens from base dependencies
         const [token0, token1] = underlyingTokenAddresses.map(tokenAddress =>
