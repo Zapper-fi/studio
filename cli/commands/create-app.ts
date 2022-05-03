@@ -5,6 +5,7 @@ import * as inquirer from 'inquirer';
 import { zipObject } from 'lodash';
 import prettier from 'prettier';
 
+import { AppTag } from '../../src/app/app.interface';
 import { Network } from '../../src/types/network.interface';
 import { strings } from '../strings';
 
@@ -13,6 +14,42 @@ export default class CreateApp extends Command {
   static examples = [`$ ./studio create-app`];
   static flags = {};
   static args = [];
+
+  private async promptNetworks() {
+    let networks: Network[] = [];
+    do {
+      const prompt = await inquirer.prompt([
+        {
+          name: 'networks',
+          message: 'Select (at least one) network supported by the app',
+          type: 'checkbox',
+          choices: Object.values(Network)
+            .filter(v => v !== Network.BITCOIN_MAINNET)
+            .map(name => ({ name })),
+        },
+      ]);
+      if (prompt.networks) networks = prompt.networks;
+    } while (!networks.length);
+
+    return networks;
+  }
+
+  private async promptTags() {
+    let tags: AppTag[] = [];
+    do {
+      const prompt = await inquirer.prompt([
+        {
+          name: 'tags',
+          message: 'Select (at least one) tag representing your app',
+          type: 'checkbox',
+          choices: Object.values(AppTag).map(name => ({ name })),
+        },
+      ]);
+      if (prompt.tags) tags = prompt.tags;
+    } while (!tags.length);
+
+    return tags;
+  }
 
   async run(): Promise<void> {
     const appName = await CliUx.ux.prompt('What is the name of the app ', { required: true });
@@ -23,16 +60,8 @@ export default class CreateApp extends Command {
     const appDescription = await CliUx.ux.prompt('What is the description of your app ', { required: true });
     const appUrl = await CliUx.ux.prompt('What is the URL of your app ', { required: true });
 
-    const { networks } = await inquirer.prompt([
-      {
-        name: 'networks',
-        message: 'Select networks supported by the app',
-        type: 'checkbox',
-        choices: Object.values(Network)
-          .filter(v => v !== Network.BITCOIN_MAINNET)
-          .map(name => ({ name })),
-      },
-    ]);
+    const networks = await this.promptNetworks();
+    const tags = await this.promptTags();
 
     createFolder(`./src/apps/${appId}`);
     createFolder(`./src/apps/${appId}/assets`);
@@ -42,7 +71,7 @@ export default class CreateApp extends Command {
       createFolder(`./src/apps/${appId}/${network}`);
     }
 
-    const generatedCode = generateDefinitionFile(appId, appName, appDescription, appUrl, networks);
+    const generatedCode = generateDefinitionFile({ appId, appName, appDescription, appUrl, networks, tags });
     const config = await prettier.resolveConfig(process.cwd());
     fse.writeFileSync(
       `./src/apps/${appId}/${appId}.definition.ts`,
@@ -52,21 +81,31 @@ export default class CreateApp extends Command {
   }
 }
 
-function generateDefinitionFile(
-  appId: string,
-  appName: string,
-  appDescription: string,
-  appUrl: string,
-  networks: string[],
-) {
+function generateDefinitionFile({
+  appId,
+  appName,
+  appDescription,
+  appUrl,
+  networks,
+  tags,
+}: {
+  appId: string;
+  appName: string;
+  appDescription: string;
+  appUrl: string;
+  networks: Network[];
+  tags: AppTag[];
+}) {
   const appDefinitionName = `${strings.upperCase(appId)}_DEFINITION`;
   const appClassName = strings.titleCase(appId);
+
   const networkToKey = zipObject(Object.values(Network), Object.keys(Network));
+  const tagToKey = zipObject(Object.values(AppTag), Object.keys(AppTag));
 
   return dedent`
   import { Register } from '~app-toolkit/decorators';
   import { AppDefinition } from '~app/app.definition';
-  import { AppAction, AppDefinitionObject } from '~app/app.interface';
+import { AppAction, AppTag, AppDefinitionObject } from '~app/app.interface';
   import { Network } from '~types/network.interface';
 
   export const ${appDefinitionName}: AppDefinitionObject = {
@@ -75,7 +114,7 @@ function generateDefinitionFile(
     description: '${appDescription}',
     url: '${appUrl}',
     groups: {},
-    tags: [],
+    tags: [${tags.map(n => `AppTag.${tagToKey[n]}`).join(',')}],
     links: {
       learn: '',
       github: '',
