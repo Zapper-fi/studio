@@ -19,7 +19,7 @@ export const AELIN_DEFINITION: AppDefinitionObject = {
     discord: 'https://t.co/kG6zsC0zaR',
     medium: 'https://medium.com/@aelinprotocol',
   },
-  tags: [AppTag.LENDING],
+  tags: [AppTag.LAUNCHPAD],
   supportedNetworks: {
     [Network.OPTIMISM_MAINNET]: [AppAction.VIEW],
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
