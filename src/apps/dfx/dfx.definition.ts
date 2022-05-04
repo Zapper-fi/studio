@@ -1,9 +1,9 @@
 import { Register } from '~app-toolkit/decorators';
-import { AppDefinition } from '~app/app.definition';
-import { GroupType, ProtocolAction, ProtocolTag } from '~app/app.interface';
+import { appDefinition, AppDefinition } from '~app/app.definition';
+import { GroupType, AppAction, AppTag } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
-export const DFX_DEFINITION = {
+export const DFX_DEFINITION = appDefinition({
   id: 'dfx',
   name: 'dfx',
   description: 'DFX.Finance is a decentralized foreign exchange protocol optimized for stablecoins',
@@ -19,13 +19,13 @@ export const DFX_DEFINITION = {
     dfxCurve: { id: 'dfx-curve', type: GroupType.TOKEN },
     staking: { id: 'staking', type: GroupType.POSITION },
   },
-  tags: [ProtocolTag.EXCHANGE, ProtocolTag.LIQUIDITY_POOL, ProtocolTag.STABLECOIN],
+  tags: [AppTag.DECENTRALIZED_EXCHANGE, AppTag.LIQUIDITY_POOL, AppTag.STABLECOIN],
   supportedNetworks: {
-    [Network.ETHEREUM_MAINNET]: [ProtocolAction.VIEW],
-    [Network.POLYGON_MAINNET]: [ProtocolAction.VIEW],
+    [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
+    [Network.POLYGON_MAINNET]: [AppAction.VIEW],
   },
   primaryColor: '#fff',
-};
+});
 
 @Register.AppDefinition(DFX_DEFINITION.id)
 export class DfxAppDefinition extends AppDefinition {
