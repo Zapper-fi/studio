@@ -1,9 +1,8 @@
-import { Module } from '@nestjs/common';
-
-import { AbstractDynamicApp } from '~app/app.dynamic-module';
+import { Register } from '~app-toolkit/decorators';
+import { AbstractApp } from '~app/app.dynamic-module';
 
 import { DfxContractFactory } from './contracts';
-import { DfxAppDefinition } from './dfx.definition';
+import DFX_DEFINITION, { DfxAppDefinition } from './dfx.definition';
 import { EthereumDfxBalanceFetcher } from './ethereum/dfx.balance-fetcher';
 import { EthereumDfxCurveTokenFetcher } from './ethereum/dfx.curve.token-fetcher';
 import { EthereumDfxStakingContractPositionFetcher } from './ethereum/dfx.staking.contract-position-fetcher';
@@ -11,7 +10,8 @@ import { PolygonDfxBalanceFetcher } from './polygon/dfx.balance-fetcher';
 import { PolygonDfxCurveTokenFetcher } from './polygon/dfx.curve.token-fetcher';
 import { PolygonDfxStakingContractPositionFetcher } from './polygon/dfx.staking.contract-position-fetcher';
 
-@Module({
+@Register.AppModule({
+  appId: DFX_DEFINITION.id,
   providers: [
     DfxAppDefinition,
     DfxContractFactory,
@@ -23,4 +23,4 @@ import { PolygonDfxStakingContractPositionFetcher } from './polygon/dfx.staking.
     PolygonDfxStakingContractPositionFetcher,
   ],
 })
-export class DfxAppModule extends AbstractDynamicApp<DfxAppModule>() {}
+export class DfxAppModule extends AbstractApp() {}
