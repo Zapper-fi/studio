@@ -47,6 +47,13 @@ export enum AppTag {
   SYNTHETICS = 'synthetics',
   TOKENIZED_RISK = 'tokenized-risk',
   YIELD_AGGREGATOR = 'yield-aggregator',
+  // Legacy tags are below, we'll delete them in a second pass
+  ASSET_BUNDLES = 'asset-bundles',
+  ASSET_INDEXES = 'asset-indexes',
+  EXCHANGE = 'exchange',
+  PAYROLL = 'payroll',
+  SEIGNIORAGE = 'seigniorage',
+  TOKENIZED_RISK_PROTOCOL = 'tokenized-risk-protocol',
 }
 
 export enum GroupType {
