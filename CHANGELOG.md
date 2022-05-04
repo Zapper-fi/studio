@@ -4,6 +4,21 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.14.0](https://github.com/Zapper-fi/studio/compare/v0.13.1...v0.14.0) (2022-05-04)
+
+
+### Features
+
+* Extract Maker to Studio, change implementation to be fully on-chain and no reliance on third party APIs ([#357](https://github.com/Zapper-fi/studio/issues/357)) ([01f0052](https://github.com/Zapper-fi/studio/commit/01f00525a50bfa1e94b3cc9674b261e85e3a00e4))
+
+
+### Bug Fixes
+
+* add back deprecated tags until we finish removal in api ([#359](https://github.com/Zapper-fi/studio/issues/359)) ([eac377b](https://github.com/Zapper-fi/studio/commit/eac377b76560dc6fab73aa76bac90ada265adaed))
+* Fix another Maker path ([#361](https://github.com/Zapper-fi/studio/issues/361)) ([89cb0b0](https://github.com/Zapper-fi/studio/commit/89cb0b01f3c1eaa2d4e777839f423c07f71d07e3))
+* Fix paths in Maker ([#360](https://github.com/Zapper-fi/studio/issues/360)) ([8c382c5](https://github.com/Zapper-fi/studio/commit/8c382c528ab9ca33342c9cd3bebd960deeba8e61))
+* remove legacy tags after all ([#362](https://github.com/Zapper-fi/studio/issues/362)) ([214595c](https://github.com/Zapper-fi/studio/commit/214595ceffeb55865a65d854045019b979d4edf2))
+
 ### [0.13.1](https://github.com/Zapper-fi/studio/compare/v0.13.0...v0.13.1) (2022-05-04)
 
 
