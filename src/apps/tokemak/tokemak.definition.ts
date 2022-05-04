@@ -1,9 +1,9 @@
 import { Register } from '~app-toolkit/decorators';
-import { AppDefinition } from '~app/app.definition';
-import { AppDefinitionObject, GroupType, AppAction, AppTag } from '~app/app.interface';
+import { appDefinition, AppDefinition } from '~app/app.definition';
+import { GroupType, AppAction, AppTag } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
-export const TOKEMAK_DEFINITION: AppDefinitionObject = {
+export const TOKEMAK_DEFINITION = appDefinition({
   id: 'tokemak',
   name: 'Tokemak',
   description: `Tokemak creates sustainable DeFi liquidity and capital efficient markets through a convenient decentralized market making protocol.`,
@@ -20,7 +20,7 @@ export const TOKEMAK_DEFINITION: AppDefinitionObject = {
   },
   tags: [AppTag.LIQUIDITY_POOL],
   supportedNetworks: { [Network.ETHEREUM_MAINNET]: [AppAction.VIEW] },
-};
+});
 
 @Register.AppDefinition(TOKEMAK_DEFINITION.id)
 export class TokemakAppDefinition extends AppDefinition {

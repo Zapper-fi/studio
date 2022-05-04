@@ -1,9 +1,9 @@
 import { Register } from '~app-toolkit/decorators';
-import { AppDefinition } from '~app/app.definition';
-import { AppDefinitionObject, GroupType, AppAction, AppTag } from '~app/app.interface';
+import { appDefinition, AppDefinition } from '~app/app.definition';
+import { GroupType, AppAction, AppTag } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
-export const PICKLE_DEFINITION: AppDefinitionObject = {
+export const PICKLE_DEFINITION = appDefinition({
   id: 'pickle',
   name: 'Pickle',
   description: `Pickle Finance helps users to maximize their DeFi yields by auto-compounding their rewards, saving them time and gas.`,
@@ -33,7 +33,7 @@ export const PICKLE_DEFINITION: AppDefinitionObject = {
     address: '0x429881672b9ae42b8eba0e26cd9c73711b891ca5',
     network: Network.ETHEREUM_MAINNET,
   },
-};
+});
 
 @Register.AppDefinition(PICKLE_DEFINITION.id)
 export class PickleAppDefinition extends AppDefinition {

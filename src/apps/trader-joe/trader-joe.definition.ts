@@ -1,10 +1,10 @@
 import { Register } from '~app-toolkit/decorators';
-import { AppDefinition } from '~app/app.definition';
-import { AppDefinitionObject, GroupType } from '~app/app.interface';
-import { AppTag, AppAction } from '~app/app.interface';
+import { appDefinition, AppDefinition } from '~app/app.definition';
+import { GroupType } from '~app/app.interface';
+import { AppAction, AppTag } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
-export const TRADER_JOE_DEFINITION: AppDefinitionObject = {
+export const TRADER_JOE_DEFINITION = appDefinition({
   id: 'trader-joe',
   name: 'Trader Joe',
   description: `Trader Joe is your one-stop decentralized trading platform on the Avalanche network.`,
@@ -32,7 +32,7 @@ export const TRADER_JOE_DEFINITION: AppDefinitionObject = {
     address: '0x6e84a6216ea6dacc71ee8e6b0a5b7322eebc0fdd',
     network: Network.AVALANCHE_MAINNET,
   },
-};
+});
 
 @Register.AppDefinition(TRADER_JOE_DEFINITION.id)
 export class TraderJoeAppDefinition extends AppDefinition {

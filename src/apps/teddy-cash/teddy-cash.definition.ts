@@ -1,9 +1,9 @@
 import { Register } from '~app-toolkit/decorators';
-import { AppDefinition } from '~app/app.definition';
-import { AppDefinitionObject, GroupType, AppAction, AppTag } from '~app/app.interface';
+import { appDefinition, AppDefinition } from '~app/app.definition';
+import { GroupType, AppAction, AppTag } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
-export const TEDDY_CASH_DEFINITION: AppDefinitionObject = {
+export const TEDDY_CASH_DEFINITION = appDefinition({
   id: 'teddy-cash',
   name: 'Teddy Cash',
   description: 'Borrow up to 90% on your AVAX with Teddy, a decentralized borrowing protocol on Avalanche',
@@ -25,7 +25,7 @@ export const TEDDY_CASH_DEFINITION: AppDefinitionObject = {
     [Network.AVALANCHE_MAINNET]: [AppAction.VIEW],
   },
   primaryColor: '#fff',
-};
+});
 
 @Register.AppDefinition(TEDDY_CASH_DEFINITION.id)
 export class TeddyCashAppDefinition extends AppDefinition {

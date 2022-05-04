@@ -1,9 +1,9 @@
 import { Register } from '~app-toolkit/decorators';
-import { AppDefinition } from '~app/app.definition';
-import { AppDefinitionObject, GroupType, AppAction, AppTag } from '~app/app.interface';
+import { appDefinition, AppDefinition } from '~app/app.definition';
+import { GroupType, AppAction, AppTag } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
-export const BANANO_DEFINITION: AppDefinitionObject = {
+export const BANANO_DEFINITION = appDefinition({
   id: 'banano',
   name: 'Banano',
   description:
@@ -26,7 +26,7 @@ export const BANANO_DEFINITION: AppDefinitionObject = {
     [Network.FANTOM_OPERA_MAINNET]: [AppAction.VIEW],
   },
   primaryColor: '#fff',
-};
+});
 
 @Register.AppDefinition(BANANO_DEFINITION.id)
 export class BananoAppDefinition extends AppDefinition {

@@ -1,9 +1,9 @@
 import { Register } from '~app-toolkit/decorators';
-import { AppDefinition } from '~app/app.definition';
-import { AppDefinitionObject, GroupType, AppAction, AppTag } from '~app/app.interface';
+import { appDefinition, AppDefinition } from '~app/app.definition';
+import { GroupType, AppAction, AppTag } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
-export const YEARN_DEFINITION: AppDefinitionObject = {
+export const YEARN_DEFINITION = appDefinition({
   id: 'yearn',
   name: 'Yearn',
   description: `Automate your yield. DeFi made simple.`,
@@ -30,7 +30,7 @@ export const YEARN_DEFINITION: AppDefinitionObject = {
     address: '0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e',
     network: Network.ETHEREUM_MAINNET,
   },
-};
+});
 
 @Register.AppDefinition(YEARN_DEFINITION.id)
 export class YearnAppDefinition extends AppDefinition {

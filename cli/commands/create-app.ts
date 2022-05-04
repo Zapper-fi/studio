@@ -104,11 +104,11 @@ function generateDefinitionFile({
 
   return dedent`
   import { Register } from '~app-toolkit/decorators';
-  import { AppDefinition } from '~app/app.definition';
-  import { AppAction, AppTag, AppDefinitionObject } from '~app/app.interface';
+  import { appDefinition, AppDefinition } from '~app/app.definition';
+  import { AppAction, AppTag } from '~app/app.interface';
   import { Network } from '~types/network.interface';
 
-  export const ${appDefinitionName}: AppDefinitionObject = {
+  export const ${appDefinitionName} = appDefinition({
     id: '${appId}',
     name: '${appName}',
     description: '${appDescription}',
@@ -128,7 +128,7 @@ function generateDefinitionFile({
       ${networks.map(n => `[Network.${networkToKey[n]}]: [AppAction.VIEW]`).join(',\n')}
     },
     primaryColor: '#fff',
-  };
+  });
 
   @Register.AppDefinition(${appDefinitionName}.id)
   export class ${appClassName}AppDefinition extends AppDefinition {

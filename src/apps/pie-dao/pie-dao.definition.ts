@@ -1,9 +1,9 @@
 import { Register } from '~app-toolkit/decorators';
-import { AppDefinition } from '~app/app.definition';
-import { AppDefinitionObject, GroupType, AppAction, AppTag } from '~app/app.interface';
+import { appDefinition, AppDefinition } from '~app/app.definition';
+import { GroupType, AppAction, AppTag } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
-export const PIE_DAO_DEFINITION: AppDefinitionObject = {
+export const PIE_DAO_DEFINITION = appDefinition({
   id: 'pie-dao',
   name: 'PieDAO',
   description: `PieDAO is the asset allocation DAO for decentralized market-weighted portfolio allocations.`,
@@ -25,7 +25,7 @@ export const PIE_DAO_DEFINITION: AppDefinitionObject = {
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
   },
-};
+});
 
 @Register.AppDefinition(PIE_DAO_DEFINITION.id)
 export class PieDaoAppDefinition extends AppDefinition {

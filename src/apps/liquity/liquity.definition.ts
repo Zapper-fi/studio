@@ -1,9 +1,9 @@
 import { Register } from '~app-toolkit/decorators';
-import { AppDefinition } from '~app/app.definition';
-import { AppDefinitionObject, GroupType, AppAction, AppTag } from '~app/app.interface';
+import { appDefinition, AppDefinition } from '~app/app.definition';
+import { GroupType, AppAction, AppTag } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
-export const LIQUITY_DEFINITION: AppDefinitionObject = {
+export const LIQUITY_DEFINITION = appDefinition({
   id: 'liquity',
   name: 'Liquity',
   description:
@@ -30,7 +30,7 @@ export const LIQUITY_DEFINITION: AppDefinitionObject = {
     address: '0x6dea81c8171d0ba574754ef6f8b412f2ed88c54d',
     network: Network.ETHEREUM_MAINNET,
   },
-};
+});
 
 @Register.AppDefinition(LIQUITY_DEFINITION.id)
 export class LiquityAppDefinition extends AppDefinition {

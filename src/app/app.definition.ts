@@ -15,6 +15,14 @@ function toNetworkWithActionsArray(
   }));
 }
 
+export const appDefinition = <T>(
+  definition: Omit<AppDefinitionObject, 'groups'> & {
+    groups: {
+      [K in keyof T]: AppGroup;
+    };
+  },
+) => definition;
+
 class AppDefinitionToken {
   address: string;
   network: Network;

@@ -1,9 +1,9 @@
 import { Register } from '~app-toolkit/decorators';
-import { AppDefinition } from '~app/app.definition';
-import { AppDefinitionObject, GroupType, AppAction, AppTag } from '~app/app.interface';
+import { appDefinition, AppDefinition } from '~app/app.definition';
+import { GroupType, AppAction, AppTag } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
-export const ALPHA_V1_DEFINITION: AppDefinitionObject = {
+export const ALPHA_V1_DEFINITION = appDefinition({
   id: 'alpha-v1',
   name: 'Alpha',
   description: `Alpha Homora is a leveraged yield farming leveraged liquidity providing protocol. Lenders can earn high interest, and yield farmers can get even higher farming APY and trading fees through leverage. This project is deprecated in favour of V2.`,
@@ -21,7 +21,7 @@ export const ALPHA_V1_DEFINITION: AppDefinitionObject = {
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
   },
   primaryColor: '#fff',
-};
+});
 
 @Register.AppDefinition(ALPHA_V1_DEFINITION.id)
 export class AlphaV1AppDefinition extends AppDefinition {
