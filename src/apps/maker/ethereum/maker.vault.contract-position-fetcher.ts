@@ -2,10 +2,10 @@ import { Inject } from '@nestjs/common';
 import { compact, range } from 'lodash';
 import Web3 from 'web3';
 
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { getImagesFromToken, getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
 import { UNISWAP_V2_DEFINITION } from '~apps/uniswap-v2';
-import { APP_TOOLKIT, IAppToolkit } from '~lib';
 import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
