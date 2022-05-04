@@ -1,9 +1,9 @@
 import { Register } from '~app-toolkit/decorators';
-import { AppDefinition } from '~app/app.definition';
-import { AppDefinitionObject, GroupType, ProtocolAction, ProtocolTag } from '~app/app.interface';
+import { appDefinition, AppDefinition } from '~app/app.definition';
+import { GroupType, AppAction, AppTag } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
-export const POOL_TOGETHER_DEFINITION: AppDefinitionObject = {
+export const POOL_TOGETHER_DEFINITION = appDefinition({
   id: 'pool-together',
   name: 'PoolTogether',
   description: `PoolTogether is a crypto-powered savings protocol based on Premium Bonds. Save money and have a chance to win every week.`,
@@ -21,19 +21,19 @@ export const POOL_TOGETHER_DEFINITION: AppDefinitionObject = {
     claimable: { id: 'claimable', type: GroupType.TOKEN },
     v3Pod: { id: 'v3-pod', type: GroupType.POSITION },
   },
-  tags: [ProtocolTag.NO_LOSS_LOTTERY],
+  tags: [AppTag.LOTTERY],
   supportedNetworks: {
-    [Network.CELO_MAINNET]: [ProtocolAction.VIEW, ProtocolAction.TRANSACT],
-    [Network.ETHEREUM_MAINNET]: [ProtocolAction.VIEW, ProtocolAction.TRANSACT],
-    [Network.POLYGON_MAINNET]: [ProtocolAction.VIEW, ProtocolAction.TRANSACT],
-    [Network.AVALANCHE_MAINNET]: [ProtocolAction.VIEW],
+    [Network.CELO_MAINNET]: [AppAction.VIEW, AppAction.TRANSACT],
+    [Network.ETHEREUM_MAINNET]: [AppAction.VIEW, AppAction.TRANSACT],
+    [Network.POLYGON_MAINNET]: [AppAction.VIEW, AppAction.TRANSACT],
+    [Network.AVALANCHE_MAINNET]: [AppAction.VIEW],
   },
   primaryColor: '#843ff3',
   token: {
     address: '0x0cec1a9154ff802e7934fc916ed7ca50bde6844e',
     network: Network.ETHEREUM_MAINNET,
   },
-};
+});
 
 @Register.AppDefinition(POOL_TOGETHER_DEFINITION.id)
 export class PoolTogetherAppDefinition extends AppDefinition {

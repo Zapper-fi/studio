@@ -1,9 +1,9 @@
 import { Register } from '~app-toolkit/decorators';
-import { AppDefinition } from '~app/app.definition';
-import { AppDefinitionObject, GroupType, ProtocolAction, ProtocolTag } from '~app/app.interface';
+import { appDefinition, AppDefinition } from '~app/app.definition';
+import { GroupType, AppAction, AppTag } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
-export const JPEGD_DEFINITION: AppDefinitionObject = {
+export const JPEGD_DEFINITION = appDefinition({
   id: 'jpegd',
   name: 'Jpegd',
   description: 'JPEGd is the leading NFT lending platform in the decentralized finance space.',
@@ -18,12 +18,12 @@ export const JPEGD_DEFINITION: AppDefinitionObject = {
     pool: { id: 'pool', type: GroupType.POSITION },
     bond: { id: 'bond', type: GroupType.POSITION },
   },
-  tags: [ProtocolTag.LENDING],
+  tags: [AppTag.COLLATERALIZED_DEBT_POSITION],
   supportedNetworks: {
-    [Network.ETHEREUM_MAINNET]: [ProtocolAction.VIEW],
+    [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
   },
   primaryColor: '#fff',
-};
+});
 
 @Register.AppDefinition(JPEGD_DEFINITION.id)
 export class JpegdAppDefinition extends AppDefinition {

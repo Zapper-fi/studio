@@ -1,9 +1,9 @@
 import { Register } from '~app-toolkit/decorators';
-import { AppDefinition } from '~app/app.definition';
-import { ProtocolAction, GroupType, ProtocolTag, AppDefinitionObject } from '~app/app.interface';
+import { appDefinition, AppDefinition } from '~app/app.definition';
+import { GroupType, AppAction, AppTag } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
-export const LIDO_DEFINITION: AppDefinitionObject = {
+export const LIDO_DEFINITION = appDefinition({
   id: 'lido',
   name: 'Lido',
   description: 'Liquidity for staked assets',
@@ -19,12 +19,12 @@ export const LIDO_DEFINITION: AppDefinitionObject = {
     steth: { id: 'steth', type: GroupType.TOKEN },
     wsteth: { id: 'wsteth', type: GroupType.TOKEN },
   },
-  tags: [ProtocolTag.DERIVATIVES],
+  tags: [AppTag.LIQUID_STAKING],
   supportedNetworks: {
-    [Network.ETHEREUM_MAINNET]: [ProtocolAction.VIEW],
+    [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
   },
   primaryColor: '#fff',
-};
+});
 
 @Register.AppDefinition(LIDO_DEFINITION.id)
 export class LidoAppDefinition extends AppDefinition {

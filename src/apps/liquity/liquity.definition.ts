@@ -1,9 +1,9 @@
 import { Register } from '~app-toolkit/decorators';
-import { AppDefinition } from '~app/app.definition';
-import { AppDefinitionObject, GroupType, ProtocolAction, ProtocolTag } from '~app/app.interface';
+import { appDefinition, AppDefinition } from '~app/app.definition';
+import { GroupType, AppAction, AppTag } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
-export const LIQUITY_DEFINITION: AppDefinitionObject = {
+export const LIQUITY_DEFINITION = appDefinition({
   id: 'liquity',
   name: 'Liquity',
   description:
@@ -21,16 +21,16 @@ export const LIQUITY_DEFINITION: AppDefinitionObject = {
     trove: { id: 'trove', type: GroupType.POSITION },
     stabilityPool: { id: 'stability-pool', type: GroupType.POSITION },
   },
-  tags: [ProtocolTag.LENDING],
+  tags: [AppTag.COLLATERALIZED_DEBT_POSITION],
   supportedNetworks: {
-    [Network.ETHEREUM_MAINNET]: [ProtocolAction.VIEW],
+    [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
   },
   primaryColor: '#fff',
   token: {
     address: '0x6dea81c8171d0ba574754ef6f8b412f2ed88c54d',
     network: Network.ETHEREUM_MAINNET,
   },
-};
+});
 
 @Register.AppDefinition(LIQUITY_DEFINITION.id)
 export class LiquityAppDefinition extends AppDefinition {

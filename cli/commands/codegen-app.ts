@@ -1,4 +1,7 @@
+/* eslint no-console: 0 */
+
 import { Command } from '@oclif/core';
+import chalk from 'chalk';
 import dedent from 'dedent';
 import { ESLint } from 'eslint';
 import fse from 'fs-extra';
@@ -14,47 +17,58 @@ export default class CodegenApp extends Command {
   static flags = {};
   static args = [{ name: 'appId', description: 'The application id ', required: true }];
 
+  private loadDefinition(appId: string) {
+    try {
+      return require(`../src/apps/${appId}/${appId}.definition`);
+    } catch (e) {
+      throw new Error(`Cannot find app with id "${appId}", please verify you're targeting the right app!`);
+    }
+  }
   async run(): Promise<void> {
     const { args } = await this.parse(CodegenApp);
 
     const appId = args.appId;
     const appDefinitionName = `${strings.upperCase(appId)}_DEFINITION`;
 
-    const definitionModule = require(`../src/apps/${appId}/${appId}.definition`);
-    const definition = definitionModule[appDefinitionName];
-    const networksRaw = definition.supportedNetworks;
+    try {
+      const definitionModule = this.loadDefinition(appId);
+      const definition = definitionModule[appDefinitionName];
+      const networksRaw = definition.supportedNetworks;
 
-    const networks = Object.keys(networksRaw);
-    const groups = definition.groups;
-    let moduleImports = '';
-    let moduleProviders = '';
+      const networks = Object.keys(networksRaw);
+      const groups = definition.groups;
+      let moduleImports = '';
+      let moduleProviders = '';
 
-    for (const network of networks) {
-      moduleImports += generateImportStatementForModule(appId, 'balance', network);
-      moduleProviders += generateClassNamesForModule(appId, 'balance', network);
+      for (const network of networks) {
+        moduleImports += generateImportStatementForModule(appId, 'balance', network);
+        moduleProviders += generateClassNamesForModule(appId, 'balance', network);
 
-      for (const [key, appGroup] of Object.entries<AppGroup>(groups)) {
-        switch (appGroup.type) {
-          case GroupType.TOKEN:
-            generateTokenFetcher(appId, key, appGroup.id, network);
-            moduleImports += generateImportStatementForModule(appId, appGroup.type, network, appGroup.id);
-            moduleProviders += generateClassNamesForModule(appId, appGroup.type, network, appGroup.id);
-            break;
+        for (const [key, appGroup] of Object.entries<AppGroup>(groups)) {
+          switch (appGroup.type) {
+            case GroupType.TOKEN:
+              generateTokenFetcher(appId, key, appGroup.id, network);
+              moduleImports += generateImportStatementForModule(appId, appGroup.type, network, appGroup.id);
+              moduleProviders += generateClassNamesForModule(appId, appGroup.type, network, appGroup.id);
+              break;
 
-          case GroupType.POSITION:
-            generateContractPosition(appId, key, appGroup.id, network);
-            moduleImports += generateImportStatementForModule(appId, appGroup.type, network, appGroup.id);
-            moduleProviders += generateClassNamesForModule(appId, appGroup.type, network, appGroup.id);
-            break;
+            case GroupType.POSITION:
+              generateContractPosition(appId, key, appGroup.id, network);
+              moduleImports += generateImportStatementForModule(appId, appGroup.type, network, appGroup.id);
+              moduleProviders += generateClassNamesForModule(appId, appGroup.type, network, appGroup.id);
+              break;
 
-          default:
-            break;
+            default:
+              break;
+          }
         }
+        generateBalanceFetcher(appId, network);
       }
-      generateBalanceFetcher(appId, network);
+      await generateModule(appId, moduleImports, moduleProviders);
+      this.log(`Files for ${appId} were generated !`);
+    } catch (e) {
+      console.log(chalk.red(e.message));
     }
-    await generateModule(appId, moduleImports, moduleProviders);
-    this.log(`Files for ${appId} were generated !`);
   }
 }
 

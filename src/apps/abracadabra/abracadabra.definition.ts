@@ -1,9 +1,9 @@
 import { Register } from '~app-toolkit/decorators';
-import { AppDefinition } from '~app/app.definition';
-import { AppDefinitionObject, GroupType, ProtocolAction, ProtocolTag } from '~app/app.interface';
+import { appDefinition, AppDefinition } from '~app/app.definition';
+import { GroupType, AppAction, AppTag } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
-export const ABRACADABRA_DEFINITION: AppDefinitionObject = {
+export const ABRACADABRA_DEFINITION = appDefinition({
   id: 'abracadabra',
   groups: {
     stakedSpell: { id: 'staked-spell', type: GroupType.TOKEN },
@@ -20,14 +20,14 @@ export const ABRACADABRA_DEFINITION: AppDefinitionObject = {
     telegram: 'https://t.me/abracadabramoney',
     medium: 'https://abracadabramoney.medium.com/',
   },
-  tags: [ProtocolTag.LENDING],
+  tags: [AppTag.LENDING],
   supportedNetworks: {
-    [Network.ARBITRUM_MAINNET]: [ProtocolAction.VIEW],
-    [Network.AVALANCHE_MAINNET]: [ProtocolAction.VIEW],
-    [Network.ETHEREUM_MAINNET]: [ProtocolAction.VIEW],
-    [Network.FANTOM_OPERA_MAINNET]: [ProtocolAction.VIEW],
+    [Network.ARBITRUM_MAINNET]: [AppAction.VIEW],
+    [Network.AVALANCHE_MAINNET]: [AppAction.VIEW],
+    [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
+    [Network.FANTOM_OPERA_MAINNET]: [AppAction.VIEW],
   },
-};
+});
 
 @Register.AppDefinition(ABRACADABRA_DEFINITION.id)
 export class AbracadabraAppDefinition extends AppDefinition {
