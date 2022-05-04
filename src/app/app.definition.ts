@@ -16,7 +16,7 @@ function toNetworkWithActionsArray(
 }
 
 export const appDefinition = <T>(
-  definition: AppDefinitionObject & {
+  definition: Omit<AppDefinitionObject, 'groups'> & {
     groups: {
       [K in keyof T]: AppGroup;
     };
