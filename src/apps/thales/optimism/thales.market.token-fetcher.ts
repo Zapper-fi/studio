@@ -43,7 +43,7 @@ export class OptimismThalesMarketTokenFetcher implements PositionFetcher<AppToke
         supply: 92435001163928768728013871,
         price: 1,
         pricePerShare: 1,
-        tokens,
+        tokens: [],
         dataProps: {},
         displayProps: { label, images },
       };
