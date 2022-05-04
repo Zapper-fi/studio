@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+### [0.13.1](https://github.com/Zapper-fi/studio/compare/v0.13.0...v0.13.1) (2022-05-04)
+
+
+### Bug Fixes
+
+* **package:** Change how the package is exported ([#355](https://github.com/Zapper-fi/studio/issues/355)) ([5aced75](https://github.com/Zapper-fi/studio/commit/5aced75444f11a61116d7f47699e2c179763ad02))
+
 ## [0.13.0](https://github.com/Zapper-fi/studio/compare/v0.12.0...v0.13.0) (2022-05-04)
 
 
