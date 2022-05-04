@@ -3,7 +3,7 @@ import { BigNumberish } from 'ethers';
 import { compact, sumBy } from 'lodash';
 
 import { drillBalance } from '~app-toolkit';
-import { APP_TOOLKIT, IAppToolkit } from '~lib';
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { EthersMulticall } from '~multicall';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType } from '~position/position.interface';
