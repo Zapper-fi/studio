@@ -25,4 +25,4 @@ import { ThalesAppDefinition } from './thales.definition';
     OptimismThalesTvlFetcher
   ],
 })
-export class ThalesAppModule extends AbstractApp() {}
+export class ThalesAppModule extends AbstractApp() { }
