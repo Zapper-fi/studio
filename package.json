@@ -14,8 +14,6 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\"",
     "lint:fix": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-    "prepublish:npm": "pnpm build",
-    "publish:npm": "pnpm publish --access public",
     "start": "nest start",
     "studio": "node ./scripts/run-cli.js",
     "test": "jest --runInBand --forceExit",
