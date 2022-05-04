@@ -4,11 +4,11 @@ import { compact, padEnd, sumBy } from 'lodash';
 import Web3 from 'web3';
 
 import { drillBalance } from '~app-toolkit';
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { Register } from '~app-toolkit/decorators';
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
 import { BalanceFetcher } from '~balance/balance-fetcher.interface';
-import { APP_TOOLKIT, IAppToolkit } from '~lib';
 import { ContractType } from '~position/contract.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { isBorrowed, isSupplied } from '~position/position.utils';
