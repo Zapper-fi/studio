@@ -4,6 +4,21 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.13.0](https://github.com/Zapper-fi/studio/compare/v0.12.0...v0.13.0) (2022-05-04)
+
+
+### Features
+
+* DFX integration ([#347](https://github.com/Zapper-fi/studio/issues/347)) ([029e3b2](https://github.com/Zapper-fi/studio/commit/029e3b2f34cbafd3f930d5318ae7903529fd057f))
+* **tags:** Update the app tags, make mandatory ([#349](https://github.com/Zapper-fi/studio/issues/349)) ([f38832f](https://github.com/Zapper-fi/studio/commit/f38832f819008fb5fd47162e94328c9085773a5c))
+
+
+### Bug Fixes
+
+* **cli:** Smol CLI improvements ([#352](https://github.com/Zapper-fi/studio/issues/352)) ([5351a5d](https://github.com/Zapper-fi/studio/commit/5351a5d219fcbe0bc848de68a086917769e4b554))
+* Fix app definition helper in DFX, use correct imports for AppTag and AppAction ([#353](https://github.com/Zapper-fi/studio/issues/353)) ([06d5e45](https://github.com/Zapper-fi/studio/commit/06d5e454f76caf8e51e39756cfec813d5cdbac5d))
+* Infer app definition group keys for stricter types ([#351](https://github.com/Zapper-fi/studio/issues/351)) ([083c2a3](https://github.com/Zapper-fi/studio/commit/083c2a3922dc60ecb6d6aa400f2469f070bbc8af))
+
 ## [0.12.0](https://github.com/Zapper-fi/studio/compare/v0.11.8...v0.12.0) (2022-05-02)
 
 
