@@ -1,15 +1,15 @@
-import { Module } from '@nestjs/common';
-
-import { AbstractDynamicApp } from '~app/app.dynamic-module';
+import { Register } from '~app-toolkit/decorators';
+import { AbstractApp } from '~app/app.dynamic-module';
 
 import { LiquityContractFactory } from './contracts';
 import { EthereumLiquityBalanceFetcher } from './ethereum/liquity.balance-fetcher';
 import { EthereumLiquityFarmContractPositionFetcher } from './ethereum/liquity.farm.contract-position-fetcher';
 import { LiquityStabilityPoolBalanceHelper } from './helpers/liquity.stability-pool.balance-helper';
 import { LiquityTroveBalanceHelper } from './helpers/liquity.trove.balance-helper';
-import { LiquityAppDefinition } from './liquity.definition';
+import LIQUITY_DEFINITION, { LiquityAppDefinition } from './liquity.definition';
 
-@Module({
+@Register.AppModule({
+  appId: LIQUITY_DEFINITION.id,
   providers: [
     LiquityAppDefinition,
     LiquityContractFactory,
@@ -20,4 +20,4 @@ import { LiquityAppDefinition } from './liquity.definition';
   ],
   exports: [LiquityContractFactory, LiquityTroveBalanceHelper, LiquityStabilityPoolBalanceHelper],
 })
-export class LiquityAppModule extends AbstractDynamicApp<LiquityAppModule>() {}
+export class LiquityAppModule extends AbstractApp() {}

@@ -97,7 +97,7 @@ export class SingleStakingContractPositionBalanceHelper {
           drillBalance(v, rewardTokenBalancesRaw[i]?.toString() ?? '0'),
         );
 
-        const tokens = [stakedTokenBalance, ...rewardTokenBalances];
+        const tokens = [stakedTokenBalance, ...rewardTokenBalances].filter(v => v.balanceUSD > 0);
         const balanceUSD = sumBy(tokens, t => t.balanceUSD);
 
         return {

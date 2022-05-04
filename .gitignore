@@ -3,6 +3,9 @@ dist
 tmp
 /out-tsc
 
+# cache
+.cache
+
 # dependencies
 node_modules
 /.pnp

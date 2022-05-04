@@ -1,0 +1,16 @@
+name: Trigger Studio Docs Deploy
+
+on:
+  push:
+    paths:
+      - 'CHANGELOG.md'
+    branches: ['main']
+
+jobs:
+  trigger-studio-docs-deploy:
+    name: Trigger Studio Docs Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger deploy hook
+        run: |
+          curl -X POST ${{ secrets.STUDIO_DOCS_DEPLOY_HOOK }}

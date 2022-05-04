@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { partition, groupBy, map, compact } from 'lodash';
 
 import { ContractType } from '~position/contract.interface';
@@ -10,15 +11,24 @@ import { PositionSource } from './position-source.interface';
 
 @Injectable()
 export class RegistryPositionSource implements PositionSource {
-  constructor(@Inject(PositionFetcherRegistry) private readonly positionFetcherRegistry: PositionFetcherRegistry) {}
+  constructor(
+    @Inject(ConfigService) private readonly configService: ConfigService,
+    @Inject(PositionFetcherRegistry) private readonly positionFetcherRegistry: PositionFetcherRegistry,
+  ) {}
+
+  private getApiResolvedPositions(): string[] {
+    return this.configService.get('apiResolvedPositions') ?? [];
+  }
 
   getSupported(definitions: AppGroupsDefinition[], contractType: ContractType) {
     const defs = definitions.flatMap(({ appId, groupIds, network }) =>
       groupIds.map(groupId => {
         const def = { appId, groupId, network, contractType };
         try {
+          // Will throw if not found
           this.positionFetcherRegistry.get({ type: contractType, appId, groupId, network });
-          return { ...def, supported: true };
+          const isLocallyProvided = !this.getApiResolvedPositions().includes(appId);
+          return { ...def, supported: isLocallyProvided };
         } catch (e) {
           return { ...def, supported: false };
         }
@@ -65,7 +75,9 @@ export class RegistryPositionSource implements PositionSource {
     );
 
     const validFetchers = compact(fetchers);
-    const positions = (await Promise.all(validFetchers.map(fetcher => fetcher.getPositions()))) as T[][];
+    const positions = (await Promise.all(
+      validFetchers.map(async fetcher => (await fetcher.getPositions()) ?? []),
+    )) as T[][];
     return positions.flat();
   }
 }
