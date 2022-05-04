@@ -1,11 +1,6 @@
 import { Register } from '~app-toolkit/decorators';
-<<<<<<< HEAD
 import { appDefinition, AppDefinition } from '~app/app.definition';
-import { GroupType, ProtocolTag, ProtocolAction } from '~app/app.interface';
-=======
-import { AppDefinition } from '~app/app.definition';
-import { GroupType, AppTag, AppAction, AppDefinitionObject } from '~app/app.interface';
->>>>>>> origin/main
+import { GroupType, AppTag, AppAction } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
 export const AELIN_DEFINITION = appDefinition({
