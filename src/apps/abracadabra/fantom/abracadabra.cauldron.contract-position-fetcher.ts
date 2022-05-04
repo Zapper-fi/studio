@@ -36,6 +36,9 @@ export class FantomAbracadabraCauldronContractPositionFetcher implements Positio
       dependencies: [
         { appId: ABRACADABRA_DEFINITION.id, groupIds: [ABRACADABRA_DEFINITION.groups.stakedSpell.id], network },
         { appId: YEARN_DEFINITION.id, groupIds: [YEARN_DEFINITION.groups.vault.id], network },
+        { appId: 'spookyswap', groupIds: ['x-boo'], network },
+        { appId: 'spookyswap', groupIds: ['pool'], network },
+        { appId: 'spiritswap', groupIds: ['pool'], network },
       ],
     });
   }
