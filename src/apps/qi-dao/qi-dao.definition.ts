@@ -1,9 +1,9 @@
 import { Register } from '~app-toolkit/decorators';
-import { AppDefinition } from '~app/app.definition';
-import { AppDefinitionObject, GroupType, ProtocolAction, ProtocolTag } from '~app/app.interface';
+import { appDefinition, AppDefinition } from '~app/app.definition';
+import { AppAction, AppTag, GroupType } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
-export const QI_DAO_DEFINITION: AppDefinitionObject = {
+export const QI_DAO_DEFINITION = appDefinition({
   id: 'qi-dao',
   name: 'Qi Dao',
   description: `Qi Dao is a lending and stablecoin protocol native to Polygon.`,
@@ -14,7 +14,7 @@ export const QI_DAO_DEFINITION: AppDefinitionObject = {
     yield: { id: 'yield', type: GroupType.TOKEN },
   },
   url: 'https://www.mai.finance/',
-  tags: [ProtocolTag.LENDING],
+  tags: [AppTag.COLLATERALIZED_DEBT_POSITION, AppTag.FARMING, AppTag.STABLECOIN],
   links: {
     github: 'https://github.com/qi-dao-mai-finance',
     twitter: 'https://twitter.com/QiDaoProtocol',
@@ -23,10 +23,10 @@ export const QI_DAO_DEFINITION: AppDefinitionObject = {
     medium: 'https://0xlaozi.medium.com/',
   },
   supportedNetworks: {
-    [Network.FANTOM_OPERA_MAINNET]: [ProtocolAction.VIEW],
-    [Network.POLYGON_MAINNET]: [ProtocolAction.VIEW],
+    [Network.FANTOM_OPERA_MAINNET]: [AppAction.VIEW],
+    [Network.POLYGON_MAINNET]: [AppAction.VIEW],
   },
-};
+});
 
 @Register.AppDefinition(QI_DAO_DEFINITION.id)
 export class QiDaoAppDefinition extends AppDefinition {
