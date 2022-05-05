@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.15.0](https://github.com/Zapper-fi/studio/compare/v0.14.0...v0.15.0) (2022-05-05)
+
+
+### Features
+
+* **abracadabra:** Add support for new cauldrons and mSPELL ([#367](https://github.com/Zapper-fi/studio/issues/367)) ([0a144f4](https://github.com/Zapper-fi/studio/commit/0a144f4273672c867cce02d02564e342a2f8ef6b))
+
+
+### Bug Fixes
+
+* Add index files per app module ([#365](https://github.com/Zapper-fi/studio/issues/365)) ([c4ab4ed](https://github.com/Zapper-fi/studio/commit/c4ab4ed39c277b88e4945db583acecc7b2136869))
+
 ## [0.14.0](https://github.com/Zapper-fi/studio/compare/v0.13.1...v0.14.0) (2022-05-04)
 
 
