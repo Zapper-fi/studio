@@ -5,7 +5,7 @@ import { Network } from '~types/network.interface';
 
 export const DFX_DEFINITION = appDefinition({
   id: 'dfx',
-  name: 'dfx',
+  name: 'DFX',
   description: 'DFX.Finance is a decentralized foreign exchange protocol optimized for stablecoins',
   url: 'https://app.dfx.finance/',
   links: {
