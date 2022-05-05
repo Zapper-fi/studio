@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.16.0](https://github.com/Zapper-fi/studio/compare/v0.15.0...v0.16.0) (2022-05-05)
+
+
+### Features
+
+* Migrate Qi Dao to Studio ([#310](https://github.com/Zapper-fi/studio/issues/310)) ([7a47678](https://github.com/Zapper-fi/studio/commit/7a47678137f553c3ac5af320dc690ec34e78322a))
+
 ## [0.15.0](https://github.com/Zapper-fi/studio/compare/v0.14.0...v0.15.0) (2022-05-05)
 
 
