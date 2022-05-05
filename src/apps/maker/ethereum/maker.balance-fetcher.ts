@@ -63,63 +63,78 @@ export class EthereumMakerBalanceFetcher implements BalanceFetcher {
     // Get the user's urn
     const cdpManagerAddress = '0x5ef30b9986345249bc32d8928b7ee64de9435e39';
     const cdpManagerContract = this.makerContractFactory.makerCdpManager({ address: cdpManagerAddress, network });
-    const cdp = await cdpManagerContract.first(proxyAddress);
-    const urn = await cdpManagerContract.urns(cdp);
 
-    // Gather balances
-    const vatAddress = '0x35d1b3f3d7966a1dfe207aa4514c12a259a0492b';
-    const vatContract = this.makerContractFactory.makerVat({ address: vatAddress, network });
-    const balances = await Promise.all(
-      positions.map(async position => {
-        const ilk = padEnd(Web3.utils.asciiToHex(position.dataProps.ilkName), 66, '0');
-        const { ink, art } = await multicall.wrap(vatContract).urns(ilk, urn);
+    // Retrieve all CDPs
+    const cdps: number[] = [];
+    let next = await cdpManagerContract.first(proxyAddress).then(v => Number(v));
+    while (next !== 0) {
+      cdps.push(next);
+      next = await cdpManagerContract.list(next).then(v => Number(v.next));
+    }
 
-        const collateralToken = position.tokens.find(isSupplied);
-        const debtToken = position.tokens.find(isBorrowed);
-        if (!collateralToken || !debtToken) return null;
+    // Build balances across all CDPs
+    const allPositions = await Promise.all(
+      cdps.map(async cdp => {
+        const urn = await cdpManagerContract.urns(cdp);
 
-        // Data Props
-        const collateralRaw = new BigNumber(ink.toString())
-          .div(10 ** 18)
-          .times(10 ** collateralToken.decimals)
-          .toFixed(0);
-        const debtRaw = new BigNumber(art.toString())
-          .div(10 ** 18)
-          .times(10 ** debtToken.decimals)
-          .toFixed(0);
-        const collateral = drillBalance(collateralToken, collateralRaw);
-        const debt = drillBalance(debtToken, debtRaw, { isDebt: true });
-        const tokens = [collateral, debt];
-        const balanceUSD = sumBy(tokens, v => v.balanceUSD);
-        const cRatio = debt.balanceUSD === 0 ? 0 : (collateral.balanceUSD / Math.abs(debt.balanceUSD)) * 100;
-        const secondaryLabel = `C-Ratio: ${(cRatio * 100).toFixed(2)}%`;
+        // Gather balances
+        const vatAddress = '0x35d1b3f3d7966a1dfe207aa4514c12a259a0492b';
+        const vatContract = this.makerContractFactory.makerVat({ address: vatAddress, network });
+        const balances = await Promise.all(
+          positions.map(async position => {
+            const ilk = padEnd(Web3.utils.asciiToHex(position.dataProps.ilkName), 66, '0');
+            const { ink, art } = await multicall.wrap(vatContract).urns(ilk, urn.toLowerCase());
 
-        const positionBalance: ContractPositionBalance<MakerVaultContractPositionBalanceDataProps> = {
-          type: ContractType.POSITION,
-          address: position.address,
-          appId: position.appId,
-          groupId: position.groupId,
-          network: position.network,
-          tokens,
-          balanceUSD,
+            const collateralToken = position.tokens.find(isSupplied);
+            const debtToken = position.tokens.find(isBorrowed);
+            if (!collateralToken || !debtToken) return null;
 
-          dataProps: {
-            ilkName: position.dataProps.ilkName,
-            cRatio,
-          },
+            // Data Props
+            const collateralRaw = new BigNumber(ink.toString())
+              .div(10 ** 18)
+              .times(10 ** collateralToken.decimals)
+              .toFixed(0);
+            const debtRaw = new BigNumber(art.toString())
+              .div(10 ** 18)
+              .times(10 ** debtToken.decimals)
+              .toFixed(0);
+            const collateral = drillBalance(collateralToken, collateralRaw);
+            const debt = drillBalance(debtToken, debtRaw, { isDebt: true });
+            const tokens = [collateral, debt];
+            const balanceUSD = sumBy(tokens, v => v.balanceUSD);
+            const cRatio = debt.balanceUSD === 0 ? 0 : (collateral.balanceUSD / Math.abs(debt.balanceUSD)) * 100;
+            const secondaryLabel = `C-Ratio: ${(cRatio * 100).toFixed(2)}%`;
 
-          displayProps: {
-            label: position.displayProps.label,
-            secondaryLabel: secondaryLabel,
-            images: position.displayProps.images,
-          },
-        };
+            const positionBalance: ContractPositionBalance<MakerVaultContractPositionBalanceDataProps> = {
+              type: ContractType.POSITION,
+              address: position.address,
+              appId: position.appId,
+              groupId: position.groupId,
+              network: position.network,
+              tokens,
+              balanceUSD,
 
-        return positionBalance;
+              dataProps: {
+                ilkName: position.dataProps.ilkName,
+                cRatio,
+              },
+
+              displayProps: {
+                label: position.displayProps.label,
+                secondaryLabel: secondaryLabel,
+                images: position.displayProps.images,
+              },
+            };
+
+            return positionBalance;
+          }),
+        );
+
+        return compact(balances);
       }),
     );
 
-    return compact(balances);
+    return compact(allPositions.flat());
   }
 
   async getBalances(address: string) {
