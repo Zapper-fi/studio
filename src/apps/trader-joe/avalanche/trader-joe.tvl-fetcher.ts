@@ -1,9 +1,9 @@
 import { Inject } from '@nestjs/common';
 
 import { SingleVaultTokenDataProps } from '~app-toolkit';
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { UniswapV2TheGraphTvlHelper } from '~apps/uniswap-v2/helpers/uniswap-v2.the-graph.tvl-helper';
-import { APP_TOOLKIT, IAppToolkit } from '~lib';
 import { TvlFetcher } from '~stats/tvl/tvl-fetcher.interface';
 import { Network } from '~types/network.interface';
 

@@ -3,9 +3,9 @@ import axios from 'axios';
 import { ethers } from 'ethers';
 
 import { drillBalance } from '~app-toolkit';
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
-import { APP_TOOLKIT, IAppToolkit } from '~lib';
 import { ContractType } from '~position/contract.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { Network } from '~types/network.interface';
