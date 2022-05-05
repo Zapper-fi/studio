@@ -35,6 +35,7 @@ specifiers:
   class-validator: ^0.13.2
   conventional-changelog-conventionalcommits: ^4.6.3
   copyfiles: ^2.4.1
+  dataloader: ^2.1.0
   dedent: ^0.7.0
   dotenv: ^16.0.0
   esbuild: ^0.14.27
@@ -44,6 +45,7 @@ specifiers:
   eslint-plugin-prettier: ^4.0.0
   eslint-plugin-unused-imports: ^2.0.0
   ethers: ^5.5.1
+  ethers-multicall: ^0.2.3
   file-system-cache: ^1.0.5
   fs-extra: ^10.0.1
   graphql: ^15.5.1
@@ -117,6 +119,7 @@ devDependencies:
   class-validator: 0.13.2
   conventional-changelog-conventionalcommits: 4.6.3
   copyfiles: 2.4.1
+  dataloader: 2.1.0
   dedent: 0.7.0
   dotenv: 16.0.0
   eslint: 8.11.0
@@ -124,6 +127,7 @@ devDependencies:
   eslint-plugin-prettier: 4.0.0_eslint@8.11.0+prettier@2.6.0
   eslint-plugin-unused-imports: 2.0.0_0d92ebcd20257249efc95aa75e3847d0
   ethers: 5.6.2
+  ethers-multicall: 0.2.3
   graphql: 15.8.0
   graphql-request: 3.7.0_graphql@15.8.0
   jest: 27.5.1_ts-node@10.7.0
@@ -3181,6 +3185,10 @@ packages:
       whatwg-url: 8.7.0
     dev: true
 
+  /dataloader/2.1.0:
+    resolution: {integrity: sha512-qTcEYLen3r7ojZNgVUaRggOI+KM7jrKxXeSHhogh/TWxYMeONEMqY+hmkobiYQozsGIyg9OYVzO4ZIfoB4I0pQ==}
+    dev: true
+
   /debug/2.6.9:
     resolution: {integrity: sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==}
     dependencies:
@@ -4020,6 +4028,15 @@ packages:
       create-hash: 1.2.0
       ethereum-cryptography: 0.1.3
       rlp: 2.2.7
+    dev: true
+
+  /ethers-multicall/0.2.3:
+    resolution: {integrity: sha512-RaWQuLy+HzeKOibptlc9RZ6j7bT1H6VnkdAKTHiLx2t/lpyfS2ckXHdQhhRbCaXNc1iu6CgoisgMejxKHg84tg==}
+    dependencies:
+      ethers: 5.6.2
+    transitivePeerDependencies:
+      - bufferutil
+      - utf-8-validate
     dev: true
 
   /ethers/5.6.2:
