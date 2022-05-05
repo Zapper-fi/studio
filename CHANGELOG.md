@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+### [0.16.1](https://github.com/Zapper-fi/studio/compare/v0.16.0...v0.16.1) (2022-05-05)
+
+
+### Bug Fixes
+
+* Capitalize DFX app name ([#370](https://github.com/Zapper-fi/studio/issues/370)) ([0735f26](https://github.com/Zapper-fi/studio/commit/0735f26570a0d7a0e91000420d5c64025e92bcd8))
+* **maker:** Fix missing CDPs ([#372](https://github.com/Zapper-fi/studio/issues/372)) ([5f13110](https://github.com/Zapper-fi/studio/commit/5f1311004ab00876052fc2209d6ab0f702e7199c))
+
 ## [0.16.0](https://github.com/Zapper-fi/studio/compare/v0.15.0...v0.16.0) (2022-05-05)
 
 
