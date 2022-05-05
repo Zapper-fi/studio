@@ -2,6 +2,7 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
+import { BEETHOVEN_X_DEFINITION } from '~apps/beethoven-x/beethoven-x.definition';
 import { CURVE_DEFINITION } from '~apps/curve';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
@@ -17,8 +18,8 @@ const FARMS: { chefAddress: string; dependencies?: AppGroupsDefinition[] }[] = [
     chefAddress: '0x230917f8a262bf9f2c3959ec495b11d1b7e1affc',
     dependencies: [
       {
-        appId: 'beethoven-x',
-        groupIds: ['pool'],
+        appId: BEETHOVEN_X_DEFINITION.id,
+        groupIds: [BEETHOVEN_X_DEFINITION.groups.pool.id],
         network: Network.FANTOM_OPERA_MAINNET,
       },
     ],
