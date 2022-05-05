@@ -3,7 +3,7 @@ import BigNumber from 'bignumber.js';
 import { range } from 'lodash';
 
 import { drillBalance } from '~app-toolkit';
-import { APP_TOOLKIT, IAppToolkit } from '~lib';
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { isBorrowed, isSupplied } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 
