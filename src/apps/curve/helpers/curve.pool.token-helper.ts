@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { BigNumber, BigNumberish } from 'ethers';
 import { compact, isUndefined } from 'lodash';
 
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ETH_ADDR_ALIAS, ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import {
   buildDollarDisplayItem,
@@ -10,7 +11,6 @@ import {
 } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { Erc20 } from '~contract/contracts';
-import { APP_TOOLKIT, IAppToolkit } from '~lib';
 import { EthersMulticall as Multicall } from '~multicall/multicall.ethers';
 import { ContractType } from '~position/contract.interface';
 import { AppTokenPosition, Token } from '~position/position.interface';

@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
-import { APP_TOOLKIT, IAppToolkit } from '~lib';
 import { Network } from '~types/network.interface';
 
 import { CurveContractFactory } from '../contracts';

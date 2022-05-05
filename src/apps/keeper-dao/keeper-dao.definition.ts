@@ -1,9 +1,9 @@
 import { Register } from '~app-toolkit/decorators';
-import { AppDefinition } from '~app/app.definition';
-import { AppDefinitionObject, GroupType, ProtocolAction, ProtocolTag } from '~app/app.interface';
+import { appDefinition, AppDefinition } from '~app/app.definition';
+import { GroupType, AppAction, AppTag } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
-export const KEEPER_DAO_DEFINITION: AppDefinitionObject = {
+export const KEEPER_DAO_DEFINITION = appDefinition({
   id: 'keeper-dao',
   name: 'KeeperDAO',
   description: `KeeperDAO is building a decentralized protocol for Keepers that will help make Ethereum a more secure, egalitarian, and profitable network for all.`,
@@ -20,9 +20,9 @@ export const KEEPER_DAO_DEFINITION: AppDefinitionObject = {
     v3Pool: { id: 'v3-pool', type: GroupType.TOKEN },
     farm: { id: 'farm', type: GroupType.POSITION },
   },
-  tags: [ProtocolTag.YIELD_AGGREGATOR],
-  supportedNetworks: { [Network.ETHEREUM_MAINNET]: [ProtocolAction.VIEW] },
-};
+  tags: [AppTag.YIELD_AGGREGATOR, AppTag.DECENTRALIZED_EXCHANGE],
+  supportedNetworks: { [Network.ETHEREUM_MAINNET]: [AppAction.VIEW] },
+});
 
 @Register.AppDefinition(KEEPER_DAO_DEFINITION.id)
 export class KeeperDaoAppDefinition extends AppDefinition {

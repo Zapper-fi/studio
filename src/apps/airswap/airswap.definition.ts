@@ -1,9 +1,9 @@
 import { Register } from '~app-toolkit/decorators';
-import { AppDefinition } from '~app/app.definition';
-import { AppDefinitionObject, GroupType, ProtocolAction, ProtocolTag } from '~app/app.interface';
+import { appDefinition, AppDefinition } from '~app/app.definition';
+import { GroupType, AppAction, AppTag } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
-export const AIRSWAP_DEFINITION: AppDefinitionObject = {
+export const AIRSWAP_DEFINITION = appDefinition({
   id: 'airswap',
   name: 'AirSwap',
   description:
@@ -19,12 +19,12 @@ export const AIRSWAP_DEFINITION: AppDefinitionObject = {
     sASTv2: { id: 's-ast-v2', type: GroupType.TOKEN },
     sASTv3: { id: 's-ast-v3', type: GroupType.TOKEN },
   },
-  tags: [ProtocolTag.EXCHANGE],
+  tags: [AppTag.DECENTRALIZED_EXCHANGE],
   supportedNetworks: {
-    [Network.ETHEREUM_MAINNET]: [ProtocolAction.VIEW],
+    [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
   },
   primaryColor: '#2B71FF',
-};
+});
 
 @Register.AppDefinition(AIRSWAP_DEFINITION.id)
 export class AirswapAppDefinition extends AppDefinition {

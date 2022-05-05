@@ -4,6 +4,57 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.14.0](https://github.com/Zapper-fi/studio/compare/v0.13.1...v0.14.0) (2022-05-04)
+
+
+### Features
+
+* Extract Maker to Studio, change implementation to be fully on-chain and no reliance on third party APIs ([#357](https://github.com/Zapper-fi/studio/issues/357)) ([01f0052](https://github.com/Zapper-fi/studio/commit/01f00525a50bfa1e94b3cc9674b261e85e3a00e4))
+
+
+### Bug Fixes
+
+* add back deprecated tags until we finish removal in api ([#359](https://github.com/Zapper-fi/studio/issues/359)) ([eac377b](https://github.com/Zapper-fi/studio/commit/eac377b76560dc6fab73aa76bac90ada265adaed))
+* Fix another Maker path ([#361](https://github.com/Zapper-fi/studio/issues/361)) ([89cb0b0](https://github.com/Zapper-fi/studio/commit/89cb0b01f3c1eaa2d4e777839f423c07f71d07e3))
+* Fix paths in Maker ([#360](https://github.com/Zapper-fi/studio/issues/360)) ([8c382c5](https://github.com/Zapper-fi/studio/commit/8c382c528ab9ca33342c9cd3bebd960deeba8e61))
+* remove legacy tags after all ([#362](https://github.com/Zapper-fi/studio/issues/362)) ([214595c](https://github.com/Zapper-fi/studio/commit/214595ceffeb55865a65d854045019b979d4edf2))
+
+### [0.13.1](https://github.com/Zapper-fi/studio/compare/v0.13.0...v0.13.1) (2022-05-04)
+
+
+### Bug Fixes
+
+* **package:** Change how the package is exported ([#355](https://github.com/Zapper-fi/studio/issues/355)) ([5aced75](https://github.com/Zapper-fi/studio/commit/5aced75444f11a61116d7f47699e2c179763ad02))
+
+## [0.13.0](https://github.com/Zapper-fi/studio/compare/v0.12.0...v0.13.0) (2022-05-04)
+
+
+### Features
+
+* DFX integration ([#347](https://github.com/Zapper-fi/studio/issues/347)) ([029e3b2](https://github.com/Zapper-fi/studio/commit/029e3b2f34cbafd3f930d5318ae7903529fd057f))
+* **tags:** Update the app tags, make mandatory ([#349](https://github.com/Zapper-fi/studio/issues/349)) ([f38832f](https://github.com/Zapper-fi/studio/commit/f38832f819008fb5fd47162e94328c9085773a5c))
+
+
+### Bug Fixes
+
+* **cli:** Smol CLI improvements ([#352](https://github.com/Zapper-fi/studio/issues/352)) ([5351a5d](https://github.com/Zapper-fi/studio/commit/5351a5d219fcbe0bc848de68a086917769e4b554))
+* Fix app definition helper in DFX, use correct imports for AppTag and AppAction ([#353](https://github.com/Zapper-fi/studio/issues/353)) ([06d5e45](https://github.com/Zapper-fi/studio/commit/06d5e454f76caf8e51e39756cfec813d5cdbac5d))
+* Infer app definition group keys for stricter types ([#351](https://github.com/Zapper-fi/studio/issues/351)) ([083c2a3](https://github.com/Zapper-fi/studio/commit/083c2a3922dc60ecb6d6aa400f2469f070bbc8af))
+
+## [0.12.0](https://github.com/Zapper-fi/studio/compare/v0.11.8...v0.12.0) (2022-05-02)
+
+
+### Features
+
+* migrate alpha-v1 to studio ([#235](https://github.com/Zapper-fi/studio/issues/235)) ([b9ab776](https://github.com/Zapper-fi/studio/commit/b9ab77666d7cee6c083f18ea39ba08005f537960))
+
+### [0.11.8](https://github.com/Zapper-fi/studio/compare/v0.11.7...v0.11.8) (2022-05-02)
+
+
+### Bug Fixes
+
+* add missing mirror pools to uniswap pool token fetcher ([#343](https://github.com/Zapper-fi/studio/issues/343)) ([b56fad3](https://github.com/Zapper-fi/studio/commit/b56fad342a92110cb8a679501c9d5c292ec58da3))
+
 ### [0.11.7](https://github.com/Zapper-fi/studio/compare/v0.11.6...v0.11.7) (2022-05-01)
 
 

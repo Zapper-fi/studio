@@ -115,7 +115,7 @@ function injectAppToolkit(s) {
       'constructor(',
       'constructor(\n@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,\n',
     );
-    next = append(next, `import { APP_TOOLKIT, IAppToolkit } from '~lib';`);
+    next = append(next, `import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';`);
   }
 
   next = next.replaceAll(' this.tokenBalanceHelper.getVaultBalances', 'this.appToolkit.getBaseTokenPrices(network)');

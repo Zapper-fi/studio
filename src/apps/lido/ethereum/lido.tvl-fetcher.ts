@@ -1,7 +1,7 @@
 import { Inject } from '@nestjs/common';
 
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
-import { APP_TOOLKIT, IAppToolkit } from '~lib';
 import { TvlFetcher } from '~stats/tvl/tvl-fetcher.interface';
 import { Network } from '~types/network.interface';
 
