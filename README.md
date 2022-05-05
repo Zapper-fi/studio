@@ -18,7 +18,7 @@
 </div>
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-14-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-15-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 ## Description
@@ -149,6 +149,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/mehdi-loup"><img src="https://avatars.githubusercontent.com/u/5024228?v=4?s=64" width="64px;" alt=""/><br /><sub><b>mehdi-loup</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=mehdi-loup" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/dylandesrosier"><img src="https://avatars.githubusercontent.com/u/13701258?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Dylan</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=dylandesrosier" title="Code">💻</a></td>
     <td align="center"><a href="http://kylefitz.com/"><img src="https://avatars.githubusercontent.com/u/253651?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Kyle</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=kafitz" title="Code">💻</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/melenxyz"><img src="https://avatars.githubusercontent.com/u/59291854?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Mélen</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=melenxyz" title="Code">💻</a></td>
   </tr>
 </table>
 
