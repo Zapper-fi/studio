@@ -28,9 +28,7 @@ export class BinanceSmartChainAbracadabraCauldronContractPositionFetcher impleme
     return this.abracadabraCauldronContractPositionHelper.getContractPositions({
       cauldronAddresses: CAULDRONS,
       network,
-      dependencies: [
-        { appId: ABRACADABRA_DEFINITION.id, groupIds: [ABRACADABRA_DEFINITION.groups.stakedSpell.id], network },
-      ],
+      dependencies: [],
     });
   }
 }

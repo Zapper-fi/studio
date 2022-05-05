@@ -4,7 +4,6 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
 import { BalanceFetcher } from '~balance/balance-fetcher.interface';
-import { MetaType } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
 import { ABRACADABRA_DEFINITION } from '../abracadabra.definition';
@@ -21,7 +20,6 @@ export class FantomAbracadabraBalanceFetcher implements BalanceFetcher {
     @Inject(AbracadabraCauldronBalanceHelper)
     private readonly abracadabraCauldronBalanceHelper: AbracadabraCauldronBalanceHelper,
     @Inject(AbracadabraContractFactory) private readonly contractFactory: AbracadabraContractFactory,
-    @Inject(AbracadabraContractFactory) private readonly abracadabraContractFactory: AbracadabraContractFactory,
   ) {}
 
   private async getStakedSpellBalances(address: string) {
@@ -92,22 +90,14 @@ export class FantomAbracadabraBalanceFetcher implements BalanceFetcher {
       appId,
       network,
       groupId: ABRACADABRA_DEFINITION.groups.mSpell.id,
-      resolveContract: opts => this.abracadabraContractFactory.abracadabraMspell(opts),
-      resolveStakedTokenBalance: ({ multicall, contract, contractPosition }) => {
-        const tokenAddress = contractPosition.tokens.find(v => v.metaType === MetaType.CLAIMABLE)?.address;
-        if (!tokenAddress) {
-          throw new Error(`Could not find claimable token for ${contractPosition.address} ${contractPosition.network}`);
-        }
+      resolveContract: opts => this.contractFactory.abracadabraMspell(opts),
+      resolveStakedTokenBalance: ({ multicall, contract }) => {
         return multicall
           .wrap(contract)
           .userInfo(address)
           .then(v => v[0]);
       },
-      resolveRewardTokenBalances: ({ multicall, contract, contractPosition }) => {
-        const tokenAddress = contractPosition.tokens.find(v => v.metaType === MetaType.CLAIMABLE)?.address;
-        if (!tokenAddress) {
-          throw new Error(`Could not find claimable token for ${contractPosition.address} ${contractPosition.network}`);
-        }
+      resolveRewardTokenBalances: ({ multicall, contract }) => {
         return multicall.wrap(contract).pendingReward(address);
       },
     });
