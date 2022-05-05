@@ -7,6 +7,7 @@ import { Network } from '~types/network.interface';
 import { AbracadabraBentoBoxTokenContract__factory } from './ethers';
 import { AbracadabraConvexWrapper__factory } from './ethers';
 import { AbracadabraCouldronTokenContract__factory } from './ethers';
+import { AbracadabraMspell__factory } from './ethers';
 import { AbracadabraStakedSpellTokenContract__factory } from './ethers';
 import { PopsicleChef__factory } from './ethers';
 
@@ -28,6 +29,9 @@ export class AbracadabraContractFactory extends ContractFactory {
   abracadabraCouldronTokenContract({ address, network }: ContractOpts) {
     return AbracadabraCouldronTokenContract__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  abracadabraMspell({ address, network }: ContractOpts) {
+    return AbracadabraMspell__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   abracadabraStakedSpellTokenContract({ address, network }: ContractOpts) {
     return AbracadabraStakedSpellTokenContract__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
@@ -39,5 +43,6 @@ export class AbracadabraContractFactory extends ContractFactory {
 export type { AbracadabraBentoBoxTokenContract } from './ethers';
 export type { AbracadabraConvexWrapper } from './ethers';
 export type { AbracadabraCouldronTokenContract } from './ethers';
+export type { AbracadabraMspell } from './ethers';
 export type { AbracadabraStakedSpellTokenContract } from './ethers';
 export type { PopsicleChef } from './ethers';

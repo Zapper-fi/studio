@@ -7,6 +7,7 @@ export const ABRACADABRA_DEFINITION = appDefinition({
   id: 'abracadabra',
   groups: {
     stakedSpell: { id: 'staked-spell', type: GroupType.TOKEN },
+    mSpell: { id: 'm-spell', type: GroupType.POSITION },
     cauldron: { id: 'cauldron', type: GroupType.POSITION },
     farm: { id: 'farm', type: GroupType.POSITION },
   },
@@ -26,6 +27,7 @@ export const ABRACADABRA_DEFINITION = appDefinition({
     [Network.AVALANCHE_MAINNET]: [AppAction.VIEW],
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
     [Network.FANTOM_OPERA_MAINNET]: [AppAction.VIEW],
+    [Network.BINANCE_SMART_CHAIN_MAINNET]: [AppAction.VIEW],
   },
 });
 
