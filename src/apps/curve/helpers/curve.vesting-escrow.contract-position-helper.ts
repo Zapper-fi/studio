@@ -1,8 +1,8 @@
 import { Inject } from '@nestjs/common';
 
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
-import { APP_TOOLKIT, IAppToolkit } from '~lib';
 import { EthersMulticall as Multicall } from '~multicall/multicall.ethers';
 import { ContractType } from '~position/contract.interface';
 import { ContractPosition } from '~position/position.interface';

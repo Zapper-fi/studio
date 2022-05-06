@@ -4,7 +4,7 @@ import { BigNumberish } from 'ethers';
 import { sumBy } from 'lodash';
 
 import { drillBalance } from '~app-toolkit';
-import { APP_TOOLKIT, IAppToolkit } from '~lib';
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { EthersMulticall as Multicall } from '~multicall/multicall.ethers';
 import { DefaultDataProps } from '~position/display.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';

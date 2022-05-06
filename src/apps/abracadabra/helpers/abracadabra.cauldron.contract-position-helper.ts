@@ -1,9 +1,9 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { compact } from 'lodash';
 
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { APP_TOOLKIT, IAppToolkit } from '~lib';
 import { ContractType } from '~position/contract.interface';
 import { ContractPosition } from '~position/position.interface';
 import { AppGroupsDefinition } from '~position/position.service';

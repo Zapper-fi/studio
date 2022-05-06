@@ -3,7 +3,7 @@ import { BigNumber } from 'ethers';
 import { sumBy } from 'lodash';
 
 import { drillBalance } from '~app-toolkit';
-import { APP_TOOLKIT, IAppToolkit } from '~lib';
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { isClaimable, isVesting } from '~position/position.utils';
 import { Network } from '~types/network.interface';

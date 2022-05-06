@@ -4,6 +4,83 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+### [0.18.2](https://github.com/Zapper-fi/studio/compare/v0.18.1...v0.18.2) (2022-05-06)
+
+
+### Bug Fixes
+
+* **convex:** Add synths as deps for factory pools ([#384](https://github.com/Zapper-fi/studio/issues/384)) ([d45ec7a](https://github.com/Zapper-fi/studio/commit/d45ec7ac836030d43da230001f1c04f296b6b8fb))
+
+### [0.18.1](https://github.com/Zapper-fi/studio/compare/v0.18.0...v0.18.1) (2022-05-06)
+
+
+### Bug Fixes
+
+* Fix broken Balancer V2 pools for missing underlying tokens ([#379](https://github.com/Zapper-fi/studio/issues/379)) ([0d129a6](https://github.com/Zapper-fi/studio/commit/0d129a655966d6bd71b5c2b96a8fb044ce920efc))
+
+## [0.18.0](https://github.com/Zapper-fi/studio/compare/v0.17.0...v0.18.0) (2022-05-06)
+
+
+### Bug Fixes
+
+* Add index file to Qi-Dao and Beethoven-X ([#377](https://github.com/Zapper-fi/studio/issues/377)) ([e5b25e8](https://github.com/Zapper-fi/studio/commit/e5b25e802014667f28ddcde53878330a6967d230))
+
+## [0.17.0](https://github.com/Zapper-fi/studio/compare/v0.16.1...v0.17.0) (2022-05-06)
+
+
+### Features
+
+* Migrate Beethoven-x to Studio ([#374](https://github.com/Zapper-fi/studio/issues/374)) ([205cf84](https://github.com/Zapper-fi/studio/commit/205cf84b6c13ae41b35097f02f983a0814603b71))
+
+### [0.16.1](https://github.com/Zapper-fi/studio/compare/v0.16.0...v0.16.1) (2022-05-05)
+
+
+### Bug Fixes
+
+* Capitalize DFX app name ([#370](https://github.com/Zapper-fi/studio/issues/370)) ([0735f26](https://github.com/Zapper-fi/studio/commit/0735f26570a0d7a0e91000420d5c64025e92bcd8))
+* **maker:** Fix missing CDPs ([#372](https://github.com/Zapper-fi/studio/issues/372)) ([5f13110](https://github.com/Zapper-fi/studio/commit/5f1311004ab00876052fc2209d6ab0f702e7199c))
+
+## [0.16.0](https://github.com/Zapper-fi/studio/compare/v0.15.0...v0.16.0) (2022-05-05)
+
+
+### Features
+
+* Migrate Qi Dao to Studio ([#310](https://github.com/Zapper-fi/studio/issues/310)) ([7a47678](https://github.com/Zapper-fi/studio/commit/7a47678137f553c3ac5af320dc690ec34e78322a))
+
+## [0.15.0](https://github.com/Zapper-fi/studio/compare/v0.14.0...v0.15.0) (2022-05-05)
+
+
+### Features
+
+* **abracadabra:** Add support for new cauldrons and mSPELL ([#367](https://github.com/Zapper-fi/studio/issues/367)) ([0a144f4](https://github.com/Zapper-fi/studio/commit/0a144f4273672c867cce02d02564e342a2f8ef6b))
+
+
+### Bug Fixes
+
+* Add index files per app module ([#365](https://github.com/Zapper-fi/studio/issues/365)) ([c4ab4ed](https://github.com/Zapper-fi/studio/commit/c4ab4ed39c277b88e4945db583acecc7b2136869))
+
+## [0.14.0](https://github.com/Zapper-fi/studio/compare/v0.13.1...v0.14.0) (2022-05-04)
+
+
+### Features
+
+* Extract Maker to Studio, change implementation to be fully on-chain and no reliance on third party APIs ([#357](https://github.com/Zapper-fi/studio/issues/357)) ([01f0052](https://github.com/Zapper-fi/studio/commit/01f00525a50bfa1e94b3cc9674b261e85e3a00e4))
+
+
+### Bug Fixes
+
+* add back deprecated tags until we finish removal in api ([#359](https://github.com/Zapper-fi/studio/issues/359)) ([eac377b](https://github.com/Zapper-fi/studio/commit/eac377b76560dc6fab73aa76bac90ada265adaed))
+* Fix another Maker path ([#361](https://github.com/Zapper-fi/studio/issues/361)) ([89cb0b0](https://github.com/Zapper-fi/studio/commit/89cb0b01f3c1eaa2d4e777839f423c07f71d07e3))
+* Fix paths in Maker ([#360](https://github.com/Zapper-fi/studio/issues/360)) ([8c382c5](https://github.com/Zapper-fi/studio/commit/8c382c528ab9ca33342c9cd3bebd960deeba8e61))
+* remove legacy tags after all ([#362](https://github.com/Zapper-fi/studio/issues/362)) ([214595c](https://github.com/Zapper-fi/studio/commit/214595ceffeb55865a65d854045019b979d4edf2))
+
+### [0.13.1](https://github.com/Zapper-fi/studio/compare/v0.13.0...v0.13.1) (2022-05-04)
+
+
+### Bug Fixes
+
+* **package:** Change how the package is exported ([#355](https://github.com/Zapper-fi/studio/issues/355)) ([5aced75](https://github.com/Zapper-fi/studio/commit/5aced75444f11a61116d7f47699e2c179763ad02))
+
 ## [0.13.0](https://github.com/Zapper-fi/studio/compare/v0.12.0...v0.13.0) (2022-05-04)
 
 

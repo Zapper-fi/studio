@@ -1,9 +1,9 @@
 import { Inject } from '@nestjs/common';
 
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
 import { BalanceFetcher } from '~balance/balance-fetcher.interface';
-import { APP_TOOLKIT, IAppToolkit } from '~lib';
 import { Network } from '~types/network.interface';
 
 import BALANCER_V1_DEFINITION from '../balancer-v1.definition';
