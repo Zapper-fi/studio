@@ -69,7 +69,6 @@ export class AvalancheGroLabsTokenFetcher implements PositionFetcher<AppTokenPos
             label: name,
             images: getImagesFromToken(underlyingToken!),
             secondaryLabel: buildDollarDisplayItem(Number(pricePerShare)),
-            tertiaryLabel: undefined,
           },
         };
         return token;
