@@ -1,7 +1,8 @@
 import { StaticJsonRpcProvider } from '@ethersproject/providers';
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { ethers } from 'ethers';
-import { mapValues } from 'lodash';
+import { mapValues, snakeCase } from 'lodash';
 
 import { Network } from '~types/network.interface';
 
@@ -11,8 +12,16 @@ import { DEFAULT_REGISTRY } from './network-provider.registry';
 export class NetworkProviderService {
   private providers: Record<Extract<Network, Network.ETHEREUM_MAINNET>, StaticJsonRpcProvider>;
 
-  constructor() {
-    this.providers = mapValues(DEFAULT_REGISTRY, url => new ethers.providers.StaticJsonRpcProvider(url));
+  static getEnvVarKey(network: Network) {
+    const snake = snakeCase(network);
+    return `${snake.toUpperCase()}_NETWORK_PROVIDER`;
+  }
+
+  constructor(@Inject(ConfigService) configService: ConfigService) {
+    this.providers = mapValues(DEFAULT_REGISTRY, (defaultUrl, network: Network) => {
+      const customUrl = configService.get(NetworkProviderService.getEnvVarKey(network));
+      return new ethers.providers.StaticJsonRpcProvider(customUrl ?? defaultUrl);
+    });
   }
 
   getProvider(network: Network): StaticJsonRpcProvider {

@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { sumBy } from 'lodash';
 
-import { APP_TOOLKIT, IAppToolkit } from '~lib';
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { EthersMulticall as Multicall } from '~multicall';
 import { DefaultDataProps, WithMetaType } from '~position/display.interface';
 import { ContractPositionBalance, TokenBalance } from '~position/position-balance.interface';

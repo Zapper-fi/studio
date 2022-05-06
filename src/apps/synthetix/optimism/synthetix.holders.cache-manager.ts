@@ -1,8 +1,8 @@
 import { Inject } from '@nestjs/common';
 import { gql, GraphQLClient } from 'graphql-request';
 
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { CacheOnInterval } from '~cache/cache-on-interval.decorator';
-import { APP_TOOLKIT, IAppToolkit } from '~lib';
 import { Network } from '~types/network.interface';
 
 import { SYNTHETIX_DEFINITION } from '../synthetix.definition';

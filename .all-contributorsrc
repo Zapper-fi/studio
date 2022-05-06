@@ -126,6 +126,33 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "dylandesrosier",
+      "name": "Dylan",
+      "avatar_url": "https://avatars.githubusercontent.com/u/13701258?v=4",
+      "profile": "https://github.com/dylandesrosier",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "kafitz",
+      "name": "Kyle",
+      "avatar_url": "https://avatars.githubusercontent.com/u/253651?v=4",
+      "profile": "http://kylefitz.com/",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "melenxyz",
+      "name": "Mélen",
+      "avatar_url": "https://avatars.githubusercontent.com/u/59291854?v=4",
+      "profile": "https://github.com/melenxyz",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7

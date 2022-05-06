@@ -1,8 +1,8 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { compact, range, uniq } from 'lodash';
 
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { CacheOnInterval } from '~cache/cache-on-interval.decorator';
-import { APP_TOOLKIT, IAppToolkit } from '~lib';
 import { Network } from '~types/network.interface';
 
 import { PancakeswapContractFactory } from '../contracts';

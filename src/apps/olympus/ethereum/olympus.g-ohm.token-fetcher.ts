@@ -1,9 +1,9 @@
 import { Inject } from '@nestjs/common';
 import { BigNumber } from 'ethers';
 
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { getAppImg } from '~app-toolkit/helpers/presentation/image.present';
-import { APP_TOOLKIT, IAppToolkit } from '~lib';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
@@ -15,7 +15,7 @@ const appId = OLYMPUS_DEFINITION.id;
 const network = Network.ETHEREUM_MAINNET;
 const groupId = OLYMPUS_DEFINITION.groups.gOhm.id;
 
-@Register.ContractPositionFetcher({
+@Register.TokenPositionFetcher({
   appId,
   groupId,
   network,

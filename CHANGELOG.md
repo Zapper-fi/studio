@@ -4,6 +4,158 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+### [0.16.1](https://github.com/Zapper-fi/studio/compare/v0.16.0...v0.16.1) (2022-05-05)
+
+
+### Bug Fixes
+
+* Capitalize DFX app name ([#370](https://github.com/Zapper-fi/studio/issues/370)) ([0735f26](https://github.com/Zapper-fi/studio/commit/0735f26570a0d7a0e91000420d5c64025e92bcd8))
+* **maker:** Fix missing CDPs ([#372](https://github.com/Zapper-fi/studio/issues/372)) ([5f13110](https://github.com/Zapper-fi/studio/commit/5f1311004ab00876052fc2209d6ab0f702e7199c))
+
+## [0.16.0](https://github.com/Zapper-fi/studio/compare/v0.15.0...v0.16.0) (2022-05-05)
+
+
+### Features
+
+* Migrate Qi Dao to Studio ([#310](https://github.com/Zapper-fi/studio/issues/310)) ([7a47678](https://github.com/Zapper-fi/studio/commit/7a47678137f553c3ac5af320dc690ec34e78322a))
+
+## [0.15.0](https://github.com/Zapper-fi/studio/compare/v0.14.0...v0.15.0) (2022-05-05)
+
+
+### Features
+
+* **abracadabra:** Add support for new cauldrons and mSPELL ([#367](https://github.com/Zapper-fi/studio/issues/367)) ([0a144f4](https://github.com/Zapper-fi/studio/commit/0a144f4273672c867cce02d02564e342a2f8ef6b))
+
+
+### Bug Fixes
+
+* Add index files per app module ([#365](https://github.com/Zapper-fi/studio/issues/365)) ([c4ab4ed](https://github.com/Zapper-fi/studio/commit/c4ab4ed39c277b88e4945db583acecc7b2136869))
+
+## [0.14.0](https://github.com/Zapper-fi/studio/compare/v0.13.1...v0.14.0) (2022-05-04)
+
+
+### Features
+
+* Extract Maker to Studio, change implementation to be fully on-chain and no reliance on third party APIs ([#357](https://github.com/Zapper-fi/studio/issues/357)) ([01f0052](https://github.com/Zapper-fi/studio/commit/01f00525a50bfa1e94b3cc9674b261e85e3a00e4))
+
+
+### Bug Fixes
+
+* add back deprecated tags until we finish removal in api ([#359](https://github.com/Zapper-fi/studio/issues/359)) ([eac377b](https://github.com/Zapper-fi/studio/commit/eac377b76560dc6fab73aa76bac90ada265adaed))
+* Fix another Maker path ([#361](https://github.com/Zapper-fi/studio/issues/361)) ([89cb0b0](https://github.com/Zapper-fi/studio/commit/89cb0b01f3c1eaa2d4e777839f423c07f71d07e3))
+* Fix paths in Maker ([#360](https://github.com/Zapper-fi/studio/issues/360)) ([8c382c5](https://github.com/Zapper-fi/studio/commit/8c382c528ab9ca33342c9cd3bebd960deeba8e61))
+* remove legacy tags after all ([#362](https://github.com/Zapper-fi/studio/issues/362)) ([214595c](https://github.com/Zapper-fi/studio/commit/214595ceffeb55865a65d854045019b979d4edf2))
+
+### [0.13.1](https://github.com/Zapper-fi/studio/compare/v0.13.0...v0.13.1) (2022-05-04)
+
+
+### Bug Fixes
+
+* **package:** Change how the package is exported ([#355](https://github.com/Zapper-fi/studio/issues/355)) ([5aced75](https://github.com/Zapper-fi/studio/commit/5aced75444f11a61116d7f47699e2c179763ad02))
+
+## [0.13.0](https://github.com/Zapper-fi/studio/compare/v0.12.0...v0.13.0) (2022-05-04)
+
+
+### Features
+
+* DFX integration ([#347](https://github.com/Zapper-fi/studio/issues/347)) ([029e3b2](https://github.com/Zapper-fi/studio/commit/029e3b2f34cbafd3f930d5318ae7903529fd057f))
+* **tags:** Update the app tags, make mandatory ([#349](https://github.com/Zapper-fi/studio/issues/349)) ([f38832f](https://github.com/Zapper-fi/studio/commit/f38832f819008fb5fd47162e94328c9085773a5c))
+
+
+### Bug Fixes
+
+* **cli:** Smol CLI improvements ([#352](https://github.com/Zapper-fi/studio/issues/352)) ([5351a5d](https://github.com/Zapper-fi/studio/commit/5351a5d219fcbe0bc848de68a086917769e4b554))
+* Fix app definition helper in DFX, use correct imports for AppTag and AppAction ([#353](https://github.com/Zapper-fi/studio/issues/353)) ([06d5e45](https://github.com/Zapper-fi/studio/commit/06d5e454f76caf8e51e39756cfec813d5cdbac5d))
+* Infer app definition group keys for stricter types ([#351](https://github.com/Zapper-fi/studio/issues/351)) ([083c2a3](https://github.com/Zapper-fi/studio/commit/083c2a3922dc60ecb6d6aa400f2469f070bbc8af))
+
+## [0.12.0](https://github.com/Zapper-fi/studio/compare/v0.11.8...v0.12.0) (2022-05-02)
+
+
+### Features
+
+* migrate alpha-v1 to studio ([#235](https://github.com/Zapper-fi/studio/issues/235)) ([b9ab776](https://github.com/Zapper-fi/studio/commit/b9ab77666d7cee6c083f18ea39ba08005f537960))
+
+### [0.11.8](https://github.com/Zapper-fi/studio/compare/v0.11.7...v0.11.8) (2022-05-02)
+
+
+### Bug Fixes
+
+* add missing mirror pools to uniswap pool token fetcher ([#343](https://github.com/Zapper-fi/studio/issues/343)) ([b56fad3](https://github.com/Zapper-fi/studio/commit/b56fad342a92110cb8a679501c9d5c292ec58da3))
+
+### [0.11.7](https://github.com/Zapper-fi/studio/compare/v0.11.6...v0.11.7) (2022-05-01)
+
+
+### Bug Fixes
+
+* Fix Olympus gOHM price ([#341](https://github.com/Zapper-fi/studio/issues/341)) ([2842321](https://github.com/Zapper-fi/studio/commit/2842321547a88b939171143a37b8cd3a8d4a23c3))
+
+### [0.11.6](https://github.com/Zapper-fi/studio/compare/v0.11.5...v0.11.6) (2022-04-29)
+
+
+### Bug Fixes
+
+* **balancer:** Export contract factory ([#339](https://github.com/Zapper-fi/studio/issues/339)) ([b6bf6d5](https://github.com/Zapper-fi/studio/commit/b6bf6d57cf8cd51c238c211b29510b51b482a245))
+
+### [0.11.5](https://github.com/Zapper-fi/studio/compare/v0.11.4...v0.11.5) (2022-04-29)
+
+
+### Bug Fixes
+
+* **balancer:** Helpers should not accept multicall, resolve internally ([#336](https://github.com/Zapper-fi/studio/issues/336)) ([a30c5ef](https://github.com/Zapper-fi/studio/commit/a30c5efdfdbe7fee87d041803462d751f316a1e1))
+
+### [0.11.4](https://github.com/Zapper-fi/studio/compare/v0.11.3...v0.11.4) (2022-04-29)
+
+
+### Bug Fixes
+
+* **balancer:** Also export the app module ([#333](https://github.com/Zapper-fi/studio/issues/333)) ([8107ea8](https://github.com/Zapper-fi/studio/commit/8107ea8448feafa54c1a0b597e1658ac97335a28))
+
+### [0.11.3](https://github.com/Zapper-fi/studio/compare/v0.11.2...v0.11.3) (2022-04-29)
+
+
+### Bug Fixes
+
+* **balancer:** Forgot to add export in module - it's Friday ([#331](https://github.com/Zapper-fi/studio/issues/331)) ([d11e4e0](https://github.com/Zapper-fi/studio/commit/d11e4e03f43f14ae1093c140e3e5e038d616748e))
+
+### [0.11.2](https://github.com/Zapper-fi/studio/compare/v0.11.1...v0.11.2) (2022-04-29)
+
+
+### Bug Fixes
+
+* **balancer:** Add missing exports for zapper api ([#329](https://github.com/Zapper-fi/studio/issues/329)) ([be0e820](https://github.com/Zapper-fi/studio/commit/be0e820b46bc43bfe521275ca78d05f25bc87002))
+
+### [0.11.1](https://github.com/Zapper-fi/studio/compare/v0.11.0...v0.11.1) (2022-04-29)
+
+
+### Bug Fixes
+
+* **balancer:** Add index files for Zapper API ([#327](https://github.com/Zapper-fi/studio/issues/327)) ([6fcec84](https://github.com/Zapper-fi/studio/commit/6fcec8450d8301bd983e333cac215436a9ce90ed))
+
+## [0.11.0](https://github.com/Zapper-fi/studio/compare/v0.10.0...v0.11.0) (2022-04-29)
+
+
+### Features
+
+* Balancer v2 to studio ([#318](https://github.com/Zapper-fi/studio/issues/318)) ([d582317](https://github.com/Zapper-fi/studio/commit/d5823172e522bcea3a379ef25366995f41960382))
+* **caching:** Add `clear-cache` command ([9fe7dfe](https://github.com/Zapper-fi/studio/commit/9fe7dfe3cf6f5a582f5f1a132c9bd7401701c535))
+* **caching:** Add file system cache ([#316](https://github.com/Zapper-fi/studio/issues/316)) ([4168929](https://github.com/Zapper-fi/studio/commit/41689293a509503a0ec9a811e08872a47ab73f6d))
+* **cli:** Add the ability to set custom network providers ([#325](https://github.com/Zapper-fi/studio/issues/325)) ([f4f0d08](https://github.com/Zapper-fi/studio/commit/f4f0d0890ff88bd61666f1e4ce36bbe4a02ec616))
+* migrate balancer-v1 to studio ([#236](https://github.com/Zapper-fi/studio/issues/236)) ([ef15509](https://github.com/Zapper-fi/studio/commit/ef15509c98898559fa17a5bfb9c96367f2563906))
+* **PoolTogether:** Add TVL. Refactor naming. Add PoolTogether contract registry. Fix APR.  ([#304](https://github.com/Zapper-fi/studio/issues/304)) ([5273348](https://github.com/Zapper-fi/studio/commit/527334882e3b9ea9ac2b988d772f5cab81c601e8))
+
+
+### Bug Fixes
+
+* **caching:** No need to load the cache on start ([#321](https://github.com/Zapper-fi/studio/issues/321)) ([3055589](https://github.com/Zapper-fi/studio/commit/3055589182c458a98e46e64a34a9d40767578036))
+* **tokemak:** Remove claimable balance of "Staked TOKE" label ([#320](https://github.com/Zapper-fi/studio/issues/320)) ([ccc4d73](https://github.com/Zapper-fi/studio/commit/ccc4d7347d76cddf5a4b313abf67c87850b6a500))
+
+## [0.10.0](https://github.com/Zapper-fi/studio/compare/v0.9.1...v0.10.0) (2022-04-29)
+
+
+### Features
+
+* Dynamically infer app dependencies at boot, dynamically use externallyConfigured ([#302](https://github.com/Zapper-fi/studio/issues/302)) ([9e9e203](https://github.com/Zapper-fi/studio/commit/9e9e203a9bf50ea92d4d35b6b981b3a6e0cbd3cf))
+
 ### [0.9.1](https://github.com/Zapper-fi/studio/compare/v0.9.0...v0.9.1) (2022-04-29)
 
 
