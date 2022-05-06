@@ -7,7 +7,7 @@
 ## [0.18.0](https://github.com/Zapper-fi/studio/compare/v0.17.0...v0.18.0) (2022-05-06)
 
 
-### Features
+### Bug Fixes
 
 * Add index file to Qi-Dao and Beethoven-X ([#377](https://github.com/Zapper-fi/studio/issues/377)) ([e5b25e8](https://github.com/Zapper-fi/studio/commit/e5b25e802014667f28ddcde53878330a6967d230))
 
