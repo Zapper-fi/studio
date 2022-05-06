@@ -1,6 +1,6 @@
 import { Register } from '~app-toolkit/decorators';
 import { AppDefinition } from '~app/app.definition';
-import { ProtocolAction } from '~app/app.interface';
+import { ProtocolAction, ProtocolTag } from '~app/app.interface';
 import { GroupType } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
@@ -14,14 +14,14 @@ export const GRO_DEFINITION = {
     vesting: { id: 'vesting', type: GroupType.POSITION },
     labs: { id: 'labs', type: GroupType.TOKEN },
   },
-  tags: [],
+  tags: [ProtocolTag.YIELD_AGGREGATOR],
   links: {
     learn: '',
-    github: '',
-    twitter: '',
-    telegram: '',
-    discord: '',
-    medium: '',
+    github: 'https://github.com/groLabs',
+    twitter: 'https://twitter.com/groprotocol',
+    telegram: 'https://t.me/gro_discussion',
+    discord: 'https://discord.gg/QfYWtWdqPS',
+    medium: 'https://medium.com/gro-protocol',
   },
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [ProtocolAction.VIEW],
