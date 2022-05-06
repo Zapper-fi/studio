@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+### [0.19.1](https://github.com/Zapper-fi/studio/compare/v0.19.0...v0.19.1) (2022-05-06)
+
+
+### Bug Fixes
+
+* **logos:** Add missing logos ([#390](https://github.com/Zapper-fi/studio/issues/390)) ([bfc5499](https://github.com/Zapper-fi/studio/commit/bfc549945f062e6765fcc510309e228b6e14fdcf))
+
 ## [0.19.0](https://github.com/Zapper-fi/studio/compare/v0.18.2...v0.19.0) (2022-05-06)
 
 
