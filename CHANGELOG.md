@@ -4,6 +4,28 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.18.0](https://github.com/Zapper-fi/studio/compare/v0.17.0...v0.18.0) (2022-05-06)
+
+
+### Bug Fixes
+
+* Add index file to Qi-Dao and Beethoven-X ([#377](https://github.com/Zapper-fi/studio/issues/377)) ([e5b25e8](https://github.com/Zapper-fi/studio/commit/e5b25e802014667f28ddcde53878330a6967d230))
+
+## [0.17.0](https://github.com/Zapper-fi/studio/compare/v0.16.1...v0.17.0) (2022-05-06)
+
+
+### Features
+
+* Migrate Beethoven-x to Studio ([#374](https://github.com/Zapper-fi/studio/issues/374)) ([205cf84](https://github.com/Zapper-fi/studio/commit/205cf84b6c13ae41b35097f02f983a0814603b71))
+
+### [0.16.1](https://github.com/Zapper-fi/studio/compare/v0.16.0...v0.16.1) (2022-05-05)
+
+
+### Bug Fixes
+
+* Capitalize DFX app name ([#370](https://github.com/Zapper-fi/studio/issues/370)) ([0735f26](https://github.com/Zapper-fi/studio/commit/0735f26570a0d7a0e91000420d5c64025e92bcd8))
+* **maker:** Fix missing CDPs ([#372](https://github.com/Zapper-fi/studio/issues/372)) ([5f13110](https://github.com/Zapper-fi/studio/commit/5f1311004ab00876052fc2209d6ab0f702e7199c))
+
 ## [0.16.0](https://github.com/Zapper-fi/studio/compare/v0.15.0...v0.16.0) (2022-05-05)
 
 
