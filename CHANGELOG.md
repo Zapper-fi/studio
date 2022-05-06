@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+### [0.18.1](https://github.com/Zapper-fi/studio/compare/v0.18.0...v0.18.1) (2022-05-06)
+
+
+### Bug Fixes
+
+* Fix broken Balancer V2 pools for missing underlying tokens ([#379](https://github.com/Zapper-fi/studio/issues/379)) ([0d129a6](https://github.com/Zapper-fi/studio/commit/0d129a655966d6bd71b5c2b96a8fb044ce920efc))
+
 ## [0.18.0](https://github.com/Zapper-fi/studio/compare/v0.17.0...v0.18.0) (2022-05-06)
 
 
