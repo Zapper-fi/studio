@@ -2,8 +2,10 @@ import { Inject } from '@nestjs/common';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
+import { drillBalance } from '~app-toolkit/helpers/balance/token-balance.helper';
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
 import { BalanceFetcher } from '~balance/balance-fetcher.interface';
+import { isVesting } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 
 import { GroContractFactory, GroLpTokenStaker } from '../contracts';
@@ -43,12 +45,42 @@ export class EthereumGroBalanceFetcher implements BalanceFetcher {
     });
   }
 
+  private async getVestingBalances(address: string) {
+    return this.appToolkit.helpers.contractPositionBalanceHelper.getContractPositionBalances({
+      address,
+      appId: GRO_DEFINITION.id,
+      groupId: GRO_DEFINITION.groups.pools.id,
+      network,
+      resolveBalances: async ({ address, contractPosition, multicall }) => {
+        const groVestingAddress = '0x748218256AfE0A19a88EBEB2E0C5Ce86d2178360';
+        const contract = this.groContractFactory.groVesting({ network, address: groVestingAddress });
+        const vestedToken = contractPosition.tokens.find(isVesting)!;
+        // Resolve the requested address' vested and vesting balance
+        const [vestedBalanceRaw, vestingBalanceRaw] = await Promise.all([
+          multicall.wrap(contract).vestedBalance(address),
+          multicall.wrap(contract).vestingBalance(address),
+        ]);
+        return [
+          drillBalance(vestedToken, vestedBalanceRaw.toString()),
+          drillBalance(vestedToken, vestingBalanceRaw.toString()),
+        ];
+      },
+    });
+  }
+
   async getBalances(address: string) {
-    const [poolsBalances] = await Promise.all([this.getPoolsBalances(address)]);
+    const [poolsBalances, vestingBalances] = await Promise.all([
+      this.getPoolsBalances(address),
+      this.getVestingBalances(address),
+    ]);
     return presentBalanceFetcherResponse([
       {
         label: 'Pools',
         assets: poolsBalances,
+      },
+      {
+        label: 'Vesting',
+        assets: vestingBalances,
       },
     ]);
   }

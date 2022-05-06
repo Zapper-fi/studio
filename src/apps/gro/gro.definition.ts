@@ -1,6 +1,6 @@
 import { Register } from '~app-toolkit/decorators';
 import { AppDefinition } from '~app/app.definition';
-import { ProtocolAction, ProtocolTag } from '~app/app.interface';
+import { AppAction, AppTag } from '~app/app.interface';
 import { GroupType } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
@@ -14,7 +14,7 @@ export const GRO_DEFINITION = {
     vesting: { id: 'vesting', type: GroupType.POSITION },
     labs: { id: 'labs', type: GroupType.TOKEN },
   },
-  tags: [ProtocolTag.YIELD_AGGREGATOR],
+  tags: [AppTag.YIELD_AGGREGATOR],
   links: {
     learn: '',
     github: 'https://github.com/groLabs',
@@ -24,8 +24,8 @@ export const GRO_DEFINITION = {
     medium: 'https://medium.com/gro-protocol',
   },
   supportedNetworks: {
-    [Network.ETHEREUM_MAINNET]: [ProtocolAction.VIEW],
-    [Network.AVALANCHE_MAINNET]: [ProtocolAction.VIEW],
+    [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
+    [Network.AVALANCHE_MAINNET]: [AppAction.VIEW],
   },
   primaryColor: '#fff',
 };
