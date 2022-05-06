@@ -91,7 +91,11 @@ export class EthereumCurvePoolTokenFetcher implements PositionFetcher<AppTokenPo
           { appId: 'aave-v2', groupIds: ['supply'], network },
           { appId: 'compound', groupIds: ['supply'], network },
           { appId: 'iron-bank', groupIds: ['supply'], network },
-          { appId: SYNTHETIX_DEFINITION.id, groupIds: [SYNTHETIX_DEFINITION.groups.farm.id, SYNTHETIX_DEFINITION.groups.synth.id], network },
+          {
+            appId: SYNTHETIX_DEFINITION.id,
+            groupIds: [SYNTHETIX_DEFINITION.groups.farm.id, SYNTHETIX_DEFINITION.groups.synth.id],
+            network,
+          },
           { appId: 'convex', groupIds: ['farm'], network },
           { appId: YEARN_DEFINITION.id, groupIds: [YEARN_DEFINITION.groups.vault.id], network },
         ],
