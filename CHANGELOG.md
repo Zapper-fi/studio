@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+### [0.18.2](https://github.com/Zapper-fi/studio/compare/v0.18.1...v0.18.2) (2022-05-06)
+
+
+### Bug Fixes
+
+* **convex:** Add synths as deps for factory pools ([#384](https://github.com/Zapper-fi/studio/issues/384)) ([d45ec7a](https://github.com/Zapper-fi/studio/commit/d45ec7ac836030d43da230001f1c04f296b6b8fb))
+
 ### [0.18.1](https://github.com/Zapper-fi/studio/compare/v0.18.0...v0.18.1) (2022-05-06)
 
 
