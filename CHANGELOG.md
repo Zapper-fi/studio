@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.19.0](https://github.com/Zapper-fi/studio/compare/v0.18.2...v0.19.0) (2022-05-06)
+
+
+### Features
+
+* Migrate Klima to Studio ([#386](https://github.com/Zapper-fi/studio/issues/386)) ([ff20d6e](https://github.com/Zapper-fi/studio/commit/ff20d6ecd0631280187d57d59ef6331b04bce9f0))
+
+
+### Bug Fixes
+
+* update DFX url ([#383](https://github.com/Zapper-fi/studio/issues/383)) ([61a86f7](https://github.com/Zapper-fi/studio/commit/61a86f7ae1dacb7a5deec368321e5e7d5dc035eb))
+
 ### [0.18.2](https://github.com/Zapper-fi/studio/compare/v0.18.1...v0.18.2) (2022-05-06)
 
 
