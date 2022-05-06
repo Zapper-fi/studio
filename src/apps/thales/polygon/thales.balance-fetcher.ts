@@ -14,7 +14,7 @@ const network = Network.POLYGON_MAINNET;
 export class PolygonThalesBalanceFetcher implements BalanceFetcher {
   constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
-  async getBalances(address: string) {
+  async getBalances(_address: string) {
     return presentBalanceFetcherResponse([]);
   }
 }

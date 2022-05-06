@@ -1,17 +1,18 @@
 import { Register } from '~app-toolkit/decorators';
-import { AppDefinition } from '~app/app.definition';
-import { GroupType, ProtocolAction, ProtocolTag } from '~app/app.interface';
+import { appDefinition, AppDefinition } from '~app/app.definition';
+import { AppAction, AppTag, GroupType } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
-export const THALES_DEFINITION = {
+export const THALES_DEFINITION = appDefinition({
   id: 'thales',
   name: 'thales',
   description: 'Novel on-chain, permissionless, and non-custodial Parimutuel Markets.',
   url: 'https://thalesmarket.io/',
   groups: {
     market: { id: 'market', type: GroupType.TOKEN },
+    staking: { id: 'staking', type: GroupType.TOKEN },
   },
-  tags: [ProtocolTag.OPTIONS],
+  tags: [AppTag.OPTIONS],
   links: {
     learn: 'https://thalesmarket.io/tale-of-thales',
     github: 'https://github.com/thales-markets',
@@ -21,12 +22,11 @@ export const THALES_DEFINITION = {
     medium: 'https://thalesmarket.medium.com/',
   },
   supportedNetworks: {
-    [Network.ETHEREUM_MAINNET]: [ProtocolAction.VIEW],
-    [Network.POLYGON_MAINNET]: [ProtocolAction.VIEW],
-    [Network.OPTIMISM_MAINNET]: [ProtocolAction.VIEW],
+    [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
+    [Network.POLYGON_MAINNET]: [AppAction.VIEW],
+    [Network.OPTIMISM_MAINNET]: [AppAction.VIEW],
   },
-  primaryColor: '#fff',
-};
+});
 
 @Register.AppDefinition(THALES_DEFINITION.id)
 export class ThalesAppDefinition extends AppDefinition {
@@ -34,5 +34,3 @@ export class ThalesAppDefinition extends AppDefinition {
     super(THALES_DEFINITION);
   }
 }
-
-export default THALES_DEFINITION;

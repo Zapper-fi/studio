@@ -10,11 +10,11 @@ import { ThalesContractFactory } from '../contracts';
 import { THALES_DEFINITION } from '../thales.definition';
 
 const appId = THALES_DEFINITION.id;
-const groupId = THALES_DEFINITION.groups.market.id;
-const network = Network.OPTIMISM_MAINNET;
+const groupId = THALES_DEFINITION.groups.staking.id;
+const network = Network.ETHEREUM_MAINNET;
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
-export class OptimismThalesMarketTokenFetcher implements PositionFetcher<AppTokenPosition> {
+export class EthereumThalesStakingTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(ThalesContractFactory) private readonly thalesContractFactory: ThalesContractFactory,
