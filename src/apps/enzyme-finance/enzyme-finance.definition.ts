@@ -8,7 +8,7 @@ export const ENZYME_FINANCE_DEFINITION = appDefinition({
   name: 'Enzyme Finance',
   description: 'Enzyme empowers you to build and scale vaults based on the investment strategies of your choice.',
   groups: {
-    vault: { id: 'vault', type: GroupType.TOKEN },
+    vault: { id: 'vault', type: GroupType.TOKEN, label: 'Vaults' },
   },
   url: 'https://enzyme.finance/',
   links: {

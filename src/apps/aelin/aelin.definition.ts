@@ -8,9 +8,9 @@ export const AELIN_DEFINITION = appDefinition({
   name: 'Aelin',
   description: `Aelin is a fundraising protocol built on Ethereum and launched on Optimism.`,
   groups: {
-    pool: { id: 'pool', type: GroupType.TOKEN },
-    vAelin: { id: 'v-aelin', type: GroupType.TOKEN },
-    farm: { id: 'farm', type: GroupType.POSITION },
+    pool: { id: 'pool', type: GroupType.TOKEN, label: 'Pools' },
+    vAelin: { id: 'v-aelin', type: GroupType.TOKEN, label: 'vAELIN' },
+    farm: { id: 'farm', type: GroupType.POSITION, label: 'Staked' },
   },
   url: 'https://aelin.xyz/',
   links: {
