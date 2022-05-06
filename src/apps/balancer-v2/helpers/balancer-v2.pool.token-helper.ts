@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import _, { compact } from 'lodash';
+import _ from 'lodash';
 import { isEmpty, isUndefined } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
@@ -77,7 +77,7 @@ export class BalancerV2PoolTokensHelper {
         });
 
         if (tokensRaw.some(isUndefined)) return null;
-        const tokens = compact(tokensRaw);
+        const tokens = _.compact(tokensRaw);
 
         const reserves = tokens.map((t, i) => Number(poolTokensRaw.balances[i]) / 10 ** t.decimals);
         const liquidity = tokens.reduce((acc, v, i) => acc + v.price * reserves[i], 0);
