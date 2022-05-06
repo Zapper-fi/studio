@@ -27,22 +27,27 @@ export class AvalancheGroLabsTokenFetcher implements PositionFetcher<AppTokenPos
     const usdcLabVaultAddress = '0x2Eb05cfFA24309b9aaf300392A4D8Db745d4E592';
     const usdtLabVaultAddress = '0x6EF44077a1F5e10cDfcCc30EFb7dCdb1d5475581';
     const vaultAddresses = [daiLabVaultAddress, usdcLabVaultAddress, usdtLabVaultAddress];
-
+    const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
     const multicall = this.appToolkit.getMulticall(network);
 
     const tokens = await Promise.all(
       vaultAddresses.map(async vaultAddress => {
         const contract = this.groContractFactory.groLabsVault({ address: vaultAddress, network });
 
-        const [symbol, decimals, supplyRaw, pricePerShare, name] = await Promise.all([
+        const [symbol, decimals, supplyRaw, pricePerShareRaw, name, underlyingTokenAddressRaw] = await Promise.all([
           multicall.wrap(contract).symbol(),
           multicall.wrap(contract).decimals(),
           multicall.wrap(contract).totalSupply(),
           multicall.wrap(contract).getPricePerShare(),
           multicall.wrap(contract).name(),
+          multicall.wrap(contract).token(),
         ]);
 
+        const underlyingToken = baseTokens.find(v => v.address === underlyingTokenAddressRaw.toLowerCase());
+        const tokens = [underlyingToken!];
+
         const supply = Number(supplyRaw) / 10 ** decimals;
+        const pricePerShare = Number(pricePerShareRaw) / 10 ** 18;
 
         // Create the token object
         const token: AppTokenPosition = {
@@ -56,7 +61,7 @@ export class AvalancheGroLabsTokenFetcher implements PositionFetcher<AppTokenPos
           supply,
           pricePerShare: Number(pricePerShare),
           price: Number(pricePerShare),
-          tokens: [],
+          tokens,
           dataProps: {},
           displayProps: {
             label: name,
