@@ -124,7 +124,9 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/5024228?v=4",
       "profile": "https://github.com/mehdi-loup",
       "contributions": [
-        "code"
+        "code",
+        "question",
+        "maintenance"
       ]
     },
     {
@@ -142,7 +144,8 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/253651?v=4",
       "profile": "http://kylefitz.com/",
       "contributions": [
-        "code"
+        "code",
+        "bug"
       ]
     },
     {
@@ -152,6 +155,17 @@
       "profile": "https://github.com/melenxyz",
       "contributions": [
         "code"
+      ]
+    },
+    {
+      "login": "pwele",
+      "name": "Papa Sougou Wele",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1527361?v=4",
+      "profile": "https://github.com/pwele",
+      "contributions": [
+        "code",
+        "question",
+        "maintenance"
       ]
     }
   ],

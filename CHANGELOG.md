@@ -4,6 +4,53 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+### [0.19.1](https://github.com/Zapper-fi/studio/compare/v0.19.0...v0.19.1) (2022-05-06)
+
+
+### Bug Fixes
+
+* **logos:** Add missing logos ([#390](https://github.com/Zapper-fi/studio/issues/390)) ([bfc5499](https://github.com/Zapper-fi/studio/commit/bfc549945f062e6765fcc510309e228b6e14fdcf))
+
+## [0.19.0](https://github.com/Zapper-fi/studio/compare/v0.18.2...v0.19.0) (2022-05-06)
+
+
+### Features
+
+* Migrate Klima to Studio ([#386](https://github.com/Zapper-fi/studio/issues/386)) ([ff20d6e](https://github.com/Zapper-fi/studio/commit/ff20d6ecd0631280187d57d59ef6331b04bce9f0))
+
+
+### Bug Fixes
+
+* update DFX url ([#383](https://github.com/Zapper-fi/studio/issues/383)) ([61a86f7](https://github.com/Zapper-fi/studio/commit/61a86f7ae1dacb7a5deec368321e5e7d5dc035eb))
+
+### [0.18.2](https://github.com/Zapper-fi/studio/compare/v0.18.1...v0.18.2) (2022-05-06)
+
+
+### Bug Fixes
+
+* **convex:** Add synths as deps for factory pools ([#384](https://github.com/Zapper-fi/studio/issues/384)) ([d45ec7a](https://github.com/Zapper-fi/studio/commit/d45ec7ac836030d43da230001f1c04f296b6b8fb))
+
+### [0.18.1](https://github.com/Zapper-fi/studio/compare/v0.18.0...v0.18.1) (2022-05-06)
+
+
+### Bug Fixes
+
+* Fix broken Balancer V2 pools for missing underlying tokens ([#379](https://github.com/Zapper-fi/studio/issues/379)) ([0d129a6](https://github.com/Zapper-fi/studio/commit/0d129a655966d6bd71b5c2b96a8fb044ce920efc))
+
+## [0.18.0](https://github.com/Zapper-fi/studio/compare/v0.17.0...v0.18.0) (2022-05-06)
+
+
+### Bug Fixes
+
+* Add index file to Qi-Dao and Beethoven-X ([#377](https://github.com/Zapper-fi/studio/issues/377)) ([e5b25e8](https://github.com/Zapper-fi/studio/commit/e5b25e802014667f28ddcde53878330a6967d230))
+
+## [0.17.0](https://github.com/Zapper-fi/studio/compare/v0.16.1...v0.17.0) (2022-05-06)
+
+
+### Features
+
+* Migrate Beethoven-x to Studio ([#374](https://github.com/Zapper-fi/studio/issues/374)) ([205cf84](https://github.com/Zapper-fi/studio/commit/205cf84b6c13ae41b35097f02f983a0814603b71))
+
 ### [0.16.1](https://github.com/Zapper-fi/studio/compare/v0.16.0...v0.16.1) (2022-05-05)
 
 
