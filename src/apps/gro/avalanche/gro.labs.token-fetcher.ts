@@ -62,7 +62,7 @@ export class AvalancheGroLabsTokenFetcher implements PositionFetcher<AppTokenPos
           decimals,
           supply,
           pricePerShare: Number(pricePerShare),
-          price: Number(pricePerShare),
+          price: Number(pricePerShare) * underlyingToken!.price,
           tokens,
           dataProps: {},
           displayProps: {

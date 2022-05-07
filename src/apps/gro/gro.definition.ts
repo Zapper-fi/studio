@@ -10,7 +10,7 @@ export const GRO_DEFINITION = {
   description: 'DeFi yield aggregator that makes it easy to earn stablecoin yields with tranching & automation',
   url: 'https://app.gro.xyz/',
   groups: {
-    pools: { id: 'pools', type: GroupType.POSITION },
+    farm: { id: 'farm', type: GroupType.POSITION },
     vesting: { id: 'vesting', type: GroupType.POSITION },
     labs: { id: 'labs', type: GroupType.TOKEN },
   },

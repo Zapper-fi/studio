@@ -3,6 +3,7 @@ import { Inject } from '@nestjs/common';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { CURVE_DEFINITION } from '~apps/curve';
+import { UNISWAP_V2_DEFINITION } from '~apps/uniswap-v2/uniswap-v2.definition';
 import { DefaultDataProps } from '~position/display.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
@@ -12,11 +13,11 @@ import { GroContractFactory, GroLpTokenStaker } from '../contracts';
 import { GRO_DEFINITION } from '../gro.definition';
 
 const appId = GRO_DEFINITION.id;
-const groupId = GRO_DEFINITION.groups.pools.id;
+const groupId = GRO_DEFINITION.groups.farm.id;
 const network = Network.ETHEREUM_MAINNET;
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
-export class EthereumGroPoolsContractPositionFetcher implements PositionFetcher<ContractPosition> {
+export class EthereumGroFarmContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(GroContractFactory) private readonly groContractFactory: GroContractFactory,
@@ -24,7 +25,7 @@ export class EthereumGroPoolsContractPositionFetcher implements PositionFetcher<
 
   async getPositions(): Promise<ContractPosition<DefaultDataProps>[]> {
     return this.appToolkit.helpers.masterChefContractPositionHelper.getContractPositions<GroLpTokenStaker>({
-      address: '0x2E32bAd45a1C29c1EA27cf4dD588DF9e68ED376C',
+      address: '0x2E32bAd45a1C29c1EA27cf4dD588DF9e68ED376C'.toLowerCase(),
       appId,
       groupId,
       network,
@@ -35,8 +36,8 @@ export class EthereumGroPoolsContractPositionFetcher implements PositionFetcher<
           network,
         },
         {
-          appId: 'uniswap-v2',
-          groupIds: ['pool'],
+          appId: UNISWAP_V2_DEFINITION.id,
+          groupIds: [UNISWAP_V2_DEFINITION.groups.pool.id],
           network,
         },
       ],
