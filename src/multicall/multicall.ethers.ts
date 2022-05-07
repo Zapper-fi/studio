@@ -48,8 +48,8 @@ export class EthersMulticall {
 
       try {
         const outputs = call.outputs;
-        const params = Abi.decode(outputs, data);
-        return outputs.length === 1 ? params[0] : params;
+        const result = Abi.decode(outputs, data);
+        return outputs.length === 1 ? result[0] : result;
       } catch (err) {
         return new Error(`Multicall call failed for ${callIdentifier}`);
       }
@@ -77,6 +77,7 @@ export class EthersMulticall {
       };
 
       memo[funcFrag.name] = newFunc;
+      return memo;
     }, {} as Record<string, (...args: any) => any>);
 
     return Object.setPrototypeOf({ ...contract, ...funcs }, Contract.prototype) as any as T;

@@ -44,10 +44,11 @@ function toFragment(abi: JsonFragment[] | string[] | Fragment[]): Fragment[] {
 function makeCallFunction(contract: MulticallContract, name: string) {
   return (...params: any[]) => {
     const { address } = contract;
-    const { inputs } = contract.functions.find(f => f.name === name)!;
-    const { outputs } = contract.functions.find(f => f.name === name)!;
+    const { type, stateMutability, inputs, outputs } = contract.functions.find(f => f.name === name)!;
 
     return {
+      type,
+      stateMutability,
       contract: {
         address,
       },
