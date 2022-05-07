@@ -5,7 +5,7 @@ import { Register } from '~app-toolkit/decorators';
 import { drillBalance } from '~app-toolkit/helpers/balance/token-balance.helper';
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
 import { BalanceFetcher } from '~balance/balance-fetcher.interface';
-import { isVesting } from '~position/position.utils';
+import { isClaimable, isLocked } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 
 import { GroContractFactory, GroLpTokenStaker } from '../contracts';
@@ -53,16 +53,17 @@ export class EthereumGroBalanceFetcher implements BalanceFetcher {
       network,
       resolveBalances: async ({ address, contractPosition, multicall }) => {
         const groVestingAddress = '0x748218256AfE0A19a88EBEB2E0C5Ce86d2178360';
-        const contract = this.groContractFactory.groVesting({ network, address: groVestingAddress });
-        const vestedToken = contractPosition.tokens.find(isVesting)!;
+        const contract = this.groContractFactory.groVesting({ network, address: groVestingAddress.toLowerCase() });
+        const lockedToken = contractPosition.tokens.find(isLocked)!;
+        const unlockedToken = contractPosition.tokens.find(isClaimable)!;
         // Resolve the requested address' vested and vesting balance
         const [vestedBalanceRaw, vestingBalanceRaw] = await Promise.all([
           multicall.wrap(contract).vestedBalance(address),
           multicall.wrap(contract).vestingBalance(address),
         ]);
         return [
-          drillBalance(vestedToken, vestedBalanceRaw.toString()),
-          drillBalance(vestedToken, vestingBalanceRaw.toString()),
+          drillBalance(unlockedToken, vestedBalanceRaw.toString()),
+          drillBalance(lockedToken, vestingBalanceRaw.toString()),
         ];
       },
     });
