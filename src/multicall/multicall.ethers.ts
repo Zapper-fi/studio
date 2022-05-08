@@ -1,19 +1,14 @@
 import DataLoader from 'dataloader';
 import { Contract } from 'ethers';
-import { FunctionFragment, ParamType } from 'ethers/lib/utils';
+import { FunctionFragment, Interface } from 'ethers/lib/utils';
 
 import { Multicall } from '~contract/contracts';
 
 import { MulticallContract } from './multicall.contract';
-import { Abi } from './multicall.utils';
 
 export type ContractCall = {
-  contract: {
-    address: string;
-  };
-  name: string;
-  inputs: ParamType[];
-  outputs: ParamType[];
+  fragment: FunctionFragment;
+  address: string;
   params: any[];
 };
 
@@ -31,15 +26,15 @@ export class EthersMulticall {
 
   private async doCalls(calls: readonly ContractCall[]) {
     const callRequests = calls.map(call => ({
-      target: call.contract.address,
-      callData: Abi.encode(call.name, call.inputs, call.params),
+      target: call.address,
+      callData: new Interface([]).encodeFunctionData(call.fragment, call.params),
     }));
 
     const response = await this.multicall.callStatic.aggregate(callRequests, false);
 
     const result = calls.map((call, i) => {
-      const signature = FunctionFragment.from(call).format();
-      const callIdentifier = [call.contract.address, signature].join(':');
+      const signature = FunctionFragment.from(call.fragment).format();
+      const callIdentifier = [call.address, signature].join(':');
       const [success, data] = response.returnData[i];
 
       if (!success) {
@@ -47,8 +42,8 @@ export class EthersMulticall {
       }
 
       try {
-        const outputs = call.outputs;
-        const result = Abi.decode(outputs, data);
+        const outputs = call.fragment.outputs!;
+        const result = new Interface([]).decodeFunctionResult(call.fragment, data);
         return outputs.length === 1 ? result[0] : result;
       } catch (err) {
         return new Error(`Multicall call failed for ${callIdentifier}`);
