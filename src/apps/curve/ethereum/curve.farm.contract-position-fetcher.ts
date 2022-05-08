@@ -71,6 +71,7 @@ export const FARMS = {
 const appId = CURVE_DEFINITION.id;
 const groupId = CURVE_DEFINITION.groups.farm.id;
 const network = Network.ETHEREUM_MAINNET;
+const CRV_TOKEN_ADDRESS = CURVE_DEFINITION.token!.address;
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
 export class EthereumCurveFarmContractPositionFetcher implements PositionFetcher<ContractPosition> {
@@ -92,11 +93,17 @@ export class EthereumCurveFarmContractPositionFetcher implements PositionFetcher
       appId,
       groupId,
       dependencies: [{ appId: CURVE_DEFINITION.id, groupIds: [CURVE_DEFINITION.groups.pool.id], network }],
-      resolveFarmAddresses: () => FARMS.single,
+      resolveFarmAddresses: async () => {
+        const factoryGaugeAddresses = await this.curveFactoryGaugeAddressHelper.getGaugeAddresses({
+          factoryAddress: '0xf18056bbd320e96a48e3fbf8bc061322531aac99',
+          network,
+        });
+        return [...FARMS.single, ...factoryGaugeAddresses];
+      },
       resolveImplementation: () => 'single-gauge',
       resolveFarmContract: ({ address, network }) => this.curveContractFactory.curveGauge({ address, network }),
       resolveStakedTokenAddress: ({ contract, multicall }) => multicall.wrap(contract).lp_token(),
-      resolveRewardTokenAddresses: async () => ['0xd533a949740bb3306d119cc777fa900ba034cd52'],
+      resolveRewardTokenAddresses: async () => [CRV_TOKEN_ADDRESS],
       resolveIsActive: this.curveGaugeIsActiveStrategy.build({
         resolveInflationRate: ({ contract, multicall }) => multicall.wrap(contract).inflation_rate(),
       }),
@@ -126,7 +133,6 @@ export class EthereumCurveFarmContractPositionFetcher implements PositionFetcher
       resolveStakedTokenAddress: ({ contract, multicall }) => multicall.wrap(contract).lp_token(),
       resolveTotalValueLocked: ({ contract, multicall }) => multicall.wrap(contract).totalSupply(),
       resolveRewardTokenAddresses: async ({ contract, multicall }) => {
-        const CRV_TOKEN_ADDRESS = '0xd533a949740bb3306d119cc777fa900ba034cd52';
         const bonusRewardTokenAddress = await multicall.wrap(contract).rewarded_token();
         return [CRV_TOKEN_ADDRESS, bonusRewardTokenAddress].filter(v => v !== ZERO_ADDRESS);
       },
@@ -166,7 +172,6 @@ export class EthereumCurveFarmContractPositionFetcher implements PositionFetcher
       resolveFarmContract: ({ address, network }) => this.curveContractFactory.curveNGauge({ address, network }),
       resolveStakedTokenAddress: ({ contract, multicall }) => multicall.wrap(contract).lp_token(),
       resolveRewardTokenAddresses: async ({ contract, multicall }) => {
-        const CRV_TOKEN_ADDRESS = '0xd533a949740bb3306d119cc777fa900ba034cd52';
         const bonusRewardTokenAddress = await multicall.wrap(contract).reward_tokens(0);
         return [CRV_TOKEN_ADDRESS, bonusRewardTokenAddress].filter(v => v !== ZERO_ADDRESS);
       },
@@ -199,7 +204,6 @@ export class EthereumCurveFarmContractPositionFetcher implements PositionFetcher
       resolveFarmContract: ({ address, network }) => this.curveContractFactory.curveNGauge({ address, network }),
       resolveStakedTokenAddress: ({ contract, multicall }) => multicall.wrap(contract).lp_token(),
       resolveRewardTokenAddresses: async ({ contract, multicall }) => {
-        const CRV_TOKEN_ADDRESS = '0xd533a949740bb3306d119cc777fa900ba034cd52';
         const bonusRewardTokenAddress = await multicall.wrap(contract).reward_tokens(0);
         return [CRV_TOKEN_ADDRESS, bonusRewardTokenAddress].filter(v => v !== ZERO_ADDRESS);
       },
