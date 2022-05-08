@@ -56,7 +56,6 @@ export class EthersMulticall {
   wrap<T extends Contract>(contract: T) {
     const abi = contract.interface.fragments;
     const multicallContract = new MulticallContract(contract.address, abi as any);
-    const dataLoader = this.dataLoader;
 
     const funcs = abi.reduce((memo, frag) => {
       if (frag.type !== 'function') return memo;
@@ -68,7 +67,7 @@ export class EthersMulticall {
       const multicallFunc = multicallContract[funcFrag.name].bind(multicallContract);
       const newFunc = (...args: any) => {
         const contractCall = multicallFunc(...args);
-        return dataLoader.load(contractCall);
+        return this.dataLoader.load(contractCall);
       };
 
       memo[funcFrag.name] = newFunc;
