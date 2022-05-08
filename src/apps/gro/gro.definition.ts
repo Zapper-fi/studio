@@ -1,10 +1,10 @@
 import { Register } from '~app-toolkit/decorators';
-import { AppDefinition } from '~app/app.definition';
+import { appDefinition, AppDefinition } from '~app/app.definition';
 import { AppAction, AppTag } from '~app/app.interface';
 import { GroupType } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
-export const GRO_DEFINITION = {
+export const GRO_DEFINITION = appDefinition({
   id: 'gro',
   name: 'gro',
   description: 'DeFi yield aggregator that makes it easy to earn stablecoin yields with tranching & automation',
@@ -28,7 +28,7 @@ export const GRO_DEFINITION = {
     [Network.AVALANCHE_MAINNET]: [AppAction.VIEW],
   },
   primaryColor: '#fff',
-};
+});
 
 @Register.AppDefinition(GRO_DEFINITION.id)
 export class GroAppDefinition extends AppDefinition {
