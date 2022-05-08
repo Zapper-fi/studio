@@ -4,6 +4,20 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.20.0](https://github.com/Zapper-fi/studio/compare/v0.19.1...v0.20.0) (2022-05-08)
+
+
+### Features
+
+* Integration for Gro Protocol ([#375](https://github.com/Zapper-fi/studio/issues/375)) ([fd72a1e](https://github.com/Zapper-fi/studio/commit/fd72a1e51a694cb19045943930a6b4ba50e9302b))
+
+
+### Bug Fixes
+
+* **balances:** Log an error and return the error message on failed balance fetcher invocation ([#393](https://github.com/Zapper-fi/studio/issues/393)) ([84430e2](https://github.com/Zapper-fi/studio/commit/84430e2eaee4e27da58add9c54eb45f60ba8e026))
+* **gro:** Add logo and index ([#396](https://github.com/Zapper-fi/studio/issues/396)) ([833e81d](https://github.com/Zapper-fi/studio/commit/833e81d008b0e012408518a6e573b3bbd93a5777))
+* **gro:** Add missing appDefinition wrapper to fix failing build ([#397](https://github.com/Zapper-fi/studio/issues/397)) ([f6e2bd2](https://github.com/Zapper-fi/studio/commit/f6e2bd22cac4364b664c37fc8b91b57da5cf4965))
+
 ### [0.19.1](https://github.com/Zapper-fi/studio/compare/v0.19.0...v0.19.1) (2022-05-06)
 
 
