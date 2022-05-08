@@ -17,6 +17,7 @@ export const PANCAKESWAP_DEFINITION = appDefinition({
   },
   groups: {
     syrupStaking: { id: 'syrup-staking', type: GroupType.POSITION },
+    syrupCake: { id: 'syrup-cake', type: GroupType.POSITION },
     autoCake: { id: 'auto-cake', type: GroupType.POSITION },
     ifoCake: { id: 'ifo-cake', type: GroupType.POSITION },
     farm: { id: 'farm', type: GroupType.POSITION },
