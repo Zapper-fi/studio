@@ -49,7 +49,7 @@ export class EthereumGroBalanceFetcher implements BalanceFetcher {
     return this.appToolkit.helpers.contractPositionBalanceHelper.getContractPositionBalances({
       address,
       appId: GRO_DEFINITION.id,
-      groupId: GRO_DEFINITION.groups.farm.id,
+      groupId: GRO_DEFINITION.groups.vesting.id,
       network,
       resolveBalances: async ({ address, contractPosition, multicall }) => {
         const groVestingAddress = '0x748218256AfE0A19a88EBEB2E0C5Ce86d2178360';
