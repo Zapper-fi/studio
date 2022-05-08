@@ -24,30 +24,13 @@ export class MulticallContract {
 
     this._abi = abi.map((item: JsonFragment | string | Fragment) => Fragment.from(item));
     this._functions = this._abi.filter(x => x.type === 'function').map(x => FunctionFragment.from(x));
-    const callFunctions = this._functions.filter(x => x.stateMutability === 'pure' || x.stateMutability === 'view');
+    const fragments = this._functions.filter(x => x.stateMutability === 'pure' || x.stateMutability === 'view');
 
-    for (const callFunction of callFunctions) {
-      const { name } = callFunction;
-      const getCall = makeCallFunction(this, name);
-      if (!this[name]) defineReadOnly(this, name, getCall);
+    for (const frag of fragments) {
+      const fn = (...params: any[]): ContractCall => ({ fragment: frag, address, params });
+      if (!this[frag.name]) Object.defineProperty(this, frag.name, { enumerable: true, writable: false, value: fn });
     }
   }
 
   [method: string]: any;
-}
-
-function makeCallFunction(contract: MulticallContract, name: string) {
-  return (...params: any[]): ContractCall => {
-    const { address } = contract;
-    const fragment = contract.functions.find(f => f.name === name)!;
-    return { fragment, address, params };
-  };
-}
-
-function defineReadOnly(object: object, name: string, value: unknown) {
-  Object.defineProperty(object, name, {
-    enumerable: true,
-    writable: false,
-    value,
-  });
 }
