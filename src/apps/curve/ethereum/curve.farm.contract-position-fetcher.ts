@@ -97,6 +97,7 @@ export class EthereumCurveFarmContractPositionFetcher implements PositionFetcher
         const factoryGaugeAddresses = await this.curveFactoryGaugeAddressHelper.getGaugeAddresses({
           factoryAddress: '0xf18056bbd320e96a48e3fbf8bc061322531aac99',
           network,
+          getPoolAddress: poolToken => poolToken.dataProps.swapAddress,
         });
         return [...FARMS.single, ...factoryGaugeAddresses];
       },
