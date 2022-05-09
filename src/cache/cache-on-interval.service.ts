@@ -1,6 +1,7 @@
 import { Inject, Injectable, Logger, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
 import { DiscoveryService, MetadataScanner, Reflector } from '@nestjs/core';
 import Cache from 'file-system-cache';
+import { isUndefined } from 'lodash';
 
 import {
   CacheOnIntervalOptions,
@@ -74,13 +75,13 @@ export class CacheOnIntervalService implements OnModuleInit, OnModuleDestroy {
     instance[methodName] = async function () {
       const cachedValue = await cacheManager.get(cacheKey);
 
-      if (cachedValue) {
-        return cachedValue;
-      } else {
+      if (isUndefined(cachedValue)) {
         logger.warn(
           `@CacheOnInterval has no cache primed for ${instance.constructor.name}#${methodName}. Please wait for a few seconds as the cache is primed.`,
         );
       }
+
+      return cachedValue;
     };
 
     let liveData = methodRef.apply(instance);
@@ -88,6 +89,7 @@ export class CacheOnIntervalService implements OnModuleInit, OnModuleDestroy {
     if (!liveData.then) {
       liveData = new Promise(liveData);
     }
+
     liveData
       .then(d => {
         return cacheManager.set(cacheKey, d);
