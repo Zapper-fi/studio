@@ -8,7 +8,7 @@ export const UNAGII_DEFINITION = appDefinition({
   name: 'Unagii',
   description: `Unagii is a non-custodial yield platform that empowers crypto asset owners with access to Decentralized Finance (DeFi) yields on a smart, simple, and user-friendly interface.`,
   groups: {
-    vault: { id: 'vault', type: GroupType.TOKEN },
+    vault: { id: 'vault', type: GroupType.TOKEN, label: 'Vault' },
   },
   url: 'https://www.unagii.com/',
   links: {

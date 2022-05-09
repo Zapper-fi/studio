@@ -16,10 +16,10 @@ export const POOL_TOGETHER_DEFINITION = appDefinition({
     medium: 'https://medium.com/pooltogether',
   },
   groups: {
-    v3: { id: 'v3', type: GroupType.TOKEN },
-    v4: { id: 'v4', type: GroupType.TOKEN },
-    claimable: { id: 'claimable', type: GroupType.TOKEN },
-    v3Pod: { id: 'v3-pod', type: GroupType.POSITION },
+    v3: { id: 'v3', type: GroupType.TOKEN, label: 'Prize Pools' },
+    v4: { id: 'v4', type: GroupType.TOKEN, label: 'PoolTogether' },
+    claimable: { id: 'claimable', type: GroupType.TOKEN, label: 'Rewards' },
+    v3Pod: { id: 'v3-pod', type: GroupType.POSITION, label: 'Prize Pods' },
   },
   tags: [AppTag.LOTTERY],
   supportedNetworks: {

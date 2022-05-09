@@ -1,18 +1,18 @@
 import { Register } from '~app-toolkit/decorators';
-import { AppDefinition } from '~app/app.definition';
+import { appDefinition, AppDefinition } from '~app/app.definition';
 import { AppAction, AppTag } from '~app/app.interface';
 import { GroupType } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
-export const GRO_DEFINITION = {
+export const GRO_DEFINITION = appDefinition({
   id: 'gro',
   name: 'gro',
   description: 'DeFi yield aggregator that makes it easy to earn stablecoin yields with tranching & automation',
   url: 'https://app.gro.xyz/',
   groups: {
-    farm: { id: 'farm', type: GroupType.POSITION },
-    vesting: { id: 'vesting', type: GroupType.POSITION },
-    labs: { id: 'labs', type: GroupType.TOKEN },
+    farm: { id: 'farm', type: GroupType.POSITION, label: 'Pools' },
+    vesting: { id: 'vesting', type: GroupType.POSITION, label: 'Vesting' },
+    labs: { id: 'labs', type: GroupType.TOKEN, label: 'Labs' },
   },
   tags: [AppTag.YIELD_AGGREGATOR],
   links: {
@@ -28,7 +28,7 @@ export const GRO_DEFINITION = {
     [Network.AVALANCHE_MAINNET]: [AppAction.VIEW],
   },
   primaryColor: '#fff',
-};
+});
 
 @Register.AppDefinition(GRO_DEFINITION.id)
 export class GroAppDefinition extends AppDefinition {

@@ -57,6 +57,7 @@ export enum GroupType {
 export type AppGroup = {
   id: string;
   type: GroupType;
+  label: string;
 };
 
 export type AppLinks = {
