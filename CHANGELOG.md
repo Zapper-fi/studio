@@ -4,6 +4,19 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.23.0](https://github.com/Zapper-fi/studio/compare/v0.22.0...v0.23.0) (2022-05-09)
+
+
+### Features
+
+* **pancakeswap:** Add new CAKE syrup pool and new Pancakeswap LP farms ([#398](https://github.com/Zapper-fi/studio/issues/398)) ([fed00bf](https://github.com/Zapper-fi/studio/commit/fed00bf5cb89a650f8e11eaba09ec766546b9537))
+
+
+### Bug Fixes
+
+* **cache:** Log cache not primed erro on only on undefined values from cache ([#405](https://github.com/Zapper-fi/studio/issues/405)) ([b17aefa](https://github.com/Zapper-fi/studio/commit/b17aefa60cc9e6a8861cd96e600071ab0079f3cd))
+* **multicall:** Fix typing on wrap function for Multicall wrapper ([#406](https://github.com/Zapper-fi/studio/issues/406)) ([ac3b4d8](https://github.com/Zapper-fi/studio/commit/ac3b4d84a0c91db4874a23e06b8f7dd8e95867e8))
+
 ## [0.22.0](https://github.com/Zapper-fi/studio/compare/v0.21.0...v0.22.0) (2022-05-09)
 
 
