@@ -17,7 +17,7 @@ jobs:
 
       - uses: actions/setup-node@v2
         with:
-          node-version: '14'
+          node-version: 'lts/gallium'
 
       - name: Cache pnpm modules
         uses: actions/cache@v2
@@ -43,7 +43,7 @@ jobs:
 
       - uses: actions/setup-node@v2
         with:
-          node-version: '14'
+          node-version: 'lts/gallium'
 
       - name: Cache pnpm modules
         uses: actions/cache@v2
@@ -69,7 +69,7 @@ jobs:
 
       - uses: actions/setup-node@v2
         with:
-          node-version: '14'
+          node-version: 'lts/gallium'
 
       - name: Cache pnpm modules
         uses: actions/cache@v2
