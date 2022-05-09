@@ -43,9 +43,9 @@ jobs:
             ${{ runner.os }}-
         if: ${{ steps.release.outputs.release_created }}
 
-      - uses: pnpm/action-setup@v2.0.1
+      - uses: pnpm/action-setup@v2.2.1
         with:
-          version: 6.23.2
+          version: 7.0.1
           run_install: true
         if: ${{ steps.release.outputs.release_created }}
 
@@ -96,9 +96,9 @@ jobs:
           node-version: 'lts/gallium'
           registry-url: 'https://registry.npmjs.org'
 
-      - uses: pnpm/action-setup@v2.0.1
+      - uses: pnpm/action-setup@v2.2.1
         with:
-          version: 6.23.2
+          version: 7.0.1
           run_install: true
 
       - name: Upgrade dependencies
