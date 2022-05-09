@@ -17,9 +17,11 @@ export const PANCAKESWAP_DEFINITION = appDefinition({
   },
   groups: {
     syrupStaking: { id: 'syrup-staking', type: GroupType.POSITION, label: 'Syrup Pools' },
+    syrupCake: { id: 'syrup-cake', type: GroupType.POSITION, label: 'Staked CAKE' },
     autoCake: { id: 'auto-cake', type: GroupType.POSITION, label: 'Auto CAKE' },
-    ifoCake: { id: 'ifo-cake', type: GroupType.POSITION, label: 'IFO CAKE' },
-    farm: { id: 'farm', type: GroupType.POSITION, label: 'Farms' },
+    ifoCake: { id: 'ifo-cake', type: GroupType.POSITION, label: 'IFO Cake' },
+    farm: { id: 'farm', type: GroupType.POSITION, label: 'Legacy Farms' },
+    farmV2: { id: 'farm-v2', type: GroupType.POSITION, label: 'Farms V2' },
     pool: { id: 'pool', type: GroupType.TOKEN, label: 'Pools' },
   },
   supportedNetworks: { [Network.BINANCE_SMART_CHAIN_MAINNET]: [AppAction.VIEW] },
