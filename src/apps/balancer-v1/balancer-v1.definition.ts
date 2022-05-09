@@ -16,7 +16,7 @@ export const BALANCER_V1_DEFINITION = appDefinition({
     medium: 'https://medium.com/balancer-protocol',
   },
   groups: {
-    pool: { id: 'pool', type: GroupType.TOKEN },
+    pool: { id: 'pool', type: GroupType.TOKEN, label: 'Pools' },
   },
   tags: [AppTag.LIQUIDITY_POOL],
   supportedNetworks: {

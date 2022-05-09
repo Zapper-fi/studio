@@ -15,8 +15,8 @@ export const JPEGD_DEFINITION = appDefinition({
     medium: 'https://medium.com/@jpegd',
   },
   groups: {
-    pool: { id: 'pool', type: GroupType.POSITION },
-    bond: { id: 'bond', type: GroupType.POSITION },
+    pool: { id: 'pool', type: GroupType.POSITION, label: 'Pools' },
+    bond: { id: 'bond', type: GroupType.POSITION, label: 'Bonds' },
   },
   tags: [AppTag.COLLATERALIZED_DEBT_POSITION],
   supportedNetworks: {
