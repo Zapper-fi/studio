@@ -16,10 +16,10 @@ export const BALANCER_V2_DEFINITION = appDefinition({
     medium: 'https://medium.com/balancer-protocol',
   },
   groups: {
-    pool: { id: 'pool', type: GroupType.TOKEN },
-    farm: { id: 'farm', type: GroupType.POSITION },
-    votingEscrow: { id: 'voting-escrow', type: GroupType.POSITION },
-    claimable: { id: 'claimable', type: GroupType.POSITION },
+    pool: { id: 'pool', type: GroupType.TOKEN, label: 'Pools' },
+    farm: { id: 'farm', type: GroupType.POSITION, label: 'Staked' },
+    votingEscrow: { id: 'voting-escrow', type: GroupType.POSITION, label: 'Voting Escrow' },
+    claimable: { id: 'claimable', type: GroupType.POSITION, label: 'Claimable' },
   },
   tags: [AppTag.LIQUIDITY_POOL],
   supportedNetworks: {
