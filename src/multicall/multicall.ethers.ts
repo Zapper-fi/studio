@@ -12,6 +12,8 @@ export type ContractCall = {
   params: any[];
 };
 
+type TargetContract = Pick<Contract, 'functions' | 'interface' | 'callStatic' | 'address'>;
+
 export class EthersMulticall {
   private multicall: Multicall;
   private dataLoader: DataLoader<ContractCall, any>;
@@ -57,7 +59,7 @@ export class EthersMulticall {
     return result;
   }
 
-  wrap<T extends Contract>(contract: T) {
+  wrap<T extends TargetContract>(contract: T) {
     const abi = contract.interface.fragments;
     const multicallContract = new MulticallContract(contract.address, abi as any);
 
