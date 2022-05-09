@@ -4,6 +4,19 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.22.0](https://github.com/Zapper-fi/studio/compare/v0.21.0...v0.22.0) (2022-05-09)
+
+
+### Features
+
+* **multicall:** Use dataloader in multicall wrapper ([#368](https://github.com/Zapper-fi/studio/issues/368)) ([5876957](https://github.com/Zapper-fi/studio/commit/5876957ecb31e85729ef42f2c3b599693990d1b3))
+
+
+### Bug Fixes
+
+* **curve:** support cadc/usdc staked balances ([#392](https://github.com/Zapper-fi/studio/issues/392)) ([e695216](https://github.com/Zapper-fi/studio/commit/e6952168e9fe9810456034b6533a7ce3eba3aa31))
+* **multicall:** Resolve type errors ([#402](https://github.com/Zapper-fi/studio/issues/402)) ([05b21be](https://github.com/Zapper-fi/studio/commit/05b21bedfa9ea6c86def558f1f328d72aaf1bd80))
+
 ## [0.21.0](https://github.com/Zapper-fi/studio/compare/v0.20.0...v0.21.0) (2022-05-09)
 
 

@@ -73,6 +73,53 @@ export class BinanceSmartChainPancakeswapPoolAddressCacheManager {
   }
 
   @CacheOnInterval({
+    key: `apps-v3:${PANCAKESWAP_DEFINITION.id}:chef-v2-pool-addresses`,
+    timeout: 15 * 60 * 1000,
+  })
+  private async getChefV2PoolAddresses() {
+    const network = Network.BINANCE_SMART_CHAIN_MAINNET;
+    const chefAddress = '0xa5f8c5dbd5f286960b9d90548680ae5ebff07652';
+    const chefContract = this.contractFactory.pancakeswapChefV2({ address: chefAddress, network });
+
+    const provider = this.appToolkit.getNetworkProvider(network);
+    const multicall = this.appToolkit.getMulticall(network);
+    const numPools = await multicall.wrap(chefContract).poolLength();
+
+    const allAddresses = await Promise.all(
+      range(0, Number(numPools)).map(async v => {
+        const lpTokenAddressRaw = await multicall.wrap(chefContract).lpToken(v);
+        const lpTokenAddress = lpTokenAddressRaw.toLowerCase();
+        const lpTokenContract = this.contractFactory.pancakeswapPair({ address: lpTokenAddress, network });
+
+        // Some EOAs exist on the MasterChef contract; calling these breaks multicall
+        const code = await provider.getCode(lpTokenAddress);
+        if (code === '0x') return false;
+
+        const [symbol, factoryAddressRaw] = await Promise.all([
+          multicall
+            .wrap(lpTokenContract)
+            .symbol()
+            .catch(_err => ''),
+          multicall
+            .wrap(lpTokenContract)
+            .factory()
+            .catch(_err => ''),
+        ]);
+
+        // We've deprecated V1 support since the liquidities are low now (also our zap does not support V1)
+        const V2_FACTORY_ADDRESS = '0xca143ce32fe78f1f7019d7d551a6402fc5350c73';
+        const isV2Pair = factoryAddressRaw.toLowerCase() === V2_FACTORY_ADDRESS;
+        const isCakeLp = symbol === 'Cake-LP';
+        if (!isV2Pair || !isCakeLp) return null;
+
+        return lpTokenAddress;
+      }),
+    );
+
+    return compact(allAddresses);
+  }
+
+  @CacheOnInterval({
     key: `apps-v3:${PANCAKESWAP_DEFINITION.id}:static-pool-addresses`,
     timeout: 15 * 60 * 1000,
   })
@@ -81,12 +128,13 @@ export class BinanceSmartChainPancakeswapPoolAddressCacheManager {
   }
 
   async getPoolAddresses(): Promise<string[]> {
-    const [topPoolAddresses, chefPoolAddresses, staticPoolAddresses] = await Promise.all([
+    const [topPoolAddresses, chefPoolAddresses, chefV2PoolAddresses, staticPoolAddresses] = await Promise.all([
       this.getTopPoolAddresses(),
       this.getChefPoolAddresses(),
+      this.getChefV2PoolAddresses(),
       this.getStaticPoolAddresses(),
     ]);
 
-    return uniq([...topPoolAddresses, ...chefPoolAddresses, ...staticPoolAddresses]);
+    return uniq([...topPoolAddresses, ...chefPoolAddresses, ...chefV2PoolAddresses, ...staticPoolAddresses]);
   }
 }
