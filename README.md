@@ -18,7 +18,7 @@
 </div>
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-14-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-16-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 ## Description
@@ -146,9 +146,13 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/wrap-that-potassium"><img src="https://avatars.githubusercontent.com/u/83176631?v=4?s=64" width="64px;" alt=""/><br /><sub><b>wrap-that-potassium</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=wrap-that-potassium" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/piersss"><img src="https://avatars.githubusercontent.com/u/86911296?v=4?s=64" width="64px;" alt=""/><br /><sub><b>piersss</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=piersss" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/rkolpakov"><img src="https://avatars.githubusercontent.com/u/13422270?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Roman Kolpakov</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=rkolpakov" title="Code">💻</a></td>
-    <td align="center"><a href="https://github.com/mehdi-loup"><img src="https://avatars.githubusercontent.com/u/5024228?v=4?s=64" width="64px;" alt=""/><br /><sub><b>mehdi-loup</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=mehdi-loup" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/mehdi-loup"><img src="https://avatars.githubusercontent.com/u/5024228?v=4?s=64" width="64px;" alt=""/><br /><sub><b>mehdi-loup</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=mehdi-loup" title="Code">💻</a> <a href="#question-mehdi-loup" title="Answering Questions">💬</a> <a href="#maintenance-mehdi-loup" title="Maintenance">🚧</a></td>
     <td align="center"><a href="https://github.com/dylandesrosier"><img src="https://avatars.githubusercontent.com/u/13701258?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Dylan</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=dylandesrosier" title="Code">💻</a></td>
-    <td align="center"><a href="http://kylefitz.com/"><img src="https://avatars.githubusercontent.com/u/253651?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Kyle</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=kafitz" title="Code">💻</a></td>
+    <td align="center"><a href="http://kylefitz.com/"><img src="https://avatars.githubusercontent.com/u/253651?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Kyle</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=kafitz" title="Code">💻</a> <a href="https://github.com/Zapper-fi/studio/issues?q=author%3Akafitz" title="Bug reports">🐛</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/melenxyz"><img src="https://avatars.githubusercontent.com/u/59291854?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Mélen</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=melenxyz" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/pwele"><img src="https://avatars.githubusercontent.com/u/1527361?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Papa Sougou Wele</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=pwele" title="Code">💻</a> <a href="#question-pwele" title="Answering Questions">💬</a> <a href="#maintenance-pwele" title="Maintenance">🚧</a></td>
   </tr>
 </table>
 

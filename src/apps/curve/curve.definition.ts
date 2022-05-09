@@ -15,10 +15,10 @@ export const CURVE_DEFINITION = appDefinition({
     telegram: 'https://t.me/curvefi',
   },
   groups: {
-    farm: { id: 'farm', type: GroupType.POSITION },
-    pool: { id: 'pool', type: GroupType.TOKEN },
-    votingEscrow: { id: 'votingEscrow', type: GroupType.POSITION },
-    vestingEscrow: { id: 'vestingEscrow', type: GroupType.POSITION },
+    farm: { id: 'farm', type: GroupType.POSITION, label: 'Staking' },
+    pool: { id: 'pool', type: GroupType.TOKEN, label: 'Pools' },
+    votingEscrow: { id: 'votingEscrow', type: GroupType.POSITION, label: 'Voting Escrow' },
+    vestingEscrow: { id: 'vestingEscrow', type: GroupType.POSITION, label: 'Vesting' },
   },
   tags: [AppTag.LIQUIDITY_POOL],
   supportedNetworks: {

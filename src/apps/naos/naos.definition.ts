@@ -15,7 +15,7 @@ export const NAOS_DEFINITION = appDefinition({
     medium: 'https://naosfinance.medium.com/',
   },
   groups: {
-    farm: { id: 'farm', type: GroupType.POSITION },
+    farm: { id: 'farm', type: GroupType.POSITION, label: 'Staking' },
   },
   url: 'https://naos.finance/',
   tags: [AppTag.LENDING],

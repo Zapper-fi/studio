@@ -16,8 +16,8 @@ export const LIDO_DEFINITION = appDefinition({
     medium: 'https://lidofinance.medium.com/',
   },
   groups: {
-    steth: { id: 'steth', type: GroupType.TOKEN },
-    wsteth: { id: 'wsteth', type: GroupType.TOKEN },
+    steth: { id: 'steth', type: GroupType.TOKEN, label: 'Staked' },
+    wsteth: { id: 'wsteth', type: GroupType.TOKEN, label: 'Staked' },
   },
   tags: [AppTag.LIQUID_STAKING],
   supportedNetworks: {
