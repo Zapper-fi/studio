@@ -3,6 +3,6 @@
 /* eslint-disable */
 export type { KeeperDaoLiquidityPoolDistributor } from './KeeperDaoLiquidityPoolDistributor';
 export type { KeeperDaoLiquidityPoolV2 } from './KeeperDaoLiquidityPoolV2';
-
+export * as factories from './factories';
 export { KeeperDaoLiquidityPoolDistributor__factory } from './factories/KeeperDaoLiquidityPoolDistributor__factory';
 export { KeeperDaoLiquidityPoolV2__factory } from './factories/KeeperDaoLiquidityPoolV2__factory';
