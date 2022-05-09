@@ -10,7 +10,7 @@ export const THALES_DEFINITION = appDefinition({
   url: 'https://thalesmarket.io/',
   groups: {
     market: { id: 'market', type: GroupType.TOKEN },
-    staking: { id: 'staking', type: GroupType.TOKEN },
+    staking: { id: 'staking', type: GroupType.POSITION },
   },
   tags: [AppTag.OPTIONS],
   links: {
