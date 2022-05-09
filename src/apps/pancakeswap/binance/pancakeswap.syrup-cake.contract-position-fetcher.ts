@@ -36,7 +36,7 @@ export class BinanceSmartChainPancakeswapSyrupCakeContractPositionFetcher implem
       resolvePoolLength: async () => BigNumber.from(1),
       resolveDepositTokenAddress: ({ multicall, contract }) => multicall.wrap(contract).token(),
       resolveRewardTokenAddresses: ({ multicall, contract }) => multicall.wrap(contract).token(),
-      resolveTotalValueLocked: ({ multicall, contract }) => multicall.wrap(contract).balanceOf(),
+      resolveTotalValueLocked: ({ multicall, contract }) => multicall.wrap(contract).available(),
       resolveRewardRate: async ({ multicall, network }) => {
         // The auto-compounding CAKE rewards are harvested from the main MasterChef V2 contract on PID 0
         const masterChefV2Address = '0xa5f8c5dbd5f286960b9d90548680ae5ebff07652';

@@ -21,6 +21,7 @@ export const PANCAKESWAP_DEFINITION = appDefinition({
     autoCake: { id: 'auto-cake', type: GroupType.POSITION },
     ifoCake: { id: 'ifo-cake', type: GroupType.POSITION },
     farm: { id: 'farm', type: GroupType.POSITION },
+    farmV2: { id: 'farm-v2', type: GroupType.POSITION },
     pool: { id: 'pool', type: GroupType.TOKEN },
   },
   supportedNetworks: { [Network.BINANCE_SMART_CHAIN_MAINNET]: [AppAction.VIEW] },

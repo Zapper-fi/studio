@@ -11,7 +11,7 @@ import { Network } from '~types/network.interface';
 import { PancakeswapContractFactory } from '../contracts';
 import { PANCAKESWAP_DEFINITION } from '../pancakeswap.definition';
 
-// @TODO: Should be indexed from BQ events,
+// @TODO: Should be indexed from BQ events or logs
 // https://github.com/pancakeswap/pancake-frontend/blob/develop/src/config/constants/pools.tsx
 const FARMS = [
   '0xa5d57c5dca083a7051797920c78fb2b19564176b',
@@ -309,15 +309,13 @@ export class BinanceSmartChainPancakeswapSyrupStakingContractPositionFetcher
       groupId,
       address: '',
       resolveAddress: async ({ poolIndex }) => FARMS[poolIndex],
-      resolvePoolIndexIsValid: ({ poolIndex, multicall }) => {
+      resolvePoolIndexIsValid: async ({ poolIndex, multicall }) => {
         // Filter out any legacy SmartChef addresses that weren't deployed by the SmartChef contract
         const smartChefAddress = FARMS[poolIndex];
         const contract = this.contractFactory.pancakeswapSmartChef({ network, address: smartChefAddress });
-        return multicall
-          .wrap(contract)
-          .SMART_CHEF_FACTORY()
-          .then(() => true)
-          .catch(() => false);
+        const wrapped = multicall.wrap(contract);
+        const factoryAddress = await wrapped.SMART_CHEF_FACTORY().catch(() => null);
+        return !!factoryAddress;
       },
       resolveContract: () => null,
       resolvePoolLength: async () => BigNumber.from(FARMS.length),
