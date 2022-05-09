@@ -26,6 +26,10 @@ export class EthersMulticall {
     this.dataLoader = new DataLoader(this.doCalls.bind(this), dataLoaderOptions);
   }
 
+  get contract() {
+    return this.multicall;
+  }
+
   private async doCalls(calls: readonly ContractCall[]) {
     const callRequests = calls.map(call => ({
       target: call.address,
