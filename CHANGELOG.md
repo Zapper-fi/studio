@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.21.0](https://github.com/Zapper-fi/studio/compare/v0.20.0...v0.21.0) (2022-05-09)
+
+
+### Features
+
+* groups must now have labels ([#381](https://github.com/Zapper-fi/studio/issues/381)) ([527cce5](https://github.com/Zapper-fi/studio/commit/527cce5099779c0519b050ff0f533fc4d5ca5146))
+
 ## [0.20.0](https://github.com/Zapper-fi/studio/compare/v0.19.1...v0.20.0) (2022-05-08)
 
 
