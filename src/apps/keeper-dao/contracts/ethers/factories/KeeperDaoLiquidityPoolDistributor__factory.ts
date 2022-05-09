@@ -2,16 +2,12 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import { Contract, Signer } from 'ethers';
-import { Provider } from '@ethersproject/providers';
-
-import type { KeeperDaoLiquidityPoolDistributor } from '../KeeperDaoLiquidityPoolDistributor';
-
-export class KeeperDaoLiquidityPoolDistributor__factory {
-  static connect(address: string, signerOrProvider: Signer | Provider): KeeperDaoLiquidityPoolDistributor {
-    return new Contract(address, _abi, signerOrProvider) as KeeperDaoLiquidityPoolDistributor;
-  }
-}
+import { Contract, Signer, utils } from 'ethers';
+import type { Provider } from '@ethersproject/providers';
+import type {
+  KeeperDaoLiquidityPoolDistributor,
+  KeeperDaoLiquidityPoolDistributorInterface,
+} from '../KeeperDaoLiquidityPoolDistributor';
 
 const _abi = [
   {
@@ -255,3 +251,13 @@ const _abi = [
     type: 'function',
   },
 ];
+
+export class KeeperDaoLiquidityPoolDistributor__factory {
+  static readonly abi = _abi;
+  static createInterface(): KeeperDaoLiquidityPoolDistributorInterface {
+    return new utils.Interface(_abi) as KeeperDaoLiquidityPoolDistributorInterface;
+  }
+  static connect(address: string, signerOrProvider: Signer | Provider): KeeperDaoLiquidityPoolDistributor {
+    return new Contract(address, _abi, signerOrProvider) as KeeperDaoLiquidityPoolDistributor;
+  }
+}
