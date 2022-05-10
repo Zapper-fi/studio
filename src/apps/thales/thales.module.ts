@@ -1,8 +1,5 @@
-import { Module } from '@nestjs/common';
-
+import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
-import { SynthetixSingleStakingFarmContractPositionHelper } from '~apps/synthetix';
-
 import { ThalesContractFactory } from './contracts';
 import { EthereumThalesBalanceFetcher } from './ethereum/thales.balance-fetcher';
 import { EthereumThalesMarketTokenFetcher } from './ethereum/thales.market.token-fetcher';
@@ -13,9 +10,10 @@ import { OptimismThalesStakingContractPositionFetcher } from './optimism/thales.
 import { PolygonThalesBalanceFetcher } from './polygon/thales.balance-fetcher';
 import { PolygonThalesMarketTokenFetcher } from './polygon/thales.market.token-fetcher';
 import { PolygonThalesStakingContractPositionFetcher } from './polygon/thales.staking.contract-position-fetcher';
-import { ThalesAppDefinition } from './thales.definition';
+import { ThalesAppDefinition, THALES_DEFINITION } from './thales.definition';
 
-@Module({
+@Register.AppModule({
+  appId: THALES_DEFINITION.id,
   providers: [
     ThalesAppDefinition,
     ThalesContractFactory,

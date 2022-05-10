@@ -38,40 +38,18 @@ export class OptimismThalesStakingContractPositionFetcher implements PositionFet
   ) { }
 
   async getPositions() {
-    // const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
-    // const appTokens = await this.appToolkit.getAppTokenPositions(
-    //   { appId: 'thales', groupIds: ['staking'], network },
-    // );
-    // const allTokens = [...appTokens, ...baseTokens];
-
+    const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
     const multicall = this.appToolkit.getMulticall(network);
 
-    const tokens = await farmDefinitions.map(async ({ address, stakedTokenAddress, rewardTokenAddress }) => {
-      const stakedToken: Token = {
-        address: '0x217d47011b23bb961eb6d93ca9945b7501a5bb11'.toLowerCase(),
-        network,
-        price: 0.42,
-        symbol: "THALES",
-        decimals: 18,
-        type: ContractType.BASE_TOKEN,
-      };
+    const tokens = await Promise.all(farmDefinitions.map(async ({ address, stakedTokenAddress, rewardTokenAddress }) => {
+      const stakedToken = baseTokens.find(t => t.address === stakedTokenAddress);
+      const rewardToken = baseTokens.find(t => t.address === rewardTokenAddress);
 
-      const rewardToken: Token = {
-        address: '0x217d47011b23bb961eb6d93ca9945b7501a5bb11'.toLowerCase(),
-        network,
-        price: 0.42,
-        symbol: "THALES",
-        decimals: 18,
-        type: ContractType.BASE_TOKEN,
-      };
-
-      // const rewardToken = allTokens.find(v => v.address === rewardTokenAddress);
       if (!stakedToken || !rewardToken) return null;
 
       const tokens = [supplied(stakedToken as Token), claimable(rewardToken)];
       const contract = this.thalesContractFactory.stakingThales({ address: farmDefinitions[0].address, network });
-      const [balanceRaw] = await Promise.all([multicall.wrap(contract).stakedBalanceOf(address)]);
-      console.log(`balance`, balanceRaw)
+      const [balanceRaw] = await Promise.all([multicall.wrap(contract).totalStakedAmount()]);
       const totalValueLocked = Number(balanceRaw) / 10 ** stakedToken.decimals;
 
       const label = `Staked ${getLabelFromToken(stakedToken)}`;
@@ -98,8 +76,7 @@ export class OptimismThalesStakingContractPositionFetcher implements PositionFet
       };
 
       return position;
-    });
-
+    }));
     return compact(tokens);
   }
 }

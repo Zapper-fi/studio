@@ -8,7 +8,7 @@ import { BalanceFetcher } from '~balance/balance-fetcher.interface';
 import { isSupplied } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 
-import { StakingThales, ThalesContractFactory } from '../contracts';
+import { ThalesContractFactory } from '../contracts';
 import { THALES_DEFINITION } from '../thales.definition';
 
 const network = Network.OPTIMISM_MAINNET;
@@ -30,20 +30,47 @@ export class OptimismThalesBalanceFetcher implements BalanceFetcher {
         const stakedToken = contractPosition.tokens.find(isSupplied)!;
         const contract = this.thalesContractFactory.stakingThales(contractPosition);
         const stakedBalanceRaw = await multicall.wrap(contract).stakedBalanceOf(address);
-        return [drillBalance(stakedToken, stakedBalanceRaw.toString())];
+        const claimableBalanceRaw = await multicall.wrap(contract).getRewardsAvailable(address);
+        return [
+          drillBalance(stakedToken, stakedBalanceRaw.toString()),
+          drillBalance(stakedToken, claimableBalanceRaw.toString()),
+        ];
+      }
+
+    });
+  }
+
+  private async getEscrowedBalances(address: string) {
+    return this.appToolkit.helpers.contractPositionBalanceHelper.getContractPositionBalances({
+      address,
+      appId: THALES_DEFINITION.id,
+      groupId: THALES_DEFINITION.groups.staking.id,
+      network,
+      resolveBalances: async ({ address, contractPosition, multicall }) => {
+        const stakedToken = contractPosition.tokens.find(isSupplied)!;
+        const contract = this.thalesContractFactory.escrowThales(contractPosition);
+        const escrowedBalanceRaw = await multicall.wrap(contract).totalAccountEscrowedAmount(address);
+        return [drillBalance(stakedToken, escrowedBalanceRaw.toString()),];
       }
 
     });
   }
 
   async getBalances(address: string) {
-    const [stakingBalances] = await Promise.all([this.getStakedBalances(address)]);
+    const [stakingBalances] = await Promise.all([
+      this.getStakedBalances(address),
+      // this.getEscrowedBalances(address),
+    ]);
 
     return presentBalanceFetcherResponse([
       {
         label: 'Staking',
         assets: stakingBalances,
       },
+      // {
+      //   label: 'Escrowed',
+      //   assets: escrowedBalances,
+      // },
     ]);
   }
 }
