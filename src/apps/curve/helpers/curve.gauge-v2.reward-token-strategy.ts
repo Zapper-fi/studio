@@ -4,9 +4,11 @@ import { range } from 'lodash';
 import { SingleStakingFarmContractPositionHelperParams } from '~app-toolkit';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 
+import { CurveGaugeV2 } from '../contracts';
+
 @Injectable()
 export class CurveGaugeV2RewardTokenStrategy {
-  build<T>(): SingleStakingFarmContractPositionHelperParams<T>['resolveRewardTokenAddresses'] {
+  build(): SingleStakingFarmContractPositionHelperParams<CurveGaugeV2>['resolveRewardTokenAddresses'] {
     return async ({ contract, multicall }) => {
       // Gauge V2 supports up to 4 different reward tokens
       const MAX_REWARDS = 4;
