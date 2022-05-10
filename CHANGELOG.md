@@ -4,6 +4,21 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.24.0](https://github.com/Zapper-fi/studio/compare/v0.23.0...v0.24.0) (2022-05-10)
+
+
+### Features
+
+* Add missing Balancer-v2 farms in Polygon and Arbitrum ([#415](https://github.com/Zapper-fi/studio/issues/415)) ([46ff7b8](https://github.com/Zapper-fi/studio/commit/46ff7b8d42ac27696867a8e6fb1d3cc355d3d8ae))
+* added alpha-v1 tvl-fetcher ([#404](https://github.com/Zapper-fi/studio/issues/404)) ([3d0203b](https://github.com/Zapper-fi/studio/commit/3d0203bbe5885450b4b9532dc3d5707d6129034d))
+
+
+### Bug Fixes
+
+* **codegen:** Update module codegen ([#414](https://github.com/Zapper-fi/studio/issues/414)) ([d3705e3](https://github.com/Zapper-fi/studio/commit/d3705e33a44a7b959f0aecbf0c50931cceb514c1))
+* **main:** Log and exit when no apps are configured in the .env file ([#412](https://github.com/Zapper-fi/studio/issues/412)) ([76fa3ef](https://github.com/Zapper-fi/studio/commit/76fa3ef43d6b5d9186c39119890ddf676b4d27d2))
+* **prices:** Cache prices for 1 minute ([#411](https://github.com/Zapper-fi/studio/issues/411)) ([9920de0](https://github.com/Zapper-fi/studio/commit/9920de06e1548ae551cdd32afb88741b682e540d))
+
 ## [0.23.0](https://github.com/Zapper-fi/studio/compare/v0.22.0...v0.23.0) (2022-05-09)
 
 
