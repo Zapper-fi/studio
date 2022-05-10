@@ -12,10 +12,10 @@ import { BalancerV2GaugeAddressesGetter } from '../helpers/balancer-v2.gauge-add
 
 const appId = BALANCER_V2_DEFINITION.id;
 const groupId = BALANCER_V2_DEFINITION.groups.farm.id;
-const network = Network.ETHEREUM_MAINNET;
+const network = Network.POLYGON_MAINNET;
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
-export class EthereumBalancerV2StakedfContractPositionFetcher implements PositionFetcher<ContractPosition> {
+export class PolygonBalancerV2StakedfContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(BalancerV2ContractFactory)
     private readonly balancerV2ContractFactory: BalancerV2ContractFactory,
