@@ -4,6 +4,7 @@ import { CurveAppModule } from '~apps/curve';
 
 import { ArbitrumBalancerV2BalanceFetcher } from './arbitrum/balancer-v2.balance-fetcher';
 import { ArbitrumBalancerV2PoolTokenFetcher } from './arbitrum/balancer-v2.pool.token-fetcher';
+import { ArbitrumBalancerV2StakedfContractPositionFetcher } from './arbitrum/balancer-v2.staked.contract-position-fetcher';
 import BALANCER_V2_DEFINITION, { BalancerV2AppDefinition } from './balancer-v2.definition';
 import { BalancerV2ContractFactory } from './contracts';
 import { EthereumBalancerV2BalanceFetcher } from './ethereum/balancer-v2.balance-fetcher';
@@ -19,6 +20,7 @@ import { BalancerV2SpotPriceHelper } from './helpers/balancer-v2.spot-price.help
 import { BalancerV2TheGraphPoolTokenDataStrategy } from './helpers/balancer-v2.the-graph.pool-token-address-strategy';
 import { PolygonBalancerV2BalanceFetcher } from './polygon/balancer-v2.balance-fetcher';
 import { PolygonBalancerV2PoolTokenFetcher } from './polygon/balancer-v2.pool.token-fetcher';
+import { PolygonBalancerV2StakedfContractPositionFetcher } from './polygon/balancer-v2.staked.contract-position-fetcher';
 
 @Register.AppModule({
   appId: BALANCER_V2_DEFINITION.id,
@@ -29,6 +31,7 @@ import { PolygonBalancerV2PoolTokenFetcher } from './polygon/balancer-v2.pool.to
     // Arbitrum
     ArbitrumBalancerV2BalanceFetcher,
     ArbitrumBalancerV2PoolTokenFetcher,
+    ArbitrumBalancerV2StakedfContractPositionFetcher,
     // Ethereum
     EthereumBalancerV2BalanceFetcher,
     EthereumBalancerV2PoolTokenFetcher,
@@ -37,6 +40,7 @@ import { PolygonBalancerV2PoolTokenFetcher } from './polygon/balancer-v2.pool.to
     // Polygon
     PolygonBalancerV2BalanceFetcher,
     PolygonBalancerV2PoolTokenFetcher,
+    PolygonBalancerV2StakedfContractPositionFetcher,
     // Helpers
     BalancerV2CacheManager,
     BalancerV2PoolTokensHelper,
