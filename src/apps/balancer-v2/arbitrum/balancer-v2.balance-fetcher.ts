@@ -4,6 +4,7 @@ import { SingleStakingContractPositionBalanceHelper, TokenBalanceHelper } from '
 import { Register } from '~app-toolkit/decorators';
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
 import { BalanceFetcher } from '~balance/balance-fetcher.interface';
+import { isClaimable } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 
 import { BALANCER_V2_DEFINITION } from '../balancer-v2.definition';
@@ -33,7 +34,11 @@ export class ArbitrumBalancerV2BalanceFetcher implements BalanceFetcher {
       groupId: BALANCER_V2_DEFINITION.groups.farm.id,
       resolveContract: ({ address, network }) => this.balancerV2ContractFactory.balancerGauge({ address, network }),
       resolveStakedTokenBalance: ({ contract, address, multicall }) => multicall.wrap(contract).balanceOf(address),
-      resolveRewardTokenBalances: () => [],
+      resolveRewardTokenBalances: ({ contract, address, multicall, contractPosition }) => {
+        const rewardTokens = contractPosition.tokens.filter(isClaimable);
+        const wrappedContract = multicall.wrap(contract);
+        return Promise.all(rewardTokens.map(v => wrappedContract.claimable_reward(address, v.address)));
+      },
     });
   }
 
