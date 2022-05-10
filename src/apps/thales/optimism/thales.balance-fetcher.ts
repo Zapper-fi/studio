@@ -44,7 +44,7 @@ export class OptimismThalesBalanceFetcher implements BalanceFetcher {
     return this.appToolkit.helpers.contractPositionBalanceHelper.getContractPositionBalances({
       address,
       appId: THALES_DEFINITION.id,
-      groupId: THALES_DEFINITION.groups.staking.id,
+      groupId: THALES_DEFINITION.groups.escrow.id,
       network,
       resolveBalances: async ({ address, contractPosition, multicall }) => {
         const stakedToken = contractPosition.tokens.find(isSupplied)!;
@@ -57,9 +57,9 @@ export class OptimismThalesBalanceFetcher implements BalanceFetcher {
   }
 
   async getBalances(address: string) {
-    const [stakingBalances] = await Promise.all([
+    const [stakingBalances, escrowedBalances] = await Promise.all([
       this.getStakedBalances(address),
-      // this.getEscrowedBalances(address),
+      this.getEscrowedBalances(address),
     ]);
 
     return presentBalanceFetcherResponse([
@@ -67,10 +67,10 @@ export class OptimismThalesBalanceFetcher implements BalanceFetcher {
         label: 'Staking',
         assets: stakingBalances,
       },
-      // {
-      //   label: 'Escrowed',
-      //   assets: escrowedBalances,
-      // },
+      {
+        label: 'Escrowed',
+        assets: escrowedBalances,
+      },
     ]);
   }
 }

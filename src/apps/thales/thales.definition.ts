@@ -11,6 +11,9 @@ export const THALES_DEFINITION = appDefinition({
   groups: {
     market: { id: 'market', type: GroupType.TOKEN },
     staking: { id: 'staking', type: GroupType.POSITION },
+    escrow: { id: 'escrow', type: GroupType.POSITION },
+    pool2: { id: 'pool2', type: GroupType.POSITION },
+    opthales: { id: 'opthales', type: GroupType.TOKEN }
   },
   tags: [AppTag.OPTIONS],
   links: {
