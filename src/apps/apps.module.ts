@@ -1,7 +1,7 @@
 import { readdirSync } from 'fs';
 
 import { IConfigurableDynamicRootModule } from '@golevelup/nestjs-modules';
-import { DynamicModule, ForwardReference, Module, Type } from '@nestjs/common';
+import { DynamicModule, ForwardReference, Logger, Module, Type } from '@nestjs/common';
 import { MODULE_METADATA } from '@nestjs/common/constants';
 import chalk from 'chalk';
 import { compact, intersection } from 'lodash';
@@ -14,6 +14,8 @@ type ModuleImport = Type<any> | DynamicModule | Promise<DynamicModule> | Forward
 
 @Module({})
 export class AppsModule {
+  static logger = new Logger(AppsModule.name);
+
   static isForwardReference(module: ModuleImport): module is ForwardReference {
     return module && !!(module as ForwardReference).forwardRef;
   }
@@ -93,9 +95,16 @@ export class AppsModule {
     // If we're in prod, or if there is no enabled apps subset configured, enable everything
     const isProd = process.env.NODE_ENV === 'production';
     const configuredAppIds = compact((process.env.ENABLED_APPS ?? '').split(','));
-    if (isProd || !configuredAppIds.length) {
+
+    if (isProd) {
       const appModules = await this.resolveModulesByAppIds(allAppIds);
       return this.externalizeAppModuleDependencies(appModules);
+    }
+
+    if (!configuredAppIds.length) {
+      const message = chalk`{red No apps have been configured! Set {yellow ENABLED_APPS} in your {yellow .env} file, then restart. Example: {yellow ENABLED_APPS=synthetix,uniswap-v2}}`;
+      this.logger.error(message);
+      process.exit(1);
     }
 
     // Resolve enabled app modules and their dependencies
