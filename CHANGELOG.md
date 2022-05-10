@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+### [0.24.1](https://github.com/Zapper-fi/studio/compare/v0.24.0...v0.24.1) (2022-05-10)
+
+
+### Bug Fixes
+
+* **balancer-v2:** Fix Gauge and Reward for Polygon and Arbitrum ([#416](https://github.com/Zapper-fi/studio/issues/416)) ([206e7b6](https://github.com/Zapper-fi/studio/commit/206e7b62e082569e9c16e2ae51288f65193cc94e))
+* **curve:** Fix Generic type in helper ([#418](https://github.com/Zapper-fi/studio/issues/418)) ([43767ea](https://github.com/Zapper-fi/studio/commit/43767ea85d18d37c10693f1178b40348dca9b69f))
+
 ## [0.24.0](https://github.com/Zapper-fi/studio/compare/v0.23.0...v0.24.0) (2022-05-10)
 
 
