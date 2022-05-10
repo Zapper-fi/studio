@@ -52,7 +52,7 @@ export class EthereumAcrossTvlFetcher implements TvlFetcher {
         let total = 0;
         for (let i = 0; i < lpAddresss.length; i++) {
             const value = await this.getLpValue(lpAddresss[i].address);
-            total += total;
+            total += value;
         }
         return total;
 
@@ -60,7 +60,8 @@ export class EthereumAcrossTvlFetcher implements TvlFetcher {
 
     async getLpValue(address) {
         const contract = this.acrossContractFactory.badgerPool({ address: address, network });
-        const tokenAddress = await contract.l1Token();
+        const tokenAddressChecksum = await contract.l1Token();
+        const tokenAddress = tokenAddressChecksum.toLowerCase();
         const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
         const ercTokenContract = this.appToolkit.globalContracts.erc20({
             address: tokenAddress,
