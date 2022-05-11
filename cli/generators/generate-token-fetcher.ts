@@ -1,10 +1,11 @@
 import dedent from 'dedent';
-import fse from 'fs-extra';
 
 import { Network } from '../../src/types/network.interface';
 import { strings } from '../strings';
 
-export function generateTokenFetcher(appId: string, groupId: string, network: string) {
+import { formatAndWrite } from './utils';
+
+export async function generateTokenFetcher(appId: string, groupId: string, network: Network) {
   const appDefinitionName = `${strings.upperCase(appId)}_DEFINITION`;
   const appCamelCase = strings.camelCase(appId);
   const appTitleCase = strings.titleCase(appCamelCase);
@@ -43,6 +44,5 @@ export function generateTokenFetcher(appId: string, groupId: string, network: st
     }
   `;
 
-  fse.mkdirpSync(`./src/apps/${appId}/${network}`);
-  fse.writeFileSync(`./src/apps/${appId}/${network}/${appId}.${groupId}.token-fetcher.ts`, `${content}\n`);
+  await formatAndWrite(`./src/apps/${appId}/${network}/${appId}.${groupId}.token-fetcher.ts`, content);
 }

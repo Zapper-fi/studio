@@ -1,22 +1,25 @@
 import dedent from 'dedent';
-import fse from 'fs-extra';
 import { zipObject } from 'lodash';
 
-import { AppDefinitionObject, AppTag } from '../../src/app/app.interface';
+import { AppAction, AppDefinitionObject, AppTag, GroupType } from '../../src/app/app.interface';
 import { Network } from '../../src/types/network.interface';
 import { strings } from '../strings';
 
-export function generateAppDefinition(appDefinition: Partial<AppDefinitionObject>) {
+import { formatAndWrite } from './utils';
+
+export async function generateAppDefinition(appDefinition: Partial<AppDefinitionObject>) {
   const appDefinitionName = `${strings.upperCase(appDefinition.id)}_DEFINITION`;
   const appClassName = strings.titleCase(appDefinition.id);
 
   const networkToKey = zipObject(Object.values(Network), Object.keys(Network));
   const tagToKey = zipObject(Object.values(AppTag), Object.keys(AppTag));
+  const actionToKey = zipObject(Object.values(AppAction), Object.keys(AppAction));
+  const gtToKey = zipObject(Object.values(GroupType), Object.keys(GroupType));
 
   const content = dedent`
     import { Register } from '~app-toolkit/decorators';
     import { appDefinition, AppDefinition } from '~app/app.definition';
-    import { AppAction, AppTag } from '~app/app.interface';
+    import { GroupType, AppAction, AppTag } from '~app/app.interface';
     import { Network } from '~types/network.interface';
 
     export const ${appDefinitionName} = appDefinition({
@@ -24,21 +27,18 @@ export function generateAppDefinition(appDefinition: Partial<AppDefinitionObject
       name: '${appDefinition.name}',
       description: '${appDefinition.description}',
       url: '${appDefinition.url}',
-      groups: ${JSON.stringify(appDefinition.groups)},
+      groups: {${Object.entries(appDefinition.groups)
+        .map(([gk, g]) => `${gk}: { id: '${g.id}', type: GroupType.${gtToKey[g.type]}, label: '${g.label}' }`)
+        .join(',')}},
       tags: [${appDefinition.tags.map(n => `AppTag.${tagToKey[n]}`).join(',')}],
-      keywords: [],
-      links: {
-        learn: '',
-        github: '',
-        twitter: '',
-        telegram: '',
-        discord: '',
-        medium: '',
-      },
+      keywords: ${JSON.stringify(appDefinition.keywords ?? [])},
+      links: ${JSON.stringify(appDefinition.links)},
       supportedNetworks: {
-        ${[].map(n => `[Network.${networkToKey[n]}]: [AppAction.VIEW]`).join(',\n')}
+        ${Object.entries(appDefinition.supportedNetworks)
+          .map(([nk, n]) => `[Network.${networkToKey[nk]}]: [${n.map(v => `AppAction.${actionToKey[v]}`).join(',')}]`)
+          .join(',')}
       },
-      primaryColor: '#fff',
+      primaryColor: '${appDefinition.primaryColor ?? '#fff'}',
     });
 
     @Register.AppDefinition(${appDefinitionName}.id)
@@ -51,5 +51,5 @@ export function generateAppDefinition(appDefinition: Partial<AppDefinitionObject
     export default ${appDefinitionName};
   `;
 
-  fse.writeFileSync(`./src/apps/${appDefinition.id}/${appDefinition.id}.definition.ts`, `${content}\n`);
+  await formatAndWrite(`./src/apps/${appDefinition.id}/${appDefinition.id}.definition.ts`, content);
 }

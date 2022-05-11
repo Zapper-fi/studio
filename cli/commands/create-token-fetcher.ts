@@ -7,6 +7,7 @@ import { camelCase } from 'lodash';
 import { AppDefinitionObject, GroupType } from '../../src/app/app.interface';
 import { Network } from '../../src/types/network.interface';
 import { generateAppDefinition } from '../generators/generate-app-definition';
+import { addTokenFetcherToAppModule } from '../generators/generate-app-module';
 import { generateTokenFetcher } from '../generators/generate-token-fetcher';
 
 export default class CreateTokenFetcher extends Command {
@@ -60,7 +61,7 @@ export default class CreateTokenFetcher extends Command {
       };
     }
 
-    const { network } = await inquirer.prompt<{ network: string }>({
+    const { network } = await inquirer.prompt<{ network: Network }>({
       name: 'network',
       message: 'Select a network',
       type: 'list',
@@ -69,9 +70,8 @@ export default class CreateTokenFetcher extends Command {
         .map(name => ({ name })),
     });
 
-    generateAppDefinition(definition);
-    generateTokenFetcher(appId, groupId, network);
-
-    console.log(definition);
+    await generateAppDefinition(definition);
+    await generateTokenFetcher(appId, groupId, network);
+    await addTokenFetcherToAppModule(appId, groupId, network);
   }
 }
