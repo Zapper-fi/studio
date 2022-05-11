@@ -1,5 +1,5 @@
 import dedent from 'dedent';
-import { zipObject } from 'lodash';
+import { entries, zipObject } from 'lodash';
 
 import { AppAction, AppDefinitionObject, AppTag, GroupType } from '../../src/app/app.interface';
 import { Network } from '../../src/types/network.interface';
@@ -27,14 +27,14 @@ export async function generateAppDefinition(appDefinition: Partial<AppDefinition
       name: '${appDefinition.name}',
       description: '${appDefinition.description}',
       url: '${appDefinition.url}',
-      groups: {${Object.entries(appDefinition.groups)
+      groups: {${entries(appDefinition.groups)
         .map(([gk, g]) => `${gk}: { id: '${g.id}', type: GroupType.${gtToKey[g.type]}, label: '${g.label}' }`)
         .join(',')}},
       tags: [${appDefinition.tags.map(n => `AppTag.${tagToKey[n]}`).join(',')}],
       keywords: ${JSON.stringify(appDefinition.keywords ?? [])},
-      links: ${JSON.stringify(appDefinition.links)},
+      links: ${JSON.stringify(appDefinition.links ?? {})},
       supportedNetworks: {
-        ${Object.entries(appDefinition.supportedNetworks)
+        ${entries(appDefinition.supportedNetworks)
           .map(([nk, n]) => `[Network.${networkToKey[nk]}]: [${n.map(v => `AppAction.${actionToKey[v]}`).join(',')}]`)
           .join(',')}
       },
