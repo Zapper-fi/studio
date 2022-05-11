@@ -1,11 +1,10 @@
 /* eslint no-console: 0 */
 
 import { Command } from '@oclif/core';
-import inquirer from 'inquirer';
 
-import { Network } from '../../src/types/network.interface';
 import { addBalanceFetcherToAppModule } from '../generators/generate-app-module';
 import { generateBalanceFetcher } from '../generators/generate-balance-fetcher';
+import { promptAppNetwork } from '../prompts';
 
 export default class CreateBalanceFetcher extends Command {
   static description = 'Creates a balance fetcher in a given app';
@@ -17,14 +16,7 @@ export default class CreateBalanceFetcher extends Command {
     const { args } = await this.parse(CreateBalanceFetcher);
     const appId = args.appId;
 
-    const { network } = await inquirer.prompt<{ network: Network }>({
-      name: 'network',
-      message: 'Select a network',
-      type: 'list',
-      choices: Object.values(Network)
-        .filter(v => v !== Network.BITCOIN_MAINNET)
-        .map(name => ({ name })),
-    });
+    const network = await promptAppNetwork();
 
     await generateBalanceFetcher(appId, network);
     await addBalanceFetcherToAppModule({ appId, network });

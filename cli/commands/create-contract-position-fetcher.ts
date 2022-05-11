@@ -1,14 +1,13 @@
 /* eslint no-console: 0 */
 
 import { Command } from '@oclif/core';
-import inquirer from 'inquirer';
 import { camelCase } from 'lodash';
 
 import { AppDefinitionObject, GroupType } from '../../src/app/app.interface';
-import { Network } from '../../src/types/network.interface';
 import { generateAppDefinition } from '../generators/generate-app-definition';
 import { addContractPositionFetcherToAppModule } from '../generators/generate-app-module';
 import { generateContractPositionFetcher } from '../generators/generate-contract-position-fetcher';
+import { promptAppGroupId, promptAppNetwork, promptNewGroupId, promptNewGroupLabel } from '../prompts';
 
 export default class CreateContractPositionFetcher extends Command {
   static description = 'Creates a contract position fetcher in a given app';
@@ -31,44 +30,18 @@ export default class CreateContractPositionFetcher extends Command {
     const definition: AppDefinitionObject = await this.loadDefinition(appId);
     const groupIds = Object.values(definition.groups).map(v => v.id);
 
-    let { groupId } = await inquirer.prompt<{ groupId: string | null }>({
-      name: 'groupId',
-      message: 'Select an existing group or create new:',
-      type: 'list',
-      choices: [...groupIds.map(name => ({ name })), { name: 'Create New', value: null }],
-    });
+    let groupId = await promptAppGroupId(groupIds);
 
     if (!groupId) {
-      ({ groupId } = await inquirer.prompt<{ groupId: string }>({
-        name: 'groupId',
-        message: 'What is the ID of the group?',
-        type: 'input',
-        validate: v => {
-          if (/[a-z0-9]+(?:-[a-z0-9]+)*/.test(v)) return true;
-          return 'ID must be kebab-case';
-        },
-      }));
+      const newGroupId = await promptNewGroupId();
+      const newGroupLabel = await promptNewGroupLabel();
+      const newGroup = { id: newGroupId, label: newGroupLabel, type: GroupType.POSITION };
 
-      const { groupLabel } = await inquirer.prompt<{ groupLabel: string }>({
-        name: 'groupLabel',
-        message: 'What is the friendly name of the group?',
-        type: 'input',
-      });
-
-      definition.groups = {
-        ...definition.groups,
-        [camelCase(groupId)]: { id: groupId, label: groupLabel, type: GroupType.POSITION },
-      };
+      definition.groups = { ...definition.groups, [camelCase(newGroupId)]: newGroup };
+      groupId = newGroupId;
     }
 
-    const { network } = await inquirer.prompt<{ network: Network }>({
-      name: 'network',
-      message: 'Select a network',
-      type: 'list',
-      choices: Object.values(Network)
-        .filter(v => v !== Network.BITCOIN_MAINNET)
-        .map(name => ({ name })),
-    });
+    const network = await promptAppNetwork();
 
     await generateAppDefinition(definition);
     await generateContractPositionFetcher(appId, groupId, network);
