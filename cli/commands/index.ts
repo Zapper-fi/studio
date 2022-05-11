@@ -3,6 +3,7 @@ import { Command } from '@oclif/core';
 import ClearCache from './clear-cache';
 import CodegenApp from './codegen-app';
 import CreateAppCommand from './create-app';
+import CreateContractPositionFetcher from './create-contract-position-fetcher';
 import CreateTokenFetcher from './create-token-fetcher';
 import GenerateContractFactory from './generate-contract-factory';
 import SetNetworkProvider from './set-network-provider';
@@ -17,6 +18,7 @@ export const commands: Record<string, typeof Command> = {
   'create-app': CreateAppCommand,
   'codegen-app': CodegenApp,
   'create-token-fetcher': CreateTokenFetcher,
+  'create-contract-position-fetcher': CreateContractPositionFetcher,
   'clear-cache': ClearCache,
   'set-network-provider': SetNetworkProvider,
 };
