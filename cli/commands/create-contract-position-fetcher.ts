@@ -72,6 +72,6 @@ export default class CreateContractPositionFetcher extends Command {
 
     await generateAppDefinition(definition);
     await generateContractPositionFetcher(appId, groupId, network);
-    await addContractPositionFetcherToAppModule(appId, groupId, network);
+    await addContractPositionFetcherToAppModule({ appId, groupId, network });
   }
 }

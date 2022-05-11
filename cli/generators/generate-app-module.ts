@@ -1,6 +1,6 @@
 import dedent from 'dedent';
 import fse from 'fs-extra';
-import { partition, sortBy } from 'lodash';
+import { compact, partition, sortBy } from 'lodash';
 import * as recast from 'recast';
 
 import { Network } from '../../src/types/network.interface';
@@ -34,9 +34,16 @@ export async function generateAppModule(appId: string) {
 }
 
 const buildAddFetcherToAppModule =
-  (filenameSuffix: string, classSuffix: string) => async (appId: string, groupId: string, network: Network) => {
-    const className = `${[network, appId, groupId].map(v => strings.titleCase(v)).join('')}${classSuffix}`;
-    const filename = `./${network}/${appId}.${groupId}.${filenameSuffix}`;
+  (filenameSuffix: string) =>
+  async ({ appId, groupId, network }: { appId: string; groupId?: string; network: Network }) => {
+    const classSuffix = strings.titleCase(filenameSuffix);
+    const classPrefix = compact([network, appId, groupId])
+      .map(v => strings.titleCase(v))
+      .join('');
+    const className = `${classPrefix}${classSuffix}`;
+
+    const filenamePrefix = compact([appId, groupId]).join('.');
+    const filename = `./${network}/${filenamePrefix}.${filenameSuffix}`;
 
     const contents = fse.readFileSync(`./src/apps/${appId}/${appId}.module.ts`, 'utf-8');
     const ast = recast.parse(contents, { parser: require('recast/parsers/typescript') });
@@ -76,8 +83,6 @@ const buildAddFetcherToAppModule =
     await formatAndWrite(`./src/apps/${appId}/${appId}.module.ts`, content);
   };
 
-export const addTokenFetcherToAppModule = buildAddFetcherToAppModule('token-fetcher', 'TokenFetcher');
-export const addContractPositionFetcherToAppModule = buildAddFetcherToAppModule(
-  'contract-position-fetcher',
-  'ContractPositionFetcher',
-);
+export const addTokenFetcherToAppModule = buildAddFetcherToAppModule('token-fetcher');
+export const addContractPositionFetcherToAppModule = buildAddFetcherToAppModule('contract-position-fetcher');
+export const addBalanceFetcherToAppModule = buildAddFetcherToAppModule('balance-fetcher');

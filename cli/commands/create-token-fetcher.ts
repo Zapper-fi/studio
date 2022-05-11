@@ -72,6 +72,6 @@ export default class CreateTokenFetcher extends Command {
 
     await generateAppDefinition(definition);
     await generateTokenFetcher(appId, groupId, network);
-    await addTokenFetcherToAppModule(appId, groupId, network);
+    await addTokenFetcherToAppModule({ appId, groupId, network });
   }
 }
