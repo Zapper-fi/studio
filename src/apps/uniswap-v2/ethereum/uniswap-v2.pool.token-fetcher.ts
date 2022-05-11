@@ -70,7 +70,7 @@ export class EthereumUniswapV2PoolTokenFetcher implements PositionFetcher<AppTok
           '0x5b64bb4f69c8c03250ac560aac4c7401d78a1c32', // mGOOGL/UST
           '0x99d737ab0df10cdc99c6f64d0384acd5c03aef7f', // mTWTR/UST
           '0x769325e8498bf2c2c3cfd6464a60fa213f26afcc', // mBABA/UST
-          '0xdb278fb5f7d4a7c3b83f80d18198d872bbf7b923', // mSLV/UST
+          '0x860425be6ad1345dc7a3e287facbf32b18bc4fae', // mSLV/UST
           '0xe214a6ca22be90f011f34fdddc7c5a07800f8bcd', // mIAU/UST
           '0x735659c8576d88a2eb5c810415ea51cb06931696', // mAAPL/UST
         ],
