@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+### [0.24.2](https://github.com/Zapper-fi/studio/compare/v0.24.1...v0.24.2) (2022-05-11)
+
+
+### Bug Fixes
+
+* **uniswap-v2:** Fix required pool address ([#419](https://github.com/Zapper-fi/studio/issues/419)) ([fc8dc03](https://github.com/Zapper-fi/studio/commit/fc8dc039bd5c2b9bbca3f218286bb27d63dc97d3))
+
 ### [0.24.1](https://github.com/Zapper-fi/studio/compare/v0.24.0...v0.24.1) (2022-05-10)
 
 
