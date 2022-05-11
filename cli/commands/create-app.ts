@@ -15,6 +15,8 @@ import {
 } from '../prompts';
 import { strings } from '../strings';
 
+import { generateContractFactory } from './generate-contract-factory';
+
 export default class CreateApp extends Command {
   static description = 'Creates the starting point for an app integration';
   static examples = [`$ ./studio create-app`];
@@ -50,6 +52,7 @@ export default class CreateApp extends Command {
       ),
     });
 
+    await generateContractFactory(`./src/apps/${appId}`);
     this.log(`You can now fill/update ${appId}.definition.ts`);
   }
 }

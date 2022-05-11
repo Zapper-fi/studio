@@ -57,15 +57,13 @@ export const promptAppUrl = async () => {
     .then(v => v.url);
 };
 
-export const promptAppNetwork = async () => {
+export const promptAppNetwork = async networks => {
   return inquirer
     .prompt<{ network: Network }>({
       name: 'network',
       message: 'Select a network',
       type: 'list',
-      choices: Object.values(Network)
-        .filter(v => v !== Network.BITCOIN_MAINNET)
-        .map(name => ({ name })),
+      choices: networks,
     })
     .then(v => v.network);
 };

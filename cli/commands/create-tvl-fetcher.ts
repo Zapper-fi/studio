@@ -2,8 +2,9 @@
 
 import { Command } from '@oclif/core';
 
-import { addBalanceFetcherToAppModule } from '../generators/generate-app-module';
+import { addTvlFetcherToAppModule } from '../generators/generate-app-module';
 import { generateTvlFetcher } from '../generators/generate-tvl-fetcher';
+import { loadAppDefinition } from '../generators/utils';
 import { promptAppNetwork } from '../prompts';
 
 export default class CreateTvlFetcher extends Command {
@@ -16,9 +17,12 @@ export default class CreateTvlFetcher extends Command {
     const { args } = await this.parse(CreateTvlFetcher);
     const appId = args.appId;
 
-    const network = await promptAppNetwork();
+    const definition = await loadAppDefinition(appId);
+    const networks = Object.keys(definition.supportedNetworks);
+
+    const network = await promptAppNetwork(networks);
 
     await generateTvlFetcher(appId, network);
-    await addBalanceFetcherToAppModule({ appId, network });
+    await addTvlFetcherToAppModule({ appId, network });
   }
 }

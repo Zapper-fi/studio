@@ -3,10 +3,11 @@
 import { Command } from '@oclif/core';
 import { camelCase } from 'lodash';
 
-import { AppDefinitionObject, GroupType } from '../../src/app/app.interface';
+import { GroupType } from '../../src/app/app.interface';
 import { generateAppDefinition } from '../generators/generate-app-definition';
 import { addTokenFetcherToAppModule } from '../generators/generate-app-module';
 import { generateTokenFetcher } from '../generators/generate-token-fetcher';
+import { loadAppDefinition } from '../generators/utils';
 import { promptAppGroupId, promptAppNetwork, promptNewGroupId, promptNewGroupLabel } from '../prompts';
 
 export default class CreateTokenFetcher extends Command {
@@ -27,8 +28,9 @@ export default class CreateTokenFetcher extends Command {
     const { args } = await this.parse(CreateTokenFetcher);
     const appId = args.appId;
 
-    const definition: AppDefinitionObject = await this.loadDefinition(appId);
+    const definition = await loadAppDefinition(appId);
     const groupIds = Object.values(definition.groups).map(v => v.id);
+    const networks = Object.keys(definition.supportedNetworks);
 
     let groupId = await promptAppGroupId(groupIds);
 
@@ -41,7 +43,7 @@ export default class CreateTokenFetcher extends Command {
       groupId = newGroupId;
     }
 
-    const network = await promptAppNetwork();
+    const network = await promptAppNetwork(networks);
 
     await generateAppDefinition(definition);
     await generateTokenFetcher(appId, groupId, network);

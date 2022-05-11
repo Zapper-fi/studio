@@ -3,10 +3,11 @@
 import { Command } from '@oclif/core';
 import { camelCase } from 'lodash';
 
-import { AppDefinitionObject, GroupType } from '../../src/app/app.interface';
+import { GroupType } from '../../src/app/app.interface';
 import { generateAppDefinition } from '../generators/generate-app-definition';
 import { addContractPositionFetcherToAppModule } from '../generators/generate-app-module';
 import { generateContractPositionFetcher } from '../generators/generate-contract-position-fetcher';
+import { loadAppDefinition } from '../generators/utils';
 import { promptAppGroupId, promptAppNetwork, promptNewGroupId, promptNewGroupLabel } from '../prompts';
 
 export default class CreateContractPositionFetcher extends Command {
@@ -15,20 +16,13 @@ export default class CreateContractPositionFetcher extends Command {
   static args = [{ name: 'appId', description: 'The application id ', required: true }];
   static flags = {};
 
-  private async loadDefinition(appId: string) {
-    const modPath = `../src/apps/${appId}/${appId}.definition`;
-    const mod = require(modPath);
-    const key = Object.keys(mod).find(v => /_DEFINITION/.test(v));
-    if (!key) throw new Error(`No matched export found in ${modPath}`);
-    return mod[key];
-  }
-
   async run(): Promise<void> {
     const { args } = await this.parse(CreateContractPositionFetcher);
     const appId = args.appId;
 
-    const definition: AppDefinitionObject = await this.loadDefinition(appId);
+    const definition = await loadAppDefinition(appId);
     const groupIds = Object.values(definition.groups).map(v => v.id);
+    const networks = Object.keys(definition.supportedNetworks);
 
     let groupId = await promptAppGroupId(groupIds);
 
@@ -41,7 +35,7 @@ export default class CreateContractPositionFetcher extends Command {
       groupId = newGroupId;
     }
 
-    const network = await promptAppNetwork();
+    const network = await promptAppNetwork(networks);
 
     await generateAppDefinition(definition);
     await generateContractPositionFetcher(appId, groupId, network);

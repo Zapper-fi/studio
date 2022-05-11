@@ -12,22 +12,23 @@ import t = recast.types.namedTypes;
 
 export async function generateAppModule(appId: string) {
   const appTitleCase = strings.titleCase(appId);
+  const appUpperCase = strings.upperCase(appId);
 
   const content = dedent`
     import { Register } from '~app-toolkit/decorators';
     import { AbstractApp } from '~app/app.dynamic-module';
     
     import { ${appTitleCase}ContractFactory } from './contracts';
-    import { ${appTitleCase}AppDefinition } from './${appId}.definition';
+    import { ${appTitleCase}AppDefinition, ${appUpperCase}_DEFINITION } from './${appId}.definition';
 
     @Register.AppModule({
-      appId: '${appId}',
+      appId: ${appUpperCase}_DEFINITION.id,
       providers: [
         ${appTitleCase}AppDefinition,
         ${appTitleCase}ContractFactory,
       ],
     })
-    export class ${appTitleCase}AppModule extends AbstractApp<${appTitleCase}AppModule>() {}
+    export class ${appTitleCase}AppModule extends AbstractApp() {}
   `;
 
   await formatAndWrite(`./src/apps/${appId}/${appId}.module.ts`, content);
@@ -86,3 +87,4 @@ const buildAddFetcherToAppModule =
 export const addTokenFetcherToAppModule = buildAddFetcherToAppModule('token-fetcher');
 export const addContractPositionFetcherToAppModule = buildAddFetcherToAppModule('contract-position-fetcher');
 export const addBalanceFetcherToAppModule = buildAddFetcherToAppModule('balance-fetcher');
+export const addTvlFetcherToAppModule = buildAddFetcherToAppModule('tvl-fetcher');
