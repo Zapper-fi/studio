@@ -4,6 +4,7 @@ import { zipObject } from 'lodash';
 
 import { AppAction } from '../../src/app/app.interface';
 import { generateAppDefinition } from '../generators/generate-app-definition';
+import { generateAppModule } from '../generators/generate-app-module';
 import {
   promptAppDescription,
   promptAppId,
@@ -36,6 +37,7 @@ export default class CreateApp extends Command {
       fse.ensureDir(`./src/apps/${appId}/${network}`);
     }
 
+    await generateAppModule(appId);
     await generateAppDefinition({
       id: appId,
       name: appName,
