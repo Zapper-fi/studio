@@ -62,6 +62,12 @@ $ pnpm dev
 pnpm studio create-app
 ```
 
+## Creating a new app group
+
+```bash
+pnpm studio create-group [app-id]
+```
+
 ## Generating code templates
 
 ```bash

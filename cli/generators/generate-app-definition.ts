@@ -60,7 +60,7 @@ export async function generateAppDefinition(appDefinition: Partial<AppDefinition
   await formatAndWrite(`./src/apps/${appDefinition.id}/${appDefinition.id}.definition.ts`, prettyContent);
 }
 
-export const addGroupToAppModule = async ({ appId, group }: { appId: string; group: AppGroup }) => {
+export const addGroupToAppDefinition = async ({ appId, group }: { appId: string; group: AppGroup }) => {
   const contents = fse.readFileSync(`./src/apps/${appId}/${appId}.definition.ts`, 'utf-8');
   const ast = recast.parse(contents, { parser: require('recast/parsers/typescript') });
   const b = recast.types.builders;
