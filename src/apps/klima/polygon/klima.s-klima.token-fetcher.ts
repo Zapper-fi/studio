@@ -30,6 +30,7 @@ export class PolygonKlimaSTokenFetcher implements PositionFetcher<AppTokenPositi
           .balanceOf('0x25d28a24ceb6f81015bb0b2007d795acac411b4d')
           .then(v => Number(v) / 10 ** underlyingToken.decimals),
       resolvePricePerShare: () => 1,
+      resolvePrimaryLabel: ({ symbol }) => symbol,
     });
   }
 }
