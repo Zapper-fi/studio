@@ -4,6 +4,7 @@ import { compact } from 'lodash';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import {
   buildDollarDisplayItem,
+  buildNumberDisplayItem,
   buildPercentageDisplayItem,
 } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
@@ -106,7 +107,8 @@ export class VaultTokenHelper {
         const secondaryLabel = buildDollarDisplayItem(price);
         const tertiaryLabel = resolveApy ? `${(apy * 100).toFixed(3)}% APY` : '';
         const images = resolveImages({ underlyingToken });
-        const statsItems: StatsItem[] = [];
+        const statsItems: StatsItem[] = [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }];
+        if (reserve > 0) statsItems.push({ label: 'Reserve', value: buildNumberDisplayItem(reserve) });
         if (resolveApy) statsItems.push({ label: 'APY', value: buildPercentageDisplayItem(apy) });
 
         const vaultToken: AppTokenPosition<VaultTokenDataProps> = {
