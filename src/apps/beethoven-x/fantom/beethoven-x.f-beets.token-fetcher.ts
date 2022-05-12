@@ -9,9 +9,9 @@ import { Network } from '~types/network.interface';
 
 import { BEETHOVEN_X_DEFINITION } from '../beethoven-x.definition';
 import { BeethovenXContractFactory } from '../contracts';
+import { BeethovenXBeetsBar } from '../contracts/ethers/BeethovenXBeetsBar';
 
 const F_BEETS_ADDRESS = '0xfcef8a994209d6916eb2c86cdd2afd60aa6f54b1';
-const BPT_BEETS_FTM_POOL_ADDRESS = '0xcde5a11a4acb4ee4c805352cec57e236bdbc3837';
 
 const appId = BEETHOVEN_X_DEFINITION.id;
 const groupId = BEETHOVEN_X_DEFINITION.groups.fBeets.id;
@@ -26,14 +26,21 @@ export class FantomBeethovenXFBeetsTokenFetcher implements PositionFetcher<AppTo
   ) {}
 
   async getPositions(): Promise<AppTokenPosition[]> {
-    return this.appToolkit.helpers.singleVaultTokenHelper.getTokens({
+    return this.appToolkit.helpers.vaultTokenHelper.getTokens<BeethovenXBeetsBar>({
       network,
       appId,
       groupId,
       dependencies: [{ appId, groupIds: [BEETHOVEN_X_DEFINITION.groups.pool.id], network }],
-      address: F_BEETS_ADDRESS,
-      resolveContract: ({ address, network }) => this.beethovenXContractFactory.erc20({ address, network }),
-      resolveUnderlyingTokenAddress: () => BPT_BEETS_FTM_POOL_ADDRESS,
+      resolveContract: ({ address, network }) =>
+        this.beethovenXContractFactory.beethovenXBeetsBar({ address, network }),
+      resolveVaultAddresses: () => [F_BEETS_ADDRESS],
+      resolveUnderlyingTokenAddress: ({ contract, multicall }) => multicall.wrap(contract).vestingToken(),
+      resolveReserve: async ({ underlyingToken, multicall, address }) =>
+        multicall
+          .wrap(this.appToolkit.globalContracts.erc20(underlyingToken))
+          .balanceOf(address)
+          .then(v => Number(v) / 10 ** underlyingToken.decimals),
+      resolvePricePerShare: ({ reserve, supply }) => reserve / supply,
       resolveImages: () => [getTokenImg(BEETHOVEN_X_DEFINITION.token!.address, network)],
     });
   }

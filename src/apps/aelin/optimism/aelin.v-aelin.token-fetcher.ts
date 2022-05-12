@@ -21,13 +21,14 @@ export class OptimismAelinVAelinTokenFetcher implements PositionFetcher<AppToken
   ) {}
 
   async getPositions() {
-    return this.appToolkit.helpers.singleVaultTokenHelper.getTokens({
+    return this.appToolkit.helpers.vaultTokenHelper.getTokens({
       appId: AELIN_DEFINITION.id,
       groupId: AELIN_DEFINITION.groups.vAelin.id,
       network: Network.OPTIMISM_MAINNET,
-      address: '0x780f70882ff4929d1a658a4e8ec8d4316b24748a',
       resolveContract: ({ address, network }) => this.aelinContractFactory.aelinVAelin({ address, network }),
+      resolveVaultAddresses: () => ['0x780f70882ff4929d1a658a4e8ec8d4316b24748a'],
       resolveUnderlyingTokenAddress: () => '0x61baadcf22d2565b0f471b291c475db5555e0b76',
+      resolveReserve: () => 0,
       resolvePricePerShare: () => 1,
     });
   }
