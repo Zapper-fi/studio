@@ -1,9 +1,9 @@
 import { Inject } from '@nestjs/common';
 import { BigNumber } from 'ethers';
 
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { RewardRateUnit } from '~app-toolkit/helpers/master-chef/master-chef.contract-position-helper';
-import { APP_TOOLKIT, IAppToolkit } from '~lib';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
@@ -11,7 +11,67 @@ import { Network } from '~types/network.interface';
 import { PancakeswapContractFactory } from '../contracts';
 import { PANCAKESWAP_DEFINITION } from '../pancakeswap.definition';
 
+// @TODO: Should be indexed from BQ events or logs
+// https://github.com/pancakeswap/pancake-frontend/blob/develop/src/config/constants/pools.tsx
 const FARMS = [
+  '0xa5d57c5dca083a7051797920c78fb2b19564176b',
+  '0xd1c395bcdc2d64ac6544a34a36185483b00530a1',
+  '0xc581345e1648cce154978ea80bf8a584ec8afde0',
+  '0xed53944b1c0ceecde1a413fdb4d0496e1a08ab58',
+  '0x9593462ff51a14633b243ba3d054a8183d057a02',
+  '0x641b1f2781b34a493e4308a0a3f1c7e042a9b952',
+  '0x0d53e0f2eb384777442e4eb813d8f5facc742206',
+  '0x84e3208578ee7db397a3d584d97fea107b15bf35',
+  '0x7092e029e4ce660f9ac081bf6d8a339be602398b',
+  '0xa581349f26de887700045f9b7d148775d422fda2',
+  '0xe76a31cf974ba5819ce86cb4667a4bf05174bc59',
+  '0x6e0272a70075f6782f6842730107e9abf74c5cc7',
+  '0x60c4998c058bac8042712b54e7e43b892ab0b0c4',
+  '0xd1d03a3d4c27884a8703cdb78504737c9e9a159e',
+  '0x260f95f5b7fd8eda720ed9d0829164de35b048ab',
+  '0x346a1b672c5cbb6ae21715428f77a0049b29b332',
+  '0xcd1be742b04db005e2c445a11bde6d13dd9dd454',
+  '0xd5668e936b951292ddf8c84553cc58f85948f816',
+  '0x80762101bd79d6e7a175e9678d05c7f815b8d7d7',
+  '0xaaf43935a526df88ab57fc69b1d80a8d35e1de82',
+  '0x921ea7e12a66025f2bd287edbff6dc5ceabd6477',
+  '0xead7b8fc5f2e5672fae9dcf14e902287f35cb169',
+  '0x1c9e3972fdba29b40954bb7594da6611998f8830',
+  '0xa34832efe74133763a85060a64103542031b0a7e',
+  '0x92c07c325ce7b340da2591f5e9cbb1f5bab73fcf',
+  '0x25ca61796d786014ffe15e42ac11c7721d46e120',
+  '0xad8f6a9d58012dca2303226b287e80e5fe27eff0',
+  '0x1a777ae604cfbc265807a46db2d228d4cc84e09d',
+  '0x09e727c83a75ffdb729280639edbf947db76eeb7',
+  '0x2718d56ae2b8f08b3076a409bbf729542233e451',
+  '0x2461ea28907a2028b2bca40040396f64b4141004',
+  '0x9e31aef040941e67356519f44bca07c5f82215e5',
+  '0x1c0c7f3b07a42efb4e15679a9ed7e70b2d7cc157',
+  '0x56bfb98ebef4344df2d88c6b80694cba5efc56c8',
+  '0x07984abb7489cd436d27875c07eb532d4116795a',
+  '0xf1fa41f593547e406a203b681df18accc3971a43',
+  '0x13a40bfab005d9284f8938fbb70bf39982580e4d',
+  '0x0914b2d9d4dd7043893def53ecfc0f1179f87d5c',
+  '0xd97ee2bfe79a4d4ab388553411c462fbb536a88c',
+  '0x2efe8772eb97b74be742d578a654ab6c95bf18db',
+  '0x7f103689cabe17c2f70da6faa298045d72a943b8',
+  '0xbd52ef04db1ad1c68a8fa24fa71f2188978ba617',
+  '0x73bb10b89091f15e8fed4d6e9eba6415df6acb21',
+  '0xdd52fab121376432dbcbb47592742f9d86cf8952',
+  '0x2b8751b7141efa7a9917f9c6fea2cea071af5ee7',
+  '0xfdfb4dbe94916f9f55dbc2c14ea8b3e386ecd9f9',
+  '0x79f5f7ddadefa0a9e850dffc4fba77e5172fe701',
+  '0x9b861a078b2583373a7a3eef815be1a39125ae08',
+  '0xa35caa9509a2337e22c54c929146d5f7f6515794',
+  '0x6e63b2b96c77532ea7ec2b3d3bfa9c8e1d383f3c',
+  '0xfef4b7a0194159d89717efa592384d42b28d3926',
+  '0x2d26e4b9a5f19ed5bb7af221dc02432d31deb4da',
+  '0xd008416c2c9cf23843bd179aa3cefedb4c8d1607',
+  '0xd9b63bb6c62fe2e9a641699a91e680994b8b0081',
+  '0xcc2d359c3a99d9cfe8e6f31230142eff1c828e6d',
+  '0x65c0940c50a3c98aeec95a115ae62e9804588713',
+  '0x6f660c58723922c6f866a058199ff4881019b4b5',
+  '0xc28c400f2b675b25894fa632205ddec71e432288',
   '0x8d018823d13c56d62ffb795151a9e629c21e047b',
   '0x4d1ec426d0d7fb6bf344dd372d0502edd71c8d88',
   '0xcb41a72067c227d6ed7bc7cfacd13ece47dfe5e9',
@@ -117,10 +177,6 @@ const FARMS = [
   '0xc707e5589aeb1dc117b0bb5a3622362f1812d4fc',
   '0x22106cdcf9787969e1672d8e6a9c03a889cda9c5',
   '0x999b86e8bba3d4f05afb8155963999db70afa97f',
-];
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const LEGACY_FARMS = [
   '0xaf3efe5fceebc603eada6a2b0172be11f7405102',
   '0xf73fdeb26a8c7a4abf3809d3db11a06ba5c13d0e',
   '0xaac7171afc93f4b75e1268d208040b152ac65e32',
@@ -253,6 +309,14 @@ export class BinanceSmartChainPancakeswapSyrupStakingContractPositionFetcher
       groupId,
       address: '',
       resolveAddress: async ({ poolIndex }) => FARMS[poolIndex],
+      resolvePoolIndexIsValid: async ({ poolIndex, multicall }) => {
+        // Filter out any legacy SmartChef addresses that weren't deployed by the SmartChef contract
+        const smartChefAddress = FARMS[poolIndex];
+        const contract = this.contractFactory.pancakeswapSmartChef({ network, address: smartChefAddress });
+        const wrapped = multicall.wrap(contract);
+        const factoryAddress = await wrapped.SMART_CHEF_FACTORY().catch(() => null);
+        return !!factoryAddress;
+      },
       resolveContract: () => null,
       resolvePoolLength: async () => BigNumber.from(FARMS.length),
       resolveRewardTokenAddresses: ({ multicall, poolIndex }) => {

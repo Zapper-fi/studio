@@ -17,11 +17,11 @@ export const OLYMPUS_DEFINITION = appDefinition({
   },
   tags: [AppTag.ELASTIC_FINANCE],
   groups: {
-    sOhmV1: { id: 's-ohm-v1', type: GroupType.TOKEN },
-    sOhm: { id: 's-ohm', type: GroupType.TOKEN },
-    wsOhmV1: { id: 'ws-ohm-v1', type: GroupType.TOKEN },
-    gOhm: { id: 'g-ohm', type: GroupType.TOKEN },
-    bond: { id: 'bond', type: GroupType.POSITION },
+    sOhmV1: { id: 's-ohm-v1', type: GroupType.TOKEN, label: 'Staked' },
+    sOhm: { id: 's-ohm', type: GroupType.TOKEN, label: 'Staked' },
+    wsOhmV1: { id: 'ws-ohm-v1', type: GroupType.TOKEN, label: 'Staked' },
+    gOhm: { id: 'g-ohm', type: GroupType.TOKEN, label: 'Staked' },
+    bond: { id: 'bond', type: GroupType.POSITION, label: 'Bonds' },
   },
   supportedNetworks: {
     [Network.ARBITRUM_MAINNET]: [AppAction.VIEW],

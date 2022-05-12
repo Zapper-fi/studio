@@ -5,9 +5,9 @@ import { Network } from '~types/network.interface';
 
 export const DFX_DEFINITION = appDefinition({
   id: 'dfx',
-  name: 'dfx',
+  name: 'DFX',
   description: 'DFX.Finance is a decentralized foreign exchange protocol optimized for stablecoins',
-  url: 'https://app.dfx.finance/',
+  url: 'https://exchange.dfx.finance/',
   links: {
     github: 'https://github.com/dfx-finance',
     twitter: 'https://twitter.com/DFXFinance',
@@ -16,8 +16,8 @@ export const DFX_DEFINITION = appDefinition({
     medium: 'https://medium.com/dfxfinance',
   },
   groups: {
-    dfxCurve: { id: 'dfx-curve', type: GroupType.TOKEN },
-    staking: { id: 'staking', type: GroupType.POSITION },
+    dfxCurve: { id: 'dfx-curve', type: GroupType.TOKEN, label: 'DFX Curves' },
+    staking: { id: 'staking', type: GroupType.POSITION, label: 'DFX Staking' },
   },
   tags: [AppTag.DECENTRALIZED_EXCHANGE, AppTag.LIQUIDITY_POOL, AppTag.STABLECOIN],
   supportedNetworks: {

@@ -8,7 +8,7 @@ export class GetPositionsQuery {
   @IsEnum(Network)
   network: Network = Network.ETHEREUM_MAINNET;
 
-  @ApiProperty({ description: 'Retrieve specific position group within the app.' })
+  @ApiProperty({ description: 'Retrieve specific position group within the app.', isArray: true, name: `groupIds[]` })
   @IsString({ each: true })
   groupIds: string[];
 }

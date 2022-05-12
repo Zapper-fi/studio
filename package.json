@@ -1,20 +1,19 @@
 {
   "name": "@zapper-fi/studio",
-  "version": "0.13.0",
+  "version": "0.23.0",
   "description": "Community build apps for Zapper.fi",
   "license": "MIT",
-  "main": "dist/lib/index.js",
-  "types": "dist/lib/index.d.ts",
+  "main": "./index.js",
+  "types": "./index.d.ts",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "tsc && tsc-alias -p tsconfig.aliases.json",
+    "postbuild": "copyfiles package.json dist",
     "dev": "NODE_ENV=development nodemon --config nodemon.json",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "typecheck": "tsc --noEmit",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\"",
     "lint:fix": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
-    "prepublish:npm": "pnpm build",
-    "publish:npm": "pnpm publish --access public",
     "start": "nest start",
     "studio": "node ./scripts/run-cli.js",
     "test": "jest --runInBand --forceExit",
@@ -54,7 +53,7 @@
     "@types/inquirer": "^8.2.0",
     "@types/jest": "^27.4.1",
     "@types/lodash": "^4.14.180",
-    "@types/node": "^16.0.0",
+    "@types/node": "16.11.7",
     "@typescript-eslint/eslint-plugin": "^5.16.0",
     "@typescript-eslint/parser": "^5.16.0",
     "axios": "^0.26.1",
@@ -64,6 +63,8 @@
     "class-transformer": "^0.5.1",
     "class-validator": "^0.13.2",
     "conventional-changelog-conventionalcommits": "^4.6.3",
+    "copyfiles": "^2.4.1",
+    "dataloader": "^2.1.0",
     "dedent": "^0.7.0",
     "dotenv": "^16.0.0",
     "eslint": "^8.11.0",
@@ -105,6 +106,7 @@
     "cache-manager": "^3.4.1",
     "class-transformer": "^0.4.0",
     "class-validator": "^0.13.2",
+    "dataloader": "^2.1.0",
     "ethers": "^5.5.1",
     "graphql": "14 || 15 || 16",
     "graphql-request": "^3",
@@ -113,5 +115,8 @@
     "rxjs": "^7.5.5",
     "type-fest": "^0.18.0",
     "web3": "^1.5.1"
+  },
+  "engines": {
+    "node": "16.x"
   }
 }

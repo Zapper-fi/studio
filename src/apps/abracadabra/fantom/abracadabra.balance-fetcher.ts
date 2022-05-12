@@ -1,15 +1,16 @@
 import { Inject } from '@nestjs/common';
 
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
 import { BalanceFetcher } from '~balance/balance-fetcher.interface';
-import { APP_TOOLKIT, IAppToolkit } from '~lib';
 import { Network } from '~types/network.interface';
 
 import { ABRACADABRA_DEFINITION } from '../abracadabra.definition';
-import { AbracadabraContractFactory, PopsicleChef } from '../contracts';
+import { AbracadabraContractFactory, PopsicleChef, AbracadabraMspell } from '../contracts';
 import { AbracadabraCauldronBalanceHelper } from '../helpers/abracadabra.cauldron.balance-helper';
 
+const appId = ABRACADABRA_DEFINITION.id;
 const network = Network.FANTOM_OPERA_MAINNET;
 
 @Register.BalanceFetcher(ABRACADABRA_DEFINITION.id, network)
@@ -57,10 +58,11 @@ export class FantomAbracadabraBalanceFetcher implements BalanceFetcher {
   }
 
   async getBalances(address: string) {
-    const [stakedSpellBalances, cauldronBalances, farmBalances] = await Promise.all([
+    const [stakedSpellBalances, cauldronBalances, farmBalances, mspellBalances] = await Promise.all([
       this.getStakedSpellBalances(address),
       this.getCauldronBalances(address),
       this.getFarmBalances(address),
+      this.getMspellBalance(address),
     ]);
 
     return presentBalanceFetcherResponse([
@@ -76,6 +78,28 @@ export class FantomAbracadabraBalanceFetcher implements BalanceFetcher {
         label: 'Farms',
         assets: farmBalances,
       },
+      {
+        label: 'mSPELL',
+        assets: mspellBalances,
+      },
     ]);
+  }
+  private async getMspellBalance(address: string) {
+    return this.appToolkit.helpers.singleStakingContractPositionBalanceHelper.getBalances<AbracadabraMspell>({
+      address,
+      appId,
+      network,
+      groupId: ABRACADABRA_DEFINITION.groups.mSpell.id,
+      resolveContract: opts => this.contractFactory.abracadabraMspell(opts),
+      resolveStakedTokenBalance: ({ multicall, contract }) => {
+        return multicall
+          .wrap(contract)
+          .userInfo(address)
+          .then(v => v[0]);
+      },
+      resolveRewardTokenBalances: ({ multicall, contract }) => {
+        return multicall.wrap(contract).pendingReward(address);
+      },
+    });
   }
 }

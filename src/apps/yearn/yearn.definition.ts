@@ -8,9 +8,9 @@ export const YEARN_DEFINITION = appDefinition({
   name: 'Yearn',
   description: `Automate your yield. DeFi made simple.`,
   groups: {
-    farm: { id: 'farm', type: GroupType.POSITION },
-    vault: { id: 'vault', type: GroupType.TOKEN },
-    yield: { id: 'yield', type: GroupType.TOKEN },
+    farm: { id: 'farm', type: GroupType.POSITION, label: 'Governance' },
+    vault: { id: 'vault', type: GroupType.TOKEN, label: 'Vaults' },
+    yield: { id: 'yield', type: GroupType.TOKEN, label: 'Yield Tokens' },
   },
   url: 'https://yearn.finance/',
   links: {
