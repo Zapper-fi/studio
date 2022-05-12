@@ -106,7 +106,7 @@
     "cache-manager": "^3.4.1",
     "class-transformer": "^0.4.0",
     "class-validator": "^0.13.2",
-    "dataloader": "^2.1.0",
+    "dataloader": "^2",
     "ethers": "^5.5.1",
     "graphql": "14 || 15 || 16",
     "graphql-request": "^3",
