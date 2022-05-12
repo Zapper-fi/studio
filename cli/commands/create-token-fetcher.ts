@@ -3,7 +3,7 @@
 import { Command } from '@oclif/core';
 
 import { GroupType } from '../../src/app/app.interface';
-import { addGroupToAppModule } from '../generators/generate-app-definition';
+import { addGroupToAppDefinition } from '../generators/generate-app-definition';
 import { addTokenFetcherToAppModule } from '../generators/generate-app-module';
 import { generateTokenFetcher } from '../generators/generate-token-fetcher';
 import { loadAppDefinition } from '../generators/utils';
@@ -34,7 +34,7 @@ export default class CreateTokenFetcher extends Command {
     let groupId = await promptAppGroupId(groupIds);
     let group = null;
     if (!groupId) {
-      const newGroupId = await promptNewGroupId();
+      const newGroupId = await promptNewGroupId(groupIds);
       const newGroupLabel = await promptNewGroupLabel();
       group = { id: newGroupId, label: newGroupLabel, type: GroupType.TOKEN };
       groupId = newGroupId;
@@ -44,6 +44,6 @@ export default class CreateTokenFetcher extends Command {
 
     await generateTokenFetcher(appId, groupId, network);
     await addTokenFetcherToAppModule({ appId, groupId, network });
-    if (group) await addGroupToAppModule({ appId, group });
+    if (group) await addGroupToAppDefinition({ appId, group });
   }
 }
