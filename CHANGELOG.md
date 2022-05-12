@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+### [0.25.2](https://github.com/Zapper-fi/studio/compare/v0.25.1...v0.25.2) (2022-05-12)
+
+
+### Bug Fixes
+
+* **dependencies:** Relax peer dependency on Dataloader ([#429](https://github.com/Zapper-fi/studio/issues/429)) ([1d5abe6](https://github.com/Zapper-fi/studio/commit/1d5abe62e17969d7108fae7681a2f73138951083))
+
 ### [0.25.1](https://github.com/Zapper-fi/studio/compare/v0.25.0...v0.25.1) (2022-05-12)
 
 
