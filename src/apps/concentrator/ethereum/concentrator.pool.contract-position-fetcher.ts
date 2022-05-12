@@ -2,10 +2,10 @@ import { Inject } from '@nestjs/common';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
+import { CURVE_DEFINITION } from '~apps/curve';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
-import { CURVE_DEFINITION } from '~apps/curve';
 
 import { CONCENTRATOR_DEFINITION } from '../concentrator.definition';
 import { ConcentratorContractFactory, AladdinConvexVault } from '../contracts';
@@ -19,7 +19,7 @@ export class EthereumConcentratorPoolContractPositionFetcher implements Position
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(ConcentratorContractFactory) private readonly concentratorContractFactory: ConcentratorContractFactory,
-  ) { }
+  ) {}
 
   async getPositions() {
     return this.appToolkit.helpers.masterChefContractPositionHelper.getContractPositions<AladdinConvexVault>({
@@ -34,7 +34,8 @@ export class EthereumConcentratorPoolContractPositionFetcher implements Position
           network,
         },
       ],
-      resolveContract: ({ address, network }) => this.concentratorContractFactory.aladdinConvexVault({ address, network }),
+      resolveContract: ({ address, network }) =>
+        this.concentratorContractFactory.aladdinConvexVault({ address, network }),
       resolvePoolLength: ({ multicall, contract }) => multicall.wrap(contract).poolLength(),
       resolveDepositTokenAddress: ({ poolIndex, contract, multicall }) =>
         multicall

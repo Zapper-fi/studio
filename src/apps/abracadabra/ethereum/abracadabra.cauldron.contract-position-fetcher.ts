@@ -54,7 +54,7 @@ export class EthereumAbracadabraCauldronContractPositionFetcher implements Posit
   constructor(
     @Inject(AbracadabraCauldronContractPositionHelper)
     private readonly abracadabraCauldronContractPositionHelper: AbracadabraCauldronContractPositionHelper,
-  ) { }
+  ) {}
 
   async getPositions() {
     return this.abracadabraCauldronContractPositionHelper.getContractPositions({

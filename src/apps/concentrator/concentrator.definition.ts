@@ -5,7 +5,7 @@ import { Network } from '~types/network.interface';
 
 export const CONCENTRATOR_DEFINITION = appDefinition({
   id: 'concentrator',
-  name: 'concentrator',
+  name: 'Concentrator',
   description: 'Boost your Convex yields by ~50%',
   url: 'https://concentrator.aladdin.club/',
   groups: {
@@ -18,13 +18,13 @@ export const CONCENTRATOR_DEFINITION = appDefinition({
       id: 'pool',
       type: GroupType.POSITION,
       label: 'Pools',
-    }
+    },
   },
 
   tags: [AppTag.FARMING],
   keywords: [],
   links: {
-    github: 'https://github.com/AladdinDAO'
+    github: 'https://github.com/AladdinDAO',
   },
 
   supportedNetworks: {

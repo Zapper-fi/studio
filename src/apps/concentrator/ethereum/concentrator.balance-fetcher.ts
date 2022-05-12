@@ -5,8 +5,8 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
 import { BalanceFetcher } from '~balance/balance-fetcher.interface';
-import { Network } from '~types/network.interface';
 import { isSupplied } from '~position/position.utils';
+import { Network } from '~types/network.interface';
 
 import { CONCENTRATOR_DEFINITION } from '../concentrator.definition';
 import { ConcentratorContractFactory } from '../contracts';
@@ -18,7 +18,7 @@ export class EthereumConcentratorBalanceFetcher implements BalanceFetcher {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(ConcentratorContractFactory) private readonly concentratorContractFactory: ConcentratorContractFactory,
-  ) { }
+  ) {}
 
   async getTokenBalances(address: string) {
     return await this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
@@ -26,7 +26,7 @@ export class EthereumConcentratorBalanceFetcher implements BalanceFetcher {
       appId: CONCENTRATOR_DEFINITION.id,
       groupId: CONCENTRATOR_DEFINITION.groups.acrv.id,
       network: Network.ETHEREUM_MAINNET,
-    })
+    });
   }
 
   async getPoolBalances(address: string) {
@@ -40,15 +40,15 @@ export class EthereumConcentratorBalanceFetcher implements BalanceFetcher {
 
         const contract = this.concentratorContractFactory.aladdinConvexVault(contractPosition);
         const pid = contractPosition.dataProps.poolIndex;
-        const [userInfo, rewardBalanceRaw] = await Promise.all([
+        const [userInfo] = await Promise.all([
           multicall.wrap(contract).userInfo(pid, address),
-          multicall.wrap(contract).pendingReward(pid, address),
-        ])
+          // multicall.wrap(contract).pendingReward(pid, address),
+        ]);
 
         return [
-          drillBalance(stakedToken, userInfo[0].toString())
+          drillBalance(stakedToken, userInfo[0].toString()),
           // TODO: add rewards
-        ]
+        ];
       },
     });
   }
@@ -67,7 +67,7 @@ export class EthereumConcentratorBalanceFetcher implements BalanceFetcher {
       {
         label: 'Pools',
         assets: poolBalances,
-      }
+      },
     ]);
   }
 }

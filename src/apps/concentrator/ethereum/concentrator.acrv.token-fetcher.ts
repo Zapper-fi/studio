@@ -2,8 +2,8 @@ import { Inject } from '@nestjs/common';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
-import { ContractType } from '~position/contract.interface';
 import { getAppImg } from '~app-toolkit/helpers/presentation/image.present';
+import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
@@ -20,7 +20,7 @@ export class EthereumConcentratorAcrvTokenFetcher implements PositionFetcher<App
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(ConcentratorContractFactory) private readonly concentratorContractFactory: ConcentratorContractFactory,
-  ) { }
+  ) {}
 
   async getPositions() {
     // TODO: replace with recipe once docs are up
@@ -62,7 +62,7 @@ export class EthereumConcentratorAcrvTokenFetcher implements PositionFetcher<App
       displayProps: {
         label,
         images,
-      }
+      },
     };
 
     return [token];
