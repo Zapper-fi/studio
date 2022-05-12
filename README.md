@@ -62,7 +62,7 @@ $ pnpm dev
 pnpm studio create-app [app-id]
 ```
 
-## Generating boilerplate
+## Generating code templates
 
 ```bash
 pnpm studio create-token-fetcher [app-id]
