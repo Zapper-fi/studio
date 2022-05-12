@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.25.0](https://github.com/Zapper-fi/studio/compare/v0.24.2...v0.25.0) (2022-05-12)
+
+
+### Features
+
+* **concentrator:** Add AladdinDAO Concentrator ([#423](https://github.com/Zapper-fi/studio/issues/423)) ([da5fb42](https://github.com/Zapper-fi/studio/commit/da5fb42dbe4a868cc779be67c2b2ea874ab8eeae))
+
+
+### Bug Fixes
+
+* **swagger:** Fix addresses query parameter in Swagger ([#424](https://github.com/Zapper-fi/studio/issues/424)) ([411437d](https://github.com/Zapper-fi/studio/commit/411437dd06a55460ca80d9392b64e91fcd3f1e9f))
+
 ### [0.24.2](https://github.com/Zapper-fi/studio/compare/v0.24.1...v0.24.2) (2022-05-11)
 
 
