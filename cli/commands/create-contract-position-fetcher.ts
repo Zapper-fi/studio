@@ -3,7 +3,7 @@
 import { Command } from '@oclif/core';
 
 import { GroupType } from '../../src/app/app.interface';
-import { addGroupToAppModule } from '../generators/generate-app-definition';
+import { addGroupToAppDefinition } from '../generators/generate-app-definition';
 import { addContractPositionFetcherToAppModule } from '../generators/generate-app-module';
 import { generateContractPositionFetcher } from '../generators/generate-contract-position-fetcher';
 import { loadAppDefinition } from '../generators/utils';
@@ -26,7 +26,7 @@ export default class CreateContractPositionFetcher extends Command {
     let groupId = await promptAppGroupId(groupIds);
     let group = null;
     if (!groupId) {
-      const newGroupId = await promptNewGroupId();
+      const newGroupId = await promptNewGroupId(groupIds);
       const newGroupLabel = await promptNewGroupLabel();
       group = { id: newGroupId, label: newGroupLabel, type: GroupType.TOKEN };
       groupId = newGroupId;
@@ -36,6 +36,6 @@ export default class CreateContractPositionFetcher extends Command {
 
     await generateContractPositionFetcher(appId, groupId, network);
     await addContractPositionFetcherToAppModule({ appId, groupId, network });
-    if (group) await addGroupToAppModule({ appId, group });
+    if (group) await addGroupToAppDefinition({ appId, group });
   }
 }

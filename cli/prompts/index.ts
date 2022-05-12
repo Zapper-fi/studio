@@ -1,6 +1,6 @@
 import inquirer from 'inquirer';
 
-import { AppTag } from '../../src/app/app.interface';
+import { AppTag, GroupType } from '../../src/app/app.interface';
 import { Network } from '../../src/types/network.interface';
 
 export const promptAppName = async () => {
@@ -57,7 +57,7 @@ export const promptAppUrl = async () => {
     .then(v => v.url);
 };
 
-export const promptAppNetwork = async networks => {
+export const promptAppNetwork = async (networks: string[]) => {
   return inquirer
     .prompt<{ network: Network }>({
       name: 'network',
@@ -111,15 +111,16 @@ export const promptAppGroupId = async (groupIds: string[]) => {
     .then(v => v.groupId);
 };
 
-export const promptNewGroupId = async () => {
+export const promptNewGroupId = async (existingGroupIds: string[]) => {
   return inquirer
     .prompt<{ groupId: string }>({
       name: 'groupId',
       message: 'What is the ID of the group?',
       type: 'input',
       validate: v => {
-        if (/[a-z0-9]+(?:-[a-z0-9]+)*/.test(v)) return true;
-        return 'ID must be kebab-case';
+        if (!/[a-z0-9]+(?:-[a-z0-9]+)*/.test(v)) return 'ID must be kebab-case';
+        if (existingGroupIds.includes(v)) return 'Group ID already exists';
+        return true;
       },
     })
     .then(v => v.groupId);
@@ -133,4 +134,15 @@ export const promptNewGroupLabel = async () => {
       type: 'input',
     })
     .then(v => v.groupLabel);
+};
+
+export const promptNewGroupType = async () => {
+  return inquirer
+    .prompt<{ groupType: GroupType }>({
+      name: 'groupType',
+      message: 'What type of group?',
+      type: 'list',
+      choices: Object.values(GroupType).map(name => ({ name })),
+    })
+    .then(v => v.groupType);
 };
