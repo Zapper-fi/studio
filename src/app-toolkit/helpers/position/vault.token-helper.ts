@@ -9,7 +9,7 @@ import {
   buildNumberDisplayItem,
   buildPercentageDisplayItem,
 } from '~app-toolkit/helpers/presentation/display-item.present';
-import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { EthersMulticall } from '~multicall';
 import { ContractType } from '~position/contract.interface';
 import { StatsItem } from '~position/display.interface';
@@ -63,7 +63,7 @@ export class VaultTokenHelper {
     resolveReserve,
     resolvePricePerShare,
     resolveApy,
-    resolvePrimaryLabel = ({ underlyingToken }) => `${getLabelFromToken(underlyingToken)} Vault`,
+    resolvePrimaryLabel = ({ symbol }) => symbol,
     resolveImages = ({ underlyingToken }) => getImagesFromToken(underlyingToken),
   }: VaultTokenHelperParams<T>) {
     const multicall = this.appToolkit.getMulticall(network);

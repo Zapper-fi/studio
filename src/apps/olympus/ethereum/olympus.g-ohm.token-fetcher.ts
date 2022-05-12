@@ -52,7 +52,6 @@ export class EthereumOlympusGOhmTokenFetcher implements PositionFetcher<AppToken
           .erc20({ address: underlyingToken.address, network })
           .balanceOf('0xb63cac384247597756545b500253ff8e607a8020')
           .then(v => Number(v) / 10 ** underlyingToken.decimals),
-      resolvePrimaryLabel: ({ symbol }) => symbol,
     });
   }
 }

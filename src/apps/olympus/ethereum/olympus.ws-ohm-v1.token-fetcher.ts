@@ -41,7 +41,6 @@ export class EthereumOlympusWsOhmV1TokenFetcher implements PositionFetcher<AppTo
           .balanceOf(address)
           .then(v => Number(v) / 10 ** underlyingToken.decimals),
       resolvePricePerShare: ({ reserve, supply }) => reserve / supply,
-      resolvePrimaryLabel: ({ symbol }) => symbol,
     });
   }
 }

@@ -41,7 +41,6 @@ export class FantomBeethovenXFBeetsTokenFetcher implements PositionFetcher<AppTo
           .balanceOf(address)
           .then(v => Number(v) / 10 ** underlyingToken.decimals),
       resolvePricePerShare: ({ reserve, supply }) => reserve / supply,
-      resolvePrimaryLabel: ({ symbol }) => symbol,
       resolveImages: () => [getTokenImg(BEETHOVEN_X_DEFINITION.token!.address, network)],
     });
   }
