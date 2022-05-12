@@ -26,12 +26,12 @@ export class EthereumOlympusSOhmV1TokenFetcher implements PositionFetcher<AppTok
   ) {}
 
   getPositions(): Promise<AppTokenPosition[]> {
-    return this.appToolkit.helpers.singleVaultTokenHelper.getTokens<OlympusSOhmV1Token>({
+    return this.appToolkit.helpers.vaultTokenHelper.getTokens<OlympusSOhmV1Token>({
       appId: OLYMPUS_DEFINITION.id,
       groupId: OLYMPUS_DEFINITION.groups.gOhm.id,
       network: Network.ETHEREUM_MAINNET,
-      address: '0x04f2694c8fcee23e8fd0dfea1d4f5bb8c352111f', // sOHMv1
       resolveContract: ({ address, network }) => this.contractFactory.olympusSOhmV1Token({ address, network }),
+      resolveVaultAddresses: () => ['0x04f2694c8fcee23e8fd0dfea1d4f5bb8c352111f'], // sOHMv1
       resolveUnderlyingTokenAddress: () => '0x383518188c0c6d7730d91b2c03a03c837814a899', // OHMv1
       resolvePricePerShare: () => 1,
       resolveImages: () => [getAppImg(OLYMPUS_DEFINITION.id)],
