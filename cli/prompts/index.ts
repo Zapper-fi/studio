@@ -16,21 +16,6 @@ export const promptAppName = async () => {
     .then(v => v.name);
 };
 
-export const promptAppId = async (defaultId?: string) => {
-  return inquirer
-    .prompt<{ id: string }>({
-      name: 'id',
-      message: 'What is the ID of your app?',
-      default: defaultId,
-      validate: v => {
-        if (v.length === 0) return 'ID is required';
-        if (!/[a-z0-9]+(?:-[a-z0-9]+)*/.test(v)) return 'ID must be kebab-case';
-        return true;
-      },
-    })
-    .then(v => v.id);
-};
-
 export const promptAppDescription = async () => {
   return inquirer
     .prompt<{ description: string }>({

@@ -1,10 +1,9 @@
 /* eslint no-console: 0 */
 
 import { Command } from '@oclif/core';
-import { camelCase } from 'lodash';
 
 import { GroupType } from '../../src/app/app.interface';
-import { generateAppDefinition } from '../generators/generate-app-definition';
+import { addGroupToAppModule } from '../generators/generate-app-definition';
 import { addTokenFetcherToAppModule } from '../generators/generate-app-module';
 import { generateTokenFetcher } from '../generators/generate-token-fetcher';
 import { loadAppDefinition } from '../generators/utils';
@@ -33,20 +32,18 @@ export default class CreateTokenFetcher extends Command {
     const networks = Object.keys(definition.supportedNetworks);
 
     let groupId = await promptAppGroupId(groupIds);
-
+    let group = null;
     if (!groupId) {
       const newGroupId = await promptNewGroupId();
       const newGroupLabel = await promptNewGroupLabel();
-      const newGroup = { id: newGroupId, label: newGroupLabel, type: GroupType.POSITION };
-
-      definition.groups = { ...definition.groups, [camelCase(newGroupId)]: newGroup };
+      group = { id: newGroupId, label: newGroupLabel, type: GroupType.TOKEN };
       groupId = newGroupId;
     }
 
     const network = await promptAppNetwork(networks);
 
-    await generateAppDefinition(definition);
     await generateTokenFetcher(appId, groupId, network);
     await addTokenFetcherToAppModule({ appId, groupId, network });
+    if (group) await addGroupToAppModule({ appId, group });
   }
 }

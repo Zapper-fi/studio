@@ -1,10 +1,9 @@
 /* eslint no-console: 0 */
 
 import { Command } from '@oclif/core';
-import { camelCase } from 'lodash';
 
 import { GroupType } from '../../src/app/app.interface';
-import { generateAppDefinition } from '../generators/generate-app-definition';
+import { addGroupToAppModule } from '../generators/generate-app-definition';
 import { addContractPositionFetcherToAppModule } from '../generators/generate-app-module';
 import { generateContractPositionFetcher } from '../generators/generate-contract-position-fetcher';
 import { loadAppDefinition } from '../generators/utils';
@@ -25,20 +24,18 @@ export default class CreateContractPositionFetcher extends Command {
     const networks = Object.keys(definition.supportedNetworks);
 
     let groupId = await promptAppGroupId(groupIds);
-
+    let group = null;
     if (!groupId) {
       const newGroupId = await promptNewGroupId();
       const newGroupLabel = await promptNewGroupLabel();
-      const newGroup = { id: newGroupId, label: newGroupLabel, type: GroupType.POSITION };
-
-      definition.groups = { ...definition.groups, [camelCase(newGroupId)]: newGroup };
+      group = { id: newGroupId, label: newGroupLabel, type: GroupType.TOKEN };
       groupId = newGroupId;
     }
 
     const network = await promptAppNetwork(networks);
 
-    await generateAppDefinition(definition);
     await generateContractPositionFetcher(appId, groupId, network);
     await addContractPositionFetcherToAppModule({ appId, groupId, network });
+    if (group) await addGroupToAppModule({ appId, group });
   }
 }

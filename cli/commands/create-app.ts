@@ -5,15 +5,7 @@ import { zipObject } from 'lodash';
 import { AppAction } from '../../src/app/app.interface';
 import { generateAppDefinition } from '../generators/generate-app-definition';
 import { generateAppModule } from '../generators/generate-app-module';
-import {
-  promptAppDescription,
-  promptAppId,
-  promptAppName,
-  promptAppNetworks,
-  promptAppTags,
-  promptAppUrl,
-} from '../prompts';
-import { strings } from '../strings';
+import { promptAppDescription, promptAppName, promptAppNetworks, promptAppTags, promptAppUrl } from '../prompts';
 
 import { generateContractFactory } from './generate-contract-factory';
 
@@ -21,11 +13,13 @@ export default class CreateApp extends Command {
   static description = 'Creates the starting point for an app integration';
   static examples = [`$ ./studio create-app`];
   static flags = {};
-  static args = [];
+  static args = [{ name: 'appId', description: 'The application id ', required: true }];
 
   async run(): Promise<void> {
+    const { args } = await this.parse(CreateApp);
+    const appId = args.appId;
+
     const appName = await promptAppName();
-    const appId = await promptAppId(strings.kebabCase(appName));
     const appDescription = await promptAppDescription();
     const appUrl = await promptAppUrl();
     const networks = await promptAppNetworks();

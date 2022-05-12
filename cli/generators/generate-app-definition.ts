@@ -1,11 +1,15 @@
 import dedent from 'dedent';
-import { entries, zipObject } from 'lodash';
+import fse from 'fs-extra';
+import { camelCase, entries, zipObject } from 'lodash';
+import * as recast from 'recast';
 
-import { AppAction, AppDefinitionObject, AppTag, GroupType } from '../../src/app/app.interface';
+import { AppAction, AppDefinitionObject, AppGroup, AppTag, GroupType } from '../../src/app/app.interface';
 import { Network } from '../../src/types/network.interface';
 import { strings } from '../strings';
 
 import { formatAndWrite } from './utils';
+
+import t = recast.types.namedTypes;
 
 export async function generateAppDefinition(appDefinition: Partial<AppDefinitionObject>) {
   const appDefinitionName = `${strings.upperCase(appDefinition.id)}_DEFINITION`;
@@ -51,5 +55,46 @@ export async function generateAppDefinition(appDefinition: Partial<AppDefinition
     export default ${appDefinitionName};
   `;
 
-  await formatAndWrite(`./src/apps/${appDefinition.id}/${appDefinition.id}.definition.ts`, content);
+  const ast = recast.parse(content, { parser: require('recast/parsers/typescript') });
+  const prettyContent = recast.prettyPrint(ast).code;
+  await formatAndWrite(`./src/apps/${appDefinition.id}/${appDefinition.id}.definition.ts`, prettyContent);
 }
+
+export const addGroupToAppModule = async ({ appId, group }: { appId: string; group: AppGroup }) => {
+  const contents = fse.readFileSync(`./src/apps/${appId}/${appId}.definition.ts`, 'utf-8');
+  const ast = recast.parse(contents, { parser: require('recast/parsers/typescript') });
+  const b = recast.types.builders;
+  const gtToKey = zipObject(Object.values(GroupType), Object.keys(GroupType));
+
+  recast.visit(ast, {
+    visitCallExpression(path) {
+      const value = path.value as t.CallExpression;
+
+      if ((value.callee as t.Identifier).name === 'appDefinition') {
+        const appDefinitionObject = value.arguments[0] as t.ObjectExpression;
+        const groups = (appDefinitionObject.properties as t.ObjectProperty[]).find(
+          p => (p?.key as t.Identifier)?.name === 'groups',
+        );
+
+        const newGroupProperty = b.objectProperty(
+          b.identifier(camelCase(group.id)),
+          b.objectExpression([
+            b.objectProperty(b.identifier('id'), b.stringLiteral(group.id)),
+            b.objectProperty(
+              b.identifier('type'),
+              b.memberExpression(b.identifier('GroupType'), b.identifier(gtToKey[group.type])),
+            ),
+            b.objectProperty(b.identifier('label'), b.stringLiteral(group.label)),
+          ]),
+        );
+
+        (groups.value as t.ObjectExpression).properties.push(newGroupProperty);
+      }
+
+      this.traverse(path);
+    },
+  });
+
+  const content = recast.prettyPrint(ast).code;
+  await formatAndWrite(`./src/apps/${appId}/${appId}.definition.ts`, content);
+};
