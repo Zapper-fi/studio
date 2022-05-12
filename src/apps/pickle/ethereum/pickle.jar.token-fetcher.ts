@@ -50,10 +50,10 @@ export class EthereumPickleJarTokenFetcher implements PositionFetcher<AppTokenPo
           .wrap(contract)
           .getRatio()
           .then(v => Number(v) / 10 ** 18),
-      resolveReserve: async ({ underlyingToken, multicall, address }) =>
+      resolveReserve: async ({ underlyingToken, multicall, address, network }) =>
         multicall
-          .wrap(this.appToolkit.globalContracts.erc20(underlyingToken))
-          .balanceOf(address)
+          .wrap(this.pickleContractFactory.pickleJar({ address, network }))
+          .balance()
           .then(v => Number(v) / 10 ** underlyingToken.decimals),
       resolveApy: async ({ vaultAddress }) => vaults.find(jar => jar.vaultAddress === vaultAddress)?.apy ?? 0,
     });

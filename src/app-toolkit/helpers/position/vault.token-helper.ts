@@ -1,3 +1,5 @@
+import { isPromise } from 'util/types';
+
 import { Inject, Injectable } from '@nestjs/common';
 import { compact } from 'lodash';
 
@@ -27,10 +29,7 @@ export type VaultTokenHelperParams<T> = {
   dependencies?: AppGroupsDefinition[];
   resolveContract: (opts: { address: string; network: Network }) => T;
   resolveVaultAddresses: (opts: { multicall: EthersMulticall; network: Network }) => string[] | Promise<string[]>;
-  resolveUnderlyingTokenAddress: (opts: {
-    multicall: EthersMulticall;
-    contract: T;
-  }) => string | null | Promise<string | null>;
+  resolveUnderlyingTokenAddress: (opts: { multicall: EthersMulticall; contract: T }) => string | Promise<string | null>;
   resolveReserve: (opts: {
     address: string;
     multicall: EthersMulticall;
@@ -80,16 +79,19 @@ export class VaultTokenHelper {
         const erc20Contract = this.appToolkit.globalContracts.erc20({ address: vaultAddress, network });
         const contract = resolveContract({ address: vaultAddress, network });
 
-        const [symbol, decimals, supplyRaw, underlyingTokenAddressRaw, apy] = await Promise.all([
+        const [symbol, decimals, supplyRaw] = await Promise.all([
           multicall.wrap(erc20Contract).symbol(),
           multicall.wrap(erc20Contract).decimals(),
           multicall.wrap(erc20Contract).totalSupply(),
-          resolveUnderlyingTokenAddress({ multicall, contract }),
-          resolveApy ? resolveApy({ multicall, contract, vaultAddress }) : Promise.resolve(0),
         ]);
 
         // Find underlying token in dependencies
+        const underlyingTokenAddressRawMaybePromise = resolveUnderlyingTokenAddress({ multicall, contract });
+        const underlyingTokenAddressRaw = isPromise(underlyingTokenAddressRawMaybePromise)
+          ? await underlyingTokenAddressRawMaybePromise.catch(() => null)
+          : underlyingTokenAddressRawMaybePromise;
         if (!underlyingTokenAddressRaw) return null;
+
         const underlyingTokenAddress = underlyingTokenAddressRaw.toLowerCase();
         const underlyingToken = allTokens.find(p => p.address === underlyingTokenAddress);
         if (!underlyingToken) return null;
@@ -98,6 +100,7 @@ export class VaultTokenHelper {
         const supply = Number(supplyRaw) / 10 ** decimals;
         const reserve = await resolveReserve({ address: vaultAddress, multicall, underlyingToken, network });
         const pricePerShare = await resolvePricePerShare({ multicall, contract, reserve, supply, underlyingToken });
+        const apy = resolveApy ? await resolveApy({ multicall, contract, vaultAddress }) : 0;
         const price = underlyingToken.price * pricePerShare;
         const tokens = [underlyingToken];
         const liquidity = price * supply;
