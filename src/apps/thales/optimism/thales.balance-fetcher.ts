@@ -1,6 +1,6 @@
 import { Inject } from '@nestjs/common';
-import { drillBalance } from '~app-toolkit';
 
+import { drillBalance } from '~app-toolkit';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
@@ -18,7 +18,7 @@ export class OptimismThalesBalanceFetcher implements BalanceFetcher {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(ThalesContractFactory) private readonly thalesContractFactory: ThalesContractFactory,
-  ) { }
+  ) {}
 
   private async getStakedBalances(address: string) {
     return this.appToolkit.helpers.contractPositionBalanceHelper.getContractPositionBalances({
@@ -36,8 +36,7 @@ export class OptimismThalesBalanceFetcher implements BalanceFetcher {
           drillBalance(stakedToken, stakedBalanceRaw.toString()),
           drillBalance(rewardToken, claimableBalanceRaw.toString()),
         ];
-      }
-
+      },
     });
   }
 
@@ -51,9 +50,8 @@ export class OptimismThalesBalanceFetcher implements BalanceFetcher {
         const stakedToken = contractPosition.tokens.find(isSupplied)!;
         const contract = this.thalesContractFactory.escrowThales(contractPosition);
         const escrowedBalanceRaw = await multicall.wrap(contract).totalAccountEscrowedAmount(address);
-        return [drillBalance(stakedToken, escrowedBalanceRaw.toString()),];
-      }
-
+        return [drillBalance(stakedToken, escrowedBalanceRaw.toString())];
+      },
     });
   }
 
@@ -73,11 +71,9 @@ export class OptimismThalesBalanceFetcher implements BalanceFetcher {
           drillBalance(stakedToken, pool2BalanceRaw.toString()),
           drillBalance(rewardToken, pool2EarnedRaw.toString()),
         ];
-      }
-
+      },
     });
   }
-
 
   async getBalances(address: string) {
     const [stakingBalances, escrowedBalances, pool2Balances] = await Promise.all([
