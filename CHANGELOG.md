@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+### [0.25.1](https://github.com/Zapper-fi/studio/compare/v0.25.0...v0.25.1) (2022-05-12)
+
+
+### Bug Fixes
+
+* **helpers:** Add contract to parameters of resolveReserve for VaultTokenHelper ([#427](https://github.com/Zapper-fi/studio/issues/427)) ([58da1b8](https://github.com/Zapper-fi/studio/commit/58da1b8f159dd1d82208031221509ebdd1413ed5))
+
 ## [0.25.0](https://github.com/Zapper-fi/studio/compare/v0.24.2...v0.25.0) (2022-05-12)
 
 
