@@ -32,16 +32,17 @@ export type VaultTokenHelperParams<T> = {
   resolveUnderlyingTokenAddress: (opts: { multicall: EthersMulticall; contract: T }) => string | Promise<string | null>;
   resolveReserve: (opts: {
     address: string;
+    contract: T;
     multicall: EthersMulticall;
     underlyingToken: Token;
     network: Network;
   }) => number | Promise<number>;
   resolvePricePerShare: (opts: {
-    multicall: EthersMulticall;
     contract: T;
+    multicall: EthersMulticall;
+    underlyingToken: Token;
     reserve: number;
     supply: number;
-    underlyingToken: Token;
   }) => number | Promise<number>;
   resolveApy?: (opts: { vaultAddress: string; multicall: EthersMulticall; contract: T }) => Promise<number>;
   resolvePrimaryLabel?: (opts: { symbol: string; vaultAddress: string; underlyingToken: Token }) => string;
@@ -98,7 +99,7 @@ export class VaultTokenHelper {
 
         // Data props
         const supply = Number(supplyRaw) / 10 ** decimals;
-        const reserve = await resolveReserve({ address: vaultAddress, multicall, underlyingToken, network });
+        const reserve = await resolveReserve({ address: vaultAddress, contract, multicall, underlyingToken, network });
         const pricePerShare = await resolvePricePerShare({ multicall, contract, reserve, supply, underlyingToken });
         const apy = resolveApy ? await resolveApy({ multicall, contract, vaultAddress }) : 0;
         const price = underlyingToken.price * pricePerShare;
