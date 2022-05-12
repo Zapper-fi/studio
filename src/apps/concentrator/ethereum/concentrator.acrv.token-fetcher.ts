@@ -14,6 +14,7 @@ import { ConcentratorContractFactory } from '../contracts';
 const appId = CONCENTRATOR_DEFINITION.id;
 const groupId = CONCENTRATOR_DEFINITION.groups.acrv.id;
 const network = Network.ETHEREUM_MAINNET;
+export const address = '0x2b95A1Dcc3D405535f9ed33c219ab38E8d7e0884'.toLowerCase(); // EIP-1967 proxy
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
 export class EthereumConcentratorAcrvTokenFetcher implements PositionFetcher<AppTokenPosition> {
@@ -23,9 +24,7 @@ export class EthereumConcentratorAcrvTokenFetcher implements PositionFetcher<App
   ) {}
 
   async getPositions() {
-    // TODO: replace with recipe once docs are up
     const multicall = this.appToolkit.getMulticall(network);
-    const address = '0x2b95A1Dcc3D405535f9ed33c219ab38E8d7e0884'; // EIP-1967 proxy
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
     const underlyingToken = baseTokens.find(token => token.symbol == 'cvxCRV');
     if (!underlyingToken) return [];

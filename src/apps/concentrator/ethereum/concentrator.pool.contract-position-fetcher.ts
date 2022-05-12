@@ -10,9 +10,12 @@ import { Network } from '~types/network.interface';
 import { CONCENTRATOR_DEFINITION } from '../concentrator.definition';
 import { ConcentratorContractFactory, AladdinConvexVault } from '../contracts';
 
+import { address as aCrvAddress } from './concentrator.acrv.token-fetcher';
+
 const appId = CONCENTRATOR_DEFINITION.id;
 const groupId = CONCENTRATOR_DEFINITION.groups.pool.id;
 const network = Network.ETHEREUM_MAINNET;
+const address = '0xc8fF37F7d057dF1BB9Ad681b53Fa4726f268E0e8'.toLowerCase();
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
 export class EthereumConcentratorPoolContractPositionFetcher implements PositionFetcher<ContractPosition> {
@@ -23,7 +26,7 @@ export class EthereumConcentratorPoolContractPositionFetcher implements Position
 
   async getPositions() {
     return this.appToolkit.helpers.masterChefContractPositionHelper.getContractPositions<AladdinConvexVault>({
-      address: '0xc8fF37F7d057dF1BB9Ad681b53Fa4726f268E0e8',
+      address,
       appId,
       groupId,
       network,
@@ -47,7 +50,7 @@ export class EthereumConcentratorPoolContractPositionFetcher implements Position
           .wrap(contract)
           .poolInfo(poolIndex)
           .then(v => v.lpToken),
-      resolveRewardTokenAddresses: () => Promise.resolve(['0x2b95A1Dcc3D405535f9ed33c219ab38E8d7e0884']),
+      resolveRewardTokenAddresses: () => Promise.resolve([aCrvAddress]),
     });
   }
 }

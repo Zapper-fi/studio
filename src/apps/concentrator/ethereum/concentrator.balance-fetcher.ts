@@ -1,15 +1,13 @@
 import { Inject } from '@nestjs/common';
 
-import { drillBalance } from '~app-toolkit';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
 import { BalanceFetcher } from '~balance/balance-fetcher.interface';
-import { isClaimable, isSupplied } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 
 import { CONCENTRATOR_DEFINITION } from '../concentrator.definition';
-import { ConcentratorContractFactory } from '../contracts';
+import { ConcentratorContractFactory, AladdinConvexVault } from '../contracts';
 
 const network = Network.ETHEREUM_MAINNET;
 
@@ -30,27 +28,24 @@ export class EthereumConcentratorBalanceFetcher implements BalanceFetcher {
   }
 
   async getPoolBalances(address: string) {
-    return this.appToolkit.helpers.contractPositionBalanceHelper.getContractPositionBalances({
+    return this.appToolkit.helpers.masterChefContractPositionBalanceHelper.getBalances<AladdinConvexVault>({
       address,
       appId: CONCENTRATOR_DEFINITION.id,
       groupId: CONCENTRATOR_DEFINITION.groups.pool.id,
       network: Network.ETHEREUM_MAINNET,
-      resolveBalances: async ({ address, contractPosition, multicall }) => {
-        const stakedToken = contractPosition.tokens.find(isSupplied)!;
-        const rewardToken = contractPosition.tokens.find(isClaimable)!;
-
-        const contract = this.concentratorContractFactory.aladdinConvexVault(contractPosition);
-        const pid = contractPosition.dataProps.poolIndex;
-        const [userInfo, rewardBalanceRaw] = await Promise.all([
-          multicall.wrap(contract).userInfo(pid, address),
-          multicall.wrap(contract).pendingReward(pid, address),
-        ]);
-
-        return [
-          drillBalance(stakedToken, userInfo[0].toString()),
-          drillBalance(rewardToken, rewardBalanceRaw.toString()),
-        ];
-      },
+      resolveChefContract: ({ contractAddress, network }) =>
+        this.concentratorContractFactory.aladdinConvexVault({ address: contractAddress, network }),
+      resolveStakedTokenBalance: this.appToolkit.helpers.masterChefDefaultStakedBalanceStrategy.build({
+        resolveStakedBalance: ({ contract, multicall, contractPosition }) =>
+          multicall
+            .wrap(contract)
+            .userInfo(contractPosition.dataProps.poolIndex, address)
+            .then(v => v[0]),
+      }),
+      resolveClaimableTokenBalances: this.appToolkit.helpers.masterChefDefaultClaimableBalanceStrategy.build({
+        resolveClaimableBalance: ({ multicall, contract, contractPosition, address }) =>
+          multicall.wrap(contract).pendingReward(contractPosition.dataProps.poolIndex, address),
+      }),
     });
   }
 
