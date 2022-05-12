@@ -30,8 +30,8 @@ export class EthereumOlympusSOhmV1TokenFetcher implements PositionFetcher<AppTok
       appId: OLYMPUS_DEFINITION.id,
       groupId: OLYMPUS_DEFINITION.groups.gOhm.id,
       network: Network.ETHEREUM_MAINNET,
-      resolveVaultAddresses: () => ['0x04f2694c8fcee23e8fd0dfea1d4f5bb8c352111f'], // sOHMv1
       resolveContract: ({ address, network }) => this.contractFactory.olympusSOhmV1Token({ address, network }),
+      resolveVaultAddresses: () => ['0x04f2694c8fcee23e8fd0dfea1d4f5bb8c352111f'], // sOHMv1
       resolveUnderlyingTokenAddress: () => '0x383518188c0c6d7730d91b2c03a03c837814a899', // OHMv1
       resolvePricePerShare: () => 1,
       resolveImages: () => [getAppImg(OLYMPUS_DEFINITION.id)],
@@ -40,6 +40,7 @@ export class EthereumOlympusSOhmV1TokenFetcher implements PositionFetcher<AppTok
           .erc20({ address: underlyingToken.address, network })
           .balanceOf('0xfd31c7d00ca47653c6ce64af53c1571f9c36566a')
           .then(v => Number(v) / 10 ** underlyingToken.decimals),
+      resolvePrimaryLabel: ({ symbol }) => symbol,
     });
   }
 }

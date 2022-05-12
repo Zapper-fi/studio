@@ -112,8 +112,8 @@ export class VaultTokenHelper {
         if (resolveApy) statsItems.push({ label: 'APY', value: buildPercentageDisplayItem(apy) });
 
         const vaultToken: AppTokenPosition<VaultTokenDataProps> = {
-          address: vaultAddress,
           type,
+          address: vaultAddress,
           network,
           appId,
           groupId,
