@@ -59,7 +59,7 @@ $ pnpm dev
 ## Creating a new app
 
 ```bash
-pnpm studio create-app [app-id]
+pnpm studio create-app
 ```
 
 ## Generating code templates
