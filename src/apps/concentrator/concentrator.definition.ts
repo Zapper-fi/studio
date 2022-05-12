@@ -8,14 +8,13 @@ export const CONCENTRATOR_DEFINITION = appDefinition({
   name: 'concentrator',
   description: 'Boost your Convex yields by ~50%',
   url: 'https://concentrator.aladdin.club/',
-
   groups: {
-    token: {
-      id: 'concentrator',
+    acrv: {
+      id: 'acrv',
       type: GroupType.TOKEN,
       label: 'Farm',
     },
-    farm: {
+    pool: {
       id: 'pool',
       type: GroupType.POSITION,
       label: 'Pools',
@@ -24,7 +23,9 @@ export const CONCENTRATOR_DEFINITION = appDefinition({
 
   tags: [AppTag.FARMING],
   keywords: [],
-  links: {},
+  links: {
+    github: 'https://github.com/AladdinDAO'
+  },
 
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],

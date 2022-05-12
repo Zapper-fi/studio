@@ -3,18 +3,18 @@ import { AbstractApp } from '~app/app.dynamic-module';
 
 import { ConcentratorAppDefinition, CONCENTRATOR_DEFINITION } from './concentrator.definition';
 import { ConcentratorContractFactory } from './contracts';
+import { EthereumConcentratorAcrvTokenFetcher } from './ethereum/concentrator.acrv.token-fetcher';
 import { EthereumConcentratorBalanceFetcher } from './ethereum/concentrator.balance-fetcher';
-import { EthereumConcentratorConcentratorTokenFetcher } from './ethereum/concentrator.concentrator.token-fetcher';
-import { EthereumConcentratorConcentratorTokenFetcher } from './ethereum/concentrator.concentrator.token-fetcher';
+import { EthereumConcentratorPoolContractPositionFetcher } from './ethereum/concentrator.pool.contract-position-fetcher';
 
 @Register.AppModule({
   appId: CONCENTRATOR_DEFINITION.id,
   providers: [
     ConcentratorAppDefinition,
     ConcentratorContractFactory,
+    EthereumConcentratorAcrvTokenFetcher,
     EthereumConcentratorBalanceFetcher,
-    EthereumConcentratorConcentratorTokenFetcher,
-    EthereumConcentratorConcentratorTokenFetcher,
+    EthereumConcentratorPoolContractPositionFetcher,
   ],
 })
 export class ConcentratorAppModule extends AbstractApp() {}
