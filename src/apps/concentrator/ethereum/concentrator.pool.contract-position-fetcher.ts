@@ -33,6 +33,11 @@ export class EthereumConcentratorPoolContractPositionFetcher implements Position
           groupIds: [CURVE_DEFINITION.groups.pool.id],
           network,
         },
+        {
+          appId: CONCENTRATOR_DEFINITION.id,
+          groupIds: [CONCENTRATOR_DEFINITION.groups.acrv.id],
+          network,
+        },
       ],
       resolveContract: ({ address, network }) =>
         this.concentratorContractFactory.aladdinConvexVault({ address, network }),
@@ -42,7 +47,7 @@ export class EthereumConcentratorPoolContractPositionFetcher implements Position
           .wrap(contract)
           .poolInfo(poolIndex)
           .then(v => v.lpToken),
-      resolveRewardTokenAddresses: () => Promise.resolve([]), // TODO: set to aCRV
+      resolveRewardTokenAddresses: () => Promise.resolve(['0x2b95A1Dcc3D405535f9ed33c219ab38E8d7e0884']),
     });
   }
 }

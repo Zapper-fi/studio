@@ -5,7 +5,7 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
 import { BalanceFetcher } from '~balance/balance-fetcher.interface';
-import { isSupplied } from '~position/position.utils';
+import { isClaimable, isSupplied } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 
 import { CONCENTRATOR_DEFINITION } from '../concentrator.definition';
@@ -37,17 +37,18 @@ export class EthereumConcentratorBalanceFetcher implements BalanceFetcher {
       network: Network.ETHEREUM_MAINNET,
       resolveBalances: async ({ address, contractPosition, multicall }) => {
         const stakedToken = contractPosition.tokens.find(isSupplied)!;
+        const rewardToken = contractPosition.tokens.find(isClaimable)!;
 
         const contract = this.concentratorContractFactory.aladdinConvexVault(contractPosition);
         const pid = contractPosition.dataProps.poolIndex;
-        const [userInfo] = await Promise.all([
+        const [userInfo, rewardBalanceRaw] = await Promise.all([
           multicall.wrap(contract).userInfo(pid, address),
-          // multicall.wrap(contract).pendingReward(pid, address),
+          multicall.wrap(contract).pendingReward(pid, address),
         ]);
 
         return [
           drillBalance(stakedToken, userInfo[0].toString()),
-          // TODO: add rewards
+          drillBalance(rewardToken, rewardBalanceRaw.toString()),
         ];
       },
     });
