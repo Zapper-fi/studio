@@ -5,7 +5,7 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
 import { BalanceFetcher } from '~balance/balance-fetcher.interface';
-import { isSupplied } from '~position/position.utils';
+import { isClaimable, isSupplied } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 
 import { ThalesContractFactory } from '../contracts';
@@ -28,12 +28,13 @@ export class OptimismThalesBalanceFetcher implements BalanceFetcher {
       network,
       resolveBalances: async ({ address, contractPosition, multicall }) => {
         const stakedToken = contractPosition.tokens.find(isSupplied)!;
+        const rewardToken = contractPosition.tokens.find(isClaimable)!;
         const contract = this.thalesContractFactory.stakingThales(contractPosition);
         const stakedBalanceRaw = await multicall.wrap(contract).stakedBalanceOf(address);
         const claimableBalanceRaw = await multicall.wrap(contract).getRewardsAvailable(address);
         return [
           drillBalance(stakedToken, stakedBalanceRaw.toString()),
-          drillBalance(stakedToken, claimableBalanceRaw.toString()),
+          drillBalance(rewardToken, claimableBalanceRaw.toString()),
         ];
       }
 
@@ -56,10 +57,33 @@ export class OptimismThalesBalanceFetcher implements BalanceFetcher {
     });
   }
 
+  private async getPool2Balances(address: string) {
+    return this.appToolkit.helpers.contractPositionBalanceHelper.getContractPositionBalances({
+      address,
+      appId: THALES_DEFINITION.id,
+      groupId: THALES_DEFINITION.groups.pool2.id,
+      network,
+      resolveBalances: async ({ address, contractPosition, multicall }) => {
+        const stakedToken = contractPosition.tokens.find(isSupplied)!;
+        const rewardToken = contractPosition.tokens.find(isClaimable)!;
+        const contract = this.thalesContractFactory.lpStaking(contractPosition);
+        const pool2BalanceRaw = await multicall.wrap(contract).balanceOf(address);
+        const pool2EarnedRaw = await multicall.wrap(contract).earned(address);
+        return [
+          drillBalance(stakedToken, pool2BalanceRaw.toString()),
+          drillBalance(rewardToken, pool2EarnedRaw.toString()),
+        ];
+      }
+
+    });
+  }
+
+
   async getBalances(address: string) {
-    const [stakingBalances, escrowedBalances] = await Promise.all([
+    const [stakingBalances, escrowedBalances, pool2Balances] = await Promise.all([
       this.getStakedBalances(address),
       this.getEscrowedBalances(address),
+      this.getPool2Balances(address),
     ]);
 
     return presentBalanceFetcherResponse([
@@ -70,6 +94,10 @@ export class OptimismThalesBalanceFetcher implements BalanceFetcher {
       {
         label: 'Escrowed',
         assets: escrowedBalances,
+      },
+      {
+        label: 'Pool2',
+        assets: pool2Balances,
       },
     ]);
   }

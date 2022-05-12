@@ -2,11 +2,9 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { EscrowThales } from './EscrowThales';
-export type { GuniPool } from './GuniPool';
-export type { PositionalMarketManager } from './PositionalMarketManager';
+export type { LpStaking } from './LpStaking';
 export type { StakingThales } from './StakingThales';
 export * as factories from './factories';
 export { EscrowThales__factory } from './factories/EscrowThales__factory';
-export { GuniPool__factory } from './factories/GuniPool__factory';
-export { PositionalMarketManager__factory } from './factories/PositionalMarketManager__factory';
+export { LpStaking__factory } from './factories/LpStaking__factory';
 export { StakingThales__factory } from './factories/StakingThales__factory';

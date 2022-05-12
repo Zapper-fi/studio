@@ -5,38 +5,6 @@
       {
         "indexed": false,
         "internalType": "address",
-        "name": "acount",
-        "type": "address"
-      },
-      {
-        "indexed": false,
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "AddedToEscrow",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "address",
-        "name": "newAddress",
-        "type": "address"
-      }
-    ],
-    "name": "AirdropContractChanged",
-    "type": "event"
-  },
-  {
-    "anonymous": false,
-    "inputs": [
-      {
-        "indexed": false,
-        "internalType": "address",
         "name": "oldOwner",
         "type": "address"
       },
@@ -81,12 +49,31 @@
     "inputs": [
       {
         "indexed": false,
-        "internalType": "address",
-        "name": "newAddress",
-        "type": "address"
+        "internalType": "uint256",
+        "name": "reward",
+        "type": "uint256"
       }
     ],
-    "name": "StakingThalesContractChanged",
+    "name": "RewardAdded",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "reward",
+        "type": "uint256"
+      }
+    ],
+    "name": "RewardPaid",
     "type": "event"
   },
   {
@@ -94,21 +81,21 @@
     "inputs": [
       {
         "indexed": false,
-        "internalType": "address",
-        "name": "thalesStakingRewardsPool",
-        "type": "address"
+        "internalType": "uint256",
+        "name": "newDuration",
+        "type": "uint256"
       }
     ],
-    "name": "ThalesStakingRewardsPoolChanged",
+    "name": "RewardsDurationUpdated",
     "type": "event"
   },
   {
     "anonymous": false,
     "inputs": [
       {
-        "indexed": false,
+        "indexed": true,
         "internalType": "address",
-        "name": "account",
+        "name": "user",
         "type": "address"
       },
       {
@@ -118,38 +105,27 @@
         "type": "uint256"
       }
     ],
-    "name": "Vested",
+    "name": "Staked",
     "type": "event"
   },
   {
-    "constant": true,
-    "inputs": [],
-    "name": "NUM_PERIODS",
-    "outputs": [
+    "anonymous": false,
+    "inputs": [
       {
+        "indexed": true,
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "indexed": false,
         "internalType": "uint256",
-        "name": "",
+        "name": "amount",
         "type": "uint256"
       }
     ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [],
-    "name": "ThalesStakingRewardsPool",
-    "outputs": [
-      {
-        "internalType": "contract IThalesStakingRewardsPool",
-        "name": "",
-        "type": "address"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
+    "name": "Withdrawn",
+    "type": "event"
   },
   {
     "constant": false,
@@ -164,32 +140,12 @@
     "constant": false,
     "inputs": [
       {
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      },
-      {
         "internalType": "uint256",
-        "name": "amount",
+        "name": "reward",
         "type": "uint256"
       }
     ],
-    "name": "addToEscrow",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "addTotalEscrowBalanceNotIncludedInStaking",
+    "name": "addReward",
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",
@@ -197,13 +153,19 @@
   },
   {
     "constant": true,
-    "inputs": [],
-    "name": "airdropContract",
-    "outputs": [
+    "inputs": [
       {
         "internalType": "address",
-        "name": "",
+        "name": "account",
         "type": "address"
+      }
+    ],
+    "name": "balanceOf",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
     "payable": false,
@@ -219,22 +181,7 @@
         "type": "address"
       }
     ],
-    "name": "claimable",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [],
-    "name": "currentVestingPeriod",
+    "name": "earned",
     "outputs": [
       {
         "internalType": "uint256",
@@ -249,7 +196,7 @@
   {
     "constant": false,
     "inputs": [],
-    "name": "enableTestMode",
+    "name": "exit",
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",
@@ -257,14 +204,8 @@
   },
   {
     "constant": false,
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      }
-    ],
-    "name": "fixEscrowEntry",
+    "inputs": [],
+    "name": "getReward",
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",
@@ -272,86 +213,13 @@
   },
   {
     "constant": true,
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      }
-    ],
-    "name": "getStakedEscrowedBalanceForRewards",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "index",
-        "type": "uint256"
-      }
-    ],
-    "name": "getStakerAmounts",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "account",
-        "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "index",
-        "type": "uint256"
-      }
-    ],
-    "name": "getStakerPeriod",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
     "inputs": [],
-    "name": "iStakingThales",
+    "name": "getRewardForDuration",
     "outputs": [
       {
-        "internalType": "contract IStakingThales",
+        "internalType": "uint256",
         "name": "",
-        "type": "address"
+        "type": "uint256"
       }
     ],
     "payable": false,
@@ -377,8 +245,18 @@
       },
       {
         "internalType": "address",
-        "name": "_vestingToken",
+        "name": "_rewardsToken",
         "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_stakingToken",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_rewardsDuration",
+        "type": "uint256"
       }
     ],
     "name": "initialize",
@@ -404,14 +282,23 @@
   },
   {
     "constant": true,
-    "inputs": [
+    "inputs": [],
+    "name": "lastTimeRewardApplicable",
+    "outputs": [
       {
-        "internalType": "address",
+        "internalType": "uint256",
         "name": "",
-        "type": "address"
+        "type": "uint256"
       }
     ],
-    "name": "lastPeriodAddedReward",
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "lastUpdateTime",
     "outputs": [
       {
         "internalType": "uint256",
@@ -454,6 +341,21 @@
     "type": "function"
   },
   {
+    "constant": false,
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "reward",
+        "type": "uint256"
+      }
+    ],
+    "name": "notifyRewardAmount",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "constant": true,
     "inputs": [],
     "name": "owner",
@@ -484,18 +386,134 @@
     "type": "function"
   },
   {
+    "constant": true,
+    "inputs": [],
+    "name": "periodFinish",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "constant": false,
     "inputs": [
       {
         "internalType": "address",
-        "name": "AirdropContract",
+        "name": "tokenAddress",
         "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "tokenAmount",
+        "type": "uint256"
       }
     ],
-    "name": "setAirdropContract",
+    "name": "recoverERC20",
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "rewardPerToken",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "rewardPerTokenStored",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "rewardRate",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "rewards",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "rewardsDuration",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "rewardsToken",
+    "outputs": [
+      {
+        "internalType": "contract IERC20",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -532,27 +550,12 @@
     "constant": false,
     "inputs": [
       {
-        "internalType": "address",
-        "name": "StakingThalesContract",
-        "type": "address"
+        "internalType": "uint256",
+        "name": "_rewardsDuration",
+        "type": "uint256"
       }
     ],
-    "name": "setStakingThalesContract",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "internalType": "address",
-        "name": "_thalesStakingRewardsPool",
-        "type": "address"
-      }
-    ],
-    "name": "setThalesStakingRewardsPool",
+    "name": "setRewardsDuration",
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",
@@ -567,7 +570,7 @@
         "type": "uint256"
       }
     ],
-    "name": "subtractTotalEscrowBalanceNotIncludedInStaking",
+    "name": "stake",
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",
@@ -575,14 +578,23 @@
   },
   {
     "constant": true,
-    "inputs": [
+    "inputs": [],
+    "name": "stakingToken",
+    "outputs": [
       {
-        "internalType": "address",
+        "internalType": "contract IERC20",
         "name": "",
         "type": "address"
       }
     ],
-    "name": "totalAccountEscrowedAmount",
+    "payable": false,
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "totalRewards",
     "outputs": [
       {
         "internalType": "uint256",
@@ -597,22 +609,7 @@
   {
     "constant": true,
     "inputs": [],
-    "name": "totalEscrowBalanceNotIncludedInStaking",
-    "outputs": [
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "constant": true,
-    "inputs": [],
-    "name": "totalEscrowedRewards",
+    "name": "totalSupply",
     "outputs": [
       {
         "internalType": "uint256",
@@ -640,65 +637,19 @@
     "type": "function"
   },
   {
-    "constant": false,
-    "inputs": [],
-    "name": "updateCurrentPeriod",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      }
-    ],
-    "name": "vest",
-    "outputs": [
-      {
-        "internalType": "bool",
-        "name": "",
-        "type": "bool"
-      }
-    ],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
     "constant": true,
     "inputs": [
       {
         "internalType": "address",
         "name": "",
         "type": "address"
-      },
-      {
-        "internalType": "uint256",
-        "name": "",
-        "type": "uint256"
       }
     ],
-    "name": "vestingEntries",
+    "name": "userRewardPerTokenPaid",
     "outputs": [
       {
         "internalType": "uint256",
-        "name": "amount",
-        "type": "uint256"
-      },
-      {
-        "internalType": "uint256",
-        "name": "vesting_period",
+        "name": "",
         "type": "uint256"
       }
     ],
@@ -707,18 +658,18 @@
     "type": "function"
   },
   {
-    "constant": true,
-    "inputs": [],
-    "name": "vestingToken",
-    "outputs": [
+    "constant": false,
+    "inputs": [
       {
-        "internalType": "contract IERC20",
-        "name": "",
-        "type": "address"
+        "internalType": "uint256",
+        "name": "amount",
+        "type": "uint256"
       }
     ],
+    "name": "withdraw",
+    "outputs": [],
     "payable": false,
-    "stateMutability": "view",
+    "stateMutability": "nonpayable",
     "type": "function"
   }
 ]
