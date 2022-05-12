@@ -1,6 +1,6 @@
 import { Inject } from '@nestjs/common';
 
-import { SingleVaultTokenDataProps } from '~app-toolkit';
+import { VaultTokenDataProps } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { UniswapV2TheGraphTvlHelper } from '~apps/uniswap-v2/helpers/uniswap-v2.the-graph.tvl-helper';
@@ -17,7 +17,7 @@ export class AvalancheTraderJoeTvlFetcher implements TvlFetcher {
   ) {}
 
   async getTvl() {
-    const xJoeTokens = await this.appToolkit.getAppTokenPositions<SingleVaultTokenDataProps>({
+    const xJoeTokens = await this.appToolkit.getAppTokenPositions<VaultTokenDataProps>({
       appId: TRADER_JOE_DEFINITION.id,
       groupIds: [TRADER_JOE_DEFINITION.groups.xJoe.id],
       network: Network.AVALANCHE_MAINNET,
