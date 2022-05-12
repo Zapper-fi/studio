@@ -18,7 +18,9 @@
 </div>
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
 [![All Contributors](https://img.shields.io/badge/all_contributors-18-orange.svg?style=flat-square)](#contributors-)
+
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 ## Description
@@ -57,13 +59,16 @@ $ pnpm dev
 ## Creating a new app
 
 ```bash
-pnpm studio create-app
+pnpm studio create-app [app-id]
 ```
 
-## Generating code template
+## Generating boilerplate
 
 ```bash
-pnpm studio codegen-app [app-id]
+pnpm studio create-token-fetcher [app-id]
+pnpm studio create-contract-position-fetcher [app-id]
+pnpm studio create-balance-fetcher [app-id]
+pnpm studio create-tvl-fetcher [app-id]
 ```
 
 ## Clearing the cache
