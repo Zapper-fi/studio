@@ -11,6 +11,7 @@ import { TraderJoeChefV3__factory } from './ethers';
 import { TraderJoeChefV3Rewarder__factory } from './ethers';
 import { TraderJoeStableStaking__factory } from './ethers';
 import { TraderJoeVeJoeStaking__factory } from './ethers';
+import { TraderJoeXJoe__factory } from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
@@ -42,6 +43,9 @@ export class TraderJoeContractFactory extends ContractFactory {
   traderJoeVeJoeStaking({ address, network }: ContractOpts) {
     return TraderJoeVeJoeStaking__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  traderJoeXJoe({ address, network }: ContractOpts) {
+    return TraderJoeXJoe__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
 }
 
 export type { TraderJoeChefBoosted } from './ethers';
@@ -51,3 +55,4 @@ export type { TraderJoeChefV3 } from './ethers';
 export type { TraderJoeChefV3Rewarder } from './ethers';
 export type { TraderJoeStableStaking } from './ethers';
 export type { TraderJoeVeJoeStaking } from './ethers';
+export type { TraderJoeXJoe } from './ethers';

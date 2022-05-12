@@ -6,6 +6,7 @@ import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
+import { KlimaContractFactory, KlimaWsKlima } from '../contracts';
 import { KLIMA_DEFINITION } from '../klima.definition';
 
 const appId = KLIMA_DEFINITION.id;
@@ -14,22 +15,26 @@ const network = Network.POLYGON_MAINNET;
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
 export class PolygonKlimaWsTokenFetcher implements PositionFetcher<AppTokenPosition> {
-  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
+  constructor(
+    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
+    @Inject(KlimaContractFactory) private readonly contractFactory: KlimaContractFactory,
+  ) {}
 
   async getPositions(): Promise<AppTokenPosition[]> {
-    return this.appToolkit.helpers.singleVaultTokenHelper.getTokens({
+    return this.appToolkit.helpers.vaultTokenHelper.getTokens<KlimaWsKlima>({
       network,
       appId,
       groupId,
       dependencies: [{ appId, groupIds: [KLIMA_DEFINITION.groups.sKlima.id], network }],
-      address: '0x6f370dba99e32a3cad959b341120db3c9e280ba6', // wsKLIMA
-      resolveContract: ({ address, network }) => this.appToolkit.globalContracts.erc20({ address, network }),
-      resolveUnderlyingTokenAddress: () => '0xb0c22d8d350c67420f06f48936654f567c73e8c8', // sKLIMA
-      resolveReserve: ({ underlyingToken, network }) =>
+      resolveContract: ({ address, network }) => this.contractFactory.klimaWsKlima({ address, network }),
+      resolveVaultAddresses: () => ['0x6f370dba99e32a3cad959b341120db3c9e280ba6'], // wsKLIMA
+      resolveUnderlyingTokenAddress: ({ contract, multicall }) => multicall.wrap(contract).sKLIMA(),
+      resolveReserve: ({ underlyingToken, network, address }) =>
         this.appToolkit.globalContracts
           .erc20({ address: underlyingToken.address, network })
-          .balanceOf('0x6f370dba99e32a3cad959b341120db3c9e280ba6')
+          .balanceOf(address)
           .then(v => Number(v) / 10 ** underlyingToken.decimals),
+      resolvePricePerShare: ({ reserve, supply }) => reserve / supply,
     });
   }
 }

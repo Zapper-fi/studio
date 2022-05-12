@@ -8,3 +8,4 @@ export { TraderJoeChefV3__factory } from './TraderJoeChefV3__factory';
 export { TraderJoeChefV3Rewarder__factory } from './TraderJoeChefV3Rewarder__factory';
 export { TraderJoeStableStaking__factory } from './TraderJoeStableStaking__factory';
 export { TraderJoeVeJoeStaking__factory } from './TraderJoeVeJoeStaking__factory';
+export { TraderJoeXJoe__factory } from './TraderJoeXJoe__factory';

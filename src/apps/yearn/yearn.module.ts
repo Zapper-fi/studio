@@ -11,7 +11,6 @@ import { EthereumYearnVaultTokenFetcher } from './ethereum/yearn.vault.token-fet
 import { EthereumYearnYieldTokenFetcher } from './ethereum/yearn.yield.token-fetcher';
 import { FantomYearnBalanceFetcher } from './fantom/yearn.balance-fetcher';
 import { FantomYearnVaultTokenFetcher } from './fantom/yearn.vault.token-fetcher';
-import { YearnLikeVaultTokenHelper } from './helpers/yearn-like.vault.token-helper';
 import { YearnVaultTokenDefinitionsResolver } from './helpers/yearn.vault.token-definitions-resolver';
 import { YearnVaultTokenHelper } from './helpers/yearn.vault.token-helper';
 import { YearnAppDefinition, YEARN_DEFINITION } from './yearn.definition';
@@ -23,7 +22,6 @@ import { YearnAppDefinition, YEARN_DEFINITION } from './yearn.definition';
     YearnAppDefinition,
     YearnContractFactory,
     YearnVaultTokenHelper,
-    YearnLikeVaultTokenHelper,
     YearnVaultTokenDefinitionsResolver,
     EthereumYearnBalanceFetcher,
     EthereumYearnFarmContractPositionFetcher,
@@ -34,6 +32,6 @@ import { YearnAppDefinition, YEARN_DEFINITION } from './yearn.definition';
     ArbitrumYearnBalanceFetcher,
     ArbitrumYearnVaultTokenFetcher,
   ],
-  exports: [YearnLikeVaultTokenHelper, YearnContractFactory],
+  exports: [YearnContractFactory],
 })
 export class YearnAppModule extends AbstractApp() {}

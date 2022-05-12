@@ -2,7 +2,6 @@ import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
 import { CurveAppModule } from '~apps/curve';
 import { SynthetixAppModule } from '~apps/synthetix';
-import { YearnAppModule } from '~apps/yearn/yearn.module';
 
 import { ArbitrumPickleBalanceFetcher } from './arbitrum/pickle.balance-fetcher';
 import { ArbitrumPickleFarmContractPositionFetcher } from './arbitrum/pickle.farm.contract-position-fetcher';
@@ -22,7 +21,7 @@ import { PolygonPickleJarTokenFetcher } from './polygon/pickle.jar.token-fetcher
 
 @Register.AppModule({
   appId: PICKLE_DEFINITION.id,
-  imports: [SynthetixAppModule, CurveAppModule, YearnAppModule],
+  imports: [SynthetixAppModule, CurveAppModule],
   providers: [
     PickleAppDefinition,
     PickleApiJarRegistry,
