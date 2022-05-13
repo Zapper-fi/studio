@@ -19,4 +19,4 @@ import { ThalesAppDefinition, THALES_DEFINITION } from './thales.definition';
     OptimismThalesPool2ContractPositionFetcher,
   ],
 })
-export class ThalesAppModule extends AbstractApp() { }
+export class ThalesAppModule extends AbstractApp() {}
