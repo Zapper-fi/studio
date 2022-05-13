@@ -88,7 +88,7 @@ export class OptimismThalesBalanceFetcher implements BalanceFetcher {
         assets: stakingBalances,
       },
       {
-        label: 'Escrow Thales',
+        label: 'Escrow',
         assets: escrowedBalances,
       },
       {
