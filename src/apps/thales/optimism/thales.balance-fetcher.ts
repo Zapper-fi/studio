@@ -18,7 +18,7 @@ export class OptimismThalesBalanceFetcher implements BalanceFetcher {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(ThalesContractFactory) private readonly thalesContractFactory: ThalesContractFactory,
-  ) { }
+  ) {}
 
   private async getStakedBalances(address: string) {
     return this.appToolkit.helpers.contractPositionBalanceHelper.getContractPositionBalances({
@@ -84,7 +84,7 @@ export class OptimismThalesBalanceFetcher implements BalanceFetcher {
 
     return presentBalanceFetcherResponse([
       {
-        label: 'Staking Thales',
+        label: 'Staking',
         assets: stakingBalances,
       },
       {

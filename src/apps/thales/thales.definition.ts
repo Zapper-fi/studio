@@ -5,13 +5,13 @@ import { Network } from '~types/network.interface';
 
 export const THALES_DEFINITION = appDefinition({
   id: 'thales',
-  name: 'thales',
+  name: 'Thales',
   description: 'Novel on-chain, permissionless, and non-custodial Parimutuel Markets.',
   url: 'https://thalesmarket.io/',
   groups: {
     staking: { id: 'staking', type: GroupType.POSITION, label: 'Staking' },
     escrow: { id: 'escrow', type: GroupType.POSITION, label: 'Escrow' },
-    pool2: { id: 'pool2', type: GroupType.POSITION, label: 'LpStaking' },
+    pool2: { id: 'pool2', type: GroupType.POSITION, label: 'LP Staking' },
   },
   tags: [AppTag.OPTIONS],
   links: {
@@ -23,8 +23,6 @@ export const THALES_DEFINITION = appDefinition({
     medium: 'https://thalesmarket.medium.com/',
   },
   supportedNetworks: {
-    [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
-    [Network.POLYGON_MAINNET]: [AppAction.VIEW],
     [Network.OPTIMISM_MAINNET]: [AppAction.VIEW],
   },
 });
