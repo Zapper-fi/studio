@@ -4,6 +4,109 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+### [0.25.2](https://github.com/Zapper-fi/studio/compare/v0.25.1...v0.25.2) (2022-05-12)
+
+
+### Bug Fixes
+
+* **dependencies:** Relax peer dependency on Dataloader ([#429](https://github.com/Zapper-fi/studio/issues/429)) ([1d5abe6](https://github.com/Zapper-fi/studio/commit/1d5abe62e17969d7108fae7681a2f73138951083))
+
+### [0.25.1](https://github.com/Zapper-fi/studio/compare/v0.25.0...v0.25.1) (2022-05-12)
+
+
+### Bug Fixes
+
+* **helpers:** Add contract to parameters of resolveReserve for VaultTokenHelper ([#427](https://github.com/Zapper-fi/studio/issues/427)) ([58da1b8](https://github.com/Zapper-fi/studio/commit/58da1b8f159dd1d82208031221509ebdd1413ed5))
+
+## [0.25.0](https://github.com/Zapper-fi/studio/compare/v0.24.2...v0.25.0) (2022-05-12)
+
+
+### Features
+
+* **concentrator:** Add AladdinDAO Concentrator ([#423](https://github.com/Zapper-fi/studio/issues/423)) ([da5fb42](https://github.com/Zapper-fi/studio/commit/da5fb42dbe4a868cc779be67c2b2ea874ab8eeae))
+
+
+### Bug Fixes
+
+* **swagger:** Fix addresses query parameter in Swagger ([#424](https://github.com/Zapper-fi/studio/issues/424)) ([411437d](https://github.com/Zapper-fi/studio/commit/411437dd06a55460ca80d9392b64e91fcd3f1e9f))
+
+### [0.24.2](https://github.com/Zapper-fi/studio/compare/v0.24.1...v0.24.2) (2022-05-11)
+
+
+### Bug Fixes
+
+* **uniswap-v2:** Fix required pool address ([#419](https://github.com/Zapper-fi/studio/issues/419)) ([fc8dc03](https://github.com/Zapper-fi/studio/commit/fc8dc039bd5c2b9bbca3f218286bb27d63dc97d3))
+
+### [0.24.1](https://github.com/Zapper-fi/studio/compare/v0.24.0...v0.24.1) (2022-05-10)
+
+
+### Bug Fixes
+
+* **balancer-v2:** Fix Gauge and Reward for Polygon and Arbitrum ([#416](https://github.com/Zapper-fi/studio/issues/416)) ([206e7b6](https://github.com/Zapper-fi/studio/commit/206e7b62e082569e9c16e2ae51288f65193cc94e))
+* **curve:** Fix Generic type in helper ([#418](https://github.com/Zapper-fi/studio/issues/418)) ([43767ea](https://github.com/Zapper-fi/studio/commit/43767ea85d18d37c10693f1178b40348dca9b69f))
+
+## [0.24.0](https://github.com/Zapper-fi/studio/compare/v0.23.0...v0.24.0) (2022-05-10)
+
+
+### Features
+
+* Add missing Balancer-v2 farms in Polygon and Arbitrum ([#415](https://github.com/Zapper-fi/studio/issues/415)) ([46ff7b8](https://github.com/Zapper-fi/studio/commit/46ff7b8d42ac27696867a8e6fb1d3cc355d3d8ae))
+* added alpha-v1 tvl-fetcher ([#404](https://github.com/Zapper-fi/studio/issues/404)) ([3d0203b](https://github.com/Zapper-fi/studio/commit/3d0203bbe5885450b4b9532dc3d5707d6129034d))
+
+
+### Bug Fixes
+
+* **codegen:** Update module codegen ([#414](https://github.com/Zapper-fi/studio/issues/414)) ([d3705e3](https://github.com/Zapper-fi/studio/commit/d3705e33a44a7b959f0aecbf0c50931cceb514c1))
+* **main:** Log and exit when no apps are configured in the .env file ([#412](https://github.com/Zapper-fi/studio/issues/412)) ([76fa3ef](https://github.com/Zapper-fi/studio/commit/76fa3ef43d6b5d9186c39119890ddf676b4d27d2))
+* **prices:** Cache prices for 1 minute ([#411](https://github.com/Zapper-fi/studio/issues/411)) ([9920de0](https://github.com/Zapper-fi/studio/commit/9920de06e1548ae551cdd32afb88741b682e540d))
+
+## [0.23.0](https://github.com/Zapper-fi/studio/compare/v0.22.0...v0.23.0) (2022-05-09)
+
+
+### Features
+
+* **pancakeswap:** Add new CAKE syrup pool and new Pancakeswap LP farms ([#398](https://github.com/Zapper-fi/studio/issues/398)) ([fed00bf](https://github.com/Zapper-fi/studio/commit/fed00bf5cb89a650f8e11eaba09ec766546b9537))
+
+
+### Bug Fixes
+
+* **cache:** Log cache not primed erro on only on undefined values from cache ([#405](https://github.com/Zapper-fi/studio/issues/405)) ([b17aefa](https://github.com/Zapper-fi/studio/commit/b17aefa60cc9e6a8861cd96e600071ab0079f3cd))
+* **multicall:** Fix typing on wrap function for Multicall wrapper ([#406](https://github.com/Zapper-fi/studio/issues/406)) ([ac3b4d8](https://github.com/Zapper-fi/studio/commit/ac3b4d84a0c91db4874a23e06b8f7dd8e95867e8))
+
+## [0.22.0](https://github.com/Zapper-fi/studio/compare/v0.21.0...v0.22.0) (2022-05-09)
+
+
+### Features
+
+* **multicall:** Use dataloader in multicall wrapper ([#368](https://github.com/Zapper-fi/studio/issues/368)) ([5876957](https://github.com/Zapper-fi/studio/commit/5876957ecb31e85729ef42f2c3b599693990d1b3))
+
+
+### Bug Fixes
+
+* **curve:** support cadc/usdc staked balances ([#392](https://github.com/Zapper-fi/studio/issues/392)) ([e695216](https://github.com/Zapper-fi/studio/commit/e6952168e9fe9810456034b6533a7ce3eba3aa31))
+* **multicall:** Resolve type errors ([#402](https://github.com/Zapper-fi/studio/issues/402)) ([05b21be](https://github.com/Zapper-fi/studio/commit/05b21bedfa9ea6c86def558f1f328d72aaf1bd80))
+
+## [0.21.0](https://github.com/Zapper-fi/studio/compare/v0.20.0...v0.21.0) (2022-05-09)
+
+
+### Features
+
+* groups must now have labels ([#381](https://github.com/Zapper-fi/studio/issues/381)) ([527cce5](https://github.com/Zapper-fi/studio/commit/527cce5099779c0519b050ff0f533fc4d5ca5146))
+
+## [0.20.0](https://github.com/Zapper-fi/studio/compare/v0.19.1...v0.20.0) (2022-05-08)
+
+
+### Features
+
+* Integration for Gro Protocol ([#375](https://github.com/Zapper-fi/studio/issues/375)) ([fd72a1e](https://github.com/Zapper-fi/studio/commit/fd72a1e51a694cb19045943930a6b4ba50e9302b))
+
+
+### Bug Fixes
+
+* **balances:** Log an error and return the error message on failed balance fetcher invocation ([#393](https://github.com/Zapper-fi/studio/issues/393)) ([84430e2](https://github.com/Zapper-fi/studio/commit/84430e2eaee4e27da58add9c54eb45f60ba8e026))
+* **gro:** Add logo and index ([#396](https://github.com/Zapper-fi/studio/issues/396)) ([833e81d](https://github.com/Zapper-fi/studio/commit/833e81d008b0e012408518a6e573b3bbd93a5777))
+* **gro:** Add missing appDefinition wrapper to fix failing build ([#397](https://github.com/Zapper-fi/studio/issues/397)) ([f6e2bd2](https://github.com/Zapper-fi/studio/commit/f6e2bd22cac4364b664c37fc8b91b57da5cf4965))
+
 ### [0.19.1](https://github.com/Zapper-fi/studio/compare/v0.19.0...v0.19.1) (2022-05-06)
 
 

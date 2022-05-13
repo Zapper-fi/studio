@@ -7,7 +7,7 @@ import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
-import { OlympusContractFactory } from '../contracts';
+import { OlympusContractFactory, OlympusWsOhmV1Token } from '../contracts';
 import { OLYMPUS_DEFINITION } from '../olympus.definition';
 
 const appId = OLYMPUS_DEFINITION.id;
@@ -26,15 +26,20 @@ export class EthereumOlympusWsOhmV1TokenFetcher implements PositionFetcher<AppTo
   ) {}
 
   getPositions(): Promise<AppTokenPosition[]> {
-    return this.appToolkit.helpers.singleVaultTokenHelper.getTokens({
+    return this.appToolkit.helpers.vaultTokenHelper.getTokens<OlympusWsOhmV1Token>({
       appId,
       groupId,
       network,
       dependencies: [{ appId, groupIds: [OLYMPUS_DEFINITION.groups.sOhmV1.id], network }],
-      address: '0xca76543cf381ebbb277be79574059e32108e3e65', // wsOHMv1
       resolveContract: ({ address, network }) => this.contractFactory.olympusWsOhmV1Token({ address, network }),
-      resolveUnderlyingTokenAddress: () => '0x04f2694c8fcee23e8fd0dfea1d4f5bb8c352111f', // sOHMv1
+      resolveVaultAddresses: () => ['0xca76543cf381ebbb277be79574059e32108e3e65'], // wsOHMv1
+      resolveUnderlyingTokenAddress: ({ contract, multicall }) => multicall.wrap(contract).sOHM(),
       resolveImages: () => [getAppImg(appId)],
+      resolveReserve: ({ underlyingToken, multicall, address }) =>
+        multicall
+          .wrap(this.contractFactory.erc20(underlyingToken))
+          .balanceOf(address)
+          .then(v => Number(v) / 10 ** underlyingToken.decimals),
       resolvePricePerShare: ({ reserve, supply }) => reserve / supply,
     });
   }

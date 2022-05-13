@@ -167,6 +167,35 @@
         "question",
         "maintenance"
       ]
+    },
+    {
+      "login": "alexandresobolevski",
+      "name": "Alexandre Sobolevski",
+      "avatar_url": "https://avatars.githubusercontent.com/u/13302110?v=4",
+      "profile": "https://ca.linkedin.com/in/alexandresobolevski",
+      "contributions": [
+        "code",
+        "question",
+        "maintenance"
+      ]
+    },
+    {
+      "login": "farhaan-ali",
+      "name": "Farhaan",
+      "avatar_url": "https://avatars.githubusercontent.com/u/59924029?v=4",
+      "profile": "https://github.com/farhaan-ali",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "tonzgao",
+      "name": "tonzgao",
+      "avatar_url": "https://avatars.githubusercontent.com/u/2408377?v=4",
+      "profile": "https://github.com/tonzgao",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7

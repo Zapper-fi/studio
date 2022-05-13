@@ -7,6 +7,7 @@ import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
 import { TraderJoeContractFactory } from '../contracts';
+import { TraderJoeXJoe } from '../contracts/ethers/TraderJoeXJoe';
 import { TRADER_JOE_DEFINITION } from '../trader-joe.definition';
 
 @Register.TokenPositionFetcher({
@@ -22,13 +23,19 @@ export class AvalancheTraderJoeXJoeTokenFetcher implements PositionFetcher<AppTo
   ) {}
 
   async getPositions() {
-    return this.appToolkit.helpers.singleVaultTokenHelper.getTokens({
+    return this.appToolkit.helpers.vaultTokenHelper.getTokens<TraderJoeXJoe>({
       appId: TRADER_JOE_DEFINITION.id,
       groupId: TRADER_JOE_DEFINITION.groups.xJoe.id,
       network: Network.AVALANCHE_MAINNET,
-      address: '0x57319d41f71e81f3c65f2a47ca4e001ebafd4f33',
-      resolveUnderlyingTokenAddress: () => '0x6e84a6216ea6dacc71ee8e6b0a5b7322eebc0fdd',
-      resolveContract: ({ address, network }) => this.traderJoeContractFactory.erc20({ address, network }),
+      resolveContract: ({ address, network }) => this.traderJoeContractFactory.traderJoeXJoe({ address, network }),
+      resolveVaultAddresses: () => ['0x57319d41f71e81f3c65f2a47ca4e001ebafd4f33'],
+      resolveUnderlyingTokenAddress: ({ contract, multicall }) => multicall.wrap(contract).joe(),
+      resolveReserve: async ({ underlyingToken, multicall, address }) =>
+        multicall
+          .wrap(this.appToolkit.globalContracts.erc20(underlyingToken))
+          .balanceOf(address)
+          .then(v => Number(v) / 10 ** underlyingToken.decimals),
+      resolvePricePerShare: ({ reserve, supply }) => reserve / supply,
     });
   }
 }

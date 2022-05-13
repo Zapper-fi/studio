@@ -9,10 +9,10 @@ import { camelCase, kebabCase, sortBy, upperFirst } from 'lodash';
 import { glob, runTypeChain } from 'typechain';
 
 import { execCodeFormatting } from '../format/exec-code-formatting';
+import { formatAndWrite } from '../generators/utils';
 import { appPath } from '../paths/app-path';
 import { strings } from '../strings';
 
-const writeFile = util.promisify(fs.writeFile);
 const mkdir = util.promisify(fs.mkdir);
 const rmdir = util.promisify(fs.rm);
 const readdir = util.promisify(fs.readdir);
@@ -71,7 +71,7 @@ const generateContract = async (location: string) => {
   });
 };
 
-const generateContractFactory = async (location: string) => {
+export const generateContractFactory = async (location: string) => {
   const abis = sortBy(await getAbis(location));
   const factoryName = upperFirst(camelCase(path.basename(location)));
   const isRoot = path.basename(location) === 'contract';
@@ -103,7 +103,7 @@ const generateContractFactory = async (location: string) => {
         return [`export type { ${typeName} } from './ethers'`];
       });
 
-      await writeFile(
+      await formatAndWrite(
         path.join(location, `/contracts/index.ts`),
         `
         import { Injectable, Inject } from '@nestjs/common';
@@ -149,7 +149,7 @@ constructor(${
   await renderer.ethers();
 };
 
-export default class NewCommand extends Command {
+export default class GenerateContractFactory extends Command {
   static description =
     'Generate typescript contract factories for a given app based on the ABIs contained within the contracts/abis folder.';
 
@@ -162,7 +162,7 @@ export default class NewCommand extends Command {
   static args = [{ name: 'appid', description: 'The application id (just the folder name)', required: false }];
 
   async run(): Promise<void> {
-    const { args, flags } = await this.parse(NewCommand);
+    const { args, flags } = await this.parse(GenerateContractFactory);
     const appId = args.appid;
 
     if (!flags.global && !appId) {

@@ -10,9 +10,11 @@ import { Network } from '~types/network.interface';
 import {
   PancakeswapCakeChef,
   PancakeswapChef,
+  PancakeswapChefV2,
   PancakeswapContractFactory,
   PancakeswapIfoChef,
   PancakeswapSmartChef,
+  PancakeswapSyrupCake,
 } from '../contracts';
 import { PANCAKESWAP_DEFINITION } from '../pancakeswap.definition';
 
@@ -36,7 +38,7 @@ export class BinanceSmartChainPancakeSwapBalanceFetcher implements BalanceFetche
     });
   }
 
-  private async getFarmBalances(address: string) {
+  private async getLegacyFarmBalances(address: string) {
     // LP and Manual Cake Farms
     return this.appToolkit.helpers.masterChefContractPositionBalanceHelper.getBalances<PancakeswapChef>({
       address,
@@ -45,6 +47,29 @@ export class BinanceSmartChainPancakeSwapBalanceFetcher implements BalanceFetche
       groupId: PANCAKESWAP_DEFINITION.groups.farm.id,
       resolveChefContract: ({ contractAddress }) =>
         this.contractFactory.pancakeswapChef({ network, address: contractAddress }),
+      resolveStakedTokenBalance: this.appToolkit.helpers.masterChefDefaultStakedBalanceStrategy.build({
+        resolveStakedBalance: ({ multicall, contract, contractPosition }) =>
+          multicall
+            .wrap(contract)
+            .userInfo(contractPosition.dataProps.poolIndex, address)
+            .then(v => v.amount),
+      }),
+      resolveClaimableTokenBalances: this.appToolkit.helpers.masterChefDefaultClaimableBalanceStrategy.build({
+        resolveClaimableBalance: ({ multicall, contract, contractPosition }) =>
+          multicall.wrap(contract).pendingCake(contractPosition.dataProps.poolIndex, address),
+      }),
+    });
+  }
+
+  private async getFarmBalances(address: string) {
+    // LP and Manual Cake Farms
+    return this.appToolkit.helpers.masterChefContractPositionBalanceHelper.getBalances<PancakeswapChefV2>({
+      address,
+      appId,
+      network,
+      groupId: PANCAKESWAP_DEFINITION.groups.farmV2.id,
+      resolveChefContract: ({ contractAddress }) =>
+        this.contractFactory.pancakeswapChefV2({ network, address: contractAddress }),
       resolveStakedTokenBalance: this.appToolkit.helpers.masterChefDefaultStakedBalanceStrategy.build({
         resolveStakedBalance: ({ multicall, contract, contractPosition }) =>
           multicall
@@ -113,6 +138,33 @@ export class BinanceSmartChainPancakeSwapBalanceFetcher implements BalanceFetche
     });
   }
 
+  private async getSyrupCakeBalances(address: string) {
+    // Autocompounding Cake Farm
+    return this.appToolkit.helpers.masterChefContractPositionBalanceHelper.getBalances<PancakeswapSyrupCake>({
+      address,
+      appId,
+      network,
+      groupId: PANCAKESWAP_DEFINITION.groups.syrupCake.id,
+      resolveChefContract: ({ contractAddress }) =>
+        this.contractFactory.pancakeswapSyrupCake({ network, address: contractAddress }),
+      resolveStakedTokenBalance: this.appToolkit.helpers.masterChefDefaultStakedBalanceStrategy.build({
+        resolveStakedBalance: async ({ multicall, contract, address }) => {
+          const [userInfo, pricePerShareRaw] = await Promise.all([
+            multicall.wrap(contract).userInfo(address),
+            multicall.wrap(contract).getPricePerFullShare(),
+          ]);
+
+          const shares = userInfo.shares.toString();
+          const pricePerShare = Number(pricePerShareRaw) / 10 ** 18;
+          return new BigNumber(shares).times(pricePerShare).toFixed(0);
+        },
+      }),
+      resolveClaimableTokenBalances: this.appToolkit.helpers.masterChefDefaultClaimableBalanceStrategy.build({
+        resolveClaimableBalance: async () => 0, // Autocompounding
+      }),
+    });
+  }
+
   private async getSyrupPoolBalances(address: string) {
     // Syrup Pools (single-staking)
     return this.appToolkit.helpers.masterChefContractPositionBalanceHelper.getBalances<PancakeswapSmartChef>({
@@ -136,10 +188,20 @@ export class BinanceSmartChainPancakeSwapBalanceFetcher implements BalanceFetche
   }
 
   async getBalances(address: string) {
-    const [poolBalances, farmBalances, autoCakeBalances, ifoCakeBalances, syrupPoolBalances] = await Promise.all([
+    const [
+      poolBalances,
+      legacyFarmBalances,
+      farmBalances,
+      autoCakeBalances,
+      syrupCakeBalances,
+      ifoCakeBalances,
+      syrupPoolBalances,
+    ] = await Promise.all([
       this.getPoolBalances(address),
+      this.getLegacyFarmBalances(address),
       this.getFarmBalances(address),
       this.getAutoCakeBalances(address),
+      this.getSyrupCakeBalances(address),
       this.getIfoCakeBalances(address),
       this.getSyrupPoolBalances(address),
     ]);
@@ -158,8 +220,16 @@ export class BinanceSmartChainPancakeSwapBalanceFetcher implements BalanceFetche
         assets: ifoCakeBalances,
       },
       {
+        label: 'Staked CAKE',
+        assets: syrupCakeBalances,
+      },
+      {
         label: 'Farms',
         assets: farmBalances,
+      },
+      {
+        label: 'Legacy Farms',
+        assets: legacyFarmBalances,
       },
       {
         label: 'Syrup Pools',

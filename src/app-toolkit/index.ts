@@ -9,7 +9,7 @@ export { MasterChefDefaultStakedBalanceStrategy } from './helpers/master-chef/ma
 export { MasterChefV2ClaimableBalanceStrategy } from './helpers/master-chef/master-chef.v2.claimable-token-balance-strategy';
 export { MasterChefV2ClaimableTokenStrategy } from './helpers/master-chef/master-chef.v2.claimable-token-strategy';
 export { SingleStakingFarmContractPositionHelper } from './helpers/position/single-staking-farm.contract-position-helper';
-export { SingleVaultTokenHelper } from './helpers/position/single-vault.token-helper';
+export { VaultTokenHelper } from './helpers/position/vault.token-helper';
 
 export type {
   MasterChefChefContractStrategy,
@@ -50,4 +50,4 @@ export type {
   SingleStakingFarmResolveRoisParams,
   SingleStakingFarmContractPositionHelperParams,
 } from './helpers/position/single-staking-farm.contract-position-helper';
-export type { SingleVaultTokenDataProps } from './helpers/position/single-vault.token-helper';
+export type { VaultTokenDataProps, VaultTokenHelperParams } from './helpers/position/vault.token-helper';

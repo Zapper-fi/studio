@@ -26,7 +26,6 @@ export class EthereumBalancerV2StakedfContractPositionFetcher implements Positio
   ) {}
 
   async getPositions() {
-    const network = Network.ETHEREUM_MAINNET;
     const farms = await this.balancerV2GaugeAddressesGetter.getGauges({ network });
     return await this.curveStakingHelper.getContractPositions<BalancerGauge>({
       network,
