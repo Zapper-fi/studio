@@ -2,6 +2,7 @@ import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
 import { OlympusAppModule } from '~apps/olympus';
 
+import { KlimaContractFactory } from './contracts';
 import { KlimaAppDefinition, KLIMA_DEFINITION } from './klima.definition';
 import { PolygonKlimaBalanceFetcher } from './polygon/klima.balance-fetcher';
 import { PolygonKlimaBondContractPositionFetcher } from './polygon/klima.bond.contract-position';
@@ -13,6 +14,7 @@ import { PolygonKlimaWsTokenFetcher } from './polygon/klima.ws-klima.token-fetch
   imports: [OlympusAppModule],
   providers: [
     KlimaAppDefinition,
+    KlimaContractFactory,
     // Polygon
     PolygonKlimaBalanceFetcher,
     PolygonKlimaBondContractPositionFetcher,

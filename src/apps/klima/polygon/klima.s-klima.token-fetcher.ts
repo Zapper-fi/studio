@@ -17,11 +17,11 @@ export class PolygonKlimaSTokenFetcher implements PositionFetcher<AppTokenPositi
   constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
   async getPositions(): Promise<AppTokenPosition[]> {
-    return this.appToolkit.helpers.singleVaultTokenHelper.getTokens({
+    return this.appToolkit.helpers.vaultTokenHelper.getTokens({
       network,
       appId,
       groupId,
-      address: '0xb0c22d8d350c67420f06f48936654f567c73e8c8', // sKLIMA
+      resolveVaultAddresses: () => ['0xb0c22d8d350c67420f06f48936654f567c73e8c8'], // sKLIMA
       resolveContract: ({ address, network }) => this.appToolkit.globalContracts.erc20({ address, network }),
       resolveUnderlyingTokenAddress: () => '0x4e78011ce80ee02d2c3e649fb657e45898257815', // KLIMA
       resolveReserve: ({ underlyingToken, network }) =>

@@ -12,7 +12,7 @@ import { MasterChefV2ClaimableBalanceStrategy } from './helpers/master-chef/mast
 import { MasterChefV2ClaimableTokenStrategy } from './helpers/master-chef/master-chef.v2.claimable-token-strategy';
 import { MasterChefV2RewardRateStrategy } from './helpers/master-chef/master-chef.v2.reward-rate-strategy';
 import { SingleStakingFarmContractPositionHelper } from './helpers/position/single-staking-farm.contract-position-helper';
-import { SingleVaultTokenHelper } from './helpers/position/single-vault.token-helper';
+import { VaultTokenHelper } from './helpers/position/vault.token-helper';
 import { TheGraphHelper } from './helpers/the-graph/the-graph.helper';
 
 export const AppToolkitHelpers = [
@@ -21,7 +21,7 @@ export const AppToolkitHelpers = [
   TheGraphHelper,
   SingleStakingContractPositionBalanceHelper,
   SingleStakingFarmContractPositionHelper,
-  SingleVaultTokenHelper,
+  VaultTokenHelper,
   MasterChefContractPositionBalanceHelper,
   MasterChefContractPositionHelper,
   MasterChefDefaultClaimableBalanceStrategy,
@@ -42,8 +42,8 @@ export class AppToolkitHelperRegistry {
     public readonly singleStakingContractPositionBalanceHelper: SingleStakingContractPositionBalanceHelper,
     @Inject(SingleStakingFarmContractPositionHelper)
     public readonly singleStakingFarmContractPositionHelper: SingleStakingFarmContractPositionHelper,
-    @Inject(SingleVaultTokenHelper)
-    public readonly singleVaultTokenHelper: SingleVaultTokenHelper,
+    @Inject(VaultTokenHelper)
+    public readonly vaultTokenHelper: VaultTokenHelper,
     @Inject(MasterChefContractPositionBalanceHelper)
     public readonly masterChefContractPositionBalanceHelper: MasterChefContractPositionBalanceHelper,
     @Inject(MasterChefContractPositionHelper)
