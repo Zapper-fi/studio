@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.26.0](https://github.com/Zapper-fi/studio/compare/v0.25.2...v0.26.0) (2022-05-13)
+
+
+### Features
+
+* **thales:** Support Thales on the Optimism network ([#326](https://github.com/Zapper-fi/studio/issues/326)) ([e81a4c1](https://github.com/Zapper-fi/studio/commit/e81a4c1d6807ede4e26c4100512f98e47df8a4ed))
+
+
+### Bug Fixes
+
+* **thales:** Fix linting and add index ([#432](https://github.com/Zapper-fi/studio/issues/432)) ([17ff989](https://github.com/Zapper-fi/studio/commit/17ff98991de4443f191c47f505eb31771466326d))
+
 ### [0.25.2](https://github.com/Zapper-fi/studio/compare/v0.25.1...v0.25.2) (2022-05-12)
 
 
