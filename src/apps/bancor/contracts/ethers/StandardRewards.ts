@@ -4,6 +4,7 @@
 import type {
   BaseContract,
   BigNumber,
+  BigNumberish,
   BytesLike,
   CallOverrides,
   ContractTransaction,
@@ -17,58 +18,364 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
 
+export type RewardsStruct = {
+  lastUpdateTime: BigNumberish;
+  rewardPerToken: BigNumberish;
+};
+
+export type RewardsStructOutput = [number, BigNumber] & {
+  lastUpdateTime: number;
+  rewardPerToken: BigNumber;
+};
+
+export type ProgramDataStruct = {
+  id: BigNumberish;
+  pool: string;
+  poolToken: string;
+  rewardsToken: string;
+  isEnabled: boolean;
+  startTime: BigNumberish;
+  endTime: BigNumberish;
+  rewardRate: BigNumberish;
+  remainingRewards: BigNumberish;
+};
+
+export type ProgramDataStructOutput = [
+  BigNumber,
+  string,
+  string,
+  string,
+  boolean,
+  number,
+  number,
+  BigNumber,
+  BigNumber,
+] & {
+  id: BigNumber;
+  pool: string;
+  poolToken: string;
+  rewardsToken: string;
+  isEnabled: boolean;
+  startTime: number;
+  endTime: number;
+  rewardRate: BigNumber;
+  remainingRewards: BigNumber;
+};
+
+export type ProviderRewardsStruct = {
+  rewardPerTokenPaid: BigNumberish;
+  pendingRewards: BigNumberish;
+  reserved0: BigNumberish;
+  stakedAmount: BigNumberish;
+};
+
+export type ProviderRewardsStructOutput = [BigNumber, BigNumber, BigNumber, BigNumber] & {
+  rewardPerTokenPaid: BigNumber;
+  pendingRewards: BigNumber;
+  reserved0: BigNumber;
+  stakedAmount: BigNumber;
+};
+
+export type StakeAmountsStruct = {
+  stakedRewardAmount: BigNumberish;
+  poolTokenAmount: BigNumberish;
+};
+
+export type StakeAmountsStructOutput = [BigNumber, BigNumber] & {
+  stakedRewardAmount: BigNumber;
+  poolTokenAmount: BigNumber;
+};
+
 export interface StandardRewardsInterface extends utils.Interface {
   functions: {
-    'admin()': FunctionFragment;
-    'implementation()': FunctionFragment;
-    'upgradeTo(address)': FunctionFragment;
-    'upgradeToAndCall(address,bytes)': FunctionFragment;
+    'DEFAULT_ADMIN_ROLE()': FunctionFragment;
+    'claimRewards(uint256[])': FunctionFragment;
+    'createProgram(address,address,uint256,uint32,uint32)': FunctionFragment;
+    'depositAndJoin(uint256,uint256)': FunctionFragment;
+    'depositAndJoinPermitted(uint256,uint256,uint256,uint8,bytes32,bytes32)': FunctionFragment;
+    'enableProgram(uint256,bool)': FunctionFragment;
+    'getRoleAdmin(bytes32)': FunctionFragment;
+    'getRoleMember(bytes32,uint256)': FunctionFragment;
+    'getRoleMemberCount(bytes32)': FunctionFragment;
+    'grantRole(bytes32,address)': FunctionFragment;
+    'hasRole(bytes32,address)': FunctionFragment;
+    'initialize()': FunctionFragment;
+    'isProgramActive(uint256)': FunctionFragment;
+    'isProgramEnabled(uint256)': FunctionFragment;
+    'join(uint256,uint256)': FunctionFragment;
+    'joinPermitted(uint256,uint256,uint256,uint8,bytes32,bytes32)': FunctionFragment;
+    'latestProgramId(address)': FunctionFragment;
+    'leave(uint256,uint256)': FunctionFragment;
+    'pendingRewards(address,uint256[])': FunctionFragment;
+    'postUpgrade(bytes)': FunctionFragment;
+    'programIds()': FunctionFragment;
+    'programRewards(uint256)': FunctionFragment;
+    'programStake(uint256)': FunctionFragment;
+    'programs(uint256[])': FunctionFragment;
+    'providerProgramIds(address)': FunctionFragment;
+    'providerRewards(address,uint256)': FunctionFragment;
+    'providerStake(address,uint256)': FunctionFragment;
+    'renounceRole(bytes32,address)': FunctionFragment;
+    'revokeRole(bytes32,address)': FunctionFragment;
+    'roleAdmin()': FunctionFragment;
+    'stakeRewards(uint256[])': FunctionFragment;
+    'supportsInterface(bytes4)': FunctionFragment;
+    'terminateProgram(uint256)': FunctionFragment;
+    'transferProviderVBNT(address[],uint256[])': FunctionFragment;
+    'version()': FunctionFragment;
   };
 
-  getFunction(nameOrSignatureOrTopic: 'admin' | 'implementation' | 'upgradeTo' | 'upgradeToAndCall'): FunctionFragment;
+  getFunction(
+    nameOrSignatureOrTopic:
+      | 'DEFAULT_ADMIN_ROLE'
+      | 'claimRewards'
+      | 'createProgram'
+      | 'depositAndJoin'
+      | 'depositAndJoinPermitted'
+      | 'enableProgram'
+      | 'getRoleAdmin'
+      | 'getRoleMember'
+      | 'getRoleMemberCount'
+      | 'grantRole'
+      | 'hasRole'
+      | 'initialize'
+      | 'isProgramActive'
+      | 'isProgramEnabled'
+      | 'join'
+      | 'joinPermitted'
+      | 'latestProgramId'
+      | 'leave'
+      | 'pendingRewards'
+      | 'postUpgrade'
+      | 'programIds'
+      | 'programRewards'
+      | 'programStake'
+      | 'programs'
+      | 'providerProgramIds'
+      | 'providerRewards'
+      | 'providerStake'
+      | 'renounceRole'
+      | 'revokeRole'
+      | 'roleAdmin'
+      | 'stakeRewards'
+      | 'supportsInterface'
+      | 'terminateProgram'
+      | 'transferProviderVBNT'
+      | 'version',
+  ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'admin', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'implementation', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'upgradeTo', values: [string]): string;
-  encodeFunctionData(functionFragment: 'upgradeToAndCall', values: [string, BytesLike]): string;
+  encodeFunctionData(functionFragment: 'DEFAULT_ADMIN_ROLE', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'claimRewards', values: [BigNumberish[]]): string;
+  encodeFunctionData(
+    functionFragment: 'createProgram',
+    values: [string, string, BigNumberish, BigNumberish, BigNumberish],
+  ): string;
+  encodeFunctionData(functionFragment: 'depositAndJoin', values: [BigNumberish, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'depositAndJoinPermitted',
+    values: [BigNumberish, BigNumberish, BigNumberish, BigNumberish, BytesLike, BytesLike],
+  ): string;
+  encodeFunctionData(functionFragment: 'enableProgram', values: [BigNumberish, boolean]): string;
+  encodeFunctionData(functionFragment: 'getRoleAdmin', values: [BytesLike]): string;
+  encodeFunctionData(functionFragment: 'getRoleMember', values: [BytesLike, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'getRoleMemberCount', values: [BytesLike]): string;
+  encodeFunctionData(functionFragment: 'grantRole', values: [BytesLike, string]): string;
+  encodeFunctionData(functionFragment: 'hasRole', values: [BytesLike, string]): string;
+  encodeFunctionData(functionFragment: 'initialize', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'isProgramActive', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'isProgramEnabled', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'join', values: [BigNumberish, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'joinPermitted',
+    values: [BigNumberish, BigNumberish, BigNumberish, BigNumberish, BytesLike, BytesLike],
+  ): string;
+  encodeFunctionData(functionFragment: 'latestProgramId', values: [string]): string;
+  encodeFunctionData(functionFragment: 'leave', values: [BigNumberish, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'pendingRewards', values: [string, BigNumberish[]]): string;
+  encodeFunctionData(functionFragment: 'postUpgrade', values: [BytesLike]): string;
+  encodeFunctionData(functionFragment: 'programIds', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'programRewards', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'programStake', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'programs', values: [BigNumberish[]]): string;
+  encodeFunctionData(functionFragment: 'providerProgramIds', values: [string]): string;
+  encodeFunctionData(functionFragment: 'providerRewards', values: [string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'providerStake', values: [string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'renounceRole', values: [BytesLike, string]): string;
+  encodeFunctionData(functionFragment: 'revokeRole', values: [BytesLike, string]): string;
+  encodeFunctionData(functionFragment: 'roleAdmin', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'stakeRewards', values: [BigNumberish[]]): string;
+  encodeFunctionData(functionFragment: 'supportsInterface', values: [BytesLike]): string;
+  encodeFunctionData(functionFragment: 'terminateProgram', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'transferProviderVBNT', values: [string[], BigNumberish[]]): string;
+  encodeFunctionData(functionFragment: 'version', values?: undefined): string;
 
-  decodeFunctionResult(functionFragment: 'admin', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'implementation', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'upgradeTo', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'upgradeToAndCall', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'DEFAULT_ADMIN_ROLE', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'claimRewards', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'createProgram', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'depositAndJoin', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'depositAndJoinPermitted', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'enableProgram', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getRoleAdmin', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getRoleMember', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getRoleMemberCount', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'grantRole', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'hasRole', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'initialize', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'isProgramActive', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'isProgramEnabled', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'join', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'joinPermitted', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'latestProgramId', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'leave', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'pendingRewards', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'postUpgrade', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'programIds', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'programRewards', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'programStake', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'programs', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'providerProgramIds', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'providerRewards', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'providerStake', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'renounceRole', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'revokeRole', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'roleAdmin', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'stakeRewards', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'supportsInterface', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'terminateProgram', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'transferProviderVBNT', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'version', data: BytesLike): Result;
 
   events: {
-    'AdminChanged(address,address)': EventFragment;
-    'BeaconUpgraded(address)': EventFragment;
-    'Upgraded(address)': EventFragment;
+    'ProgramCreated(address,uint256,address,uint256,uint32,uint32)': EventFragment;
+    'ProgramEnabled(address,uint256,bool,uint256)': EventFragment;
+    'ProgramTerminated(address,uint256,uint32,uint256)': EventFragment;
+    'ProviderJoined(address,uint256,address,uint256,uint256)': EventFragment;
+    'ProviderLeft(address,uint256,address,uint256,uint256)': EventFragment;
+    'RewardsClaimed(address,uint256,address,uint256)': EventFragment;
+    'RewardsStaked(address,uint256,address,uint256)': EventFragment;
+    'RoleAdminChanged(bytes32,bytes32,bytes32)': EventFragment;
+    'RoleGranted(bytes32,address,address)': EventFragment;
+    'RoleRevoked(bytes32,address,address)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: 'AdminChanged'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'BeaconUpgraded'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'Upgraded'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'ProgramCreated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'ProgramEnabled'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'ProgramTerminated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'ProviderJoined'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'ProviderLeft'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'RewardsClaimed'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'RewardsStaked'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'RoleAdminChanged'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'RoleGranted'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'RoleRevoked'): EventFragment;
 }
 
-export interface AdminChangedEventObject {
-  previousAdmin: string;
-  newAdmin: string;
+export interface ProgramCreatedEventObject {
+  pool: string;
+  programId: BigNumber;
+  rewardsToken: string;
+  totalRewards: BigNumber;
+  startTime: number;
+  endTime: number;
 }
-export type AdminChangedEvent = TypedEvent<[string, string], AdminChangedEventObject>;
+export type ProgramCreatedEvent = TypedEvent<
+  [string, BigNumber, string, BigNumber, number, number],
+  ProgramCreatedEventObject
+>;
 
-export type AdminChangedEventFilter = TypedEventFilter<AdminChangedEvent>;
+export type ProgramCreatedEventFilter = TypedEventFilter<ProgramCreatedEvent>;
 
-export interface BeaconUpgradedEventObject {
-  beacon: string;
+export interface ProgramEnabledEventObject {
+  pool: string;
+  programId: BigNumber;
+  status: boolean;
+  remainingRewards: BigNumber;
 }
-export type BeaconUpgradedEvent = TypedEvent<[string], BeaconUpgradedEventObject>;
+export type ProgramEnabledEvent = TypedEvent<[string, BigNumber, boolean, BigNumber], ProgramEnabledEventObject>;
 
-export type BeaconUpgradedEventFilter = TypedEventFilter<BeaconUpgradedEvent>;
+export type ProgramEnabledEventFilter = TypedEventFilter<ProgramEnabledEvent>;
 
-export interface UpgradedEventObject {
-  implementation: string;
+export interface ProgramTerminatedEventObject {
+  pool: string;
+  programId: BigNumber;
+  endTime: number;
+  remainingRewards: BigNumber;
 }
-export type UpgradedEvent = TypedEvent<[string], UpgradedEventObject>;
+export type ProgramTerminatedEvent = TypedEvent<[string, BigNumber, number, BigNumber], ProgramTerminatedEventObject>;
 
-export type UpgradedEventFilter = TypedEventFilter<UpgradedEvent>;
+export type ProgramTerminatedEventFilter = TypedEventFilter<ProgramTerminatedEvent>;
+
+export interface ProviderJoinedEventObject {
+  pool: string;
+  programId: BigNumber;
+  provider: string;
+  poolTokenAmount: BigNumber;
+  prevStake: BigNumber;
+}
+export type ProviderJoinedEvent = TypedEvent<
+  [string, BigNumber, string, BigNumber, BigNumber],
+  ProviderJoinedEventObject
+>;
+
+export type ProviderJoinedEventFilter = TypedEventFilter<ProviderJoinedEvent>;
+
+export interface ProviderLeftEventObject {
+  pool: string;
+  programId: BigNumber;
+  provider: string;
+  poolTokenAmount: BigNumber;
+  remainingStake: BigNumber;
+}
+export type ProviderLeftEvent = TypedEvent<[string, BigNumber, string, BigNumber, BigNumber], ProviderLeftEventObject>;
+
+export type ProviderLeftEventFilter = TypedEventFilter<ProviderLeftEvent>;
+
+export interface RewardsClaimedEventObject {
+  pool: string;
+  programId: BigNumber;
+  provider: string;
+  amount: BigNumber;
+}
+export type RewardsClaimedEvent = TypedEvent<[string, BigNumber, string, BigNumber], RewardsClaimedEventObject>;
+
+export type RewardsClaimedEventFilter = TypedEventFilter<RewardsClaimedEvent>;
+
+export interface RewardsStakedEventObject {
+  pool: string;
+  programId: BigNumber;
+  provider: string;
+  amount: BigNumber;
+}
+export type RewardsStakedEvent = TypedEvent<[string, BigNumber, string, BigNumber], RewardsStakedEventObject>;
+
+export type RewardsStakedEventFilter = TypedEventFilter<RewardsStakedEvent>;
+
+export interface RoleAdminChangedEventObject {
+  role: string;
+  previousAdminRole: string;
+  newAdminRole: string;
+}
+export type RoleAdminChangedEvent = TypedEvent<[string, string, string], RoleAdminChangedEventObject>;
+
+export type RoleAdminChangedEventFilter = TypedEventFilter<RoleAdminChangedEvent>;
+
+export interface RoleGrantedEventObject {
+  role: string;
+  account: string;
+  sender: string;
+}
+export type RoleGrantedEvent = TypedEvent<[string, string, string], RoleGrantedEventObject>;
+
+export type RoleGrantedEventFilter = TypedEventFilter<RoleGrantedEvent>;
+
+export interface RoleRevokedEventObject {
+  role: string;
+  account: string;
+  sender: string;
+}
+export type RoleRevokedEvent = TypedEvent<[string, string, string], RoleRevokedEventObject>;
+
+export type RoleRevokedEventFilter = TypedEventFilter<RoleRevokedEvent>;
 
 export interface StandardRewards extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -93,89 +400,773 @@ export interface StandardRewards extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    admin(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<[string]>;
 
-    implementation(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
-
-    upgradeTo(
-      newImplementation: string,
+    claimRewards(
+      ids: BigNumberish[],
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
 
-    upgradeToAndCall(
-      newImplementation: string,
-      data: BytesLike,
+    createProgram(
+      pool: string,
+      rewardsToken: string,
+      totalRewards: BigNumberish,
+      startTime: BigNumberish,
+      endTime: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<ContractTransaction>;
+
+    depositAndJoin(
+      id: BigNumberish,
+      tokenAmount: BigNumberish,
       overrides?: PayableOverrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
+
+    depositAndJoinPermitted(
+      id: BigNumberish,
+      tokenAmount: BigNumberish,
+      deadline: BigNumberish,
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<ContractTransaction>;
+
+    enableProgram(
+      id: BigNumberish,
+      status: boolean,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<ContractTransaction>;
+
+    getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<[string]>;
+
+    getRoleMember(role: BytesLike, index: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+
+    getRoleMemberCount(role: BytesLike, overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    grantRole(
+      role: BytesLike,
+      account: string,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<ContractTransaction>;
+
+    hasRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<[boolean]>;
+
+    initialize(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+
+    isProgramActive(id: BigNumberish, overrides?: CallOverrides): Promise<[boolean]>;
+
+    isProgramEnabled(id: BigNumberish, overrides?: CallOverrides): Promise<[boolean]>;
+
+    join(
+      id: BigNumberish,
+      poolTokenAmount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<ContractTransaction>;
+
+    joinPermitted(
+      id: BigNumberish,
+      poolTokenAmount: BigNumberish,
+      deadline: BigNumberish,
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<ContractTransaction>;
+
+    latestProgramId(pool: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    leave(
+      id: BigNumberish,
+      poolTokenAmount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<ContractTransaction>;
+
+    pendingRewards(provider: string, ids: BigNumberish[], overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    postUpgrade(
+      data: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<ContractTransaction>;
+
+    programIds(overrides?: CallOverrides): Promise<[BigNumber[]]>;
+
+    programRewards(id: BigNumberish, overrides?: CallOverrides): Promise<[RewardsStructOutput]>;
+
+    programStake(id: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    programs(ids: BigNumberish[], overrides?: CallOverrides): Promise<[ProgramDataStructOutput[]]>;
+
+    providerProgramIds(provider: string, overrides?: CallOverrides): Promise<[BigNumber[]]>;
+
+    providerRewards(
+      provider: string,
+      id: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<[ProviderRewardsStructOutput]>;
+
+    providerStake(provider: string, id: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    renounceRole(
+      role: BytesLike,
+      account: string,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<ContractTransaction>;
+
+    revokeRole(
+      role: BytesLike,
+      account: string,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<ContractTransaction>;
+
+    roleAdmin(overrides?: CallOverrides): Promise<[string]>;
+
+    stakeRewards(
+      ids: BigNumberish[],
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<ContractTransaction>;
+
+    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<[boolean]>;
+
+    terminateProgram(
+      id: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<ContractTransaction>;
+
+    transferProviderVBNT(
+      providers: string[],
+      amounts: BigNumberish[],
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<ContractTransaction>;
+
+    version(overrides?: CallOverrides): Promise<[number]>;
   };
 
-  admin(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<string>;
 
-  implementation(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
-
-  upgradeTo(
-    newImplementation: string,
+  claimRewards(
+    ids: BigNumberish[],
     overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
-  upgradeToAndCall(
-    newImplementation: string,
-    data: BytesLike,
+  createProgram(
+    pool: string,
+    rewardsToken: string,
+    totalRewards: BigNumberish,
+    startTime: BigNumberish,
+    endTime: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> },
+  ): Promise<ContractTransaction>;
+
+  depositAndJoin(
+    id: BigNumberish,
+    tokenAmount: BigNumberish,
     overrides?: PayableOverrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
+  depositAndJoinPermitted(
+    id: BigNumberish,
+    tokenAmount: BigNumberish,
+    deadline: BigNumberish,
+    v: BigNumberish,
+    r: BytesLike,
+    s: BytesLike,
+    overrides?: Overrides & { from?: string | Promise<string> },
+  ): Promise<ContractTransaction>;
+
+  enableProgram(
+    id: BigNumberish,
+    status: boolean,
+    overrides?: Overrides & { from?: string | Promise<string> },
+  ): Promise<ContractTransaction>;
+
+  getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<string>;
+
+  getRoleMember(role: BytesLike, index: BigNumberish, overrides?: CallOverrides): Promise<string>;
+
+  getRoleMemberCount(role: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+
+  grantRole(
+    role: BytesLike,
+    account: string,
+    overrides?: Overrides & { from?: string | Promise<string> },
+  ): Promise<ContractTransaction>;
+
+  hasRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<boolean>;
+
+  initialize(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+
+  isProgramActive(id: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+
+  isProgramEnabled(id: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+
+  join(
+    id: BigNumberish,
+    poolTokenAmount: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> },
+  ): Promise<ContractTransaction>;
+
+  joinPermitted(
+    id: BigNumberish,
+    poolTokenAmount: BigNumberish,
+    deadline: BigNumberish,
+    v: BigNumberish,
+    r: BytesLike,
+    s: BytesLike,
+    overrides?: Overrides & { from?: string | Promise<string> },
+  ): Promise<ContractTransaction>;
+
+  latestProgramId(pool: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+  leave(
+    id: BigNumberish,
+    poolTokenAmount: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> },
+  ): Promise<ContractTransaction>;
+
+  pendingRewards(provider: string, ids: BigNumberish[], overrides?: CallOverrides): Promise<BigNumber>;
+
+  postUpgrade(
+    data: BytesLike,
+    overrides?: Overrides & { from?: string | Promise<string> },
+  ): Promise<ContractTransaction>;
+
+  programIds(overrides?: CallOverrides): Promise<BigNumber[]>;
+
+  programRewards(id: BigNumberish, overrides?: CallOverrides): Promise<RewardsStructOutput>;
+
+  programStake(id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+
+  programs(ids: BigNumberish[], overrides?: CallOverrides): Promise<ProgramDataStructOutput[]>;
+
+  providerProgramIds(provider: string, overrides?: CallOverrides): Promise<BigNumber[]>;
+
+  providerRewards(provider: string, id: BigNumberish, overrides?: CallOverrides): Promise<ProviderRewardsStructOutput>;
+
+  providerStake(provider: string, id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+
+  renounceRole(
+    role: BytesLike,
+    account: string,
+    overrides?: Overrides & { from?: string | Promise<string> },
+  ): Promise<ContractTransaction>;
+
+  revokeRole(
+    role: BytesLike,
+    account: string,
+    overrides?: Overrides & { from?: string | Promise<string> },
+  ): Promise<ContractTransaction>;
+
+  roleAdmin(overrides?: CallOverrides): Promise<string>;
+
+  stakeRewards(
+    ids: BigNumberish[],
+    overrides?: Overrides & { from?: string | Promise<string> },
+  ): Promise<ContractTransaction>;
+
+  supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<boolean>;
+
+  terminateProgram(
+    id: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> },
+  ): Promise<ContractTransaction>;
+
+  transferProviderVBNT(
+    providers: string[],
+    amounts: BigNumberish[],
+    overrides?: Overrides & { from?: string | Promise<string> },
+  ): Promise<ContractTransaction>;
+
+  version(overrides?: CallOverrides): Promise<number>;
+
   callStatic: {
-    admin(overrides?: CallOverrides): Promise<string>;
+    DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<string>;
 
-    implementation(overrides?: CallOverrides): Promise<string>;
+    claimRewards(ids: BigNumberish[], overrides?: CallOverrides): Promise<BigNumber>;
 
-    upgradeTo(newImplementation: string, overrides?: CallOverrides): Promise<void>;
+    createProgram(
+      pool: string,
+      rewardsToken: string,
+      totalRewards: BigNumberish,
+      startTime: BigNumberish,
+      endTime: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    upgradeToAndCall(newImplementation: string, data: BytesLike, overrides?: CallOverrides): Promise<void>;
+    depositAndJoin(id: BigNumberish, tokenAmount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+
+    depositAndJoinPermitted(
+      id: BigNumberish,
+      tokenAmount: BigNumberish,
+      deadline: BigNumberish,
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    enableProgram(id: BigNumberish, status: boolean, overrides?: CallOverrides): Promise<void>;
+
+    getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<string>;
+
+    getRoleMember(role: BytesLike, index: BigNumberish, overrides?: CallOverrides): Promise<string>;
+
+    getRoleMemberCount(role: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+
+    grantRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<void>;
+
+    hasRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<boolean>;
+
+    initialize(overrides?: CallOverrides): Promise<void>;
+
+    isProgramActive(id: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+
+    isProgramEnabled(id: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+
+    join(id: BigNumberish, poolTokenAmount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+
+    joinPermitted(
+      id: BigNumberish,
+      poolTokenAmount: BigNumberish,
+      deadline: BigNumberish,
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    latestProgramId(pool: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    leave(id: BigNumberish, poolTokenAmount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+
+    pendingRewards(provider: string, ids: BigNumberish[], overrides?: CallOverrides): Promise<BigNumber>;
+
+    postUpgrade(data: BytesLike, overrides?: CallOverrides): Promise<void>;
+
+    programIds(overrides?: CallOverrides): Promise<BigNumber[]>;
+
+    programRewards(id: BigNumberish, overrides?: CallOverrides): Promise<RewardsStructOutput>;
+
+    programStake(id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+
+    programs(ids: BigNumberish[], overrides?: CallOverrides): Promise<ProgramDataStructOutput[]>;
+
+    providerProgramIds(provider: string, overrides?: CallOverrides): Promise<BigNumber[]>;
+
+    providerRewards(
+      provider: string,
+      id: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<ProviderRewardsStructOutput>;
+
+    providerStake(provider: string, id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+
+    renounceRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<void>;
+
+    revokeRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<void>;
+
+    roleAdmin(overrides?: CallOverrides): Promise<string>;
+
+    stakeRewards(ids: BigNumberish[], overrides?: CallOverrides): Promise<StakeAmountsStructOutput>;
+
+    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<boolean>;
+
+    terminateProgram(id: BigNumberish, overrides?: CallOverrides): Promise<void>;
+
+    transferProviderVBNT(providers: string[], amounts: BigNumberish[], overrides?: CallOverrides): Promise<void>;
+
+    version(overrides?: CallOverrides): Promise<number>;
   };
 
   filters: {
-    'AdminChanged(address,address)'(previousAdmin?: null, newAdmin?: null): AdminChangedEventFilter;
-    AdminChanged(previousAdmin?: null, newAdmin?: null): AdminChangedEventFilter;
+    'ProgramCreated(address,uint256,address,uint256,uint32,uint32)'(
+      pool?: string | null,
+      programId?: BigNumberish | null,
+      rewardsToken?: string | null,
+      totalRewards?: null,
+      startTime?: null,
+      endTime?: null,
+    ): ProgramCreatedEventFilter;
+    ProgramCreated(
+      pool?: string | null,
+      programId?: BigNumberish | null,
+      rewardsToken?: string | null,
+      totalRewards?: null,
+      startTime?: null,
+      endTime?: null,
+    ): ProgramCreatedEventFilter;
 
-    'BeaconUpgraded(address)'(beacon?: string | null): BeaconUpgradedEventFilter;
-    BeaconUpgraded(beacon?: string | null): BeaconUpgradedEventFilter;
+    'ProgramEnabled(address,uint256,bool,uint256)'(
+      pool?: string | null,
+      programId?: BigNumberish | null,
+      status?: null,
+      remainingRewards?: null,
+    ): ProgramEnabledEventFilter;
+    ProgramEnabled(
+      pool?: string | null,
+      programId?: BigNumberish | null,
+      status?: null,
+      remainingRewards?: null,
+    ): ProgramEnabledEventFilter;
 
-    'Upgraded(address)'(implementation?: string | null): UpgradedEventFilter;
-    Upgraded(implementation?: string | null): UpgradedEventFilter;
+    'ProgramTerminated(address,uint256,uint32,uint256)'(
+      pool?: string | null,
+      programId?: BigNumberish | null,
+      endTime?: null,
+      remainingRewards?: null,
+    ): ProgramTerminatedEventFilter;
+    ProgramTerminated(
+      pool?: string | null,
+      programId?: BigNumberish | null,
+      endTime?: null,
+      remainingRewards?: null,
+    ): ProgramTerminatedEventFilter;
+
+    'ProviderJoined(address,uint256,address,uint256,uint256)'(
+      pool?: string | null,
+      programId?: BigNumberish | null,
+      provider?: string | null,
+      poolTokenAmount?: null,
+      prevStake?: null,
+    ): ProviderJoinedEventFilter;
+    ProviderJoined(
+      pool?: string | null,
+      programId?: BigNumberish | null,
+      provider?: string | null,
+      poolTokenAmount?: null,
+      prevStake?: null,
+    ): ProviderJoinedEventFilter;
+
+    'ProviderLeft(address,uint256,address,uint256,uint256)'(
+      pool?: string | null,
+      programId?: BigNumberish | null,
+      provider?: string | null,
+      poolTokenAmount?: null,
+      remainingStake?: null,
+    ): ProviderLeftEventFilter;
+    ProviderLeft(
+      pool?: string | null,
+      programId?: BigNumberish | null,
+      provider?: string | null,
+      poolTokenAmount?: null,
+      remainingStake?: null,
+    ): ProviderLeftEventFilter;
+
+    'RewardsClaimed(address,uint256,address,uint256)'(
+      pool?: string | null,
+      programId?: BigNumberish | null,
+      provider?: string | null,
+      amount?: null,
+    ): RewardsClaimedEventFilter;
+    RewardsClaimed(
+      pool?: string | null,
+      programId?: BigNumberish | null,
+      provider?: string | null,
+      amount?: null,
+    ): RewardsClaimedEventFilter;
+
+    'RewardsStaked(address,uint256,address,uint256)'(
+      pool?: string | null,
+      programId?: BigNumberish | null,
+      provider?: string | null,
+      amount?: null,
+    ): RewardsStakedEventFilter;
+    RewardsStaked(
+      pool?: string | null,
+      programId?: BigNumberish | null,
+      provider?: string | null,
+      amount?: null,
+    ): RewardsStakedEventFilter;
+
+    'RoleAdminChanged(bytes32,bytes32,bytes32)'(
+      role?: BytesLike | null,
+      previousAdminRole?: BytesLike | null,
+      newAdminRole?: BytesLike | null,
+    ): RoleAdminChangedEventFilter;
+    RoleAdminChanged(
+      role?: BytesLike | null,
+      previousAdminRole?: BytesLike | null,
+      newAdminRole?: BytesLike | null,
+    ): RoleAdminChangedEventFilter;
+
+    'RoleGranted(bytes32,address,address)'(
+      role?: BytesLike | null,
+      account?: string | null,
+      sender?: string | null,
+    ): RoleGrantedEventFilter;
+    RoleGranted(role?: BytesLike | null, account?: string | null, sender?: string | null): RoleGrantedEventFilter;
+
+    'RoleRevoked(bytes32,address,address)'(
+      role?: BytesLike | null,
+      account?: string | null,
+      sender?: string | null,
+    ): RoleRevokedEventFilter;
+    RoleRevoked(role?: BytesLike | null, account?: string | null, sender?: string | null): RoleRevokedEventFilter;
   };
 
   estimateGas: {
-    admin(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<BigNumber>;
 
-    implementation(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    claimRewards(ids: BigNumberish[], overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
 
-    upgradeTo(
-      newImplementation: string,
+    createProgram(
+      pool: string,
+      rewardsToken: string,
+      totalRewards: BigNumberish,
+      startTime: BigNumberish,
+      endTime: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
 
-    upgradeToAndCall(
-      newImplementation: string,
-      data: BytesLike,
+    depositAndJoin(
+      id: BigNumberish,
+      tokenAmount: BigNumberish,
       overrides?: PayableOverrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
+
+    depositAndJoinPermitted(
+      id: BigNumberish,
+      tokenAmount: BigNumberish,
+      deadline: BigNumberish,
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<BigNumber>;
+
+    enableProgram(
+      id: BigNumberish,
+      status: boolean,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<BigNumber>;
+
+    getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+
+    getRoleMember(role: BytesLike, index: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+
+    getRoleMemberCount(role: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+
+    grantRole(
+      role: BytesLike,
+      account: string,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<BigNumber>;
+
+    hasRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    initialize(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+
+    isProgramActive(id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+
+    isProgramEnabled(id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+
+    join(
+      id: BigNumberish,
+      poolTokenAmount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<BigNumber>;
+
+    joinPermitted(
+      id: BigNumberish,
+      poolTokenAmount: BigNumberish,
+      deadline: BigNumberish,
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<BigNumber>;
+
+    latestProgramId(pool: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    leave(
+      id: BigNumberish,
+      poolTokenAmount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<BigNumber>;
+
+    pendingRewards(provider: string, ids: BigNumberish[], overrides?: CallOverrides): Promise<BigNumber>;
+
+    postUpgrade(data: BytesLike, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+
+    programIds(overrides?: CallOverrides): Promise<BigNumber>;
+
+    programRewards(id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+
+    programStake(id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+
+    programs(ids: BigNumberish[], overrides?: CallOverrides): Promise<BigNumber>;
+
+    providerProgramIds(provider: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    providerRewards(provider: string, id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+
+    providerStake(provider: string, id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+
+    renounceRole(
+      role: BytesLike,
+      account: string,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<BigNumber>;
+
+    revokeRole(
+      role: BytesLike,
+      account: string,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<BigNumber>;
+
+    roleAdmin(overrides?: CallOverrides): Promise<BigNumber>;
+
+    stakeRewards(ids: BigNumberish[], overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+
+    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+
+    terminateProgram(id: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+
+    transferProviderVBNT(
+      providers: string[],
+      amounts: BigNumberish[],
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<BigNumber>;
+
+    version(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    admin(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    implementation(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
-
-    upgradeTo(
-      newImplementation: string,
+    claimRewards(
+      ids: BigNumberish[],
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
-    upgradeToAndCall(
-      newImplementation: string,
-      data: BytesLike,
+    createProgram(
+      pool: string,
+      rewardsToken: string,
+      totalRewards: BigNumberish,
+      startTime: BigNumberish,
+      endTime: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<PopulatedTransaction>;
+
+    depositAndJoin(
+      id: BigNumberish,
+      tokenAmount: BigNumberish,
       overrides?: PayableOverrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
+
+    depositAndJoinPermitted(
+      id: BigNumberish,
+      tokenAmount: BigNumberish,
+      deadline: BigNumberish,
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<PopulatedTransaction>;
+
+    enableProgram(
+      id: BigNumberish,
+      status: boolean,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<PopulatedTransaction>;
+
+    getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    getRoleMember(role: BytesLike, index: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    getRoleMemberCount(role: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    grantRole(
+      role: BytesLike,
+      account: string,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<PopulatedTransaction>;
+
+    hasRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    initialize(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+
+    isProgramActive(id: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    isProgramEnabled(id: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    join(
+      id: BigNumberish,
+      poolTokenAmount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<PopulatedTransaction>;
+
+    joinPermitted(
+      id: BigNumberish,
+      poolTokenAmount: BigNumberish,
+      deadline: BigNumberish,
+      v: BigNumberish,
+      r: BytesLike,
+      s: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<PopulatedTransaction>;
+
+    latestProgramId(pool: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    leave(
+      id: BigNumberish,
+      poolTokenAmount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<PopulatedTransaction>;
+
+    pendingRewards(provider: string, ids: BigNumberish[], overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    postUpgrade(
+      data: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<PopulatedTransaction>;
+
+    programIds(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    programRewards(id: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    programStake(id: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    programs(ids: BigNumberish[], overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    providerProgramIds(provider: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    providerRewards(provider: string, id: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    providerStake(provider: string, id: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    renounceRole(
+      role: BytesLike,
+      account: string,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<PopulatedTransaction>;
+
+    revokeRole(
+      role: BytesLike,
+      account: string,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<PopulatedTransaction>;
+
+    roleAdmin(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    stakeRewards(
+      ids: BigNumberish[],
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<PopulatedTransaction>;
+
+    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    terminateProgram(
+      id: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<PopulatedTransaction>;
+
+    transferProviderVBNT(
+      providers: string[],
+      amounts: BigNumberish[],
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<PopulatedTransaction>;
+
+    version(overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }

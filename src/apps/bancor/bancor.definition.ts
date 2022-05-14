@@ -13,7 +13,7 @@ export const BANCOR_DEFINITION = appDefinition({
       id: 'v3',
       type: GroupType.POSITION,
       label: 'Pools',
-    }
+    },
   },
   tags: [AppTag.DECENTRALIZED_EXCHANGE, AppTag.LIQUIDITY_POOL],
   keywords: [],

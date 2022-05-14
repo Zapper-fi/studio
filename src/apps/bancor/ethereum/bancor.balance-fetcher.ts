@@ -12,7 +12,7 @@ const network = Network.ETHEREUM_MAINNET;
 
 @Register.BalanceFetcher(BANCOR_DEFINITION.id, network)
 export class EthereumBancorBalanceFetcher implements BalanceFetcher {
-  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
+  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) { }
 
   async getBalances(address: string) {
     return presentBalanceFetcherResponse([]);
