@@ -43,6 +43,8 @@ const CAULDRONS = [
   '0x5ec47ee69bede0b6c2a2fc0d9d094df16c192498', // WBTC
   '0xf179fe36a36b32a4644587b8cdee7a23af98ed37', // yvCVXETH
   '0x7ce7d9ed62b9a6c5ace1c6ec9aeb115fa3064757', // yvDAI
+  '0xd31E19A0574dBF09310c3B06f3416661B4Dc7324', // Stargate USDC
+  '0xc6b2b3fe7c3d7a6f823d9106e22e66660709001e', // Stargate USDT
 ];
 
 const appId = ABRACADABRA_DEFINITION.id;
@@ -68,6 +70,7 @@ export class EthereumAbracadabraCauldronContractPositionFetcher implements Posit
         // @TODO: Migrate these over
         { appId: 'convex', groupIds: ['deposit'], network },
         { appId: 'sushiswap', groupIds: ['pool'], network },
+        { appId: 'stargate', groupIds: ['pool'], network},
       ],
     });
   }
