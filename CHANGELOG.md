@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.27.0](https://github.com/Zapper-fi/studio/compare/v0.26.0...v0.27.0) (2022-05-14)
+
+
+### Features
+
+* **Abracadabra:** Added support for Stargate Cauldrons ([#435](https://github.com/Zapper-fi/studio/issues/435)) ([f914b06](https://github.com/Zapper-fi/studio/commit/f914b06ff6167fd6237eace7c9592d50345da38c))
+
 ## [0.26.0](https://github.com/Zapper-fi/studio/compare/v0.25.2...v0.26.0) (2022-05-13)
 
 
