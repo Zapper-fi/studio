@@ -1,7 +1,6 @@
 import { Inject } from '@nestjs/common';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { ETH_ADDR_ALIAS } from '~app-toolkit/constants/address';
 import { Register } from '~app-toolkit/decorators';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
@@ -15,14 +14,12 @@ const groupId = BANCOR_DEFINITION.groups.v3.id;
 const network = Network.ETHEREUM_MAINNET;
 const address = '0xb0B958398ABB0b5DB4ce4d7598Fb868f5A00f372'.toLowerCase();
 
-const WETH_ADDRESS = '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2';
-
 @Register.ContractPositionFetcher({ appId, groupId, network })
 export class EthereumBancorV3ContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(BancorContractFactory) private readonly bancorContractFactory: BancorContractFactory,
-  ) {}
+  ) { }
 
   async getPositions() {
     return this.appToolkit.helpers.masterChefContractPositionHelper.getContractPositions<StandardRewards>({
@@ -47,11 +44,7 @@ export class EthereumBancorV3ContractPositionFetcher implements PositionFetcher<
         multicall
           .wrap(contract)
           .programs([poolIndex + 1])
-          .then(v => {
-            const result = v[0][1];
-            if (result.toLowerCase() === ETH_ADDR_ALIAS) return WETH_ADDRESS; // TODO HACK: recipe requires ERC20
-            return result;
-          }),
+          .then(v => v[0][1]),
       resolveRewardTokenAddresses: ({ poolIndex, contract, multicall }) =>
         multicall
           .wrap(contract)

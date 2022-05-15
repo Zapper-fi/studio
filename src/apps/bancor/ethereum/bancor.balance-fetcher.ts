@@ -16,7 +16,7 @@ export class EthereumBancorBalanceFetcher implements BalanceFetcher {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(BancorContractFactory) private readonly bancorContractFactory: BancorContractFactory,
-  ) {}
+  ) { }
 
   async getPoolBalances(address: string) {
     return this.appToolkit.helpers.masterChefContractPositionBalanceHelper.getBalances<StandardRewards>({
