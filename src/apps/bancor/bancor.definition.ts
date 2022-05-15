@@ -9,10 +9,15 @@ export const BANCOR_DEFINITION = appDefinition({
   description: 'Deposit a single token and maintain 100% upside exposure while earning fees and rewards',
   url: 'https://app.bancor.network/',
   groups: {
-    v3: {
-      id: 'v3',
-      type: GroupType.POSITION,
+    v3Pool: {
+      id: 'v3Pool',
+      type: GroupType.TOKEN,
       label: 'Pools',
+    },
+    v3Farm: {
+      id: 'v3Farm',
+      type: GroupType.POSITION,
+      label: 'Farm',
     },
   },
   tags: [AppTag.DECENTRALIZED_EXCHANGE, AppTag.LIQUIDITY_POOL],

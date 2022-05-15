@@ -14,7 +14,7 @@ import { BancorContractFactory } from '../contracts';
 const WETH_ADDRESS = '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2';
 
 const appId = BANCOR_DEFINITION.id;
-const groupId = BANCOR_DEFINITION.groups.v3.id;
+const groupId = BANCOR_DEFINITION.groups.v3Pool.id;
 const network = Network.ETHEREUM_MAINNET;
 const address = '0xec9596e0eb67228d61a12cfdb4b3608281f261b3'.toLowerCase();
 

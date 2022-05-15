@@ -22,7 +22,7 @@ export class EthereumBancorBalanceFetcher implements BalanceFetcher {
     return await this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
       address,
       appId: BANCOR_DEFINITION.id,
-      groupId: BANCOR_DEFINITION.groups.v3.id,
+      groupId: BANCOR_DEFINITION.groups.v3Pool.id,
       network: Network.ETHEREUM_MAINNET,
     });
   }
@@ -31,7 +31,7 @@ export class EthereumBancorBalanceFetcher implements BalanceFetcher {
     return this.appToolkit.helpers.masterChefContractPositionBalanceHelper.getBalances<StandardRewards>({
       address,
       appId: BANCOR_DEFINITION.id,
-      groupId: BANCOR_DEFINITION.groups.v3.id,
+      groupId: BANCOR_DEFINITION.groups.v3Farm.id,
       network: Network.ETHEREUM_MAINNET,
       resolveChefContract: ({ contractAddress, network }) =>
         this.bancorContractFactory.standardRewards({ address: contractAddress, network }),

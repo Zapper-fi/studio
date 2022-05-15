@@ -10,7 +10,7 @@ import { BANCOR_DEFINITION } from '../bancor.definition';
 import { BancorContractFactory, StandardRewards } from '../contracts';
 
 const appId = BANCOR_DEFINITION.id;
-const groupId = BANCOR_DEFINITION.groups.v3.id;
+const groupId = BANCOR_DEFINITION.groups.v3Farm.id;
 const network = Network.ETHEREUM_MAINNET;
 const address = '0xb0B958398ABB0b5DB4ce4d7598Fb868f5A00f372'.toLowerCase();
 
@@ -30,7 +30,12 @@ export class EthereumBancorV3ContractPositionFetcher implements PositionFetcher<
       dependencies: [
         {
           appId: BANCOR_DEFINITION.id,
-          groupIds: [BANCOR_DEFINITION.groups.v3.id],
+          groupIds: [BANCOR_DEFINITION.groups.v3Farm.id],
+          network,
+        },
+        {
+          appId: BANCOR_DEFINITION.id,
+          groupIds: [BANCOR_DEFINITION.groups.v3Pool.id],
           network,
         },
       ],
