@@ -16,7 +16,16 @@ export class EthereumBancorBalanceFetcher implements BalanceFetcher {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(BancorContractFactory) private readonly bancorContractFactory: BancorContractFactory,
-  ) { }
+  ) {}
+
+  async getTokenBalances(address: string) {
+    return await this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
+      address,
+      appId: BANCOR_DEFINITION.id,
+      groupId: BANCOR_DEFINITION.groups.v3.id,
+      network: Network.ETHEREUM_MAINNET,
+    });
+  }
 
   async getPoolBalances(address: string) {
     return this.appToolkit.helpers.masterChefContractPositionBalanceHelper.getBalances<StandardRewards>({
@@ -42,11 +51,19 @@ export class EthereumBancorBalanceFetcher implements BalanceFetcher {
   }
 
   async getBalances(address: string) {
-    const assets = await this.getPoolBalances(address);
+    const [tokenBalances, poolBalances] = await Promise.all([
+      this.getTokenBalances(address),
+      this.getPoolBalances(address),
+    ]);
+
     return presentBalanceFetcherResponse([
       {
+        label: 'Tokens',
+        assets: tokenBalances,
+      },
+      {
         label: 'Pools',
-        assets,
+        assets: poolBalances,
       },
     ]);
   }

@@ -19,7 +19,7 @@ export class EthereumBancorV3ContractPositionFetcher implements PositionFetcher<
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(BancorContractFactory) private readonly bancorContractFactory: BancorContractFactory,
-  ) { }
+  ) {}
 
   async getPositions() {
     return this.appToolkit.helpers.masterChefContractPositionHelper.getContractPositions<StandardRewards>({
@@ -44,7 +44,7 @@ export class EthereumBancorV3ContractPositionFetcher implements PositionFetcher<
         multicall
           .wrap(contract)
           .programs([poolIndex + 1])
-          .then(v => v[0][1]),
+          .then(v => v[0][2]),
       resolveRewardTokenAddresses: ({ poolIndex, contract, multicall }) =>
         multicall
           .wrap(contract)
