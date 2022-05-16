@@ -13,7 +13,7 @@ import { StandardRewards__factory } from './ethers';
 type ContractOpts = { address: string; network: Network };
 
 @Injectable()
-export class BancorContractFactory extends ContractFactory {
+export class BancorV3ContractFactory extends ContractFactory {
   constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) {
     super((network: Network) => appToolkit.getNetworkProvider(network));
   }

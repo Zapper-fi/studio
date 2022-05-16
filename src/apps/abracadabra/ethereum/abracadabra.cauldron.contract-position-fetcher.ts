@@ -70,7 +70,7 @@ export class EthereumAbracadabraCauldronContractPositionFetcher implements Posit
         // @TODO: Migrate these over
         { appId: 'convex', groupIds: ['deposit'], network },
         { appId: 'sushiswap', groupIds: ['pool'], network },
-        { appId: 'stargate', groupIds: ['pool'], network},
+        { appId: 'stargate', groupIds: ['pool'], network },
       ],
     });
   }
