@@ -1,0 +1,490 @@
+{
+  "abi": [
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "_wrappedNative",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "contract FusePoolDirectory",
+          "name": "directory",
+          "type": "address"
+        }
+      ],
+      "name": "getAllPoolsLength",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "contract Comptroller",
+          "name": "comptroller",
+          "type": "address"
+        }
+      ],
+      "name": "getPoolAssetsWithData",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "cToken",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "underlyingToken",
+              "type": "address"
+            },
+            {
+              "internalType": "string",
+              "name": "underlyingName",
+              "type": "string"
+            },
+            {
+              "internalType": "string",
+              "name": "underlyingSymbol",
+              "type": "string"
+            },
+            {
+              "internalType": "uint256",
+              "name": "underlyingDecimals",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "underlyingBalance",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "supplyRatePerBlock",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "borrowRatePerBlock",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "totalSupply",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "totalBorrow",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "supplyBalance",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "borrowBalance",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "liquidity",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bool",
+              "name": "membership",
+              "type": "bool"
+            },
+            {
+              "internalType": "uint256",
+              "name": "exchangeRate",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "underlyingPrice",
+              "type": "uint256"
+            },
+            {
+              "internalType": "address",
+              "name": "oracle",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "collateralFactor",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "reserveFactor",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "adminFee",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "fuseFee",
+              "type": "uint256"
+            },
+            {
+              "internalType": "bool",
+              "name": "borrowGuardianPaused",
+              "type": "bool"
+            }
+          ],
+          "internalType": "struct MarketLens.PoolAsset[]",
+          "name": "",
+          "type": "tuple[]"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "contract Comptroller",
+          "name": "comptroller",
+          "type": "address"
+        }
+      ],
+      "name": "getPoolSummary",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "address[]",
+          "name": "",
+          "type": "address[]"
+        },
+        {
+          "internalType": "string[]",
+          "name": "",
+          "type": "string[]"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "contract Comptroller",
+          "name": "comptroller",
+          "type": "address"
+        },
+        {
+          "internalType": "address",
+          "name": "account",
+          "type": "address"
+        }
+      ],
+      "name": "getPoolUserSummary",
+      "outputs": [
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "contract Comptroller",
+          "name": "comptroller",
+          "type": "address"
+        },
+        {
+          "internalType": "uint256",
+          "name": "maxHealth",
+          "type": "uint256"
+        }
+      ],
+      "name": "getPoolUsersWithData",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internalType": "address",
+              "name": "account",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "totalBorrow",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "totalCollateral",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "health",
+              "type": "uint256"
+            },
+            {
+              "components": [
+                {
+                  "internalType": "address",
+                  "name": "cToken",
+                  "type": "address"
+                },
+                {
+                  "internalType": "address",
+                  "name": "underlyingToken",
+                  "type": "address"
+                },
+                {
+                  "internalType": "string",
+                  "name": "underlyingName",
+                  "type": "string"
+                },
+                {
+                  "internalType": "string",
+                  "name": "underlyingSymbol",
+                  "type": "string"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "underlyingDecimals",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "underlyingBalance",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "supplyRatePerBlock",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "borrowRatePerBlock",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "totalSupply",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "totalBorrow",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "supplyBalance",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "borrowBalance",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "liquidity",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "bool",
+                  "name": "membership",
+                  "type": "bool"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "exchangeRate",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "underlyingPrice",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "address",
+                  "name": "oracle",
+                  "type": "address"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "collateralFactor",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "reserveFactor",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "adminFee",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "uint256",
+                  "name": "fuseFee",
+                  "type": "uint256"
+                },
+                {
+                  "internalType": "bool",
+                  "name": "borrowGuardianPaused",
+                  "type": "bool"
+                }
+              ],
+              "internalType": "struct MarketLens.PoolAsset[]",
+              "name": "assets",
+              "type": "tuple[]"
+            }
+          ],
+          "internalType": "struct MarketLens.PoolUser[]",
+          "name": "",
+          "type": "tuple[]"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        },
+        {
+          "internalType": "uint256",
+          "name": "",
+          "type": "uint256"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "contract FusePoolDirectory",
+          "name": "directory",
+          "type": "address"
+        }
+      ],
+      "name": "getPublicPoolsWithData",
+      "outputs": [
+        {
+          "internalType": "uint256[]",
+          "name": "",
+          "type": "uint256[]"
+        },
+        {
+          "components": [
+            {
+              "internalType": "string",
+              "name": "name",
+              "type": "string"
+            },
+            {
+              "internalType": "address",
+              "name": "creator",
+              "type": "address"
+            },
+            {
+              "internalType": "address",
+              "name": "comptroller",
+              "type": "address"
+            },
+            {
+              "internalType": "uint256",
+              "name": "blockPosted",
+              "type": "uint256"
+            },
+            {
+              "internalType": "uint256",
+              "name": "timestampPosted",
+              "type": "uint256"
+            }
+          ],
+          "internalType": "struct FusePoolDirectory.FusePool[]",
+          "name": "",
+          "type": "tuple[]"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "",
+          "type": "uint256[]"
+        },
+        {
+          "internalType": "uint256[]",
+          "name": "",
+          "type": "uint256[]"
+        },
+        {
+          "internalType": "address[][]",
+          "name": "",
+          "type": "address[][]"
+        },
+        {
+          "internalType": "string[][]",
+          "name": "",
+          "type": "string[][]"
+        },
+        {
+          "internalType": "bool[]",
+          "name": "",
+          "type": "bool[]"
+        }
+      ],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
+      "inputs": [],
+      "name": "wrappedNative",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    }
+  ]
+}
