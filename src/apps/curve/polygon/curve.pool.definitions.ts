@@ -6,16 +6,16 @@ export const CURVE_V1_POOL_DEFINITIONS: CurvePoolDefinition[] = [
     label: 'Aave 3Pool Curve',
     swapAddress: '0x445fe580ef8d70ff569ab36e80c647af338db351',
     tokenAddress: '0xe7a24ef0c5e95ffb0f6684b813a78f2a3ad7d171',
-    gaugeAddress: '0x19793b454d3afc7b454f206ffe95ade26ca6912c',
-    streamAddress: '0xc48f4653dd6a9509de44c92beb0604bea3aee714',
+    gaugeAddress: '0x20759f567bb3ecdb55c817c9a1d13076ab215edc',
+    streamAddress: '0x20759f567bb3ecdb55c817c9a1d13076ab215edc',
   },
   {
     queryKey: 'renBTC',
     label: 'renBTC Curve',
     swapAddress: '0xc2d95eef97ec6c17551d45e77b590dc1f9117c67',
     tokenAddress: '0xf8a57c1d3b9629b77b6726a042ca48990a84fb49',
-    gaugeAddress: '0xffbacce0cc7c19d46132f1258fc16cf6871d153c',
-    streamAddress: '0x488e6ef919c2bb9de535c634a80afb0114da8f62',
+    gaugeAddress: '0x8d9649e50a0d1da8e939f800fb926cde8f18b47d',
+    streamAddress: '0x8d9649e50a0d1da8e939f800fb926cde8f18b47d',
   },
 ];
 
@@ -25,8 +25,8 @@ export const CURVE_V2_POOL_DEFINITIONS: CurvePoolDefinition[] = [
     label: 'EURT-USD Curve',
     swapAddress: '0xb446bf7b8d6d4276d0c75ec0e3ee8dd7fe15783a',
     tokenAddress: '0x600743b1d8a96438bd46836fd34977a00293f6aa',
-    gaugeAddress: '0x40c0e9376468b4f257d15f8c47e5d0c646c28880',
-    streamAddress: '0xaf78381216a8ecc7ad5957f3cd12a431500e0b0d',
+    gaugeAddress: '0x8b397084699cc64e429f610f81fac13bf061ef55',
+    streamAddress: '0x8b397084699cc64e429f610f81fac13bf061ef55',
   },
   {
     queryKey: 'atricrypto',
@@ -47,8 +47,8 @@ export const CURVE_V2_POOL_DEFINITIONS: CurvePoolDefinition[] = [
     label: 'Aave TriCrypto3 Curve',
     swapAddress: '0x92215849c439e1f8612b6646060b4e3e5ef822cc',
     tokenAddress: '0xdad97f7713ae9437fa9249920ec8507e5fbb23d3',
-    gaugeAddress: '0x3b6b158a76fd8ccc297538f454ce7b4787778c7c',
-    streamAddress: '0x060e386ecfbacf42aa72171af9efe17b3993fc4f',
+    gaugeAddress: '0xbb1b19495b8fe7c402427479b9ac14886cbbaaee',
+    streamAddress: '0xbb1b19495b8fe7c402427479b9ac14886cbbaaee',
   },
   {
     queryKey: 'mai3pool3crv',
