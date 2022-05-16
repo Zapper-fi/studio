@@ -1,22 +1,20 @@
 import { Inject } from '@nestjs/common';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { ETH_ADDR_ALIAS } from '~app-toolkit/constants/address';
+import { ETH_ADDR_ALIAS, ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { Register } from '~app-toolkit/decorators';
-import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
 import { BANCOR_DEFINITION } from '../bancor.definition';
-import { BancorContractFactory } from '../contracts';
-
-const WETH_ADDRESS = '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2';
+import { BancorContractFactory, BntPool, PoolCollection } from '../contracts';
 
 const appId = BANCOR_DEFINITION.id;
 const groupId = BANCOR_DEFINITION.groups.v3Pool.id;
 const network = Network.ETHEREUM_MAINNET;
-const address = '0xec9596e0eb67228d61a12cfdb4b3608281f261b3'.toLowerCase();
+const poolCollectionAddress = '0xec9596e0eb67228d61a12cfdb4b3608281f261b3'.toLowerCase();
+const bntPoolAddress = '0x02651E355D26f3506C1E644bA393FDD9Ac95EaCa'.toLowerCase();
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
 export class EthereumBancorV3TokenFetcher implements PositionFetcher<AppTokenPosition> {
@@ -27,52 +25,63 @@ export class EthereumBancorV3TokenFetcher implements PositionFetcher<AppTokenPos
 
   async getPositions() {
     const multicall = this.appToolkit.getMulticall(network);
-    const contract = this.bancorContractFactory.poolCollection({ address, network });
-    const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
-    const pools = (await multicall.wrap(contract).pools()).map(p => p.toLowerCase());
-
-    const tokens = await Promise.all(
-      pools.map(async pool => {
-        const poolToken = (await multicall.wrap(contract).poolToken(pool)).toLowerCase();
-
-        // Currently bugged (always returns 1): see https://discord.com/channels/476133894043729930/764907781462425680/975085730500059216
-        const pricePerShare = Number(await multicall.wrap(contract).underlyingToPoolToken(pool, 1));
-
-        const tokenContract = this.appToolkit.globalContracts.erc20({ address: poolToken, network });
-        const [symbol, decimals, supplyRaw, label] = await Promise.all([
-          multicall.wrap(tokenContract).symbol(),
-          multicall.wrap(tokenContract).decimals(),
-          multicall.wrap(tokenContract).totalSupply(),
-          multicall.wrap(tokenContract).name(),
-        ]);
-
-        const supply = Number(supplyRaw) / 10 ** decimals;
-        const underlyingAddress = pool === ETH_ADDR_ALIAS ? WETH_ADDRESS : pool;
-        const underlyingToken = baseTokens.find(token => token.address === underlyingAddress)!;
-        const price = underlyingToken.price * pricePerShare;
-
-        const token: AppTokenPosition = {
-          type: ContractType.APP_TOKEN,
-          appId,
-          groupId,
-          address: poolToken,
-          network,
-          symbol,
-          decimals,
-          supply,
-          tokens: [underlyingToken],
-          price,
-          pricePerShare,
-          dataProps: {},
-          displayProps: {
-            label,
-            images: [],
-          },
-        };
-        return token;
-      }),
+    const poolContract: PoolCollection = this.bancorContractFactory.poolCollection({
+      address: poolCollectionAddress,
+      network,
+    });
+    const pools = await Promise.all(
+      (
+        await multicall.wrap(poolContract).pools()
+      ).map(async (poolAddress: string) => (await multicall.wrap(poolContract).poolToken(poolAddress)).toLowerCase()),
     );
+    const tokens = await this.appToolkit.helpers.vaultTokenHelper.getTokens<PoolCollection>({
+      appId: BANCOR_DEFINITION.id,
+      groupId: BANCOR_DEFINITION.groups.v3Pool.id,
+      network: Network.ETHEREUM_MAINNET,
+      resolveVaultAddresses: () => pools,
+      resolveContract: ({ address, network }) => this.bancorContractFactory.poolToken({ address, network }),
+      resolveUnderlyingTokenAddress: ({ multicall, contract }) =>
+        multicall
+          .wrap(contract)
+          .reserveToken()
+          .then(a => (a.toLowerCase() === ETH_ADDR_ALIAS ? ZERO_ADDRESS : a.toLowerCase())),
+      resolveReserve: () => 0,
+      resolvePricePerShare: ({ multicall, contract, underlyingToken }) =>
+        multicall
+          .wrap(contract)
+          .reserveToken()
+          .then(address =>
+            multicall
+              .wrap(poolContract)
+              .poolTokenToUnderlying(address, (10 ** underlyingToken.decimals).toString())
+              .then(ratio => ratio / 10 ** underlyingToken.decimals),
+          ),
+    });
 
-    return tokens;
+    const bntPoolContract = this.bancorContractFactory.bntPool({ address: bntPoolAddress, network });
+    const bnToken = await this.appToolkit.helpers.vaultTokenHelper.getTokens<BntPool>({
+      appId: BANCOR_DEFINITION.id,
+      groupId: BANCOR_DEFINITION.groups.v3Pool.id,
+      network: Network.ETHEREUM_MAINNET,
+      resolveVaultAddresses: () =>
+        multicall
+          .wrap(bntPoolContract)
+          .poolToken()
+          .then(a => [a.toLowerCase()]),
+      resolveContract: ({ address, network }) => this.bancorContractFactory.poolToken({ address, network }),
+      resolveUnderlyingTokenAddress: ({ multicall, contract }) =>
+        multicall
+          .wrap(contract)
+          .reserveToken()
+          .then(a => a.toLowerCase()),
+      resolveReserve: () => 0,
+      resolvePricePerShare: ({ multicall, underlyingToken }) =>
+        multicall
+          .wrap(bntPoolContract)
+          .poolTokenToUnderlying((10 ** underlyingToken.decimals).toString())
+          .then(ratio => ratio / 10 ** underlyingToken.decimals),
+    });
+
+    return [...tokens, ...bnToken];
   }
 }
