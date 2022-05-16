@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.28.0](https://github.com/Zapper-fi/studio/compare/v0.27.0...v0.28.0) (2022-05-16)
+
+
+### Features
+
+* **bancor-v3:** Support Bancor V3 ([#437](https://github.com/Zapper-fi/studio/issues/437)) ([058a733](https://github.com/Zapper-fi/studio/commit/058a733ea5ff4063fd887e8f34d69f420e10aae4))
+
 ## [0.27.0](https://github.com/Zapper-fi/studio/compare/v0.26.0...v0.27.0) (2022-05-14)
 
 
