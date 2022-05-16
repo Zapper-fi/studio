@@ -25,8 +25,7 @@ const network = Network.BINANCE_SMART_CHAIN_MAINNET;
 export class BinanceSmartChainPancakeSwapBalanceFetcher implements BalanceFetcher {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(PancakeswapContractFactory)
-    private readonly contractFactory: PancakeswapContractFactory,
+    @Inject(PancakeswapContractFactory) private readonly contractFactory: PancakeswapContractFactory,
   ) {}
 
   private async getPoolBalances(address: string) {
@@ -155,8 +154,9 @@ export class BinanceSmartChainPancakeSwapBalanceFetcher implements BalanceFetche
           ]);
 
           const shares = userInfo.shares.toString();
+          const userBoostedShare = userInfo.userBoostedShare.toString();
           const pricePerShare = Number(pricePerShareRaw) / 10 ** 18;
-          return new BigNumber(shares).times(pricePerShare).toFixed(0);
+          return new BigNumber(shares).times(pricePerShare).minus(userBoostedShare).toFixed(0);
         },
       }),
       resolveClaimableTokenBalances: this.appToolkit.helpers.masterChefDefaultClaimableBalanceStrategy.build({

@@ -4,6 +4,37 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.28.0](https://github.com/Zapper-fi/studio/compare/v0.27.0...v0.28.0) (2022-05-16)
+
+
+### Features
+
+* **bancor-v3:** Support Bancor V3 ([#437](https://github.com/Zapper-fi/studio/issues/437)) ([058a733](https://github.com/Zapper-fi/studio/commit/058a733ea5ff4063fd887e8f34d69f420e10aae4))
+
+
+### Bug Fixes
+
+* **bancor:** Rename to bancor-v3 and fix errors in BNT pool ([#440](https://github.com/Zapper-fi/studio/issues/440)) ([66c8b3f](https://github.com/Zapper-fi/studio/commit/66c8b3f3956cd99ed315c7498e4084a1f27e92e8))
+
+## [0.27.0](https://github.com/Zapper-fi/studio/compare/v0.26.0...v0.27.0) (2022-05-14)
+
+
+### Features
+
+* **Abracadabra:** Added support for Stargate Cauldrons ([#435](https://github.com/Zapper-fi/studio/issues/435)) ([f914b06](https://github.com/Zapper-fi/studio/commit/f914b06ff6167fd6237eace7c9592d50345da38c))
+
+## [0.26.0](https://github.com/Zapper-fi/studio/compare/v0.25.2...v0.26.0) (2022-05-13)
+
+
+### Features
+
+* **thales:** Support Thales on the Optimism network ([#326](https://github.com/Zapper-fi/studio/issues/326)) ([e81a4c1](https://github.com/Zapper-fi/studio/commit/e81a4c1d6807ede4e26c4100512f98e47df8a4ed))
+
+
+### Bug Fixes
+
+* **thales:** Fix linting and add index ([#432](https://github.com/Zapper-fi/studio/issues/432)) ([17ff989](https://github.com/Zapper-fi/studio/commit/17ff98991de4443f191c47f505eb31771466326d))
+
 ### [0.25.2](https://github.com/Zapper-fi/studio/compare/v0.25.1...v0.25.2) (2022-05-12)
 
 
