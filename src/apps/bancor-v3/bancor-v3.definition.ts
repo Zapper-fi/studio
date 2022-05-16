@@ -3,19 +3,19 @@ import { appDefinition, AppDefinition } from '~app/app.definition';
 import { AppAction, AppTag, GroupType } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
-export const BANCOR_DEFINITION = appDefinition({
-  id: 'bancor',
-  name: 'bancor',
+export const BANCOR_V3_DEFINITION = appDefinition({
+  id: 'bancor-v3',
+  name: 'Bancor V3',
   description: 'Deposit a single token and maintain 100% upside exposure while earning fees and rewards',
   url: 'https://app.bancor.network/',
   groups: {
-    v3Pool: {
-      id: 'v3Pool',
+    pool: {
+      id: 'pool',
       type: GroupType.TOKEN,
       label: 'Pools',
     },
-    v3Farm: {
-      id: 'v3Farm',
+    farm: {
+      id: 'farm',
       type: GroupType.POSITION,
       label: 'Farm',
     },
@@ -33,11 +33,11 @@ export const BANCOR_DEFINITION = appDefinition({
   primaryColor: '#fff',
 });
 
-@Register.AppDefinition(BANCOR_DEFINITION.id)
-export class BancorAppDefinition extends AppDefinition {
+@Register.AppDefinition(BANCOR_V3_DEFINITION.id)
+export class BancorV3AppDefinition extends AppDefinition {
   constructor() {
-    super(BANCOR_DEFINITION);
+    super(BANCOR_V3_DEFINITION);
   }
 }
 
-export default BANCOR_DEFINITION;
+export default BANCOR_V3_DEFINITION;

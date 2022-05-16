@@ -6,23 +6,23 @@ import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation
 import { BalanceFetcher } from '~balance/balance-fetcher.interface';
 import { Network } from '~types/network.interface';
 
-import { BANCOR_DEFINITION } from '../bancor.definition';
-import { BancorContractFactory, StandardRewards } from '../contracts';
+import { BANCOR_V3_DEFINITION } from '../bancor-v3.definition';
+import { BancorV3ContractFactory, StandardRewards } from '../contracts';
 
 const network = Network.ETHEREUM_MAINNET;
 
-@Register.BalanceFetcher(BANCOR_DEFINITION.id, network)
-export class EthereumBancorBalanceFetcher implements BalanceFetcher {
+@Register.BalanceFetcher(BANCOR_V3_DEFINITION.id, network)
+export class EthereumBancorV3BalanceFetcher implements BalanceFetcher {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(BancorContractFactory) private readonly bancorContractFactory: BancorContractFactory,
+    @Inject(BancorV3ContractFactory) private readonly contractFactory: BancorV3ContractFactory,
   ) {}
 
   async getTokenBalances(address: string) {
     return await this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
       address,
-      appId: BANCOR_DEFINITION.id,
-      groupId: BANCOR_DEFINITION.groups.v3Pool.id,
+      appId: BANCOR_V3_DEFINITION.id,
+      groupId: BANCOR_V3_DEFINITION.groups.pool.id,
       network: Network.ETHEREUM_MAINNET,
     });
   }
@@ -30,11 +30,11 @@ export class EthereumBancorBalanceFetcher implements BalanceFetcher {
   async getPoolBalances(address: string) {
     return this.appToolkit.helpers.masterChefContractPositionBalanceHelper.getBalances<StandardRewards>({
       address,
-      appId: BANCOR_DEFINITION.id,
-      groupId: BANCOR_DEFINITION.groups.v3Farm.id,
+      appId: BANCOR_V3_DEFINITION.id,
+      groupId: BANCOR_V3_DEFINITION.groups.farm.id,
       network: Network.ETHEREUM_MAINNET,
       resolveChefContract: ({ contractAddress, network }) =>
-        this.bancorContractFactory.standardRewards({ address: contractAddress, network }),
+        this.contractFactory.standardRewards({ address: contractAddress, network }),
       resolveStakedTokenBalance: this.appToolkit.helpers.masterChefDefaultStakedBalanceStrategy.build({
         // Note: each asset can have multiple positions (currently 2)
         resolveStakedBalance: ({ contract, multicall, contractPosition }) => {

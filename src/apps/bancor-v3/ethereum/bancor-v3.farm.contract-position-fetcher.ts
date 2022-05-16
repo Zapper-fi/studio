@@ -6,11 +6,11 @@ import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
-import { BANCOR_DEFINITION } from '../bancor.definition';
-import { BancorContractFactory, StandardRewards } from '../contracts';
+import { BANCOR_V3_DEFINITION } from '../bancor-v3.definition';
+import { BancorV3ContractFactory, StandardRewards } from '../contracts';
 
-const appId = BANCOR_DEFINITION.id;
-const groupId = BANCOR_DEFINITION.groups.v3Farm.id;
+const appId = BANCOR_V3_DEFINITION.id;
+const groupId = BANCOR_V3_DEFINITION.groups.farm.id;
 const network = Network.ETHEREUM_MAINNET;
 const address = '0xb0B958398ABB0b5DB4ce4d7598Fb868f5A00f372'.toLowerCase();
 
@@ -18,7 +18,7 @@ const address = '0xb0B958398ABB0b5DB4ce4d7598Fb868f5A00f372'.toLowerCase();
 export class EthereumBancorV3ContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(BancorContractFactory) private readonly bancorContractFactory: BancorContractFactory,
+    @Inject(BancorV3ContractFactory) private readonly contractFactory: BancorV3ContractFactory,
   ) {}
 
   async getPositions() {
@@ -27,19 +27,8 @@ export class EthereumBancorV3ContractPositionFetcher implements PositionFetcher<
       appId,
       groupId,
       network,
-      dependencies: [
-        {
-          appId: BANCOR_DEFINITION.id,
-          groupIds: [BANCOR_DEFINITION.groups.v3Farm.id],
-          network,
-        },
-        {
-          appId: BANCOR_DEFINITION.id,
-          groupIds: [BANCOR_DEFINITION.groups.v3Pool.id],
-          network,
-        },
-      ],
-      resolveContract: ({ address, network }) => this.bancorContractFactory.standardRewards({ address, network }),
+      dependencies: [{ appId: BANCOR_V3_DEFINITION.id, groupIds: [BANCOR_V3_DEFINITION.groups.pool.id], network }],
+      resolveContract: ({ address, network }) => this.contractFactory.standardRewards({ address, network }),
       resolvePoolLength: ({ multicall, contract }) =>
         multicall
           .wrap(contract)
