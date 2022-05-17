@@ -32,8 +32,6 @@ import { CurveCryptoFactoryPoolDefinitionStrategy } from './helpers/curve.crypto
 import { CurveFactoryGaugeAddressHelper } from './helpers/curve.factory-gauge.address-helper';
 import { CurveFactoryPoolTokenHelper } from './helpers/curve.factory-pool.token-helper';
 import { CurveFactoryPoolDefinitionStrategy } from './helpers/curve.factory.pool-definition-strategy';
-import { CurveGaugeV2RewardTokenStrategy } from './helpers/curve.gauge-v2.reward-token-strategy';
-import { CurveGaugeV2RoiStrategy } from './helpers/curve.gauge-v2.roi-strategy';
 import { CurveGaugeIsActiveStrategy } from './helpers/curve.gauge.is-active-strategy';
 import { CurveGaugeRoiStrategy } from './helpers/curve.gauge.roi-strategy';
 import { CurveLiquidityPriceStrategy } from './helpers/curve.liquidity.price-strategy';
@@ -41,6 +39,8 @@ import { CurveOnChainCoinStrategy } from './helpers/curve.on-chain.coin-strategy
 import { CurveOnChainReserveStrategy } from './helpers/curve.on-chain.reserve-strategy';
 import { CurveOnChainVolumeStrategy } from './helpers/curve.on-chain.volume-strategy';
 import { CurvePoolTokenHelper } from './helpers/curve.pool.token-helper';
+import { CurveRewardsOnlyGaugeRewardTokenStrategy } from './helpers/curve.rewards-only-gauge.reward-token-strategy';
+import { CurveRewardsOnlyGaugeRoiStrategy } from './helpers/curve.rewards-only-gauge.roi-strategy';
 import { CurveV1PoolTokenHelper } from './helpers/curve.v1-pool.token-helper';
 import { CurveV2PoolTokenHelper } from './helpers/curve.v2-pool.token-helper';
 import { CurveVestingEscrowContractPositionBalanceHelper } from './helpers/curve.vesting-escrow.contract-position-balance-helper';
@@ -114,8 +114,8 @@ import { PolygonCurvePoolTokenFetcher } from './polygon/curve.pool.token-fetcher
     CurveGaugeRoiStrategy,
     CurveFactoryGaugeAddressHelper,
     // Legacy Sidechain/L2 Gauges
-    CurveGaugeV2RoiStrategy,
-    CurveGaugeV2RewardTokenStrategy,
+    CurveRewardsOnlyGaugeRoiStrategy,
+    CurveRewardsOnlyGaugeRewardTokenStrategy,
     // Sidechain/L2 gauges
     CurveChildLiquidityGaugeRoiStrategy,
     CurveChildLiquidityGaugeRewardTokenStrategy,
@@ -146,8 +146,8 @@ import { PolygonCurvePoolTokenFetcher } from './polygon/curve.pool.token-fetcher
     // Gauge Helper Strategies
     CurveGaugeIsActiveStrategy,
     CurveGaugeRoiStrategy,
-    CurveGaugeV2RoiStrategy,
-    CurveGaugeV2RewardTokenStrategy,
+    CurveRewardsOnlyGaugeRoiStrategy,
+    CurveRewardsOnlyGaugeRewardTokenStrategy,
     CurveFactoryGaugeAddressHelper,
     // Voting Escrow Helpers
     CurveVotingEscrowContractPositionHelper,

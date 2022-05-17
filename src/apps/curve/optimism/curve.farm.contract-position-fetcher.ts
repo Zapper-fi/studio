@@ -11,8 +11,8 @@ import { CURVE_DEFINITION } from '../curve.definition';
 import { CurveChildLiquidityGaugeFactoryAddressHelper } from '../helpers/curve.child-liquidity-gauge-factory.address-helper';
 import { CurveChildLiquidityGaugeRewardTokenStrategy } from '../helpers/curve.child-liquidity-gauge.reward-token-strategy';
 import { CurveChildLiquidityGaugeRoiStrategy } from '../helpers/curve.child-liquidity-gauge.roi-strategy';
-import { CurveGaugeV2RewardTokenStrategy } from '../helpers/curve.gauge-v2.reward-token-strategy';
-import { CurveGaugeV2RoiStrategy } from '../helpers/curve.gauge-v2.roi-strategy';
+import { CurveRewardsOnlyGaugeRewardTokenStrategy } from '../helpers/curve.rewards-only-gauge.reward-token-strategy';
+import { CurveRewardsOnlyGaugeRoiStrategy } from '../helpers/curve.rewards-only-gauge.roi-strategy';
 
 import { CURVE_V1_POOL_DEFINITIONS } from './curve.pool.definitions';
 
@@ -26,10 +26,10 @@ export class OptimismCurveFarmContractPositionFetcher implements PositionFetcher
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(CurveContractFactory)
     private readonly curveContractFactory: CurveContractFactory,
-    @Inject(CurveGaugeV2RoiStrategy)
-    private readonly curveGaugeV2RoiStrategy: CurveGaugeV2RoiStrategy,
-    @Inject(CurveGaugeV2RewardTokenStrategy)
-    private readonly curveGaugeV2RewardTokenStrategy: CurveGaugeV2RewardTokenStrategy,
+    @Inject(CurveRewardsOnlyGaugeRoiStrategy)
+    private readonly curveRewardsOnlyGaugeRoiStrategy: CurveRewardsOnlyGaugeRoiStrategy,
+    @Inject(CurveRewardsOnlyGaugeRewardTokenStrategy)
+    private readonly curveRewardsOnlyGaugeRewardTokenStrategy: CurveRewardsOnlyGaugeRewardTokenStrategy,
     @Inject(CurveChildLiquidityGaugeFactoryAddressHelper)
     private readonly childGaugeAddressHelper: CurveChildLiquidityGaugeFactoryAddressHelper,
     @Inject(CurveChildLiquidityGaugeRoiStrategy)
@@ -51,9 +51,9 @@ export class OptimismCurveFarmContractPositionFetcher implements PositionFetcher
       resolveFarmContract: ({ address, network }) =>
         this.curveContractFactory.curveRewardsOnlyGauge({ address, network }),
       resolveStakedTokenAddress: ({ contract, multicall }) => multicall.wrap(contract).lp_token(),
-      resolveRewardTokenAddresses: this.curveGaugeV2RewardTokenStrategy.build(),
+      resolveRewardTokenAddresses: this.curveRewardsOnlyGaugeRewardTokenStrategy.build(),
       resolveIsActive: () => true,
-      resolveRois: this.curveGaugeV2RoiStrategy.build({
+      resolveRois: this.curveRewardsOnlyGaugeRoiStrategy.build({
         tokenDefinitions: definitions,
       }),
     });
