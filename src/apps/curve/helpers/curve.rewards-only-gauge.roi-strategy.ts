@@ -18,12 +18,12 @@ type GetRewardsInUsdOpts = {
   network: Network;
 };
 
-type CurveGaugeV2RoiStrategyParams = {
+type CurveRewardsOnlyGaugeRoiStrategyParams = {
   tokenDefinitions: CurvePoolDefinition[];
 };
 
 @Injectable()
-export class CurveGaugeV2RoiStrategy {
+export class CurveRewardsOnlyGaugeRoiStrategy {
   constructor(
     @Inject(CurveContractFactory)
     private readonly curveContractFactory: CurveContractFactory,
@@ -31,7 +31,7 @@ export class CurveGaugeV2RoiStrategy {
 
   build({
     tokenDefinitions,
-  }: CurveGaugeV2RoiStrategyParams): SingleStakingFarmContractPositionHelperParams<CurveGaugeV2>['resolveRois'] {
+  }: CurveRewardsOnlyGaugeRoiStrategyParams): SingleStakingFarmContractPositionHelperParams<CurveGaugeV2>['resolveRois'] {
     return async ({ multicall, address, stakedToken, rewardTokens, network }) => {
       // Get the TVL of the pool to calculate the APY as a fraction
       const tokenContract = this.curveContractFactory.erc20({ address: stakedToken.address, network });
