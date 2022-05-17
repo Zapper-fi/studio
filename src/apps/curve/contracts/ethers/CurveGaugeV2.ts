@@ -17,8 +17,9 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
 
-export interface CurveRewardsOnlyGaugeInterface extends utils.Interface {
+export interface CurveGaugeV2Interface extends utils.Interface {
   functions: {
+    'claimable_tokens(address)': FunctionFragment;
     'decimals()': FunctionFragment;
     'reward_contract()': FunctionFragment;
     'last_claim()': FunctionFragment;
@@ -60,6 +61,7 @@ export interface CurveRewardsOnlyGaugeInterface extends utils.Interface {
 
   getFunction(
     nameOrSignatureOrTopic:
+      | 'claimable_tokens'
       | 'decimals'
       | 'reward_contract'
       | 'last_claim'
@@ -99,6 +101,7 @@ export interface CurveRewardsOnlyGaugeInterface extends utils.Interface {
       | 'future_admin',
   ): FunctionFragment;
 
+  encodeFunctionData(functionFragment: 'claimable_tokens', values: [string]): string;
   encodeFunctionData(functionFragment: 'decimals', values?: undefined): string;
   encodeFunctionData(functionFragment: 'reward_contract', values?: undefined): string;
   encodeFunctionData(functionFragment: 'last_claim', values?: undefined): string;
@@ -140,6 +143,7 @@ export interface CurveRewardsOnlyGaugeInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'admin', values?: undefined): string;
   encodeFunctionData(functionFragment: 'future_admin', values?: undefined): string;
 
+  decodeFunctionResult(functionFragment: 'claimable_tokens', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'decimals', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'reward_contract', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'last_claim', data: BytesLike): Result;
@@ -243,12 +247,12 @@ export type ApprovalEvent = TypedEvent<[string, string, BigNumber], ApprovalEven
 
 export type ApprovalEventFilter = TypedEventFilter<ApprovalEvent>;
 
-export interface CurveRewardsOnlyGauge extends BaseContract {
+export interface CurveGaugeV2 extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: CurveRewardsOnlyGaugeInterface;
+  interface: CurveGaugeV2Interface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -266,6 +270,11 @@ export interface CurveRewardsOnlyGauge extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
+    claimable_tokens(
+      addr: string,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<ContractTransaction>;
+
     decimals(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     reward_contract(overrides?: CallOverrides): Promise<[string]>;
@@ -401,6 +410,11 @@ export interface CurveRewardsOnlyGauge extends BaseContract {
     future_admin(overrides?: CallOverrides): Promise<[string]>;
   };
 
+  claimable_tokens(
+    addr: string,
+    overrides?: Overrides & { from?: string | Promise<string> },
+  ): Promise<ContractTransaction>;
+
   decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
   reward_contract(overrides?: CallOverrides): Promise<string>;
@@ -534,6 +548,8 @@ export interface CurveRewardsOnlyGauge extends BaseContract {
   future_admin(overrides?: CallOverrides): Promise<string>;
 
   callStatic: {
+    claimable_tokens(addr: string, overrides?: CallOverrides): Promise<BigNumber>;
+
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
     reward_contract(overrides?: CallOverrides): Promise<string>;
@@ -644,6 +660,8 @@ export interface CurveRewardsOnlyGauge extends BaseContract {
   };
 
   estimateGas: {
+    claimable_tokens(addr: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
     reward_contract(overrides?: CallOverrides): Promise<BigNumber>;
@@ -778,6 +796,11 @@ export interface CurveRewardsOnlyGauge extends BaseContract {
   };
 
   populateTransaction: {
+    claimable_tokens(
+      addr: string,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<PopulatedTransaction>;
+
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     reward_contract(overrides?: CallOverrides): Promise<PopulatedTransaction>;

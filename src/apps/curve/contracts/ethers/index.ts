@@ -11,6 +11,7 @@ export type { CurveFactoryPool } from './CurveFactoryPool';
 export type { CurveFactoryPoolV2 } from './CurveFactoryPoolV2';
 export type { CurveFactoryV2 } from './CurveFactoryV2';
 export type { CurveGauge } from './CurveGauge';
+export type { CurveGaugeV2 } from './CurveGaugeV2';
 export type { CurveMinter } from './CurveMinter';
 export type { CurveMultiRewardStream } from './CurveMultiRewardStream';
 export type { CurveNGauge } from './CurveNGauge';
@@ -35,6 +36,7 @@ export { CurveFactoryPoolV2__factory } from './factories/CurveFactoryPoolV2__fac
 export { CurveFactoryPool__factory } from './factories/CurveFactoryPool__factory';
 export { CurveFactoryV2__factory } from './factories/CurveFactoryV2__factory';
 export { CurveFactory__factory } from './factories/CurveFactory__factory';
+export { CurveGaugeV2__factory } from './factories/CurveGaugeV2__factory';
 export { CurveGauge__factory } from './factories/CurveGauge__factory';
 export { CurveMinter__factory } from './factories/CurveMinter__factory';
 export { CurveMultiRewardStream__factory } from './factories/CurveMultiRewardStream__factory';
