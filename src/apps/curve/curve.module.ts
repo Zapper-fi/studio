@@ -24,6 +24,9 @@ import { HarmonyCurveBalanceFetcher } from './harmony/curve.balance-fetcher';
 import { HarmonyCurveFarmContractPositionFetcher } from './harmony/curve.farm.contract-position-fetcher';
 import { HarmonyCurvePoolTokenFetcher } from './harmony/curve.pool.token-fetcher';
 import { CurveApiVolumeStrategy } from './helpers/curve.api.volume-strategy';
+import { CurveChildLiquidityGaugeFactoryAddressHelper } from './helpers/curve.child-liquidity-gauge-factory.address-helper';
+import { CurveChildLiquidityGaugeRewardTokenStrategy } from './helpers/curve.child-liquidity-gauge.reward-token-strategy';
+import { CurveChildLiquidityGaugeRoiStrategy } from './helpers/curve.child-liquidity-gauge.roi-strategy';
 import { CurveCryptoFactoryPoolTokenHelper } from './helpers/curve.crypto-factory-pool.token-helper';
 import { CurveCryptoFactoryPoolDefinitionStrategy } from './helpers/curve.crypto-factory.pool-definition-strategy';
 import { CurveFactoryGaugeAddressHelper } from './helpers/curve.factory-gauge.address-helper';
@@ -109,9 +112,14 @@ import { PolygonCurvePoolTokenFetcher } from './polygon/curve.pool.token-fetcher
     // Gauge Helper Strategies
     CurveGaugeIsActiveStrategy,
     CurveGaugeRoiStrategy,
+    CurveFactoryGaugeAddressHelper,
+    // Legacy Sidechain/L2 Gauges
     CurveGaugeV2RoiStrategy,
     CurveGaugeV2RewardTokenStrategy,
-    CurveFactoryGaugeAddressHelper,
+    // Sidechain/L2 gauges
+    CurveChildLiquidityGaugeRoiStrategy,
+    CurveChildLiquidityGaugeRewardTokenStrategy,
+    CurveChildLiquidityGaugeFactoryAddressHelper,
     // Voting Escrow Helpers
     CurveVotingEscrowContractPositionHelper,
     CurveVotingEscrowContractPositionBalanceHelper,

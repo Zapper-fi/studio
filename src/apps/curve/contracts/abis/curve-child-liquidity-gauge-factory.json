@@ -1,0 +1,253 @@
+[
+  {
+    "name": "DeployedGauge",
+    "inputs": [
+      { "name": "_implementation", "type": "address", "indexed": true },
+      { "name": "_lp_token", "type": "address", "indexed": true },
+      { "name": "_deployer", "type": "address", "indexed": true },
+      { "name": "_salt", "type": "bytes32", "indexed": false },
+      { "name": "_gauge", "type": "address", "indexed": false }
+    ],
+    "anonymous": false,
+    "type": "event"
+  },
+  {
+    "name": "Minted",
+    "inputs": [
+      { "name": "_user", "type": "address", "indexed": true },
+      { "name": "_gauge", "type": "address", "indexed": true },
+      { "name": "_new_total", "type": "uint256", "indexed": false }
+    ],
+    "anonymous": false,
+    "type": "event"
+  },
+  {
+    "name": "UpdateImplementation",
+    "inputs": [
+      { "name": "_old_implementation", "type": "address", "indexed": false },
+      { "name": "_new_implementation", "type": "address", "indexed": false }
+    ],
+    "anonymous": false,
+    "type": "event"
+  },
+  {
+    "name": "UpdateVotingEscrow",
+    "inputs": [
+      { "name": "_old_voting_escrow", "type": "address", "indexed": false },
+      { "name": "_new_voting_escrow", "type": "address", "indexed": false }
+    ],
+    "anonymous": false,
+    "type": "event"
+  },
+  {
+    "name": "UpdateCallProxy",
+    "inputs": [
+      { "name": "_old_call_proxy", "type": "address", "indexed": false },
+      { "name": "_new_call_proxy", "type": "address", "indexed": false }
+    ],
+    "anonymous": false,
+    "type": "event"
+  },
+  {
+    "name": "UpdateMirrored",
+    "inputs": [
+      { "name": "_gauge", "type": "address", "indexed": true },
+      { "name": "_mirrored", "type": "bool", "indexed": false }
+    ],
+    "anonymous": false,
+    "type": "event"
+  },
+  {
+    "name": "TransferOwnership",
+    "inputs": [
+      { "name": "_old_owner", "type": "address", "indexed": false },
+      { "name": "_new_owner", "type": "address", "indexed": false }
+    ],
+    "anonymous": false,
+    "type": "event"
+  },
+  {
+    "stateMutability": "nonpayable",
+    "type": "constructor",
+    "inputs": [
+      { "name": "_call_proxy", "type": "address" },
+      { "name": "_crv", "type": "address" },
+      { "name": "_owner", "type": "address" }
+    ],
+    "outputs": []
+  },
+  {
+    "stateMutability": "nonpayable",
+    "type": "function",
+    "name": "mint",
+    "inputs": [{ "name": "_gauge", "type": "address" }],
+    "outputs": []
+  },
+  {
+    "stateMutability": "nonpayable",
+    "type": "function",
+    "name": "mint_many",
+    "inputs": [{ "name": "_gauges", "type": "address[32]" }],
+    "outputs": []
+  },
+  {
+    "stateMutability": "nonpayable",
+    "type": "function",
+    "name": "deploy_gauge",
+    "inputs": [
+      { "name": "_lp_token", "type": "address" },
+      { "name": "_salt", "type": "bytes32" }
+    ],
+    "outputs": [{ "name": "", "type": "address" }]
+  },
+  {
+    "stateMutability": "nonpayable",
+    "type": "function",
+    "name": "deploy_gauge",
+    "inputs": [
+      { "name": "_lp_token", "type": "address" },
+      { "name": "_salt", "type": "bytes32" },
+      { "name": "_manager", "type": "address" }
+    ],
+    "outputs": [{ "name": "", "type": "address" }]
+  },
+  {
+    "stateMutability": "nonpayable",
+    "type": "function",
+    "name": "set_voting_escrow",
+    "inputs": [{ "name": "_voting_escrow", "type": "address" }],
+    "outputs": []
+  },
+  {
+    "stateMutability": "nonpayable",
+    "type": "function",
+    "name": "set_implementation",
+    "inputs": [{ "name": "_implementation", "type": "address" }],
+    "outputs": []
+  },
+  {
+    "stateMutability": "nonpayable",
+    "type": "function",
+    "name": "set_mirrored",
+    "inputs": [
+      { "name": "_gauge", "type": "address" },
+      { "name": "_mirrored", "type": "bool" }
+    ],
+    "outputs": []
+  },
+  {
+    "stateMutability": "nonpayable",
+    "type": "function",
+    "name": "set_call_proxy",
+    "inputs": [{ "name": "_new_call_proxy", "type": "address" }],
+    "outputs": []
+  },
+  {
+    "stateMutability": "nonpayable",
+    "type": "function",
+    "name": "commit_transfer_ownership",
+    "inputs": [{ "name": "_future_owner", "type": "address" }],
+    "outputs": []
+  },
+  {
+    "stateMutability": "nonpayable",
+    "type": "function",
+    "name": "accept_transfer_ownership",
+    "inputs": [],
+    "outputs": []
+  },
+  {
+    "stateMutability": "view",
+    "type": "function",
+    "name": "is_valid_gauge",
+    "inputs": [{ "name": "_gauge", "type": "address" }],
+    "outputs": [{ "name": "", "type": "bool" }]
+  },
+  {
+    "stateMutability": "view",
+    "type": "function",
+    "name": "is_mirrored",
+    "inputs": [{ "name": "_gauge", "type": "address" }],
+    "outputs": [{ "name": "", "type": "bool" }]
+  },
+  {
+    "stateMutability": "view",
+    "type": "function",
+    "name": "last_request",
+    "inputs": [{ "name": "_gauge", "type": "address" }],
+    "outputs": [{ "name": "", "type": "uint256" }]
+  },
+  {
+    "stateMutability": "view",
+    "type": "function",
+    "name": "get_implementation",
+    "inputs": [],
+    "outputs": [{ "name": "", "type": "address" }]
+  },
+  {
+    "stateMutability": "view",
+    "type": "function",
+    "name": "voting_escrow",
+    "inputs": [],
+    "outputs": [{ "name": "", "type": "address" }]
+  },
+  {
+    "stateMutability": "view",
+    "type": "function",
+    "name": "owner",
+    "inputs": [],
+    "outputs": [{ "name": "", "type": "address" }]
+  },
+  {
+    "stateMutability": "view",
+    "type": "function",
+    "name": "future_owner",
+    "inputs": [],
+    "outputs": [{ "name": "", "type": "address" }]
+  },
+  {
+    "stateMutability": "view",
+    "type": "function",
+    "name": "call_proxy",
+    "inputs": [],
+    "outputs": [{ "name": "", "type": "address" }]
+  },
+  {
+    "stateMutability": "view",
+    "type": "function",
+    "name": "gauge_data",
+    "inputs": [{ "name": "arg0", "type": "address" }],
+    "outputs": [{ "name": "", "type": "uint256" }]
+  },
+  {
+    "stateMutability": "view",
+    "type": "function",
+    "name": "minted",
+    "inputs": [
+      { "name": "arg0", "type": "address" },
+      { "name": "arg1", "type": "address" }
+    ],
+    "outputs": [{ "name": "", "type": "uint256" }]
+  },
+  {
+    "stateMutability": "view",
+    "type": "function",
+    "name": "get_gauge_from_lp_token",
+    "inputs": [{ "name": "arg0", "type": "address" }],
+    "outputs": [{ "name": "", "type": "address" }]
+  },
+  {
+    "stateMutability": "view",
+    "type": "function",
+    "name": "get_gauge_count",
+    "inputs": [],
+    "outputs": [{ "name": "", "type": "uint256" }]
+  },
+  {
+    "stateMutability": "view",
+    "type": "function",
+    "name": "get_gauge",
+    "inputs": [{ "name": "arg0", "type": "uint256" }],
+    "outputs": [{ "name": "", "type": "address" }]
+  }
+]
