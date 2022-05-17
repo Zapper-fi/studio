@@ -28,4 +28,12 @@ export const CURVE_V2_POOL_DEFINITIONS: CurvePoolDefinition[] = [
     gaugeAddress: '0x97e2768e8e73511ca874545dc5ff8067eb19b787',
     streamAddress: '0x9044e12fb1732f88ed0c93cfa5e9bb9bd2990ce5',
   },
+  {
+    queryKey: 'eursusd',
+    label: 'EURs-USD',
+    swapAddress: '0xa827a652ead76c6b0b3d19dba05452e06e25c27e',
+    tokenAddress: '0x3dfe1324a0ee9d86337d06aeb829deb4528db9ca',
+    gaugeAddress: '0x37c7ef6b0e23c9bd9b620a6dabbfec13ce30d824',
+    streamAddress: '0x56eda719d82ae45cbb87b7030d3fb485685bea45',
+  },
 ];
