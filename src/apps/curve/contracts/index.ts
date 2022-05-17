@@ -4,6 +4,8 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
+import { CurveChildLiquidityGauge__factory } from './ethers';
+import { CurveChildLiquidityGaugeFactory__factory } from './ethers';
 import { CurveController__factory } from './ethers';
 import { CurveCryptoPool__factory } from './ethers';
 import { CurveDoubleGauge__factory } from './ethers';
@@ -36,6 +38,12 @@ export class CurveContractFactory extends ContractFactory {
     super((network: Network) => appToolkit.getNetworkProvider(network));
   }
 
+  curveChildLiquidityGauge({ address, network }: ContractOpts) {
+    return CurveChildLiquidityGauge__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
+  curveChildLiquidityGaugeFactory({ address, network }: ContractOpts) {
+    return CurveChildLiquidityGaugeFactory__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   curveController({ address, network }: ContractOpts) {
     return CurveController__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
@@ -104,6 +112,8 @@ export class CurveContractFactory extends ContractFactory {
   }
 }
 
+export type { CurveChildLiquidityGauge } from './ethers';
+export type { CurveChildLiquidityGaugeFactory } from './ethers';
 export type { CurveController } from './ethers';
 export type { CurveCryptoPool } from './ethers';
 export type { CurveDoubleGauge } from './ethers';
