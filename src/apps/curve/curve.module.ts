@@ -1,6 +1,12 @@
 import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
 
+import { ArbitrumCurveBalanceFetcher } from './arbitrum/curve.balance-fetcher';
+import { ArbitrumCurveFarmContractPositionFetcher } from './arbitrum/curve.farm.contract-position-fetcher';
+import { ArbitrumCurvePoolTokenFetcher } from './arbitrum/curve.pool.token-fetcher';
+import { AvalancheCurveBalanceFetcher } from './avalanche/curve.balance-fetcher';
+import { AvalancheCurveFarmContractPositionFetcher } from './avalanche/curve.farm.contract-position-fetcher';
+import { AvalancheCurvePoolTokenFetcher } from './avalanche/curve.pool.token-fetcher';
 import { CurveContractFactory } from './contracts';
 import { CurveAppDefinition, CURVE_DEFINITION } from './curve.definition';
 import { EthereumCurveBalanceFetcher } from './ethereum/curve.balance-fetcher';
@@ -55,13 +61,13 @@ import { PolygonCurvePoolTokenFetcher } from './polygon/curve.pool.token-fetcher
     CurveAppDefinition,
     CurveContractFactory,
     // Arbitrum
-    // ArbitrumCurveBalanceFetcher,
-    // ArbitrumCurvePoolTokenFetcher,
-    // ArbitrumCurveFarmContractPositionFetcher,
-    // // Avalanche
-    // AvalancheCurveBalanceFetcher,
-    // AvalancheCurvePoolTokenFetcher,
-    // AvalancheCurveFarmContractPositionFetcher,
+    ArbitrumCurveBalanceFetcher,
+    ArbitrumCurvePoolTokenFetcher,
+    ArbitrumCurveFarmContractPositionFetcher,
+    // Avalanche
+    AvalancheCurveBalanceFetcher,
+    AvalancheCurvePoolTokenFetcher,
+    AvalancheCurveFarmContractPositionFetcher,
     // Ethereum
     EthereumCurveBalanceFetcher,
     EthereumCurvePoolTokenFetcher,
