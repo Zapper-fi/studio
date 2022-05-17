@@ -7,7 +7,7 @@ import { BalanceFetcher } from '~balance/balance-fetcher.interface';
 import { isClaimable } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 
-import { CurveChildLiquidityGauge, CurveContractFactory, CurveGaugeV2 } from '../contracts';
+import { CurveChildLiquidityGauge, CurveContractFactory, CurveRewardsOnlyGauge } from '../contracts';
 import { CURVE_DEFINITION } from '../curve.definition';
 
 @Register.BalanceFetcher(CURVE_DEFINITION.id, Network.AVALANCHE_MAINNET)
@@ -27,13 +27,13 @@ export class AvalancheCurveBalanceFetcher implements BalanceFetcher {
   }
 
   private async getRewardsOnlyGaugeStakedBalances(address: string) {
-    return this.appToolkit.helpers.singleStakingContractPositionBalanceHelper.getBalances<CurveGaugeV2>({
+    return this.appToolkit.helpers.singleStakingContractPositionBalanceHelper.getBalances<CurveRewardsOnlyGauge>({
       address,
       appId: CURVE_DEFINITION.id,
       groupId: CURVE_DEFINITION.groups.farm.id,
       network: Network.AVALANCHE_MAINNET,
       farmFilter: v => v.dataProps.implementation === 'rewards-only-gauge',
-      resolveContract: ({ address, network }) => this.curveContractFactory.curveGaugeV2({ address, network }),
+      resolveContract: ({ address, network }) => this.curveContractFactory.curveRewardsOnlyGauge({ address, network }),
       resolveStakedTokenBalance: ({ contract, address, multicall }) => multicall.wrap(contract).balanceOf(address),
       resolveRewardTokenBalances: ({ contract, address, multicall, contractPosition }) => {
         const rewardTokens = contractPosition.tokens.filter(isClaimable);

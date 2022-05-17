@@ -17,7 +17,7 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
 
-export interface CurveGaugeV2Interface extends utils.Interface {
+export interface CurveRewardsOnlyGaugeInterface extends utils.Interface {
   functions: {
     'claimable_tokens(address)': FunctionFragment;
     'decimals()': FunctionFragment;
@@ -247,12 +247,12 @@ export type ApprovalEvent = TypedEvent<[string, string, BigNumber], ApprovalEven
 
 export type ApprovalEventFilter = TypedEventFilter<ApprovalEvent>;
 
-export interface CurveGaugeV2 extends BaseContract {
+export interface CurveRewardsOnlyGauge extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: CurveGaugeV2Interface;
+  interface: CurveRewardsOnlyGaugeInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

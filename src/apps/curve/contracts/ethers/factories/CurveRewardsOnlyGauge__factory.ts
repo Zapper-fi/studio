@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { CurveGaugeV2, CurveGaugeV2Interface } from '../CurveGaugeV2';
+import type { CurveRewardsOnlyGauge, CurveRewardsOnlyGaugeInterface } from '../CurveRewardsOnlyGauge';
 
 const _abi = [
   {
@@ -724,12 +724,12 @@ const _abi = [
   },
 ];
 
-export class CurveGaugeV2__factory {
+export class CurveRewardsOnlyGauge__factory {
   static readonly abi = _abi;
-  static createInterface(): CurveGaugeV2Interface {
-    return new utils.Interface(_abi) as CurveGaugeV2Interface;
+  static createInterface(): CurveRewardsOnlyGaugeInterface {
+    return new utils.Interface(_abi) as CurveRewardsOnlyGaugeInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): CurveGaugeV2 {
-    return new Contract(address, _abi, signerOrProvider) as CurveGaugeV2;
+  static connect(address: string, signerOrProvider: Signer | Provider): CurveRewardsOnlyGauge {
+    return new Contract(address, _abi, signerOrProvider) as CurveRewardsOnlyGauge;
   }
 }
