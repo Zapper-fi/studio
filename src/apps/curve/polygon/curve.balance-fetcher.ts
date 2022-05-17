@@ -7,7 +7,7 @@ import { BalanceFetcher } from '~balance/balance-fetcher.interface';
 import { isClaimable } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 
-import { CurveContractFactory, CurveRewardsOnlyGauge } from '../contracts';
+import { CurveChildLiquidityGauge, CurveContractFactory, CurveRewardsOnlyGauge } from '../contracts';
 import { CURVE_DEFINITION } from '../curve.definition';
 
 @Register.BalanceFetcher(CURVE_DEFINITION.id, Network.POLYGON_MAINNET)
@@ -26,12 +26,13 @@ export class PolygonCurveBalanceFetcher implements BalanceFetcher {
     });
   }
 
-  private async getStakedBalances(address: string) {
+  private async getRewardsOnlyGaugeStakedBalances(address: string) {
     return this.appToolkit.helpers.singleStakingContractPositionBalanceHelper.getBalances<CurveRewardsOnlyGauge>({
       address,
       appId: CURVE_DEFINITION.id,
       groupId: CURVE_DEFINITION.groups.farm.id,
       network: Network.POLYGON_MAINNET,
+      farmFilter: v => v.dataProps.implementation === 'rewards-only-gauge',
       resolveContract: ({ address, network }) => this.curveContractFactory.curveRewardsOnlyGauge({ address, network }),
       resolveStakedTokenBalance: ({ contract, address, multicall }) => multicall.wrap(contract).balanceOf(address),
       resolveRewardTokenBalances: ({ contract, address, multicall, contractPosition }) => {
@@ -42,10 +43,33 @@ export class PolygonCurveBalanceFetcher implements BalanceFetcher {
     });
   }
 
+  private async getChildLiquidityGaugeStakedBalances(address: string) {
+    return this.appToolkit.helpers.singleStakingContractPositionBalanceHelper.getBalances<CurveChildLiquidityGauge>({
+      address,
+      appId: CURVE_DEFINITION.id,
+      groupId: CURVE_DEFINITION.groups.farm.id,
+      network: Network.POLYGON_MAINNET,
+      farmFilter: v => v.dataProps.implementation === 'child-liquidity-gauge',
+      resolveContract: ({ address, network }) =>
+        this.curveContractFactory.curveChildLiquidityGauge({ address, network }),
+      resolveStakedTokenBalance: ({ contract, address, multicall }) => multicall.wrap(contract).balanceOf(address),
+      resolveRewardTokenBalances: async ({ contract, address, multicall, contractPosition }) => {
+        const rewardTokens = contractPosition.tokens.filter(isClaimable);
+        const otherRewardTokens = rewardTokens.filter(v => v.symbol !== 'CRV');
+
+        return Promise.all([
+          multicall.wrap(contract).callStatic.claimable_tokens(address),
+          ...otherRewardTokens.map(v => multicall.wrap(contract).claimable_reward(address, v.address)),
+        ]);
+      },
+    });
+  }
+
   async getBalances(address: string) {
-    const [poolTokenBalances, stakedBalances] = await Promise.all([
+    const [poolTokenBalances, rewardOnlyGaugeStakedBalances, childLiquidityGaugeStakedBalances] = await Promise.all([
       this.getPoolTokenBalances(address),
-      this.getStakedBalances(address),
+      this.getRewardsOnlyGaugeStakedBalances(address),
+      this.getChildLiquidityGaugeStakedBalances(address),
     ]);
 
     return presentBalanceFetcherResponse([
@@ -55,7 +79,7 @@ export class PolygonCurveBalanceFetcher implements BalanceFetcher {
       },
       {
         label: 'Staked',
-        assets: stakedBalances,
+        assets: [...rewardOnlyGaugeStakedBalances, ...childLiquidityGaugeStakedBalances],
       },
     ]);
   }
