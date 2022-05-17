@@ -3,6 +3,7 @@ import { compact, uniqBy } from 'lodash';
 
 import { Register } from '~app-toolkit/decorators';
 import { SYNTHETIX_DEFINITION } from '~apps/synthetix';
+import { TOKEMAK_DEFINITION } from '~apps/tokemak';
 import { YEARN_DEFINITION } from '~apps/yearn/yearn.definition';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
@@ -98,6 +99,7 @@ export class EthereumCurvePoolTokenFetcher implements PositionFetcher<AppTokenPo
           },
           { appId: 'convex', groupIds: ['farm'], network },
           { appId: YEARN_DEFINITION.id, groupIds: [YEARN_DEFINITION.groups.vault.id], network },
+          { appId: TOKEMAK_DEFINITION.id, groupIds: [TOKEMAK_DEFINITION.groups.reactor.id], network },
         ],
       }),
       this.curveCryptoFactoryPoolTokenHelper.getTokens({
