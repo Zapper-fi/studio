@@ -27,9 +27,9 @@ export class AvalancheCurveFarmContractPositionFetcher implements PositionFetche
     @Inject(CurveContractFactory)
     private readonly curveContractFactory: CurveContractFactory,
     @Inject(CurveGaugeV2RoiStrategy)
-    private readonly gaugeV2RoiStrategy: CurveGaugeV2RoiStrategy,
+    private readonly curveGaugeV2RoiStrategy: CurveGaugeV2RoiStrategy,
     @Inject(CurveGaugeV2RewardTokenStrategy)
-    private readonly gaugeV2RewardTokenStrategy: CurveGaugeV2RewardTokenStrategy,
+    private readonly curveGaugeV2RewardTokenStrategy: CurveGaugeV2RewardTokenStrategy,
     @Inject(CurveChildLiquidityGaugeFactoryAddressHelper)
     private readonly childGaugeAddressHelper: CurveChildLiquidityGaugeFactoryAddressHelper,
     @Inject(CurveChildLiquidityGaugeRoiStrategy)
@@ -50,8 +50,8 @@ export class AvalancheCurveFarmContractPositionFetcher implements PositionFetche
       resolveFarmAddresses: () => definitions.map(v => v.gaugeAddress!),
       resolveFarmContract: ({ address, network }) => this.curveContractFactory.curveGaugeV2({ address, network }),
       resolveStakedTokenAddress: ({ contract, multicall }) => multicall.wrap(contract).lp_token(),
-      resolveRewardTokenAddresses: this.gaugeV2RewardTokenStrategy.build(),
-      resolveRois: this.gaugeV2RoiStrategy.build({ tokenDefinitions: definitions }),
+      resolveRewardTokenAddresses: this.curveGaugeV2RewardTokenStrategy.build(),
+      resolveRois: this.curveGaugeV2RoiStrategy.build({ tokenDefinitions: definitions }),
       resolveIsActive: () => true,
     });
   }
