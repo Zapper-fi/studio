@@ -38,8 +38,8 @@ export class GnosisCurveFarmContractPositionFetcher implements PositionFetcher<C
     private readonly childGaugeRewardTokenStrategy: CurveChildLiquidityGaugeRewardTokenStrategy,
   ) {}
 
-  async getRewardOnlyGaugePositions() {
-    const definitions = CURVE_V1_POOL_DEFINITIONS.filter(v => !!v.gaugeAddress);
+  async getRewardsOnlyGaugePositions() {
+    const definitions = [CURVE_V1_POOL_DEFINITIONS].flat().filter(v => !!v.gaugeAddress);
 
     return this.appToolkit.helpers.singleStakingFarmContractPositionHelper.getContractPositions<CurveRewardsOnlyGauge>({
       network,
@@ -84,7 +84,7 @@ export class GnosisCurveFarmContractPositionFetcher implements PositionFetcher<C
 
   async getPositions() {
     const [rewardOnlyGaugePositions, childLiquidityGaugePositions] = await Promise.all([
-      this.getRewardOnlyGaugePositions(),
+      this.getRewardsOnlyGaugePositions(),
       this.getChildLiquidityGaugePositions(),
     ]);
 
