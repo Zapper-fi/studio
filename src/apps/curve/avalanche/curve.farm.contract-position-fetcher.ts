@@ -38,7 +38,7 @@ export class AvalancheCurveFarmContractPositionFetcher implements PositionFetche
     private readonly childGaugeRewardTokenStrategy: CurveChildLiquidityGaugeRewardTokenStrategy,
   ) {}
 
-  async getRewardOnlyGaugePositions() {
+  async getRewardsOnlyGaugePositions() {
     const definitions = [CURVE_V1_POOL_DEFINITIONS, CURVE_V2_POOL_DEFINITIONS].flat().filter(v => !!v.gaugeAddress);
 
     return this.appToolkit.helpers.singleStakingFarmContractPositionHelper.getContractPositions<CurveRewardsOnlyGauge>({
@@ -84,7 +84,7 @@ export class AvalancheCurveFarmContractPositionFetcher implements PositionFetche
 
   async getPositions() {
     const [rewardOnlyGaugePositions, childLiquidityGaugePositions] = await Promise.all([
-      this.getRewardOnlyGaugePositions(),
+      this.getRewardsOnlyGaugePositions(),
       this.getChildLiquidityGaugePositions(),
     ]);
 
