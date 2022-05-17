@@ -59,6 +59,13 @@
     "outputs": []
   },
   {
+    "name": "claimable_tokens",
+    "outputs": [{ "type": "uint256", "name": "" }],
+    "inputs": [{ "type": "address", "name": "addr" }],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "stateMutability": "view",
     "type": "function",
     "name": "decimals",

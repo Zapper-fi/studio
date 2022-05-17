@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { CurveRewardsOnlyGauge, CurveRewardsOnlyGaugeInterface } from '../CurveRewardsOnlyGauge';
+import type { CurveGaugeV2, CurveGaugeV2Interface } from '../CurveGaugeV2';
 
 const _abi = [
   {
@@ -123,6 +123,23 @@ const _abi = [
       },
     ],
     outputs: [],
+  },
+  {
+    name: 'claimable_tokens',
+    outputs: [
+      {
+        type: 'uint256',
+        name: '',
+      },
+    ],
+    inputs: [
+      {
+        type: 'address',
+        name: 'addr',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
     stateMutability: 'view',
@@ -707,12 +724,12 @@ const _abi = [
   },
 ];
 
-export class CurveRewardsOnlyGauge__factory {
+export class CurveGaugeV2__factory {
   static readonly abi = _abi;
-  static createInterface(): CurveRewardsOnlyGaugeInterface {
-    return new utils.Interface(_abi) as CurveRewardsOnlyGaugeInterface;
+  static createInterface(): CurveGaugeV2Interface {
+    return new utils.Interface(_abi) as CurveGaugeV2Interface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): CurveRewardsOnlyGauge {
-    return new Contract(address, _abi, signerOrProvider) as CurveRewardsOnlyGauge;
+  static connect(address: string, signerOrProvider: Signer | Provider): CurveGaugeV2 {
+    return new Contract(address, _abi, signerOrProvider) as CurveGaugeV2;
   }
 }
