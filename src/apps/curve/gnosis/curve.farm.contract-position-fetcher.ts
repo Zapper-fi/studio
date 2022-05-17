@@ -6,7 +6,7 @@ import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
-import { CurveContractFactory, CurveGaugeV2 } from '../contracts';
+import { CurveContractFactory, CurveRewardsOnlyGauge } from '../contracts';
 import { CURVE_DEFINITION } from '../curve.definition';
 import { CurveGaugeV2RewardTokenStrategy } from '../helpers/curve.gauge-v2.reward-token-strategy';
 import { CurveGaugeV2RoiStrategy } from '../helpers/curve.gauge-v2.roi-strategy';
@@ -31,13 +31,14 @@ export class GnosisCurveFarmContractPositionFetcher implements PositionFetcher<C
 
   async getPositions() {
     const definitions = [CURVE_V1_POOL_DEFINITIONS].flat().filter(v => !!v.gaugeAddress);
-    return this.appToolkit.helpers.singleStakingFarmContractPositionHelper.getContractPositions<CurveGaugeV2>({
+    return this.appToolkit.helpers.singleStakingFarmContractPositionHelper.getContractPositions<CurveRewardsOnlyGauge>({
       network,
       appId,
       groupId,
       dependencies: [{ appId: CURVE_DEFINITION.id, groupIds: [CURVE_DEFINITION.groups.pool.id], network }],
       resolveFarmAddresses: () => definitions.map(v => v.gaugeAddress ?? null),
-      resolveFarmContract: ({ address, network }) => this.curveContractFactory.curveGaugeV2({ address, network }),
+      resolveFarmContract: ({ address, network }) =>
+        this.curveContractFactory.curveRewardsOnlyGauge({ address, network }),
       resolveStakedTokenAddress: ({ contract, multicall }) => multicall.wrap(contract).lp_token(),
       resolveRewardTokenAddresses: this.curveGaugeV2RewardTokenStrategy.build(),
       resolveIsActive: () => true,

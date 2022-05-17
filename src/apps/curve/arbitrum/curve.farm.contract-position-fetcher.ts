@@ -6,7 +6,7 @@ import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
-import { CurveChildLiquidityGauge, CurveContractFactory, CurveGaugeV2 } from '../contracts';
+import { CurveChildLiquidityGauge, CurveContractFactory, CurveRewardsOnlyGauge } from '../contracts';
 import { CURVE_DEFINITION } from '../curve.definition';
 import { CurveChildLiquidityGaugeFactoryAddressHelper } from '../helpers/curve.child-liquidity-gauge-factory.address-helper';
 import { CurveChildLiquidityGaugeRewardTokenStrategy } from '../helpers/curve.child-liquidity-gauge.reward-token-strategy';
@@ -41,13 +41,14 @@ export class ArbitrumCurveFarmContractPositionFetcher implements PositionFetcher
   async getRewardOnlyGaugePositions() {
     const definitions = [CURVE_V1_POOL_DEFINITIONS, CURVE_V2_POOL_DEFINITIONS].flat().filter(v => !!v.gaugeAddress);
 
-    return this.appToolkit.helpers.singleStakingFarmContractPositionHelper.getContractPositions<CurveGaugeV2>({
+    return this.appToolkit.helpers.singleStakingFarmContractPositionHelper.getContractPositions<CurveRewardsOnlyGauge>({
       network,
       appId,
       groupId,
       dependencies: [{ appId: CURVE_DEFINITION.id, groupIds: [CURVE_DEFINITION.groups.pool.id], network }],
       resolveFarmAddresses: () => definitions.map(v => v.gaugeAddress ?? null),
-      resolveFarmContract: ({ address, network }) => this.curveContractFactory.curveGaugeV2({ address, network }),
+      resolveFarmContract: ({ address, network }) =>
+        this.curveContractFactory.curveRewardsOnlyGauge({ address, network }),
       resolveStakedTokenAddress: ({ contract, multicall }) => multicall.wrap(contract).lp_token(),
       resolveRewardTokenAddresses: this.curveGaugeV2RewardTokenStrategy.build(),
       resolveIsActive: () => true,

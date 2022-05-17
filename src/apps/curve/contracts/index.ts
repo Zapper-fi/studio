@@ -14,11 +14,11 @@ import { CurveFactoryPool__factory } from './ethers';
 import { CurveFactoryPoolV2__factory } from './ethers';
 import { CurveFactoryV2__factory } from './ethers';
 import { CurveGauge__factory } from './ethers';
-import { CurveGaugeV2__factory } from './ethers';
 import { CurveMinter__factory } from './ethers';
 import { CurveMultiRewardStream__factory } from './ethers';
 import { CurveNGauge__factory } from './ethers';
 import { CurvePassthroughRewards__factory } from './ethers';
+import { CurveRewardsOnlyGauge__factory } from './ethers';
 import { CurveSingleRewardStream__factory } from './ethers';
 import { CurveToken__factory } from './ethers';
 import { CurveV1Metapool__factory } from './ethers';
@@ -68,9 +68,6 @@ export class CurveContractFactory extends ContractFactory {
   curveGauge({ address, network }: ContractOpts) {
     return CurveGauge__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
-  curveGaugeV2({ address, network }: ContractOpts) {
-    return CurveGaugeV2__factory.connect(address, this.appToolkit.getNetworkProvider(network));
-  }
   curveMinter({ address, network }: ContractOpts) {
     return CurveMinter__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
@@ -82,6 +79,9 @@ export class CurveContractFactory extends ContractFactory {
   }
   curvePassthroughRewards({ address, network }: ContractOpts) {
     return CurvePassthroughRewards__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
+  curveRewardsOnlyGauge({ address, network }: ContractOpts) {
+    return CurveRewardsOnlyGauge__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
   curveSingleRewardStream({ address, network }: ContractOpts) {
     return CurveSingleRewardStream__factory.connect(address, this.appToolkit.getNetworkProvider(network));
@@ -122,11 +122,11 @@ export type { CurveFactoryPool } from './ethers';
 export type { CurveFactoryPoolV2 } from './ethers';
 export type { CurveFactoryV2 } from './ethers';
 export type { CurveGauge } from './ethers';
-export type { CurveGaugeV2 } from './ethers';
 export type { CurveMinter } from './ethers';
 export type { CurveMultiRewardStream } from './ethers';
 export type { CurveNGauge } from './ethers';
 export type { CurvePassthroughRewards } from './ethers';
+export type { CurveRewardsOnlyGauge } from './ethers';
 export type { CurveSingleRewardStream } from './ethers';
 export type { CurveToken } from './ethers';
 export type { CurveV1Metapool } from './ethers';

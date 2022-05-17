@@ -7,7 +7,7 @@ import { BalanceFetcher } from '~balance/balance-fetcher.interface';
 import { isClaimable } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 
-import { CurveContractFactory, CurveGaugeV2, CurveNGauge } from '../contracts';
+import { CurveContractFactory, CurveNGauge, CurveRewardsOnlyGauge } from '../contracts';
 import { CURVE_DEFINITION } from '../curve.definition';
 
 @Register.BalanceFetcher(CURVE_DEFINITION.id, Network.OPTIMISM_MAINNET)
@@ -29,12 +29,13 @@ export class OptimismCurveBalanceFetcher implements BalanceFetcher {
   private async getStakedBalances(address: string) {
     return Promise.all([
       // Single Gauge
-      this.appToolkit.helpers.singleStakingContractPositionBalanceHelper.getBalances<CurveGaugeV2>({
+      this.appToolkit.helpers.singleStakingContractPositionBalanceHelper.getBalances<CurveRewardsOnlyGauge>({
         address,
         appId: CURVE_DEFINITION.id,
         groupId: CURVE_DEFINITION.groups.farm.id,
         network: Network.OPTIMISM_MAINNET,
-        resolveContract: ({ address, network }) => this.curveContractFactory.curveGaugeV2({ address, network }),
+        resolveContract: ({ address, network }) =>
+          this.curveContractFactory.curveRewardsOnlyGauge({ address, network }),
         resolveStakedTokenBalance: ({ contract, address, multicall }) => multicall.wrap(contract).balanceOf(address),
         resolveRewardTokenBalances: ({ contract, address, multicall, contractPosition }) => {
           const rewardTokens = contractPosition.tokens.filter(isClaimable);
