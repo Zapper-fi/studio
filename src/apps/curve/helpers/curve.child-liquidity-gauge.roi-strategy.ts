@@ -27,7 +27,7 @@ export class CurveChildLiquidityGaugeRoiStrategy {
       const periodTimestamp = await multicall.wrap(gaugeContract).period_timestamp(period);
       const periodWeek = Math.floor(periodTimestamp.toNumber() / (86_400 * 7)); // num weeks
       const inflationRate = await multicall.wrap(gaugeContract).inflation_rate(periodWeek);
-      const crvToken = rewardTokens.find(v => v.symbol === 'CRV')!;
+      const crvToken = rewardTokens.find(v => v.symbol === 'CRV' || v.symbol === '1CRV')!;
       const totalCrvRewardInUSD = new BigNumber(inflationRate.toString())
         .times(365 * 24 * 60 * 60)
         .times(crvToken.price)
