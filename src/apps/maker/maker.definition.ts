@@ -8,8 +8,8 @@ export const MAKER_DEFINITION = appDefinition({
   name: 'Maker',
   description: `MakerDAO is a decentralized organization dedicated to bringing stability to the cryptocurrency economy.`,
   groups: {
-    vault: { id: 'vault', type: GroupType.POSITION },
-    governance: { id: 'governance', type: GroupType.POSITION },
+    vault: { id: 'vault', type: GroupType.POSITION, label: 'Vaults' },
+    governance: { id: 'governance', type: GroupType.POSITION, label: 'Governance' },
   },
   links: {
     github: 'https://github.com/makerdao',

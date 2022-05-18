@@ -16,9 +16,9 @@ export const TEDDY_CASH_DEFINITION = appDefinition({
     medium: 'https://medium.com/teddy-cash',
   },
   groups: {
-    farm: { id: 'farm', type: GroupType.POSITION },
-    trove: { id: 'trove', type: GroupType.POSITION },
-    stabilityPool: { id: 'stability-pool', type: GroupType.POSITION },
+    farm: { id: 'farm', type: GroupType.POSITION, label: 'Staked' },
+    trove: { id: 'trove', type: GroupType.POSITION, label: 'Trove' },
+    stabilityPool: { id: 'stability-pool', type: GroupType.POSITION, label: 'Stability Pool' },
   },
   tags: [AppTag.COLLATERALIZED_DEBT_POSITION],
   supportedNetworks: {

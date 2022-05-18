@@ -18,7 +18,9 @@
 </div>
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-16-orange.svg?style=flat-square)](#contributors-)
+
+[![All Contributors](https://img.shields.io/badge/all_contributors-19-orange.svg?style=flat-square)](#contributors-)
+
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 ## Description
@@ -60,10 +62,19 @@ $ pnpm dev
 pnpm studio create-app
 ```
 
-## Generating code template
+## Creating a new app group
 
 ```bash
-pnpm studio codegen-app [app-id]
+pnpm studio create-group [app-id]
+```
+
+## Generating code templates
+
+```bash
+pnpm studio create-token-fetcher [app-id]
+pnpm studio create-contract-position-fetcher [app-id]
+pnpm studio create-balance-fetcher [app-id]
+pnpm studio create-tvl-fetcher [app-id]
 ```
 
 ## Clearing the cache
@@ -153,6 +164,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="https://github.com/melenxyz"><img src="https://avatars.githubusercontent.com/u/59291854?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Mélen</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=melenxyz" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/pwele"><img src="https://avatars.githubusercontent.com/u/1527361?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Papa Sougou Wele</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=pwele" title="Code">💻</a> <a href="#question-pwele" title="Answering Questions">💬</a> <a href="#maintenance-pwele" title="Maintenance">🚧</a></td>
+    <td align="center"><a href="https://ca.linkedin.com/in/alexandresobolevski"><img src="https://avatars.githubusercontent.com/u/13302110?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Alexandre Sobolevski</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=alexandresobolevski" title="Code">💻</a> <a href="#question-alexandresobolevski" title="Answering Questions">💬</a> <a href="#maintenance-alexandresobolevski" title="Maintenance">🚧</a></td>
+    <td align="center"><a href="https://github.com/farhaan-ali"><img src="https://avatars.githubusercontent.com/u/59924029?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Farhaan</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=farhaan-ali" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/tonzgao"><img src="https://avatars.githubusercontent.com/u/2408377?v=4?s=64" width="64px;" alt=""/><br /><sub><b>tonzgao</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=tonzgao" title="Code">💻</a></td>
   </tr>
 </table>
 

@@ -8,9 +8,9 @@ export const BEETHOVEN_X_DEFINITION = appDefinition({
   name: 'Beethoven-X',
   description: `Beethoven X enables secure and efficient - high speed, low cost - trading. Start trading immediately, no registration required. Just connect your wallet and you’re good to go.`,
   groups: {
-    pool: { id: 'pool', type: GroupType.TOKEN },
-    farm: { id: 'farm', type: GroupType.POSITION },
-    fBeets: { id: 'fBEETS', type: GroupType.TOKEN },
+    pool: { id: 'pool', type: GroupType.TOKEN, label: 'Pools' },
+    farm: { id: 'farm', type: GroupType.POSITION, label: 'Farms' },
+    fBeets: { id: 'fBEETS', type: GroupType.TOKEN, label: 'Staking' },
   },
   url: 'https://app.beets.fi/',
   links: {

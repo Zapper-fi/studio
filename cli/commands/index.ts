@@ -1,8 +1,12 @@
 import { Command } from '@oclif/core';
 
 import ClearCache from './clear-cache';
-import CodegenApp from './codegen-app';
-import CreateAppCommand from './create-app';
+import CreateApp from './create-app';
+import CreateBalanceFetcher from './create-balance-fetcher';
+import CreateContractPositionFetcher from './create-contract-position-fetcher';
+import CreateGroup from './create-group';
+import CreateTokenFetcher from './create-token-fetcher';
+import CreateTvlFetcher from './create-tvl-fetcher';
 import GenerateContractFactory from './generate-contract-factory';
 import SetNetworkProvider from './set-network-provider';
 
@@ -13,8 +17,12 @@ import SetNetworkProvider from './set-network-provider';
  */
 export const commands: Record<string, typeof Command> = {
   'generate:contract-factory': GenerateContractFactory,
-  'create-app': CreateAppCommand,
-  'codegen-app': CodegenApp,
+  'create-app': CreateApp,
+  'create-group': CreateGroup,
+  'create-token-fetcher': CreateTokenFetcher,
+  'create-balance-fetcher': CreateBalanceFetcher,
+  'create-contract-position-fetcher': CreateContractPositionFetcher,
+  'create-tvl-fetcher': CreateTvlFetcher,
   'clear-cache': ClearCache,
   'set-network-provider': SetNetworkProvider,
 };

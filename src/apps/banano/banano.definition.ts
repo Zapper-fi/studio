@@ -17,7 +17,7 @@ export const BANANO_DEFINITION = appDefinition({
     medium: 'https://medium.com/banano',
   },
   groups: {
-    farm: { id: 'farm', type: GroupType.POSITION },
+    farm: { id: 'farm', type: GroupType.POSITION, label: 'Farms' },
   },
   tags: [AppTag.FARMING],
   supportedNetworks: {

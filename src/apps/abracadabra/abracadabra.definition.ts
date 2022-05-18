@@ -6,10 +6,10 @@ import { Network } from '~types/network.interface';
 export const ABRACADABRA_DEFINITION = appDefinition({
   id: 'abracadabra',
   groups: {
-    stakedSpell: { id: 'staked-spell', type: GroupType.TOKEN },
-    mSpell: { id: 'm-spell', type: GroupType.POSITION },
-    cauldron: { id: 'cauldron', type: GroupType.POSITION },
-    farm: { id: 'farm', type: GroupType.POSITION },
+    stakedSpell: { id: 'staked-spell', type: GroupType.TOKEN, label: 'Staked SPELL' },
+    mSpell: { id: 'm-spell', type: GroupType.POSITION, label: 'mSpell' },
+    cauldron: { id: 'cauldron', type: GroupType.POSITION, label: 'Cauldrons' },
+    farm: { id: 'farm', type: GroupType.POSITION, label: 'Farms' },
   },
   name: 'Abracadabra',
   description: `Abracadabra is a lending platform that uses interest-bearing tokens as collateral to borrow a USD pegged stable coin that can be used as any other stablecoin. Abracadabra provides the opportunity for users to unlock the capital of their yield.`,

@@ -8,7 +8,7 @@ export const UNISWAP_V2_DEFINITION = appDefinition({
   name: 'Uniswap V2',
   description: `A protocol for trading and automated liquidity provision on Ethereum.`,
   groups: {
-    pool: { id: 'pool', type: GroupType.TOKEN },
+    pool: { id: 'pool', type: GroupType.TOKEN, label: 'Pools' },
   },
   url: 'https://uniswap.org/',
   links: {

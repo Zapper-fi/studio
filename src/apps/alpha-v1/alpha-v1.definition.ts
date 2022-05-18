@@ -8,7 +8,7 @@ export const ALPHA_V1_DEFINITION = appDefinition({
   name: 'Alpha',
   description: `Alpha Homora is a leveraged yield farming leveraged liquidity providing protocol. Lenders can earn high interest, and yield farmers can get even higher farming APY and trading fees through leverage. This project is deprecated in favour of V2.`,
   groups: {
-    lending: { id: 'lending', type: GroupType.TOKEN },
+    lending: { id: 'lending', type: GroupType.TOKEN, label: 'Lending' },
   },
   url: 'https://homora.alphafinance.io/',
   links: {
