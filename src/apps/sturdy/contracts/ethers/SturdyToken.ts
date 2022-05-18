@@ -17,7 +17,7 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
 
-export interface SturdyDaiInterface extends utils.Interface {
+export interface SturdyTokenInterface extends utils.Interface {
   functions: {
     'ATOKEN_REVISION()': FunctionFragment;
     'DOMAIN_SEPARATOR()': FunctionFragment;
@@ -238,12 +238,12 @@ export type TransferEvent = TypedEvent<[string, string, BigNumber], TransferEven
 
 export type TransferEventFilter = TypedEventFilter<TransferEvent>;
 
-export interface SturdyDai extends BaseContract {
+export interface SturdyToken extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: SturdyDaiInterface;
+  interface: SturdyTokenInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

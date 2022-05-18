@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { SturdyDai, SturdyDaiInterface } from '../SturdyDai';
+import type { SturdyToken, SturdyTokenInterface } from '../SturdyToken';
 
 const _abi = [
   {
@@ -831,12 +831,12 @@ const _abi = [
   },
 ];
 
-export class SturdyDai__factory {
+export class SturdyToken__factory {
   static readonly abi = _abi;
-  static createInterface(): SturdyDaiInterface {
-    return new utils.Interface(_abi) as SturdyDaiInterface;
+  static createInterface(): SturdyTokenInterface {
+    return new utils.Interface(_abi) as SturdyTokenInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): SturdyDai {
-    return new Contract(address, _abi, signerOrProvider) as SturdyDai;
+  static connect(address: string, signerOrProvider: Signer | Provider): SturdyToken {
+    return new Contract(address, _abi, signerOrProvider) as SturdyToken;
   }
 }

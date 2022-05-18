@@ -55,17 +55,10 @@ export class FantomSturdyLendingTokenFetcher implements PositionFetcher<AppToken
       const symbol = data.tokens;
       const underlyingTokens: BaseToken[] = [];
 
-      let contractFactoryFunc;
-      if (symbol === 'USDC') contractFactoryFunc = this.sturdyContractFactory.sturdyUsdc;
-      else if (symbol === 'fUSDT') contractFactoryFunc = this.sturdyContractFactory.sturdyFusdt;
-      else if (symbol === 'DAI') contractFactoryFunc = this.sturdyContractFactory.sturdyDai;
-
-      if (contractFactoryFunc) {
-        const contract = this.sturdyContractFactory.sturdyUsdc({ address: data.address, network });
-        const underlyingTokenAddress = await multicall.wrap(contract).UNDERLYING_ASSET_ADDRESS().then(v => v.toLowerCase());
-        const underlyingToken = baseTokens.find(t => t.address === underlyingTokenAddress);
-        if (underlyingToken) underlyingTokens.push(underlyingToken);
-      }
+      const contract = this.sturdyContractFactory.sturdyToken({ address: data.address, network });
+      const underlyingTokenAddress = await multicall.wrap(contract).UNDERLYING_ASSET_ADDRESS().then(v => v.toLowerCase());
+      const underlyingToken = baseTokens.find(t => t.address === underlyingTokenAddress);
+      if (underlyingToken) underlyingTokens.push(underlyingToken);
 
       const token: AppTokenPosition = {
         type: ContractType.APP_TOKEN,
