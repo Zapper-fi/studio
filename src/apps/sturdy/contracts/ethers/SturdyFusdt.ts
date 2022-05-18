@@ -19,184 +19,158 @@ import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './com
 
 export interface SturdyFusdtInterface extends utils.Interface {
   functions: {
+    'ATOKEN_REVISION()': FunctionFragment;
     'DOMAIN_SEPARATOR()': FunctionFragment;
+    'EIP712_REVISION()': FunctionFragment;
     'PERMIT_TYPEHASH()': FunctionFragment;
-    'Swapin(bytes32,address,uint256)': FunctionFragment;
-    'Swapout(uint256,address)': FunctionFragment;
-    'TRANSFER_TYPEHASH()': FunctionFragment;
+    'POOL()': FunctionFragment;
+    'RESERVE_TREASURY_ADDRESS()': FunctionFragment;
+    'UNDERLYING_ASSET_ADDRESS()': FunctionFragment;
+    '_nonces(address)': FunctionFragment;
     'allowance(address,address)': FunctionFragment;
     'approve(address,uint256)': FunctionFragment;
-    'approveAndCall(address,uint256,bytes)': FunctionFragment;
     'balanceOf(address)': FunctionFragment;
-    'burn(address,uint256)': FunctionFragment;
-    'changeMPCOwner(address)': FunctionFragment;
-    'changeVault(address)': FunctionFragment;
+    'burn(address,address,uint256,uint256)': FunctionFragment;
     'decimals()': FunctionFragment;
-    'deposit(uint256,address)': FunctionFragment;
-    'deposit(uint256)': FunctionFragment;
-    'deposit()': FunctionFragment;
-    'depositVault(uint256,address)': FunctionFragment;
-    'depositWithPermit(address,uint256,uint256,uint8,bytes32,bytes32,address)': FunctionFragment;
-    'depositWithTransferPermit(address,uint256,uint256,uint8,bytes32,bytes32,address)': FunctionFragment;
-    'mint(address,uint256)': FunctionFragment;
+    'decreaseAllowance(address,uint256)': FunctionFragment;
+    'getIncentivesController()': FunctionFragment;
+    'getScaledUserBalanceAndSupply(address)': FunctionFragment;
+    'handleRepayment(address,uint256)': FunctionFragment;
+    'increaseAllowance(address,uint256)': FunctionFragment;
+    'initialize(address,address,address,address,uint8,string,string,bytes)': FunctionFragment;
+    'mint(address,uint256,uint256)': FunctionFragment;
+    'mintToTreasury(uint256,uint256)': FunctionFragment;
     'name()': FunctionFragment;
-    'nonces(address)': FunctionFragment;
-    'owner()': FunctionFragment;
     'permit(address,address,uint256,uint256,uint8,bytes32,bytes32)': FunctionFragment;
+    'scaledBalanceOf(address)': FunctionFragment;
+    'scaledTotalSupply()': FunctionFragment;
     'symbol()': FunctionFragment;
     'totalSupply()': FunctionFragment;
     'transfer(address,uint256)': FunctionFragment;
-    'transferAndCall(address,uint256,bytes)': FunctionFragment;
     'transferFrom(address,address,uint256)': FunctionFragment;
-    'transferWithPermit(address,address,uint256,uint256,uint8,bytes32,bytes32)': FunctionFragment;
-    'underlying()': FunctionFragment;
-    'vault()': FunctionFragment;
-    'withdraw(uint256,address)': FunctionFragment;
-    'withdraw(uint256)': FunctionFragment;
-    'withdraw()': FunctionFragment;
-    'withdrawVault(address,uint256,address)': FunctionFragment;
+    'transferOnLiquidation(address,address,uint256)': FunctionFragment;
+    'transferUnderlyingTo(address,uint256)': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
+      | 'ATOKEN_REVISION'
       | 'DOMAIN_SEPARATOR'
+      | 'EIP712_REVISION'
       | 'PERMIT_TYPEHASH'
-      | 'Swapin'
-      | 'Swapout'
-      | 'TRANSFER_TYPEHASH'
+      | 'POOL'
+      | 'RESERVE_TREASURY_ADDRESS'
+      | 'UNDERLYING_ASSET_ADDRESS'
+      | '_nonces'
       | 'allowance'
       | 'approve'
-      | 'approveAndCall'
       | 'balanceOf'
       | 'burn'
-      | 'changeMPCOwner'
-      | 'changeVault'
       | 'decimals'
-      | 'deposit(uint256,address)'
-      | 'deposit(uint256)'
-      | 'deposit()'
-      | 'depositVault'
-      | 'depositWithPermit'
-      | 'depositWithTransferPermit'
+      | 'decreaseAllowance'
+      | 'getIncentivesController'
+      | 'getScaledUserBalanceAndSupply'
+      | 'handleRepayment'
+      | 'increaseAllowance'
+      | 'initialize'
       | 'mint'
+      | 'mintToTreasury'
       | 'name'
-      | 'nonces'
-      | 'owner'
       | 'permit'
+      | 'scaledBalanceOf'
+      | 'scaledTotalSupply'
       | 'symbol'
       | 'totalSupply'
       | 'transfer'
-      | 'transferAndCall'
       | 'transferFrom'
-      | 'transferWithPermit'
-      | 'underlying'
-      | 'vault'
-      | 'withdraw(uint256,address)'
-      | 'withdraw(uint256)'
-      | 'withdraw()'
-      | 'withdrawVault',
+      | 'transferOnLiquidation'
+      | 'transferUnderlyingTo',
   ): FunctionFragment;
 
+  encodeFunctionData(functionFragment: 'ATOKEN_REVISION', values?: undefined): string;
   encodeFunctionData(functionFragment: 'DOMAIN_SEPARATOR', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'EIP712_REVISION', values?: undefined): string;
   encodeFunctionData(functionFragment: 'PERMIT_TYPEHASH', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'Swapin', values: [BytesLike, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'Swapout', values: [BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'TRANSFER_TYPEHASH', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'POOL', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'RESERVE_TREASURY_ADDRESS', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'UNDERLYING_ASSET_ADDRESS', values?: undefined): string;
+  encodeFunctionData(functionFragment: '_nonces', values: [string]): string;
   encodeFunctionData(functionFragment: 'allowance', values: [string, string]): string;
   encodeFunctionData(functionFragment: 'approve', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'approveAndCall', values: [string, BigNumberish, BytesLike]): string;
   encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
-  encodeFunctionData(functionFragment: 'burn', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'changeMPCOwner', values: [string]): string;
-  encodeFunctionData(functionFragment: 'changeVault', values: [string]): string;
+  encodeFunctionData(functionFragment: 'burn', values: [string, string, BigNumberish, BigNumberish]): string;
   encodeFunctionData(functionFragment: 'decimals', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'deposit(uint256,address)', values: [BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'deposit(uint256)', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'deposit()', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'depositVault', values: [BigNumberish, string]): string;
+  encodeFunctionData(functionFragment: 'decreaseAllowance', values: [string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'getIncentivesController', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'getScaledUserBalanceAndSupply', values: [string]): string;
+  encodeFunctionData(functionFragment: 'handleRepayment', values: [string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'increaseAllowance', values: [string, BigNumberish]): string;
   encodeFunctionData(
-    functionFragment: 'depositWithPermit',
-    values: [string, BigNumberish, BigNumberish, BigNumberish, BytesLike, BytesLike, string],
+    functionFragment: 'initialize',
+    values: [string, string, string, string, BigNumberish, string, string, BytesLike],
   ): string;
-  encodeFunctionData(
-    functionFragment: 'depositWithTransferPermit',
-    values: [string, BigNumberish, BigNumberish, BigNumberish, BytesLike, BytesLike, string],
-  ): string;
-  encodeFunctionData(functionFragment: 'mint', values: [string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'mint', values: [string, BigNumberish, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'mintToTreasury', values: [BigNumberish, BigNumberish]): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'nonces', values: [string]): string;
-  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'permit',
     values: [string, string, BigNumberish, BigNumberish, BigNumberish, BytesLike, BytesLike],
   ): string;
+  encodeFunctionData(functionFragment: 'scaledBalanceOf', values: [string]): string;
+  encodeFunctionData(functionFragment: 'scaledTotalSupply', values?: undefined): string;
   encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
   encodeFunctionData(functionFragment: 'transfer', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferAndCall', values: [string, BigNumberish, BytesLike]): string;
   encodeFunctionData(functionFragment: 'transferFrom', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(
-    functionFragment: 'transferWithPermit',
-    values: [string, string, BigNumberish, BigNumberish, BigNumberish, BytesLike, BytesLike],
-  ): string;
-  encodeFunctionData(functionFragment: 'underlying', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'vault', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'withdraw(uint256,address)', values: [BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'withdraw(uint256)', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'withdraw()', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'withdrawVault', values: [string, BigNumberish, string]): string;
+  encodeFunctionData(functionFragment: 'transferOnLiquidation', values: [string, string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'transferUnderlyingTo', values: [string, BigNumberish]): string;
 
+  decodeFunctionResult(functionFragment: 'ATOKEN_REVISION', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'DOMAIN_SEPARATOR', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'EIP712_REVISION', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'PERMIT_TYPEHASH', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'Swapin', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'Swapout', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'TRANSFER_TYPEHASH', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'POOL', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'RESERVE_TREASURY_ADDRESS', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'UNDERLYING_ASSET_ADDRESS', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: '_nonces', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'allowance', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'approve', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'approveAndCall', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'burn', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'changeMPCOwner', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'changeVault', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'decimals', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'deposit(uint256,address)', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'deposit(uint256)', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'deposit()', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'depositVault', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'depositWithPermit', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'depositWithTransferPermit', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'decreaseAllowance', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getIncentivesController', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getScaledUserBalanceAndSupply', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'handleRepayment', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'increaseAllowance', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'initialize', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'mint', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'mintToTreasury', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'name', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'nonces', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'permit', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'scaledBalanceOf', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'scaledTotalSupply', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'symbol', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'totalSupply', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'transfer', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'transferAndCall', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'transferFrom', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'transferWithPermit', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'underlying', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'vault', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'withdraw(uint256,address)', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'withdraw(uint256)', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'withdraw()', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'withdrawVault', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'transferOnLiquidation', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'transferUnderlyingTo', data: BytesLike): Result;
 
   events: {
     'Approval(address,address,uint256)': EventFragment;
-    'LogChangeMPCOwner(address,address,uint256)': EventFragment;
-    'LogChangeVault(address,address,uint256)': EventFragment;
-    'LogSwapin(bytes32,address,uint256)': EventFragment;
-    'LogSwapout(address,address,uint256)': EventFragment;
+    'BalanceTransfer(address,address,uint256,uint256)': EventFragment;
+    'Burn(address,address,uint256,uint256)': EventFragment;
+    'Initialized(address,address,address,address,uint8,string,string,bytes)': EventFragment;
+    'Mint(address,uint256,uint256)': EventFragment;
     'Transfer(address,address,uint256)': EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: 'Approval'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'LogChangeMPCOwner'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'LogChangeVault'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'LogSwapin'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'LogSwapout'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'BalanceTransfer'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Burn'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Initialized'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Mint'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Transfer'): EventFragment;
 }
 
@@ -209,41 +183,51 @@ export type ApprovalEvent = TypedEvent<[string, string, BigNumber], ApprovalEven
 
 export type ApprovalEventFilter = TypedEventFilter<ApprovalEvent>;
 
-export interface LogChangeMPCOwnerEventObject {
-  oldOwner: string;
-  newOwner: string;
-  effectiveHeight: BigNumber;
+export interface BalanceTransferEventObject {
+  from: string;
+  to: string;
+  value: BigNumber;
+  index: BigNumber;
 }
-export type LogChangeMPCOwnerEvent = TypedEvent<[string, string, BigNumber], LogChangeMPCOwnerEventObject>;
+export type BalanceTransferEvent = TypedEvent<[string, string, BigNumber, BigNumber], BalanceTransferEventObject>;
 
-export type LogChangeMPCOwnerEventFilter = TypedEventFilter<LogChangeMPCOwnerEvent>;
+export type BalanceTransferEventFilter = TypedEventFilter<BalanceTransferEvent>;
 
-export interface LogChangeVaultEventObject {
-  oldVault: string;
-  newVault: string;
-  effectiveTime: BigNumber;
+export interface BurnEventObject {
+  from: string;
+  target: string;
+  value: BigNumber;
+  index: BigNumber;
 }
-export type LogChangeVaultEvent = TypedEvent<[string, string, BigNumber], LogChangeVaultEventObject>;
+export type BurnEvent = TypedEvent<[string, string, BigNumber, BigNumber], BurnEventObject>;
 
-export type LogChangeVaultEventFilter = TypedEventFilter<LogChangeVaultEvent>;
+export type BurnEventFilter = TypedEventFilter<BurnEvent>;
 
-export interface LogSwapinEventObject {
-  txhash: string;
-  account: string;
-  amount: BigNumber;
+export interface InitializedEventObject {
+  underlyingAsset: string;
+  pool: string;
+  treasury: string;
+  incentivesController: string;
+  aTokenDecimals: number;
+  aTokenName: string;
+  aTokenSymbol: string;
+  params: string;
 }
-export type LogSwapinEvent = TypedEvent<[string, string, BigNumber], LogSwapinEventObject>;
+export type InitializedEvent = TypedEvent<
+  [string, string, string, string, number, string, string, string],
+  InitializedEventObject
+>;
 
-export type LogSwapinEventFilter = TypedEventFilter<LogSwapinEvent>;
+export type InitializedEventFilter = TypedEventFilter<InitializedEvent>;
 
-export interface LogSwapoutEventObject {
-  account: string;
-  bindaddr: string;
-  amount: BigNumber;
+export interface MintEventObject {
+  from: string;
+  value: BigNumber;
+  index: BigNumber;
 }
-export type LogSwapoutEvent = TypedEvent<[string, string, BigNumber], LogSwapoutEventObject>;
+export type MintEvent = TypedEvent<[string, BigNumber, BigNumber], MintEventObject>;
 
-export type LogSwapoutEventFilter = TypedEventFilter<LogSwapoutEvent>;
+export type MintEventFilter = TypedEventFilter<MintEvent>;
 
 export interface TransferEventObject {
   from: string;
@@ -277,115 +261,93 @@ export interface SturdyFusdt extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
+    ATOKEN_REVISION(overrides?: CallOverrides): Promise<[BigNumber]>;
+
     DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<[string]>;
+
+    EIP712_REVISION(overrides?: CallOverrides): Promise<[string]>;
 
     PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<[string]>;
 
-    Swapin(
-      txhash: BytesLike,
-      account: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
+    POOL(overrides?: CallOverrides): Promise<[string]>;
 
-    Swapout(
-      amount: BigNumberish,
-      bindaddr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
+    RESERVE_TREASURY_ADDRESS(overrides?: CallOverrides): Promise<[string]>;
 
-    TRANSFER_TYPEHASH(overrides?: CallOverrides): Promise<[string]>;
+    UNDERLYING_ASSET_ADDRESS(overrides?: CallOverrides): Promise<[string]>;
 
-    allowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    _nonces(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     approve(
       spender: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
-
-    approveAndCall(
-      spender: string,
-      value: BigNumberish,
-      data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
-
-    balanceOf(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    burn(
-      from: string,
       amount: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
 
-    changeMPCOwner(
-      newVault: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
+    balanceOf(user: string, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    changeVault(
-      newVault: string,
+    burn(
+      user: string,
+      receiverOfUnderlying: string,
+      amount: BigNumberish,
+      index: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<[number]>;
 
-    'deposit(uint256,address)'(
+    decreaseAllowance(
+      spender: string,
+      subtractedValue: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<ContractTransaction>;
+
+    getIncentivesController(overrides?: CallOverrides): Promise<[string]>;
+
+    getScaledUserBalanceAndSupply(user: string, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+
+    handleRepayment(
+      user: string,
       amount: BigNumberish,
-      to: string,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
 
-    'deposit(uint256)'(
-      amount: BigNumberish,
+    increaseAllowance(
+      spender: string,
+      addedValue: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
 
-    'deposit()'(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
-
-    depositVault(
-      amount: BigNumberish,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
-
-    depositWithPermit(
-      target: string,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
-
-    depositWithTransferPermit(
-      target: string,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      to: string,
+    initialize(
+      pool: string,
+      treasury: string,
+      underlyingAsset: string,
+      incentivesController: string,
+      aTokenDecimals: BigNumberish,
+      aTokenName: string,
+      aTokenSymbol: string,
+      params: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
 
     mint(
-      to: string,
+      user: string,
       amount: BigNumberish,
+      index: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<ContractTransaction>;
+
+    mintToTreasury(
+      amount: BigNumberish,
+      index: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    owner(overrides?: CallOverrides): Promise<[string]>;
-
     permit(
-      target: string,
+      owner: string,
       spender: string,
       value: BigNumberish,
       deadline: BigNumberish,
@@ -394,176 +356,129 @@ export interface SturdyFusdt extends BaseContract {
       s: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
+
+    scaledBalanceOf(user: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    scaledTotalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
 
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transfer(
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
-
-    transferAndCall(
-      to: string,
-      value: BigNumberish,
-      data: BytesLike,
+      recipient: string,
+      amount: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
 
     transferFrom(
+      sender: string,
+      recipient: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<ContractTransaction>;
+
+    transferOnLiquidation(
       from: string,
       to: string,
       value: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
 
-    transferWithPermit(
+    transferUnderlyingTo(
       target: string,
-      to: string,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
-
-    underlying(overrides?: CallOverrides): Promise<[string]>;
-
-    vault(overrides?: CallOverrides): Promise<[string]>;
-
-    'withdraw(uint256,address)'(
       amount: BigNumberish,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
-
-    'withdraw(uint256)'(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
-
-    'withdraw()'(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
-
-    withdrawVault(
-      from: string,
-      amount: BigNumberish,
-      to: string,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
   };
 
+  ATOKEN_REVISION(overrides?: CallOverrides): Promise<BigNumber>;
+
   DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<string>;
+
+  EIP712_REVISION(overrides?: CallOverrides): Promise<string>;
 
   PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<string>;
 
-  Swapin(
-    txhash: BytesLike,
-    account: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
-  ): Promise<ContractTransaction>;
+  POOL(overrides?: CallOverrides): Promise<string>;
 
-  Swapout(
-    amount: BigNumberish,
-    bindaddr: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
-  ): Promise<ContractTransaction>;
+  RESERVE_TREASURY_ADDRESS(overrides?: CallOverrides): Promise<string>;
 
-  TRANSFER_TYPEHASH(overrides?: CallOverrides): Promise<string>;
+  UNDERLYING_ASSET_ADDRESS(overrides?: CallOverrides): Promise<string>;
 
-  allowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+  _nonces(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+  allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
 
   approve(
     spender: string,
-    value: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
-  ): Promise<ContractTransaction>;
-
-  approveAndCall(
-    spender: string,
-    value: BigNumberish,
-    data: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
-  ): Promise<ContractTransaction>;
-
-  balanceOf(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-  burn(
-    from: string,
     amount: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
-  changeMPCOwner(
-    newVault: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
-  ): Promise<ContractTransaction>;
+  balanceOf(user: string, overrides?: CallOverrides): Promise<BigNumber>;
 
-  changeVault(
-    newVault: string,
+  burn(
+    user: string,
+    receiverOfUnderlying: string,
+    amount: BigNumberish,
+    index: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
   decimals(overrides?: CallOverrides): Promise<number>;
 
-  'deposit(uint256,address)'(
+  decreaseAllowance(
+    spender: string,
+    subtractedValue: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> },
+  ): Promise<ContractTransaction>;
+
+  getIncentivesController(overrides?: CallOverrides): Promise<string>;
+
+  getScaledUserBalanceAndSupply(user: string, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+
+  handleRepayment(
+    user: string,
     amount: BigNumberish,
-    to: string,
     overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
-  'deposit(uint256)'(
-    amount: BigNumberish,
+  increaseAllowance(
+    spender: string,
+    addedValue: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
-  'deposit()'(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
-
-  depositVault(
-    amount: BigNumberish,
-    to: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
-  ): Promise<ContractTransaction>;
-
-  depositWithPermit(
-    target: string,
-    value: BigNumberish,
-    deadline: BigNumberish,
-    v: BigNumberish,
-    r: BytesLike,
-    s: BytesLike,
-    to: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
-  ): Promise<ContractTransaction>;
-
-  depositWithTransferPermit(
-    target: string,
-    value: BigNumberish,
-    deadline: BigNumberish,
-    v: BigNumberish,
-    r: BytesLike,
-    s: BytesLike,
-    to: string,
+  initialize(
+    pool: string,
+    treasury: string,
+    underlyingAsset: string,
+    incentivesController: string,
+    aTokenDecimals: BigNumberish,
+    aTokenName: string,
+    aTokenSymbol: string,
+    params: BytesLike,
     overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
   mint(
-    to: string,
+    user: string,
     amount: BigNumberish,
+    index: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> },
+  ): Promise<ContractTransaction>;
+
+  mintToTreasury(
+    amount: BigNumberish,
+    index: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
   name(overrides?: CallOverrides): Promise<string>;
 
-  nonces(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-  owner(overrides?: CallOverrides): Promise<string>;
-
   permit(
-    target: string,
+    owner: string,
     spender: string,
     value: BigNumberish,
     deadline: BigNumberish,
@@ -572,133 +487,104 @@ export interface SturdyFusdt extends BaseContract {
     s: BytesLike,
     overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
+
+  scaledBalanceOf(user: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+  scaledTotalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
 
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   transfer(
-    to: string,
-    value: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
-  ): Promise<ContractTransaction>;
-
-  transferAndCall(
-    to: string,
-    value: BigNumberish,
-    data: BytesLike,
+    recipient: string,
+    amount: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
   transferFrom(
+    sender: string,
+    recipient: string,
+    amount: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> },
+  ): Promise<ContractTransaction>;
+
+  transferOnLiquidation(
     from: string,
     to: string,
     value: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
-  transferWithPermit(
+  transferUnderlyingTo(
     target: string,
-    to: string,
-    value: BigNumberish,
-    deadline: BigNumberish,
-    v: BigNumberish,
-    r: BytesLike,
-    s: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
-  ): Promise<ContractTransaction>;
-
-  underlying(overrides?: CallOverrides): Promise<string>;
-
-  vault(overrides?: CallOverrides): Promise<string>;
-
-  'withdraw(uint256,address)'(
     amount: BigNumberish,
-    to: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
-  ): Promise<ContractTransaction>;
-
-  'withdraw(uint256)'(
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
-  ): Promise<ContractTransaction>;
-
-  'withdraw()'(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
-
-  withdrawVault(
-    from: string,
-    amount: BigNumberish,
-    to: string,
     overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
+    ATOKEN_REVISION(overrides?: CallOverrides): Promise<BigNumber>;
+
     DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<string>;
+
+    EIP712_REVISION(overrides?: CallOverrides): Promise<string>;
 
     PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<string>;
 
-    Swapin(txhash: BytesLike, account: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    POOL(overrides?: CallOverrides): Promise<string>;
 
-    Swapout(amount: BigNumberish, bindaddr: string, overrides?: CallOverrides): Promise<boolean>;
+    RESERVE_TREASURY_ADDRESS(overrides?: CallOverrides): Promise<string>;
 
-    TRANSFER_TYPEHASH(overrides?: CallOverrides): Promise<string>;
+    UNDERLYING_ASSET_ADDRESS(overrides?: CallOverrides): Promise<string>;
 
-    allowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    _nonces(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
 
-    approve(spender: string, value: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
 
-    approveAndCall(spender: string, value: BigNumberish, data: BytesLike, overrides?: CallOverrides): Promise<boolean>;
+    approve(spender: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
 
-    balanceOf(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(user: string, overrides?: CallOverrides): Promise<BigNumber>;
 
-    burn(from: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
-
-    changeMPCOwner(newVault: string, overrides?: CallOverrides): Promise<boolean>;
-
-    changeVault(newVault: string, overrides?: CallOverrides): Promise<boolean>;
+    burn(
+      user: string,
+      receiverOfUnderlying: string,
+      amount: BigNumberish,
+      index: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     decimals(overrides?: CallOverrides): Promise<number>;
 
-    'deposit(uint256,address)'(amount: BigNumberish, to: string, overrides?: CallOverrides): Promise<BigNumber>;
+    decreaseAllowance(spender: string, subtractedValue: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
 
-    'deposit(uint256)'(amount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getIncentivesController(overrides?: CallOverrides): Promise<string>;
 
-    'deposit()'(overrides?: CallOverrides): Promise<BigNumber>;
+    getScaledUserBalanceAndSupply(user: string, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
 
-    depositVault(amount: BigNumberish, to: string, overrides?: CallOverrides): Promise<BigNumber>;
+    handleRepayment(user: string, amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
 
-    depositWithPermit(
-      target: string,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      to: string,
+    increaseAllowance(spender: string, addedValue: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+
+    initialize(
+      pool: string,
+      treasury: string,
+      underlyingAsset: string,
+      incentivesController: string,
+      aTokenDecimals: BigNumberish,
+      aTokenName: string,
+      aTokenSymbol: string,
+      params: BytesLike,
       overrides?: CallOverrides,
-    ): Promise<BigNumber>;
+    ): Promise<void>;
 
-    depositWithTransferPermit(
-      target: string,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      to: string,
-      overrides?: CallOverrides,
-    ): Promise<BigNumber>;
+    mint(user: string, amount: BigNumberish, index: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
 
-    mint(to: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    mintToTreasury(amount: BigNumberish, index: BigNumberish, overrides?: CallOverrides): Promise<void>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-    owner(overrides?: CallOverrides): Promise<string>;
-
     permit(
-      target: string,
+      owner: string,
       spender: string,
       value: BigNumberish,
       deadline: BigNumberish,
@@ -708,38 +594,21 @@ export interface SturdyFusdt extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<void>;
 
+    scaledBalanceOf(user: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    scaledTotalSupply(overrides?: CallOverrides): Promise<BigNumber>;
+
     symbol(overrides?: CallOverrides): Promise<string>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transfer(to: string, value: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transfer(recipient: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
 
-    transferAndCall(to: string, value: BigNumberish, data: BytesLike, overrides?: CallOverrides): Promise<boolean>;
+    transferFrom(sender: string, recipient: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
 
-    transferFrom(from: string, to: string, value: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transferOnLiquidation(from: string, to: string, value: BigNumberish, overrides?: CallOverrides): Promise<void>;
 
-    transferWithPermit(
-      target: string,
-      to: string,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: CallOverrides,
-    ): Promise<boolean>;
-
-    underlying(overrides?: CallOverrides): Promise<string>;
-
-    vault(overrides?: CallOverrides): Promise<string>;
-
-    'withdraw(uint256,address)'(amount: BigNumberish, to: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-    'withdraw(uint256)'(amount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
-
-    'withdraw()'(overrides?: CallOverrides): Promise<BigNumber>;
-
-    withdrawVault(from: string, amount: BigNumberish, to: string, overrides?: CallOverrides): Promise<BigNumber>;
+    transferUnderlyingTo(target: string, amount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   filters: {
@@ -750,150 +619,138 @@ export interface SturdyFusdt extends BaseContract {
     ): ApprovalEventFilter;
     Approval(owner?: string | null, spender?: string | null, value?: null): ApprovalEventFilter;
 
-    'LogChangeMPCOwner(address,address,uint256)'(
-      oldOwner?: string | null,
-      newOwner?: string | null,
-      effectiveHeight?: BigNumberish | null,
-    ): LogChangeMPCOwnerEventFilter;
-    LogChangeMPCOwner(
-      oldOwner?: string | null,
-      newOwner?: string | null,
-      effectiveHeight?: BigNumberish | null,
-    ): LogChangeMPCOwnerEventFilter;
+    'BalanceTransfer(address,address,uint256,uint256)'(
+      from?: string | null,
+      to?: string | null,
+      value?: null,
+      index?: null,
+    ): BalanceTransferEventFilter;
+    BalanceTransfer(from?: string | null, to?: string | null, value?: null, index?: null): BalanceTransferEventFilter;
 
-    'LogChangeVault(address,address,uint256)'(
-      oldVault?: string | null,
-      newVault?: string | null,
-      effectiveTime?: BigNumberish | null,
-    ): LogChangeVaultEventFilter;
-    LogChangeVault(
-      oldVault?: string | null,
-      newVault?: string | null,
-      effectiveTime?: BigNumberish | null,
-    ): LogChangeVaultEventFilter;
+    'Burn(address,address,uint256,uint256)'(
+      from?: string | null,
+      target?: string | null,
+      value?: null,
+      index?: null,
+    ): BurnEventFilter;
+    Burn(from?: string | null, target?: string | null, value?: null, index?: null): BurnEventFilter;
 
-    'LogSwapin(bytes32,address,uint256)'(
-      txhash?: BytesLike | null,
-      account?: string | null,
-      amount?: null,
-    ): LogSwapinEventFilter;
-    LogSwapin(txhash?: BytesLike | null, account?: string | null, amount?: null): LogSwapinEventFilter;
+    'Initialized(address,address,address,address,uint8,string,string,bytes)'(
+      underlyingAsset?: string | null,
+      pool?: string | null,
+      treasury?: null,
+      incentivesController?: null,
+      aTokenDecimals?: null,
+      aTokenName?: null,
+      aTokenSymbol?: null,
+      params?: null,
+    ): InitializedEventFilter;
+    Initialized(
+      underlyingAsset?: string | null,
+      pool?: string | null,
+      treasury?: null,
+      incentivesController?: null,
+      aTokenDecimals?: null,
+      aTokenName?: null,
+      aTokenSymbol?: null,
+      params?: null,
+    ): InitializedEventFilter;
 
-    'LogSwapout(address,address,uint256)'(
-      account?: string | null,
-      bindaddr?: string | null,
-      amount?: null,
-    ): LogSwapoutEventFilter;
-    LogSwapout(account?: string | null, bindaddr?: string | null, amount?: null): LogSwapoutEventFilter;
+    'Mint(address,uint256,uint256)'(from?: string | null, value?: null, index?: null): MintEventFilter;
+    Mint(from?: string | null, value?: null, index?: null): MintEventFilter;
 
     'Transfer(address,address,uint256)'(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
     Transfer(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
   };
 
   estimateGas: {
+    ATOKEN_REVISION(overrides?: CallOverrides): Promise<BigNumber>;
+
     DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<BigNumber>;
+
+    EIP712_REVISION(overrides?: CallOverrides): Promise<BigNumber>;
 
     PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<BigNumber>;
 
-    Swapin(
-      txhash: BytesLike,
-      account: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<BigNumber>;
+    POOL(overrides?: CallOverrides): Promise<BigNumber>;
 
-    Swapout(
-      amount: BigNumberish,
-      bindaddr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<BigNumber>;
+    RESERVE_TREASURY_ADDRESS(overrides?: CallOverrides): Promise<BigNumber>;
 
-    TRANSFER_TYPEHASH(overrides?: CallOverrides): Promise<BigNumber>;
+    UNDERLYING_ASSET_ADDRESS(overrides?: CallOverrides): Promise<BigNumber>;
 
-    allowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    _nonces(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     approve(
       spender: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<BigNumber>;
-
-    approveAndCall(
-      spender: string,
-      value: BigNumberish,
-      data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<BigNumber>;
-
-    balanceOf(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-    burn(
-      from: string,
       amount: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
 
-    changeMPCOwner(newVault: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    balanceOf(user: string, overrides?: CallOverrides): Promise<BigNumber>;
 
-    changeVault(newVault: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    burn(
+      user: string,
+      receiverOfUnderlying: string,
+      amount: BigNumberish,
+      index: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
-    'deposit(uint256,address)'(
+    decreaseAllowance(
+      spender: string,
+      subtractedValue: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<BigNumber>;
+
+    getIncentivesController(overrides?: CallOverrides): Promise<BigNumber>;
+
+    getScaledUserBalanceAndSupply(user: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    handleRepayment(
+      user: string,
       amount: BigNumberish,
-      to: string,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
 
-    'deposit(uint256)'(
-      amount: BigNumberish,
+    increaseAllowance(
+      spender: string,
+      addedValue: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
 
-    'deposit()'(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
-
-    depositVault(
-      amount: BigNumberish,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<BigNumber>;
-
-    depositWithPermit(
-      target: string,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<BigNumber>;
-
-    depositWithTransferPermit(
-      target: string,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      to: string,
+    initialize(
+      pool: string,
+      treasury: string,
+      underlyingAsset: string,
+      incentivesController: string,
+      aTokenDecimals: BigNumberish,
+      aTokenName: string,
+      aTokenSymbol: string,
+      params: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
 
     mint(
-      to: string,
+      user: string,
       amount: BigNumberish,
+      index: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<BigNumber>;
+
+    mintToTreasury(
+      amount: BigNumberish,
+      index: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-    owner(overrides?: CallOverrides): Promise<BigNumber>;
-
     permit(
-      target: string,
+      owner: string,
       spender: string,
       value: BigNumberish,
       deadline: BigNumberish,
@@ -902,177 +759,130 @@ export interface SturdyFusdt extends BaseContract {
       s: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
+
+    scaledBalanceOf(user: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    scaledTotalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<BigNumber>;
-
-    transferAndCall(
-      to: string,
-      value: BigNumberish,
-      data: BytesLike,
+      recipient: string,
+      amount: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
 
     transferFrom(
+      sender: string,
+      recipient: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<BigNumber>;
+
+    transferOnLiquidation(
       from: string,
       to: string,
       value: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
 
-    transferWithPermit(
+    transferUnderlyingTo(
       target: string,
-      to: string,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<BigNumber>;
-
-    underlying(overrides?: CallOverrides): Promise<BigNumber>;
-
-    vault(overrides?: CallOverrides): Promise<BigNumber>;
-
-    'withdraw(uint256,address)'(
       amount: BigNumberish,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<BigNumber>;
-
-    'withdraw(uint256)'(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<BigNumber>;
-
-    'withdraw()'(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
-
-    withdrawVault(
-      from: string,
-      amount: BigNumberish,
-      to: string,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
+    ATOKEN_REVISION(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    EIP712_REVISION(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    Swapin(
-      txhash: BytesLike,
-      account: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<PopulatedTransaction>;
+    POOL(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    Swapout(
-      amount: BigNumberish,
-      bindaddr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<PopulatedTransaction>;
+    RESERVE_TREASURY_ADDRESS(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    TRANSFER_TYPEHASH(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    UNDERLYING_ASSET_ADDRESS(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    allowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    _nonces(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     approve(
       spender: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<PopulatedTransaction>;
-
-    approveAndCall(
-      spender: string,
-      value: BigNumberish,
-      data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<PopulatedTransaction>;
-
-    balanceOf(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    burn(
-      from: string,
       amount: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
-    changeMPCOwner(
-      newVault: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<PopulatedTransaction>;
+    balanceOf(user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    changeVault(
-      newVault: string,
+    burn(
+      user: string,
+      receiverOfUnderlying: string,
+      amount: BigNumberish,
+      index: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    'deposit(uint256,address)'(
+    decreaseAllowance(
+      spender: string,
+      subtractedValue: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<PopulatedTransaction>;
+
+    getIncentivesController(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    getScaledUserBalanceAndSupply(user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    handleRepayment(
+      user: string,
       amount: BigNumberish,
-      to: string,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
-    'deposit(uint256)'(
-      amount: BigNumberish,
+    increaseAllowance(
+      spender: string,
+      addedValue: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
-    'deposit()'(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
-
-    depositVault(
-      amount: BigNumberish,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<PopulatedTransaction>;
-
-    depositWithPermit(
-      target: string,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<PopulatedTransaction>;
-
-    depositWithTransferPermit(
-      target: string,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      to: string,
+    initialize(
+      pool: string,
+      treasury: string,
+      underlyingAsset: string,
+      incentivesController: string,
+      aTokenDecimals: BigNumberish,
+      aTokenName: string,
+      aTokenSymbol: string,
+      params: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
     mint(
-      to: string,
+      user: string,
       amount: BigNumberish,
+      index: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<PopulatedTransaction>;
+
+    mintToTreasury(
+      amount: BigNumberish,
+      index: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
     permit(
-      target: string,
+      owner: string,
       spender: string,
       value: BigNumberish,
       deadline: BigNumberish,
@@ -1081,63 +891,38 @@ export interface SturdyFusdt extends BaseContract {
       s: BytesLike,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
+
+    scaledBalanceOf(user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    scaledTotalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transfer(
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<PopulatedTransaction>;
-
-    transferAndCall(
-      to: string,
-      value: BigNumberish,
-      data: BytesLike,
+      recipient: string,
+      amount: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
     transferFrom(
+      sender: string,
+      recipient: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<PopulatedTransaction>;
+
+    transferOnLiquidation(
       from: string,
       to: string,
       value: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
-    transferWithPermit(
+    transferUnderlyingTo(
       target: string,
-      to: string,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<PopulatedTransaction>;
-
-    underlying(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    vault(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    'withdraw(uint256,address)'(
       amount: BigNumberish,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<PopulatedTransaction>;
-
-    'withdraw(uint256)'(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<PopulatedTransaction>;
-
-    'withdraw()'(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
-
-    withdrawVault(
-      from: string,
-      amount: BigNumberish,
-      to: string,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
   };

@@ -7,6 +7,7 @@ import { Register } from '~app-toolkit/decorators';
 import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
+import { BaseToken } from '~position/token.interface';
 import { Network } from '~types/network.interface';
 
 import { SturdyContractFactory } from '../contracts';
@@ -38,10 +39,11 @@ type VaultMonitoringResponse = {
 export class FantomSturdyLendingTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(SturdyContractFactory) private readonly contractFactory: SturdyContractFactory,
+    @Inject(SturdyContractFactory) private readonly sturdyContractFactory: SturdyContractFactory,
   ) { }
 
   async getPositions() {
+    const multicall = this.appToolkit.getMulticall(network);
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
     const ethToken = baseTokens.find(t => t.address === ZERO_ADDRESS);
     if (!ethToken) return [];
@@ -49,8 +51,22 @@ export class FantomSturdyLendingTokenFetcher implements PositionFetcher<AppToken
     const endpoint = 'https://us-central1-stu-dashboard-a0ba2.cloudfunctions.net/getVaultMonitoring';
     const tokenData = await axios.get<VaultMonitoringResponse>(endpoint).then(v => v.data);
 
-    return tokenData.map(data => {
+    const tokens = tokenData.map(async (data) => {
       const symbol = data.tokens;
+      const underlyingTokens: BaseToken[] = [];
+
+      let contractFactoryFunc;
+      if (symbol === 'USDC') contractFactoryFunc = this.sturdyContractFactory.sturdyUsdc;
+      else if (symbol === 'fUSDT') contractFactoryFunc = this.sturdyContractFactory.sturdyFusdt;
+      else if (symbol === 'DAI') contractFactoryFunc = this.sturdyContractFactory.sturdyDai;
+
+      if (contractFactoryFunc) {
+        const contract = this.sturdyContractFactory.sturdyUsdc({ address: data.address, network });
+        const underlyingTokenAddress = await multicall.wrap(contract).UNDERLYING_ASSET_ADDRESS().then(v => v.toLowerCase());
+        const underlyingToken = baseTokens.find(t => t.address === underlyingTokenAddress);
+        if (underlyingToken) underlyingTokens.push(underlyingToken);
+      }
+
       const token: AppTokenPosition = {
         type: ContractType.APP_TOKEN,
         appId,
@@ -62,7 +78,7 @@ export class FantomSturdyLendingTokenFetcher implements PositionFetcher<AppToken
         supply: data.supply,
         pricePerShare: 1,
         price: data.price,
-        tokens: [ethToken],
+        tokens: underlyingTokens,
         dataProps: {
           apy: data.base,
           tvl: data.tvl
@@ -72,7 +88,8 @@ export class FantomSturdyLendingTokenFetcher implements PositionFetcher<AppToken
           images: []
         }
       };
-      return token
+      return token;
     })
+    return Promise.all(tokens);
   }
 }

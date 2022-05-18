@@ -8,32 +8,6 @@ import type { SturdyDai, SturdyDaiInterface } from '../SturdyDai';
 
 const _abi = [
   {
-    inputs: [
-      {
-        internalType: 'string',
-        name: '_name',
-        type: 'string',
-      },
-      {
-        internalType: 'string',
-        name: '_symbol',
-        type: 'string',
-      },
-      {
-        internalType: 'uint8',
-        name: '_decimals',
-        type: 'uint8',
-      },
-      {
-        internalType: 'address',
-        name: '_owner',
-        type: 'address',
-      },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'constructor',
-  },
-  {
     anonymous: false,
     inputs: [
       {
@@ -64,48 +38,29 @@ const _abi = [
       {
         indexed: true,
         internalType: 'address',
-        name: 'oldOwner',
+        name: 'from',
         type: 'address',
       },
       {
         indexed: true,
         internalType: 'address',
-        name: 'newOwner',
-        type: 'address',
-      },
-      {
-        indexed: true,
-        internalType: 'uint256',
-        name: 'effectiveTime',
-        type: 'uint256',
-      },
-    ],
-    name: 'LogChangeDCRMOwner',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'bytes32',
-        name: 'txhash',
-        type: 'bytes32',
-      },
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'account',
+        name: 'to',
         type: 'address',
       },
       {
         indexed: false,
         internalType: 'uint256',
-        name: 'amount',
+        name: 'value',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'index',
         type: 'uint256',
       },
     ],
-    name: 'LogSwapin',
+    name: 'BalanceTransfer',
     type: 'event',
   },
   {
@@ -114,23 +69,109 @@ const _abi = [
       {
         indexed: true,
         internalType: 'address',
-        name: 'account',
+        name: 'from',
         type: 'address',
       },
       {
         indexed: true,
         internalType: 'address',
-        name: 'bindaddr',
+        name: 'target',
         type: 'address',
       },
       {
         indexed: false,
         internalType: 'uint256',
-        name: 'amount',
+        name: 'value',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'index',
         type: 'uint256',
       },
     ],
-    name: 'LogSwapout',
+    name: 'Burn',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'underlyingAsset',
+        type: 'address',
+      },
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'pool',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        internalType: 'address',
+        name: 'treasury',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        internalType: 'address',
+        name: 'incentivesController',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        internalType: 'uint8',
+        name: 'aTokenDecimals',
+        type: 'uint8',
+      },
+      {
+        indexed: false,
+        internalType: 'string',
+        name: 'aTokenName',
+        type: 'string',
+      },
+      {
+        indexed: false,
+        internalType: 'string',
+        name: 'aTokenSymbol',
+        type: 'string',
+      },
+      {
+        indexed: false,
+        internalType: 'bytes',
+        name: 'params',
+        type: 'bytes',
+      },
+    ],
+    name: 'Initialized',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'address',
+        name: 'from',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'value',
+        type: 'uint256',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'index',
+        type: 'uint256',
+      },
+    ],
+    name: 'Mint',
     type: 'event',
   },
   {
@@ -160,12 +201,38 @@ const _abi = [
   },
   {
     inputs: [],
+    name: 'ATOKEN_REVISION',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
     name: 'DOMAIN_SEPARATOR',
     outputs: [
       {
         internalType: 'bytes32',
         name: '',
         type: 'bytes32',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'EIP712_REVISION',
+    outputs: [
+      {
+        internalType: 'bytes',
+        name: '',
+        type: 'bytes',
       },
     ],
     stateMutability: 'view',
@@ -185,66 +252,39 @@ const _abi = [
     type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'bytes32',
-        name: 'txhash',
-        type: 'bytes32',
-      },
-      {
-        internalType: 'address',
-        name: 'account',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'amount',
-        type: 'uint256',
-      },
-    ],
-    name: 'Swapin',
+    inputs: [],
+    name: 'POOL',
     outputs: [
       {
-        internalType: 'bool',
+        internalType: 'contract ILendingPool',
         name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: 'amount',
-        type: 'uint256',
-      },
-      {
-        internalType: 'address',
-        name: 'bindaddr',
         type: 'address',
       },
     ],
-    name: 'Swapout',
-    outputs: [
-      {
-        internalType: 'bool',
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'nonpayable',
+    stateMutability: 'view',
     type: 'function',
   },
   {
     inputs: [],
-    name: 'TRANSFER_TYPEHASH',
+    name: 'RESERVE_TREASURY_ADDRESS',
     outputs: [
       {
-        internalType: 'bytes32',
+        internalType: 'address',
         name: '',
-        type: 'bytes32',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'UNDERLYING_ASSET_ADDRESS',
+    outputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
       },
     ],
     stateMutability: 'view',
@@ -257,9 +297,28 @@ const _abi = [
         name: '',
         type: 'address',
       },
+    ],
+    name: '_nonces',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
       {
         internalType: 'address',
-        name: '',
+        name: 'owner',
+        type: 'address',
+      },
+      {
+        internalType: 'address',
+        name: 'spender',
         type: 'address',
       },
     ],
@@ -283,7 +342,7 @@ const _abi = [
       },
       {
         internalType: 'uint256',
-        name: 'value',
+        name: 'amount',
         type: 'uint256',
       },
     ],
@@ -302,36 +361,7 @@ const _abi = [
     inputs: [
       {
         internalType: 'address',
-        name: 'spender',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'value',
-        type: 'uint256',
-      },
-      {
-        internalType: 'bytes',
-        name: 'data',
-        type: 'bytes',
-      },
-    ],
-    name: 'approveAndCall',
-    outputs: [
-      {
-        internalType: 'bool',
-        name: '',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '',
+        name: 'user',
         type: 'address',
       },
     ],
@@ -350,18 +380,27 @@ const _abi = [
     inputs: [
       {
         internalType: 'address',
-        name: 'newOwner',
+        name: 'user',
         type: 'address',
       },
-    ],
-    name: 'changeDCRMOwner',
-    outputs: [
       {
-        internalType: 'bool',
-        name: '',
-        type: 'bool',
+        internalType: 'address',
+        name: 'receiverOfUnderlying',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'amount',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'index',
+        type: 'uint256',
       },
     ],
+    name: 'burn',
+    outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
   },
@@ -376,6 +415,204 @@ const _abi = [
       },
     ],
     stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'spender',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'subtractedValue',
+        type: 'uint256',
+      },
+    ],
+    name: 'decreaseAllowance',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'getIncentivesController',
+    outputs: [
+      {
+        internalType: 'contract ISturdyIncentivesController',
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'user',
+        type: 'address',
+      },
+    ],
+    name: 'getScaledUserBalanceAndSupply',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'user',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'amount',
+        type: 'uint256',
+      },
+    ],
+    name: 'handleRepayment',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'spender',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'addedValue',
+        type: 'uint256',
+      },
+    ],
+    name: 'increaseAllowance',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'contract ILendingPool',
+        name: 'pool',
+        type: 'address',
+      },
+      {
+        internalType: 'address',
+        name: 'treasury',
+        type: 'address',
+      },
+      {
+        internalType: 'address',
+        name: 'underlyingAsset',
+        type: 'address',
+      },
+      {
+        internalType: 'contract ISturdyIncentivesController',
+        name: 'incentivesController',
+        type: 'address',
+      },
+      {
+        internalType: 'uint8',
+        name: 'aTokenDecimals',
+        type: 'uint8',
+      },
+      {
+        internalType: 'string',
+        name: 'aTokenName',
+        type: 'string',
+      },
+      {
+        internalType: 'string',
+        name: 'aTokenSymbol',
+        type: 'string',
+      },
+      {
+        internalType: 'bytes',
+        name: 'params',
+        type: 'bytes',
+      },
+    ],
+    name: 'initialize',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'user',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'amount',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'index',
+        type: 'uint256',
+      },
+    ],
+    name: 'mint',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'amount',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'index',
+        type: 'uint256',
+      },
+    ],
+    name: 'mintToTreasury',
+    outputs: [],
+    stateMutability: 'nonpayable',
     type: 'function',
   },
   {
@@ -395,39 +632,7 @@ const _abi = [
     inputs: [
       {
         internalType: 'address',
-        name: '',
-        type: 'address',
-      },
-    ],
-    name: 'nonces',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'owner',
-    outputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'target',
+        name: 'owner',
         type: 'address',
       },
       {
@@ -467,6 +672,38 @@ const _abi = [
     type: 'function',
   },
   {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'user',
+        type: 'address',
+      },
+    ],
+    name: 'scaledBalanceOf',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'scaledTotalSupply',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
     inputs: [],
     name: 'symbol',
     outputs: [
@@ -496,12 +733,12 @@ const _abi = [
     inputs: [
       {
         internalType: 'address',
-        name: 'to',
+        name: 'recipient',
         type: 'address',
       },
       {
         internalType: 'uint256',
-        name: 'value',
+        name: 'amount',
         type: 'uint256',
       },
     ],
@@ -520,21 +757,21 @@ const _abi = [
     inputs: [
       {
         internalType: 'address',
-        name: 'to',
+        name: 'sender',
+        type: 'address',
+      },
+      {
+        internalType: 'address',
+        name: 'recipient',
         type: 'address',
       },
       {
         internalType: 'uint256',
-        name: 'value',
+        name: 'amount',
         type: 'uint256',
       },
-      {
-        internalType: 'bytes',
-        name: 'data',
-        type: 'bytes',
-      },
     ],
-    name: 'transferAndCall',
+    name: 'transferFrom',
     outputs: [
       {
         internalType: 'bool',
@@ -563,14 +800,8 @@ const _abi = [
         type: 'uint256',
       },
     ],
-    name: 'transferFrom',
-    outputs: [
-      {
-        internalType: 'bool',
-        name: '',
-        type: 'bool',
-      },
-    ],
+    name: 'transferOnLiquidation',
+    outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
   },
@@ -582,42 +813,17 @@ const _abi = [
         type: 'address',
       },
       {
-        internalType: 'address',
-        name: 'to',
-        type: 'address',
-      },
-      {
         internalType: 'uint256',
-        name: 'value',
+        name: 'amount',
         type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'deadline',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint8',
-        name: 'v',
-        type: 'uint8',
-      },
-      {
-        internalType: 'bytes32',
-        name: 'r',
-        type: 'bytes32',
-      },
-      {
-        internalType: 'bytes32',
-        name: 's',
-        type: 'bytes32',
       },
     ],
-    name: 'transferWithPermit',
+    name: 'transferUnderlyingTo',
     outputs: [
       {
-        internalType: 'bool',
+        internalType: 'uint256',
         name: '',
-        type: 'bool',
+        type: 'uint256',
       },
     ],
     stateMutability: 'nonpayable',
