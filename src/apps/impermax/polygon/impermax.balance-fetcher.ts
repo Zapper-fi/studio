@@ -12,19 +12,19 @@ const network = Network.POLYGON_MAINNET;
 
 @Register.BalanceFetcher(IMPERMAX_DEFINITION.id, network)
 export class PolygonImpermaxBalanceFetcher implements BalanceFetcher {
-  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) { }
+  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
   async getLendingBalances(address: string) {
     return await this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
       address,
       appId: IMPERMAX_DEFINITION.id,
       groupId: IMPERMAX_DEFINITION.groups.lend.id,
-      network: Network.POLYGON_MAINNET,
+      network,
     });
   }
 
   async getBalances(address: string) {
-    const lendingBalance = await this.getLendingBalances(address)
+    const lendingBalance = await this.getLendingBalances(address);
 
     // TODO: fetch debt in borrow position
 

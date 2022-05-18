@@ -14,7 +14,25 @@ const network = Network.ARBITRUM_MAINNET;
 export class ArbitrumImpermaxBalanceFetcher implements BalanceFetcher {
   constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
+  async getLendingBalances(address: string) {
+    return await this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
+      address,
+      appId: IMPERMAX_DEFINITION.id,
+      groupId: IMPERMAX_DEFINITION.groups.lend.id,
+      network,
+    });
+  }
+
   async getBalances(address: string) {
-    return presentBalanceFetcherResponse([]);
+    const lendingBalance = await this.getLendingBalances(address);
+
+    // TODO: fetch debt in borrow position
+
+    return presentBalanceFetcherResponse([
+      {
+        label: 'Lend',
+        assets: lendingBalance,
+      },
+    ]);
   }
 }

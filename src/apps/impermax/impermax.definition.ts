@@ -23,7 +23,7 @@ export const IMPERMAX_DEFINITION = appDefinition({
   tags: [AppTag.LENDING],
   keywords: [],
   links: {
-    github: 'https://github.com/Impermax-Finance'
+    github: 'https://github.com/Impermax-Finance',
   },
 
   supportedNetworks: {

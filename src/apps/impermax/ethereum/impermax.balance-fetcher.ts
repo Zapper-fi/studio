@@ -14,7 +14,25 @@ const network = Network.ETHEREUM_MAINNET;
 export class EthereumImpermaxBalanceFetcher implements BalanceFetcher {
   constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
+  async getLendingBalances(address: string) {
+    return await this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
+      address,
+      appId: IMPERMAX_DEFINITION.id,
+      groupId: IMPERMAX_DEFINITION.groups.lend.id,
+      network,
+    });
+  }
+
   async getBalances(address: string) {
-    return presentBalanceFetcherResponse([]);
+    const lendingBalance = await this.getLendingBalances(address);
+
+    // TODO: fetch debt in borrow position
+
+    return presentBalanceFetcherResponse([
+      {
+        label: 'Lend',
+        assets: lendingBalance,
+      },
+    ]);
   }
 }
