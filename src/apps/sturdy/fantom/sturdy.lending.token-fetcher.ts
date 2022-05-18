@@ -71,7 +71,7 @@ export class FantomSturdyLendingTokenFetcher implements PositionFetcher<AppToken
         decimals: data.decimals,
         supply: data.supply,
         pricePerShare: 1,
-        price: data.price,
+        price: underlyingTokens[0].price,
         tokens: underlyingTokens,
         dataProps: {
           apy: data.base,
