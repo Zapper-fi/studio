@@ -4,6 +4,7 @@ import axios from 'axios';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { Register } from '~app-toolkit/decorators';
+import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
@@ -78,7 +79,7 @@ export class FantomSturdyLendingTokenFetcher implements PositionFetcher<AppToken
         },
         displayProps: {
           label: symbol,
-          images: []
+          images: getImagesFromToken(underlyingTokens[0])
         }
       };
       return token;
