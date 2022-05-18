@@ -16,6 +16,24 @@ const appId = STURDY_DEFINITION.id;
 const groupId = STURDY_DEFINITION.groups.lending.id;
 const network = Network.FANTOM_OPERA_MAINNET;
 
+type VaultMonitoringResponse = {
+  chain: string;
+  tokens: string;
+  decimals: number;
+  address: string;
+  supply: number;
+  price: number;
+  base: number;
+  reward: number;
+  rewards: {
+    CRV: number;
+    CVX: number;
+  };
+  url: number;
+  tvl: number;
+  active: boolean;
+}[];
+
 @Register.TokenPositionFetcher({ appId, groupId, network })
 export class FantomSturdyLendingTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
@@ -29,7 +47,7 @@ export class FantomSturdyLendingTokenFetcher implements PositionFetcher<AppToken
     if (!ethToken) return [];
 
     const endpoint = 'https://us-central1-stu-dashboard-a0ba2.cloudfunctions.net/getVaultMonitoring';
-    const tokenData = await axios.get<any[]>(endpoint).then(v => v.data);
+    const tokenData = await axios.get<VaultMonitoringResponse>(endpoint).then(v => v.data);
 
     return tokenData.map(data => {
       const symbol = data.tokens;
