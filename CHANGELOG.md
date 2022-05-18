@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.30.0](https://github.com/Zapper-fi/studio/compare/v0.29.0...v0.30.0) (2022-05-18)
+
+
+### Features
+
+* added support for yvstETH Concentrated ([#456](https://github.com/Zapper-fi/studio/issues/456)) ([d8e198c](https://github.com/Zapper-fi/studio/commit/d8e198c09359bb4dbf8075a04e06009d94db2f8e))
+
 ## [0.29.0](https://github.com/Zapper-fi/studio/compare/v0.28.0...v0.29.0) (2022-05-17)
 
 
