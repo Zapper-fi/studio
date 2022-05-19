@@ -9,8 +9,8 @@ export { CurveCryptoFactoryPoolDefinitionStrategy } from './helpers/curve.crypto
 export { CurveFactoryGaugeAddressHelper } from './helpers/curve.factory-gauge.address-helper';
 export { CurveFactoryPoolTokenHelper } from './helpers/curve.factory-pool.token-helper';
 export { CurveFactoryPoolDefinitionStrategy } from './helpers/curve.factory.pool-definition-strategy';
-export { CurveGaugeV2RewardTokenStrategy } from './helpers/curve.gauge-v2.reward-token-strategy';
-export { CurveGaugeV2RoiStrategy } from './helpers/curve.gauge-v2.roi-strategy';
+export { CurveRewardsOnlyGaugeRewardTokenStrategy } from './helpers/curve.rewards-only-gauge.reward-token-strategy';
+export { CurveRewardsOnlyGaugeRoiStrategy } from './helpers/curve.rewards-only-gauge.roi-strategy';
 export { CurveGaugeIsActiveStrategy } from './helpers/curve.gauge.is-active-strategy';
 export { CurveGaugeRoiStrategy } from './helpers/curve.gauge.roi-strategy';
 export { CurveLiquidityPriceStrategy } from './helpers/curve.liquidity.price-strategy';
