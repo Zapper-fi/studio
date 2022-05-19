@@ -10,8 +10,7 @@ import { Network } from '~types/network.interface';
 import { SolaceContractFactory } from '../contracts';
 import { SOLACE_DEFINITION } from '../solace.definition';
 
-import { ethers } from 'ethers';
-const formatUnits = ethers.utils.formatUnits;
+import { bnToFloat } from '../utils';
 
 const appId = SOLACE_DEFINITION.id;
 const groupId = SOLACE_DEFINITION.groups.scp.id;
@@ -38,8 +37,8 @@ export class EthereumSolaceScpTokenFetcher implements PositionFetcher<AppTokenPo
       mcscp.pricePerShare(),
       this.getEthPrice()
     ]);
-    const supply = parseFloat(formatUnits(supplyRaw, decimals));
-    const scpPrice = ethPrice * parseFloat(formatUnits(pps, decimals));
+    const supply = bnToFloat(decimals)(supplyRaw);
+    const scpPrice = ethPrice * bnToFloat(decimals)(pps);
 
     return [{
       type: ContractType.APP_TOKEN,

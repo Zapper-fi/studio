@@ -10,6 +10,7 @@ import { SOLACE_DEFINITION } from '../solace.definition';
 
 import { ethers } from 'ethers';
 const formatUnits = ethers.utils.formatUnits;
+import { bnToFloat, range } from '~apps/solace/utils';
 
 const appId = SOLACE_DEFINITION.id;
 const network = Network.ETHEREUM_MAINNET;
@@ -89,12 +90,12 @@ export class EthereumSolaceTvlFetcher implements TvlFetcher {
     let provider: any = undefined;
     const balances = await Promise.all(TOKENS.map(token => {
       if(token.address === ZERO_ADDRESS) {
-        return provider.getBalance(UWP_ADDRESS).then((bal:any) => parseFloat(formatUnits(bal, token.decimals)));
+        return provider.getBalance(UWP_ADDRESS).then(bnToFloat(token.decimals));
       } else {
         const tokenContract = this.solaceContractFactory.erc20({ address: token.address, network });
         if(!provider) provider = tokenContract.provider;
         const mct = multicall.wrap(tokenContract);
-        return mct.balanceOf(UWP_ADDRESS).then((bal:any) => parseFloat(formatUnits(bal, token.decimals)));
+        return mct.balanceOf(UWP_ADDRESS).then(bnToFloat(token.decimals));
       }
     }));
     let usd = 0;
@@ -114,7 +115,7 @@ export class EthereumSolaceTvlFetcher implements TvlFetcher {
       const pps = await scp.pricePerShare();
       const eth = baseTokens.find((v:any) => v.address === ZERO_ADDRESS);
       const ethPrice = eth?.price ?? 0.0;
-      const scpPrice = ethPrice * parseFloat(formatUnits(pps, 18));
+      const scpPrice = ethPrice * bnToFloat(18)(pps);
       return {
         "metaType": "supplied",
         "type": "app-token",
@@ -131,9 +132,9 @@ export class EthereumSolaceTvlFetcher implements TvlFetcher {
       const usdcContract = this.solaceContractFactory.erc20({ address: USDC_ADDRESS, network });
       const slpContract = this.solaceContractFactory.erc20({ address: SLP_ADDRESS, network });
       const [s, u, ts] = await Promise.all([
-        solaceContract.balanceOf(SLP_ADDRESS).then((bal:any) => parseFloat(formatUnits(bal, 18))),
-        usdcContract.balanceOf(SLP_ADDRESS).then((bal:any) => parseFloat(formatUnits(bal, 6))),
-        slpContract.totalSupply().then((bal:any) => parseFloat(formatUnits(bal, 18))),
+        solaceContract.balanceOf(SLP_ADDRESS).then(bnToFloat(18)),
+        usdcContract.balanceOf(SLP_ADDRESS).then(bnToFloat(6)),
+        slpContract.totalSupply().then(bnToFloat(18)),
       ])
       const slpPrice = (s*solace.price + u*usdc.price) / ts;
       return {
@@ -148,10 +149,4 @@ export class EthereumSolaceTvlFetcher implements TvlFetcher {
     }
     return undefined;
   }
-}
-
-function range(start: any, stop: any) {
-  const arr: any = [];
-  for(let i = start; i < stop; i++) arr.push(i);
-  return arr;
 }

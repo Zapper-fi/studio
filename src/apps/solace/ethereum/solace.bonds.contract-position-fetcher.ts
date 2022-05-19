@@ -11,8 +11,7 @@ import { Network } from '~types/network.interface';
 import { SolaceContractFactory } from '../contracts';
 import { SOLACE_DEFINITION } from '../solace.definition';
 
-import { ethers } from 'ethers';
-const formatUnits = ethers.utils.formatUnits;
+import { bnToFloat } from '../utils';
 
 const appId = SOLACE_DEFINITION.id;
 const groupId = SOLACE_DEFINITION.groups.bonds.id;
@@ -95,7 +94,7 @@ export class EthereumSolaceBondsContractPositionFetcher implements PositionFetch
       const pps = await scp.pricePerShare();
       const eth = baseTokens.find((v:any) => v.address === ZERO_ADDRESS);
       const ethPrice = eth?.price ?? 0.0;
-      const scpPrice = ethPrice * parseFloat(formatUnits(pps, 18));
+      const scpPrice = ethPrice * bnToFloat(18)(pps);
       return {
         "metaType": "supplied",
         "type": "app-token",

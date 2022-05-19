@@ -10,9 +10,7 @@ import { Network } from '~types/network.interface';
 import { SolaceContractFactory } from '../contracts';
 import { SOLACE_DEFINITION } from '../solace.definition';
 
-import { ethers } from 'ethers';
-const BN = ethers.BigNumber;
-const formatUnits = ethers.utils.formatUnits;
+import { bnToFloat } from '../utils';
 
 const appId = SOLACE_DEFINITION.id;
 const groupId = SOLACE_DEFINITION.groups.xsolacev1.id;
@@ -22,7 +20,7 @@ const SOLACE_ADDRESS = "0x501ace9c35e60f03a2af4d484f49f9b1efde9f40";
 const XSOLACE_V1_ADDRESS = "0x501ace5ac3af20f49d53242b6d208f3b91cfc411";
 const symbol = "xSOLACEv1";
 const decimals = 18;
-const ONE_ETHER = BN.from("1000000000000000000");
+const ONE_ETHER = "1000000000000000000";
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
 export class EthereumSolaceXsolacev1TokenFetcher implements PositionFetcher<AppTokenPosition> {
@@ -41,8 +39,8 @@ export class EthereumSolaceXsolacev1TokenFetcher implements PositionFetcher<AppT
         mcxs.xSolaceToSolace(ONE_ETHER),
         this.getSolacePrice()
       ]);
-      const supply = parseFloat(formatUnits(supplyRaw, decimals));
-      const xsolacePrice = solacePrice * parseFloat(formatUnits(pps, decimals));
+      const supply = bnToFloat(decimals)(supplyRaw);
+      const xsolacePrice = solacePrice * bnToFloat(decimals)(pps);
 
       resolve([{
         type: ContractType.APP_TOKEN,

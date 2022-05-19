@@ -5,6 +5,7 @@ import { drillBalance } from '~app-toolkit';
 
 import { ethers } from 'ethers';
 const BN = ethers.BigNumber;
+import { range } from '~apps/solace/utils';
 
 export default async function getBondBalance(address: string, appToolkit: any, solaceContractFactory: SolaceContractFactory) {
   const network = Network.POLYGON_MAINNET;
@@ -41,10 +42,4 @@ export default async function getBondBalance(address: string, appToolkit: any, s
         ];
       },
     });
-}
-
-function range(start: any, stop: any) {
-  const arr: any = [];
-  for(let i = start; i < stop; i++) arr.push(i);
-  return arr;
 }

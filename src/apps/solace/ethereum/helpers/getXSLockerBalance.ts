@@ -5,6 +5,7 @@ import { drillBalance } from '~app-toolkit';
 
 import { ethers } from 'ethers';
 const BN = ethers.BigNumber;
+import { range } from '~apps/solace/utils';
 
 const XSLOCKER_ADDRESS        = "0x501ace47c5b0c2099c4464f681c3fa2ecd3146c1";
 const STAKING_REWARDS_ADDRESS = "0x501ace3d42f9c8723b108d4fbe29989060a91411";
@@ -46,10 +47,4 @@ export default async function getXSLockerBalance(address: string, appToolkit: an
         ];
       },
     });
-}
-
-function range(start: any, stop: any) {
-  const arr: any = [];
-  for(let i = start; i < stop; i++) arr.push(i);
-  return arr;
 }

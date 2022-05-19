@@ -8,8 +8,7 @@ import { Network } from '~types/network.interface';
 import { SolaceContractFactory } from '../contracts';
 import { SOLACE_DEFINITION } from '../solace.definition';
 
-import { ethers } from 'ethers';
-const formatUnits = ethers.utils.formatUnits;
+import { bnToFloat, range } from '~apps/solace/utils';
 
 const appId = SOLACE_DEFINITION.id;
 const network = Network.POLYGON_MAINNET;
@@ -81,12 +80,12 @@ export class PolygonSolaceTvlFetcher implements TvlFetcher {
     let provider: any = undefined;
     const balances = await Promise.all(TOKENS.map(token => {
       if(token.address === ZERO_ADDRESS) {
-        return provider.getBalance(UWP_ADDRESS).then((bal:any) => parseFloat(formatUnits(bal, token.decimals)));
+        return provider.getBalance(UWP_ADDRESS).then(bnToFloat(token.decimals));
       } else {
         const tokenContract = this.solaceContractFactory.erc20({ address: token.address, network });
         if(!provider) provider = tokenContract.provider;
         const mct = multicall.wrap(tokenContract);
-        return mct.balanceOf(UWP_ADDRESS).then((bal:any) => parseFloat(formatUnits(bal, token.decimals)));
+        return mct.balanceOf(UWP_ADDRESS).then(bnToFloat(token.decimals));
       }
     }));
     let usd = 0;
@@ -103,10 +102,4 @@ export class PolygonSolaceTvlFetcher implements TvlFetcher {
     if(!!token) return token;
     return undefined;
   }
-}
-
-function range(start: any, stop: any) {
-  const arr: any = [];
-  for(let i = start; i < stop; i++) arr.push(i);
-  return arr;
 }
