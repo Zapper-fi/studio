@@ -13,15 +13,13 @@ import { WithMetaType } from '~position/display.interface';
 import { SolaceContractFactory } from '../contracts';
 import { SOLACE_DEFINITION } from '../solace.definition';
 
-import { ethers } from 'ethers';
-const formatUnits = ethers.utils.formatUnits;
+import { findToken } from '../utils';
 
 const appId = SOLACE_DEFINITION.id;
 const groupId = SOLACE_DEFINITION.groups.bonds.id;
 const network = Network.POLYGON_MAINNET;
 
 const SOLACE_ADDRESS = "0x501ace9c35e60f03a2af4d484f49f9b1efde9f40";
-const ZERO_ADDRESS   = "0x0000000000000000000000000000000000000000";
 
 const BOND_TELLERS = [
   {
@@ -73,7 +71,7 @@ export class PolygonSolaceBondsContractPositionFetcher implements PositionFetche
     const solace = baseTokens.find((t:WithMetaType<Token>) => t.address === SOLACE_ADDRESS);
     const positions = await Promise.all(BOND_TELLERS.map(async teller => {
       const tokens:WithMetaType<Token>[] = [];
-      const depositToken = await this.getToken(baseTokens, teller.deposit);
+      const depositToken = await findToken(baseTokens, teller.deposit, this.solaceContractFactory, network);
       if(!!depositToken) tokens.push(supplied(depositToken));
       if(!!solace) tokens.push(claimable(solace));
       return {
@@ -86,11 +84,5 @@ export class PolygonSolaceBondsContractPositionFetcher implements PositionFetche
       };
     }));
     return positions;
-  }
-
-  async getToken(baseTokens:WithMetaType<Token>[], tokenAddress:string) {
-    const token = baseTokens.find((t:WithMetaType<Token>) => t.address === tokenAddress);
-    if(!!token) return token;
-    return undefined;
   }
 }

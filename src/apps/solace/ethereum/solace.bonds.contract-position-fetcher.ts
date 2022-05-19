@@ -13,15 +13,13 @@ import { WithMetaType } from '~position/display.interface';
 import { SolaceContractFactory } from '../contracts';
 import { SOLACE_DEFINITION } from '../solace.definition';
 
-import { bnToFloat } from '../utils';
+import { findToken } from '../utils';
 
 const appId = SOLACE_DEFINITION.id;
 const groupId = SOLACE_DEFINITION.groups.bonds.id;
 const network = Network.ETHEREUM_MAINNET;
 
 const SOLACE_ADDRESS = "0x501ace9c35e60f03a2af4d484f49f9b1efde9f40";
-const SCP_ADDRESS    = "0x501acee83a6f269b77c167c6701843d454e2efa0";
-const ZERO_ADDRESS   = "0x0000000000000000000000000000000000000000";
 
 const BOND_TELLERS = [
   {
@@ -73,7 +71,7 @@ export class EthereumSolaceBondsContractPositionFetcher implements PositionFetch
     const solace = baseTokens.find((t:WithMetaType<Token>) => t.address === SOLACE_ADDRESS);
     const positions = await Promise.all(BOND_TELLERS.map(async teller => {
       const tokens:WithMetaType<Token>[] = [];
-      const depositToken = await this.getToken(baseTokens, teller.deposit);
+      const depositToken = await findToken(baseTokens, teller.deposit, this.solaceContractFactory, network);
       if(!!depositToken) tokens.push(supplied(depositToken));
       if(!!solace) tokens.push(claimable(solace));
       return {
@@ -86,27 +84,5 @@ export class EthereumSolaceBondsContractPositionFetcher implements PositionFetch
       };
     }));
     return positions;
-  }
-
-  async getToken(baseTokens:WithMetaType<Token>[], tokenAddress:string) {
-    const token = baseTokens.find((t:WithMetaType<Token>) => t.address === tokenAddress);
-    if(!!token) return token;
-    if(tokenAddress === SCP_ADDRESS) {
-      const scp = this.solaceContractFactory.scp({ address: SCP_ADDRESS, network });
-      const pps = await scp.pricePerShare();
-      const eth = baseTokens.find((t:WithMetaType<Token>) => t.address === ZERO_ADDRESS);
-      const ethPrice = eth?.price ?? 0.0;
-      const scpPrice = ethPrice * bnToFloat(18)(pps);
-      return {
-        "metaType": "supplied",
-        "type": "app-token",
-        "network": "ethereum",
-        "address": SCP_ADDRESS,
-        "decimals": 18,
-        "symbol": "SCP",
-        "price": scpPrice
-      }
-    }
-    return undefined;
   }
 }
