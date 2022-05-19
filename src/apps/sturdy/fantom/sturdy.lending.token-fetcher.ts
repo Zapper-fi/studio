@@ -41,7 +41,7 @@ export class FantomSturdyLendingTokenFetcher implements PositionFetcher<AppToken
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(SturdyContractFactory) private readonly sturdyContractFactory: SturdyContractFactory,
-  ) { }
+  ) {}
 
   async getPositions() {
     const multicall = this.appToolkit.getMulticall(network);
@@ -52,12 +52,15 @@ export class FantomSturdyLendingTokenFetcher implements PositionFetcher<AppToken
     const endpoint = 'https://us-central1-stu-dashboard-a0ba2.cloudfunctions.net/getVaultMonitoring';
     const tokenData = await axios.get<VaultMonitoringResponse>(endpoint).then(v => v.data);
 
-    const tokens = tokenData.map(async (data) => {
+    const tokens = tokenData.map(async data => {
       const symbol = data.tokens;
       const underlyingTokens: BaseToken[] = [];
 
       const contract = this.sturdyContractFactory.sturdyToken({ address: data.address, network });
-      const underlyingTokenAddress = await multicall.wrap(contract).UNDERLYING_ASSET_ADDRESS().then(v => v.toLowerCase());
+      const underlyingTokenAddress = await multicall
+        .wrap(contract)
+        .UNDERLYING_ASSET_ADDRESS()
+        .then(v => v.toLowerCase());
       const underlyingToken = baseTokens.find(t => t.address === underlyingTokenAddress);
       if (underlyingToken) underlyingTokens.push(underlyingToken);
 
@@ -75,15 +78,15 @@ export class FantomSturdyLendingTokenFetcher implements PositionFetcher<AppToken
         tokens: underlyingTokens,
         dataProps: {
           apy: data.base,
-          tvl: data.tvl
+          tvl: data.tvl,
         },
         displayProps: {
           label: symbol,
-          images: getImagesFromToken(underlyingTokens[0])
-        }
+          images: getImagesFromToken(underlyingTokens[0]),
+        },
       };
       return token;
-    })
+    });
     return Promise.all(tokens);
   }
 }

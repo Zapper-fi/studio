@@ -13,7 +13,7 @@ const network = Network.FANTOM_OPERA_MAINNET;
 
 @Register.TvlFetcher({ appId, network })
 export class FantomSturdyTvlFetcher implements TvlFetcher {
-  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) { }
+  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
   async getTvl() {
     const lendingTokens = await this.appToolkit.getAppTokenPositions({
