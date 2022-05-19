@@ -4,6 +4,8 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { TvlFetcher } from '~stats/tvl/tvl-fetcher.interface';
 import { Network } from '~types/network.interface';
+import { Token } from '~position/position.interface';
+import { WithMetaType } from '~position/display.interface';
 
 import { SolaceContractFactory } from '../contracts';
 import { SOLACE_DEFINITION } from '../solace.definition';
@@ -99,7 +101,7 @@ export class EthereumSolaceTvlFetcher implements TvlFetcher {
       }
     }));
     let usd = 0;
-    await Promise.all(indices.map(async (i:any) => {
+    await Promise.all(indices.map(async (i:number) => {
       const zapperToken = await this.getToken(baseTokens, TOKENS[i].address);
       if(!zapperToken) return;
       usd += balances[i] * zapperToken.price;
@@ -107,13 +109,13 @@ export class EthereumSolaceTvlFetcher implements TvlFetcher {
     return usd;
   }
 
-  async getToken(baseTokens:any, tokenAddress:string) {
-    const token = baseTokens.find((v:any) => v.address === tokenAddress);
+  async getToken(baseTokens:WithMetaType<Token>[], tokenAddress:string) {
+    const token = baseTokens.find((t:WithMetaType<Token>) => t.address === tokenAddress);
     if(!!token) return token;
     if(tokenAddress === SCP_ADDRESS) {
       const scp = this.solaceContractFactory.scp({ address: SCP_ADDRESS, network });
       const pps = await scp.pricePerShare();
-      const eth = baseTokens.find((v:any) => v.address === ZERO_ADDRESS);
+      const eth = baseTokens.find((t:WithMetaType<Token>) => t.address === ZERO_ADDRESS);
       const ethPrice = eth?.price ?? 0.0;
       const scpPrice = ethPrice * bnToFloat(18)(pps);
       return {
@@ -126,8 +128,10 @@ export class EthereumSolaceTvlFetcher implements TvlFetcher {
         "price": scpPrice
       }
     } else if(tokenAddress === SLP_ADDRESS) {
-      const solace = baseTokens.find((v:any) => v.address === SOLACE_ADDRESS);
-      const usdc = baseTokens.find((v:any) => v.address === USDC_ADDRESS);
+      const solace = baseTokens.find((t:WithMetaType<Token>) => t.address === SOLACE_ADDRESS);
+      const usdc = baseTokens.find((t:WithMetaType<Token>) => t.address === USDC_ADDRESS);
+      const solacePrice = solace?.price ?? 0.0;
+      const usdcPrice = usdc?.price ?? 0.0;
       const solaceContract = this.solaceContractFactory.erc20({ address: SOLACE_ADDRESS, network });
       const usdcContract = this.solaceContractFactory.erc20({ address: USDC_ADDRESS, network });
       const slpContract = this.solaceContractFactory.erc20({ address: SLP_ADDRESS, network });
@@ -136,7 +140,7 @@ export class EthereumSolaceTvlFetcher implements TvlFetcher {
         usdcContract.balanceOf(SLP_ADDRESS).then(bnToFloat(6)),
         slpContract.totalSupply().then(bnToFloat(18)),
       ])
-      const slpPrice = (s*solace.price + u*usdc.price) / ts;
+      const slpPrice = (s*solacePrice + u*usdcPrice) / ts;
       return {
         "metaType": "supplied",
         "type": "app-token",

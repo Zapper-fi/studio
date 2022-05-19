@@ -4,6 +4,8 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { TvlFetcher } from '~stats/tvl/tvl-fetcher.interface';
 import { Network } from '~types/network.interface';
+import { Token } from '~position/position.interface';
+import { WithMetaType } from '~position/display.interface';
 
 import { SolaceContractFactory } from '../contracts';
 import { SOLACE_DEFINITION } from '../solace.definition';
@@ -89,7 +91,7 @@ export class PolygonSolaceTvlFetcher implements TvlFetcher {
       }
     }));
     let usd = 0;
-    await Promise.all(indices.map(async (i:any) => {
+    await Promise.all(indices.map(async (i:number) => {
       const zapperToken = await this.getToken(baseTokens, TOKENS[i].address);
       if(!zapperToken) return;
       usd += balances[i] * zapperToken.price;
@@ -97,8 +99,8 @@ export class PolygonSolaceTvlFetcher implements TvlFetcher {
     return usd;
   }
 
-  async getToken(baseTokens:any, tokenAddress:string) {
-    const token = baseTokens.find((v:any) => v.address === tokenAddress);
+  async getToken(baseTokens:WithMetaType<Token>[], tokenAddress:string) {
+    const token = baseTokens.find((t:WithMetaType<Token>) => t.address === tokenAddress);
     if(!!token) return token;
     return undefined;
   }

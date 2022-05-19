@@ -6,6 +6,8 @@ import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { ContractType } from '~position/contract.interface';
 import { Network } from '~types/network.interface';
+import { Token } from '~position/position.interface';
+import { WithMetaType } from '~position/display.interface';
 
 import { SolaceContractFactory } from '../contracts';
 import { SOLACE_DEFINITION } from '../solace.definition';
@@ -55,7 +57,7 @@ export class EthereumSolaceScpTokenFetcher implements PositionFetcher<AppTokenPo
 
   async getEthPrice() {
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
-    const eth = baseTokens.find((v:any) => v.address === ZERO_ADDRESS);
+    const eth = baseTokens.find((t:WithMetaType<Token>) => t.address === ZERO_ADDRESS);
     if(!eth || !eth.price) return 0.0;
     return eth.price;
   }

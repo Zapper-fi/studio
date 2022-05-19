@@ -7,6 +7,8 @@ import { ContractPosition } from '~position/position.interface';
 import { ContractType } from '~position/contract.interface';
 import { claimable, supplied } from '~position/position.utils';
 import { Network } from '~types/network.interface';
+import { Token } from '~position/position.interface';
+import { WithMetaType } from '~position/display.interface';
 
 import { SolaceContractFactory } from '../contracts';
 import { SOLACE_DEFINITION } from '../solace.definition';
@@ -68,9 +70,9 @@ export class EthereumSolaceBondsContractPositionFetcher implements PositionFetch
 
   async getPositions() {
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
-    const solace = baseTokens.find((v:any) => v.address === SOLACE_ADDRESS);
+    const solace = baseTokens.find((t:WithMetaType<Token>) => t.address === SOLACE_ADDRESS);
     const positions = await Promise.all(BOND_TELLERS.map(async teller => {
-      const tokens:any = [];
+      const tokens:WithMetaType<Token>[] = [];
       const depositToken = await this.getToken(baseTokens, teller.deposit);
       if(!!depositToken) tokens.push(supplied(depositToken));
       if(!!solace) tokens.push(claimable(solace));
@@ -86,13 +88,13 @@ export class EthereumSolaceBondsContractPositionFetcher implements PositionFetch
     return positions;
   }
 
-  async getToken(baseTokens:any, tokenAddress:string) {
-    const token = baseTokens.find((v:any) => v.address === tokenAddress);
+  async getToken(baseTokens:WithMetaType<Token>[], tokenAddress:string) {
+    const token = baseTokens.find((t:WithMetaType<Token>) => t.address === tokenAddress);
     if(!!token) return token;
     if(tokenAddress === SCP_ADDRESS) {
       const scp = this.solaceContractFactory.scp({ address: SCP_ADDRESS, network });
       const pps = await scp.pricePerShare();
-      const eth = baseTokens.find((v:any) => v.address === ZERO_ADDRESS);
+      const eth = baseTokens.find((t:WithMetaType<Token>) => t.address === ZERO_ADDRESS);
       const ethPrice = eth?.price ?? 0.0;
       const scpPrice = ethPrice * bnToFloat(18)(pps);
       return {

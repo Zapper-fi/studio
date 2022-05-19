@@ -7,6 +7,8 @@ import { ContractPosition } from '~position/position.interface';
 import { ContractType } from '~position/contract.interface';
 import { supplied } from '~position/position.utils';
 import { Network } from '~types/network.interface';
+import { Token } from '~position/position.interface';
+import { WithMetaType } from '~position/display.interface';
 
 import { SolaceContractFactory } from '../contracts';
 import { SOLACE_DEFINITION } from '../solace.definition';
@@ -27,7 +29,7 @@ export class PolygonSolacePoliciesContractPositionFetcher implements PositionFet
 
   async getPositions() {
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
-    const frax = baseTokens.find((v:any) => v.address === FRAX_ADDRESS);
+    const frax = baseTokens.find((t:WithMetaType<Token>) => t.address === FRAX_ADDRESS);
     const tokens = ((!!frax)
       ? [supplied(frax)]
       : []);
