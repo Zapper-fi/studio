@@ -8,8 +8,9 @@ export const COMPOUND_DEFINITION = appDefinition({
   name: 'Compound',
   description: `An algorithmic, autonomous interest rate protocol built for developers`,
   groups: {
-    supply: { id: 'supply', type: GroupType.TOKEN, label: 'Rewards' },
-    borrow: { id: 'borrow', type: GroupType.POSITION, label: 'Lending' },
+    supply: { id: 'supply', type: GroupType.TOKEN, label: 'Supply' },
+    borrow: { id: 'borrow', type: GroupType.POSITION, label: 'Borrow' },
+    claimable: { id: 'claimable', type: GroupType.POSITION, label: 'Claimable' },
   },
   url: 'https://compound.finance/',
   links: {

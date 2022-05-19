@@ -13,6 +13,8 @@ import { Network } from '~types/network.interface';
 
 import { BProtocolContractFactory } from '../contracts';
 
+const appId = LIQUITY_DEFINITION.id;
+const groupId = LIQUITY_DEFINITION.groups.trove.id;
 const network = Network.ETHEREUM_MAINNET;
 
 export class LiquityBProtocolAdapter {
@@ -50,8 +52,8 @@ export class LiquityBProtocolAdapter {
           const contractPositionBalance: ContractPositionBalance = {
             type: ContractType.POSITION,
             address: bammLensAddress,
-            appId: LIQUITY_DEFINITION.id,
-            groupId: LIQUITY_DEFINITION.groups.trove.id,
+            appId,
+            groupId,
             network,
             tokens: [tokenBalance],
             balanceUSD: tokenBalance.balanceUSD,

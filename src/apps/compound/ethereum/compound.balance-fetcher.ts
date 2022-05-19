@@ -44,7 +44,7 @@ export class EthereumCompoundBalanceFetcher implements BalanceFetcher {
     return this.compoundClaimableBalanceHelper.getBalances({
       address,
       appId,
-      groupId: COMPOUND_DEFINITION.groups.supply.id,
+      groupId: COMPOUND_DEFINITION.groups.claimable.id,
       network,
       lensAddress: '0xd513d22422a3062bd342ae374b4b9c20e0a9a074',
       rewardTokenAddress: '0xc00e94cb662c3520282e6f5717214004a7f26888',
@@ -67,7 +67,7 @@ export class EthereumCompoundBalanceFetcher implements BalanceFetcher {
         meta: meta,
       },
       {
-        label: 'Rewards',
+        label: 'Claimable',
         assets: claimableBalances,
       },
     ]);

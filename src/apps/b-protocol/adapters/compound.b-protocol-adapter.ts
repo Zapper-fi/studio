@@ -1,6 +1,7 @@
 import { Inject } from '@nestjs/common';
 
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
+import { COMPOUND_DEFINITION } from '~apps/compound/compound.definition';
 import { CompoundContractFactory } from '~apps/compound/contracts';
 import { CompoundLendingBalanceHelper } from '~apps/compound/helper/compound.lending.balance-helper';
 import { CompoundLendingMetaHelper } from '~apps/compound/helper/compound.lending.meta-helper';
@@ -30,9 +31,9 @@ export class CompoundBProtocolAdapter {
 
     const lendingBalances = await this.compoundLendingBalanceHelper.getBalances({
       address: avatarAddress,
-      appId: 'compound',
-      supplyGroupId: 'supply',
-      borrowGroupId: 'borrow',
+      appId: COMPOUND_DEFINITION.id,
+      supplyGroupId: COMPOUND_DEFINITION.groups.supply.id,
+      borrowGroupId: COMPOUND_DEFINITION.groups.borrow.id,
       network,
       getTokenContract: ({ address, network }) => this.compoundContractFactory.compoundCToken({ address, network }),
       getBalanceRaw: ({ contract, address, multicall }) => multicall.wrap(contract).balanceOf(address),

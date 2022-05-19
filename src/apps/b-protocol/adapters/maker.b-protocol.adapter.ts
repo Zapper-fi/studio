@@ -13,6 +13,8 @@ import { Network } from '~types/network.interface';
 
 import { BProtocolContractFactory } from '../contracts';
 
+const appId = MAKER_DEFINITION.id;
+const groupId = MAKER_DEFINITION.groups.vault.id;
 const network = Network.ETHEREUM_MAINNET;
 
 export class MakerBProtocolAdapter {
@@ -88,8 +90,8 @@ export class MakerBProtocolAdapter {
         const position: ContractPositionBalance = {
           type: ContractType.POSITION,
           address: this.BCDP_MANGER,
-          appId: MAKER_DEFINITION.id,
-          groupId: MAKER_DEFINITION.groups.vault.id,
+          appId,
+          groupId,
           network,
           tokens,
           balanceUSD,
