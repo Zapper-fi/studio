@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.32.0](https://github.com/Zapper-fi/studio/compare/v0.31.0...v0.32.0) (2022-05-19)
+
+
+### Features
+
+* **tarot:** Extract Tarot to Studio ([#463](https://github.com/Zapper-fi/studio/issues/463)) ([3dc92e0](https://github.com/Zapper-fi/studio/commit/3dc92e0aced64f2f2b9091f8fbca92a5255fe8fc))
+
 ## [0.31.0](https://github.com/Zapper-fi/studio/compare/v0.30.0...v0.31.0) (2022-05-19)
 
 
