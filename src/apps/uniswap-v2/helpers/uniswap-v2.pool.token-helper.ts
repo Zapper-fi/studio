@@ -1,6 +1,6 @@
 import { Inject } from '@nestjs/common';
 import { BigNumberish } from 'ethers';
-import _ from 'lodash';
+import _, { compact } from 'lodash';
 import { keyBy, sortBy } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
@@ -13,6 +13,7 @@ import { EthersMulticall as Multicall } from '~multicall/multicall.ethers';
 import { ContractType } from '~position/contract.interface';
 import { AppTokenPosition, Token } from '~position/position.interface';
 import { AppGroupsDefinition } from '~position/position.service';
+import { BaseToken } from '~position/token.interface';
 import { Network } from '~types/network.interface';
 
 import { UniswapFactory, UniswapPair } from '../contracts';
@@ -39,6 +40,7 @@ export type UniswapV2PoolTokenHelperParams<T = UniswapFactory, V = UniswapPair> 
   hiddenTokens?: string[];
   blockedPools?: string[];
   appTokenDependencies?: AppGroupsDefinition[];
+  priceDerivationWhitelist?: string[];
   resolveFactoryContract(opts: { address: string; network: Network }): T;
   resolvePoolContract(opts: { address: string; network: Network }): V;
   resolvePoolTokenAddresses: (opts: {
@@ -48,6 +50,17 @@ export type UniswapV2PoolTokenHelperParams<T = UniswapFactory, V = UniswapPair> 
     resolveFactoryContract(opts: { address: string; network: Network }): T;
     resolvePoolContract(opts: { address: string; network: Network }): V;
   }) => Promise<ResolvePoolTokenAddressesResponse>;
+  resolveDerivedUnderlyingToken?(opts: {
+    appId: string;
+    network: Network;
+    factoryAddress: string;
+    tokenAddress: string;
+    baseTokensByAddress: Record<string, BaseToken>;
+    resolveFactoryContract(opts: { address: string; network: Network }): T;
+    resolvePoolContract(opts: { address: string; network: Network }): V;
+    resolvePoolUnderlyingTokenAddresses(opts: { multicall: Multicall; poolContract: V }): Promise<[string, string]>;
+    resolvePoolReserves(opts: { multicall: Multicall; poolContract: V }): Promise<[BigNumberish, BigNumberish]>;
+  }): Promise<BaseToken>;
   resolvePoolVolumes?: (opts: {
     appId: string;
     network: Network;
@@ -77,6 +90,7 @@ export class UniswapV2PoolTokenHelper {
     appTokenDependencies = [],
     resolveFactoryContract,
     resolvePoolContract,
+    resolveDerivedUnderlyingToken,
     resolvePoolTokenAddresses,
     resolvePoolTokenSymbol,
     resolvePoolTokenSupply,
@@ -122,9 +136,28 @@ export class UniswapV2PoolTokenHelper {
         const token1Address = token1AddressRaw.toLowerCase();
         if (hiddenTokens.includes(token0Address) || hiddenTokens.includes(token1Address)) return null;
 
-        const token0 = appTokensByAddress[token0Address] ?? baseTokensByAddress[token0Address];
-        const token1 = appTokensByAddress[token1Address] ?? baseTokensByAddress[token1Address];
-        if (!token0 || !token1) return null;
+        const resolvedTokens = await Promise.all(
+          [token0Address, token1Address].map(async tokenAddress => {
+            const underlyingToken = appTokensByAddress[tokenAddress] ?? baseTokensByAddress[tokenAddress];
+            if (underlyingToken) return underlyingToken;
+            if (!resolveDerivedUnderlyingToken) return null;
+
+            return resolveDerivedUnderlyingToken({
+              appId,
+              baseTokensByAddress,
+              factoryAddress,
+              network,
+              resolveFactoryContract,
+              resolvePoolContract,
+              resolvePoolReserves,
+              resolvePoolUnderlyingTokenAddresses,
+              tokenAddress,
+            });
+          }),
+        );
+
+        const tokens = compact(resolvedTokens);
+        if (tokens.length !== resolvedTokens.length) return null;
 
         // Retrieve pool reserves and pool token supply
         const [symbol, supplyRaw, reservesRaw] = await Promise.all([
@@ -135,7 +168,6 @@ export class UniswapV2PoolTokenHelper {
 
         // Data Props
         const decimals = 18;
-        const tokens = [token0, token1];
         const reserves = reservesRaw.map((r, i) => Number(r) / 10 ** tokens[i].decimals);
         const liquidity = tokens[0].price * reserves[0] + tokens[1].price * reserves[1];
         const reservePercentages = tokens.map((t, i) => reserves[i] * (t.price / liquidity));
@@ -148,7 +180,7 @@ export class UniswapV2PoolTokenHelper {
 
         // Display Props
         const prefix = resolveTokenDisplayPrefix(symbol);
-        const label = `${prefix} ${resolveTokenDisplaySymbol(token0)} / ${resolveTokenDisplaySymbol(token1)}`;
+        const label = `${prefix} ${resolveTokenDisplaySymbol(tokens[0])} / ${resolveTokenDisplaySymbol(tokens[1])}`;
         const secondaryLabel = reservePercentages.map(p => `${Math.round(p * 100)}%`).join(' / ');
         const images = tokens.map(v => getImagesFromToken(v)).flat();
         const statsItems = [
