@@ -5,9 +5,9 @@ import { Network } from '~types/network.interface';
 
 export const EASE_DEFINITION = appDefinition({
   id: 'ease',
-  name: 'Ease DeFi Cover',
+  name: 'Ease.org DeFi Cover',
   description:
-    'Ease is a decentralized insurance protocol that enables users to insure their yield, lending or LP tokens trustlessly and without a premium',
+    'Ease is a decentralized coverage protocol that enables users to protect their DeFi tokens without a premium while earning compounding yield.',
   url: 'https://ease.org/',
 
   groups: {
