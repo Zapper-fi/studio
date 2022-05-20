@@ -4,7 +4,6 @@
 export { BondTellerErc20__factory } from './BondTellerErc20__factory';
 export { BondTellerEth__factory } from './BondTellerEth__factory';
 export { BondTellerMatic__factory } from './BondTellerMatic__factory';
-export { Erc20__factory } from './Erc20__factory';
 export { Scp__factory } from './Scp__factory';
 export { Solace__factory } from './Solace__factory';
 export { SolaceCoverProduct__factory } from './SolaceCoverProduct__factory';
