@@ -4,6 +4,21 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.29.0](https://github.com/Zapper-fi/studio/compare/v0.28.0...v0.29.0) (2022-05-17)
+
+
+### Features
+
+* **curve:** Add child liquidity gauges to Optimism ([#451](https://github.com/Zapper-fi/studio/issues/451)) ([a9c218e](https://github.com/Zapper-fi/studio/commit/a9c218eb2b718db946e15f8175f464c567396b80))
+* **curve:** Document Curve gauge impls on Ethereum for future refactors ([#455](https://github.com/Zapper-fi/studio/issues/455)) ([fc9638f](https://github.com/Zapper-fi/studio/commit/fc9638f3ae0219b03f53658d3bcf7b491c304265))
+* **curve:** Support child liquidity gauges for Gnosis Curve ([#450](https://github.com/Zapper-fi/studio/issues/450)) ([aa4054c](https://github.com/Zapper-fi/studio/commit/aa4054c1d203892e4aa0ba7014158cbfb3158b49))
+* **curve:** Support child liquidity gauges on Avalanche ([#442](https://github.com/Zapper-fi/studio/issues/442)) ([140f5dc](https://github.com/Zapper-fi/studio/commit/140f5dcc26364c961c1c892a4bd704db762088d4))
+* **curve:** Support child liquidity gauges on Harmony ([#452](https://github.com/Zapper-fi/studio/issues/452)) ([40138de](https://github.com/Zapper-fi/studio/commit/40138de5e955cdbe053eb98d00ccb4245838dff0))
+* **curve:** Support new child liquidity gauges on Arbitrum ([#444](https://github.com/Zapper-fi/studio/issues/444)) ([1c1510e](https://github.com/Zapper-fi/studio/commit/1c1510e6d03a250692b4da79e1a92cd2a70b8091))
+* **curve:** Support Tokemak pools ([#453](https://github.com/Zapper-fi/studio/issues/453)) ([5a15843](https://github.com/Zapper-fi/studio/commit/5a15843ef4e10b8aeb2d8c73577df0731ceee865))
+* **curve:** Update Curve Fantom liquidity gauges ([#448](https://github.com/Zapper-fi/studio/issues/448)) ([2beb324](https://github.com/Zapper-fi/studio/commit/2beb3246f9218e40d1aed6c47cbc170aac8cb950))
+* **curve:** Update Polygon sidechain gauges ([#446](https://github.com/Zapper-fi/studio/issues/446)) ([b4698e6](https://github.com/Zapper-fi/studio/commit/b4698e62518f175ffd10715928f1698e53e61637))
+
 ## [0.28.0](https://github.com/Zapper-fi/studio/compare/v0.27.0...v0.28.0) (2022-05-16)
 
 

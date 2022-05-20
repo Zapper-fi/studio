@@ -47,6 +47,7 @@ export enum AppTag {
   SYNTHETICS = 'synthetics',
   TOKENIZED_RISK = 'tokenized-risk',
   YIELD_AGGREGATOR = 'yield-aggregator',
+  LIMIT_ORDER = 'limit-order',
 }
 
 export enum GroupType {
