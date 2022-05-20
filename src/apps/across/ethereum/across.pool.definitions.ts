@@ -1,4 +1,4 @@
-import {AcrossPoolDefinition } from '../across.types';
+import { AcrossPoolDefinition } from '../across.types';
 
 export const ACROSS_V1_POOL_DEFINITIONS: AcrossPoolDefinition[] = [
   {
