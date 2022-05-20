@@ -5,9 +5,9 @@ import { Network } from '~types/network.interface';
 
 export const EASE_DEFINITION = appDefinition({
   id: 'ease',
-  name: 'ease DeFi cover',
+  name: 'Ease DeFi Cover',
   description:
-    'ease provides users with a DeFi native coverage model that protects them from hacks by pooling covered assets together and using them as collateral for the coverage.',
+    'Ease is a decentralized insurance protocol that enables users to insure their yield, lending or LP tokens trustlessly and without a premium',
   url: 'https://ease.org/',
 
   groups: {
@@ -20,14 +20,11 @@ export const EASE_DEFINITION = appDefinition({
 
   tags: [AppTag.INSURANCE, AppTag.YIELD_AGGREGATOR],
   keywords: [],
-
   links: {
-    learn: '',
-    github: '',
-    twitter: '',
-    telegram: '',
-    discord: '',
-    medium: '',
+    discord: 'https://discord.gg/9JVTdFXdgF',
+    github: 'https://github.com/EaseDeFi',
+    learn: 'https://ease.org/learn/',
+    twitter: 'https://twitter.com/EaseDeFi',
   },
 
   supportedNetworks: {
