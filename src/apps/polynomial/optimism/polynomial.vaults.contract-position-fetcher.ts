@@ -14,18 +14,6 @@ const appId = POLYNOMIAL_DEFINITION.id;
 const groupId = POLYNOMIAL_DEFINITION.groups.vaults.id;
 const network = Network.OPTIMISM_MAINNET;
 
-const calculateROI = async ({ multicall, contract }) => {
-  const currentYield = Number(await multicall.wrap(contract).premiumCollected());
-  const usedFunds = Number(await multicall.wrap(contract).usedFunds());
-  const totalFunds = Number(await multicall.wrap(contract).totalFunds());
-  const managementFee = Number(await multicall.wrap(contract).managementFee()) / 10 ** 9;
-  const performanceFee = Number(await multicall.wrap(contract).performanceFee()) / 10 ** 9;
-  const totalFees = (currentYield * performanceFee + usedFunds * managementFee) / 52;
-  const totalShares = Number(await multicall.wrap(contract).totalShares());
-  const index = (totalFunds + currentYield - totalFees) / totalShares;
-  return index;
-};
-
 @Register.ContractPositionFetcher({ appId, groupId, network })
 export class OptimismPolynomialVaultsContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
@@ -48,9 +36,9 @@ export class OptimismPolynomialVaultsContractPositionFetcher implements Position
           resolveStakedTokenAddress: async ({ multicall, contract }) => multicall.wrap(contract).UNDERLYING(),
           resolveFarmContract: ({ address }) => this.contractFactory.polynomialCoveredCall({ address, network }),
           resolveTotalValueLocked: ({ multicall, contract }) => multicall.wrap(contract).totalFunds(),
-          resolveRois: async ({ multicall, contract }) => ({
+          resolveRois: () => ({
             dailyROI: 0,
-            weeklyROI: await calculateROI({ multicall, contract }),
+            weeklyROI: 0,
             yearlyROI: 0,
           }),
         },
@@ -66,9 +54,9 @@ export class OptimismPolynomialVaultsContractPositionFetcher implements Position
         resolveStakedTokenAddress: async ({ multicall, contract }) => multicall.wrap(contract).COLLATERAL(),
         resolveFarmContract: ({ address }) => this.contractFactory.polynomialPutSelling({ address, network }),
         resolveTotalValueLocked: ({ multicall, contract }) => multicall.wrap(contract).totalFunds(),
-        resolveRois: async ({ multicall, contract }) => ({
+        resolveRois: () => ({
           dailyROI: 0,
-          weeklyROI: await calculateROI({ multicall, contract }),
+          weeklyROI: 0,
           yearlyROI: 0,
         }),
       });

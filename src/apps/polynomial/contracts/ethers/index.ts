@@ -3,6 +3,8 @@
 /* eslint-disable */
 export type { PolynomialCoveredCall } from './PolynomialCoveredCall';
 export type { PolynomialPutSelling } from './PolynomialPutSelling';
+export type { Vaults } from './Vaults';
 export * as factories from './factories';
 export { PolynomialCoveredCall__factory } from './factories/PolynomialCoveredCall__factory';
 export { PolynomialPutSelling__factory } from './factories/PolynomialPutSelling__factory';
+export { Vaults__factory } from './factories/Vaults__factory';

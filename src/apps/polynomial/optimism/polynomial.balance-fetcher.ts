@@ -1,15 +1,17 @@
 import { Inject } from '@nestjs/common';
 
+import { drillBalance } from '~app-toolkit';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
 import { BalanceFetcher } from '~balance/balance-fetcher.interface';
 import { Network } from '~types/network.interface';
 
-import { PolynomialContractFactory, PolynomialCoveredCall } from '../contracts';
+import { PolynomialContractFactory } from '../contracts';
 import { POLYNOMIAL_DEFINITION } from '../polynomial.definition';
 
 const network = Network.OPTIMISM_MAINNET;
+const resolverAddress = '0xE38462409A2d960D9431ac452d5ffA20f4120f51'.toLowerCase();
 
 @Register.BalanceFetcher(POLYNOMIAL_DEFINITION.id, network)
 export class OptimismPolynomialBalanceFetcher implements BalanceFetcher {
@@ -19,23 +21,17 @@ export class OptimismPolynomialBalanceFetcher implements BalanceFetcher {
   ) {}
 
   async getVaultBalances(address: string) {
-    return this.appToolkit.helpers.masterChefContractPositionBalanceHelper.getBalances<PolynomialCoveredCall>({
+    return this.appToolkit.helpers.contractPositionBalanceHelper.getContractPositionBalances({
       address,
       appId: POLYNOMIAL_DEFINITION.id,
       groupId: POLYNOMIAL_DEFINITION.groups.vaults.id,
       network: Network.OPTIMISM_MAINNET,
-      resolveChefContract: ({ contractAddress, network }) =>
-        this.contractFactory.polynomialCoveredCall({ address: contractAddress, network }),
-      resolveStakedTokenBalance: this.appToolkit.helpers.masterChefDefaultStakedBalanceStrategy.build({
-        resolveStakedBalance: async ({ address, contract, multicall, contractPosition }) => {
-          const userInfo = await multicall.wrap(contract).userInfos(address);
-          return (
-            Number(userInfo.pendingDeposit) +
-            (Number(userInfo.withdrawnShares) + Number(userInfo.totalShares)) * contractPosition.dataProps.weeklyROI
-          );
-        },
-      }),
-      resolveClaimableTokenBalances: async () => [],
+      resolveBalances: async ({ address, network, multicall, contractPosition: position }) => {
+        const token = position.tokens[0];
+        const contract = this.contractFactory.vaults({ address: resolverAddress, network });
+        const balances = await multicall.wrap(contract).getAllBalances(address, [position.address], [token.address]);
+        return [drillBalance(token, Number(balances._vaultBalances[0]).toString())];
+      },
     });
   }
 
