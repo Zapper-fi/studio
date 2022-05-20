@@ -4,6 +4,21 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.35.0](https://github.com/Zapper-fi/studio/compare/v0.34.0...v0.35.0) (2022-05-20)
+
+
+### Features
+
+* **polynomial:** Add Polynomial protocol ([#473](https://github.com/Zapper-fi/studio/issues/473)) ([afda7d3](https://github.com/Zapper-fi/studio/commit/afda7d3fd60b063d8df8cd05955945d77d322ea4))
+* **symphony:** Add Symphony Finance ([#468](https://github.com/Zapper-fi/studio/issues/468)) ([f768448](https://github.com/Zapper-fi/studio/commit/f7684484f91fd638241b924959f79d51d300f64d))
+
+
+### Bug Fixes
+
+* **ci:** Use Pull Request trigger ([#481](https://github.com/Zapper-fi/studio/issues/481)) ([a8bdf94](https://github.com/Zapper-fi/studio/commit/a8bdf94165e15481c59fe8724ccfd4d198f65a14))
+* **ease:** fix apy in vault stats ([#479](https://github.com/Zapper-fi/studio/issues/479)) ([ada8b80](https://github.com/Zapper-fi/studio/commit/ada8b802f1c2dc77fc15dbd45147e8062ff3f400))
+* **ease:** Small linting issue ([3934178](https://github.com/Zapper-fi/studio/commit/3934178e2fdc0ad79f0ca841f59c8b14db6f1b2e))
+
 ## [0.34.0](https://github.com/Zapper-fi/studio/compare/v0.33.1...v0.34.0) (2022-05-20)
 
 
