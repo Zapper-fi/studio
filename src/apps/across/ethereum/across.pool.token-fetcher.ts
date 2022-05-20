@@ -5,7 +5,6 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getAppImg } from '~app-toolkit/helpers/presentation/image.present';
-import { CacheOnInterval } from '~cache/cache-on-interval.decorator';
 import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
@@ -27,10 +26,6 @@ export class EthereumAcrossPoolTokenFetcher implements PositionFetcher<AppTokenP
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
   ) {}
 
-  @CacheOnInterval({
-    key: `studio:${ACROSS_DEFINITION.id}:${ACROSS_DEFINITION.groups.pool}:${Network.ETHEREUM_MAINNET}:addresses`,
-    timeout: 15 * 60 * 1000,
-  })
   async getPositions() {
     const multicall = this.appToolkit.getMulticall(network);
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
@@ -38,12 +33,13 @@ export class EthereumAcrossPoolTokenFetcher implements PositionFetcher<AppTokenP
     const tokens = await Promise.all(
       ACROSS_V1_POOL_DEFINITIONS.map(async pool => {
         const tokenContract = this.acrossContractFactory.badgerPool({ address: pool.poolAddress, network });
-        const [label, symbol, decimals, supplyRaw, l1TokenAddressRaw] = await Promise.all([
+        const [label, symbol, decimals, supplyRaw, l1TokenAddressRaw, pricePerShareRaw] = await Promise.all([
           multicall.wrap(tokenContract).name(),
           multicall.wrap(tokenContract).symbol(),
           multicall.wrap(tokenContract).decimals(),
           multicall.wrap(tokenContract).totalSupply(),
           multicall.wrap(tokenContract).l1Token(),
+          multicall.wrap(tokenContract).callStatic.exchangeRateCurrent(),
         ]);
 
         const l1TokenAddress = l1TokenAddressRaw.toLowerCase();
@@ -51,8 +47,8 @@ export class EthereumAcrossPoolTokenFetcher implements PositionFetcher<AppTokenP
         if (!underlyingToken) return null;
 
         const supply = Number(supplyRaw) / 10 ** decimals;
-        const pricePerShare = 1; // 1:1 with sUSD token
-        const price = underlyingToken.price;
+        const pricePerShare = Number(pricePerShareRaw) / 10 ** 18;
+        const price = underlyingToken.price * pricePerShare;
         const tokens = [underlyingToken];
         const secondaryLabel = buildDollarDisplayItem(price);
         const images = [getAppImg(ACROSS_DEFINITION.id)];
