@@ -2,4 +2,5 @@
 /* tslint:disable */
 /* eslint-disable */
 export { Borrowable__factory } from './Borrowable__factory';
+export { Collateral__factory } from './Collateral__factory';
 export { Factory__factory } from './Factory__factory';

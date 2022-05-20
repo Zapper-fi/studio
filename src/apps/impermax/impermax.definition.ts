@@ -12,12 +12,17 @@ export const IMPERMAX_DEFINITION = appDefinition({
     lend: {
       id: 'lend',
       type: GroupType.TOKEN,
-      label: 'Lend',
+      label: 'Lending Pool',
+    },
+    collateral: {
+      id: 'collateral',
+      type: GroupType.TOKEN,
+      label: 'Lending Pool',
     },
     borrow: {
       id: 'borrow',
       type: GroupType.POSITION,
-      label: 'Borrow',
+      label: 'Lending Pool',
     },
   },
   tags: [AppTag.LENDING],
