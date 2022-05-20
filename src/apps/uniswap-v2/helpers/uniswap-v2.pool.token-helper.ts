@@ -1,6 +1,7 @@
 import { Inject } from '@nestjs/common';
+import BigNumber from 'bignumber.js';
 import { BigNumberish } from 'ethers';
-import _, { compact } from 'lodash';
+import _, { chunk, compact } from 'lodash';
 import { keyBy, sortBy } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
@@ -60,7 +61,7 @@ export type UniswapV2PoolTokenHelperParams<T = UniswapFactory, V = UniswapPair> 
     resolvePoolContract(opts: { address: string; network: Network }): V;
     resolvePoolUnderlyingTokenAddresses(opts: { multicall: Multicall; poolContract: V }): Promise<[string, string]>;
     resolvePoolReserves(opts: { multicall: Multicall; poolContract: V }): Promise<[BigNumberish, BigNumberish]>;
-  }): Promise<BaseToken>;
+  }): Promise<BaseToken | null>;
   resolvePoolVolumes?: (opts: {
     appId: string;
     network: Network;
@@ -123,7 +124,7 @@ export class UniswapV2PoolTokenHelper {
       resolvePoolContract,
     }).catch(() => []);
 
-    const poolStatsRaw = await Promise.all(
+    const poolTokens = await Promise.all(
       poolAddresses.map(async address => {
         const type = ContractType.APP_TOKEN;
         const poolContract = resolvePoolContract({ address, network });
@@ -168,7 +169,8 @@ export class UniswapV2PoolTokenHelper {
 
         // Data Props
         const decimals = 18;
-        const reserves = reservesRaw.map((r, i) => Number(r) / 10 ** tokens[i].decimals);
+        const reservesBN = reservesRaw.map((r, i) => new BigNumber(r.toString()).div(10 ** tokens[i].decimals));
+        const reserves = reservesBN.map(v => v.toNumber());
         const liquidity = tokens[0].price * reserves[0] + tokens[1].price * reserves[1];
         const reservePercentages = tokens.map((t, i) => reserves[i] * (t.price / liquidity));
         const supply = Number(supplyRaw) / 10 ** decimals;
@@ -187,6 +189,7 @@ export class UniswapV2PoolTokenHelper {
           { label: 'Liquidity', value: buildDollarDisplayItem(liquidity) },
           { label: 'Volume', value: buildDollarDisplayItem(volume) },
           { label: 'Fee', value: buildPercentageDisplayItem(fee) },
+          { label: 'Reserves', value: reserves.map(v => (v < 0.01 ? '<0.01' : v.toFixed(2))).join(' / ') },
         ];
 
         const poolToken: AppTokenPosition<UniswapV2PoolTokenDataProps> = {
@@ -222,10 +225,8 @@ export class UniswapV2PoolTokenHelper {
       }),
     );
 
-    const poolStats = _.compact(poolStatsRaw);
-
     return sortBy(
-      poolStats.filter(t => !!t && t.dataProps.liquidity > minLiquidity),
+      compact(poolTokens).filter(t => t.dataProps.liquidity > minLiquidity),
       t => -t!.dataProps.liquidity,
     );
   }
