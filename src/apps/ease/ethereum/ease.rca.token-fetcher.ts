@@ -51,7 +51,6 @@ export class EthereumEaseRcaTokenFetcher implements PositionFetcher<AppTokenPosi
         { appId: 'aave-v2', groupIds: ['supply'], network },
         { appId: 'compound', groupIds: ['supply'], network },
       ],
-      //TODO: maybe easeRcaShieldNormalized? Or for every token own contract?
       resolveContract: ({ address, network }) => this.easeContractFactory.easeRcaShield({ address, network }),
       resolveVaultAddresses: async () => ethData.map(({ address }) => address.toLowerCase()),
       resolveUnderlyingTokenAddress: ({ multicall, contract }) => multicall.wrap(contract).uToken().catch(() => ''),
@@ -61,7 +60,6 @@ export class EthereumEaseRcaTokenFetcher implements PositionFetcher<AppTokenPosi
         .then(v => Number(v) / 10 ** underlyingToken.decimals),
       resolvePricePerShare: () => 1,
       resolveApy: async ({ vaultAddress }) => await (rcaAddressToDetails[vaultAddress]?.token['apy'] ?? 0) / 100,
-      // resolvePrimaryLabel
     });
   }
 }
