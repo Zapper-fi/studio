@@ -10,7 +10,7 @@
 ### Features
 
 * **polynomial:** Add Polynomial protocol ([#473](https://github.com/Zapper-fi/studio/issues/473)) ([afda7d3](https://github.com/Zapper-fi/studio/commit/afda7d3fd60b063d8df8cd05955945d77d322ea4))
-* **symphone:** Add Symphony Finance ([#468](https://github.com/Zapper-fi/studio/issues/468)) ([f768448](https://github.com/Zapper-fi/studio/commit/f7684484f91fd638241b924959f79d51d300f64d))
+* **symphony:** Add Symphony Finance ([#468](https://github.com/Zapper-fi/studio/issues/468)) ([f768448](https://github.com/Zapper-fi/studio/commit/f7684484f91fd638241b924959f79d51d300f64d))
 
 
 ### Bug Fixes
