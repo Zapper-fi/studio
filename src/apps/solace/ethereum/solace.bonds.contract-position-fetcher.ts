@@ -7,6 +7,7 @@ import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/pres
 import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
+import { claimable, supplied } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 
 import { SOLACE_DEFINITION } from '../solace.definition';
@@ -74,7 +75,7 @@ export class EthereumSolaceBondsContractPositionFetcher implements PositionFetch
       BOND_TELLERS.map(async teller => {
         const depositToken = allTokens.find(v => v.address === teller.deposit);
         if (!depositToken || !solaceToken) return null;
-        const tokens = [depositToken, solaceToken];
+        const tokens = [supplied(depositToken), claimable(solaceToken)];
 
         const position: ContractPosition = {
           type: ContractType.POSITION,
