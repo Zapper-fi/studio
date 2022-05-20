@@ -20,7 +20,7 @@ const CAULDRONS = [
   '0x0bf90b3b5cad7dfcf70de198c498b61b3ba35cff', // xSUSHI v2
   '0xbb02a884621fb8f5bfd263a67f58b65df5b090f3', // xSUSHI (deprecated)
   '0xebfde87310dc22404d918058faa4d56dc4e93f0a', // yvcrvIB
-  '0x0bca8ebcb26502b013493bf8fe53aa2b1ed401c1', // yvstETH
+  '0x0bca8ebcb26502b013493bf8fe53aa2b1ed401c1', // yvstETH (deprecated)
   '0x6cbafee1fab76ca5b5e144c43b3b50d42b7c8c8f', // yvUSDC (deprecated)
   '0x551a7cff4de931f32893c928bbc3d25bf1fc5147', // yvUSDT (deprecated)
   '0x6ff9061bb8f97d948942cef376d98b51fa38b91f', // yvWETH (deprecated)
@@ -45,6 +45,7 @@ const CAULDRONS = [
   '0x7ce7d9ed62b9a6c5ace1c6ec9aeb115fa3064757', // yvDAI
   '0xd31E19A0574dBF09310c3B06f3416661B4Dc7324', // Stargate USDC
   '0xc6b2b3fe7c3d7a6f823d9106e22e66660709001e', // Stargate USDT
+  '0x53375add9d2dfe19398ed65baaeffe622760a9a6', // yvstETH Concentrated
 ];
 
 const appId = ABRACADABRA_DEFINITION.id;
