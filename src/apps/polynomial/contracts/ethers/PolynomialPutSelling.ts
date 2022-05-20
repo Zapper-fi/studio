@@ -17,15 +17,12 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
 
-export interface PolynomialInterface extends utils.Interface {
+export interface PolynomialPutSellingInterface extends utils.Interface {
   functions: {
+    'COLLATERAL()': FunctionFragment;
     'LYRA_CLAIMER()': FunctionFragment;
     'LYRA_MARKET()': FunctionFragment;
     'LYRA_TOKEN()': FunctionFragment;
-    'SYNTHETIX()': FunctionFragment;
-    'SYNTH_KEY_PREMIUM()': FunctionFragment;
-    'SYNTH_KEY_UNDERLYING()': FunctionFragment;
-    'UNDERLYING()': FunctionFragment;
     'authority()': FunctionFragment;
     'cancelDeposit(uint256)': FunctionFragment;
     'cancelWithdraw(uint256)': FunctionFragment;
@@ -72,13 +69,10 @@ export interface PolynomialInterface extends utils.Interface {
 
   getFunction(
     nameOrSignatureOrTopic:
+      | 'COLLATERAL'
       | 'LYRA_CLAIMER'
       | 'LYRA_MARKET'
       | 'LYRA_TOKEN'
-      | 'SYNTHETIX'
-      | 'SYNTH_KEY_PREMIUM'
-      | 'SYNTH_KEY_UNDERLYING'
-      | 'UNDERLYING'
       | 'authority'
       | 'cancelDeposit'
       | 'cancelWithdraw'
@@ -123,13 +117,10 @@ export interface PolynomialInterface extends utils.Interface {
       | 'vaultCapacity',
   ): FunctionFragment;
 
+  encodeFunctionData(functionFragment: 'COLLATERAL', values?: undefined): string;
   encodeFunctionData(functionFragment: 'LYRA_CLAIMER', values?: undefined): string;
   encodeFunctionData(functionFragment: 'LYRA_MARKET', values?: undefined): string;
   encodeFunctionData(functionFragment: 'LYRA_TOKEN', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'SYNTHETIX', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'SYNTH_KEY_PREMIUM', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'SYNTH_KEY_UNDERLYING', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'UNDERLYING', values?: undefined): string;
   encodeFunctionData(functionFragment: 'authority', values?: undefined): string;
   encodeFunctionData(functionFragment: 'cancelDeposit', values: [BigNumberish]): string;
   encodeFunctionData(functionFragment: 'cancelWithdraw', values: [BigNumberish]): string;
@@ -173,13 +164,10 @@ export interface PolynomialInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'userInfos', values: [string]): string;
   encodeFunctionData(functionFragment: 'vaultCapacity', values?: undefined): string;
 
+  decodeFunctionResult(functionFragment: 'COLLATERAL', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'LYRA_CLAIMER', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'LYRA_MARKET', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'LYRA_TOKEN', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'SYNTHETIX', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'SYNTH_KEY_PREMIUM', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'SYNTH_KEY_UNDERLYING', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'UNDERLYING', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'authority', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'cancelDeposit', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'cancelWithdraw', data: BytesLike): Result;
@@ -424,12 +412,12 @@ export type UnpausedEvent = TypedEvent<[string], UnpausedEventObject>;
 
 export type UnpausedEventFilter = TypedEventFilter<UnpausedEvent>;
 
-export interface Polynomial extends BaseContract {
+export interface PolynomialPutSelling extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: PolynomialInterface;
+  interface: PolynomialPutSellingInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -447,19 +435,13 @@ export interface Polynomial extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
+    COLLATERAL(overrides?: CallOverrides): Promise<[string]>;
+
     LYRA_CLAIMER(overrides?: CallOverrides): Promise<[string]>;
 
     LYRA_MARKET(overrides?: CallOverrides): Promise<[string]>;
 
     LYRA_TOKEN(overrides?: CallOverrides): Promise<[string]>;
-
-    SYNTHETIX(overrides?: CallOverrides): Promise<[string]>;
-
-    SYNTH_KEY_PREMIUM(overrides?: CallOverrides): Promise<[string]>;
-
-    SYNTH_KEY_UNDERLYING(overrides?: CallOverrides): Promise<[string]>;
-
-    UNDERLYING(overrides?: CallOverrides): Promise<[string]>;
 
     authority(overrides?: CallOverrides): Promise<[string]>;
 
@@ -607,19 +589,13 @@ export interface Polynomial extends BaseContract {
     vaultCapacity(overrides?: CallOverrides): Promise<[BigNumber]>;
   };
 
+  COLLATERAL(overrides?: CallOverrides): Promise<string>;
+
   LYRA_CLAIMER(overrides?: CallOverrides): Promise<string>;
 
   LYRA_MARKET(overrides?: CallOverrides): Promise<string>;
 
   LYRA_TOKEN(overrides?: CallOverrides): Promise<string>;
-
-  SYNTHETIX(overrides?: CallOverrides): Promise<string>;
-
-  SYNTH_KEY_PREMIUM(overrides?: CallOverrides): Promise<string>;
-
-  SYNTH_KEY_UNDERLYING(overrides?: CallOverrides): Promise<string>;
-
-  UNDERLYING(overrides?: CallOverrides): Promise<string>;
 
   authority(overrides?: CallOverrides): Promise<string>;
 
@@ -761,19 +737,13 @@ export interface Polynomial extends BaseContract {
   vaultCapacity(overrides?: CallOverrides): Promise<BigNumber>;
 
   callStatic: {
+    COLLATERAL(overrides?: CallOverrides): Promise<string>;
+
     LYRA_CLAIMER(overrides?: CallOverrides): Promise<string>;
 
     LYRA_MARKET(overrides?: CallOverrides): Promise<string>;
 
     LYRA_TOKEN(overrides?: CallOverrides): Promise<string>;
-
-    SYNTHETIX(overrides?: CallOverrides): Promise<string>;
-
-    SYNTH_KEY_PREMIUM(overrides?: CallOverrides): Promise<string>;
-
-    SYNTH_KEY_UNDERLYING(overrides?: CallOverrides): Promise<string>;
-
-    UNDERLYING(overrides?: CallOverrides): Promise<string>;
 
     authority(overrides?: CallOverrides): Promise<string>;
 
@@ -1022,19 +992,13 @@ export interface Polynomial extends BaseContract {
   };
 
   estimateGas: {
+    COLLATERAL(overrides?: CallOverrides): Promise<BigNumber>;
+
     LYRA_CLAIMER(overrides?: CallOverrides): Promise<BigNumber>;
 
     LYRA_MARKET(overrides?: CallOverrides): Promise<BigNumber>;
 
     LYRA_TOKEN(overrides?: CallOverrides): Promise<BigNumber>;
-
-    SYNTHETIX(overrides?: CallOverrides): Promise<BigNumber>;
-
-    SYNTH_KEY_PREMIUM(overrides?: CallOverrides): Promise<BigNumber>;
-
-    SYNTH_KEY_UNDERLYING(overrides?: CallOverrides): Promise<BigNumber>;
-
-    UNDERLYING(overrides?: CallOverrides): Promise<BigNumber>;
 
     authority(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1148,19 +1112,13 @@ export interface Polynomial extends BaseContract {
   };
 
   populateTransaction: {
+    COLLATERAL(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     LYRA_CLAIMER(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     LYRA_MARKET(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     LYRA_TOKEN(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    SYNTHETIX(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    SYNTH_KEY_PREMIUM(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    SYNTH_KEY_UNDERLYING(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    UNDERLYING(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     authority(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 

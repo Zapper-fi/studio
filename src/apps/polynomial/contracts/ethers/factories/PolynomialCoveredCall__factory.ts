@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { Polynomial, PolynomialInterface } from '../Polynomial';
+import type { PolynomialCoveredCall, PolynomialCoveredCallInterface } from '../PolynomialCoveredCall';
 
 const _abi = [
   {
@@ -1149,12 +1149,12 @@ const _abi = [
   },
 ];
 
-export class Polynomial__factory {
+export class PolynomialCoveredCall__factory {
   static readonly abi = _abi;
-  static createInterface(): PolynomialInterface {
-    return new utils.Interface(_abi) as PolynomialInterface;
+  static createInterface(): PolynomialCoveredCallInterface {
+    return new utils.Interface(_abi) as PolynomialCoveredCallInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): Polynomial {
-    return new Contract(address, _abi, signerOrProvider) as Polynomial;
+  static connect(address: string, signerOrProvider: Signer | Provider): PolynomialCoveredCall {
+    return new Contract(address, _abi, signerOrProvider) as PolynomialCoveredCall;
   }
 }

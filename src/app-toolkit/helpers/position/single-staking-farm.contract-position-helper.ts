@@ -86,7 +86,7 @@ export type SingleStakingFarmContractPositionHelperParams<T> = {
 
 @Injectable()
 export class SingleStakingFarmContractPositionHelper {
-  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
+  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) { }
 
   async getContractPositions<T>({
     network,
@@ -112,8 +112,8 @@ export class SingleStakingFarmContractPositionHelper {
     const farmDefinitionsOrAddresses = resolveFarmDefinitions
       ? await resolveFarmDefinitions({ network })
       : resolveFarmAddresses
-      ? await resolveFarmAddresses({ network })
-      : [];
+        ? await resolveFarmAddresses({ network })
+        : [];
 
     const contractPositions = await Promise.all(
       farmDefinitionsOrAddresses.map(
@@ -230,8 +230,8 @@ export class SingleStakingFarmContractPositionHelper {
       return stakedToken.address === ZERO_ADDRESS
         ? multicall.wrap(multicall.contract).getEthBalance(address)
         : multicall
-            .wrap(this.appToolkit.globalContracts.erc20({ address: stakedToken.address, network }))
-            .balanceOf(address);
+          .wrap(this.appToolkit.globalContracts.erc20({ address: stakedToken.address, network }))
+          .balanceOf(address);
     };
   }
 }
