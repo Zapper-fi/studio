@@ -10,10 +10,9 @@ import ACROSS_DEFINITION from '../across.definition';
 import { AcrossContractFactory } from '../contracts';
 
 const appId = ACROSS_DEFINITION.id;
-const groupId = ACROSS_DEFINITION.groups.pool.id;
 const network = Network.ETHEREUM_MAINNET;
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Register.BalanceFetcher(appId, network)
 export class EthereumAcrossBalanceFetcher implements BalanceFetcher {
   constructor(
     @Inject(AcrossContractFactory) private readonly acrossContractFactory: AcrossContractFactory,
