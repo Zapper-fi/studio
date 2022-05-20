@@ -23,7 +23,6 @@ const YIELD_TOKEN_ADDRESSES = [
   '0xe6c23289ba5a9f0ef31b8eb36241d5c800889b7b', // camDAI
   '0x0470cd31c8fcc42671465880ba81d631f0b76c1d', // camWETH
   '0xb3911259f435b28ec072e4ff6ff5a2c604fea0fb', // camUSDT
-  '0x7068ea5255cb05931efa8026bd04b18f3deb8b0b', // camWMATIC
   '0xea4040b21cb68afb94889cb60834b13427cfc4eb', // camAAVE
   '0xba6273a78a23169e01317bd0f6338547f869e8df', // camWBTC
 ];
