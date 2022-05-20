@@ -4,6 +4,7 @@ import _ from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
+import { getAppImg } from '~app-toolkit/helpers/presentation/image.present';
 import { YEARN_DEFINITION } from '~apps/yearn/yearn.definition';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
@@ -61,6 +62,7 @@ export class EthereumEaseRcaTokenFetcher implements PositionFetcher<AppTokenPosi
           .then(v => Number(v) / 10 ** underlyingToken.decimals),
       resolvePricePerShare: () => 1,
       resolveApy: async ({ vaultAddress }) => (await (rcaAddressToDetails[vaultAddress]?.token['apy'] ?? 0)) / 100,
+      resolveImages: () => [getAppImg(appId)],
     });
   }
 }
