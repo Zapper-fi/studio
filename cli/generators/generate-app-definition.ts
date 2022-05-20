@@ -67,6 +67,21 @@ export const addGroupToAppDefinition = async ({ appId, group }: { appId: string;
   const gtToKey = zipObject(Object.values(GroupType), Object.keys(GroupType));
 
   recast.visit(ast, {
+    visitProgram(path) {
+      // Add an import statement for GroupType if necessary
+      const value = path.value as t.Program;
+      const imports = value.body.filter((v): v is t.ImportDeclaration => v.type === 'ImportDeclaration');
+
+      const appInterfaceImport = imports.find(v => v.source.value === '~app/app.interface');
+      const appInterfaceImportedNames = appInterfaceImport.specifiers.map(v => v as t.ImportSpecifier);
+      const hasGroupTypeImport = appInterfaceImportedNames.find(t => t.imported.name === 'GroupType');
+
+      if (!hasGroupTypeImport) {
+        appInterfaceImport.specifiers.push(b.importSpecifier(b.identifier('GroupType')));
+      }
+
+      this.traverse(path);
+    },
     visitCallExpression(path) {
       const value = path.value as t.CallExpression;
 

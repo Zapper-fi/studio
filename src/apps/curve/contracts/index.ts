@@ -4,6 +4,8 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
+import { CurveChildLiquidityGauge__factory } from './ethers';
+import { CurveChildLiquidityGaugeFactory__factory } from './ethers';
 import { CurveController__factory } from './ethers';
 import { CurveCryptoPool__factory } from './ethers';
 import { CurveDoubleGauge__factory } from './ethers';
@@ -17,6 +19,7 @@ import { CurveMinter__factory } from './ethers';
 import { CurveMultiRewardStream__factory } from './ethers';
 import { CurveNGauge__factory } from './ethers';
 import { CurvePassthroughRewards__factory } from './ethers';
+import { CurveRewardsOnlyGauge__factory } from './ethers';
 import { CurveSingleRewardStream__factory } from './ethers';
 import { CurveToken__factory } from './ethers';
 import { CurveV1Metapool__factory } from './ethers';
@@ -36,6 +39,12 @@ export class CurveContractFactory extends ContractFactory {
     super((network: Network) => appToolkit.getNetworkProvider(network));
   }
 
+  curveChildLiquidityGauge({ address, network }: ContractOpts) {
+    return CurveChildLiquidityGauge__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
+  curveChildLiquidityGaugeFactory({ address, network }: ContractOpts) {
+    return CurveChildLiquidityGaugeFactory__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   curveController({ address, network }: ContractOpts) {
     return CurveController__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
@@ -75,6 +84,9 @@ export class CurveContractFactory extends ContractFactory {
   curvePassthroughRewards({ address, network }: ContractOpts) {
     return CurvePassthroughRewards__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  curveRewardsOnlyGauge({ address, network }: ContractOpts) {
+    return CurveRewardsOnlyGauge__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   curveSingleRewardStream({ address, network }: ContractOpts) {
     return CurveSingleRewardStream__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
@@ -104,6 +116,8 @@ export class CurveContractFactory extends ContractFactory {
   }
 }
 
+export type { CurveChildLiquidityGauge } from './ethers';
+export type { CurveChildLiquidityGaugeFactory } from './ethers';
 export type { CurveController } from './ethers';
 export type { CurveCryptoPool } from './ethers';
 export type { CurveDoubleGauge } from './ethers';
@@ -117,6 +131,7 @@ export type { CurveMinter } from './ethers';
 export type { CurveMultiRewardStream } from './ethers';
 export type { CurveNGauge } from './ethers';
 export type { CurvePassthroughRewards } from './ethers';
+export type { CurveRewardsOnlyGauge } from './ethers';
 export type { CurveSingleRewardStream } from './ethers';
 export type { CurveToken } from './ethers';
 export type { CurveV1Metapool } from './ethers';
