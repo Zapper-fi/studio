@@ -6,6 +6,7 @@ import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
 import { UniswapFactory, UniswapPair, UniswapV2ContractFactory } from '../contracts';
+import { UniswapV2OnChainTokenDerivationStrategy } from '../helpers/uniswap-v2.on-chain.token-derivation-strategy';
 import { UniswapV2PoolTokenHelper } from '../helpers/uniswap-v2.pool.token-helper';
 import { UniswapV2TheGraphPoolTokenAddressStrategy } from '../helpers/uniswap-v2.the-graph.pool-token-address-strategy';
 import { UniswapV2TheGraphPoolVolumeStrategy } from '../helpers/uniswap-v2.the-graph.pool-volume-strategy';
@@ -22,6 +23,8 @@ export class EthereumUniswapV2PoolTokenFetcher implements PositionFetcher<AppTok
     private readonly uniswapV2ContractFactory: UniswapV2ContractFactory,
     @Inject(UniswapV2PoolTokenHelper)
     private readonly uniswapV2PoolTokenHelper: UniswapV2PoolTokenHelper,
+    @Inject(UniswapV2OnChainTokenDerivationStrategy)
+    private readonly uniswapV2OnChainTokenDerivationStrategy: UniswapV2OnChainTokenDerivationStrategy,
     @Inject(UniswapV2TheGraphPoolTokenAddressStrategy)
     private readonly uniswapV2TheGraphPoolTokenAddressStrategy: UniswapV2TheGraphPoolTokenAddressStrategy,
     @Inject(UniswapV2TheGraphPoolVolumeStrategy)
@@ -36,19 +39,14 @@ export class EthereumUniswapV2PoolTokenFetcher implements PositionFetcher<AppTok
       factoryAddress: '0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f',
       hiddenTokens: ['0x62359ed7505efc61ff1d56fef82158ccaffa23d7', '0x35bd01fc9d6d5d81ca9e055db88dc49aa2c699a8'],
       blockedPools: ['0x9cbfb60a09a9a33a10312da0f39977cbdb7fde23'], // Uniswap V2: SAITAMA - has a transfer fee (not supported by our zap)
-      appTokenDependencies: [
-        {
-          appId: 'alpha-v1',
-          groupIds: ['lending'],
-          network,
-        },
-      ],
+      appTokenDependencies: [{ appId: 'alpha-v1', groupIds: ['lending'], network }],
       resolveFactoryContract: ({ address, network }) =>
         this.uniswapV2ContractFactory.uniswapFactory({ address, network }),
       resolvePoolContract: ({ address, network }) => this.uniswapV2ContractFactory.uniswapPair({ address, network }),
       resolvePoolTokenAddresses: this.uniswapV2TheGraphPoolTokenAddressStrategy.build({
         subgraphUrl: 'https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v2',
         first: 1000,
+        orderBy: 'trackedReserveETH',
         requiredPools: [
           '0xaad22f5543fcdaa694b68f94be177b561836ae57', // sUSD-$BASED
           '0xe98f89a2b3aecdbe2118202826478eb02434459a', // DAI-DEBASE
@@ -74,6 +72,18 @@ export class EthereumUniswapV2PoolTokenFetcher implements PositionFetcher<AppTok
           '0xe214a6ca22be90f011f34fdddc7c5a07800f8bcd', // mIAU/UST
           '0x735659c8576d88a2eb5c810415ea51cb06931696', // mAAPL/UST
         ],
+      }),
+      resolveDerivedUnderlyingToken: this.uniswapV2OnChainTokenDerivationStrategy.build({
+        priceDerivationWhitelist: [
+          '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2', // WETH
+          '0x6b175474e89094c44da98b954eedeac495271d0f', // DAI
+          '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48', // USDC
+          '0xdac17f958d2ee523a2206206994597c13d831ec7', // USDT
+          '0x853d955acef822db058eb8505911ed77f175b99e', // FRAX
+          '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599', // WBTC
+        ],
+        resolvePoolAddress: ({ factoryContract, multicall, token0, token1 }) =>
+          multicall.wrap(factoryContract).getPair(token0, token1),
       }),
       resolvePoolTokenSymbol: ({ multicall, poolContract }) => multicall.wrap(poolContract).symbol(),
       resolvePoolTokenSupply: ({ multicall, poolContract }) => multicall.wrap(poolContract).totalSupply(),
