@@ -13,13 +13,13 @@ const network = Network.ETHEREUM_MAINNET;
 
 @Register.TvlFetcher({ appId, network })
 export class EthereumEaseTvlFetcher implements TvlFetcher {
-  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) { }
+  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
   async getTvl() {
     const tokens = await this.appToolkit.getAppTokenPositions({
       appId,
       groupIds: [EASE_DEFINITION.groups.rca.id],
-      network
+      network,
     });
     return sumBy(tokens, v => v.supply * v.price);
   }

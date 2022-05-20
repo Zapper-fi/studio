@@ -1,6 +1,7 @@
-import { Network } from '~types/network.interface';
-import { SOLACE_DEFINITION } from '../../solace.definition';
 import { IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { Network } from '~types/network.interface';
+
+import { SOLACE_DEFINITION } from '../../solace.definition';
 
 export default async function getScpBalance(address: string, appToolkit: IAppToolkit) {
   return appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
