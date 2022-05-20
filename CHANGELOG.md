@@ -4,6 +4,25 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.32.0](https://github.com/Zapper-fi/studio/compare/v0.31.0...v0.32.0) (2022-05-19)
+
+
+### Features
+
+* **tarot:** Extract Tarot to Studio ([#463](https://github.com/Zapper-fi/studio/issues/463)) ([3dc92e0](https://github.com/Zapper-fi/studio/commit/3dc92e0aced64f2f2b9091f8fbca92a5255fe8fc))
+
+## [0.31.0](https://github.com/Zapper-fi/studio/compare/v0.30.0...v0.31.0) (2022-05-19)
+
+
+### Features
+
+* **sturdy:** Add Sturdy Finance ([#461](https://github.com/Zapper-fi/studio/issues/461)) ([e83ba4b](https://github.com/Zapper-fi/studio/commit/e83ba4b8b108769d336de9dd882aed3c5e468531))
+
+
+### Bug Fixes
+
+* **sturdy:** Fix linting issues ([25b22be](https://github.com/Zapper-fi/studio/commit/25b22be258f0515a562a3d5f15d13a2c6c0af3b3))
+
 ## [0.30.0](https://github.com/Zapper-fi/studio/compare/v0.29.0...v0.30.0) (2022-05-18)
 
 
