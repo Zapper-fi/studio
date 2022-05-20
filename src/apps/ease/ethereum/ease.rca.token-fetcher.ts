@@ -30,7 +30,7 @@ export class EthereumEaseRcaTokenFetcher implements PositionFetcher<AppTokenPosi
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(EaseContractFactory) private readonly easeContractFactory: EaseContractFactory,
-  ) {}
+  ) { }
 
   async getPositions() {
     const endpoint = 'https://app.ease.org/api/v1/vaults';
