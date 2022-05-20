@@ -12,14 +12,12 @@ import { EthereumSolaceXsolacev1TokenFetcher } from './ethereum/solace.xsolacev1
 import { PolygonSolaceBalanceFetcher } from './polygon/solace.balance-fetcher';
 import { PolygonSolaceBondsContractPositionFetcher } from './polygon/solace.bonds.contract-position-fetcher';
 import { PolygonSolacePoliciesContractPositionFetcher } from './polygon/solace.policies.contract-position-fetcher';
-import { PolygonSolaceScpTokenFetcher } from './polygon/solace.scp.token-fetcher';
 import { PolygonSolaceTvlFetcher } from './polygon/solace.tvl-fetcher';
 import { PolygonSolaceXslockerContractPositionFetcher } from './polygon/solace.xslocker.contract-position-fetcher';
-import { PolygonSolaceXsolacev1TokenFetcher } from './polygon/solace.xsolacev1.token-fetcher';
-import { SolaceAppDefinition } from './solace.definition';
+import SOLACE_DEFINITION, { SolaceAppDefinition } from './solace.definition';
 
 @Register.AppModule({
-  appId: 'solace',
+  appId: SOLACE_DEFINITION.id,
   providers: [
     EthereumSolaceBalanceFetcher,
     EthereumSolaceBondsContractPositionFetcher,
@@ -31,12 +29,10 @@ import { SolaceAppDefinition } from './solace.definition';
     PolygonSolaceBalanceFetcher,
     PolygonSolaceBondsContractPositionFetcher,
     PolygonSolacePoliciesContractPositionFetcher,
-    PolygonSolaceScpTokenFetcher,
     PolygonSolaceTvlFetcher,
     PolygonSolaceXslockerContractPositionFetcher,
-    PolygonSolaceXsolacev1TokenFetcher,
     SolaceAppDefinition,
     SolaceContractFactory,
   ],
 })
-export class SolaceAppModule extends AbstractApp<SolaceAppModule>() {}
+export class SolaceAppModule extends AbstractApp() {}
