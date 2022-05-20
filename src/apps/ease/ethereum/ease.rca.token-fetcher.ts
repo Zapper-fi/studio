@@ -35,8 +35,6 @@ export class EthereumEaseRcaTokenFetcher implements PositionFetcher<AppTokenPosi
     const endpoint = 'https://app.ease.org/api/v1/vaults';
     const ethData = await Axios.get<EaseRcaVaultDetails[]>(endpoint).then(v => v.data);
     const rcaAddressToDetails = _.keyBy(ethData, v => v.address.toLowerCase());
-
-    //TODO: Is there the need to implement TokenPositionFetcher for all Shields? (RCAShieldNormalized / RcaShield / RcaShieldBase)
     return this.appToolkit.helpers.vaultTokenHelper.getTokens<EaseRcaShield>({
       appId: EASE_DEFINITION.id,
       groupId: EASE_DEFINITION.groups.rca.id,
