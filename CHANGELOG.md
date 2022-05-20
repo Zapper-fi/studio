@@ -4,6 +4,68 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.34.0](https://github.com/Zapper-fi/studio/compare/v0.33.1...v0.34.0) (2022-05-20)
+
+
+### Features
+
+* **ease:** Added ease image and change definition+name ([#476](https://github.com/Zapper-fi/studio/issues/476)) ([12b500f](https://github.com/Zapper-fi/studio/commit/12b500f11796c9d02b82bbb8a5f9231b0cf570c4))
+
+### [0.33.1](https://github.com/Zapper-fi/studio/compare/v0.33.0...v0.33.1) (2022-05-20)
+
+
+### Bug Fixes
+
+* **solace:** Add metatype to bond tokens ([df2ef9b](https://github.com/Zapper-fi/studio/commit/df2ef9b2cb9f38aa186897bacfe4337520432b7c))
+
+## [0.33.0](https://github.com/Zapper-fi/studio/compare/v0.32.0...v0.33.0) (2022-05-20)
+
+
+### Features
+
+* **across:** Add across protocol on Ethereum mainnet ([#395](https://github.com/Zapper-fi/studio/issues/395)) ([1b55ec8](https://github.com/Zapper-fi/studio/commit/1b55ec8e15e5737bb83a7742e1a3a676fe5ef11d))
+* **ease:** Add support for Ease's RCAs on mainnet ([#469](https://github.com/Zapper-fi/studio/issues/469)) ([9f4325f](https://github.com/Zapper-fi/studio/commit/9f4325fc97651dab4468d151a3cb8ce8c54639a0))
+* porting b-protocol and compound to studio ([#449](https://github.com/Zapper-fi/studio/issues/449)) ([6d9d157](https://github.com/Zapper-fi/studio/commit/6d9d1578174b8ee15559399354a3902d7cc3e7d3))
+* **solace:** Integrate solace finance ([#457](https://github.com/Zapper-fi/studio/issues/457)) ([860de45](https://github.com/Zapper-fi/studio/commit/860de457bb4f75e87c1fb546251902df0f26f69c))
+* **uniswap-v2:** Derive unknown tokens prices ([#466](https://github.com/Zapper-fi/studio/issues/466)) ([272090d](https://github.com/Zapper-fi/studio/commit/272090df4895a0134f7a09e50551cd1ad0bf3d7f))
+
+
+### Bug Fixes
+
+* **across:** Fix Across balance fetcher and token fetcher ([#470](https://github.com/Zapper-fi/studio/issues/470)) ([6d2cd19](https://github.com/Zapper-fi/studio/commit/6d2cd191d5e7467769447f2d61082cab7cc7cea6))
+* **across:** Satisfy lint ([470e39f](https://github.com/Zapper-fi/studio/commit/470e39f67d2ee759729c13ff50a3b4f5a03bf0cd))
+* **global:** Revert unexpected change ([6defafe](https://github.com/Zapper-fi/studio/commit/6defafec827c2c26df587c8ea79fdb502e9dffd5))
+* **qi-dao:** Remove duplicate Yield ([#467](https://github.com/Zapper-fi/studio/issues/467)) ([84ccf18](https://github.com/Zapper-fi/studio/commit/84ccf183548390d6557810b7e5d908048728a2cb))
+* **solace:** Adjust Solace implementation ([#472](https://github.com/Zapper-fi/studio/issues/472)) ([cdd243d](https://github.com/Zapper-fi/studio/commit/cdd243d621d872b3bf3b17245d66b31e2a130270))
+* **solace:** Remove dupe ERC20 ([4308d60](https://github.com/Zapper-fi/studio/commit/4308d600453d4962597042d7dd06fb5fe10ee165))
+* **uniswap-v2:** Lint error ([13bd641](https://github.com/Zapper-fi/studio/commit/13bd641ce57695b1e3f76f503c7268db245da6b3))
+
+## [0.32.0](https://github.com/Zapper-fi/studio/compare/v0.31.0...v0.32.0) (2022-05-19)
+
+
+### Features
+
+* **tarot:** Extract Tarot to Studio ([#463](https://github.com/Zapper-fi/studio/issues/463)) ([3dc92e0](https://github.com/Zapper-fi/studio/commit/3dc92e0aced64f2f2b9091f8fbca92a5255fe8fc))
+
+## [0.31.0](https://github.com/Zapper-fi/studio/compare/v0.30.0...v0.31.0) (2022-05-19)
+
+
+### Features
+
+* **sturdy:** Add Sturdy Finance ([#461](https://github.com/Zapper-fi/studio/issues/461)) ([e83ba4b](https://github.com/Zapper-fi/studio/commit/e83ba4b8b108769d336de9dd882aed3c5e468531))
+
+
+### Bug Fixes
+
+* **sturdy:** Fix linting issues ([25b22be](https://github.com/Zapper-fi/studio/commit/25b22be258f0515a562a3d5f15d13a2c6c0af3b3))
+
+## [0.30.0](https://github.com/Zapper-fi/studio/compare/v0.29.0...v0.30.0) (2022-05-18)
+
+
+### Features
+
+* added support for yvstETH Concentrated ([#456](https://github.com/Zapper-fi/studio/issues/456)) ([d8e198c](https://github.com/Zapper-fi/studio/commit/d8e198c09359bb4dbf8075a04e06009d94db2f8e))
+
 ## [0.29.0](https://github.com/Zapper-fi/studio/compare/v0.28.0...v0.29.0) (2022-05-17)
 
 
