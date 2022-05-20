@@ -12,6 +12,7 @@ import { supplied } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 
 import { SymphonyContractFactory } from '../contracts';
+import { SymphonyYoloTokenDataProps, Token } from '../helpers/types';
 import { SYMPHONY_DEFINITION } from '../symphony.definition';
 
 const appId = SYMPHONY_DEFINITION.id;
@@ -31,9 +32,9 @@ export class AvalancheSymphonyYoloContractPositionFetcher implements PositionFet
     const multicall = this.appToolkit.getMulticall(network);
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
 
-    const tokenList = (await axios.get(TOKENLIST_URL)).data.tokens
-      .filter(data => data.chainId == 43114 && !data.extensions.isNative)
-      .map(token => token);
+    const tokenList: Token[] = (await axios.get(TOKENLIST_URL)).data.tokens
+      .filter((data: Token) => data.chainId == 43114 && !data.extensions.isNative)
+      .map((token: Token) => token);
 
     const yoloContract = this.symphonyContractFactory.symphonyYolo({
       address: YOLO_ADDRESS,
@@ -41,7 +42,7 @@ export class AvalancheSymphonyYoloContractPositionFetcher implements PositionFet
     });
 
     const balances = await Promise.all(
-      tokenList.map(async (token: any, i: number) => {
+      tokenList.map(async (token, i: number) => {
         const tokenContract = this.appToolkit.globalContracts.erc20({ address: token.address, network });
 
         const [contractBalances] = await Promise.all([multicall.wrap(tokenContract).balanceOf(YOLO_ADDRESS)]);
@@ -65,7 +66,7 @@ export class AvalancheSymphonyYoloContractPositionFetcher implements PositionFet
         const label = `${token.symbol} Order`;
         const images = [getTokenImg(token.address.toLocaleLowerCase(), network)];
 
-        const position: ContractPosition<any> = {
+        const position: ContractPosition<SymphonyYoloTokenDataProps> = {
           type: ContractType.POSITION,
           address: token.address,
           appId: SYMPHONY_DEFINITION.id,

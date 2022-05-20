@@ -6,6 +6,7 @@ import { Register } from '~app-toolkit/decorators';
 import { TvlFetcher } from '~stats/tvl/tvl-fetcher.interface';
 import { Network } from '~types/network.interface';
 
+import { SymphonyYoloTokenDataProps } from '../helpers/types';
 import { SYMPHONY_DEFINITION } from '../symphony.definition';
 
 const appId = SYMPHONY_DEFINITION.id;
@@ -16,12 +17,12 @@ export class PolygonSymphonyTvlFetcher implements TvlFetcher {
   constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
   async getTvl() {
-    const tokens = await this.appToolkit.getAppContractPositions({
+    const tokens = await this.appToolkit.getAppContractPositions<SymphonyYoloTokenDataProps>({
       appId,
       groupIds: [SYMPHONY_DEFINITION.groups.yolo.id],
       network,
     });
 
-    return sumBy(tokens, (v: any) => v.dataProps.totalValueLocked);
+    return sumBy(tokens, v => v.dataProps.totalValueLocked);
   }
 }
