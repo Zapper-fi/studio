@@ -1,5 +1,4 @@
 import { Inject } from '@nestjs/common';
-import { ethers } from 'ethers';
 import { compact } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
@@ -12,20 +11,14 @@ import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
-import { AcrossContractFactory } from '../contracts';
 import ACROSS_DEFINITION from '../across.definition';
+import { AcrossContractFactory } from '../contracts';
 
 import { ACROSS_V1_POOL_DEFINITIONS } from './across.pool.definitions';
 
 const appId = ACROSS_DEFINITION.id;
 const groupId = ACROSS_DEFINITION.groups.pool.id;
 const network = Network.ETHEREUM_MAINNET;
-
-type AelinPoolsResponse = {
-  poolCreateds: {
-    id: string;
-  }[];
-};
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
 export class EthereumAcrossPoolTokenFetcher implements PositionFetcher<AppTokenPosition> {
@@ -38,7 +31,6 @@ export class EthereumAcrossPoolTokenFetcher implements PositionFetcher<AppTokenP
     key: `studio:${ACROSS_DEFINITION.id}:${ACROSS_DEFINITION.groups.pool}:${Network.ETHEREUM_MAINNET}:addresses`,
     timeout: 15 * 60 * 1000,
   })
-
   async getPositions() {
     const multicall = this.appToolkit.getMulticall(network);
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
