@@ -52,7 +52,7 @@ export class OptimismPolynomialVaultsContractPositionFetcher implements Position
             dailyROI: 0,
             weeklyROI: await calculateROI({ multicall, contract }),
             yearlyROI: 0,
-          }), // TODO: calculate
+          }),
         },
       );
 
@@ -70,7 +70,7 @@ export class OptimismPolynomialVaultsContractPositionFetcher implements Position
           dailyROI: 0,
           weeklyROI: await calculateROI({ multicall, contract }),
           yearlyROI: 0,
-        }), // TODO: calculate
+        }),
       });
 
     return [...putPositions, ...callPositions];

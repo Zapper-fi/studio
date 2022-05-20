@@ -4,7 +4,6 @@
 export type { BondTellerErc20 } from './BondTellerErc20';
 export type { BondTellerEth } from './BondTellerEth';
 export type { BondTellerMatic } from './BondTellerMatic';
-export type { Erc20 } from './Erc20';
 export type { Scp } from './Scp';
 export type { Solace } from './Solace';
 export type { SolaceCoverProduct } from './SolaceCoverProduct';
@@ -16,7 +15,6 @@ export * as factories from './factories';
 export { BondTellerErc20__factory } from './factories/BondTellerErc20__factory';
 export { BondTellerEth__factory } from './factories/BondTellerEth__factory';
 export { BondTellerMatic__factory } from './factories/BondTellerMatic__factory';
-export { Erc20__factory } from './factories/Erc20__factory';
 export { Scp__factory } from './factories/Scp__factory';
 export { SolaceCoverProductV2__factory } from './factories/SolaceCoverProductV2__factory';
 export { SolaceCoverProduct__factory } from './factories/SolaceCoverProduct__factory';

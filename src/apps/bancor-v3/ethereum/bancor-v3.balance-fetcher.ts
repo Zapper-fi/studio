@@ -16,7 +16,7 @@ export class EthereumBancorV3BalanceFetcher implements BalanceFetcher {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(BancorV3ContractFactory) private readonly contractFactory: BancorV3ContractFactory,
-  ) { }
+  ) {}
 
   async getTokenBalances(address: string) {
     return await this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
