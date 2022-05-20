@@ -8,11 +8,12 @@ import { Network } from '~types/network.interface';
 
 import { SolaceContractFactory } from '../contracts';
 import { SOLACE_DEFINITION } from '../solace.definition';
-import getScpBalance from './helpers/getScpBalance';
-import getXSolaceV1Balance from './helpers/getXSolaceV1Balance';
-import getXSLockerBalance from './helpers/getXSLockerBalance';
+
 import getBondBalance from './helpers/getBondBalance';
 import getPolicyBalance from './helpers/getPolicyBalance';
+import getScpBalance from './helpers/getScpBalance';
+import getXSLockerBalance from './helpers/getXSLockerBalance';
+import getXSolaceV1Balance from './helpers/getXSolaceV1Balance';
 
 const network = Network.ETHEREUM_MAINNET;
 
@@ -20,7 +21,7 @@ const network = Network.ETHEREUM_MAINNET;
 export class EthereumSolaceBalanceFetcher implements BalanceFetcher {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(SolaceContractFactory) private readonly solaceContractFactory: SolaceContractFactory
+    @Inject(SolaceContractFactory) private readonly solaceContractFactory: SolaceContractFactory,
   ) {}
 
   async getBalances(address: string) {
