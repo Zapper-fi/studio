@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.34.0](https://github.com/Zapper-fi/studio/compare/v0.33.1...v0.34.0) (2022-05-20)
+
+
+### Features
+
+* **ease:** Added ease image and change definition+name ([#476](https://github.com/Zapper-fi/studio/issues/476)) ([12b500f](https://github.com/Zapper-fi/studio/commit/12b500f11796c9d02b82bbb8a5f9231b0cf570c4))
+
 ### [0.33.1](https://github.com/Zapper-fi/studio/compare/v0.33.0...v0.33.1) (2022-05-20)
 
 
