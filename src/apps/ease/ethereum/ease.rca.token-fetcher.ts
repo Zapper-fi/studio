@@ -4,10 +4,10 @@ import _ from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
+import { YEARN_DEFINITION } from '~apps/yearn/yearn.definition';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
-import { YEARN_DEFINITION } from '~apps/yearn/yearn.definition';
 
 import { EaseContractFactory, EaseRcaShield } from '../contracts';
 import { EASE_DEFINITION } from '../ease.definition';
@@ -29,7 +29,7 @@ export class EthereumEaseRcaTokenFetcher implements PositionFetcher<AppTokenPosi
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(EaseContractFactory) private readonly easeContractFactory: EaseContractFactory,
-  ) { }
+  ) {}
 
   async getPositions() {
     const endpoint = 'https://app.ease.org/api/v1/vaults';
@@ -49,13 +49,18 @@ export class EthereumEaseRcaTokenFetcher implements PositionFetcher<AppTokenPosi
       ],
       resolveContract: ({ address, network }) => this.easeContractFactory.easeRcaShield({ address, network }),
       resolveVaultAddresses: async () => ethData.map(({ address }) => address.toLowerCase()),
-      resolveUnderlyingTokenAddress: ({ multicall, contract }) => multicall.wrap(contract).uToken().catch(() => ''),
-      resolveReserve: async ({ underlyingToken, multicall, address }) => multicall
-        .wrap(this.appToolkit.globalContracts.erc20(underlyingToken))
-        .balanceOf(address)
-        .then(v => Number(v) / 10 ** underlyingToken.decimals),
+      resolveUnderlyingTokenAddress: ({ multicall, contract }) =>
+        multicall
+          .wrap(contract)
+          .uToken()
+          .catch(() => ''),
+      resolveReserve: async ({ underlyingToken, multicall, address }) =>
+        multicall
+          .wrap(this.appToolkit.globalContracts.erc20(underlyingToken))
+          .balanceOf(address)
+          .then(v => Number(v) / 10 ** underlyingToken.decimals),
       resolvePricePerShare: () => 1,
-      resolveApy: async ({ vaultAddress }) => await (rcaAddressToDetails[vaultAddress]?.token['apy'] ?? 0) / 100,
+      resolveApy: async ({ vaultAddress }) => (await (rcaAddressToDetails[vaultAddress]?.token['apy'] ?? 0)) / 100,
     });
   }
 }
