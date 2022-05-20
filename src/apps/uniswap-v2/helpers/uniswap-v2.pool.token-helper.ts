@@ -1,7 +1,7 @@
 import { Inject } from '@nestjs/common';
 import BigNumber from 'bignumber.js';
 import { BigNumberish } from 'ethers';
-import _, { chunk, compact } from 'lodash';
+import { compact } from 'lodash';
 import { keyBy, sortBy } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
