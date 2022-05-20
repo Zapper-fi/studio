@@ -12,9 +12,25 @@ const network = Network.ETHEREUM_MAINNET;
 
 @Register.BalanceFetcher(EASE_DEFINITION.id, network)
 export class EthereumEaseBalanceFetcher implements BalanceFetcher {
-  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
+  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) { }
+
+  async getRcaTokenBalances(address: string) {
+    return this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
+      address,
+      appId: EASE_DEFINITION.id,
+      groupId: EASE_DEFINITION.groups.rca.id,
+      network: network
+    });
+  }
 
   async getBalances(address: string) {
-    return presentBalanceFetcherResponse([]);
+    const [rcaTokenBalances] = await Promise.all([this.getRcaTokenBalances(address)]);
+
+    return presentBalanceFetcherResponse([
+      {
+        label: 'RCAs',
+        assets: rcaTokenBalances
+      }
+    ]);
   }
 }
