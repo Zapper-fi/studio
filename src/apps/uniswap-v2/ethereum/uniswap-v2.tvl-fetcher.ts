@@ -1,10 +1,11 @@
 import { Inject } from '@nestjs/common';
+import { sumBy } from 'lodash';
 
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { TvlFetcher } from '~stats/tvl/tvl-fetcher.interface';
 import { Network } from '~types/network.interface';
 
-import { UniswapV2TheGraphTvlHelper } from '../helpers/uniswap-v2.the-graph.tvl-helper';
 import UNISWAP_V2_DEFINITION from '../uniswap-v2.definition';
 
 const appId = UNISWAP_V2_DEFINITION.id;
@@ -12,13 +13,15 @@ const network = Network.ETHEREUM_MAINNET;
 
 @Register.TvlFetcher({ appId, network })
 export class EthereumUniswapV2TvlFetcher implements TvlFetcher {
-  constructor(
-    @Inject(UniswapV2TheGraphTvlHelper) private readonly uniswapV2TheGraphTvlHelper: UniswapV2TheGraphTvlHelper,
-  ) {}
+  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
   async getTvl() {
-    return this.uniswapV2TheGraphTvlHelper.getTvl({
-      subgraphUrl: 'https://api.thegraph.com/subgraphs/name/ianlapham/uniswapv2',
+    const positions = await this.appToolkit.getAppTokenPositions({
+      appId,
+      groupIds: ['pool'],
+      network,
     });
+
+    return sumBy(positions, v => v.dataProps.liquidity as number);
   }
 }
