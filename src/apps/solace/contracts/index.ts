@@ -7,7 +7,6 @@ import { Network } from '~types/network.interface';
 import { BondTellerErc20__factory } from './ethers';
 import { BondTellerEth__factory } from './ethers';
 import { BondTellerMatic__factory } from './ethers';
-import { Erc20__factory } from './ethers';
 import { Scp__factory } from './ethers';
 import { Solace__factory } from './ethers';
 import { SolaceCoverProduct__factory } from './ethers';
@@ -33,9 +32,6 @@ export class SolaceContractFactory extends ContractFactory {
   }
   bondTellerMatic({ address, network }: ContractOpts) {
     return BondTellerMatic__factory.connect(address, this.appToolkit.getNetworkProvider(network));
-  }
-  erc20({ address, network }: ContractOpts) {
-    return Erc20__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
   scp({ address, network }: ContractOpts) {
     return Scp__factory.connect(address, this.appToolkit.getNetworkProvider(network));
@@ -63,7 +59,6 @@ export class SolaceContractFactory extends ContractFactory {
 export type { BondTellerErc20 } from './ethers';
 export type { BondTellerEth } from './ethers';
 export type { BondTellerMatic } from './ethers';
-export type { Erc20 } from './ethers';
 export type { Scp } from './ethers';
 export type { Solace } from './ethers';
 export type { SolaceCoverProduct } from './ethers';
