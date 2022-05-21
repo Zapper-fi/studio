@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+### [0.38.1](https://github.com/Zapper-fi/studio/compare/v0.38.0...v0.38.1) (2022-05-21)
+
+
+### Bug Fixes
+
+* **jones-dao:** Add index and missing extends ([ca1a7f5](https://github.com/Zapper-fi/studio/commit/ca1a7f53b42c984be49688ed03ca885822fb077a))
+
 ## [0.38.0](https://github.com/Zapper-fi/studio/compare/v0.37.0...v0.38.0) (2022-05-21)
 
 
