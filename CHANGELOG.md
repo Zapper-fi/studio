@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.37.0](https://github.com/Zapper-fi/studio/compare/v0.36.0...v0.37.0) (2022-05-21)
+
+
+### Features
+
+* **jones-dao:** Extract Jones DAO to Studio ([#484](https://github.com/Zapper-fi/studio/issues/484)) ([42d1be6](https://github.com/Zapper-fi/studio/commit/42d1be67b42b5f0fc8c6626a36a4561348ce1d84))
+
+
+### Bug Fixes
+
+* **polynomial:** track vault balances in withdrawal ([#486](https://github.com/Zapper-fi/studio/issues/486)) ([f33fa77](https://github.com/Zapper-fi/studio/commit/f33fa7713f81ea58d386c0813bc487ad7a201c4c))
+
 ## [0.36.0](https://github.com/Zapper-fi/studio/compare/v0.35.0...v0.36.0) (2022-05-21)
 
 
