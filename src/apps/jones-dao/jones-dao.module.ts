@@ -1,4 +1,5 @@
 import { Register } from '~app-toolkit/decorators';
+import { AbstractApp } from '~app/app.dynamic-module';
 
 import { ArbitrumJonesDaoBalanceFetcher } from './arbitrum/jones-dao.balance-fetcher';
 import { ArbitrumJonesDaoFarmContractPositionFetcher } from './arbitrum/jones-dao.farm.contract-position-fetcher';
@@ -16,4 +17,4 @@ import { JonesDaoAppDefinition, JONES_DAO_DEFINITION } from './jones-dao.definit
     ArbitrumJonesDaoVaultTokenFetcher,
   ],
 })
-export class JonesDaoAppModule {}
+export class JonesDaoAppModule extends AbstractApp() {}
