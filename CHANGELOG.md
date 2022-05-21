@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.38.0](https://github.com/Zapper-fi/studio/compare/v0.37.0...v0.38.0) (2022-05-21)
+
+
+### Features
+
+* **impermax:** Add Impermax on Ethereum, Arbitrum, and Polygon ([#458](https://github.com/Zapper-fi/studio/issues/458)) ([c9a80c3](https://github.com/Zapper-fi/studio/commit/c9a80c3008c3467408d17b108e311c43d65f3870))
+
 ## [0.37.0](https://github.com/Zapper-fi/studio/compare/v0.36.0...v0.37.0) (2022-05-21)
 
 
