@@ -5,7 +5,7 @@ import { Network } from '~types/network.interface';
 
 export const SOLACE_DEFINITION = appDefinition({
   id: 'solace',
-  name: 'solace',
+  name: 'Solace',
   description:
     'Solace is an insurance protocol that is aiming to invent the future of DeFi Insurance. The protocol helps you to protect your funds against smart-contracts exploits across 180+ protocols with an intelligent single policy that automatically adjusts coverage to changes in your positions.',
   url: 'https://solace.fi',
