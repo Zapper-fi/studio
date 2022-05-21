@@ -14,8 +14,6 @@ import { ContractPosition } from '~position/position.interface';
 import { borrowed } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 
-import { TarotContractFactory } from '../contracts';
-
 export type CompoundSupplyTokenDataProps = {
   supplyApy: number;
   borrowApy: number;
@@ -34,10 +32,7 @@ type CompoundBorrowContractPositionHelperParams<T> = {
 
 @Injectable()
 export class CompoundBorrowContractPositionHelper {
-  constructor(
-    @Inject(TarotContractFactory) private readonly contractFactory: TarotContractFactory,
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-  ) {}
+  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
   async getPositions<T>({
     network,
