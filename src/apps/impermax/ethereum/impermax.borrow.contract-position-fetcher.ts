@@ -5,7 +5,7 @@ import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
-import { CompoundBorrowContractPositionHelper } from '../../tarot/helper/compound.borrow.contract-position-helper';
+import { CompoundBorrowContractPositionHelper } from '../../tarot/helper/compound.borrow.contract-position-helper'; // TODO: move to compound folder
 import { ImpermaxContractFactory, Borrowable } from '../contracts';
 import { IMPERMAX_DEFINITION } from '../impermax.definition';
 

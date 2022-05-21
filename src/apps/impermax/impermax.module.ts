@@ -1,9 +1,8 @@
 import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
 
-import { CompoundBorrowContractPositionHelper } from '../tarot/helper/compound.borrow.contract-position-helper';
-import { CompoundLendingBalanceHelper } from '../tarot/helper/compound.lending.balance-helper';
-import { CompoundSupplyTokenHelper } from '../tarot/helper/compound.supply.token-helper';
+import { CompoundLendingBalanceHelper } from '../compound/helper/compound.lending.balance-helper';
+import { CompoundBorrowContractPositionHelper } from '../tarot/helper/compound.borrow.contract-position-helper'; // TODO: move to compound folder
 
 import { ArbitrumImpermaxBalanceFetcher } from './arbitrum/impermax.balance-fetcher';
 import { ArbitrumImpermaxBorrowContractPositionFetcher } from './arbitrum/impermax.borrow.contract-position-fetcher';
@@ -14,6 +13,9 @@ import { EthereumImpermaxBalanceFetcher } from './ethereum/impermax.balance-fetc
 import { EthereumImpermaxBorrowContractPositionFetcher } from './ethereum/impermax.borrow.contract-position-fetcher';
 import { EthereumImpermaxCollateralTokenFetcher } from './ethereum/impermax.collateral.token-fetcher';
 import { EthereumImpermaxLendTokenFetcher } from './ethereum/impermax.lend.token-fetcher';
+import { ImpermaxBalanceHelper } from './helpers/impermax.balance-helper';
+import { ImpermaxCollateralTokenHelper } from './helpers/impermax.collateral.token-fetcher-helper';
+import { ImpermaxLendTokenHelper } from './helpers/impermax.lend.token-fetcher-helper';
 import { ImpermaxAppDefinition, IMPERMAX_DEFINITION } from './impermax.definition';
 import { PolygonImpermaxBalanceFetcher } from './polygon/impermax.balance-fetcher';
 import { PolygonImpermaxBorrowContractPositionFetcher } from './polygon/impermax.borrow.contract-position-fetcher';
@@ -29,13 +31,15 @@ import { PolygonImpermaxLendTokenFetcher } from './polygon/impermax.lend.token-f
     ArbitrumImpermaxLendTokenFetcher,
     CompoundBorrowContractPositionHelper,
     CompoundLendingBalanceHelper,
-    CompoundSupplyTokenHelper,
     EthereumImpermaxBalanceFetcher,
     EthereumImpermaxBorrowContractPositionFetcher,
     EthereumImpermaxCollateralTokenFetcher,
     EthereumImpermaxLendTokenFetcher,
     ImpermaxAppDefinition,
     ImpermaxContractFactory,
+    ImpermaxBalanceHelper,
+    ImpermaxCollateralTokenHelper,
+    ImpermaxLendTokenHelper,
     PolygonImpermaxBalanceFetcher,
     PolygonImpermaxBorrowContractPositionFetcher,
     PolygonImpermaxCollateralTokenFetcher,

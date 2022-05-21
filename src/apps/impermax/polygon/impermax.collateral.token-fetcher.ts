@@ -1,13 +1,11 @@
 import { Inject } from '@nestjs/common';
 
-import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
-import { ImpermaxContractFactory, Collateral } from '../contracts';
-import { getCollateralAddresses } from '../ethereum/impermax.collateral.token-fetcher';
+import { ImpermaxCollateralTokenHelper } from '../helpers/impermax.collateral.token-fetcher-helper';
 import { IMPERMAX_DEFINITION } from '../impermax.definition';
 
 import { address } from './impermax.lend.token-fetcher';
@@ -19,29 +17,18 @@ const network = Network.POLYGON_MAINNET;
 @Register.TokenPositionFetcher({ appId, groupId, network })
 export class PolygonImpermaxCollateralTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(ImpermaxContractFactory) private readonly contractFactory: ImpermaxContractFactory,
+    @Inject(ImpermaxCollateralTokenHelper)
+    private readonly impermaxCollateralTokenHelper: ImpermaxCollateralTokenHelper,
   ) {}
 
   async getPositions() {
-    const contract = this.contractFactory.factory({ address, network });
-    const multicall = this.appToolkit.getMulticall(network).wrap(contract);
-    const collateralAddresses = await getCollateralAddresses(multicall);
-
-    const tokens = await this.appToolkit.helpers.vaultTokenHelper.getTokens<Collateral>({
-      appId,
-      groupId,
+    return this.impermaxCollateralTokenHelper.getPositions({
+      address,
       network,
       dependencies: [
         { appId: 'quickswap', groupIds: ['pool'], network },
         { appId: 'sushiswap', groupIds: ['pool'], network },
       ],
-      resolveVaultAddresses: () => collateralAddresses,
-      resolveContract: ({ address, network }) => this.contractFactory.collateral({ address, network }),
-      resolveUnderlyingTokenAddress: ({ multicall, contract }) => multicall.wrap(contract).underlying(),
-      resolveReserve: () => 0,
-      resolvePricePerShare: () => 1, // Note: assumes not liquidated
     });
-    return tokens;
   }
 }
