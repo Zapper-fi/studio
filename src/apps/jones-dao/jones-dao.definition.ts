@@ -16,6 +16,12 @@ export const JONES_DAO_DEFINITION = appDefinition({
       label: 'Staking',
     },
 
+    millinerV2: {
+      id: 'milliner-v2',
+      type: GroupType.POSITION,
+      label: 'Milliner V2',
+    },
+
     vault: {
       id: 'vault',
       type: GroupType.TOKEN,
