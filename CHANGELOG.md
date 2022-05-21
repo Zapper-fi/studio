@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.39.0](https://github.com/Zapper-fi/studio/compare/v0.38.1...v0.39.0) (2022-05-21)
+
+
+### Features
+
+* **jones-dao:** Add staking V2, get staking V1 dynamically ([#489](https://github.com/Zapper-fi/studio/issues/489)) ([8c47c93](https://github.com/Zapper-fi/studio/commit/8c47c9318f9141e4e121e5d144d7ca3b1101d1d3))
+
 ### [0.38.1](https://github.com/Zapper-fi/studio/compare/v0.38.0...v0.38.1) (2022-05-21)
 
 
