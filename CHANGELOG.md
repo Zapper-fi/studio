@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.36.0](https://github.com/Zapper-fi/studio/compare/v0.35.0...v0.36.0) (2022-05-21)
+
+
+### Features
+
+* **symphony:** Fix address balance ([#482](https://github.com/Zapper-fi/studio/issues/482)) ([6a744cf](https://github.com/Zapper-fi/studio/commit/6a744cfbd947cb2a993fd743baf6479068270e5f))
+
 ## [0.35.0](https://github.com/Zapper-fi/studio/compare/v0.34.0...v0.35.0) (2022-05-20)
 
 
