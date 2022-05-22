@@ -5,7 +5,7 @@ import { Network } from '~types/network.interface';
 
 export const IMPERMAX_DEFINITION = appDefinition({
   id: 'impermax',
-  name: 'impermax',
+  name: 'Impermax',
   description: 'Impermax enables permissionless lending for Leveraged Yield Farming',
   url: 'https://www.impermax.finance/',
   groups: {

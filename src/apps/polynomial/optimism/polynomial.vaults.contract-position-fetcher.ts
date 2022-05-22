@@ -1,5 +1,6 @@
 import { Inject } from '@nestjs/common';
 import Axios from 'axios';
+import _ from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
@@ -13,6 +14,8 @@ import { POLYNOMIAL_DEFINITION } from '../polynomial.definition';
 const appId = POLYNOMIAL_DEFINITION.id;
 const groupId = POLYNOMIAL_DEFINITION.groups.vaults.id;
 const network = Network.OPTIMISM_MAINNET;
+
+const resolveTitle = (title: string) => _.startCase(_.toLower(title));
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
 export class OptimismPolynomialVaultsContractPositionFetcher implements PositionFetcher<ContractPosition> {
@@ -36,6 +39,8 @@ export class OptimismPolynomialVaultsContractPositionFetcher implements Position
           resolveStakedTokenAddress: async ({ multicall, contract }) => multicall.wrap(contract).UNDERLYING(),
           resolveFarmContract: ({ address }) => this.contractFactory.polynomialCoveredCall({ address, network }),
           resolveTotalValueLocked: ({ multicall, contract }) => multicall.wrap(contract).totalFunds(),
+          resolveLabel: address =>
+            resolveTitle(vaults.find(vault => vault.contractAddress.toLowerCase() === address).type),
           resolveRois: () => ({
             dailyROI: 0,
             weeklyROI: 0,
@@ -54,6 +59,8 @@ export class OptimismPolynomialVaultsContractPositionFetcher implements Position
         resolveStakedTokenAddress: async ({ multicall, contract }) => multicall.wrap(contract).COLLATERAL(),
         resolveFarmContract: ({ address }) => this.contractFactory.polynomialPutSelling({ address, network }),
         resolveTotalValueLocked: ({ multicall, contract }) => multicall.wrap(contract).totalFunds(),
+        resolveLabel: address =>
+          resolveTitle(vaults.find(vault => vault.contractAddress.toLowerCase() === address).type),
         resolveRois: () => ({
           dailyROI: 0,
           weeklyROI: 0,

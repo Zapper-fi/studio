@@ -76,6 +76,7 @@ export type SingleStakingFarmContractPositionHelperParams<T> = {
     network: Network;
   }) => SingleStakingFarmDefinition[] | Promise<SingleStakingFarmDefinition[]>;
   resolveImplementation?: () => string;
+  resolveLabel?: (definition: string | SingleStakingFarmDefinition) => string;
   resolveFarmAddresses?: (opts: { network: Network }) => (string | null)[] | Promise<(string | null)[]>;
   resolveStakedTokenAddress?: (opts: { contract: T; multicall: Multicall; index: number }) => Promise<string>;
   resolveRewardTokenAddresses?: (opts: { contract: T; multicall: Multicall }) => Promise<string | string[]>;
@@ -98,6 +99,7 @@ export class SingleStakingFarmContractPositionHelper {
     resolveFarmAddresses,
     resolveFarmDefinitions,
     resolveImplementation,
+    resolveLabel,
     resolveStakedTokenAddress = async () => '',
     resolveRewardTokenAddresses = async () => [],
     resolveIsActive = async () => true,
@@ -197,7 +199,7 @@ export class SingleStakingFarmContractPositionHelper {
           // Display Properties
           const underlyingLabel =
             stakedToken.type === ContractType.APP_TOKEN ? stakedToken.displayProps.label : stakedToken.symbol;
-          const label = `Staked ${underlyingLabel}`;
+          const label = resolveLabel ? resolveLabel(definitionOrAddress) : `Staked ${underlyingLabel}`;
           const secondaryLabel = buildDollarDisplayItem(stakedToken.price);
           const images = [getTokenImg(stakedToken.address, network)];
           const statsItems = [

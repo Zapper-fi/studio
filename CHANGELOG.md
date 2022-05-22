@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+### [0.39.1](https://github.com/Zapper-fi/studio/compare/v0.39.0...v0.39.1) (2022-05-22)
+
+
+### Bug Fixes
+
+* fix typo in impermax definition ([#492](https://github.com/Zapper-fi/studio/issues/492)) ([5841786](https://github.com/Zapper-fi/studio/commit/5841786894abc5bc35ebe38a27ccae9ea33afee0))
+* update polynomial vault name ([#491](https://github.com/Zapper-fi/studio/issues/491)) ([c6533b6](https://github.com/Zapper-fi/studio/commit/c6533b616271cdb0dad9d5fc8aa4cecac4ffb452))
+
 ## [0.39.0](https://github.com/Zapper-fi/studio/compare/v0.38.1...v0.39.0) (2022-05-21)
 
 
