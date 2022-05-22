@@ -3,6 +3,9 @@ dist
 tmp
 /out-tsc
 
+# for linking
+studio
+
 # cache
 .cache
 
