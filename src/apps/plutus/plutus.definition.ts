@@ -15,6 +15,11 @@ export const PLUTUS_DEFINITION = appDefinition({
       type: GroupType.TOKEN,
       label: 'veTokens',
     },
+    lock: {
+      id: 'lock',
+      type: GroupType.POSITION,
+      label: 'Locked PLS',
+    },
     pools: {
       id: 'pools',
       type: GroupType.POSITION,
