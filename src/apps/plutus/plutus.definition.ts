@@ -20,10 +20,20 @@ export const PLUTUS_DEFINITION = appDefinition({
       type: GroupType.POSITION,
       label: 'Locked PLS',
     },
-    pools: {
-      id: 'pools',
+    jones: {
+      id: 'jones',
       type: GroupType.POSITION,
-      label: 'Pools',
+      label: 'Staked PlsJones',
+    },
+    dpx: {
+      id: 'dpx',
+      type: GroupType.POSITION,
+      label: 'Staked PlsDPX',
+    },
+    stake: {
+      id: 'stake',
+      type: GroupType.POSITION,
+      label: 'Staked PLS',
     },
   },
   tags: [AppTag.ASSET_MANAGEMENT, AppTag.FARMING],
