@@ -10,7 +10,7 @@ import { DEFAULT_REGISTRY } from './network-provider.registry';
 
 @Injectable()
 export class NetworkProviderService {
-  private providers: Record<Extract<Network, Network.ETHEREUM_MAINNET>, StaticJsonRpcProvider>;
+  private providers: Record<Exclude<Network, Network.BITCOIN_MAINNET>, StaticJsonRpcProvider>;
 
   static getEnvVarKey(network: Network) {
     const snake = snakeCase(network);
