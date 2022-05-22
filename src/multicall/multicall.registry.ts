@@ -12,5 +12,7 @@ export const MULTICALL_ADDRESSES: Record<Network, string | null> = {
   [Network.HARMONY_MAINNET]: '0xfc7e92958262d3078acfcccb89c615ae6995f96a',
   [Network.OPTIMISM_MAINNET]: '0x2a8be97eb1029eab52ec743004f82e95612f2d3a',
   [Network.MOONRIVER_MAINNET]: '0x2a8be97eb1029eab52ec743004f82e95612f2d3a',
+  [Network.CRONOS_MAINNET]: '0x845c4753954c347175b4179b2d5b18de1629f94f',
+  [Network.AURORA_MAINNET]: '0x67d66e8ec1fd25d98b3ccd3b19b7dc4b4b7fc493',
   [Network.BITCOIN_MAINNET]: null,
 };
