@@ -1,5 +1,6 @@
 import { Inject } from '@nestjs/common';
 import Axios from 'axios';
+import { BigNumber } from 'ethers';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
@@ -54,8 +55,8 @@ export class FantomMarketXyzPoolContractPositionFetcher implements PositionFetch
         const price =
           parseInt(
             asset.underlyingPrice
-              .mul(ethPrice * 1e2)
-              .div(decimals + 36)
+              .mul(Math.floor(ethPrice * 1e2))
+              .div(BigNumber.from(10).pow(decimals))
               .toString(),
           ) / 1e2;
 

@@ -56,7 +56,7 @@ export class FantomMarketXyzBalanceFetcher implements BalanceFetcher {
                 parseInt(
                   asset.supplyBalance
                     .mul(asset.underlyingPrice)
-                    .mul(ethPrice * 1e2)
+                    .mul(Math.floor(ethPrice * 1e2))
                     .div(asset.underlyingDecimals)
                     .toString(),
                 ) / 1e2,
@@ -71,7 +71,7 @@ export class FantomMarketXyzBalanceFetcher implements BalanceFetcher {
                 parseInt(
                   asset.borrowBalance
                     .mul(asset.underlyingPrice)
-                    .mul(ethPrice * 1e2)
+                    .mul(Math.floor(ethPrice * 1e2))
                     .div(asset.underlyingDecimals)
                     .toString(),
                 ) / 1e2,
