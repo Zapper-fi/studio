@@ -23,14 +23,15 @@ export class ArbitrumPlutusDpxContractPositionFetcher implements PositionFetcher
   ) {}
 
   async getPositions() {
-    return this.appToolkit.helpers.singleStakingFarmContractPositionHelper.getContractPositions<PlsDpxPlutusChef>({
+    return this.appToolkit.helpers.masterChefContractPositionHelper.getContractPositions<PlsDpxPlutusChef>({
+      address: VAULTS.DPX_VAULT,
       appId,
       groupId,
       network,
       dependencies: [{ appId, groupIds: [PLUTUS_DEFINITION.groups.ve.id], network }],
-      resolveFarmAddresses: async () => [VAULTS.DPX_VAULT],
-      resolveStakedTokenAddress: async ({ multicall, contract }) => multicall.wrap(contract).plsDpx(),
-      resolveFarmContract: opts => this.contractFactory.plsDpxPlutusChef(opts),
+      resolveContract: opts => this.contractFactory.plsDpxPlutusChef(opts),
+      resolvePoolLength: async () => 1,
+      resolveDepositTokenAddress: async ({ multicall, contract }) => multicall.wrap(contract).plsDpx(),
       resolveRewardTokenAddresses: async () => [
         ADDRESSES.pls,
         ADDRESSES.plsDpx,
@@ -38,7 +39,6 @@ export class ArbitrumPlutusDpxContractPositionFetcher implements PositionFetcher
         ADDRESSES.dpx,
         ADDRESSES.rdpx,
       ],
-      resolveRois: () => ({ dailyROI: 0, weeklyROI: 0, yearlyROI: 0 }),
     });
   }
 }
