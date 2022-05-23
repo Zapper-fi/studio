@@ -2,6 +2,7 @@ import { Inject } from '@nestjs/common';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
+import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
@@ -49,6 +50,7 @@ export class ArbitrumPlutusVeTokenFetcher implements PositionFetcher<AppTokenPos
       dataProps: {},
       displayProps: {
         label: symbol,
+        secondaryLabel: buildDollarDisplayItem(price),
         images: getImagesFromToken(baseToken),
       },
     };

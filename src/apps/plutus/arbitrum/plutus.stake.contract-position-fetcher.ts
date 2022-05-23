@@ -6,7 +6,7 @@ import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
-import { PlutusContractFactory, MasterChef } from '../contracts';
+import { PlutusContractFactory, PlsPlutusChef } from '../contracts';
 import { PLUTUS_DEFINITION } from '../plutus.definition';
 
 import { VAULTS, ADDRESSES } from './consts';
@@ -23,7 +23,7 @@ export class ArbitrumPlutusStakeContractPositionFetcher implements PositionFetch
   ) {}
 
   async getPositions() {
-    return this.appToolkit.helpers.singleStakingFarmContractPositionHelper.getContractPositions<MasterChef>({
+    return this.appToolkit.helpers.singleStakingFarmContractPositionHelper.getContractPositions<PlsPlutusChef>({
       appId,
       groupId,
       network,
@@ -36,7 +36,7 @@ export class ArbitrumPlutusStakeContractPositionFetcher implements PositionFetch
           .poolInfo(pool)
           .then(info => info.lpToken);
       },
-      resolveFarmContract: opts => this.contractFactory.masterChef(opts),
+      resolveFarmContract: opts => this.contractFactory.plsPlutusChef(opts),
       resolveRewardTokenAddresses: async () => ADDRESSES.pls,
       resolveRois: () => ({ dailyROI: 0, weeklyROI: 0, yearlyROI: 0 }),
     });

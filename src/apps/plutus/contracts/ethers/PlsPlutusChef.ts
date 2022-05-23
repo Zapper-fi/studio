@@ -17,7 +17,7 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
 
-export interface MasterChefInterface extends utils.Interface {
+export interface PlsPlutusChefInterface extends utils.Interface {
   functions: {
     'MONTH_IN_SECONDS()': FunctionFragment;
     'PLS()': FunctionFragment;
@@ -165,12 +165,12 @@ export type WithdrawEvent = TypedEvent<[string, BigNumber, BigNumber], WithdrawE
 
 export type WithdrawEventFilter = TypedEventFilter<WithdrawEvent>;
 
-export interface MasterChef extends BaseContract {
+export interface PlsPlutusChef extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: MasterChefInterface;
+  interface: PlsPlutusChefInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

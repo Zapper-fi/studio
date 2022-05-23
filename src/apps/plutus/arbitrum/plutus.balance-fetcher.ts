@@ -8,7 +8,7 @@ import { Network } from '~types/network.interface';
 
 import {
   PlutusContractFactory,
-  MasterChef,
+  PlsPlutusChef,
   PlsDpxPlutusChef,
   PlsJonesPlutusChef,
   PlutusEpochStaking,
@@ -99,12 +99,12 @@ export class ArbitrumPlutusBalanceFetcher implements BalanceFetcher {
   }
 
   async getStakedPlsBalances(address: string) {
-    return this.appToolkit.helpers.singleStakingContractPositionBalanceHelper.getBalances<MasterChef>({
+    return this.appToolkit.helpers.singleStakingContractPositionBalanceHelper.getBalances<PlsPlutusChef>({
       address,
       network,
       appId,
       groupId: PLUTUS_DEFINITION.groups.stake.id,
-      resolveContract: ({ address, network }) => this.contractFactory.masterChef({ address, network }),
+      resolveContract: ({ address, network }) => this.contractFactory.plsPlutusChef({ address, network }),
       resolveStakedTokenBalance: async ({ contract, address, multicall }) => {
         const pool = Number(await multicall.wrap(contract).poolLength()) - 1;
         return await multicall

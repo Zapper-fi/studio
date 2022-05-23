@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { MasterChef, MasterChefInterface } from '../MasterChef';
+import type { PlsPlutusChef, PlsPlutusChefInterface } from '../PlsPlutusChef';
 
 const _abi = [
   {
@@ -485,12 +485,12 @@ const _abi = [
   },
 ];
 
-export class MasterChef__factory {
+export class PlsPlutusChef__factory {
   static readonly abi = _abi;
-  static createInterface(): MasterChefInterface {
-    return new utils.Interface(_abi) as MasterChefInterface;
+  static createInterface(): PlsPlutusChefInterface {
+    return new utils.Interface(_abi) as PlsPlutusChefInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): MasterChef {
-    return new Contract(address, _abi, signerOrProvider) as MasterChef;
+  static connect(address: string, signerOrProvider: Signer | Provider): PlsPlutusChef {
+    return new Contract(address, _abi, signerOrProvider) as PlsPlutusChef;
   }
 }
