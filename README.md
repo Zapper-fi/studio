@@ -18,7 +18,7 @@
 </div>
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-20-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-25-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 ## Description
@@ -166,6 +166,13 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/farhaan-ali"><img src="https://avatars.githubusercontent.com/u/59924029?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Farhaan</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=farhaan-ali" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/tonzgao"><img src="https://avatars.githubusercontent.com/u/2408377?v=4?s=64" width="64px;" alt=""/><br /><sub><b>tonzgao</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=tonzgao" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/LeifuChen"><img src="https://avatars.githubusercontent.com/u/4819006?v=4?s=64" width="64px;" alt=""/><br /><sub><b>leifu</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=LeifuChen" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/dominikpre"><img src="https://avatars.githubusercontent.com/u/58030116?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Dominik Prediger</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=dominikpre" title="Code">💻</a> <a href="https://github.com/Zapper-fi/studio/issues?q=author%3Adominikpre" title="Bug reports">🐛</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/symphonyfi"><img src="https://avatars.githubusercontent.com/u/81959798?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Kakashi</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=symphonyfi" title="Code">💻</a></td>
+    <td align="center"><a href="https://aleonard.dev/"><img src="https://avatars.githubusercontent.com/u/14011462?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Andrew Leonard</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=leonardishere" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/mingji"><img src="https://avatars.githubusercontent.com/u/3455636?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Michael</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=mingji" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/liuyepiaoxiang"><img src="https://avatars.githubusercontent.com/u/13102393?v=4?s=64" width="64px;" alt=""/><br /><sub><b>liuyepiaoxiang</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=liuyepiaoxiang" title="Code">💻</a></td>
   </tr>
 </table>
 
