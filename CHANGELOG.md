@@ -4,6 +4,165 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.40.0](https://github.com/Zapper-fi/studio/compare/v0.39.1...v0.40.0) (2022-05-22)
+
+
+### Features
+
+* **network:** Support Aurora, Cronos, and Evmos networks ([#495](https://github.com/Zapper-fi/studio/issues/495)) ([909f9c1](https://github.com/Zapper-fi/studio/commit/909f9c14629fa763a45567a641f2c75254d51d6d))
+
+### [0.39.1](https://github.com/Zapper-fi/studio/compare/v0.39.0...v0.39.1) (2022-05-22)
+
+
+### Bug Fixes
+
+* fix typo in impermax definition ([#492](https://github.com/Zapper-fi/studio/issues/492)) ([5841786](https://github.com/Zapper-fi/studio/commit/5841786894abc5bc35ebe38a27ccae9ea33afee0))
+* update polynomial vault name ([#491](https://github.com/Zapper-fi/studio/issues/491)) ([c6533b6](https://github.com/Zapper-fi/studio/commit/c6533b616271cdb0dad9d5fc8aa4cecac4ffb452))
+
+## [0.39.0](https://github.com/Zapper-fi/studio/compare/v0.38.1...v0.39.0) (2022-05-21)
+
+
+### Features
+
+* **jones-dao:** Add staking V2, get staking V1 dynamically ([#489](https://github.com/Zapper-fi/studio/issues/489)) ([8c47c93](https://github.com/Zapper-fi/studio/commit/8c47c9318f9141e4e121e5d144d7ca3b1101d1d3))
+
+### [0.38.1](https://github.com/Zapper-fi/studio/compare/v0.38.0...v0.38.1) (2022-05-21)
+
+
+### Bug Fixes
+
+* **jones-dao:** Add index and missing extends ([ca1a7f5](https://github.com/Zapper-fi/studio/commit/ca1a7f53b42c984be49688ed03ca885822fb077a))
+
+## [0.38.0](https://github.com/Zapper-fi/studio/compare/v0.37.0...v0.38.0) (2022-05-21)
+
+
+### Features
+
+* **impermax:** Add Impermax on Ethereum, Arbitrum, and Polygon ([#458](https://github.com/Zapper-fi/studio/issues/458)) ([c9a80c3](https://github.com/Zapper-fi/studio/commit/c9a80c3008c3467408d17b108e311c43d65f3870))
+
+## [0.37.0](https://github.com/Zapper-fi/studio/compare/v0.36.0...v0.37.0) (2022-05-21)
+
+
+### Features
+
+* **jones-dao:** Extract Jones DAO to Studio ([#484](https://github.com/Zapper-fi/studio/issues/484)) ([42d1be6](https://github.com/Zapper-fi/studio/commit/42d1be67b42b5f0fc8c6626a36a4561348ce1d84))
+
+
+### Bug Fixes
+
+* **polynomial:** track vault balances in withdrawal ([#486](https://github.com/Zapper-fi/studio/issues/486)) ([f33fa77](https://github.com/Zapper-fi/studio/commit/f33fa7713f81ea58d386c0813bc487ad7a201c4c))
+
+## [0.36.0](https://github.com/Zapper-fi/studio/compare/v0.35.0...v0.36.0) (2022-05-21)
+
+
+### Features
+
+* **symphony:** Fix address balance ([#482](https://github.com/Zapper-fi/studio/issues/482)) ([6a744cf](https://github.com/Zapper-fi/studio/commit/6a744cfbd947cb2a993fd743baf6479068270e5f))
+
+## [0.35.0](https://github.com/Zapper-fi/studio/compare/v0.34.0...v0.35.0) (2022-05-20)
+
+
+### Features
+
+* **polynomial:** Add Polynomial protocol ([#473](https://github.com/Zapper-fi/studio/issues/473)) ([afda7d3](https://github.com/Zapper-fi/studio/commit/afda7d3fd60b063d8df8cd05955945d77d322ea4))
+* **symphony:** Add Symphony Finance ([#468](https://github.com/Zapper-fi/studio/issues/468)) ([f768448](https://github.com/Zapper-fi/studio/commit/f7684484f91fd638241b924959f79d51d300f64d))
+
+
+### Bug Fixes
+
+* **ci:** Use Pull Request trigger ([#481](https://github.com/Zapper-fi/studio/issues/481)) ([a8bdf94](https://github.com/Zapper-fi/studio/commit/a8bdf94165e15481c59fe8724ccfd4d198f65a14))
+* **ease:** fix apy in vault stats ([#479](https://github.com/Zapper-fi/studio/issues/479)) ([ada8b80](https://github.com/Zapper-fi/studio/commit/ada8b802f1c2dc77fc15dbd45147e8062ff3f400))
+* **ease:** Small linting issue ([3934178](https://github.com/Zapper-fi/studio/commit/3934178e2fdc0ad79f0ca841f59c8b14db6f1b2e))
+
+## [0.34.0](https://github.com/Zapper-fi/studio/compare/v0.33.1...v0.34.0) (2022-05-20)
+
+
+### Features
+
+* **ease:** Added ease image and change definition+name ([#476](https://github.com/Zapper-fi/studio/issues/476)) ([12b500f](https://github.com/Zapper-fi/studio/commit/12b500f11796c9d02b82bbb8a5f9231b0cf570c4))
+
+### [0.33.1](https://github.com/Zapper-fi/studio/compare/v0.33.0...v0.33.1) (2022-05-20)
+
+
+### Bug Fixes
+
+* **solace:** Add metatype to bond tokens ([df2ef9b](https://github.com/Zapper-fi/studio/commit/df2ef9b2cb9f38aa186897bacfe4337520432b7c))
+
+## [0.33.0](https://github.com/Zapper-fi/studio/compare/v0.32.0...v0.33.0) (2022-05-20)
+
+
+### Features
+
+* **across:** Add across protocol on Ethereum mainnet ([#395](https://github.com/Zapper-fi/studio/issues/395)) ([1b55ec8](https://github.com/Zapper-fi/studio/commit/1b55ec8e15e5737bb83a7742e1a3a676fe5ef11d))
+* **ease:** Add support for Ease's RCAs on mainnet ([#469](https://github.com/Zapper-fi/studio/issues/469)) ([9f4325f](https://github.com/Zapper-fi/studio/commit/9f4325fc97651dab4468d151a3cb8ce8c54639a0))
+* porting b-protocol and compound to studio ([#449](https://github.com/Zapper-fi/studio/issues/449)) ([6d9d157](https://github.com/Zapper-fi/studio/commit/6d9d1578174b8ee15559399354a3902d7cc3e7d3))
+* **solace:** Integrate solace finance ([#457](https://github.com/Zapper-fi/studio/issues/457)) ([860de45](https://github.com/Zapper-fi/studio/commit/860de457bb4f75e87c1fb546251902df0f26f69c))
+* **uniswap-v2:** Derive unknown tokens prices ([#466](https://github.com/Zapper-fi/studio/issues/466)) ([272090d](https://github.com/Zapper-fi/studio/commit/272090df4895a0134f7a09e50551cd1ad0bf3d7f))
+
+
+### Bug Fixes
+
+* **across:** Fix Across balance fetcher and token fetcher ([#470](https://github.com/Zapper-fi/studio/issues/470)) ([6d2cd19](https://github.com/Zapper-fi/studio/commit/6d2cd191d5e7467769447f2d61082cab7cc7cea6))
+* **across:** Satisfy lint ([470e39f](https://github.com/Zapper-fi/studio/commit/470e39f67d2ee759729c13ff50a3b4f5a03bf0cd))
+* **global:** Revert unexpected change ([6defafe](https://github.com/Zapper-fi/studio/commit/6defafec827c2c26df587c8ea79fdb502e9dffd5))
+* **qi-dao:** Remove duplicate Yield ([#467](https://github.com/Zapper-fi/studio/issues/467)) ([84ccf18](https://github.com/Zapper-fi/studio/commit/84ccf183548390d6557810b7e5d908048728a2cb))
+* **solace:** Adjust Solace implementation ([#472](https://github.com/Zapper-fi/studio/issues/472)) ([cdd243d](https://github.com/Zapper-fi/studio/commit/cdd243d621d872b3bf3b17245d66b31e2a130270))
+* **solace:** Remove dupe ERC20 ([4308d60](https://github.com/Zapper-fi/studio/commit/4308d600453d4962597042d7dd06fb5fe10ee165))
+* **uniswap-v2:** Lint error ([13bd641](https://github.com/Zapper-fi/studio/commit/13bd641ce57695b1e3f76f503c7268db245da6b3))
+
+## [0.32.0](https://github.com/Zapper-fi/studio/compare/v0.31.0...v0.32.0) (2022-05-19)
+
+
+### Features
+
+* **tarot:** Extract Tarot to Studio ([#463](https://github.com/Zapper-fi/studio/issues/463)) ([3dc92e0](https://github.com/Zapper-fi/studio/commit/3dc92e0aced64f2f2b9091f8fbca92a5255fe8fc))
+
+## [0.31.0](https://github.com/Zapper-fi/studio/compare/v0.30.0...v0.31.0) (2022-05-19)
+
+
+### Features
+
+* **sturdy:** Add Sturdy Finance ([#461](https://github.com/Zapper-fi/studio/issues/461)) ([e83ba4b](https://github.com/Zapper-fi/studio/commit/e83ba4b8b108769d336de9dd882aed3c5e468531))
+
+
+### Bug Fixes
+
+* **sturdy:** Fix linting issues ([25b22be](https://github.com/Zapper-fi/studio/commit/25b22be258f0515a562a3d5f15d13a2c6c0af3b3))
+
+## [0.30.0](https://github.com/Zapper-fi/studio/compare/v0.29.0...v0.30.0) (2022-05-18)
+
+
+### Features
+
+* added support for yvstETH Concentrated ([#456](https://github.com/Zapper-fi/studio/issues/456)) ([d8e198c](https://github.com/Zapper-fi/studio/commit/d8e198c09359bb4dbf8075a04e06009d94db2f8e))
+
+## [0.29.0](https://github.com/Zapper-fi/studio/compare/v0.28.0...v0.29.0) (2022-05-17)
+
+
+### Features
+
+* **curve:** Add child liquidity gauges to Optimism ([#451](https://github.com/Zapper-fi/studio/issues/451)) ([a9c218e](https://github.com/Zapper-fi/studio/commit/a9c218eb2b718db946e15f8175f464c567396b80))
+* **curve:** Document Curve gauge impls on Ethereum for future refactors ([#455](https://github.com/Zapper-fi/studio/issues/455)) ([fc9638f](https://github.com/Zapper-fi/studio/commit/fc9638f3ae0219b03f53658d3bcf7b491c304265))
+* **curve:** Support child liquidity gauges for Gnosis Curve ([#450](https://github.com/Zapper-fi/studio/issues/450)) ([aa4054c](https://github.com/Zapper-fi/studio/commit/aa4054c1d203892e4aa0ba7014158cbfb3158b49))
+* **curve:** Support child liquidity gauges on Avalanche ([#442](https://github.com/Zapper-fi/studio/issues/442)) ([140f5dc](https://github.com/Zapper-fi/studio/commit/140f5dcc26364c961c1c892a4bd704db762088d4))
+* **curve:** Support child liquidity gauges on Harmony ([#452](https://github.com/Zapper-fi/studio/issues/452)) ([40138de](https://github.com/Zapper-fi/studio/commit/40138de5e955cdbe053eb98d00ccb4245838dff0))
+* **curve:** Support new child liquidity gauges on Arbitrum ([#444](https://github.com/Zapper-fi/studio/issues/444)) ([1c1510e](https://github.com/Zapper-fi/studio/commit/1c1510e6d03a250692b4da79e1a92cd2a70b8091))
+* **curve:** Support Tokemak pools ([#453](https://github.com/Zapper-fi/studio/issues/453)) ([5a15843](https://github.com/Zapper-fi/studio/commit/5a15843ef4e10b8aeb2d8c73577df0731ceee865))
+* **curve:** Update Curve Fantom liquidity gauges ([#448](https://github.com/Zapper-fi/studio/issues/448)) ([2beb324](https://github.com/Zapper-fi/studio/commit/2beb3246f9218e40d1aed6c47cbc170aac8cb950))
+* **curve:** Update Polygon sidechain gauges ([#446](https://github.com/Zapper-fi/studio/issues/446)) ([b4698e6](https://github.com/Zapper-fi/studio/commit/b4698e62518f175ffd10715928f1698e53e61637))
+
+## [0.28.0](https://github.com/Zapper-fi/studio/compare/v0.27.0...v0.28.0) (2022-05-16)
+
+
+### Features
+
+* **bancor-v3:** Support Bancor V3 ([#437](https://github.com/Zapper-fi/studio/issues/437)) ([058a733](https://github.com/Zapper-fi/studio/commit/058a733ea5ff4063fd887e8f34d69f420e10aae4))
+
+
+### Bug Fixes
+
+* **bancor:** Rename to bancor-v3 and fix errors in BNT pool ([#440](https://github.com/Zapper-fi/studio/issues/440)) ([66c8b3f](https://github.com/Zapper-fi/studio/commit/66c8b3f3956cd99ed315c7498e4084a1f27e92e8))
+
 ## [0.27.0](https://github.com/Zapper-fi/studio/compare/v0.26.0...v0.27.0) (2022-05-14)
 
 
