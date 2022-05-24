@@ -10,14 +10,20 @@ export const MARKET_XYZ_DEFINITION = appDefinition({
   url: 'https://www.market.xyz/',
 
   groups: {
-    pool: {
-      id: 'pool',
+    supply: {
+      id: 'supply',
+      type: GroupType.TOKEN,
+      label: 'Lending',
+    },
+
+    borrow: {
+      id: 'borrow',
       type: GroupType.POSITION,
-      label: 'Pool',
+      label: 'Lending',
     },
   },
 
-  tags: [AppTag.COLLATERALIZED_DEBT_POSITION, AppTag.LIQUIDITY_POOL],
+  tags: [AppTag.LIQUIDITY_POOL],
   keywords: [],
 
   links: {

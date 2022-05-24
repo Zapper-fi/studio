@@ -1,92 +1,55 @@
 import { Inject } from '@nestjs/common';
-import Axios from 'axios';
-import { BigNumber } from 'ethers';
 
-import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
+import { CompoundContractFactory } from '~apps/compound';
+import { CompoundLendingMetaHelper } from '~apps/compound/helper/compound.lending.meta-helper';
 import { BalanceFetcher } from '~balance/balance-fetcher.interface';
-import { WithMetaType } from '~position/display.interface';
-import { BaseTokenBalance, ContractPositionBalance } from '~position/position-balance.interface';
-import { MetaType } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
-import { MarketXyzContractFactory } from '../contracts';
+import { MarketXyzLendingBalanceHelper } from '../helpers/market-xyz.lending.balance-helper';
 import { MARKET_XYZ_DEFINITION } from '../market-xyz.definition';
 
-const network = Network.FANTOM_OPERA_MAINNET;
-
-const fantomDirectoryAddress = '0x0E7d754A8d1a82220432148C10715497a0569BD7';
-const fantomLensAddress = '0xCb1F1Ff803B475bd854e999ec6d1226f431F5725';
-
-export async function getEthPriceUSD(): Promise<number> {
-  return (await Axios.get('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd')).data.ethereum
-    .usd;
-}
-
-@Register.BalanceFetcher(MARKET_XYZ_DEFINITION.id, network)
+@Register.BalanceFetcher(MARKET_XYZ_DEFINITION.id, Network.FANTOM_OPERA_MAINNET)
 export class FantomMarketXyzBalanceFetcher implements BalanceFetcher {
   constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(MarketXyzContractFactory) private readonly marketXyzContractFactory: MarketXyzContractFactory,
+    @Inject(CompoundContractFactory)
+    private readonly compoundContractFactory: CompoundContractFactory,
+    @Inject(MarketXyzLendingBalanceHelper)
+    private readonly MarketXyzLendingBalanceHelper: MarketXyzLendingBalanceHelper,
+    @Inject(CompoundLendingMetaHelper)
+    private readonly compoundLendingMetaHelper: CompoundLendingMetaHelper,
   ) { }
 
+  async getLendingBalances(address: string) {
+    return this.MarketXyzLendingBalanceHelper.getBalances({
+      address,
+      appId: MARKET_XYZ_DEFINITION.id,
+      supplyGroupId: MARKET_XYZ_DEFINITION.groups.supply.id,
+      borrowGroupId: MARKET_XYZ_DEFINITION.groups.borrow.id,
+      network: Network.FANTOM_OPERA_MAINNET,
+      fuseLensAddress: '0x5aB6215AB8344C28B899efdE93BEe47B124200Fb',
+      getTokenContract: ({ address, network }) => this.compoundContractFactory.compoundCToken({ address, network }),
+      getBalanceRaw: ({ contract, address, multicall }) => multicall.wrap(contract).balanceOf(address),
+      getBorrowBalanceRaw: ({ contract, address, multicall }) =>
+        multicall
+          .wrap(contract)
+          .borrowBalanceCurrent(address)
+          .catch(() => '0'),
+    });
+  }
+
   async getBalances(address: string) {
-    const multicall = await this.appToolkit.getMulticall(network);
-    const directory = await this.marketXyzContractFactory.poolDirectory({ network, address: fantomDirectoryAddress });
-    const lens = await this.marketXyzContractFactory.marketLens({ network, address: fantomLensAddress });
+    const [lendingBalances] = await Promise.all([this.getLendingBalances(address)]);
 
-    const pools = await directory.getAllPools();
-    const assetsRaw = await Promise.all(
-      pools.map(pool => multicall.wrap(lens).callStatic.getPoolAssetsWithData(pool.comptroller, { from: address })),
-    );
-    const ethPrice = await getEthPriceUSD();
+    const meta = this.compoundLendingMetaHelper.getMeta({ balances: lendingBalances });
 
-    const allAssets = assetsRaw.map(assets => [
-      <ContractPositionBalance>{
-        tokens: assets
-          .map(asset => [
-            <WithMetaType<BaseTokenBalance>>{
-              metaType: MetaType.SUPPLIED,
-              balance:
-                parseInt(asset.borrowBalance.div(BigNumber.from(10).pow(asset.underlyingDecimals.sub(3))).toString()) /
-                1e3,
-              balanceRaw: asset.supplyBalance.toString(),
-              balanceUSD:
-                parseInt(
-                  asset.supplyBalance
-                    .mul(asset.underlyingPrice)
-                    .mul(Math.floor(ethPrice * 1e2))
-                    .div(asset.underlyingDecimals)
-                    .toString(),
-                ) / 1e2,
-            },
-            <WithMetaType<BaseTokenBalance>>{
-              metaType: MetaType.BORROWED,
-              balance:
-                parseInt(asset.borrowBalance.div(BigNumber.from(10).pow(asset.underlyingDecimals.sub(3))).toString()) /
-                1e3,
-              balanceRaw: asset.borrowBalance.toString(),
-              balanceUSD:
-                parseInt(
-                  asset.borrowBalance
-                    .mul(asset.underlyingPrice)
-                    .mul(Math.floor(ethPrice * 1e2))
-                    .div(asset.underlyingDecimals)
-                    .toString(),
-                ) / 1e2,
-            },
-          ])
-          .reduce((acc, curr) => acc.concat(curr), []),
-        balanceUSD: 0,
+    return presentBalanceFetcherResponse([
+      {
+        label: 'Lending',
+        assets: lendingBalances,
+        meta: meta,
       },
     ]);
-
-    return presentBalanceFetcherResponse(
-      allAssets.map((assets, i) => ({
-        label: <string>pools[i].name,
-        assets: assets,
-      })),
-    );
   }
 }
