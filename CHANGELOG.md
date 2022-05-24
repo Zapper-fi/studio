@@ -4,6 +4,76 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.40.0](https://github.com/Zapper-fi/studio/compare/v0.39.1...v0.40.0) (2022-05-22)
+
+
+### Features
+
+* **network:** Support Aurora, Cronos, and Evmos networks ([#495](https://github.com/Zapper-fi/studio/issues/495)) ([909f9c1](https://github.com/Zapper-fi/studio/commit/909f9c14629fa763a45567a641f2c75254d51d6d))
+
+### [0.39.1](https://github.com/Zapper-fi/studio/compare/v0.39.0...v0.39.1) (2022-05-22)
+
+
+### Bug Fixes
+
+* fix typo in impermax definition ([#492](https://github.com/Zapper-fi/studio/issues/492)) ([5841786](https://github.com/Zapper-fi/studio/commit/5841786894abc5bc35ebe38a27ccae9ea33afee0))
+* update polynomial vault name ([#491](https://github.com/Zapper-fi/studio/issues/491)) ([c6533b6](https://github.com/Zapper-fi/studio/commit/c6533b616271cdb0dad9d5fc8aa4cecac4ffb452))
+
+## [0.39.0](https://github.com/Zapper-fi/studio/compare/v0.38.1...v0.39.0) (2022-05-21)
+
+
+### Features
+
+* **jones-dao:** Add staking V2, get staking V1 dynamically ([#489](https://github.com/Zapper-fi/studio/issues/489)) ([8c47c93](https://github.com/Zapper-fi/studio/commit/8c47c9318f9141e4e121e5d144d7ca3b1101d1d3))
+
+### [0.38.1](https://github.com/Zapper-fi/studio/compare/v0.38.0...v0.38.1) (2022-05-21)
+
+
+### Bug Fixes
+
+* **jones-dao:** Add index and missing extends ([ca1a7f5](https://github.com/Zapper-fi/studio/commit/ca1a7f53b42c984be49688ed03ca885822fb077a))
+
+## [0.38.0](https://github.com/Zapper-fi/studio/compare/v0.37.0...v0.38.0) (2022-05-21)
+
+
+### Features
+
+* **impermax:** Add Impermax on Ethereum, Arbitrum, and Polygon ([#458](https://github.com/Zapper-fi/studio/issues/458)) ([c9a80c3](https://github.com/Zapper-fi/studio/commit/c9a80c3008c3467408d17b108e311c43d65f3870))
+
+## [0.37.0](https://github.com/Zapper-fi/studio/compare/v0.36.0...v0.37.0) (2022-05-21)
+
+
+### Features
+
+* **jones-dao:** Extract Jones DAO to Studio ([#484](https://github.com/Zapper-fi/studio/issues/484)) ([42d1be6](https://github.com/Zapper-fi/studio/commit/42d1be67b42b5f0fc8c6626a36a4561348ce1d84))
+
+
+### Bug Fixes
+
+* **polynomial:** track vault balances in withdrawal ([#486](https://github.com/Zapper-fi/studio/issues/486)) ([f33fa77](https://github.com/Zapper-fi/studio/commit/f33fa7713f81ea58d386c0813bc487ad7a201c4c))
+
+## [0.36.0](https://github.com/Zapper-fi/studio/compare/v0.35.0...v0.36.0) (2022-05-21)
+
+
+### Features
+
+* **symphony:** Fix address balance ([#482](https://github.com/Zapper-fi/studio/issues/482)) ([6a744cf](https://github.com/Zapper-fi/studio/commit/6a744cfbd947cb2a993fd743baf6479068270e5f))
+
+## [0.35.0](https://github.com/Zapper-fi/studio/compare/v0.34.0...v0.35.0) (2022-05-20)
+
+
+### Features
+
+* **polynomial:** Add Polynomial protocol ([#473](https://github.com/Zapper-fi/studio/issues/473)) ([afda7d3](https://github.com/Zapper-fi/studio/commit/afda7d3fd60b063d8df8cd05955945d77d322ea4))
+* **symphony:** Add Symphony Finance ([#468](https://github.com/Zapper-fi/studio/issues/468)) ([f768448](https://github.com/Zapper-fi/studio/commit/f7684484f91fd638241b924959f79d51d300f64d))
+
+
+### Bug Fixes
+
+* **ci:** Use Pull Request trigger ([#481](https://github.com/Zapper-fi/studio/issues/481)) ([a8bdf94](https://github.com/Zapper-fi/studio/commit/a8bdf94165e15481c59fe8724ccfd4d198f65a14))
+* **ease:** fix apy in vault stats ([#479](https://github.com/Zapper-fi/studio/issues/479)) ([ada8b80](https://github.com/Zapper-fi/studio/commit/ada8b802f1c2dc77fc15dbd45147e8062ff3f400))
+* **ease:** Small linting issue ([3934178](https://github.com/Zapper-fi/studio/commit/3934178e2fdc0ad79f0ca841f59c8b14db6f1b2e))
+
 ## [0.34.0](https://github.com/Zapper-fi/studio/compare/v0.33.1...v0.34.0) (2022-05-20)
 
 

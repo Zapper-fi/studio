@@ -70,17 +70,17 @@ const _abi = [
   },
   {
     inputs: [],
-    name: 'DepositLimitExceeded',
-    type: 'error',
-  },
-  {
-    inputs: [],
     name: 'DepositingDisabled',
     type: 'error',
   },
   {
     inputs: [],
     name: 'DoesNotExist',
+    type: 'error',
+  },
+  {
+    inputs: [],
+    name: 'FundingLimitTooHigh',
     type: 'error',
   },
   {
@@ -106,6 +106,16 @@ const _abi = [
   {
     inputs: [],
     name: 'InvalidFee',
+    type: 'error',
+  },
+  {
+    inputs: [],
+    name: 'InvalidFraction',
+    type: 'error',
+  },
+  {
+    inputs: [],
+    name: 'InvalidParam',
     type: 'error',
   },
   {
@@ -187,31 +197,6 @@ const _abi = [
         type: 'address',
       },
       {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'prevDepositLimit',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'newDepositLimit',
-        type: 'uint256',
-      },
-    ],
-    name: 'DepositLimitUpdated',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'contract Token',
-        name: 'pool',
-        type: 'address',
-      },
-      {
         indexed: true,
         internalType: 'bool',
         name: 'newStatus',
@@ -238,25 +223,6 @@ const _abi = [
       },
     ],
     name: 'OwnerUpdate',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'contract IPoolToken',
-        name: 'poolToken',
-        type: 'address',
-      },
-      {
-        indexed: true,
-        internalType: 'contract Token',
-        name: 'token',
-        type: 'address',
-      },
-    ],
-    name: 'PoolCreated',
     type: 'event',
   },
   {
@@ -550,6 +516,25 @@ const _abi = [
         type: 'address',
       },
     ],
+    name: 'depositingEnabled',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'contract Token',
+        name: 'pool',
+        type: 'address',
+      },
+    ],
     name: 'disableTrading',
     outputs: [],
     stateMutability: 'nonpayable',
@@ -594,6 +579,25 @@ const _abi = [
     name: 'enableTrading',
     outputs: [],
     stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'contract Token',
+        name: 'pool',
+        type: 'address',
+      },
+    ],
+    name: 'isPoolStable',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
     type: 'function',
   },
   {
@@ -668,15 +672,27 @@ const _abi = [
                 name: 'rate',
                 type: 'tuple',
               },
+              {
+                components: [
+                  {
+                    internalType: 'uint112',
+                    name: 'n',
+                    type: 'uint112',
+                  },
+                  {
+                    internalType: 'uint112',
+                    name: 'd',
+                    type: 'uint112',
+                  },
+                ],
+                internalType: 'struct Fraction112',
+                name: 'invRate',
+                type: 'tuple',
+              },
             ],
-            internalType: 'struct AverageRate',
-            name: 'averageRate',
+            internalType: 'struct AverageRates',
+            name: 'averageRates',
             type: 'tuple',
-          },
-          {
-            internalType: 'uint256',
-            name: 'depositLimit',
-            type: 'uint256',
           },
           {
             components: [
@@ -842,15 +858,27 @@ const _abi = [
                 name: 'rate',
                 type: 'tuple',
               },
+              {
+                components: [
+                  {
+                    internalType: 'uint112',
+                    name: 'n',
+                    type: 'uint112',
+                  },
+                  {
+                    internalType: 'uint112',
+                    name: 'd',
+                    type: 'uint112',
+                  },
+                ],
+                internalType: 'struct Fraction112',
+                name: 'invRate',
+                type: 'tuple',
+              },
             ],
-            internalType: 'struct AverageRate',
-            name: 'averageRate',
+            internalType: 'struct AverageRates',
+            name: 'averageRates',
             type: 'tuple',
-          },
-          {
-            internalType: 'uint256',
-            name: 'depositLimit',
-            type: 'uint256',
           },
           {
             components: [
@@ -1026,24 +1054,6 @@ const _abi = [
       },
     ],
     name: 'setDefaultTradingFeePPM',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'contract Token',
-        name: 'pool',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'newDepositLimit',
-        type: 'uint256',
-      },
-    ],
-    name: 'setDepositLimit',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -1273,6 +1283,44 @@ const _abi = [
   {
     inputs: [
       {
+        internalType: 'contract Token',
+        name: 'pool',
+        type: 'address',
+      },
+    ],
+    name: 'tradingEnabled',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'contract Token',
+        name: 'pool',
+        type: 'address',
+      },
+    ],
+    name: 'tradingFeePPM',
+    outputs: [
+      {
+        internalType: 'uint32',
+        name: '',
+        type: 'uint32',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
         internalType: 'address',
         name: 'ownerCandidate',
         type: 'address',
@@ -1340,6 +1388,11 @@ const _abi = [
       {
         internalType: 'uint256',
         name: 'poolTokenAmount',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'baseTokenAmount',
         type: 'uint256',
       },
     ],

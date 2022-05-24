@@ -13,7 +13,7 @@ import { BancorV3ContractFactory, BntPool, PoolCollection, PoolToken } from '../
 const appId = BANCOR_V3_DEFINITION.id;
 const groupId = BANCOR_V3_DEFINITION.groups.pool.id;
 const network = Network.ETHEREUM_MAINNET;
-const poolCollectionAddress = '0xec9596e0eb67228d61a12cfdb4b3608281f261b3'.toLowerCase();
+const bancorAddress = '0xeEF417e1D5CC832e619ae18D2F140De2999dD4fB'.toLowerCase();
 const bntPoolAddress = '0x02651E355D26f3506C1E644bA393FDD9Ac95EaCa'.toLowerCase();
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
@@ -25,20 +25,27 @@ export class EthereumBancorV3TokenFetcher implements PositionFetcher<AppTokenPos
 
   async getPositions() {
     const multicall = this.appToolkit.getMulticall(network);
+    const bancorContract = this.contractFactory.bancorNetwork({ address: bancorAddress, network });
+    const poolCollectionAddress = (await multicall.wrap(bancorContract).poolCollections()).at(-1)!; // TODO: support multiple pool collections
     const poolContract: PoolCollection = this.contractFactory.poolCollection({
       address: poolCollectionAddress,
       network,
     });
-    const pools = await Promise.all(
-      (
-        await multicall.wrap(poolContract).pools()
-      ).map(async (poolAddress: string) => (await multicall.wrap(poolContract).poolToken(poolAddress)).toLowerCase()),
+    const pools = await multicall.wrap(bancorContract).liquidityPools();
+    const vaults = await Promise.all(
+      pools.map(async pool =>
+        multicall
+          .wrap(poolContract)
+          .poolToken(pool)
+          .then(a => a.toLowerCase()),
+      ),
     );
+
     const tokens = await this.appToolkit.helpers.vaultTokenHelper.getTokens<PoolToken>({
-      appId: BANCOR_V3_DEFINITION.id,
-      groupId: BANCOR_V3_DEFINITION.groups.pool.id,
-      network: Network.ETHEREUM_MAINNET,
-      resolveVaultAddresses: () => pools,
+      appId,
+      groupId,
+      network,
+      resolveVaultAddresses: () => vaults,
       resolveContract: ({ address, network }) => this.contractFactory.poolToken({ address, network }),
       resolveUnderlyingTokenAddress: ({ multicall, contract }) =>
         multicall
@@ -60,9 +67,9 @@ export class EthereumBancorV3TokenFetcher implements PositionFetcher<AppTokenPos
 
     const bntPoolContract = this.contractFactory.bntPool({ address: bntPoolAddress, network });
     const bnToken = await this.appToolkit.helpers.vaultTokenHelper.getTokens<BntPool>({
-      appId: BANCOR_V3_DEFINITION.id,
-      groupId: BANCOR_V3_DEFINITION.groups.pool.id,
-      network: Network.ETHEREUM_MAINNET,
+      appId,
+      groupId,
+      network,
       resolveVaultAddresses: () =>
         multicall
           .wrap(bntPoolContract)
