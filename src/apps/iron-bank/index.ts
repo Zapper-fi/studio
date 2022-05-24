@@ -6,4 +6,3 @@ export { IronBankContractFactory } from './contracts';
 export type { IronBankCToken } from './contracts';
 export type { IronBankComptroller } from './contracts';
 export type { IronBankLens } from './contracts';
-console.log('hello world')

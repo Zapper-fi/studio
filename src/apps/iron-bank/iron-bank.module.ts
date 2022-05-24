@@ -7,6 +7,14 @@ import { EthereumIronBankBalanceFetcher } from './ethereum/ironBank.balance-fetc
 import { EthereumIronBankBorrowContractPositionFetcher } from './ethereum/ironBank.borrow.contract-position-fetcher';
 import { EthereumIronBankSupplyTokenFetcher } from './ethereum/ironBank.supply.token-fetcher';
 import { EthereumIronBankTvlFetcher } from './ethereum/ironBank.tvl-fetcher';
+import { FantomIronBankBalanceFetcher } from './fantom/ironBank.balance-fetcher';
+import { FantomIronBankBorrowContractPositionFetcher } from './fantom/ironBank.borrow.contract-position-fetcher';
+import { FantomIronBankSupplyTokenFetcher } from './fantom/ironBank.supply.token-fetcher';
+import { FantomIronBankTvlFetcher } from './fantom/ironBank.tvl-fetcher';
+import { AvalancheIronBankBalanceFetcher } from './avalanche/ironBank.balance-fetcher';
+import { AvalancheIronBankBorrowContractPositionFetcher } from './avalanche/ironBank.borrow.contract-position-fetcher';
+import { AvalancheIronBankSupplyTokenFetcher } from './avalanche/ironBank.supply.token-fetcher';
+import { AvalancheIronBankTvlFetcher } from './avalanche/ironBank.tvl-fetcher';
 import { IronBankBorrowContractPositionHelper } from './helper/ironBank.borrow.contract-position-helper';
 import { IronBankLendingBalanceHelper } from './helper/ironBank.lending.balance-helper';
 import { IronBankLendingMetaHelper } from './helper/ironBank.lending.meta-helper';
@@ -22,6 +30,14 @@ import { IronBankTvlHelper } from './helper/ironBank.tvl-helper';
     EthereumIronBankSupplyTokenFetcher,
     EthereumIronBankBorrowContractPositionFetcher,
     EthereumIronBankTvlFetcher,
+    FantomIronBankBalanceFetcher,
+    FantomIronBankSupplyTokenFetcher,
+    FantomIronBankBorrowContractPositionFetcher,
+    FantomIronBankTvlFetcher,
+    AvalancheIronBankBalanceFetcher,
+    AvalancheIronBankSupplyTokenFetcher,
+    AvalancheIronBankBorrowContractPositionFetcher,
+    AvalancheIronBankTvlFetcher,
     // Helpers
     IronBankLendingBalanceHelper,
     IronBankLendingMetaHelper,
