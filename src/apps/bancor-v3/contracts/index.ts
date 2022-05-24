@@ -4,6 +4,7 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
+import { BancorNetwork__factory } from './ethers';
 import { BntPool__factory } from './ethers';
 import { PoolCollection__factory } from './ethers';
 import { PoolToken__factory } from './ethers';
@@ -18,6 +19,9 @@ export class BancorV3ContractFactory extends ContractFactory {
     super((network: Network) => appToolkit.getNetworkProvider(network));
   }
 
+  bancorNetwork({ address, network }: ContractOpts) {
+    return BancorNetwork__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   bntPool({ address, network }: ContractOpts) {
     return BntPool__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
@@ -32,6 +36,7 @@ export class BancorV3ContractFactory extends ContractFactory {
   }
 }
 
+export type { BancorNetwork } from './ethers';
 export type { BntPool } from './ethers';
 export type { PoolCollection } from './ethers';
 export type { PoolToken } from './ethers';
