@@ -26,7 +26,7 @@ export class AvalancheMarketXyzSupplyTokenFetcher implements PositionFetcher<App
   ) { }
 
   async getPositions() {
-    const network = Network.ETHEREUM_MAINNET;
+    const network = Network.AVALANCHE_MAINNET;
     const poolDirectoryAddress = '0x1c4D63bDA492d69f2D6b02Fb622fb6c49cc401d2';
     const controllerContract = this.marketXyzContractFactory.poolDirectory({ address: poolDirectoryAddress, network });
     const pools = await controllerContract.getAllPools();

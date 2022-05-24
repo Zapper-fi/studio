@@ -45,7 +45,7 @@ export class MarketXyzLendingBalanceHelper {
     getBalanceRaw,
     getBorrowBalanceRaw,
   }: MarketXyzLendingBalanceHelperParams<T>) {
-    const multicall = this.appToolkit.getMulticall(Network.ETHEREUM_MAINNET);
+    const multicall = this.appToolkit.getMulticall(network);
 
     const supplyTokens = await this.appToolkit.getAppTokenPositions<CompoundSupplyTokenDataProps>({
       appId,
