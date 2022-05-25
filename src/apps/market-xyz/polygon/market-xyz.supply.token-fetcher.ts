@@ -1,5 +1,6 @@
 import { Inject } from '@nestjs/common';
 
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { CompoundContractFactory } from '~apps/compound';
 import { CompoundSupplyTokenHelper } from '~apps/compound/helper/compound.supply.token-helper';
@@ -20,6 +21,7 @@ export class PolygonMarketXyzSupplyTokenFetcher implements PositionFetcher<AppTo
     @Inject(CompoundContractFactory) private readonly compoundContractFactory: CompoundContractFactory,
     @Inject(CompoundSupplyTokenHelper) private readonly compoundSupplyTokenHelper: CompoundSupplyTokenHelper,
     @Inject(MarketXyzContractFactory) private readonly marketXyzContractFactory: MarketXyzContractFactory,
+    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
   ) {}
 
   async getPositions() {
@@ -27,6 +29,8 @@ export class PolygonMarketXyzSupplyTokenFetcher implements PositionFetcher<AppTo
     const poolDirectoryAddress = '0xA2a1cb88D86A939A37770FE5E9530E8700DEe56b';
     const controllerContract = this.marketXyzContractFactory.poolDirectory({ address: poolDirectoryAddress, network });
     const pools = await controllerContract.getAllPools();
+
+    const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
 
     const markets = await Promise.all(
       pools.map(pool => {
@@ -36,6 +40,7 @@ export class PolygonMarketXyzSupplyTokenFetcher implements PositionFetcher<AppTo
           groupId,
           comptrollerAddress: pool.comptroller.toLowerCase(),
           marketName: pool.name,
+          allTokens: [...baseTokens],
           getComptrollerContract: ({ address, network }) =>
             this.compoundContractFactory.compoundComptroller({ address, network }),
           getTokenContract: ({ address, network }) => this.compoundContractFactory.compoundCToken({ address, network }),
