@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
+import { CompoundLendingMetaHelper } from '~apps/compound';
 import { CompoundBorrowBalanceHelper } from '~apps/compound/helper/compound.borrow.balance-helper';
 import { CompoundSupplyBalanceHelper } from '~apps/compound/helper/compound.supply.balance-helper';
 
@@ -17,6 +18,8 @@ export class ImpermaxBalanceHelper {
     private readonly compoundBorrowBalanceHelper: CompoundBorrowBalanceHelper,
     @Inject(CompoundSupplyBalanceHelper)
     private readonly compoundSupplyBalanceHelper: CompoundSupplyBalanceHelper,
+    @Inject(CompoundLendingMetaHelper)
+    private readonly compoundLendingMetaHelper: CompoundLendingMetaHelper,
     @Inject(ImpermaxContractFactory)
     private readonly contractFactory: ImpermaxContractFactory,
   ) {}
@@ -59,19 +62,13 @@ export class ImpermaxBalanceHelper {
       this.getCollateralBalances({ address, network }),
     ]);
 
-    return presentBalanceFetcherResponse([
-      {
-        label: 'Collateral',
-        assets: collateralBalances,
-      },
-      {
-        label: 'Borrow',
-        assets: borrowBalances,
-      },
-      {
-        label: 'Supply',
-        assets: supplyBalances,
-      },
-    ]);
+    const products = [
+      { label: 'Collateral', assets: collateralBalances },
+      { label: 'Borrow', assets: borrowBalances },
+      { label: 'Supply', assets: supplyBalances },
+    ];
+    const meta = this.compoundLendingMetaHelper.getMeta({ balances: [...supplyBalances, ...borrowBalances] });
+
+    return presentBalanceFetcherResponse(products, meta);
   }
 }
