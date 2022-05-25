@@ -27,7 +27,7 @@ export class EthereumBancorV3ContractPositionFetcher implements PositionFetcher<
       appId,
       groupId,
       network,
-      dependencies: [{ appId: BANCOR_V3_DEFINITION.id, groupIds: [BANCOR_V3_DEFINITION.groups.pool.id], network }],
+      dependencies: [{ appId, groupIds: [BANCOR_V3_DEFINITION.groups.pool.id], network }],
       resolveContract: ({ address, network }) => this.contractFactory.standardRewards({ address, network }),
       resolvePoolLength: ({ multicall, contract }) =>
         multicall

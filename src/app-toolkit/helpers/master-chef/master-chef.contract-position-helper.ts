@@ -4,6 +4,7 @@ import { BigNumber, BigNumberish } from 'ethers';
 import _, { compact, isArray, toLower } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { BLOCKS_PER_DAY } from '~app-toolkit/constants/blocks';
 import { EthersMulticall as Multicall } from '~multicall/multicall.ethers';
 import { ContractType } from '~position/contract.interface';
@@ -190,7 +191,7 @@ export class MasterChefContractPositionHelper {
         const allTokens = [...appTokens, ...baseTokens];
         const depositToken = allTokens.find(t => t.address === depositTokenAddress);
         const maybeRewardTokens = rewardTokenAddresses.map(v => allTokens.find(t => t.address === v));
-        if (!depositToken) return null;
+        if (!depositToken || depositTokenAddress === ZERO_ADDRESS) return null;
 
         // Resolve as much as we can about this token from on-chain data
         const rewardTokens = await Promise.all(

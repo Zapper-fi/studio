@@ -1,4 +1,5 @@
 import { Inject } from '@nestjs/common';
+import BigNumber from 'bignumber.js';
 import _, { sumBy } from 'lodash';
 
 import { drillBalance } from '~app-toolkit';
@@ -35,13 +36,17 @@ export class PolygonSymphonyBalanceFetcher implements BalanceFetcher {
 
     const contractPositionBalances = await Promise.all(
       contractPositions.map(async contractPosition => {
-        const position = positions.find(
+        const position = positions.filter(
           p => p.inputToken.toLocaleLowerCase() === contractPosition.address.toLocaleLowerCase(),
         )!;
 
         if (position) {
           const claimableToken = contractPosition.tokens.find(isSupplied)!;
-          const suppliedTokenBalance = drillBalance(claimableToken, position.inputAmount.toString());
+          const totalSupplied = position.reduce(
+            (partialSum, a) => partialSum.plus(new BigNumber(a.inputAmount)),
+            new BigNumber(0),
+          );
+          const suppliedTokenBalance = drillBalance(claimableToken, totalSupplied.toString());
           const tokens = [suppliedTokenBalance].filter(v => v.balanceUSD > 0);
           const balanceUSD = sumBy(tokens, t => t.balanceUSD);
           return { ...contractPosition, tokens, balanceUSD };

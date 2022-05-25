@@ -29,8 +29,10 @@ export class OptimismPolynomialBalanceFetcher implements BalanceFetcher {
       resolveBalances: async ({ address, network, multicall, contractPosition: position }) => {
         const token = position.tokens[0];
         const contract = this.contractFactory.vaults({ address: resolverAddress, network });
-        const balances = await multicall.wrap(contract).getAllBalances(address, [position.address], [token.address]);
-        return [drillBalance(token, Number(balances._vaultBalances[0]).toString())];
+        const balances = await multicall.wrap(contract).getUserBalance(address, position.address);
+        const totalBalance =
+          Number(balances._balance) + Number(balances._withdrawToComplete) + Number(balances._cancellableWithdraw);
+        return [drillBalance(token, totalBalance.toString())];
       },
     });
   }
