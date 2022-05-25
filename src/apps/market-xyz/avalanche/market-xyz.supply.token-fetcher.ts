@@ -3,9 +3,7 @@ import { Inject } from '@nestjs/common';
 import { Register } from '~app-toolkit/decorators';
 import { CompoundContractFactory } from '~apps/compound';
 import { CompoundSupplyTokenHelper } from '~apps/compound/helper/compound.supply.token-helper';
-import { CURVE_DEFINITION } from '~apps/curve';
 import { OLYMPUS_DEFINITION } from '~apps/olympus';
-import { YEARN_DEFINITION } from '~apps/yearn';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
@@ -39,11 +37,7 @@ export class AvalancheMarketXyzSupplyTokenFetcher implements PositionFetcher<App
           groupId,
           comptrollerAddress: pool.comptroller.toLowerCase(),
           marketName: pool.name,
-          dependencies: [
-            { appId: CURVE_DEFINITION.id, groupIds: [CURVE_DEFINITION.groups.pool.id], network },
-            { appId: YEARN_DEFINITION.id, groupIds: [YEARN_DEFINITION.groups.vault.id], network },
-            { appId: OLYMPUS_DEFINITION.id, groupIds: [OLYMPUS_DEFINITION.groups.gOhm.id], network },
-          ],
+          dependencies: [{ appId: OLYMPUS_DEFINITION.id, groupIds: [OLYMPUS_DEFINITION.groups.gOhm.id], network }],
           getComptrollerContract: ({ address, network }) =>
             this.compoundContractFactory.compoundComptroller({ address, network }),
           getTokenContract: ({ address, network }) => this.compoundContractFactory.compoundCToken({ address, network }),
