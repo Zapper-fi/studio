@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+### [0.43.1](https://github.com/Zapper-fi/studio/compare/v0.43.0...v0.43.1) (2022-05-25)
+
+
+### Bug Fixes
+
+* **plutus:** Display correct locked balance in PlutusDAO ([#511](https://github.com/Zapper-fi/studio/issues/511)) ([47ec210](https://github.com/Zapper-fi/studio/commit/47ec210c687d2e7ee3774cb8c1d0983f42a80d34))
+* **rari-fuse:** Decrease spam of get base tokens and app tokens ([#512](https://github.com/Zapper-fi/studio/issues/512)) ([a25d5c6](https://github.com/Zapper-fi/studio/commit/a25d5c6c8b9be806199bd08391594b691bfcef19))
+
 ## [0.43.0](https://github.com/Zapper-fi/studio/compare/v0.42.1...v0.43.0) (2022-05-25)
 
 
