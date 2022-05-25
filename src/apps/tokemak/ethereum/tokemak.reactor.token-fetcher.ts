@@ -107,6 +107,12 @@ export class EthereumTokemakReactorTokenFetcher implements PositionFetcher<AppTo
             label,
             secondaryLabel,
             images,
+            statsItems: [
+              {
+                label: 'Liquidity',
+                value: buildDollarDisplayItem(liquidity),
+              },
+            ],
           },
         };
 

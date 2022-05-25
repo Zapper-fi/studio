@@ -4,6 +4,10 @@ import axios from 'axios';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { Register } from '~app-toolkit/decorators';
+import {
+  buildNumberDisplayItem,
+  buildPercentageDisplayItem,
+} from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
@@ -83,6 +87,16 @@ export class FantomSturdyLendingTokenFetcher implements PositionFetcher<AppToken
         displayProps: {
           label: symbol,
           images: getImagesFromToken(underlyingTokens[0]),
+          statsItems: [
+            {
+              label: 'Liquidity',
+              value: buildPercentageDisplayItem(data.base),
+            },
+            {
+              label: 'Supply',
+              value: buildNumberDisplayItem(data.tvl),
+            },
+          ],
         },
       };
       return token;

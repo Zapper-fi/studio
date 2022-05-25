@@ -2,7 +2,10 @@ import { Inject } from '@nestjs/common';
 import { compact, sum } from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
+import {
+  buildDollarDisplayItem,
+  buildPercentageDisplayItem,
+} from '~app-toolkit/helpers/presentation/display-item.present';
 import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
 import { AppTokenPosition } from '~position/position.interface';
@@ -141,6 +144,16 @@ export class PoolTogetherV3PrizePoolTokenHelper {
             label: ticketSymbol,
             secondaryLabel,
             images,
+            statsItems: [
+              {
+                label: 'APY',
+                value: buildPercentageDisplayItem(apy),
+              },
+              {
+                label: 'Total Liquidity',
+                value: buildDollarDisplayItem(totalLiquidity),
+              },
+            ],
           },
         };
 
@@ -167,6 +180,16 @@ export class PoolTogetherV3PrizePoolTokenHelper {
             label: sponsorshipSymbol,
             secondaryLabel,
             images,
+            statsItems: [
+              {
+                label: 'APY',
+                value: buildPercentageDisplayItem(apy),
+              },
+              {
+                label: 'Total Liquidity',
+                value: buildDollarDisplayItem(totalLiquidity),
+              },
+            ],
           },
         };
 
