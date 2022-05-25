@@ -17,7 +17,7 @@ export class FantomMarketXyzBorrowContractPositionFetcher implements PositionFet
   constructor(
     @Inject(CompoundBorrowContractPositionHelper)
     private readonly compoundBorrowContractPositionHelper: CompoundBorrowContractPositionHelper,
-  ) { }
+  ) {}
 
   async getPositions() {
     return this.compoundBorrowContractPositionHelper.getPositions({

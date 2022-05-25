@@ -17,7 +17,7 @@ export class AvalancheMarketXyzBorrowContractPositionFetcher implements Position
   constructor(
     @Inject(CompoundBorrowContractPositionHelper)
     private readonly compoundBorrowContractPositionHelper: CompoundBorrowContractPositionHelper,
-  ) { }
+  ) {}
 
   async getPositions() {
     return this.compoundBorrowContractPositionHelper.getPositions({

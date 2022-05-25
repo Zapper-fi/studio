@@ -19,7 +19,7 @@ export class AvalancheMarketXyzBalanceFetcher implements BalanceFetcher {
     private readonly MarketXyzLendingBalanceHelper: MarketXyzLendingBalanceHelper,
     @Inject(CompoundLendingMetaHelper)
     private readonly compoundLendingMetaHelper: CompoundLendingMetaHelper,
-  ) { }
+  ) {}
 
   async getLendingBalances(address: string) {
     return this.MarketXyzLendingBalanceHelper.getBalances({

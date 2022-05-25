@@ -20,7 +20,7 @@ export class FantomMarketXyzSupplyTokenFetcher implements PositionFetcher<AppTok
     @Inject(CompoundContractFactory) private readonly compoundContractFactory: CompoundContractFactory,
     @Inject(CompoundSupplyTokenHelper) private readonly compoundSupplyTokenHelper: CompoundSupplyTokenHelper,
     @Inject(MarketXyzContractFactory) private readonly marketXyzContractFactory: MarketXyzContractFactory,
-  ) { }
+  ) {}
 
   async getPositions() {
     const network = Network.FANTOM_OPERA_MAINNET;

@@ -21,7 +21,7 @@ export class AvalancheMarketXyzSupplyTokenFetcher implements PositionFetcher<App
     @Inject(CompoundContractFactory) private readonly compoundContractFactory: CompoundContractFactory,
     @Inject(CompoundSupplyTokenHelper) private readonly compoundSupplyTokenHelper: CompoundSupplyTokenHelper,
     @Inject(MarketXyzContractFactory) private readonly marketXyzContractFactory: MarketXyzContractFactory,
-  ) { }
+  ) {}
 
   async getPositions() {
     const network = Network.AVALANCHE_MAINNET;
