@@ -87,6 +87,12 @@ export class PoolTogetherV3PodTokenHelper {
             label,
             secondaryLabel,
             images,
+            statsItems: [
+              {
+                label: 'Liquidity',
+                value: buildDollarDisplayItem(liquidity),
+              },
+            ],
           },
         };
 
