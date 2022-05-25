@@ -1,5 +1,6 @@
 import { Inject } from '@nestjs/common';
 
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { CompoundContractFactory } from '~apps/compound';
 import { CompoundSupplyTokenHelper } from '~apps/compound/helper/compound.supply.token-helper';
@@ -23,6 +24,7 @@ export class EthereumRariFuseSupplyTokenFetcher implements PositionFetcher<AppTo
     @Inject(CompoundContractFactory) private readonly compoundContractFactory: CompoundContractFactory,
     @Inject(CompoundSupplyTokenHelper) private readonly compoundSupplyTokenHelper: CompoundSupplyTokenHelper,
     @Inject(RariFuseContractFactory) private readonly contractFactory: RariFuseContractFactory,
+    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
   ) {}
 
   async getPositions() {
@@ -30,6 +32,13 @@ export class EthereumRariFuseSupplyTokenFetcher implements PositionFetcher<AppTo
     const poolDirectoryAddress = '0x835482fe0532f169024d5e9410199369aad5c77e';
     const controllerContract = this.contractFactory.rariFusePoolsDirectory({ address: poolDirectoryAddress, network });
     const pools = await controllerContract.getAllPools();
+
+    const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
+    const appTokens = await this.appToolkit.getAppTokenPositions(
+      { appId: CURVE_DEFINITION.id, groupIds: [CURVE_DEFINITION.groups.pool.id], network },
+      { appId: YEARN_DEFINITION.id, groupIds: [YEARN_DEFINITION.groups.vault.id], network },
+      { appId: OLYMPUS_DEFINITION.id, groupIds: [OLYMPUS_DEFINITION.groups.gOhm.id], network },
+    );
 
     const markets = await Promise.all(
       pools.map(pool => {
@@ -39,11 +48,7 @@ export class EthereumRariFuseSupplyTokenFetcher implements PositionFetcher<AppTo
           groupId,
           comptrollerAddress: pool.comptroller.toLowerCase(),
           marketName: pool.name,
-          dependencies: [
-            { appId: CURVE_DEFINITION.id, groupIds: [CURVE_DEFINITION.groups.pool.id], network },
-            { appId: YEARN_DEFINITION.id, groupIds: [YEARN_DEFINITION.groups.vault.id], network },
-            { appId: OLYMPUS_DEFINITION.id, groupIds: [OLYMPUS_DEFINITION.groups.gOhm.id], network },
-          ],
+          allTokens: [...appTokens, ...baseTokens],
           getComptrollerContract: ({ address, network }) =>
             this.compoundContractFactory.compoundComptroller({ address, network }),
           getTokenContract: ({ address, network }) => this.compoundContractFactory.compoundCToken({ address, network }),

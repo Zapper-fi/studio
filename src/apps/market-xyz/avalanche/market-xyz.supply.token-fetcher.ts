@@ -1,5 +1,6 @@
 import { Inject } from '@nestjs/common';
 
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { CompoundContractFactory } from '~apps/compound';
 import { CompoundSupplyTokenHelper } from '~apps/compound/helper/compound.supply.token-helper';
@@ -21,6 +22,7 @@ export class AvalancheMarketXyzSupplyTokenFetcher implements PositionFetcher<App
     @Inject(CompoundContractFactory) private readonly compoundContractFactory: CompoundContractFactory,
     @Inject(CompoundSupplyTokenHelper) private readonly compoundSupplyTokenHelper: CompoundSupplyTokenHelper,
     @Inject(MarketXyzContractFactory) private readonly marketXyzContractFactory: MarketXyzContractFactory,
+    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
   ) {}
 
   async getPositions() {
@@ -28,6 +30,13 @@ export class AvalancheMarketXyzSupplyTokenFetcher implements PositionFetcher<App
     const poolDirectoryAddress = '0x1c4D63bDA492d69f2D6b02Fb622fb6c49cc401d2';
     const controllerContract = this.marketXyzContractFactory.poolDirectory({ address: poolDirectoryAddress, network });
     const pools = await controllerContract.getAllPools();
+
+    const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
+    const appTokens = await this.appToolkit.getAppTokenPositions({
+      appId: OLYMPUS_DEFINITION.id,
+      groupIds: [OLYMPUS_DEFINITION.groups.gOhm.id],
+      network,
+    });
 
     const markets = await Promise.all(
       pools.map(pool => {
@@ -37,7 +46,7 @@ export class AvalancheMarketXyzSupplyTokenFetcher implements PositionFetcher<App
           groupId,
           comptrollerAddress: pool.comptroller.toLowerCase(),
           marketName: pool.name,
-          dependencies: [{ appId: OLYMPUS_DEFINITION.id, groupIds: [OLYMPUS_DEFINITION.groups.gOhm.id], network }],
+          allTokens: [...appTokens, ...baseTokens],
           getComptrollerContract: ({ address, network }) =>
             this.compoundContractFactory.compoundComptroller({ address, network }),
           getTokenContract: ({ address, network }) => this.compoundContractFactory.compoundCToken({ address, network }),

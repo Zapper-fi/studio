@@ -1,5 +1,6 @@
 import { Inject } from '@nestjs/common';
 
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { CompoundContractFactory } from '~apps/compound';
 import { CompoundSupplyTokenHelper } from '~apps/compound/helper/compound.supply.token-helper';
@@ -20,6 +21,7 @@ export class FantomMarketXyzSupplyTokenFetcher implements PositionFetcher<AppTok
     @Inject(CompoundContractFactory) private readonly compoundContractFactory: CompoundContractFactory,
     @Inject(CompoundSupplyTokenHelper) private readonly compoundSupplyTokenHelper: CompoundSupplyTokenHelper,
     @Inject(MarketXyzContractFactory) private readonly marketXyzContractFactory: MarketXyzContractFactory,
+    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
   ) {}
 
   async getPositions() {
@@ -27,6 +29,9 @@ export class FantomMarketXyzSupplyTokenFetcher implements PositionFetcher<AppTok
     const poolDirectoryAddress = '0x0E7d754A8d1a82220432148C10715497a0569BD7';
     const controllerContract = this.marketXyzContractFactory.poolDirectory({ address: poolDirectoryAddress, network });
     const pools = await controllerContract.getAllPools();
+
+    const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
+    const appTokens = await this.appToolkit.getAppTokenPositions({ appId: 'spookyswap', groupIds: ['pool'], network });
 
     const markets = await Promise.all(
       pools.map(pool => {
@@ -36,7 +41,7 @@ export class FantomMarketXyzSupplyTokenFetcher implements PositionFetcher<AppTok
           groupId,
           comptrollerAddress: pool.comptroller.toLowerCase(),
           marketName: pool.name,
-          dependencies: [{ appId: 'spookyswap', groupIds: ['pool'], network }],
+          allTokens: [...appTokens, ...baseTokens],
           getComptrollerContract: ({ address, network }) =>
             this.compoundContractFactory.compoundComptroller({ address, network }),
           getTokenContract: ({ address, network }) => this.compoundContractFactory.compoundCToken({ address, network }),
