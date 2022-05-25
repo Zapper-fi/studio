@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.43.0](https://github.com/Zapper-fi/studio/compare/v0.42.1...v0.43.0) (2022-05-25)
+
+
+### Features
+
+* **market-xyz:** Add market.xyz to Zapper ([#498](https://github.com/Zapper-fi/studio/issues/498)) ([ac66d36](https://github.com/Zapper-fi/studio/commit/ac66d36e22219cf6b2001d23e57db4c1f78a8473))
+
+
+### Bug Fixes
+
+* **market-xyz:** Remove reference to PositionModule ([b229562](https://github.com/Zapper-fi/studio/commit/b22956200c643b76cd49b0e50336c076d0723221))
+
 ### [0.42.1](https://github.com/Zapper-fi/studio/compare/v0.42.0...v0.42.1) (2022-05-25)
 
 
