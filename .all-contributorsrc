@@ -205,6 +205,52 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "dominikpre",
+      "name": "Dominik Prediger",
+      "avatar_url": "https://avatars.githubusercontent.com/u/58030116?v=4",
+      "profile": "https://github.com/dominikpre",
+      "contributions": [
+        "code",
+        "bug"
+      ]
+    },
+    {
+      "login": "symphonyfi",
+      "name": "Kakashi",
+      "avatar_url": "https://avatars.githubusercontent.com/u/81959798?v=4",
+      "profile": "https://github.com/symphonyfi",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "leonardishere",
+      "name": "Andrew Leonard",
+      "avatar_url": "https://avatars.githubusercontent.com/u/14011462?v=4",
+      "profile": "https://aleonard.dev/",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "mingji",
+      "name": "Michael",
+      "avatar_url": "https://avatars.githubusercontent.com/u/3455636?v=4",
+      "profile": "https://github.com/mingji",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "liuyepiaoxiang",
+      "name": "liuyepiaoxiang",
+      "avatar_url": "https://avatars.githubusercontent.com/u/13102393?v=4",
+      "profile": "https://github.com/liuyepiaoxiang",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7

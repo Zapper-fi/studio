@@ -23,7 +23,7 @@ export class EthereumBancorV3BalanceFetcher implements BalanceFetcher {
       address,
       appId: BANCOR_V3_DEFINITION.id,
       groupId: BANCOR_V3_DEFINITION.groups.pool.id,
-      network: Network.ETHEREUM_MAINNET,
+      network,
     });
   }
 
@@ -32,7 +32,7 @@ export class EthereumBancorV3BalanceFetcher implements BalanceFetcher {
       address,
       appId: BANCOR_V3_DEFINITION.id,
       groupId: BANCOR_V3_DEFINITION.groups.farm.id,
-      network: Network.ETHEREUM_MAINNET,
+      network,
       resolveChefContract: ({ contractAddress, network }) =>
         this.contractFactory.standardRewards({ address: contractAddress, network }),
       resolveStakedTokenBalance: this.appToolkit.helpers.masterChefDefaultStakedBalanceStrategy.build({

@@ -24,14 +24,16 @@ export type Fraction112StructOutput = [BigNumber, BigNumber] & {
   d: BigNumber;
 };
 
-export type AverageRateStruct = {
+export type AverageRatesStruct = {
   blockNumber: BigNumberish;
   rate: Fraction112Struct;
+  invRate: Fraction112Struct;
 };
 
-export type AverageRateStructOutput = [number, Fraction112StructOutput] & {
+export type AverageRatesStructOutput = [number, Fraction112StructOutput, Fraction112StructOutput] & {
   blockNumber: number;
   rate: Fraction112StructOutput;
+  invRate: Fraction112StructOutput;
 };
 
 export type PoolLiquidityStruct = {
@@ -51,8 +53,7 @@ export type PoolStruct = {
   tradingFeePPM: BigNumberish;
   tradingEnabled: boolean;
   depositingEnabled: boolean;
-  averageRate: AverageRateStruct;
-  depositLimit: BigNumberish;
+  averageRates: AverageRatesStruct;
   liquidity: PoolLiquidityStruct;
 };
 
@@ -61,16 +62,14 @@ export type PoolStructOutput = [
   number,
   boolean,
   boolean,
-  AverageRateStructOutput,
-  BigNumber,
+  AverageRatesStructOutput,
   PoolLiquidityStructOutput,
 ] & {
   poolToken: string;
   tradingFeePPM: number;
   tradingEnabled: boolean;
   depositingEnabled: boolean;
-  averageRate: AverageRateStructOutput;
-  depositLimit: BigNumber;
+  averageRates: AverageRatesStructOutput;
   liquidity: PoolLiquidityStructOutput;
 };
 
@@ -104,11 +103,13 @@ export interface PoolCollectionInterface extends utils.Interface {
     'createPool(address)': FunctionFragment;
     'defaultTradingFeePPM()': FunctionFragment;
     'depositFor(bytes32,address,address,uint256)': FunctionFragment;
+    'depositingEnabled(address)': FunctionFragment;
     'disableTrading(address)': FunctionFragment;
     'enableDepositing(address,bool)': FunctionFragment;
     'enableTrading(address,uint256,uint256)': FunctionFragment;
+    'isPoolStable(address)': FunctionFragment;
     'isPoolValid(address)': FunctionFragment;
-    'migratePoolIn(address,(address,uint32,bool,bool,(uint32,(uint112,uint112)),uint256,(uint128,uint128,uint256)))': FunctionFragment;
+    'migratePoolIn(address,(address,uint32,bool,bool,(uint32,(uint112,uint112),(uint112,uint112)),(uint128,uint128,uint256)))': FunctionFragment;
     'migratePoolOut(address,address)': FunctionFragment;
     'newOwner()': FunctionFragment;
     'onFeesCollected(address,uint256)': FunctionFragment;
@@ -122,16 +123,17 @@ export interface PoolCollectionInterface extends utils.Interface {
     'poolType()': FunctionFragment;
     'pools()': FunctionFragment;
     'setDefaultTradingFeePPM(uint32)': FunctionFragment;
-    'setDepositLimit(address,uint256)': FunctionFragment;
     'setTradingFeePPM(address,uint32)': FunctionFragment;
     'tradeBySourceAmount(bytes32,address,address,uint256,uint256)': FunctionFragment;
     'tradeByTargetAmount(bytes32,address,address,uint256,uint256)': FunctionFragment;
     'tradeInputAndFeeByTargetAmount(address,address,uint256)': FunctionFragment;
     'tradeOutputAndFeeBySourceAmount(address,address,uint256)': FunctionFragment;
+    'tradingEnabled(address)': FunctionFragment;
+    'tradingFeePPM(address)': FunctionFragment;
     'transferOwnership(address)': FunctionFragment;
     'underlyingToPoolToken(address,uint256)': FunctionFragment;
     'version()': FunctionFragment;
-    'withdraw(bytes32,address,address,uint256)': FunctionFragment;
+    'withdraw(bytes32,address,address,uint256,uint256)': FunctionFragment;
     'withdrawalAmounts(address,uint256)': FunctionFragment;
   };
 
@@ -141,9 +143,11 @@ export interface PoolCollectionInterface extends utils.Interface {
       | 'createPool'
       | 'defaultTradingFeePPM'
       | 'depositFor'
+      | 'depositingEnabled'
       | 'disableTrading'
       | 'enableDepositing'
       | 'enableTrading'
+      | 'isPoolStable'
       | 'isPoolValid'
       | 'migratePoolIn'
       | 'migratePoolOut'
@@ -159,12 +163,13 @@ export interface PoolCollectionInterface extends utils.Interface {
       | 'poolType'
       | 'pools'
       | 'setDefaultTradingFeePPM'
-      | 'setDepositLimit'
       | 'setTradingFeePPM'
       | 'tradeBySourceAmount'
       | 'tradeByTargetAmount'
       | 'tradeInputAndFeeByTargetAmount'
       | 'tradeOutputAndFeeBySourceAmount'
+      | 'tradingEnabled'
+      | 'tradingFeePPM'
       | 'transferOwnership'
       | 'underlyingToPoolToken'
       | 'version'
@@ -176,9 +181,11 @@ export interface PoolCollectionInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'createPool', values: [string]): string;
   encodeFunctionData(functionFragment: 'defaultTradingFeePPM', values?: undefined): string;
   encodeFunctionData(functionFragment: 'depositFor', values: [BytesLike, string, string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'depositingEnabled', values: [string]): string;
   encodeFunctionData(functionFragment: 'disableTrading', values: [string]): string;
   encodeFunctionData(functionFragment: 'enableDepositing', values: [string, boolean]): string;
   encodeFunctionData(functionFragment: 'enableTrading', values: [string, BigNumberish, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'isPoolStable', values: [string]): string;
   encodeFunctionData(functionFragment: 'isPoolValid', values: [string]): string;
   encodeFunctionData(functionFragment: 'migratePoolIn', values: [string, PoolStruct]): string;
   encodeFunctionData(functionFragment: 'migratePoolOut', values: [string, string]): string;
@@ -194,7 +201,6 @@ export interface PoolCollectionInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'poolType', values?: undefined): string;
   encodeFunctionData(functionFragment: 'pools', values?: undefined): string;
   encodeFunctionData(functionFragment: 'setDefaultTradingFeePPM', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setDepositLimit', values: [string, BigNumberish]): string;
   encodeFunctionData(functionFragment: 'setTradingFeePPM', values: [string, BigNumberish]): string;
   encodeFunctionData(
     functionFragment: 'tradeBySourceAmount',
@@ -212,19 +218,26 @@ export interface PoolCollectionInterface extends utils.Interface {
     functionFragment: 'tradeOutputAndFeeBySourceAmount',
     values: [string, string, BigNumberish],
   ): string;
+  encodeFunctionData(functionFragment: 'tradingEnabled', values: [string]): string;
+  encodeFunctionData(functionFragment: 'tradingFeePPM', values: [string]): string;
   encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
   encodeFunctionData(functionFragment: 'underlyingToPoolToken', values: [string, BigNumberish]): string;
   encodeFunctionData(functionFragment: 'version', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'withdraw', values: [BytesLike, string, string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'withdraw',
+    values: [BytesLike, string, string, BigNumberish, BigNumberish],
+  ): string;
   encodeFunctionData(functionFragment: 'withdrawalAmounts', values: [string, BigNumberish]): string;
 
   decodeFunctionResult(functionFragment: 'acceptOwnership', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'createPool', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'defaultTradingFeePPM', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'depositFor', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'depositingEnabled', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'disableTrading', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'enableDepositing', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'enableTrading', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'isPoolStable', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'isPoolValid', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'migratePoolIn', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'migratePoolOut', data: BytesLike): Result;
@@ -240,12 +253,13 @@ export interface PoolCollectionInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'poolType', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'pools', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'setDefaultTradingFeePPM', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'setDepositLimit', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'setTradingFeePPM', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'tradeBySourceAmount', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'tradeByTargetAmount', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'tradeInputAndFeeByTargetAmount', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'tradeOutputAndFeeBySourceAmount', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'tradingEnabled', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'tradingFeePPM', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'transferOwnership', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'underlyingToPoolToken', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'version', data: BytesLike): Result;
@@ -254,10 +268,8 @@ export interface PoolCollectionInterface extends utils.Interface {
 
   events: {
     'DefaultTradingFeePPMUpdated(uint32,uint32)': EventFragment;
-    'DepositLimitUpdated(address,uint256,uint256)': EventFragment;
     'DepositingEnabled(address,bool)': EventFragment;
     'OwnerUpdate(address,address)': EventFragment;
-    'PoolCreated(address,address)': EventFragment;
     'TokensDeposited(bytes32,address,address,uint256,uint256)': EventFragment;
     'TokensWithdrawn(bytes32,address,address,uint256,uint256,uint256,uint256,uint256)': EventFragment;
     'TotalLiquidityUpdated(bytes32,address,uint256,uint256,uint256)': EventFragment;
@@ -267,10 +279,8 @@ export interface PoolCollectionInterface extends utils.Interface {
   };
 
   getEvent(nameOrSignatureOrTopic: 'DefaultTradingFeePPMUpdated'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'DepositLimitUpdated'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'DepositingEnabled'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'OwnerUpdate'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'PoolCreated'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'TokensDeposited'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'TokensWithdrawn'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'TotalLiquidityUpdated'): EventFragment;
@@ -287,15 +297,6 @@ export type DefaultTradingFeePPMUpdatedEvent = TypedEvent<[number, number], Defa
 
 export type DefaultTradingFeePPMUpdatedEventFilter = TypedEventFilter<DefaultTradingFeePPMUpdatedEvent>;
 
-export interface DepositLimitUpdatedEventObject {
-  pool: string;
-  prevDepositLimit: BigNumber;
-  newDepositLimit: BigNumber;
-}
-export type DepositLimitUpdatedEvent = TypedEvent<[string, BigNumber, BigNumber], DepositLimitUpdatedEventObject>;
-
-export type DepositLimitUpdatedEventFilter = TypedEventFilter<DepositLimitUpdatedEvent>;
-
 export interface DepositingEnabledEventObject {
   pool: string;
   newStatus: boolean;
@@ -311,14 +312,6 @@ export interface OwnerUpdateEventObject {
 export type OwnerUpdateEvent = TypedEvent<[string, string], OwnerUpdateEventObject>;
 
 export type OwnerUpdateEventFilter = TypedEventFilter<OwnerUpdateEvent>;
-
-export interface PoolCreatedEventObject {
-  poolToken: string;
-  token: string;
-}
-export type PoolCreatedEvent = TypedEvent<[string, string], PoolCreatedEventObject>;
-
-export type PoolCreatedEventFilter = TypedEventFilter<PoolCreatedEvent>;
 
 export interface TokensDepositedEventObject {
   contextId: string;
@@ -437,6 +430,8 @@ export interface PoolCollection extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
 
+    depositingEnabled(pool: string, overrides?: CallOverrides): Promise<[boolean]>;
+
     disableTrading(
       pool: string,
       overrides?: Overrides & { from?: string | Promise<string> },
@@ -454,6 +449,8 @@ export interface PoolCollection extends BaseContract {
       baseTokenVirtualBalance: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
+
+    isPoolStable(pool: string, overrides?: CallOverrides): Promise<[boolean]>;
 
     isPoolValid(pool: string, overrides?: CallOverrides): Promise<[boolean]>;
 
@@ -505,12 +502,6 @@ export interface PoolCollection extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
 
-    setDepositLimit(
-      pool: string,
-      newDepositLimit: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
-
     setTradingFeePPM(
       pool: string,
       newTradingFeePPM: BigNumberish,
@@ -549,6 +540,10 @@ export interface PoolCollection extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<[TradeAmountAndFeeStructOutput]>;
 
+    tradingEnabled(pool: string, overrides?: CallOverrides): Promise<[boolean]>;
+
+    tradingFeePPM(pool: string, overrides?: CallOverrides): Promise<[number]>;
+
     transferOwnership(
       ownerCandidate: string,
       overrides?: Overrides & { from?: string | Promise<string> },
@@ -563,6 +558,7 @@ export interface PoolCollection extends BaseContract {
       provider: string,
       pool: string,
       poolTokenAmount: BigNumberish,
+      baseTokenAmount: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
 
@@ -587,6 +583,8 @@ export interface PoolCollection extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
+  depositingEnabled(pool: string, overrides?: CallOverrides): Promise<boolean>;
+
   disableTrading(
     pool: string,
     overrides?: Overrides & { from?: string | Promise<string> },
@@ -604,6 +602,8 @@ export interface PoolCollection extends BaseContract {
     baseTokenVirtualBalance: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
+
+  isPoolStable(pool: string, overrides?: CallOverrides): Promise<boolean>;
 
   isPoolValid(pool: string, overrides?: CallOverrides): Promise<boolean>;
 
@@ -655,12 +655,6 @@ export interface PoolCollection extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
-  setDepositLimit(
-    pool: string,
-    newDepositLimit: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
-  ): Promise<ContractTransaction>;
-
   setTradingFeePPM(
     pool: string,
     newTradingFeePPM: BigNumberish,
@@ -699,6 +693,10 @@ export interface PoolCollection extends BaseContract {
     overrides?: CallOverrides,
   ): Promise<TradeAmountAndFeeStructOutput>;
 
+  tradingEnabled(pool: string, overrides?: CallOverrides): Promise<boolean>;
+
+  tradingFeePPM(pool: string, overrides?: CallOverrides): Promise<number>;
+
   transferOwnership(
     ownerCandidate: string,
     overrides?: Overrides & { from?: string | Promise<string> },
@@ -713,6 +711,7 @@ export interface PoolCollection extends BaseContract {
     provider: string,
     pool: string,
     poolTokenAmount: BigNumberish,
+    baseTokenAmount: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
@@ -737,6 +736,8 @@ export interface PoolCollection extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
+    depositingEnabled(pool: string, overrides?: CallOverrides): Promise<boolean>;
+
     disableTrading(pool: string, overrides?: CallOverrides): Promise<void>;
 
     enableDepositing(pool: string, status: boolean, overrides?: CallOverrides): Promise<void>;
@@ -747,6 +748,8 @@ export interface PoolCollection extends BaseContract {
       baseTokenVirtualBalance: BigNumberish,
       overrides?: CallOverrides,
     ): Promise<void>;
+
+    isPoolStable(pool: string, overrides?: CallOverrides): Promise<boolean>;
 
     isPoolValid(pool: string, overrides?: CallOverrides): Promise<boolean>;
 
@@ -783,8 +786,6 @@ export interface PoolCollection extends BaseContract {
 
     setDefaultTradingFeePPM(newDefaultTradingFeePPM: BigNumberish, overrides?: CallOverrides): Promise<void>;
 
-    setDepositLimit(pool: string, newDepositLimit: BigNumberish, overrides?: CallOverrides): Promise<void>;
-
     setTradingFeePPM(pool: string, newTradingFeePPM: BigNumberish, overrides?: CallOverrides): Promise<void>;
 
     tradeBySourceAmount(
@@ -819,6 +820,10 @@ export interface PoolCollection extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<TradeAmountAndFeeStructOutput>;
 
+    tradingEnabled(pool: string, overrides?: CallOverrides): Promise<boolean>;
+
+    tradingFeePPM(pool: string, overrides?: CallOverrides): Promise<number>;
+
     transferOwnership(ownerCandidate: string, overrides?: CallOverrides): Promise<void>;
 
     underlyingToPoolToken(pool: string, tokenAmount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
@@ -830,6 +835,7 @@ export interface PoolCollection extends BaseContract {
       provider: string,
       pool: string,
       poolTokenAmount: BigNumberish,
+      baseTokenAmount: BigNumberish,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
@@ -847,25 +853,11 @@ export interface PoolCollection extends BaseContract {
     ): DefaultTradingFeePPMUpdatedEventFilter;
     DefaultTradingFeePPMUpdated(prevFeePPM?: null, newFeePPM?: null): DefaultTradingFeePPMUpdatedEventFilter;
 
-    'DepositLimitUpdated(address,uint256,uint256)'(
-      pool?: string | null,
-      prevDepositLimit?: null,
-      newDepositLimit?: null,
-    ): DepositLimitUpdatedEventFilter;
-    DepositLimitUpdated(
-      pool?: string | null,
-      prevDepositLimit?: null,
-      newDepositLimit?: null,
-    ): DepositLimitUpdatedEventFilter;
-
     'DepositingEnabled(address,bool)'(pool?: string | null, newStatus?: boolean | null): DepositingEnabledEventFilter;
     DepositingEnabled(pool?: string | null, newStatus?: boolean | null): DepositingEnabledEventFilter;
 
     'OwnerUpdate(address,address)'(prevOwner?: string | null, newOwner?: string | null): OwnerUpdateEventFilter;
     OwnerUpdate(prevOwner?: string | null, newOwner?: string | null): OwnerUpdateEventFilter;
-
-    'PoolCreated(address,address)'(poolToken?: string | null, token?: string | null): PoolCreatedEventFilter;
-    PoolCreated(poolToken?: string | null, token?: string | null): PoolCreatedEventFilter;
 
     'TokensDeposited(bytes32,address,address,uint256,uint256)'(
       contextId?: BytesLike | null,
@@ -967,6 +959,8 @@ export interface PoolCollection extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
 
+    depositingEnabled(pool: string, overrides?: CallOverrides): Promise<BigNumber>;
+
     disableTrading(pool: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
 
     enableDepositing(
@@ -981,6 +975,8 @@ export interface PoolCollection extends BaseContract {
       baseTokenVirtualBalance: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
+
+    isPoolStable(pool: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     isPoolValid(pool: string, overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1032,12 +1028,6 @@ export interface PoolCollection extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
 
-    setDepositLimit(
-      pool: string,
-      newDepositLimit: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<BigNumber>;
-
     setTradingFeePPM(
       pool: string,
       newTradingFeePPM: BigNumberish,
@@ -1076,6 +1066,10 @@ export interface PoolCollection extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
+    tradingEnabled(pool: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    tradingFeePPM(pool: string, overrides?: CallOverrides): Promise<BigNumber>;
+
     transferOwnership(
       ownerCandidate: string,
       overrides?: Overrides & { from?: string | Promise<string> },
@@ -1090,6 +1084,7 @@ export interface PoolCollection extends BaseContract {
       provider: string,
       pool: string,
       poolTokenAmount: BigNumberish,
+      baseTokenAmount: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
 
@@ -1114,6 +1109,8 @@ export interface PoolCollection extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
+    depositingEnabled(pool: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     disableTrading(
       pool: string,
       overrides?: Overrides & { from?: string | Promise<string> },
@@ -1131,6 +1128,8 @@ export interface PoolCollection extends BaseContract {
       baseTokenVirtualBalance: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
+
+    isPoolStable(pool: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     isPoolValid(pool: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1186,12 +1185,6 @@ export interface PoolCollection extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
-    setDepositLimit(
-      pool: string,
-      newDepositLimit: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<PopulatedTransaction>;
-
     setTradingFeePPM(
       pool: string,
       newTradingFeePPM: BigNumberish,
@@ -1230,6 +1223,10 @@ export interface PoolCollection extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
+    tradingEnabled(pool: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    tradingFeePPM(pool: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     transferOwnership(
       ownerCandidate: string,
       overrides?: Overrides & { from?: string | Promise<string> },
@@ -1248,6 +1245,7 @@ export interface PoolCollection extends BaseContract {
       provider: string,
       pool: string,
       poolTokenAmount: BigNumberish,
+      baseTokenAmount: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
