@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+### [0.44.3](https://github.com/Zapper-fi/studio/compare/v0.44.2...v0.44.3) (2022-05-25)
+
+
+### Bug Fixes
+
+* **compound:** Export helpers in Compound index ([cd9abef](https://github.com/Zapper-fi/studio/commit/cd9abef729f65ac4f1710e3e5fd28da458f87843))
+
 ### [0.44.2](https://github.com/Zapper-fi/studio/compare/v0.44.1...v0.44.2) (2022-05-25)
 
 
