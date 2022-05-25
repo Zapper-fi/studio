@@ -19,7 +19,7 @@ export interface AbstractPosition<T = DefaultDataProps> extends Contract {
   key?: string;
 }
 
-export interface ContractPosition<T = Record<string, unknown>> extends AbstractPosition<T> {
+export interface ContractPosition<T = DefaultDataProps> extends AbstractPosition<T> {
   type: ContractType.POSITION;
 }
 
