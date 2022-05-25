@@ -6,7 +6,6 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { CompoundCToken } from '~apps/compound';
 import { CompoundSupplyTokenDataProps } from '~apps/compound/helper/compound.supply.token-helper';
 import { EthersMulticall as Multicall } from '~multicall/multicall.ethers';
-import { PositionService } from '~position/position.service';
 import { Network } from '~types';
 
 import { RariFuseContractFactory } from '../contracts';
@@ -28,8 +27,6 @@ export class RariFuseLendingBalanceHelper {
   constructor(
     @Inject(RariFuseContractFactory)
     private readonly rariFuseContractFactory: RariFuseContractFactory,
-    @Inject(PositionService)
-    private readonly positionService: PositionService,
     @Inject(APP_TOOLKIT)
     private readonly appToolkit: IAppToolkit,
   ) {}
@@ -53,7 +50,7 @@ export class RariFuseLendingBalanceHelper {
       network,
     });
 
-    const borrowPositions = await this.positionService.getAppContractPositions<CompoundSupplyTokenDataProps>({
+    const borrowPositions = await this.appToolkit.getAppContractPositions<CompoundSupplyTokenDataProps>({
       appId,
       groupIds: [borrowGroupId],
       network,
