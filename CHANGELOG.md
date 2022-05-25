@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+### [0.42.1](https://github.com/Zapper-fi/studio/compare/v0.42.0...v0.42.1) (2022-05-25)
+
+
+### Bug Fixes
+
+* **rari-fuse:** Remove reference to PositionService ([e25c488](https://github.com/Zapper-fi/studio/commit/e25c4888ac4acb35eb978dc789a5bbd24b1c6798))
+
 ## [0.42.0](https://github.com/Zapper-fi/studio/compare/v0.41.0...v0.42.0) (2022-05-25)
 
 
