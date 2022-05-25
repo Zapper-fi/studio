@@ -100,7 +100,7 @@ export class PolygonDfxCurveTokenFetcher implements PositionFetcher<AppTokenPosi
             images,
             statsItems: [
               {
-                label: 'tvl',
+                label: 'Liquidity',
                 value: buildDollarDisplayItem(totalLiquidity),
               },
             ],

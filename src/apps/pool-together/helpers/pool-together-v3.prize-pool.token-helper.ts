@@ -150,7 +150,7 @@ export class PoolTogetherV3PrizePoolTokenHelper {
                 value: buildPercentageDisplayItem(apy),
               },
               {
-                label: 'Total Liquidity',
+                label: 'Liquidity',
                 value: buildDollarDisplayItem(totalLiquidity),
               },
             ],
@@ -186,7 +186,7 @@ export class PoolTogetherV3PrizePoolTokenHelper {
                 value: buildPercentageDisplayItem(apy),
               },
               {
-                label: 'Total Liquidity',
+                label: 'Liquidity',
                 value: buildDollarDisplayItem(totalLiquidity),
               },
             ],

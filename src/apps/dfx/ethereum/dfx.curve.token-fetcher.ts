@@ -100,7 +100,7 @@ export class EthereumDfxCurveTokenFetcher implements PositionFetcher<AppTokenPos
             images,
             statsItems: [
               {
-                label: 'tvl',
+                label: 'Liquidity',
                 value: buildDollarDisplayItem(totalLiquidity),
               },
             ],
