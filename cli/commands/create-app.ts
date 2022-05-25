@@ -4,6 +4,7 @@ import { zipObject } from 'lodash';
 
 import { AppAction } from '../../src/app/app.interface';
 import { generateAppDefinition } from '../generators/generate-app-definition';
+import { generateAppIndex } from '../generators/generate-app-index';
 import { generateAppModule } from '../generators/generate-app-module';
 import {
   promptAppDescription,
@@ -40,6 +41,7 @@ export default class CreateApp extends Command {
     }
 
     await generateAppModule(appId);
+    await generateAppIndex(appId);
     await generateAppDefinition({
       id: appId,
       name: appName,
