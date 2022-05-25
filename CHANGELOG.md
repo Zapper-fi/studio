@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+### [0.44.1](https://github.com/Zapper-fi/studio/compare/v0.44.0...v0.44.1) (2022-05-25)
+
+
+### Bug Fixes
+
+* **compound:** Split compound lending balance helper ([#516](https://github.com/Zapper-fi/studio/issues/516)) ([e17f5ec](https://github.com/Zapper-fi/studio/commit/e17f5ec82d2fa812b0f559b0e6faa9e4ca90b5fc))
+
 ## [0.44.0](https://github.com/Zapper-fi/studio/compare/v0.43.1...v0.44.0) (2022-05-25)
 
 
