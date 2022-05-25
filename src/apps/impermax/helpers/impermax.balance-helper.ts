@@ -2,8 +2,9 @@ import { Inject, Injectable } from '@nestjs/common';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
+import { CompoundBorrowBalanceHelper } from '~apps/compound/helper/compound.borrow.balance-helper';
+import { CompoundSupplyBalanceHelper } from '~apps/compound/helper/compound.supply.balance-helper';
 
-import { CompoundLendingBalanceHelper } from '../../compound/helper/compound.lending.balance-helper';
 import { ImpermaxContractFactory, Borrowable } from '../contracts';
 import { IMPERMAX_DEFINITION } from '../impermax.definition';
 
@@ -12,13 +13,15 @@ export class ImpermaxBalanceHelper {
   constructor(
     @Inject(APP_TOOLKIT)
     private readonly appToolkit: IAppToolkit,
-    @Inject(CompoundLendingBalanceHelper)
-    private readonly compoundLendingBalanceHelper: CompoundLendingBalanceHelper,
+    @Inject(CompoundBorrowBalanceHelper)
+    private readonly compoundBorrowBalanceHelper: CompoundBorrowBalanceHelper,
+    @Inject(CompoundSupplyBalanceHelper)
+    private readonly compoundSupplyBalanceHelper: CompoundSupplyBalanceHelper,
     @Inject(ImpermaxContractFactory)
     private readonly contractFactory: ImpermaxContractFactory,
   ) {}
 
-  private async getCollateralTokenBalances({ network, address }) {
+  private async getCollateralBalances({ network, address }) {
     return this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
       network,
       appId: IMPERMAX_DEFINITION.id,
@@ -27,29 +30,47 @@ export class ImpermaxBalanceHelper {
     });
   }
 
-  private async getLendingTokenBalances({ network, address }) {
-    return await this.compoundLendingBalanceHelper.getBalances<Borrowable>({
+  private async getBorrowBalances({ network, address }) {
+    return this.compoundBorrowBalanceHelper.getBalances<Borrowable>({
       address,
       network,
       appId: IMPERMAX_DEFINITION.id,
-      supplyGroupId: IMPERMAX_DEFINITION.groups.lend.id,
-      borrowGroupId: IMPERMAX_DEFINITION.groups.borrow.id,
+      groupId: IMPERMAX_DEFINITION.groups.borrow.id,
       getTokenContract: ({ address, network }) => this.contractFactory.borrowable({ address, network }),
-      getBalanceRaw: ({ address, multicall, contract }) => multicall.wrap(contract).balanceOf(address),
       getBorrowBalanceRaw: ({ address, multicall, contract }) => multicall.wrap(contract).borrowBalance(address),
     });
   }
 
-  async getBalances({ network, address }) {
-    const lendingBalance = await this.getLendingTokenBalances({ network, address });
-    const collateralBalance = await this.getCollateralTokenBalances({ network, address });
+  private async getSupplyBalances({ network, address }) {
+    return this.compoundSupplyBalanceHelper.getBalances<Borrowable>({
+      address,
+      network,
+      appId: IMPERMAX_DEFINITION.id,
+      groupId: IMPERMAX_DEFINITION.groups.lend.id,
+      getTokenContract: ({ address, network }) => this.contractFactory.borrowable({ address, network }),
+      getBalanceRaw: ({ address, multicall, contract }) => multicall.wrap(contract).balanceOf(address),
+    });
+  }
 
-    // TODO: add impermax rewards
+  async getBalances({ network, address }) {
+    const [borrowBalances, supplyBalances, collateralBalances] = await Promise.all([
+      this.getBorrowBalances({ address, network }),
+      this.getSupplyBalances({ address, network }),
+      this.getCollateralBalances({ address, network }),
+    ]);
 
     return presentBalanceFetcherResponse([
       {
-        label: 'Lending Pools',
-        assets: [...lendingBalance, ...collateralBalance],
+        label: 'Collateral',
+        assets: collateralBalances,
+      },
+      {
+        label: 'Borrow',
+        assets: borrowBalances,
+      },
+      {
+        label: 'Supply',
+        assets: supplyBalances,
       },
     ]);
   }
