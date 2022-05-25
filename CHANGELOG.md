@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+### [0.44.4](https://github.com/Zapper-fi/studio/compare/v0.44.3...v0.44.4) (2022-05-25)
+
+
+### Bug Fixes
+
+* **compound:** Put meta on app level for Impermax instead of Compound ([#520](https://github.com/Zapper-fi/studio/issues/520)) ([4ba4cfd](https://github.com/Zapper-fi/studio/commit/4ba4cfd1c2e45716007990bc406bee7897bf6685))
+
 ### [0.44.3](https://github.com/Zapper-fi/studio/compare/v0.44.2...v0.44.3) (2022-05-25)
 
 
