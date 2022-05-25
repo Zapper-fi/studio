@@ -98,6 +98,12 @@ export class PolygonDfxCurveTokenFetcher implements PositionFetcher<AppTokenPosi
             label,
             secondaryLabel,
             images,
+            statsItems: [
+              {
+                label: 'Liquidity',
+                value: buildDollarDisplayItem(totalLiquidity),
+              },
+            ],
           },
         };
         return lpToken;
