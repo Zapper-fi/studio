@@ -8,7 +8,7 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
-import { DefaultDataProps, DisplayProps } from '~position/display.interface';
+import { DisplayProps } from '~position/display.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
@@ -47,6 +47,10 @@ type YieldSeriesDetails = {
 type YieldRes = {
   pools: YieldPoolDetails[];
   seriesEntities: YieldSeriesDetails[];
+};
+
+export type FyTokenDataProps = {
+  matured: boolean;
 };
 
 const query = gql`
@@ -88,11 +92,14 @@ export class EthereumYieldProtocolLendTokenFetcher implements PositionFetcher<Ap
   }
 
   async sellFYTokenPreview(matured: boolean, poolAddress: string, decimals: number) {
+    const multicall = this.appToolkit.getMulticall(network);
     if (!matured) {
       const poolContract = this.yieldProtocolContractFactory.pool({ address: poolAddress, network });
       // estimated amount of base you would get for an abritrarily small fyToken value
       try {
-        const estimate = await poolContract.sellFYTokenPreview(ethers.utils.parseUnits('1', decimals));
+        const [estimate] = await Promise.all([
+          multicall.wrap(poolContract).sellFYTokenPreview(ethers.utils.parseUnits('1', decimals)),
+        ]);
         return +ethers.utils.formatUnits(estimate, decimals);
       } catch (error) {
         return 0;
@@ -130,7 +137,7 @@ export class EthereumYieldProtocolLendTokenFetcher implements PositionFetcher<Ap
           price = pricePerShare * underlyingToken?.price;
         }
 
-        const dataProps: DefaultDataProps = {
+        const dataProps: FyTokenDataProps = {
           matured,
         };
         const displayName = moment(moment.unix(maturity)).format('MMMM D yyyy');
