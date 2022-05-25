@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+### [0.44.2](https://github.com/Zapper-fi/studio/compare/v0.44.1...v0.44.2) (2022-05-25)
+
+
+### Bug Fixes
+
+* **market-xyz:** Add logo and properly case name ([e6844ee](https://github.com/Zapper-fi/studio/commit/e6844ee7df7b570327c16332887ef63dea78355b))
+
 ### [0.44.1](https://github.com/Zapper-fi/studio/compare/v0.44.0...v0.44.1) (2022-05-25)
 
 
