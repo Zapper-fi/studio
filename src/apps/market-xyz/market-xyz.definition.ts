@@ -5,7 +5,7 @@ import { Network } from '~types/network.interface';
 
 export const MARKET_XYZ_DEFINITION = appDefinition({
   id: 'market-xyz',
-  name: 'market.xyz',
+  name: 'Market',
   description: 'Earn yield & leverage assets on your terms',
   url: 'https://www.market.xyz/',
 
