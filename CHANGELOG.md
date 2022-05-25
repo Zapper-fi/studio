@@ -4,6 +4,19 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.42.0](https://github.com/Zapper-fi/studio/compare/v0.41.0...v0.42.0) (2022-05-25)
+
+
+### Features
+
+* **qi-dao:** Add assetStandard to vault dataProps ([#506](https://github.com/Zapper-fi/studio/issues/506)) ([5a8141e](https://github.com/Zapper-fi/studio/commit/5a8141ed41daff9857b9977b12d85e51375bf2cc))
+
+
+### Bug Fixes
+
+* **codegen:** Add indexes and generate on create app ([#508](https://github.com/Zapper-fi/studio/issues/508)) ([a55cb92](https://github.com/Zapper-fi/studio/commit/a55cb92176b19679952d16265601600fca281d9a))
+* **ease:** fix correct apy and images of uTokens ([#505](https://github.com/Zapper-fi/studio/issues/505)) ([ce08a3b](https://github.com/Zapper-fi/studio/commit/ce08a3b5a05e26b46d3fa6fe4050f5540b69b384))
+
 ## [0.41.0](https://github.com/Zapper-fi/studio/compare/v0.40.0...v0.41.0) (2022-05-25)
 
 
