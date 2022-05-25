@@ -6,7 +6,7 @@ import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken, getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
-import { ContractPosition } from '~position/position.interface';
+import { ContractPosition, Standard } from '~position/position.interface';
 import { AppGroupsDefinition } from '~position/position.service';
 import { borrowed, supplied } from '~position/position.utils';
 import { Network } from '~types/network.interface';
@@ -15,6 +15,7 @@ import { QiDaoContractFactory } from '../contracts';
 import { QI_DAO_DEFINITION } from '../qi-dao.definition';
 
 export type QiDaoVaultPositionDataProps = {
+  assetStandard: Standard;
   liquidity: number;
   vaultInfoAddress: string;
 };
@@ -83,6 +84,7 @@ export class QiDaoVaultPositionHelper {
           tokens,
 
           dataProps: {
+            assetStandard: Standard.ERC_721,
             liquidity,
             vaultInfoAddress,
           },
