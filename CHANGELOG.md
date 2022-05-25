@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.44.0](https://github.com/Zapper-fi/studio/compare/v0.43.1...v0.44.0) (2022-05-25)
+
+
+### Features
+
+* add more stats items ([#514](https://github.com/Zapper-fi/studio/issues/514)) ([23f8384](https://github.com/Zapper-fi/studio/commit/23f83846f83e33aece608effbe806e4074047e01))
+
 ### [0.43.1](https://github.com/Zapper-fi/studio/compare/v0.43.0...v0.43.1) (2022-05-25)
 
 
