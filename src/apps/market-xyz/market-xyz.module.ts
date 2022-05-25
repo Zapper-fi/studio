@@ -1,7 +1,6 @@
 import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
 import { CompoundAppModule } from '~apps/compound';
-import { PositionModule } from '~position/position.module';
 
 import { AvalancheMarketXyzBalanceFetcher } from './avalanche/market-xyz.balance-fetcher';
 import { AvalancheMarketXyzBorrowContractPositionFetcher } from './avalanche/market-xyz.borrow.contract-position-fetcher';
@@ -18,7 +17,7 @@ import { PolygonMarketXyzSupplyTokenFetcher } from './polygon/market-xyz.supply.
 
 @Register.AppModule({
   appId: MARKET_XYZ_DEFINITION.id,
-  imports: [CompoundAppModule, PositionModule],
+  imports: [CompoundAppModule],
   providers: [
     AvalancheMarketXyzBalanceFetcher,
     AvalancheMarketXyzBorrowContractPositionFetcher,
@@ -34,4 +33,4 @@ import { PolygonMarketXyzSupplyTokenFetcher } from './polygon/market-xyz.supply.
     MarketXyzLendingBalanceHelper,
   ],
 })
-export class MarketXyzAppModule extends AbstractApp() { }
+export class MarketXyzAppModule extends AbstractApp() {}
