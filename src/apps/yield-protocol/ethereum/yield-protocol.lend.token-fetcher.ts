@@ -120,8 +120,10 @@ export class EthereumYieldProtocolLendTokenFetcher implements PositionFetcher<Ap
           fyToken: { id: fyTokenaddress, symbol, totalSupply: supply, decimals, maturity },
         } = series;
 
+        // get the corresponding pool of the series
         const pool = pools.find(p => p.fyToken.id === fyTokenaddress);
 
+        // get the corresponding base of the series
         const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
         const underlyingToken = baseTokens.find(v => v.address === baseAddress);
 
@@ -140,9 +142,12 @@ export class EthereumYieldProtocolLendTokenFetcher implements PositionFetcher<Ap
         const dataProps: FyTokenDataProps = {
           matured,
         };
+
         const displayName = moment(moment.unix(maturity)).format('MMMM D yyyy');
         const displayProps: DisplayProps = {
-          label: `fy${underlyingToken?.symbol} ${displayName}`,
+          label: `fy${underlyingToken?.symbol}`,
+          secondaryLabel: displayName,
+          tertiaryLabel: matured ? 'Matured' : '',
           images: getImagesFromToken(underlyingToken!),
         };
 
