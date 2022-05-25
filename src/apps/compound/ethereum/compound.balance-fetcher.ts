@@ -71,11 +71,10 @@ export class EthereumCompoundBalanceFetcher implements BalanceFetcher {
       this.getClaimableBalances(address),
     ]);
 
-    const supplyProduct = { label: 'Supply', assets: supplyBalances };
-    const borrowProduct = { label: 'Borrow', assets: borrowBalances };
-    const claimableProduct = { label: 'Claimable', assets: claimableBalances };
     const meta = this.compoundLendingMetaHelper.getMeta({ balances: [...supplyBalances, ...borrowBalances] });
+    const claimableProduct = { label: 'Claimable', assets: claimableBalances };
+    const lendingProduct = { label: 'Lending', assets: [...supplyBalances, ...borrowBalances], meta };
 
-    return presentBalanceFetcherResponse([supplyProduct, borrowProduct, claimableProduct], meta);
+    return presentBalanceFetcherResponse([lendingProduct, claimableProduct]);
   }
 }
