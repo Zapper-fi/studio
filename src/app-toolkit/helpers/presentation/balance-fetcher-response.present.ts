@@ -46,12 +46,15 @@ const getTotalsMeta = (balances: (TokenBalance | ContractPositionBalance)[]): Me
   ];
 };
 
+type Product = {
+  label: string;
+  assets: (AppTokenPositionBalance | ContractPositionBalance | NonFungibleTokenBalance)[];
+  meta?: MetadataItemWithLabel[];
+};
+
 export const presentBalanceFetcherResponse = (
-  products: {
-    label: string;
-    assets: (AppTokenPositionBalance | ContractPositionBalance | NonFungibleTokenBalance)[];
-    meta?: MetadataItemWithLabel[];
-  }[],
+  products: Product[],
+  meta: MetadataItemWithLabel[] = [],
 ): TokenBalanceResponse => {
   // Exclude any asset groups that have negligible balances
   const nonZeroBalanceProducts = products
@@ -67,8 +70,11 @@ export const presentBalanceFetcherResponse = (
     meta: assetGroup.meta ?? [],
   }));
 
+  const totalsMeta = getTotalsMeta(productsWithTotals.flatMap(assetGroup => assetGroup.assets));
+  const metaWithTotals = [...meta, ...totalsMeta];
+
   return {
     products: productsWithTotals,
-    meta: getTotalsMeta(productsWithTotals.flatMap(assetGroup => assetGroup.assets)),
+    meta: metaWithTotals,
   };
 };

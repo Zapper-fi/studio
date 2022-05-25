@@ -1,7 +1,8 @@
 import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
 
-import { CompoundLendingBalanceHelper } from '../compound/helper/compound.lending.balance-helper';
+import { CompoundBorrowBalanceHelper } from '../compound/helper/compound.borrow.balance-helper';
+import { CompoundSupplyBalanceHelper } from '../compound/helper/compound.supply.balance-helper';
 import { CompoundBorrowContractPositionHelper } from '../tarot/helper/compound.borrow.contract-position-helper'; // TODO: move to compound folder
 
 import { ArbitrumImpermaxBalanceFetcher } from './arbitrum/impermax.balance-fetcher';
@@ -30,7 +31,8 @@ import { PolygonImpermaxLendTokenFetcher } from './polygon/impermax.lend.token-f
     ArbitrumImpermaxCollateralTokenFetcher,
     ArbitrumImpermaxLendTokenFetcher,
     CompoundBorrowContractPositionHelper,
-    CompoundLendingBalanceHelper,
+    CompoundBorrowBalanceHelper,
+    CompoundSupplyBalanceHelper,
     EthereumImpermaxBalanceFetcher,
     EthereumImpermaxBorrowContractPositionFetcher,
     EthereumImpermaxCollateralTokenFetcher,
