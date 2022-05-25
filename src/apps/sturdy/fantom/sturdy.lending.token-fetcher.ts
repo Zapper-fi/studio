@@ -89,11 +89,11 @@ export class FantomSturdyLendingTokenFetcher implements PositionFetcher<AppToken
           images: getImagesFromToken(underlyingTokens[0]),
           statsItems: [
             {
-              label: 'Liquidity',
+              label: 'apy',
               value: buildPercentageDisplayItem(data.base),
             },
             {
-              label: 'Supply',
+              label: 'Liquidity',
               value: buildNumberDisplayItem(data.tvl),
             },
           ],
