@@ -138,7 +138,7 @@ export class ArbitrumPlutusBalanceFetcher implements BalanceFetcher {
   async getBalances(address: string) {
     const [tokenBalances, lockedBalances, dpxBalances, jonesBalances, plsBalances] = await Promise.all([
       this.getTokenBalances(address),
-      this.getStakedDPXBalances(address),
+      this.getLockedBalances(address),
       this.getStakedDPXBalances(address),
       this.getStakedJonesBalances(address),
       this.getStakedPlsBalances(address),
