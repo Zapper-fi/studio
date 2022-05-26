@@ -10,6 +10,7 @@ import { BalanceAfterwareRegistry } from './balance-afterware.registry';
 import { BalanceFetcherRegistry } from './balance-fetcher.registry';
 import { BalanceController } from './balance.controller';
 import { BalanceService } from './balance.service';
+import { DefaultBalanceAfterwareFactory } from './default.balance-afterware.factory';
 import { DefaultContractPositionBalanceFetcherFactory } from './default.contract-position-balance-fetcher.factory';
 import { DefaultTokenBalanceFetcherFactory } from './default.token-balance-fetcher.factory';
 
@@ -21,6 +22,7 @@ import { DefaultTokenBalanceFetcherFactory } from './default.token-balance-fetch
     BalanceService,
     DefaultTokenBalanceFetcherFactory,
     DefaultContractPositionBalanceFetcherFactory,
+    DefaultBalanceAfterwareFactory,
   ],
   controllers: [BalanceController],
 })

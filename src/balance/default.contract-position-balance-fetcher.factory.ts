@@ -13,7 +13,7 @@ type BuildContractPositionBalanceFetcherParams = {
 @Injectable()
 export class DefaultContractPositionBalanceFetcherFactory {
   build(_opts: BuildContractPositionBalanceFetcherParams) {
-    const klass = class DefaultContractPositionBalanceFactory
+    const klass = class DefaultContractPositionBalanceFetcher
       implements PositionBalanceFetcher<ContractPositionBalance>
     {
       async getBalances(_address: string) {

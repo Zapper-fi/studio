@@ -28,7 +28,7 @@ export class DefaultTokenBalanceFetcherFactory {
   }
 
   build({ appId, groupId, network }: BuildTokenBalanceFetcherParams) {
-    const klass = class DefaultTokenBalanceFactory implements PositionBalanceFetcher<AppTokenPositionBalance> {
+    const klass = class DefaultTokenBalanceFetcher implements PositionBalanceFetcher<AppTokenPositionBalance> {
       constructor(
         readonly positionService: PositionService,
         readonly multicallService: MulticallService,
