@@ -40,7 +40,7 @@ export class EthereumYieldProtocolPoolTokenFetcher implements PositionFetcher<Ap
 
   // estimate the value of a strategy token to base
   async basePriceEst() {
-    return 0;
+    return 1;
   }
 
   async getPositions() {
