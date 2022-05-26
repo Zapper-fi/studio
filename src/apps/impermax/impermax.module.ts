@@ -1,5 +1,6 @@
 import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
+import { CompoundAppModule } from '~apps/compound';
 
 import { CompoundBorrowBalanceHelper } from '../compound/helper/compound.borrow.balance-helper';
 import { CompoundSupplyBalanceHelper } from '../compound/helper/compound.supply.balance-helper';
@@ -25,6 +26,7 @@ import { PolygonImpermaxLendTokenFetcher } from './polygon/impermax.lend.token-f
 
 @Register.AppModule({
   appId: IMPERMAX_DEFINITION.id,
+  imports: [CompoundAppModule],
   providers: [
     ArbitrumImpermaxBalanceFetcher,
     ArbitrumImpermaxBorrowContractPositionFetcher,
