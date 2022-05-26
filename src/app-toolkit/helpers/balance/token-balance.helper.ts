@@ -97,7 +97,7 @@ export const drillBalance = <T extends Token>(
 
 @Injectable()
 export class TokenBalanceHelper {
-  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
+  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) { }
 
   async getTokenBalances({
     network,

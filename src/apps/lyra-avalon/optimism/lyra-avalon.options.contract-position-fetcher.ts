@@ -1,28 +1,66 @@
 import { Inject } from '@nestjs/common';
+import _ from 'lodash'
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { PositionFetcher } from '~position/position-fetcher.interface';
+import { supplied } from '~position/position.utils';
 import { ContractPosition } from '~position/position.interface';
+import { ContractType } from '~position/contract.interface';
 import { Network } from '~types/network.interface';
+import { getAppImg } from '~app-toolkit/helpers/presentation/image.present';
 
-import { LyraAvalonContractFactory } from '../contracts';
+import { getOptions } from './helpers/graph'
+import { OPTION_TYPES } from './helpers/consts'
 import { LYRA_AVALON_DEFINITION } from '../lyra-avalon.definition';
 
 const appId = LYRA_AVALON_DEFINITION.id;
 const groupId = LYRA_AVALON_DEFINITION.groups.options.id;
 const network = Network.OPTIMISM_MAINNET;
-const address = '0xF24eCF73Fd8E7FC9d8F94cd9DF4f03107704D309'.toLowerCase() // TODO: pull from LyraRegistry instead
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
 export class OptimismLyraAvalonOptionsContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(LyraAvalonContractFactory) private readonly lyraAvalonContractFactory: LyraAvalonContractFactory,
   ) { }
 
   async getPositions() {
-    // TODO: make use of OptionMarketPricer
-    return [];
+    const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
+    const response = await getOptions(this.appToolkit.helpers.theGraphHelper);
+
+    const markets = response.markets.map(market => {
+      const quoteToken = baseTokens.find(t => t.address === market.quoteAddress.toLowerCase())!
+      const baseToken = baseTokens.find(t => t.address === market.baseAddress.toLowerCase())!
+      const boards = market.boards.map(board => {
+        const strikes = board.strikes.map(strike => {
+          const position = {
+            type: ContractType.POSITION,
+            appId,
+            groupId,
+            address: market.optionToken.id.toLowerCase(),
+            network,
+            displayProps: {
+              images: [getAppImg(appId)],
+            },
+            dataProps: {},
+          }
+          const positions = _.keys(OPTION_TYPES).map(key => {
+            return {
+              ...position,
+              tokens: Number(key) === 2 ? [supplied(baseToken), quoteToken] : [baseToken, supplied(quoteToken)],
+              displayProps: {
+                ...position.displayProps,
+                label: `${OPTION_TYPES[key]} ${baseToken.symbol} @ $${strike.strikePriceReadable}`,
+                secondaryLabel: `Option ${key} Strike ${strike.strikeId}`
+              }
+            } as ContractPosition
+          })
+          return positions;
+        })
+        return _.flatten(strikes)
+      })
+      return _.flatten(boards)
+    })
+    return _.flatten(markets)
   }
 }
