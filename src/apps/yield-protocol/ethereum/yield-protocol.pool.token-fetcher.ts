@@ -1,13 +1,20 @@
 import { Inject } from '@nestjs/common';
+import { ethers } from 'ethers';
+import { compact } from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
+import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { ContractType } from '~position/contract.interface';
+import { DisplayProps } from '~position/display.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
 import { YieldProtocolContractFactory } from '../contracts';
 import { YIELD_PROTOCOL_DEFINITION } from '../yield-protocol.definition';
+
+import { formatMaturity } from './yield-protocol.lend.token-fetcher';
 
 const appId = YIELD_PROTOCOL_DEFINITION.id;
 const groupId = YIELD_PROTOCOL_DEFINITION.groups.pool.id;
@@ -31,41 +38,44 @@ export class EthereumYieldProtocolPoolTokenFetcher implements PositionFetcher<Ap
     @Inject(YieldProtocolContractFactory) private readonly yieldProtocolContractFactory: YieldProtocolContractFactory,
   ) {}
 
-  async getStrategies() {
-    const multicall = this.appToolkit.getMulticall(network);
+  // estimate the value of a strategy token to base
+  async basePriceEst() {
+    return 0;
   }
 
   async getPositions() {
+    const multicall = this.appToolkit.getMulticall(network);
+
     const tokens = await Promise.all(
       YIELD_STRATEGIES.map(async address => {
-        // const contract =
+        const strategyContract = this.yieldProtocolContractFactory.strategy({ address, network });
+
+        const [decimals, symbol, baseAddress, supply, poolAddress] = await Promise.all([
+          multicall.wrap(strategyContract).decimals(),
+          multicall.wrap(strategyContract).symbol(),
+          multicall.wrap(strategyContract).base(),
+          multicall.wrap(strategyContract).totalSupply(),
+          multicall.wrap(strategyContract).pool(),
+        ]);
+
+        const poolContract = this.yieldProtocolContractFactory.pool({ address: poolAddress, network });
+        const [maturity] = await Promise.all([multicall.wrap(poolContract).maturity()]);
 
         // get the corresponding base of the strategy
         const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
-        const underlyingToken = baseTokens.find(v => v.address === baseAddress);
+        const underlyingToken = baseTokens.find(v => v.address === baseAddress.toLowerCase());
 
         if (!underlyingToken) return null;
 
-        let pricePerShare = 0;
-        let price = underlyingToken.price;
+        // estimate the value of a unit of strategy token to base
+        const estimate = await this.basePriceEst();
+        const pricePerShare = estimate;
+        const price = pricePerShare * underlyingToken.price;
 
-        // if there is an associated pool, we estimate the value of a unit of fyToken to base
-        if (pool?.id) {
-          const estimate = await this.sellFYTokenPreview(matured, pool?.id, decimals);
-          pricePerShare = estimate;
-          price = pricePerShare * underlyingToken?.price;
-        }
-
-        const dataProps: FyTokenDataProps = {
-          matured,
-        };
-
-        const displayName = moment(moment.unix(maturity)).format('MMMM D, yyyy');
         const displayProps: DisplayProps = {
-          label: `fy${underlyingToken?.symbol}`,
-          secondaryLabel: displayName,
-          tertiaryLabel: matured ? 'Matured' : '',
-          images: getImagesFromToken(underlyingToken!),
+          label: `Yield ${underlyingToken.symbol} Strategy`,
+          secondaryLabel: `Automatic Roll on ${formatMaturity(maturity)}`,
+          images: getImagesFromToken(underlyingToken),
         };
 
         const token: AppTokenPosition = {
@@ -76,16 +86,17 @@ export class EthereumYieldProtocolPoolTokenFetcher implements PositionFetcher<Ap
           network,
           symbol,
           decimals,
-          supply: +supply,
+          supply: +ethers.utils.formatUnits(supply, decimals),
           pricePerShare,
           price,
           tokens: [underlyingToken],
-          dataProps,
+          dataProps: {},
           displayProps,
         };
 
         return token;
       }),
     );
+    return compact(tokens);
   }
 }
