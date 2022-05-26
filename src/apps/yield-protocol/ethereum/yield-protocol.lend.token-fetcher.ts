@@ -49,7 +49,7 @@ type YieldRes = {
   seriesEntities: YieldSeriesDetails[];
 };
 
-export type FyTokenDataProps = {
+type FyTokenDataProps = {
   matured: boolean;
 };
 
@@ -76,6 +76,10 @@ const query = gql`
     }
   }
 `;
+
+export const formatMaturity = (maturity: number) => {
+  return moment(moment.unix(maturity)).format('MMMM D, yyyy');
+};
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
 export class EthereumYieldProtocolLendTokenFetcher implements PositionFetcher<AppTokenPosition> {
@@ -136,19 +140,19 @@ export class EthereumYieldProtocolLendTokenFetcher implements PositionFetcher<Ap
         if (pool?.id) {
           const estimate = await this.sellFYTokenPreview(matured, pool?.id, decimals);
           pricePerShare = estimate;
-          price = pricePerShare * underlyingToken?.price;
+          price = pricePerShare * underlyingToken.price;
         }
 
         const dataProps: FyTokenDataProps = {
           matured,
         };
 
-        const displayName = moment(moment.unix(maturity)).format('MMMM D, yyyy');
+        const displayName = formatMaturity(maturity);
         const displayProps: DisplayProps = {
-          label: `fy${underlyingToken?.symbol}`,
+          label: `fy${underlyingToken.symbol}`,
           secondaryLabel: displayName,
           tertiaryLabel: matured ? 'Matured' : '',
-          images: getImagesFromToken(underlyingToken!),
+          images: getImagesFromToken(underlyingToken),
         };
 
         const token: AppTokenPosition = {
