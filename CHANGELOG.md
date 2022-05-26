@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+### [0.44.6](https://github.com/Zapper-fi/studio/compare/v0.44.5...v0.44.6) (2022-05-26)
+
+
+### Bug Fixes
+
+* **impermax:** Fix wrong Network in fetcher ([#523](https://github.com/Zapper-fi/studio/issues/523)) ([6914778](https://github.com/Zapper-fi/studio/commit/6914778b4a2c9df7bbedecb092483bd53573696c))
+
 ### [0.44.5](https://github.com/Zapper-fi/studio/compare/v0.44.4...v0.44.5) (2022-05-26)
 
 
