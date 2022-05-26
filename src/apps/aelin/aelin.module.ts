@@ -4,7 +4,6 @@ import { SynthetixAppModule } from '~apps/synthetix/synthetix.module';
 
 import { AelinAppDefinition, AELIN_DEFINITION } from './aelin.definition';
 import { AelinContractFactory } from './contracts';
-import { EthereumAelinBalanceFetcher } from './ethereum/aelin.balance-fetcher';
 import { EthereumAelinPoolTokenFetcher } from './ethereum/aelin.pool.token-fetcher';
 import { OptimismAelinBalanceFetcher } from './optimism/aelin.balance-fetcher';
 import { OptimismAelinFarmContractPositionFetcher } from './optimism/aelin.farm.contract-position-fetcher';
@@ -18,7 +17,6 @@ import { OptimismAelinVAelinTokenFetcher } from './optimism/aelin.v-aelin.token-
     AelinAppDefinition,
     AelinContractFactory,
     // Ethereum
-    EthereumAelinBalanceFetcher,
     EthereumAelinPoolTokenFetcher,
     // Optimism
     OptimismAelinPoolTokenFetcher,

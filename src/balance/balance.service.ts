@@ -87,7 +87,7 @@ export class BalanceService {
           this.balanceAfterwareRegistry.get(appId, network) ??
           this.defaultBalanceAfterwareFactory.build({ appId, network });
         const preprocessed = [...tokenBalances.flat(), ...contractPositionBalances.flat()];
-        const balances = afterware.use(preprocessed);
+        const balances = await afterware.use(preprocessed);
         return [address, balances];
       }),
     );
