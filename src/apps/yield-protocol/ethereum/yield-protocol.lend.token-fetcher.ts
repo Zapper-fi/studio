@@ -21,7 +21,7 @@ const groupId = YIELD_PROTOCOL_DEFINITION.groups.lend.id;
 const network = Network.ETHEREUM_MAINNET;
 
 // subgraph endpoint
-const endpoint = 'https://api.thegraph.com/subgraphs/name/yieldprotocol/v2-mainnet';
+export const yieldV2MainnetSubgraph = 'https://api.thegraph.com/subgraphs/name/yieldprotocol/v2-mainnet';
 
 type YieldPoolDetails = {
   id: string;
@@ -86,7 +86,7 @@ export class EthereumYieldProtocolLendTokenFetcher implements PositionFetcher<Ap
 
   async getYieldDetails() {
     return await this.appToolkit.helpers.theGraphHelper.request<YieldRes>({
-      endpoint,
+      endpoint: yieldV2MainnetSubgraph,
       query,
     });
   }
