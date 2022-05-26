@@ -2,6 +2,7 @@ import { Inject, OnModuleInit } from '@nestjs/common';
 import { DiscoveryService } from '@nestjs/core';
 
 import { Network } from '~types/network.interface';
+import { buildRegistry, Registry } from '~utils/build-registry';
 
 import { ContractType } from './contract.interface';
 import { DefaultDataProps } from './display.interface';
@@ -15,38 +16,17 @@ import { PositionFetcher } from './position-fetcher.interface';
 import { AbstractPosition, Position } from './position.interface';
 
 export class PositionFetcherRegistry implements OnModuleInit {
-  private readonly registry = new Map<
-    ContractType,
-    Map<Network, Map<string, Map<string, PositionFetcher<Position>>>>
-  >();
+  private registry: Registry<[ContractType, Network, string, string], PositionFetcher<Position>> = new Map();
 
   constructor(@Inject(DiscoveryService) private readonly discoveryService: DiscoveryService) {}
 
   onModuleInit() {
-    const wrappers = this.discoveryService.getProviders();
-
-    wrappers
-      .filter(
-        wrapper =>
-          wrapper.metatype &&
-          Reflect.getMetadata(POSITION_FETCHER_APP, wrapper.metatype) &&
-          Reflect.getMetadata(POSITION_FETCHER_NETWORK, wrapper.metatype) &&
-          Reflect.getMetadata(POSITION_FETCHER_GROUP, wrapper.metatype) &&
-          Reflect.getMetadata(POSITION_FETCHER_TYPE, wrapper.metatype),
-      )
-      .forEach(wrapper => {
-        const type = Reflect.getMetadata(POSITION_FETCHER_TYPE, wrapper.metatype);
-        const network = Reflect.getMetadata(POSITION_FETCHER_NETWORK, wrapper.metatype);
-        const appId = Reflect.getMetadata(POSITION_FETCHER_APP, wrapper.metatype);
-        const groupId = Reflect.getMetadata(POSITION_FETCHER_GROUP, wrapper.metatype);
-
-        if (!this.registry.get(type)) this.registry.set(type, new Map());
-        if (!this.registry.get(type)!.get(network)) this.registry.get(type)!.set(network, new Map());
-        if (!this.registry.get(type)!.get(network)!.get(appId))
-          this.registry.get(type)!.get(network)!.set(appId, new Map());
-
-        this.registry.get(type)?.get(network)?.get(appId)?.set(groupId, wrapper.instance);
-      });
+    this.registry = buildRegistry(this.discoveryService, [
+      POSITION_FETCHER_TYPE,
+      POSITION_FETCHER_NETWORK,
+      POSITION_FETCHER_APP,
+      POSITION_FETCHER_GROUP,
+    ]);
   }
 
   get<T extends AbstractPosition<V>, V = DefaultDataProps>({
@@ -63,5 +43,10 @@ export class PositionFetcherRegistry implements OnModuleInit {
     const fetcher = this.registry.get(type)?.get(network)?.get(appId)?.get(groupId);
     if (!fetcher) throw new Error('No position fetcher found');
     return fetcher as unknown as PositionFetcher<T, V>;
+  }
+
+  getGroupIdsForApp({ type, network, appId }: { type: ContractType; network: Network; appId: string }) {
+    const appFetchers = this.registry.get(type)?.get(network)?.get(appId);
+    return Array.from(appFetchers?.keys() ?? []);
   }
 }

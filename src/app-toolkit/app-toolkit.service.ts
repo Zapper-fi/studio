@@ -4,7 +4,7 @@ import { Cache } from 'cache-manager';
 import { ethers } from 'ethers';
 
 import { ContractFactory } from '~contract';
-import { EthersMulticall, MULTICALL_ADDRESSES } from '~multicall';
+import { MulticallService } from '~multicall/multicall.service';
 import { NetworkProviderService } from '~network-provider/network-provider.service';
 import { DefaultDataProps } from '~position/display.interface';
 import { AppGroupsDefinition, PositionService } from '~position/position.service';
@@ -23,6 +23,7 @@ export class AppToolkit implements IAppToolkit {
     @Inject(NetworkProviderService) private readonly networkProviderService: NetworkProviderService,
     @Inject(PositionService) private readonly positionService: PositionService,
     @Inject(TokenService) private readonly tokenService: TokenService,
+    @Inject(MulticallService) private readonly multicallService: MulticallService,
     @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
   ) {
     this.contractFactory = new ContractFactory((network: Network) => this.networkProviderService.getProvider(network));
@@ -39,15 +40,7 @@ export class AppToolkit implements IAppToolkit {
   }
 
   getMulticall(network: Network) {
-    const multicallAddress = MULTICALL_ADDRESSES[network];
-    if (!multicallAddress) throw new Error(`Multicall not supported on network "${network}"`);
-
-    const contract = this.contractFactory.multicall({
-      network,
-      address: multicallAddress,
-    });
-
-    return new EthersMulticall(contract);
+    return this.multicallService.getMulticall(network);
   }
 
   // Base Tokens

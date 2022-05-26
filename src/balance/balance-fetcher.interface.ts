@@ -1,13 +1,9 @@
 import { MetadataItem } from '~position/display.interface';
-import {
-  AppTokenPositionBalance,
-  ContractPositionBalance,
-  NonFungibleTokenBalance,
-} from '~position/position-balance.interface';
+import { AppTokenPositionBalance, ContractPositionBalance } from '~position/position-balance.interface';
 
 export type ProductItem = {
   label: string;
-  assets: (AppTokenPositionBalance | ContractPositionBalance | NonFungibleTokenBalance)[];
+  assets: (AppTokenPositionBalance | ContractPositionBalance)[];
   meta: MetadataItemWithLabel[];
 };
 

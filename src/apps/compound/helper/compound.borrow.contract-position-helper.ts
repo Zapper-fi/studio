@@ -14,12 +14,7 @@ import { Network } from '~types/network.interface';
 
 import { CompoundContractFactory } from '../contracts';
 
-export type CompoundSupplyTokenDataProps = {
-  supplyApy: number;
-  borrowApy: number;
-  liquidity: number;
-  supply: number;
-};
+import { CompoundSupplyTokenDataProps } from './compound.supply.token-helper';
 
 type CompoundBorrowContractPositionHelperParams = {
   network: Network;
