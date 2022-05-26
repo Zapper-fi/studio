@@ -143,7 +143,7 @@ export class EthereumYieldProtocolLendTokenFetcher implements PositionFetcher<Ap
           matured,
         };
 
-        const displayName = moment(moment.unix(maturity)).format('MMMM D yyyy');
+        const displayName = moment(moment.unix(maturity)).format('MMMM D, yyyy');
         const displayProps: DisplayProps = {
           label: `fy${underlyingToken?.symbol}`,
           secondaryLabel: displayName,
