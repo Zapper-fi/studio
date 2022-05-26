@@ -23,8 +23,24 @@ export class EthereumYieldProtocolBalanceFetcher implements BalanceFetcher {
     });
   }
 
+  async getPoolBalances(address: string) {
+    return this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
+      address,
+      appId: YIELD_PROTOCOL_DEFINITION.id,
+      groupId: YIELD_PROTOCOL_DEFINITION.groups.pool.id,
+      network: Network.ETHEREUM_MAINNET,
+    });
+  }
+
   async getBalances(address: string) {
-    const [lendBalances] = await Promise.all([this.getLendBalances(address)]);
-    return presentBalanceFetcherResponse([{ label: 'Lend', assets: lendBalances }]);
+    const [lendBalances, poolBalances] = await Promise.all([
+      this.getLendBalances(address),
+      this.getPoolBalances(address),
+    ]);
+
+    return presentBalanceFetcherResponse([
+      { label: 'Lend', assets: lendBalances },
+      { label: 'Pool', assets: poolBalances },
+    ]);
   }
 }
