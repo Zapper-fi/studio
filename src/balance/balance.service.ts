@@ -1,4 +1,4 @@
-import { Inject, Injectable, Logger } from '@nestjs/common';
+import { Inject, Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { fromPairs } from 'lodash';
 
 import { ContractFactory } from '~contract';
@@ -61,6 +61,10 @@ export class BalanceService {
       this.positionFetcherRegistry.getGroupIdsForApp({ type: ContractType.APP_TOKEN, network, appId }),
       this.positionFetcherRegistry.getGroupIdsForApp({ type: ContractType.POSITION, network, appId }),
     ]);
+
+    // If there is no custom fetcher defined, and there are no token/contract position groups defined, declare 404
+    if (!tokenGroupIds.length && !contractPositionGroupIds.length)
+      throw new NotFoundException(`Protocol ${appId} is not supported on network ${network}`);
 
     const addressBalancePairs = await Promise.all(
       addresses.map(async address => {
