@@ -13,7 +13,7 @@ import { address } from './impermax.lend.token-fetcher';
 
 const appId = IMPERMAX_DEFINITION.id;
 const groupId = IMPERMAX_DEFINITION.groups.collateral.id;
-const network = Network.ARBITRUM_MAINNET;
+const network = Network.ETHEREUM_MAINNET;
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
 export class EthereumImpermaxCollateralTokenFetcher implements PositionFetcher<AppTokenPosition> {
