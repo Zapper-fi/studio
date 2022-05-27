@@ -6,11 +6,11 @@ import { MulticallModule } from '~multicall/multicall.module';
 import { NetworkProviderModule } from '~network-provider/network-provider.module';
 import { PositionModule } from '~position/position.module';
 
-import { BalanceAfterwareRegistry } from './balance-afterware.registry';
 import { BalanceFetcherRegistry } from './balance-fetcher.registry';
+import { BalancePresenterRegistry } from './balance-presenter.registry';
 import { BalanceController } from './balance.controller';
 import { BalanceService } from './balance.service';
-import { DefaultBalanceAfterwareFactory } from './default.balance-afterware.factory';
+import { DefaultBalancePresenterFactory } from './default.balance-presenter.factory';
 import { DefaultContractPositionBalanceFetcherFactory } from './default.contract-position-balance-fetcher.factory';
 import { DefaultTokenBalanceFetcherFactory } from './default.token-balance-fetcher.factory';
 
@@ -18,11 +18,11 @@ import { DefaultTokenBalanceFetcherFactory } from './default.token-balance-fetch
   imports: [DiscoveryModule, MulticallModule, NetworkProviderModule, PositionModule, AppModule],
   providers: [
     BalanceFetcherRegistry,
-    BalanceAfterwareRegistry,
+    BalancePresenterRegistry,
     BalanceService,
     DefaultTokenBalanceFetcherFactory,
     DefaultContractPositionBalanceFetcherFactory,
-    DefaultBalanceAfterwareFactory,
+    DefaultBalancePresenterFactory,
   ],
   controllers: [BalanceController],
 })

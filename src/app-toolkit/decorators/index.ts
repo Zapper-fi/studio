@@ -4,14 +4,14 @@ import { PositionBalanceFetcher } from '~position/position-balance-fetcher.decor
 import { PositionFetcher } from '~position/position-fetcher.decorator';
 import { TvlFetcher } from '~stats/tvl/tvl-fetcher.decorator';
 
-import { BalanceAfterware } from './balance-afterware.decorator';
 import { BalanceFetcher } from './balance-fetcher.decorator';
+import { BalancePresenter } from './balance-presenter.decorator';
 
 export const Register = {
   AppDefinition,
   AppModule,
-  BalanceAfterware,
   BalanceFetcher,
+  BalancePresenter,
   ContractPositionFetcher: PositionFetcher(ContractType.POSITION),
   TokenPositionFetcher: PositionFetcher(ContractType.APP_TOKEN),
   ContractPositionBalanceFetcher: PositionBalanceFetcher(ContractType.POSITION),

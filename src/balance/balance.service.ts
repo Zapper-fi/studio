@@ -8,10 +8,10 @@ import { PositionBalanceFetcherRegistry } from '~position/position-balance-fetch
 import { PositionFetcherRegistry } from '~position/position-fetcher.registry';
 import { Network } from '~types/network.interface';
 
-import { BalanceAfterwareRegistry } from './balance-afterware.registry';
 import { TokenBalanceResponse } from './balance-fetcher.interface';
 import { BalanceFetcherRegistry } from './balance-fetcher.registry';
-import { DefaultBalanceAfterwareFactory } from './default.balance-afterware.factory';
+import { BalancePresenterRegistry } from './balance-presenter.registry';
+import { DefaultBalancePresenterFactory } from './default.balance-presenter.factory';
 import { DefaultContractPositionBalanceFetcherFactory } from './default.contract-position-balance-fetcher.factory';
 import { DefaultTokenBalanceFetcherFactory } from './default.token-balance-fetcher.factory';
 import { GetBalancesParams } from './dto/get-balances-params.dto';
@@ -27,10 +27,10 @@ export class BalanceService {
     @Inject(PositionFetcherRegistry) private readonly positionFetcherRegistry: PositionFetcherRegistry,
     @Inject(PositionBalanceFetcherRegistry)
     private readonly positionBalanceFetcherRegistry: PositionBalanceFetcherRegistry,
-    @Inject(BalanceAfterwareRegistry) private readonly balanceAfterwareRegistry: BalanceAfterwareRegistry,
+    @Inject(BalancePresenterRegistry) private readonly balancePresenterRegistry: BalancePresenterRegistry,
     @Inject(NetworkProviderService) private readonly networkProviderService: NetworkProviderService,
-    @Inject(DefaultBalanceAfterwareFactory)
-    private readonly defaultBalanceAfterwareFactory: DefaultBalanceAfterwareFactory,
+    @Inject(DefaultBalancePresenterFactory)
+    private readonly defaultBalancePresenterFactory: DefaultBalancePresenterFactory,
     @Inject(DefaultTokenBalanceFetcherFactory)
     private readonly defaultTokenBalanceFetcherFactory: DefaultTokenBalanceFetcherFactory,
     @Inject(DefaultContractPositionBalanceFetcherFactory)
@@ -83,11 +83,11 @@ export class BalanceService {
           ),
         ]);
 
-        const afterware =
-          this.balanceAfterwareRegistry.get(appId, network) ??
-          this.defaultBalanceAfterwareFactory.build({ appId, network });
+        const presenter =
+          this.balancePresenterRegistry.get(appId, network) ??
+          this.defaultBalancePresenterFactory.build({ appId, network });
         const preprocessed = [...tokenBalances.flat(), ...contractPositionBalances.flat()];
-        const balances = await afterware.use(preprocessed);
+        const balances = await presenter.present(preprocessed);
         return [address, balances];
       }),
     );

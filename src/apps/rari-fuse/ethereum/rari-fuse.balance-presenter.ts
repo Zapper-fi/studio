@@ -5,20 +5,20 @@ import { Register } from '~app-toolkit/decorators';
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
 import { CompoundLendingMetaHelper } from '~apps/compound';
 import { CompoundSupplyTokenDataProps } from '~apps/compound/helper/compound.supply.token-helper';
-import { BalanceAfterware } from '~balance/balance-afterware.interface';
+import { BalancePresenter } from '~balance/balance-presenter.interface';
 import { PositionBalance } from '~position/position-balance.interface';
 import { Network } from '~types/network.interface';
 
 import RARI_FUSE_DEFINITION from '../rari-fuse.definition';
 
-@Register.BalanceAfterware({ appId: RARI_FUSE_DEFINITION.id, network: Network.ETHEREUM_MAINNET })
-export class EthereumRariFuseBalanceAfterware implements BalanceAfterware {
+@Register.BalancePresenter({ appId: RARI_FUSE_DEFINITION.id, network: Network.ETHEREUM_MAINNET })
+export class EthereumRariFuseBalancePresenter implements BalancePresenter {
   constructor(
     @Inject(CompoundLendingMetaHelper)
     private readonly compoundLendingMetaHelper: CompoundLendingMetaHelper,
   ) {}
 
-  async use(balances: PositionBalance<CompoundSupplyTokenDataProps>[]) {
+  async present(balances: PositionBalance<CompoundSupplyTokenDataProps>[]) {
     // Group supply and borrow balances by their market
     const balancesByMarket = groupBy(balances, v => v.dataProps.marketName);
 

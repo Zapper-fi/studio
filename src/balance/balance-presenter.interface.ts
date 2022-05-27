@@ -2,6 +2,6 @@ import { PositionBalance } from '~position/position-balance.interface';
 
 import { TokenBalanceResponse } from './balance-fetcher.interface';
 
-export interface BalanceAfterware {
-  use(balances: PositionBalance[]): Promise<TokenBalanceResponse>;
+export interface BalancePresenter {
+  present(balances: PositionBalance[]): Promise<TokenBalanceResponse>;
 }

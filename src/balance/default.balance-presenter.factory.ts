@@ -6,22 +6,22 @@ import { AppService } from '~app/app.service';
 import { PositionBalance } from '~position/position-balance.interface';
 import { Network } from '~types';
 
-import { BalanceAfterware } from './balance-afterware.interface';
+import { BalancePresenter } from './balance-presenter.interface';
 
-type BuildContractPositionBalanceFetcherParams = {
+type BuildBalancePresenterParams = {
   appId: string;
   network: Network;
 };
 
 @Injectable()
-export class DefaultBalanceAfterwareFactory {
+export class DefaultBalancePresenterFactory {
   constructor(@Inject(AppService) private readonly appService: AppService) {}
 
-  build({ appId }: BuildContractPositionBalanceFetcherParams) {
-    const klass = class DefaultBalanceAfterware implements BalanceAfterware {
+  build({ appId }: BuildBalancePresenterParams) {
+    const klass = class DefaultBalancePresenter implements BalancePresenter {
       constructor(readonly appService: AppService) {}
 
-      async use(balances: PositionBalance[]) {
+      async present(balances: PositionBalance[]) {
         // Build labelled groups by the labels defined in the app definition
         const app = this.appService.getApp(appId);
         const products = Object.values(app.groups).map(group => {
