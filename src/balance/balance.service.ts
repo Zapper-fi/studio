@@ -24,7 +24,7 @@ export class BalanceService {
 
   constructor(
     @Inject(BalanceFetcherRegistry) private readonly balanceFetcherRegistry: BalanceFetcherRegistry,
-    @Inject(PositionFetcherRegistry) private readonly positionFetcherRegistry: PositionFetcherRegistry,
+    @Inject(PositionFetcherRegistry) private readonly pfRegistry: PositionFetcherRegistry,
     @Inject(PositionBalanceFetcherRegistry)
     private readonly positionBalanceFetcherRegistry: PositionBalanceFetcherRegistry,
     @Inject(BalancePresenterRegistry) private readonly balancePresenterRegistry: BalancePresenterRegistry,
@@ -57,13 +57,11 @@ export class BalanceService {
   }
 
   private async getBalancesGeneralizedStrategy({ appId, addresses, network }: GetBalancesQuery & GetBalancesParams) {
-    const [tokenGroupIds, contractPositionGroupIds] = await Promise.all([
-      this.positionFetcherRegistry.getGroupIdsForApp({ type: ContractType.APP_TOKEN, network, appId }),
-      this.positionFetcherRegistry.getGroupIdsForApp({ type: ContractType.POSITION, network, appId }),
-    ]);
+    const tokenGroupIds = this.pfRegistry.getGroupIdsForApp({ type: ContractType.APP_TOKEN, network, appId });
+    const positionGroupIds = this.pfRegistry.getGroupIdsForApp({ type: ContractType.POSITION, network, appId });
 
     // If there is no custom fetcher defined, and there are no token/contract position groups defined, declare 404
-    if (!tokenGroupIds.length && !contractPositionGroupIds.length)
+    if (!tokenGroupIds.length && !positionGroupIds.length)
       throw new NotFoundException(`Protocol ${appId} is not supported on network ${network}`);
 
     const addressBalancePairs = await Promise.all(
@@ -78,7 +76,7 @@ export class BalanceService {
             }),
           ),
           await Promise.all(
-            contractPositionGroupIds.map(async groupId => {
+            positionGroupIds.map(async groupId => {
               const balanceFetcher =
                 this.positionBalanceFetcherRegistry.get({ type: ContractType.POSITION, appId, groupId, network }) ??
                 this.defaultContractPositionBalanceFetcherFactory.build({ appId, groupId, network });
