@@ -4,4 +4,4 @@ export const OPTION_TYPES = {
   2: 'Short Call Base',
   3: 'Short Call Quote',
   4: 'Short Put Quote',
-}
+};

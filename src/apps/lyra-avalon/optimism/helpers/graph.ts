@@ -2,59 +2,59 @@ import { gql } from 'graphql-request';
 
 import { TheGraphHelper } from '~app-toolkit/helpers/the-graph/the-graph.helper';
 
-
 type OptionPrice = {
   latestOptionPriceAndGreeks: {
-    optionPrice: string
-  }
-}
+    optionPrice: string;
+  };
+};
 type OptionsResponse = {
   markets: {
     id: string;
     optionToken: {
-      id: string
-    }
+      id: string;
+    };
     baseAddress: string;
-    quoteAddress: string,
+    quoteAddress: string;
     boards: {
       strikes: {
         strikeId: string;
         strikePriceReadable: string;
-        putOption: OptionPrice,
-        callOption: OptionPrice,
-      }[]
-    }[]
-  }[]
-}
+        putOption: OptionPrice;
+        callOption: OptionPrice;
+      }[];
+    }[];
+  }[];
+};
 const OPTIONS_QUERY = gql`
-{
-  markets(where:{isRemoved:false}) {
-    id
-    baseAddress
-    quoteAddress
-    optionToken {
+  {
+    markets(where: { isRemoved: false }) {
       id
-    }
-    boards (where: {isExpired:false}) {
-      boardId
-      strikes {
-        strikeId
-        strikePriceReadable
-        putOption {
-          latestOptionPriceAndGreeks {
-            optionPrice
+      baseAddress
+      quoteAddress
+      optionToken {
+        id
+      }
+      boards(where: { isExpired: false }) {
+        boardId
+        strikes {
+          strikeId
+          strikePriceReadable
+          putOption {
+            latestOptionPriceAndGreeks {
+              optionPrice
+            }
           }
-        }
-        callOption {
-          latestOptionPriceAndGreeks {
-            optionPrice
+          callOption {
+            latestOptionPriceAndGreeks {
+              optionPrice
+            }
           }
         }
       }
     }
   }
-}`
-const subgraphUrl = 'https://api.thegraph.com/subgraphs/name/lyra-finance/mainnet'
+`;
+const subgraphUrl = 'https://api.thegraph.com/subgraphs/name/lyra-finance/mainnet';
 
 export const runQuery = <T>(graphHelper: TheGraphHelper, query) => {
   return graphHelper.requestGraph<T>({
@@ -64,5 +64,5 @@ export const runQuery = <T>(graphHelper: TheGraphHelper, query) => {
 };
 
 export const getOptions = (graphHelper: TheGraphHelper) => {
-  return runQuery<OptionsResponse>(graphHelper, OPTIONS_QUERY)
+  return runQuery<OptionsResponse>(graphHelper, OPTIONS_QUERY);
 };
