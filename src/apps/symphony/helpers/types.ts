@@ -1,5 +1,5 @@
 export type SymphonyYoloTokenDataProps = {
-  totalValueLocked: number;
+  liquidity: number;
 };
 
 export type Token = {

@@ -16,12 +16,10 @@ export class EthereumTokemakTvlFetcher implements TvlFetcher {
   async getTvl() {
     const farmPositions = await this.appToolkit.getAppContractPositions<SingleStakingFarmDataProps>({
       appId: TOKEMAK_DEFINITION.id,
-      network: Network.ETHEREUM_MAINNET,
       groupIds: [TOKEMAK_DEFINITION.groups.farm.id],
+      network: Network.ETHEREUM_MAINNET,
     });
 
-    const farmTvl = sumBy(farmPositions, position => position.dataProps.totalValueLocked);
-
-    return farmTvl;
+    return sumBy(farmPositions, position => position.dataProps.liquidity);
   }
 }

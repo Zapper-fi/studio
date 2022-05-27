@@ -31,6 +31,7 @@ export type SingleStakingFarmRois = {
 
 export type SingleStakingFarmDataProps = {
   totalValueLocked: number;
+  liquidity: number;
   isActive: boolean;
   dailyROI: number;
   weeklyROI: number;
@@ -63,6 +64,7 @@ export type SingleStakingFarmResolveRoisParams<T> = (opts: {
   stakedToken: WithMetaType<Token>;
   rewardTokens: WithMetaType<Token>[];
   totalValueLocked: number;
+  liquidity: number;
 }) => SingleStakingFarmRois | Promise<SingleStakingFarmRois>;
 
 export type SingleStakingFarmContractPositionHelperParams<T> = {
@@ -191,10 +193,11 @@ export class SingleStakingFarmContractPositionHelper {
             stakedToken,
             rewardTokens: rewardTokenMatches,
             totalValueLocked,
+            liquidity: totalValueLocked,
           });
 
           const otherProps = resolveImplementation ? { implementation: resolveImplementation() } : {};
-          const dataProps = { totalValueLocked, isActive, ...rois, ...otherProps };
+          const dataProps = { totalValueLocked, liquidity: totalValueLocked, isActive, ...rois, ...otherProps };
 
           // Display Properties
           const underlyingLabel =
