@@ -110,6 +110,7 @@ type MasterChefContractPositionHelperParams<T> = {
 export type MasterChefContractPositionDataProps = {
   poolIndex: number;
   totalValueLocked: number;
+  liquidity: number;
   isActive: boolean;
   dailyROI: number;
   weeklyROI: number;
@@ -268,7 +269,15 @@ export class MasterChefContractPositionHelper {
         }
 
         // Resolve data properties
-        const dataProps = { poolIndex, totalValueLocked, isActive, dailyROI, weeklyROI, yearlyROI };
+        const dataProps = {
+          poolIndex,
+          totalValueLocked,
+          liquidity: totalValueLocked,
+          isActive,
+          dailyROI,
+          weeklyROI,
+          yearlyROI,
+        };
 
         // Resolve display properties
         const label = resolveLabel({ stakedToken, rewardTokens });
