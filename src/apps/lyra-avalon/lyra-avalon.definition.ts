@@ -5,7 +5,7 @@ import { Network } from '~types/network.interface';
 
 export const LYRA_AVALON_DEFINITION = appDefinition({
   id: 'lyra-avalon',
-  name: 'Lyra',
+  name: 'Lyra Avalon',
   description:
     'Lyra is an options trading protocol accessing the scalability of Layer 2 Ethereum to provide a robust, lightning-fast and reliable trading experience.',
   url: 'https://avalon.app.lyra.finance/',

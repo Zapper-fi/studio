@@ -5,6 +5,7 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { getAppImg } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
+import { DefaultDataProps } from '~position/display.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
 import { supplied } from '~position/position.utils';
@@ -18,6 +19,11 @@ import { getOptions } from './helpers/graph';
 const appId = LYRA_AVALON_DEFINITION.id;
 const groupId = LYRA_AVALON_DEFINITION.groups.options.id;
 const network = Network.OPTIMISM_MAINNET;
+
+export interface LyraAvalonOptionContractPositionDataProps extends DefaultDataProps {
+  optionType: number;
+  strikeId: number;
+}
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
 export class OptimismLyraAvalonOptionsContractPositionFetcher implements PositionFetcher<ContractPosition> {
@@ -47,12 +53,15 @@ export class OptimismLyraAvalonOptionsContractPositionFetcher implements Positio
             return {
               ...position,
               tokens: Number(key) === 2 ? [supplied(baseToken), quoteToken] : [baseToken, supplied(quoteToken)],
+              dataProps: {
+                strikeId: Number(strike.strikeId),
+                optionType: Number(key),
+              },
               displayProps: {
                 ...position.displayProps,
                 label: `${OPTION_TYPES[key]} ${baseToken.symbol} @ $${strike.strikePriceReadable}`,
-                secondaryLabel: `Option ${key} Strike ${strike.strikeId}`,
               },
-            } as ContractPosition;
+            } as ContractPosition<LyraAvalonOptionContractPositionDataProps>;
           });
           return positions;
         });

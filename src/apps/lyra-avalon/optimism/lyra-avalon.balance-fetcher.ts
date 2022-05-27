@@ -6,6 +6,7 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
 import { BalanceFetcher } from '~balance/balance-fetcher.interface';
+import { ContractPosition } from '~position/position.interface';
 import { isSupplied } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 
@@ -14,6 +15,7 @@ import { LYRA_AVALON_DEFINITION } from '../lyra-avalon.definition';
 
 import { OPTION_TYPES } from './helpers/consts';
 import { getOptions } from './helpers/graph';
+import { LyraAvalonOptionContractPositionDataProps } from './lyra-avalon.options.contract-position-fetcher';
 
 const appId = LYRA_AVALON_DEFINITION.id;
 const network = Network.OPTIMISM_MAINNET;
@@ -58,33 +60,36 @@ export class OptimismLyraAvalonBalanceFetcher implements BalanceFetcher {
       appId,
       groupId: LYRA_AVALON_DEFINITION.groups.options.id,
       network,
-      resolveBalances: async ({ contractPosition }) => {
+      resolveBalances: async ({
+        contractPosition,
+      }: {
+        contractPosition: ContractPosition<LyraAvalonOptionContractPositionDataProps>;
+      }) => {
         // Find matching market for contract position
         const market = markets.find(market => market.marketAddress === contractPosition.address);
         if (!market?.strikes) return [];
 
         // Extract information from contract position
-        const [, optionType, , strikeId] = (contractPosition.displayProps.secondaryLabel as string).split(' ');
+        const { strikeId, optionType } = contractPosition.dataProps;
         const collateralToken = contractPosition.tokens.find(isSupplied)!;
         const quoteToken = contractPosition.tokens.find(token => token.address === market.quoteAddress.toLowerCase())!;
 
         // Find matching user position for contract position
         const userPosition = market.userPositions.find(
-          position => Number(position.strikeId) === Number(strikeId) && position.optionType === Number(optionType),
+          position => Number(position.strikeId) === strikeId && position.optionType === optionType,
         );
         if (!userPosition) return [];
 
         // Determine price of the contract position strike
-        const strike = market.strikes.find(strike => Number(strike.strikeId) === Number(strikeId));
+        const strike = market.strikes.find(strike => Number(strike.strikeId) === strikeId);
         if (!strike) return [];
         const price = (OPTION_TYPES[optionType].includes('Call') ? strike.callOption : strike.putOption)
           .latestOptionPriceAndGreeks.optionPrice;
         const balance = ((Number(price) * Number(userPosition.amount)) / 10 ** quoteToken.decimals).toString();
 
-        // Return balance
-        // Note: may not be totally accurate
+        // Return balance. Note: may not be totally accurate
         if (Number(optionType) >= 2) {
-          // Short
+          // Short Option
           const debt = drillBalance(quoteToken, balance, { isDebt: true });
           const collateral = drillBalance(collateralToken, userPosition.collateral.toString());
           return [debt, collateral];
