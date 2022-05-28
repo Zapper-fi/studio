@@ -1,5 +1,4 @@
 import { Inject } from '@nestjs/common';
-import _ from 'lodash';
 
 import { drillBalance } from '~app-toolkit';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
@@ -10,11 +9,10 @@ import { ContractPosition } from '~position/position.interface';
 import { isSupplied } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 
-import { LyraAvalonContractFactory } from '../contracts';
+import { LyraAvalonContractFactory, OptionToken } from '../contracts';
 import { LYRA_AVALON_DEFINITION } from '../lyra-avalon.definition';
 
 import { OPTION_TYPES } from './helpers/consts';
-import { getOptions } from './helpers/graph';
 import { LyraAvalonOptionContractPositionDataProps } from './lyra-avalon.options.contract-position-fetcher';
 
 const appId = LYRA_AVALON_DEFINITION.id;
@@ -37,23 +35,8 @@ export class OptimismLyraAvalonBalanceFetcher implements BalanceFetcher {
   }
 
   async getOptionsBalances(address: string) {
+    const markets: Record<string, OptionToken.OptionPositionStructOutput[]> = {};
     const multicall = this.appToolkit.getMulticall(network);
-    const response = await getOptions(this.appToolkit.helpers.theGraphHelper);
-    const markets = await Promise.all(
-      response.markets.map(async market => {
-        const tokenContract = this.contractFactory.optionToken({
-          address: market.optionToken.id.toLowerCase(),
-          network,
-        });
-        const userPositions = await multicall.wrap(tokenContract).getOwnerPositions(address);
-        return {
-          userPositions,
-          marketAddress: market.optionToken.id.toLowerCase(),
-          quoteAddress: market.quoteAddress,
-          strikes: _.flatten(market.boards.map(board => board.strikes)),
-        };
-      }),
-    );
 
     return this.appToolkit.helpers.contractPositionBalanceHelper.getContractPositionBalances({
       address,
@@ -65,35 +48,36 @@ export class OptimismLyraAvalonBalanceFetcher implements BalanceFetcher {
       }: {
         contractPosition: ContractPosition<LyraAvalonOptionContractPositionDataProps>;
       }) => {
-        // Find matching market for contract position
-        const market = markets.find(market => market.marketAddress === contractPosition.address);
-        if (!market?.strikes) return [];
-
         // Extract information from contract position
-        const { strikeId, optionType } = contractPosition.dataProps;
+        const { strikeId, optionType, marketAddress, quoteAddress, tokenAddress, callPrice, putPrice } =
+          contractPosition.dataProps;
         const collateralToken = contractPosition.tokens.find(isSupplied)!;
-        const quoteToken = contractPosition.tokens.find(token => token.address === market.quoteAddress.toLowerCase())!;
+        const quoteToken = contractPosition.tokens.find(token => token.address === quoteAddress)!;
+
+        // Pull user positions for the relevant market
+        if (!markets[marketAddress]) {
+          const contract = this.contractFactory.optionToken({ address: tokenAddress, network });
+          markets[marketAddress] = await multicall.wrap(contract).getOwnerPositions(address);
+        }
 
         // Find matching user position for contract position
-        const userPosition = market.userPositions.find(
+        const userPosition = markets[marketAddress].find(
           position => Number(position.strikeId) === strikeId && position.optionType === optionType,
         );
         if (!userPosition) return [];
 
-        // Determine price of the contract position strike
-        const strike = market.strikes.find(strike => Number(strike.strikeId) === strikeId);
-        if (!strike) return [];
-        const price = (OPTION_TYPES[optionType].includes('Call') ? strike.callOption : strike.putOption)
-          .latestOptionPriceAndGreeks.optionPrice;
+        // Determine price of the contract position strike.
+        // Note: may not be totally accurate
+        const price = OPTION_TYPES[optionType].includes('Call') ? callPrice : putPrice;
         const balance = ((Number(price) * Number(userPosition.amount)) / 10 ** quoteToken.decimals).toString();
 
-        // Return balance. Note: may not be totally accurate
         if (Number(optionType) >= 2) {
           // Short Option
           const debt = drillBalance(quoteToken, balance, { isDebt: true });
           const collateral = drillBalance(collateralToken, userPosition.collateral.toString());
           return [debt, collateral];
         }
+        // Long Option
         return [drillBalance(quoteToken, balance)];
       },
     });
