@@ -3,7 +3,7 @@ import { BigNumberish } from 'ethers';
 import _ from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
+import { ETH_ADDR_ALIAS, ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { BLOCKS_PER_DAY } from '~app-toolkit/constants/blocks';
 import {
   buildDollarDisplayItem,
@@ -93,7 +93,7 @@ export class CompoundSupplyTokenHelper {
         const contract = getTokenContract({ address, network });
 
         const underlyingAddress = await getUnderlyingAddress({ contract, multicall })
-          .then(t => t.toLowerCase())
+          .then(t => t.toLowerCase().replace(ETH_ADDR_ALIAS, ZERO_ADDRESS))
           .catch(() => ZERO_ADDRESS);
 
         const underlyingToken = allTokens.find(v => v.address === underlyingAddress);
