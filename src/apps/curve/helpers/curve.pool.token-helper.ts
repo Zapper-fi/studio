@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { BigNumber, BigNumberish } from 'ethers';
-import { compact, isUndefined } from 'lodash';
+import { compact } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ETH_ADDR_ALIAS, ZERO_ADDRESS } from '~app-toolkit/constants/address';
@@ -101,7 +101,7 @@ export class CurvePoolTokenHelper {
         const tokenAddresses = rawTokenAddresses.map(v => (v === ETH_ADDR_ALIAS ? ZERO_ADDRESS : v.toLowerCase()));
         const reservesRaw = await resolvePoolReserves({ multicall, poolContract });
 
-        const tokens = tokenAddresses.map(tokenAddress => {
+        const maybeTokens = tokenAddresses.map(tokenAddress => {
           const baseToken = baseTokens.find(price => price.address === tokenAddress);
           const appToken = appTokens.find(p => p.address === tokenAddress);
           const curveToken = baseCurveTokens.find(p => p.address === tokenAddress);
@@ -109,10 +109,9 @@ export class CurvePoolTokenHelper {
         });
 
         // If any underlying token is missing, do not display this pool
-        const isMissingUnderlyingTokens = tokens.some(isUndefined);
+        const tokens = compact(maybeTokens);
+        const isMissingUnderlyingTokens = tokens.length !== maybeTokens.length;
         if (isMissingUnderlyingTokens) return null;
-
-        const sanitizedTokens = tokens as NonNullable<typeof tokens[number]>[];
 
         const [symbol, supplyRaw, feeRaw] = await Promise.all([
           resolvePoolTokenSymbol({ multicall, poolTokenContract }),
@@ -125,26 +124,24 @@ export class CurvePoolTokenHelper {
         const fee = Number(feeRaw) / 10 ** 10;
         if (supply === 0) return null;
 
-        const reserves = reservesRaw.map((r, i) => Number(r) / 10 ** sanitizedTokens[i].decimals);
-        const underlyingTokens = sanitizedTokens.flatMap(v => (v.type === ContractType.BASE_TOKEN ? v : v.tokens));
+        const reserves = reservesRaw.map((r, i) => Number(r) / 10 ** tokens[i].decimals);
+        const underlyingTokens = tokens.flatMap(v => (v.type === ContractType.BASE_TOKEN ? v : v.tokens));
         const price = await resolvePoolTokenPrice({
-          tokens: sanitizedTokens,
+          tokens,
           reserves,
           poolContract,
           multicall,
           supply,
         });
-        const volume = resolvePoolVolume
-          ? await resolvePoolVolume({ definition, poolContract, tokens: sanitizedTokens, price })
-          : 0;
+        const volume = resolvePoolVolume ? await resolvePoolVolume({ definition, poolContract, tokens, price }) : 0;
 
         const pricePerShare = reserves.map(r => r / supply);
-        const reservesUSD = sanitizedTokens.map((t, i) => reserves[i] * t.price);
+        const reservesUSD = tokens.map((t, i) => reserves[i] * t.price);
         const liquidity = reservesUSD.reduce((total, r) => total + r, 0);
         const reservePercentages = reservesUSD.map(reserveUSD => reserveUSD / liquidity);
 
         // Display Properties
-        const underlyingLabels = sanitizedTokens.map(v => (isMetaPool(v) ? getLabelFromToken(v) : v.symbol)); // Flatten metapool label
+        const underlyingLabels = tokens.map(v => (isMetaPool(v) ? getLabelFromToken(v) : v.symbol)); // Flatten metapool label
         const label = definition.label ?? underlyingLabels.join(' / ');
         const secondaryLabel = reservePercentages.map(p => `${Math.floor(p * 100)}%`).join(' / ');
         const images = underlyingTokens.map(t => getImagesFromToken(t)).flat();
@@ -160,7 +157,7 @@ export class CurvePoolTokenHelper {
           supply,
           price,
           pricePerShare,
-          tokens: sanitizedTokens,
+          tokens,
 
           dataProps: {
             swapAddress,
