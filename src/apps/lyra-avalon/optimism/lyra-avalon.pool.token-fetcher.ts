@@ -10,13 +10,12 @@ import { Network } from '~types/network.interface';
 import { LyraAvalonContractFactory, LiquidityToken } from '../contracts';
 import { LYRA_AVALON_DEFINITION } from '../lyra-avalon.definition';
 
+import { REGISTRY_ADDRESS } from './helpers/consts';
 import { runQuery } from './helpers/graph';
 
 const appId = LYRA_AVALON_DEFINITION.id;
 const groupId = LYRA_AVALON_DEFINITION.groups.pool.id;
 const network = Network.OPTIMISM_MAINNET;
-
-const REGISTRY_ADDRESS = '0x7c7AbDdbCb6c731237f7546d3e4c5165531fb0c1'.toLowerCase();
 
 // TODO: find better way to determine available markets
 type QueryResponse = {

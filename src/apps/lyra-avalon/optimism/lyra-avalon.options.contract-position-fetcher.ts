@@ -23,6 +23,11 @@ const network = Network.OPTIMISM_MAINNET;
 export interface LyraAvalonOptionContractPositionDataProps extends DefaultDataProps {
   optionType: number;
   strikeId: number;
+  marketAddress: string;
+  quoteAddress: string;
+  tokenAddress: string;
+  callPrice: number;
+  putPrice: number;
 }
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
@@ -56,6 +61,11 @@ export class OptimismLyraAvalonOptionsContractPositionFetcher implements Positio
               dataProps: {
                 strikeId: Number(strike.strikeId),
                 optionType: Number(key),
+                marketAddress: market.id,
+                quoteAddress: market.quoteAddress,
+                tokenAddress: market.optionToken.id,
+                callPrice: Number(strike.callOption.latestOptionPriceAndGreeks.optionPrice),
+                putPrice: Number(strike.putOption.latestOptionPriceAndGreeks.optionPrice),
               },
               displayProps: {
                 ...position.displayProps,
