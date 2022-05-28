@@ -13,7 +13,7 @@ export const LYRA_AVALON_DEFINITION = appDefinition({
   groups: {
     options: {
       id: 'options',
-      type: GroupType.TOKEN,
+      type: GroupType.POSITION,
       label: 'Options',
     },
     pool: {
