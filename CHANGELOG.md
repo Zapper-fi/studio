@@ -4,6 +4,19 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.46.0](https://github.com/Zapper-fi/studio/compare/v0.45.1...v0.46.0) (2022-05-28)
+
+
+### Features
+
+* **cozy-finance:** Support Cozy Finance ([#534](https://github.com/Zapper-fi/studio/issues/534)) ([8199a2d](https://github.com/Zapper-fi/studio/commit/8199a2df0b6c32d34ac50af598fa667f51f66afd))
+* **llama-airforce:** Extract Llama Airforce and re-enable airdrop balances ([#531](https://github.com/Zapper-fi/studio/issues/531)) ([61cfe43](https://github.com/Zapper-fi/studio/commit/61cfe437652db8dc6897aba74082924b11fac7de))
+
+
+### Bug Fixes
+
+* **curve:** Fix missing Curve farm balances on Arbitrum ([#533](https://github.com/Zapper-fi/studio/issues/533)) ([8b2a4c2](https://github.com/Zapper-fi/studio/commit/8b2a4c23b20a732f8a185b12e2c6b0d52f331de0))
+
 ### [0.45.1](https://github.com/Zapper-fi/studio/compare/v0.45.0...v0.45.1) (2022-05-28)
 
 
