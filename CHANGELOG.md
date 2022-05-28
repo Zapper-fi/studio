@@ -4,6 +4,25 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+### [0.45.1](https://github.com/Zapper-fi/studio/compare/v0.45.0...v0.45.1) (2022-05-28)
+
+
+### Bug Fixes
+
+* **lyra-avalon:** Optimize balance fetcher by removing calls to TheGraph ([#529](https://github.com/Zapper-fi/studio/issues/529)) ([b54d753](https://github.com/Zapper-fi/studio/commit/b54d75380a07fa705c58d358ee30f964d466458c))
+
+## [0.45.0](https://github.com/Zapper-fi/studio/compare/v0.44.6...v0.45.0) (2022-05-27)
+
+
+### Features
+
+* **lyra-avalon:** Add support for Lyra Avalon ([#526](https://github.com/Zapper-fi/studio/issues/526)) ([4de0d56](https://github.com/Zapper-fi/studio/commit/4de0d5682bb9f1d4d490513127254cd6b20e4b8c))
+
+
+### Bug Fixes
+
+* **lyra-avalon:** Wrong group type ([5948516](https://github.com/Zapper-fi/studio/commit/5948516879495a13ac4a5620548514fe0b630f87))
+
 ### [0.44.6](https://github.com/Zapper-fi/studio/compare/v0.44.5...v0.44.6) (2022-05-26)
 
 
