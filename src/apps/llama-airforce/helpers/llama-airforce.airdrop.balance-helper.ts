@@ -50,9 +50,10 @@ export class LlamaAirforceAirdropBalancesHelper {
   }
 
   async getBalances({ address }: LlamaAirforceAirdropBalancesParams) {
+    const checksumAddress = getAddress(address);
     const airdropData = await this.getCachedAirdropData();
-    if (!airdropData[getAddress(address)]) return [];
-    const { index, amount } = airdropData[address];
+    if (!airdropData[checksumAddress]) return [];
+    const { index, amount } = airdropData[checksumAddress];
 
     return this.appToolkit.helpers.contractPositionBalanceHelper.getContractPositionBalances({
       address,
