@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.47.0](https://github.com/Zapper-fi/studio/compare/v0.46.0...v0.47.0) (2022-05-30)
+
+
+### Features
+
+* **penguin:** Extract and fix Penguin ([#536](https://github.com/Zapper-fi/studio/issues/536)) ([e645849](https://github.com/Zapper-fi/studio/commit/e6458496cdea3a1655c458e9d5c3f210df14a992))
+
 ## [0.46.0](https://github.com/Zapper-fi/studio/compare/v0.45.1...v0.46.0) (2022-05-28)
 
 
