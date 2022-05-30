@@ -2,12 +2,7 @@ import _ from 'lodash';
 
 import { MetadataItemWithLabel, TokenBalanceResponse } from '~balance/balance-fetcher.interface';
 import { ContractType } from '~position/contract.interface';
-import {
-  AppTokenPositionBalance,
-  ContractPositionBalance,
-  NonFungibleTokenBalance,
-  TokenBalance,
-} from '~position/position-balance.interface';
+import { AppTokenPositionBalance, ContractPositionBalance, TokenBalance } from '~position/position-balance.interface';
 
 const getTotalsMeta = (balances: (TokenBalance | ContractPositionBalance)[]): MetadataItemWithLabel[] => {
   const filteredBalances = balances.filter(t => Math.abs(t.balanceUSD) >= 0.01);
@@ -48,7 +43,7 @@ const getTotalsMeta = (balances: (TokenBalance | ContractPositionBalance)[]): Me
 
 type Product = {
   label: string;
-  assets: (AppTokenPositionBalance | ContractPositionBalance | NonFungibleTokenBalance)[];
+  assets: (AppTokenPositionBalance | ContractPositionBalance)[];
   meta?: MetadataItemWithLabel[];
 };
 
