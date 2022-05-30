@@ -4,10 +4,15 @@ export type Registry<T extends any[], U> = T extends [head: infer V, ...tail: in
   ? Map<V, Registry<Tail_, U>>
   : U;
 
-export const buildRegistry = <T extends any[], U>(discovery: DiscoveryService, metadataKeys: string[]) => {
+export const buildRegistry = <T extends any[], U>(
+  discovery: DiscoveryService,
+  metadataKeys: string[],
+  filterKeys: string[] = [],
+) => {
   const wrappers = discovery.getProviders();
   const matchable = wrappers.filter(wrapper => !!wrapper.metatype);
-  const matched = matchable.filter(wrapper => metadataKeys.every(k => Reflect.getMetadata(k, wrapper.metatype)));
+  const allKeys = [...metadataKeys, ...filterKeys];
+  const matched = matchable.filter(wrapper => allKeys.every(k => Reflect.getMetadata(k, wrapper.metatype)));
 
   const registry = matched.reduce((acc, wrapper) => {
     let node = acc;
