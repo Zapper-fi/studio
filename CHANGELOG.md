@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+### [0.49.1](https://github.com/Zapper-fi/studio/compare/v0.49.0...v0.49.1) (2022-05-30)
+
+
+### Bug Fixes
+
+* **llama-airforce:** Fix undefined error ([63dbaaa](https://github.com/Zapper-fi/studio/commit/63dbaaa4b5f8456ba56808f95ad2b53174955c27))
+
 ## [0.49.0](https://github.com/Zapper-fi/studio/compare/v0.48.0...v0.49.0) (2022-05-30)
 
 
