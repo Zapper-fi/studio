@@ -16,6 +16,11 @@ import { CompoundContractFactory } from '../contracts';
 
 import { CompoundSupplyTokenDataProps } from './compound.supply.token-helper';
 
+export type CompoundBorrowContractPositionDataProps = CompoundSupplyTokenDataProps & {
+  supply: number;
+  borrow: number;
+};
+
 type CompoundBorrowContractPositionHelperParams = {
   network: Network;
   appId: string;
