@@ -4,6 +4,59 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.47.0](https://github.com/Zapper-fi/studio/compare/v0.46.0...v0.47.0) (2022-05-30)
+
+
+### Features
+
+* **penguin:** Extract and fix Penguin ([#536](https://github.com/Zapper-fi/studio/issues/536)) ([e645849](https://github.com/Zapper-fi/studio/commit/e6458496cdea3a1655c458e9d5c3f210df14a992))
+
+## [0.46.0](https://github.com/Zapper-fi/studio/compare/v0.45.1...v0.46.0) (2022-05-28)
+
+
+### Features
+
+* **cozy-finance:** Support Cozy Finance ([#534](https://github.com/Zapper-fi/studio/issues/534)) ([8199a2d](https://github.com/Zapper-fi/studio/commit/8199a2df0b6c32d34ac50af598fa667f51f66afd))
+* **llama-airforce:** Extract Llama Airforce and re-enable airdrop balances ([#531](https://github.com/Zapper-fi/studio/issues/531)) ([61cfe43](https://github.com/Zapper-fi/studio/commit/61cfe437652db8dc6897aba74082924b11fac7de))
+
+
+### Bug Fixes
+
+* **curve:** Fix missing Curve farm balances on Arbitrum ([#533](https://github.com/Zapper-fi/studio/issues/533)) ([8b2a4c2](https://github.com/Zapper-fi/studio/commit/8b2a4c23b20a732f8a185b12e2c6b0d52f331de0))
+
+### [0.45.1](https://github.com/Zapper-fi/studio/compare/v0.45.0...v0.45.1) (2022-05-28)
+
+
+### Bug Fixes
+
+* **lyra-avalon:** Optimize balance fetcher by removing calls to TheGraph ([#529](https://github.com/Zapper-fi/studio/issues/529)) ([b54d753](https://github.com/Zapper-fi/studio/commit/b54d75380a07fa705c58d358ee30f964d466458c))
+
+## [0.45.0](https://github.com/Zapper-fi/studio/compare/v0.44.6...v0.45.0) (2022-05-27)
+
+
+### Features
+
+* **lyra-avalon:** Add support for Lyra Avalon ([#526](https://github.com/Zapper-fi/studio/issues/526)) ([4de0d56](https://github.com/Zapper-fi/studio/commit/4de0d5682bb9f1d4d490513127254cd6b20e4b8c))
+
+
+### Bug Fixes
+
+* **lyra-avalon:** Wrong group type ([5948516](https://github.com/Zapper-fi/studio/commit/5948516879495a13ac4a5620548514fe0b630f87))
+
+### [0.44.6](https://github.com/Zapper-fi/studio/compare/v0.44.5...v0.44.6) (2022-05-26)
+
+
+### Bug Fixes
+
+* **impermax:** Fix wrong Network in fetcher ([#523](https://github.com/Zapper-fi/studio/issues/523)) ([6914778](https://github.com/Zapper-fi/studio/commit/6914778b4a2c9df7bbedecb092483bd53573696c))
+
+### [0.44.5](https://github.com/Zapper-fi/studio/compare/v0.44.4...v0.44.5) (2022-05-26)
+
+
+### Bug Fixes
+
+* **impermax:** Add missing module ([fb6d204](https://github.com/Zapper-fi/studio/commit/fb6d204daade39fbc109dd11d5595fdcd6e46d2d))
+
 ### [0.44.4](https://github.com/Zapper-fi/studio/compare/v0.44.3...v0.44.4) (2022-05-25)
 
 

@@ -20,7 +20,7 @@ const groupId = DFX_DEFINITION.groups.staking.id;
 const network = Network.ETHEREUM_MAINNET;
 
 type DfxCurveContractPositionDataProps = {
-  totalValueLocked: number;
+  liquidity: number;
 };
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
@@ -61,7 +61,7 @@ export class EthereumDfxStakingContractPositionFetcher implements PositionFetche
         const [balanceRaw] = await Promise.all([multicall.wrap(contract).balanceOf(address)]);
 
         // Denormalize the balance as the TVL
-        const totalValueLocked = Number(balanceRaw) / 10 ** stakedToken.decimals;
+        const liquidity = Number(balanceRaw) / 10 ** stakedToken.decimals;
 
         // Prepare display props
         const label = `Staked ${getLabelFromToken(stakedToken)}`;
@@ -76,7 +76,7 @@ export class EthereumDfxStakingContractPositionFetcher implements PositionFetche
           network,
           tokens,
           dataProps: {
-            totalValueLocked,
+            liquidity,
           },
           displayProps: {
             label,
