@@ -18,7 +18,7 @@
 </div>
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-25-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-26-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 ## Description
@@ -173,6 +173,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://aleonard.dev/"><img src="https://avatars.githubusercontent.com/u/14011462?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Andrew Leonard</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=leonardishere" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/mingji"><img src="https://avatars.githubusercontent.com/u/3455636?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Michael</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=mingji" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/liuyepiaoxiang"><img src="https://avatars.githubusercontent.com/u/13102393?v=4?s=64" width="64px;" alt=""/><br /><sub><b>liuyepiaoxiang</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=liuyepiaoxiang" title="Code">💻</a></td>
+    <td align="center"><a href="https://libkakashi.repl.co/"><img src="https://avatars.githubusercontent.com/u/46374098?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Apoorv Singal</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=apoorvsingal" title="Code">💻</a></td>
   </tr>
 </table>
 
