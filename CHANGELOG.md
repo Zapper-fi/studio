@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.48.0](https://github.com/Zapper-fi/studio/compare/v0.47.0...v0.48.0) (2022-05-30)
+
+
+### Features
+
+* **balances:** Eliminate requirement for balance fetcher ([#524](https://github.com/Zapper-fi/studio/issues/524)) ([2a69f87](https://github.com/Zapper-fi/studio/commit/2a69f879799f7aa59e961d7757877a02546e57b3))
+
 ## [0.47.0](https://github.com/Zapper-fi/studio/compare/v0.46.0...v0.47.0) (2022-05-30)
 
 
