@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+### [0.49.2](https://github.com/Zapper-fi/studio/compare/v0.49.1...v0.49.2) (2022-05-30)
+
+
+### Bug Fixes
+
+* **lido:** Fix rename issue ([83634b7](https://github.com/Zapper-fi/studio/commit/83634b7340398a2d15144e12b3227802806d3536))
+* **lido:** Stop double counting Lido ([0d78e22](https://github.com/Zapper-fi/studio/commit/0d78e2237604f40a92cee6f5f8e51b84264a6c81))
+
 ### [0.49.1](https://github.com/Zapper-fi/studio/compare/v0.49.0...v0.49.1) (2022-05-30)
 
 
