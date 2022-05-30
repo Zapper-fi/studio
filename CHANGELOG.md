@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.49.0](https://github.com/Zapper-fi/studio/compare/v0.48.0...v0.49.0) (2022-05-30)
+
+
+### Features
+
+* **maple:** Extract Maple to Studio and add xMPL ([#540](https://github.com/Zapper-fi/studio/issues/540)) ([7a63d6e](https://github.com/Zapper-fi/studio/commit/7a63d6ec6cb01e2907fd8cef0992906fda7d42f1))
+
 ## [0.48.0](https://github.com/Zapper-fi/studio/compare/v0.47.0...v0.48.0) (2022-05-30)
 
 
