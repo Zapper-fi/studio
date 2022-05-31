@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+### [0.50.1](https://github.com/Zapper-fi/studio/compare/v0.50.0...v0.50.1) (2022-05-31)
+
+
+### Bug Fixes
+
+* **synthetix:** Resolve circular dependency ([cbcd5b5](https://github.com/Zapper-fi/studio/commit/cbcd5b5d09b0527cb8c7f8c2111674aee05c4c05))
+
 ## [0.50.0](https://github.com/Zapper-fi/studio/compare/v0.49.2...v0.50.0) (2022-05-31)
 
 
