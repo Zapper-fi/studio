@@ -101,9 +101,7 @@ export class EthereumYieldProtocolLendTokenFetcher implements PositionFetcher<Ap
       const poolContract = this.yieldProtocolContractFactory.pool({ address: poolAddress, network });
       // estimated amount of base you would get for an abritrarily small fyToken value
       try {
-        const [estimate] = await Promise.all([
-          multicall.wrap(poolContract).sellFYTokenPreview(ethers.utils.parseUnits('1', decimals)),
-        ]);
+        const estimate = await multicall.wrap(poolContract).sellFYTokenPreview(ethers.utils.parseUnits('1', decimals));
         return +ethers.utils.formatUnits(estimate, decimals);
       } catch (error) {
         return 0;
