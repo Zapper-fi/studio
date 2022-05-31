@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.50.0](https://github.com/Zapper-fi/studio/compare/v0.49.2...v0.50.0) (2022-05-31)
+
+
+### Features
+
+* **synthetix:** Synthetix integration rewrite ([#544](https://github.com/Zapper-fi/studio/issues/544)) ([4953150](https://github.com/Zapper-fi/studio/commit/49531506ee9852ead3b34dcf3d7446976d1e9079))
+
+
+### Bug Fixes
+
+* **synthetix:** Fix Synthetix Mintr metadata in Optimism ([59afeac](https://github.com/Zapper-fi/studio/commit/59afeac196cea5857683077472e790b57d708f9b))
+
 ### [0.49.2](https://github.com/Zapper-fi/studio/compare/v0.49.1...v0.49.2) (2022-05-30)
 
 
