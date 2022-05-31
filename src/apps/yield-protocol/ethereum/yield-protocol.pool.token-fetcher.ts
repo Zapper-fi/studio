@@ -59,7 +59,7 @@ export class EthereumYieldProtocolPoolTokenFetcher implements PositionFetcher<Ap
         ]);
 
         const poolContract = this.yieldProtocolContractFactory.pool({ address: poolAddress, network });
-        const [maturity] = await Promise.all([multicall.wrap(poolContract).maturity()]);
+        const maturity = await multicall.wrap(poolContract).maturity();
 
         // get the corresponding base of the strategy
         const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
