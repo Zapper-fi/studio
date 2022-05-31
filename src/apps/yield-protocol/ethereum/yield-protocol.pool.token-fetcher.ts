@@ -97,6 +97,7 @@ export class EthereumYieldProtocolPoolTokenFetcher implements PositionFetcher<Ap
         return token;
       }),
     );
+
     return compact(tokens);
   }
 }
