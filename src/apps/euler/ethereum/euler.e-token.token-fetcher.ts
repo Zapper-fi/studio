@@ -4,6 +4,8 @@ import { compact } from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
+import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
+import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { EulerContractFactory } from '~apps/euler';
 import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
@@ -56,11 +58,6 @@ interface EulerMarketsResponse {
   };
 }
 
-enum Contracts {
-  GeneralView = '0xACC25c4d40651676FEEd43a3467F3169e3E68e42',
-  Euler = '0x27182842E098f60e3D576794A5bFFb0777E025d3',
-}
-
 @Register.TokenPositionFetcher({ appId, groupId, network })
 export class EthereumEulerETokenTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
@@ -87,13 +84,15 @@ export class EthereumEulerETokenTokenFetcher implements PositionFetcher<AppToken
 
         const ratio = Number(totalSupply.toString()) / Number(market.totalBalances);
 
+        const pricePerShare = underlyingToken.price * ratio;
+
         return {
           address: market.eTokenAddress,
           symbol: `E${market.symbol}`,
           name: `Euler E token ${market.name}`,
           type: ContractType.APP_TOKEN as const,
           supply: Number(market.totalSupply) / 10 ** Number(market.decimals),
-          pricePerShare: underlyingToken.price * ratio,
+          pricePerShare,
           price: underlyingToken.price,
           network,
           decimals: 18,
@@ -107,7 +106,11 @@ export class EthereumEulerETokenTokenFetcher implements PositionFetcher<AppToken
             totalSupply: totalSupply.toString(),
             totalBalances: market.totalBalances,
           },
-          displayProps: { label: market.name, images: [''] },
+          displayProps: {
+            label: `Euler E token ${market.name}`,
+            secondaryLabel: buildDollarDisplayItem(pricePerShare),
+            images: getImagesFromToken(underlyingToken),
+          },
           appId,
           groupId,
         };

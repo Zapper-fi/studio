@@ -4,6 +4,8 @@ import { compact } from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
+import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
+import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { EulerContractFactory } from '~apps/euler';
 import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
@@ -95,7 +97,11 @@ export class EthereumEulerDTokenTokenFetcher implements PositionFetcher<AppToken
             borrowAPY: Number(market.borrowAPY) / 10 ** 18,
             supplyAPY: Number(market.borrowAPY) / 10 ** 18,
           },
-          displayProps: { label: market.name, images: [''] },
+          displayProps: {
+            label: `Euler D token ${market.name}`,
+            secondaryLabel: buildDollarDisplayItem(underlyingToken.price),
+            images: getImagesFromToken(underlyingToken),
+          },
           appId,
           groupId,
         };
