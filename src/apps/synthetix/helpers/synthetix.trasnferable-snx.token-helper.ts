@@ -32,7 +32,7 @@ export class SynthetixTrasnferrableSnxTokenHelper {
     const snxAppToken: AppTokenPosition = {
       type: ContractType.APP_TOKEN,
       appId: SYNTHETIX_DEFINITION.id,
-      groupId: SYNTHETIX_DEFINITION.groups.transferrableSnx.id,
+      groupId: SYNTHETIX_DEFINITION.groups.transferableSnx.id,
       network: network,
       address: snxToken.address,
       decimals: snxToken.decimals,

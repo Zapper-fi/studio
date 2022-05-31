@@ -5,15 +5,15 @@ import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
-import { SynthetixTrasnferrableSnxTokenHelper } from '../helpers/synthetix.trasnferrable-snx.token-helper';
+import { SynthetixTrasnferrableSnxTokenHelper } from '../helpers/synthetix.trasnferable-snx.token-helper';
 import { SYNTHETIX_DEFINITION } from '../synthetix.definition';
 
 @Register.TokenPositionFetcher({
   appId: SYNTHETIX_DEFINITION.id,
-  groupId: SYNTHETIX_DEFINITION.groups.transferrableSnx.id,
+  groupId: SYNTHETIX_DEFINITION.groups.transferableSnx.id,
   network: Network.OPTIMISM_MAINNET,
 })
-export class OptimismSynthetixTransferrableSnxTokenFetcher implements PositionFetcher<AppTokenPosition> {
+export class OptimismSynthetixTransferableSnxTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(SynthetixTrasnferrableSnxTokenHelper) private readonly tokenHelper: SynthetixTrasnferrableSnxTokenHelper,
   ) {}

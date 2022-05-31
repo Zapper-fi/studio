@@ -8,10 +8,10 @@ export const SYNTHETIX_DEFINITION = appDefinition({
   name: 'Synthetix',
   description: `A new financial primitive enabling the creation of synthetic assets, offering unique derivatives and exposure to real-world assets on the blockchain.`,
   groups: {
-    transferrableSnx: {
-      id: 'transferrable-snx',
+    transferableSnx: {
+      id: 'transferable-snx',
       type: GroupType.TOKEN,
-      label: 'Synths',
+      label: 'Transferable SNX',
     },
 
     synth: {

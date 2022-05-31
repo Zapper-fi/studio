@@ -7,7 +7,7 @@ import { Network } from '~types/network.interface';
 import { SynthetixContractFactory } from '../contracts';
 import { SYNTHETIX_DEFINITION } from '../synthetix.definition';
 
-export type SynthetixTransferrableSnxTokenBalanceHelperParams = {
+export type SynthetixTransferableSnxTokenBalanceHelperParams = {
   address: string;
   network: Network;
 };
@@ -19,12 +19,12 @@ export class SynthetixTrasnferrableSnxTokenBalanceHelper {
     @Inject(SynthetixContractFactory) private readonly contractFactory: SynthetixContractFactory,
   ) {}
 
-  async getBalances({ address, network }: SynthetixTransferrableSnxTokenBalanceHelperParams) {
+  async getBalances({ address, network }: SynthetixTransferableSnxTokenBalanceHelperParams) {
     const multicall = this.appToolkit.getMulticall(network);
 
     const appTokens = await this.appToolkit.getAppTokenPositions({
       appId: SYNTHETIX_DEFINITION.id,
-      groupIds: [SYNTHETIX_DEFINITION.groups.transferrableSnx.id],
+      groupIds: [SYNTHETIX_DEFINITION.groups.transferableSnx.id],
       network,
     });
 
