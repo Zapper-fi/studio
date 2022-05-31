@@ -11,7 +11,7 @@ import { SynthetixMintrMetaHelper } from '../helpers/synthetix.mintr.meta-helper
 import { SYNTHETIX_DEFINITION } from '../synthetix.definition';
 
 @Register.BalancePresenter({ appId: SYNTHETIX_DEFINITION.id, network: Network.ETHEREUM_MAINNET })
-export class EthereumRariFuseBalancePresenter implements BalancePresenter {
+export class EthereumSynthetixBalancePresenter implements BalancePresenter {
   constructor(@Inject(SynthetixMintrMetaHelper) private readonly synthetixMintrMetaHelper: SynthetixMintrMetaHelper) {}
 
   async present(address: string, balances: PositionBalance<CompoundSupplyTokenDataProps>[]) {

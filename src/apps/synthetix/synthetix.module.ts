@@ -2,6 +2,7 @@ import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { SynthetixContractFactory } from './contracts';
+import { EthereumSynthetixBalancePresenter } from './ethereum/synthetix.balance-presenter';
 import { EthereumSynthetixFarmContractPositionBalanceFetcher } from './ethereum/synthetix.farm.contract-position-balance-fetcher';
 import { EthereumSynthetixFarmContractPositionFetcher } from './ethereum/synthetix.farm.contract-position-fetcher';
 import { EthereumSynthetixMintrContractPositionBalanceFetcher } from './ethereum/synthetix.mintr.contract-position-balance-fetcher';
@@ -22,6 +23,7 @@ import { SynthetixSynthTokenBalanceHelper } from './helpers/synthetix.synth.toke
 import { SynthetixSynthTokenHelper } from './helpers/synthetix.synth.token-helper';
 import { SynthetixTrasnferrableSnxTokenBalanceHelper } from './helpers/synthetix.transferable-snx.token-balance-helper';
 import { SynthetixTrasnferrableSnxTokenHelper } from './helpers/synthetix.trasnferable-snx.token-helper';
+import { OptimismSynthetixBalancePresenter } from './optimism/synthetix.balance-presenter';
 import { OptimismSynthetixMintrContractPositionBalanceFetcher } from './optimism/synthetix.mintr.contract-position-balance-fetcher';
 import { OptimismSynthetixMintrContractPositionFetcher } from './optimism/synthetix.mintr.contract-position-fetcher';
 import { OptimismSynthetixSynthTokenBalanceFetcher } from './optimism/synthetix.synth.token-balance-fetcher';
@@ -56,6 +58,7 @@ import { SynthetixAppDefinition, SYNTHETIX_DEFINITION } from './synthetix.defini
     EthereumSynthetixSynthTokenBalanceFetcher,
     EthereumSynthetixTransferableSnxTokenFetcher,
     EthereumSynthetixTransferableSnxBalanceFetcher,
+    EthereumSynthetixBalancePresenter,
     EthereumSynthetixTvlFetcher,
     // Optimism
     OptimismSynthetixMintrContractPositionFetcher,
@@ -64,6 +67,7 @@ import { SynthetixAppDefinition, SYNTHETIX_DEFINITION } from './synthetix.defini
     OptimismSynthetixSynthTokenBalanceFetcher,
     OptimismSynthetixTransferableSnxTokenFetcher,
     OptimismSynthetixTransferableSnxBalanceFetcher,
+    OptimismSynthetixBalancePresenter,
     OptimismSynthetixTvlFetcher,
   ],
   exports: [

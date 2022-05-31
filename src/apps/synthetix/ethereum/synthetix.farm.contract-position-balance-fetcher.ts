@@ -12,16 +12,14 @@ import { SYNTHETIX_DEFINITION } from '../synthetix.definition';
 @Register.ContractPositionBalanceFetcher({
   appId: SYNTHETIX_DEFINITION.id,
   groupId: SYNTHETIX_DEFINITION.groups.farm.id,
-  network: Network.OPTIMISM_MAINNET,
+  network: Network.ETHEREUM_MAINNET,
 })
 export class EthereumSynthetixFarmContractPositionBalanceFetcher
   implements PositionBalanceFetcher<ContractPositionBalance>
 {
   constructor(
-    @Inject(APP_TOOLKIT)
-    private readonly appToolkit: IAppToolkit,
-    @Inject(SynthetixContractFactory)
-    private readonly synthetixContractFactory: SynthetixContractFactory,
+    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
+    @Inject(SynthetixContractFactory) private readonly synthetixContractFactory: SynthetixContractFactory,
   ) {}
 
   async getBalances(address: string) {
@@ -29,7 +27,7 @@ export class EthereumSynthetixFarmContractPositionBalanceFetcher
       address,
       appId: SYNTHETIX_DEFINITION.id,
       groupId: SYNTHETIX_DEFINITION.groups.farm.id,
-      network: Network.OPTIMISM_MAINNET,
+      network: Network.ETHEREUM_MAINNET,
       resolveContract: ({ address, network }) => this.synthetixContractFactory.synthetixRewards({ address, network }),
       resolveStakedTokenBalance: ({ contract, address, multicall }) => multicall.wrap(contract).balanceOf(address),
       resolveRewardTokenBalances: ({ contract, address, multicall }) => multicall.wrap(contract).earned(address),
