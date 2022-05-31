@@ -14,7 +14,6 @@ import { DisplayProps } from '~position/display.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { Network } from '~types/network.interface';
 
-import { YieldProtocolContractFactory } from '../contracts';
 import { YIELD_PROTOCOL_DEFINITION } from '../yield-protocol.definition';
 
 import { formatMaturity, yieldV2MainnetSubgraph } from './yield-protocol.lend.token-fetcher';
@@ -43,7 +42,7 @@ type YieldVaultRes = {
   };
 };
 
-export type YieldVaultContractPositionDataProps = {
+type YieldVaultContractPositionDataProps = {
   collateralizationRatio: string;
 };
 
@@ -72,10 +71,7 @@ const vaultsQuery = gql`
 
 @Register.BalanceFetcher(YIELD_PROTOCOL_DEFINITION.id, network)
 export class EthereumYieldProtocolBalanceFetcher implements BalanceFetcher {
-  constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(YieldProtocolContractFactory) private readonly yieldProtocolContractFactory: YieldProtocolContractFactory,
-  ) {}
+  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
   private async getBorrowBalances(address: string) {
     const {
@@ -149,7 +145,7 @@ export class EthereumYieldProtocolBalanceFetcher implements BalanceFetcher {
     return compact(positions);
   }
 
-  async getLendBalances(address: string) {
+  private async getLendBalances(address: string) {
     return this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
       address,
       appId: YIELD_PROTOCOL_DEFINITION.id,
@@ -158,7 +154,7 @@ export class EthereumYieldProtocolBalanceFetcher implements BalanceFetcher {
     });
   }
 
-  async getPoolBalances(address: string) {
+  private async getPoolBalances(address: string) {
     return this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
       address,
       appId: YIELD_PROTOCOL_DEFINITION.id,
