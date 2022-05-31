@@ -64,6 +64,7 @@ export class EthereumEulerPTokenTokenFetcher implements PositionFetcher<AppToken
   async getPositions() {
     const endpoint = 'https://api.thegraph.com/subgraphs/name/euler-xyz/euler-mainnet';
     const data = await this.appToolkit.helpers.theGraphHelper.request<EulerMarketsResponse>({ endpoint, query });
+    const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
 
     const tokens = await Promise.all(
       data.eulerMarketStore.markets.map(async market => {
@@ -73,28 +74,21 @@ export class EthereumEulerPTokenTokenFetcher implements PositionFetcher<AppToken
         });
 
         const totalSupply = await pTokenContract.totalSupply();
-        if (totalSupply.isZero()) return null;
+        const underlyingToken = baseTokens.find(token => token?.address === market.id.toLowerCase());
+
+        if (totalSupply.isZero() || !underlyingToken) return null;
+
         return {
           address: market.pTokenAddress,
           symbol: `P${market.symbol}`,
           name: `Euler P token ${market.name}`,
           type: ContractType.APP_TOKEN as const,
           supply: Number(market.totalSupply) / 10 ** Number(market.decimals),
-          pricePerShare: Number(market.twap) / 10 ** 18,
-          price: Number(market.twap) / 10 ** 18,
+          pricePerShare: underlyingToken.price,
+          price: underlyingToken.price,
           network,
           decimals: 18,
-          tokens: [
-            {
-              type: ContractType.BASE_TOKEN as const,
-              address: market.id,
-              symbol: market.symbol,
-              name: market.name,
-              price: Number(market.twap) / 10 ** 18,
-              network,
-              decimals: Number(market.decimals),
-            },
-          ],
+          tokens: [underlyingToken],
           dataProps: {
             name: market.name,
             interestRate: Number(market.interestRate) / 10 ** 18,

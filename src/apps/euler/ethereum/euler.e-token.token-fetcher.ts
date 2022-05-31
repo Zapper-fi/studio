@@ -71,16 +71,19 @@ export class EthereumEulerETokenTokenFetcher implements PositionFetcher<AppToken
   async getPositions() {
     const endpoint = 'https://api.thegraph.com/subgraphs/name/euler-xyz/euler-mainnet';
     const data = await this.appToolkit.helpers.theGraphHelper.request<EulerMarketsResponse>({ endpoint, query });
+    const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
 
     const tokens = await Promise.all(
-      data.eulerMarketStore.markets.map(async (market, i) => {
+      data.eulerMarketStore.markets.map(async market => {
         const eTokenContract = this.eulerContractFactory.eulerEtokenContract({
           address: market.eTokenAddress,
           network,
         });
 
         const totalSupply = await eTokenContract.totalSupply();
-        if (totalSupply.isZero()) return null;
+        const underlyingToken = baseTokens.find(token => token?.address === market.id.toLowerCase());
+
+        if (totalSupply.isZero() || !underlyingToken) return null;
 
         const ratio = Number(totalSupply.toString()) / Number(market.totalBalances);
 
@@ -90,21 +93,11 @@ export class EthereumEulerETokenTokenFetcher implements PositionFetcher<AppToken
           name: `Euler E token ${market.name}`,
           type: ContractType.APP_TOKEN as const,
           supply: Number(market.totalSupply) / 10 ** Number(market.decimals),
-          pricePerShare: (Number(market.twap) / 10 ** 18) * ratio,
-          price: Number(market.twap) / 10 ** 18,
+          pricePerShare: underlyingToken.price * ratio,
+          price: underlyingToken.price,
           network,
           decimals: 18,
-          tokens: [
-            {
-              type: ContractType.BASE_TOKEN as const,
-              address: market.id,
-              symbol: market.symbol,
-              name: market.name,
-              price: Number(market.twap) / 10 ** 18,
-              network,
-              decimals: Number(market.decimals),
-            },
-          ],
+          tokens: [underlyingToken],
           dataProps: {
             name: `Euler E token ${market.name}`,
             underlyingAddress: market.id,
