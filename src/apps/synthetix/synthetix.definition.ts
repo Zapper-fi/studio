@@ -23,13 +23,13 @@ export const SYNTHETIX_DEFINITION = appDefinition({
     farm: {
       id: 'farm',
       type: GroupType.POSITION,
-      label: 'Mintr',
+      label: 'Staking',
     },
 
     mintr: {
       id: 'mintr',
       type: GroupType.POSITION,
-      label: 'Staking',
+      label: 'Mintr',
     },
   },
   url: 'https://synthetix.io/',
