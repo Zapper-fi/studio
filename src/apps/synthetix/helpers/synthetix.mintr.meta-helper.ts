@@ -13,6 +13,11 @@ import { Network } from '~types';
 import { SynthetixContractFactory } from '../contracts';
 import { SYNTHETIX_DEFINITION } from '../synthetix.definition';
 
+export type SynthetixMintrMetaHelperParams = {
+  address: string;
+  network: Network;
+};
+
 @Injectable()
 export class SynthetixMintrMetaHelper {
   constructor(
@@ -20,12 +25,12 @@ export class SynthetixMintrMetaHelper {
     @Inject(SynthetixContractFactory) private readonly contractFactory: SynthetixContractFactory,
   ) {}
 
-  async getMeta(address: string) {
-    const multicall = this.appToolkit.getMulticall(Network.ETHEREUM_MAINNET);
+  async getMeta({ address, network }: SynthetixMintrMetaHelperParams) {
+    const multicall = this.appToolkit.getMulticall(network);
     const [mintrPosition] = await this.appToolkit.getAppContractPositions({
       appId: SYNTHETIX_DEFINITION.id,
       groupIds: [SYNTHETIX_DEFINITION.groups.mintr.id],
-      network: Network.ETHEREUM_MAINNET,
+      network,
     });
 
     if (!mintrPosition) return [];

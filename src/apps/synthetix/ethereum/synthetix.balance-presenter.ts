@@ -22,7 +22,7 @@ export class EthereumSynthetixBalancePresenter implements BalancePresenter {
 
         // For the Mintr group, add additional metadata
         if (group.id === SYNTHETIX_DEFINITION.groups.mintr.id) {
-          const meta = await this.synthetixMintrMetaHelper.getMeta(address);
+          const meta = await this.synthetixMintrMetaHelper.getMeta({ address, network: Network.ETHEREUM_MAINNET });
           return { label: group.label, assets: groupBalances, meta };
         }
 
