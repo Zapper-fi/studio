@@ -2,6 +2,8 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
+import { BALANCER_V1_DEFINITION } from '~apps/balancer-v1';
+import { CURVE_DEFINITION } from '~apps/curve';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
@@ -67,8 +69,16 @@ export class EthereumSynthetixFarmContractPositionFetcher implements PositionFet
       appId: SYNTHETIX_DEFINITION.id,
       groupId: SYNTHETIX_DEFINITION.groups.farm.id,
       dependencies: [
-        { appId: 'balancer-v1', groupIds: ['pool'], network: Network.ETHEREUM_MAINNET },
-        { appId: 'curve', groupIds: ['pool'], network: Network.ETHEREUM_MAINNET },
+        {
+          appId: BALANCER_V1_DEFINITION.id,
+          groupIds: [BALANCER_V1_DEFINITION.groups.pool.id],
+          network: Network.ETHEREUM_MAINNET,
+        },
+        {
+          appId: CURVE_DEFINITION.id,
+          groupIds: [CURVE_DEFINITION.groups.pool.id],
+          network: Network.ETHEREUM_MAINNET,
+        },
       ],
       resolveFarmDefinitions: async () => FARMS,
       resolveFarmContract: ({ network, address }) =>

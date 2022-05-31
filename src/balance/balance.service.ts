@@ -89,7 +89,7 @@ export class BalanceService {
           this.balancePresenterRegistry.get(appId, network) ??
           this.defaultBalancePresenterFactory.build({ appId, network });
         const preprocessed = [...tokenBalances.flat(), ...contractPositionBalances.flat()];
-        const balances = await presenter.present(preprocessed);
+        const balances = await presenter.present(address, preprocessed);
         return [address, balances];
       }),
     );

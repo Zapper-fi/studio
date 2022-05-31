@@ -18,7 +18,7 @@ export class EthereumRariFuseBalancePresenter implements BalancePresenter {
     private readonly compoundLendingMetaHelper: CompoundLendingMetaHelper,
   ) {}
 
-  async present(balances: PositionBalance<CompoundSupplyTokenDataProps>[]) {
+  async present(_address: string, balances: PositionBalance<CompoundSupplyTokenDataProps>[]) {
     // Group supply and borrow balances by their market
     const balancesByMarket = groupBy(balances, v => v.dataProps.marketName);
 

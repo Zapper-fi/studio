@@ -21,7 +21,7 @@ export class DefaultBalancePresenterFactory {
     const klass = class DefaultBalancePresenter implements BalancePresenter {
       constructor(readonly appService: AppService) {}
 
-      async present(balances: PositionBalance[]) {
+      async present(_address: string, balances: PositionBalance[]) {
         // Build labelled groups by the labels defined in the app definition
         const app = this.appService.getApp(appId);
         const products = Object.values(app.groups).map(group => {

@@ -1,4 +1,4 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { parseBytes32String } from 'ethers/lib/utils';
 import { padEnd } from 'lodash';
 import Web3 from 'web3';
@@ -18,6 +18,7 @@ export type SynthetixSynthTokenHelperParams = {
   resolverAddress: string;
 };
 
+@Injectable()
 export class SynthetixSynthTokenHelper {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
