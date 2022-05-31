@@ -28,9 +28,11 @@ type YieldVaultRes = {
       debtAmount: number;
       collateralAmount: number;
       series: {
-        maturity: number;
         baseAsset: {
           id: string;
+        };
+        fyToken: {
+          maturity: number;
         };
       };
       collateral: {
@@ -54,9 +56,11 @@ const vaultsQuery = gql`
         debtAmount
         collateralAmount
         series {
-          maturity
           baseAsset {
             id
+          }
+          fyToken {
+            maturity
           }
         }
         collateral {
@@ -88,8 +92,8 @@ export class EthereumYieldProtocolBalanceFetcher implements BalanceFetcher {
           debtAmount,
           collateralAmount,
           series: {
-            maturity,
             baseAsset: { id: artAddress },
+            fyToken: { maturity },
           },
           collateral: {
             asset: { id: ilkAddress },
