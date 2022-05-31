@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+### [0.50.2](https://github.com/Zapper-fi/studio/compare/v0.50.1...v0.50.2) (2022-05-31)
+
+
+### Bug Fixes
+
+* **olympus:** Fix wrong groups on Ethereum ([#548](https://github.com/Zapper-fi/studio/issues/548)) ([1cd1cb0](https://github.com/Zapper-fi/studio/commit/1cd1cb06c5008ac85f35eee8b75c9eacf118ca0e))
+* **rari-fuse:** Optimize balances to use Comptroller to pre-emptively determine participated markets ([#550](https://github.com/Zapper-fi/studio/issues/550)) ([46d8593](https://github.com/Zapper-fi/studio/commit/46d8593a70d72ea36429edef771369f1edd30a67))
+
 ### [0.50.1](https://github.com/Zapper-fi/studio/compare/v0.50.0...v0.50.1) (2022-05-31)
 
 
