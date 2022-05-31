@@ -95,13 +95,18 @@ export class EthereumYieldProtocolLendTokenFetcher implements PositionFetcher<Ap
     });
   }
 
-  private async sellFYTokenPreview(matured: boolean, poolAddress: string, decimals: number) {
+  private async sellFYTokenPreview(matured: boolean, poolAddress: string, baseSymbol: string, decimals: number) {
     const multicall = this.appToolkit.getMulticall(network);
     if (!matured) {
       const poolContract = this.yieldProtocolContractFactory.pool({ address: poolAddress, network });
       // estimated amount of base you would get for an abritrarily small fyToken value
       try {
-        const estimate = await multicall.wrap(poolContract).sellFYTokenPreview(ethers.utils.parseUnits('1', decimals));
+        const estimate = await multicall.wrap(poolContract).sellFYTokenPreview(
+          ethers.utils.parseUnits(
+            baseSymbol === 'WETH' ? '.01' : '1', // use smaller unit for weth
+            decimals,
+          ),
+        );
         return +ethers.utils.formatUnits(estimate, decimals);
       } catch (error) {
         return 0;
@@ -136,7 +141,7 @@ export class EthereumYieldProtocolLendTokenFetcher implements PositionFetcher<Ap
 
         // if there is an associated pool, we estimate the value of a unit of fyToken to base
         if (pool?.id) {
-          const estimate = await this.sellFYTokenPreview(matured, pool?.id, decimals);
+          const estimate = await this.sellFYTokenPreview(matured, pool?.id, baseTokens.symbol, decimals);
           pricePerShare = estimate;
           price = pricePerShare * underlyingToken.price;
         }
