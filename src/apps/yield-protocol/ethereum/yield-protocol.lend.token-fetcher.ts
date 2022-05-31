@@ -88,14 +88,14 @@ export class EthereumYieldProtocolLendTokenFetcher implements PositionFetcher<Ap
     @Inject(YieldProtocolContractFactory) private readonly yieldProtocolContractFactory: YieldProtocolContractFactory,
   ) {}
 
-  async getYieldDetails() {
+  private async getYieldDetails() {
     return await this.appToolkit.helpers.theGraphHelper.request<YieldRes>({
       endpoint: yieldV2MainnetSubgraph,
       query,
     });
   }
 
-  async sellFYTokenPreview(matured: boolean, poolAddress: string, decimals: number) {
+  private async sellFYTokenPreview(matured: boolean, poolAddress: string, decimals: number) {
     const multicall = this.appToolkit.getMulticall(network);
     if (!matured) {
       const poolContract = this.yieldProtocolContractFactory.pool({ address: poolAddress, network });
