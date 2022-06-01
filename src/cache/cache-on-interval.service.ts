@@ -1,5 +1,6 @@
 import { Inject, Injectable, Logger, OnModuleDestroy, OnModuleInit } from '@nestjs/common';
 import { DiscoveryService, MetadataScanner, Reflector } from '@nestjs/core';
+import chalk from 'chalk';
 import Cache from 'file-system-cache';
 import { isUndefined } from 'lodash';
 
@@ -98,7 +99,8 @@ export class CacheOnIntervalService implements OnModuleInit, OnModuleDestroy {
         logger.log(`Cache ready for for ${instance.constructor.name}#${methodName}`);
       })
       .catch(e => {
-        logger.error(`@CacheOnInterval error init for ${instance.constructor.name}#${methodName}`, e);
+        logger.error(`@CacheOnInterval error init for ${instance.constructor.name}#${methodName}: ${e.message}`);
+        logger.error(chalk.gray(e.stack));
       });
 
     // Save the interval
@@ -107,7 +109,8 @@ export class CacheOnIntervalService implements OnModuleInit, OnModuleDestroy {
         const liveData = await methodRef.apply(instance);
         await cacheManager.set(cacheKey, liveData);
       } catch (e) {
-        logger.error(`@CacheOnInterval error for ${instance.constructor.name}#${methodName}`, e);
+        logger.error(`@CacheOnInterval error for ${instance.constructor.name}#${methodName}: ${e.message}`);
+        logger.error(chalk.gray(e.stack));
       }
     }, cacheTimeout);
     this.intervals.push(interval);
