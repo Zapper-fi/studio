@@ -2,6 +2,7 @@ import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { ArbitrumYieldProtocolLendTokenFetcher } from './arbitrum/yield-protocol.lend.token-fetcher';
+import { ArbitrumYieldProtocolPoolTokenFetcher } from './arbitrum/yield-protocol.pool.token-fetcher';
 import { YieldProtocolContractFactory } from './contracts';
 import { EthereumYieldProtocolBalanceFetcher } from './ethereum/yield-protocol.balance-fetcher';
 import { EthereumYieldProtocolLendTokenFetcher } from './ethereum/yield-protocol.lend.token-fetcher';
@@ -12,6 +13,7 @@ import { YieldProtocolAppDefinition, YIELD_PROTOCOL_DEFINITION } from './yield-p
   appId: YIELD_PROTOCOL_DEFINITION.id,
   providers: [
     ArbitrumYieldProtocolLendTokenFetcher,
+    ArbitrumYieldProtocolPoolTokenFetcher,
     EthereumYieldProtocolBalanceFetcher,
     EthereumYieldProtocolLendTokenFetcher,
     EthereumYieldProtocolPoolTokenFetcher,
