@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+### [0.52.1](https://github.com/Zapper-fi/studio/compare/v0.52.0...v0.52.1) (2022-06-01)
+
+
+### Bug Fixes
+
+* **euler:** Filter out zero addresses ([7aac735](https://github.com/Zapper-fi/studio/commit/7aac7350befe5da1f60da387d9e4b30325b5b3ab))
+
 ## [0.52.0](https://github.com/Zapper-fi/studio/compare/v0.51.1...v0.52.0) (2022-06-01)
 
 
