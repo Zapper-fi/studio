@@ -14,12 +14,14 @@ import { DisplayProps } from '~position/display.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { Network } from '~types/network.interface';
 
+import { YieldProtocolContractFactory } from '../contracts';
 import { YIELD_PROTOCOL_DEFINITION } from '../yield-protocol.definition';
 
 import { formatMaturity, yieldV2MainnetSubgraph } from './yield-protocol.lend.token-fetcher';
 
 const network = Network.ETHEREUM_MAINNET;
 const appId = YIELD_PROTOCOL_DEFINITION.id;
+const CAULDRON = '0xc88191F8cb8e6D4a668B047c1C8503432c3Ca867';
 
 type YieldVaultRes = {
   vaultOwner: {
@@ -30,6 +32,7 @@ type YieldVaultRes = {
       series: {
         baseAsset: {
           id: string;
+          assetId: string;
         };
         fyToken: {
           maturity: number;
@@ -38,6 +41,7 @@ type YieldVaultRes = {
       collateral: {
         asset: {
           id: string;
+          assetId: string;
         };
       };
     }[];
@@ -46,6 +50,8 @@ type YieldVaultRes = {
 
 type YieldVaultContractPositionDataProps = {
   collateralizationRatio: string;
+  minCollateralizationRatio: string;
+  liquidationPrice: string;
 };
 
 const vaultsQuery = gql`
@@ -58,6 +64,7 @@ const vaultsQuery = gql`
         series {
           baseAsset {
             id
+            assetId
           }
           fyToken {
             maturity
@@ -66,6 +73,7 @@ const vaultsQuery = gql`
         collateral {
           asset {
             id
+            assetId
           }
         }
       }
@@ -75,7 +83,10 @@ const vaultsQuery = gql`
 
 @Register.BalanceFetcher(YIELD_PROTOCOL_DEFINITION.id, network)
 export class EthereumYieldProtocolBalanceFetcher implements BalanceFetcher {
-  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
+  constructor(
+    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
+    @Inject(YieldProtocolContractFactory) private readonly yieldProtocolContractFactory: YieldProtocolContractFactory,
+  ) {}
 
   private async getBorrowBalances(address: string) {
     const {
@@ -92,11 +103,11 @@ export class EthereumYieldProtocolBalanceFetcher implements BalanceFetcher {
           debtAmount,
           collateralAmount,
           series: {
-            baseAsset: { id: artAddress },
+            baseAsset: { id: artAddress, assetId: baseId },
             fyToken: { maturity },
           },
           collateral: {
-            asset: { id: ilkAddress },
+            asset: { id: ilkAddress, assetId: ilkId },
           },
         } = vault;
 
@@ -119,6 +130,17 @@ export class EthereumYieldProtocolBalanceFetcher implements BalanceFetcher {
           .toFixed(2)
           .toString()}%`;
 
+        const multicall = this.appToolkit.getMulticall(network);
+        const cauldron = this.yieldProtocolContractFactory.cauldron({ address: CAULDRON, network });
+        const [{ dec: cauldronPairDecimals }, { ratio }] = await Promise.all([
+          multicall.wrap(cauldron).debt(baseId, ilkId),
+          multicall.wrap(cauldron).spotOracles(baseId, ilkId),
+        ]);
+        const minCollatRatio = ratio / 10 ** cauldronPairDecimals;
+        const minCollateralizationRatio = `${(minCollatRatio * 100).toString()}%`;
+        const liqPrice = (debtAmount * minCollatRatio) / collateralAmount;
+        const liquidationPrice = `1 ${ilk.symbol}: ${liqPrice.toFixed(2)} ${art.symbol}`;
+
         // display props
         const displayProps: DisplayProps = {
           label: `Yield Vault`,
@@ -138,6 +160,8 @@ export class EthereumYieldProtocolBalanceFetcher implements BalanceFetcher {
 
           dataProps: {
             collateralizationRatio,
+            minCollateralizationRatio,
+            liquidationPrice,
           },
 
           displayProps,
