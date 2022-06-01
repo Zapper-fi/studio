@@ -1,29 +1,45 @@
 import { Inject } from '@nestjs/common';
-import { CURVE_DEFINITION } from '@zapper-fi/studio/apps/curve';
-import { Network } from '@zapper-fi/types/networks';
 import Axios from 'axios';
 import { values } from 'lodash';
 
-import { SUSHISWAP_DEFINITION } from '~apps-v3/sushiswap/sushiswap.definition';
-import { SWAPR_DEFINITION } from '~apps-v3/swapr/swapr.definition';
+import { Register } from '~app-toolkit/decorators';
+import { CURVE_DEFINITION } from '~apps/curve/curve.definition';
 import { CacheOnInterval } from '~cache/cache-on-interval.decorator';
-import { RegisterPositionFetcher } from '~position/position-fetcher.decorator';
-import { AppToken, ContractType, PositionFetcher } from '~position/position-fetcher.interface';
+import { PositionFetcher } from '~position/position-fetcher.interface';
+import { AppTokenPosition } from '~position/position.interface';
+import { Network } from '~types/network.interface';
 
 import { BADGER_DEFINITION } from '../badger.definition';
-import { BadgerApiTokensResponse } from '../ethereum/badger.vault.token-fetcher';
 import { BadgerVaultTokenHelper } from '../helpers/badger.vault.token-helper';
 
 const appId = BADGER_DEFINITION.id;
 const groupId = BADGER_DEFINITION.groups.vault.id;
 const network = Network.ARBITRUM_MAINNET;
 
-@RegisterPositionFetcher({ appId, groupId, network, type: ContractType.APP_TOKEN, options: { includeInTvl: true } })
-export class ArbitrumBadgerVaultTokenFetcher implements PositionFetcher<AppToken> {
+export type BadgerApiTokensResponseEntry = {
+  address: string;
+  decimals: number;
+  name: string;
+  symbol: string;
+  type: string;
+  vaultToken: {
+    address: string;
+    network: string;
+  };
+};
+
+export type BadgerApiTokensResponse = Record<string, BadgerApiTokensResponseEntry>;
+
+@Register.TokenPositionFetcher({
+  appId,
+  groupId,
+  network,
+  options: { includeInTvl: true },
+})
+export class ArbitrumBadgerVaultTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(@Inject(BadgerVaultTokenHelper) private readonly badgerVaultTokenHelper: BadgerVaultTokenHelper) {}
 
   @CacheOnInterval({
-    instance: 'business',
     key: `apps-v3:${network}:${appId}:${groupId}:definitions`,
     timeout: 15 * 60 * 1000,
   })
@@ -42,21 +58,9 @@ export class ArbitrumBadgerVaultTokenFetcher implements PositionFetcher<AppToken
       network,
       definitions: vaultDefinitions,
       dependencies: [
-        {
-          appId: SUSHISWAP_DEFINITION.id,
-          groupIds: [SUSHISWAP_DEFINITION.groups.pool.id],
-          network,
-        },
-        {
-          appId: CURVE_DEFINITION.id,
-          groupIds: [CURVE_DEFINITION.groups.pool.id],
-          network,
-        },
-        {
-          appId: SWAPR_DEFINITION.id,
-          groupIds: [SWAPR_DEFINITION.groups.pool.id],
-          network,
-        },
+        { appId: CURVE_DEFINITION.id, groupIds: [CURVE_DEFINITION.groups.pool.id], network },
+        { appId: 'sushiswap', groupIds: ['pool'], network },
+        { appId: 'swapr', groupIds: ['pool'], network },
       ],
     });
   }
