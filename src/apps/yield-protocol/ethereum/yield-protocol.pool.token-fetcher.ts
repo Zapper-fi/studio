@@ -38,11 +38,6 @@ export class EthereumYieldProtocolPoolTokenFetcher implements PositionFetcher<Ap
     @Inject(YieldProtocolContractFactory) private readonly yieldProtocolContractFactory: YieldProtocolContractFactory,
   ) {}
 
-  // estimate the value of a strategy token to base
-  async basePriceEst() {
-    return 1;
-  }
-
   async getPositions() {
     const multicall = this.appToolkit.getMulticall(network);
 
@@ -50,7 +45,8 @@ export class EthereumYieldProtocolPoolTokenFetcher implements PositionFetcher<Ap
       YIELD_STRATEGIES.map(async address => {
         const strategyContract = this.yieldProtocolContractFactory.strategy({ address, network });
 
-        const [decimals, symbol, baseAddress, supply, poolAddress] = await Promise.all([
+        // strategy data
+        const [decimals, symbol, baseAddress, strategyTotalSupply, poolAddress] = await Promise.all([
           multicall.wrap(strategyContract).decimals(),
           multicall.wrap(strategyContract).symbol(),
           multicall.wrap(strategyContract).base(),
@@ -59,7 +55,14 @@ export class EthereumYieldProtocolPoolTokenFetcher implements PositionFetcher<Ap
         ]);
 
         const poolContract = this.yieldProtocolContractFactory.pool({ address: poolAddress, network });
-        const maturity = await multicall.wrap(poolContract).maturity();
+
+        // pool data
+        const [baseReserves, fyTokenReserves, poolTotalSupply, maturity] = await Promise.all([
+          multicall.wrap(poolContract).getBaseBalance(),
+          multicall.wrap(poolContract).getFYTokenBalance(),
+          multicall.wrap(poolContract).totalSupply(),
+          multicall.wrap(poolContract).maturity(),
+        ]);
 
         // get the corresponding base of the strategy
         const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
@@ -68,7 +71,8 @@ export class EthereumYieldProtocolPoolTokenFetcher implements PositionFetcher<Ap
         if (!underlyingToken) return null;
 
         // estimate the value of a unit of strategy token to base
-        const estimate = await this.basePriceEst();
+        const realFyTokenReserves = fyTokenReserves.sub(poolTotalSupply);
+        const estimate = (+baseReserves + +realFyTokenReserves) / +strategyTotalSupply;
         const pricePerShare = estimate;
         const price = pricePerShare * underlyingToken.price;
 
@@ -86,7 +90,7 @@ export class EthereumYieldProtocolPoolTokenFetcher implements PositionFetcher<Ap
           network,
           symbol,
           decimals,
-          supply: +ethers.utils.formatUnits(supply, decimals),
+          supply: +ethers.utils.formatUnits(strategyTotalSupply, decimals),
           pricePerShare,
           price,
           tokens: [underlyingToken],
