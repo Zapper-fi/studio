@@ -5,7 +5,7 @@ import { Network } from '~types/network.interface';
 
 export const EULER_DEFINITION = appDefinition({
   id: 'euler',
-  name: 'euler',
+  name: 'Euler',
   description:
     'Euler is a non-custodial protocol on Ethereum that allows users to lend and borrow almost any crypto asset.',
   url: 'https://app.euler.finance/',
