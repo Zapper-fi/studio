@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+### [0.51.1](https://github.com/Zapper-fi/studio/compare/v0.51.0...v0.51.1) (2022-06-01)
+
+
+### Bug Fixes
+
+* **euler:** Add logo and upper case name ([a5fee4e](https://github.com/Zapper-fi/studio/commit/a5fee4ea70dfa96c0be401a2e3c5127ecfafaaff))
+
 ## [0.51.0](https://github.com/Zapper-fi/studio/compare/v0.50.2...v0.51.0) (2022-06-01)
 
 
