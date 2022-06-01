@@ -86,7 +86,7 @@ export class EthereumEulerDTokenTokenFetcher implements PositionFetcher<AppToken
           name: `Euler D token ${market.name}`,
           type: ContractType.APP_TOKEN as const,
           supply: Number(market.totalSupply) / 10 ** Number(market.decimals),
-          pricePerShare: underlyingToken.price,
+          pricePerShare: 1,
           price: underlyingToken.price,
           network,
           decimals: 18,

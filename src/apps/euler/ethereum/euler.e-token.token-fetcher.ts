@@ -82,9 +82,7 @@ export class EthereumEulerETokenTokenFetcher implements PositionFetcher<AppToken
 
         if (totalSupply.isZero() || !underlyingToken) return null;
 
-        const ratio = Number(totalSupply.toString()) / Number(market.totalBalances);
-
-        const pricePerShare = underlyingToken.price * ratio;
+        const pricePerShare = Number(totalSupply.toString()) / Number(market.totalBalances);
 
         return {
           address: market.eTokenAddress,
