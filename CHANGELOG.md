@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.51.0](https://github.com/Zapper-fi/studio/compare/v0.50.2...v0.51.0) (2022-06-01)
+
+
+### Features
+
+* **badger:** Move Badger to Studio ([#551](https://github.com/Zapper-fi/studio/issues/551)) ([546d29c](https://github.com/Zapper-fi/studio/commit/546d29cb4646f51770f51438e002f586f5eb2b5b))
+* **euler:** Create Euler integration ([#535](https://github.com/Zapper-fi/studio/issues/535)) ([42e0bdb](https://github.com/Zapper-fi/studio/commit/42e0bdb6b0ca374abe158dd7121e92984dba0673))
+
 ### [0.50.2](https://github.com/Zapper-fi/studio/compare/v0.50.1...v0.50.2) (2022-05-31)
 
 
