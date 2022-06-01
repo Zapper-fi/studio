@@ -4,6 +4,20 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.52.0](https://github.com/Zapper-fi/studio/compare/v0.51.1...v0.52.0) (2022-06-01)
+
+
+### Features
+
+* add optional exploreLabel field ([#557](https://github.com/Zapper-fi/studio/issues/557)) ([c3845e5](https://github.com/Zapper-fi/studio/commit/c3845e55c2d21042072b693d72b56e47e9768ff2))
+* **kinesis-labs:** Support Kinesis Labs Celer and Nomad stable coin pools ([#554](https://github.com/Zapper-fi/studio/issues/554)) ([4f396fa](https://github.com/Zapper-fi/studio/commit/4f396fa00591e2a273da00f51b69f8fba07d947b))
+
+
+### Bug Fixes
+
+* **kinesis-labs:** Smol linting errors ([0fbd65a](https://github.com/Zapper-fi/studio/commit/0fbd65ae67eee405b5036ef211512fe2429406e5))
+* **multicall:** Fix Evmos multicall address and log errors for cache init ([#555](https://github.com/Zapper-fi/studio/issues/555)) ([1c83788](https://github.com/Zapper-fi/studio/commit/1c837886f03ee8a6b1ef6b40e637c92f8df6da59))
+
 ### [0.51.1](https://github.com/Zapper-fi/studio/compare/v0.51.0...v0.51.1) (2022-06-01)
 
 
