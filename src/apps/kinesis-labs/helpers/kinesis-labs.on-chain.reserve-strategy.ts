@@ -2,7 +2,7 @@ import { compact } from 'lodash';
 
 import { EthersMulticall as Multicall } from '~multicall';
 
-import { KinesisLabsContractFactory, KinesisLabsPool } from '../contracts';
+import { KinesisLabsPool } from '../contracts';
 
 export class KinesisLabsOnChainReserveStrategy {
   build() {
