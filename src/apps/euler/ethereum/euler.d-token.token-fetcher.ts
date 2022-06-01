@@ -3,6 +3,7 @@ import { gql } from 'graphql-request';
 import { compact } from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
+import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { Register } from '~app-toolkit/decorators';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
@@ -70,6 +71,8 @@ export class EthereumEulerDTokenTokenFetcher implements PositionFetcher<AppToken
 
     const tokens = await Promise.all(
       data.eulerMarketStore.markets.map(async market => {
+        if (market.dTokenAddress === ZERO_ADDRESS) return null;
+
         const dTokenContract = this.eulerContractFactory.eulerDtokenContract({
           address: market.dTokenAddress,
           network,
