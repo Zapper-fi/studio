@@ -36,9 +36,9 @@ export class EvmosKinesisLabsPoolTokenFetcher implements PositionFetcher<AppToke
 
   async getPositions() {
     const basePools = await this.curvePoolTokenHelper.getTokens<KinesisLabsPool, Erc20>({
-      network: Network.ETHEREUM_MAINNET,
-      appId: KINESIS_LABS_DEFINITION.id,
-      groupId: KINESIS_LABS_DEFINITION.groups.pool.id,
+      network: network,
+      appId: appId,
+      groupId: groupId,
       resolvePoolDefinitions: async () => KINESIS_LABS_BASEPOOL_DEFINITIONS,
       resolvePoolContract: ({ network, definition }) =>
         this.kinesisLabsContractFactory.kinesisLabsPool({ network, address: definition.swapAddress }),
@@ -47,7 +47,7 @@ export class EvmosKinesisLabsPoolTokenFetcher implements PositionFetcher<AppToke
       resolvePoolCoinAddresses: this.kinesisLabsOnChainCoinStrategy.build(),
       resolvePoolReserves: this.kinesisLabsOnChainReserveStrategy.build(),
       resolvePoolFee: async () => BigNumber.from('4000000'),
-      resolvePoolTokenSymbol: ({ multicall, poolTokenContract }) => Promise<string>("symbol"),//multicall.wrap(poolTokenContract).symbol(),
+      resolvePoolTokenSymbol: ({ multicall, poolTokenContract }) => multicall.wrap(poolTokenContract).symbol(),
       resolvePoolTokenSupply: ({ multicall, poolTokenContract }) => multicall.wrap(poolTokenContract).totalSupply(),
       resolvePoolTokenPrice: this.curveVirtualPriceStrategy.build({
         resolveVirtualPrice: ({ multicall, poolContract }) => multicall.wrap(poolContract).getVirtualPrice(),
