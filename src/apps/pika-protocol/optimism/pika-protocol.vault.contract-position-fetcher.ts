@@ -28,6 +28,10 @@ const VAULTS = [
 
 ]
 
+export type PikaProtocolContractPositionDataProps = {
+  totalValueLocked: number
+}
+
 @Register.ContractPositionFetcher({ appId, groupId, network })
 export class OptimismPikaProtocolVaultContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
