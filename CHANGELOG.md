@@ -4,6 +4,19 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.53.0](https://github.com/Zapper-fi/studio/compare/v0.52.1...v0.53.0) (2022-06-03)
+
+
+### Features
+
+* **good-ghosting:** Add GoodGhosting integration ([#560](https://github.com/Zapper-fi/studio/issues/560)) ([8994a12](https://github.com/Zapper-fi/studio/commit/8994a121aea3878af5237b054067f80d42cfb01a))
+
+
+### Bug Fixes
+
+* **good-ghosting:** Linting and clean-up before shipping ([f69a3d6](https://github.com/Zapper-fi/studio/commit/f69a3d61b57262e1fa5e0b9d27f7516ffa50867d))
+* **good-ghosting:** Logo ([2645ca9](https://github.com/Zapper-fi/studio/commit/2645ca968ba4d15d51a238162014b097474c6e1f))
+
 ### [0.52.1](https://github.com/Zapper-fi/studio/compare/v0.52.0...v0.52.1) (2022-06-01)
 
 
