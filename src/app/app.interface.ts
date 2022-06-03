@@ -59,6 +59,7 @@ export type AppGroup = {
   id: string;
   type: GroupType;
   label: string;
+  groupLabel?: string;
 };
 
 export type AppLinks = {

@@ -3,7 +3,6 @@ import { AbstractApp } from '~app/app.dynamic-module';
 
 import AIRSWAP_DEFINITION, { AirswapAppDefinition } from './airswap.definition';
 import { AirswapContractFactory } from './contracts';
-import { EthereumAirswapBalanceFetcher } from './ethereum/airswap.balance-fetcher';
 import { EthereumAirswapSAstV2TokenFetcher } from './ethereum/airswap.s-ast-v2.token-fetcher';
 import { EthereumAirswapSAstV3TokenFetcher } from './ethereum/airswap.s-ast-v3.token-fetcher';
 
@@ -12,7 +11,6 @@ import { EthereumAirswapSAstV3TokenFetcher } from './ethereum/airswap.s-ast-v3.t
   providers: [
     AirswapAppDefinition,
     AirswapContractFactory,
-    EthereumAirswapBalanceFetcher,
     EthereumAirswapSAstV2TokenFetcher,
     EthereumAirswapSAstV3TokenFetcher,
   ],

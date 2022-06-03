@@ -46,6 +46,7 @@ export class ArbitrumCurveFarmContractPositionFetcher implements PositionFetcher
       appId,
       groupId,
       dependencies: [{ appId: CURVE_DEFINITION.id, groupIds: [CURVE_DEFINITION.groups.pool.id], network }],
+      resolveImplementation: () => 'rewards-only-gauge',
       resolveFarmAddresses: () => definitions.map(v => v.gaugeAddress ?? null),
       resolveFarmContract: ({ address, network }) =>
         this.curveContractFactory.curveRewardsOnlyGauge({ address, network }),

@@ -4,7 +4,7 @@ import { sumBy } from 'lodash';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Network } from '~types/network.interface';
 
-import { CompoundSupplyTokenDataProps } from './compound.borrow.contract-position-helper';
+import { CompoundBorrowContractPositionDataProps } from './compound.borrow.contract-position-helper';
 
 @Injectable()
 export class CompoundTvlHelper {
@@ -30,7 +30,7 @@ export class CompoundTvlHelper {
     groupIds: string[];
     network: Network;
   }) {
-    const borrow = await this.appToolkit.getAppContractPositions<CompoundSupplyTokenDataProps>({
+    const borrow = await this.appToolkit.getAppContractPositions<CompoundBorrowContractPositionDataProps>({
       appId,
       groupIds,
       network,
@@ -61,7 +61,7 @@ export class CompoundTvlHelper {
     groupIds: string[];
     network: Network;
   }) {
-    const borrow = await this.appToolkit.getAppContractPositions<CompoundSupplyTokenDataProps>({
+    const borrow = await this.appToolkit.getAppContractPositions<CompoundBorrowContractPositionDataProps>({
       appId,
       groupIds,
       network,

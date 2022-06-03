@@ -4,6 +4,241 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+### [0.52.1](https://github.com/Zapper-fi/studio/compare/v0.52.0...v0.52.1) (2022-06-01)
+
+
+### Bug Fixes
+
+* **euler:** Filter out zero addresses ([7aac735](https://github.com/Zapper-fi/studio/commit/7aac7350befe5da1f60da387d9e4b30325b5b3ab))
+
+## [0.52.0](https://github.com/Zapper-fi/studio/compare/v0.51.1...v0.52.0) (2022-06-01)
+
+
+### Features
+
+* add optional exploreLabel field ([#557](https://github.com/Zapper-fi/studio/issues/557)) ([c3845e5](https://github.com/Zapper-fi/studio/commit/c3845e55c2d21042072b693d72b56e47e9768ff2))
+* **kinesis-labs:** Support Kinesis Labs Celer and Nomad stable coin pools ([#554](https://github.com/Zapper-fi/studio/issues/554)) ([4f396fa](https://github.com/Zapper-fi/studio/commit/4f396fa00591e2a273da00f51b69f8fba07d947b))
+
+
+### Bug Fixes
+
+* **kinesis-labs:** Smol linting errors ([0fbd65a](https://github.com/Zapper-fi/studio/commit/0fbd65ae67eee405b5036ef211512fe2429406e5))
+* **multicall:** Fix Evmos multicall address and log errors for cache init ([#555](https://github.com/Zapper-fi/studio/issues/555)) ([1c83788](https://github.com/Zapper-fi/studio/commit/1c837886f03ee8a6b1ef6b40e637c92f8df6da59))
+
+### [0.51.1](https://github.com/Zapper-fi/studio/compare/v0.51.0...v0.51.1) (2022-06-01)
+
+
+### Bug Fixes
+
+* **euler:** Add logo and upper case name ([a5fee4e](https://github.com/Zapper-fi/studio/commit/a5fee4ea70dfa96c0be401a2e3c5127ecfafaaff))
+
+## [0.51.0](https://github.com/Zapper-fi/studio/compare/v0.50.2...v0.51.0) (2022-06-01)
+
+
+### Features
+
+* **badger:** Move Badger to Studio ([#551](https://github.com/Zapper-fi/studio/issues/551)) ([546d29c](https://github.com/Zapper-fi/studio/commit/546d29cb4646f51770f51438e002f586f5eb2b5b))
+* **euler:** Create Euler integration ([#535](https://github.com/Zapper-fi/studio/issues/535)) ([42e0bdb](https://github.com/Zapper-fi/studio/commit/42e0bdb6b0ca374abe158dd7121e92984dba0673))
+
+### [0.50.2](https://github.com/Zapper-fi/studio/compare/v0.50.1...v0.50.2) (2022-05-31)
+
+
+### Bug Fixes
+
+* **olympus:** Fix wrong groups on Ethereum ([#548](https://github.com/Zapper-fi/studio/issues/548)) ([1cd1cb0](https://github.com/Zapper-fi/studio/commit/1cd1cb06c5008ac85f35eee8b75c9eacf118ca0e))
+* **rari-fuse:** Optimize balances to use Comptroller to pre-emptively determine participated markets ([#550](https://github.com/Zapper-fi/studio/issues/550)) ([46d8593](https://github.com/Zapper-fi/studio/commit/46d8593a70d72ea36429edef771369f1edd30a67))
+
+### [0.50.1](https://github.com/Zapper-fi/studio/compare/v0.50.0...v0.50.1) (2022-05-31)
+
+
+### Bug Fixes
+
+* **synthetix:** Resolve circular dependency ([cbcd5b5](https://github.com/Zapper-fi/studio/commit/cbcd5b5d09b0527cb8c7f8c2111674aee05c4c05))
+
+## [0.50.0](https://github.com/Zapper-fi/studio/compare/v0.49.2...v0.50.0) (2022-05-31)
+
+
+### Features
+
+* **synthetix:** Synthetix integration rewrite ([#544](https://github.com/Zapper-fi/studio/issues/544)) ([4953150](https://github.com/Zapper-fi/studio/commit/49531506ee9852ead3b34dcf3d7446976d1e9079))
+
+
+### Bug Fixes
+
+* **synthetix:** Fix Synthetix Mintr metadata in Optimism ([59afeac](https://github.com/Zapper-fi/studio/commit/59afeac196cea5857683077472e790b57d708f9b))
+
+### [0.49.2](https://github.com/Zapper-fi/studio/compare/v0.49.1...v0.49.2) (2022-05-30)
+
+
+### Bug Fixes
+
+* **lido:** Fix rename issue ([83634b7](https://github.com/Zapper-fi/studio/commit/83634b7340398a2d15144e12b3227802806d3536))
+* **lido:** Stop double counting Lido ([0d78e22](https://github.com/Zapper-fi/studio/commit/0d78e2237604f40a92cee6f5f8e51b84264a6c81))
+
+### [0.49.1](https://github.com/Zapper-fi/studio/compare/v0.49.0...v0.49.1) (2022-05-30)
+
+
+### Bug Fixes
+
+* **llama-airforce:** Fix undefined error ([63dbaaa](https://github.com/Zapper-fi/studio/commit/63dbaaa4b5f8456ba56808f95ad2b53174955c27))
+
+## [0.49.0](https://github.com/Zapper-fi/studio/compare/v0.48.0...v0.49.0) (2022-05-30)
+
+
+### Features
+
+* **maple:** Extract Maple to Studio and add xMPL ([#540](https://github.com/Zapper-fi/studio/issues/540)) ([7a63d6e](https://github.com/Zapper-fi/studio/commit/7a63d6ec6cb01e2907fd8cef0992906fda7d42f1))
+
+## [0.48.0](https://github.com/Zapper-fi/studio/compare/v0.47.0...v0.48.0) (2022-05-30)
+
+
+### Features
+
+* **balances:** Eliminate requirement for balance fetcher ([#524](https://github.com/Zapper-fi/studio/issues/524)) ([2a69f87](https://github.com/Zapper-fi/studio/commit/2a69f879799f7aa59e961d7757877a02546e57b3))
+
+## [0.47.0](https://github.com/Zapper-fi/studio/compare/v0.46.0...v0.47.0) (2022-05-30)
+
+
+### Features
+
+* **penguin:** Extract and fix Penguin ([#536](https://github.com/Zapper-fi/studio/issues/536)) ([e645849](https://github.com/Zapper-fi/studio/commit/e6458496cdea3a1655c458e9d5c3f210df14a992))
+
+## [0.46.0](https://github.com/Zapper-fi/studio/compare/v0.45.1...v0.46.0) (2022-05-28)
+
+
+### Features
+
+* **cozy-finance:** Support Cozy Finance ([#534](https://github.com/Zapper-fi/studio/issues/534)) ([8199a2d](https://github.com/Zapper-fi/studio/commit/8199a2df0b6c32d34ac50af598fa667f51f66afd))
+* **llama-airforce:** Extract Llama Airforce and re-enable airdrop balances ([#531](https://github.com/Zapper-fi/studio/issues/531)) ([61cfe43](https://github.com/Zapper-fi/studio/commit/61cfe437652db8dc6897aba74082924b11fac7de))
+
+
+### Bug Fixes
+
+* **curve:** Fix missing Curve farm balances on Arbitrum ([#533](https://github.com/Zapper-fi/studio/issues/533)) ([8b2a4c2](https://github.com/Zapper-fi/studio/commit/8b2a4c23b20a732f8a185b12e2c6b0d52f331de0))
+
+### [0.45.1](https://github.com/Zapper-fi/studio/compare/v0.45.0...v0.45.1) (2022-05-28)
+
+
+### Bug Fixes
+
+* **lyra-avalon:** Optimize balance fetcher by removing calls to TheGraph ([#529](https://github.com/Zapper-fi/studio/issues/529)) ([b54d753](https://github.com/Zapper-fi/studio/commit/b54d75380a07fa705c58d358ee30f964d466458c))
+
+## [0.45.0](https://github.com/Zapper-fi/studio/compare/v0.44.6...v0.45.0) (2022-05-27)
+
+
+### Features
+
+* **lyra-avalon:** Add support for Lyra Avalon ([#526](https://github.com/Zapper-fi/studio/issues/526)) ([4de0d56](https://github.com/Zapper-fi/studio/commit/4de0d5682bb9f1d4d490513127254cd6b20e4b8c))
+
+
+### Bug Fixes
+
+* **lyra-avalon:** Wrong group type ([5948516](https://github.com/Zapper-fi/studio/commit/5948516879495a13ac4a5620548514fe0b630f87))
+
+### [0.44.6](https://github.com/Zapper-fi/studio/compare/v0.44.5...v0.44.6) (2022-05-26)
+
+
+### Bug Fixes
+
+* **impermax:** Fix wrong Network in fetcher ([#523](https://github.com/Zapper-fi/studio/issues/523)) ([6914778](https://github.com/Zapper-fi/studio/commit/6914778b4a2c9df7bbedecb092483bd53573696c))
+
+### [0.44.5](https://github.com/Zapper-fi/studio/compare/v0.44.4...v0.44.5) (2022-05-26)
+
+
+### Bug Fixes
+
+* **impermax:** Add missing module ([fb6d204](https://github.com/Zapper-fi/studio/commit/fb6d204daade39fbc109dd11d5595fdcd6e46d2d))
+
+### [0.44.4](https://github.com/Zapper-fi/studio/compare/v0.44.3...v0.44.4) (2022-05-25)
+
+
+### Bug Fixes
+
+* **compound:** Put meta on app level for Impermax instead of Compound ([#520](https://github.com/Zapper-fi/studio/issues/520)) ([4ba4cfd](https://github.com/Zapper-fi/studio/commit/4ba4cfd1c2e45716007990bc406bee7897bf6685))
+
+### [0.44.3](https://github.com/Zapper-fi/studio/compare/v0.44.2...v0.44.3) (2022-05-25)
+
+
+### Bug Fixes
+
+* **compound:** Export helpers in Compound index ([cd9abef](https://github.com/Zapper-fi/studio/commit/cd9abef729f65ac4f1710e3e5fd28da458f87843))
+
+### [0.44.2](https://github.com/Zapper-fi/studio/compare/v0.44.1...v0.44.2) (2022-05-25)
+
+
+### Bug Fixes
+
+* **market-xyz:** Add logo and properly case name ([e6844ee](https://github.com/Zapper-fi/studio/commit/e6844ee7df7b570327c16332887ef63dea78355b))
+
+### [0.44.1](https://github.com/Zapper-fi/studio/compare/v0.44.0...v0.44.1) (2022-05-25)
+
+
+### Bug Fixes
+
+* **compound:** Split compound lending balance helper ([#516](https://github.com/Zapper-fi/studio/issues/516)) ([e17f5ec](https://github.com/Zapper-fi/studio/commit/e17f5ec82d2fa812b0f559b0e6faa9e4ca90b5fc))
+
+## [0.44.0](https://github.com/Zapper-fi/studio/compare/v0.43.1...v0.44.0) (2022-05-25)
+
+
+### Features
+
+* add more stats items ([#514](https://github.com/Zapper-fi/studio/issues/514)) ([23f8384](https://github.com/Zapper-fi/studio/commit/23f83846f83e33aece608effbe806e4074047e01))
+
+### [0.43.1](https://github.com/Zapper-fi/studio/compare/v0.43.0...v0.43.1) (2022-05-25)
+
+
+### Bug Fixes
+
+* **plutus:** Display correct locked balance in PlutusDAO ([#511](https://github.com/Zapper-fi/studio/issues/511)) ([47ec210](https://github.com/Zapper-fi/studio/commit/47ec210c687d2e7ee3774cb8c1d0983f42a80d34))
+* **rari-fuse:** Decrease spam of get base tokens and app tokens ([#512](https://github.com/Zapper-fi/studio/issues/512)) ([a25d5c6](https://github.com/Zapper-fi/studio/commit/a25d5c6c8b9be806199bd08391594b691bfcef19))
+
+## [0.43.0](https://github.com/Zapper-fi/studio/compare/v0.42.1...v0.43.0) (2022-05-25)
+
+
+### Features
+
+* **market-xyz:** Add market.xyz to Zapper ([#498](https://github.com/Zapper-fi/studio/issues/498)) ([ac66d36](https://github.com/Zapper-fi/studio/commit/ac66d36e22219cf6b2001d23e57db4c1f78a8473))
+
+
+### Bug Fixes
+
+* **market-xyz:** Remove reference to PositionModule ([b229562](https://github.com/Zapper-fi/studio/commit/b22956200c643b76cd49b0e50336c076d0723221))
+
+### [0.42.1](https://github.com/Zapper-fi/studio/compare/v0.42.0...v0.42.1) (2022-05-25)
+
+
+### Bug Fixes
+
+* **rari-fuse:** Remove reference to PositionService ([e25c488](https://github.com/Zapper-fi/studio/commit/e25c4888ac4acb35eb978dc789a5bbd24b1c6798))
+
+## [0.42.0](https://github.com/Zapper-fi/studio/compare/v0.41.0...v0.42.0) (2022-05-25)
+
+
+### Features
+
+* **qi-dao:** Add assetStandard to vault dataProps ([#506](https://github.com/Zapper-fi/studio/issues/506)) ([5a8141e](https://github.com/Zapper-fi/studio/commit/5a8141ed41daff9857b9977b12d85e51375bf2cc))
+
+
+### Bug Fixes
+
+* **codegen:** Add indexes and generate on create app ([#508](https://github.com/Zapper-fi/studio/issues/508)) ([a55cb92](https://github.com/Zapper-fi/studio/commit/a55cb92176b19679952d16265601600fca281d9a))
+* **ease:** fix correct apy and images of uTokens ([#505](https://github.com/Zapper-fi/studio/issues/505)) ([ce08a3b](https://github.com/Zapper-fi/studio/commit/ce08a3b5a05e26b46d3fa6fe4050f5540b69b384))
+
+## [0.41.0](https://github.com/Zapper-fi/studio/compare/v0.40.0...v0.41.0) (2022-05-25)
+
+
+### Features
+
+* **plutus:** Add Plutus DAO ([#497](https://github.com/Zapper-fi/studio/issues/497)) ([26a0282](https://github.com/Zapper-fi/studio/commit/26a028293520026fabb492f3bf20b4901383c617))
+* **rari-fuse:** Move Rari Fuse to Studio ([#499](https://github.com/Zapper-fi/studio/issues/499)) ([b2096de](https://github.com/Zapper-fi/studio/commit/b2096deb4a8a714c6c9b75f56473fe8cde7572d1))
+* **saddle:** Extract Saddle to Studio, add farms, add chef, add 4pool ([#501](https://github.com/Zapper-fi/studio/issues/501)) ([2acb909](https://github.com/Zapper-fi/studio/commit/2acb9091eeb42399ad98e9d979f0031fc2ffada7))
+
+
+### Bug Fixes
+
+* **bancor:** Update Bancor V3 for new pool collection contract ([#502](https://github.com/Zapper-fi/studio/issues/502)) ([1b00b68](https://github.com/Zapper-fi/studio/commit/1b00b687c2828fbb48fb69248b4160122435afe3))
+* **positions:** Cache API-sourced positions with DataLoader ([#504](https://github.com/Zapper-fi/studio/issues/504)) ([a592b3f](https://github.com/Zapper-fi/studio/commit/a592b3fda49785e041362570ac1cd12baddb29ad))
+
 ## [0.40.0](https://github.com/Zapper-fi/studio/compare/v0.39.1...v0.40.0) (2022-05-22)
 
 

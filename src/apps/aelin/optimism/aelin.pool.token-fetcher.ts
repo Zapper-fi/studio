@@ -54,7 +54,7 @@ export class OptimismAelinPoolTokenFetcher implements PositionFetcher<AppTokenPo
   async getPositions() {
     const multicall = this.appToolkit.getMulticall(network);
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
-    const poolAddresses = await this.getCachedPoolAddresses();
+    const poolAddresses = (await this.getCachedPoolAddresses()) ?? [];
 
     const tokens = await Promise.all(
       poolAddresses.map(async poolAddress => {

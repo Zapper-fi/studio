@@ -98,6 +98,12 @@ export class EthereumDfxCurveTokenFetcher implements PositionFetcher<AppTokenPos
             label,
             secondaryLabel,
             images,
+            statsItems: [
+              {
+                label: 'Liquidity',
+                value: buildDollarDisplayItem(totalLiquidity),
+              },
+            ],
           },
         };
         return lpToken;

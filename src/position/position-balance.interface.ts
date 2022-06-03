@@ -23,7 +23,4 @@ export interface ContractPositionBalance<T = DefaultDataProps> extends ContractP
 }
 
 export type TokenBalance = BaseTokenBalance | AppTokenPositionBalance | NonFungibleTokenBalance;
-export type PositionBalance<T = DefaultDataProps> =
-  | ContractPositionBalance<T>
-  | AppTokenPositionBalance<T>
-  | NonFungibleTokenBalance;
+export type PositionBalance<T = DefaultDataProps> = ContractPositionBalance<T> | AppTokenPositionBalance<T>;
