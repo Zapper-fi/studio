@@ -1,4 +1,5 @@
 import { Inject } from '@nestjs/common';
+import { drillBalance } from '~app-toolkit';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
@@ -20,28 +21,36 @@ export class OptimismPikaProtocolBalanceFetcher implements BalanceFetcher {
   ) { }
 
   async getBalances(address: string) {
-    return presentBalanceFetcherResponse([]);
+    const [vaultBalances] = await Promise.all([this.getFarmBalances(address)])
+    return presentBalanceFetcherResponse([
+      { label: 'Vaults', assets: vaultBalances }
+    ]);
   }
 
   async getFarmBalances(address: string) {
-    const multicall = this.appToolkit.getMulticall(network);
-
     return this.appToolkit.helpers.contractPositionBalanceHelper.getContractPositionBalances({
       address, appId: PIKA_PROTOCOL_DEFINITION.id, groupId: PIKA_PROTOCOL_DEFINITION.groups.vault.id,
       network: Network.OPTIMISM_MAINNET,
 
       resolveBalances: async ({ address, contractPosition, multicall }) => {
+        const rewardAddress = '0x58488bB666d2da33F8E8938Dbdd582D2481D4183'.toLowerCase();
+        const contract = this.pikaProtocolContractFactory.pikaProtocolVault({ address: contractPosition.address, network })
+        const rewardContract = this.pikaProtocolContractFactory.pikaProtocolVaultRewards({ address: rewardAddress, network });
+
         const stakedToken = contractPosition.tokens.find(isSupplied)!;
         const rewardToken = contractPosition.tokens.find(isClaimable)!;
 
-        const contract = this.pikaProtocolContractFactory.pikaProtocolVault({ address, network })
 
         const [stakedBalanceRaw, rewardBalanceRaw] = await Promise.all(
           [
-            this.pikaProtocolContractFactory.vaultBalance(contract.address, stakedToken.address, network, multicall),
-            // TODO: Resolve farm position balances
+            this.pikaProtocolContractFactory.getVaultBalance(contract.address, stakedToken.address, network),
+            multicall.wrap(rewardContract).getClaimableReward(address)
           ])
-        return [] as any
+
+        return [
+          drillBalance(stakedToken, stakedBalanceRaw.toString()),
+          drillBalance(rewardToken, rewardBalanceRaw.toString())
+        ]
       }
     })
   }

@@ -53,7 +53,7 @@ export class OptimismPikaProtocolVaultContractPositionFetcher implements Positio
 
         const contract = this.pikaProtocolContractFactory.pikaProtocolVault({ address, network });
 
-        const [balanceRaw] = await this.pikaProtocolContractFactory.vaultBalance(contract.address, stakedTokenAddress, network, multicall);
+        const [balanceRaw] = await this.pikaProtocolContractFactory.getVaultBalance(contract.address, stakedToken.address, network);
 
         const totalValueLocked = Number(balanceRaw) / 10 ** stakedToken.decimals;
 
