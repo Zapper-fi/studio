@@ -41,7 +41,6 @@ export class OptimismPikaProtocolVaultContractPositionFetcher implements Positio
     const appTokens = await this.appToolkit.getAppTokenPositions({ appId, groupIds: [groupId], network });
 
     const allTokens = [...appTokens, ...baseTokens];
-    const multicall = this.appToolkit.getMulticall(network);
 
     const positions = await Promise.all(
       VAULTS.map(async ({ address, stakedTokenAddress, rewardTokenAddress }) => {
