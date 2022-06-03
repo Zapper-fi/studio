@@ -81,6 +81,12 @@ export class PoolTogetherV4PrizePoolTokenHelper {
             label: symbol,
             secondaryLabel: buildDollarDisplayItem(price),
             images: [getTokenImg(underlyingToken.address, network)],
+            statsItems: [
+              {
+                label: 'Liquidity',
+                value: buildDollarDisplayItem(liquidity),
+              },
+            ],
           },
           supply,
           price,

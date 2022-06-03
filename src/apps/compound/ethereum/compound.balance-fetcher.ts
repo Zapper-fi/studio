@@ -7,9 +7,10 @@ import { Network } from '~types/network.interface';
 
 import { COMPOUND_DEFINITION } from '../compound.definition';
 import { CompoundContractFactory } from '../contracts';
+import { CompoundBorrowBalanceHelper } from '../helper/compound.borrow.balance-helper';
 import { CompoundClaimableBalanceHelper } from '../helper/compound.claimable.balance-helper';
-import { CompoundLendingBalanceHelper } from '../helper/compound.lending.balance-helper';
 import { CompoundLendingMetaHelper } from '../helper/compound.lending.meta-helper';
+import { CompoundSupplyBalanceHelper } from '../helper/compound.supply.balance-helper';
 
 const appId = COMPOUND_DEFINITION.id;
 const network = Network.ETHEREUM_MAINNET;
@@ -17,8 +18,10 @@ const network = Network.ETHEREUM_MAINNET;
 @Register.BalanceFetcher(appId, network)
 export class EthereumCompoundBalanceFetcher implements BalanceFetcher {
   constructor(
-    @Inject(CompoundLendingBalanceHelper)
-    private readonly compoundLendingBalanceHelper: CompoundLendingBalanceHelper,
+    @Inject(CompoundBorrowBalanceHelper)
+    private readonly compoundBorrowBalanceHelper: CompoundBorrowBalanceHelper,
+    @Inject(CompoundSupplyBalanceHelper)
+    private readonly compoundSupplyBalanceHelper: CompoundSupplyBalanceHelper,
     @Inject(CompoundClaimableBalanceHelper)
     private readonly compoundClaimableBalanceHelper: CompoundClaimableBalanceHelper,
     @Inject(CompoundLendingMetaHelper)
@@ -27,15 +30,24 @@ export class EthereumCompoundBalanceFetcher implements BalanceFetcher {
     private readonly compoundContractFactory: CompoundContractFactory,
   ) {}
 
-  async getLendingBalances(address: string) {
-    return this.compoundLendingBalanceHelper.getBalances({
+  async getSupplyBalances(address: string) {
+    return this.compoundSupplyBalanceHelper.getBalances({
       address,
       appId,
-      supplyGroupId: COMPOUND_DEFINITION.groups.supply.id,
-      borrowGroupId: COMPOUND_DEFINITION.groups.borrow.id,
+      groupId: COMPOUND_DEFINITION.groups.supply.id,
       network,
       getTokenContract: ({ address, network }) => this.compoundContractFactory.compoundCToken({ address, network }),
       getBalanceRaw: ({ contract, address, multicall }) => multicall.wrap(contract).balanceOf(address),
+    });
+  }
+
+  async getBorrowBalances(address: string) {
+    return this.compoundBorrowBalanceHelper.getBalances({
+      address,
+      appId,
+      groupId: COMPOUND_DEFINITION.groups.borrow.id,
+      network,
+      getTokenContract: ({ address, network }) => this.compoundContractFactory.compoundCToken({ address, network }),
       getBorrowBalanceRaw: ({ contract, address, multicall }) => multicall.wrap(contract).borrowBalanceCurrent(address),
     });
   }
@@ -53,23 +65,16 @@ export class EthereumCompoundBalanceFetcher implements BalanceFetcher {
   }
 
   async getBalances(address: string) {
-    const [lendingBalances, claimableBalances] = await Promise.all([
-      this.getLendingBalances(address),
+    const [supplyBalances, borrowBalances, claimableBalances] = await Promise.all([
+      this.getSupplyBalances(address),
+      this.getBorrowBalances(address),
       this.getClaimableBalances(address),
     ]);
 
-    const meta = this.compoundLendingMetaHelper.getMeta({ balances: lendingBalances });
+    const meta = this.compoundLendingMetaHelper.getMeta({ balances: [...supplyBalances, ...borrowBalances] });
+    const claimableProduct = { label: 'Claimable', assets: claimableBalances };
+    const lendingProduct = { label: 'Lending', assets: [...supplyBalances, ...borrowBalances], meta };
 
-    return presentBalanceFetcherResponse([
-      {
-        label: 'Lending',
-        assets: lendingBalances,
-        meta: meta,
-      },
-      {
-        label: 'Claimable',
-        assets: claimableBalances,
-      },
-    ]);
+    return presentBalanceFetcherResponse([lendingProduct, claimableProduct]);
   }
 }

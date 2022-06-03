@@ -23,6 +23,6 @@ export class PolygonSymphonyTvlFetcher implements TvlFetcher {
       network,
     });
 
-    return sumBy(tokens, v => v.dataProps.totalValueLocked);
+    return sumBy(tokens, v => v.dataProps.liquidity);
   }
 }

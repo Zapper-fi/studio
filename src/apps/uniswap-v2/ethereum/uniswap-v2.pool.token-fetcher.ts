@@ -44,7 +44,7 @@ export class EthereumUniswapV2PoolTokenFetcher implements PositionFetcher<AppTok
         this.uniswapV2ContractFactory.uniswapFactory({ address, network }),
       resolvePoolContract: ({ address, network }) => this.uniswapV2ContractFactory.uniswapPair({ address, network }),
       resolvePoolTokenAddresses: this.uniswapV2TheGraphPoolTokenAddressStrategy.build({
-        subgraphUrl: 'https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v2',
+        subgraphUrl: 'https://api.thegraph.com/subgraphs/name/ianlapham/uniswapv2',
         first: 1000,
         orderBy: 'trackedReserveETH',
         requiredPools: [

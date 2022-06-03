@@ -74,7 +74,7 @@ export class PolygonSymphonyYoloContractPositionFetcher implements PositionFetch
           network,
           tokens: [supplied(tokenData)],
           dataProps: {
-            totalValueLocked: tokenBalanceUSD,
+            liquidity: tokenBalanceUSD,
           },
           displayProps: {
             label,

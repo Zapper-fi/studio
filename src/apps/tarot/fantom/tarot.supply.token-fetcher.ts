@@ -3,6 +3,7 @@ import _ from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
+import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { CURVE_DEFINITION } from '~apps/curve';
 import { ContractType } from '~position/contract.interface';
@@ -117,6 +118,12 @@ export class FantomTarotSupplyTokenFetcher implements PositionFetcher<AppTokenPo
                   displayProps: {
                     label: `${getLabelFromToken(underlyingToken)} in ${getLabelFromToken(poolToken)} Lending Pool`,
                     images: getImagesFromToken(underlyingToken),
+                    statsItems: [
+                      {
+                        label: 'Liquidity',
+                        value: buildDollarDisplayItem(liquidity),
+                      },
+                    ],
                   },
                 };
 

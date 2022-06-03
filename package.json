@@ -1,6 +1,6 @@
 {
   "name": "@zapper-fi/studio",
-  "version": "0.40.0",
+  "version": "0.52.1",
   "description": "Community build apps for Zapper.fi",
   "license": "MIT",
   "main": "./index.js",
@@ -30,6 +30,7 @@
     "fs-extra": "^10.0.1",
     "inquirer": "^8.2.2",
     "lodash": "^4.17.21",
+    "murmurhash-js": "^1.0.0",
     "rimraf": "^3.0.2"
   },
   "devDependencies": {
@@ -53,7 +54,9 @@
     "@types/inquirer": "^8.2.0",
     "@types/jest": "^27.4.1",
     "@types/lodash": "^4.14.180",
+    "@types/murmurhash-js": "^1.0.3",
     "@types/node": "16.11.7",
+    "@types/qs": "^6.9.7",
     "@typescript-eslint/eslint-plugin": "^5.16.0",
     "@typescript-eslint/parser": "^5.16.0",
     "axios": "^0.26.1",

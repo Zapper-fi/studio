@@ -74,7 +74,7 @@ export class AvalancheSymphonyYoloContractPositionFetcher implements PositionFet
           network,
           tokens: [supplied(tokenData)],
           dataProps: {
-            totalValueLocked: tokenBalanceUSD,
+            liquidity: tokenBalanceUSD,
           },
           displayProps: {
             label,

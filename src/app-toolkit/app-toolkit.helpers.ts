@@ -11,17 +11,22 @@ import { MasterChefDefaultStakedBalanceStrategy } from './helpers/master-chef/ma
 import { MasterChefV2ClaimableBalanceStrategy } from './helpers/master-chef/master-chef.v2.claimable-token-balance-strategy';
 import { MasterChefV2ClaimableTokenStrategy } from './helpers/master-chef/master-chef.v2.claimable-token-strategy';
 import { MasterChefV2RewardRateStrategy } from './helpers/master-chef/master-chef.v2.reward-rate-strategy';
+import { MerkleContractPositionHelper } from './helpers/merkle/merkle.contract-position-helper';
 import { SingleStakingFarmContractPositionHelper } from './helpers/position/single-staking-farm.contract-position-helper';
 import { VaultTokenHelper } from './helpers/position/vault.token-helper';
 import { TheGraphHelper } from './helpers/the-graph/the-graph.helper';
 
 export const AppToolkitHelpers = [
+  // General
   TokenBalanceHelper,
   ContractPositionBalanceHelper,
   TheGraphHelper,
+  // Single Staking
   SingleStakingContractPositionBalanceHelper,
   SingleStakingFarmContractPositionHelper,
+  // Vaults
   VaultTokenHelper,
+  // Master Chef
   MasterChefContractPositionBalanceHelper,
   MasterChefContractPositionHelper,
   MasterChefDefaultClaimableBalanceStrategy,
@@ -30,6 +35,8 @@ export const AppToolkitHelpers = [
   MasterChefV2ClaimableBalanceStrategy,
   MasterChefV2ClaimableTokenStrategy,
   MasterChefV2RewardRateStrategy,
+  // Merkle
+  MerkleContractPositionHelper,
 ];
 
 @Injectable()
@@ -60,5 +67,7 @@ export class AppToolkitHelperRegistry {
     public readonly masterChefV2ClaimableTokenStrategy: MasterChefV2ClaimableTokenStrategy,
     @Inject(MasterChefV2RewardRateStrategy)
     public readonly masterChefV2RewardRateStrategy: MasterChefV2RewardRateStrategy,
+    @Inject(MerkleContractPositionHelper)
+    public readonly merkleContractPositionHelper: MerkleContractPositionHelper,
   ) {}
 }

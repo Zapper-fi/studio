@@ -3,7 +3,7 @@ import { BigNumberish } from 'ethers';
 import _ from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
+import { ETH_ADDR_ALIAS, ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { BLOCKS_PER_DAY } from '~app-toolkit/constants/blocks';
 import {
   buildDollarDisplayItem,
@@ -15,6 +15,7 @@ import { ContractType } from '~position/contract.interface';
 import { BalanceDisplayMode } from '~position/display.interface';
 import { AppTokenPosition, Token } from '~position/position.interface';
 import { AppGroupsDefinition } from '~position/position.service';
+import { BaseToken } from '~position/token.interface';
 import { Network } from '~types/network.interface';
 
 import { CompoundComptroller, CompoundContractFactory, CompoundCToken } from '../contracts';
@@ -32,6 +33,7 @@ type CompoundSupplyTokenHelperParams<T = CompoundComptroller, V = CompoundCToken
   appId: string;
   groupId: string;
   dependencies?: AppGroupsDefinition[];
+  allTokens?: (BaseToken | AppTokenPosition)[];
   comptrollerAddress: string;
   marketName?: string;
   getComptrollerContract: (opts: { address: string; network: Network }) => T;
@@ -60,6 +62,7 @@ export class CompoundSupplyTokenHelper {
     appId,
     groupId,
     dependencies = [],
+    allTokens = [],
     getComptrollerContract,
     getTokenContract,
     getAllMarkets,
@@ -74,9 +77,11 @@ export class CompoundSupplyTokenHelper {
   }: CompoundSupplyTokenHelperParams<T, V>) {
     const multicall = this.appToolkit.getMulticall(network);
 
-    const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
-    const appTokens = await this.appToolkit.getAppTokenPositions(...dependencies);
-    const allTokens = [...appTokens, ...baseTokens];
+    if (!allTokens.length) {
+      const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
+      const appTokens = await this.appToolkit.getAppTokenPositions(...dependencies);
+      allTokens.push(...appTokens, ...baseTokens);
+    }
 
     const comptrollerContract = getComptrollerContract({ network, address: comptrollerAddress });
     const marketTokenAddressesRaw = await getAllMarkets({ contract: comptrollerContract, multicall });
@@ -88,7 +93,7 @@ export class CompoundSupplyTokenHelper {
         const contract = getTokenContract({ address, network });
 
         const underlyingAddress = await getUnderlyingAddress({ contract, multicall })
-          .then(t => t.toLowerCase())
+          .then(t => t.toLowerCase().replace(ETH_ADDR_ALIAS, ZERO_ADDRESS))
           .catch(() => ZERO_ADDRESS);
 
         const underlyingToken = allTokens.find(v => v.address === underlyingAddress);
