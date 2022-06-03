@@ -11,8 +11,8 @@ export const PIKA_PROTOCOL_DEFINITION = appDefinition({
   url: 'https://app.pikaprotocol.com',
 
   groups: {
-    farm: {
-      id: 'farm',
+    vault: {
+      id: 'vault',
       type: GroupType.POSITION,
       label: 'contract-position',
     },
