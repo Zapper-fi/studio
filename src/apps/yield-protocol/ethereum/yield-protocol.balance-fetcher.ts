@@ -24,7 +24,7 @@ const appId = YIELD_PROTOCOL_DEFINITION.id;
 const CAULDRON = '0xc88191F8cb8e6D4a668B047c1C8503432c3Ca867';
 
 type YieldVaultRes = {
-  vaultOwner: {
+  vaultOwner?: {
     id: string;
     vaults: {
       debtAmount: number;
@@ -89,16 +89,17 @@ export class EthereumYieldProtocolBalanceFetcher implements BalanceFetcher {
   ) {}
 
   private async getBorrowBalances(address: string) {
-    const {
-      vaultOwner: { vaults },
-    } = await this.appToolkit.helpers.theGraphHelper.request<YieldVaultRes>({
+    const data = await this.appToolkit.helpers.theGraphHelper.request<YieldVaultRes>({
       endpoint: yieldV2MainnetSubgraph,
       query: vaultsQuery,
       variables: { address },
     });
+    const vaultOwner = data.vaultOwner;
+
+    if (!vaultOwner) return [];
 
     const positions = await Promise.all(
-      vaults.map(async vault => {
+      vaultOwner.vaults.map(async vault => {
         const {
           debtAmount,
           collateralAmount,
