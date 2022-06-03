@@ -20,10 +20,11 @@ export class GoodGhostingGameContractPositionFetcherHelper {
 
   async getContractPosition(
     network: Network,
+    networkId: string,
     appId: string,
     groupId: string,
   ): Promise<ContractPosition<SingleStakingFarmDataProps>[]> {
-    const GAMES = await this.goodGhostingGameConfigFetcherHelper.getGameConfigs();
+    const GAMES = await this.goodGhostingGameConfigFetcherHelper.getGameConfigs(networkId);
     return this.appToolkit.helpers.singleStakingFarmContractPositionHelper.getContractPositions<GoodghostingAbiV001>({
       appId,
       groupId,

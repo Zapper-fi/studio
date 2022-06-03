@@ -5,11 +5,13 @@ import { Register } from '~app-toolkit/decorators';
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
 import { BalanceFetcher } from '~balance/balance-fetcher.interface';
 import { Network } from '~types/network.interface';
+import { NetworkId } from '../helpers/constants';
 
 import { GOOD_GHOSTING_DEFINITION } from '../good-ghosting.definition';
 import { GoodGhostingBalanceFetcherHelper } from '../helpers/good-ghosting.balance-fetcher-helper';
 
 const network = Network.POLYGON_MAINNET;
+const networkId = NetworkId.PolygonMainnet;
 const appId = GOOD_GHOSTING_DEFINITION.id;
 const groupId = GOOD_GHOSTING_DEFINITION.groups.game.id;
 
@@ -21,7 +23,7 @@ export class PolygonGoodGhostingBalanceFetcher implements BalanceFetcher {
   ) {}
 
   async getBalances(address: string) {
-    const gameBalance = await this.helper.getGameBalances(network, appId, groupId, address);
+    const gameBalance = await this.helper.getGameBalances(network, networkId, appId, groupId, address);
 
     return presentBalanceFetcherResponse([
       {

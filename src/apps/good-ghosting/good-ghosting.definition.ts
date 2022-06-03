@@ -6,7 +6,8 @@ import { Network } from '~types/network.interface';
 export const GOOD_GHOSTING_DEFINITION = appDefinition({
   id: 'good-ghosting',
   name: 'GoodGhosting',
-  description: 'Integration of GoodGhosting to Zapper',
+  description:
+    'A better way to grow your savings. The new addictive way to save. Our savings pools reward regular savers with higher interest rates and extra rewards.',
   url: 'https://goodghosting.com',
 
   groups: {

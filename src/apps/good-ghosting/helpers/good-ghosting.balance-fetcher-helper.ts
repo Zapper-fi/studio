@@ -2,7 +2,6 @@ import { Inject, Injectable } from '@nestjs/common';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { drillBalance } from '~app-toolkit';
 import { isClaimable, isSupplied } from '~position/position.utils';
-import { SingleStakingFarmDataProps } from '~app-toolkit';
 import { sumBy } from 'lodash';
 
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
@@ -38,25 +37,18 @@ export class GoodGhostingBalanceFetcherHelper implements BalanceFetcher {
     return this.goodGhostingContractFactory.goodghostingAbiV001(contractPosition);
   }
 
-  private async getGameBalances(network: Network, appId: string, groupId: string, address: string) {
-    const gameConfigs = await this.goodGhostingGameConfigFetcherHelper.getGameConfigs();
+  private async getGameBalances(network: Network, networkId: string, appId: string, groupId: string, address: string) {
+    const gameConfigs = await this.goodGhostingGameConfigFetcherHelper.getGameConfigs(networkId);
     return this.appToolkit.helpers.contractPositionBalanceHelper.getContractPositionBalances({
       address,
       appId,
       groupId,
       network,
-      resolveBalances: async ({ address, multicall }) => {
-        // Resolve staked token and reward token balances from contract position object
-        const contractPositions = await this.appToolkit.getAppContractPositions<SingleStakingFarmDataProps>({
-          network,
-          appId,
-          groupIds: [groupId],
-        });
-
+      resolveBalances: async ({ address, multicall, contractPosition }) => {
         const incentiveTokenIndex = 2;
 
         const balances = await Promise.all(
-          contractPositions.map(async contractPosition => {
+          gameConfigs.map(async () => {
             const stakedToken = contractPosition.tokens.find(isSupplied)!;
             const rewardToken = contractPosition.tokens.find(isClaimable)!;
             const incentiveToken = contractPosition.tokens[incentiveTokenIndex];
@@ -117,6 +109,7 @@ export class GoodGhostingBalanceFetcherHelper implements BalanceFetcher {
             return { ...contractPosition, tokens, balanceUSD };
           }),
         );
+
         return balances;
       },
     });

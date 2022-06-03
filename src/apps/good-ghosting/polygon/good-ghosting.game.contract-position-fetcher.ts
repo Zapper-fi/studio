@@ -5,6 +5,7 @@ import { Register } from '~app-toolkit/decorators';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
+import { NetworkId } from '../helpers/constants';
 
 import { GoodGhostingContractFactory, GoodghostingAbiV001 } from '../contracts';
 import { GOOD_GHOSTING_DEFINITION } from '../good-ghosting.definition';
@@ -13,6 +14,7 @@ import { GoodGhostingGameContractPositionFetcherHelper } from '../helpers/good-g
 const appId = GOOD_GHOSTING_DEFINITION.id;
 const groupId = GOOD_GHOSTING_DEFINITION.groups.game.id;
 const network = Network.POLYGON_MAINNET;
+const networkId = NetworkId.PolygonMainnet;
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
 export class PolygonGoodGhostingGameContractPositionFetcher implements PositionFetcher<ContractPosition> {
@@ -25,6 +27,6 @@ export class PolygonGoodGhostingGameContractPositionFetcher implements PositionF
   ) {}
 
   async getPositions() {
-    return this.helper.getContractPosition(network, appId, groupId);
+    return this.helper.getContractPosition(network, networkId, appId, groupId);
   }
 }
