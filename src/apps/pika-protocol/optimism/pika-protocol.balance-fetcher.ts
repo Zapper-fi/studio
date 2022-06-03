@@ -1,4 +1,5 @@
 import { Inject } from '@nestjs/common';
+import { ethers } from 'ethers';
 import { drillBalance } from '~app-toolkit';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
@@ -27,6 +28,18 @@ export class OptimismPikaProtocolBalanceFetcher implements BalanceFetcher {
     ]);
   }
 
+  pikaProtocolVaultRewards(address: string) {
+    const abi = [
+      "function getClaimableReward(address account) external view returns(uint256)"
+    ]
+
+    const provider = this.appToolkit.getNetworkProvider(network);
+
+    const contract = new ethers.Contract(address, abi, provider)
+
+    return contract;
+
+  }
   async getFarmBalances(address: string) {
     return this.appToolkit.helpers.contractPositionBalanceHelper.getContractPositionBalances({
       address, appId: PIKA_PROTOCOL_DEFINITION.id, groupId: PIKA_PROTOCOL_DEFINITION.groups.vault.id,
@@ -35,7 +48,7 @@ export class OptimismPikaProtocolBalanceFetcher implements BalanceFetcher {
       resolveBalances: async ({ address, contractPosition, multicall }) => {
         const rewardAddress = '0x58488bB666d2da33F8E8938Dbdd582D2481D4183'.toLowerCase();
         const contract = this.pikaProtocolContractFactory.pikaProtocolVault({ address: contractPosition.address, network })
-        const rewardContract = this.pikaProtocolContractFactory.pikaProtocolVaultRewards({ address: rewardAddress, network });
+        const rewardContract = this.pikaProtocolVaultRewards(rewardAddress);
 
         const stakedToken = contractPosition.tokens.find(isSupplied)!;
         const rewardToken = contractPosition.tokens.find(isClaimable)!;
