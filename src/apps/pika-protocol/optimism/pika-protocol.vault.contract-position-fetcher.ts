@@ -35,6 +35,12 @@ export class OptimismPikaProtocolVaultContractPositionFetcher implements Positio
     @Inject(PikaProtocolContractFactory) private readonly pikaProtocolContractFactory: PikaProtocolContractFactory,
   ) { }
 
+  // Adds helper function to check the `balanceOf` PikaProtocolVault 
+  async getVaultBalance(vaultContractAddress: string, depositTokenAddress: string) {
+    const multicall = this.appToolkit.getMulticall(network);
+    const depositTokenContract = multicall.wrap(this.appToolkit.globalContracts.erc20({ network, address: depositTokenAddress }))
+    return await Promise.all([depositTokenContract.balanceOf(vaultContractAddress)])
+  }
 
   async getPositions() {
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
@@ -52,7 +58,7 @@ export class OptimismPikaProtocolVaultContractPositionFetcher implements Positio
 
         const contract = this.pikaProtocolContractFactory.pikaProtocolVault({ address, network });
 
-        const [balanceRaw] = await this.pikaProtocolContractFactory.getVaultBalance(contract.address, stakedToken.address, network);
+        const [balanceRaw] = await this.getVaultBalance(contract.address, stakedToken.address);
 
         const totalValueLocked = Number(balanceRaw) / 10 ** stakedToken.decimals;
 
