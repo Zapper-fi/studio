@@ -43,7 +43,7 @@ export class OptimismPikaProtocolBalanceFetcher implements BalanceFetcher {
 
         const [stakedBalanceRaw, rewardBalanceRaw] = await Promise.all(
           [
-            this.pikaProtocolContractFactory.getVaultBalance(contract.address, stakedToken.address, network),
+            multicall.wrap(contract).getShareBalance(address),
             multicall.wrap(rewardContract).getClaimableReward(address)
           ])
 
