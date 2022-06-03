@@ -1,19 +1,18 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { drillBalance } from '~app-toolkit';
-import { isClaimable, isSupplied } from '~position/position.utils';
-import { sumBy } from 'lodash';
+import { BigNumber } from 'ethers';
 
-import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
-import { BalanceFetcher } from '~balance/balance-fetcher.interface';
+import { drillBalance } from '~app-toolkit';
+import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
+import { isClaimable, isSupplied } from '~position/position.utils';
 import { Network } from '~types/network.interface';
+
+import { GoodghostingAbiV003, GoodGhostingContractFactory } from '../contracts';
 import { GoodGhostingGameConfigFetcherHelper } from '../helpers/good-ghosting.game.config-fetcher';
 
-import { GoodGhostingContractFactory } from '../contracts';
-import { ABIVersion, ZERO_BN, BN } from './constants';
+import { ABIVersion } from './constants';
 
 @Injectable()
-export class GoodGhostingBalanceFetcherHelper implements BalanceFetcher {
+export class GoodGhostingBalanceFetcherHelper {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(GoodGhostingContractFactory) private readonly goodGhostingContractFactory: GoodGhostingContractFactory,
@@ -37,7 +36,7 @@ export class GoodGhostingBalanceFetcherHelper implements BalanceFetcher {
     return this.goodGhostingContractFactory.goodghostingAbiV001(contractPosition);
   }
 
-  private async getGameBalances(network: Network, networkId: string, appId: string, groupId: string, address: string) {
+  async getGameBalances(network: Network, networkId: string, appId: string, groupId: string, address: string) {
     const gameConfigs = await this.goodGhostingGameConfigFetcherHelper.getGameConfigs(networkId);
     return this.appToolkit.helpers.contractPositionBalanceHelper.getContractPositionBalances({
       address,
@@ -47,70 +46,57 @@ export class GoodGhostingBalanceFetcherHelper implements BalanceFetcher {
       resolveBalances: async ({ address, multicall, contractPosition }) => {
         const incentiveTokenIndex = 2;
 
-        const balances = await Promise.all(
-          gameConfigs.map(async () => {
-            const stakedToken = contractPosition.tokens.find(isSupplied)!;
-            const rewardToken = contractPosition.tokens.find(isClaimable)!;
-            const incentiveToken = contractPosition.tokens[incentiveTokenIndex];
-            const gameConfig = gameConfigs.find(v => v.address === contractPosition.address);
-            const contract = this.contractProvider(gameConfig.contractVersion, contractPosition);
-            const [player, lastSegment, gameInterest] = await Promise.all([
-              multicall.wrap(contract).players(address),
-              multicall.wrap(contract).lastSegment(),
-              multicall.wrap(contract).totalGameInterest(),
-            ]);
+        const gameConfig = gameConfigs.find(v => v.address === contractPosition.address)!;
+        const stakedToken = contractPosition.tokens.find(isSupplied)!;
+        const rewardToken = contractPosition.tokens.find(isClaimable)!;
+        const incentiveToken = contractPosition.tokens[incentiveTokenIndex];
 
-            let winnerCount: BN;
-            let incentiveAmount: BN;
+        const contract = this.contractProvider(gameConfig.contractVersion, contractPosition);
+        const [player, lastSegment, gameInterest] = await Promise.all([
+          multicall.wrap(contract).players(address),
+          multicall.wrap(contract).lastSegment(),
+          multicall.wrap(contract).totalGameInterest(),
+        ]);
 
-            try {
-              [winnerCount, incentiveAmount] = await Promise.all([
-                multicall.wrap(contract).winnerCount(),
-                multicall.wrap(contract).totalIncentiveAmount(),
-              ]);
-            } catch (e) {
-              // older contracts don't have winnerCount and incentiveAmount variable, so it may revert.
-              // we don't need to do anything, just continue.
-            }
+        let winnerCount: BigNumber | null = null;
+        let incentiveAmount: BigNumber | null = null;
+        if (gameConfig.contractVersion === ABIVersion.v002 || gameConfig.contractVersion === ABIVersion.v003) {
+          [winnerCount, incentiveAmount] = await Promise.all([
+            multicall.wrap(contract as GoodghostingAbiV003).winnerCount(),
+            multicall.wrap(contract).totalIncentiveAmount(),
+          ]);
+        }
 
-            const amountPaid = player.amountPaid;
-            const mostRecentSegmentPaid = player.mostRecentSegmentPaid.toString();
-            const contractLastSegment = lastSegment.sub(1).toString();
-            let balance = amountPaid;
-            let playerIncentive = ZERO_BN;
+        const amountPaid = player.amountPaid;
+        const mostRecentSegmentPaid = player.mostRecentSegmentPaid.toString();
+        const contractLastSegment = lastSegment.sub(1).toString();
+        let balance = amountPaid;
+        let playerIncentive = BigNumber.from(0);
 
-            if (winnerCount && mostRecentSegmentPaid === contractLastSegment) {
-              const playerInterest = gameInterest.div(winnerCount);
-              playerIncentive = incentiveAmount.div(winnerCount);
+        if (winnerCount && incentiveAmount && mostRecentSegmentPaid === contractLastSegment) {
+          const playerInterest = gameInterest.div(winnerCount);
+          playerIncentive = incentiveAmount.div(winnerCount);
+          balance = balance.add(playerInterest);
+        }
 
-              balance = balance.add(playerInterest);
-            }
+        if (player.withdrawn) {
+          balance = BigNumber.from(0);
+        }
 
-            if (player.withdrawn) {
-              balance = ZERO_BN;
-            }
+        const stakedTokenBalance = drillBalance(stakedToken, amountPaid.toString());
+        const playerTokens = [stakedTokenBalance];
 
-            const stakedTokenBalance = drillBalance(stakedToken, amountPaid.toString());
-            const playerTokens = [stakedTokenBalance];
+        if (rewardToken) {
+          const claimableTokenBalance = drillBalance(rewardToken, balance.toString());
+          playerTokens.push(claimableTokenBalance);
+        }
 
-            if (rewardToken) {
-              const claimableTokenBalance = drillBalance(rewardToken, balance.toString());
-              playerTokens.push(claimableTokenBalance);
-            }
+        if (incentiveToken) {
+          const incentiveTokenBalance = drillBalance(incentiveToken, playerIncentive.toString());
+          playerTokens.push(incentiveTokenBalance);
+        }
 
-            if (incentiveToken) {
-              const incentiveTokenBalance = drillBalance(incentiveToken, playerIncentive.toString());
-              playerTokens.push(incentiveTokenBalance);
-            }
-
-            const tokens = playerTokens.filter(v => v.balanceUSD > 0);
-            const balanceUSD = sumBy(tokens, t => t.balanceUSD);
-
-            return { ...contractPosition, tokens, balanceUSD };
-          }),
-        );
-
-        return balances;
+        return playerTokens.filter(v => v.balanceUSD > 0);
       },
     });
   }

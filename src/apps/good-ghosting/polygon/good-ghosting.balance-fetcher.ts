@@ -5,9 +5,9 @@ import { Register } from '~app-toolkit/decorators';
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
 import { BalanceFetcher } from '~balance/balance-fetcher.interface';
 import { Network } from '~types/network.interface';
-import { NetworkId } from '../helpers/constants';
 
 import { GOOD_GHOSTING_DEFINITION } from '../good-ghosting.definition';
+import { NetworkId } from '../helpers/constants';
 import { GoodGhostingBalanceFetcherHelper } from '../helpers/good-ghosting.balance-fetcher-helper';
 
 const network = Network.POLYGON_MAINNET;

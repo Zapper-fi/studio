@@ -1,21 +1,24 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { GamesResponse } from './constants';
+import { Injectable } from '@nestjs/common';
 import axios from 'axios';
+
+import { SingleStakingFarmDefinition } from '~app-toolkit';
+
+import { GamesResponse } from './constants';
 
 @Injectable()
 export class GoodGhostingGameConfigFetcherHelper {
-  private async getGameConfigs(networkIdParam) {
+  async getGameConfigs(networkIdParam: string) {
     const url = `https://goodghosting-api.com/v1/games`;
 
     const response = await axios.get<GamesResponse>(url);
     const gameConfigs = response.data;
-    const farms = [];
+    const farms: (SingleStakingFarmDefinition & { contractVersion: string })[] = [];
 
     const gameContractAddresses = Object.keys(gameConfigs);
 
     for (let i = 0; i < gameContractAddresses.length; i += 1) {
       const gameContractAddress = gameContractAddresses[i];
-      const rewardTokenAddresses = [];
+      const rewardTokenAddresses: string[] = [];
 
       const { depositTokenAddress, rewardTokenAddress, id, contractVersion, incentiveTokenAddress, networkId } =
         gameConfigs[gameContractAddress];

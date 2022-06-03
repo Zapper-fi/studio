@@ -22,6 +22,8 @@ export type GamesResponse = Record<
     networkId: string;
     depositToken: string;
     liquidityToken: string;
+    rewardToken?: string;
+    incentiveToken?: string;
     gameName: string;
     contractVersion: string;
     isCapped: boolean;
@@ -36,6 +38,8 @@ export type GamesResponse = Record<
     paymentCount: string;
     depositTokenAddress: string;
     liquidityTokenAddress: string;
+    rewardTokenAddress?: string;
+    incentiveTokenAddress?: string;
     currentSegment: string;
     earlyWithdrawalFee: string;
     performanceFee: string;
