@@ -9,7 +9,7 @@ import { ContractPosition } from '~position/position.interface';
 import { isSupplied } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 
-import { LyraAvalonContractFactory, OptionToken } from '../contracts';
+import { LyraAvalonContractFactory, OptionToken, StakingRewards } from '../contracts';
 import { LYRA_AVALON_DEFINITION } from '../lyra-avalon.definition';
 
 import { OPTION_TYPES } from './helpers/consts';
@@ -24,6 +24,18 @@ export class OptimismLyraAvalonBalanceFetcher implements BalanceFetcher {
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(LyraAvalonContractFactory) private readonly contractFactory: LyraAvalonContractFactory,
   ) {}
+
+  async getStakingBalances(address: string) {
+    return this.appToolkit.helpers.singleStakingContractPositionBalanceHelper.getBalances<StakingRewards>({
+      address,
+      appId,
+      groupId: LYRA_AVALON_DEFINITION.groups.staking.id,
+      network,
+      resolveContract: ({ address, network }) => this.contractFactory.stakingRewards({ address, network }),
+      resolveStakedTokenBalance: ({ contract, address, multicall }) => multicall.wrap(contract).balanceOf(address),
+      resolveRewardTokenBalances: ({ contract, address, multicall }) => multicall.wrap(contract).earned(address),
+    });
+  }
 
   async getPoolBalances(address: string) {
     return await this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
@@ -84,12 +96,17 @@ export class OptimismLyraAvalonBalanceFetcher implements BalanceFetcher {
   }
 
   async getBalances(address: string) {
-    const [tokenBalances, optionsBalances] = await Promise.all([
+    const [stakingBalances, tokenBalances, optionsBalances] = await Promise.all([
+      this.getStakingBalances(address),
       this.getPoolBalances(address),
       this.getOptionsBalances(address),
     ]);
 
     return presentBalanceFetcherResponse([
+      {
+        label: 'Staking',
+        assets: stakingBalances,
+      },
       {
         label: 'Pools',
         assets: tokenBalances,
