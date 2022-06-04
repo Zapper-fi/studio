@@ -42,9 +42,10 @@ export class OptimismPikaProtocolBalanceFetcher implements BalanceFetcher {
   }
   async getFarmBalances(address: string) {
     return this.appToolkit.helpers.contractPositionBalanceHelper.getContractPositionBalances({
-      address, appId: PIKA_PROTOCOL_DEFINITION.id, groupId: PIKA_PROTOCOL_DEFINITION.groups.vault.id,
+      address,
+      appId: PIKA_PROTOCOL_DEFINITION.id,
+      groupId: PIKA_PROTOCOL_DEFINITION.groups.vault.id,
       network: Network.OPTIMISM_MAINNET,
-
       resolveBalances: async ({ address, contractPosition, multicall }) => {
         const rewardAddress = '0x58488bB666d2da33F8E8938Dbdd582D2481D4183'.toLowerCase();
         const contract = this.pikaProtocolContractFactory.pikaProtocolVault({ address: contractPosition.address, network })
@@ -61,7 +62,7 @@ export class OptimismPikaProtocolBalanceFetcher implements BalanceFetcher {
           ])
 
         return [
-          drillBalance(stakedToken, stakedBalanceRaw.toString()),
+          drillBalance(stakedToken, (Number(stakedBalanceRaw) / 100).toString()),
           drillBalance(rewardToken, rewardBalanceRaw.toString())
         ]
       }
