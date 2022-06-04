@@ -18,7 +18,8 @@
     "studio": "node ./scripts/run-cli.js",
     "test": "jest --runInBand --forceExit",
     "test:integration": "jest --runInBand --forceExit --config jest.integration.config.js",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@golevelup/nestjs-modules": "^0.5.0",
@@ -77,7 +78,9 @@
     "ethers": "^5.5.1",
     "graphql": "^15.5.1",
     "graphql-request": "^3.7.0",
+    "husky": "^8.0.1",
     "jest": "^27.5.1",
+    "lint-staged": "^13.0.0",
     "moment": "^2.29.2",
     "nodemon": "^2.0.15",
     "prettier": "^2.6.0",
