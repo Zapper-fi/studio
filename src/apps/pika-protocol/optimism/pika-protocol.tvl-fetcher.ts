@@ -7,6 +7,7 @@ import { TvlFetcher } from '~stats/tvl/tvl-fetcher.interface';
 import { Network } from '~types/network.interface';
 
 import { PIKA_PROTOCOL_DEFINITION } from '../pika-protocol.definition';
+
 import { PikaProtocolContractPositionDataProps } from './pika-protocol.vault.contract-position-fetcher';
 
 const appId = PIKA_PROTOCOL_DEFINITION.id;
