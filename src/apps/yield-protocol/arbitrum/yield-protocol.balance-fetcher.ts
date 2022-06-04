@@ -22,7 +22,7 @@ import { yieldV2ArbitrumSubgraph } from './yield-protocol.lend.token-fetcher';
 
 const network = Network.ARBITRUM_MAINNET;
 const appId = YIELD_PROTOCOL_DEFINITION.id;
-const CAULDRON = '0x23cc87FBEBDD67ccE167Fa9Ec6Ad3b7fE3892E30';
+const CAULDRON = '0x23cc87fbebdd67cce167fa9ec6ad3b7fe3892e30';
 
 type YieldVaultRes = {
   vaultOwner?: {
