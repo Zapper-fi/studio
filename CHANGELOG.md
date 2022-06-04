@@ -4,6 +4,15 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.54.2](https://github.com/Zapper-fi/studio/compare/v0.54.1...v0.54.2) (2022-06-04)
+
+
+### Bug Fixes
+
+* euler tvl ([#567](https://github.com/Zapper-fi/studio/issues/567)) ([c734b46](https://github.com/Zapper-fi/studio/commit/c734b46b2105c9cf180d046578e470e7ad3ef563))
+* good ghosting balance  ([#572](https://github.com/Zapper-fi/studio/issues/572)) ([ac3a9eb](https://github.com/Zapper-fi/studio/commit/ac3a9ebcbbd12b63778d36317553f6e54486437a))
+* updated liquidity of compound borrow contract position helper ([#566](https://github.com/Zapper-fi/studio/issues/566)) ([b6d1105](https://github.com/Zapper-fi/studio/commit/b6d11054087ac20138ad543cc738e50f2aa1d63f))
+
 ## [0.54.1](https://github.com/Zapper-fi/studio/compare/v0.54.0...v0.54.1) (2022-06-04)
 
 
