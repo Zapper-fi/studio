@@ -6,3 +6,4 @@ export { LiquidityToken__factory } from './LiquidityToken__factory';
 export { LyraRegistry__factory } from './LyraRegistry__factory';
 export { OptionMarket__factory } from './OptionMarket__factory';
 export { OptionToken__factory } from './OptionToken__factory';
+export { StakingRewards__factory } from './StakingRewards__factory';

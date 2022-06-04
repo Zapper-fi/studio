@@ -16,10 +16,17 @@ export const LYRA_AVALON_DEFINITION = appDefinition({
       type: GroupType.POSITION,
       label: 'Options',
     },
+
     pool: {
       id: 'pool',
       type: GroupType.TOKEN,
       label: 'Liquidity Pool',
+    },
+
+    staking: {
+      id: 'staking',
+      type: GroupType.TOKEN,
+      label: 'Staking',
     },
   },
 
