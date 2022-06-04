@@ -54,7 +54,9 @@ export class FantomSturdyLendingTokenFetcher implements PositionFetcher<AppToken
     if (!ethToken) return [];
 
     const endpoint = 'https://us-central1-stu-dashboard-a0ba2.cloudfunctions.net/getVaultMonitoring';
-    const tokenData = await axios.get<VaultMonitoringResponse>(endpoint).then(v => v.data);
+    const tokenData = (await axios.get<VaultMonitoringResponse>(endpoint).then(v => v.data)).filter(
+      data => data.chain === 'ftm',
+    );
 
     const tokens = tokenData.map(async data => {
       const symbol = data.tokens;

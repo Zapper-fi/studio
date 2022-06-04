@@ -81,6 +81,7 @@ export class GoodGhostingBalanceFetcherHelper {
 
         if (player.withdrawn) {
           balance = BigNumber.from(0);
+          return [];
         }
 
         const stakedTokenBalance = drillBalance(stakedToken, amountPaid.toString());
