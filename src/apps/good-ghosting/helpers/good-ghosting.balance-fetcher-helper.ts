@@ -18,7 +18,7 @@ export class GoodGhostingBalanceFetcherHelper {
     @Inject(GoodGhostingContractFactory) private readonly goodGhostingContractFactory: GoodGhostingContractFactory,
     @Inject(GoodGhostingGameConfigFetcherHelper)
     private readonly goodGhostingGameConfigFetcherHelper: GoodGhostingGameConfigFetcherHelper,
-  ) { }
+  ) {}
 
   private contractProvider(abiVersion, contractPosition) {
     if (abiVersion === ABIVersion.v001) {
@@ -81,7 +81,7 @@ export class GoodGhostingBalanceFetcherHelper {
 
         if (player.withdrawn) {
           balance = BigNumber.from(0);
-          return []
+          return [];
         }
 
         const stakedTokenBalance = drillBalance(stakedToken, amountPaid.toString());

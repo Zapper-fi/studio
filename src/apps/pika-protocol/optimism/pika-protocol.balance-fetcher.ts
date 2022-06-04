@@ -19,7 +19,7 @@ export class OptimismPikaProtocolBalanceFetcher implements BalanceFetcher {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(PikaProtocolContractFactory) private readonly pikaProtocolContractFactory: PikaProtocolContractFactory,
-  ) { }
+  ) {}
 
   async getBalances(address: string) {
     const [vaultBalances] = await Promise.all([this.getFarmBalances(address)]);

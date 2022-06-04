@@ -15,7 +15,7 @@ const network = Network.OPTIMISM_MAINNET;
 
 @Register.TvlFetcher({ appId, network })
 export class OptimismPikaProtocolTvlFetcher implements TvlFetcher {
-  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) { }
+  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
   async getTvl() {
     const tokens = await this.appToolkit.getAppContractPositions<PikaProtocolContractPositionDataProps>({

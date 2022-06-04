@@ -36,7 +36,7 @@ export class OptimismPikaProtocolVaultContractPositionFetcher implements Positio
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(PikaProtocolContractFactory) private readonly pikaProtocolContractFactory: PikaProtocolContractFactory,
-  ) { }
+  ) {}
 
   // Adds helper function to check the `balanceOf` PikaProtocolVault
   async getVaultBalance(vaultContractAddress: string, depositTokenAddress: string) {
