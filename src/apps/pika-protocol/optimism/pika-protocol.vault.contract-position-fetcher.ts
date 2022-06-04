@@ -23,14 +23,13 @@ const VAULTS = [
   {
     address: '0x2FaE8C7Edd26213cA1A88fC57B65352dbe353698'.toLowerCase(),
     stakedTokenAddress: '0x7F5c764cBc14f9669B88837ca1490cCa17c31607'.toLowerCase(),
-    rewardTokenAddress: '0x7F5c764cBc14f9669B88837ca1490cCa17c31607'.toLowerCase()
-  }
-
-]
+    rewardTokenAddress: '0x7F5c764cBc14f9669B88837ca1490cCa17c31607'.toLowerCase(),
+  },
+];
 
 export type PikaProtocolContractPositionDataProps = {
-  totalValueLocked: number
-}
+  totalValueLocked: number;
+};
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
 export class OptimismPikaProtocolVaultContractPositionFetcher implements PositionFetcher<ContractPosition> {
@@ -39,11 +38,13 @@ export class OptimismPikaProtocolVaultContractPositionFetcher implements Positio
     @Inject(PikaProtocolContractFactory) private readonly pikaProtocolContractFactory: PikaProtocolContractFactory,
   ) { }
 
-  // Adds helper function to check the `balanceOf` PikaProtocolVault 
+  // Adds helper function to check the `balanceOf` PikaProtocolVault
   async getVaultBalance(vaultContractAddress: string, depositTokenAddress: string) {
     const multicall = this.appToolkit.getMulticall(network);
-    const depositTokenContract = multicall.wrap(this.appToolkit.globalContracts.erc20({ network, address: depositTokenAddress }))
-    return await Promise.all([depositTokenContract.balanceOf(vaultContractAddress)])
+    const depositTokenContract = multicall.wrap(
+      this.appToolkit.globalContracts.erc20({ network, address: depositTokenAddress }),
+    );
+    return await Promise.all([depositTokenContract.balanceOf(vaultContractAddress)]);
   }
 
   async getPositions() {

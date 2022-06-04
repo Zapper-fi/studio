@@ -18,7 +18,11 @@ export class OptimismPikaProtocolTvlFetcher implements TvlFetcher {
   constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) { }
 
   async getTvl() {
-    const tokens = await this.appToolkit.getAppContractPositions<PikaProtocolContractPositionDataProps>({ appId, groupIds: [groupId], network });
+    const tokens = await this.appToolkit.getAppContractPositions<PikaProtocolContractPositionDataProps>({
+      appId,
+      groupIds: [groupId],
+      network,
+    });
 
     return sumBy(tokens, v => v.dataProps.totalValueLocked);
   }

@@ -4,6 +4,27 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.54.1](https://github.com/Zapper-fi/studio/compare/v0.54.0...v0.54.1) (2022-06-04)
+
+
+### Bug Fixes
+
+* **pika-protocol:** Fix Pika Protocol balance ([1fc62bb](https://github.com/Zapper-fi/studio/commit/1fc62bbf5098feb9703bffae448a0ffcef6b2469))
+
+## [0.54.0](https://github.com/Zapper-fi/studio/compare/v0.53.0...v0.54.0) (2022-06-04)
+
+
+### Features
+
+* **pika-protocol:** Support Pika Protocol ([#559](https://github.com/Zapper-fi/studio/issues/559)) ([9d820a0](https://github.com/Zapper-fi/studio/commit/9d820a05210568b2bbec76a281b80dca8e646203))
+
+
+### Bug Fixes
+
+* **good-ghosting:** Cache games API data for 15m to prevent 502 errors when trashing the endpoint ([a075d9c](https://github.com/Zapper-fi/studio/commit/a075d9cba296a43acae249bfea98d74938a8ff33))
+* **pika-protocol:** Add missing logo ([e40ac1b](https://github.com/Zapper-fi/studio/commit/e40ac1b1d446bcbcfbaff70fb04df1c7f1aec49e))
+* **pika-protocol:** Few linting errors because we absolutely need a pre-commit hook ([d2c3f98](https://github.com/Zapper-fi/studio/commit/d2c3f98d821a3fa6284b7fc49c9c249af6988681))
+
 ## [0.53.0](https://github.com/Zapper-fi/studio/compare/v0.52.1...v0.53.0) (2022-06-03)
 
 
