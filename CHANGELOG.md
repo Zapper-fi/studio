@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.54.1](https://github.com/Zapper-fi/studio/compare/v0.54.0...v0.54.1) (2022-06-04)
+
+
+### Bug Fixes
+
+* **pika-protocol:** Fix Pika Protocol balance ([1fc62bb](https://github.com/Zapper-fi/studio/commit/1fc62bbf5098feb9703bffae448a0ffcef6b2469))
+
 ## [0.54.0](https://github.com/Zapper-fi/studio/compare/v0.53.0...v0.54.0) (2022-06-04)
 
 
