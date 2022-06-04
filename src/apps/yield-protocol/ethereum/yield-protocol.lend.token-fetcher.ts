@@ -137,7 +137,7 @@ export class EthereumYieldProtocolLendTokenFetcher implements PositionFetcher<Ap
 
         if (!underlyingToken) return null;
 
-        let pricePerShare = 0;
+        let pricePerShare = 1;
         let price = underlyingToken.price;
 
         // if there is an associated pool, we estimate the value of a unit of fyToken to base
