@@ -15,7 +15,7 @@ import { Network } from '~types/network.interface';
 import { YieldProtocolContractFactory } from '../contracts';
 import { YIELD_PROTOCOL_DEFINITION } from '../yield-protocol.definition';
 
-import { CAULDRON } from './yield-protocol.balance-fetcher';
+import { LADLE } from './yield-protocol.balance-fetcher';
 import { yieldV2MainnetSubgraph } from './yield-protocol.lend.token-fetcher';
 
 const appId = YIELD_PROTOCOL_DEFINITION.id;
@@ -68,7 +68,25 @@ export class EthereumYieldProtocolBorrowContractPositionFetcher implements Posit
     });
 
     // use distinct art/ilk pairs as positions
-    const pairs = new Set([...vaults.map(v => ({ art: v.series.baseAsset.id, ilk: v.collateral.asset.id }))]);
+    const pairs: Map<string, { art: string; ilk: string }> = vaults.reduce((pairs, vault) => {
+      const {
+        series: {
+          baseAsset: { id: artAddress },
+        },
+        collateral: {
+          asset: { id: ilkAddress },
+        },
+      } = vault;
+
+      const artIlk = artAddress + ilkAddress;
+      const pairItem = { art: artAddress, ilk: ilkAddress };
+      const newPairs = pairs;
+      if (!pairs.has(artIlk)) {
+        newPairs.set(artIlk, pairItem);
+      }
+
+      return newPairs;
+    }, new Map());
 
     const positions = await Promise.all(
       [...pairs.values()].map(async pair => {
@@ -90,7 +108,7 @@ export class EthereumYieldProtocolBorrowContractPositionFetcher implements Posit
           type: ContractType.POSITION,
           appId,
           groupId,
-          address: CAULDRON,
+          address: LADLE,
           network,
           tokens,
           dataProps: {},
