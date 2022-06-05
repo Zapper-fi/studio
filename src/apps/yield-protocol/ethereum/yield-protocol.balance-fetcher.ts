@@ -153,7 +153,7 @@ export class EthereumYieldProtocolBalanceFetcher implements BalanceFetcher {
 
         const positionBalance: ContractPositionBalance<YieldVaultContractPositionDataProps> = {
           type: ContractType.POSITION,
-          address,
+          address: LADLE,
           appId,
           groupId: YIELD_PROTOCOL_DEFINITION.groups.borrow.id,
           network,
