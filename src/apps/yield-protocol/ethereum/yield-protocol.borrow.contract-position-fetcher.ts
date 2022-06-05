@@ -81,7 +81,7 @@ export class EthereumYieldProtocolBorrowContractPositionFetcher implements Posit
         const tokens = [supplied(ilk!), borrowed(art!)];
 
         const displayProps: DisplayProps = {
-          label: `Yield Vault`,
+          label: `Yield Debt/Collateral Pair`,
           secondaryLabel: `${getLabelFromToken(art)} Debt and ${getLabelFromToken(ilk)} Collateral`,
           images: [getImagesFromToken(art)[0], getImagesFromToken(ilk)[0]],
         };
