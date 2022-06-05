@@ -68,7 +68,25 @@ export class ArbitrumYieldProtocolBorrowContractPositionFetcher implements Posit
     });
 
     // use distinct art/ilk pairs as positions
-    const pairs = new Set([...vaults.map(v => ({ art: v.series.baseAsset.id, ilk: v.collateral.asset.id }))]);
+    const pairs: Map<string, { art: string; ilk: string }> = vaults.reduce((pairs, vault) => {
+      const {
+        series: {
+          baseAsset: { id: artAddress },
+        },
+        collateral: {
+          asset: { id: ilkAddress },
+        },
+      } = vault;
+
+      const artIlk = artAddress + ilkAddress;
+      const pairItem = { art: artAddress, ilk: ilkAddress };
+      const newPairs = pairs;
+      if (!pairs.has(artIlk)) {
+        newPairs.set(artIlk, pairItem);
+      }
+
+      return newPairs;
+    }, new Map());
 
     const positions = await Promise.all(
       [...pairs.values()].map(async pair => {
