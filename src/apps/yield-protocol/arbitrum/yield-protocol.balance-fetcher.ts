@@ -154,7 +154,7 @@ export class ArbitrumYieldProtocolBalanceFetcher implements BalanceFetcher {
 
         const positionBalance: ContractPositionBalance<YieldVaultContractPositionDataProps> = {
           type: ContractType.POSITION,
-          address: LADLE,
+          address: LADLE, // use the ladle here because the user interacts with the ladle to open a position
           appId,
           groupId: YIELD_PROTOCOL_DEFINITION.groups.borrow.id,
           network,
