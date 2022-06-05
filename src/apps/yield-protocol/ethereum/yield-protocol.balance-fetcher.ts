@@ -21,7 +21,8 @@ import { formatMaturity, yieldV2MainnetSubgraph } from './yield-protocol.lend.to
 
 const network = Network.ETHEREUM_MAINNET;
 const appId = YIELD_PROTOCOL_DEFINITION.id;
-const CAULDRON = '0xc88191f8cb8e6d4a668b047c1c8503432c3ca867';
+export const CAULDRON = '0xc88191f8cb8e6d4a668b047c1c8503432c3ca867';
+export const LADLE = '0x6cb18ff2a33e981d1e38a663ca056c0a5265066a';
 
 type YieldVaultRes = {
   vaultOwner?: {
