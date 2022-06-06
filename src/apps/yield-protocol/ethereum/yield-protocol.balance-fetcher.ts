@@ -134,11 +134,8 @@ export class EthereumYieldProtocolBalanceFetcher implements BalanceFetcher {
 
         const multicall = this.appToolkit.getMulticall(network);
         const cauldron = this.yieldProtocolContractFactory.cauldron({ address: CAULDRON, network });
-        const [{ dec: cauldronPairDecimals }, { ratio }] = await Promise.all([
-          multicall.wrap(cauldron).debt(baseId, ilkId),
-          multicall.wrap(cauldron).spotOracles(baseId, ilkId),
-        ]);
-        const minCollatRatio = ratio / 10 ** cauldronPairDecimals;
+        const { ratio } = await multicall.wrap(cauldron).spotOracles(baseId, ilkId);
+        const minCollatRatio = ratio / 10 ** 6; // ratio uses 6 decimals for all pairs
         const minCollateralizationRatio = `${(minCollatRatio * 100).toString()}%`;
         const liqPrice = (debtAmount * minCollatRatio) / collateralAmount;
         const liquidationPrice = `1 ${ilk.symbol}: ${liqPrice.toFixed(2)} ${art.symbol}`;
