@@ -16,13 +16,13 @@ export class FantomMarketXyzBalanceFetcher implements BalanceFetcher {
     @Inject(CompoundContractFactory)
     private readonly compoundContractFactory: CompoundContractFactory,
     @Inject(MarketXyzLendingBalanceHelper)
-    private readonly MarketXyzLendingBalanceHelper: MarketXyzLendingBalanceHelper,
+    private readonly marketXyzLendingBalanceHelper: MarketXyzLendingBalanceHelper,
     @Inject(CompoundLendingMetaHelper)
     private readonly compoundLendingMetaHelper: CompoundLendingMetaHelper,
   ) {}
 
   async getLendingBalances(address: string) {
-    return this.MarketXyzLendingBalanceHelper.getBalances({
+    return this.marketXyzLendingBalanceHelper.getBalances({
       address,
       appId: MARKET_XYZ_DEFINITION.id,
       supplyGroupId: MARKET_XYZ_DEFINITION.groups.supply.id,

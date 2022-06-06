@@ -92,26 +92,31 @@ export class CacheOnIntervalService implements OnModuleInit, OnModuleDestroy {
     }
 
     liveData
-      .then(d => {
+      .then((d: any) => {
         return cacheManager.set(cacheKey, d);
       })
       .then(() => {
         logger.log(`Cache ready for for ${instance.constructor.name}#${methodName}`);
       })
-      .catch(e => {
+      .catch((e: Error) => {
         logger.error(`@CacheOnInterval error init for ${instance.constructor.name}#${methodName}: ${e.message}`);
         logger.error(chalk.gray(e.stack));
       });
 
     // Save the interval
-    const interval = setInterval(async () => {
-      try {
-        const liveData = await methodRef.apply(instance);
-        await cacheManager.set(cacheKey, liveData);
-      } catch (e) {
-        logger.error(`@CacheOnInterval error for ${instance.constructor.name}#${methodName}: ${e.message}`);
-        logger.error(chalk.gray(e.stack));
-      }
+    const interval = setInterval(() => {
+      methodRef
+        .apply(instance)
+        .then((liveData: any) => {
+          cacheManager.set(cacheKey, liveData).catch((e: Error) => {
+            logger.error(`@CacheOnInterval caching error for ${instance.constructor.name}#${methodName}: ${e.message}`);
+            logger.error(chalk.gray(e.stack));
+          });
+        })
+        .catch((e: Error) => {
+          logger.error(`@CacheOnInterval target error for ${instance.constructor.name}#${methodName}: ${e.message}`);
+          logger.error(chalk.gray(e.stack));
+        });
     }, cacheTimeout);
     this.intervals.push(interval);
   }
