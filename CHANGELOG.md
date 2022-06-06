@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.55.1](https://github.com/Zapper-fi/studio/compare/v0.55.0...v0.55.1) (2022-06-06)
+
+
+### Bug Fixes
+
+* **build:** Remove Husky prepare script ([7dcb4a4](https://github.com/Zapper-fi/studio/commit/7dcb4a4ff76cb9f08560721d94984c48b83d06e6))
+
 ## [0.55.0](https://github.com/Zapper-fi/studio/compare/v0.54.2...v0.55.0) (2022-06-06)
 
 
