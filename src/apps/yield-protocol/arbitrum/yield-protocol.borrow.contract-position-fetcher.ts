@@ -1,6 +1,6 @@
 import { Inject } from '@nestjs/common';
-import { gql } from 'graphql-request';
-import { compact } from 'lodash';
+import { ethers } from 'ethers';
+import { compact, flatten, isEqual, uniqWith } from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
@@ -13,46 +13,21 @@ import { borrowed, supplied } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 
 import { YieldProtocolContractFactory } from '../contracts';
+import {
+  artsQuery,
+  ilksQuery,
+  YieldArtsRes,
+  YieldIlksRes,
+  YieldVaultContractPositionDataProps,
+} from '../ethereum/yield-protocol.borrow.contract-position-fetcher';
 import { YIELD_PROTOCOL_DEFINITION } from '../yield-protocol.definition';
 
-import { LADLE } from './yield-protocol.balance-fetcher';
+import { CAULDRON, LADLE } from './yield-protocol.balance-fetcher';
 import { yieldV2ArbitrumSubgraph } from './yield-protocol.lend.token-fetcher';
 
 const appId = YIELD_PROTOCOL_DEFINITION.id;
 const groupId = YIELD_PROTOCOL_DEFINITION.groups.borrow.id;
 const network = Network.ARBITRUM_MAINNET;
-
-type YieldVaultsRes = {
-  vaults: {
-    series: {
-      baseAsset: {
-        id: string;
-      };
-    };
-    collateral: {
-      asset: {
-        id: string;
-      };
-    };
-  }[];
-};
-
-const vaultsQuery = gql`
-  {
-    vaults {
-      series {
-        baseAsset {
-          id
-        }
-      }
-      collateral {
-        asset {
-          id
-        }
-      }
-    }
-  }
-`;
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
 export class ArbitrumYieldProtocolBorrowContractPositionFetcher implements PositionFetcher<ContractPosition> {
@@ -62,62 +37,76 @@ export class ArbitrumYieldProtocolBorrowContractPositionFetcher implements Posit
   ) {}
 
   async getPositions() {
-    const { vaults } = await this.appToolkit.helpers.theGraphHelper.request<YieldVaultsRes>({
+    const multicall = this.appToolkit.getMulticall(network);
+    const cauldron = this.yieldProtocolContractFactory.cauldron({ address: CAULDRON, network });
+
+    const { assets: ilks } = await this.appToolkit.helpers.theGraphHelper.request<YieldIlksRes>({
       endpoint: yieldV2ArbitrumSubgraph,
-      query: vaultsQuery,
+      query: ilksQuery,
     });
 
-    // use distinct art/ilk pairs as positions
-    const pairs: Map<string, { art: string; ilk: string }> = vaults.reduce((pairs, vault) => {
-      const {
-        series: {
-          baseAsset: { id: artAddress },
-        },
-        collateral: {
-          asset: { id: ilkAddress },
-        },
-      } = vault;
+    const { seriesEntities: artsRes } = await this.appToolkit.helpers.theGraphHelper.request<YieldArtsRes>({
+      endpoint: yieldV2ArbitrumSubgraph,
+      query: artsQuery,
+    });
 
-      const artIlk = artAddress + ilkAddress;
-      const pairItem = { art: artAddress, ilk: ilkAddress };
-      const newPairs = pairs;
-      if (!pairs.has(artIlk)) {
-        newPairs.set(artIlk, pairItem);
-      }
-
-      return newPairs;
-    }, new Map());
+    // get distinct debt assets
+    const distinctArts = uniqWith(artsRes, isEqual);
 
     const positions = await Promise.all(
-      [...pairs.values()].map(async pair => {
+      ilks.map(async ilk => {
+        const { assetId: ilkId, id: ilkAddress } = ilk;
         const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
-        const art = baseTokens.find(v => v.address === pair.art.toLowerCase());
-        const ilk = baseTokens.find(v => v.address === pair.ilk.toLowerCase());
+        const _ilk = baseTokens.find(v => v.address === ilkAddress.toLowerCase());
 
-        if (!art || !ilk) return null;
+        if (!_ilk) return;
 
-        const tokens = [supplied(ilk!), borrowed(art!)];
+        return await Promise.all(
+          distinctArts.map(async art => {
+            const {
+              baseAsset: { assetId: artId, id: artAddress },
+            } = art;
 
-        const displayProps: DisplayProps = {
-          label: `Yield Debt/Collateral Pair`,
-          secondaryLabel: `${getLabelFromToken(art)} Debt and ${getLabelFromToken(ilk)} Collateral`,
-          images: [getImagesFromToken(art)[0], getImagesFromToken(ilk)[0]],
-        };
+            const _art = baseTokens.find(v => v.address === artAddress.toLowerCase());
+            if (!_art) return null;
 
-        const position: ContractPosition = {
-          type: ContractType.POSITION,
-          appId,
-          groupId,
-          address: LADLE,
-          network,
-          tokens,
-          dataProps: {},
-          displayProps,
-        };
+            const [{ max: maxDebt }, { ratio }] = await Promise.all([
+              multicall.wrap(cauldron).debt(artId, ilkId),
+              multicall.wrap(cauldron).spotOracles(artId, ilkId),
+            ]);
 
-        return position;
+            // assume this is an invalid art/ilk pair if the max debt has not been set
+            if (maxDebt.eq(ethers.constants.Zero)) return null;
+
+            const minCollatRatio = ratio / 10 ** 6; // ratio uses 6 decimals for all pairs
+            const minCollateralizationRatio = `${(minCollatRatio * 100).toString()}%`;
+
+            const tokens = [supplied(_ilk), borrowed(_art)];
+
+            const displayProps: DisplayProps = {
+              label: `Yield Debt/Collateral Pair`,
+              secondaryLabel: `${getLabelFromToken(_art)} Debt and ${getLabelFromToken(_ilk)} Collateral`,
+              images: [getImagesFromToken(_art)[0], getImagesFromToken(_ilk)[0]],
+            };
+
+            const position: ContractPosition<YieldVaultContractPositionDataProps> = {
+              type: ContractType.POSITION,
+              appId,
+              groupId,
+              address: LADLE,
+              network,
+              tokens,
+              dataProps: {
+                minCollateralizationRatio,
+              },
+              displayProps,
+            };
+
+            return position;
+          }),
+        );
       }),
     );
-    return compact(positions);
+    return compact(flatten(positions));
   }
 }

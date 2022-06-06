@@ -23,14 +23,14 @@ const appId = YIELD_PROTOCOL_DEFINITION.id;
 const groupId = YIELD_PROTOCOL_DEFINITION.groups.borrow.id;
 const network = Network.ETHEREUM_MAINNET;
 
-type YieldIlksRes = {
+export type YieldIlksRes = {
   assets: {
     id: string;
     assetId: string;
   }[];
 };
 
-type YieldArtsRes = {
+export type YieldArtsRes = {
   seriesEntities: {
     baseAsset: {
       id: string;
@@ -39,11 +39,11 @@ type YieldArtsRes = {
   }[];
 };
 
-type YieldVaultContractPositionDataProps = {
+export type YieldVaultContractPositionDataProps = {
   minCollateralizationRatio: string;
 };
 
-const ilksQuery = gql`
+export const ilksQuery = gql`
   {
     assets {
       id
@@ -52,7 +52,7 @@ const ilksQuery = gql`
   }
 `;
 
-const artsQuery = gql`
+export const artsQuery = gql`
   {
     seriesEntities {
       baseAsset {
