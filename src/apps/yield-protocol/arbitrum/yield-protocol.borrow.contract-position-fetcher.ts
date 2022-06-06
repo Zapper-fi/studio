@@ -84,8 +84,7 @@ export class ArbitrumYieldProtocolBorrowContractPositionFetcher implements Posit
             const tokens = [supplied(_ilk), borrowed(_art)];
 
             const displayProps: DisplayProps = {
-              label: `Yield Debt/Collateral Pair`,
-              secondaryLabel: `${getLabelFromToken(_art)} Debt and ${getLabelFromToken(_ilk)} Collateral`,
+              label: `Yield ${getLabelFromToken(_art)} Debt and ${getLabelFromToken(_ilk)} Collateral`,
               images: [getImagesFromToken(_art)[0], getImagesFromToken(_ilk)[0]],
             };
 
