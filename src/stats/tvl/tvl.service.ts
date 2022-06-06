@@ -1,4 +1,4 @@
-import { Inject, Injectable, Logger, NotFoundException } from '@nestjs/common';
+import { Inject, Injectable, NotFoundException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import Axios, { AxiosInstance } from 'axios';
 
@@ -17,7 +17,6 @@ type AppTvl = {
 @Injectable()
 export class TvlService {
   private readonly axios: AxiosInstance;
-  private logger = new Logger(TvlService.name);
 
   constructor(
     @Inject(TvlFetcherRegistry) private readonly tvlFetcherRegistry: TvlFetcherRegistry,
