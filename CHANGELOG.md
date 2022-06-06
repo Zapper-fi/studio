@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.55.0](https://github.com/Zapper-fi/studio/compare/v0.54.2...v0.55.0) (2022-06-06)
+
+
+### Features
+
+* **yield-protocol:** Integrate Yield Protocol ([#562](https://github.com/Zapper-fi/studio/issues/562)) ([df920e0](https://github.com/Zapper-fi/studio/commit/df920e082f793b0221ce54678a613656f40777ac))
+
+
+### Bug Fixes
+
+* **yield-protocol:** Add missing logo ([420acaa](https://github.com/Zapper-fi/studio/commit/420acaa1e7d804a8de9a78ee61843a4a937ecca2))
+
 ## [0.54.2](https://github.com/Zapper-fi/studio/compare/v0.54.1...v0.54.2) (2022-06-04)
 
 
