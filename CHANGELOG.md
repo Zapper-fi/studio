@@ -4,6 +4,19 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.56.0](https://github.com/Zapper-fi/studio/compare/v0.55.1...v0.56.0) (2022-06-06)
+
+
+### Features
+
+* **ci:** Enforce strict promise rules on linter ([#581](https://github.com/Zapper-fi/studio/issues/581)) ([0a6a22f](https://github.com/Zapper-fi/studio/commit/0a6a22f6f7691a2ad1d1459ff0a45b8e134d182d))
+* **tvl:** Use Zapper API as TVL fallback ([#579](https://github.com/Zapper-fi/studio/issues/579)) ([7be18f9](https://github.com/Zapper-fi/studio/commit/7be18f974e354f03af5d2a12feaee00ead4bd1c8))
+
+
+### Bug Fixes
+
+* use undefined for tertiary label before maturity to prevent "-" render ([#582](https://github.com/Zapper-fi/studio/issues/582)) ([7af8a84](https://github.com/Zapper-fi/studio/commit/7af8a8418fef08b0469854a180f915566aafdfcd))
+
 ## [0.55.1](https://github.com/Zapper-fi/studio/compare/v0.55.0...v0.55.1) (2022-06-06)
 
 
