@@ -142,9 +142,9 @@ export class EthereumYieldProtocolBalanceFetcher implements BalanceFetcher {
 
         // display props
         const displayProps: DisplayProps = {
-          label: `Yield Vault`,
-          secondaryLabel: `${getLabelFromToken(art)} Debt and ${getLabelFromToken(ilk)} Collateral`,
-          tertiaryLabel: formatMaturity(maturity),
+          label: `Yield ${getLabelFromToken(art)} Debt and ${getLabelFromToken(ilk)} Collateral Vault, ${formatMaturity(
+            maturity,
+          )}`,
           images: [getImagesFromToken(art)[0], getImagesFromToken(ilk)[0]],
         };
 
