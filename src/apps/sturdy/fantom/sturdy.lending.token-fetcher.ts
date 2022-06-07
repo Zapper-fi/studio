@@ -16,9 +16,9 @@ import { AppTokenPosition } from '~position/position.interface';
 import { BaseToken } from '~position/token.interface';
 import { Network } from '~types/network.interface';
 
-import { VaultMonitoringResponse, cacheOnIntervalKeyCreationHelper, TIMEOUT_DURATION } from '../helpers/constants';
 import { SturdyContractFactory } from '../contracts';
 import { STURDY_DEFINITION } from '../sturdy.definition';
+import { VaultMonitoringResponse, cacheOnIntervalKeyCreationHelper, TIMEOUT_DURATION } from '../helpers/constants';
 
 const appId = STURDY_DEFINITION.id;
 const groupId = STURDY_DEFINITION.groups.lending.id;
