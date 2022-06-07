@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.56.2](https://github.com/Zapper-fi/studio/compare/v0.56.1...v0.56.2) (2022-06-07)
+
+
+### Bug Fixes
+
+* **utils:** Fix drill balance share percentage ([dda0731](https://github.com/Zapper-fi/studio/commit/dda07315604bc4c86a32933e98645edb18e0b3a3))
+
 ## [0.56.1](https://github.com/Zapper-fi/studio/compare/v0.56.0...v0.56.1) (2022-06-06)
 
 
