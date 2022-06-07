@@ -87,6 +87,8 @@ export class EthereumEulerETokenTokenFetcher implements PositionFetcher<AppToken
 
         const pricePerShare = Number(totalSupply.toString()) / Number(market.totalBalances);
 
+        const liquidity = Number(totalSupply) * pricePerShare;
+
         return {
           address: market.eTokenAddress,
           symbol: `E${market.symbol}`,
@@ -111,6 +113,12 @@ export class EthereumEulerETokenTokenFetcher implements PositionFetcher<AppToken
             label: `Euler E token ${market.name}`,
             secondaryLabel: buildDollarDisplayItem(pricePerShare),
             images: getImagesFromToken(underlyingToken),
+            statsItems: [
+              {
+                label: 'Liquidity',
+                value: buildDollarDisplayItem(liquidity),
+              },
+            ],
           },
           appId,
           groupId,

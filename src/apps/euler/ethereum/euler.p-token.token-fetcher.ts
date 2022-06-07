@@ -83,6 +83,8 @@ export class EthereumEulerPTokenTokenFetcher implements PositionFetcher<AppToken
 
         if (totalSupply.isZero() || !underlyingToken) return null;
 
+        const liquidity = Number(totalSupply) * underlyingToken.price;
+
         return {
           address: market.pTokenAddress,
           symbol: `P${market.symbol}`,
@@ -104,6 +106,12 @@ export class EthereumEulerPTokenTokenFetcher implements PositionFetcher<AppToken
             label: `Euler P token ${market.name}`,
             secondaryLabel: buildDollarDisplayItem(underlyingToken.price),
             images: getImagesFromToken(underlyingToken),
+            statsItems: [
+              {
+                label: 'Liquidity',
+                value: buildDollarDisplayItem(liquidity),
+              },
+            ],
           },
           appId,
           groupId,
