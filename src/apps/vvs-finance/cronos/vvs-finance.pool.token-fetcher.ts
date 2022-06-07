@@ -6,7 +6,7 @@ import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
-import { VvsFinanceContractFactory, VvsCraftsman } from '../contracts';
+import { VvsFinanceContractFactory, VvsFactory } from '../contracts';
 import { VVS_FINANCE_DEFINITION } from '../vvs-finance.definition';
 
 import { CronosVvsFinancePoolAddressCacheManager } from './vvs-finance.pool.cache-manager';
@@ -26,14 +26,14 @@ export class CronosVvsFinancePoolTokenFetcher implements PositionFetcher<AppToke
   ) {}
 
   getPositions() {
-    return this.poolTokenHelper.getTokens<VvsCraftsman, UniswapPair>({
+    return this.poolTokenHelper.getTokens<VvsFactory, UniswapPair>({
       network,
       appId,
       groupId,
       minLiquidity: 10000,
       fee: 0.003,
-      factoryAddress: '0xDccd6455AE04b03d785F12196B492b18129564bc',
-      resolveFactoryContract: opts => this.contractFactory.vvsCraftsman(opts),
+      factoryAddress: '0x3B44B2a187a7b3824131F8db5a74194D0a42Fc15',
+      resolveFactoryContract: opts => this.contractFactory.vvsFactory(opts),
       resolvePoolContract: opts => this.contractFactory.vvsPair(opts),
       resolvePoolTokenAddresses: () => this.vvsFinancePoolAddressCacheManager.getPoolAddresses(),
       resolvePoolTokenSymbol: ({ multicall, poolContract }) => multicall.wrap(poolContract).symbol(),

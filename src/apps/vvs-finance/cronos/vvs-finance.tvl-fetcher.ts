@@ -19,8 +19,8 @@ const vvsFactoriesQuery = gql`
 
 interface VvsFactoriesQueryResult {
   vvsFactories: {
-    totalLiquidityUSD: string
-  }[],
+    totalLiquidityUSD: string;
+  }[];
 }
 
 const CRAFTSMAN_CONTRACT_ADDRESS = '0xDccd6455AE04b03d785F12196B492b18129564bc';
@@ -39,11 +39,7 @@ export class CronosVvsFinanceTvlFetcher implements TvlFetcher {
     });
 
     const [vvsFactories, vvsToken, stakedVvsBalance] = await Promise.all([
-      request<VvsFactoriesQueryResult>(
-        graphEndpoint,
-        vvsFactoriesQuery,
-        { tokenId: VVS_TOKEN_ADDRESS.toLowerCase() },
-      ),
+      request<VvsFactoriesQueryResult>(graphEndpoint, vvsFactoriesQuery, { tokenId: VVS_TOKEN_ADDRESS.toLowerCase() }),
       this.toolkit.getBaseTokenPrice({
         address: VVS_TOKEN_ADDRESS,
         network,

@@ -6,11 +6,7 @@ import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation
 import { BalanceFetcher } from '~balance/balance-fetcher.interface';
 import { Network } from '~types/network.interface';
 
-import {
-  VvsFinanceContractFactory,
-  VvsCraftsman,
-  VvsCraftsmanV2,
-} from '../contracts';
+import { VvsFinanceContractFactory, VvsCraftsman, VvsCraftsmanV2 } from '../contracts';
 import { VVS_FINANCE_DEFINITION } from '../vvs-finance.definition';
 
 const appId = VVS_FINANCE_DEFINITION.id;
@@ -40,18 +36,17 @@ export class CronosVvsFinanceBalanceFetcher implements BalanceFetcher {
       network,
       groupId: VVS_FINANCE_DEFINITION.groups.farm.id,
       resolveChefContract: ({ contractAddress }) =>
-      this.contractFactory.vvsCraftsman({ network, address: contractAddress }),
+        this.contractFactory.vvsCraftsman({ network, address: contractAddress }),
       resolveStakedTokenBalance: this.appToolkit.helpers.masterChefDefaultStakedBalanceStrategy.build({
-        resolveStakedBalance: async ({ multicall, contract, contractPosition }) => (
+        resolveStakedBalance: async ({ multicall, contract, contractPosition }) =>
           multicall
-          .wrap(contract)
-          .userInfo(contractPosition.dataProps.poolIndex, address)
-          .then(v => v.amount)
-        ),
+            .wrap(contract)
+            .userInfo(contractPosition.dataProps.poolIndex, address)
+            .then(v => v.amount),
       }),
       resolveClaimableTokenBalances: this.appToolkit.helpers.masterChefDefaultClaimableBalanceStrategy.build({
         resolveClaimableBalance: ({ multicall, contract, contractPosition }) =>
-        multicall.wrap(contract).pendingVVS(contractPosition.dataProps.poolIndex, address),
+          multicall.wrap(contract).pendingVVS(contractPosition.dataProps.poolIndex, address),
       }),
     });
   }
@@ -80,11 +75,7 @@ export class CronosVvsFinanceBalanceFetcher implements BalanceFetcher {
   }
 
   async getBalances(address: string) {
-    const [
-      poolBalances,
-      farmBalances,
-      farmV2Balances,
-    ] = await Promise.all([
+    const [poolBalances, farmBalances, farmV2Balances] = await Promise.all([
       this.getPoolBalances(address),
       this.getFarmBalances(address),
       this.getFarmV2Balances(address),

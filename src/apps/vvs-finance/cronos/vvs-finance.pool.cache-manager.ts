@@ -50,7 +50,10 @@ export class CronosVvsFinancePoolAddressCacheManager {
         const code = await provider.getCode(lpTokenAddress);
         if (code === '0x') return false;
 
-        const symbol = await multicall.wrap(lpTokenContract).symbol().catch(_err => '');
+        const symbol = await multicall
+          .wrap(lpTokenContract)
+          .symbol()
+          .catch(_err => '');
 
         const isVvsLp = symbol === 'VVS-LP';
         if (!isVvsLp) return null;
@@ -72,29 +75,34 @@ export class CronosVvsFinancePoolAddressCacheManager {
       this.contractFactory.vvsCraftsmanV2({
         address: '0xbc149c62EFe8AFC61728fC58b1b66a0661712e76',
         network,
-      })
+      }),
     );
 
     const resolvedPoolIds: BigNumber[] = [];
     let index = 0;
-    while(true) {
+    let indexWithinRange = true;
+    while (indexWithinRange) {
       try {
-        const poolId = await craftsmanV2Contract.poolIds(index)
+        const poolId = await craftsmanV2Contract.poolIds(index);
         resolvedPoolIds.push(poolId);
         index++;
       } catch (_error) {
         // index out of range
-        break;
+        indexWithinRange = false;
       }
     }
 
-    const pools = await Promise.all(resolvedPoolIds.map(async poolId => {
-      const { lpToken, accVVSPerShare } = await craftsmanV2Contract.poolInfo(poolId);
+    const pools = await Promise.all(
+      resolvedPoolIds.map(async poolId => {
+        const { lpToken, accVVSPerShare } = await craftsmanV2Contract.poolInfo(poolId);
 
-      return {
-        poolId, lpToken, accVVSPerShare,
-      }
-    }));
+        return {
+          poolId,
+          lpToken,
+          accVVSPerShare,
+        };
+      }),
+    );
 
     return pools;
   }
@@ -119,7 +127,10 @@ export class CronosVvsFinancePoolAddressCacheManager {
         const code = await provider.getCode(lpTokenAddress);
         if (code === '0x') return false;
 
-        const symbol = await multicall.wrap(lpTokenContract).symbol().catch(_err => '');
+        const symbol = await multicall
+          .wrap(lpTokenContract)
+          .symbol()
+          .catch(_err => '');
 
         const isVvsLp = symbol === 'VVS-LP';
         if (!isVvsLp) return null;
@@ -136,12 +147,14 @@ export class CronosVvsFinancePoolAddressCacheManager {
   }
 
   async getPoolAddresses(): Promise<string[]> {
-    const [topPoolAddresses, craftsmanPoolAddresses, craftsmanV2PoolAddresses, staticPoolAddresses] = await Promise.all([
-      this.getTopPoolAddresses(),
-      this.getCraftsmanPoolAddresses(),
-      this.getCraftsmanV2PoolAddresses(),
-      this.getStaticPoolAddresses(),
-    ]);
+    const [topPoolAddresses, craftsmanPoolAddresses, craftsmanV2PoolAddresses, staticPoolAddresses] = await Promise.all(
+      [
+        this.getTopPoolAddresses(),
+        this.getCraftsmanPoolAddresses(),
+        this.getCraftsmanV2PoolAddresses(),
+        this.getStaticPoolAddresses(),
+      ],
+    );
 
     return uniq([...topPoolAddresses, ...craftsmanPoolAddresses, ...craftsmanV2PoolAddresses, ...staticPoolAddresses]);
   }

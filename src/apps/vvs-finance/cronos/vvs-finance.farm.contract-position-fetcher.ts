@@ -2,8 +2,8 @@ import { Inject } from '@nestjs/common';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
-import { PositionFetcher } from '~position/position-fetcher.interface';
 import { RewardRateUnit } from '~app-toolkit/helpers/master-chef/master-chef.contract-position-helper';
+import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
@@ -22,32 +22,37 @@ export class CronosVvsFinanceFarmContractPositionFetcher implements PositionFetc
   ) {}
 
   async getPositions() {
-    const positions = await this.appToolkit.helpers.masterChefContractPositionHelper.getContractPositions<VvsCraftsman>({
-      network,
-      groupId,
-      appId,
-      address: '0xDccd6455AE04b03d785F12196B492b18129564bc',
-      dependencies: [{ appId, groupIds: [VVS_FINANCE_DEFINITION.groups.pool.id], network }],
-      resolveContract: opts => this.contractFactory.vvsCraftsman(opts),
-      resolvePoolLength: ({ multicall, contract }) => multicall.wrap(contract).poolLength(),
-      resolveDepositTokenAddress: ({ multicall, contract, poolIndex }) =>
-        multicall.wrap(contract).poolInfo(poolIndex).then(pool => pool.lpToken),
-      resolveRewardTokenAddresses: ({ multicall, contract }) => multicall.wrap(contract).vvs(),
-      rewardRateUnit: RewardRateUnit.BLOCK,
-      resolveRewardRate: this.appToolkit.helpers.masterChefDefaultRewardsPerBlockStrategy.build({
-        resolvePoolAllocPoints: ({ multicall, contract, poolIndex }) =>
+    const positions = await this.appToolkit.helpers.masterChefContractPositionHelper.getContractPositions<VvsCraftsman>(
+      {
+        network,
+        groupId,
+        appId,
+        address: '0xDccd6455AE04b03d785F12196B492b18129564bc',
+        dependencies: [{ appId, groupIds: [VVS_FINANCE_DEFINITION.groups.pool.id], network }],
+        resolveContract: opts => this.contractFactory.vvsCraftsman(opts),
+        resolvePoolLength: ({ multicall, contract }) => multicall.wrap(contract).poolLength(),
+        resolveDepositTokenAddress: ({ multicall, contract, poolIndex }) =>
           multicall
             .wrap(contract)
             .poolInfo(poolIndex)
-            .then(i => i.allocPoint),
-        resolveTotalAllocPoints: async ({ multicall, contract /*, poolIndex */ }) => {
-          return  multicall.wrap(contract).totalAllocPoint()
-        },
-        resolveTotalRewardRate: async ({ multicall, contract /*, poolIndex */ }) => {
-          return multicall.wrap(contract).vvsPerBlock();
-        },
-      }),
-    });
+            .then(pool => pool.lpToken),
+        resolveRewardTokenAddresses: ({ multicall, contract }) => multicall.wrap(contract).vvs(),
+        rewardRateUnit: RewardRateUnit.BLOCK,
+        resolveRewardRate: this.appToolkit.helpers.masterChefDefaultRewardsPerBlockStrategy.build({
+          resolvePoolAllocPoints: ({ multicall, contract, poolIndex }) =>
+            multicall
+              .wrap(contract)
+              .poolInfo(poolIndex)
+              .then(i => i.allocPoint),
+          resolveTotalAllocPoints: async ({ multicall, contract /*, poolIndex */ }) => {
+            return multicall.wrap(contract).totalAllocPoint();
+          },
+          resolveTotalRewardRate: async ({ multicall, contract /*, poolIndex */ }) => {
+            return multicall.wrap(contract).vvsPerBlock();
+          },
+        }),
+      },
+    );
 
     return positions;
   }
