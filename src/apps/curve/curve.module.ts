@@ -34,6 +34,7 @@ import { CurveFactoryPoolTokenHelper } from './helpers/curve.factory-pool.token-
 import { CurveFactoryPoolDefinitionStrategy } from './helpers/curve.factory.pool-definition-strategy';
 import { CurveGaugeIsActiveStrategy } from './helpers/curve.gauge.is-active-strategy';
 import { CurveGaugeRoiStrategy } from './helpers/curve.gauge.roi-strategy';
+import { CurveLiquidityAndVirtualPriceStrategy } from './helpers/curve.liquidity-and-virtual.price-strategy';
 import { CurveLiquidityPriceStrategy } from './helpers/curve.liquidity.price-strategy';
 import { CurveOnChainCoinStrategy } from './helpers/curve.on-chain.coin-strategy';
 import { CurveOnChainReserveStrategy } from './helpers/curve.on-chain.reserve-strategy';
@@ -107,6 +108,7 @@ import { PolygonCurvePoolTokenFetcher } from './polygon/curve.pool.token-fetcher
     CurveOnChainReserveStrategy,
     CurveVirtualPriceStrategy,
     CurveLiquidityPriceStrategy,
+    CurveLiquidityAndVirtualPriceStrategy,
     CurveFactoryPoolDefinitionStrategy,
     CurveCryptoFactoryPoolDefinitionStrategy,
     // Gauge Helper Strategies
@@ -141,6 +143,7 @@ import { PolygonCurvePoolTokenFetcher } from './polygon/curve.pool.token-fetcher
     CurveOnChainReserveStrategy,
     CurveVirtualPriceStrategy,
     CurveLiquidityPriceStrategy,
+    CurveLiquidityAndVirtualPriceStrategy,
     CurveFactoryPoolDefinitionStrategy,
     CurveCryptoFactoryPoolDefinitionStrategy,
     // Gauge Helper Strategies
