@@ -22,10 +22,10 @@ import { STURDY_DEFINITION } from '../sturdy.definition';
 
 const appId = STURDY_DEFINITION.id;
 const groupId = STURDY_DEFINITION.groups.lending.id;
-const network = Network.FANTOM_OPERA_MAINNET;
+const network = Network.ETHEREUM_MAINNET;
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
-export class FantomSturdyLendingTokenFetcher implements PositionFetcher<AppTokenPosition> {
+export class EthereumSturdyLendingTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(SturdyContractFactory) private readonly sturdyContractFactory: SturdyContractFactory,
@@ -36,7 +36,7 @@ export class FantomSturdyLendingTokenFetcher implements PositionFetcher<AppToken
     timeout: TIMEOUT_DURATION,
   })
   private async getVaultMonitoringData() {
-    const endpoint = 'https://us-central1-stu-dashboard-a0ba2.cloudfunctions.net/getVaultMonitoring';
+    const endpoint = 'https://us-central1-stu-dashboard-a0ba2.cloudfunctions.net/getVaultMonitoring?chain=ethereum';
     const data = await axios.get<VaultMonitoringResponse>(endpoint).then(res => res.data);
     return data;
   }
