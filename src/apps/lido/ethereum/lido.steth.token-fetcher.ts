@@ -35,6 +35,7 @@ export class EthereumLidoStethTokenFetcher implements PositionFetcher<AppTokenPo
       multicall.wrap(contract).totalSupply(),
     ]);
     const supply = Number(totalSupply) / 10 ** decimals;
+    const liquidity = stethToken.price * Number(totalSupply);
     const token: AppTokenPosition = {
       address,
       network,
@@ -52,6 +53,12 @@ export class EthereumLidoStethTokenFetcher implements PositionFetcher<AppTokenPo
         label: symbol,
         secondaryLabel: buildDollarDisplayItem(stethToken.price),
         images: [getTokenImg(address, network)],
+        statsItems: [
+          {
+            label: 'Liquidity',
+            value: buildDollarDisplayItem(liquidity),
+          },
+        ],
       },
     };
 
