@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.58.0](https://github.com/Zapper-fi/studio/compare/v0.57.0...v0.58.0) (2022-06-07)
+
+
+### Features
+
+* **compound:** Add resolver in helper method ([#588](https://github.com/Zapper-fi/studio/issues/588)) ([afe5287](https://github.com/Zapper-fi/studio/commit/afe52873518d0af185fda7eefc078ccab71551fa))
+
 ## [0.57.0](https://github.com/Zapper-fi/studio/compare/v0.56.2...v0.57.0) (2022-06-07)
 
 
