@@ -17,8 +17,8 @@ export const CURVE_DEFINITION = appDefinition({
   groups: {
     farm: { id: 'farm', type: GroupType.POSITION, label: 'Staking' },
     pool: { id: 'pool', type: GroupType.TOKEN, label: 'Pools' },
-    votingEscrow: { id: 'votingEscrow', type: GroupType.POSITION, label: 'Voting Escrow' },
-    vestingEscrow: { id: 'vestingEscrow', type: GroupType.POSITION, label: 'Vesting' },
+    votingEscrow: { id: 'voting-escrow', type: GroupType.POSITION, label: 'Voting Escrow' },
+    vestingEscrow: { id: 'vesting-escrow', type: GroupType.POSITION, label: 'Vesting' },
   },
   tags: [AppTag.LIQUIDITY_POOL],
   supportedNetworks: {
