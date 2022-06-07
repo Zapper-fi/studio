@@ -1,6 +1,6 @@
 {
   "name": "@zapper-fi/studio",
-  "version": "0.54.2",
+  "version": "0.56.2",
   "description": "Community build apps for Zapper.fi",
   "license": "MIT",
   "main": "./index.js",
@@ -18,8 +18,7 @@
     "studio": "node ./scripts/run-cli.js",
     "test": "jest --runInBand --forceExit",
     "test:integration": "jest --runInBand --forceExit --config jest.integration.config.js",
-    "test:watch": "jest --watch",
-    "prepare": "husky install"
+    "test:watch": "jest --watch"
   },
   "dependencies": {
     "@golevelup/nestjs-modules": "^0.5.0",

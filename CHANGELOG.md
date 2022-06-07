@@ -4,6 +4,52 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.56.2](https://github.com/Zapper-fi/studio/compare/v0.56.1...v0.56.2) (2022-06-07)
+
+
+### Bug Fixes
+
+* **utils:** Fix drill balance share percentage ([dda0731](https://github.com/Zapper-fi/studio/commit/dda07315604bc4c86a32933e98645edb18e0b3a3))
+
+## [0.56.1](https://github.com/Zapper-fi/studio/compare/v0.56.0...v0.56.1) (2022-06-06)
+
+
+### Bug Fixes
+
+* **tarot:** Export module ([#583](https://github.com/Zapper-fi/studio/issues/583)) ([f66ddaa](https://github.com/Zapper-fi/studio/commit/f66ddaa1e81deeef43cc369d9bb7dd3517719111))
+
+## [0.56.0](https://github.com/Zapper-fi/studio/compare/v0.55.1...v0.56.0) (2022-06-06)
+
+
+### Features
+
+* **ci:** Enforce strict promise rules on linter ([#581](https://github.com/Zapper-fi/studio/issues/581)) ([0a6a22f](https://github.com/Zapper-fi/studio/commit/0a6a22f6f7691a2ad1d1459ff0a45b8e134d182d))
+* **tvl:** Use Zapper API as TVL fallback ([#579](https://github.com/Zapper-fi/studio/issues/579)) ([7be18f9](https://github.com/Zapper-fi/studio/commit/7be18f974e354f03af5d2a12feaee00ead4bd1c8))
+
+
+### Bug Fixes
+
+* use undefined for tertiary label before maturity to prevent "-" render ([#582](https://github.com/Zapper-fi/studio/issues/582)) ([7af8a84](https://github.com/Zapper-fi/studio/commit/7af8a8418fef08b0469854a180f915566aafdfcd))
+
+## [0.55.1](https://github.com/Zapper-fi/studio/compare/v0.55.0...v0.55.1) (2022-06-06)
+
+
+### Bug Fixes
+
+* **build:** Remove Husky prepare script ([7dcb4a4](https://github.com/Zapper-fi/studio/commit/7dcb4a4ff76cb9f08560721d94984c48b83d06e6))
+
+## [0.55.0](https://github.com/Zapper-fi/studio/compare/v0.54.2...v0.55.0) (2022-06-06)
+
+
+### Features
+
+* **yield-protocol:** Integrate Yield Protocol ([#562](https://github.com/Zapper-fi/studio/issues/562)) ([df920e0](https://github.com/Zapper-fi/studio/commit/df920e082f793b0221ce54678a613656f40777ac))
+
+
+### Bug Fixes
+
+* **yield-protocol:** Add missing logo ([420acaa](https://github.com/Zapper-fi/studio/commit/420acaa1e7d804a8de9a78ee61843a4a937ecca2))
+
 ## [0.54.2](https://github.com/Zapper-fi/studio/compare/v0.54.1...v0.54.2) (2022-06-04)
 
 
