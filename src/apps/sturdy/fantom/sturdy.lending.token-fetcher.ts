@@ -13,32 +13,17 @@ import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { BaseToken } from '~position/token.interface';
+import { CacheOnInterval } from '~cache/cache-on-interval.decorator';
 import { Network } from '~types/network.interface';
 
 import { SturdyContractFactory } from '../contracts';
 import { STURDY_DEFINITION } from '../sturdy.definition';
 
+import { VaultMonitoringResponse, cacheOnIntervalKeyCreationHelper, TIMEOUT_DURATION } from '../helpers/constants';
+
 const appId = STURDY_DEFINITION.id;
 const groupId = STURDY_DEFINITION.groups.lending.id;
 const network = Network.FANTOM_OPERA_MAINNET;
-
-type VaultMonitoringResponse = {
-  chain: string;
-  tokens: string;
-  decimals: number;
-  address: string;
-  supply: number;
-  price: number;
-  base: number;
-  reward: number;
-  rewards: {
-    CRV: number;
-    CVX: number;
-  };
-  url: number;
-  tvl: number;
-  active: boolean;
-}[];
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
 export class FantomSturdyLendingTokenFetcher implements PositionFetcher<AppTokenPosition> {
@@ -47,14 +32,23 @@ export class FantomSturdyLendingTokenFetcher implements PositionFetcher<AppToken
     @Inject(SturdyContractFactory) private readonly sturdyContractFactory: SturdyContractFactory,
   ) {}
 
+  @CacheOnInterval({
+    key: cacheOnIntervalKeyCreationHelper(appId, groupId, network),
+    timeout: TIMEOUT_DURATION,
+  })
+  private async getVaultMonitoringData() {
+    const endpoint = 'https://us-central1-stu-dashboard-a0ba2.cloudfunctions.net/getVaultMonitoring';
+    const data = await axios.get<VaultMonitoringResponse>(endpoint).then(res => res.data);
+    return data;
+  }
+
   async getPositions() {
     const multicall = this.appToolkit.getMulticall(network);
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
     const ethToken = baseTokens.find(t => t.address === ZERO_ADDRESS);
     if (!ethToken) return [];
 
-    const endpoint = 'https://us-central1-stu-dashboard-a0ba2.cloudfunctions.net/getVaultMonitoring';
-    const tokenData = await axios.get<VaultMonitoringResponse>(endpoint).then(v => v.data);
+    const tokenData = await this.getVaultMonitoringData();
 
     const tokens = tokenData.map(async data => {
       const symbol = data.tokens;
@@ -89,7 +83,7 @@ export class FantomSturdyLendingTokenFetcher implements PositionFetcher<AppToken
           images: getImagesFromToken(underlyingTokens[0]),
           statsItems: [
             {
-              label: 'apy',
+              label: 'APY',
               value: buildPercentageDisplayItem(data.base),
             },
             {
