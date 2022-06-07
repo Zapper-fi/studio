@@ -7,7 +7,7 @@ import { Network } from '~types/network.interface';
 import { CurveContractFactory, CurveFactoryPool } from '../contracts';
 
 import { CurveCryptoFactoryPoolDefinitionStrategy } from './curve.crypto-factory.pool-definition-strategy';
-import { CurveLiquidityPriceStrategy } from './curve.liquidity.price-strategy';
+import { CurveLiquidityAndVirtualPriceStrategy } from './curve.liquidity-and-virtual.price-strategy';
 import { CurveOnChainCoinStrategy } from './curve.on-chain.coin-strategy';
 import { CurveOnChainReserveStrategy } from './curve.on-chain.reserve-strategy';
 import { CurveOnChainVolumeStrategy } from './curve.on-chain.volume-strategy';
@@ -34,8 +34,8 @@ export class CurveCryptoFactoryPoolTokenHelper {
     private readonly curveOnChainReserveStrategy: CurveOnChainReserveStrategy,
     @Inject(CurveCryptoFactoryPoolDefinitionStrategy)
     private readonly curveCryptoFactoryPoolDefinitionStrategy: CurveCryptoFactoryPoolDefinitionStrategy,
-    @Inject(CurveLiquidityPriceStrategy)
-    private readonly curveLiquidityPriceStrategy: CurveLiquidityPriceStrategy,
+    @Inject(CurveLiquidityAndVirtualPriceStrategy)
+    private readonly curveLiquidityAndVirtualPriceStrategy: CurveLiquidityAndVirtualPriceStrategy,
     @Inject(CurveContractFactory)
     private readonly curveContractFactory: CurveContractFactory,
     @Inject(CurveOnChainVolumeStrategy)
@@ -71,7 +71,13 @@ export class CurveCryptoFactoryPoolTokenHelper {
           .wrap(poolContract)
           .fee()
           .catch(() => '0'),
-      resolvePoolTokenPrice: this.curveLiquidityPriceStrategy.build(),
+      resolvePoolTokenPrice: this.curveLiquidityAndVirtualPriceStrategy.build({
+        resolveVirtualPrice: ({ multicall, poolContract }) =>
+          multicall
+            .wrap(poolContract)
+            .get_virtual_price()
+            .catch(() => '0'),
+      }),
       resolvePoolTokenSymbol: ({ multicall, poolTokenContract }) => multicall.wrap(poolTokenContract).symbol(),
       resolvePoolTokenSupply: ({ multicall, poolTokenContract }) => multicall.wrap(poolTokenContract).totalSupply(),
     });
