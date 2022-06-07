@@ -9,17 +9,16 @@ import {
   buildPercentageDisplayItem,
 } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { CacheOnInterval } from '~cache/cache-on-interval.decorator';
 import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { BaseToken } from '~position/token.interface';
-import { CacheOnInterval } from '~cache/cache-on-interval.decorator';
 import { Network } from '~types/network.interface';
 
+import { VaultMonitoringResponse, cacheOnIntervalKeyCreationHelper, TIMEOUT_DURATION } from '../helpers/constants';
 import { SturdyContractFactory } from '../contracts';
 import { STURDY_DEFINITION } from '../sturdy.definition';
-
-import { VaultMonitoringResponse, cacheOnIntervalKeyCreationHelper, TIMEOUT_DURATION } from '../helpers/constants';
 
 const appId = STURDY_DEFINITION.id;
 const groupId = STURDY_DEFINITION.groups.lending.id;
