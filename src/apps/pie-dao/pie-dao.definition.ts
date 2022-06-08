@@ -8,8 +8,8 @@ export const PIE_DAO_DEFINITION = appDefinition({
   name: 'PieDAO',
   description: `PieDAO is the asset allocation DAO for decentralized market-weighted portfolio allocations.`,
   groups: {
-    farmSingleStaking: { id: 'farm-single-staking', type: GroupType.POSITION, label: 'Farming' },
-    farmMasterChef: { id: 'farm-master-chef', type: GroupType.POSITION, label: 'Farming' },
+    farmSingleStaking: { id: 'farm-single-staking', type: GroupType.POSITION, label: 'Farming', groupLabel: 'Farms' },
+    farmMasterChef: { id: 'farm-master-chef', type: GroupType.POSITION, label: 'Farming', groupLabel: 'Farms' },
     eDough: { id: 'e-dough', type: GroupType.TOKEN, label: 'Escrow' },
     voting: { id: 'voting', type: GroupType.POSITION, label: 'Voting Escrow' },
   },

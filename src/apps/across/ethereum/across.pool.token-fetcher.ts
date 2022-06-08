@@ -52,8 +52,14 @@ export class EthereumAcrossPoolTokenFetcher implements PositionFetcher<AppTokenP
         const tokens = [underlyingToken];
         const secondaryLabel = buildDollarDisplayItem(price);
         const images = [getAppImg(ACROSS_DEFINITION.id)];
-        const dataProps = {};
-        const displayProps = { label, secondaryLabel, images };
+        const liquidity = price * supply;
+        const dataProps = { liquidity };
+        const displayProps = {
+          label,
+          secondaryLabel,
+          images,
+          statsItems: [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }],
+        };
 
         const token: AppTokenPosition = {
           type: ContractType.APP_TOKEN,

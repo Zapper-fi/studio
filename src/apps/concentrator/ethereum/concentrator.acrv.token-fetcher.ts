@@ -2,6 +2,7 @@ import { Inject } from '@nestjs/common';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
+import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getAppImg } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
@@ -40,6 +41,7 @@ export class EthereumConcentratorAcrvTokenFetcher implements PositionFetcher<App
     const supply = Number(supplyRaw) / 10 ** decimals;
     const pricePerShare = Number(underlyingRaw) / Number(supplyRaw);
     const price = underlyingToken.price * pricePerShare;
+    const liquidity = price * supply;
 
     // TODO: add additional properties from https://concentrator-api.aladdin.club/apy/
     const label = `Concentrator aCRV`;
@@ -57,10 +59,11 @@ export class EthereumConcentratorAcrvTokenFetcher implements PositionFetcher<App
       tokens: [underlyingToken],
       price,
       pricePerShare,
-      dataProps: {},
+      dataProps: { liquidity },
       displayProps: {
         label,
         images,
+        statsItems: [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }],
       },
     };
 

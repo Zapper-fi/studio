@@ -35,7 +35,7 @@ export class EthereumLidoWstethTokenFetcher implements PositionFetcher<AppTokenP
       multicall.wrap(contract).totalSupply(),
     ]);
     const supply = Number(totalSupply) / 10 ** decimals;
-    const liquidity = wstethToken.price * Number(totalSupply);
+    const liquidity = wstethToken.price * supply;
     const token: AppTokenPosition = {
       address,
       network,

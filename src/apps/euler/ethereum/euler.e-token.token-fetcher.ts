@@ -87,7 +87,16 @@ export class EthereumEulerETokenTokenFetcher implements PositionFetcher<AppToken
 
         const pricePerShare = Number(totalSupply.toString()) / Number(market.totalBalances);
 
-        const liquidity = Number(totalSupply) * pricePerShare;
+        const dataProps = {
+          name: `Euler E token ${market.name}`,
+          liquidity: Number(totalSupply) * underlyingToken.price,
+          underlyingAddress: market.id,
+          interestRate: Number(market.interestRate) / 10 ** 18,
+          borrowAPY: Number(market.borrowAPY) / 10 ** 18,
+          supplyAPY: Number(market.borrowAPY) / 10 ** 18,
+          totalSupply: totalSupply.toString(),
+          totalBalances: market.totalBalances,
+        };
 
         return {
           address: market.eTokenAddress,
@@ -100,15 +109,7 @@ export class EthereumEulerETokenTokenFetcher implements PositionFetcher<AppToken
           network,
           decimals: 18,
           tokens: [underlyingToken],
-          dataProps: {
-            name: `Euler E token ${market.name}`,
-            underlyingAddress: market.id,
-            interestRate: Number(market.interestRate) / 10 ** 18,
-            borrowAPY: Number(market.borrowAPY) / 10 ** 18,
-            supplyAPY: Number(market.borrowAPY) / 10 ** 18,
-            totalSupply: totalSupply.toString(),
-            totalBalances: market.totalBalances,
-          },
+          dataProps,
           displayProps: {
             label: `Euler E token ${market.name}`,
             secondaryLabel: buildDollarDisplayItem(pricePerShare),
@@ -116,7 +117,15 @@ export class EthereumEulerETokenTokenFetcher implements PositionFetcher<AppToken
             statsItems: [
               {
                 label: 'Liquidity',
-                value: buildDollarDisplayItem(liquidity),
+                value: buildDollarDisplayItem(dataProps.liquidity),
+              },
+              {
+                label: 'Borrow APY',
+                value: buildDollarDisplayItem(dataProps.borrowAPY),
+              },
+              {
+                label: 'Supply APY',
+                value: buildDollarDisplayItem(dataProps.supplyAPY),
               },
             ],
           },

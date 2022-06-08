@@ -73,6 +73,7 @@ export class OptimismThalesPool2ContractPositionFetcher implements PositionFetch
             label,
             images,
             secondaryLabel,
+            statsItems: [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }],
           },
         };
 

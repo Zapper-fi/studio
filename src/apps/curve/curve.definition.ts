@@ -15,7 +15,7 @@ export const CURVE_DEFINITION = appDefinition({
     telegram: 'https://t.me/curvefi',
   },
   groups: {
-    farm: { id: 'farm', type: GroupType.POSITION, label: 'Staking' },
+    farm: { id: 'farm', type: GroupType.POSITION, label: 'Staking', groupLabel: 'Farms' },
     pool: { id: 'pool', type: GroupType.TOKEN, label: 'Pools' },
     votingEscrow: { id: 'voting-escrow', type: GroupType.POSITION, label: 'Voting Escrow' },
     vestingEscrow: { id: 'vesting-escrow', type: GroupType.POSITION, label: 'Vesting' },

@@ -4,6 +4,44 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.63.0](https://github.com/Zapper-fi/studio/compare/v0.62.0...v0.63.0) (2022-06-08)
+
+
+### Features
+
+* **exchangeable-tokens:** Compound and Olympus tokens as exchangeable ([#601](https://github.com/Zapper-fi/studio/issues/601)) ([1fde9af](https://github.com/Zapper-fi/studio/commit/1fde9afe467fb13e22c633a27983c31c0d34a7cd))
+
+
+### Bug Fixes
+
+* add groupLabels and liquidity to stats ([#600](https://github.com/Zapper-fi/studio/issues/600)) ([913c112](https://github.com/Zapper-fi/studio/commit/913c112f9e71bb5a1eb9a9d36818097c451acb97))
+
+## [0.62.0](https://github.com/Zapper-fi/studio/compare/v0.61.0...v0.62.0) (2022-06-08)
+
+
+### Features
+
+* **tempus-finance:** Add support for Tempus Finance ([#597](https://github.com/Zapper-fi/studio/issues/597)) ([4e941b2](https://github.com/Zapper-fi/studio/commit/4e941b23e56b433c2328030d6784b0c780f69d43))
+
+
+### Bug Fixes
+
+* **badger:** Fix claimable amounts ([cbf5f67](https://github.com/Zapper-fi/studio/commit/cbf5f67cd8799d88b7cc25b824edbcd935d8e613))
+
+## [0.61.0](https://github.com/Zapper-fi/studio/compare/v0.60.0...v0.61.0) (2022-06-08)
+
+
+### Features
+
+* **coslend:** Add Coslend app integration ([#586](https://github.com/Zapper-fi/studio/issues/586)) ([96f70a3](https://github.com/Zapper-fi/studio/commit/96f70a38ec7c1199811d03e03f4636466b685a1b))
+
+## [0.60.0](https://github.com/Zapper-fi/studio/compare/v0.59.0...v0.60.0) (2022-06-08)
+
+
+### Features
+
+* **aave-v2:** Extract Aave V2 to Studio ([#594](https://github.com/Zapper-fi/studio/issues/594)) ([3ecf880](https://github.com/Zapper-fi/studio/commit/3ecf880db6de6dadaad6b9fabe0ed5d6422a6fdb))
+
 ## [0.59.0](https://github.com/Zapper-fi/studio/compare/v0.58.0...v0.59.0) (2022-06-07)
 
 

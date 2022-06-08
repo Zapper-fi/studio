@@ -17,7 +17,7 @@ export const BALANCER_V2_DEFINITION = appDefinition({
   },
   groups: {
     pool: { id: 'pool', type: GroupType.TOKEN, label: 'Pools' },
-    farm: { id: 'farm', type: GroupType.POSITION, label: 'Staked' },
+    farm: { id: 'farm', type: GroupType.POSITION, label: 'Staked', groupLabel: 'Farms' },
     votingEscrow: { id: 'voting-escrow', type: GroupType.POSITION, label: 'Voting Escrow' },
     claimable: { id: 'claimable', type: GroupType.POSITION, label: 'Claimable' },
   },

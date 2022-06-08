@@ -42,6 +42,7 @@ export class EthereumAirswapSAstV3TokenFetcher implements PositionFetcher<AppTok
     }
 
     const supply = Number(supplyRaw) / 10 ** decimals;
+    const liquidity = underlyingToken.price * supply;
 
     const token: AppTokenPosition = {
       type: ContractType.APP_TOKEN,
@@ -55,11 +56,19 @@ export class EthereumAirswapSAstV3TokenFetcher implements PositionFetcher<AppTok
       tokens: [underlyingToken],
       price: underlyingToken.price,
       pricePerShare: 1,
-      dataProps: {},
+      dataProps: {
+        liquidity,
+      },
       displayProps: {
         label: 'sAST v3',
         secondaryLabel: buildDollarDisplayItem(underlyingToken.price),
         images: [getTokenImg(underlyingToken.address, network)],
+        statsItems: [
+          {
+            label: 'Liquidity',
+            value: buildDollarDisplayItem(liquidity),
+          },
+        ],
       },
     };
 
