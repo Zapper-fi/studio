@@ -65,7 +65,7 @@ export class EthereumYearnYieldTokenFetcher implements PositionFetcher<AppTokenP
         const label = symbol;
         const secondaryLabel = buildDollarDisplayItem(price);
         const images = [getTokenImg(underlyingToken.address, network)];
-        const statsItems = [];
+        const statsItems = [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }];
 
         const yieldToken: AppTokenPosition<YearnYieldTokenDataProps> = {
           type: ContractType.APP_TOKEN,

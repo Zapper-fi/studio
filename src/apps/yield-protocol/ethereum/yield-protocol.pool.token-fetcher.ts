@@ -4,6 +4,7 @@ import { compact } from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
+import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
 import { DisplayProps } from '~position/display.interface';
@@ -75,11 +76,13 @@ export class EthereumYieldProtocolPoolTokenFetcher implements PositionFetcher<Ap
         const estimate = (+baseReserves + +realFyTokenReserves) / +strategyTotalSupply;
         const pricePerShare = estimate;
         const price = pricePerShare * underlyingToken.price;
+        const liquidity = price * Number(realFyTokenReserves);
 
         const displayProps: DisplayProps = {
           label: `Yield ${underlyingToken.symbol} Strategy`,
           secondaryLabel: `Automatic Roll on ${formatMaturity(maturity)}`,
           images: getImagesFromToken(underlyingToken),
+          statsItems: [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }],
         };
 
         const token: AppTokenPosition = {
@@ -94,7 +97,7 @@ export class EthereumYieldProtocolPoolTokenFetcher implements PositionFetcher<Ap
           pricePerShare,
           price,
           tokens: [underlyingToken],
-          dataProps: {},
+          dataProps: { liquidity },
           displayProps,
         };
 

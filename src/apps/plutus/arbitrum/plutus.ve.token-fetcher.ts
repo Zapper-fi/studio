@@ -34,6 +34,7 @@ export class ArbitrumPlutusVeTokenFetcher implements PositionFetcher<AppTokenPos
     const supply = Number(supplyRaw) / 10 ** decimals;
     const pricePerShare = 1; // Note: Consult liquidity pools for peg once set up
     const price = baseToken.price * pricePerShare;
+    const liquidity = supply * price;
 
     const token: AppTokenPosition = {
       type: ContractType.APP_TOKEN,
@@ -47,11 +48,12 @@ export class ArbitrumPlutusVeTokenFetcher implements PositionFetcher<AppTokenPos
       price,
       pricePerShare,
       tokens: [baseToken],
-      dataProps: {},
+      dataProps: { liquidity },
       displayProps: {
         label: symbol,
         secondaryLabel: buildDollarDisplayItem(price),
         images: getImagesFromToken(baseToken),
+        statsItems: [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }],
       },
     };
     return token;

@@ -16,9 +16,9 @@ export const KEEPER_DAO_DEFINITION = appDefinition({
     medium: 'https://medium.com/keeperdao',
   },
   groups: {
-    v2Pool: { id: 'v2-pool', type: GroupType.TOKEN, label: 'KeeperDAO' },
-    v3Pool: { id: 'v3-pool', type: GroupType.TOKEN, label: 'KeeperDAO' },
-    farm: { id: 'farm', type: GroupType.POSITION, label: 'KeeperDAO' },
+    v2Pool: { id: 'v2-pool', type: GroupType.TOKEN, label: 'KeeperDAO', groupLabel: 'Pools' },
+    v3Pool: { id: 'v3-pool', type: GroupType.TOKEN, label: 'KeeperDAO', groupLabel: 'Pools' },
+    farm: { id: 'farm', type: GroupType.POSITION, label: 'KeeperDAO', groupLabel: 'Farms' },
   },
   tags: [AppTag.YIELD_AGGREGATOR, AppTag.DECENTRALIZED_EXCHANGE],
   supportedNetworks: { [Network.ETHEREUM_MAINNET]: [AppAction.VIEW] },

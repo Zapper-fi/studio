@@ -104,6 +104,7 @@ export class AvalanchePenguinVaultTokenFetcher implements PositionFetcher<AppTok
             label,
             secondaryLabel,
             images,
+            statsItems: [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }],
           },
         };
 

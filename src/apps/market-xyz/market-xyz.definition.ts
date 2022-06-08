@@ -14,12 +14,14 @@ export const MARKET_XYZ_DEFINITION = appDefinition({
       id: 'supply',
       type: GroupType.TOKEN,
       label: 'Lending',
+      groupLabel: 'Supply',
     },
 
     borrow: {
       id: 'borrow',
       type: GroupType.POSITION,
       label: 'Lending',
+      groupLabel: 'Borrow',
     },
   },
 
