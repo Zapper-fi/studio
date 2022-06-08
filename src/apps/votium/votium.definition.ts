@@ -5,8 +5,8 @@ import { Network } from '~types/network.interface';
 
 export const VOTIUM_DEFINITION = appDefinition({
   id: 'votium',
-  name: 'votium',
-  description: 'a',
+  name: 'Votium',
+  description: 'Get rewarded for your vlCVX and veCRV votes',
   url: 'https://votium.app',
 
   groups: {
