@@ -24,7 +24,7 @@ const groupId = SADDLE_DEFINITION.groups.communalFarm.id;
 const network = Network.EVMOS_MAINNET;
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
-export class EthereumSaddleCommunalFarmContractPositionFetcher implements PositionFetcher<ContractPosition> {
+export class EvmosSaddleCommunalFarmContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(SaddleContractFactory) private readonly contractFactory: SaddleContractFactory,
