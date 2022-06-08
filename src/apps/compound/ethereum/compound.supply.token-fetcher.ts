@@ -25,6 +25,7 @@ export class EthereumCompoundSupplyTokenFetcher implements PositionFetcher<AppTo
       network,
       appId,
       groupId,
+      exchangeable: true,
       comptrollerAddress: '0x3d9819210a31b4961b30ef54be2aed79b9c9cd3b',
       getComptrollerContract: ({ address, network }) =>
         this.compoundContractFactory.compoundComptroller({ address, network }),
