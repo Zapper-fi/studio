@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.62.0](https://github.com/Zapper-fi/studio/compare/v0.61.0...v0.62.0) (2022-06-08)
+
+
+### Features
+
+* **tempus-finance:** Add support for Tempus Finance ([#597](https://github.com/Zapper-fi/studio/issues/597)) ([4e941b2](https://github.com/Zapper-fi/studio/commit/4e941b23e56b433c2328030d6784b0c780f69d43))
+
+
+### Bug Fixes
+
+* **badger:** Fix claimable amounts ([cbf5f67](https://github.com/Zapper-fi/studio/commit/cbf5f67cd8799d88b7cc25b824edbcd935d8e613))
+
 ## [0.61.0](https://github.com/Zapper-fi/studio/compare/v0.60.0...v0.61.0) (2022-06-08)
 
 
