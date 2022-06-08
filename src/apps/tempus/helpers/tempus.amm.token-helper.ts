@@ -60,7 +60,7 @@ export class TempusAmmTokenFetcher {
       resolvePoolTokenPrice: async ({ tokens, reserves, supply }) => {
         const [principalToken, yieldToken] = tokens;
         const [sizePrincipal, sizeYield] = reserves;
-        const price = principalToken.price * sizePrincipal + (yieldToken.price * sizeYield) / supply;
+        const price = ((principalToken.price * sizePrincipal) + (yieldToken.price * sizeYield)) / supply;
         return price;
       },
     });
