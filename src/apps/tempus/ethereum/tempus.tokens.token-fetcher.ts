@@ -1,5 +1,4 @@
 import { Inject } from '@nestjs/common';
-import Axios from 'axios';
 import _ from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
@@ -11,11 +10,11 @@ import { Network } from '~types/network.interface';
 import { TempusContractFactory, PyToken } from '../contracts';
 import { TEMPUS_DEFINITION } from '../tempus.definition';
 
+import { getTempusData, TempusPool } from '../helpers/tempus.datasource'
+
 const appId = TEMPUS_DEFINITION.id;
 const groupId = TEMPUS_DEFINITION.groups.pools.id;
 const network = Network.ETHEREUM_MAINNET;
-
-const datasourceUrl = 'https://raw.githubusercontent.com/tempus-finance/tempus-pools-config/master/config.json'
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
 export class EthereumTempusTokensTokenFetcher implements PositionFetcher<AppTokenPosition> {
@@ -24,26 +23,14 @@ export class EthereumTempusTokensTokenFetcher implements PositionFetcher<AppToke
     @Inject(TempusContractFactory) private readonly contractFactory: TempusContractFactory,
   ) { }
 
-  async getPoolTokens(address: string) {
-    const multicall = this.appToolkit.getMulticall(network);
-    const pool = this.contractFactory.pool({ address, network })
-
-    const matured = await multicall.wrap(pool).matured()
-    if (matured) return []
-
-    const [principalAddress, yieldAddress, backingAddress] = await Promise.all([
-      multicall.wrap(pool).principalShare(),
-      multicall.wrap(pool).yieldShare(),
-      multicall.wrap(pool).backingToken(), // Should probably be yieldBearingToken, but that may have dependency issues in the future
-    ])
-
+  async getPoolTokens(data: TempusPool) {
     return await this.appToolkit.helpers.vaultTokenHelper.getTokens<PyToken>({
       appId,
       groupId,
       network,
-      resolveVaultAddresses: () => [principalAddress, yieldAddress],
+      resolveVaultAddresses: () => [data.principalsAddress.toLowerCase(), data.yieldsAddress.toLowerCase()],
       resolveContract: ({ address, network }) => this.contractFactory.pyToken({ address, network }),
-      resolveUnderlyingTokenAddress: () => backingAddress,
+      resolveUnderlyingTokenAddress: () => data.backingTokenAddress.toLowerCase(),
       resolveReserve: () => 0,
       resolvePricePerShare: async ({ multicall, contract }) => {
         const decimals = await multicall.wrap(contract).decimals();
@@ -54,9 +41,10 @@ export class EthereumTempusTokensTokenFetcher implements PositionFetcher<AppToke
   }
 
   async getPositions() {
-    const pools = (await Axios.get(datasourceUrl)).data[network]
-    if (!pools) return []
-    const tokens = await Promise.all(pools.tempusPools.map(async (pool) => this.getPoolTokens(pool.address)))
+    const data = await getTempusData(network)
+    if (!data) return []
+
+    const tokens = await Promise.all(data.tempusPools.map(pool => this.getPoolTokens(pool)))
     return _.flatten(tokens)
   }
 }
