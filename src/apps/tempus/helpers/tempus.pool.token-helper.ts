@@ -4,7 +4,7 @@ import _ from 'lodash';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Network } from '~types/network.interface';
 
-import { TempusContractFactory, PyToken } from '../contracts';
+import { TempusContractFactory, TempusPyToken } from '../contracts';
 import { TEMPUS_DEFINITION } from '../tempus.definition';
 
 import { getTempusData, TempusPool } from './tempus.datasource';
@@ -20,12 +20,12 @@ export class TempusTokensTokenFetcher {
   ) {}
 
   async getPoolTokens(data: TempusPool, network: Network) {
-    return await this.appToolkit.helpers.vaultTokenHelper.getTokens<PyToken>({
+    return await this.appToolkit.helpers.vaultTokenHelper.getTokens<TempusPyToken>({
       appId,
       groupId,
       network,
       resolveVaultAddresses: () => [data.principalsAddress.toLowerCase(), data.yieldsAddress.toLowerCase()],
-      resolveContract: ({ address, network }) => this.contractFactory.pyToken({ address, network }),
+      resolveContract: ({ address, network }) => this.contractFactory.tempusPyToken({ address, network }),
       resolveUnderlyingTokenAddress: () => data.backingTokenAddress.toLowerCase(),
       resolveReserve: () => 0,
       resolvePricePerShare: async ({ multicall, contract }) => {

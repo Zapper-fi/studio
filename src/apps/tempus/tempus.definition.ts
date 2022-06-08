@@ -24,7 +24,7 @@ export const TEMPUS_DEFINITION = appDefinition({
     },
   },
 
-  tags: [AppTag.CROSS_CHAIN],
+  tags: [AppTag.CROSS_CHAIN, AppTag.YIELD_AGGREGATOR],
   keywords: [],
   links: {},
 

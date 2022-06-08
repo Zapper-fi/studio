@@ -4,9 +4,9 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { Amm__factory } from './ethers';
-import { Pool__factory } from './ethers';
-import { PyToken__factory } from './ethers';
+import { TempusAmm__factory } from './ethers';
+import { TempusPool__factory } from './ethers';
+import { TempusPyToken__factory } from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
@@ -17,17 +17,17 @@ export class TempusContractFactory extends ContractFactory {
     super((network: Network) => appToolkit.getNetworkProvider(network));
   }
 
-  amm({ address, network }: ContractOpts) {
-    return Amm__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  tempusAmm({ address, network }: ContractOpts) {
+    return TempusAmm__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
-  pool({ address, network }: ContractOpts) {
-    return Pool__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  tempusPool({ address, network }: ContractOpts) {
+    return TempusPool__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
-  pyToken({ address, network }: ContractOpts) {
-    return PyToken__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  tempusPyToken({ address, network }: ContractOpts) {
+    return TempusPyToken__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
 }
 
-export type { Amm } from './ethers';
-export type { Pool } from './ethers';
-export type { PyToken } from './ethers';
+export type { TempusAmm } from './ethers';
+export type { TempusPool } from './ethers';
+export type { TempusPyToken } from './ethers';

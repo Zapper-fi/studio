@@ -53,7 +53,7 @@ export declare namespace IPoolSwapStructs {
   };
 }
 
-export interface AmmInterface extends utils.Interface {
+export interface TempusAmmInterface extends utils.Interface {
   functions: {
     'DOMAIN_SEPARATOR()': FunctionFragment;
     'allowance(address,address)': FunctionFragment;
@@ -320,12 +320,12 @@ export type TransferEvent = TypedEvent<[string, string, BigNumber], TransferEven
 
 export type TransferEventFilter = TypedEventFilter<TransferEvent>;
 
-export interface Amm extends BaseContract {
+export interface TempusAmm extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: AmmInterface;
+  interface: TempusAmmInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

@@ -53,7 +53,7 @@ export declare namespace IVersioned {
   };
 }
 
-export interface PoolInterface extends utils.Interface {
+export interface TempusPoolInterface extends utils.Interface {
   functions: {
     'acceptOwnership()': FunctionFragment;
     'backingToken()': FunctionFragment;
@@ -252,12 +252,12 @@ export type OwnershipTransferredEvent = TypedEvent<[string, string], OwnershipTr
 
 export type OwnershipTransferredEventFilter = TypedEventFilter<OwnershipTransferredEvent>;
 
-export interface Pool extends BaseContract {
+export interface TempusPool extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: PoolInterface;
+  interface: TempusPoolInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

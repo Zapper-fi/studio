@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { Pool, PoolInterface, TokenDataStruct, ITempusFees } from '../Pool';
+import type { TempusPool, TempusPoolInterface, TokenDataStruct, ITempusFees } from '../TempusPool';
 
 const _abi = [
   {
@@ -874,12 +874,12 @@ const _abi = [
   },
 ];
 
-export class Pool__factory {
+export class TempusPool__factory {
   static readonly abi = _abi;
-  static createInterface(): PoolInterface {
-    return new utils.Interface(_abi) as PoolInterface;
+  static createInterface(): TempusPoolInterface {
+    return new utils.Interface(_abi) as TempusPoolInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): Pool {
-    return new Contract(address, _abi, signerOrProvider) as Pool;
+  static connect(address: string, signerOrProvider: Signer | Provider): TempusPool {
+    return new Contract(address, _abi, signerOrProvider) as TempusPool;
   }
 }

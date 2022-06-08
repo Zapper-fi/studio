@@ -44,7 +44,7 @@ export class EthereumTempusBalanceFetcher implements BalanceFetcher {
         assets: poolTokenBalances,
       },
       {
-        label: 'Farms',
+        label: 'AMM',
         assets: AMMTokenBalances,
       },
     ]);

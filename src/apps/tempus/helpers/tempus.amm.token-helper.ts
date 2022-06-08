@@ -5,7 +5,7 @@ import { CurvePoolTokenHelper } from '~apps/curve';
 import { Erc20 } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { TempusContractFactory, Amm } from '../contracts';
+import { TempusContractFactory, TempusAmm } from '../contracts';
 import { TEMPUS_DEFINITION } from '../tempus.definition';
 
 import { getTempusData } from './tempus.datasource';
@@ -25,7 +25,7 @@ export class TempusAmmTokenFetcher {
     const data = await getTempusData(network);
     if (!data) return [];
 
-    return await this.curvePoolTokenHelper.getTokens<Amm, Erc20>({
+    return await this.curvePoolTokenHelper.getTokens<TempusAmm, Erc20>({
       network,
       appId,
       groupId,
@@ -36,7 +36,7 @@ export class TempusAmmTokenFetcher {
           tokenAddress: pool.ammAddress.toLowerCase(),
         })),
       resolvePoolContract: ({ network, definition }) =>
-        this.contractFactory.amm({ network, address: definition.swapAddress }),
+        this.contractFactory.tempusAmm({ network, address: definition.swapAddress }),
       resolvePoolTokenContract: ({ network, definition }) =>
         this.contractFactory.erc20({ network, address: definition.tokenAddress }),
       resolvePoolCoinAddresses: async ({ poolContract }) => {

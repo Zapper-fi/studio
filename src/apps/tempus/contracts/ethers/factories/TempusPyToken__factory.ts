@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { PyToken, PyTokenInterface } from '../PyToken';
+import type { TempusPyToken, TempusPyTokenInterface } from '../TempusPyToken';
 
 const _abi = [
   {
@@ -419,12 +419,12 @@ const _abi = [
   },
 ];
 
-export class PyToken__factory {
+export class TempusPyToken__factory {
   static readonly abi = _abi;
-  static createInterface(): PyTokenInterface {
-    return new utils.Interface(_abi) as PyTokenInterface;
+  static createInterface(): TempusPyTokenInterface {
+    return new utils.Interface(_abi) as TempusPyTokenInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): PyToken {
-    return new Contract(address, _abi, signerOrProvider) as PyToken;
+  static connect(address: string, signerOrProvider: Signer | Provider): TempusPyToken {
+    return new Contract(address, _abi, signerOrProvider) as TempusPyToken;
   }
 }
