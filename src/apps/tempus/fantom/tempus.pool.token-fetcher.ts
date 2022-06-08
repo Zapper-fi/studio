@@ -10,7 +10,7 @@ import { TempusContractFactory } from '../contracts';
 import { TEMPUS_DEFINITION } from '../tempus.definition';
 
 const appId = TEMPUS_DEFINITION.id;
-const groupId = TEMPUS_DEFINITION.groups.pools.id;
+const groupId = TEMPUS_DEFINITION.groups.pool.id;
 const network = Network.FANTOM_OPERA_MAINNET;
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
@@ -18,7 +18,7 @@ export class FantomTempusTokensTokenFetcher implements PositionFetcher<AppTokenP
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(TempusContractFactory) private readonly tempusContractFactory: TempusContractFactory,
-  ) { }
+  ) {}
 
   async getPositions() {
     return [];

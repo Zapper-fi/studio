@@ -11,8 +11,8 @@ export const TEMPUS_DEFINITION = appDefinition({
   url: 'https://tempus.finance/',
 
   groups: {
-    pools: {
-      id: 'pools',
+    pool: {
+      id: 'pool',
       type: GroupType.TOKEN,
       label: 'P-Y Tokens',
     },
