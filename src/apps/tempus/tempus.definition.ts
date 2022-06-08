@@ -16,6 +16,12 @@ export const TEMPUS_DEFINITION = appDefinition({
       type: GroupType.TOKEN,
       label: 'P-Y Tokens',
     },
+
+    amm: {
+      id: 'amm',
+      type: GroupType.TOKEN,
+      label: 'AMM Liquidity',
+    },
   },
 
   tags: [AppTag.CROSS_CHAIN],
