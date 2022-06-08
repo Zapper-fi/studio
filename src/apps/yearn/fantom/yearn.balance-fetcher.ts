@@ -8,13 +8,15 @@ import { Network } from '~types/network.interface';
 
 import { YEARN_DEFINITION } from '../yearn.definition';
 
+const network = Network.FANTOM_OPERA_MAINNET;
+
 @Register.BalanceFetcher(YEARN_DEFINITION.id, Network.FANTOM_OPERA_MAINNET)
 export class FantomYearnBalanceFetcher implements BalanceFetcher {
   constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
   private async getVaultBalances(address: string) {
     return await this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
-      network: Network.FANTOM_OPERA_MAINNET,
+      network,
       appId: YEARN_DEFINITION.id,
       groupId: YEARN_DEFINITION.groups.vault.id,
       address,
