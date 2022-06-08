@@ -12,7 +12,7 @@ import { SaddleCommunalFarm, SaddleContractFactory, SaddleMiniChefV2 } from '../
 import { SADDLE_DEFINITION } from '../saddle.definition';
 
 @Register.BalanceFetcher(SADDLE_DEFINITION.id, Network.EVMOS_MAINNET)
-export class EthereumSaddleBalanceFetcher implements BalanceFetcher {
+export class EvmosSaddleBalanceFetcher implements BalanceFetcher {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(SaddleContractFactory) private readonly contractFactory: SaddleContractFactory,
