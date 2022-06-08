@@ -5,18 +5,21 @@ import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
-import { TempusTokensTokenFetcher } from '../helpers/tempus.pool.token-helper';
+import { TempusAmmTokenFetcher } from '../helpers/tempus.amm.token-helper';
 import { TEMPUS_DEFINITION } from '../tempus.definition';
 
 const appId = TEMPUS_DEFINITION.id;
-const groupId = TEMPUS_DEFINITION.groups.pool.id;
+const groupId = TEMPUS_DEFINITION.groups.amm.id;
 const network = Network.FANTOM_OPERA_MAINNET;
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
-export class FantomTempusTokensTokenFetcher implements PositionFetcher<AppTokenPosition> {
-  constructor(@Inject(TempusTokensTokenFetcher) private readonly tempusTokensTokenFetcher: TempusTokensTokenFetcher) {}
+export class FantomTempusAmmTokenFetcher implements PositionFetcher<AppTokenPosition> {
+  constructor(
+    @Inject(TempusAmmTokenFetcher)
+    private readonly tempusAmmTokenFetcher: TempusAmmTokenFetcher,
+  ) {}
 
   async getPositions() {
-    return this.tempusTokensTokenFetcher.getPositions(network);
+    return this.tempusAmmTokenFetcher.getPositions(network);
   }
 }
