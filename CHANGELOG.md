@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.63.1](https://github.com/Zapper-fi/studio/compare/v0.63.0...v0.63.1) (2022-06-08)
+
+
+### Bug Fixes
+
+* **tempus-finance:** Fix AMM price ([#604](https://github.com/Zapper-fi/studio/issues/604)) ([8002419](https://github.com/Zapper-fi/studio/commit/80024198287f30dd1f9f32a5b2d3f5355f1456b4))
+
 ## [0.63.0](https://github.com/Zapper-fi/studio/compare/v0.62.0...v0.63.0) (2022-06-08)
 
 
