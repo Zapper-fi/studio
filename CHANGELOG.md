@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.60.0](https://github.com/Zapper-fi/studio/compare/v0.59.0...v0.60.0) (2022-06-08)
+
+
+### Features
+
+* **aave-v2:** Extract Aave V2 to Studio ([#594](https://github.com/Zapper-fi/studio/issues/594)) ([3ecf880](https://github.com/Zapper-fi/studio/commit/3ecf880db6de6dadaad6b9fabe0ed5d6422a6fdb))
+
 ## [0.59.0](https://github.com/Zapper-fi/studio/compare/v0.58.0...v0.59.0) (2022-06-07)
 
 
