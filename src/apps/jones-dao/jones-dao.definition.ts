@@ -14,6 +14,7 @@ export const JONES_DAO_DEFINITION = appDefinition({
       id: 'farm',
       type: GroupType.POSITION,
       label: 'Staking',
+      groupLabel: 'Farms',
     },
 
     millinerV2: {

@@ -10,9 +10,9 @@ export const VVS_FINANCE_DEFINITION = appDefinition({
   url: 'https://vvs.finance/',
 
   groups: {
-    pool: { id: 'pool', type: GroupType.TOKEN, label: 'Pools' },
-    farm: { id: 'farm', type: GroupType.POSITION, label: 'Farm' },
-    farmV2: { id: 'farm-v2', type: GroupType.POSITION, label: 'Farm V2' },
+    pool: { id: 'pool', type: GroupType.TOKEN, label: 'Pools', groupLabel: 'Pools' },
+    farm: { id: 'farm', type: GroupType.POSITION, label: 'Farm', groupLabel: 'Farms' },
+    farmV2: { id: 'farm-v2', type: GroupType.POSITION, label: 'Farm V2', groupLabel: 'Farms' },
     mine: { id: 'mine', type: GroupType.POSITION, label: 'Mine' },
   },
 

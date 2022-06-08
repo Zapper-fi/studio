@@ -83,7 +83,13 @@ export class EthereumEulerPTokenTokenFetcher implements PositionFetcher<AppToken
 
         if (totalSupply.isZero() || !underlyingToken) return null;
 
-        const liquidity = Number(totalSupply) * underlyingToken.price;
+        const dataProps = {
+          name: market.name,
+          liquidity: Number(totalSupply) * underlyingToken.price,
+          interestRate: Number(market.interestRate) / 10 ** 18,
+          borrowAPY: Number(market.borrowAPY) / 10 ** 18,
+          supplyAPY: Number(market.borrowAPY) / 10 ** 18,
+        };
 
         return {
           address: market.pTokenAddress,
@@ -96,12 +102,7 @@ export class EthereumEulerPTokenTokenFetcher implements PositionFetcher<AppToken
           network,
           decimals: 18,
           tokens: [underlyingToken],
-          dataProps: {
-            name: market.name,
-            interestRate: Number(market.interestRate) / 10 ** 18,
-            borrowAPY: Number(market.borrowAPY) / 10 ** 18,
-            supplyAPY: Number(market.borrowAPY) / 10 ** 18,
-          },
+          dataProps,
           displayProps: {
             label: `Euler P token ${market.name}`,
             secondaryLabel: buildDollarDisplayItem(underlyingToken.price),
@@ -109,7 +110,15 @@ export class EthereumEulerPTokenTokenFetcher implements PositionFetcher<AppToken
             statsItems: [
               {
                 label: 'Liquidity',
-                value: buildDollarDisplayItem(liquidity),
+                value: buildDollarDisplayItem(dataProps.liquidity),
+              },
+              {
+                label: 'Borrow APY',
+                value: buildDollarDisplayItem(dataProps.borrowAPY),
+              },
+              {
+                label: 'Supply APY',
+                value: buildDollarDisplayItem(dataProps.supplyAPY),
               },
             ],
           },
