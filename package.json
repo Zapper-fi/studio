@@ -5,6 +5,7 @@
   "license": "MIT",
   "main": "./index.js",
   "types": "./index.d.ts",
+  
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "tsc && tsc-alias -p tsconfig.aliases.json",
