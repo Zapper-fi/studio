@@ -10,7 +10,7 @@ export const AELIN_DEFINITION = appDefinition({
   groups: {
     pool: { id: 'pool', type: GroupType.TOKEN, label: 'Pools' },
     vAelin: { id: 'v-aelin', type: GroupType.TOKEN, label: 'vAELIN' },
-    farm: { id: 'farm', type: GroupType.POSITION, label: 'Staking' },
+    farm: { id: 'farm', type: GroupType.POSITION, label: 'Staking', groupLabel: 'Farms' },
   },
   url: 'https://aelin.xyz/',
   links: {

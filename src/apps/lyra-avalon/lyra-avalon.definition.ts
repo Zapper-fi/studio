@@ -21,12 +21,14 @@ export const LYRA_AVALON_DEFINITION = appDefinition({
       id: 'pool',
       type: GroupType.TOKEN,
       label: 'Liquidity Pool',
+      groupLabel: 'Pools',
     },
 
     staking: {
       id: 'staking',
       type: GroupType.TOKEN,
       label: 'Staking',
+      groupLabel: 'Farms',
     },
   },
 
