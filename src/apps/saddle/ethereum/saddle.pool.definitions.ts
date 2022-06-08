@@ -38,8 +38,8 @@ export const SADDLE_BASEPOOL_DEFINITIONS: CurvePoolDefinition[] = [
   },
   // Saddle Frax 3Pool
   {
-    swapAddress: '0x8cAEa59f3Bf1F341f89c51607E4919841131e47a',
-    tokenAddress: '0x0785aDDf5F7334aDB7ec40cD785EBF39bfD91520',
+    swapAddress: '0x8caea59f3bf1f341f89c51607e4919841131e47a',
+    tokenAddress: '0x0785addf5f7334adb7ec40cd785ebf39bfd91520',
   },
 ];
 
