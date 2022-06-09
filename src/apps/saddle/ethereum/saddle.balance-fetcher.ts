@@ -31,7 +31,7 @@ export class EthereumSaddleBalanceFetcher implements BalanceFetcher {
     return this.appToolkit.helpers.singleStakingContractPositionBalanceHelper.getBalances<SaddleCommunalFarm>({
       address,
       appId: SADDLE_DEFINITION.id,
-      groupId: SADDLE_DEFINITION.groups.communalFarm.id,
+      groupId: SADDLE_DEFINITION.groups.communalFarms.id,
       network: Network.ETHEREUM_MAINNET,
       resolveContract: ({ address, network }) => this.contractFactory.saddleCommunalFarm({ address, network }),
       resolveStakedTokenBalance: ({ contract, address, multicall }) =>
@@ -44,7 +44,7 @@ export class EthereumSaddleBalanceFetcher implements BalanceFetcher {
     return this.appToolkit.helpers.masterChefContractPositionBalanceHelper.getBalances<SaddleMiniChefV2>({
       address,
       appId: SADDLE_DEFINITION.id,
-      groupId: SADDLE_DEFINITION.groups.miniChefV2.id,
+      groupId: SADDLE_DEFINITION.groups.minichefV2.id,
       network: Network.ETHEREUM_MAINNET,
       resolveChefContract: ({ contractAddress }) =>
         this.contractFactory.saddleMiniChefV2({ network: Network.ETHEREUM_MAINNET, address: contractAddress }),
