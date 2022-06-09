@@ -1,3 +1,5 @@
+import { Blob } from 'buffer';
+
 import { Inject, Injectable } from '@nestjs/common';
 import Axios from 'axios';
 import BigNumber from 'bignumber.js';
@@ -37,7 +39,7 @@ export type VotiumRewardsToken = {
 };
 
 const appId = VOTIUM_DEFINITION.id;
-const groupId = VOTIUM_DEFINITION.groups.claimable;
+const groupId = VOTIUM_DEFINITION.groups.claimable.id;
 const network = Network.ETHEREUM_MAINNET;
 
 @Injectable()
@@ -66,7 +68,10 @@ export class VotiumClaimableBalancesHelper {
         }),
       );
 
-      return fromPairs(claims);
+      const result = fromPairs(claims);
+      const resultStr = JSON.stringify(result);
+      console.log('SIZE: ', new Blob([resultStr]).size);
+      return result;
     } catch (e) {
       return [];
     }
