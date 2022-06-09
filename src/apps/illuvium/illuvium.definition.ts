@@ -17,8 +17,8 @@ export const ILLUVIUM_DEFINITION = appDefinition({
   },
   tags: [AppTag.GAMING],
   groups: {
-    farm: { id: 'farm', type: GroupType.POSITION, label: 'Staked' },
-    farmV2: { id: 'farm-v2', type: GroupType.POSITION, label: 'Staked' },
+    farm: { id: 'farm', type: GroupType.POSITION, label: 'Staked', groupLabel: 'Farms' },
+    farmV2: { id: 'farm-v2', type: GroupType.POSITION, label: 'Staked', groupLabel: 'Farms' },
   },
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],

@@ -17,9 +17,9 @@ export const LIQUITY_DEFINITION = appDefinition({
     medium: 'https://medium.com/liquity',
   },
   groups: {
-    farm: { id: 'farm', type: GroupType.POSITION, label: 'Staked' },
+    farm: { id: 'farm', type: GroupType.POSITION, label: 'Staked', groupLabel: 'Farms' },
     trove: { id: 'trove', type: GroupType.POSITION, label: 'Trove' },
-    stabilityPool: { id: 'stability-pool', type: GroupType.POSITION, label: 'Stability Pool' },
+    stabilityPool: { id: 'stability-pool', type: GroupType.POSITION, label: 'Stability Pool', groupLabel: 'Pools' },
   },
   tags: [AppTag.COLLATERALIZED_DEBT_POSITION],
   supportedNetworks: {

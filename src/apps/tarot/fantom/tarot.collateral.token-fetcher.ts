@@ -3,6 +3,7 @@ import _ from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
+import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { CURVE_DEFINITION } from '~apps/curve';
 import { ContractType } from '~position/contract.interface';
@@ -87,6 +88,7 @@ export class FantomTarotCollateralTokenFetcher implements PositionFetcher<AppTok
             const supply = Number(supplyRaw) / 10 ** 18;
             const pricePerShare = Number(exchangeRateRaw) / 10 ** 18;
             const price = pricePerShare * underlyingToken.price;
+            const liquidity = price * supply;
 
             const collateralToken: AppTokenPosition = {
               type: ContractType.APP_TOKEN,
@@ -100,10 +102,11 @@ export class FantomTarotCollateralTokenFetcher implements PositionFetcher<AppTok
               pricePerShare,
               price,
               tokens: [underlyingToken],
-              dataProps: {},
+              dataProps: { liquidity },
               displayProps: {
                 label: `Deposited ${getLabelFromToken(underlyingToken)} in Tarot`,
                 images: getImagesFromToken(underlyingToken),
+                statsItems: [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }],
               },
             };
 

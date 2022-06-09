@@ -93,7 +93,10 @@ export class CompoundBorrowContractPositionHelper {
       const tertiaryLabel = isNumber(borrowApy) ? `${(borrowApy * 100).toFixed(3)}% APR` : '';
       const images = appToken.displayProps.images;
       const statsItems = isNumber(borrowApy)
-        ? [{ label: 'Borrow APR', value: buildPercentageDisplayItem(borrowApy) }]
+        ? [
+            { label: 'Borrow APR', value: buildPercentageDisplayItem(borrowApy) },
+            { label: 'Liquidity', value: buildDollarDisplayItem(dataProps.liquidity) },
+          ]
         : [];
 
       const contractPosition: ContractPosition<CompoundSupplyTokenDataProps> = {

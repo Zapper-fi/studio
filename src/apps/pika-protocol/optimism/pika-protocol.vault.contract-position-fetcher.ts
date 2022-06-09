@@ -85,6 +85,7 @@ export class OptimismPikaProtocolVaultContractPositionFetcher implements Positio
             label,
             secondaryLabel,
             images,
+            statsItems: [{ label: 'Liquidity', value: buildDollarDisplayItem(totalValueLocked) }],
           },
         };
 
