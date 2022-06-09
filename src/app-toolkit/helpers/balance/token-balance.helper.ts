@@ -67,7 +67,7 @@ export const drillBalance = <T extends Token>(
   // Token share stats item
   const userStatsItems: StatsItem[] = [];
   if (token.supply > 0) {
-    const share = balance / token.supply;
+    const share = (balance / token.supply) * 100;
     userStatsItems.push({ label: 'Share', value: buildPercentageDisplayItem(share) });
   }
 

@@ -50,6 +50,8 @@ export class AvalancheGroLabsTokenFetcher implements PositionFetcher<AppTokenPos
 
         const supply = Number(supplyRaw) / 10 ** decimals;
         const pricePerShare = Number(pricePerShareRaw) / 10 ** 18;
+        const price = Number(pricePerShare) * underlyingToken!.price;
+        const liquidity = price * supply;
 
         // Create the token object
         const token: AppTokenPosition = {
@@ -62,13 +64,19 @@ export class AvalancheGroLabsTokenFetcher implements PositionFetcher<AppTokenPos
           decimals,
           supply,
           pricePerShare: Number(pricePerShare),
-          price: Number(pricePerShare) * underlyingToken!.price,
+          price,
           tokens,
-          dataProps: {},
+          dataProps: { liquidity },
           displayProps: {
             label: name,
             images: getImagesFromToken(underlyingToken!),
             secondaryLabel: buildDollarDisplayItem(Number(pricePerShare)),
+            statsItems: [
+              {
+                label: 'Liquidity',
+                value: buildDollarDisplayItem(liquidity),
+              },
+            ],
           },
         };
         return token;

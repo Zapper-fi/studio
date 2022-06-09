@@ -65,5 +65,9 @@ export interface NonFungibleToken extends AbstractToken {
   };
 }
 
+export type ExchangeableAppTokenDataProps = {
+  exchangeable: boolean;
+};
+
 export type Token = BaseToken | AppTokenPosition | NonFungibleToken;
 export type Position<T = DefaultDataProps> = ContractPosition<T> | AppTokenPosition<T>;

@@ -22,6 +22,7 @@ export const STURDY_DEFINITION = appDefinition({
   },
 
   supportedNetworks: {
+    [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
     [Network.FANTOM_OPERA_MAINNET]: [AppAction.VIEW],
   },
 

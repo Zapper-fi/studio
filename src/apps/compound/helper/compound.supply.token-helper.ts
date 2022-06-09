@@ -13,14 +13,14 @@ import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
 import { EthersMulticall as Multicall } from '~multicall/multicall.ethers';
 import { ContractType } from '~position/contract.interface';
 import { BalanceDisplayMode } from '~position/display.interface';
-import { AppTokenPosition, Token } from '~position/position.interface';
+import { AppTokenPosition, ExchangeableAppTokenDataProps, Token } from '~position/position.interface';
 import { AppGroupsDefinition } from '~position/position.service';
 import { BaseToken } from '~position/token.interface';
 import { Network } from '~types/network.interface';
 
 import { CompoundComptroller, CompoundContractFactory, CompoundCToken } from '../contracts';
 
-export type CompoundSupplyTokenDataProps = {
+export type CompoundSupplyTokenDataProps = ExchangeableAppTokenDataProps & {
   supplyApy: number;
   borrowApy: number;
   liquidity: number;
@@ -46,6 +46,7 @@ type CompoundSupplyTokenHelperParams<T = CompoundComptroller, V = CompoundCToken
   getExchangeRateMantissa: (opts: { tokenDecimals: number; underlyingTokenDecimals: number }) => number;
   getDisplayLabel?: (opts: { contract: V; multicall: Multicall; underlyingToken: Token }) => Promise<string>;
   getDenormalizedRate?: (opts: { rate: BigNumberish; blocksPerDay: number; decimals: number }) => number;
+  exchangeable?: boolean;
 };
 
 @Injectable()
@@ -61,6 +62,7 @@ export class CompoundSupplyTokenHelper {
     network,
     appId,
     groupId,
+    exchangeable = false,
     dependencies = [],
     allTokens = [],
     getComptrollerContract,
@@ -161,6 +163,7 @@ export class CompoundSupplyTokenHelper {
             borrowApy,
             liquidity,
             comptrollerAddress,
+            exchangeable,
           },
 
           displayProps: {
