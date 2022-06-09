@@ -25,6 +25,7 @@ import { SaddleAppDefinition, SADDLE_DEFINITION } from './saddle.definition';
     EthereumSaddlePoolTokenFetcher,
     EvmosSaddlePoolTokenFetcher,
     EvmosSaddleCommunalFarmContractPositionFetcher,
+    EvmosSaddleMiniChefV2FarmContractPositionFetcher
     SaddleAppDefinition,
     SaddleContractFactory,
     SaddleOnChainCoinStrategy,
