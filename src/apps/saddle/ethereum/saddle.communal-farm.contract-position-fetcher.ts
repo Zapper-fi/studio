@@ -25,7 +25,7 @@ const FARMS = [
 ];
 
 const appId = SADDLE_DEFINITION.id;
-const groupId = SADDLE_DEFINITION.groups.communalFarm.id;
+const groupId = SADDLE_DEFINITION.groups.communalFarms.id;
 const network = Network.ETHEREUM_MAINNET;
 
 @Register.ContractPositionFetcher({ appId, groupId, network })

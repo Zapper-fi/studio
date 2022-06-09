@@ -1,6 +1,7 @@
 import { Register } from '~app-toolkit/decorators';
 import { appDefinition, AppDefinition } from '~app/app.definition';
 import { AppAction, AppTag, GroupType } from '~app/app.interface';
+import { FARMS } from '~apps/curve/ethereum/curve.farm.contract-position-fetcher';
 import { Network } from '~types/network.interface';
 
 export const SADDLE_DEFINITION = appDefinition({
@@ -16,6 +17,7 @@ export const SADDLE_DEFINITION = appDefinition({
   groups: {
     pool: { id: 'pool', type: GroupType.TOKEN, label: 'Pool' },
     minichefV2: { id: 'minichefV2', type: GroupType.POSITION, label: 'MiniChefv2' },
+    communalFarms: { id: 'communal-farms', type: GroupType.POSITION, label: 'CommunalFarms'}
     masterchefFarm: { id: 'masterchef-farm', type: GroupType.POSITION, label: 'Farms' },
   },
   primaryColor: '#fff',

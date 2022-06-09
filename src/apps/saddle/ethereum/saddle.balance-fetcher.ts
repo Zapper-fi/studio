@@ -83,7 +83,7 @@ export class EthereumSaddleBalanceFetcher implements BalanceFetcher {
         assets: miniChefV2FarmBalances,
       },
       {
-        label: 'Communal Farms',
+        label: 'CommunalFarms',
         assets: communalFarmBalances,
       },
     ]);
