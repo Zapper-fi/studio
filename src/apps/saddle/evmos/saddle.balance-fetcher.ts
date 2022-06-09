@@ -27,7 +27,7 @@ export class EvmosSaddleBalanceFetcher implements BalanceFetcher {
     });
   }
 
-  private async getCommunalFarmBalances(address: string) {
+  private async getSaddleMiniChefV2(address: string) {
     return this.appToolkit.helpers.singleStakingContractPositionBalanceHelper.getBalances<SaddleCommunalFarm>({
       address,
       appId: SADDLE_DEFINITION.id,
@@ -69,7 +69,6 @@ export class EvmosSaddleBalanceFetcher implements BalanceFetcher {
   async getBalances(address: string) {
     const [poolTokenBalances, communalFarmBalances, miniChefV2FarmBalances] = await Promise.all([
       this.getPoolTokenBalances(address),
-      this.getCommunalFarmBalances(address),
       this.getMiniChefV2FarmBalances(address),
     ]);
 
