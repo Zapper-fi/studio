@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.65.1](https://github.com/Zapper-fi/studio/compare/v0.65.0...v0.65.1) (2022-06-09)
+
+
+### Bug Fixes
+
+* **votium:** Use group ID in key ([97051a5](https://github.com/Zapper-fi/studio/commit/97051a5769b10daa095e73f0cef501973a176487))
+
 ## [0.65.0](https://github.com/Zapper-fi/studio/compare/v0.64.0...v0.65.0) (2022-06-09)
 
 
