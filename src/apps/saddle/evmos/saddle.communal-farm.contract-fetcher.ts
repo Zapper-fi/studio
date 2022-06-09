@@ -14,7 +14,7 @@ const FARMS = [
   // Saddle Frax 3 Pool Farm
   {
     address: '0x0232e0b6df048c8cc4037c52bc90cf943c9c8cc6',
-    stakedTokenAddress: '0x2801fE8f9DE3a4aD6098a5B95d5165676bb01f82',
+    stakedTokenAddress: '0x2801fe8f9de3a4ad6098a5b95d5165676bb01f82',
     rewardTokenAddresses: ['0x3344e55c6dde2a01f4ed893f97bac1f99ec24f8b'],
   },
 ];
