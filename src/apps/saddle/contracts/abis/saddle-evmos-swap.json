@@ -1,1 +1,400 @@
-[{"type":"event","name":"AddLiquidity","inputs":[{"type":"address","name":"provider","internalType":"address","indexed":true},{"type":"uint256[]","name":"tokenAmounts","internalType":"uint256[]","indexed":false},{"type":"uint256[]","name":"fees","internalType":"uint256[]","indexed":false},{"type":"uint256","name":"invariant","internalType":"uint256","indexed":false},{"type":"uint256","name":"lpTokenSupply","internalType":"uint256","indexed":false}],"anonymous":false},{"type":"event","name":"FlashLoan","inputs":[{"type":"address","name":"receiver","internalType":"address","indexed":true},{"type":"uint8","name":"tokenIndex","internalType":"uint8","indexed":false},{"type":"uint256","name":"amount","internalType":"uint256","indexed":false},{"type":"uint256","name":"amountFee","internalType":"uint256","indexed":false},{"type":"uint256","name":"protocolFee","internalType":"uint256","indexed":false}],"anonymous":false},{"type":"event","name":"NewAdminFee","inputs":[{"type":"uint256","name":"newAdminFee","internalType":"uint256","indexed":false}],"anonymous":false},{"type":"event","name":"NewSwapFee","inputs":[{"type":"uint256","name":"newSwapFee","internalType":"uint256","indexed":false}],"anonymous":false},{"type":"event","name":"NewWithdrawFee","inputs":[{"type":"uint256","name":"newWithdrawFee","internalType":"uint256","indexed":false}],"anonymous":false},{"type":"event","name":"OwnershipTransferred","inputs":[{"type":"address","name":"previousOwner","internalType":"address","indexed":true},{"type":"address","name":"newOwner","internalType":"address","indexed":true}],"anonymous":false},{"type":"event","name":"Paused","inputs":[{"type":"address","name":"account","internalType":"address","indexed":false}],"anonymous":false},{"type":"event","name":"RampA","inputs":[{"type":"uint256","name":"oldA","internalType":"uint256","indexed":false},{"type":"uint256","name":"newA","internalType":"uint256","indexed":false},{"type":"uint256","name":"initialTime","internalType":"uint256","indexed":false},{"type":"uint256","name":"futureTime","internalType":"uint256","indexed":false}],"anonymous":false},{"type":"event","name":"RemoveLiquidity","inputs":[{"type":"address","name":"provider","internalType":"address","indexed":true},{"type":"uint256[]","name":"tokenAmounts","internalType":"uint256[]","indexed":false},{"type":"uint256","name":"lpTokenSupply","internalType":"uint256","indexed":false}],"anonymous":false},{"type":"event","name":"RemoveLiquidityImbalance","inputs":[{"type":"address","name":"provider","internalType":"address","indexed":true},{"type":"uint256[]","name":"tokenAmounts","internalType":"uint256[]","indexed":false},{"type":"uint256[]","name":"fees","internalType":"uint256[]","indexed":false},{"type":"uint256","name":"invariant","internalType":"uint256","indexed":false},{"type":"uint256","name":"lpTokenSupply","internalType":"uint256","indexed":false}],"anonymous":false},{"type":"event","name":"RemoveLiquidityOne","inputs":[{"type":"address","name":"provider","internalType":"address","indexed":true},{"type":"uint256","name":"lpTokenAmount","internalType":"uint256","indexed":false},{"type":"uint256","name":"lpTokenSupply","internalType":"uint256","indexed":false},{"type":"uint256","name":"boughtId","internalType":"uint256","indexed":false},{"type":"uint256","name":"tokensBought","internalType":"uint256","indexed":false}],"anonymous":false},{"type":"event","name":"StopRampA","inputs":[{"type":"uint256","name":"currentA","internalType":"uint256","indexed":false},{"type":"uint256","name":"time","internalType":"uint256","indexed":false}],"anonymous":false},{"type":"event","name":"TokenSwap","inputs":[{"type":"address","name":"buyer","internalType":"address","indexed":true},{"type":"uint256","name":"tokensSold","internalType":"uint256","indexed":false},{"type":"uint256","name":"tokensBought","internalType":"uint256","indexed":false},{"type":"uint128","name":"soldId","internalType":"uint128","indexed":false},{"type":"uint128","name":"boughtId","internalType":"uint128","indexed":false}],"anonymous":false},{"type":"event","name":"Unpaused","inputs":[{"type":"address","name":"account","internalType":"address","indexed":false}],"anonymous":false},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"MAX_BPS","inputs":[]},{"type":"function","stateMutability":"payable","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"addLiquidity","inputs":[{"type":"uint256[]","name":"amounts","internalType":"uint256[]"},{"type":"uint256","name":"minToMint","internalType":"uint256"},{"type":"uint256","name":"deadline","internalType":"uint256"}]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256[]","name":"","internalType":"uint256[]"}],"name":"calculateRemoveLiquidity","inputs":[{"type":"uint256","name":"amount","internalType":"uint256"}]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"availableTokenAmount","internalType":"uint256"}],"name":"calculateRemoveLiquidityOneToken","inputs":[{"type":"uint256","name":"tokenAmount","internalType":"uint256"},{"type":"uint8","name":"tokenIndex","internalType":"uint8"}]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"calculateSwap","inputs":[{"type":"uint8","name":"tokenIndexFrom","internalType":"uint8"},{"type":"uint8","name":"tokenIndexTo","internalType":"uint8"},{"type":"uint256","name":"dx","internalType":"uint256"}]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"calculateTokenAmount","inputs":[{"type":"uint256[]","name":"amounts","internalType":"uint256[]"},{"type":"bool","name":"deposit","internalType":"bool"}]},{"type":"function","stateMutability":"payable","outputs":[],"name":"flashLoan","inputs":[{"type":"address","name":"receiver","internalType":"address"},{"type":"address","name":"token","internalType":"contract IERC20"},{"type":"uint256","name":"amount","internalType":"uint256"},{"type":"bytes","name":"params","internalType":"bytes"}]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"flashLoanFeeBPS","inputs":[]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"getA","inputs":[]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"getAPrecise","inputs":[]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"getAdminBalance","inputs":[{"type":"uint256","name":"index","internalType":"uint256"}]},{"type":"function","stateMutability":"view","outputs":[{"type":"address","name":"","internalType":"contract IERC20"}],"name":"getToken","inputs":[{"type":"uint8","name":"index","internalType":"uint8"}]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"getTokenBalance","inputs":[{"type":"uint8","name":"index","internalType":"uint8"}]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint8","name":"","internalType":"uint8"}],"name":"getTokenIndex","inputs":[{"type":"address","name":"tokenAddress","internalType":"address"}]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"getVirtualPrice","inputs":[]},{"type":"function","stateMutability":"payable","outputs":[],"name":"initialize","inputs":[{"type":"address[]","name":"_pooledTokens","internalType":"contract IERC20[]"},{"type":"uint8[]","name":"decimals","internalType":"uint8[]"},{"type":"string","name":"lpTokenName","internalType":"string"},{"type":"string","name":"lpTokenSymbol","internalType":"string"},{"type":"uint256","name":"_a","internalType":"uint256"},{"type":"uint256","name":"_fee","internalType":"uint256"},{"type":"uint256","name":"_adminFee","internalType":"uint256"},{"type":"address","name":"lpTokenTargetAddress","internalType":"address"}]},{"type":"function","stateMutability":"view","outputs":[{"type":"address","name":"","internalType":"address"}],"name":"owner","inputs":[]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"pause","inputs":[]},{"type":"function","stateMutability":"view","outputs":[{"type":"bool","name":"","internalType":"bool"}],"name":"paused","inputs":[]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"protocolFeeShareBPS","inputs":[]},{"type":"function","stateMutability":"payable","outputs":[],"name":"rampA","inputs":[{"type":"uint256","name":"futureA","internalType":"uint256"},{"type":"uint256","name":"futureTime","internalType":"uint256"}]},{"type":"function","stateMutability":"payable","outputs":[{"type":"uint256[]","name":"","internalType":"uint256[]"}],"name":"removeLiquidity","inputs":[{"type":"uint256","name":"amount","internalType":"uint256"},{"type":"uint256[]","name":"minAmounts","internalType":"uint256[]"},{"type":"uint256","name":"deadline","internalType":"uint256"}]},{"type":"function","stateMutability":"payable","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"removeLiquidityImbalance","inputs":[{"type":"uint256[]","name":"amounts","internalType":"uint256[]"},{"type":"uint256","name":"maxBurnAmount","internalType":"uint256"},{"type":"uint256","name":"deadline","internalType":"uint256"}]},{"type":"function","stateMutability":"payable","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"removeLiquidityOneToken","inputs":[{"type":"uint256","name":"tokenAmount","internalType":"uint256"},{"type":"uint8","name":"tokenIndex","internalType":"uint8"},{"type":"uint256","name":"minAmount","internalType":"uint256"},{"type":"uint256","name":"deadline","internalType":"uint256"}]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"renounceOwnership","inputs":[]},{"type":"function","stateMutability":"payable","outputs":[],"name":"setAdminFee","inputs":[{"type":"uint256","name":"newAdminFee","internalType":"uint256"}]},{"type":"function","stateMutability":"payable","outputs":[],"name":"setFlashLoanFees","inputs":[{"type":"uint256","name":"newFlashLoanFeeBPS","internalType":"uint256"},{"type":"uint256","name":"newProtocolFeeShareBPS","internalType":"uint256"}]},{"type":"function","stateMutability":"payable","outputs":[],"name":"setSwapFee","inputs":[{"type":"uint256","name":"newSwapFee","internalType":"uint256"}]},{"type":"function","stateMutability":"payable","outputs":[],"name":"stopRampA","inputs":[]},{"type":"function","stateMutability":"payable","outputs":[{"type":"uint256","name":"","internalType":"uint256"}],"name":"swap","inputs":[{"type":"uint8","name":"tokenIndexFrom","internalType":"uint8"},{"type":"uint8","name":"tokenIndexTo","internalType":"uint8"},{"type":"uint256","name":"dx","internalType":"uint256"},{"type":"uint256","name":"minDy","internalType":"uint256"},{"type":"uint256","name":"deadline","internalType":"uint256"}]},{"type":"function","stateMutability":"view","outputs":[{"type":"uint256","name":"initialA","internalType":"uint256"},{"type":"uint256","name":"futureA","internalType":"uint256"},{"type":"uint256","name":"initialATime","internalType":"uint256"},{"type":"uint256","name":"futureATime","internalType":"uint256"},{"type":"uint256","name":"swapFee","internalType":"uint256"},{"type":"uint256","name":"adminFee","internalType":"uint256"},{"type":"address","name":"lpToken","internalType":"contract LPToken"}],"name":"swapStorage","inputs":[]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"transferOwnership","inputs":[{"type":"address","name":"newOwner","internalType":"address"}]},{"type":"function","stateMutability":"nonpayable","outputs":[],"name":"unpause","inputs":[]},{"type":"function","stateMutability":"payable","outputs":[],"name":"withdrawAdminFees","inputs":[]}]
+[
+  {
+    "type": "event",
+    "name": "AddLiquidity",
+    "inputs": [
+      { "type": "address", "name": "provider", "internalType": "address", "indexed": true },
+      { "type": "uint256[]", "name": "tokenAmounts", "internalType": "uint256[]", "indexed": false },
+      { "type": "uint256[]", "name": "fees", "internalType": "uint256[]", "indexed": false },
+      { "type": "uint256", "name": "invariant", "internalType": "uint256", "indexed": false },
+      { "type": "uint256", "name": "lpTokenSupply", "internalType": "uint256", "indexed": false }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "FlashLoan",
+    "inputs": [
+      { "type": "address", "name": "receiver", "internalType": "address", "indexed": true },
+      { "type": "uint8", "name": "tokenIndex", "internalType": "uint8", "indexed": false },
+      { "type": "uint256", "name": "amount", "internalType": "uint256", "indexed": false },
+      { "type": "uint256", "name": "amountFee", "internalType": "uint256", "indexed": false },
+      { "type": "uint256", "name": "protocolFee", "internalType": "uint256", "indexed": false }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "NewAdminFee",
+    "inputs": [{ "type": "uint256", "name": "newAdminFee", "internalType": "uint256", "indexed": false }],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "NewSwapFee",
+    "inputs": [{ "type": "uint256", "name": "newSwapFee", "internalType": "uint256", "indexed": false }],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "NewWithdrawFee",
+    "inputs": [{ "type": "uint256", "name": "newWithdrawFee", "internalType": "uint256", "indexed": false }],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "OwnershipTransferred",
+    "inputs": [
+      { "type": "address", "name": "previousOwner", "internalType": "address", "indexed": true },
+      { "type": "address", "name": "newOwner", "internalType": "address", "indexed": true }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "Paused",
+    "inputs": [{ "type": "address", "name": "account", "internalType": "address", "indexed": false }],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "RampA",
+    "inputs": [
+      { "type": "uint256", "name": "oldA", "internalType": "uint256", "indexed": false },
+      { "type": "uint256", "name": "newA", "internalType": "uint256", "indexed": false },
+      { "type": "uint256", "name": "initialTime", "internalType": "uint256", "indexed": false },
+      { "type": "uint256", "name": "futureTime", "internalType": "uint256", "indexed": false }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "RemoveLiquidity",
+    "inputs": [
+      { "type": "address", "name": "provider", "internalType": "address", "indexed": true },
+      { "type": "uint256[]", "name": "tokenAmounts", "internalType": "uint256[]", "indexed": false },
+      { "type": "uint256", "name": "lpTokenSupply", "internalType": "uint256", "indexed": false }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "RemoveLiquidityImbalance",
+    "inputs": [
+      { "type": "address", "name": "provider", "internalType": "address", "indexed": true },
+      { "type": "uint256[]", "name": "tokenAmounts", "internalType": "uint256[]", "indexed": false },
+      { "type": "uint256[]", "name": "fees", "internalType": "uint256[]", "indexed": false },
+      { "type": "uint256", "name": "invariant", "internalType": "uint256", "indexed": false },
+      { "type": "uint256", "name": "lpTokenSupply", "internalType": "uint256", "indexed": false }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "RemoveLiquidityOne",
+    "inputs": [
+      { "type": "address", "name": "provider", "internalType": "address", "indexed": true },
+      { "type": "uint256", "name": "lpTokenAmount", "internalType": "uint256", "indexed": false },
+      { "type": "uint256", "name": "lpTokenSupply", "internalType": "uint256", "indexed": false },
+      { "type": "uint256", "name": "boughtId", "internalType": "uint256", "indexed": false },
+      { "type": "uint256", "name": "tokensBought", "internalType": "uint256", "indexed": false }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "StopRampA",
+    "inputs": [
+      { "type": "uint256", "name": "currentA", "internalType": "uint256", "indexed": false },
+      { "type": "uint256", "name": "time", "internalType": "uint256", "indexed": false }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "TokenSwap",
+    "inputs": [
+      { "type": "address", "name": "buyer", "internalType": "address", "indexed": true },
+      { "type": "uint256", "name": "tokensSold", "internalType": "uint256", "indexed": false },
+      { "type": "uint256", "name": "tokensBought", "internalType": "uint256", "indexed": false },
+      { "type": "uint128", "name": "soldId", "internalType": "uint128", "indexed": false },
+      { "type": "uint128", "name": "boughtId", "internalType": "uint128", "indexed": false }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "Unpaused",
+    "inputs": [{ "type": "address", "name": "account", "internalType": "address", "indexed": false }],
+    "anonymous": false
+  },
+  {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{ "type": "uint256", "name": "", "internalType": "uint256" }],
+    "name": "MAX_BPS",
+    "inputs": []
+  },
+  {
+    "type": "function",
+    "stateMutability": "payable",
+    "outputs": [{ "type": "uint256", "name": "", "internalType": "uint256" }],
+    "name": "addLiquidity",
+    "inputs": [
+      { "type": "uint256[]", "name": "amounts", "internalType": "uint256[]" },
+      { "type": "uint256", "name": "minToMint", "internalType": "uint256" },
+      { "type": "uint256", "name": "deadline", "internalType": "uint256" }
+    ]
+  },
+  {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{ "type": "uint256[]", "name": "", "internalType": "uint256[]" }],
+    "name": "calculateRemoveLiquidity",
+    "inputs": [{ "type": "uint256", "name": "amount", "internalType": "uint256" }]
+  },
+  {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{ "type": "uint256", "name": "availableTokenAmount", "internalType": "uint256" }],
+    "name": "calculateRemoveLiquidityOneToken",
+    "inputs": [
+      { "type": "uint256", "name": "tokenAmount", "internalType": "uint256" },
+      { "type": "uint8", "name": "tokenIndex", "internalType": "uint8" }
+    ]
+  },
+  {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{ "type": "uint256", "name": "", "internalType": "uint256" }],
+    "name": "calculateSwap",
+    "inputs": [
+      { "type": "uint8", "name": "tokenIndexFrom", "internalType": "uint8" },
+      { "type": "uint8", "name": "tokenIndexTo", "internalType": "uint8" },
+      { "type": "uint256", "name": "dx", "internalType": "uint256" }
+    ]
+  },
+  {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{ "type": "uint256", "name": "", "internalType": "uint256" }],
+    "name": "calculateTokenAmount",
+    "inputs": [
+      { "type": "uint256[]", "name": "amounts", "internalType": "uint256[]" },
+      { "type": "bool", "name": "deposit", "internalType": "bool" }
+    ]
+  },
+  {
+    "type": "function",
+    "stateMutability": "payable",
+    "outputs": [],
+    "name": "flashLoan",
+    "inputs": [
+      { "type": "address", "name": "receiver", "internalType": "address" },
+      { "type": "address", "name": "token", "internalType": "contract IERC20" },
+      { "type": "uint256", "name": "amount", "internalType": "uint256" },
+      { "type": "bytes", "name": "params", "internalType": "bytes" }
+    ]
+  },
+  {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{ "type": "uint256", "name": "", "internalType": "uint256" }],
+    "name": "flashLoanFeeBPS",
+    "inputs": []
+  },
+  {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{ "type": "uint256", "name": "", "internalType": "uint256" }],
+    "name": "getA",
+    "inputs": []
+  },
+  {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{ "type": "uint256", "name": "", "internalType": "uint256" }],
+    "name": "getAPrecise",
+    "inputs": []
+  },
+  {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{ "type": "uint256", "name": "", "internalType": "uint256" }],
+    "name": "getAdminBalance",
+    "inputs": [{ "type": "uint256", "name": "index", "internalType": "uint256" }]
+  },
+  {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{ "type": "address", "name": "", "internalType": "contract IERC20" }],
+    "name": "getToken",
+    "inputs": [{ "type": "uint8", "name": "index", "internalType": "uint8" }]
+  },
+  {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{ "type": "uint256", "name": "", "internalType": "uint256" }],
+    "name": "getTokenBalance",
+    "inputs": [{ "type": "uint8", "name": "index", "internalType": "uint8" }]
+  },
+  {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{ "type": "uint8", "name": "", "internalType": "uint8" }],
+    "name": "getTokenIndex",
+    "inputs": [{ "type": "address", "name": "tokenAddress", "internalType": "address" }]
+  },
+  {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{ "type": "uint256", "name": "", "internalType": "uint256" }],
+    "name": "getVirtualPrice",
+    "inputs": []
+  },
+  {
+    "type": "function",
+    "stateMutability": "payable",
+    "outputs": [],
+    "name": "initialize",
+    "inputs": [
+      { "type": "address[]", "name": "_pooledTokens", "internalType": "contract IERC20[]" },
+      { "type": "uint8[]", "name": "decimals", "internalType": "uint8[]" },
+      { "type": "string", "name": "lpTokenName", "internalType": "string" },
+      { "type": "string", "name": "lpTokenSymbol", "internalType": "string" },
+      { "type": "uint256", "name": "_a", "internalType": "uint256" },
+      { "type": "uint256", "name": "_fee", "internalType": "uint256" },
+      { "type": "uint256", "name": "_adminFee", "internalType": "uint256" },
+      { "type": "address", "name": "lpTokenTargetAddress", "internalType": "address" }
+    ]
+  },
+  {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{ "type": "address", "name": "", "internalType": "address" }],
+    "name": "owner",
+    "inputs": []
+  },
+  { "type": "function", "stateMutability": "nonpayable", "outputs": [], "name": "pause", "inputs": [] },
+  {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{ "type": "bool", "name": "", "internalType": "bool" }],
+    "name": "paused",
+    "inputs": []
+  },
+  {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [{ "type": "uint256", "name": "", "internalType": "uint256" }],
+    "name": "protocolFeeShareBPS",
+    "inputs": []
+  },
+  {
+    "type": "function",
+    "stateMutability": "payable",
+    "outputs": [],
+    "name": "rampA",
+    "inputs": [
+      { "type": "uint256", "name": "futureA", "internalType": "uint256" },
+      { "type": "uint256", "name": "futureTime", "internalType": "uint256" }
+    ]
+  },
+  {
+    "type": "function",
+    "stateMutability": "payable",
+    "outputs": [{ "type": "uint256[]", "name": "", "internalType": "uint256[]" }],
+    "name": "removeLiquidity",
+    "inputs": [
+      { "type": "uint256", "name": "amount", "internalType": "uint256" },
+      { "type": "uint256[]", "name": "minAmounts", "internalType": "uint256[]" },
+      { "type": "uint256", "name": "deadline", "internalType": "uint256" }
+    ]
+  },
+  {
+    "type": "function",
+    "stateMutability": "payable",
+    "outputs": [{ "type": "uint256", "name": "", "internalType": "uint256" }],
+    "name": "removeLiquidityImbalance",
+    "inputs": [
+      { "type": "uint256[]", "name": "amounts", "internalType": "uint256[]" },
+      { "type": "uint256", "name": "maxBurnAmount", "internalType": "uint256" },
+      { "type": "uint256", "name": "deadline", "internalType": "uint256" }
+    ]
+  },
+  {
+    "type": "function",
+    "stateMutability": "payable",
+    "outputs": [{ "type": "uint256", "name": "", "internalType": "uint256" }],
+    "name": "removeLiquidityOneToken",
+    "inputs": [
+      { "type": "uint256", "name": "tokenAmount", "internalType": "uint256" },
+      { "type": "uint8", "name": "tokenIndex", "internalType": "uint8" },
+      { "type": "uint256", "name": "minAmount", "internalType": "uint256" },
+      { "type": "uint256", "name": "deadline", "internalType": "uint256" }
+    ]
+  },
+  { "type": "function", "stateMutability": "nonpayable", "outputs": [], "name": "renounceOwnership", "inputs": [] },
+  {
+    "type": "function",
+    "stateMutability": "payable",
+    "outputs": [],
+    "name": "setAdminFee",
+    "inputs": [{ "type": "uint256", "name": "newAdminFee", "internalType": "uint256" }]
+  },
+  {
+    "type": "function",
+    "stateMutability": "payable",
+    "outputs": [],
+    "name": "setFlashLoanFees",
+    "inputs": [
+      { "type": "uint256", "name": "newFlashLoanFeeBPS", "internalType": "uint256" },
+      { "type": "uint256", "name": "newProtocolFeeShareBPS", "internalType": "uint256" }
+    ]
+  },
+  {
+    "type": "function",
+    "stateMutability": "payable",
+    "outputs": [],
+    "name": "setSwapFee",
+    "inputs": [{ "type": "uint256", "name": "newSwapFee", "internalType": "uint256" }]
+  },
+  { "type": "function", "stateMutability": "payable", "outputs": [], "name": "stopRampA", "inputs": [] },
+  {
+    "type": "function",
+    "stateMutability": "payable",
+    "outputs": [{ "type": "uint256", "name": "", "internalType": "uint256" }],
+    "name": "swap",
+    "inputs": [
+      { "type": "uint8", "name": "tokenIndexFrom", "internalType": "uint8" },
+      { "type": "uint8", "name": "tokenIndexTo", "internalType": "uint8" },
+      { "type": "uint256", "name": "dx", "internalType": "uint256" },
+      { "type": "uint256", "name": "minDy", "internalType": "uint256" },
+      { "type": "uint256", "name": "deadline", "internalType": "uint256" }
+    ]
+  },
+  {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [
+      { "type": "uint256", "name": "initialA", "internalType": "uint256" },
+      { "type": "uint256", "name": "futureA", "internalType": "uint256" },
+      { "type": "uint256", "name": "initialATime", "internalType": "uint256" },
+      { "type": "uint256", "name": "futureATime", "internalType": "uint256" },
+      { "type": "uint256", "name": "swapFee", "internalType": "uint256" },
+      { "type": "uint256", "name": "adminFee", "internalType": "uint256" },
+      { "type": "address", "name": "lpToken", "internalType": "contract LPToken" }
+    ],
+    "name": "swapStorage",
+    "inputs": []
+  },
+  {
+    "type": "function",
+    "stateMutability": "nonpayable",
+    "outputs": [],
+    "name": "transferOwnership",
+    "inputs": [{ "type": "address", "name": "newOwner", "internalType": "address" }]
+  },
+  { "type": "function", "stateMutability": "nonpayable", "outputs": [], "name": "unpause", "inputs": [] },
+  { "type": "function", "stateMutability": "payable", "outputs": [], "name": "withdrawAdminFees", "inputs": [] }
+]
