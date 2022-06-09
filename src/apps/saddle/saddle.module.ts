@@ -13,6 +13,7 @@ import { EvmosSaddleBalanceFetcher } from './evmos/saddle.balance-fetcher';
 import { EvmosSaddleMiniChefV2FarmContractPositionFetcher } from './evmos/saddle.mini-chef-v2-farm.contract-position-fetcher';
 import { EvmosSaddlePoolContractPositionFetcher } from './evmos/saddle.pool.contract-position-fetcher';
 import { EvmosSaddlePoolTokenFetcher } from './evmos/saddle.pool.token-fetcher';
+import { EvmosSaddlePoolTokenFetcher } from './evmos/saddle.pool.token-fetcher';
 import { EvmosSaddleTvlFetcher } from './evmos/saddle.tvl-fetcher';
 import { SaddleOnChainCoinStrategy } from './helpers/saddle.on-chain.coin-strategy';
 import { SaddleOnChainReserveStrategy } from './helpers/saddle.on-chain.reserve-strategy';
@@ -30,8 +31,11 @@ import { SaddleAppDefinition, SADDLE_DEFINITION } from './saddle.definition';
     EthereumSaddlePoolTokenFetcher,
     EthereumSaddleTvlFetcher,
     EvmosSaddleBalanceFetcher,
+    EvmosSaddleBalanceFetcher,
     EvmosSaddleMiniChefV2FarmContractPositionFetcher,
     EvmosSaddlePoolContractPositionFetcher,
+    EvmosSaddlePoolTokenFetcher,
+    EvmosSaddlePoolTokenFetcher,
     EvmosSaddlePoolTokenFetcher,
     EvmosSaddleTvlFetcher,
     SaddleAppDefinition,
