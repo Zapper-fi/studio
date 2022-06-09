@@ -51,7 +51,24 @@ export class EvmosSaddleBalanceFetcher implements BalanceFetcher {
         return [drillBalance(claimableToken, pendingTokens.toString())];
       },
     });
+
+  }resolveClaimableTokenBalances: this.appToolkit.helpers.MiniChefV2ClaimableBalanceStrategy: any.build<
+  SaddleMiniChefV2,
+{
+  resolvePrimaryClaimableBalance: ({ multicall, contract, contractPosition, address }) =>
+    multicall.wrap(contract).pendingPickle(contractPosition.dataProps.poolIndex, address),
+  resolveRewarderAddress: ({ contract, contractPosition, multicall }) =>
+    multicall.wrap(contract).rewarder(contractPosition.dataProps.poolIndex),
+  resolveRewarderContract: ({ network, rewarderAddress }) =>
+    this.contractFactory.pickleRewarder({ address: rewarderAddress, network }),
+  resolveSecondaryClaimableBalance: ({ multicall, rewarderContract, contractPosition, address }) =>
+    multicall
+      .wrap(rewarderContract)
+      .pendingTokens(contractPosition.dataProps.poolIndex, address, 0)
+      .then(v => v.rewardAmounts[MiniChefV2ClaimableBalanceStrategy]),
+  
   }
+
 
   async getBalances(address: string) {
     const [poolTokenBalances, miniChefV2FarmBalances] = await Promise.all([
