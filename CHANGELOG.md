@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.65.0](https://github.com/Zapper-fi/studio/compare/v0.64.0...v0.65.0) (2022-06-09)
+
+
+### Features
+
+* **aave-v2:** Add enabled as collateral and liquidation threshold data props ([#610](https://github.com/Zapper-fi/studio/issues/610)) ([c75f883](https://github.com/Zapper-fi/studio/commit/c75f8838ad9877302960acd378172c86e42b2003))
+
 ## [0.64.0](https://github.com/Zapper-fi/studio/compare/v0.63.1...v0.64.0) (2022-06-09)
 
 
