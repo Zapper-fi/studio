@@ -1,6 +1,6 @@
 import { Register } from '~app-toolkit/decorators';
 import { appDefinition, AppDefinition } from '~app/app.definition';
-import { AppAction, AppTag } from '~app/app.interface';
+import { AppAction, AppTag, GroupType } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
 export const AGAVE_DEFINITION = appDefinition({
@@ -9,7 +9,33 @@ export const AGAVE_DEFINITION = appDefinition({
   description:
     'Agave rewards depositors with passive income and lets them use their deposits as collateral to borrow and lend digital assets.',
   url: 'https://agave.finance/',
-  groups: {},
+
+  groups: {
+    deposit: {
+      id: 'deposit',
+      type: GroupType.TOKEN,
+      label: 'Deposit',
+    },
+
+    stableBorrow: {
+      id: 'stable-borrow',
+      type: GroupType.TOKEN,
+      label: 'Borrow',
+    },
+
+    variableBorrow: {
+      id: 'variable-borrow',
+      type: GroupType.TOKEN,
+      label: 'Borrow',
+    },
+
+    claimable: {
+      id: 'claimable',
+      type: GroupType.TOKEN,
+      label: 'Reward',
+    },
+  },
+
   tags: [AppTag.COLLATERALIZED_DEBT_POSITION],
   keywords: [],
   links: {},
