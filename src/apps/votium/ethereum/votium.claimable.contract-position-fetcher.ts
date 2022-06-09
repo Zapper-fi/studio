@@ -7,7 +7,7 @@ import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
-import { VotiumContractFactory } from '../contracts';
+import { VotiumRewardsToken } from '../helpers/votium.rewards.balance-helper';
 import { VOTIUM_DEFINITION } from '../votium.definition';
 
 const appId = VOTIUM_DEFINITION.id;
@@ -16,27 +16,19 @@ const network = Network.ETHEREUM_MAINNET;
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
 export class EthereumVotiumClaimableContractPositionFetcher implements PositionFetcher<ContractPosition> {
-  constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(VotiumContractFactory) private readonly votiumContractFactory: VotiumContractFactory,
-  ) {}
+  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
-	async getPositions() {
-		const tokens = await Axios.get<VotiumRewardTokens>(
-			'https://raw.githubusercontent.com/oo-00/Votium/main/merkle/activeTokens.json',
-		).then(v => v.data);
-		const rewards = await Promise.all(
-			tokens.map(async tok => {
-				return tok.value;
-			})
-		);
+  async getPositions() {
+    const rewardTokenAddresses = await Axios.get<VotiumRewardsToken[]>(
+      'https://raw.githubusercontent.com/oo-00/Votium/main/merkle/activeTokens.json',
+    ).then(v => v.data.map(v => v.value.toLowerCase()));
+
     return this.appToolkit.helpers.merkleContractPositionHelper.getContractPositions({
-      address: '0x378Ba9B73309bE80BF4C2c027aAD799766a7ED5A',
+      address: '0x378ba9b73309be80bf4c2c027aad799766a7ed5a',
       appId,
       groupId,
       network,
-      dependencies: [],
-      rewardTokenAddresses: rewards,
+      rewardTokenAddresses,
     });
   }
 }

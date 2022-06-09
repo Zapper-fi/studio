@@ -46,7 +46,7 @@ export class MerkleContractPositionHelper {
       const tokens = [claimable(rewardToken)];
       const dataProps = {};
       const displayProps = {
-        label: getLabelFromToken(rewardToken),
+        label: `Claimable ${getLabelFromToken(rewardToken)}`,
         secondaryLabel: buildDollarDisplayItem(rewardToken.price),
         images: getImagesFromToken(rewardToken),
       };

@@ -4,9 +4,8 @@ import { AbstractApp } from '~app/app.dynamic-module';
 import { VotiumContractFactory } from './contracts';
 import { EthereumVotiumBalanceFetcher } from './ethereum/votium.balance-fetcher';
 import { EthereumVotiumClaimableContractPositionFetcher } from './ethereum/votium.claimable.contract-position-fetcher';
+import { VotiumClaimableBalancesHelper } from './helpers/votium.rewards.balance-helper';
 import { VotiumAppDefinition, VOTIUM_DEFINITION } from './votium.definition';
-import { VotiumRewardsBalancesHelper } from './helpers/votium.rewards.balance-helper';
-
 
 @Register.AppModule({
   appId: VOTIUM_DEFINITION.id,
@@ -14,7 +13,7 @@ import { VotiumRewardsBalancesHelper } from './helpers/votium.rewards.balance-he
     EthereumVotiumBalanceFetcher,
     EthereumVotiumClaimableContractPositionFetcher,
     VotiumAppDefinition,
-		VotiumRewardsBalancesHelper,
+    VotiumClaimableBalancesHelper,
     VotiumContractFactory,
   ],
 })
