@@ -8,13 +8,15 @@ import { Network } from '~types/network.interface';
 
 import { YEARN_DEFINITION } from '../yearn.definition';
 
+const network = Network.ARBITRUM_MAINNET;
+
 @Register.BalanceFetcher(YEARN_DEFINITION.id, Network.ARBITRUM_MAINNET)
 export class ArbitrumYearnBalanceFetcher implements BalanceFetcher {
   constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
   private async getVaultBalances(address: string) {
     return await this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
-      network: Network.ARBITRUM_MAINNET,
+      network,
       appId: YEARN_DEFINITION.id,
       groupId: YEARN_DEFINITION.groups.vault.id,
       address,
