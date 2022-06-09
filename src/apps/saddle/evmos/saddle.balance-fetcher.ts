@@ -8,7 +8,7 @@ import { BalanceFetcher } from '~balance/balance-fetcher.interface';
 import { MetaType } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
-import { SaddleCommunalFarm, SaddleContractFactory, SaddleMiniChefV2 } from '../contracts';
+import { SaddleContractFactory, SaddleMiniChefV2 } from '../contracts';
 import { SADDLE_DEFINITION } from '../saddle.definition';
 
 @Register.BalanceFetcher(SADDLE_DEFINITION.id, Network.EVMOS_MAINNET)
@@ -24,19 +24,6 @@ export class EvmosSaddleBalanceFetcher implements BalanceFetcher {
       appId: SADDLE_DEFINITION.id,
       groupId: SADDLE_DEFINITION.groups.pool.id,
       network: Network.EVMOS_MAINNET,
-    });
-  }
-
-  private async getSaddleMiniChefV2(address: string) {
-    return this.appToolkit.helpers.singleStakingContractPositionBalanceHelper.getBalances<SaddleCommunalFarm>({
-      address,
-      appId: SADDLE_DEFINITION.id,
-      groupId: SADDLE_DEFINITION.groups.communalFarm.id,
-      network: Network.EVMOS_MAINNET,
-      resolveContract: ({ address, network }) => this.contractFactory.saddleCommunalFarm({ address, network }),
-      resolveStakedTokenBalance: ({ contract, address, multicall }) =>
-        multicall.wrap(contract).lockedLiquidityOf(address),
-      resolveRewardTokenBalances: ({ contract, address, multicall }) => multicall.wrap(contract).earned(address),
     });
   }
 
@@ -67,7 +54,7 @@ export class EvmosSaddleBalanceFetcher implements BalanceFetcher {
   }
 
   async getBalances(address: string) {
-    const [poolTokenBalances, communalFarmBalances, miniChefV2FarmBalances] = await Promise.all([
+    const [poolTokenBalances, miniChefV2FarmBalances] = await Promise.all([
       this.getPoolTokenBalances(address),
       this.getMiniChefV2FarmBalances(address),
     ]);
@@ -82,8 +69,8 @@ export class EvmosSaddleBalanceFetcher implements BalanceFetcher {
         assets: miniChefV2FarmBalances,
       },
       {
-        label: 'Communal Farms',
-        assets: communalFarmBalances,
+        label: 'MiniChefV2',
+        assets: miniChefV2FarmBalances,
       },
     ]);
   }
