@@ -4,6 +4,19 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.64.0](https://github.com/Zapper-fi/studio/compare/v0.63.1...v0.64.0) (2022-06-09)
+
+
+### Features
+
+* **votium:** Add Votium protocol  ([#607](https://github.com/Zapper-fi/studio/issues/607)) ([7dab0ac](https://github.com/Zapper-fi/studio/commit/7dab0acf01d18ea3b67c2d247612d2a074e98ac3))
+
+
+### Bug Fixes
+
+* **votium:** Add logo ([347629f](https://github.com/Zapper-fi/studio/commit/347629f74f3de7891119a33963040825823e886c))
+* **votium:** Clean-up and ship ([7a7eaca](https://github.com/Zapper-fi/studio/commit/7a7eacad4969891ccf0debe3c09227f86a8f17d1))
+
 ## [0.63.1](https://github.com/Zapper-fi/studio/compare/v0.63.0...v0.63.1) (2022-06-08)
 
 
