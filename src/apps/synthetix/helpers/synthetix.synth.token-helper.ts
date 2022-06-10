@@ -7,7 +7,7 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
-import { AppTokenPosition } from '~position/position.interface';
+import { AppTokenPosition, ExchangeableAppTokenDataProps } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
 import { SynthetixContractFactory } from '../contracts';
@@ -16,6 +16,7 @@ import { SYNTHETIX_DEFINITION } from '../synthetix.definition';
 export type SynthetixSynthTokenHelperParams = {
   network: Network;
   resolverAddress: string;
+  exchangeable?: boolean;
 };
 
 @Injectable()
@@ -25,7 +26,7 @@ export class SynthetixSynthTokenHelper {
     @Inject(SynthetixContractFactory) private readonly contractFactory: SynthetixContractFactory,
   ) {}
 
-  async getTokens({ network, resolverAddress }: SynthetixSynthTokenHelperParams) {
+  async getTokens({ network, resolverAddress, exchangeable = false }: SynthetixSynthTokenHelperParams) {
     const multicall = this.appToolkit.getMulticall(network);
 
     const addressResolverContract = this.contractFactory.synthetixAddressResolver({
@@ -60,7 +61,7 @@ export class SynthetixSynthTokenHelper {
         const secondaryLabel = buildDollarDisplayItem(price);
         const images = [getTokenImg(address, network)];
 
-        const token: AppTokenPosition = {
+        const token: AppTokenPosition<ExchangeableAppTokenDataProps> = {
           type: ContractType.APP_TOKEN,
           appId: SYNTHETIX_DEFINITION.id,
           groupId: SYNTHETIX_DEFINITION.groups.synth.id,
@@ -73,7 +74,7 @@ export class SynthetixSynthTokenHelper {
           pricePerShare,
           tokens,
 
-          dataProps: {},
+          dataProps: { exchangeable },
 
           displayProps: {
             label,
