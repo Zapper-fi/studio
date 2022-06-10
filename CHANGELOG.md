@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.69.0](https://github.com/Zapper-fi/studio/compare/v0.68.0...v0.69.0) (2022-06-10)
+
+
+### Features
+
+* **votium:** Cache smaller keys using MerkleCache helper class ([#623](https://github.com/Zapper-fi/studio/issues/623)) ([2429726](https://github.com/Zapper-fi/studio/commit/24297267fe06d2a916a22d74ac89ef1890556081))
+
 ## [0.68.0](https://github.com/Zapper-fi/studio/compare/v0.67.0...v0.68.0) (2022-06-10)
 
 
