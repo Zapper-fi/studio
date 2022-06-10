@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.67.0](https://github.com/Zapper-fi/studio/compare/v0.66.0...v0.67.0) (2022-06-10)
+
+
+### Features
+
+* **synthetix:** Make synths exchangeable ([#618](https://github.com/Zapper-fi/studio/issues/618)) ([076bb1f](https://github.com/Zapper-fi/studio/commit/076bb1f719087d2be6ea5aafa469efc6fcaa51c2))
+
 ## [0.66.0](https://github.com/Zapper-fi/studio/compare/v0.65.1...v0.66.0) (2022-06-10)
 
 
