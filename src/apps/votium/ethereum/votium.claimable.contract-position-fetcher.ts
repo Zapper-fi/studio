@@ -7,8 +7,9 @@ import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
-import { VotiumRewardsToken } from '../helpers/votium.rewards.balance-helper';
 import { VOTIUM_DEFINITION } from '../votium.definition';
+
+import { VotiumActiveTokenData } from './votium.merkle-cache';
 
 const appId = VOTIUM_DEFINITION.id;
 const groupId = VOTIUM_DEFINITION.groups.claimable.id;
@@ -19,7 +20,7 @@ export class EthereumVotiumClaimableContractPositionFetcher implements PositionF
   constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
   async getPositions() {
-    const rewardTokenAddresses = await Axios.get<VotiumRewardsToken[]>(
+    const rewardTokenAddresses = await Axios.get<VotiumActiveTokenData[]>(
       'https://raw.githubusercontent.com/oo-00/Votium/main/merkle/activeTokens.json',
     ).then(v => v.data.map(v => v.value.toLowerCase()));
 
