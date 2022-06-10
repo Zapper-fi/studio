@@ -1,19 +1,22 @@
 import { Inject } from '@nestjs/common';
 
-import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
+import { drillBalance } from '~app-toolkit';
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
 import { BalanceFetcher } from '~balance/balance-fetcher.interface';
+import { MetaType } from '~position/position.interface';
 import { Network } from '~types/network.interface';
-import { SaddleMiniChefV2 } from '../contracts';
 
+import { SaddleContractFactory, SaddleMiniChefV2 } from '../contracts';
 import { SADDLE_DEFINITION } from '../saddle.definition';
 
-const network = Network.EVMOS_MAINNET;
-
-@Register.BalanceFetcher(SADDLE_DEFINITION.id, network)
+@Register.BalanceFetcher(SADDLE_DEFINITION.id, Network.EVMOS_MAINNET)
 export class EvmosSaddleBalanceFetcher implements BalanceFetcher {
-  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
+  constructor(
+    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
+    @Inject(SaddleContractFactory) private readonly contractFactory: SaddleContractFactory,
+  ) {}
 
   private async getPoolTokenBalances(address: string) {
     return this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
@@ -28,10 +31,10 @@ export class EvmosSaddleBalanceFetcher implements BalanceFetcher {
     return this.appToolkit.helpers.masterChefContractPositionBalanceHelper.getBalances<SaddleMiniChefV2>({
       address,
       appId: SADDLE_DEFINITION.id,
-      groupId: SADDLE_DEFINITION.groups.minichefV2.id,
+      groupId: SADDLE_DEFINITION.groups.miniChefV2.id,
       network: Network.EVMOS_MAINNET,
       resolveChefContract: ({ contractAddress }) =>
-        this.contractFactory.saddleminichefV2({ network: Network.EVMOS_MAINNET, address: contractAddress }),
+        this.contractFactory.saddleMiniChefV2({ network: Network.EVMOS_MAINNET, address: contractAddress }),
       resolveStakedTokenBalance: this.appToolkit.helpers.masterChefDefaultStakedBalanceStrategy.build({
         resolveStakedBalance: ({ contract, multicall, contractPosition }) =>
           multicall
