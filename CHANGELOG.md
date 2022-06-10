@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.68.0](https://github.com/Zapper-fi/studio/compare/v0.67.0...v0.68.0) (2022-06-10)
+
+
+### Features
+
+* **exchangeable-tokens:** Turn off aave-v2 and compound tokens ([#620](https://github.com/Zapper-fi/studio/issues/620)) ([3bd93a7](https://github.com/Zapper-fi/studio/commit/3bd93a705dc3924c5ca8fbc4522de12cf32a05b1))
+
 ## [0.67.0](https://github.com/Zapper-fi/studio/compare/v0.66.0...v0.67.0) (2022-06-10)
 
 
