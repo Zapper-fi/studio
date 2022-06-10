@@ -77,14 +77,15 @@ export class AuroraBastionProtocolSupplyTokenFetcher implements PositionFetcher<
         const type = ContractType.APP_TOKEN;
         const supply = Number(supplyRaw) / 10 ** decimals;
         const underlyingTokenDecimals = underlyingToken.decimals;
+        // The exchange rate has (18 - 8 + UnderlyingTokenDecimals) decimals
         const mantissa = underlyingTokenDecimals + 10;
         const pricePerShare = Number(rateRaw) / 10 ** mantissa;
         const price = pricePerShare * underlyingToken.price;
         const liquidity = price * supply;
         const tokens = [underlyingToken];
         const secondsPerDay = 60 * 60 * 24;
-        const supplyRate = formatUnits(supplyRateRaw, 18)
-        const borrowRate = formatUnits(borrowRateRaw, 18)
+        const supplyRate = formatUnits(supplyRateRaw, 18);
+        const borrowRate = formatUnits(borrowRateRaw, 18);
 
         const supplyApy = Math.pow(1 + secondsPerDay * Number(supplyRate), 365) - 1;
         const borrowApy = Math.pow(1 + secondsPerDay * Number(borrowRate), 365) - 1;

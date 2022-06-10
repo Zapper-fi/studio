@@ -38,22 +38,19 @@ export class AuroraBastionProtocolBorrowContractPositionFetcher implements Posit
     const promisedPositions = appTokens.map(async appToken => {
       const contract = this.bastionProtocolContractFactory.bastionProtocolCtoken({ network, address: appToken.address });
 
-      // Compound has a `getCash` method which returns the total liquidity
-      // of a given borrowed contract position. This is typically what defilama
-      // would use to display a TVL
+      // Get the cash reserves of the market. Cash reserves are the underlying assets that are available to borrow
       const cashRaw = await multicall.wrap(contract).getCash();
-      // The "cash" needs to be converted back into a proper number format.
-      // We use the underlying token as the basis for the conversion.
       const cashSupply = Number(cashRaw) / 10 ** appToken.tokens[0].decimals;
 
       const tokens = [borrowed(appToken.tokens[0])];
       // The underlying token liquidity actually represents the TOTAL SUPPLY of a borrowed
-      // contract position, not the liquidity.
+      // contract position, not the liquidity. This includes assets that have been borrowed and that are available to borrow.
+      // Denominated in USD
       const underlyingLiquidity = appToken.dataProps.liquidity;
       const underlyingPrice = appToken.tokens[0].price;
-      // Liquidity is the total supply of "cash" multiplied by the price of an underlying token
-      const borrowedPositionliquidity = cashSupply * underlyingPrice;
-      const borrowLiquidity = underlyingLiquidity - borrowedPositionliquidity;
+      // We denominate the cashSupply in USD to be consistent with the underlyingLiquidity
+      const cashSupplyUSD = cashSupply * underlyingPrice;
+      const borrowLiquidity = underlyingLiquidity - cashSupplyUSD;
 
       const dataProps = {
         ...appToken.dataProps,
