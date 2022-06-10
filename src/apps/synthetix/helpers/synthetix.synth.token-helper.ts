@@ -7,7 +7,7 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
-import { AppTokenPosition } from '~position/position.interface';
+import { AppTokenPosition, ExchangeableAppTokenDataProps } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
 import { SynthetixContractFactory } from '../contracts';
@@ -61,7 +61,7 @@ export class SynthetixSynthTokenHelper {
         const secondaryLabel = buildDollarDisplayItem(price);
         const images = [getTokenImg(address, network)];
 
-        const token: AppTokenPosition = {
+        const token: AppTokenPosition<ExchangeableAppTokenDataProps> = {
           type: ContractType.APP_TOKEN,
           appId: SYNTHETIX_DEFINITION.id,
           groupId: SYNTHETIX_DEFINITION.groups.synth.id,
