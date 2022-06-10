@@ -2,8 +2,6 @@
 /* tslint:disable */
 /* eslint-disable */
 export { SaddleCommunalFarm__factory } from './SaddleCommunalFarm__factory';
-export { SaddleEvmosMiniChef__factory } from './SaddleEvmosMiniChef__factory';
-export { SaddleEvmosSwap__factory } from './SaddleEvmosSwap__factory';
 export { SaddleMiniChefV2__factory } from './SaddleMiniChefV2__factory';
 export { SaddleMiniChefV2Rewarder__factory } from './SaddleMiniChefV2Rewarder__factory';
 export { SaddleSwap__factory } from './SaddleSwap__factory';

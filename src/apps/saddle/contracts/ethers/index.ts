@@ -2,15 +2,11 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { SaddleCommunalFarm } from './SaddleCommunalFarm';
-export type { SaddleEvmosMiniChef } from './SaddleEvmosMiniChef';
-export type { SaddleEvmosSwap } from './SaddleEvmosSwap';
 export type { SaddleMiniChefV2 } from './SaddleMiniChefV2';
 export type { SaddleMiniChefV2Rewarder } from './SaddleMiniChefV2Rewarder';
 export type { SaddleSwap } from './SaddleSwap';
 export * as factories from './factories';
 export { SaddleCommunalFarm__factory } from './factories/SaddleCommunalFarm__factory';
-export { SaddleEvmosMiniChef__factory } from './factories/SaddleEvmosMiniChef__factory';
-export { SaddleEvmosSwap__factory } from './factories/SaddleEvmosSwap__factory';
 export { SaddleMiniChefV2Rewarder__factory } from './factories/SaddleMiniChefV2Rewarder__factory';
 export { SaddleMiniChefV2__factory } from './factories/SaddleMiniChefV2__factory';
 export { SaddleSwap__factory } from './factories/SaddleSwap__factory';
