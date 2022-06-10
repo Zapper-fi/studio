@@ -5,6 +5,8 @@ import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
 import { SaddleCommunalFarm__factory } from './ethers';
+import { SaddleEvmosMiniChef__factory } from './ethers';
+import { SaddleEvmosSwap__factory } from './ethers';
 import { SaddleMiniChefV2__factory } from './ethers';
 import { SaddleMiniChefV2Rewarder__factory } from './ethers';
 import { SaddleSwap__factory } from './ethers';
@@ -21,6 +23,12 @@ export class SaddleContractFactory extends ContractFactory {
   saddleCommunalFarm({ address, network }: ContractOpts) {
     return SaddleCommunalFarm__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  saddleEvmosMiniChef({ address, network }: ContractOpts) {
+    return SaddleEvmosMiniChef__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
+  saddleEvmosSwap({ address, network }: ContractOpts) {
+    return SaddleEvmosSwap__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   saddleMiniChefV2({ address, network }: ContractOpts) {
     return SaddleMiniChefV2__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
@@ -33,6 +41,8 @@ export class SaddleContractFactory extends ContractFactory {
 }
 
 export type { SaddleCommunalFarm } from './ethers';
+export type { SaddleEvmosMiniChef } from './ethers';
+export type { SaddleEvmosSwap } from './ethers';
 export type { SaddleMiniChefV2 } from './ethers';
 export type { SaddleMiniChefV2Rewarder } from './ethers';
 export type { SaddleSwap } from './ethers';
