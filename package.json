@@ -27,7 +27,6 @@
     "bitcoin-address-validation": "^2.2.1",
     "esbuild": "^0.14.27",
     "esbuild-runner": "^2.2.1",
-    "express": "link:.=4.0.0",
     "file-system-cache": "^1.0.5",
     "fs-extra": "^10.0.1",
     "inquirer": "^8.2.2",
