@@ -28,9 +28,15 @@ export const AGAVE_DEFINITION = appDefinition({
       type: GroupType.TOKEN,
       label: 'Borrow',
     },
+
+    claimable: {
+      id: 'claimable',
+      type: GroupType.POSITION,
+      label: 'Reward',
+    },
   },
 
-  tags: [AppTag.COLLATERALIZED_DEBT_POSITION],
+  tags: [AppTag.LENDING],
   keywords: [],
   links: {},
 

@@ -37,7 +37,6 @@ export class AaveV2ClaimableContractPositionHelper {
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
     const rewardToken = baseTokens.find(p => p.address === rewardTokenAddress)!;
     const tokens = [claimable(rewardToken)];
-
     const position: ContractPosition<AaveV2ClaimableContractPositionDataProps> = {
       type: ContractType.POSITION,
       address: incentivesControllerAddress,

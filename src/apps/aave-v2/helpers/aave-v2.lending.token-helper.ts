@@ -154,11 +154,9 @@ export class AaveV2LendingTokenHelper {
             statsItems,
           },
         };
-
         return token;
       }),
     );
-
     return compact(tokens);
   }
 }
