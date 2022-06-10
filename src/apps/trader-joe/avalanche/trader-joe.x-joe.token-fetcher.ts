@@ -10,11 +10,11 @@ import { TraderJoeContractFactory } from '../contracts';
 import { TraderJoeXJoe } from '../contracts/ethers/TraderJoeXJoe';
 import { TRADER_JOE_DEFINITION } from '../trader-joe.definition';
 
-@Register.TokenPositionFetcher({
-  appId: TRADER_JOE_DEFINITION.id,
-  groupId: TRADER_JOE_DEFINITION.groups.xJoe.id,
-  network: Network.AVALANCHE_MAINNET,
-})
+const appId = TRADER_JOE_DEFINITION.id;
+const groupId = TRADER_JOE_DEFINITION.groups.xJoe.id;
+const network = Network.AVALANCHE_MAINNET;
+
+@Register.TokenPositionFetcher({ appId, groupId, network })
 export class AvalancheTraderJoeXJoeTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
@@ -24,9 +24,9 @@ export class AvalancheTraderJoeXJoeTokenFetcher implements PositionFetcher<AppTo
 
   async getPositions() {
     return this.appToolkit.helpers.vaultTokenHelper.getTokens<TraderJoeXJoe>({
-      appId: TRADER_JOE_DEFINITION.id,
-      groupId: TRADER_JOE_DEFINITION.groups.xJoe.id,
-      network: Network.AVALANCHE_MAINNET,
+      appId,
+      groupId,
+      network,
       resolveContract: ({ address, network }) => this.traderJoeContractFactory.traderJoeXJoe({ address, network }),
       resolveVaultAddresses: () => ['0x57319d41f71e81f3c65f2a47ca4e001ebafd4f33'],
       resolveUnderlyingTokenAddress: ({ contract, multicall }) => multicall.wrap(contract).joe(),
