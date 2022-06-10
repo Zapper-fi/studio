@@ -4,6 +4,19 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.66.0](https://github.com/Zapper-fi/studio/compare/v0.65.1...v0.66.0) (2022-06-10)
+
+
+### Features
+
+* **saddle:** Evmos and Ethereum Frax saddle3Pool ([#613](https://github.com/Zapper-fi/studio/issues/613)) ([be12e1f](https://github.com/Zapper-fi/studio/commit/be12e1fde0a995f42fde4d8c519bb2a5bc06b615))
+* **saddle:** Fix Saddle integration ([#616](https://github.com/Zapper-fi/studio/issues/616)) ([b99d1d2](https://github.com/Zapper-fi/studio/commit/b99d1d21cf307bf87ee856ef9beeb32b72fe5c32))
+
+
+### Bug Fixes
+
+* **saddle:** Revert package.json and pnpm-lock.yml changes ([6f7961c](https://github.com/Zapper-fi/studio/commit/6f7961c2fc9c1c4a60ab744f80f895fd27a06b40))
+
 ## [0.65.1](https://github.com/Zapper-fi/studio/compare/v0.65.0...v0.65.1) (2022-06-09)
 
 
