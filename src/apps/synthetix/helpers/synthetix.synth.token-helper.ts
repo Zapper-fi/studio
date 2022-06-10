@@ -16,6 +16,7 @@ import { SYNTHETIX_DEFINITION } from '../synthetix.definition';
 export type SynthetixSynthTokenHelperParams = {
   network: Network;
   resolverAddress: string;
+  exchangeable?: boolean;
 };
 
 @Injectable()
@@ -25,7 +26,7 @@ export class SynthetixSynthTokenHelper {
     @Inject(SynthetixContractFactory) private readonly contractFactory: SynthetixContractFactory,
   ) {}
 
-  async getTokens({ network, resolverAddress }: SynthetixSynthTokenHelperParams) {
+  async getTokens({ network, resolverAddress, exchangeable = false }: SynthetixSynthTokenHelperParams) {
     const multicall = this.appToolkit.getMulticall(network);
 
     const addressResolverContract = this.contractFactory.synthetixAddressResolver({
@@ -73,7 +74,7 @@ export class SynthetixSynthTokenHelper {
           pricePerShare,
           tokens,
 
-          dataProps: {},
+          dataProps: { exchangeable },
 
           displayProps: {
             label,
