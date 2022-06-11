@@ -4,6 +4,27 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.69.0](https://github.com/Zapper-fi/studio/compare/v0.68.0...v0.69.0) (2022-06-10)
+
+
+### Features
+
+* **votium:** Cache smaller keys using MerkleCache helper class ([#623](https://github.com/Zapper-fi/studio/issues/623)) ([2429726](https://github.com/Zapper-fi/studio/commit/24297267fe06d2a916a22d74ac89ef1890556081))
+
+## [0.68.0](https://github.com/Zapper-fi/studio/compare/v0.67.0...v0.68.0) (2022-06-10)
+
+
+### Features
+
+* **exchangeable-tokens:** Turn off aave-v2 and compound tokens ([#620](https://github.com/Zapper-fi/studio/issues/620)) ([3bd93a7](https://github.com/Zapper-fi/studio/commit/3bd93a705dc3924c5ca8fbc4522de12cf32a05b1))
+
+## [0.67.0](https://github.com/Zapper-fi/studio/compare/v0.66.0...v0.67.0) (2022-06-10)
+
+
+### Features
+
+* **synthetix:** Make synths exchangeable ([#618](https://github.com/Zapper-fi/studio/issues/618)) ([076bb1f](https://github.com/Zapper-fi/studio/commit/076bb1f719087d2be6ea5aafa469efc6fcaa51c2))
+
 ## [0.66.0](https://github.com/Zapper-fi/studio/compare/v0.65.1...v0.66.0) (2022-06-10)
 
 
