@@ -15,10 +15,17 @@ export const BASTION_PROTOCOL_DEFINITION = appDefinition({
       type: GroupType.TOKEN,
       label: 'Supply',
     },
+
     borrow: {
       id: 'borrow',
       type: GroupType.TOKEN,
       label: 'Borrow',
+    },
+
+    swap: {
+      id: 'swap',
+      type: GroupType.TOKEN,
+      label: 'Stableswap Pools',
     },
   },
 

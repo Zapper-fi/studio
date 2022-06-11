@@ -27,6 +27,7 @@ export class AuroraBastionProtocolTvlFetcher implements TvlFetcher {
       appId,
       groupIds: [
         BASTION_PROTOCOL_DEFINITION.groups.supply.id,
+        BASTION_PROTOCOL_DEFINITION.groups.swap.id,
       ],
       network,
     });

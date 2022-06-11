@@ -11,6 +11,7 @@ import { Network } from '~types/network.interface';
 
 import { BASTION_PROTOCOL_DEFINITION } from '../bastion-protocol.definition';
 import { BastionProtocolContractFactory } from '../contracts';
+import { BastionLPTokenDataProps } from '../helper/bastion-protocol.swap.token-helper';
 import { BastionSupplyTokenDataProps } from './bastion-protocol.supply.token-fetcher';
 
 const network = Network.AURORA_MAINNET;
@@ -73,6 +74,28 @@ export class AuroraBastionProtocolBalanceFetcher implements BalanceFetcher {
     return borrowPositionBalances;
   }
 
+  async getSwapBalances(address: string) {
+    const multicall = this.appToolkit.getMulticall(network);
+
+    const swapTokens = await this.appToolkit.getAppTokenPositions<BastionLPTokenDataProps>({
+      appId: BASTION_PROTOCOL_DEFINITION.id,
+      groupIds: [
+        BASTION_PROTOCOL_DEFINITION.groups.swap.id,
+      ],
+      network,
+    });
+
+    const swapTokenBalances = await Promise.all(
+      swapTokens.map(async swapToken => {
+        const supplyTokenContract = this.bastionProtocolContractFactory.bastionProtocolCtoken({ address: swapToken.address, network });
+        const balanceRaw = await multicall.wrap(supplyTokenContract).balanceOf(address);
+        return drillBalance(swapToken, balanceRaw.toString());
+      }),
+    );
+
+    return swapTokenBalances;
+  }
+
   getMeta({ balances }: BastionLendingMetaHelperParams) {
     const collaterals = balances.filter(balance => balance.balanceUSD > 0);
     const debt = balances.filter(balance => balance.balanceUSD < 0);
@@ -102,14 +125,16 @@ export class AuroraBastionProtocolBalanceFetcher implements BalanceFetcher {
   }
 
   async getBalances(address: string) {
-    const [supplyBalances, borrowBalances] = await Promise.all([
+    const [supplyBalances, borrowBalances, swapBalances] = await Promise.all([
       this.getSupplyBalances(address),
       this.getBorrowBalances(address),
+      this.getSwapBalances(address),
     ]);
 
     const meta = this.getMeta({ balances: [...supplyBalances, ...borrowBalances] });
     const lendingProduct = { label: 'Lending', assets: [...supplyBalances, ...borrowBalances], meta };
+    const swapProduct = { label: 'Stableswap', assets: [...swapBalances] };
 
-    return presentBalanceFetcherResponse([lendingProduct]);
+    return presentBalanceFetcherResponse([lendingProduct, swapProduct]);
   }
 }

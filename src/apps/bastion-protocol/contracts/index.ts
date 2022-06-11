@@ -6,6 +6,8 @@ import { Network } from '~types/network.interface';
 
 import { BastionProtocolComptroller__factory } from './ethers';
 import { BastionProtocolCtoken__factory } from './ethers';
+import { BastionProtocolLptoken__factory } from './ethers';
+import { BastionProtocolSwap__factory } from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
@@ -22,7 +24,15 @@ export class BastionProtocolContractFactory extends ContractFactory {
   bastionProtocolCtoken({ address, network }: ContractOpts) {
     return BastionProtocolCtoken__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  bastionProtocolLptoken({ address, network }: ContractOpts) {
+    return BastionProtocolLptoken__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
+  bastionProtocolSwap({ address, network }: ContractOpts) {
+    return BastionProtocolSwap__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
 }
 
 export type { BastionProtocolComptroller } from './ethers';
 export type { BastionProtocolCtoken } from './ethers';
+export type { BastionProtocolLptoken } from './ethers';
+export type { BastionProtocolSwap } from './ethers';

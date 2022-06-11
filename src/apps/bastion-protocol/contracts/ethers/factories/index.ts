@@ -3,3 +3,5 @@
 /* eslint-disable */
 export { BastionProtocolComptroller__factory } from './BastionProtocolComptroller__factory';
 export { BastionProtocolCtoken__factory } from './BastionProtocolCtoken__factory';
+export { BastionProtocolLptoken__factory } from './BastionProtocolLptoken__factory';
+export { BastionProtocolSwap__factory } from './BastionProtocolSwap__factory';
