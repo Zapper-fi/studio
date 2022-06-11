@@ -1,13 +1,11 @@
 import { Inject } from '@nestjs/common';
 
-import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
 import { BASTION_PROTOCOL_DEFINITION } from '../bastion-protocol.definition';
-import { BastionProtocolContractFactory } from '../contracts';
 import { BastionSupplyTokenHelper } from '../helper/bastion-protocol.supply.token-helper';
 
 const appId = BASTION_PROTOCOL_DEFINITION.id;

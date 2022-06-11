@@ -2,7 +2,7 @@ import { Inject } from '@nestjs/common';
 import { sumBy } from 'lodash';
 import { drillBalance } from '~app-toolkit';
 
-import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
 import { BalanceFetcher, MetadataItemWithLabel } from '~balance/balance-fetcher.interface';
