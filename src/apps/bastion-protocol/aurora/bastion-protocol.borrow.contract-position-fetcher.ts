@@ -30,7 +30,12 @@ export class AuroraBastionProtocolBorrowContractPositionFetcher implements Posit
   async getPositions() {
     const appTokens = await this.appToolkit.getAppTokenPositions<BastionSupplyTokenDataProps>({
       appId,
-      groupIds: [BASTION_PROTOCOL_DEFINITION.groups.supply.id],
+      groupIds: [
+        BASTION_PROTOCOL_DEFINITION.groups.supply.id,
+        BASTION_PROTOCOL_DEFINITION.groups.suppyAurora.id,
+        BASTION_PROTOCOL_DEFINITION.groups.supplyStakedNear.id,
+        BASTION_PROTOCOL_DEFINITION.groups.supplyMultichain.id,
+      ],
       network,
     });
 

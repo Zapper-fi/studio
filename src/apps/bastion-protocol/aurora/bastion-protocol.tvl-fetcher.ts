@@ -23,12 +23,17 @@ export class AuroraBastionProtocolTvlFetcher implements TvlFetcher {
 
 
   async getTvl() {
-    const borrow = await this.appToolkit.getAppContractPositions<BastionBorrowContractPositionDataProps>({
+    const appTokens = await this.appToolkit.getAppTokenPositions<BastionSupplyTokenDataProps>({
       appId,
-      groupIds: [BASTION_PROTOCOL_DEFINITION.groups.borrow.id],
+      groupIds: [
+        BASTION_PROTOCOL_DEFINITION.groups.supply.id,
+        BASTION_PROTOCOL_DEFINITION.groups.suppyAurora.id,
+        BASTION_PROTOCOL_DEFINITION.groups.supplyStakedNear.id,
+        BASTION_PROTOCOL_DEFINITION.groups.supplyMultichain.id,
+      ],
       network,
     });
 
-    return sumBy(borrow, b => b.dataProps.supply);
+    return sumBy(appTokens, b => b.dataProps.liquidity);
   }
 }

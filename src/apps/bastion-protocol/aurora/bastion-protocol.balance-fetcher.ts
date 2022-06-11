@@ -33,7 +33,12 @@ export class AuroraBastionProtocolBalanceFetcher implements BalanceFetcher {
 
     const supplyTokens = await this.appToolkit.getAppTokenPositions<BastionSupplyTokenDataProps>({
       appId: BASTION_PROTOCOL_DEFINITION.id,
-      groupIds: [BASTION_PROTOCOL_DEFINITION.groups.supply.id],
+      groupIds: [
+        BASTION_PROTOCOL_DEFINITION.groups.supply.id,
+        BASTION_PROTOCOL_DEFINITION.groups.suppyAurora.id,
+        BASTION_PROTOCOL_DEFINITION.groups.supplyStakedNear.id,
+        BASTION_PROTOCOL_DEFINITION.groups.supplyMultichain.id,
+      ],
       network,
     });
 
@@ -53,7 +58,12 @@ export class AuroraBastionProtocolBalanceFetcher implements BalanceFetcher {
 
     const borrowPositions = await this.appToolkit.getAppContractPositions<BastionSupplyTokenDataProps>({
       appId: BASTION_PROTOCOL_DEFINITION.id,
-      groupIds: [BASTION_PROTOCOL_DEFINITION.groups.supply.id],
+      groupIds: [
+        BASTION_PROTOCOL_DEFINITION.groups.supply.id,
+        BASTION_PROTOCOL_DEFINITION.groups.suppyAurora.id,
+        BASTION_PROTOCOL_DEFINITION.groups.supplyStakedNear.id,
+        BASTION_PROTOCOL_DEFINITION.groups.supplyMultichain.id,
+      ],
       network,
     });
 

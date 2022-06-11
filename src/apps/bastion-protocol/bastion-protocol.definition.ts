@@ -21,6 +21,24 @@ export const BASTION_PROTOCOL_DEFINITION = appDefinition({
       type: GroupType.TOKEN,
       label: 'Borrow',
     },
+
+    suppyAurora: {
+      id: 'supply-aurora',
+      type: GroupType.TOKEN,
+      label: 'Supply Aurora Realm',
+    },
+
+    supplyStakedNear: {
+      id: 'supply-staked-near',
+      type: GroupType.TOKEN,
+      label: 'Supply Staked Near Realm',
+    },
+
+    supplyMultichain: {
+      id: 'supply-multichain',
+      type: GroupType.TOKEN,
+      label: 'Supply Multichain Realm',
+    },
   },
 
   tags: [AppTag.LENDING, AppTag.LIQUIDITY_POOL],
