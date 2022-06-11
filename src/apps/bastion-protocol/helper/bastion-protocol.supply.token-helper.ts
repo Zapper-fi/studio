@@ -19,12 +19,13 @@ export type BastionSupplyTokenDataProps = ExchangeableAppTokenDataProps & {
   supplyApy: number;
   borrowApy: number;
   liquidity: number;
-  marketName?: string;
+  realmName: string;
   comptrollerAddress: string;
 };
 
 type BastionSupplyTokenHelperParams<T = BastionProtocolComptroller, V = BastionProtocolCtoken> = {
   comptrollerAddress: string;
+  realmName: string;
   network: Network;
   appId: string;
   groupId: string;
@@ -39,6 +40,7 @@ export class BastionSupplyTokenHelper {
 
   async getTokens<T = BastionProtocolComptroller, V = BastionProtocolCtoken>({
     comptrollerAddress,
+    realmName,
     network,
     appId,
     groupId,
@@ -120,7 +122,7 @@ export class BastionSupplyTokenHelper {
           tokens,
 
           dataProps: {
-            marketName: undefined,
+            realmName,
             supplyApy,
             borrowApy,
             liquidity,
