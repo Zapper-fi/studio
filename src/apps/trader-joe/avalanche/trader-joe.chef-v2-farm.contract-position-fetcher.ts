@@ -9,11 +9,11 @@ import { Network } from '~types/network.interface';
 import { TraderJoeChefV2, TraderJoeChefV2Rewarder, TraderJoeContractFactory } from '../contracts';
 import { TRADER_JOE_DEFINITION } from '../trader-joe.definition';
 
-@Register.ContractPositionFetcher({
-  appId: TRADER_JOE_DEFINITION.id,
-  groupId: TRADER_JOE_DEFINITION.groups.chefV2Farm.id,
-  network: Network.AVALANCHE_MAINNET,
-})
+const appId = TRADER_JOE_DEFINITION.id;
+const groupId = TRADER_JOE_DEFINITION.groups.chefV2Farm.id;
+const network = Network.AVALANCHE_MAINNET;
+
+@Register.ContractPositionFetcher({ appId, groupId, network })
 export class AvalancheTraderJoeChefV2FarmContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
@@ -23,14 +23,14 @@ export class AvalancheTraderJoeChefV2FarmContractPositionFetcher implements Posi
   async getPositions() {
     return this.appToolkit.helpers.masterChefContractPositionHelper.getContractPositions<TraderJoeChefV2>({
       address: '0xd6a4f121ca35509af06a0be99093d08462f53052',
-      appId: TRADER_JOE_DEFINITION.id,
-      groupId: TRADER_JOE_DEFINITION.groups.chefV2Farm.id,
-      network: Network.AVALANCHE_MAINNET,
+      appId,
+      groupId,
+      network,
       dependencies: [
         {
           appId: TRADER_JOE_DEFINITION.id,
           groupIds: [TRADER_JOE_DEFINITION.groups.pool.id, TRADER_JOE_DEFINITION.groups.xJoe.id],
-          network: Network.AVALANCHE_MAINNET,
+          network,
         },
       ],
       resolveContract: ({ address, network }) => this.traderJoeContractFactory.traderJoeChefV2({ address, network }),
