@@ -22,6 +22,7 @@ export class AvalancheAaveV2StableDebtTokenFetcher implements PositionFetcher<Ap
       appId,
       groupId,
       network,
+      isDebt: true,
       protocolDataProviderAddress: '0x65285e9dfab318f57051ab2b139cccf232945451',
       resolveTokenAddress: ({ reserveTokenAddressesData }) => reserveTokenAddressesData.stableDebtTokenAddress,
       resolveLendingRate: ({ reserveData }) => reserveData.stableBorrowRate,

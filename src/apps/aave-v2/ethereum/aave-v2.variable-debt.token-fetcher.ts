@@ -25,6 +25,7 @@ export class EthereumAaveV2VariableDebtTokenFetcher implements PositionFetcher<A
       appId,
       groupId,
       network,
+      isDebt: true,
       protocolDataProviderAddress: '0x057835ad21a177dbdd3090bb1cae03eacf78fc6d',
       resolveTokenAddress: ({ reserveTokenAddressesData }) => reserveTokenAddressesData.variableDebtTokenAddress,
       resolveLendingRate: ({ reserveData }) => reserveData.variableBorrowRate,

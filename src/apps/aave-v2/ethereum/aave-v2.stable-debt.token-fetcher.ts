@@ -22,6 +22,7 @@ export class EthereumAaveV2StableDebtTokenFetcher implements PositionFetcher<App
       appId,
       groupId,
       network,
+      isDebt: true,
       protocolDataProviderAddress: '0x057835ad21a177dbdd3090bb1cae03eacf78fc6d',
       resolveTokenAddress: ({ reserveTokenAddressesData }) => reserveTokenAddressesData.stableDebtTokenAddress,
       resolveLendingRate: ({ reserveData }) => reserveData.stableBorrowRate,

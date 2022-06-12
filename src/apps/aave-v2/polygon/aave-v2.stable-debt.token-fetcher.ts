@@ -22,6 +22,7 @@ export class PolygonAaveV2StableDebtTokenFetcher implements PositionFetcher<AppT
       appId,
       groupId,
       network,
+      isDebt: true,
       protocolDataProviderAddress: '0x7551b5d2763519d4e37e8b81929d336de671d46d',
       resolveTokenAddress: ({ reserveTokenAddressesData }) => reserveTokenAddressesData.stableDebtTokenAddress,
       resolveLendingRate: ({ reserveData }) => reserveData.stableBorrowRate,

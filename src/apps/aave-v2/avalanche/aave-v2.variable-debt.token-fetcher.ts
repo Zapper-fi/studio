@@ -25,6 +25,7 @@ export class AvalancheAaveV2VariableDebtTokenFetcher implements PositionFetcher<
       appId,
       groupId,
       network,
+      isDebt: true,
       protocolDataProviderAddress: '0x65285e9dfab318f57051ab2b139cccf232945451',
       resolveTokenAddress: ({ reserveTokenAddressesData }) => reserveTokenAddressesData.variableDebtTokenAddress,
       resolveLendingRate: ({ reserveData }) => reserveData.variableBorrowRate,

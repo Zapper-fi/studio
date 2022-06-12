@@ -25,6 +25,7 @@ export class PolygonAaveV2VariableDebtTokenFetcher implements PositionFetcher<Ap
       appId,
       groupId,
       network,
+      isDebt: true,
       protocolDataProviderAddress: '0x7551b5d2763519d4e37e8b81929d336de671d46d',
       resolveTokenAddress: ({ reserveTokenAddressesData }) => reserveTokenAddressesData.variableDebtTokenAddress,
       resolveLendingRate: ({ reserveData }) => reserveData.variableBorrowRate,
