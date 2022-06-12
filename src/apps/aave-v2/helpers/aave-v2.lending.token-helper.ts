@@ -36,6 +36,7 @@ type ReserveConfigurationData = {
 export type AaveV2LendingTokenDataProps = ExchangeableAppTokenDataProps & {
   apy: number;
   enabledAsCollateral: boolean;
+  liquidity: number;
   liquidationThreshold: number;
 };
 
@@ -142,7 +143,13 @@ export class AaveV2LendingTokenHelper {
         const liquidationThreshold = Number(liquidationThresholdRaw) / 10 ** 4;
         const enabledAsCollateral = reserveConfigurationData.usageAsCollateralEnabled;
         const tokens = [reserveToken];
-        const dataProps = { apy, exchangeable: exchangeable ?? false, enabledAsCollateral, liquidationThreshold };
+        const dataProps = {
+          apy,
+          exchangeable: exchangeable ?? false,
+          enabledAsCollateral,
+          liquidity,
+          liquidationThreshold,
+        };
 
         // Display Props
         const label = resolveLabel({ reserveToken });

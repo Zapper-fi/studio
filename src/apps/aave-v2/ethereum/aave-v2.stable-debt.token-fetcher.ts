@@ -13,12 +13,12 @@ const appId = AAVE_V2_DEFINITION.id;
 const groupId = AAVE_V2_DEFINITION.groups.stableDebt.id;
 const network = Network.ETHEREUM_MAINNET;
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
 export class EthereumAaveV2StableDebtTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(@Inject(AaveV2LendingTokenHelper) private readonly aaveV2LendingTokenHelper: AaveV2LendingTokenHelper) {}
 
   async getPositions() {
-    return this.aaveV2LendingTokenHelper.getTokens({
+    return await this.aaveV2LendingTokenHelper.getTokens({
       appId,
       groupId,
       network,
