@@ -14,7 +14,8 @@ import { TRADER_JOE_DEFINITION } from '../trader-joe.definition';
 const appId = TRADER_JOE_DEFINITION.id;
 const groupId = TRADER_JOE_DEFINITION.groups.pool.id;
 const network = Network.AVALANCHE_MAINNET;
-@Register.TokenPositionFetcher({ appId, groupId, network })
+
+@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
 export class AvalancheTraderJoePoolTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(UniswapV2ContractFactory)
@@ -25,12 +26,11 @@ export class AvalancheTraderJoePoolTokenFetcher implements PositionFetcher<AppTo
     private readonly uniswapV2TheGraphPoolTokenAddressStrategy: UniswapV2TheGraphPoolTokenAddressStrategy,
   ) {}
 
-  getPositions() {
-    const network = Network.AVALANCHE_MAINNET;
-    return this.uniswapV2PoolTokenHelper.getTokens({
+  async getPositions() {
+    return await this.uniswapV2PoolTokenHelper.getTokens({
       network,
-      appId: TRADER_JOE_DEFINITION.id,
-      groupId: TRADER_JOE_DEFINITION.groups.pool.id,
+      appId,
+      groupId,
       factoryAddress: '0x9ad6c38be94206ca50bb0d90783181662f0cfa10',
       appTokenDependencies: [
         { appId: OLYMPUS_DEFINITION.id, groupIds: [OLYMPUS_DEFINITION.groups.gOhm.id], network },

@@ -4,6 +4,74 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.69.0](https://github.com/Zapper-fi/studio/compare/v0.68.0...v0.69.0) (2022-06-10)
+
+
+### Features
+
+* **votium:** Cache smaller keys using MerkleCache helper class ([#623](https://github.com/Zapper-fi/studio/issues/623)) ([2429726](https://github.com/Zapper-fi/studio/commit/24297267fe06d2a916a22d74ac89ef1890556081))
+
+## [0.68.0](https://github.com/Zapper-fi/studio/compare/v0.67.0...v0.68.0) (2022-06-10)
+
+
+### Features
+
+* **exchangeable-tokens:** Turn off aave-v2 and compound tokens ([#620](https://github.com/Zapper-fi/studio/issues/620)) ([3bd93a7](https://github.com/Zapper-fi/studio/commit/3bd93a705dc3924c5ca8fbc4522de12cf32a05b1))
+
+## [0.67.0](https://github.com/Zapper-fi/studio/compare/v0.66.0...v0.67.0) (2022-06-10)
+
+
+### Features
+
+* **synthetix:** Make synths exchangeable ([#618](https://github.com/Zapper-fi/studio/issues/618)) ([076bb1f](https://github.com/Zapper-fi/studio/commit/076bb1f719087d2be6ea5aafa469efc6fcaa51c2))
+
+## [0.66.0](https://github.com/Zapper-fi/studio/compare/v0.65.1...v0.66.0) (2022-06-10)
+
+
+### Features
+
+* **saddle:** Evmos and Ethereum Frax saddle3Pool ([#613](https://github.com/Zapper-fi/studio/issues/613)) ([be12e1f](https://github.com/Zapper-fi/studio/commit/be12e1fde0a995f42fde4d8c519bb2a5bc06b615))
+* **saddle:** Fix Saddle integration ([#616](https://github.com/Zapper-fi/studio/issues/616)) ([b99d1d2](https://github.com/Zapper-fi/studio/commit/b99d1d21cf307bf87ee856ef9beeb32b72fe5c32))
+
+
+### Bug Fixes
+
+* **saddle:** Revert package.json and pnpm-lock.yml changes ([6f7961c](https://github.com/Zapper-fi/studio/commit/6f7961c2fc9c1c4a60ab744f80f895fd27a06b40))
+
+## [0.65.1](https://github.com/Zapper-fi/studio/compare/v0.65.0...v0.65.1) (2022-06-09)
+
+
+### Bug Fixes
+
+* **votium:** Use group ID in key ([97051a5](https://github.com/Zapper-fi/studio/commit/97051a5769b10daa095e73f0cef501973a176487))
+
+## [0.65.0](https://github.com/Zapper-fi/studio/compare/v0.64.0...v0.65.0) (2022-06-09)
+
+
+### Features
+
+* **aave-v2:** Add enabled as collateral and liquidation threshold data props ([#610](https://github.com/Zapper-fi/studio/issues/610)) ([c75f883](https://github.com/Zapper-fi/studio/commit/c75f8838ad9877302960acd378172c86e42b2003))
+
+## [0.64.0](https://github.com/Zapper-fi/studio/compare/v0.63.1...v0.64.0) (2022-06-09)
+
+
+### Features
+
+* **votium:** Add Votium protocol  ([#607](https://github.com/Zapper-fi/studio/issues/607)) ([7dab0ac](https://github.com/Zapper-fi/studio/commit/7dab0acf01d18ea3b67c2d247612d2a074e98ac3))
+
+
+### Bug Fixes
+
+* **votium:** Add logo ([347629f](https://github.com/Zapper-fi/studio/commit/347629f74f3de7891119a33963040825823e886c))
+* **votium:** Clean-up and ship ([7a7eaca](https://github.com/Zapper-fi/studio/commit/7a7eacad4969891ccf0debe3c09227f86a8f17d1))
+
+## [0.63.1](https://github.com/Zapper-fi/studio/compare/v0.63.0...v0.63.1) (2022-06-08)
+
+
+### Bug Fixes
+
+* **tempus-finance:** Fix AMM price ([#604](https://github.com/Zapper-fi/studio/issues/604)) ([8002419](https://github.com/Zapper-fi/studio/commit/80024198287f30dd1f9f32a5b2d3f5355f1456b4))
+
 ## [0.63.0](https://github.com/Zapper-fi/studio/compare/v0.62.0...v0.63.0) (2022-06-08)
 
 
