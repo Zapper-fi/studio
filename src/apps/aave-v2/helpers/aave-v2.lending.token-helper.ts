@@ -147,8 +147,8 @@ export class AaveV2LendingTokenHelper {
         const tertiaryLabel = resolveApyLabel({ apy });
         const images = getImagesFromToken(reserveToken);
         const statsItems = [
-          { label: 'Liquidity', value: buildDollarDisplayItem(liquidity) },
           { label: 'APY', value: buildPercentageDisplayItem(apy * 100) },
+          { label: 'Liquidity', value: buildDollarDisplayItem(liquidity) },
         ];
 
         const token: AppTokenPosition<AaveV2LendingTokenDataProps> = {
