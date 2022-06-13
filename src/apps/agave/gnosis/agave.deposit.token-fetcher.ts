@@ -28,7 +28,7 @@ export class GnosisAgaveDepositTokenFetcher implements PositionFetcher<AppTokenP
       appId,
       groupId,
       network,
-      protocolDataProviderAddress: '0x24dCbd376Db23e4771375092344f5CbEA3541FC0',
+      protocolDataProviderAddress: '0x24dcbd376db23e4771375092344f5cbea3541fc0',
       resolveTokenAddress: ({ reserveTokenAddressesData }) => reserveTokenAddressesData.aTokenAddress,
       resolveLendingRate: ({ reserveData }) => reserveData.liquidityRate,
       resolveLabel: ({ reserveToken }) => getLabelFromToken(reserveToken),

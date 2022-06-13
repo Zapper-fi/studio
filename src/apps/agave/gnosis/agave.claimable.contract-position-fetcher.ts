@@ -28,8 +28,8 @@ export class GnosisAgaveClaimableContractPositionFetcher implements PositionFetc
       appId,
       groupId,
       network,
-      incentivesControllerAddress: '0xfa255f5104f129B78f477e9a6D050a02f31A5D86',
-      protocolDataProviderAddress: '0x24dCbd376Db23e4771375092344f5CbEA3541FC0',
+      incentivesControllerAddress: '0xfa255f5104f129b78f477e9a6d050a02f31a5d86',
+      protocolDataProviderAddress: '0x24dcbd376db23e4771375092344f5cbea3541fc0',
       rewardTokenAddress: '0x3a97704a1b25f08aa230ae53b352e2e72ef52843',
     });
   }

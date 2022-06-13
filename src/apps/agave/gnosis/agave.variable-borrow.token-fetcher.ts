@@ -29,7 +29,7 @@ export class GnosisAgaveVariableBorrowTokenFetcher implements PositionFetcher<Ap
       appId,
       groupId,
       network,
-      protocolDataProviderAddress: '0x24dCbd376Db23e4771375092344f5CbEA3541FC0',
+      protocolDataProviderAddress: '0x24dcbd376db23e4771375092344f5cbea3541fc0',
       resolveTokenAddress: ({ reserveTokenAddressesData }) => reserveTokenAddressesData.variableDebtTokenAddress,
       resolveLendingRate: ({ reserveData }) => reserveData.variableBorrowRate,
       resolveLabel: ({ reserveToken }) => `Borrowed ${getLabelFromToken(reserveToken)}`,

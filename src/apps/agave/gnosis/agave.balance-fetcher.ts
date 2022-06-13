@@ -58,7 +58,7 @@ export class GnosisAgaveBalanceFetcher implements BalanceFetcher {
     return this.healthFactorHelper.getHealthFactor({
       address,
       network,
-      lendingPoolAddress: '0x5E15d5E33d318dCEd84Bfe3F4EACe07909bE6d9c',
+      lendingPoolAddress: '0x5e15d5e33d318dced84bfe3f4eace07909be6d9c',
     });
   }
 
