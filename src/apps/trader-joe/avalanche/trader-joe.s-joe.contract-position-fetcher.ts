@@ -13,6 +13,7 @@ import { TRADER_JOE_DEFINITION } from '../trader-joe.definition';
 const appId = TRADER_JOE_DEFINITION.id;
 const groupId = TRADER_JOE_DEFINITION.groups.sJoe.id;
 const network = Network.AVALANCHE_MAINNET;
+
 @Register.ContractPositionFetcher({ appId, groupId, network })
 export class AvalancheTraderJoeSJoeContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
