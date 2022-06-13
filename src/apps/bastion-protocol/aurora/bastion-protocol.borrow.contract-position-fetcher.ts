@@ -5,6 +5,7 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { buildDollarDisplayItem, buildPercentageDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { CompoundSupplyTokenDataProps } from '~apps/compound/helper/compound.supply.token-helper';
 import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
@@ -13,7 +14,6 @@ import { Network } from '~types/network.interface';
 
 import { BASTION_PROTOCOL_DEFINITION } from '../bastion-protocol.definition';
 import { BastionProtocolContractFactory } from '../contracts';
-import { BastionSupplyTokenDataProps } from './bastion-protocol.supply.token-fetcher';
 
 const appId = BASTION_PROTOCOL_DEFINITION.id;
 const groupId = BASTION_PROTOCOL_DEFINITION.groups.borrow.id;
@@ -28,7 +28,7 @@ export class AuroraBastionProtocolBorrowContractPositionFetcher implements Posit
   ) { }
 
   async getPositions() {
-    const appTokens = await this.appToolkit.getAppTokenPositions<BastionSupplyTokenDataProps>({
+    const appTokens = await this.appToolkit.getAppTokenPositions<CompoundSupplyTokenDataProps>({
       appId,
       groupIds: [
         BASTION_PROTOCOL_DEFINITION.groups.supply.id,
@@ -76,7 +76,7 @@ export class AuroraBastionProtocolBorrowContractPositionFetcher implements Posit
         ]
         : [];
 
-      const contractPosition: ContractPosition<BastionSupplyTokenDataProps> = {
+      const contractPosition: ContractPosition<CompoundSupplyTokenDataProps> = {
         type: ContractType.POSITION,
         address: appToken.address,
         network,
