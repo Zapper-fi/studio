@@ -6,6 +6,7 @@ import { AurigamiAppDefinition, AURIGAMI_DEFINITION } from './aurigami.definitio
 import { AuroraAurigamiBalanceFetcher } from './aurora/aurigami.balance-fetcher';
 import { AuroraAurigamiBorrowContractPositionFetcher } from './aurora/aurigami.borrow.contract-position-fetcher';
 import { AuroraAurigamiSupplyTokenFetcher } from './aurora/aurigami.supply.token-fetcher';
+import { AuroraAurigamiTvlFetcher } from './aurora/aurigami.tvl-fetcher';
 import { AurigamiContractFactory } from './contracts';
 import { AurigamiClaimableBalanceHelper } from './helper/Aurigami.claimable.balance-helper';
 
@@ -18,6 +19,8 @@ import { AurigamiClaimableBalanceHelper } from './helper/Aurigami.claimable.bala
     AuroraAurigamiBalanceFetcher,
     AuroraAurigamiBorrowContractPositionFetcher,
     AuroraAurigamiSupplyTokenFetcher,
+    AuroraAurigamiTvlFetcher,
+
     // Helpers
     AurigamiClaimableBalanceHelper,
   ],
