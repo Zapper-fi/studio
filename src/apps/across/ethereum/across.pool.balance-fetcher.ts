@@ -7,17 +7,13 @@ import { BalanceFetcher } from '~balance/balance-fetcher.interface';
 import { Network } from '~types/network.interface';
 
 import ACROSS_DEFINITION from '../across.definition';
-import { AcrossContractFactory } from '../contracts';
 
 const appId = ACROSS_DEFINITION.id;
 const network = Network.ETHEREUM_MAINNET;
 
 @Register.BalanceFetcher(appId, network)
 export class EthereumAcrossBalanceFetcher implements BalanceFetcher {
-  constructor(
-    @Inject(AcrossContractFactory) private readonly acrossContractFactory: AcrossContractFactory,
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-  ) {}
+  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
   private async getPoolTokenBalances(address: string) {
     return this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
