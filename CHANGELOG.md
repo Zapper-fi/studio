@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.71.0](https://github.com/Zapper-fi/studio/compare/v0.70.0...v0.71.0) (2022-06-13)
+
+
+### Features
+
+* **tectonic:** Add Tectonic Integration ([#609](https://github.com/Zapper-fi/studio/issues/609)) ([badfa33](https://github.com/Zapper-fi/studio/commit/badfa3334a323eb4d215cb50cbd122c59b5f4ae5))
+* **vvs-finance:** Add auto VVS, mines and xVVS vaults ([#622](https://github.com/Zapper-fi/studio/issues/622)) ([a74c43e](https://github.com/Zapper-fi/studio/commit/a74c43e2d64183ca63546aabf8c7adef37a79d63))
+
 ## [0.70.0](https://github.com/Zapper-fi/studio/compare/v0.69.0...v0.70.0) (2022-06-12)
 
 
