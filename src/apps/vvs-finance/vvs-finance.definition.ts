@@ -13,7 +13,10 @@ export const VVS_FINANCE_DEFINITION = appDefinition({
     pool: { id: 'pool', type: GroupType.TOKEN, label: 'Pools', groupLabel: 'Pools' },
     farm: { id: 'farm', type: GroupType.POSITION, label: 'Farm', groupLabel: 'Farms' },
     farmV2: { id: 'farm-v2', type: GroupType.POSITION, label: 'Farm V2', groupLabel: 'Farms' },
-    mine: { id: 'mine', type: GroupType.POSITION, label: 'Mine' },
+    autoVvsMine: { id: 'auto-vvs-mine', type: GroupType.POSITION, label: 'Auto VVS Mine', groupLabel: 'Mines' },
+    mine: { id: 'mine', type: GroupType.POSITION, label: 'Mine', groupLabel: 'Mines' },
+    xvvs: { id: 'xvvs', type: GroupType.TOKEN, label: 'xVVS', groupLabel: 'xVVS' },
+    xvvsVault: { id: 'xvvs-vault', type: GroupType.TOKEN, label: 'xVVS Vault', groupLabel: 'xVVS' },
   },
 
   tags: [AppTag.DECENTRALIZED_EXCHANGE, AppTag.FARMING, AppTag.LIQUIDITY_POOL, AppTag.LIQUID_STAKING],

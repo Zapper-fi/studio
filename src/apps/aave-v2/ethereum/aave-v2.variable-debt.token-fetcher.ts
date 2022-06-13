@@ -28,8 +28,8 @@ export class EthereumAaveV2VariableDebtTokenFetcher implements PositionFetcher<A
       protocolDataProviderAddress: '0x057835ad21a177dbdd3090bb1cae03eacf78fc6d',
       resolveTokenAddress: ({ reserveTokenAddressesData }) => reserveTokenAddressesData.variableDebtTokenAddress,
       resolveLendingRate: ({ reserveData }) => reserveData.variableBorrowRate,
-      resolveLabel: ({ reserveToken }) => `Borrowed ${getLabelFromToken(reserveToken)}`,
-      resolveApyLabel: ({ apy }) => `${(apy * 100).toFixed(3)}% APR (variable)`,
+      resolveLabel: ({ reserveToken }) => getLabelFromToken(reserveToken),
+      resolveApyLabel: ({ apy }) => `${apy.toFixed(3)}% APR (variable)`,
     });
   }
 }

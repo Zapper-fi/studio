@@ -6,12 +6,14 @@ import { AppToolkitModule } from '~app-toolkit/app-toolkit.module';
 import { AppsModule } from '~apps/apps.module';
 import { BalanceModule } from '~balance/balance.module';
 import { CacheModule } from '~cache/cache.module';
+import { SchedulerModule } from '~scheduler/scheduler.module';
 import { StatsModule } from '~stats/stats.module';
 
 @Module({
   imports: [
     AppsModule.registerAsync({ appToolkitModule: AppToolkitModule }),
     CacheModule,
+    SchedulerModule,
     AppToolkitModule,
     StatsModule,
     BalanceModule,
