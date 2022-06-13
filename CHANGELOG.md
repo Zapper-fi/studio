@@ -4,6 +4,22 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.71.0](https://github.com/Zapper-fi/studio/compare/v0.70.0...v0.71.0) (2022-06-13)
+
+
+### Features
+
+* **tectonic:** Add Tectonic Integration ([#609](https://github.com/Zapper-fi/studio/issues/609)) ([badfa33](https://github.com/Zapper-fi/studio/commit/badfa3334a323eb4d215cb50cbd122c59b5f4ae5))
+* **vvs-finance:** Add auto VVS, mines and xVVS vaults ([#622](https://github.com/Zapper-fi/studio/issues/622)) ([a74c43e](https://github.com/Zapper-fi/studio/commit/a74c43e2d64183ca63546aabf8c7adef37a79d63))
+
+## [0.70.0](https://github.com/Zapper-fi/studio/compare/v0.69.0...v0.70.0) (2022-06-12)
+
+
+### Features
+
+* **llama-airforce:** Support uFXS claimable ([#627](https://github.com/Zapper-fi/studio/issues/627)) ([9b47896](https://github.com/Zapper-fi/studio/commit/9b47896a864011eb8c1da6d505d73a465b783d02))
+* **network:** Update default ETH RPC in development to use Cloudflare's gateway ([#633](https://github.com/Zapper-fi/studio/issues/633)) ([a6c736f](https://github.com/Zapper-fi/studio/commit/a6c736fd9e5956bf38984157bbc21a8c098ab021))
+
 ## [0.69.0](https://github.com/Zapper-fi/studio/compare/v0.68.0...v0.69.0) (2022-06-10)
 
 
