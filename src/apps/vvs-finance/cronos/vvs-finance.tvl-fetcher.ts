@@ -8,7 +8,7 @@ import { Network } from '~types/network.interface';
 
 import { VVS_FINANCE_DEFINITION } from '../vvs-finance.definition';
 
-const graphEndpoint = 'https://graph.vvs.finance/exchange';
+const graphEndpoint = 'https://graph.cronoslabs.com/subgraphs/name/vvs/exchange';
 const vvsFactoriesQuery = gql`
   query vvsFactories($tokenId: String) {
     vvsFactories(start: 1) {
