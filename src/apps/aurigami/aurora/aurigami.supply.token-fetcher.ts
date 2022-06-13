@@ -38,12 +38,6 @@ export class AuroraAurigamiSupplyTokenFetcher implements PositionFetcher<AppToke
       getUnderlyingAddress: ({ contract, multicall }) => multicall.wrap(contract).underlying(),
       getExchangeRateMantissa: ({ underlyingTokenDecimals, tokenDecimals }) =>
         18 + underlyingTokenDecimals - tokenDecimals,
-      getDisplayLabel: async ({ contract, multicall, underlyingToken }) => {
-        const [symbol, name] = await Promise.all([multicall.wrap(contract).symbol(), multicall.wrap(contract).name()]);
-        if (!name.startsWith(`${symbol}-`)) return underlyingToken.symbol;
-        const triggerLabel = name.replace(`${symbol}-`, '');
-        return `${underlyingToken.symbol} - ${triggerLabel}`;
-      },
     });
   }
 }
