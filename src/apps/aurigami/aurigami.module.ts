@@ -3,6 +3,7 @@ import { AbstractApp } from '~app/app.dynamic-module';
 import { CompoundAppModule } from '~apps/compound';
 
 import { AurigamiAppDefinition, AURIGAMI_DEFINITION } from './aurigami.definition';
+import { AuroraAurigamiBalanceFetcher } from './aurora/aurigami.balance-fetcher';
 import { AuroraAurigamiBorrowContractPositionFetcher } from './aurora/aurigami.borrow.contract-position-fetcher';
 import { AuroraAurigamiSupplyTokenFetcher } from './aurora/aurigami.supply.token-fetcher';
 import { AurigamiContractFactory } from './contracts';
@@ -13,6 +14,7 @@ import { AurigamiContractFactory } from './contracts';
   providers: [
     AurigamiAppDefinition,
     AurigamiContractFactory,
+    AuroraAurigamiBalanceFetcher,
     AuroraAurigamiBorrowContractPositionFetcher,
     AuroraAurigamiSupplyTokenFetcher,
   ],
