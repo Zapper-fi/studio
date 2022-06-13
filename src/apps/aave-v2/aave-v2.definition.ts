@@ -35,6 +35,7 @@ export const AAVE_V2_DEFINITION = appDefinition({
       id: 'claimable',
       type: GroupType.TOKEN,
       label: 'Reward',
+      isHiddenFromExplore: true,
     },
   },
 
