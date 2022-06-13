@@ -10,10 +10,10 @@ import { AuroraBastionProtocolSwapTokenFetcher } from './aurora/bastion-protocol
 import { AuroraBastionProtocolTvlFetcher } from './aurora/bastion-protocol.tvl-fetcher';
 import { BastionProtocolAppDefinition, BASTION_PROTOCOL_DEFINITION } from './bastion-protocol.definition';
 import { BastionProtocolContractFactory } from './contracts';
+import { BastionSupplyTokenHelper } from './helper/bastion-protocol.supply.token-helper';
 
 @Register.AppModule({
   appId: BASTION_PROTOCOL_DEFINITION.id,
-  imports: [CompoundAppModule],
   providers: [
     AuroraBastionProtocolBalanceFetcher,
     AuroraBastionProtocolBorrowContractPositionFetcher,
@@ -22,6 +22,7 @@ import { BastionProtocolContractFactory } from './contracts';
     AuroraBastionProtocolTvlFetcher,
     BastionProtocolAppDefinition,
     BastionProtocolContractFactory,
+    BastionSupplyTokenHelper,
     CurvePoolTokenHelper,
   ],
 })

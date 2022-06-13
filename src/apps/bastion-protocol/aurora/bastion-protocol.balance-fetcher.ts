@@ -5,14 +5,14 @@ import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
+import { CurvePoolTokenDataProps } from '~apps/curve/helpers/curve.pool.token-helper';
 import { BalanceFetcher, MetadataItemWithLabel } from '~balance/balance-fetcher.interface';
 import { ContractPositionBalance, TokenBalance } from '~position/position-balance.interface';
 import { Network } from '~types/network.interface';
 
 import { BASTION_PROTOCOL_DEFINITION } from '../bastion-protocol.definition';
 import { BastionProtocolContractFactory } from '../contracts';
-import { BastionLPTokenDataProps } from '../helper/bastion-protocol.swap.token-helper';
-import { BastionSupplyTokenDataProps } from './bastion-protocol.supply.token-fetcher';
+import { BastionSupplyTokenDataProps } from '../helper/bastion-protocol.supply.token-helper';
 
 const network = Network.AURORA_MAINNET;
 
@@ -77,7 +77,7 @@ export class AuroraBastionProtocolBalanceFetcher implements BalanceFetcher {
   async getSwapBalances(address: string) {
     const multicall = this.appToolkit.getMulticall(network);
 
-    const swapTokens = await this.appToolkit.getAppTokenPositions<BastionLPTokenDataProps>({
+    const swapTokens = await this.appToolkit.getAppTokenPositions<CurvePoolTokenDataProps>({
       appId: BASTION_PROTOCOL_DEFINITION.id,
       groupIds: [
         BASTION_PROTOCOL_DEFINITION.groups.swap.id,
