@@ -85,4 +85,4 @@ jobs:
           run_install: true
 
       - name: Studio linting tests
-        run: pnpm lint
+        run: pnpm lint:ci

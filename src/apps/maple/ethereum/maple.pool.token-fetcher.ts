@@ -72,8 +72,8 @@ export class EthereumMaplePoolTokenFetcher implements PositionFetcher<AppTokenPo
         const tertiaryLabel = `${(apy * 100).toFixed(3)}% APY`;
         const images = [getTokenImg(underlyingToken.address, network)];
         const statsItems = [
-          { label: 'Liquidity', value: buildDollarDisplayItem(liquidity) },
           { label: 'APY', value: buildPercentageDisplayItem(apy) },
+          { label: 'Liquidity', value: buildDollarDisplayItem(liquidity) },
         ];
 
         const poolToken: AppTokenPosition<MaplePoolTokenDataProps> = {

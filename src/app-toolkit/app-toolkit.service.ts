@@ -65,8 +65,14 @@ export class AppToolkit implements IAppToolkit {
 
   // Cache
 
-  getFromCache<T = any>(key: string) {
+  async getFromCache<T = any>(key: string) {
+    // In production, this is a Redis `get`
     return this.cacheManager.get<T>(key);
+  }
+
+  async msetToCache<T = any>(entries: [string, T][]) {
+    // In production, this is a Redis `mset`
+    await Promise.all(entries.map(([key, value]) => this.cacheManager.set(key, value)));
   }
 
   // Global Helpers

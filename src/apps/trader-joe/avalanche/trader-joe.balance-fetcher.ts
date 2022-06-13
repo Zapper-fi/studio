@@ -32,7 +32,7 @@ export class AvalancheTraderJoeBalanceFetcher implements BalanceFetcher {
     return this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
       appId: TRADER_JOE_DEFINITION.id,
       groupId: TRADER_JOE_DEFINITION.groups.xJoe.id,
-      network: Network.AVALANCHE_MAINNET,
+      network,
       address,
     });
   }
@@ -84,7 +84,7 @@ export class AvalancheTraderJoeBalanceFetcher implements BalanceFetcher {
     return this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
       appId: TRADER_JOE_DEFINITION.id,
       groupId: TRADER_JOE_DEFINITION.groups.pool.id,
-      network: Network.AVALANCHE_MAINNET,
+      network,
       address,
     });
   }
@@ -94,9 +94,9 @@ export class AvalancheTraderJoeBalanceFetcher implements BalanceFetcher {
       address,
       appId: TRADER_JOE_DEFINITION.id,
       groupId: TRADER_JOE_DEFINITION.groups.chefV2Farm.id,
-      network: Network.AVALANCHE_MAINNET,
+      network,
       resolveChefContract: ({ contractAddress }) =>
-        this.traderJoeContractFactory.traderJoeChefV2({ network: Network.AVALANCHE_MAINNET, address: contractAddress }),
+        this.traderJoeContractFactory.traderJoeChefV2({ network, address: contractAddress }),
       resolveStakedTokenBalance: this.appToolkit.helpers.masterChefDefaultStakedBalanceStrategy.build({
         resolveStakedBalance: ({ contract, multicall, contractPosition }) =>
           multicall
@@ -121,9 +121,9 @@ export class AvalancheTraderJoeBalanceFetcher implements BalanceFetcher {
       address,
       appId: TRADER_JOE_DEFINITION.id,
       groupId: TRADER_JOE_DEFINITION.groups.chefV3Farm.id,
-      network: Network.AVALANCHE_MAINNET,
+      network,
       resolveChefContract: ({ contractAddress }) =>
-        this.traderJoeContractFactory.traderJoeChefV3({ network: Network.AVALANCHE_MAINNET, address: contractAddress }),
+        this.traderJoeContractFactory.traderJoeChefV3({ network, address: contractAddress }),
       resolveStakedTokenBalance: this.appToolkit.helpers.masterChefDefaultStakedBalanceStrategy.build({
         resolveStakedBalance: ({ contract, multicall, contractPosition }) =>
           multicall
@@ -148,10 +148,10 @@ export class AvalancheTraderJoeBalanceFetcher implements BalanceFetcher {
       address,
       appId: TRADER_JOE_DEFINITION.id,
       groupId: TRADER_JOE_DEFINITION.groups.chefBoostedFarm.id,
-      network: Network.AVALANCHE_MAINNET,
+      network,
       resolveChefContract: ({ contractAddress }) =>
         this.traderJoeContractFactory.traderJoeChefBoosted({
-          network: Network.AVALANCHE_MAINNET,
+          network,
           address: contractAddress,
         }),
       resolveStakedTokenBalance: this.appToolkit.helpers.masterChefDefaultStakedBalanceStrategy.build({

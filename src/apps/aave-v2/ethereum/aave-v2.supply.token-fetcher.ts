@@ -26,8 +26,7 @@ export class EthereumAaveV2SupplyTokenFetcher implements PositionFetcher<AppToke
       resolveTokenAddress: ({ reserveTokenAddressesData }) => reserveTokenAddressesData.aTokenAddress,
       resolveLendingRate: ({ reserveData }) => reserveData.liquidityRate,
       resolveLabel: ({ reserveToken }) => getLabelFromToken(reserveToken),
-      resolveApyLabel: ({ apy }) => `${(apy * 100).toFixed(3)}% APY`,
-      exchangeable: true,
+      resolveApyLabel: ({ apy }) => `${apy.toFixed(3)}% APY`,
     });
   }
 }
