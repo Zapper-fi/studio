@@ -55,6 +55,7 @@ export class AaveV2ClaimableContractPositionHelper {
         secondaryLabel: buildDollarDisplayItem(rewardToken.price),
       },
     };
+
     return [position];
   }
 }
