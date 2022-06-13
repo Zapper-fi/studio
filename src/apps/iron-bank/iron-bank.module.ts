@@ -1,5 +1,6 @@
 import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
+import { CompoundAppModule } from '~apps/compound';
 
 import { IronBankAppDefinition, IRON_BANK_DEFINITION } from './iron-bank.definition';
 import { IronBankContractFactory } from './contracts';
@@ -15,14 +16,10 @@ import { AvalancheIronBankBalanceFetcher } from './avalanche/ironBank.balance-fe
 import { AvalancheIronBankBorrowContractPositionFetcher } from './avalanche/ironBank.borrow.contract-position-fetcher';
 import { AvalancheIronBankSupplyTokenFetcher } from './avalanche/ironBank.supply.token-fetcher';
 import { AvalancheIronBankTvlFetcher } from './avalanche/ironBank.tvl-fetcher';
-import { IronBankBorrowContractPositionHelper } from './helper/ironBank.borrow.contract-position-helper';
-import { IronBankLendingBalanceHelper } from './helper/ironBank.lending.balance-helper';
-import { IronBankLendingMetaHelper } from './helper/ironBank.lending.meta-helper';
-import { IronBankSupplyTokenHelper } from './helper/ironBank.supply.token-helper';
-import { IronBankTvlHelper } from './helper/ironBank.tvl-helper';
 
 @Register.AppModule({
   appId: IRON_BANK_DEFINITION.id,
+  imports: [CompoundAppModule],
   providers: [
     IronBankAppDefinition,
     IronBankContractFactory,
@@ -38,21 +35,8 @@ import { IronBankTvlHelper } from './helper/ironBank.tvl-helper';
     AvalancheIronBankSupplyTokenFetcher,
     AvalancheIronBankBorrowContractPositionFetcher,
     AvalancheIronBankTvlFetcher,
-    // Helpers
-    IronBankLendingBalanceHelper,
-    IronBankLendingMetaHelper,
-    IronBankSupplyTokenHelper,
-    IronBankBorrowContractPositionHelper,
     IronBankContractFactory,
-    IronBankTvlHelper,
   ],
-  exports: [
-    IronBankLendingBalanceHelper,
-    IronBankLendingMetaHelper,
-    IronBankSupplyTokenHelper,
-    IronBankBorrowContractPositionHelper,
-    IronBankContractFactory,
-    IronBankTvlHelper,
-  ],
+  
 })
 export class IronBankAppModule extends AbstractApp() {}

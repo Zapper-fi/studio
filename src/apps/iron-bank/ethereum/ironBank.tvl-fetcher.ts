@@ -5,22 +5,26 @@ import { TvlFetcher } from '~stats/tvl/tvl-fetcher.interface';
 import { Network } from '~types/network.interface';
 
 import { IRON_BANK_DEFINITION } from '../iron-bank.definition';
-import { IronBankTvlHelper } from '../helper/ironBank.tvl-helper';
+import { CompoundTvlHelper } from '~apps/compound/helper/compound.tvl-helper';
 
 const appId = IRON_BANK_DEFINITION.id;
 const network = Network.ETHEREUM_MAINNET;
 
 @Register.TvlFetcher({ appId, network })
 export class EthereumIronBankTvlFetcher implements TvlFetcher {
-  constructor(@Inject(IronBankTvlHelper) private readonly ironBankTvlHelper: IronBankTvlHelper) {}
+  constructor(@Inject(CompoundTvlHelper) private readonly compoundTvlHelper: CompoundTvlHelper) {}
 
   async getTvl() {
-    const tvl = await this.ironBankTvlHelper.getLiquidityBasedOnBorrowedPositions({
+    const totalSupplyBasedOnBorrowedPositions = await this.compoundTvlHelper.getTotalSupplyBasedOnBorrowedPositions({
       appId,
       groupIds: [IRON_BANK_DEFINITION.groups.borrow.id],
       network,
     });
-
-    return tvl;
+    const liquidityBasedOnBorrowedPositions = await this.compoundTvlHelper.getLiquidityBasedOnBorrowedPositions({
+      appId,
+      groupIds: [IRON_BANK_DEFINITION.groups.borrow.id],
+      network,
+    });
+    return totalSupplyBasedOnBorrowedPositions + liquidityBasedOnBorrowedPositions;
   }
 }

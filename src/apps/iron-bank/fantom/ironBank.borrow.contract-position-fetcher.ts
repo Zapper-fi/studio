@@ -6,7 +6,7 @@ import { ContractPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
 import { IRON_BANK_DEFINITION } from '../iron-bank.definition';
-import { IronBankBorrowContractPositionHelper } from '../helper/ironBank.borrow.contract-position-helper';
+import { CompoundBorrowContractPositionHelper } from '~apps/compound/helper/compound.borrow.contract-position-helper';
 
 const appId = IRON_BANK_DEFINITION.id;
 const groupId = IRON_BANK_DEFINITION.groups.borrow.id;
@@ -15,12 +15,12 @@ const network = Network.FANTOM_OPERA_MAINNET;
 @Register.ContractPositionFetcher({ appId, groupId, network })
 export class FantomIronBankBorrowContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
-    @Inject(IronBankBorrowContractPositionHelper)
-    private readonly ironBankBorrowContractPositionHelper: IronBankBorrowContractPositionHelper,
+    @Inject(CompoundBorrowContractPositionHelper)
+    private readonly compoundBorrowContractPositionHelper: CompoundBorrowContractPositionHelper,
   ) {}
 
   async getPositions() {
-    return this.ironBankBorrowContractPositionHelper.getPositions({
+    return this.compoundBorrowContractPositionHelper.getPositions({
       network,
       appId,
       groupId,

@@ -7,7 +7,7 @@ import { Network } from '~types/network.interface';
 
 import { IRON_BANK_DEFINITION } from '../iron-bank.definition';
 import { IronBankContractFactory } from '../contracts';
-import { IronBankSupplyTokenHelper } from '../helper/ironBank.supply.token-helper';
+import { CompoundSupplyTokenHelper } from '~apps/compound/helper/compound.supply.token-helper';
 
 const appId = IRON_BANK_DEFINITION.id;
 const groupId = IRON_BANK_DEFINITION.groups.supply.id;
@@ -17,11 +17,11 @@ const network = Network.ETHEREUM_MAINNET;
 export class EthereumIronBankSupplyTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(IronBankContractFactory) private readonly ironBankContractFactory: IronBankContractFactory,
-    @Inject(IronBankSupplyTokenHelper) private readonly ironBankSupplyTokenHelper: IronBankSupplyTokenHelper,
+    @Inject(CompoundSupplyTokenHelper) private readonly compoundSupplyTokenHelper: CompoundSupplyTokenHelper,
   ) {}
 
   async getPositions() {
-    return this.ironBankSupplyTokenHelper.getTokens({
+    return this.compoundSupplyTokenHelper.getTokens({
       network,
       appId,
       groupId,

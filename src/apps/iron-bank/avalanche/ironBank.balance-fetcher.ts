@@ -8,8 +8,9 @@ import { Network } from '~types/network.interface';
 import { IRON_BANK_DEFINITION } from '../iron-bank.definition';
 import { IronBankContractFactory } from '../contracts';
 
-import { IronBankLendingBalanceHelper } from '../helper/ironBank.lending.balance-helper';
-import { IronBankLendingMetaHelper } from '../helper/ironBank.lending.meta-helper';
+import { CompoundLendingMetaHelper } from '~apps/compound/helper/compound.lending.meta-helper';
+import { CompoundSupplyBalanceHelper } from '~apps/compound/helper/compound.supply.balance-helper';
+import { CompoundBorrowBalanceHelper } from '~apps/compound/helper/compound.borrow.balance-helper';
 
 const appId = IRON_BANK_DEFINITION.id;
 const network = Network.AVALANCHE_MAINNET;
@@ -17,40 +18,46 @@ const network = Network.AVALANCHE_MAINNET;
 @Register.BalanceFetcher(appId, network)
 export class AvalancheIronBankBalanceFetcher implements BalanceFetcher {
   constructor(
-    @Inject(IronBankLendingBalanceHelper)
-    private readonly ironBankLendingBalanceHelper: IronBankLendingBalanceHelper,
-    @Inject(IronBankLendingMetaHelper)
-    private readonly ironBankLendingMetaHelper: IronBankLendingMetaHelper,
+    @Inject(CompoundBorrowBalanceHelper)
+    private readonly compoundBorrowBalanceHelper: CompoundBorrowBalanceHelper,
+    @Inject(CompoundLendingMetaHelper)
+    private readonly compoundLendingMetaHelper: CompoundLendingMetaHelper,
+    @Inject(CompoundSupplyBalanceHelper)
+    private readonly compoundSupplyBalanceHelper: CompoundSupplyBalanceHelper,
     @Inject(IronBankContractFactory)
     private readonly ironBankContractFactory: IronBankContractFactory,
   ) {}
-
-  async getLendingBalances(address: string) {
-    return this.ironBankLendingBalanceHelper.getBalances({
+  async getSupplyBalances(address: string) {
+    return this.compoundSupplyBalanceHelper.getBalances({
       address,
       appId,
-      supplyGroupId: IRON_BANK_DEFINITION.groups.supply.id,
-      borrowGroupId: IRON_BANK_DEFINITION.groups.borrow.id,
+      groupId: IRON_BANK_DEFINITION.groups.supply.id,
       network,
       getTokenContract: ({ address, network }) => this.ironBankContractFactory.ironBankCToken({ address, network }),
       getBalanceRaw: ({ contract, address, multicall }) => multicall.wrap(contract).balanceOf(address),
+    });
+  }
+
+  async getBorrowBalances(address: string) {
+    return this.compoundBorrowBalanceHelper.getBalances({
+      address,
+      appId,
+      groupId: IRON_BANK_DEFINITION.groups.borrow.id,
+      network,
+      getTokenContract: ({ address, network }) => this.ironBankContractFactory.ironBankCToken({ address, network }),
       getBorrowBalanceRaw: ({ contract, address, multicall }) => multicall.wrap(contract).borrowBalanceCurrent(address),
     });
   }
 
   async getBalances(address: string) {
-    const [lendingBalances] = await Promise.all([
-      this.getLendingBalances(address)
+    const [supplyBalances, borrowBalances] = await Promise.all([
+      this.getSupplyBalances(address),
+      this.getBorrowBalances(address)
     ]);
 
-    const meta = this.ironBankLendingMetaHelper.getMeta({ balances: lendingBalances });
+    const meta = this.compoundLendingMetaHelper.getMeta({ balances: [...supplyBalances, ...borrowBalances] });
+    const lendingProduct = { label: 'Lending', assets: [...supplyBalances, ...borrowBalances], meta };
 
-    return presentBalanceFetcherResponse([
-      {
-        label: 'Lending',
-        assets: lendingBalances,
-        meta: meta,
-      }
-    ]);
-  }
+    return presentBalanceFetcherResponse([lendingProduct]);
+}
 }
