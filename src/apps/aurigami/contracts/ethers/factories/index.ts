@@ -3,3 +3,4 @@
 /* eslint-disable */
 export { AurigamiAuToken__factory } from './AurigamiAuToken__factory';
 export { AurigamiComptroller__factory } from './AurigamiComptroller__factory';
+export { AurigamiLens__factory } from './AurigamiLens__factory';

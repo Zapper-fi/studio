@@ -3,6 +3,8 @@
 /* eslint-disable */
 export type { AurigamiAuToken } from './AurigamiAuToken';
 export type { AurigamiComptroller } from './AurigamiComptroller';
+export type { AurigamiLens } from './AurigamiLens';
 export * as factories from './factories';
 export { AurigamiAuToken__factory } from './factories/AurigamiAuToken__factory';
 export { AurigamiComptroller__factory } from './factories/AurigamiComptroller__factory';
+export { AurigamiLens__factory } from './factories/AurigamiLens__factory';

@@ -6,6 +6,7 @@ import { Network } from '~types/network.interface';
 
 import { AurigamiAuToken__factory } from './ethers';
 import { AurigamiComptroller__factory } from './ethers';
+import { AurigamiLens__factory } from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
@@ -22,7 +23,11 @@ export class AurigamiContractFactory extends ContractFactory {
   aurigamiComptroller({ address, network }: ContractOpts) {
     return AurigamiComptroller__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  aurigamiLens({ address, network }: ContractOpts) {
+    return AurigamiLens__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
 }
 
 export type { AurigamiAuToken } from './ethers';
 export type { AurigamiComptroller } from './ethers';
+export type { AurigamiLens } from './ethers';

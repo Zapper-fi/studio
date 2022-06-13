@@ -7,7 +7,7 @@ import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
-import { AURIGAMI_DEFINITION } from '../aurigami.definition';
+import { AURIGAMI_CONTRACT_ADDRESSES, AURIGAMI_DEFINITION } from '../aurigami.definition';
 import { AurigamiAuToken, AurigamiComptroller, AurigamiContractFactory } from '../contracts';
 
 const appId = AURIGAMI_DEFINITION.id;
@@ -27,7 +27,7 @@ export class AuroraAurigamiSupplyTokenFetcher implements PositionFetcher<AppToke
       network,
       appId,
       groupId,
-      comptrollerAddress: '0x817af6cfAF35BdC1A634d6cC94eE9e4c68369Aeb',
+      comptrollerAddress: AURIGAMI_CONTRACT_ADDRESSES[network].comptroller,
       getComptrollerContract: ({ address, network }) =>
         this.aurigamiContractFactory.aurigamiComptroller({ address, network }),
       getTokenContract: ({ address, network }) => this.aurigamiContractFactory.aurigamiAuToken({ address, network }),

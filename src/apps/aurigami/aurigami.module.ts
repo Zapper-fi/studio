@@ -7,6 +7,7 @@ import { AuroraAurigamiBalanceFetcher } from './aurora/aurigami.balance-fetcher'
 import { AuroraAurigamiBorrowContractPositionFetcher } from './aurora/aurigami.borrow.contract-position-fetcher';
 import { AuroraAurigamiSupplyTokenFetcher } from './aurora/aurigami.supply.token-fetcher';
 import { AurigamiContractFactory } from './contracts';
+import { AurigamiClaimableBalanceHelper } from './helper/Aurigami.claimable.balance-helper';
 
 @Register.AppModule({
   appId: AURIGAMI_DEFINITION.id,
@@ -17,6 +18,8 @@ import { AurigamiContractFactory } from './contracts';
     AuroraAurigamiBalanceFetcher,
     AuroraAurigamiBorrowContractPositionFetcher,
     AuroraAurigamiSupplyTokenFetcher,
+    // Helpers
+    AurigamiClaimableBalanceHelper,
   ],
 })
 export class AurigamiAppModule extends AbstractApp() {}

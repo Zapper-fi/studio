@@ -4,7 +4,6 @@ import { Register } from '~app-toolkit/decorators';
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
 import {
   CompoundBorrowBalanceHelper,
-  CompoundClaimableBalanceHelper,
   CompoundContractFactory,
   CompoundLendingMetaHelper,
   CompoundSupplyBalanceHelper,
@@ -12,7 +11,8 @@ import {
 import { BalanceFetcher } from '~balance/balance-fetcher.interface';
 import { Network } from '~types/network.interface';
 
-import { AURIGAMI_DEFINITION } from '../aurigami.definition';
+import { AURIGAMI_CONTRACT_ADDRESSES, AURIGAMI_DEFINITION } from '../aurigami.definition';
+import { AurigamiClaimableBalanceHelper } from '../helper/Aurigami.claimable.balance-helper';
 
 const appId = AURIGAMI_DEFINITION.id;
 const network = Network.AURORA_MAINNET;
@@ -24,8 +24,8 @@ export class AuroraAurigamiBalanceFetcher implements BalanceFetcher {
     private readonly compoundBorrowBalanceHelper: CompoundBorrowBalanceHelper,
     @Inject(CompoundSupplyBalanceHelper)
     private readonly compoundSupplyBalanceHelper: CompoundSupplyBalanceHelper,
-    @Inject(CompoundClaimableBalanceHelper)
-    private readonly compoundClaimableBalanceHelper: CompoundClaimableBalanceHelper,
+    @Inject(AurigamiClaimableBalanceHelper)
+    private readonly aurigamiClaimableBalanceHelper: AurigamiClaimableBalanceHelper,
     @Inject(CompoundLendingMetaHelper)
     private readonly compoundLendingMetaHelper: CompoundLendingMetaHelper,
     @Inject(CompoundContractFactory)
@@ -54,15 +54,31 @@ export class AuroraAurigamiBalanceFetcher implements BalanceFetcher {
     });
   }
 
+  async getClaimableBalances(address: string) {
+    return this.aurigamiClaimableBalanceHelper.getBalances({
+      address,
+      appId,
+      groupId: AURIGAMI_DEFINITION.groups.claimable.id,
+      network,
+      lensAddress: AURIGAMI_CONTRACT_ADDRESSES[network].lens,
+      comptrollerAddress: AURIGAMI_CONTRACT_ADDRESSES[network].comptroller,
+      fairlaunchAddress: AURIGAMI_CONTRACT_ADDRESSES[network].fairLaunch,
+      stakingPoolIds: [0],
+      rewardAddress: AURIGAMI_CONTRACT_ADDRESSES.aurora.ply,
+    });
+  }
+
   async getBalances(address: string) {
-    const [supplyBalances, borrowBalances] = await Promise.all([
+    const [supplyBalances, borrowBalances, claimableBalances] = await Promise.all([
       this.getSupplyBalances(address),
       this.getBorrowBalances(address),
+      this.getClaimableBalances(address),
     ]);
 
     const meta = this.compoundLendingMetaHelper.getMeta({ balances: [...supplyBalances, ...borrowBalances] });
+    const claimableProduct = { label: 'Claimable', assets: claimableBalances };
     const lendingProduct = { label: 'Lending', assets: [...supplyBalances, ...borrowBalances], meta };
 
-    return presentBalanceFetcherResponse([lendingProduct]);
+    return presentBalanceFetcherResponse([lendingProduct, claimableProduct]);
   }
 }
