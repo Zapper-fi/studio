@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.70.0](https://github.com/Zapper-fi/studio/compare/v0.69.0...v0.70.0) (2022-06-12)
+
+
+### Features
+
+* **llama-airforce:** Support uFXS claimable ([#627](https://github.com/Zapper-fi/studio/issues/627)) ([9b47896](https://github.com/Zapper-fi/studio/commit/9b47896a864011eb8c1da6d505d73a465b783d02))
+* **network:** Update default ETH RPC in development to use Cloudflare's gateway ([#633](https://github.com/Zapper-fi/studio/issues/633)) ([a6c736f](https://github.com/Zapper-fi/studio/commit/a6c736fd9e5956bf38984157bbc21a8c098ab021))
+
 ## [0.69.0](https://github.com/Zapper-fi/studio/compare/v0.68.0...v0.69.0) (2022-06-10)
 
 
