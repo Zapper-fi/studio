@@ -60,6 +60,7 @@ export type AppGroup = {
   type: GroupType;
   label: string;
   groupLabel?: string;
+  isHiddenFromExplore?: boolean;
 };
 
 export type AppLinks = {
