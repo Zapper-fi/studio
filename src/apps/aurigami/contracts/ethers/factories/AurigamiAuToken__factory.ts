@@ -8,6 +8,52 @@ import type { AurigamiAuToken, AurigamiAuTokenInterface } from '../AurigamiAuTok
 
 const _abi = [
   {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'underlying_',
+        type: 'address',
+      },
+      {
+        internalType: 'contract ComptrollerInterface',
+        name: 'comptroller_',
+        type: 'address',
+      },
+      {
+        internalType: 'contract InterestRateModel',
+        name: 'interestRateModel_',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'initialExchangeRateMantissa_',
+        type: 'uint256',
+      },
+      {
+        internalType: 'string',
+        name: 'name_',
+        type: 'string',
+      },
+      {
+        internalType: 'string',
+        name: 'symbol_',
+        type: 'string',
+      },
+      {
+        internalType: 'uint8',
+        name: 'decimals_',
+        type: 'uint8',
+      },
+      {
+        internalType: 'address payable',
+        name: 'admin_',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'constructor',
+  },
+  {
     inputs: [],
     name: 'BadInput',
     type: 'error',
@@ -448,6 +494,19 @@ const _abi = [
     inputs: [
       {
         internalType: 'uint256',
+        name: 'addAmount',
+        type: 'uint256',
+      },
+    ],
+    name: '_addReserves',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
         name: 'reduceAmount',
         type: 'uint256',
       },
@@ -638,6 +697,19 @@ const _abi = [
         type: 'uint256',
       },
     ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'borrowAmount',
+        type: 'uint256',
+      },
+    ],
+    name: 'borrow',
+    outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
   },
@@ -908,6 +980,42 @@ const _abi = [
     type: 'function',
   },
   {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'borrower',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'repayAmount',
+        type: 'uint256',
+      },
+      {
+        internalType: 'contract AuTokenInterface',
+        name: 'auTokenCollateral',
+        type: 'address',
+      },
+    ],
+    name: 'liquidateBorrow',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'mintAmount',
+        type: 'uint256',
+      },
+    ],
+    name: 'mint',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
     inputs: [],
     name: 'name',
     outputs: [
@@ -944,6 +1052,63 @@ const _abi = [
       },
     ],
     stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'redeemTokens',
+        type: 'uint256',
+      },
+    ],
+    name: 'redeem',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'redeemAmount',
+        type: 'uint256',
+      },
+    ],
+    name: 'redeemUnderlying',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: 'repayAmount',
+        type: 'uint256',
+      },
+    ],
+    name: 'repayBorrow',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'borrower',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'repayAmount',
+        type: 'uint256',
+      },
+    ],
+    name: 'repayBorrowBehalf',
+    outputs: [],
+    stateMutability: 'nonpayable',
     type: 'function',
   },
   {
@@ -993,6 +1158,19 @@ const _abi = [
       },
     ],
     stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'contract EIP20NonStandardInterface',
+        name: 'token',
+        type: 'address',
+      },
+    ],
+    name: 'sweepToken',
+    outputs: [],
+    stateMutability: 'nonpayable',
     type: 'function',
   },
   {
@@ -1111,6 +1289,19 @@ const _abi = [
       },
     ],
     stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'underlying',
+    outputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
     type: 'function',
   },
 ];

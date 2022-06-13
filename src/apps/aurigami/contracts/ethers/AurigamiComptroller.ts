@@ -360,7 +360,6 @@ export interface AurigamiComptrollerInterface extends utils.Interface {
 
   events: {
     'ActionPaused(string,bool)': EventFragment;
-    'ActionPaused(address,string,bool)': EventFragment;
     'ContributorPlySpeedUpdated(address,uint256)': EventFragment;
     'DistributedBorrowerReward(uint8,address,address,uint256,uint256)': EventFragment;
     'DistributedSupplierReward(uint8,address,address,uint256,uint256)': EventFragment;
@@ -381,8 +380,7 @@ export interface AurigamiComptrollerInterface extends utils.Interface {
     'WhitelistStatusChanged(address,bool)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: 'ActionPaused(string,bool)'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'ActionPaused(address,string,bool)'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'ActionPaused'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'ContributorPlySpeedUpdated'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'DistributedBorrowerReward'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'DistributedSupplierReward'): EventFragment;
@@ -403,25 +401,13 @@ export interface AurigamiComptrollerInterface extends utils.Interface {
   getEvent(nameOrSignatureOrTopic: 'WhitelistStatusChanged'): EventFragment;
 }
 
-export interface ActionPaused_string_bool_EventObject {
+export interface ActionPausedEventObject {
   action: string;
   pauseState: boolean;
 }
-export type ActionPaused_string_bool_Event = TypedEvent<[string, boolean], ActionPaused_string_bool_EventObject>;
+export type ActionPausedEvent = TypedEvent<[string, boolean], ActionPausedEventObject>;
 
-export type ActionPaused_string_bool_EventFilter = TypedEventFilter<ActionPaused_string_bool_Event>;
-
-export interface ActionPaused_address_string_bool_EventObject {
-  auToken: string;
-  action: string;
-  pauseState: boolean;
-}
-export type ActionPaused_address_string_bool_Event = TypedEvent<
-  [string, string, boolean],
-  ActionPaused_address_string_bool_EventObject
->;
-
-export type ActionPaused_address_string_bool_EventFilter = TypedEventFilter<ActionPaused_address_string_bool_Event>;
+export type ActionPausedEventFilter = TypedEventFilter<ActionPausedEvent>;
 
 export interface ContributorPlySpeedUpdatedEventObject {
   contributor: string;
@@ -1514,12 +1500,8 @@ export interface AurigamiComptroller extends BaseContract {
   };
 
   filters: {
-    'ActionPaused(string,bool)'(action?: null, pauseState?: null): ActionPaused_string_bool_EventFilter;
-    'ActionPaused(address,string,bool)'(
-      auToken?: null,
-      action?: null,
-      pauseState?: null,
-    ): ActionPaused_address_string_bool_EventFilter;
+    'ActionPaused(string,bool)'(action?: null, pauseState?: null): ActionPausedEventFilter;
+    ActionPaused(action?: null, pauseState?: null): ActionPausedEventFilter;
 
     'ContributorPlySpeedUpdated(address,uint256)'(
       contributor?: string | null,

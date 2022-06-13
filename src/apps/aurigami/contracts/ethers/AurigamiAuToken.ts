@@ -20,6 +20,7 @@ import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './com
 export interface AurigamiAuTokenInterface extends utils.Interface {
   functions: {
     '_acceptAdmin()': FunctionFragment;
+    '_addReserves(uint256)': FunctionFragment;
     '_reduceReserves(uint256)': FunctionFragment;
     '_setComptroller(address)': FunctionFragment;
     '_setInterestRateModel(address)': FunctionFragment;
@@ -33,6 +34,7 @@ export interface AurigamiAuTokenInterface extends utils.Interface {
     'approve(address,uint256)': FunctionFragment;
     'balanceOf(address)': FunctionFragment;
     'balanceOfUnderlying(address)': FunctionFragment;
+    'borrow(uint256)': FunctionFragment;
     'borrowBalanceCurrent(address)': FunctionFragment;
     'borrowBalanceStored(address)': FunctionFragment;
     'borrowIndex()': FunctionFragment;
@@ -48,12 +50,19 @@ export interface AurigamiAuTokenInterface extends utils.Interface {
     'getSupplyDataOfTwoAccount(address,address)': FunctionFragment;
     'interestRateModel()': FunctionFragment;
     'isAuToken()': FunctionFragment;
+    'liquidateBorrow(address,uint256,address)': FunctionFragment;
+    'mint(uint256)': FunctionFragment;
     'name()': FunctionFragment;
     'pendingAdmin()': FunctionFragment;
     'protocolSeizeShareMantissa()': FunctionFragment;
+    'redeem(uint256)': FunctionFragment;
+    'redeemUnderlying(uint256)': FunctionFragment;
+    'repayBorrow(uint256)': FunctionFragment;
+    'repayBorrowBehalf(address,uint256)': FunctionFragment;
     'reserveFactorMantissa()': FunctionFragment;
     'seize(address,address,uint256)': FunctionFragment;
     'supplyRatePerTimestamp()': FunctionFragment;
+    'sweepToken(address)': FunctionFragment;
     'symbol()': FunctionFragment;
     'totalBorrows()': FunctionFragment;
     'totalBorrowsCurrent()': FunctionFragment;
@@ -61,11 +70,13 @@ export interface AurigamiAuTokenInterface extends utils.Interface {
     'totalSupply()': FunctionFragment;
     'transfer(address,uint256)': FunctionFragment;
     'transferFrom(address,address,uint256)': FunctionFragment;
+    'underlying()': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
       | '_acceptAdmin'
+      | '_addReserves'
       | '_reduceReserves'
       | '_setComptroller'
       | '_setInterestRateModel'
@@ -79,6 +90,7 @@ export interface AurigamiAuTokenInterface extends utils.Interface {
       | 'approve'
       | 'balanceOf'
       | 'balanceOfUnderlying'
+      | 'borrow'
       | 'borrowBalanceCurrent'
       | 'borrowBalanceStored'
       | 'borrowIndex'
@@ -94,22 +106,31 @@ export interface AurigamiAuTokenInterface extends utils.Interface {
       | 'getSupplyDataOfTwoAccount'
       | 'interestRateModel'
       | 'isAuToken'
+      | 'liquidateBorrow'
+      | 'mint'
       | 'name'
       | 'pendingAdmin'
       | 'protocolSeizeShareMantissa'
+      | 'redeem'
+      | 'redeemUnderlying'
+      | 'repayBorrow'
+      | 'repayBorrowBehalf'
       | 'reserveFactorMantissa'
       | 'seize'
       | 'supplyRatePerTimestamp'
+      | 'sweepToken'
       | 'symbol'
       | 'totalBorrows'
       | 'totalBorrowsCurrent'
       | 'totalReserves'
       | 'totalSupply'
       | 'transfer'
-      | 'transferFrom',
+      | 'transferFrom'
+      | 'underlying',
   ): FunctionFragment;
 
   encodeFunctionData(functionFragment: '_acceptAdmin', values?: undefined): string;
+  encodeFunctionData(functionFragment: '_addReserves', values: [BigNumberish]): string;
   encodeFunctionData(functionFragment: '_reduceReserves', values: [BigNumberish]): string;
   encodeFunctionData(functionFragment: '_setComptroller', values: [string]): string;
   encodeFunctionData(functionFragment: '_setInterestRateModel', values: [string]): string;
@@ -123,6 +144,7 @@ export interface AurigamiAuTokenInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'approve', values: [string, BigNumberish]): string;
   encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
   encodeFunctionData(functionFragment: 'balanceOfUnderlying', values: [string]): string;
+  encodeFunctionData(functionFragment: 'borrow', values: [BigNumberish]): string;
   encodeFunctionData(functionFragment: 'borrowBalanceCurrent', values: [string]): string;
   encodeFunctionData(functionFragment: 'borrowBalanceStored', values: [string]): string;
   encodeFunctionData(functionFragment: 'borrowIndex', values?: undefined): string;
@@ -138,12 +160,19 @@ export interface AurigamiAuTokenInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'getSupplyDataOfTwoAccount', values: [string, string]): string;
   encodeFunctionData(functionFragment: 'interestRateModel', values?: undefined): string;
   encodeFunctionData(functionFragment: 'isAuToken', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'liquidateBorrow', values: [string, BigNumberish, string]): string;
+  encodeFunctionData(functionFragment: 'mint', values: [BigNumberish]): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
   encodeFunctionData(functionFragment: 'pendingAdmin', values?: undefined): string;
   encodeFunctionData(functionFragment: 'protocolSeizeShareMantissa', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'redeem', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'redeemUnderlying', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'repayBorrow', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'repayBorrowBehalf', values: [string, BigNumberish]): string;
   encodeFunctionData(functionFragment: 'reserveFactorMantissa', values?: undefined): string;
   encodeFunctionData(functionFragment: 'seize', values: [string, string, BigNumberish]): string;
   encodeFunctionData(functionFragment: 'supplyRatePerTimestamp', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'sweepToken', values: [string]): string;
   encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalBorrows', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalBorrowsCurrent', values?: undefined): string;
@@ -151,8 +180,10 @@ export interface AurigamiAuTokenInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
   encodeFunctionData(functionFragment: 'transfer', values: [string, BigNumberish]): string;
   encodeFunctionData(functionFragment: 'transferFrom', values: [string, string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'underlying', values?: undefined): string;
 
   decodeFunctionResult(functionFragment: '_acceptAdmin', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: '_addReserves', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: '_reduceReserves', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: '_setComptroller', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: '_setInterestRateModel', data: BytesLike): Result;
@@ -166,6 +197,7 @@ export interface AurigamiAuTokenInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'approve', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'balanceOfUnderlying', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'borrow', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'borrowBalanceCurrent', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'borrowBalanceStored', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'borrowIndex', data: BytesLike): Result;
@@ -181,12 +213,19 @@ export interface AurigamiAuTokenInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'getSupplyDataOfTwoAccount', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'interestRateModel', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'isAuToken', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'liquidateBorrow', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'mint', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'name', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'pendingAdmin', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'protocolSeizeShareMantissa', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'redeem', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'redeemUnderlying', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'repayBorrow', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'repayBorrowBehalf', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'reserveFactorMantissa', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'seize', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'supplyRatePerTimestamp', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'sweepToken', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'symbol', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'totalBorrows', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'totalBorrowsCurrent', data: BytesLike): Result;
@@ -194,6 +233,7 @@ export interface AurigamiAuTokenInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'totalSupply', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'transfer', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'transferFrom', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'underlying', data: BytesLike): Result;
 
   events: {
     'AccrueInterest(uint256,uint256,uint256,uint256)': EventFragment;
@@ -404,6 +444,11 @@ export interface AurigamiAuToken extends BaseContract {
   functions: {
     _acceptAdmin(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
 
+    _addReserves(
+      addAmount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<ContractTransaction>;
+
     _reduceReserves(
       reduceAmount: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> },
@@ -455,6 +500,11 @@ export interface AurigamiAuToken extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
 
+    borrow(
+      borrowAmount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<ContractTransaction>;
+
     borrowBalanceCurrent(
       account: string,
       overrides?: Overrides & { from?: string | Promise<string> },
@@ -492,11 +542,44 @@ export interface AurigamiAuToken extends BaseContract {
 
     isAuToken(overrides?: CallOverrides): Promise<[boolean]>;
 
+    liquidateBorrow(
+      borrower: string,
+      repayAmount: BigNumberish,
+      auTokenCollateral: string,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<ContractTransaction>;
+
+    mint(
+      mintAmount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<ContractTransaction>;
+
     name(overrides?: CallOverrides): Promise<[string]>;
 
     pendingAdmin(overrides?: CallOverrides): Promise<[string]>;
 
     protocolSeizeShareMantissa(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    redeem(
+      redeemTokens: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<ContractTransaction>;
+
+    redeemUnderlying(
+      redeemAmount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<ContractTransaction>;
+
+    repayBorrow(
+      repayAmount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<ContractTransaction>;
+
+    repayBorrowBehalf(
+      borrower: string,
+      repayAmount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<ContractTransaction>;
 
     reserveFactorMantissa(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -508,6 +591,11 @@ export interface AurigamiAuToken extends BaseContract {
     ): Promise<ContractTransaction>;
 
     supplyRatePerTimestamp(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    sweepToken(
+      token: string,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<ContractTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
 
@@ -531,9 +619,16 @@ export interface AurigamiAuToken extends BaseContract {
       amount: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
+
+    underlying(overrides?: CallOverrides): Promise<[string]>;
   };
 
   _acceptAdmin(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+
+  _addReserves(
+    addAmount: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> },
+  ): Promise<ContractTransaction>;
 
   _reduceReserves(
     reduceAmount: BigNumberish,
@@ -586,6 +681,11 @@ export interface AurigamiAuToken extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
+  borrow(
+    borrowAmount: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> },
+  ): Promise<ContractTransaction>;
+
   borrowBalanceCurrent(
     account: string,
     overrides?: Overrides & { from?: string | Promise<string> },
@@ -623,11 +723,44 @@ export interface AurigamiAuToken extends BaseContract {
 
   isAuToken(overrides?: CallOverrides): Promise<boolean>;
 
+  liquidateBorrow(
+    borrower: string,
+    repayAmount: BigNumberish,
+    auTokenCollateral: string,
+    overrides?: Overrides & { from?: string | Promise<string> },
+  ): Promise<ContractTransaction>;
+
+  mint(
+    mintAmount: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> },
+  ): Promise<ContractTransaction>;
+
   name(overrides?: CallOverrides): Promise<string>;
 
   pendingAdmin(overrides?: CallOverrides): Promise<string>;
 
   protocolSeizeShareMantissa(overrides?: CallOverrides): Promise<BigNumber>;
+
+  redeem(
+    redeemTokens: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> },
+  ): Promise<ContractTransaction>;
+
+  redeemUnderlying(
+    redeemAmount: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> },
+  ): Promise<ContractTransaction>;
+
+  repayBorrow(
+    repayAmount: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> },
+  ): Promise<ContractTransaction>;
+
+  repayBorrowBehalf(
+    borrower: string,
+    repayAmount: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> },
+  ): Promise<ContractTransaction>;
 
   reserveFactorMantissa(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -639,6 +772,8 @@ export interface AurigamiAuToken extends BaseContract {
   ): Promise<ContractTransaction>;
 
   supplyRatePerTimestamp(overrides?: CallOverrides): Promise<BigNumber>;
+
+  sweepToken(token: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
 
@@ -663,8 +798,12 @@ export interface AurigamiAuToken extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
+  underlying(overrides?: CallOverrides): Promise<string>;
+
   callStatic: {
     _acceptAdmin(overrides?: CallOverrides): Promise<void>;
+
+    _addReserves(addAmount: BigNumberish, overrides?: CallOverrides): Promise<void>;
 
     _reduceReserves(reduceAmount: BigNumberish, overrides?: CallOverrides): Promise<void>;
 
@@ -691,6 +830,8 @@ export interface AurigamiAuToken extends BaseContract {
     balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     balanceOfUnderlying(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    borrow(borrowAmount: BigNumberish, overrides?: CallOverrides): Promise<void>;
 
     borrowBalanceCurrent(account: string, overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -726,17 +867,36 @@ export interface AurigamiAuToken extends BaseContract {
 
     isAuToken(overrides?: CallOverrides): Promise<boolean>;
 
+    liquidateBorrow(
+      borrower: string,
+      repayAmount: BigNumberish,
+      auTokenCollateral: string,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    mint(mintAmount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+
     name(overrides?: CallOverrides): Promise<string>;
 
     pendingAdmin(overrides?: CallOverrides): Promise<string>;
 
     protocolSeizeShareMantissa(overrides?: CallOverrides): Promise<BigNumber>;
 
+    redeem(redeemTokens: BigNumberish, overrides?: CallOverrides): Promise<void>;
+
+    redeemUnderlying(redeemAmount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+
+    repayBorrow(repayAmount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+
+    repayBorrowBehalf(borrower: string, repayAmount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+
     reserveFactorMantissa(overrides?: CallOverrides): Promise<BigNumber>;
 
     seize(liquidator: string, borrower: string, seizeTokens: BigNumberish, overrides?: CallOverrides): Promise<void>;
 
     supplyRatePerTimestamp(overrides?: CallOverrides): Promise<BigNumber>;
+
+    sweepToken(token: string, overrides?: CallOverrides): Promise<void>;
 
     symbol(overrides?: CallOverrides): Promise<string>;
 
@@ -751,6 +911,8 @@ export interface AurigamiAuToken extends BaseContract {
     transfer(dst: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
 
     transferFrom(src: string, dst: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+
+    underlying(overrides?: CallOverrides): Promise<string>;
   };
 
   filters: {
@@ -872,6 +1034,11 @@ export interface AurigamiAuToken extends BaseContract {
   estimateGas: {
     _acceptAdmin(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
 
+    _addReserves(
+      addAmount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<BigNumber>;
+
     _reduceReserves(
       reduceAmount: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> },
@@ -920,6 +1087,8 @@ export interface AurigamiAuToken extends BaseContract {
 
     balanceOfUnderlying(owner: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
 
+    borrow(borrowAmount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+
     borrowBalanceCurrent(
       account: string,
       overrides?: Overrides & { from?: string | Promise<string> },
@@ -953,11 +1122,38 @@ export interface AurigamiAuToken extends BaseContract {
 
     isAuToken(overrides?: CallOverrides): Promise<BigNumber>;
 
+    liquidateBorrow(
+      borrower: string,
+      repayAmount: BigNumberish,
+      auTokenCollateral: string,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<BigNumber>;
+
+    mint(mintAmount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
     pendingAdmin(overrides?: CallOverrides): Promise<BigNumber>;
 
     protocolSeizeShareMantissa(overrides?: CallOverrides): Promise<BigNumber>;
+
+    redeem(redeemTokens: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+
+    redeemUnderlying(
+      redeemAmount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<BigNumber>;
+
+    repayBorrow(
+      repayAmount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<BigNumber>;
+
+    repayBorrowBehalf(
+      borrower: string,
+      repayAmount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<BigNumber>;
 
     reserveFactorMantissa(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -969,6 +1165,8 @@ export interface AurigamiAuToken extends BaseContract {
     ): Promise<BigNumber>;
 
     supplyRatePerTimestamp(overrides?: CallOverrides): Promise<BigNumber>;
+
+    sweepToken(token: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -992,10 +1190,17 @@ export interface AurigamiAuToken extends BaseContract {
       amount: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
+
+    underlying(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
     _acceptAdmin(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+
+    _addReserves(
+      addAmount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<PopulatedTransaction>;
 
     _reduceReserves(
       reduceAmount: BigNumberish,
@@ -1048,6 +1253,11 @@ export interface AurigamiAuToken extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
+    borrow(
+      borrowAmount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<PopulatedTransaction>;
+
     borrowBalanceCurrent(
       account: string,
       overrides?: Overrides & { from?: string | Promise<string> },
@@ -1085,11 +1295,44 @@ export interface AurigamiAuToken extends BaseContract {
 
     isAuToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    liquidateBorrow(
+      borrower: string,
+      repayAmount: BigNumberish,
+      auTokenCollateral: string,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<PopulatedTransaction>;
+
+    mint(
+      mintAmount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<PopulatedTransaction>;
+
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     pendingAdmin(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     protocolSeizeShareMantissa(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    redeem(
+      redeemTokens: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<PopulatedTransaction>;
+
+    redeemUnderlying(
+      redeemAmount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<PopulatedTransaction>;
+
+    repayBorrow(
+      repayAmount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<PopulatedTransaction>;
+
+    repayBorrowBehalf(
+      borrower: string,
+      repayAmount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<PopulatedTransaction>;
 
     reserveFactorMantissa(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1101,6 +1344,11 @@ export interface AurigamiAuToken extends BaseContract {
     ): Promise<PopulatedTransaction>;
 
     supplyRatePerTimestamp(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    sweepToken(
+      token: string,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1124,5 +1372,7 @@ export interface AurigamiAuToken extends BaseContract {
       amount: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
+
+    underlying(overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }

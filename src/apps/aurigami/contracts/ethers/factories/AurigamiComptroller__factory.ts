@@ -85,31 +85,6 @@ const _abi = [
     anonymous: false,
     inputs: [
       {
-        indexed: false,
-        internalType: 'contract AuToken',
-        name: 'auToken',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'string',
-        name: 'action',
-        type: 'string',
-      },
-      {
-        indexed: false,
-        internalType: 'bool',
-        name: 'pauseState',
-        type: 'bool',
-      },
-    ],
-    name: 'ActionPaused',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
         indexed: true,
         internalType: 'address',
         name: 'contributor',
