@@ -11,8 +11,6 @@ import { Network } from '~types/network.interface';
 import { IronBankContractFactory } from '../contracts';
 import { IRON_BANK_DEFINITION } from '../iron-bank.definition';
 
-// import { IronBankLendingBalanceHelper } from '../helper/ironBank.lending.balance-helper';
-
 const appId = IRON_BANK_DEFINITION.id;
 const network = Network.ETHEREUM_MAINNET;
 
