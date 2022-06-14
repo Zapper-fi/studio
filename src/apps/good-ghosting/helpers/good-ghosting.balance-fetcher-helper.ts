@@ -99,7 +99,7 @@ export class GoodGhostingBalanceFetcherHelper {
           playerTokens.push(claimableTokenBalance);
         }
 
-        if (incentiveToken) {
+        if (incentiveToken && isWinner) {
           const incentiveTokenBalance = drillBalance(incentiveToken, playerIncentive.toString());
           playerTokens.push(incentiveTokenBalance);
         }
