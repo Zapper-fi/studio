@@ -20,6 +20,7 @@ export class EthereumSynthetixSynthTokenFetcher implements PositionFetcher<AppTo
     return this.tokenHelper.getTokens({
       network: Network.ETHEREUM_MAINNET,
       resolverAddress: '0x823be81bbf96bec0e25ca13170f5aacb5b79ba83',
+      exchangeable: true,
     });
   }
 }

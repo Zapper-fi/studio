@@ -43,11 +43,13 @@ export class EthereumPieDaoEDoughTokenFetcher implements PositionFetcher<AppToke
     const supply = Number(supplyRaw) / 10 ** 18;
     const price = pricePerShare * underlyingToken.price;
     const tokens = [underlyingToken];
+    const liquidity = price * supply;
 
     // Display Props
     const label = symbol;
     const secondaryLabel = buildDollarDisplayItem(price);
     const images = [getTokenImg(underlyingToken.address, network)];
+    const statsItems = [{ label: 'liquidity', value: buildDollarDisplayItem(liquidity) }];
 
     const vaultToken: AppTokenPosition = {
       type: ContractType.APP_TOKEN,
@@ -62,12 +64,13 @@ export class EthereumPieDaoEDoughTokenFetcher implements PositionFetcher<AppToke
       pricePerShare,
       tokens,
 
-      dataProps: {},
+      dataProps: { liquidity },
 
       displayProps: {
         label,
         secondaryLabel,
         images,
+        statsItems,
       },
     };
 

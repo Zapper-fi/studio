@@ -1,8 +1,9 @@
 import { Inject, Injectable } from '@nestjs/common';
+
 import { SingleStakingFarmDataProps } from '~app-toolkit';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { ContractPosition } from '~position/position.interface';
 import { CURVE_DEFINITION } from '~apps/curve';
+import { ContractPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
 import { GoodGhostingContractFactory, GoodghostingAbiV001 } from '../contracts';

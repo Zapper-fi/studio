@@ -67,6 +67,7 @@ export class PolygonDfxStakingContractPositionFetcher implements PositionFetcher
         const label = `Staked ${getLabelFromToken(stakedToken)}`;
         const images = getImagesFromToken(stakedToken);
         const secondaryLabel = buildDollarDisplayItem(stakedToken.price);
+        const statsItems = [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }];
 
         const position: ContractPosition<DfxCurveContractPositionDataProps> = {
           type: ContractType.POSITION,
@@ -82,6 +83,7 @@ export class PolygonDfxStakingContractPositionFetcher implements PositionFetcher
             label,
             secondaryLabel,
             images,
+            statsItems,
           },
         };
         return position;

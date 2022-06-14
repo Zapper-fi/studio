@@ -15,6 +15,7 @@ export const GOOD_GHOSTING_DEFINITION = appDefinition({
       id: 'game',
       type: GroupType.POSITION,
       label: 'Games',
+      groupLabel: 'Farms',
     },
   },
 
@@ -24,7 +25,6 @@ export const GOOD_GHOSTING_DEFINITION = appDefinition({
 
   supportedNetworks: {
     [Network.POLYGON_MAINNET]: [AppAction.VIEW],
-    [Network.CELO_MAINNET]: [AppAction.VIEW],
   },
 
   primaryColor: '#fff',

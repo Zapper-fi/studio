@@ -41,6 +41,7 @@ export interface IAppToolkit {
   // Cache
 
   getFromCache<T = any>(key: string): Promise<T | undefined>;
+  msetToCache<T = any>(entries: [string, T][]): Promise<void>;
 
   // Global Helpers
 
