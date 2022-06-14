@@ -4,6 +4,16 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.73.0](https://github.com/Zapper-fi/studio/compare/v0.72.0...v0.73.0) (2022-06-14)
+
+
+### Features
+
+* **aurigami:** Implement Aurigami ([#640](https://github.com/Zapper-fi/studio/issues/640)) ([ffb3aa6](https://github.com/Zapper-fi/studio/commit/ffb3aa611a3a9ef7c23901170735c578ac6d2cf6))
+* **bastion-protocol:** Add Bastion protocol to Zapper ([#628](https://github.com/Zapper-fi/studio/issues/628)) ([1031765](https://github.com/Zapper-fi/studio/commit/1031765ecfd7ca0808c77989ac7f7b5cb089b9e3))
+* **curve:** Added liquidity data prop and enabled TVL ([#603](https://github.com/Zapper-fi/studio/issues/603)) ([548055f](https://github.com/Zapper-fi/studio/commit/548055fea2910bc05c33997747f4b4a4a7bc5fe5))
+* **sturdy:** Align Sturdy as an Aave V2 fork ([#643](https://github.com/Zapper-fi/studio/issues/643)) ([055fd62](https://github.com/Zapper-fi/studio/commit/055fd6216a5fd0a682a2fa42f01b9d2e63aa51a3))
+
 ## [0.72.0](https://github.com/Zapper-fi/studio/compare/v0.71.0...v0.72.0) (2022-06-14)
 
 
