@@ -8,7 +8,6 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 
 import { ContractType } from '~position/contract.interface';
 import { getAppImg } from '~app-toolkit/helpers/presentation/image.present';
-import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { isClaimable, isSupplied } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 
