@@ -76,11 +76,7 @@ export class GoodGhostingBalanceFetcherHelper {
         const gameLastSegment = lastSegment.sub(1).toString();
         let balance = amountPaid;
         let playerIncentive = BigNumber.from(0);
-        let isWinner = false;
-
-        if (mostRecentSegmentPaid === gameLastSegment) {
-          isWinner = true;
-        }
+        const isWinner = mostRecentSegmentPaid === gameLastSegment;
 
         if (winnerCount && isWinner) {
           const playerInterest = gameInterest.div(winnerCount);
