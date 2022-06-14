@@ -57,7 +57,14 @@ interface EulerMarketsResponse {
   };
 }
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
+type EulerTokenDataProps = {
+  liquidity: number;
+  interestRate: number;
+  borrowAPY: number;
+  supplyAPY: number;
+};
+
+@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
 export class EthereumEulerPTokenTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
@@ -73,7 +80,6 @@ export class EthereumEulerPTokenTokenFetcher implements PositionFetcher<AppToken
     const tokens = await Promise.all(
       data.eulerMarketStore.markets.map(async market => {
         if (market.pTokenAddress === ZERO_ADDRESS) return null;
-
         const pTokenContract = this.eulerContractFactory.eulerPtokenContract({
           address: market.pTokenAddress,
           network,
@@ -90,13 +96,16 @@ export class EthereumEulerPTokenTokenFetcher implements PositionFetcher<AppToken
         const symbol = `P${market.symbol}`;
         const price = underlyingToken.price;
         const pricePerShare = 1;
+        const liquidity = supply * underlyingToken.price;
+        const interestRate = Number(market.interestRate) / 10 ** decimals;
+        const borrowAPY = Number(market.borrowAPY) / 10 ** 25;
+        const supplyAPY = Number(market.supplyAPY) / 10 ** 25;
 
         const dataProps = {
-          name: market.name,
-          liquidity: supply * underlyingToken.price,
-          interestRate: Number(market.interestRate) / 10 ** decimals,
-          borrowAPY: Number(market.borrowAPY) / 10 ** decimals,
-          supplyAPY: Number(market.supplyAPY) / 10 ** decimals,
+          liquidity,
+          interestRate,
+          borrowAPY,
+          supplyAPY,
         };
 
         const statsItems = [
@@ -121,7 +130,7 @@ export class EthereumEulerPTokenTokenFetcher implements PositionFetcher<AppToken
           statsItems,
         };
 
-        const token: AppTokenPosition = {
+        const token: AppTokenPosition<EulerTokenDataProps> = {
           type: ContractType.APP_TOKEN,
           address: market.pTokenAddress,
           appId,

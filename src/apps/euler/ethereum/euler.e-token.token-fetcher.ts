@@ -59,7 +59,14 @@ interface EulerMarketsResponse {
   };
 }
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
+type EulerTokenDataProps = {
+  liquidity: number;
+  interestRate: number;
+  borrowAPY: number;
+  supplyAPY: number;
+};
+
+@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
 export class EthereumEulerETokenTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
@@ -92,16 +99,16 @@ export class EthereumEulerETokenTokenFetcher implements PositionFetcher<AppToken
         const symbol = `E${market.symbol}`;
         const price = underlyingToken.price;
         const pricePerShare = Number(supply) / Number(market.totalBalances);
+        const liquidity = supply * underlyingToken.price;
+        const interestRate = Number(market.interestRate) / 10 ** decimals;
+        const borrowAPY = Number(market.borrowAPY) / 10 ** 25;
+        const supplyAPY = Number(market.supplyAPY) / 10 ** 25;
 
         const dataProps = {
-          name: `Euler E token ${market.name}`,
-          liquidity: supply * underlyingToken.price,
-          underlyingAddress: market.id,
-          interestRate: Number(market.interestRate) / 10 ** decimals,
-          borrowAPY: Number(market.borrowAPY) / 10 ** decimals,
-          supplyAPY: Number(market.supplyAPY) / 10 ** decimals,
-          totalSupply: supply,
-          totalBalances: market.totalBalances,
+          liquidity,
+          interestRate,
+          borrowAPY,
+          supplyAPY,
         };
 
         const statsItems = [
@@ -126,7 +133,7 @@ export class EthereumEulerETokenTokenFetcher implements PositionFetcher<AppToken
           statsItems,
         };
 
-        const token: AppTokenPosition = {
+        const token: AppTokenPosition<EulerTokenDataProps> = {
           type: ContractType.APP_TOKEN,
           address: market.eTokenAddress,
           appId,
