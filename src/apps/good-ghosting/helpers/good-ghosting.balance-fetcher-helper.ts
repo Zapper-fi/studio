@@ -1,7 +1,12 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { BigNumber } from 'ethers';
+import { sumBy } from 'lodash';
 
 import { drillBalance } from '~app-toolkit';
+import { ContractPositionBalance } from '~position/position-balance.interface';
+import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
+import { ContractType } from '~position/contract.interface';
+import { getAppImg } from '~app-toolkit/helpers/presentation/image.present';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { isClaimable, isSupplied } from '~position/position.utils';
 import { Network } from '~types/network.interface';
@@ -69,14 +74,22 @@ export class GoodGhostingBalanceFetcherHelper {
 
         const amountPaid = player.amountPaid;
         const mostRecentSegmentPaid = player.mostRecentSegmentPaid.toString();
-        const contractLastSegment = lastSegment.sub(1).toString();
+        const gameLastSegment = lastSegment.sub(1).toString();
         let balance = amountPaid;
         let playerIncentive = BigNumber.from(0);
+        let isWinner = false;
 
-        if (winnerCount && incentiveAmount && mostRecentSegmentPaid === contractLastSegment) {
+        if (mostRecentSegmentPaid === gameLastSegment) {
+          isWinner = true;
+        }
+
+        if (winnerCount && isWinner) {
           const playerInterest = gameInterest.div(winnerCount);
-          playerIncentive = incentiveAmount.div(winnerCount);
           balance = balance.add(playerInterest);
+        }
+
+        if (winnerCount && incentiveAmount && isWinner) {
+          playerIncentive = incentiveAmount.div(winnerCount);
         }
 
         if (player.withdrawn) {
@@ -87,7 +100,7 @@ export class GoodGhostingBalanceFetcherHelper {
         const stakedTokenBalance = drillBalance(stakedToken, amountPaid.toString());
         const playerTokens = [stakedTokenBalance];
 
-        if (rewardToken) {
+        if (rewardToken && isWinner) {
           const claimableTokenBalance = drillBalance(rewardToken, balance.toString());
           playerTokens.push(claimableTokenBalance);
         }
@@ -97,7 +110,27 @@ export class GoodGhostingBalanceFetcherHelper {
           playerTokens.push(incentiveTokenBalance);
         }
 
-        return playerTokens.filter(v => v.balanceUSD > 0);
+        const tokens = playerTokens.filter(v => v.balanceUSD > 0);
+        const balanceUSD = sumBy(tokens, t => t.balanceUSD);
+        const statsItems = [{ label: 'Strategy', value: gameConfig.strategyProvider }];
+
+        const contractPositionBalance: ContractPositionBalance = {
+          type: ContractType.POSITION,
+          network,
+          address: contractPosition.address,
+          appId,
+          groupId,
+          tokens,
+          balanceUSD,
+          dataProps: {},
+          displayProps: {
+            label: gameConfig.gameName,
+            images: [getAppImg(appId)],
+            statsItems,
+          },
+        };
+
+        return [contractPositionBalance];
       },
     });
   }

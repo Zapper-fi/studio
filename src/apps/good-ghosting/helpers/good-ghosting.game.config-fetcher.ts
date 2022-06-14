@@ -30,8 +30,16 @@ export class GoodGhostingGameConfigFetcherHelper {
       const gameContractAddress = gameContractAddresses[i];
       const rewardTokenAddresses: string[] = [];
 
-      const { depositTokenAddress, rewardTokenAddress, id, contractVersion, incentiveTokenAddress, networkId } =
-        gameConfigs[gameContractAddress];
+      const {
+        depositTokenAddress,
+        rewardTokenAddress,
+        id,
+        contractVersion,
+        incentiveTokenAddress,
+        networkId,
+        strategyProvider,
+        gameName,
+      } = gameConfigs[gameContractAddress];
 
       if (rewardTokenAddress) {
         rewardTokenAddresses.push(rewardTokenAddress);
@@ -46,7 +54,9 @@ export class GoodGhostingGameConfigFetcherHelper {
           address: id,
           stakedTokenAddress: depositTokenAddress,
           rewardTokenAddresses,
+          strategyProvider,
           contractVersion,
+          gameName,
         });
       }
     }
