@@ -2,16 +2,16 @@ import { Inject } from '@nestjs/common';
 
 import { Register } from '~app-toolkit/decorators';
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
+import { CompoundBorrowBalanceHelper } from '~apps/compound/helper/compound.borrow.balance-helper';
+import { CompoundLendingMetaHelper } from '~apps/compound/helper/compound.lending.meta-helper';
+import { CompoundSupplyBalanceHelper } from '~apps/compound/helper/compound.supply.balance-helper';
 import { BalanceFetcher } from '~balance/balance-fetcher.interface';
 import { Network } from '~types/network.interface';
 
-import { IRON_BANK_DEFINITION } from '../iron-bank.definition';
 import { IronBankContractFactory } from '../contracts';
+import { IRON_BANK_DEFINITION } from '../iron-bank.definition';
 
 // import { IronBankLendingBalanceHelper } from '../helper/ironBank.lending.balance-helper';
-import { CompoundLendingMetaHelper } from '~apps/compound/helper/compound.lending.meta-helper';
-import { CompoundSupplyBalanceHelper } from '~apps/compound/helper/compound.supply.balance-helper';
-import { CompoundBorrowBalanceHelper } from '~apps/compound/helper/compound.borrow.balance-helper';
 
 const appId = IRON_BANK_DEFINITION.id;
 const network = Network.ETHEREUM_MAINNET;
@@ -53,7 +53,7 @@ export class EthereumIronBankBalanceFetcher implements BalanceFetcher {
   async getBalances(address: string) {
     const [supplyBalances, borrowBalances] = await Promise.all([
       this.getSupplyBalances(address),
-      this.getBorrowBalances(address)
+      this.getBorrowBalances(address),
     ]);
 
     const meta = this.compoundLendingMetaHelper.getMeta({ balances: [...supplyBalances, ...borrowBalances] });

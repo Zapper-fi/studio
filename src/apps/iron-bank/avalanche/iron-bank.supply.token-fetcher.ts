@@ -1,13 +1,13 @@
 import { Inject } from '@nestjs/common';
 
 import { Register } from '~app-toolkit/decorators';
+import { CompoundSupplyTokenHelper } from '~apps/compound/helper/compound.supply.token-helper';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
-import { IRON_BANK_DEFINITION } from '../iron-bank.definition';
 import { IronBankContractFactory } from '../contracts';
-import { CompoundSupplyTokenHelper } from '~apps/compound/helper/compound.supply.token-helper';
+import { IRON_BANK_DEFINITION } from '../iron-bank.definition';
 
 const appId = IRON_BANK_DEFINITION.id;
 const groupId = IRON_BANK_DEFINITION.groups.supply.id;
@@ -25,7 +25,7 @@ export class AvalancheIronBankSupplyTokenFetcher implements PositionFetcher<AppT
       network,
       appId,
       groupId,
-      comptrollerAddress: '0x2eE80614Ccbc5e28654324a66A396458Fa5cD7Cc',
+      comptrollerAddress: '0x2ee80614ccbc5e28654324a66a396458fa5cd7cc',
       getComptrollerContract: ({ address, network }) =>
         this.ironBankContractFactory.ironBankComptroller({ address, network }),
       getTokenContract: ({ address, network }) => this.ironBankContractFactory.ironBankCToken({ address, network }),
