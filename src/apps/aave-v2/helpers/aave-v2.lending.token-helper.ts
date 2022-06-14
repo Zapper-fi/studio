@@ -40,7 +40,7 @@ export type AaveV2LendingTokenDataProps = ExchangeableAppTokenDataProps & {
   liquidationThreshold: number;
 };
 
-type AaveV2LendingTokenHelperParams<T = AaveProtocolDataProvider> = {
+export type AaveV2LendingTokenHelperParams<T = AaveProtocolDataProvider> = {
   appId: string;
   groupId: string;
   network: Network;
