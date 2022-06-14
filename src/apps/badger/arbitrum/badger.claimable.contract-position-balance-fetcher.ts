@@ -10,7 +10,7 @@ import { BadgerClaimableContractPositionBalanceHelper } from '../helpers/badger.
 
 const appId = BADGER_DEFINITION.id;
 const groupId = BADGER_DEFINITION.groups.claimable.id;
-const network = Network.ETHEREUM_MAINNET;
+const network = Network.ARBITRUM_MAINNET;
 
 @Register.ContractPositionBalanceFetcher({ appId, groupId, network })
 export class ArbitrumBadgerClaimableContractPositionBalanceFetcher
@@ -22,6 +22,6 @@ export class ArbitrumBadgerClaimableContractPositionBalanceFetcher
   ) {}
 
   async getBalances(address: string) {
-    return this.badgerClaimableBalancesHelper.getBalances({ address, network: Network.ARBITRUM_MAINNET });
+    return this.badgerClaimableBalancesHelper.getBalances({ address, network });
   }
 }

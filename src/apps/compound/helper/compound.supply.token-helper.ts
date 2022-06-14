@@ -140,7 +140,8 @@ export class CompoundSupplyTokenHelper {
         const images = [getTokenImg(underlyingToken.address, network)];
         const balanceDisplayMode = BalanceDisplayMode.UNDERLYING;
         const statsItems = [
-          { label: 'APY', value: buildPercentageDisplayItem(supplyApy) },
+          { label: 'Supply APY', value: buildPercentageDisplayItem(supplyApy) },
+          { label: 'Borrow APR', value: buildPercentageDisplayItem(borrowApy) },
           { label: 'Liquidity', value: buildDollarDisplayItem(liquidity) },
         ];
 

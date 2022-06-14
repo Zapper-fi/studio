@@ -23,7 +23,7 @@ export class EthereumConcentratorBalanceFetcher implements BalanceFetcher {
       address,
       appId: CONCENTRATOR_DEFINITION.id,
       groupId: CONCENTRATOR_DEFINITION.groups.acrv.id,
-      network: Network.ETHEREUM_MAINNET,
+      network,
     });
   }
 
@@ -32,7 +32,7 @@ export class EthereumConcentratorBalanceFetcher implements BalanceFetcher {
       address,
       appId: CONCENTRATOR_DEFINITION.id,
       groupId: CONCENTRATOR_DEFINITION.groups.pool.id,
-      network: Network.ETHEREUM_MAINNET,
+      network,
       resolveChefContract: ({ contractAddress, network }) =>
         this.concentratorContractFactory.aladdinConvexVault({ address: contractAddress, network }),
       resolveStakedTokenBalance: this.appToolkit.helpers.masterChefDefaultStakedBalanceStrategy.build({

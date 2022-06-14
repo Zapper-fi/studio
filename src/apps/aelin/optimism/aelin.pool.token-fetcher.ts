@@ -75,6 +75,7 @@ export class OptimismAelinPoolTokenFetcher implements PositionFetcher<AppTokenPo
         const supply = Number(supplyRaw) / 10 ** decimals;
         const pricePerShare = 1; // 1:1 with sUSD token
         const price = underlyingToken.price;
+        const liquidity = supply * price;
         const tokens = [underlyingToken];
         const maybeName = name.replace(/^(aePool-|aeP-)/, '');
         const labelPrefix = ethers.utils.isHexString(maybeName)
@@ -84,8 +85,9 @@ export class OptimismAelinPoolTokenFetcher implements PositionFetcher<AppTokenPo
         const label = `${labelPrefix} Aelin Pool`;
         const secondaryLabel = buildDollarDisplayItem(price);
         const images = [getAppImg(AELIN_DEFINITION.id)];
-        const dataProps = {};
-        const displayProps = { label, secondaryLabel, images };
+        const statsItems = [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }];
+        const dataProps = { liquidity };
+        const displayProps = { label, secondaryLabel, images, statsItems };
 
         const token: AppTokenPosition = {
           type: ContractType.APP_TOKEN,
