@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { BigNumber } from 'ethers';
-import { sumBy } from 'lodash';
+import { sumBy, compact } from 'lodash';
 
 import { drillBalance } from '~app-toolkit';
 import { ContractPositionBalance } from '~position/position-balance.interface';
@@ -133,6 +133,6 @@ export class GoodGhostingBalanceFetcherHelper {
       }),
     );
 
-    return balances;
+    return compact(balances);
   }
 }
