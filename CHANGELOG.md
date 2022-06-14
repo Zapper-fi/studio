@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.72.0](https://github.com/Zapper-fi/studio/compare/v0.71.0...v0.72.0) (2022-06-14)
+
+
+### Features
+
+* **agave:** Added Agave to Zapper ([#635](https://github.com/Zapper-fi/studio/issues/635)) ([f26b3bc](https://github.com/Zapper-fi/studio/commit/f26b3bc88ceece6b9be47a111b2d208bbbeb9631))
+* **honeyswap:** Implemented Honeyswap  ([#636](https://github.com/Zapper-fi/studio/issues/636)) ([ebe3eb9](https://github.com/Zapper-fi/studio/commit/ebe3eb9595b69069cbdef08bb29bca45a2b09431))
+
 ## [0.71.0](https://github.com/Zapper-fi/studio/compare/v0.70.0...v0.71.0) (2022-06-13)
 
 
