@@ -8,7 +8,7 @@ import { AuroraAurigamiBorrowContractPositionFetcher } from './aurora/aurigami.b
 import { AuroraAurigamiSupplyTokenFetcher } from './aurora/aurigami.supply.token-fetcher';
 import { AuroraAurigamiTvlFetcher } from './aurora/aurigami.tvl-fetcher';
 import { AurigamiContractFactory } from './contracts';
-import { AurigamiClaimableBalanceHelper } from './helper/Aurigami.claimable.balance-helper';
+import { AurigamiClaimableBalanceHelper } from './helper/aurigami.claimable.balance-helper';
 
 @Register.AppModule({
   appId: AURIGAMI_DEFINITION.id,

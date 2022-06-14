@@ -6,7 +6,7 @@ import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/displa
 import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
-import { MetaType } from '~position/position.interface';
+import { claimable } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 
 import { AurigamiContractFactory } from '../contracts';
@@ -41,6 +41,10 @@ export class AurigamiClaimableBalanceHelper {
     stakingPoolIds,
     rewardAddress,
   }: AurigamiClaimableBalanceHelperParams) {
+    const rewardToken = await this.appToolkit.getBaseTokenPrice({ network, address: rewardAddress });
+    // Return if we can't fetch the reward token price
+    if (!rewardToken) return [];
+
     const lensContract = this.aurigamiContractFactory.aurigamiLens({ address: lensAddress, network });
 
     // Resolve reward metadata
@@ -52,19 +56,9 @@ export class AurigamiClaimableBalanceHelper {
     );
 
     // Calculate claimable PLY rewards
-    const rewardToken = await this.appToolkit.getBaseTokenPrice({ network, address: rewardAddress });
-    if (!rewardToken) return [];
 
     const rewardBalanceRaw = rewardMetadata.plyAccrured;
-    const rewardTokenWithMetaType = { metaType: MetaType.CLAIMABLE, ...rewardToken };
-    const tokenBalance = drillBalance(rewardTokenWithMetaType, rewardBalanceRaw.toString());
-
-    // Display Props
-    const label = `Claimable ${rewardToken.symbol}`;
-    const secondaryLabel = buildDollarDisplayItem(rewardToken.price);
-    const images = [getTokenImg(rewardToken.address, network)];
-    const statsItems = [];
-    const displayProps = { label, secondaryLabel, images, statsItems };
+    const tokenBalance = drillBalance(claimable(rewardToken), rewardBalanceRaw.toString());
 
     const contractPositionBalance: ContractPositionBalance = {
       type: ContractType.POSITION,
@@ -73,7 +67,11 @@ export class AurigamiClaimableBalanceHelper {
       groupId,
       network,
       dataProps: {},
-      displayProps,
+      displayProps: {
+        label: `Claimable ${rewardToken.symbol}`,
+        secondaryLabel: buildDollarDisplayItem(rewardToken.price),
+        images: [getTokenImg(rewardToken.address, network)],
+      },
       tokens: [tokenBalance],
       balanceUSD: tokenBalance.balanceUSD,
     };

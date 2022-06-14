@@ -12,7 +12,7 @@ import { BalanceFetcher } from '~balance/balance-fetcher.interface';
 import { Network } from '~types/network.interface';
 
 import { AURIGAMI_CONTRACT_ADDRESSES, AURIGAMI_DEFINITION } from '../aurigami.definition';
-import { AurigamiClaimableBalanceHelper } from '../helper/Aurigami.claimable.balance-helper';
+import { AurigamiClaimableBalanceHelper } from '../helper/aurigami.claimable.balance-helper';
 
 const appId = AURIGAMI_DEFINITION.id;
 const network = Network.AURORA_MAINNET;
@@ -63,8 +63,8 @@ export class AuroraAurigamiBalanceFetcher implements BalanceFetcher {
       lensAddress: AURIGAMI_CONTRACT_ADDRESSES[network].lens,
       comptrollerAddress: AURIGAMI_CONTRACT_ADDRESSES[network].comptroller,
       fairlaunchAddress: AURIGAMI_CONTRACT_ADDRESSES[network].fairLaunch,
-      stakingPoolIds: [0],
-      rewardAddress: AURIGAMI_CONTRACT_ADDRESSES.aurora.ply,
+      stakingPoolIds: [0], // Currently aurigami has only 1 staking pool
+      rewardAddress: AURIGAMI_CONTRACT_ADDRESSES[network].ply,
     });
   }
 
