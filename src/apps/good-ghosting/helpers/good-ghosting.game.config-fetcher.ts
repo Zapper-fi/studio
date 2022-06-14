@@ -22,7 +22,11 @@ export class GoodGhostingGameConfigFetcherHelper {
   }
 
   async getGameConfigs(networkIdParam: string) {
-    const farms: (SingleStakingFarmDefinition & { contractVersion: string })[] = [];
+    const farms: (SingleStakingFarmDefinition & {
+      contractVersion: string;
+      strategyProvider: string;
+      gameName: string;
+    })[] = [];
     const gameConfigs = await this.getCachedGameConfigsData();
     const gameContractAddresses = Object.keys(gameConfigs);
 
@@ -30,8 +34,16 @@ export class GoodGhostingGameConfigFetcherHelper {
       const gameContractAddress = gameContractAddresses[i];
       const rewardTokenAddresses: string[] = [];
 
-      const { depositTokenAddress, rewardTokenAddress, id, contractVersion, incentiveTokenAddress, networkId } =
-        gameConfigs[gameContractAddress];
+      const {
+        depositTokenAddress,
+        rewardTokenAddress,
+        id,
+        contractVersion,
+        incentiveTokenAddress,
+        networkId,
+        strategyProvider,
+        gameName,
+      } = gameConfigs[gameContractAddress];
 
       if (rewardTokenAddress) {
         rewardTokenAddresses.push(rewardTokenAddress);
@@ -46,7 +58,9 @@ export class GoodGhostingGameConfigFetcherHelper {
           address: id,
           stakedTokenAddress: depositTokenAddress,
           rewardTokenAddresses,
+          strategyProvider,
           contractVersion,
+          gameName,
         });
       }
     }
