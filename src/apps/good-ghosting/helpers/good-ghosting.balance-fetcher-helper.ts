@@ -4,7 +4,8 @@ import { sumBy } from 'lodash';
 
 import { drillBalance } from '~app-toolkit';
 import { ContractPositionBalance } from '~position/position-balance.interface';
-import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+
 import { ContractType } from '~position/contract.interface';
 import { getAppImg } from '~app-toolkit/helpers/presentation/image.present';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
@@ -43,12 +44,11 @@ export class GoodGhostingBalanceFetcherHelper {
 
   async getGameBalances(network: Network, networkId: string, appId: string, groupId: string, address: string) {
     const gameConfigs = await this.goodGhostingGameConfigFetcherHelper.getGameConfigs(networkId);
-    return this.appToolkit.helpers.contractPositionBalanceHelper.getContractPositionBalances({
-      address,
-      appId,
-      groupId,
-      network,
-      resolveBalances: async ({ address, multicall, contractPosition }) => {
+    const multicall = this.appToolkit.getMulticall(network);
+    const contractPositions = await this.appToolkit.getAppContractPositions({ network, appId, groupIds: [groupId] });
+
+    const balances = await Promise.all(
+      contractPositions.map(async contractPosition => {
         const incentiveTokenIndex = 2;
 
         const gameConfig = gameConfigs.find(v => v.address === contractPosition.address)!;
@@ -130,8 +130,10 @@ export class GoodGhostingBalanceFetcherHelper {
           },
         };
 
-        return [contractPositionBalance];
-      },
-    });
+        return contractPositionBalance;
+      }),
+    );
+
+    return balances;
   }
 }
