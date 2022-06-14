@@ -18,7 +18,7 @@ export class EthereumSturdyTvlFetcher implements TvlFetcher {
   async getTvl() {
     const lendingTokens = await this.appToolkit.getAppTokenPositions({
       appId,
-      groupIds: [STURDY_DEFINITION.groups.lending.id],
+      groupIds: [STURDY_DEFINITION.groups.supply.id],
       network,
     });
     return sumBy(lendingTokens, v => v.supply * v.price);
