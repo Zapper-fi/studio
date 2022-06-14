@@ -69,6 +69,7 @@ export class EthereumEulerETokenTokenFetcher implements PositionFetcher<AppToken
   async getPositions() {
     const endpoint = 'https://api.thegraph.com/subgraphs/name/euler-xyz/euler-mainnet';
     const data = await this.appToolkit.helpers.theGraphHelper.request<EulerMarketsResponse>({ endpoint, query });
+    const multicall = this.appToolkit.getMulticall(network);
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
 
     const tokens = await Promise.all(
@@ -80,58 +81,68 @@ export class EthereumEulerETokenTokenFetcher implements PositionFetcher<AppToken
           network,
         });
 
-        const totalSupply = await eTokenContract.totalSupply();
-        const underlyingToken = baseTokens.find(token => token?.address === market.id.toLowerCase());
+        const [totalSupplyRaw, decimals] = await Promise.all([
+          multicall.wrap(eTokenContract).totalSupply(),
+          multicall.wrap(eTokenContract).decimals(),
+        ]);
+        const underlyingToken = baseTokens.find(token => token.address === market.id.toLowerCase());
+        if (totalSupplyRaw.isZero() || !underlyingToken) return null;
 
-        if (totalSupply.isZero() || !underlyingToken) return null;
-
-        const pricePerShare = Number(totalSupply.toString()) / Number(market.totalBalances);
+        const supply = Number(totalSupplyRaw) / 10 ** decimals;
+        const symbol = `E${market.symbol}`;
+        const price = underlyingToken.price;
+        const pricePerShare = Number(supply) / Number(market.totalBalances);
 
         const dataProps = {
           name: `Euler E token ${market.name}`,
-          liquidity: Number(totalSupply) * underlyingToken.price,
+          liquidity: supply * underlyingToken.price,
           underlyingAddress: market.id,
-          interestRate: Number(market.interestRate) / 10 ** 18,
-          borrowAPY: Number(market.borrowAPY) / 10 ** 18,
-          supplyAPY: Number(market.borrowAPY) / 10 ** 18,
-          totalSupply: totalSupply.toString(),
+          interestRate: Number(market.interestRate) / 10 ** decimals,
+          borrowAPY: Number(market.borrowAPY) / 10 ** decimals,
+          supplyAPY: Number(market.supplyAPY) / 10 ** decimals,
+          totalSupply: supply,
           totalBalances: market.totalBalances,
         };
 
-        return {
-          address: market.eTokenAddress,
-          symbol: `E${market.symbol}`,
-          name: `Euler E token ${market.name}`,
-          type: ContractType.APP_TOKEN as const,
-          supply: Number(market.totalSupply) / 10 ** Number(market.decimals),
-          pricePerShare,
-          price: underlyingToken.price,
-          network,
-          decimals: 18,
-          tokens: [underlyingToken],
-          dataProps,
-          displayProps: {
-            label: `Euler E token ${market.name}`,
-            secondaryLabel: buildDollarDisplayItem(pricePerShare),
-            images: getImagesFromToken(underlyingToken),
-            statsItems: [
-              {
-                label: 'Liquidity',
-                value: buildDollarDisplayItem(dataProps.liquidity),
-              },
-              {
-                label: 'Borrow APY',
-                value: buildDollarDisplayItem(dataProps.borrowAPY),
-              },
-              {
-                label: 'Supply APY',
-                value: buildDollarDisplayItem(dataProps.supplyAPY),
-              },
-            ],
+        const statsItems = [
+          {
+            label: 'Liquidity',
+            value: buildDollarDisplayItem(dataProps.liquidity),
           },
+          {
+            label: 'Borrow APY',
+            value: buildDollarDisplayItem(dataProps.borrowAPY),
+          },
+          {
+            label: 'Supply APY',
+            value: buildDollarDisplayItem(dataProps.supplyAPY),
+          },
+        ];
+
+        const displayProps = {
+          label: `Euler E token ${market.name}`,
+          secondaryLabel: buildDollarDisplayItem(price),
+          images: getImagesFromToken(underlyingToken),
+          statsItems,
+        };
+
+        const token: AppTokenPosition = {
+          type: ContractType.APP_TOKEN,
+          address: market.eTokenAddress,
           appId,
           groupId,
+          network,
+          symbol,
+          decimals,
+          supply,
+          price,
+          pricePerShare,
+          tokens: [underlyingToken],
+          dataProps,
+          displayProps,
         };
+
+        return token;
       }),
     );
 

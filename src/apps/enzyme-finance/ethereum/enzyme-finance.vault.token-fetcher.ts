@@ -33,7 +33,7 @@ const appId = ENZYME_FINANCE_DEFINITION.id;
 const groupId = ENZYME_FINANCE_DEFINITION.groups.vault.id;
 const network = Network.ETHEREUM_MAINNET;
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
 export class EthereumEnzymeFinanceVaultTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(EnzymeFinanceContractFactory) private readonly enzymeFinanceContractFactory: EnzymeFinanceContractFactory,
