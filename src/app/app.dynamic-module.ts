@@ -23,6 +23,11 @@ export const AbstractApp = () =>
     providers: DYNAMIC_PROVIDERS,
   });
 
+export const AbstractAppHelper = () =>
+  createConfigurableDynamicRootModule<Type, AppModuleOptions>(APP_OPTIONS, {
+    providers: DYNAMIC_PROVIDERS,
+  });
+
 export const DynamicApps = ({
   apps,
   imports,
