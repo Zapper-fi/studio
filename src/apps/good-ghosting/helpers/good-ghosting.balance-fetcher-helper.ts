@@ -1,19 +1,20 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { drillBalance } from '~app-toolkit';
-import { isClaimable, isSupplied } from '~position/position.utils';
 import { sumBy } from 'lodash';
 
-import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
-import { BalanceFetcher } from '~balance/balance-fetcher.interface';
+import { drillBalance } from '~app-toolkit';
+import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
+import { PositionBalance } from '~position/position-balance.interface';
+import { ContractType } from '~position/contract.interface';
+import { getAppImg } from '~app-toolkit/helpers/presentation/image.present';
+import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
+import { isClaimable, isSupplied } from '~position/position.utils';
 import { Network } from '~types/network.interface';
-import { GoodGhostingGameConfigFetcherHelper } from '../helpers/good-ghosting.game.config-fetcher';
-
 import { GoodGhostingContractFactory } from '../contracts';
+import { GoodGhostingGameConfigFetcherHelper } from '../helpers/good-ghosting.game.config-fetcher';
 import { ABIVersion, ZERO_BN, BN } from './constants';
 
 @Injectable()
-export class GoodGhostingBalanceFetcherHelper implements BalanceFetcher {
+export class GoodGhostingBalanceFetcherHelper {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(GoodGhostingContractFactory) private readonly goodGhostingContractFactory: GoodGhostingContractFactory,
@@ -75,11 +76,16 @@ export class GoodGhostingBalanceFetcherHelper implements BalanceFetcher {
 
             const amountPaid = player.amountPaid;
             const mostRecentSegmentPaid = player.mostRecentSegmentPaid.toString();
-            const contractLastSegment = lastSegment.sub(1).toString();
+            const gameLastSegment = lastSegment.sub(1).toString();
             let balance = amountPaid;
             let playerIncentive = ZERO_BN;
+            let isWinner = false;
 
-            if (winnerCount && mostRecentSegmentPaid === contractLastSegment) {
+            if (mostRecentSegmentPaid === gameLastSegment) {
+              isWinner = true;
+            }
+
+            if (winnerCount && isWinner) {
               const playerInterest = gameInterest.div(winnerCount);
               playerIncentive = incentiveAmount.div(winnerCount);
 
@@ -92,9 +98,11 @@ export class GoodGhostingBalanceFetcherHelper implements BalanceFetcher {
 
             const stakedTokenBalance = drillBalance(stakedToken, amountPaid.toString());
             const playerTokens = [stakedTokenBalance];
+            let secondaryLabel = '';
 
-            if (rewardToken) {
+            if (rewardToken && isWinner) {
               const claimableTokenBalance = drillBalance(rewardToken, balance.toString());
+              secondaryLabel = buildDollarDisplayItem(rewardToken.price);
               playerTokens.push(claimableTokenBalance);
             }
 
@@ -106,7 +114,26 @@ export class GoodGhostingBalanceFetcherHelper implements BalanceFetcher {
             const tokens = playerTokens.filter(v => v.balanceUSD > 0);
             const balanceUSD = sumBy(tokens, t => t.balanceUSD);
 
-            return { ...contractPosition, tokens, balanceUSD };
+            const statsItems = [];
+
+            const contractPositionBalance: PositionBalance = {
+              type: ContractType.POSITION,
+              network,
+              address: contractPosition.address,
+              appId,
+              groupId,
+              tokens,
+              balanceUSD,
+              dataProps: {},
+              displayProps: {
+                label: gameConfig.gameName,
+                secondaryLabel,
+                images: [getAppImg(appId)],
+                statsItems,
+              },
+            };
+
+            return contractPositionBalance;
           }),
         );
 

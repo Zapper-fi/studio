@@ -13,11 +13,11 @@ import { GoodGhostingGameContractPositionFetcherHelper } from '../helpers/good-g
 
 const appId = GOOD_GHOSTING_DEFINITION.id;
 const groupId = GOOD_GHOSTING_DEFINITION.groups.game.id;
-const network = Network.POLYGON_MAINNET;
-const networkId = NetworkId.PolygonMainnet;
+const network = Network.CELO_MAINNET;
+const networkId = NetworkId.CeloMainnet;
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
-export class PolygonGoodGhostingGameContractPositionFetcher implements PositionFetcher<ContractPosition> {
+export class CeloGoodGhostingGameContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(GoodGhostingContractFactory) private readonly goodGhostingContractFactory: GoodGhostingContractFactory,

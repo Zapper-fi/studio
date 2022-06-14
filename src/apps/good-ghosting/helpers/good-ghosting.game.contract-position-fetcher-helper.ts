@@ -1,10 +1,9 @@
 import { Inject, Injectable } from '@nestjs/common';
-
-import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { Network } from '~types/network.interface';
-import { ContractPosition } from '~position/position.interface';
 import { SingleStakingFarmDataProps } from '~app-toolkit';
+import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
+import { ContractPosition } from '~position/position.interface';
 import { CURVE_DEFINITION } from '~apps/curve';
+import { Network } from '~types/network.interface';
 
 import { GoodGhostingContractFactory, GoodghostingAbiV001 } from '../contracts';
 import { GoodGhostingGameConfigFetcherHelper } from '../helpers/good-ghosting.game.config-fetcher';

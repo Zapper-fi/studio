@@ -9,13 +9,13 @@ import { GOOD_GHOSTING_DEFINITION } from '../good-ghosting.definition';
 import { NetworkId } from '../helpers/constants';
 import { GoodGhostingBalanceFetcherHelper } from '../helpers/good-ghosting.balance-fetcher-helper';
 
-const network = Network.POLYGON_MAINNET;
-const networkId = NetworkId.PolygonMainnet;
+const network = Network.CELO_MAINNET;
+const networkId = NetworkId.CeloMainnet;
 const appId = GOOD_GHOSTING_DEFINITION.id;
 const groupId = GOOD_GHOSTING_DEFINITION.groups.game.id;
 
 @Register.BalanceFetcher(GOOD_GHOSTING_DEFINITION.id, network)
-export class PolygonGoodGhostingBalanceFetcher implements BalanceFetcher {
+export class CeloGoodGhostingBalanceFetcher implements BalanceFetcher {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(GoodGhostingBalanceFetcherHelper) private readonly helper: GoodGhostingBalanceFetcherHelper,

@@ -1,6 +1,7 @@
-import { Inject, Injectable } from '@nestjs/common';
-import { GamesResponse } from './constants';
+import { Injectable } from '@nestjs/common';
+
 import axios from 'axios';
+import { GamesResponse } from './constants';
 
 @Injectable()
 export class GoodGhostingGameConfigFetcherHelper {
@@ -17,8 +18,15 @@ export class GoodGhostingGameConfigFetcherHelper {
       const gameContractAddress = gameContractAddresses[i];
       const rewardTokenAddresses = [];
 
-      const { depositTokenAddress, rewardTokenAddress, id, contractVersion, incentiveTokenAddress, networkId } =
-        gameConfigs[gameContractAddress];
+      const {
+        depositTokenAddress,
+        rewardTokenAddress,
+        id,
+        contractVersion,
+        incentiveTokenAddress,
+        networkId,
+        gameName,
+      } = gameConfigs[gameContractAddress];
 
       if (rewardTokenAddress) {
         rewardTokenAddresses.push(rewardTokenAddress);
@@ -34,6 +42,7 @@ export class GoodGhostingGameConfigFetcherHelper {
           stakedTokenAddress: depositTokenAddress,
           rewardTokenAddresses,
           contractVersion,
+          gameName,
         });
       }
     }
