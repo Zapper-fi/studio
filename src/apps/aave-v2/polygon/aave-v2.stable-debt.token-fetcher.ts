@@ -13,7 +13,7 @@ const appId = AAVE_V2_DEFINITION.id;
 const groupId = AAVE_V2_DEFINITION.groups.stableDebt.id;
 const network = Network.POLYGON_MAINNET;
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
 export class PolygonAaveV2StableDebtTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(@Inject(AaveV2LendingTokenHelper) private readonly aaveV2LendingTokenHelper: AaveV2LendingTokenHelper) {}
 
@@ -22,6 +22,7 @@ export class PolygonAaveV2StableDebtTokenFetcher implements PositionFetcher<AppT
       appId,
       groupId,
       network,
+      isDebt: true,
       protocolDataProviderAddress: '0x7551b5d2763519d4e37e8b81929d336de671d46d',
       resolveTokenAddress: ({ reserveTokenAddressesData }) => reserveTokenAddressesData.stableDebtTokenAddress,
       resolveLendingRate: ({ reserveData }) => reserveData.stableBorrowRate,

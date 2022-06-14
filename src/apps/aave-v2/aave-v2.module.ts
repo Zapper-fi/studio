@@ -12,7 +12,6 @@ import { EthereumAaveV2BalanceFetcher } from './ethereum/aave-v2.balance-fetcher
 import { EthereumAaveV2ClaimableContractPositionFetcher } from './ethereum/aave-v2.claimable.contract-position-fetcher';
 import { EthereumAaveV2StableDebtTokenFetcher } from './ethereum/aave-v2.stable-debt.token-fetcher';
 import { EthereumAaveV2SupplyTokenFetcher } from './ethereum/aave-v2.supply.token-fetcher';
-import { EthereumAaveV2TvlFetcher } from './ethereum/aave-v2.tvl-fetcher';
 import { EthereumAaveV2VariableDebtTokenFetcher } from './ethereum/aave-v2.variable-debt.token-fetcher';
 import { AaveV2ClaimableBalanceHelper } from './helpers/aave-v2.claimable.balance-helper';
 import { AaveV2ClaimableContractPositionHelper } from './helpers/aave-v2.claimable.contract-position-helper';
@@ -44,7 +43,6 @@ import { PolygonAaveV2VariableDebtTokenFetcher } from './polygon/aave-v2.variabl
     EthereumAaveV2ClaimableContractPositionFetcher,
     EthereumAaveV2StableDebtTokenFetcher,
     EthereumAaveV2SupplyTokenFetcher,
-    EthereumAaveV2TvlFetcher,
     EthereumAaveV2VariableDebtTokenFetcher,
     PolygonAaveV2BalanceFetcher,
     PolygonAaveV2ClaimableContractPositionFetcher,
