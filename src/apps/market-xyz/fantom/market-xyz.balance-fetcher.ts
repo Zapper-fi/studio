@@ -28,7 +28,7 @@ export class FantomMarketXyzBalanceFetcher implements BalanceFetcher {
       supplyGroupId: MARKET_XYZ_DEFINITION.groups.supply.id,
       borrowGroupId: MARKET_XYZ_DEFINITION.groups.borrow.id,
       network: Network.FANTOM_OPERA_MAINNET,
-      fuseLensAddress: '0x5aB6215AB8344C28B899efdE93BEe47B124200Fb',
+      fuseLensAddress: '0x5ab6215ab8344c28b899efde93bee47b124200fb',
       getTokenContract: ({ address, network }) => this.compoundContractFactory.compoundCToken({ address, network }),
       getBalanceRaw: ({ contract, address, multicall }) => multicall.wrap(contract).balanceOf(address),
       getBorrowBalanceRaw: ({ contract, address, multicall }) =>
