@@ -22,7 +22,11 @@ export class GoodGhostingGameConfigFetcherHelper {
   }
 
   async getGameConfigs(networkIdParam: string) {
-    const farms: (SingleStakingFarmDefinition & { contractVersion: string })[] = [];
+    const farms: (SingleStakingFarmDefinition & {
+      contractVersion: string;
+      strategyProvider: string;
+      gameName: string;
+    })[] = [];
     const gameConfigs = await this.getCachedGameConfigsData();
     const gameContractAddresses = Object.keys(gameConfigs);
 
