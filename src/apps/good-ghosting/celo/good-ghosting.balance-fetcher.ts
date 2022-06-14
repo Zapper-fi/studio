@@ -2,7 +2,8 @@ import { Inject } from '@nestjs/common';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
-import { BalanceFetcher } from '~balance/balance-fetcher.interface';
+import { PositionBalanceFetcher } from '~position/position-balance-fetcher.interface';
+import { ContractPositionBalance } from '~position/position-balance.interface';
 import { Network } from '~types/network.interface';
 
 import { GOOD_GHOSTING_DEFINITION } from '../good-ghosting.definition';
@@ -15,7 +16,7 @@ const appId = GOOD_GHOSTING_DEFINITION.id;
 const groupId = GOOD_GHOSTING_DEFINITION.groups.game.id;
 
 @Register.BalanceFetcher(GOOD_GHOSTING_DEFINITION.id, network)
-export class CeloGoodGhostingBalanceFetcher implements BalanceFetcher {
+export class CeloGoodGhostingBalanceFetcher implements PositionBalanceFetcher<ContractPositionBalance> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(GoodGhostingBalanceFetcherHelper) private readonly helper: GoodGhostingBalanceFetcherHelper,
