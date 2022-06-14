@@ -18,7 +18,7 @@ export const POOL_TOGETHER_DEFINITION = appDefinition({
   groups: {
     v3: { id: 'v3', type: GroupType.TOKEN, label: 'Prize Pools', groupLabel: 'Pools' },
     v4: { id: 'v4', type: GroupType.TOKEN, label: 'PoolTogether', groupLabel: 'Pools' },
-    claimable: { id: 'claimable', type: GroupType.TOKEN, label: 'Rewards' },
+    claimable: { id: 'claimable', type: GroupType.TOKEN, label: 'Rewards', isHiddenFromExplore: true },
     v3Pod: { id: 'v3-pod', type: GroupType.POSITION, label: 'Prize Pods' },
   },
   tags: [AppTag.LOTTERY],

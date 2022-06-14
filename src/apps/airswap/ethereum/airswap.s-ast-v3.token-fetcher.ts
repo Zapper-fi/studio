@@ -24,7 +24,7 @@ export class EthereumAirswapSAstV3TokenFetcher implements PositionFetcher<AppTok
   ) {}
 
   async getPositions() {
-    const address = '0x6d88B09805b90dad911E5C5A512eEDd984D6860B';
+    const address = '0x6d88b09805b90dad911e5c5a512eedd984d6860b';
     const multicall = this.appToolkit.getMulticall(network);
     const contract = this.airswapContractFactory.stakingV3({ address, network });
 
@@ -36,13 +36,11 @@ export class EthereumAirswapSAstV3TokenFetcher implements PositionFetcher<AppTok
 
     const baseTokenDependencies = await this.appToolkit.getBaseTokenPrices(network);
     const underlyingToken = baseTokenDependencies.find(v => v.symbol === 'AST');
-
-    if (!underlyingToken) {
-      return [];
-    }
+    if (!underlyingToken) return [];
 
     const supply = Number(supplyRaw) / 10 ** decimals;
-    const liquidity = underlyingToken.price * supply;
+    const price = underlyingToken.price;
+    const liquidity = price * supply;
 
     const token: AppTokenPosition = {
       type: ContractType.APP_TOKEN,
@@ -54,7 +52,7 @@ export class EthereumAirswapSAstV3TokenFetcher implements PositionFetcher<AppTok
       decimals,
       supply,
       tokens: [underlyingToken],
-      price: underlyingToken.price,
+      price,
       pricePerShare: 1,
       dataProps: {
         liquidity,

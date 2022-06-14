@@ -19,7 +19,7 @@ const appId = ACROSS_DEFINITION.id;
 const groupId = ACROSS_DEFINITION.groups.pool.id;
 const network = Network.ETHEREUM_MAINNET;
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
 export class EthereumAcrossPoolTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(AcrossContractFactory) private readonly acrossContractFactory: AcrossContractFactory,
@@ -47,7 +47,7 @@ export class EthereumAcrossPoolTokenFetcher implements PositionFetcher<AppTokenP
         if (!underlyingToken) return null;
 
         const supply = Number(supplyRaw) / 10 ** decimals;
-        const pricePerShare = Number(pricePerShareRaw) / 10 ** 18;
+        const pricePerShare = Number(pricePerShareRaw) / 10 ** underlyingToken.decimals;
         const price = underlyingToken.price * pricePerShare;
         const tokens = [underlyingToken];
         const secondaryLabel = buildDollarDisplayItem(price);
