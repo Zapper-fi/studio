@@ -9,11 +9,11 @@ import { CurveVotingEscrow, CurveVotingEscrowReward } from '../contracts';
 import { CURVE_DEFINITION } from '../curve.definition';
 import { CurveVotingEscrowContractPositionHelper } from '../helpers/curve.voting-escrow.contract-position-helper';
 
-@Register.ContractPositionFetcher({
-  appId: CURVE_DEFINITION.id,
-  groupId: CURVE_DEFINITION.groups.votingEscrow.id,
-  network: Network.ETHEREUM_MAINNET,
-})
+const appId = CURVE_DEFINITION.id;
+const groupId = CURVE_DEFINITION.groups.votingEscrow.id;
+const network = Network.ETHEREUM_MAINNET;
+
+@Register.ContractPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
 export class EthereumCurveVotingEscrowContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(CurveVotingEscrowContractPositionHelper)
@@ -21,7 +21,6 @@ export class EthereumCurveVotingEscrowContractPositionFetcher implements Positio
   ) {}
 
   async getPositions() {
-    const network = Network.ETHEREUM_MAINNET;
     return this.curveVotingEscrowContractPositionHelper.getContractPositions<
       CurveVotingEscrow,
       CurveVotingEscrowReward

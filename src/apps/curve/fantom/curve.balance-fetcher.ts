@@ -10,6 +10,8 @@ import { Network } from '~types/network.interface';
 import { CurveChildLiquidityGauge, CurveContractFactory, CurveRewardsOnlyGauge } from '../contracts';
 import { CURVE_DEFINITION } from '../curve.definition';
 
+const network = Network.FANTOM_OPERA_MAINNET;
+
 @Register.BalanceFetcher(CURVE_DEFINITION.id, Network.FANTOM_OPERA_MAINNET)
 export class FantomCurveBalanceFetcher implements BalanceFetcher {
   constructor(
@@ -19,7 +21,7 @@ export class FantomCurveBalanceFetcher implements BalanceFetcher {
 
   private async getPoolTokenBalances(address: string) {
     return this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
-      network: Network.FANTOM_OPERA_MAINNET,
+      network,
       appId: CURVE_DEFINITION.id,
       groupId: CURVE_DEFINITION.groups.pool.id,
       address,
@@ -31,7 +33,7 @@ export class FantomCurveBalanceFetcher implements BalanceFetcher {
       address,
       appId: CURVE_DEFINITION.id,
       groupId: CURVE_DEFINITION.groups.farm.id,
-      network: Network.FANTOM_OPERA_MAINNET,
+      network,
       farmFilter: v => v.dataProps.implementation === 'rewards-only-gauge',
       resolveContract: ({ address, network }) => this.curveContractFactory.curveRewardsOnlyGauge({ address, network }),
       resolveStakedTokenBalance: ({ contract, address, multicall }) => multicall.wrap(contract).balanceOf(address),
@@ -48,7 +50,7 @@ export class FantomCurveBalanceFetcher implements BalanceFetcher {
       address,
       appId: CURVE_DEFINITION.id,
       groupId: CURVE_DEFINITION.groups.farm.id,
-      network: Network.FANTOM_OPERA_MAINNET,
+      network,
       farmFilter: v => v.dataProps.implementation === 'child-liquidity-gauge',
       resolveContract: ({ address, network }) =>
         this.curveContractFactory.curveChildLiquidityGauge({ address, network }),
