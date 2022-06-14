@@ -72,6 +72,31 @@ export type AppLinks = {
   medium?: string;
 };
 
+type ExploreViewConfig = {
+  tabs: (
+    | { viewType: 'list'; label: string; groupIds: string[] }
+    | {
+        viewType: 'split';
+        label: string;
+        views: (
+          | {
+              viewType: 'list';
+              label: string;
+              groupIds: string[];
+            }
+          | {
+              viewType: 'split';
+              label: string;
+              views: {
+                label: string;
+                groupIds: string[];
+              }[];
+            }
+        )[];
+      }
+  )[];
+};
+
 export type AppDefinitionObject = {
   id: string;
   name: string;
@@ -88,4 +113,5 @@ export type AppDefinitionObject = {
     address: string;
     network: Network;
   };
+  exploreViewConfig?: ExploreViewConfig;
 };

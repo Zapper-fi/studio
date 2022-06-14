@@ -14,29 +14,99 @@ export const AAVE_V2_DEFINITION = appDefinition({
       id: 'supply',
       type: GroupType.TOKEN,
       label: 'Lending',
-      groupLabel: 'Supply',
     },
 
     stableDebt: {
       id: 'stable-debt',
       type: GroupType.TOKEN,
       label: 'Lending',
-      groupLabel: 'Borrow',
     },
 
     variableDebt: {
       id: 'variable-debt',
       type: GroupType.TOKEN,
       label: 'Lending',
-      groupLabel: 'Borrow',
     },
 
     claimable: {
       id: 'claimable',
       type: GroupType.TOKEN,
       label: 'Reward',
-      isHiddenFromExplore: true,
     },
+  },
+
+  // First case
+  exploreViewConfig: {
+    tabs: [
+      {
+        label: 'Lending',
+        viewType: 'list',
+        groupIds: ['supply'],
+      },
+      {
+        label: 'Borrow',
+        viewType: 'list',
+        groupIds: ['variable-debt', 'stable-debt'],
+      },
+    ],
+  },
+
+  // Second case
+  exploreViewConfig: {
+    tabs: [
+      {
+        label: 'Lending',
+        viewType: 'list',
+        groupIds: ['supply'],
+      },
+      {
+        label: 'Borrow',
+        viewType: 'split',
+        views: [
+          {
+            viewType: 'list',
+            label: 'Stable',
+            groupIds: ['stable-debt'],
+          },
+          {
+            viewType: 'list',
+            label: 'Variable',
+            groupIds: ['variable-debt'],
+          },
+        ],
+      },
+    ],
+  },
+
+  // Third case
+  exploreViewConfig: {
+    tabs: [
+      {
+        label: 'Lending',
+        viewType: 'split',
+        views: [
+          {
+            viewType: 'list',
+            label: 'Supply',
+            groupIds: ['supply'],
+          },
+          {
+            viewType: 'split',
+            label: 'Borrow',
+            views: [
+              {
+                label: 'Stable',
+                groupIds: ['stable-debt'],
+              },
+              {
+                label: 'Variable',
+                groupIds: ['variable-debt'],
+              },
+            ],
+          },
+        ],
+      },
+    ],
   },
 
   supportedNetworks: {
