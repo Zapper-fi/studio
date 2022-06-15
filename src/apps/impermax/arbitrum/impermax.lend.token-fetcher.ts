@@ -11,7 +11,8 @@ import { IMPERMAX_DEFINITION } from '../impermax.definition';
 const appId = IMPERMAX_DEFINITION.id;
 const groupId = IMPERMAX_DEFINITION.groups.lend.id;
 const network = Network.ARBITRUM_MAINNET;
-export const address = '0x8C3736e2FE63cc2cD89Ee228D9dBcAb6CE5B767B'.toLowerCase();
+
+const address = '0x8c3736e2fe63cc2cd89ee228d9dbcab6ce5b767b';
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
 export class ArbitrumImpermaxLendTokenFetcher implements PositionFetcher<AppTokenPosition> {

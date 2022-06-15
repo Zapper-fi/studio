@@ -75,7 +75,7 @@ export class BadgerVaultTokenHelper {
         }
 
         // Display Props
-        const label = `${getLabelFromToken(underlyingToken)} Sett Vault`;
+        const label = `${getLabelFromToken(underlyingToken)}`;
         const secondaryLabel = buildDollarDisplayItem(price);
         const images = getImagesFromToken(underlyingToken);
 

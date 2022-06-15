@@ -14,6 +14,7 @@ import { CurveContractFactory as ContractFactory } from '../contracts';
 
 export type CurveVotingEscrowContractPositionDataProps = {
   rewardAddress?: string;
+  liquidity: number;
 };
 
 type CurveVotingEscrowContractPositionHelperParams<T, V = null> = {
@@ -60,8 +61,13 @@ export class CurveVotingEscrowContractPositionHelper {
     const escrowedToken = allTokens.find(v => v.address === escrowedTokenAddress);
     if (!escrowedToken) return [];
 
+    const escrowedTokenContract = this.contractFactory.erc20({ address: escrowedToken.address, network });
+    const balanceOfRaw = await multicall.wrap(escrowedTokenContract).balanceOf(votingEscrowAddress);
+    const balanceOf = Number(balanceOfRaw) / 10 ** escrowedToken.decimals;
+    const liquidity = balanceOf * escrowedToken.price;
+
     const tokens = [supplied(escrowedToken)];
-    const dataProps: CurveVotingEscrowContractPositionDataProps = {};
+    const dataProps: CurveVotingEscrowContractPositionDataProps = { liquidity };
 
     // Resolve reward token if applicable
     if (resolveRewardContract && resolveRewardTokenAddress) {
@@ -77,7 +83,12 @@ export class CurveVotingEscrowContractPositionHelper {
     const label = `Voting Escrow ${getLabelFromToken(escrowedToken)}`;
     const secondaryLabel = buildDollarDisplayItem(escrowedToken.price);
     const images = getImagesFromToken(escrowedToken);
-    const statsItems = [];
+    const statsItems = [
+      {
+        label: 'Liquidity',
+        value: buildDollarDisplayItem(liquidity),
+      },
+    ];
     const displayProps = { label, secondaryLabel, images, statsItems };
 
     const contractPosition: ContractPosition<CurveVotingEscrowContractPositionDataProps> = {
