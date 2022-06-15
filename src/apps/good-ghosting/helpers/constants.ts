@@ -1,5 +1,3 @@
-import BigNumber from 'bignumber.js';
-
 export enum ABIVersion {
   v001 = '0.0.1',
   v002 = '0.0.2',
@@ -45,6 +43,3 @@ export type GamesResponse = Record<
     performanceFee: string;
   }
 >;
-
-const ZERO_BN = new BigNumber(0);
-export { BigNumber as BN, ZERO_BN };
