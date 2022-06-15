@@ -305,6 +305,89 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "CronosLabsDev",
+      "name": "CronosLabsDev",
+      "avatar_url": "https://avatars.githubusercontent.com/u/106642922?v=4",
+      "profile": "https://github.com/CronosLabsDev",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "BastionProvider",
+      "name": "BastionProvider",
+      "avatar_url": "https://avatars.githubusercontent.com/u/100055847?v=4",
+      "profile": "https://github.com/BastionProvider",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "desposto",
+      "name": "David Esposto",
+      "avatar_url": "https://avatars.githubusercontent.com/u/62306651?v=4",
+      "profile": "https://github.com/desposto",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "westonnelson",
+      "name": "Weston Nelson",
+      "avatar_url": "https://avatars.githubusercontent.com/u/29180454?v=4",
+      "profile": "https://github.com/westonnelson",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "coslendteam",
+      "name": "coslendteam",
+      "avatar_url": "https://avatars.githubusercontent.com/u/99856080?v=4",
+      "profile": "https://github.com/coslendteam",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "liz-cs",
+      "name": "liz",
+      "avatar_url": "https://avatars.githubusercontent.com/u/90375135?v=4",
+      "profile": "https://github.com/liz-cs",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "oo-00",
+      "name": "oo-00",
+      "avatar_url": "https://avatars.githubusercontent.com/u/29607330?v=4",
+      "profile": "https://github.com/oo-00",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "takao-aurigami",
+      "name": "takao-aurigami",
+      "avatar_url": "https://avatars.githubusercontent.com/u/102155128?v=4",
+      "profile": "https://github.com/takao-aurigami",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "sebaudet26",
+      "name": "Sébastien Audet",
+      "avatar_url": "https://avatars.githubusercontent.com/u/6855274?v=4",
+      "profile": "https://github.com/sebaudet26",
+      "contributions": [
+        "code",
+        "question",
+        "maintenance"
+      ]
     }
   ],
   "contributorsPerLine": 7

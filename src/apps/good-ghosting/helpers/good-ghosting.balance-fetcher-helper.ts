@@ -1,8 +1,13 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { BigNumber } from 'ethers';
+import { sumBy, compact } from 'lodash';
 
 import { drillBalance } from '~app-toolkit';
-import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
+import { ContractPositionBalance } from '~position/position-balance.interface';
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+
+import { ContractType } from '~position/contract.interface';
+import { getAppImg } from '~app-toolkit/helpers/presentation/image.present';
 import { isClaimable, isSupplied } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 
@@ -38,12 +43,11 @@ export class GoodGhostingBalanceFetcherHelper {
 
   async getGameBalances(network: Network, networkId: string, appId: string, groupId: string, address: string) {
     const gameConfigs = await this.goodGhostingGameConfigFetcherHelper.getGameConfigs(networkId);
-    return this.appToolkit.helpers.contractPositionBalanceHelper.getContractPositionBalances({
-      address,
-      appId,
-      groupId,
-      network,
-      resolveBalances: async ({ address, multicall, contractPosition }) => {
+    const multicall = this.appToolkit.getMulticall(network);
+    const contractPositions = await this.appToolkit.getAppContractPositions({ network, appId, groupIds: [groupId] });
+
+    const balances = await Promise.all(
+      contractPositions.map(async contractPosition => {
         const incentiveTokenIndex = 2;
 
         const gameConfig = gameConfigs.find(v => v.address === contractPosition.address)!;
@@ -69,36 +73,61 @@ export class GoodGhostingBalanceFetcherHelper {
 
         const amountPaid = player.amountPaid;
         const mostRecentSegmentPaid = player.mostRecentSegmentPaid.toString();
-        const contractLastSegment = lastSegment.sub(1).toString();
+        const gameLastSegment = lastSegment.sub(1).toString();
         let balance = amountPaid;
         let playerIncentive = BigNumber.from(0);
+        const isWinner = mostRecentSegmentPaid === gameLastSegment;
 
-        if (winnerCount && incentiveAmount && mostRecentSegmentPaid === contractLastSegment) {
+        if (winnerCount && isWinner) {
           const playerInterest = gameInterest.div(winnerCount);
-          playerIncentive = incentiveAmount.div(winnerCount);
           balance = balance.add(playerInterest);
+        }
+
+        if (winnerCount && incentiveAmount && isWinner) {
+          playerIncentive = incentiveAmount.div(winnerCount);
         }
 
         if (player.withdrawn) {
           balance = BigNumber.from(0);
-          return [];
         }
 
         const stakedTokenBalance = drillBalance(stakedToken, amountPaid.toString());
         const playerTokens = [stakedTokenBalance];
 
-        if (rewardToken) {
+        if (rewardToken && isWinner) {
           const claimableTokenBalance = drillBalance(rewardToken, balance.toString());
           playerTokens.push(claimableTokenBalance);
         }
 
-        if (incentiveToken) {
+        if (incentiveToken && isWinner) {
           const incentiveTokenBalance = drillBalance(incentiveToken, playerIncentive.toString());
           playerTokens.push(incentiveTokenBalance);
         }
 
-        return playerTokens.filter(v => v.balanceUSD > 0);
-      },
-    });
+        const tokens = playerTokens.filter(v => v.balanceUSD > 0);
+        const balanceUSD = sumBy(tokens, t => t.balanceUSD);
+        const statsItems = [{ label: 'Strategy', value: gameConfig.strategyProvider }];
+
+        const contractPositionBalance: ContractPositionBalance = {
+          type: ContractType.POSITION,
+          network,
+          address: contractPosition.address,
+          appId,
+          groupId,
+          tokens,
+          balanceUSD,
+          dataProps: {},
+          displayProps: {
+            label: gameConfig.gameName,
+            images: [getAppImg(appId)],
+            statsItems,
+          },
+        };
+
+        return contractPositionBalance;
+      }),
+    );
+
+    return compact(balances);
   }
 }

@@ -10,7 +10,26 @@ export const STURDY_DEFINITION = appDefinition({
   url: 'https://app.sturdy.finance/',
 
   groups: {
-    lending: { id: 'lending', type: GroupType.TOKEN, label: 'Lending' },
+    supply: {
+      id: 'supply',
+      type: GroupType.TOKEN,
+      label: 'Lending',
+      groupLabel: 'Supply',
+    },
+
+    stableDebt: {
+      id: 'stable-debt',
+      type: GroupType.TOKEN,
+      label: 'Lending',
+      groupLabel: 'Borrow',
+    },
+
+    variableDebt: {
+      id: 'variable-debt',
+      type: GroupType.TOKEN,
+      label: 'Lending',
+      groupLabel: 'Borrow',
+    },
   },
 
   tags: [AppTag.LENDING],
