@@ -14,11 +14,11 @@ import { LLAMA_AIRFORCE_DEFINITION } from '../llama-airforce.definition';
 
 import { EthereumLlamaAirforceMerkleCache } from './llama-airforce.merkle-cache';
 
-@Register.ContractPositionBalanceFetcher({
-  appId: LLAMA_AIRFORCE_DEFINITION.id,
-  groupId: LLAMA_AIRFORCE_DEFINITION.groups.airdrop.id,
-  network: Network.ETHEREUM_MAINNET,
-})
+const appId = LLAMA_AIRFORCE_DEFINITION.id;
+const groupId = LLAMA_AIRFORCE_DEFINITION.groups.airdrop.id;
+const network = Network.ETHEREUM_MAINNET;
+
+@Register.ContractPositionBalanceFetcher({ appId, groupId, network })
 export class EthereumLlamaAirforceAirdropContractPositionBalanceFetcher
   implements PositionBalanceFetcher<ContractPositionBalance>
 {
@@ -33,9 +33,9 @@ export class EthereumLlamaAirforceAirdropContractPositionBalanceFetcher
   async getBalances(address: string) {
     return this.appToolkit.helpers.contractPositionBalanceHelper.getContractPositionBalances({
       address,
-      appId: LLAMA_AIRFORCE_DEFINITION.id,
-      groupId: LLAMA_AIRFORCE_DEFINITION.groups.airdrop.id,
-      network: Network.ETHEREUM_MAINNET,
+      appId,
+      groupId,
+      network,
       resolveBalances: async ({ contractPosition, multicall }) => {
         const contract = this.contractFactory.llamaAirforceMerkleDistributor(contractPosition);
         const rewardToken = contractPosition.tokens.find(isClaimable)!;

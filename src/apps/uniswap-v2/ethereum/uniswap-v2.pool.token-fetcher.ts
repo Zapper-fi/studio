@@ -16,7 +16,7 @@ const appId = UNISWAP_V2_DEFINITION.id;
 const groupId = UNISWAP_V2_DEFINITION.groups.pool.id;
 const network = Network.ETHEREUM_MAINNET;
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
 export class EthereumUniswapV2PoolTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(UniswapV2ContractFactory)

@@ -25,8 +25,7 @@ export class FantomMarketXyzSupplyTokenFetcher implements PositionFetcher<AppTok
   ) {}
 
   async getPositions() {
-    const network = Network.FANTOM_OPERA_MAINNET;
-    const poolDirectoryAddress = '0x0E7d754A8d1a82220432148C10715497a0569BD7';
+    const poolDirectoryAddress = '0x0e7d754a8d1a82220432148c10715497a0569bd7';
     const controllerContract = this.marketXyzContractFactory.poolDirectory({ address: poolDirectoryAddress, network });
     const pools = await controllerContract.getAllPools();
 
