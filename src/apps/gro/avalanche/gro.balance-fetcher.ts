@@ -19,7 +19,7 @@ export class AvalancheGroBalanceFetcher implements BalanceFetcher {
       address,
       appId: GRO_DEFINITION.id,
       groupId: GRO_DEFINITION.groups.labs.id,
-      network: Network.AVALANCHE_MAINNET,
+      network,
     });
   }
 

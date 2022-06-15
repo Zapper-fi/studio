@@ -4,6 +4,8 @@ import _ from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
+import { AAVE_V2_DEFINITION } from '~apps/aave-v2/aave-v2.definition';
+import { COMPOUND_DEFINITION } from '~apps/compound/compound.definition';
 import { YEARN_DEFINITION } from '~apps/yearn/yearn.definition';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
@@ -24,7 +26,7 @@ export type EaseRcaVaultDetails = {
   token: [];
 };
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
 export class EthereumEaseRcaTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
@@ -36,16 +38,16 @@ export class EthereumEaseRcaTokenFetcher implements PositionFetcher<AppTokenPosi
     const ethData = await Axios.get<EaseRcaVaultDetails[]>(endpoint).then(v => v.data);
     const rcaAddressToDetails = _.keyBy(ethData, v => v.address.toLowerCase());
     return this.appToolkit.helpers.vaultTokenHelper.getTokens<EaseRcaShield>({
-      appId: EASE_DEFINITION.id,
-      groupId: EASE_DEFINITION.groups.rca.id,
-      network: Network.ETHEREUM_MAINNET,
+      appId,
+      groupId,
+      network,
       dependencies: [
         { appId: YEARN_DEFINITION.id, groupIds: [YEARN_DEFINITION.groups.vault.id], network },
+        { appId: AAVE_V2_DEFINITION.id, groupIds: [AAVE_V2_DEFINITION.groups.supply.id], network },
+        { appId: COMPOUND_DEFINITION.id, groupIds: [COMPOUND_DEFINITION.groups.supply.id], network },
         //TODO: migrate
         { appId: 'sushiswap', groupIds: ['pool'], network },
         { appId: 'convex', groupIds: ['deposit'], network },
-        { appId: 'aave-v2', groupIds: ['supply'], network },
-        { appId: 'compound', groupIds: ['supply'], network },
       ],
       resolveContract: ({ address, network }) => this.easeContractFactory.easeRcaShield({ address, network }),
       resolveVaultAddresses: async () => ethData.map(({ address }) => address.toLowerCase()),

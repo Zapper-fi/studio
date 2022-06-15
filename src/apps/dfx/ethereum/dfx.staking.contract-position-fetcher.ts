@@ -15,13 +15,13 @@ import { Addresses } from '../addresses';
 import { DfxContractFactory } from '../contracts';
 import { DFX_DEFINITION } from '../dfx.definition';
 
-const appId = DFX_DEFINITION.id;
-const groupId = DFX_DEFINITION.groups.staking.id;
-const network = Network.ETHEREUM_MAINNET;
-
 type DfxCurveContractPositionDataProps = {
   liquidity: number;
 };
+
+const appId = DFX_DEFINITION.id;
+const groupId = DFX_DEFINITION.groups.staking.id;
+const network = Network.ETHEREUM_MAINNET;
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
 export class EthereumDfxStakingContractPositionFetcher implements PositionFetcher<ContractPosition> {
