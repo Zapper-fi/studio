@@ -23,7 +23,7 @@ export class CronosArgoFinancePledgingContractPositionFetcher implements Positio
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(ArgoFinanceContractFactory) private readonly argoFinanceContractFactory: ArgoFinanceContractFactory,
-  ) {}
+  ) { }
 
   async getVePosition(address: string, baseAddress: string) {
     const multicall = this.appToolkit.getMulticall(network);
@@ -49,16 +49,16 @@ export class CronosArgoFinancePledgingContractPositionFetcher implements Positio
       type: ContractType.POSITION,
       appId,
       groupId,
-      address,
+      address: ADDRESSES.pledging,
       network,
       tokens,
       dataProps: {
-     
+
       },
       displayProps: {
         label: "xARGO",
         secondaryLabel: buildDollarDisplayItem(price),
-        images:getImagesFromToken(baseToken),
+        images: getImagesFromToken(baseToken),
       },
     };
     return position;
