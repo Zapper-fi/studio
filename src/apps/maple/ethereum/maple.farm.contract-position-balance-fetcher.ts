@@ -9,11 +9,11 @@ import { Network } from '~types/network.interface';
 import { MapleContractFactory, MapleRewards } from '../contracts';
 import { MAPLE_DEFINITION } from '../maple.definition';
 
-@Register.ContractPositionBalanceFetcher({
-  appId: MAPLE_DEFINITION.id,
-  groupId: MAPLE_DEFINITION.groups.farm.id,
-  network: Network.ETHEREUM_MAINNET,
-})
+const appId = MAPLE_DEFINITION.id;
+const groupId = MAPLE_DEFINITION.groups.farm.id;
+const network = Network.ETHEREUM_MAINNET;
+
+@Register.ContractPositionBalanceFetcher({ appId, groupId, network })
 export class EthereumMapleFarmContractPositionBalanceFetcher
   implements PositionBalanceFetcher<ContractPositionBalance>
 {
@@ -27,9 +27,9 @@ export class EthereumMapleFarmContractPositionBalanceFetcher
   async getBalances(address: string) {
     return this.appToolkit.helpers.singleStakingContractPositionBalanceHelper.getBalances<MapleRewards>({
       address,
-      appId: MAPLE_DEFINITION.id,
-      groupId: MAPLE_DEFINITION.groups.farm.id,
-      network: Network.ETHEREUM_MAINNET,
+      appId,
+      groupId,
+      network,
       resolveContract: ({ address, network }) => this.mapleContractFactory.mapleRewards({ address, network }),
       resolveStakedTokenBalance: ({ contract, address, multicall }) => multicall.wrap(contract).balanceOf(address),
       resolveRewardTokenBalances: ({ contract, address, multicall }) => multicall.wrap(contract).earned(address),
