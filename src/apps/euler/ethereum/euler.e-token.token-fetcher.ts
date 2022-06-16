@@ -99,7 +99,7 @@ export class EthereumEulerETokenTokenFetcher implements PositionFetcher<AppToken
         return {
           address: market.eTokenAddress,
           symbol: `E${market.symbol}`,
-          name: market.name,
+          name: `${market.name} (E)`,
           type: ContractType.APP_TOKEN as const,
           supply: Number(market.totalBalances) / 10 ** Number(market.decimals),
           pricePerShare: underlyingToken.price * Number(utils.formatEther(pricePerShare)),
@@ -109,7 +109,7 @@ export class EthereumEulerETokenTokenFetcher implements PositionFetcher<AppToken
           tokens: [underlyingToken],
           dataProps,
           displayProps: {
-            label: market.name,
+            label: `${market.name} (E)`,
             secondaryLabel: buildDollarDisplayItem(underlyingToken.price * Number(utils.formatEther(pricePerShare))),
             images: getImagesFromToken(underlyingToken),
             statsItems: [
