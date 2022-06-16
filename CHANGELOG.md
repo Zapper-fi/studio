@@ -4,6 +4,47 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.75.1](https://github.com/Zapper-fi/studio/compare/v0.75.0...v0.75.1) (2022-06-16)
+
+
+### Bug Fixes
+
+* **compound:** Create resolver for Supply/Borrow rate label ([#661](https://github.com/Zapper-fi/studio/issues/661)) ([c68ab75](https://github.com/Zapper-fi/studio/commit/c68ab75701073bc423f90888a0a2bb1b7fa5064f))
+* **iron-bank:** Set borrow rate label ([#663](https://github.com/Zapper-fi/studio/issues/663)) ([32cd0e4](https://github.com/Zapper-fi/studio/commit/32cd0e4d5db18379ee6a13b4aa5fc77a988abae6))
+
+## [0.75.0](https://github.com/Zapper-fi/studio/compare/v0.74.1...v0.75.0) (2022-06-16)
+
+
+### Features
+
+* **iron-bank:** Add missing logo ([b3fd15d](https://github.com/Zapper-fi/studio/commit/b3fd15d01027a3fe53d3556aa0f25f53f7d6f15a))
+* **iron-bank:** Added Iron Bank to Zapper  ([#617](https://github.com/Zapper-fi/studio/issues/617)) ([05eef48](https://github.com/Zapper-fi/studio/commit/05eef48957267f877cee651ac0aa9c062707dc10))
+* **tvl:** Use group based strategy for local TVLs ([#655](https://github.com/Zapper-fi/studio/issues/655)) ([08897ef](https://github.com/Zapper-fi/studio/commit/08897ef03156c6f56523111122f5cc0a56a76eec))
+
+## [0.74.1](https://github.com/Zapper-fi/studio/compare/v0.74.0...v0.74.1) (2022-06-15)
+
+
+### Bug Fixes
+
+* **aave-v2:** Fix APY statsItem in helper ([#653](https://github.com/Zapper-fi/studio/issues/653)) ([1d9151d](https://github.com/Zapper-fi/studio/commit/1d9151db3202f419c7a82852f572d550b333694d))
+
+## [0.74.0](https://github.com/Zapper-fi/studio/compare/v0.73.0...v0.74.0) (2022-06-15)
+
+
+### Features
+
+* **aave-v2:** Enable TVL ([#630](https://github.com/Zapper-fi/studio/issues/630)) ([e622faf](https://github.com/Zapper-fi/studio/commit/e622fafbb164728406d4abfa04393cb768a00c6d))
+* adds support for Celo and bug fixes ([#642](https://github.com/Zapper-fi/studio/issues/642)) ([3a152a7](https://github.com/Zapper-fi/studio/commit/3a152a75958e435b02bffaa1bb976167f4c9da21))
+* **diffusion-protocol:** Add Diffusion Pools ([#629](https://github.com/Zapper-fi/studio/issues/629)) ([fac4d88](https://github.com/Zapper-fi/studio/commit/fac4d883a4f209b96053f6bd4b75e9cb2cdd4d74))
+
+
+### Bug Fixes
+
+* fixed euler finance supply APY, fixed uppercase contract addresses, fixed labels, etc ([#647](https://github.com/Zapper-fi/studio/issues/647)) ([7fc2291](https://github.com/Zapper-fi/studio/commit/7fc2291d7998b1db69544c82b174fb167fd17244))
+* fixed liquidity and labels ([#637](https://github.com/Zapper-fi/studio/issues/637)) ([bab1e8a](https://github.com/Zapper-fi/studio/commit/bab1e8a523f9b98c340247645fb626d250e414df))
+* removed uniswap pool-token helper prefix on label ([#650](https://github.com/Zapper-fi/studio/issues/650)) ([46ba164](https://github.com/Zapper-fi/studio/commit/46ba164d817f0ce3f7079d6e63a00ccc16d37d26))
+* **uniswap-v2:** Make cache key generic in helper ([#649](https://github.com/Zapper-fi/studio/issues/649)) ([17cdfea](https://github.com/Zapper-fi/studio/commit/17cdfea98d1115a7be1cbcb6cadf0f2eca690268))
+
 ## [0.73.0](https://github.com/Zapper-fi/studio/compare/v0.72.0...v0.73.0) (2022-06-14)
 
 
