@@ -16,7 +16,7 @@ interface EulerMarket {
   symbol: string;
   totalBalancesUsd: string;
   totalBorrowsUsd: string;
-  decimals: string
+  decimals: string;
 }
 
 interface EulerMarketsResponse {
@@ -47,7 +47,6 @@ export class EthereumEulerTvlFetcher implements TvlFetcher {
     const markets = data.eulerMarketStore.markets;
 
     const tvlPerMarket = markets.map(market => {
-
       const totalBalance = Number(market.totalBalancesUsd) / 10 ** Number(market.decimals);
       const totalBorrows = Number(market.totalBorrowsUsd) / 10 ** Number(market.decimals);
 

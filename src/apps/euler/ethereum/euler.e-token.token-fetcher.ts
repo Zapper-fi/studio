@@ -1,11 +1,15 @@
 import { Inject } from '@nestjs/common';
+import { utils } from 'ethers';
 import { gql } from 'graphql-request';
 import { compact } from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { Register } from '~app-toolkit/decorators';
-import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
+import {
+  buildDollarDisplayItem,
+  buildPercentageDisplayItem,
+} from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { EulerContractFactory } from '~apps/euler';
 import { ContractType } from '~position/contract.interface';
@@ -14,7 +18,6 @@ import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
 import { EULER_DEFINITION } from '../euler.definition';
-import {BigNumber, utils} from "ethers";
 
 const appId = EULER_DEFINITION.id;
 const groupId = EULER_DEFINITION.groups.eToken.id;
@@ -91,7 +94,7 @@ export class EthereumEulerETokenTokenFetcher implements PositionFetcher<AppToken
           liquidity: Number(totalSupply) * underlyingToken.price,
           underlyingAddress: market.id,
           interestRate: Number(market.interestRate) / 10 ** 18,
-          supplyAPY: Number(market.supplyAPY) * 100 / 1e27,
+          supplyAPY: (Number(market.supplyAPY) * 100) / 1e27,
           totalSupply: totalSupply.toString(),
           totalBalances: market.totalBalances,
         };
@@ -102,7 +105,7 @@ export class EthereumEulerETokenTokenFetcher implements PositionFetcher<AppToken
           name: `${market.name} (E)`,
           type: ContractType.APP_TOKEN as const,
           supply: Number(market.totalBalances) / 10 ** Number(market.decimals),
-          pricePerShare: underlyingToken.price * Number(utils.formatEther(pricePerShare)),
+          pricePerShare: Number(utils.formatEther(pricePerShare)),
           price: underlyingToken.price,
           network,
           decimals: 18,
@@ -119,7 +122,7 @@ export class EthereumEulerETokenTokenFetcher implements PositionFetcher<AppToken
               },
               {
                 label: 'Supply APY',
-                value: dataProps.supplyAPY,
+                value: buildPercentageDisplayItem(dataProps.supplyAPY),
               },
             ],
           },

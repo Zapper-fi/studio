@@ -5,7 +5,10 @@ import { compact } from 'lodash';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { Register } from '~app-toolkit/decorators';
-import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
+import {
+  buildDollarDisplayItem,
+  buildPercentageDisplayItem,
+} from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { EulerContractFactory } from '~apps/euler';
 import { ContractType } from '~position/contract.interface';
@@ -87,7 +90,7 @@ export class EthereumEulerDTokenTokenFetcher implements PositionFetcher<AppToken
           name: market.name,
           liquidity: Number(totalSupply) * underlyingToken.price,
           interestRate: Number(market.interestRate) / 10 ** 18,
-          borrowAPY: Number(market.borrowAPY) * 100 / 1e27,
+          borrowAPY: (Number(market.borrowAPY) * 100) / 1e27,
         };
 
         return {
@@ -96,7 +99,7 @@ export class EthereumEulerDTokenTokenFetcher implements PositionFetcher<AppToken
           name: `${market.name} (D)`,
           type: ContractType.APP_TOKEN as const,
           supply: Number(market.totalBalances) / 10 ** Number(market.decimals),
-          pricePerShare: underlyingToken.price,
+          pricePerShare: 1,
           price: underlyingToken.price,
           network,
           decimals: Number(market.decimals),
@@ -113,7 +116,7 @@ export class EthereumEulerDTokenTokenFetcher implements PositionFetcher<AppToken
               },
               {
                 label: 'Borrow APY',
-                value: dataProps.borrowAPY,
+                value: buildPercentageDisplayItem(dataProps.borrowAPY),
               },
             ],
           },
