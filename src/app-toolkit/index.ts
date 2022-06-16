@@ -26,7 +26,7 @@ export type {
   MasterChefDespositTokenAddressStrategy,
   MasterChefRewardTokenAddressesStrategy,
   MasterChefRewardRateStrategy,
-  MasterChefTotalValueLockedStrategy,
+  MasterChefLiquidityStrategy,
   MasterChefLabelStrategy,
   MasterChefContractPositionDataProps,
 } from './helpers/master-chef/master-chef.contract-position-helper';

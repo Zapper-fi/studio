@@ -82,7 +82,7 @@ export type SingleStakingFarmContractPositionHelperParams<T> = {
   resolveFarmAddresses?: (opts: { network: Network }) => (string | null)[] | Promise<(string | null)[]>;
   resolveStakedTokenAddress?: (opts: { contract: T; multicall: Multicall; index: number }) => Promise<string>;
   resolveRewardTokenAddresses?: (opts: { contract: T; multicall: Multicall }) => Promise<string | string[]>;
-  resolveTotalValueLocked?: SingleStakingFarmResolveTotalValueLockedParams<T>;
+  resolveLiquidity?: SingleStakingFarmResolveTotalValueLockedParams<T>;
   resolveIsActive?: SingleStakingFarmResolveIsActiveParams<T>;
   resolveRois: SingleStakingFarmResolveRoisParams<T>;
 };
@@ -106,7 +106,7 @@ export class SingleStakingFarmContractPositionHelper {
     resolveRewardTokenAddresses = async () => [],
     resolveIsActive = async () => true,
     resolveRois,
-    resolveTotalValueLocked = this.defaultTotalValueLocked(),
+    resolveLiquidity = this.defaultTotalValueLocked(),
   }: SingleStakingFarmContractPositionHelperParams<T>) {
     const multicall = this.appToolkit.getMulticall(network);
 
@@ -174,7 +174,7 @@ export class SingleStakingFarmContractPositionHelper {
           const tokens = [stakedToken, ...rewardTokens];
 
           // Resolve data props
-          const totalValueLockedRaw = await resolveTotalValueLocked({
+          const totalValueLockedRaw = await resolveLiquidity({
             address: reserveAddress,
             network,
             contract,
@@ -202,12 +202,12 @@ export class SingleStakingFarmContractPositionHelper {
           // Display Properties
           const underlyingLabel =
             stakedToken.type === ContractType.APP_TOKEN ? stakedToken.displayProps.label : stakedToken.symbol;
-          const label = resolveLabel ? resolveLabel(definitionOrAddress) : `Staked ${underlyingLabel}`;
+          const label = resolveLabel ? resolveLabel(definitionOrAddress) : `${underlyingLabel}`;
           const secondaryLabel = buildDollarDisplayItem(stakedToken.price);
           const images = [getTokenImg(stakedToken.address, network)];
           const statsItems = [
-            { label: 'ROI', value: buildPercentageDisplayItem(rois.yearlyROI) },
-            { label: 'TVL', value: buildDollarDisplayItem(totalValueLocked) },
+            { label: 'APY', value: buildPercentageDisplayItem(rois.yearlyROI) },
+            { label: 'Liquidity', value: buildDollarDisplayItem(totalValueLocked) },
           ];
           const displayProps = { label, secondaryLabel, images, statsItems };
 
