@@ -38,7 +38,6 @@ export type StatsItem = {
   value:
     | string // @TODO Remove
     | number // @TODO Remove
-    | boolean
     | StringDisplayItem
     | NumberDisplayItem
     | TranslationDisplayItem
