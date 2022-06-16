@@ -4,6 +4,15 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.75.0](https://github.com/Zapper-fi/studio/compare/v0.74.1...v0.75.0) (2022-06-16)
+
+
+### Features
+
+* **iron-bank:** Add missing logo ([b3fd15d](https://github.com/Zapper-fi/studio/commit/b3fd15d01027a3fe53d3556aa0f25f53f7d6f15a))
+* **iron-bank:** Added Iron Bank to Zapper  ([#617](https://github.com/Zapper-fi/studio/issues/617)) ([05eef48](https://github.com/Zapper-fi/studio/commit/05eef48957267f877cee651ac0aa9c062707dc10))
+* **tvl:** Use group based strategy for local TVLs ([#655](https://github.com/Zapper-fi/studio/issues/655)) ([08897ef](https://github.com/Zapper-fi/studio/commit/08897ef03156c6f56523111122f5cc0a56a76eec))
+
 ## [0.74.1](https://github.com/Zapper-fi/studio/compare/v0.74.0...v0.74.1) (2022-06-15)
 
 
