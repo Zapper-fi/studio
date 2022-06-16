@@ -79,7 +79,7 @@ export class CompoundBorrowContractPositionHelper {
 
       const dataProps = {
         ...appToken.dataProps,
-        liquidity: -borrowLiquidity,
+        liquidity: borrowLiquidity,
         supply: underlyingLiquidity,
         // The amount borrowed can be derived simply by substracting the liquidity from the total supply
         // of tokens
