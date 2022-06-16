@@ -3,6 +3,7 @@ import { compact } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
+import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
@@ -45,6 +46,7 @@ export class FantomBeethovenXFarmContractPositionFetcher implements PositionFetc
         resolveDepositTokenAddress: ({ poolIndex, contract, multicall }) =>
           multicall.wrap(contract).lpTokens(poolIndex),
         resolveRewardTokenAddresses: ({ multicall, contract }) => multicall.wrap(contract).beets(),
+        resolveLabel: ({ stakedToken }) => `${getLabelFromToken(stakedToken)}`,
         resolveRewardRate: this.appToolkit.helpers.masterChefDefaultRewardsPerBlockStrategy.build({
           resolvePoolAllocPoints: async ({ poolIndex, contract, multicall }) =>
             multicall
