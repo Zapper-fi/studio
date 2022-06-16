@@ -4,6 +4,20 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.76.0](https://github.com/Zapper-fi/studio/compare/v0.75.1...v0.76.0) (2022-06-16)
+
+
+### Features
+
+* **bancor-v3:** Include Pools data in tvl ([#665](https://github.com/Zapper-fi/studio/issues/665)) ([c3affc9](https://github.com/Zapper-fi/studio/commit/c3affc9c7df38665573c71a730c122d8ce46130c))
+* **beethoven-x:** Update TVL fetcher ([#669](https://github.com/Zapper-fi/studio/issues/669)) ([7c983d5](https://github.com/Zapper-fi/studio/commit/7c983d5364ad30dea0cee95a082b4c7055d76e13))
+* **single-staking:** Fix APY display ([f675f0d](https://github.com/Zapper-fi/studio/commit/f675f0d70030536dd5d0bcc926fde6d749aa8a03))
+
+
+### Bug Fixes
+
+* **beethoven-x:** Update contrat position label ([#667](https://github.com/Zapper-fi/studio/issues/667)) ([0d94f3f](https://github.com/Zapper-fi/studio/commit/0d94f3f4857fb8bfc103b42699b1c40a2ef46e1e))
+
 ## [0.75.1](https://github.com/Zapper-fi/studio/compare/v0.75.0...v0.75.1) (2022-06-16)
 
 
