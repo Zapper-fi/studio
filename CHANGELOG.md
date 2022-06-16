@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.76.1](https://github.com/Zapper-fi/studio/compare/v0.76.0...v0.76.1) (2022-06-16)
+
+
+### Bug Fixes
+
+* Fixing apps part 4 ([#664](https://github.com/Zapper-fi/studio/issues/664)) ([1882bae](https://github.com/Zapper-fi/studio/commit/1882baedd02ce644ac1610cc842821ff7a7dd83b))
+
 ## [0.76.0](https://github.com/Zapper-fi/studio/compare/v0.75.1...v0.76.0) (2022-06-16)
 
 
