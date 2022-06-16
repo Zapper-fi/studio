@@ -286,7 +286,6 @@ export class MasterChefContractPositionHelper {
         const statsItems = [
           { label: 'APY', value: buildPercentageDisplayItem(yearlyROI) },
           { label: 'TVL', value: buildDollarDisplayItem(totalValueLocked) },
-          { label: 'displayInExplore', value: isActive },
         ];
         const displayProps = {
           label,

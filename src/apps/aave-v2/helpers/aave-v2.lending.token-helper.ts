@@ -149,6 +149,7 @@ export class AaveV2LendingTokenHelper {
           enabledAsCollateral,
           liquidity,
           liquidationThreshold,
+          isActive: Boolean(liquidity < 0),
         };
 
         // Display Props
@@ -159,7 +160,6 @@ export class AaveV2LendingTokenHelper {
         const statsItems = [
           { label: 'APY', value: buildPercentageDisplayItem(apy) },
           { label: 'Liquidity', value: buildDollarDisplayItem(liquidity) },
-          { label: 'isHiddenFromExplore', value: Boolean(liquidity > 0) },
         ];
 
         const token: AppTokenPosition<AaveV2LendingTokenDataProps> = {

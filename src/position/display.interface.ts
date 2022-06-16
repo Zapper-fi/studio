@@ -57,7 +57,6 @@ export interface DisplayProps {
   tertiaryLabel?: string | number | DollarDisplayItem | PercentageDisplayItem;
   images: string[];
   appName?: string;
-  isActive?: boolean;
   statsItems?: StatsItem[];
   balanceDisplayMode?: BalanceDisplayMode;
 }
