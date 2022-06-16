@@ -172,7 +172,7 @@ export class SingleStakingFarmContractPositionHelper {
           const tokens = [stakedToken, ...rewardTokens];
 
           // Resolve data props
-          const LiquidityRaw = await resolveLiquidity({
+          const liquidityRaw = await resolveLiquidity({
             address: reserveAddress,
             network,
             contract,
@@ -180,7 +180,7 @@ export class SingleStakingFarmContractPositionHelper {
             stakedToken,
           });
 
-          const liquidity = stakedToken.price * (Number(LiquidityRaw) / 10 ** stakedToken.decimals);
+          const liquidity = stakedToken.price * (Number(liquidityRaw) / 10 ** stakedToken.decimals);
           const isActive = await resolveIsActive({ address, network, contract, multicall, stakedToken, rewardTokens });
 
           const rois = await resolveRois({
