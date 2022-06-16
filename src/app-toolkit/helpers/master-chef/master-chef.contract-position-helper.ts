@@ -285,7 +285,12 @@ export class MasterChefContractPositionHelper {
           { label: 'APY', value: buildPercentageDisplayItem(yearlyROI) },
           { label: 'Liquidity', value: buildDollarDisplayItem(liquidity) },
         ];
-        const displayProps = { label, secondaryLabel, images, statsItems };
+        const displayProps = {
+          label,
+          secondaryLabel,
+          images,
+          statsItems,
+        };
 
         const position: ContractPosition<MasterChefContractPositionDataProps> = {
           type,
