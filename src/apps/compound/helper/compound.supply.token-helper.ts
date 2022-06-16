@@ -90,10 +90,6 @@ export class CompoundSupplyTokenHelper {
 
     const tokens = await Promise.all(
       marketTokenAddressesRaw.map(async marketTokenAddressRaw => {
-        const isDeprecated = 
-
-
-
         const address = marketTokenAddressRaw.toLowerCase();
         const erc20TokenContract = this.contractFactory.erc20({ address, network });
         const contract = getTokenContract({ address, network });
