@@ -21,20 +21,12 @@ export class AuroraBluebitFarmContractPositionFetcher implements PositionFetcher
     @Inject(BluebitContractFactory) private readonly bluebitContractFactory: BluebitContractFactory,
   ) {}
 
-  async getVaultToken({ poolIndex, contract, multicall }) {
-    const pool = await multicall.wrap(contract).pools(poolIndex);
-    const vault = this.bluebitContractFactory.vault({ address: pool.vault, network: network });
-    const token = await vault.swapPair();
-    return token.toLowerCase();
-  }
-
   async getPositions() {
     return this.appToolkit.helpers.masterChefContractPositionHelper.getContractPositions<Bluebit>({
       address: '0x947dD92990343aE1D6Cbe2102ea84eF73Bc5790E',
       appId,
       groupId,
       network,
-      minimumTvl: 10000,
       dependencies: [
         {
           appId,
@@ -44,8 +36,29 @@ export class AuroraBluebitFarmContractPositionFetcher implements PositionFetcher
       ],
       resolveContract: opts => this.bluebitContractFactory.bluebit(opts),
       resolvePoolLength: async ({ multicall, contract }) => multicall.wrap(contract).poolLength(),
-      resolveDepositTokenAddress: async ({ poolIndex, contract, multicall }) =>
-        this.getVaultToken({ poolIndex, contract, multicall }),
+      resolvePoolIndexIsValid: async ({ poolIndex, multicall }) => {
+        switch (poolIndex) {
+          case 2:
+          case 3:
+          case 13:
+          case 14:
+            return false;
+          default:
+            return true;
+        }
+      },
+      resolveDepositTokenAddress: async ({ poolIndex, contract, multicall }) => {
+        const pool = await multicall.wrap(contract).pools(poolIndex);
+        const vault = this.bluebitContractFactory.vault({ address: pool.vault, network: network });
+        const token = await vault.swapPair();
+        return token.toLowerCase();
+      },
+      resolveTotalValueLocked: async ({ multicall, contract, poolIndex }) => {
+        const pool = await multicall.wrap(contract).pools(poolIndex);
+        const vault = this.bluebitContractFactory.vault({ address: pool.vault, network: network });
+        const totalSupply = await vault.totalSupply();
+        return totalSupply;
+      },
       resolveRewardTokenAddresses: async ({ multicall, contract }) => multicall.wrap(contract).bluebitToken(),
       rewardRateUnit: RewardRateUnit.BLOCK,
       resolveRewardRate: this.appToolkit.helpers.masterChefDefaultRewardsPerBlockStrategy.build({
