@@ -18,10 +18,7 @@ const FARMS = [
   '0xd1c395bcdc2d64ac6544a34a36185483b00530a1',
   '0xc581345e1648cce154978ea80bf8a584ec8afde0',
   '0xed53944b1c0ceecde1a413fdb4d0496e1a08ab58',
-  '0xa79d37ce9df9443ef4b6dec2e38a8ecd35303adc',
   '0x9593462ff51a14633b243ba3d054a8183d057a02',
-  '0x0f96e19bdc787e767ba1e8f1add0f62cbdad87c8',
-  '0x2d17ec6cd0af737b2ade40ea527d41ceeedc166f',
   '0x641b1f2781b34a493e4308a0a3f1c7e042a9b952',
   '0x0d53e0f2eb384777442e4eb813d8f5facc742206',
   '0x84e3208578ee7db397a3d584d97fea107b15bf35',
@@ -294,7 +291,7 @@ const appId = PANCAKESWAP_DEFINITION.id;
 const groupId = PANCAKESWAP_DEFINITION.groups.syrupStaking.id;
 const network = Network.BINANCE_SMART_CHAIN_MAINNET;
 
-@Register.ContractPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
+@Register.ContractPositionFetcher({ appId, groupId, network })
 export class BinanceSmartChainPancakeswapSyrupStakingContractPositionFetcher
   implements PositionFetcher<ContractPosition>
 {

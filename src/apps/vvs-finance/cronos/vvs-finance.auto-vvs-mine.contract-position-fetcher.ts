@@ -36,7 +36,7 @@ export class CronosVvsFinanceAutoVvsMineContractPositionFetcher implements Posit
       resolveContract: opts => this.contractFactory.vvsVault(opts),
       resolvePoolLength: async () => BigNumber.from(1),
       resolveDepositTokenAddress: ({ multicall, contract }) => multicall.wrap(contract).token(),
-      resolveTotalValueLocked: ({ multicall, contract }) => multicall.wrap(contract).balanceOf(),
+      resolveLiquidity: ({ multicall, contract }) => multicall.wrap(contract).balanceOf(),
       resolveRewardTokenAddresses: ({ multicall, contract }) => multicall.wrap(contract).token(),
       rewardRateUnit: RewardRateUnit.BLOCK,
       resolveRewardRate: this.appToolkit.helpers.masterChefDefaultRewardsPerBlockStrategy.build({

@@ -9,13 +9,11 @@ import { Network } from '~types/network.interface';
 import { QiDaoVaultPositionDataProps, QiDaoVaultPositionHelper } from '../helpers/qi-dao.vault.position-helper';
 import { QI_DAO_DEFINITION } from '../qi-dao.definition';
 
+const appId = QI_DAO_DEFINITION.id;
+const groupId = QI_DAO_DEFINITION.groups.vault.id;
 const network = Network.FANTOM_OPERA_MAINNET;
 
-@Register.ContractPositionFetcher({
-  appId: QI_DAO_DEFINITION.id,
-  groupId: QI_DAO_DEFINITION.groups.vault.id,
-  network,
-})
+@Register.ContractPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
 export class FantomQiDaoVaultPositionFetcher implements PositionFetcher<ContractPosition<QiDaoVaultPositionDataProps>> {
   constructor(@Inject(QiDaoVaultPositionHelper) private readonly qiDaoVaultPositionHelper: QiDaoVaultPositionHelper) {}
 

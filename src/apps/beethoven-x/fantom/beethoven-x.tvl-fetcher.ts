@@ -1,5 +1,6 @@
 import { Inject } from '@nestjs/common';
 import { gql } from 'graphql-request';
+import { sumBy } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
@@ -9,16 +10,16 @@ import { Network } from '~types/network.interface';
 import { BEETHOVEN_X_DEFINITION } from '../beethoven-x.definition';
 
 type QueryResponse = {
-  balancers: { totalLiquidity: string }[];
+  pools: { totalLiquidity: string }[];
 };
 const QUERY = gql`
   {
-    balancers(first: 1) {
+    pools {
       totalLiquidity
     }
   }
 `;
-const subgraphUrl = 'https://api.thegraph.com/subgraphs/name/beethovenxfi/beethovenx';
+const subgraphUrl = 'https://backend.beets-ftm-node.com/graphql';
 
 @Register.TvlFetcher({ appId: BEETHOVEN_X_DEFINITION.id, network: Network.FANTOM_OPERA_MAINNET })
 export class FantomBeethovenXTvlFetcher implements TvlFetcher {
@@ -33,7 +34,7 @@ export class FantomBeethovenXTvlFetcher implements TvlFetcher {
       headers: { 'Content-Type': 'application/json' },
     });
 
-    const tvl = Number(response.balancers[0]?.totalLiquidity ?? 0);
+    const tvl = sumBy(response.pools, pool => Number(pool.totalLiquidity));
 
     return tvl;
   }

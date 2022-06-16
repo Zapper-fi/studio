@@ -46,7 +46,7 @@ export const PositionFetcher =
       CacheOnIntervalBuilder<IPositionFetcher<Position>>({
         targetMethod: 'getPositions',
         key: buildAppPositionsCacheKey({ type, network, appId, groupId }),
-        timeout: process.env.NODE_ENV === 'production' ? 45 * 1000 : 45 * 1000,
+        timeout: process.env.NODE_ENV === 'production' ? 45 * 1000 : 10 * 1000,
         failOnMissingData: process.env.NODE_ENV === 'production',
       }),
       Injectable,

@@ -17,7 +17,7 @@ const appId = PANCAKESWAP_DEFINITION.id;
 const groupId = PANCAKESWAP_DEFINITION.groups.syrupCake.id;
 const network = Network.BINANCE_SMART_CHAIN_MAINNET;
 
-@Register.ContractPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
+@Register.ContractPositionFetcher({ appId, groupId, network })
 export class BinanceSmartChainPancakeswapSyrupCakeContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
@@ -36,7 +36,7 @@ export class BinanceSmartChainPancakeswapSyrupCakeContractPositionFetcher implem
       resolvePoolLength: async () => BigNumber.from(1),
       resolveDepositTokenAddress: ({ multicall, contract }) => multicall.wrap(contract).token(),
       resolveRewardTokenAddresses: ({ multicall, contract }) => multicall.wrap(contract).token(),
-      resolveTotalValueLocked: ({ multicall, contract }) => multicall.wrap(contract).available(),
+      resolveLiquidity: ({ multicall, contract }) => multicall.wrap(contract).available(),
       resolveRewardRate: async ({ multicall, network }) => {
         // The auto-compounding CAKE rewards are harvested from the main MasterChef V2 contract on PID 0
         const masterChefV2Address = '0xa5f8c5dbd5f286960b9d90548680ae5ebff07652';
@@ -44,13 +44,12 @@ export class BinanceSmartChainPancakeswapSyrupCakeContractPositionFetcher implem
         const poolInfo = await multicall.wrap(masterChefV2Contract).poolInfo(0);
         const cakePerBlock = await multicall.wrap(masterChefV2Contract).cakePerBlock(poolInfo.isRegular);
         const poolAllocPoints = poolInfo.allocPoint;
-        const totalAllocPoints = await (poolInfo.isRegular
+        const totalAllocPoints = poolInfo.isRegular
           ? masterChefV2Contract.totalRegularAllocPoint()
-          : masterChefV2Contract.totalSpecialAllocPoint());
+          : masterChefV2Contract.totalSpecialAllocPoint();
 
         const poolShare = Number(poolAllocPoints) / Number(totalAllocPoints);
         const rewardPerBlock = poolShare * Number(cakePerBlock);
-
         return rewardPerBlock;
       },
     });
