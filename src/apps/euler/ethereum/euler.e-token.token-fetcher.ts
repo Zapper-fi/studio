@@ -14,6 +14,7 @@ import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
 import { EULER_DEFINITION } from '../euler.definition';
+import {BigNumber, utils} from "ethers";
 
 const appId = EULER_DEFINITION.id;
 const groupId = EULER_DEFINITION.groups.eToken.id;
@@ -27,7 +28,6 @@ const query = gql`
         interestRate
         borrowAPY
         supplyAPY
-        totalSupply
         twap
         name
         symbol
@@ -44,7 +44,6 @@ interface EulerMarket {
   interestRate: string;
   borrowAPY: string;
   supplyAPY: string;
-  totalSupply: string;
   twap: string;
   name: string;
   symbol: string;
@@ -85,15 +84,14 @@ export class EthereumEulerETokenTokenFetcher implements PositionFetcher<AppToken
 
         if (totalSupply.isZero() || !underlyingToken) return null;
 
-        const pricePerShare = Number(totalSupply.toString()) / Number(market.totalBalances);
+        const pricePerShare = await eTokenContract.convertBalanceToUnderlying(utils.parseEther('1'));
 
         const dataProps = {
-          name: `Euler E token ${market.name}`,
+          name: market.name,
           liquidity: Number(totalSupply) * underlyingToken.price,
           underlyingAddress: market.id,
           interestRate: Number(market.interestRate) / 10 ** 18,
-          borrowAPY: Number(market.borrowAPY) / 10 ** 18,
-          supplyAPY: Number(market.borrowAPY) / 10 ** 18,
+          supplyAPY: Number(market.supplyAPY) * 100 / 1e27,
           totalSupply: totalSupply.toString(),
           totalBalances: market.totalBalances,
         };
@@ -101,18 +99,18 @@ export class EthereumEulerETokenTokenFetcher implements PositionFetcher<AppToken
         return {
           address: market.eTokenAddress,
           symbol: `E${market.symbol}`,
-          name: `Euler E token ${market.name}`,
+          name: market.name,
           type: ContractType.APP_TOKEN as const,
-          supply: Number(market.totalSupply) / 10 ** Number(market.decimals),
-          pricePerShare,
+          supply: Number(market.totalBalances) / 10 ** Number(market.decimals),
+          pricePerShare: underlyingToken.price * Number(utils.formatEther(pricePerShare)),
           price: underlyingToken.price,
           network,
           decimals: 18,
           tokens: [underlyingToken],
           dataProps,
           displayProps: {
-            label: `Euler E token ${market.name}`,
-            secondaryLabel: buildDollarDisplayItem(pricePerShare),
+            label: market.name,
+            secondaryLabel: buildDollarDisplayItem(underlyingToken.price * Number(utils.formatEther(pricePerShare))),
             images: getImagesFromToken(underlyingToken),
             statsItems: [
               {
@@ -120,12 +118,8 @@ export class EthereumEulerETokenTokenFetcher implements PositionFetcher<AppToken
                 value: buildDollarDisplayItem(dataProps.liquidity),
               },
               {
-                label: 'Borrow APY',
-                value: buildDollarDisplayItem(dataProps.borrowAPY),
-              },
-              {
                 label: 'Supply APY',
-                value: buildDollarDisplayItem(dataProps.supplyAPY),
+                value: dataProps.supplyAPY,
               },
             ],
           },

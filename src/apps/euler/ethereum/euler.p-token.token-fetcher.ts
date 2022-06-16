@@ -68,7 +68,6 @@ export class EthereumEulerPTokenTokenFetcher implements PositionFetcher<AppToken
     const endpoint = 'https://api.thegraph.com/subgraphs/name/euler-xyz/euler-mainnet';
     const data = await this.appToolkit.helpers.theGraphHelper.request<EulerMarketsResponse>({ endpoint, query });
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
-
     const tokens = await Promise.all(
       data.eulerMarketStore.markets.map(async market => {
         if (market.pTokenAddress === ZERO_ADDRESS) return null;
@@ -80,45 +79,34 @@ export class EthereumEulerPTokenTokenFetcher implements PositionFetcher<AppToken
 
         const totalSupply = await pTokenContract.totalSupply();
         const underlyingToken = baseTokens.find(token => token?.address === market.id.toLowerCase());
-
         if (totalSupply.isZero() || !underlyingToken) return null;
 
         const dataProps = {
           name: market.name,
           liquidity: Number(totalSupply) * underlyingToken.price,
           interestRate: Number(market.interestRate) / 10 ** 18,
-          borrowAPY: Number(market.borrowAPY) / 10 ** 18,
-          supplyAPY: Number(market.borrowAPY) / 10 ** 18,
         };
 
         return {
           address: market.pTokenAddress,
           symbol: `P${market.symbol}`,
-          name: `Euler P token ${market.name}`,
+          name: market.name,
           type: ContractType.APP_TOKEN as const,
           supply: Number(market.totalSupply) / 10 ** Number(market.decimals),
-          pricePerShare: 1,
+          pricePerShare: underlyingToken.price,
           price: underlyingToken.price,
           network,
           decimals: 18,
           tokens: [underlyingToken],
           dataProps,
           displayProps: {
-            label: `Euler P token ${market.name}`,
+            label: market.name,
             secondaryLabel: buildDollarDisplayItem(underlyingToken.price),
             images: getImagesFromToken(underlyingToken),
             statsItems: [
               {
                 label: 'Liquidity',
                 value: buildDollarDisplayItem(dataProps.liquidity),
-              },
-              {
-                label: 'Borrow APY',
-                value: buildDollarDisplayItem(dataProps.borrowAPY),
-              },
-              {
-                label: 'Supply APY',
-                value: buildDollarDisplayItem(dataProps.supplyAPY),
               },
             ],
           },
