@@ -45,7 +45,7 @@ export type {
   SingleStakingFarmDefinition,
   SingleStakingFarmRois,
   SingleStakingFarmDataProps,
-  SingleStakingFarmResolveTotalValueLockedParams,
+  SingleStakingFarmResolveLiquidityParams,
   SingleStakingFarmResolveIsActiveParams,
   SingleStakingFarmResolveRoisParams,
   SingleStakingFarmContractPositionHelperParams,
