@@ -284,7 +284,7 @@ export class MasterChefContractPositionHelper {
         const secondaryLabel = buildDollarDisplayItem(stakedToken.price);
         const images = getImagesFromToken(stakedToken);
         const statsItems = [
-          { label: 'ROI', value: buildPercentageDisplayItem(yearlyROI) },
+          { label: 'APY', value: buildPercentageDisplayItem(yearlyROI) },
           { label: 'TVL', value: buildDollarDisplayItem(totalValueLocked) },
         ];
         const displayProps = { label, secondaryLabel, images, statsItems };
