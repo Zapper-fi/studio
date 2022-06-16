@@ -38,6 +38,7 @@ export type StatsItem = {
   value:
     | string // @TODO Remove
     | number // @TODO Remove
+    | boolean
     | StringDisplayItem
     | NumberDisplayItem
     | TranslationDisplayItem
@@ -56,6 +57,7 @@ export interface DisplayProps {
   tertiaryLabel?: string | number | DollarDisplayItem | PercentageDisplayItem;
   images: string[];
   appName?: string;
+  isActive?: boolean;
   statsItems?: StatsItem[];
   balanceDisplayMode?: BalanceDisplayMode;
 }

@@ -8,7 +8,7 @@ export const TOKEMAK_DEFINITION = appDefinition({
   name: 'Tokemak',
   description: `Tokemak creates sustainable DeFi liquidity and capital efficient markets through a convenient decentralized market making protocol.`,
   groups: {
-    farm: { id: 'farm', type: GroupType.POSITION, label: 'Staking' },
+    farm: { id: 'farm', type: GroupType.POSITION, label: 'Staking', isHiddenFromExplore: true }, // Can't figure out how tokemak arrive to $13m on their TVL
     reactor: { id: 'reactor', type: GroupType.TOKEN, label: 'Reactors' },
   },
   url: 'https://www.tokemak.xyz/',

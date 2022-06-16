@@ -284,10 +284,16 @@ export class MasterChefContractPositionHelper {
         const secondaryLabel = buildDollarDisplayItem(stakedToken.price);
         const images = getImagesFromToken(stakedToken);
         const statsItems = [
-          { label: 'ROI', value: buildPercentageDisplayItem(yearlyROI) },
+          { label: 'APY', value: buildPercentageDisplayItem(yearlyROI) },
           { label: 'TVL', value: buildDollarDisplayItem(totalValueLocked) },
+          { label: 'displayInExplore', value: isActive },
         ];
-        const displayProps = { label, secondaryLabel, images, statsItems };
+        const displayProps = {
+          label,
+          secondaryLabel,
+          images,
+          statsItems,
+        };
 
         const position: ContractPosition<MasterChefContractPositionDataProps> = {
           type,
