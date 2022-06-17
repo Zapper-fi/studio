@@ -56,6 +56,7 @@ export class FantomBeethovenXFarmContractPositionFetcher implements PositionFetc
           resolveTotalAllocPoints: ({ multicall, contract }) => multicall.wrap(contract).totalAllocPoint(),
           resolveTotalRewardRate: ({ multicall, contract }) => multicall.wrap(contract).beetsPerBlock(),
         }),
+        resolveReturnOnInvestmentLabel: () => 'APR',
       });
 
     return compact(contractPositions);

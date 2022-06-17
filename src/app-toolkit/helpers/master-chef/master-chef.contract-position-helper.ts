@@ -105,6 +105,7 @@ type MasterChefContractPositionHelperParams<T> = {
   resolveRewardRate?: MasterChefRewardRateStrategy<T>;
   resolveLiquidity?: MasterChefLiquidityStrategy<T>;
   resolveLabel?: MasterChefLabelStrategy;
+  resolveReturnOnInvestmentLabel?: () => string;
 };
 
 export type MasterChefContractPositionDataProps = {
@@ -145,6 +146,7 @@ export class MasterChefContractPositionHelper {
         .balanceOf(address),
     resolveAddress = async ({ contract }) => (contract as unknown as Contract).address,
     resolveLabel = ({ stakedToken }) => `Staked ${getLabelFromToken(stakedToken)}`,
+    resolveReturnOnInvestmentLabel = () => 'APY',
   }: MasterChefContractPositionHelperParams<T>): Promise<ContractPosition<MasterChefContractPositionDataProps>[]> {
     const provider = this.appToolkit.getNetworkProvider(network);
     const multicall = this.appToolkit.getMulticall(network);
@@ -282,7 +284,7 @@ export class MasterChefContractPositionHelper {
         const secondaryLabel = buildDollarDisplayItem(stakedToken.price);
         const images = getImagesFromToken(stakedToken);
         const statsItems = [
-          { label: 'APY', value: buildPercentageDisplayItem(yearlyROI) },
+          { label: resolveReturnOnInvestmentLabel(), value: buildPercentageDisplayItem(yearlyROI) },
           { label: 'Liquidity', value: buildDollarDisplayItem(liquidity) },
         ];
         const displayProps = {
