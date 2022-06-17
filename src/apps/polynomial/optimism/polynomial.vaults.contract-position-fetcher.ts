@@ -38,7 +38,7 @@ export class OptimismPolynomialVaultsContractPositionFetcher implements Position
             vaults.filter(vault => vault.type.includes('CALL')).map(vault => vault.contractAddress.toLowerCase()),
           resolveStakedTokenAddress: async ({ multicall, contract }) => multicall.wrap(contract).UNDERLYING(),
           resolveFarmContract: ({ address }) => this.contractFactory.polynomialCoveredCall({ address, network }),
-          resolveTotalValueLocked: ({ multicall, contract }) => multicall.wrap(contract).totalFunds(),
+          resolveLiquidity: ({ multicall, contract }) => multicall.wrap(contract).totalFunds(),
           resolveLabel: address =>
             resolveTitle(vaults.find(vault => vault.contractAddress.toLowerCase() === address).type),
           resolveRois: () => ({
@@ -58,7 +58,7 @@ export class OptimismPolynomialVaultsContractPositionFetcher implements Position
           vaults.filter(vault => vault.type.includes('PUT')).map(vault => vault.contractAddress.toLowerCase()),
         resolveStakedTokenAddress: async ({ multicall, contract }) => multicall.wrap(contract).COLLATERAL(),
         resolveFarmContract: ({ address }) => this.contractFactory.polynomialPutSelling({ address, network }),
-        resolveTotalValueLocked: ({ multicall, contract }) => multicall.wrap(contract).totalFunds(),
+        resolveLiquidity: ({ multicall, contract }) => multicall.wrap(contract).totalFunds(),
         resolveLabel: address =>
           resolveTitle(vaults.find(vault => vault.contractAddress.toLowerCase() === address).type),
         resolveRois: () => ({

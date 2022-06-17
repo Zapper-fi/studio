@@ -21,17 +21,13 @@ const network = Network.OPTIMISM_MAINNET;
 const VAULTS = [
   // USDC
   {
-    address: '0x2FaE8C7Edd26213cA1A88fC57B65352dbe353698'.toLowerCase(),
-    stakedTokenAddress: '0x7F5c764cBc14f9669B88837ca1490cCa17c31607'.toLowerCase(),
-    rewardTokenAddress: '0x7F5c764cBc14f9669B88837ca1490cCa17c31607'.toLowerCase(),
+    address: '0x2fae8c7edd26213ca1a88fc57b65352dbe353698',
+    stakedTokenAddress: '0x7f5c764cbc14f9669b88837ca1490cca17c31607',
+    rewardTokenAddress: '0x7f5c764cbc14f9669b88837ca1490cca17c31607',
   },
 ];
 
-export type PikaProtocolContractPositionDataProps = {
-  totalValueLocked: number;
-};
-
-@Register.ContractPositionFetcher({ appId, groupId, network })
+@Register.ContractPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
 export class OptimismPikaProtocolVaultContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
@@ -59,18 +55,13 @@ export class OptimismPikaProtocolVaultContractPositionFetcher implements Positio
         const rewardToken = allTokens.find(v => v.address === rewardTokenAddress);
         if (!stakedToken || !rewardToken) return null;
 
+        const contract = this.pikaProtocolContractFactory.pikaProtocolVault({ address, network });
+        const balanceRaw = await this.getVaultBalance(contract.address, stakedToken.address);
+        const liquidity = Number(balanceRaw) / 10 ** stakedToken.decimals;
         const tokens = [supplied(stakedToken), claimable(rewardToken)];
 
-        const contract = this.pikaProtocolContractFactory.pikaProtocolVault({ address, network });
-
-        const [balanceRaw] = await this.getVaultBalance(contract.address, stakedToken.address);
-
-        const totalValueLocked = Number(balanceRaw) / 10 ** stakedToken.decimals;
-
         const label = `Staked ${getLabelFromToken(stakedToken)}`;
-
         const images = getImagesFromToken(stakedToken);
-
         const secondaryLabel = buildDollarDisplayItem(stakedToken.price);
 
         const position: ContractPosition = {
@@ -80,12 +71,12 @@ export class OptimismPikaProtocolVaultContractPositionFetcher implements Positio
           address,
           network,
           tokens,
-          dataProps: { totalValueLocked },
+          dataProps: { liquidity },
           displayProps: {
             label,
             secondaryLabel,
             images,
-            statsItems: [{ label: 'Liquidity', value: buildDollarDisplayItem(totalValueLocked) }],
+            statsItems: [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }],
           },
         };
 

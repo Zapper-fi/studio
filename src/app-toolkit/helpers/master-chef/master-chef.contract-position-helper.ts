@@ -69,7 +69,7 @@ export type MasterChefRewardRateStrategy<T> = (opts: {
   appTokens: AppTokenPosition[];
 }) => Promise<number | number[] | BigNumber | BigNumber[]>;
 
-export type MasterChefTotalValueLockedStrategy<T> = (opts: {
+export type MasterChefLiquidityStrategy<T> = (opts: {
   contract: T;
   address: string;
   network: Network;
@@ -103,13 +103,12 @@ type MasterChefContractPositionHelperParams<T> = {
   resolveDepositTokenAddress: MasterChefDespositTokenAddressStrategy<T>;
   resolveRewardTokenAddresses: MasterChefRewardTokenAddressesStrategy<T>;
   resolveRewardRate?: MasterChefRewardRateStrategy<T>;
-  resolveTotalValueLocked?: MasterChefTotalValueLockedStrategy<T>;
+  resolveLiquidity?: MasterChefLiquidityStrategy<T>;
   resolveLabel?: MasterChefLabelStrategy;
 };
 
 export type MasterChefContractPositionDataProps = {
   poolIndex: number;
-  totalValueLocked: number;
   liquidity: number;
   isActive: boolean;
   dailyROI: number;
@@ -140,7 +139,7 @@ export class MasterChefContractPositionHelper {
     resolveRewardRate = async () => 0,
     resolvePoolIndexIsValid = async () => true,
     resolveEndBlock = async () => 0,
-    resolveTotalValueLocked = async ({ depositTokenAddress, address, multicall }) =>
+    resolveLiquidity = async ({ depositTokenAddress, address, multicall }) =>
       multicall
         .wrap(this.appToolkit.globalContracts.erc20({ network, address: depositTokenAddress }))
         .balanceOf(address),
@@ -211,8 +210,8 @@ export class MasterChefContractPositionHelper {
           }),
         );
 
-        // Resolve total value locked
-        const totalValueLockedRaw = await resolveTotalValueLocked({
+        // Resolve liquidity (aka TVL)
+        const liquidityRaw = await resolveLiquidity({
           multicall,
           poolIndex,
           contract,
@@ -246,9 +245,9 @@ export class MasterChefContractPositionHelper {
         let yearlyROI = 0;
         const isRewardsOver = endBlock > 0 && currentBlock >= endBlock;
         const isActive = !isRewardsOver && rewardsPerBlock.some(t => t > 0);
-        const totalValueLocked = stakedToken.price * (Number(totalValueLockedRaw) / 10 ** stakedToken.decimals);
+        const liquidity = stakedToken.price * (Number(liquidityRaw) / 10 ** stakedToken.decimals);
 
-        if (totalValueLocked !== 0 && isActive) {
+        if (liquidity !== 0 && isActive) {
           const roisPerToken = rewardTokens.map((rewardToken, index) => {
             const rewardPerBlock = (rewardsPerBlock[index] ?? 0) / 10 ** rewardToken.decimals;
             const dailyRewardRate =
@@ -257,7 +256,7 @@ export class MasterChefContractPositionHelper {
                 : rewardPerBlock * 86_400;
             const dailyRewardRateUSD = dailyRewardRate * rewardToken.price;
 
-            const dailyROI = (dailyRewardRateUSD + totalValueLocked) / totalValueLocked - 1;
+            const dailyROI = (dailyRewardRateUSD + liquidity) / liquidity - 1;
             const weeklyROI = Number(dailyROI * 7);
             const yearlyROI = dailyROI * 365;
             return { dailyROI, weeklyROI, yearlyROI };
@@ -271,8 +270,7 @@ export class MasterChefContractPositionHelper {
         // Resolve data properties
         const dataProps = {
           poolIndex,
-          totalValueLocked,
-          liquidity: totalValueLocked,
+          liquidity,
           isActive,
           dailyROI,
           weeklyROI,
@@ -284,10 +282,15 @@ export class MasterChefContractPositionHelper {
         const secondaryLabel = buildDollarDisplayItem(stakedToken.price);
         const images = getImagesFromToken(stakedToken);
         const statsItems = [
-          { label: 'ROI', value: buildPercentageDisplayItem(yearlyROI) },
-          { label: 'TVL', value: buildDollarDisplayItem(totalValueLocked) },
+          { label: 'APY', value: buildPercentageDisplayItem(yearlyROI) },
+          { label: 'Liquidity', value: buildDollarDisplayItem(liquidity) },
         ];
-        const displayProps = { label, secondaryLabel, images, statsItems };
+        const displayProps = {
+          label,
+          secondaryLabel,
+          images,
+          statsItems,
+        };
 
         const position: ContractPosition<MasterChefContractPositionDataProps> = {
           type,
@@ -304,7 +307,7 @@ export class MasterChefContractPositionHelper {
       }),
     );
 
-    return compact(contractPositions).filter(f => f.dataProps.totalValueLocked >= minimumTvl);
+    return compact(contractPositions).filter(f => f.dataProps.liquidity >= minimumTvl);
   }
 
   buildDefaultRewardsPerBlockStrategy<T>(opts: MasterChefDefaultRewardRateStrategyParams<T>) {

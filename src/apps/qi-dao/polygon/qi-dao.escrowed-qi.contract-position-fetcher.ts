@@ -11,16 +11,15 @@ import { Network } from '~types/network.interface';
 
 import { QI_DAO_DEFINITION } from '../qi-dao.definition';
 
-@Register.ContractPositionFetcher({
-  appId: QI_DAO_DEFINITION.id,
-  groupId: QI_DAO_DEFINITION.groups.escrowedQi.id,
-  network: Network.POLYGON_MAINNET,
-})
+const appId = QI_DAO_DEFINITION.id;
+const groupId = QI_DAO_DEFINITION.groups.escrowedQi.id;
+const network = Network.POLYGON_MAINNET;
+
+@Register.ContractPositionFetcher({ appId, groupId, network })
 export class PolygonQiDaoEscrowedQiContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
   async getPositions() {
-    const network = Network.POLYGON_MAINNET;
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
     const address = '0x880decade22ad9c58a8a4202ef143c4f305100b3';
     const qiToken = baseTokens.find(v => v.symbol === 'QI')!;
@@ -29,9 +28,9 @@ export class PolygonQiDaoEscrowedQiContractPositionFetcher implements PositionFe
     const contractPosition: ContractPosition = {
       type: ContractType.POSITION,
       address: address,
-      appId: QI_DAO_DEFINITION.id,
-      groupId: QI_DAO_DEFINITION.groups.escrowedQi.id,
-      network: Network.POLYGON_MAINNET,
+      appId,
+      groupId,
+      network,
       dataProps: {},
       displayProps: {
         label: 'Escrowed QI',
