@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.76.2](https://github.com/Zapper-fi/studio/compare/v0.76.1...v0.76.2) (2022-06-17)
+
+
+### Bug Fixes
+
+* **bastion:** Add logo and update name ([#672](https://github.com/Zapper-fi/studio/issues/672)) ([9ccdabb](https://github.com/Zapper-fi/studio/commit/9ccdabba09cae362d6cf3abc3826a69619e64f3a))
+
 ## [0.76.1](https://github.com/Zapper-fi/studio/compare/v0.76.0...v0.76.1) (2022-06-16)
 
 
