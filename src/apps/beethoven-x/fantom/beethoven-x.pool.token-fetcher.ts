@@ -16,7 +16,7 @@ const appId = BEETHOVEN_X_DEFINITION.id;
 const groupId = BEETHOVEN_X_DEFINITION.groups.pool.id;
 const network = Network.FANTOM_OPERA_MAINNET;
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
 export class FantomBeethovenXPoolTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(BalancerV2PoolTokensHelper) private readonly poolTokensHelper: BalancerV2PoolTokensHelper,
