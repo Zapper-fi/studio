@@ -203,7 +203,7 @@ export class SingleStakingFarmContractPositionHelper {
           const secondaryLabel = buildDollarDisplayItem(stakedToken.price);
           const images = [getTokenImg(stakedToken.address, network)];
           const statsItems = [
-            { label: 'APY', value: buildPercentageDisplayItem(rois.yearlyROI * 100) },
+            { label: 'APR', value: buildPercentageDisplayItem(rois.yearlyROI * 100) },
             { label: 'Liquidity', value: buildDollarDisplayItem(liquidity) },
           ];
           const displayProps = { label, secondaryLabel, images, statsItems };
