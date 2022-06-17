@@ -28,7 +28,7 @@ export const PANCAKESWAP_DEFINITION = appDefinition({
   primaryColor: '#1fc8d4',
   token: {
     address: '0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82',
-    network: Network.ETHEREUM_MAINNET,
+    network: Network.BINANCE_SMART_CHAIN_MAINNET,
   },
 });
 
