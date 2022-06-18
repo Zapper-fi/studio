@@ -1,0 +1,92 @@
+{
+  "0x942f2d75e01fa5eaf9e127b22326c12311ac5bc1": {
+    "products": [
+      {
+        "label": "Compounding Marinating UMAMI",
+        "assets": [
+          {
+            "type": "app-token",
+            "appId": "umami",
+            "groupId": "compound",
+            "address": "0x1922c36f3bc762ca300b4a46bb2102f84b1684ab",
+            "network": "arbitrum",
+            "symbol": "cmUMAMI",
+            "decimals": 9,
+            "supply": 254329.119314947,
+            "pricePerShare": 1.056632174420511,
+            "price": 14.602656650491461,
+            "tokens": [
+              {
+                "type": "app-token",
+                "appId": "umami",
+                "groupId": "marinate",
+                "address": "0x2adabd6e8ce3e82f52d9998a7f64a90d294a92a4",
+                "network": "arbitrum",
+                "symbol": "mUMAMI",
+                "decimals": 9,
+                "supply": 485321.182324936,
+                "pricePerShare": 1,
+                "price": 13.82,
+                "tokens": [
+                  {
+                    "id": "281",
+                    "networkId": 2,
+                    "address": "0x1622bf67e6e5747b81866fe0b85178a93c7f86e3",
+                    "name": "Umami",
+                    "symbol": "UMAMI",
+                    "decimals": 9,
+                    "coingeckoId": "umami-finance",
+                    "status": "approved",
+                    "hide": false,
+                    "canExchange": true,
+                    "updatedAt": "2022-06-18T03:21:22.422Z",
+                    "createdAt": "2022-05-18T12:54:47.549Z",
+                    "price": 13.82,
+                    "totalSupply": "1000000.253838756",
+                    "networkEnumValue": "arbitrum",
+                    "type": "base-token",
+                    "network": "arbitrum",
+                    "balance": 8918.005053782,
+                    "balanceRaw": "8918005053782",
+                    "balanceUSD": 123246.82984326725
+                  }
+                ],
+                "dataProps": { "apy": "" },
+                "displayProps": {
+                  "label": "Marinating UMAMI",
+                  "images": [
+                    "https://storage.googleapis.com/zapper-fi-assets/tokens/arbitrum/0x1622bf67e6e5747b81866fe0b85178a93c7f86e3.png"
+                  ],
+                  "secondaryLabel": { "type": "dollar", "value": 13.82 },
+                  "statsItems": [{ "label": "Share", "value": { "type": "pct", "value": 1.8375470468979342 } }]
+                },
+                "balance": 8918.005053782,
+                "balanceRaw": "8918005053782",
+                "balanceUSD": 123246.82984326725
+              }
+            ],
+            "dataProps": { "pricePerShare": "1.056632174420511" },
+            "displayProps": {
+              "label": "Compounding Marinated UMAMI",
+              "images": [
+                "https://storage.googleapis.com/zapper-fi-assets/tokens/arbitrum/0x1622bf67e6e5747b81866fe0b85178a93c7f86e3.png"
+              ],
+              "secondaryLabel": { "type": "dollar", "value": 14.602656650491461 },
+              "tertiaryLabel": "1.056632174420511",
+              "statsItems": [{ "label": "Share", "value": { "type": "pct", "value": 3.31854564794224 } }]
+            },
+            "balance": 8440.027920476,
+            "balanceRaw": "8440027920476",
+            "balanceUSD": 123246.8298432725
+          }
+        ],
+        "meta": []
+      }
+    ],
+    "meta": [
+      { "label": "Total", "value": 123246.8298432725, "type": "dollar" },
+      { "label": "Assets", "value": 123246.8298432725, "type": "dollar" },
+      { "label": "Debt", "value": 0, "type": "dollar" }
+    ]
+  }
+}
