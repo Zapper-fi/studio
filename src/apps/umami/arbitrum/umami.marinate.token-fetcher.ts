@@ -49,8 +49,6 @@ export class ArbitrumUmamiMarinateTokenFetcher implements PositionFetcher<AppTok
     const label = `Marinating UMAMI`;
     const images = getImagesFromToken(underlyingToken);
     const secondaryLabel = buildDollarDisplayItem(price);
-    // // And for a tertiary label, we'll use the APY
-    // const tertiaryLabel = `${(apy * 100).toFixed(3)}% APY`;
 
     const token: AppTokenPosition = {
       type: ContractType.APP_TOKEN,
@@ -64,9 +62,7 @@ export class ArbitrumUmamiMarinateTokenFetcher implements PositionFetcher<AppTok
       pricePerShare,
       price,
       tokens,
-      dataProps: {
-        apy: '', //todo
-      },
+      dataProps: {},
       displayProps: {
         label,
         images,

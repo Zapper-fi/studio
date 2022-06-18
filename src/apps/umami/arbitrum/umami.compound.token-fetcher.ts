@@ -62,7 +62,7 @@ export class ArbitrumUmamiCompoundTokenFetcher implements PositionFetcher<AppTok
     const images = getImagesFromToken(underlyingToken);
     const secondaryLabel = buildDollarDisplayItem(price);
     const tertiaryLabel = `${pricePerShare}`;
-    // Create the token object
+
     const token: AppTokenPosition = {
       type: ContractType.APP_TOKEN,
       appId,
