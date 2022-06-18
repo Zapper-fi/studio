@@ -11,13 +11,11 @@ export const ARGO_FINANCE_DEFINITION = appDefinition({
   url: 'https://www.argofinance.money/',
 
   groups: {
-
     pledging: {
       id: 'pledging',
       type: GroupType.POSITION,
       label: 'Pledging',
     },
-
   },
 
   tags: [AppTag.LIQUID_STAKING],
