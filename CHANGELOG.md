@@ -4,6 +4,27 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.77.0](https://github.com/Zapper-fi/studio/compare/v0.76.2...v0.77.0) (2022-06-17)
+
+
+### Features
+
+* **beethoven-x:** Label ([c5df718](https://github.com/Zapper-fi/studio/commit/c5df718f60f0ba6baec73ced6435a0a760b8e1e0))
+* **farms:** Re-label APY to APR since we calculate non-compounding values here ([39bc100](https://github.com/Zapper-fi/studio/commit/39bc1007abe6c66f3f7dfb94ee1430d51a6615c8))
+
+
+### Bug Fixes
+
+* **beethoven-x:** Remove custom TVL fetcher ([#676](https://github.com/Zapper-fi/studio/issues/676)) ([85d550e](https://github.com/Zapper-fi/studio/commit/85d550e7ace9602c05996c3e312a41802190eb63))
+* **beethoven-x:** Update Farm APR label ([#674](https://github.com/Zapper-fi/studio/issues/674)) ([01d5605](https://github.com/Zapper-fi/studio/commit/01d5605eedb8f418639cb33a2a079649d70ff365))
+
+## [0.76.2](https://github.com/Zapper-fi/studio/compare/v0.76.1...v0.76.2) (2022-06-17)
+
+
+### Bug Fixes
+
+* **bastion:** Add logo and update name ([#672](https://github.com/Zapper-fi/studio/issues/672)) ([9ccdabb](https://github.com/Zapper-fi/studio/commit/9ccdabba09cae362d6cf3abc3826a69619e64f3a))
+
 ## [0.76.1](https://github.com/Zapper-fi/studio/compare/v0.76.0...v0.76.1) (2022-06-16)
 
 

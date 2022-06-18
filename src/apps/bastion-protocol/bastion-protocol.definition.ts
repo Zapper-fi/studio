@@ -5,7 +5,7 @@ import { Network } from '~types/network.interface';
 
 export const BASTION_PROTOCOL_DEFINITION = appDefinition({
   id: 'bastion-protocol',
-  name: 'bastion protocol',
+  name: 'Bastion',
   description: 'Liquidity Foundation of Aurora',
   url: 'https://bastionprotocol.com/',
 
