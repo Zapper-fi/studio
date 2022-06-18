@@ -84,17 +84,18 @@ export class CompoundBorrowContractPositionHelper {
         // The amount borrowed can be derived simply by substracting the liquidity from the total supply
         // of tokens
         borrow: borrowLiquidity,
+        isActive: Boolean(borrowLiquidity > 0),
       };
       const borrowApy = appToken.dataProps.borrowApy;
 
       // Display Props
-      const label = `Borrowed ${getLabelFromToken(appToken.tokens[0])}`;
+      const label = getLabelFromToken(appToken.tokens[0]);
       const secondaryLabel = buildDollarDisplayItem(underlyingPrice);
-      const tertiaryLabel = isNumber(borrowApy) ? `${(borrowApy * 100).toFixed(3)}% APR` : '';
+      const tertiaryLabel = isNumber(borrowApy) ? `${(borrowApy * 100).toFixed(3)}% APY` : '';
       const images = appToken.displayProps.images;
       const statsItems = isNumber(borrowApy)
         ? [
-            { label: 'Borrow APR', value: buildPercentageDisplayItem(borrowApy) },
+            { label: 'APY', value: buildPercentageDisplayItem(borrowApy) },
             { label: 'Liquidity', value: buildDollarDisplayItem(dataProps.liquidity) },
           ]
         : [];

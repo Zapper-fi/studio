@@ -22,21 +22,30 @@ type ReserveTokenAddressesData = {
   variableDebtTokenAddress: string;
 };
 
-type ReserveDataData = {
+type ReserveData = {
   liquidityRate: BigNumber;
   stableBorrowRate: BigNumber;
   variableBorrowRate: BigNumber;
 };
 
-export type AaveV2LendingTokenDataProps = ExchangeableAppTokenDataProps & {
-  apy: number;
+type ReserveConfigurationData = {
+  usageAsCollateralEnabled: boolean;
+  liquidationThreshold: BigNumber;
 };
 
-type AaveV2LendingTokenHelperParams<T = AaveProtocolDataProvider> = {
+export type AaveV2LendingTokenDataProps = ExchangeableAppTokenDataProps & {
+  apy: number;
+  enabledAsCollateral: boolean;
+  liquidity: number;
+  liquidationThreshold: number;
+};
+
+export type AaveV2LendingTokenHelperParams<T = AaveProtocolDataProvider> = {
   appId: string;
   groupId: string;
   network: Network;
   protocolDataProviderAddress: string;
+  isDebt?: boolean;
   dependencies?: AppGroupsDefinition[];
   resolveContract?: (opts: { contractFactory: AaveV2ContractFactory; address: string }) => T;
   resolveReserveTokens?: (opts: { contract: T }) => Promise<string[]>;
@@ -49,10 +58,15 @@ type AaveV2LendingTokenHelperParams<T = AaveProtocolDataProvider> = {
     contract: T;
     multicall: Multicall;
     reserveTokenAddress: string;
-  }) => Promise<ReserveDataData>;
+  }) => Promise<ReserveData>;
+  resolveReserveConfigurationData?: (opts: {
+    contract: T;
+    multicall: Multicall;
+    reserveTokenAddress: string;
+  }) => Promise<ReserveConfigurationData>;
   exchangeable?: boolean;
   resolveTokenAddress: (opts: { reserveTokenAddressesData: ReserveTokenAddressesData }) => string;
-  resolveLendingRate: (opts: { reserveData: ReserveDataData }) => BigNumber;
+  resolveLendingRate: (opts: { reserveData: ReserveData }) => BigNumber;
   resolveLabel: (opts: { reserveToken: Token }) => string;
   resolveApyLabel: (opts: { apy: number }) => string;
 };
@@ -70,6 +84,7 @@ export class AaveV2LendingTokenHelper {
     network,
     dependencies = [],
     protocolDataProviderAddress,
+    isDebt = false,
     resolveTokenAddress,
     resolveLendingRate,
     resolveLabel,
@@ -83,6 +98,8 @@ export class AaveV2LendingTokenHelper {
       multicall.wrap(contract as unknown as AaveProtocolDataProvider).getReserveTokensAddresses(reserveTokenAddress),
     resolveReserveData = ({ contract, multicall, reserveTokenAddress }) =>
       multicall.wrap(contract as unknown as AaveProtocolDataProvider).getReserveData(reserveTokenAddress),
+    resolveReserveConfigurationData = ({ contract, multicall, reserveTokenAddress }) =>
+      multicall.wrap(contract as unknown as AaveProtocolDataProvider).getReserveConfigurationData(reserveTokenAddress),
   }: AaveV2LendingTokenHelperParams<T>): Promise<AppTokenPosition<AaveV2LendingTokenDataProps>[]> {
     const multicall = this.appToolkit.getMulticall(network);
 
@@ -105,11 +122,12 @@ export class AaveV2LendingTokenHelper {
         const reserveToken = allTokens.find(v => v.address === reserveTokenAddress);
         if (!reserveToken) return null;
 
-        const [symbol, decimalsRaw, supplyRaw, reserveData] = await Promise.all([
+        const [symbol, decimalsRaw, supplyRaw, reserveData, reserveConfigurationData] = await Promise.all([
           multicall.wrap(this.appToolkit.globalContracts.erc20({ network, address: tokenAddress })).symbol(),
           multicall.wrap(this.appToolkit.globalContracts.erc20({ network, address: tokenAddress })).decimals(),
           multicall.wrap(this.appToolkit.globalContracts.erc20({ network, address: tokenAddress })).totalSupply(),
           resolveReserveData({ contract, multicall, reserveTokenAddress }),
+          resolveReserveConfigurationData({ contract, multicall, reserveTokenAddress }),
         ]);
 
         // Data Props
@@ -117,11 +135,22 @@ export class AaveV2LendingTokenHelper {
         const supply = Number(supplyRaw) / 10 ** decimals;
         const pricePerShare = 1; // Minted 1:1
         const price = pricePerShare * reserveToken.price;
-        const liquidity = price * supply;
+        const liquidityAmount = price * supply;
+        const liquidity = isDebt == true ? -liquidityAmount : liquidityAmount;
         const lendingRateRaw = resolveLendingRate({ reserveData });
         const apy = Number(lendingRateRaw) / 10 ** 27;
+        const liquidationThresholdRaw = reserveConfigurationData.liquidationThreshold;
+        const liquidationThreshold = Number(liquidationThresholdRaw) / 10 ** 4;
+        const enabledAsCollateral = reserveConfigurationData.usageAsCollateralEnabled;
         const tokens = [reserveToken];
-        const dataProps = { apy, exchangeable: exchangeable ?? false };
+        const dataProps = {
+          apy,
+          exchangeable: exchangeable ?? false,
+          enabledAsCollateral,
+          liquidity,
+          liquidationThreshold,
+          isActive: Boolean(liquidity < 0),
+        };
 
         // Display Props
         const label = resolveLabel({ reserveToken });
@@ -129,8 +158,8 @@ export class AaveV2LendingTokenHelper {
         const tertiaryLabel = resolveApyLabel({ apy });
         const images = getImagesFromToken(reserveToken);
         const statsItems = [
+          { label: 'APY', value: buildPercentageDisplayItem(apy) },
           { label: 'Liquidity', value: buildDollarDisplayItem(liquidity) },
-          { label: 'APY', value: buildPercentageDisplayItem(apy * 100) },
         ];
 
         const token: AppTokenPosition<AaveV2LendingTokenDataProps> = {

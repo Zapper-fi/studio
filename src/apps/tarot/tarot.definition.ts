@@ -11,7 +11,7 @@ export const TAROT_DEFINITION = appDefinition({
   tags: [AppTag.LENDING, AppTag.YIELD_AGGREGATOR],
   groups: {
     collateral: { id: 'collateral', type: GroupType.TOKEN, label: 'Lending Pools', groupLabel: 'Pools' },
-    supply: { id: 'supply', type: GroupType.TOKEN, label: 'Rewards', groupLabel: 'Supply' },
+    supply: { id: 'supply', type: GroupType.TOKEN, label: 'Supply', groupLabel: 'Supply', isHiddenFromExplore: true },
     borrow: { id: 'borrow', type: GroupType.POSITION, label: 'Lending Pools', groupLabel: 'Borrow' },
     supplyVault: { id: 'supply-vault', type: GroupType.TOKEN, label: 'Vaults', groupLabel: 'Vault' },
   },

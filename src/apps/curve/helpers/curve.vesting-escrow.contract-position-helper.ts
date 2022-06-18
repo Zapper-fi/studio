@@ -45,13 +45,25 @@ export class CurveVestingEscrowContractPositionHelper {
     const escrowedToken = baseTokens.find(v => v.address === escrowedTokenAddress)!;
     const tokens = [claimable(escrowedToken), vesting(escrowedToken)];
 
+    const escrowedTokenContract = this.contractFactory.erc20({ address: escrowedToken.address, network });
+    const balanceOfRaw = await multicall.wrap(escrowedTokenContract).balanceOf(vestingEscrowAddress);
+    const balanceOf = Number(balanceOfRaw) / 10 ** escrowedToken.decimals;
+    const liquidity = balanceOf * escrowedToken.price;
+
     // Display Props
     const label = `Vesting Escrow ${escrowedToken.symbol}`;
     const secondaryLabel = buildDollarDisplayItem(escrowedToken.price);
     const images = [getTokenImg(escrowedToken.address, network)];
-    const statsItems = [];
+    const statsItems = [
+      {
+        label: 'Liquidity',
+        value: buildDollarDisplayItem(liquidity),
+      },
+    ];
 
-    const dataProps = {};
+    const dataProps = {
+      liquidity,
+    };
     const displayProps = { label, secondaryLabel, images, statsItems };
 
     const contractPosition: ContractPosition = {
@@ -60,9 +72,9 @@ export class CurveVestingEscrowContractPositionHelper {
       appId,
       groupId,
       network,
+      tokens,
       dataProps,
       displayProps,
-      tokens,
     };
 
     return [contractPosition];

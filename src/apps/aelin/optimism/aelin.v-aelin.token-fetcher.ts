@@ -9,11 +9,11 @@ import { Network } from '~types/network.interface';
 import { AELIN_DEFINITION } from '../aelin.definition';
 import { AelinContractFactory } from '../contracts';
 
-@Register.TokenPositionFetcher({
-  appId: AELIN_DEFINITION.id,
-  groupId: AELIN_DEFINITION.groups.vAelin.id,
-  network: Network.OPTIMISM_MAINNET,
-})
+const appId = AELIN_DEFINITION.id;
+const groupId = AELIN_DEFINITION.groups.vAelin.id;
+const network = Network.OPTIMISM_MAINNET;
+
+@Register.TokenPositionFetcher({ appId, groupId, network })
 export class OptimismAelinVAelinTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
@@ -22,9 +22,9 @@ export class OptimismAelinVAelinTokenFetcher implements PositionFetcher<AppToken
 
   async getPositions() {
     return this.appToolkit.helpers.vaultTokenHelper.getTokens({
-      appId: AELIN_DEFINITION.id,
-      groupId: AELIN_DEFINITION.groups.vAelin.id,
-      network: Network.OPTIMISM_MAINNET,
+      appId,
+      groupId,
+      network,
       resolveContract: ({ address, network }) => this.aelinContractFactory.aelinVAelin({ address, network }),
       resolveVaultAddresses: () => ['0x780f70882ff4929d1a658a4e8ec8d4316b24748a'],
       resolveUnderlyingTokenAddress: () => '0x61baadcf22d2565b0f471b291c475db5555e0b76',

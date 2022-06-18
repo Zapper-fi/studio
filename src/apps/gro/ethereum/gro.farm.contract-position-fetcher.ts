@@ -25,7 +25,7 @@ export class EthereumGroFarmContractPositionFetcher implements PositionFetcher<C
 
   async getPositions(): Promise<ContractPosition<DefaultDataProps>[]> {
     return this.appToolkit.helpers.masterChefContractPositionHelper.getContractPositions<GroLpTokenStaker>({
-      address: '0x2E32bAd45a1C29c1EA27cf4dD588DF9e68ED376C'.toLowerCase(),
+      address: '0x2e32bad45a1c29c1ea27cf4dd588df9e68ed376c'.toLowerCase(),
       appId,
       groupId,
       network,

@@ -1,0 +1,297 @@
+[
+  {
+    "type": "constructor",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "addressesProvider",
+        "internalType": "contract ILendingPoolAddressesProvider"
+      }
+    ]
+  },
+  {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [
+      {
+        "type": "address",
+        "name": "",
+        "internalType": "contract ILendingPoolAddressesProvider"
+      }
+    ],
+    "name": "ADDRESSES_PROVIDER",
+    "inputs": []
+  },
+  {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [
+      {
+        "type": "tuple[]",
+        "name": "",
+        "internalType": "struct AaveProtocolDataProvider.TokenData[]",
+        "components": [
+          {
+            "type": "string",
+            "name": "symbol",
+            "internalType": "string"
+          },
+          {
+            "type": "address",
+            "name": "tokenAddress",
+            "internalType": "address"
+          }
+        ]
+      }
+    ],
+    "name": "getAllATokens",
+    "inputs": []
+  },
+  {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [
+      {
+        "type": "tuple[]",
+        "name": "",
+        "internalType": "struct AaveProtocolDataProvider.TokenData[]",
+        "components": [
+          {
+            "type": "string",
+            "name": "symbol",
+            "internalType": "string"
+          },
+          {
+            "type": "address",
+            "name": "tokenAddress",
+            "internalType": "address"
+          }
+        ]
+      }
+    ],
+    "name": "getAllReservesTokens",
+    "inputs": []
+  },
+  {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "decimals",
+        "internalType": "uint256"
+      },
+      {
+        "type": "uint256",
+        "name": "ltv",
+        "internalType": "uint256"
+      },
+      {
+        "type": "uint256",
+        "name": "liquidationThreshold",
+        "internalType": "uint256"
+      },
+      {
+        "type": "uint256",
+        "name": "liquidationBonus",
+        "internalType": "uint256"
+      },
+      {
+        "type": "uint256",
+        "name": "reserveFactor",
+        "internalType": "uint256"
+      },
+      {
+        "type": "bool",
+        "name": "usageAsCollateralEnabled",
+        "internalType": "bool"
+      },
+      {
+        "type": "bool",
+        "name": "borrowingEnabled",
+        "internalType": "bool"
+      },
+      {
+        "type": "bool",
+        "name": "stableBorrowRateEnabled",
+        "internalType": "bool"
+      },
+      {
+        "type": "bool",
+        "name": "isActive",
+        "internalType": "bool"
+      },
+      {
+        "type": "bool",
+        "name": "isFrozen",
+        "internalType": "bool"
+      }
+    ],
+    "name": "getReserveConfigurationData",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "asset",
+        "internalType": "address"
+      }
+    ]
+  },
+  {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "availableLiquidity",
+        "internalType": "uint256"
+      },
+      {
+        "type": "uint256",
+        "name": "totalStableDebt",
+        "internalType": "uint256"
+      },
+      {
+        "type": "uint256",
+        "name": "totalVariableDebt",
+        "internalType": "uint256"
+      },
+      {
+        "type": "uint256",
+        "name": "liquidityRate",
+        "internalType": "uint256"
+      },
+      {
+        "type": "uint256",
+        "name": "variableBorrowRate",
+        "internalType": "uint256"
+      },
+      {
+        "type": "uint256",
+        "name": "stableBorrowRate",
+        "internalType": "uint256"
+      },
+      {
+        "type": "uint256",
+        "name": "averageStableBorrowRate",
+        "internalType": "uint256"
+      },
+      {
+        "type": "uint256",
+        "name": "liquidityIndex",
+        "internalType": "uint256"
+      },
+      {
+        "type": "uint256",
+        "name": "variableBorrowIndex",
+        "internalType": "uint256"
+      },
+      {
+        "type": "uint40",
+        "name": "lastUpdateTimestamp",
+        "internalType": "uint40"
+      }
+    ],
+    "name": "getReserveData",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "asset",
+        "internalType": "address"
+      }
+    ]
+  },
+  {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [
+      {
+        "type": "address",
+        "name": "aTokenAddress",
+        "internalType": "address"
+      },
+      {
+        "type": "address",
+        "name": "stableDebtTokenAddress",
+        "internalType": "address"
+      },
+      {
+        "type": "address",
+        "name": "variableDebtTokenAddress",
+        "internalType": "address"
+      }
+    ],
+    "name": "getReserveTokensAddresses",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "asset",
+        "internalType": "address"
+      }
+    ]
+  },
+  {
+    "type": "function",
+    "stateMutability": "view",
+    "outputs": [
+      {
+        "type": "uint256",
+        "name": "currentATokenBalance",
+        "internalType": "uint256"
+      },
+      {
+        "type": "uint256",
+        "name": "currentStableDebt",
+        "internalType": "uint256"
+      },
+      {
+        "type": "uint256",
+        "name": "currentVariableDebt",
+        "internalType": "uint256"
+      },
+      {
+        "type": "uint256",
+        "name": "principalStableDebt",
+        "internalType": "uint256"
+      },
+      {
+        "type": "uint256",
+        "name": "scaledVariableDebt",
+        "internalType": "uint256"
+      },
+      {
+        "type": "uint256",
+        "name": "stableBorrowRate",
+        "internalType": "uint256"
+      },
+      {
+        "type": "uint256",
+        "name": "liquidityRate",
+        "internalType": "uint256"
+      },
+      {
+        "type": "uint40",
+        "name": "stableRateLastUpdated",
+        "internalType": "uint40"
+      },
+      {
+        "type": "bool",
+        "name": "usageAsCollateralEnabled",
+        "internalType": "bool"
+      }
+    ],
+    "name": "getUserReserveData",
+    "inputs": [
+      {
+        "type": "address",
+        "name": "asset",
+        "internalType": "address"
+      },
+      {
+        "type": "address",
+        "name": "user",
+        "internalType": "address"
+      }
+    ]
+  }
+]

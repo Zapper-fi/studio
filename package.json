@@ -1,6 +1,6 @@
 {
   "name": "@zapper-fi/studio",
-  "version": "0.64.0",
+  "version": "0.77.0",
   "description": "Community build apps for Zapper.fi",
   "license": "MIT",
   "main": "./index.js",
@@ -13,6 +13,7 @@
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "typecheck": "tsc --noEmit",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\"",
+    "lint:ci": "eslint $(git diff --name-only --diff-filter=ACMRTUXB main | grep -E \"(.js$|.ts$|.tsx$)\")",
     "lint:fix": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "start": "nest start",
     "studio": "node ./scripts/run-cli.js",
