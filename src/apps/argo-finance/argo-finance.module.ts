@@ -5,6 +5,7 @@ import { ArgoFinanceAppDefinition, ARGO_FINANCE_DEFINITION } from './argo-financ
 import { ArgoFinanceContractFactory } from './contracts';
 import { CronosArgoFinanceBalanceFetcher } from './cronos/argo-finance.balance-fetcher';
 import { CronosArgoFinancePledgingContractPositionFetcher } from './cronos/argo-finance.pledging.contract-position-fetcher';
+import { CronosArgoFinancePledgingTokenFetcher } from './cronos/argo-finance.pledging.token-fetcher';
 
 @Register.AppModule({
   appId: ARGO_FINANCE_DEFINITION.id,
@@ -12,7 +13,8 @@ import { CronosArgoFinancePledgingContractPositionFetcher } from './cronos/argo-
     ArgoFinanceAppDefinition,
     ArgoFinanceContractFactory,
     CronosArgoFinanceBalanceFetcher,
-    CronosArgoFinancePledgingContractPositionFetcher
+    CronosArgoFinancePledgingContractPositionFetcher,
+    CronosArgoFinancePledgingTokenFetcher,
   ],
 })
-export class ArgoFinanceAppModule extends AbstractApp() { }
+export class ArgoFinanceAppModule extends AbstractApp() {}
