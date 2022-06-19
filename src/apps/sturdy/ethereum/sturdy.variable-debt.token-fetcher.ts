@@ -23,6 +23,7 @@ export class EthereumSturdyVariableDebtTokenFetcher implements PositionFetcher<A
       groupId,
       network,
       protocolDataProviderAddress: '0xa422ca380bd70eef876292839222159e41aaee17',
+      isDebt: true,
       resolveTokenAddress: ({ reserveTokenAddressesData }) => reserveTokenAddressesData.variableDebtTokenAddress,
       resolveLendingRate: ({ reserveData }) => reserveData.variableBorrowRate,
       resolveLabel: ({ reserveToken }) => `Borrowed ${getLabelFromToken(reserveToken)}`,

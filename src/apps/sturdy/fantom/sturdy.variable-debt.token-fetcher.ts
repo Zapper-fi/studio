@@ -23,6 +23,7 @@ export class FantomSturdyVariableDebtTokenFetcher implements PositionFetcher<App
       groupId,
       network,
       protocolDataProviderAddress: '0x7ff2520cd7b76e8c49b5db51505b842d665f3e9a',
+      isDebt: true,
       resolveTokenAddress: ({ reserveTokenAddressesData }) => reserveTokenAddressesData.variableDebtTokenAddress,
       resolveLendingRate: ({ reserveData }) => reserveData.variableBorrowRate,
       resolveLabel: ({ reserveToken }) => `Borrowed ${getLabelFromToken(reserveToken)}`,
