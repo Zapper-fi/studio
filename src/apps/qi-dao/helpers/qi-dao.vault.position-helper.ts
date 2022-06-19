@@ -37,7 +37,7 @@ export class QiDaoVaultPositionHelper {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(QiDaoContractFactory) protected readonly contractFactory: QiDaoContractFactory,
-  ) {}
+  ) { }
 
   async getPositions({ network, vaults, debtTokenAddress, dependencies = [] }: QiDaoVaultPositionHelperParams) {
     const multicall = this.appToolkit.getMulticall(network);
