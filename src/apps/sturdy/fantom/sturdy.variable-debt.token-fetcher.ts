@@ -13,7 +13,7 @@ const appId = STURDY_DEFINITION.id;
 const groupId = STURDY_DEFINITION.groups.variableDebt.id;
 const network = Network.FANTOM_OPERA_MAINNET;
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
 export class FantomSturdyVariableDebtTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(@Inject(SturdyLendingTokenHelper) private readonly sturdyLendingTokenHelper: SturdyLendingTokenHelper) {}
 
@@ -26,7 +26,7 @@ export class FantomSturdyVariableDebtTokenFetcher implements PositionFetcher<App
       isDebt: true,
       resolveTokenAddress: ({ reserveTokenAddressesData }) => reserveTokenAddressesData.variableDebtTokenAddress,
       resolveLendingRate: ({ reserveData }) => reserveData.variableBorrowRate,
-      resolveLabel: ({ reserveToken }) => `Borrowed ${getLabelFromToken(reserveToken)}`,
+      resolveLabel: ({ reserveToken }) => getLabelFromToken(reserveToken),
       resolveApyLabel: ({ apy }) => `${(apy * 100).toFixed(3)}% APR (variable)`,
     });
   }
