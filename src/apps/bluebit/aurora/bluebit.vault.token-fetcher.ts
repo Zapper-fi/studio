@@ -1,5 +1,5 @@
 import { Inject } from '@nestjs/common';
-import { uniq } from 'lodash';
+import { compact, uniq } from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
@@ -31,16 +31,20 @@ export class AuroraBluebitVaultTokenFetcher implements PositionFetcher<AppTokenP
   async getVaults() {
     const stats = this.bluebitContractFactory.stats({ address: statsAddress, network: network });
     const vaults: any = await stats.vaults(zeroAddress);
-    let items: any = [];
-    for (let i = 0; i < vaults.length; i++) {
-      const pair = this.uniswapV2ContractFactory.uniswapPair({ address: vaults[i].token, network });
-      try {
-        await pair.token0();
-        items.push(vaults[i].token.toLowerCase());
-      } catch (error) {}
-    }
-    items = uniq(items);
-    return items;
+
+    const multicall = this.appToolkit.getMulticall(network);
+
+    const vaultAddresses = await Promise.all(
+      vaults.map(async vault => {
+        const pair = this.uniswapV2ContractFactory.uniswapPair({ address: vault.token, network });
+        const token0 = await multicall
+          .wrap(pair)
+          .token0()
+          .catch(() => null);
+        return token0 ? vault.token.toLowerCase() : null;
+      }),
+    );
+    return uniq(compact(vaultAddresses));
   }
 
   async getPositions() {

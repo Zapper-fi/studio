@@ -36,28 +36,15 @@ export class AuroraBluebitFarmContractPositionFetcher implements PositionFetcher
       ],
       resolveContract: opts => this.bluebitContractFactory.bluebit(opts),
       resolvePoolLength: async ({ multicall, contract }) => multicall.wrap(contract).poolLength(),
-      resolvePoolIndexIsValid: async ({ poolIndex, multicall }) => {
-        switch (poolIndex) {
-          case 2:
-          case 3:
-          case 13:
-          case 14:
-            return false;
-          default:
-            return true;
-        }
-      },
       resolveDepositTokenAddress: async ({ poolIndex, contract, multicall }) => {
         const pool = await multicall.wrap(contract).pools(poolIndex);
         const vault = this.bluebitContractFactory.vault({ address: pool.vault, network: network });
-        const token = await vault.swapPair();
-        return token.toLowerCase();
+        return await multicall.wrap(vault).swapPair();
       },
-      resolveTotalValueLocked: async ({ multicall, contract, poolIndex }) => {
+      resolveLiquidity: async ({ multicall, contract, poolIndex }) => {
         const pool = await multicall.wrap(contract).pools(poolIndex);
         const vault = this.bluebitContractFactory.vault({ address: pool.vault, network: network });
-        const totalSupply = await vault.totalSupply();
-        return totalSupply;
+        return await multicall.wrap(vault).totalSupply();
       },
       resolveRewardTokenAddresses: async ({ multicall, contract }) => multicall.wrap(contract).bluebitToken(),
       rewardRateUnit: RewardRateUnit.BLOCK,
