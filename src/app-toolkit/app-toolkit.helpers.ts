@@ -8,6 +8,8 @@ import { MasterChefContractPositionHelper } from './helpers/master-chef/master-c
 import { MasterChefDefaultClaimableBalanceStrategy } from './helpers/master-chef/master-chef.default.claimable-token-balances-strategy';
 import { MasterChefDefaultRewardRateStrategy } from './helpers/master-chef/master-chef.default.reward-token-reward-rate-strategy';
 import { MasterChefDefaultStakedBalanceStrategy } from './helpers/master-chef/master-chef.default.staked-token-balance-strategy';
+import { MasterChefRewarderClaimableBalanceStrategy } from './helpers/master-chef/master-chef.rewarder.claimable-token-balances-strategy';
+import { MasterChefRewarderClaimableTokenStrategy } from './helpers/master-chef/master-chef.rewarder.claimable-token-strategy';
 import { MasterChefV2ClaimableBalanceStrategy } from './helpers/master-chef/master-chef.v2.claimable-token-balance-strategy';
 import { MasterChefV2ClaimableTokenStrategy } from './helpers/master-chef/master-chef.v2.claimable-token-strategy';
 import { MasterChefV2RewardRateStrategy } from './helpers/master-chef/master-chef.v2.reward-rate-strategy';
@@ -35,6 +37,8 @@ export const AppToolkitHelpers = [
   MasterChefV2ClaimableBalanceStrategy,
   MasterChefV2ClaimableTokenStrategy,
   MasterChefV2RewardRateStrategy,
+  MasterChefRewarderClaimableBalanceStrategy,
+  MasterChefRewarderClaimableTokenStrategy,
   // Merkle
   MerkleContractPositionHelper,
 ];
@@ -67,6 +71,10 @@ export class AppToolkitHelperRegistry {
     public readonly masterChefV2ClaimableTokenStrategy: MasterChefV2ClaimableTokenStrategy,
     @Inject(MasterChefV2RewardRateStrategy)
     public readonly masterChefV2RewardRateStrategy: MasterChefV2RewardRateStrategy,
+    @Inject(MasterChefRewarderClaimableBalanceStrategy)
+    public readonly masterChefRewarderClaimableBalanceStrategy: MasterChefRewarderClaimableBalanceStrategy,
+    @Inject(MasterChefRewarderClaimableTokenStrategy)
+    public readonly masterChefRewarderClaimableTokenStrategy: MasterChefRewarderClaimableTokenStrategy,
     @Inject(MerkleContractPositionHelper)
     public readonly merkleContractPositionHelper: MerkleContractPositionHelper,
   ) {}
