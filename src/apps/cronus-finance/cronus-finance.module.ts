@@ -13,8 +13,8 @@ import { EvmosCronusFinanceTvlFetcher } from './evmos/cronus-finance.tvl-fetcher
   providers: [
     CronusFinanceAppDefinition,
     CronusFinanceContractFactory,
-    EvmosCronusFinanceBalanceFetcher,
     EvmosCronusFinanceFarmTokenFetcher,
+    EvmosCronusFinanceBalanceFetcher,
     EvmosCronusFinanceJarTokenFetcher,
     EvmosCronusFinanceTvlFetcher,
   ],
