@@ -12,8 +12,8 @@ import { EvmosCronusFinanceTvlFetcher } from './evmos/cronus-finance.tvl-fetcher
   appId: CRONUS_FINANCE_DEFINITION.id,
   providers: [
     CronusFinanceAppDefinition,
-    CronusFinanceContractFactory,
     EvmosCronusFinanceBalanceFetcher,
+    CronusFinanceContractFactory,
     EvmosCronusFinanceFarmTokenFetcher,
     EvmosCronusFinanceJarTokenFetcher,
     EvmosCronusFinanceTvlFetcher,
