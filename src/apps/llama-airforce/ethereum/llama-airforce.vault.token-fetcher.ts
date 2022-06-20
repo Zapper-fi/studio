@@ -15,7 +15,7 @@ const appId = LLAMA_AIRFORCE_DEFINITION.id;
 const groupId = LLAMA_AIRFORCE_DEFINITION.groups.vault.id;
 const network = Network.ETHEREUM_MAINNET;
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
 export class EthereumLlamaAirforceVaultTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
@@ -23,7 +23,7 @@ export class EthereumLlamaAirforceVaultTokenFetcher implements PositionFetcher<A
   ) {}
 
   async getPositions() {
-    return this.appToolkit.helpers.vaultTokenHelper.getTokens<LlamaAirforceUnionVault>({
+    return await this.appToolkit.helpers.vaultTokenHelper.getTokens<LlamaAirforceUnionVault>({
       appId,
       groupId,
       network,

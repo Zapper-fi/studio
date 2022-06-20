@@ -36,14 +36,16 @@ type ReserveConfigurationData = {
 export type AaveV2LendingTokenDataProps = ExchangeableAppTokenDataProps & {
   apy: number;
   enabledAsCollateral: boolean;
+  liquidity: number;
   liquidationThreshold: number;
 };
 
-type AaveV2LendingTokenHelperParams<T = AaveProtocolDataProvider> = {
+export type AaveV2LendingTokenHelperParams<T = AaveProtocolDataProvider> = {
   appId: string;
   groupId: string;
   network: Network;
   protocolDataProviderAddress: string;
+  isDebt?: boolean;
   dependencies?: AppGroupsDefinition[];
   resolveContract?: (opts: { contractFactory: AaveV2ContractFactory; address: string }) => T;
   resolveReserveTokens?: (opts: { contract: T }) => Promise<string[]>;
@@ -82,6 +84,7 @@ export class AaveV2LendingTokenHelper {
     network,
     dependencies = [],
     protocolDataProviderAddress,
+    isDebt = false,
     resolveTokenAddress,
     resolveLendingRate,
     resolveLabel,
@@ -132,14 +135,22 @@ export class AaveV2LendingTokenHelper {
         const supply = Number(supplyRaw) / 10 ** decimals;
         const pricePerShare = 1; // Minted 1:1
         const price = pricePerShare * reserveToken.price;
-        const liquidity = price * supply;
+        const liquidityAmount = price * supply;
+        const liquidity = isDebt == true ? -liquidityAmount : liquidityAmount;
         const lendingRateRaw = resolveLendingRate({ reserveData });
         const apy = Number(lendingRateRaw) / 10 ** 27;
         const liquidationThresholdRaw = reserveConfigurationData.liquidationThreshold;
         const liquidationThreshold = Number(liquidationThresholdRaw) / 10 ** 4;
         const enabledAsCollateral = reserveConfigurationData.usageAsCollateralEnabled;
         const tokens = [reserveToken];
-        const dataProps = { apy, exchangeable: exchangeable ?? false, enabledAsCollateral, liquidationThreshold };
+        const dataProps = {
+          apy,
+          exchangeable: exchangeable ?? false,
+          enabledAsCollateral,
+          liquidity,
+          liquidationThreshold,
+          isActive: Boolean(liquidity < 0),
+        };
 
         // Display Props
         const label = resolveLabel({ reserveToken });
@@ -147,7 +158,7 @@ export class AaveV2LendingTokenHelper {
         const tertiaryLabel = resolveApyLabel({ apy });
         const images = getImagesFromToken(reserveToken);
         const statsItems = [
-          { label: 'APY', value: buildPercentageDisplayItem(apy * 100) },
+          { label: 'APY', value: buildPercentageDisplayItem(apy) },
           { label: 'Liquidity', value: buildDollarDisplayItem(liquidity) },
         ];
 

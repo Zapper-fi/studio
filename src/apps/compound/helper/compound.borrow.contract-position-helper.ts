@@ -84,6 +84,7 @@ export class CompoundBorrowContractPositionHelper {
         // The amount borrowed can be derived simply by substracting the liquidity from the total supply
         // of tokens
         borrow: borrowLiquidity,
+        isActive: Boolean(borrowLiquidity > 0),
       };
       const borrowApy = appToken.dataProps.borrowApy;
 
