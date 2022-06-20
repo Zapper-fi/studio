@@ -9,7 +9,6 @@ import { ContractPosition } from '~position/position.interface';
 import { claimable, supplied } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 
-import { SolaceContractFactory } from '../contracts';
 import { SOLACE_DEFINITION } from '../solace.definition';
 
 const appId = SOLACE_DEFINITION.id;
@@ -21,10 +20,7 @@ const XSLOCKER_ADDRESS = '0x501ace47c5b0c2099c4464f681c3fa2ecd3146c1';
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
 export class EthereumSolaceXslockerContractPositionFetcher implements PositionFetcher<ContractPosition> {
-  constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(SolaceContractFactory) private readonly solaceContractFactory: SolaceContractFactory,
-  ) {}
+  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
   async getPositions() {
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
