@@ -39,7 +39,7 @@ export class AvalanchePenguinChefV2FarmContractPositionFetcher implements Positi
           .wrap(contract)
           .poolInfo(poolIndex)
           .then(v => v.poolToken),
-      resolveTotalValueLocked: ({ multicall, contract, poolIndex }) => multicall.wrap(contract).totalShares(poolIndex),
+      resolveLiquidity: ({ multicall, contract, poolIndex }) => multicall.wrap(contract).totalShares(poolIndex),
       resolveRewardTokenAddresses: this.appToolkit.helpers.masterChefV2ClaimableTokenStrategy.build<
         PenguinChefV2,
         PenguinExtraRewarder

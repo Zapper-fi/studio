@@ -19,7 +19,7 @@ export class EthereumEaseBalanceFetcher implements BalanceFetcher {
       address,
       appId: EASE_DEFINITION.id,
       groupId: EASE_DEFINITION.groups.rca.id,
-      network: network,
+      network,
     });
   }
 

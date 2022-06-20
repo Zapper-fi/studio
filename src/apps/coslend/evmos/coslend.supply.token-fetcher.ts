@@ -13,7 +13,7 @@ const appId = COSLEND_DEFINITION.id;
 const groupId = COSLEND_DEFINITION.groups.supply.id;
 const network = Network.EVMOS_MAINNET;
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
 export class EvmosCoslendSupplyTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(CoslendContractFactory) private readonly coslendContractFactory: CoslendContractFactory,
@@ -25,7 +25,7 @@ export class EvmosCoslendSupplyTokenFetcher implements PositionFetcher<AppTokenP
       network,
       appId,
       groupId,
-      comptrollerAddress: '0x2C8b48Dc777C26dc857E1040D8ef3Bdd3B1ef499',
+      comptrollerAddress: '0x2c8b48dc777c26dc857e1040d8ef3bdd3b1ef499',
       getComptrollerContract: ({ address, network }) =>
         this.coslendContractFactory.coslendComptroller({ address, network }),
       getTokenContract: ({ address, network }) => this.coslendContractFactory.coslendCToken({ address, network }),

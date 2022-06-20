@@ -101,7 +101,7 @@ export class CronosVvsFinanceFarmV2ContractPositionFetcher implements PositionFe
         resolveDepositTokenAddress: async ({ poolIndex }) => poolRecords[poolIndex].lpToken,
         resolveRewardTokenAddresses: async ({ poolIndex }) => poolRecords[poolIndex].rewards.map(r => r.token),
         rewardRateUnit: RewardRateUnit.SECOND,
-        resolveTotalValueLocked: async ({ depositTokenAddress, multicall }) =>
+        resolveLiquidity: async ({ depositTokenAddress, multicall }) =>
           multicall
             .wrap(this.appToolkit.globalContracts.erc20({ network, address: depositTokenAddress }))
             .balanceOf(craftsmanV1ContractAddress),

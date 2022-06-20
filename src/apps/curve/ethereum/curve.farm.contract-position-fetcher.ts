@@ -132,7 +132,7 @@ export class EthereumCurveFarmContractPositionFetcher implements PositionFetcher
       resolveImplementation: () => 'double-gauge',
       resolveFarmContract: ({ address, network }) => this.curveContractFactory.curveDoubleGauge({ address, network }),
       resolveStakedTokenAddress: ({ contract, multicall }) => multicall.wrap(contract).lp_token(),
-      resolveTotalValueLocked: ({ contract, multicall }) => multicall.wrap(contract).totalSupply(),
+      resolveLiquidity: ({ contract, multicall }) => multicall.wrap(contract).totalSupply(),
       resolveRewardTokenAddresses: async ({ contract, multicall }) => {
         const bonusRewardTokenAddress = await multicall.wrap(contract).rewarded_token();
         return [CRV_TOKEN_ADDRESS, bonusRewardTokenAddress].filter(v => v !== ZERO_ADDRESS);
@@ -169,7 +169,7 @@ export class EthereumCurveFarmContractPositionFetcher implements PositionFetcher
         return [...FARMS.nGauge, ...factoryGaugeAddresses];
       },
       resolveImplementation: () => 'n-gauge',
-      resolveTotalValueLocked: ({ contract, multicall }) => multicall.wrap(contract).totalSupply(),
+      resolveLiquidity: ({ contract, multicall }) => multicall.wrap(contract).totalSupply(),
       resolveFarmContract: ({ address, network }) => this.curveContractFactory.curveNGauge({ address, network }),
       resolveStakedTokenAddress: ({ contract, multicall }) => multicall.wrap(contract).lp_token(),
       resolveRewardTokenAddresses: async ({ contract, multicall }) => {
@@ -201,7 +201,7 @@ export class EthereumCurveFarmContractPositionFetcher implements PositionFetcher
       dependencies: [{ appId: CURVE_DEFINITION.id, groupIds: [CURVE_DEFINITION.groups.pool.id], network }],
       resolveFarmAddresses: async () => FARMS.nGaugeV2,
       resolveImplementation: () => 'n-gauge-v2',
-      resolveTotalValueLocked: ({ contract, multicall }) => multicall.wrap(contract).totalSupply(),
+      resolveLiquidity: ({ contract, multicall }) => multicall.wrap(contract).totalSupply(),
       resolveFarmContract: ({ address, network }) => this.curveContractFactory.curveNGauge({ address, network }),
       resolveStakedTokenAddress: ({ contract, multicall }) => multicall.wrap(contract).lp_token(),
       resolveRewardTokenAddresses: async ({ contract, multicall }) => {
