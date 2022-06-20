@@ -19,7 +19,7 @@ export class GnosisQiDaoBalanceFetcher implements BalanceFetcher {
     @Inject(QiDaoVaultPositionBalanceHelper)
     private readonly qiDaoVaultTokenBalanceHelper: QiDaoVaultPositionBalanceHelper,
     @Inject(QiDaoContractFactory) private readonly contractFactory: QiDaoContractFactory,
-  ) { }
+  ) {}
 
   async getVaultTokenBalances(address: string) {
     return this.qiDaoVaultTokenBalanceHelper.getPositionBalances({
@@ -29,15 +29,13 @@ export class GnosisQiDaoBalanceFetcher implements BalanceFetcher {
   }
 
   async getBalances(address: string) {
-    const [vaultTokenBalances] = await Promise.all([
-      this.getVaultTokenBalances(address),
-    ]);
+    const [vaultTokenBalances] = await Promise.all([this.getVaultTokenBalances(address)]);
 
     return presentBalanceFetcherResponse([
       {
         label: 'Vaults',
         assets: vaultTokenBalances,
-      }
+      },
     ]);
   }
 }

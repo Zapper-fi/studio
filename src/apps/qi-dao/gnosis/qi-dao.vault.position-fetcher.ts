@@ -14,7 +14,7 @@ const network = Network.GNOSIS_MAINNET;
 
 @Register.ContractPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
 export class GnosisQiDaoVaultPositionFetcher implements PositionFetcher<ContractPosition<QiDaoVaultPositionDataProps>> {
-  constructor(@Inject(QiDaoVaultPositionHelper) private readonly qiDaoVaultPositionHelper: QiDaoVaultPositionHelper) { }
+  constructor(@Inject(QiDaoVaultPositionHelper) private readonly qiDaoVaultPositionHelper: QiDaoVaultPositionHelper) {}
 
   getPositions() {
     return this.qiDaoVaultPositionHelper.getPositions({
@@ -28,7 +28,7 @@ export class GnosisQiDaoVaultPositionFetcher implements PositionFetcher<Contract
         {
           nftAddress: '0x014a177e9642d1b4e970418f894985dc1b85657f', // GNO
           vaultInfoAddress: '0x014a177e9642d1b4e970418f894985dc1b85657f',
-        }
+        },
       ],
     });
   }

@@ -40,4 +40,4 @@ import { QiDaoAppDefinition, QI_DAO_DEFINITION } from './qi-dao.definition';
     GnosisQiDaoVaultPositionFetcher,
   ],
 })
-export class QiDaoAppModule extends AbstractApp() { }
+export class QiDaoAppModule extends AbstractApp() {}
