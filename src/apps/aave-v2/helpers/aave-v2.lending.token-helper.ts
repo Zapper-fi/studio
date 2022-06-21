@@ -149,7 +149,7 @@ export class AaveV2LendingTokenHelper {
           enabledAsCollateral,
           liquidity,
           liquidationThreshold,
-          isActive: Boolean(liquidity < 0),
+          isActive: Boolean(liquidityAmount > 0),
         };
 
         // Display Props

@@ -43,7 +43,6 @@ type CompoundSupplyTokenHelperParams<T = CompoundComptroller, V = CompoundCToken
   getSupplyRate: (opts: { contract: V; multicall: Multicall }) => Promise<BigNumberish>;
   getBorrowRate: (opts: { contract: V; multicall: Multicall }) => Promise<BigNumberish>;
   getSupplyRateLabel?: () => string;
-  getBorrowRateLabel?: () => string;
   getUnderlyingAddress: (opts: { contract: V; multicall: Multicall }) => Promise<string>;
   getExchangeRateMantissa: (opts: { tokenDecimals: number; underlyingTokenDecimals: number }) => number;
   getDisplayLabel?: (opts: { contract: V; multicall: Multicall; underlyingToken: Token }) => Promise<string>;
@@ -74,7 +73,6 @@ export class CompoundSupplyTokenHelper {
     getSupplyRate,
     getBorrowRate,
     getSupplyRateLabel = () => 'APY',
-    getBorrowRateLabel = () => 'APR',
     getUnderlyingAddress,
     getExchangeRateMantissa,
     getDisplayLabel,
@@ -144,8 +142,7 @@ export class CompoundSupplyTokenHelper {
         const images = [getTokenImg(underlyingToken.address, network)];
         const balanceDisplayMode = BalanceDisplayMode.UNDERLYING;
         const statsItems = [
-          { label: getSupplyRateLabel(), value: buildPercentageDisplayItem(supplyApy) },
-          { label: getBorrowRateLabel(), value: buildPercentageDisplayItem(borrowApy) },
+          { label: getSupplyRateLabel(), value: buildPercentageDisplayItem(supplyApy * 100) },
           { label: 'Liquidity', value: buildDollarDisplayItem(liquidity) },
         ];
 
