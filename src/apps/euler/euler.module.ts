@@ -11,12 +11,12 @@ import { EulerAppDefinition, EULER_DEFINITION } from './euler.definition';
 @Register.AppModule({
   appId: EULER_DEFINITION.id,
   providers: [
+    EulerAppDefinition,
+    EulerContractFactory,
     EthereumEulerBalanceFetcher,
     EthereumEulerDTokenTokenFetcher,
     EthereumEulerETokenTokenFetcher,
     EthereumEulerPTokenTokenFetcher,
-    EulerAppDefinition,
-    EulerContractFactory,
   ],
 })
 export class EulerAppModule extends AbstractApp() {}
