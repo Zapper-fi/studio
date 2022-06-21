@@ -46,11 +46,11 @@ const FARMS = [
   },
 ];
 
-@Register.ContractPositionFetcher({
-  appId: SYNTHETIX_DEFINITION.id,
-  groupId: SYNTHETIX_DEFINITION.groups.farm.id,
-  network: Network.ETHEREUM_MAINNET,
-})
+const appId = SYNTHETIX_DEFINITION.id;
+const groupId = SYNTHETIX_DEFINITION.groups.farm.id;
+const network = Network.ETHEREUM_MAINNET;
+
+@Register.ContractPositionFetcher({ appId, groupId, network })
 export class EthereumSynthetixFarmContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(APP_TOOLKIT)
@@ -65,19 +65,19 @@ export class EthereumSynthetixFarmContractPositionFetcher implements PositionFet
 
   async getPositions() {
     return this.appToolkit.helpers.singleStakingFarmContractPositionHelper.getContractPositions<SynthetixRewards>({
-      network: Network.ETHEREUM_MAINNET,
-      appId: SYNTHETIX_DEFINITION.id,
-      groupId: SYNTHETIX_DEFINITION.groups.farm.id,
+      network,
+      appId,
+      groupId,
       dependencies: [
         {
           appId: BALANCER_V1_DEFINITION.id,
           groupIds: [BALANCER_V1_DEFINITION.groups.pool.id],
-          network: Network.ETHEREUM_MAINNET,
+          network,
         },
         {
           appId: CURVE_DEFINITION.id,
           groupIds: [CURVE_DEFINITION.groups.pool.id],
-          network: Network.ETHEREUM_MAINNET,
+          network,
         },
       ],
       resolveFarmDefinitions: async () => FARMS,

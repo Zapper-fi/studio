@@ -33,7 +33,6 @@ export class FantomIronBankSupplyTokenFetcher implements PositionFetcher<AppToke
       getExchangeRate: ({ contract, multicall }) => multicall.wrap(contract).exchangeRateCurrent(),
       getSupplyRate: ({ contract, multicall }) => multicall.wrap(contract).supplyRatePerBlock(),
       getBorrowRate: ({ contract, multicall }) => multicall.wrap(contract).borrowRatePerBlock(),
-      getBorrowRateLabel: () => 'Borrow APY',
       getUnderlyingAddress: ({ contract, multicall }) => multicall.wrap(contract).underlying(),
       getExchangeRateMantissa: ({ underlyingTokenDecimals }) => underlyingTokenDecimals + 10,
     });
