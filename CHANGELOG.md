@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.79.2](https://github.com/Zapper-fi/studio/compare/v0.79.1...v0.79.2) (2022-06-21)
+
+
+### Bug Fixes
+
+* Removed suffix on yearn vaults ([#694](https://github.com/Zapper-fi/studio/issues/694)) ([8a1166c](https://github.com/Zapper-fi/studio/commit/8a1166c5092fb4de7a42c083516d787583992021))
+
 ## [0.79.1](https://github.com/Zapper-fi/studio/compare/v0.79.0...v0.79.1) (2022-06-21)
 
 
