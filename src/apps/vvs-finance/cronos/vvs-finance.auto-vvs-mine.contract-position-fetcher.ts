@@ -48,6 +48,7 @@ export class CronosVvsFinanceAutoVvsMineContractPositionFetcher implements Posit
         resolveTotalAllocPoints: ({ multicall }) => multicall.wrap(chefContract).totalAllocPoint(),
         resolveTotalRewardRate: ({ multicall }) => multicall.wrap(chefContract).vvsPerBlock(),
       }),
+      resolveLabel: () => 'Auto VVS mine (compounding)',
     });
   }
 }
