@@ -1,4 +1,5 @@
 import { Inject } from '@nestjs/common';
+import axios from 'axios';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
@@ -15,6 +16,19 @@ import { UMAMI_DEFINITION } from '../umami.definition';
 const appId = UMAMI_DEFINITION.id;
 const groupId = UMAMI_DEFINITION.groups.compound.id;
 const network = Network.ARBITRUM_MAINNET;
+
+type UmamiMarinateApiObject = {
+  apy: string;
+};
+
+type UmamiCompounderApiObject = {
+  tvl: number;
+};
+
+export type UmamiApiDatas = {
+  marinate: UmamiMarinateApiObject;
+  mUmamiCompounder: UmamiCompounderApiObject;
+};
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
 export class ArbitrumUmamiCompoundTokenFetcher implements PositionFetcher<AppTokenPosition> {
@@ -52,6 +66,12 @@ export class ArbitrumUmamiCompoundTokenFetcher implements PositionFetcher<AppTok
 
     if (!underlyingToken) return [];
 
+    const data = await axios.get<UmamiApiDatas>('https://horseysauce.xyz/').then(v => v.data);
+
+    const { marinate, mUmamiCompounder } = data;
+    const { apy } = marinate;
+    const { tvl } = mUmamiCompounder;
+
     const supply = Number(supplyRaw) / 10 ** decimals;
     const reserve = Number(balanceRaw) / 10 ** decimals;
     const pricePerShare = reserve / supply;
@@ -61,7 +81,14 @@ export class ArbitrumUmamiCompoundTokenFetcher implements PositionFetcher<AppTok
     const label = `Compounding Marinated UMAMI`;
     const images = getImagesFromToken(underlyingToken);
     const secondaryLabel = buildDollarDisplayItem(price);
-    const tertiaryLabel = `${pricePerShare}`;
+
+    const tertiaryLabel = `${apy}% APY`;
+    const statsItems = [
+      {
+        label: 'TVL',
+        value: `${parseInt(`${tvl}`)}`,
+      },
+    ];
 
     const token: AppTokenPosition = {
       type: ContractType.APP_TOKEN,
@@ -76,13 +103,14 @@ export class ArbitrumUmamiCompoundTokenFetcher implements PositionFetcher<AppTok
       price,
       tokens,
       dataProps: {
-        pricePerShare: `${pricePerShare}`,
+        pricePerShare: `${parseFloat(`${pricePerShare}`).toFixed(3)}`,
       },
       displayProps: {
         label,
         images,
         secondaryLabel,
         tertiaryLabel,
+        statsItems,
       },
     };
     return [token];

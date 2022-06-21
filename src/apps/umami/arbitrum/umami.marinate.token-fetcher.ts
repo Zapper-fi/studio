@@ -1,4 +1,5 @@
 import { Inject } from '@nestjs/common';
+import axios from 'axios';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
@@ -15,6 +16,15 @@ import { UMAMI_DEFINITION } from '../umami.definition';
 const appId = UMAMI_DEFINITION.id;
 const groupId = UMAMI_DEFINITION.groups.marinate.id;
 const network = Network.ARBITRUM_MAINNET;
+
+type UmamiMarinateApiObject = {
+  apr: string;
+  marinateTVL: string;
+};
+
+export type UmamiApiDatas = {
+  marinate: UmamiMarinateApiObject;
+};
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
 export class ArbitrumUmamiMarinateTokenFetcher implements PositionFetcher<AppTokenPosition> {
@@ -43,12 +53,25 @@ export class ArbitrumUmamiMarinateTokenFetcher implements PositionFetcher<AppTok
     const baseTokenDependencies = await this.appToolkit.getBaseTokenPrices(network);
     const underlyingToken = baseTokenDependencies.find(v => v.address === UMAMI_ADDRESS);
     if (!underlyingToken) return [];
+
+    const data = await axios.get<UmamiApiDatas>('https://horseysauce.xyz/').then(v => v.data);
+
+    const { marinate } = data;
+    const { apr, marinateTVL } = marinate;
+
     const tokens = [underlyingToken];
     const pricePerShare = 1.0;
     const price = pricePerShare * underlyingToken.price;
     const label = `Marinating UMAMI`;
     const images = getImagesFromToken(underlyingToken);
     const secondaryLabel = buildDollarDisplayItem(price);
+    const tertiaryLabel = `${apr}% APR`;
+    const statsItems = [
+      {
+        label: 'TVL',
+        value: `${marinateTVL}`,
+      },
+    ];
 
     const token: AppTokenPosition = {
       type: ContractType.APP_TOKEN,
@@ -67,6 +90,8 @@ export class ArbitrumUmamiMarinateTokenFetcher implements PositionFetcher<AppTok
         label,
         images,
         secondaryLabel,
+        tertiaryLabel,
+        statsItems,
       },
     };
     return [token];
