@@ -25,9 +25,9 @@ export class AvalancheGroLabsTokenFetcher implements PositionFetcher<AppTokenPos
   ) {}
 
   async getPositions() {
-    const daiLabVaultAddress = '0x6063597B9356B246E706Fd6A48C780F897e3ef55';
-    const usdcLabVaultAddress = '0x2Eb05cfFA24309b9aaf300392A4D8Db745d4E592';
-    const usdtLabVaultAddress = '0x6EF44077a1F5e10cDfcCc30EFb7dCdb1d5475581';
+    const daiLabVaultAddress = '0x6063597b9356b246e706fd6a48c780f897e3ef55';
+    const usdcLabVaultAddress = '0x2eb05cffa24309b9aaf300392a4d8db745d4e592';
+    const usdtLabVaultAddress = '0x6ef44077a1f5e10cdfccc30efb7dcdb1d5475581';
     const vaultAddresses = [daiLabVaultAddress, usdcLabVaultAddress, usdtLabVaultAddress];
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
     const multicall = this.appToolkit.getMulticall(network);

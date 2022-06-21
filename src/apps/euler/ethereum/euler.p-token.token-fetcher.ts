@@ -57,7 +57,14 @@ interface EulerMarketsResponse {
   };
 }
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
+type EulerTokenDataProps = {
+  liquidity: number;
+  interestRate: number;
+  borrowAPY: number;
+  supplyAPY: number;
+};
+
+@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
 export class EthereumEulerPTokenTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
@@ -73,7 +80,6 @@ export class EthereumEulerPTokenTokenFetcher implements PositionFetcher<AppToken
     const tokens = await Promise.all(
       data.eulerMarketStore.markets.map(async market => {
         if (market.pTokenAddress === ZERO_ADDRESS) return null;
-
         const pTokenContract = this.eulerContractFactory.eulerPtokenContract({
           address: market.pTokenAddress,
           network,

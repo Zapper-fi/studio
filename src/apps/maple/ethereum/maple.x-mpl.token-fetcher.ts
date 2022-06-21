@@ -23,9 +23,9 @@ export class EthereumMapleXMplTokenFetcher implements PositionFetcher<AppTokenPo
 
   async getPositions() {
     return this.appToolkit.helpers.vaultTokenHelper.getTokens<MapleXMpl>({
-      appId: MAPLE_DEFINITION.id,
-      groupId: MAPLE_DEFINITION.groups.xMpl.id,
-      network: Network.ETHEREUM_MAINNET,
+      appId,
+      groupId,
+      network,
       resolveContract: ({ address, network }) => this.mapleContractFactory.mapleXMpl({ address, network }),
       resolveVaultAddresses: () => ['0x4937a209d4cdbd3ecd48857277cfd4da4d82914c'],
       resolveUnderlyingTokenAddress: ({ contract, multicall }) => multicall.wrap(contract).asset(),

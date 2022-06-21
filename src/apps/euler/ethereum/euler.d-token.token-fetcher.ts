@@ -60,7 +60,14 @@ interface EulerMarketsResponse {
   };
 }
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
+type EulerTokenDataProps = {
+  liquidity: number;
+  interestRate: number;
+  borrowAPY: number;
+  supplyAPY: number;
+};
+
+@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
 export class EthereumEulerDTokenTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
@@ -88,7 +95,6 @@ export class EthereumEulerDTokenTokenFetcher implements PositionFetcher<AppToken
         ]);
 
         const underlyingToken = baseTokens.find(token => token?.address === market.id.toLowerCase());
-
         if (totalSupplyRaw.isZero() || !underlyingToken) return null;
 
         const supply = Number(market.totalBalances) / 10 ** decimals;

@@ -6,7 +6,6 @@ import { CoslendAppDefinition, COSLEND_DEFINITION } from './coslend.definition';
 import { EvmosCoslendBalanceFetcher } from './evmos/coslend.balance-fetcher';
 import { EvmosCoslendBorrowContractPositionFetcher } from './evmos/coslend.borrow.contract-position-fetcher';
 import { EvmosCoslendSupplyTokenFetcher } from './evmos/coslend.supply.token-fetcher';
-import { EvmosCoslendTvlFetcher } from './evmos/coslend.tvl-fetcher';
 import { CoslendBorrowBalanceHelper } from './helper/coslend.borrow.balance-helper';
 import { CoslendBorrowContractPositionHelper } from './helper/coslend.borrow.contract-position-helper';
 import { CoslendLendingMetaHelper } from './helper/coslend.lending.meta-helper';
@@ -22,7 +21,6 @@ import { CoslendTvlHelper } from './helper/coslend.tvl-helper';
     EvmosCoslendBalanceFetcher,
     EvmosCoslendBorrowContractPositionFetcher,
     EvmosCoslendSupplyTokenFetcher,
-    EvmosCoslendTvlFetcher,
     // Helpers
     CoslendLendingMetaHelper,
     CoslendSupplyTokenHelper,

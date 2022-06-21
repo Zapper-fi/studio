@@ -1,5 +1,6 @@
 import { Inject } from '@nestjs/common';
-import { compact, range } from 'lodash';
+import _ from 'lodash';
+import { range } from 'lodash';
 import Web3 from 'web3';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
@@ -51,9 +52,12 @@ export class EthereumMakerVaultContractPositionFetcher implements PositionFetche
     const contractPositions = await Promise.all(
       range(0, Number(numIlks)).map(async ilkIndex => {
         const ilk = await multicall.wrap(ilkRegContract).get(ilkIndex);
+        const [gem, join] = await Promise.all([
+          multicall.wrap(ilkRegContract).gem(ilk),
+          multicall.wrap(ilkRegContract).join(ilk),
+        ]);
+
         const ilkName = Web3.utils.hexToAscii(ilk).replace(/\0/g, '');
-        const gem = await multicall.wrap(ilkRegContract).gem(ilk);
-        const join = await multicall.wrap(ilkRegContract).join(ilk);
 
         const contractAddress = join.toLowerCase();
         const collateralTokenAddress = gem.toLowerCase();
@@ -91,6 +95,6 @@ export class EthereumMakerVaultContractPositionFetcher implements PositionFetche
       }),
     );
 
-    return compact(contractPositions);
+    return _.compact(contractPositions);
   }
 }
