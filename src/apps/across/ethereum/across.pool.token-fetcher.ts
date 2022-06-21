@@ -33,7 +33,7 @@ export class EthereumAcrossPoolTokenFetcher implements PositionFetcher<AppTokenP
     const tokens = await Promise.all(
       ACROSS_V1_POOL_DEFINITIONS.map(async pool => {
         const tokenContract = this.acrossContractFactory.badgerPool({ address: pool.poolAddress, network });
-        const [label, symbol, decimals, supplyRaw, l1TokenAddressRaw, pricePerShareRaw] = await Promise.all([
+        const [labelRaw, symbol, decimals, supplyRaw, l1TokenAddressRaw, pricePerShareRaw] = await Promise.all([
           multicall.wrap(tokenContract).name(),
           multicall.wrap(tokenContract).symbol(),
           multicall.wrap(tokenContract).decimals(),
@@ -54,6 +54,7 @@ export class EthereumAcrossPoolTokenFetcher implements PositionFetcher<AppTokenP
         const images = [getAppImg(ACROSS_DEFINITION.id)];
         const liquidity = price * supply;
         const dataProps = { liquidity };
+        const label = labelRaw.slice(7);
         const displayProps = {
           label,
           secondaryLabel,
