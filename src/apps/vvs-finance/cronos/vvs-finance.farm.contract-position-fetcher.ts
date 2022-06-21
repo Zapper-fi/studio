@@ -3,6 +3,7 @@ import { Inject } from '@nestjs/common';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { RewardRateUnit } from '~app-toolkit/helpers/master-chef/master-chef.contract-position-helper';
+import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
@@ -51,9 +52,22 @@ export class CronosVvsFinanceFarmContractPositionFetcher implements PositionFetc
             return multicall.wrap(contract).vvsPerBlock();
           },
         }),
+        resolveLabel: ({ stakedToken, rewardTokens }) =>
+          `Staked ${getLabelFromToken(stakedToken)} for ${rewardTokens.map(getLabelFromToken).join(', ')} farm`,
       },
     );
 
-    return positions;
+    return positions.map(position => {
+      if (position.dataProps.poolIndex === 0) {
+        return {
+          ...position,
+          displayProps: {
+            ...position.displayProps,
+            label: 'Manual VVS mine',
+          },
+        };
+      }
+      return position;
+    });
   }
 }

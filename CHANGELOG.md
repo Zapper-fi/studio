@@ -4,6 +4,38 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.78.1](https://github.com/Zapper-fi/studio/compare/v0.78.0...v0.78.1) (2022-06-21)
+
+
+### Bug Fixes
+
+* **compound:** Fix lending display APY ([#696](https://github.com/Zapper-fi/studio/issues/696)) ([fdd8900](https://github.com/Zapper-fi/studio/commit/fdd8900e7ed1e9fe3a182b1ee7c616bcc5a00c3a))
+* **compound:** Remove displayed borrow APY from supply position ([#698](https://github.com/Zapper-fi/studio/issues/698)) ([1a3607f](https://github.com/Zapper-fi/studio/commit/1a3607f984b593662dfb8742c6c2241ff98a6727))
+* **iron-bank:** Add presentation config to Iron Bank ([#699](https://github.com/Zapper-fi/studio/issues/699)) ([8aa8c4a](https://github.com/Zapper-fi/studio/commit/8aa8c4a3a73f363f34a12ba93cb1e4155efca1b1))
+
+## [0.78.0](https://github.com/Zapper-fi/studio/compare/v0.77.0...v0.78.0) (2022-06-21)
+
+
+### Features
+
+* **argo-finance:** Added Argo Finance to Zapper ([#652](https://github.com/Zapper-fi/studio/issues/652)) ([84fa912](https://github.com/Zapper-fi/studio/commit/84fa91210f72c0e50ef2941bafea9b0d6612a14b))
+* **bluebit:** added Bluebit Finance to Zapper ([#659](https://github.com/Zapper-fi/studio/issues/659)) ([9efe649](https://github.com/Zapper-fi/studio/commit/9efe649c4e0cc4b0c9b87dbfee5c9108d59606fc))
+* **dhedge-v2:** Add dHEDGE V2 ([#683](https://github.com/Zapper-fi/studio/issues/683)) ([55045f6](https://github.com/Zapper-fi/studio/commit/55045f6c25ed53ce514ca31def36e3b80b0d3a74))
+* **evmoswap:** Implemented EvmoSwap ([#681](https://github.com/Zapper-fi/studio/issues/681)) ([2801fa0](https://github.com/Zapper-fi/studio/commit/2801fa0b13178ef8791c391dd45b8ae2002fabc1))
+* **sushiswap-bentobox:** Migrate Bentobox to studio ([#685](https://github.com/Zapper-fi/studio/issues/685)) ([b3f2d3a](https://github.com/Zapper-fi/studio/commit/b3f2d3a1c5c523533842c5a5bedecaeced8c9362))
+* **qi-dao:** Add Gnosis chain support ([#686](https://github.com/Zapper-fi/studio/issues/686)) ([ee1d35b](https://github.com/Zapper-fi/studio/commit/ee1d35b2a24d04cbe7c1f0854e3964c1d452976f))
+* **umami:** Add staking tokens and rewards ([#680](https://github.com/Zapper-fi/studio/issues/680)) ([ca525b9](https://github.com/Zapper-fi/studio/commit/ca525b977ddfa513d4bf11b6e7355cba77243cf0))
+
+
+### Bug Fixes
+
+* **across:** Fix label ([#690](https://github.com/Zapper-fi/studio/issues/690)) ([b6715d7](https://github.com/Zapper-fi/studio/commit/b6715d76f8115b94f2abed8bfcd9473dd6facfd4))
+* **apps:** Add missing logos and adjust names ([6f8e9d8](https://github.com/Zapper-fi/studio/commit/6f8e9d842849ba0d30aa8417e7901d5da99e9c8c))
+* **euler:** Fix token values and calculations ([#660](https://github.com/Zapper-fi/studio/issues/660)) ([3a17376](https://github.com/Zapper-fi/studio/commit/3a17376ba0277b0fa062335b8178fe6ba2869535))
+* **apps:** ([#691](https://github.com/Zapper-fi/studio/issues/691)) ([00107ea](https://github.com/Zapper-fi/studio/commit/00107ea6816af0dda4515cfde5473ff8d9d246bf))
+* **sturdy:** Fix Sturdy TVL and remove legacy TVL fetcher ([#682](https://github.com/Zapper-fi/studio/issues/682)) ([9e89e65](https://github.com/Zapper-fi/studio/commit/9e89e6548ab84ddabd83e3080d72e08f85a67202))
+* **vvs-finance:** Add labels and xVVS token balance ([#687](https://github.com/Zapper-fi/studio/issues/687)) ([71fb81e](https://github.com/Zapper-fi/studio/commit/71fb81e75f0343161c5eb1587240f90509fdf901))
+
 ## [0.77.0](https://github.com/Zapper-fi/studio/compare/v0.76.2...v0.77.0) (2022-06-17)
 
 

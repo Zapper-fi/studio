@@ -13,7 +13,7 @@ const appId = STURDY_DEFINITION.id;
 const groupId = STURDY_DEFINITION.groups.stableDebt.id;
 const network = Network.ETHEREUM_MAINNET;
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
 export class EthereumSturdyStableDebtTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(@Inject(SturdyLendingTokenHelper) private readonly sturdyLendingTokenHelper: SturdyLendingTokenHelper) {}
 
@@ -23,9 +23,10 @@ export class EthereumSturdyStableDebtTokenFetcher implements PositionFetcher<App
       groupId,
       network,
       protocolDataProviderAddress: '0xa422ca380bd70eef876292839222159e41aaee17',
+      isDebt: true,
       resolveTokenAddress: ({ reserveTokenAddressesData }) => reserveTokenAddressesData.stableDebtTokenAddress,
       resolveLendingRate: ({ reserveData }) => reserveData.stableBorrowRate,
-      resolveLabel: ({ reserveToken }) => `Borrowed ${getLabelFromToken(reserveToken)}`,
+      resolveLabel: ({ reserveToken }) => getLabelFromToken(reserveToken),
       resolveApyLabel: ({ apy }) => `${(apy * 100).toFixed(3)}% APR (stable)`,
     });
   }

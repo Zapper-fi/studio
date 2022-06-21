@@ -9,8 +9,28 @@ export const IRON_BANK_DEFINITION = appDefinition({
   description: 'iron',
   url: 'https://app.ib.xyz/',
   groups: {
-    supply: { id: 'supply', type: GroupType.TOKEN, label: 'Supply' },
-    borrow: { id: 'borrow', type: GroupType.POSITION, label: 'Borrow' },
+    supply: { id: 'supply', type: GroupType.TOKEN, label: 'Lending', groupLabel: 'Supply' },
+    borrow: { id: 'borrow', type: GroupType.POSITION, label: 'Lending', groupLabel: 'Borrow' },
+  },
+  presentationConfig: {
+    tabs: [
+      {
+        label: 'Lending',
+        viewType: 'split',
+        views: [
+          {
+            viewType: 'list',
+            label: 'Supply',
+            groupIds: ['supply'],
+          },
+          {
+            viewType: 'list',
+            label: 'Borrow',
+            groupIds: ['borrow'],
+          },
+        ],
+      },
+    ],
   },
   tags: [AppTag.LENDING],
   keywords: [],
