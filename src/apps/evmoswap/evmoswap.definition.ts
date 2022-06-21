@@ -5,7 +5,7 @@ import { Network } from '~types/network.interface';
 
 export const EVMOSWAP_DEFINITION = appDefinition({
   id: 'evmoswap',
-  name: 'evmoswap',
+  name: 'EvmoSwap',
   description:
     'EvmoSwap is a Decentralized Autonomous Organization (DAO) that offers a full suite of tools to explore and engage with decentralized finance opportunities.',
   url: 'https://app.evmoswap.org',
@@ -15,7 +15,7 @@ export const EVMOSWAP_DEFINITION = appDefinition({
   },
 
   tags: [AppTag.DECENTRALIZED_EXCHANGE, AppTag.FARMING, AppTag.LIQUIDITY_POOL, AppTag.STAKING],
-  
+
   keywords: ['dex', 'defi', 'evmos', 'cosmos', 'decentralized finance', 'evmoswap', 'pools', 'liquidity', 'staking'],
   links: {
     github: 'https://github.com/evmoswap',
