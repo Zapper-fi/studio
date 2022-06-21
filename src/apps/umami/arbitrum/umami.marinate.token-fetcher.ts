@@ -3,7 +3,10 @@ import axios from 'axios';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
-import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
+import {
+  buildDollarDisplayItem,
+  buildPercentageDisplayItem,
+} from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { CacheOnInterval } from '~cache/cache-on-interval.decorator';
 import { ContractType } from '~position/contract.interface';
@@ -35,7 +38,7 @@ export class ArbitrumUmamiMarinateTokenFetcher implements PositionFetcher<AppTok
   ) {}
 
   @CacheOnInterval({
-    key: `apps-v3:${network}:${appId}:${groupId}:informations`,
+    key: `studio:${network}:${appId}:${groupId}:informations`,
     timeout: 15 * 60 * 1000,
   })
   async getUmamiInformations() {
@@ -79,11 +82,15 @@ export class ArbitrumUmamiMarinateTokenFetcher implements PositionFetcher<AppTok
     const label = `Marinating UMAMI`;
     const images = getImagesFromToken(underlyingToken);
     const secondaryLabel = buildDollarDisplayItem(price);
-    const tertiaryLabel = `${apr}% APR`;
+
     const statsItems = [
       {
-        label: 'TVL',
-        value: `${marinateTVL}`,
+        label: 'Liquidity',
+        value: buildDollarDisplayItem(parseFloat(marinateTVL)),
+      },
+      {
+        label: 'APR',
+        value: buildPercentageDisplayItem(parseFloat(apr)),
       },
     ];
 
@@ -104,7 +111,6 @@ export class ArbitrumUmamiMarinateTokenFetcher implements PositionFetcher<AppTok
         label,
         images,
         secondaryLabel,
-        tertiaryLabel,
         statsItems,
       },
     };

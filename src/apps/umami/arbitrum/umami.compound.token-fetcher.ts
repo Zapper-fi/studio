@@ -3,7 +3,10 @@ import axios from 'axios';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
-import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
+import {
+  buildDollarDisplayItem,
+  buildPercentageDisplayItem,
+} from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { CacheOnInterval } from '~cache/cache-on-interval.decorator';
 import { ContractType } from '~position/contract.interface';
@@ -39,7 +42,7 @@ export class ArbitrumUmamiCompoundTokenFetcher implements PositionFetcher<AppTok
   ) {}
 
   @CacheOnInterval({
-    key: `apps-v3:${network}:${appId}:${groupId}:informations`,
+    key: `studio:${network}:${appId}:${groupId}:informations`,
     timeout: 15 * 60 * 1000,
   })
   async getUmamiInformations() {
@@ -94,11 +97,14 @@ export class ArbitrumUmamiCompoundTokenFetcher implements PositionFetcher<AppTok
     const images = getImagesFromToken(underlyingToken);
     const secondaryLabel = buildDollarDisplayItem(price);
 
-    const tertiaryLabel = `${apy}% APY`;
     const statsItems = [
       {
-        label: 'TVL',
-        value: `${parseInt(`${tvl}`)}`,
+        label: 'Liquidity',
+        value: buildDollarDisplayItem(tvl),
+      },
+      {
+        label: 'APY',
+        value: buildPercentageDisplayItem(parseFloat(apy)),
       },
     ];
 
@@ -111,7 +117,7 @@ export class ArbitrumUmamiCompoundTokenFetcher implements PositionFetcher<AppTok
       symbol,
       decimals,
       supply,
-      pricePerShare: Number(parseFloat(`${pricePerShare}`).toFixed(4)),
+      pricePerShare,
       price,
       tokens,
       dataProps: {},
@@ -119,7 +125,6 @@ export class ArbitrumUmamiCompoundTokenFetcher implements PositionFetcher<AppTok
         label,
         images,
         secondaryLabel,
-        tertiaryLabel,
         statsItems,
       },
     };

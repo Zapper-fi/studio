@@ -5,7 +5,7 @@ import { Network } from '~types/network.interface';
 
 export const UMAMI_DEFINITION = appDefinition({
   id: 'umami',
-  name: 'UMAMI',
+  name: 'Umami Finance',
   description:
     'Umami’s expanding menu of strategy vaults and staking options offers sustainable, risk-hedged passive income in WETH and USDC sourced from across Arbitrum’s DeFi ecosystem.',
   url: 'https://umami.finance/',
