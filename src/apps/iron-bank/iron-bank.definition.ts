@@ -6,7 +6,8 @@ import { Network } from '~types/network.interface';
 export const IRON_BANK_DEFINITION = appDefinition({
   id: 'iron-bank',
   name: 'Iron Bank',
-  description: 'iron',
+  description:
+    'Iron Bank is a decentralized protocol to protocol lending platform. It allows trusted protocols to borrow funds without posting collateral via whitelisting.',
   url: 'https://app.ib.xyz/',
   groups: {
     supply: { id: 'supply', type: GroupType.TOKEN, label: 'Lending', groupLabel: 'Supply' },
