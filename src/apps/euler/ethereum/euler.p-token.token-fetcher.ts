@@ -57,13 +57,6 @@ interface EulerMarketsResponse {
   };
 }
 
-type EulerTokenDataProps = {
-  liquidity: number;
-  interestRate: number;
-  borrowAPY: number;
-  supplyAPY: number;
-};
-
 @Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
 export class EthereumEulerPTokenTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
@@ -89,7 +82,7 @@ export class EthereumEulerPTokenTokenFetcher implements PositionFetcher<AppToken
           multicall.wrap(pTokenContract).totalSupply(),
           multicall.wrap(pTokenContract).decimals(),
         ]);
-        const underlyingToken = baseTokens.find(token => token?.address === market.id.toLowerCase());
+        const underlyingToken = baseTokens.find(token => token.address === market.id.toLowerCase());
         if (totalSupplyRaw.isZero() || !underlyingToken) return null;
 
         const supply = Number(totalSupplyRaw) / 10 ** decimals;
@@ -104,22 +97,15 @@ export class EthereumEulerPTokenTokenFetcher implements PositionFetcher<AppToken
           interestRate,
         };
 
-        const statsItems = [
-          {
-            label: 'Liquidity',
-            value: buildDollarDisplayItem(dataProps.liquidity),
-          },
-        ];
-
         const displayProps = {
-          label: `${market.name} (P)`,
+          label: market.name,
           secondaryLabel: buildDollarDisplayItem(underlyingToken.price),
           images: getImagesFromToken(underlyingToken),
-          statsItems,
+          statsItems: [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }],
         };
 
-        return {
-          type: ContractType.APP_TOKEN as const,
+        const token: AppTokenPosition = {
+          type: ContractType.APP_TOKEN,
           address: market.pTokenAddress,
           appId,
           groupId,
@@ -133,6 +119,8 @@ export class EthereumEulerPTokenTokenFetcher implements PositionFetcher<AppToken
           dataProps,
           displayProps,
         };
+
+        return token;
       }),
     );
 
