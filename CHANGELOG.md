@@ -4,6 +4,19 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.79.0](https://github.com/Zapper-fi/studio/compare/v0.78.1...v0.79.0) (2022-06-21)
+
+
+### Features
+
+* **aave-v2:** Add presentation config ([#705](https://github.com/Zapper-fi/studio/issues/705)) ([cd13f94](https://github.com/Zapper-fi/studio/commit/cd13f946e1d65d3eff6c4d5b85607c0d355aef7d))
+* **compound:** Add presentation config ([#701](https://github.com/Zapper-fi/studio/issues/701)) ([7f9c960](https://github.com/Zapper-fi/studio/commit/7f9c9609c32460fa95b473459d78f3918b9103dc))
+
+
+### Bug Fixes
+
+* **aave-v2:** Fix isActive dataProps ([#704](https://github.com/Zapper-fi/studio/issues/704)) ([066a11f](https://github.com/Zapper-fi/studio/commit/066a11f300bed91157a1b9f59fea5b60dada92e7))
+
 ## [0.78.1](https://github.com/Zapper-fi/studio/compare/v0.78.0...v0.78.1) (2022-06-21)
 
 
