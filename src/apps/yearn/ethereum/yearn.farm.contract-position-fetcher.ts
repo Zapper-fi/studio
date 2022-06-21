@@ -27,7 +27,7 @@ const appId = YEARN_DEFINITION.id;
 const groupId = YEARN_DEFINITION.groups.farm.id;
 const network = Network.ETHEREUM_MAINNET;
 
-@Register.ContractPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
+@Register.ContractPositionFetcher({ appId, groupId, network })
 export class EthereumYearnFarmContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(APP_TOOLKIT)

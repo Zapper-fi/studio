@@ -8,7 +8,7 @@ export const SUSHISWAP_BENTOBOX_DEFINITION = appDefinition({
   name: 'SushiSwap BentoBox',
   description: `BentoBox is a token vault that generates yield for the capital deposited into it`,
   groups: {
-    vault: { id: 'vault', type: GroupType.POSITION, label: 'SushiSwap BentoBox', groupLabel: 'Farms' },
+    vault: { id: 'vault', type: GroupType.POSITION, label: 'SushiSwap BentoBox', groupLabel: 'Vaults' },
   },
   url: 'https://sushi.com',
   tags: [AppTag.YIELD_AGGREGATOR],
