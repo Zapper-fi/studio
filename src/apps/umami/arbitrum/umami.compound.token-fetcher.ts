@@ -5,6 +5,7 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { CacheOnInterval } from '~cache/cache-on-interval.decorator';
 import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
@@ -37,6 +38,22 @@ export class ArbitrumUmamiCompoundTokenFetcher implements PositionFetcher<AppTok
     @Inject(UmamiContractFactory) private readonly umamiContractFactory: UmamiContractFactory,
   ) {}
 
+  @CacheOnInterval({
+    key: `apps-v3:${network}:${appId}:${groupId}:informations`,
+    timeout: 15 * 60 * 1000,
+  })
+  async getUmamiInformations() {
+    const data = await axios.get<UmamiApiDatas>('https://horseysauce.xyz/').then(v => v.data);
+
+    const { marinate, mUmamiCompounder } = data;
+    const { apy } = marinate;
+    const { tvl } = mUmamiCompounder;
+    return {
+      apy,
+      tvl,
+    };
+  }
+
   async getPositions() {
     const mUMAMI_ADDRESS = '0x2AdAbD6E8Ce3e82f52d9998a7f64a90d294A92A4'.toLowerCase();
     const cmUMAMI_ADDRESS = '0x1922C36F3bc762Ca300b4a46bB2102F84B1684aB'.toLowerCase();
@@ -66,19 +83,14 @@ export class ArbitrumUmamiCompoundTokenFetcher implements PositionFetcher<AppTok
 
     if (!underlyingToken) return [];
 
-    const data = await axios.get<UmamiApiDatas>('https://horseysauce.xyz/').then(v => v.data);
-
-    const { marinate, mUmamiCompounder } = data;
-    const { apy } = marinate;
-    const { tvl } = mUmamiCompounder;
+    const { apy, tvl } = await this.getUmamiInformations();
 
     const supply = Number(supplyRaw) / 10 ** decimals;
     const reserve = Number(balanceRaw) / 10 ** decimals;
     const pricePerShare = reserve / supply;
     const price = pricePerShare * underlyingToken.price;
     const tokens = [underlyingToken];
-
-    const label = `Compounding Marinated UMAMI`;
+    const label = `Compounding Marinating UMAMI`;
     const images = getImagesFromToken(underlyingToken);
     const secondaryLabel = buildDollarDisplayItem(price);
 
@@ -99,12 +111,10 @@ export class ArbitrumUmamiCompoundTokenFetcher implements PositionFetcher<AppTok
       symbol,
       decimals,
       supply,
-      pricePerShare,
+      pricePerShare: Number(parseFloat(`${pricePerShare}`).toFixed(4)),
       price,
       tokens,
-      dataProps: {
-        pricePerShare: `${parseFloat(`${pricePerShare}`).toFixed(3)}`,
-      },
+      dataProps: {},
       displayProps: {
         label,
         images,

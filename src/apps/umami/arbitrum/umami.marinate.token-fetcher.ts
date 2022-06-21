@@ -5,6 +5,7 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { CacheOnInterval } from '~cache/cache-on-interval.decorator';
 import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
@@ -33,6 +34,22 @@ export class ArbitrumUmamiMarinateTokenFetcher implements PositionFetcher<AppTok
     @Inject(UmamiContractFactory) private readonly umamiContractFactory: UmamiContractFactory,
   ) {}
 
+  @CacheOnInterval({
+    key: `apps-v3:${network}:${appId}:${groupId}:informations`,
+    timeout: 15 * 60 * 1000,
+  })
+  async getUmamiInformations() {
+    const data = await axios.get<UmamiApiDatas>('https://horseysauce.xyz/').then(v => v.data);
+
+    const { marinate } = data;
+    const { apr, marinateTVL } = marinate;
+
+    return {
+      apr,
+      marinateTVL,
+    };
+  }
+
   async getPositions() {
     const UMAMI_ADDRESS = '0x1622bF67e6e5747b81866fE0b85178a93C7F86e3'.toLowerCase();
     const mUMAMI_ADDRESS = '0x2AdAbD6E8Ce3e82f52d9998a7f64a90d294A92A4'.toLowerCase();
@@ -54,10 +71,7 @@ export class ArbitrumUmamiMarinateTokenFetcher implements PositionFetcher<AppTok
     const underlyingToken = baseTokenDependencies.find(v => v.address === UMAMI_ADDRESS);
     if (!underlyingToken) return [];
 
-    const data = await axios.get<UmamiApiDatas>('https://horseysauce.xyz/').then(v => v.data);
-
-    const { marinate } = data;
-    const { apr, marinateTVL } = marinate;
+    const { apr, marinateTVL } = await this.getUmamiInformations();
 
     const tokens = [underlyingToken];
     const pricePerShare = 1.0;
