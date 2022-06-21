@@ -70,6 +70,7 @@ export class EthereumEulerDTokenTokenFetcher implements PositionFetcher<AppToken
   async getPositions() {
     const endpoint = 'https://api.thegraph.com/subgraphs/name/euler-xyz/euler-mainnet';
     const data = await this.appToolkit.helpers.theGraphHelper.request<EulerMarketsResponse>({ endpoint, query });
+    const multicall = this.appToolkit.getMulticall(network);
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
 
     const tokens = await Promise.all(
@@ -81,47 +82,61 @@ export class EthereumEulerDTokenTokenFetcher implements PositionFetcher<AppToken
           network,
         });
 
-        const totalSupply = await dTokenContract.totalSupply();
+        const [totalSupplyRaw, decimals] = await Promise.all([
+          multicall.wrap(dTokenContract).totalSupply(),
+          multicall.wrap(dTokenContract).decimals(),
+        ]);
+
         const underlyingToken = baseTokens.find(token => token?.address === market.id.toLowerCase());
 
-        if (totalSupply.isZero() || !underlyingToken) return null;
+        if (totalSupplyRaw.isZero() || !underlyingToken) return null;
+
+        const supply = Number(market.totalBalances) / 10 ** decimals;
+        const symbol = `D${market.symbol}`;
+        const price = underlyingToken.price;
+        const pricePerShare = 1;
+        const liquidity = Number(totalSupplyRaw) * underlyingToken.price;
+        const interestRate = Number(market.interestRate) / 10 ** decimals;
+        const borrowAPY = (Number(market.borrowAPY) * 100) / 1e27;
 
         const dataProps = {
-          name: market.name,
-          liquidity: Number(totalSupply) * underlyingToken.price,
-          interestRate: Number(market.interestRate) / 10 ** 18,
-          borrowAPY: (Number(market.borrowAPY) * 100) / 1e27,
+          liquidity,
+          interestRate,
+          borrowAPY,
+        };
+
+        const statsItems = [
+          {
+            label: 'Liquidity',
+            value: buildDollarDisplayItem(dataProps.liquidity),
+          },
+          {
+            label: 'Borrow APY',
+            value: buildPercentageDisplayItem(dataProps.borrowAPY),
+          },
+        ];
+
+        const displayProps = {
+          label: `${market.name} (D)`,
+          secondaryLabel: buildDollarDisplayItem(price),
+          images: getImagesFromToken(underlyingToken),
+          statsItems,
         };
 
         return {
-          address: market.dTokenAddress,
-          symbol: `D${market.symbol}`,
-          name: `${market.name} (D)`,
           type: ContractType.APP_TOKEN as const,
-          supply: Number(market.totalBalances) / 10 ** Number(market.decimals),
-          pricePerShare: 1,
-          price: underlyingToken.price,
-          network,
-          decimals: Number(market.decimals),
-          tokens: [underlyingToken],
-          dataProps,
-          displayProps: {
-            label: `${market.name} (D)`,
-            secondaryLabel: buildDollarDisplayItem(underlyingToken.price),
-            images: getImagesFromToken(underlyingToken),
-            statsItems: [
-              {
-                label: 'Liquidity',
-                value: buildDollarDisplayItem(dataProps.liquidity),
-              },
-              {
-                label: 'Borrow APY',
-                value: buildPercentageDisplayItem(dataProps.borrowAPY),
-              },
-            ],
-          },
+          address: market.dTokenAddress,
           appId,
           groupId,
+          network,
+          symbol,
+          decimals,
+          supply,
+          price,
+          pricePerShare,
+          tokens: [underlyingToken],
+          dataProps,
+          displayProps,
         };
       }),
     );
