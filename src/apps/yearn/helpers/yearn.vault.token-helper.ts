@@ -108,7 +108,7 @@ export class YearnVaultTokenHelper {
         const images = getImagesFromToken(underlyingToken);
         const statsItems = [
           { label: 'APY', value: buildPercentageDisplayItem(apy) },
-          { label: 'Liquidity', value: liquidity },
+          { label: 'Liquidity', value: buildDollarDisplayItem(liquidity) },
         ];
 
         const vaultToken: AppTokenPosition<YearnVaultTokenDataProps> = {
