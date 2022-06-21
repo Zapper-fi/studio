@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.79.1](https://github.com/Zapper-fi/studio/compare/v0.79.0...v0.79.1) (2022-06-21)
+
+
+### Bug Fixes
+
+* **uniswap-v2:** Add pools that are missing because of subgraph lag ([1bb89ee](https://github.com/Zapper-fi/studio/commit/1bb89eefef930a0f008700032b75eadcacfffbce))
+
 ## [0.79.0](https://github.com/Zapper-fi/studio/compare/v0.78.1...v0.79.0) (2022-06-21)
 
 
