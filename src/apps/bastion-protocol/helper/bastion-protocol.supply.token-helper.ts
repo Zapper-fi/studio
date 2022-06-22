@@ -6,13 +6,14 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ETH_ADDR_ALIAS, ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import {
   buildDollarDisplayItem,
-  buildPercentageDisplayItem
+  buildPercentageDisplayItem,
 } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
 import { BalanceDisplayMode } from '~position/display.interface';
 import { AppTokenPosition, ExchangeableAppTokenDataProps } from '~position/position.interface';
 import { Network } from '~types/network.interface';
+
 import { BastionProtocolComptroller, BastionProtocolContractFactory, BastionProtocolCtoken } from '../contracts';
 
 export type BastionSupplyTokenDataProps = ExchangeableAppTokenDataProps & {
@@ -34,9 +35,10 @@ type BastionSupplyTokenHelperParams<T = BastionProtocolComptroller, V = BastionP
 @Injectable()
 export class BastionSupplyTokenHelper {
   constructor(
-    @Inject(BastionProtocolContractFactory) private readonly bastionProtocolContractFactory: BastionProtocolContractFactory,
+    @Inject(BastionProtocolContractFactory)
+    private readonly bastionProtocolContractFactory: BastionProtocolContractFactory,
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-  ) { }
+  ) {}
 
   async getTokens<T = BastionProtocolComptroller, V = BastionProtocolCtoken>({
     comptrollerAddress,
@@ -46,13 +48,10 @@ export class BastionSupplyTokenHelper {
     groupId,
   }: BastionSupplyTokenHelperParams<T, V>) {
     const multicall = this.appToolkit.getMulticall(network);
-    const comptrollerContract =
-      this.bastionProtocolContractFactory.bastionProtocolComptroller(
-        {
-          address: comptrollerAddress,
-          network
-        }
-      );
+    const comptrollerContract = this.bastionProtocolContractFactory.bastionProtocolComptroller({
+      address: comptrollerAddress,
+      network,
+    });
     const marketTokenAddressesRaw = await multicall.wrap(comptrollerContract).getAllMarkets();
 
     const tokens = await Promise.all(
@@ -61,7 +60,9 @@ export class BastionSupplyTokenHelper {
         const erc20TokenContract = this.bastionProtocolContractFactory.erc20({ address, network });
         const contract = this.bastionProtocolContractFactory.bastionProtocolCtoken({ address, network });
 
-        const underlyingAddress = await multicall.wrap(contract).underlying()
+        const underlyingAddress = await multicall
+          .wrap(contract)
+          .underlying()
           .then(t => t.toLowerCase().replace(ETH_ADDR_ALIAS, ZERO_ADDRESS))
           .catch(() => ZERO_ADDRESS);
 

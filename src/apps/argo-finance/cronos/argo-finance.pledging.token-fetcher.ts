@@ -2,10 +2,10 @@ import { Inject } from '@nestjs/common';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
-import { PositionFetcher } from '~position/position-fetcher.interface';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
+import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
@@ -23,7 +23,7 @@ export class CronosArgoFinancePledgingTokenFetcher implements PositionFetcher<Ap
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(ArgoFinanceContractFactory) private readonly argoFinanceContractFactory: ArgoFinanceContractFactory,
-  ) { }
+  ) {}
 
   async getVePosition(address: string, baseAddress: string) {
     const multicall = this.appToolkit.getMulticall(network);
@@ -64,9 +64,7 @@ export class CronosArgoFinancePledgingTokenFetcher implements PositionFetcher<Ap
   }
 
   async getPositions() {
-    const [argo] = await Promise.all([
-      this.getVePosition(ADDRESSES.xargo, ADDRESSES.argo),
-    ]);
+    const [argo] = await Promise.all([this.getVePosition(ADDRESSES.xargo, ADDRESSES.argo)]);
     return [argo];
   }
 }

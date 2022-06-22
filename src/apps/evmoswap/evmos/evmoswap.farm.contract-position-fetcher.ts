@@ -22,8 +22,8 @@ export class EvmosEvmoswapFarmContractPositionFetcher implements PositionFetcher
   ) {}
 
   async getPositions() {
-    const positions = await this.appToolkit.helpers.masterChefContractPositionHelper.getContractPositions<EvmoswapMasterchef>(
-      {
+    const positions =
+      await this.appToolkit.helpers.masterChefContractPositionHelper.getContractPositions<EvmoswapMasterchef>({
         network,
         groupId,
         appId,
@@ -51,8 +51,7 @@ export class EvmosEvmoswapFarmContractPositionFetcher implements PositionFetcher
             return multicall.wrap(contract).emoPerSecond();
           },
         }),
-      },
-    );
+      });
 
     return positions;
   }

@@ -7,10 +7,10 @@ import { CronosTectonicBalanceFetcher } from './cronos/tectonic.balance-fetcher'
 import { CronosTectonicBorrowContractPositionFetcher } from './cronos/tectonic.borrow.contract-position-fetcher';
 import { CronosTectonicSupplyTokenFetcher } from './cronos/tectonic.supply.token-fetcher';
 import { CronosTectonicTvlFetcher } from './cronos/tectonic.tvl-fetcher';
-import { TectonicClaimableBalanceHelper } from './helper/tectonic.claimable.balance-helper';
 import { TectonicBorrowBalanceHelper } from './helper/tectonic.borrow.balance-helper';
-import { TectonicSupplyTokenHelper } from './helper/tectonic.supply.token-helper';
+import { TectonicClaimableBalanceHelper } from './helper/tectonic.claimable.balance-helper';
 import { TectonicSupplyBalanceHelper } from './helper/tectonic.supply.balance-helper';
+import { TectonicSupplyTokenHelper } from './helper/tectonic.supply.token-helper';
 import { TectonicAppDefinition, TECTONIC_DEFINITION } from './tectonic.definition';
 
 @Register.AppModule({

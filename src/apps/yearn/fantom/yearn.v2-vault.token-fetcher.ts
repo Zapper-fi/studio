@@ -10,15 +10,15 @@ import { YearnVaultTokenHelper } from '../helpers/yearn.vault.token-helper';
 import { YEARN_DEFINITION } from '../yearn.definition';
 
 const appId = YEARN_DEFINITION.id;
-const groupId = YEARN_DEFINITION.groups.vault.id;
-const network = Network.ARBITRUM_MAINNET;
+const groupId = YEARN_DEFINITION.groups.v2Vault.id;
+const network = Network.FANTOM_OPERA_MAINNET;
 
 @Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
-export class ArbitrumYearnVaultTokenFetcher implements PositionFetcher<AppTokenPosition> {
+export class FantomYearnV2VaultTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(@Inject(YearnVaultTokenHelper) private readonly yearnVaultTokenHelper: YearnVaultTokenHelper) {}
 
   async getPositions() {
-    return this.yearnVaultTokenHelper.getTokens({
+    return this.yearnVaultTokenHelper.getV2Tokens({
       network,
       dependencies: [{ appId: CURVE_DEFINITION.id, groupIds: [CURVE_DEFINITION.groups.pool.id], network }],
     });
