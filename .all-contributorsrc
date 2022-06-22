@@ -388,6 +388,69 @@
         "question",
         "maintenance"
       ]
+    },
+    {
+      "login": "BluebitFinance",
+      "name": "BlueBit Finance",
+      "avatar_url": "https://avatars.githubusercontent.com/u/96361968?v=4",
+      "profile": "https://github.com/BluebitFinance",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "Clonescody",
+      "name": "Clonescody",
+      "avatar_url": "https://avatars.githubusercontent.com/u/6602520?v=4",
+      "profile": "https://github.com/Clonescody",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "the-emerald",
+      "name": "Emerald",
+      "avatar_url": "https://avatars.githubusercontent.com/u/12746683?v=4",
+      "profile": "https://anson-cheung.com/",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "evLorne",
+      "name": "EvLorne",
+      "avatar_url": "https://avatars.githubusercontent.com/u/101081187?v=4",
+      "profile": "https://github.com/evLorne",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "0xKratos",
+      "name": "Kratos",
+      "avatar_url": "https://avatars.githubusercontent.com/u/32628639?v=4",
+      "profile": "https://github.com/0xKratos",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "reganwrench",
+      "name": "reganwrench",
+      "avatar_url": "https://avatars.githubusercontent.com/u/98139806?v=4",
+      "profile": "https://github.com/reganwrench",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "scruffy-dev",
+      "name": "scruffy-dev",
+      "avatar_url": "https://avatars.githubusercontent.com/u/82269917?v=4",
+      "profile": "https://github.com/scruffy-dev",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7
