@@ -40,10 +40,10 @@ export class OptimismPikaProtocolBalanceFetcher implements BalanceFetcher {
       address,
       appId: PIKA_PROTOCOL_DEFINITION.id,
       groupId: PIKA_PROTOCOL_DEFINITION.groups.vault.id,
-      network: Network.OPTIMISM_MAINNET,
+      network,
 
       resolveBalances: async ({ address, contractPosition, multicall }) => {
-        const rewardAddress = '0x58488bB666d2da33F8E8938Dbdd582D2481D4183'.toLowerCase();
+        const rewardAddress = '0x58488bb666d2da33f8e8938dbdd582d2481d4183';
         const contract = this.pikaProtocolContractFactory.pikaProtocolVault({
           address: contractPosition.address,
           network,
