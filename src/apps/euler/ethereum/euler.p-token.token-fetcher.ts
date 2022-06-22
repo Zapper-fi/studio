@@ -98,14 +98,10 @@ export class EthereumEulerPTokenTokenFetcher implements PositionFetcher<AppToken
         const pricePerShare = 1;
         const liquidity = supply * underlyingToken.price;
         const interestRate = Number(market.interestRate) / 10 ** decimals;
-        const borrowAPY = Number(market.borrowAPY) / 10 ** 25;
-        const supplyAPY = Number(market.supplyAPY) / 10 ** 25;
 
         const dataProps = {
           liquidity,
           interestRate,
-          borrowAPY,
-          supplyAPY,
         };
 
         const statsItems = [
@@ -113,25 +109,17 @@ export class EthereumEulerPTokenTokenFetcher implements PositionFetcher<AppToken
             label: 'Liquidity',
             value: buildDollarDisplayItem(dataProps.liquidity),
           },
-          {
-            label: 'Borrow APY',
-            value: buildDollarDisplayItem(dataProps.borrowAPY),
-          },
-          {
-            label: 'Supply APY',
-            value: buildDollarDisplayItem(dataProps.supplyAPY),
-          },
         ];
 
         const displayProps = {
-          label: `Euler P token ${market.name}`,
-          secondaryLabel: buildDollarDisplayItem(price),
+          label: `${market.name} (P)`,
+          secondaryLabel: buildDollarDisplayItem(underlyingToken.price),
           images: getImagesFromToken(underlyingToken),
           statsItems,
         };
 
-        const token: AppTokenPosition<EulerTokenDataProps> = {
-          type: ContractType.APP_TOKEN,
+        return {
+          type: ContractType.APP_TOKEN as const,
           address: market.pTokenAddress,
           appId,
           groupId,
@@ -145,8 +133,6 @@ export class EthereumEulerPTokenTokenFetcher implements PositionFetcher<AppToken
           dataProps,
           displayProps,
         };
-
-        return token;
       }),
     );
 

@@ -8,17 +8,17 @@ import { Network } from '~types/network.interface';
 import { SynthetixTrasnferrableSnxTokenHelper } from '../helpers/synthetix.trasnferable-snx.token-helper';
 import { SYNTHETIX_DEFINITION } from '../synthetix.definition';
 
-@Register.TokenPositionFetcher({
-  appId: SYNTHETIX_DEFINITION.id,
-  groupId: SYNTHETIX_DEFINITION.groups.transferableSnx.id,
-  network: Network.ETHEREUM_MAINNET,
-})
+const appId = SYNTHETIX_DEFINITION.id;
+const groupId = SYNTHETIX_DEFINITION.groups.transferableSnx.id;
+const network = Network.ETHEREUM_MAINNET;
+
+@Register.TokenPositionFetcher({ appId, groupId, network })
 export class EthereumSynthetixTransferableSnxTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(SynthetixTrasnferrableSnxTokenHelper) private readonly tokenHelper: SynthetixTrasnferrableSnxTokenHelper,
   ) {}
 
   async getPositions() {
-    return this.tokenHelper.getTokens({ network: Network.ETHEREUM_MAINNET });
+    return this.tokenHelper.getTokens({ network });
   }
 }
