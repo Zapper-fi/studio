@@ -451,6 +451,17 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "Emile-Filteau",
+      "name": "Émile Filteau-Tessier",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1054341?v=4",
+      "profile": "https://github.com/Emile-Filteau",
+      "contributions": [
+        "code",
+        "question",
+        "maintenance"
+      ]
     }
   ],
   "contributorsPerLine": 7
