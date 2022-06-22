@@ -4,6 +4,26 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.82.0](https://github.com/Zapper-fi/studio/compare/v0.81.1...v0.82.0) (2022-06-22)
+
+
+### Features
+
+* **compound:** Use the group-based TVL ([#720](https://github.com/Zapper-fi/studio/issues/720)) ([3a444f5](https://github.com/Zapper-fi/studio/commit/3a444f525214a30f9b6c3432c5fb121b4452a2f4))
+
+
+### Bug Fixes
+
+* **euler:** Fix price per share ([b2dba91](https://github.com/Zapper-fi/studio/commit/b2dba9140f523cd2c5b6f8089070b870c1e34c83))
+* **lyra-avalon:** Fix Lyra Avalon registry address ([3ed190e](https://github.com/Zapper-fi/studio/commit/3ed190e2f38359afa1dbffc9cb4bb9852a9d908b))
+
+## [0.81.1](https://github.com/Zapper-fi/studio/compare/v0.81.0...v0.81.1) (2022-06-22)
+
+
+### Bug Fixes
+
+* **impermax:** Fixed factory address for polygon ([#716](https://github.com/Zapper-fi/studio/issues/716)) ([f7203a8](https://github.com/Zapper-fi/studio/commit/f7203a8b6af36e72b923cb43d33a7169ef6b0029))
+
 ## [0.81.0](https://github.com/Zapper-fi/studio/compare/v0.80.0...v0.81.0) (2022-06-22)
 
 
