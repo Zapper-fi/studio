@@ -18,7 +18,7 @@
 </div>
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-40-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-47-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 ## Description
@@ -192,6 +192,15 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/oo-00"><img src="https://avatars.githubusercontent.com/u/29607330?v=4?s=64" width="64px;" alt=""/><br /><sub><b>oo-00</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=oo-00" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/takao-aurigami"><img src="https://avatars.githubusercontent.com/u/102155128?v=4?s=64" width="64px;" alt=""/><br /><sub><b>takao-aurigami</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=takao-aurigami" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/sebaudet26"><img src="https://avatars.githubusercontent.com/u/6855274?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Sébastien Audet</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=sebaudet26" title="Code">💻</a> <a href="#question-sebaudet26" title="Answering Questions">💬</a> <a href="#maintenance-sebaudet26" title="Maintenance">🚧</a></td>
+    <td align="center"><a href="https://github.com/BluebitFinance"><img src="https://avatars.githubusercontent.com/u/96361968?v=4?s=64" width="64px;" alt=""/><br /><sub><b>BlueBit Finance</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=BluebitFinance" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/Clonescody"><img src="https://avatars.githubusercontent.com/u/6602520?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Clonescody</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=Clonescody" title="Code">💻</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://anson-cheung.com/"><img src="https://avatars.githubusercontent.com/u/12746683?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Emerald</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=the-emerald" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/evLorne"><img src="https://avatars.githubusercontent.com/u/101081187?v=4?s=64" width="64px;" alt=""/><br /><sub><b>EvLorne</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=evLorne" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/0xKratos"><img src="https://avatars.githubusercontent.com/u/32628639?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Kratos</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=0xKratos" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/reganwrench"><img src="https://avatars.githubusercontent.com/u/98139806?v=4?s=64" width="64px;" alt=""/><br /><sub><b>reganwrench</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=reganwrench" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/scruffy-dev"><img src="https://avatars.githubusercontent.com/u/82269917?v=4?s=64" width="64px;" alt=""/><br /><sub><b>scruffy-dev</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=scruffy-dev" title="Code">💻</a></td>
   </tr>
 </table>
 
