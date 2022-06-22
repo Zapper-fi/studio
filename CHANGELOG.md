@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.81.1](https://github.com/Zapper-fi/studio/compare/v0.81.0...v0.81.1) (2022-06-22)
+
+
+### Bug Fixes
+
+* **impermax:** Fixed factory address for polygon ([#716](https://github.com/Zapper-fi/studio/issues/716)) ([f7203a8](https://github.com/Zapper-fi/studio/commit/f7203a8b6af36e72b923cb43d33a7169ef6b0029))
+
 ## [0.81.0](https://github.com/Zapper-fi/studio/compare/v0.80.0...v0.81.0) (2022-06-22)
 
 
