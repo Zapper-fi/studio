@@ -6,7 +6,6 @@ import { CompoundContractFactory } from './contracts';
 import { EthereumCompoundBalanceFetcher } from './ethereum/compound.balance-fetcher';
 import { EthereumCompoundBorrowContractPositionFetcher } from './ethereum/compound.borrow.contract-position-fetcher';
 import { EthereumCompoundSupplyTokenFetcher } from './ethereum/compound.supply.token-fetcher';
-import { EthereumCompoundTvlFetcher } from './ethereum/coumpound.tvl-fetcher';
 import { CompoundBorrowBalanceHelper } from './helper/compound.borrow.balance-helper';
 import { CompoundBorrowContractPositionHelper } from './helper/compound.borrow.contract-position-helper';
 import { CompoundClaimableBalanceHelper } from './helper/compound.claimable.balance-helper';
@@ -23,7 +22,6 @@ import { CompoundTvlHelper } from './helper/compound.tvl-helper';
     EthereumCompoundBalanceFetcher,
     EthereumCompoundSupplyTokenFetcher,
     EthereumCompoundBorrowContractPositionFetcher,
-    EthereumCompoundTvlFetcher,
     // Helpers
     CompoundClaimableBalanceHelper,
     CompoundLendingMetaHelper,
