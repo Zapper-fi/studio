@@ -4,6 +4,81 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.82.0](https://github.com/Zapper-fi/studio/compare/v0.81.1...v0.82.0) (2022-06-22)
+
+
+### Features
+
+* **compound:** Use the group-based TVL ([#720](https://github.com/Zapper-fi/studio/issues/720)) ([3a444f5](https://github.com/Zapper-fi/studio/commit/3a444f525214a30f9b6c3432c5fb121b4452a2f4))
+
+
+### Bug Fixes
+
+* **euler:** Fix price per share ([b2dba91](https://github.com/Zapper-fi/studio/commit/b2dba9140f523cd2c5b6f8089070b870c1e34c83))
+* **lyra-avalon:** Fix Lyra Avalon registry address ([3ed190e](https://github.com/Zapper-fi/studio/commit/3ed190e2f38359afa1dbffc9cb4bb9852a9d908b))
+
+## [0.81.1](https://github.com/Zapper-fi/studio/compare/v0.81.0...v0.81.1) (2022-06-22)
+
+
+### Bug Fixes
+
+* **impermax:** Fixed factory address for polygon ([#716](https://github.com/Zapper-fi/studio/issues/716)) ([f7203a8](https://github.com/Zapper-fi/studio/commit/f7203a8b6af36e72b923cb43d33a7169ef6b0029))
+
+## [0.81.0](https://github.com/Zapper-fi/studio/compare/v0.80.0...v0.81.0) (2022-06-22)
+
+
+### Features
+
+* **arrakis:** Extract Gelato from Zapper API, rename to Arrakis, and support Polygon/Ethereum ([#713](https://github.com/Zapper-fi/studio/issues/713)) ([7d9d870](https://github.com/Zapper-fi/studio/commit/7d9d870fd6bb64ce20bb6a35b7c6b936bb4d4b41))
+
+## [0.80.0](https://github.com/Zapper-fi/studio/compare/v0.79.2...v0.80.0) (2022-06-21)
+
+
+### Features
+
+* **iron-bank:** Update empty description ([#710](https://github.com/Zapper-fi/studio/issues/710)) ([e7d6b68](https://github.com/Zapper-fi/studio/commit/e7d6b681f015c11a1ed625e665398480a5b5dd2c))
+
+
+### Bug Fixes
+
+* **aave-v2:** Fix displayed APY ([#712](https://github.com/Zapper-fi/studio/issues/712)) ([3022cf3](https://github.com/Zapper-fi/studio/commit/3022cf3a58d94065b6a06eb007f4965be0ef22f6))
+
+## [0.79.2](https://github.com/Zapper-fi/studio/compare/v0.79.1...v0.79.2) (2022-06-21)
+
+
+### Bug Fixes
+
+* Removed suffix on yearn vaults ([#694](https://github.com/Zapper-fi/studio/issues/694)) ([8a1166c](https://github.com/Zapper-fi/studio/commit/8a1166c5092fb4de7a42c083516d787583992021))
+
+## [0.79.1](https://github.com/Zapper-fi/studio/compare/v0.79.0...v0.79.1) (2022-06-21)
+
+
+### Bug Fixes
+
+* **uniswap-v2:** Add pools that are missing because of subgraph lag ([1bb89ee](https://github.com/Zapper-fi/studio/commit/1bb89eefef930a0f008700032b75eadcacfffbce))
+
+## [0.79.0](https://github.com/Zapper-fi/studio/compare/v0.78.1...v0.79.0) (2022-06-21)
+
+
+### Features
+
+* **aave-v2:** Add presentation config ([#705](https://github.com/Zapper-fi/studio/issues/705)) ([cd13f94](https://github.com/Zapper-fi/studio/commit/cd13f946e1d65d3eff6c4d5b85607c0d355aef7d))
+* **compound:** Add presentation config ([#701](https://github.com/Zapper-fi/studio/issues/701)) ([7f9c960](https://github.com/Zapper-fi/studio/commit/7f9c9609c32460fa95b473459d78f3918b9103dc))
+
+
+### Bug Fixes
+
+* **aave-v2:** Fix isActive dataProps ([#704](https://github.com/Zapper-fi/studio/issues/704)) ([066a11f](https://github.com/Zapper-fi/studio/commit/066a11f300bed91157a1b9f59fea5b60dada92e7))
+
+## [0.78.1](https://github.com/Zapper-fi/studio/compare/v0.78.0...v0.78.1) (2022-06-21)
+
+
+### Bug Fixes
+
+* **compound:** Fix lending display APY ([#696](https://github.com/Zapper-fi/studio/issues/696)) ([fdd8900](https://github.com/Zapper-fi/studio/commit/fdd8900e7ed1e9fe3a182b1ee7c616bcc5a00c3a))
+* **compound:** Remove displayed borrow APY from supply position ([#698](https://github.com/Zapper-fi/studio/issues/698)) ([1a3607f](https://github.com/Zapper-fi/studio/commit/1a3607f984b593662dfb8742c6c2241ff98a6727))
+* **iron-bank:** Add presentation config to Iron Bank ([#699](https://github.com/Zapper-fi/studio/issues/699)) ([8aa8c4a](https://github.com/Zapper-fi/studio/commit/8aa8c4a3a73f363f34a12ba93cb1e4155efca1b1))
+
 ## [0.78.0](https://github.com/Zapper-fi/studio/compare/v0.77.0...v0.78.0) (2022-06-21)
 
 

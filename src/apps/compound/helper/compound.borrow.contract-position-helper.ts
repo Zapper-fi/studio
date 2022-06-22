@@ -96,7 +96,7 @@ export class CompoundBorrowContractPositionHelper {
       const statsItems = isNumber(borrowApy)
         ? [
             { label: 'APY', value: buildPercentageDisplayItem(borrowApy * 100) },
-            { label: 'Liquidity', value: buildDollarDisplayItem(dataProps.liquidity) },
+            { label: 'Liquidity', value: buildDollarDisplayItem(borrowLiquidity) },
           ]
         : [];
 

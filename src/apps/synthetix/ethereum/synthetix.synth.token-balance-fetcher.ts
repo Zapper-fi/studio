@@ -8,11 +8,11 @@ import { Network } from '~types/network.interface';
 import { SynthetixSynthTokenBalanceHelper } from '../helpers/synthetix.synth.token-balance-helper';
 import { SYNTHETIX_DEFINITION } from '../synthetix.definition';
 
-@Register.TokenPositionBalanceFetcher({
-  appId: SYNTHETIX_DEFINITION.id,
-  groupId: SYNTHETIX_DEFINITION.groups.synth.id,
-  network: Network.ETHEREUM_MAINNET,
-})
+const appId = SYNTHETIX_DEFINITION.id;
+const groupId = SYNTHETIX_DEFINITION.groups.synth.id;
+const network = Network.ETHEREUM_MAINNET;
+
+@Register.TokenPositionBalanceFetcher({ appId, groupId, network })
 export class EthereumSynthetixSynthTokenBalanceFetcher implements PositionBalanceFetcher<AppTokenPositionBalance> {
   constructor(
     @Inject(SynthetixSynthTokenBalanceHelper)
@@ -22,7 +22,7 @@ export class EthereumSynthetixSynthTokenBalanceFetcher implements PositionBalanc
   async getBalances(address: string) {
     return this.tokenBalanceHelper.getBalances({
       address,
-      network: Network.ETHEREUM_MAINNET,
+      network,
       resolverAddress: '0x823be81bbf96bec0e25ca13170f5aacb5b79ba83',
     });
   }
