@@ -89,6 +89,7 @@ export class ArrakisPoolTokenHelper {
 
         const reserves = reservesRaw.map((r, i) => Number(r) / 10 ** tokens[i].decimals);
         const liquidity = tokens.reduce((acc, v, i) => acc + v.price * reserves[i], 0);
+        if (liquidity < 1000) return null;
 
         // Data Props
         const supply = Number(supplyRaw) / 10 ** decimals;
