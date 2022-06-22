@@ -2,6 +2,8 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
+import { BALANCER_V1_DEFINITION } from '~apps/balancer-v1/balancer-v1.definition';
+import { CURVE_DEFINITION } from '~apps/curve/curve.definition';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
@@ -44,11 +46,11 @@ const FARMS = [
   },
 ];
 
-@Register.ContractPositionFetcher({
-  appId: SYNTHETIX_DEFINITION.id,
-  groupId: SYNTHETIX_DEFINITION.groups.farm.id,
-  network: Network.ETHEREUM_MAINNET,
-})
+const appId = SYNTHETIX_DEFINITION.id;
+const groupId = SYNTHETIX_DEFINITION.groups.farm.id;
+const network = Network.ETHEREUM_MAINNET;
+
+@Register.ContractPositionFetcher({ appId, groupId, network })
 export class EthereumSynthetixFarmContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(APP_TOOLKIT)
@@ -63,12 +65,20 @@ export class EthereumSynthetixFarmContractPositionFetcher implements PositionFet
 
   async getPositions() {
     return this.appToolkit.helpers.singleStakingFarmContractPositionHelper.getContractPositions<SynthetixRewards>({
-      network: Network.ETHEREUM_MAINNET,
-      appId: SYNTHETIX_DEFINITION.id,
-      groupId: SYNTHETIX_DEFINITION.groups.farm.id,
+      network,
+      appId,
+      groupId,
       dependencies: [
-        { appId: 'balancer-v1', groupIds: ['pool'], network: Network.ETHEREUM_MAINNET },
-        { appId: 'curve', groupIds: ['pool'], network: Network.ETHEREUM_MAINNET },
+        {
+          appId: BALANCER_V1_DEFINITION.id,
+          groupIds: [BALANCER_V1_DEFINITION.groups.pool.id],
+          network,
+        },
+        {
+          appId: CURVE_DEFINITION.id,
+          groupIds: [CURVE_DEFINITION.groups.pool.id],
+          network,
+        },
       ],
       resolveFarmDefinitions: async () => FARMS,
       resolveFarmContract: ({ network, address }) =>

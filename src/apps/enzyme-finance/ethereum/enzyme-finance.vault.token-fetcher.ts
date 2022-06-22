@@ -33,7 +33,7 @@ const appId = ENZYME_FINANCE_DEFINITION.id;
 const groupId = ENZYME_FINANCE_DEFINITION.groups.vault.id;
 const network = Network.ETHEREUM_MAINNET;
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
 export class EthereumEnzymeFinanceVaultTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(EnzymeFinanceContractFactory) private readonly enzymeFinanceContractFactory: EnzymeFinanceContractFactory,
@@ -96,12 +96,18 @@ export class EthereumEnzymeFinanceVaultTokenFetcher implements PositionFetcher<A
         const pricePerShare = 1;
         const price = totalAssetUnderManagement / supply;
         const tokens = compact(underlyingTokens);
+        const liquidity = price * supply;
 
         const label = name;
         const secondaryLabel = buildDollarDisplayItem(price);
         const images = [getAppImg(appId)];
-        const dataProps = {};
-        const displayProps = { label, secondaryLabel, images };
+        const dataProps = { liquidity };
+        const displayProps = {
+          label,
+          secondaryLabel,
+          images,
+          statsItems: [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }],
+        };
 
         const token: AppTokenPosition = {
           type: ContractType.APP_TOKEN,

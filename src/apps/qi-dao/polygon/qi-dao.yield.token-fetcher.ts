@@ -5,6 +5,7 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
+import { AAVE_V2_DEFINITION } from '~apps/aave-v2';
 import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
@@ -23,16 +24,15 @@ const YIELD_TOKEN_ADDRESSES = [
   '0xe6c23289ba5a9f0ef31b8eb36241d5c800889b7b', // camDAI
   '0x0470cd31c8fcc42671465880ba81d631f0b76c1d', // camWETH
   '0xb3911259f435b28ec072e4ff6ff5a2c604fea0fb', // camUSDT
-  '0x7068ea5255cb05931efa8026bd04b18f3deb8b0b', // camWMATIC
   '0xea4040b21cb68afb94889cb60834b13427cfc4eb', // camAAVE
   '0xba6273a78a23169e01317bd0f6338547f869e8df', // camWBTC
 ];
 
-@Register.TokenPositionFetcher({
-  appId: QI_DAO_DEFINITION.id,
-  groupId: QI_DAO_DEFINITION.groups.yield.id,
-  network: Network.POLYGON_MAINNET,
-})
+const appId = QI_DAO_DEFINITION.id;
+const groupId = QI_DAO_DEFINITION.groups.yield.id;
+const network = Network.POLYGON_MAINNET;
+
+@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
 export class PolygonQiDaoYieldTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
@@ -40,11 +40,10 @@ export class PolygonQiDaoYieldTokenFetcher implements PositionFetcher<AppTokenPo
   ) {}
 
   async getPositions() {
-    const network = Network.POLYGON_MAINNET;
     const multicall = this.appToolkit.getMulticall(network);
     const aaveTokens = await this.appToolkit.getAppTokenPositions({
-      appId: 'aave-v2',
-      groupIds: ['supply'],
+      appId: AAVE_V2_DEFINITION.id,
+      groupIds: [AAVE_V2_DEFINITION.groups.supply.id],
       network,
     });
 

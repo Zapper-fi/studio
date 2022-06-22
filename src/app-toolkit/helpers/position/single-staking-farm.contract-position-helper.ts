@@ -30,7 +30,7 @@ export type SingleStakingFarmRois = {
 };
 
 export type SingleStakingFarmDataProps = {
-  totalValueLocked: number;
+  liquidity: number;
   isActive: boolean;
   dailyROI: number;
   weeklyROI: number;
@@ -38,7 +38,7 @@ export type SingleStakingFarmDataProps = {
   implementation?: string;
 };
 
-export type SingleStakingFarmResolveTotalValueLockedParams<T> = (opts: {
+export type SingleStakingFarmResolveLiquidityParams<T> = (opts: {
   contract: T;
   address: string;
   network: Network;
@@ -62,7 +62,7 @@ export type SingleStakingFarmResolveRoisParams<T> = (opts: {
   multicall: Multicall;
   stakedToken: WithMetaType<Token>;
   rewardTokens: WithMetaType<Token>[];
-  totalValueLocked: number;
+  liquidity: number;
 }) => SingleStakingFarmRois | Promise<SingleStakingFarmRois>;
 
 export type SingleStakingFarmContractPositionHelperParams<T> = {
@@ -76,10 +76,11 @@ export type SingleStakingFarmContractPositionHelperParams<T> = {
     network: Network;
   }) => SingleStakingFarmDefinition[] | Promise<SingleStakingFarmDefinition[]>;
   resolveImplementation?: () => string;
+  resolveLabel?: (definition: string | SingleStakingFarmDefinition) => string;
   resolveFarmAddresses?: (opts: { network: Network }) => (string | null)[] | Promise<(string | null)[]>;
   resolveStakedTokenAddress?: (opts: { contract: T; multicall: Multicall; index: number }) => Promise<string>;
   resolveRewardTokenAddresses?: (opts: { contract: T; multicall: Multicall }) => Promise<string | string[]>;
-  resolveTotalValueLocked?: SingleStakingFarmResolveTotalValueLockedParams<T>;
+  resolveLiquidity?: SingleStakingFarmResolveLiquidityParams<T>;
   resolveIsActive?: SingleStakingFarmResolveIsActiveParams<T>;
   resolveRois: SingleStakingFarmResolveRoisParams<T>;
 };
@@ -98,11 +99,12 @@ export class SingleStakingFarmContractPositionHelper {
     resolveFarmAddresses,
     resolveFarmDefinitions,
     resolveImplementation,
+    resolveLabel,
     resolveStakedTokenAddress = async () => '',
     resolveRewardTokenAddresses = async () => [],
     resolveIsActive = async () => true,
     resolveRois,
-    resolveTotalValueLocked = this.defaultTotalValueLocked(),
+    resolveLiquidity = this.defaultLiquidity(),
   }: SingleStakingFarmContractPositionHelperParams<T>) {
     const multicall = this.appToolkit.getMulticall(network);
 
@@ -170,7 +172,7 @@ export class SingleStakingFarmContractPositionHelper {
           const tokens = [stakedToken, ...rewardTokens];
 
           // Resolve data props
-          const totalValueLockedRaw = await resolveTotalValueLocked({
+          const liquidityRaw = await resolveLiquidity({
             address: reserveAddress,
             network,
             contract,
@@ -178,7 +180,7 @@ export class SingleStakingFarmContractPositionHelper {
             stakedToken,
           });
 
-          const totalValueLocked = stakedToken.price * (Number(totalValueLockedRaw) / 10 ** stakedToken.decimals);
+          const liquidity = stakedToken.price * (Number(liquidityRaw) / 10 ** stakedToken.decimals);
           const isActive = await resolveIsActive({ address, network, contract, multicall, stakedToken, rewardTokens });
 
           const rois = await resolveRois({
@@ -188,21 +190,21 @@ export class SingleStakingFarmContractPositionHelper {
             multicall,
             stakedToken,
             rewardTokens: rewardTokenMatches,
-            totalValueLocked,
+            liquidity,
           });
 
           const otherProps = resolveImplementation ? { implementation: resolveImplementation() } : {};
-          const dataProps = { totalValueLocked, isActive, ...rois, ...otherProps };
+          const dataProps = { liquidity, isActive, ...rois, ...otherProps };
 
           // Display Properties
           const underlyingLabel =
             stakedToken.type === ContractType.APP_TOKEN ? stakedToken.displayProps.label : stakedToken.symbol;
-          const label = `Staked ${underlyingLabel}`;
+          const label = resolveLabel ? resolveLabel(definitionOrAddress) : `${underlyingLabel}`;
           const secondaryLabel = buildDollarDisplayItem(stakedToken.price);
           const images = [getTokenImg(stakedToken.address, network)];
           const statsItems = [
-            { label: 'ROI', value: buildPercentageDisplayItem(rois.yearlyROI) },
-            { label: 'TVL', value: buildDollarDisplayItem(totalValueLocked) },
+            { label: 'APR', value: buildPercentageDisplayItem(rois.yearlyROI * 100) },
+            { label: 'Liquidity', value: buildDollarDisplayItem(liquidity) },
           ];
           const displayProps = { label, secondaryLabel, images, statsItems };
 
@@ -222,10 +224,10 @@ export class SingleStakingFarmContractPositionHelper {
       ),
     );
 
-    return compact(contractPositions).filter(v => v.dataProps.totalValueLocked >= minimumTvl);
+    return compact(contractPositions).filter(v => v.dataProps.liquidity >= minimumTvl);
   }
 
-  defaultTotalValueLocked<T>(): SingleStakingFarmResolveTotalValueLockedParams<T> {
+  defaultLiquidity<T>(): SingleStakingFarmResolveLiquidityParams<T> {
     return ({ stakedToken, network, address, multicall }) => {
       return stakedToken.address === ZERO_ADDRESS
         ? multicall.wrap(multicall.contract).getEthBalance(address)

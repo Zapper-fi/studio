@@ -1,7 +1,7 @@
 name: Zapper Police 👮🏻‍♂️🚨
 
 on:
-  pull_request_target:
+  pull_request:
     types:
       - opened
       - reopened
@@ -85,4 +85,4 @@ jobs:
           run_install: true
 
       - name: Studio linting tests
-        run: pnpm lint
+        run: pnpm lint:ci

@@ -20,7 +20,7 @@ const groupId = DFX_DEFINITION.groups.staking.id;
 const network = Network.POLYGON_MAINNET;
 
 type DfxCurveContractPositionDataProps = {
-  totalValueLocked: number;
+  liquidity: number;
 };
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
@@ -61,12 +61,13 @@ export class PolygonDfxStakingContractPositionFetcher implements PositionFetcher
         const [balanceRaw] = await Promise.all([multicall.wrap(contract).balanceOf(address)]);
 
         // Denormalize the balance as the TVL
-        const totalValueLocked = Number(balanceRaw) / 10 ** stakedToken.decimals;
+        const liquidity = Number(balanceRaw) / 10 ** stakedToken.decimals;
 
         // Prepare display props
         const label = `Staked ${getLabelFromToken(stakedToken)}`;
         const images = getImagesFromToken(stakedToken);
         const secondaryLabel = buildDollarDisplayItem(stakedToken.price);
+        const statsItems = [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }];
 
         const position: ContractPosition<DfxCurveContractPositionDataProps> = {
           type: ContractType.POSITION,
@@ -76,12 +77,13 @@ export class PolygonDfxStakingContractPositionFetcher implements PositionFetcher
           network,
           tokens,
           dataProps: {
-            totalValueLocked,
+            liquidity,
           },
           displayProps: {
             label,
             secondaryLabel,
             images,
+            statsItems,
           },
         };
         return position;

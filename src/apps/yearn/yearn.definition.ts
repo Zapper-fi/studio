@@ -10,7 +10,7 @@ export const YEARN_DEFINITION = appDefinition({
   groups: {
     farm: { id: 'farm', type: GroupType.POSITION, label: 'Governance' },
     vault: { id: 'vault', type: GroupType.TOKEN, label: 'Vaults' },
-    yield: { id: 'yield', type: GroupType.TOKEN, label: 'Yield Tokens' },
+    yield: { id: 'yield', type: GroupType.TOKEN, label: 'Yield Tokens', isHiddenFromExplore: true }, // We seem to have these twice e.g. the same yUSDT is here and in vaults
   },
   url: 'https://yearn.finance/',
   links: {

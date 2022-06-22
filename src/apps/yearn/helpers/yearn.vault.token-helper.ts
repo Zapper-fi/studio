@@ -103,10 +103,13 @@ export class YearnVaultTokenHelper {
         const isBlocked = vault.emergencyShutdown || vault.type === 'v1' || vault.migration?.available;
 
         // Display props
-        const label = `${getLabelFromToken(underlyingToken)} Vault`;
+        const label = getLabelFromToken(underlyingToken);
         const secondaryLabel = buildDollarDisplayItem(price);
         const images = getImagesFromToken(underlyingToken);
-        const statsItems = [{ label: 'APY', value: buildPercentageDisplayItem(apy) }];
+        const statsItems = [
+          { label: 'APY', value: buildPercentageDisplayItem(apy) },
+          { label: 'Liquidity', value: buildDollarDisplayItem(liquidity) },
+        ];
 
         const vaultToken: AppTokenPosition<YearnVaultTokenDataProps> = {
           address: vaultAddress,

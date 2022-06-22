@@ -8,9 +8,30 @@ export const SYNTHETIX_DEFINITION = appDefinition({
   name: 'Synthetix',
   description: `A new financial primitive enabling the creation of synthetic assets, offering unique derivatives and exposure to real-world assets on the blockchain.`,
   groups: {
-    synth: { id: 'synth', type: GroupType.TOKEN, label: 'Synths' },
-    farm: { id: 'farm', type: GroupType.POSITION, label: 'Mintr' },
-    mintr: { id: 'mintr', type: GroupType.POSITION, label: 'Staking' },
+    transferableSnx: {
+      id: 'transferable-snx',
+      type: GroupType.TOKEN,
+      label: 'Transferable SNX',
+    },
+
+    synth: {
+      id: 'synth',
+      type: GroupType.TOKEN,
+      label: 'Synths',
+    },
+
+    farm: {
+      id: 'farm',
+      type: GroupType.POSITION,
+      label: 'Staking',
+      groupLabel: 'Farms',
+    },
+
+    mintr: {
+      id: 'mintr',
+      type: GroupType.POSITION,
+      label: 'Mintr',
+    },
   },
   url: 'https://synthetix.io/',
   links: {

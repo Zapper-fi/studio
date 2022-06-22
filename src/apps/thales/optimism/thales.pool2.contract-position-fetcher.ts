@@ -15,7 +15,7 @@ import { ThalesContractFactory } from '../contracts';
 import { THALES_DEFINITION } from '../thales.definition';
 
 export type ThalesStakingContractPositionDataProps = {
-  totalValueLocked: number;
+  liquidity: number;
 };
 
 const appId = THALES_DEFINITION.id;
@@ -52,7 +52,7 @@ export class OptimismThalesPool2ContractPositionFetcher implements PositionFetch
         const tokens = [supplied(stakedToken as Token), claimable(rewardToken)];
         const contract = this.thalesContractFactory.lpStaking({ address: farmDefinitions[0].address, network });
         const [balanceRaw] = await Promise.all([multicall.wrap(contract).totalSupply()]);
-        const totalValueLocked = Number(balanceRaw) / 10 ** stakedToken.decimals;
+        const liquidity = Number(balanceRaw) / 10 ** stakedToken.decimals;
         const label = `Staked ${getLabelFromToken(stakedToken)}`;
         // For images, we'll use the underlying token images as well
         const images = getImagesFromToken(stakedToken);
@@ -67,12 +67,13 @@ export class OptimismThalesPool2ContractPositionFetcher implements PositionFetch
           network,
           tokens,
           dataProps: {
-            totalValueLocked,
+            liquidity,
           },
           displayProps: {
             label,
             images,
             secondaryLabel,
+            statsItems: [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }],
           },
         };
 

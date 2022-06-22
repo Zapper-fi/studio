@@ -12,6 +12,12 @@ export enum MetaType {
   NFT = 'nft',
 }
 
+export enum Standard {
+  ERC_20 = 'erc20',
+  ERC_721 = 'erc721',
+  ERC_1155 = 'erc1155',
+}
+
 export interface AbstractPosition<T = DefaultDataProps> extends Contract {
   tokens: WithMetaType<Token>[];
   dataProps: T;
@@ -19,7 +25,7 @@ export interface AbstractPosition<T = DefaultDataProps> extends Contract {
   key?: string;
 }
 
-export interface ContractPosition<T = Record<string, unknown>> extends AbstractPosition<T> {
+export interface ContractPosition<T = DefaultDataProps> extends AbstractPosition<T> {
   type: ContractType.POSITION;
 }
 
@@ -58,6 +64,10 @@ export interface NonFungibleToken extends AbstractToken {
     volume24hUSD: number;
   };
 }
+
+export type ExchangeableAppTokenDataProps = {
+  exchangeable: boolean;
+};
 
 export type Token = BaseToken | AppTokenPosition | NonFungibleToken;
 export type Position<T = DefaultDataProps> = ContractPosition<T> | AppTokenPosition<T>;

@@ -1,11 +1,11 @@
 import { Inject, Injectable } from '@nestjs/common';
 import BigNumberJS from 'bignumber.js';
-import { isArray, pick } from 'lodash';
+import { identity, isArray, pick } from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { EthersMulticall } from '~multicall/multicall.ethers';
 import { ContractType } from '~position/contract.interface';
-import { StatsItem, WithMetaType } from '~position/display.interface';
+import { DefaultDataProps, StatsItem, WithMetaType } from '~position/display.interface';
 import { AppTokenPositionBalance, BaseTokenBalance } from '~position/position-balance.interface';
 import { AppTokenPosition, ContractPosition, MetaType, Token } from '~position/position.interface';
 import { BaseToken } from '~position/token.interface';
@@ -13,12 +13,17 @@ import { Network } from '~types/network.interface';
 
 import { buildPercentageDisplayItem } from '../presentation/display-item.present';
 
-type GetTokenBalancesParams = {
+type GetTokenBalancesParams<T> = {
   network: Network;
   appId: string;
   groupId: string;
   address: string;
-  resolveBalance?: (opts: { multicall: EthersMulticall; address: string; token: AppTokenPosition }) => Promise<string>;
+  filter?: (contractPosition: AppTokenPosition<T>) => boolean;
+  resolveBalance?: (opts: {
+    multicall: EthersMulticall;
+    address: string;
+    token: AppTokenPosition<T>;
+  }) => Promise<string>;
 };
 
 type Options = {
@@ -62,7 +67,7 @@ export const drillBalance = <T extends Token>(
   // Token share stats item
   const userStatsItems: StatsItem[] = [];
   if (token.supply > 0) {
-    const share = balance / token.supply;
+    const share = (balance / token.supply) * 100;
     userStatsItems.push({ label: 'Share', value: buildPercentageDisplayItem(share) });
   }
 
@@ -99,25 +104,27 @@ export const drillBalance = <T extends Token>(
 export class TokenBalanceHelper {
   constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
-  async getTokenBalances({
+  async getTokenBalances<T = DefaultDataProps>({
     network,
     appId,
     groupId,
     address,
+    filter = identity,
     resolveBalance = async ({ multicall, address, token }) => {
       return await multicall
         .wrap(this.appToolkit.globalContracts.erc20({ network, address: token.address }))
         .balanceOf(address)
         .then(v => v.toString());
     },
-  }: GetTokenBalancesParams) {
+  }: GetTokenBalancesParams<T>) {
     const multicall = this.appToolkit.getMulticall(network);
-    const appTokens = await this.appToolkit.getAppTokenPositions({ appId, network, groupIds: [groupId] });
+    const appTokens = await this.appToolkit.getAppTokenPositions<T>({ appId, network, groupIds: [groupId] });
 
+    const filteredTokens = appTokens.filter(filter);
     const balances = await Promise.all(
-      appTokens.map(async token => {
+      filteredTokens.map(async token => {
         const balanceRaw = await resolveBalance({ multicall, address, token });
-        const tokenBalance = drillBalance(token, balanceRaw);
+        const tokenBalance = drillBalance(token as AppTokenPosition, balanceRaw);
         return tokenBalance;
       }),
     );

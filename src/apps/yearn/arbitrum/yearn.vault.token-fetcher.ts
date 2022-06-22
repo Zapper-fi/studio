@@ -13,7 +13,7 @@ const appId = YEARN_DEFINITION.id;
 const groupId = YEARN_DEFINITION.groups.vault.id;
 const network = Network.ARBITRUM_MAINNET;
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
 export class ArbitrumYearnVaultTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(@Inject(YearnVaultTokenHelper) private readonly yearnVaultTokenHelper: YearnVaultTokenHelper) {}
 

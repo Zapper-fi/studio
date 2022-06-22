@@ -19,7 +19,7 @@ const groupId = THALES_DEFINITION.groups.staking.id;
 const network = Network.OPTIMISM_MAINNET;
 
 export type ThalesStakingContractPositionDataProps = {
-  totalValueLocked: number;
+  liquidity: number;
 };
 
 const farmDefinitions = [
@@ -51,7 +51,7 @@ export class OptimismThalesStakingContractPositionFetcher implements PositionFet
         const tokens = [supplied(stakedToken as Token), claimable(rewardToken)];
         const contract = this.thalesContractFactory.stakingThales({ address: farmDefinitions[0].address, network });
         const [balanceRaw] = await Promise.all([multicall.wrap(contract).totalStakedAmount()]);
-        const totalValueLocked = Number(balanceRaw) / 10 ** stakedToken.decimals;
+        const liquidity = Number(balanceRaw) / 10 ** stakedToken.decimals;
 
         const label = `Staked ${getLabelFromToken(stakedToken)}`;
         // For images, we'll use the underlying token images as well
@@ -67,12 +67,13 @@ export class OptimismThalesStakingContractPositionFetcher implements PositionFet
           network,
           tokens,
           dataProps: {
-            totalValueLocked,
+            liquidity,
           },
           displayProps: {
             label,
             images,
             secondaryLabel,
+            statsItems: [{ label: 'liquidity', value: buildDollarDisplayItem(liquidity) }],
           },
         };
 

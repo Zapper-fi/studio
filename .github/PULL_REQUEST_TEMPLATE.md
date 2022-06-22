@@ -6,6 +6,7 @@
 
 - [ ] I have followed the [Contributing Guidelines](../CONTRIBUTING.md)
 - [ ] (optional) As a contributor, my Ethereum address/ENS is:
+- [ ] (optional) As a contributor, my Twitter handle is:
 
 ## How to test?
 

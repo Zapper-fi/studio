@@ -42,7 +42,7 @@ const appId = TOKEMAK_DEFINITION.id;
 const groupId = TOKEMAK_DEFINITION.groups.reactor.id;
 const network = Network.ETHEREUM_MAINNET;
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
 export class EthereumTokemakReactorTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
@@ -107,6 +107,12 @@ export class EthereumTokemakReactorTokenFetcher implements PositionFetcher<AppTo
             label,
             secondaryLabel,
             images,
+            statsItems: [
+              {
+                label: 'Liquidity',
+                value: buildDollarDisplayItem(liquidity),
+              },
+            ],
           },
         };
 

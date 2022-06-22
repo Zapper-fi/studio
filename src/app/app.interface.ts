@@ -47,6 +47,7 @@ export enum AppTag {
   SYNTHETICS = 'synthetics',
   TOKENIZED_RISK = 'tokenized-risk',
   YIELD_AGGREGATOR = 'yield-aggregator',
+  LIMIT_ORDER = 'limit-order',
 }
 
 export enum GroupType {
@@ -58,6 +59,8 @@ export type AppGroup = {
   id: string;
   type: GroupType;
   label: string;
+  groupLabel?: string;
+  isHiddenFromExplore?: boolean;
 };
 
 export type AppLinks = {
@@ -69,6 +72,31 @@ export type AppLinks = {
   medium?: string;
 };
 
+export type PresentationConfig = {
+  tabs: (
+    | { viewType: 'list'; label: string; groupIds: string[] }
+    | {
+        viewType: 'split';
+        label: string;
+        views: (
+          | {
+              viewType: 'list';
+              label: string;
+              groupIds: string[];
+            }
+          | {
+              viewType: 'split';
+              label: string;
+              views: {
+                label: string;
+                groupIds: string[];
+              }[];
+            }
+        )[];
+      }
+  )[];
+};
+
 export type AppDefinitionObject = {
   id: string;
   name: string;
@@ -76,6 +104,7 @@ export type AppDefinitionObject = {
   keywords?: string[];
   description: string;
   groups: Record<string, AppGroup>;
+  presentationConfig?: PresentationConfig;
   supportedNetworks: { [N in Network]?: AppAction[] };
   primaryColor?: string;
   url: string;

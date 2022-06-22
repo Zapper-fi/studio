@@ -18,7 +18,7 @@ const appId = DFX_DEFINITION.id;
 const groupId = DFX_DEFINITION.groups.dfxCurve.id;
 const network = Network.ETHEREUM_MAINNET;
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
 export class EthereumDfxCurveTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
@@ -67,10 +67,10 @@ export class EthereumDfxCurveTokenFetcher implements PositionFetcher<AppTokenPos
 
         // Denormalize big integer values
         const supply = Number(supplyRaw) / 10 ** decimals;
-        const totalLiquidity = Number(totalLiquidityRaw) / 1e18;
+        const liquidity = Number(totalLiquidityRaw) / 1e18;
         const reserves = underlyingLiquidityRaw.map(reserveRaw => Number(reserveRaw) / 10 ** 18); // DFX report all token liquidity in 10**18
         const pricePerShare = reserves.map(r => r / supply);
-        const price = totalLiquidity / supply;
+        const price = liquidity / supply;
 
         // Prepare display props
         const [, baseToken, quoteToken] = name.split('-');
@@ -92,12 +92,18 @@ export class EthereumDfxCurveTokenFetcher implements PositionFetcher<AppTokenPos
           pricePerShare,
           tokens,
           dataProps: {
-            tvl: totalLiquidity,
+            liquidity,
           },
           displayProps: {
             label,
             secondaryLabel,
             images,
+            statsItems: [
+              {
+                label: 'Liquidity',
+                value: buildDollarDisplayItem(liquidity),
+              },
+            ],
           },
         };
         return lpToken;

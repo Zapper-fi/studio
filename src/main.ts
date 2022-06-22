@@ -24,4 +24,6 @@ async function bootstrap() {
   await app.listen(5001);
 }
 
-bootstrap();
+bootstrap().catch(err => {
+  throw err;
+});
