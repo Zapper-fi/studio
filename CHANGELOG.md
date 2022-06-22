@@ -4,6 +4,32 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.80.0](https://github.com/Zapper-fi/studio/compare/v0.79.2...v0.80.0) (2022-06-21)
+
+
+### Features
+
+* **iron-bank:** Update empty description ([#710](https://github.com/Zapper-fi/studio/issues/710)) ([e7d6b68](https://github.com/Zapper-fi/studio/commit/e7d6b681f015c11a1ed625e665398480a5b5dd2c))
+
+
+### Bug Fixes
+
+* **aave-v2:** Fix displayed APY ([#712](https://github.com/Zapper-fi/studio/issues/712)) ([3022cf3](https://github.com/Zapper-fi/studio/commit/3022cf3a58d94065b6a06eb007f4965be0ef22f6))
+
+## [0.79.2](https://github.com/Zapper-fi/studio/compare/v0.79.1...v0.79.2) (2022-06-21)
+
+
+### Bug Fixes
+
+* Removed suffix on yearn vaults ([#694](https://github.com/Zapper-fi/studio/issues/694)) ([8a1166c](https://github.com/Zapper-fi/studio/commit/8a1166c5092fb4de7a42c083516d787583992021))
+
+## [0.79.1](https://github.com/Zapper-fi/studio/compare/v0.79.0...v0.79.1) (2022-06-21)
+
+
+### Bug Fixes
+
+* **uniswap-v2:** Add pools that are missing because of subgraph lag ([1bb89ee](https://github.com/Zapper-fi/studio/commit/1bb89eefef930a0f008700032b75eadcacfffbce))
+
 ## [0.79.0](https://github.com/Zapper-fi/studio/compare/v0.78.1...v0.79.0) (2022-06-21)
 
 
