@@ -26,7 +26,7 @@ export const ACROSS_V2_DEFINITION = appDefinition({
     [Network.POLYGON_MAINNET]: [AppAction.VIEW],
     [Network.OPTIMISM_MAINNET]: [AppAction.VIEW],
     [Network.ARBITRUM_MAINNET]: [AppAction.VIEW],
-    [Network.BOAB_MAINNET]: [AppAction.VIEW],
+    // [Network.BOAB_MAINNET]: [AppAction.VIEW],
   },
 
   primaryColor: '#fff',
