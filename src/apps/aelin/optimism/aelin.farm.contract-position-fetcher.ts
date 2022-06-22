@@ -1,6 +1,7 @@
 import { Inject } from '@nestjs/common';
 
 import { Register } from '~app-toolkit/decorators';
+import { ARRAKIS_DEFINITION } from '~apps/arrakis/arrakis.definition';
 import { SynthetixSingleStakingFarmContractPositionHelper } from '~apps/synthetix/helpers/synthetix.single-staking-farm-contract-position-helper';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
@@ -37,7 +38,7 @@ export class OptimismAelinFarmContractPositionFetcher implements PositionFetcher
       appId,
       groupId,
       network,
-      dependencies: [{ appId: 'sorbet', groupIds: ['pool'], network }],
+      dependencies: [{ appId: ARRAKIS_DEFINITION.id, groupIds: [ARRAKIS_DEFINITION.groups.pool.id], network }],
       farmDefinitions: FARMS,
     });
   }
