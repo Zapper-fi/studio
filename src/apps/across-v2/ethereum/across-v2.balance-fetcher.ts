@@ -11,7 +11,7 @@ import { ACROSS_V2_DEFINITION } from '../across-v2.definition';
 const network = Network.ETHEREUM_MAINNET;
 
 @Register.BalanceFetcher(ACROSS_V2_DEFINITION.id, network)
-export class BobaAcrossV2BalanceFetcher implements BalanceFetcher {
+export class EthereumAcrossV2BalanceFetcher implements BalanceFetcher {
   constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
   private async getPoolTokenBalances(address: string) {

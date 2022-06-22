@@ -20,7 +20,7 @@ const network = Network.OPTIMISM_MAINNET;
 const networkId = NETWORK_IDS[network]
 
 @Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
-export class EthereumAcrossPoolTokenFetcher implements PositionFetcher<AppTokenPosition> {
+export class OptimismAcrossV2PoolTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(AcrossV2ContractFactory) private readonly acrossV2ContractFactory: AcrossV2ContractFactory,
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
