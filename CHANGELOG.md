@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.81.0](https://github.com/Zapper-fi/studio/compare/v0.80.0...v0.81.0) (2022-06-22)
+
+
+### Features
+
+* **arrakis:** Extract Gelato from Zapper API, rename to Arrakis, and support Polygon/Ethereum ([#713](https://github.com/Zapper-fi/studio/issues/713)) ([7d9d870](https://github.com/Zapper-fi/studio/commit/7d9d870fd6bb64ce20bb6a35b7c6b936bb4d4b41))
+
 ## [0.80.0](https://github.com/Zapper-fi/studio/compare/v0.79.2...v0.80.0) (2022-06-21)
 
 
