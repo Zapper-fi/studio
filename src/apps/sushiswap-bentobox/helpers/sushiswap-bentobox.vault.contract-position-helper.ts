@@ -88,7 +88,7 @@ export class SushiSwapBentoBoxContractPositionHelper {
           },
           displayProps: {
             statsItems: [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }],
-            label: `${baseToken.symbol} Vault`,
+            label: `${baseToken.symbol} Deposit`,
             secondaryLabel: buildDollarDisplayItem(baseToken.price),
             images: [getTokenImg(baseToken.address, network)],
           },

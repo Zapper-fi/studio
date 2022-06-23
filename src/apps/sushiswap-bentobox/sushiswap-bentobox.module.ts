@@ -34,5 +34,12 @@ import { SushiSwapBentoBoxAppDefinition, SUSHISWAP_BENTOBOX_DEFINITION } from '.
     PolygonSushiSwapBentoBoxContractPositionFetcher,
     PolygonSushiSwapBentoBoxBalanceFetcher,
   ],
+  exports: [
+    SushiSwapBentoBoxAppDefinition,
+    SushiSwapBentoBoxAppModule,
+    SushiswapBentoboxContractFactory,
+    SushiSwapBentoBoxContractPositionBalanceHelper,
+    SushiSwapBentoBoxContractPositionHelper,
+  ],
 })
 export class SushiSwapBentoBoxAppModule extends AbstractApp() {}
