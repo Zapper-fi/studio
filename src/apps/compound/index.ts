@@ -9,7 +9,6 @@ export { CompoundClaimableBalanceHelper } from './helper/compound.claimable.bala
 export { CompoundLendingMetaHelper } from './helper/compound.lending.meta-helper';
 export { CompoundSupplyBalanceHelper } from './helper/compound.supply.balance-helper';
 export { CompoundSupplyTokenHelper } from './helper/compound.supply.token-helper';
-export { CompoundTvlHelper } from './helper/compound.tvl-helper';
 
 /* Contracts */
 export type { CompoundCToken } from './contracts';
