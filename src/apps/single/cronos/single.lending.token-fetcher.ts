@@ -7,7 +7,7 @@ import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
-import { SingleContractFactory, Vault } from '../contracts';
+import { SingleContractFactory, SingleVault } from '../contracts';
 import { SINGLE_DEFINITION } from '../single.definition';
 import { SingleProtocol } from '../types';
 
@@ -30,15 +30,15 @@ export class CronosSingleLendingTokenFetcher implements PositionFetcher<AppToken
   ) { }
 
   async getPositions() {
-    return this.appToolkit.helpers.vaultTokenHelper.getTokens<Vault>({
+    return this.appToolkit.helpers.vaultTokenHelper.getTokens<SingleVault>({
       appId,
       groupId,
       network,
-      resolveContract: ({ address, network }) => this.singleContractFactory.vault({ address, network }),
+      resolveContract: ({ address, network }) => this.singleContractFactory.singleVault({ address, network }),
       resolveVaultAddresses,
       resolveUnderlyingTokenAddress: ({ contract, multicall }) => multicall.wrap(contract).token(),
       resolveReserve: async ({ underlyingToken, multicall, address }) => {
-        const contract = this.singleContractFactory.vault({ address, network });
+        const contract = this.singleContractFactory.singleVault({ address, network });
         return multicall
           .wrap(contract)
           .totalToken()
@@ -46,6 +46,5 @@ export class CronosSingleLendingTokenFetcher implements PositionFetcher<AppToken
       },
       resolvePricePerShare: ({ reserve, supply }) => reserve / supply,
     });
-    return [];
   }
 }

@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { Vault, VaultInterface } from '../Vault';
+import type { SingleVault, SingleVaultInterface } from '../SingleVault';
 
 const _abi = [
   {
@@ -733,12 +733,12 @@ const _abi = [
   },
 ];
 
-export class Vault__factory {
+export class SingleVault__factory {
   static readonly abi = _abi;
-  static createInterface(): VaultInterface {
-    return new utils.Interface(_abi) as VaultInterface;
+  static createInterface(): SingleVaultInterface {
+    return new utils.Interface(_abi) as SingleVaultInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): Vault {
-    return new Contract(address, _abi, signerOrProvider) as Vault;
+  static connect(address: string, signerOrProvider: Signer | Provider): SingleVault {
+    return new Contract(address, _abi, signerOrProvider) as SingleVault;
   }
 }

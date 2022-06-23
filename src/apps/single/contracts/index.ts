@@ -4,7 +4,7 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { Vault__factory } from './ethers';
+import { SingleVault__factory } from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
@@ -15,9 +15,9 @@ export class SingleContractFactory extends ContractFactory {
     super((network: Network) => appToolkit.getNetworkProvider(network));
   }
 
-  vault({ address, network }: ContractOpts) {
-    return Vault__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  singleVault({ address, network }: ContractOpts) {
+    return SingleVault__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
 }
 
-export type { Vault } from './ethers';
+export type { SingleVault } from './ethers';
