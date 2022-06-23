@@ -1,6 +1,5 @@
 import { Inject } from '@nestjs/common';
 
-import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
 import { AaveV2LendingBalanceHelper, AaveV2ClaimableBalanceHelper, AaveV2HealthFactorMetaHelper } from '~apps/aave-v2';
@@ -14,7 +13,6 @@ const network = Network.GNOSIS_MAINNET;
 @Register.BalanceFetcher(AGAVE_DEFINITION.id, network)
 export class GnosisAgaveBalanceFetcher implements BalanceFetcher {
   constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(AaveV2LendingBalanceHelper) private readonly aaveV2LendingBalanceHelper: AaveV2LendingBalanceHelper,
     @Inject(AaveV2ClaimableBalanceHelper) private readonly aaveV2ClaimableBalanceHelper: AaveV2ClaimableBalanceHelper,
     @Inject(AaveV2HealthFactorMetaHelper) private readonly healthFactorHelper: AaveV2HealthFactorMetaHelper,
