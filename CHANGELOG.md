@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.88.1](https://github.com/Zapper-fi/studio/compare/v0.88.0...v0.88.1) (2022-06-23)
+
+
+### Bug Fixes
+
+* **agave:** Remove claimable reward until Symmetric Exchange is supported ([#744](https://github.com/Zapper-fi/studio/issues/744)) ([0de275d](https://github.com/Zapper-fi/studio/commit/0de275da7c711f3ae5fc6b8673930855539b3132))
+* **positions:** Move cache registration logic to position service ([#745](https://github.com/Zapper-fi/studio/issues/745)) ([66dd3ae](https://github.com/Zapper-fi/studio/commit/66dd3aedda6c408e8596f40b007f7c0c229cca18))
+
 ## [0.88.0](https://github.com/Zapper-fi/studio/compare/v0.87.0...v0.88.0) (2022-06-23)
 
 
