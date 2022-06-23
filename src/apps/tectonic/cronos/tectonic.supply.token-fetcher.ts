@@ -29,11 +29,11 @@ export class CronosTectonicSupplyTokenFetcher implements PositionFetcher<AppToke
       getTectonicCoreContract: ({ address, network }) =>
         this.tectonicContractFactory.tectonicCore({ address, network }),
       getTokenContract: ({ address, network }) => this.tectonicContractFactory.tectonicTToken({ address, network }),
-      getAllMarkets: ({ contract }) => contract.getAllMarkets(),
-      getExchangeRate: ({ contract }) => contract.callStatic.exchangeRateCurrent(),
-      getSupplyRate: ({ contract }) => contract.supplyRatePerBlock(),
-      getBorrowRate: ({ contract }) => contract.borrowRatePerBlock(),
-      getUnderlyingAddress: ({ contract }) => contract.underlying(),
+      getAllMarkets: ({ contract, multicall }) => multicall.wrap(contract).getAllMarkets(),
+      getExchangeRate: ({ contract, multicall }) => multicall.wrap(contract).callStatic.exchangeRateCurrent(),
+      getSupplyRate: ({ contract, multicall }) => multicall.wrap(contract).supplyRatePerBlock(),
+      getBorrowRate: ({ contract, multicall }) => multicall.wrap(contract).borrowRatePerBlock(),
+      getUnderlyingAddress: ({ contract, multicall }) => multicall.wrap(contract).underlying(),
       getExchangeRateMantissa: ({ underlyingTokenDecimals }) => underlyingTokenDecimals + 10,
     });
   }
