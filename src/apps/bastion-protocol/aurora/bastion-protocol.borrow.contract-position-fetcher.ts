@@ -22,7 +22,7 @@ const appId = BASTION_PROTOCOL_DEFINITION.id;
 const groupId = BASTION_PROTOCOL_DEFINITION.groups.borrow.id;
 const network = Network.AURORA_MAINNET;
 
-@Register.ContractPositionFetcher({ appId, groupId, network })
+@Register.ContractPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
 export class AuroraBastionProtocolBorrowContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
@@ -69,14 +69,14 @@ export class AuroraBastionProtocolBorrowContractPositionFetcher implements Posit
       const borrowApy = appToken.dataProps.borrowApy;
 
       // Display Props
-      const label = `Borrowed ${getLabelFromToken(appToken.tokens[0])}`;
+      const label = `${getLabelFromToken(appToken.tokens[0])}`;
       const secondaryLabel = buildDollarDisplayItem(underlyingPrice);
       const tertiaryLabel = isNumber(borrowApy) ? `${(borrowApy * 100).toFixed(3)}% APR` : '';
       const images = appToken.displayProps.images;
       const statsItems = isNumber(borrowApy)
         ? [
-            { label: 'Borrow APR', value: buildPercentageDisplayItem(borrowApy) },
-            { label: 'Liquidity', value: buildDollarDisplayItem(dataProps.liquidity) },
+            { label: 'APY', value: buildPercentageDisplayItem(borrowApy * 100) },
+            { label: 'Liquidity', value: buildDollarDisplayItem(borrowLiquidity) },
           ]
         : [];
 

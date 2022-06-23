@@ -99,7 +99,7 @@ export class BastionSupplyTokenHelper {
         const images = [getTokenImg(underlyingToken.address, network)];
         const balanceDisplayMode = BalanceDisplayMode.UNDERLYING;
         const statsItems = [
-          { label: 'Supply APY', value: buildPercentageDisplayItem(supplyApy) },
+          { label: 'APY', value: buildPercentageDisplayItem(supplyApy * 100) },
           { label: 'Liquidity', value: buildDollarDisplayItem(liquidity) },
         ];
 
