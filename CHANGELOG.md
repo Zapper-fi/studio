@@ -4,6 +4,20 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.88.0](https://github.com/Zapper-fi/studio/compare/v0.87.0...v0.88.0) (2022-06-23)
+
+
+### Features
+
+* **single:** Add Single Finance vaults ([#727](https://github.com/Zapper-fi/studio/issues/727)) ([b03b54e](https://github.com/Zapper-fi/studio/commit/b03b54ebcdeb33fd296d328e74964ea93a1f6061))
+
+
+### Bug Fixes
+
+* add borrow liquidity to stats in coslend ([#741](https://github.com/Zapper-fi/studio/issues/741)) ([aa955c5](https://github.com/Zapper-fi/studio/commit/aa955c589f1fe01a2c373c5e9b5a8faceafce378))
+* **single:** Adjust Single Finance name and add logo ([e1fddde](https://github.com/Zapper-fi/studio/commit/e1fdddebccfd46de8563eef5a1f19a05f579585a))
+* **uniswap-v2:** Fix silently failing pool addresses ([#743](https://github.com/Zapper-fi/studio/issues/743)) ([f0ff5a0](https://github.com/Zapper-fi/studio/commit/f0ff5a0ef1818cc1e2913ee7bbc556540f9af5f0))
+
 ## [0.87.0](https://github.com/Zapper-fi/studio/compare/v0.86.0...v0.87.0) (2022-06-23)
 
 
