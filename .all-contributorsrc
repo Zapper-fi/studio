@@ -462,6 +462,25 @@
         "question",
         "maintenance"
       ]
+    },
+    {
+      "login": "SamIam-0x",
+      "name": "Sam | Zapper",
+      "avatar_url": "https://avatars.githubusercontent.com/u/43358952?v=4",
+      "profile": "https://github.com/SamIam-0x",
+      "contributions": [
+        "doc",
+        "question"
+      ]
+    },
+    {
+      "login": "singlefinance",
+      "name": "Single Finance Lab",
+      "avatar_url": "https://avatars.githubusercontent.com/u/92788245?v=4",
+      "profile": "https://www.singlefinance.io/",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7
