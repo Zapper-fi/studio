@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.85.0](https://github.com/Zapper-fi/studio/compare/v0.84.0...v0.85.0) (2022-06-23)
+
+
+### Features
+
+* **abracadabra:** Added support for Degenbox Deposits ([#731](https://github.com/Zapper-fi/studio/issues/731)) ([003c75f](https://github.com/Zapper-fi/studio/commit/003c75f0a297368fda3e240a2280328edf09d1f7))
+
+
+### Bug Fixes
+
+* **yearn:** Rename v1 vaults ([#733](https://github.com/Zapper-fi/studio/issues/733)) ([d2448c3](https://github.com/Zapper-fi/studio/commit/d2448c3d0b605e5b2bc65ab86fdad026d92fcf2b))
+
 ## [0.84.0](https://github.com/Zapper-fi/studio/compare/v0.83.0...v0.84.0) (2022-06-23)
 
 
