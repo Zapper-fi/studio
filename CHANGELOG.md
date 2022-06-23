@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.86.0](https://github.com/Zapper-fi/studio/compare/v0.85.0...v0.86.0) (2022-06-23)
+
+
+### Features
+
+* **aurigami:** Add presentation config and remove custom tvl fetcher ([#736](https://github.com/Zapper-fi/studio/issues/736)) ([0d34ebd](https://github.com/Zapper-fi/studio/commit/0d34ebd2aca41511c412fcc659f96e9ce2784f7e))
+* **tectonic:** Add presentation config and fix supply displayed APY ([#734](https://github.com/Zapper-fi/studio/issues/734)) ([e67a9fb](https://github.com/Zapper-fi/studio/commit/e67a9fbab28385ce586622c2f14465e4ae49f3e0))
+
 ## [0.85.0](https://github.com/Zapper-fi/studio/compare/v0.84.0...v0.85.0) (2022-06-23)
 
 
