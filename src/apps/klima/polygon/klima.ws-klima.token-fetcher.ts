@@ -20,7 +20,7 @@ export class PolygonKlimaWsTokenFetcher implements PositionFetcher<AppTokenPosit
     @Inject(KlimaContractFactory) private readonly contractFactory: KlimaContractFactory,
   ) {}
 
-  async getPositions(): Promise<AppTokenPosition[]> {
+  async getPositions() {
     return this.appToolkit.helpers.vaultTokenHelper.getTokens<KlimaWsKlima>({
       network,
       appId,

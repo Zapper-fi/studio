@@ -8,7 +8,6 @@ import { GnosisAgaveBalanceFetcher } from './gnosis/agave.balance-fetcher';
 import { GnosisAgaveClaimableContractPositionFetcher } from './gnosis/agave.claimable.contract-position-fetcher';
 import { GnosisAgaveDepositTokenFetcher } from './gnosis/agave.deposit.token-fetcher';
 import { GnosisAgaveStableBorrowTokenFetcher } from './gnosis/agave.stable-borrow.token-fetcher';
-import { GnosisAgaveTvlFetcher } from './gnosis/agave.tvl-fetcher';
 import { GnosisAgaveVariableBorrowTokenFetcher } from './gnosis/agave.variable-borrow.token-fetcher';
 
 @Register.AppModule({
@@ -21,7 +20,6 @@ import { GnosisAgaveVariableBorrowTokenFetcher } from './gnosis/agave.variable-b
     GnosisAgaveClaimableContractPositionFetcher,
     GnosisAgaveDepositTokenFetcher,
     GnosisAgaveStableBorrowTokenFetcher,
-    GnosisAgaveTvlFetcher,
     GnosisAgaveVariableBorrowTokenFetcher,
   ],
 })

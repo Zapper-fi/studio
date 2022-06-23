@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.82.1](https://github.com/Zapper-fi/studio/compare/v0.82.0...v0.82.1) (2022-06-23)
+
+
+### Bug Fixes
+
+* **umami:** Fix name/pps, add TVL/APR/APY ([#700](https://github.com/Zapper-fi/studio/issues/700)) ([22bfc87](https://github.com/Zapper-fi/studio/commit/22bfc87acae5a3338168166af85e88c7ece78e89))
+* **uniswap-v2:** Remove Uniswap V2 pool with absurd price and supply, bump number of Enzyme Finance vaults fetched ([#723](https://github.com/Zapper-fi/studio/issues/723)) ([ab299a3](https://github.com/Zapper-fi/studio/commit/ab299a31e4ad6b79f8380e684bce47a231bb961d))
+
 ## [0.82.0](https://github.com/Zapper-fi/studio/compare/v0.81.1...v0.82.0) (2022-06-22)
 
 
