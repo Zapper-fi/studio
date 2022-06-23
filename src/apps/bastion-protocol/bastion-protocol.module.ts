@@ -1,6 +1,5 @@
 import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
-import { CompoundAppModule, CompoundSupplyTokenHelper } from '~apps/compound';
 import { CurvePoolTokenHelper } from '~apps/curve';
 
 import { AuroraBastionProtocolBalanceFetcher } from './aurora/bastion-protocol.balance-fetcher';
@@ -26,4 +25,4 @@ import { BastionSupplyTokenHelper } from './helper/bastion-protocol.supply.token
     CurvePoolTokenHelper,
   ],
 })
-export class BastionProtocolAppModule extends AbstractApp() { }
+export class BastionProtocolAppModule extends AbstractApp() {}
