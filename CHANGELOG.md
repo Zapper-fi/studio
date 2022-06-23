@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.82.2](https://github.com/Zapper-fi/studio/compare/v0.82.1...v0.82.2) (2022-06-23)
+
+
+### Bug Fixes
+
+* **tectonic:** Fix linting, fix duplicate ABI log warning ([8a2c8a7](https://github.com/Zapper-fi/studio/commit/8a2c8a7e63a3ce3c51193467ff0205705803b689))
+
 ## [0.82.1](https://github.com/Zapper-fi/studio/compare/v0.82.0...v0.82.1) (2022-06-23)
 
 
