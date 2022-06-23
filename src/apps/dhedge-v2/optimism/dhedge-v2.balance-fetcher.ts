@@ -26,6 +26,7 @@ export class OptimismDhedgeV2BalanceFetcher implements BalanceFetcher {
 
   async getBalances(address: string) {
     const assets = await this.getTokenBalances(address);
+
     return presentBalanceFetcherResponse([
       {
         label: 'Pools',
