@@ -61,13 +61,6 @@ interface EulerMarketsResponse {
   };
 }
 
-type EulerTokenDataProps = {
-  liquidity: number;
-  interestRate: number;
-  borrowAPY: number;
-  supplyAPY: number;
-};
-
 @Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
 export class EthereumEulerETokenTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(

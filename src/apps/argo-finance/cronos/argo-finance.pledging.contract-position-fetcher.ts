@@ -11,7 +11,6 @@ import { claimable, supplied } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 
 import { ARGO_FINANCE_DEFINITION } from '../argo-finance.definition';
-import { ArgoFinanceContractFactory } from '../contracts';
 
 import { ADDRESSES } from './consts';
 
@@ -21,12 +20,9 @@ const network = Network.CRONOS_MAINNET;
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
 export class CronosArgoFinancePledgingContractPositionFetcher implements PositionFetcher<ContractPosition> {
-  constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(ArgoFinanceContractFactory) private readonly argoFinanceContractFactory: ArgoFinanceContractFactory,
-  ) {}
+  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
-  async getVePosition(address: string, baseAddress: string) {
+  async getVePosition(address: string) {
     const multicall = this.appToolkit.getMulticall(network);
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
     const contractTokens = await this.appToolkit.getAppTokenPositions({
@@ -37,11 +33,7 @@ export class CronosArgoFinancePledgingContractPositionFetcher implements Positio
     const baseToken = contractTokens.find(t => t.symbol === 'xARGO')!;
     const croToken = baseTokens.find(t => t.symbol === 'WCRO')!;
     const veToken = multicall.wrap(this.appToolkit.globalContracts.erc20({ address, network }));
-    const [supplyRaw, decimals, symbol] = await Promise.all([
-      veToken.totalSupply(),
-      veToken.decimals(),
-      veToken.symbol(),
-    ]);
+    const [supplyRaw, decimals] = await Promise.all([veToken.totalSupply(), veToken.decimals()]);
     const supply = Number(supplyRaw) / 10 ** decimals;
     const pricePerShare = 1; // Note: Consult liquidity pools for peg once set up
     const price = baseToken.price * pricePerShare;
@@ -55,7 +47,7 @@ export class CronosArgoFinancePledgingContractPositionFetcher implements Positio
       address: ADDRESSES.pledging,
       network,
       tokens,
-      dataProps: {},
+      dataProps: { liquidity },
       displayProps: {
         label: 'xARGO',
         secondaryLabel: buildDollarDisplayItem(price),
@@ -66,7 +58,7 @@ export class CronosArgoFinancePledgingContractPositionFetcher implements Positio
   }
 
   async getPositions() {
-    const [argo] = await Promise.all([this.getVePosition(ADDRESSES.xargo, ADDRESSES.argo)]);
+    const [argo] = await Promise.all([this.getVePosition(ADDRESSES.xargo)]);
     return [argo];
   }
 }

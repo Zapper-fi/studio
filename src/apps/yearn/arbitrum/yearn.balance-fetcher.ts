@@ -14,15 +14,6 @@ const network = Network.ARBITRUM_MAINNET;
 export class ArbitrumYearnBalanceFetcher implements BalanceFetcher {
   constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
-  private async getV1VaultBalances(address: string) {
-    return await this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
-      network,
-      appId: YEARN_DEFINITION.id,
-      groupId: YEARN_DEFINITION.groups.v1Vault.id,
-      address,
-    });
-  }
-
   private async getV2VaultBalances(address: string) {
     return await this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
       network,
@@ -33,18 +24,11 @@ export class ArbitrumYearnBalanceFetcher implements BalanceFetcher {
   }
 
   async getBalances(address: string) {
-    const [v1VaultBalances, v2VaultBalances] = await Promise.all([
-      this.getV1VaultBalances(address),
-      this.getV2VaultBalances(address),
-    ]);
+    const v2VaultBalances = await this.getV2VaultBalances(address);
 
     return presentBalanceFetcherResponse([
       {
-        label: 'Vaults (V1)',
-        assets: v1VaultBalances,
-      },
-      {
-        label: 'Vaults (V2)',
+        label: 'Vaults',
         assets: v2VaultBalances,
       },
     ]);

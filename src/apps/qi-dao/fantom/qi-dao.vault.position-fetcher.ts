@@ -24,7 +24,7 @@ export class FantomQiDaoVaultPositionFetcher implements PositionFetcher<Contract
       dependencies: [
         {
           appId: YEARN_DEFINITION.id,
-          groupIds: [YEARN_DEFINITION.groups.v1Vault.id, YEARN_DEFINITION.groups.v2Vault.id],
+          groupIds: [YEARN_DEFINITION.groups.v2Vault.id],
           network,
         },
       ],

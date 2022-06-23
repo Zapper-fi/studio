@@ -19,7 +19,6 @@ import { YEARN_DEFINITION } from '../yearn.definition';
 import { YearnVaultData, YearnVaultTokenDefinitionsResolver } from './yearn.vault.token-definitions-resolver';
 
 type YearnVaultTokenDataProps = {
-  version: 'v1' | 'v2';
   liquidity: number;
   reserve: number;
   isBlocked: boolean;
@@ -77,15 +76,13 @@ export class YearnVaultTokenHelper {
 
     const vaultTokens = await Promise.all(
       vaultDefinitions.map(async vault => {
-        const vaultType = vault.type as 'v1' | 'v2';
-
         const underlyingTokenAddress = vault.token.address.toLowerCase();
         const underlyingToken = allTokens.find(t => t.address === underlyingTokenAddress);
         if (!underlyingToken) return null;
 
         const type = ContractType.APP_TOKEN;
         const appId = YEARN_DEFINITION.id;
-        const groupId = vaultType === 'v1' ? YEARN_DEFINITION.groups.v1Vault.id : YEARN_DEFINITION.groups.v2Vault.id;
+        const groupId = vault.type === 'v1' ? YEARN_DEFINITION.groups.v1Vault.id : YEARN_DEFINITION.groups.v2Vault.id;
         const vaultAddress = vault.address.toLowerCase();
         const erc20Contract = this.yearnContractFactory.erc20({ address: vaultAddress, network });
 
@@ -103,7 +100,7 @@ export class YearnVaultTokenHelper {
         const tokens = [underlyingToken];
         const liquidity = price * supply;
         const apy = vault.apy?.net_apy;
-        const isBlocked = vault.emergencyShutdown || vaultType === 'v1' || vault.migration?.available;
+        const isBlocked = vault.emergencyShutdown || vault.type === 'v1' || vault.migration?.available;
 
         // Display props
         const label = getLabelFromToken(underlyingToken);
@@ -128,7 +125,6 @@ export class YearnVaultTokenHelper {
           tokens,
 
           dataProps: {
-            version: vaultType,
             liquidity,
             reserve,
             isBlocked: !!isBlocked,
@@ -152,11 +148,11 @@ export class YearnVaultTokenHelper {
 
   async getV1Tokens(opts: YearnVaultTokenHelperParams) {
     const tokens = await this.getTokens(opts);
-    return tokens.filter(t => t.dataProps.version === 'v1');
+    return tokens.filter(t => t.groupId === YEARN_DEFINITION.groups.v1Vault.id);
   }
 
   async getV2Tokens(opts: YearnVaultTokenHelperParams) {
     const tokens = await this.getTokens(opts);
-    return tokens.filter(t => t.dataProps.version === 'v2');
+    return tokens.filter(t => t.groupId === YEARN_DEFINITION.groups.v2Vault.id);
   }
 }

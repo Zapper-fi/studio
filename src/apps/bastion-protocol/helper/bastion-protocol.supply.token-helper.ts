@@ -14,7 +14,7 @@ import { BalanceDisplayMode } from '~position/display.interface';
 import { AppTokenPosition, ExchangeableAppTokenDataProps } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
-import { BastionProtocolComptroller, BastionProtocolContractFactory, BastionProtocolCtoken } from '../contracts';
+import { BastionProtocolContractFactory } from '../contracts';
 
 export type BastionSupplyTokenDataProps = ExchangeableAppTokenDataProps & {
   supplyApy: number;
@@ -24,7 +24,7 @@ export type BastionSupplyTokenDataProps = ExchangeableAppTokenDataProps & {
   comptrollerAddress: string;
 };
 
-type BastionSupplyTokenHelperParams<T = BastionProtocolComptroller, V = BastionProtocolCtoken> = {
+type BastionSupplyTokenHelperParams = {
   comptrollerAddress: string;
   realmName: string;
   network: Network;
@@ -40,13 +40,7 @@ export class BastionSupplyTokenHelper {
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
   ) {}
 
-  async getTokens<T = BastionProtocolComptroller, V = BastionProtocolCtoken>({
-    comptrollerAddress,
-    realmName,
-    network,
-    appId,
-    groupId,
-  }: BastionSupplyTokenHelperParams<T, V>) {
+  async getTokens({ comptrollerAddress, realmName, network, appId, groupId }: BastionSupplyTokenHelperParams) {
     const multicall = this.appToolkit.getMulticall(network);
     const comptrollerContract = this.bastionProtocolContractFactory.bastionProtocolComptroller({
       address: comptrollerAddress,
