@@ -1,6 +1,5 @@
 import { Inject } from '@nestjs/common';
 
-import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { UniswapV2ContractFactory } from '~apps/uniswap-v2/contracts';
 import { UniswapV2OnChainPoolTokenAddressStrategy } from '~apps/uniswap-v2/helpers/uniswap-v2.on-chain.pool-token-address-strategy';
@@ -9,7 +8,6 @@ import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
-import { DiffusionContractFactory } from '../contracts';
 import { DIFFUSION_DEFINITION } from '../diffusion.definition';
 
 const appId = DIFFUSION_DEFINITION.id;
@@ -23,10 +21,7 @@ export class EvmosDiffusionPoolTokenFetcher implements PositionFetcher<AppTokenP
     private readonly uniswapV2ContractFactory: UniswapV2ContractFactory,
     @Inject(UniswapV2OnChainPoolTokenAddressStrategy)
     private readonly uniswapV2OnChainPoolTokenAddressStrategy: UniswapV2OnChainPoolTokenAddressStrategy,
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(UniswapV2PoolTokenHelper)
-    @Inject(DiffusionContractFactory)
-    private readonly diffusionContractFactory: DiffusionContractFactory,
     @Inject(UniswapV2PoolTokenHelper)
     private readonly uniswapV2PoolTokenHelper: UniswapV2PoolTokenHelper,
   ) {}
@@ -36,7 +31,7 @@ export class EvmosDiffusionPoolTokenFetcher implements PositionFetcher<AppTokenP
       network,
       appId,
       groupId,
-      factoryAddress: '0x6aBdDa34Fb225be4610a2d153845e09429523Cd2',
+      factoryAddress: '0x6abdda34fb225be4610a2d153845e09429523cd2',
       resolveFactoryContract: ({ address, network }) =>
         this.uniswapV2ContractFactory.uniswapFactory({ address, network }),
       resolvePoolContract: ({ address, network }) => this.uniswapV2ContractFactory.uniswapPair({ address, network }),

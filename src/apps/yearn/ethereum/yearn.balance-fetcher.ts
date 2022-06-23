@@ -50,7 +50,7 @@ export class EthereumYearnBalanceFetcher implements BalanceFetcher {
     return this.appToolkit.helpers.singleStakingContractPositionBalanceHelper.getBalances<SynthetixRewards>({
       address,
       appId: YEARN_DEFINITION.id,
-      groupId: YEARN_DEFINITION.groups.farm.id,
+      groupId: YEARN_DEFINITION.groups.governance.id,
       network,
       resolveContract: ({ address, network }) => this.synthetixContractFactory.synthetixRewards({ address, network }),
       resolveStakedTokenBalance: ({ contract, address, multicall }) => multicall.wrap(contract).balanceOf(address),

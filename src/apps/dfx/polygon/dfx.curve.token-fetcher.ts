@@ -67,14 +67,14 @@ export class PolygonDfxCurveTokenFetcher implements PositionFetcher<AppTokenPosi
 
         // Denormalize big integer values
         const supply = Number(supplyRaw) / 10 ** decimals;
-        const totalLiquidity = Number(totalLiquidityRaw) / 1e18;
+        const liquidity = Number(totalLiquidityRaw) / 1e18;
         const reserves = underlyingLiquidityRaw.map(reserveRaw => Number(reserveRaw) / 10 ** 18); // DFX report all token liquidity in 10**18
         const pricePerShare = reserves.map(r => r / supply);
-        const price = totalLiquidity / supply;
+        const price = liquidity / supply;
 
         // Prepare display props
         const [, baseToken, quoteToken] = name.split('-');
-        const label = `DFX LP ${baseToken.toUpperCase()}/${quoteToken.toUpperCase()}`;
+        const label = `${baseToken.toUpperCase()}/${quoteToken.toUpperCase()}`;
         const secondaryLabel = buildDollarDisplayItem(price);
         const images = [getAppImg(appId)];
 
@@ -92,7 +92,7 @@ export class PolygonDfxCurveTokenFetcher implements PositionFetcher<AppTokenPosi
           pricePerShare,
           tokens,
           dataProps: {
-            tvl: totalLiquidity,
+            liquidity,
           },
           displayProps: {
             label,
@@ -101,7 +101,7 @@ export class PolygonDfxCurveTokenFetcher implements PositionFetcher<AppTokenPosi
             statsItems: [
               {
                 label: 'Liquidity',
-                value: buildDollarDisplayItem(totalLiquidity),
+                value: buildDollarDisplayItem(liquidity),
               },
             ],
           },

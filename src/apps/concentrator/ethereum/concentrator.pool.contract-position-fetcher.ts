@@ -15,6 +15,7 @@ import { address as aCrvAddress } from './concentrator.acrv.token-fetcher';
 const appId = CONCENTRATOR_DEFINITION.id;
 const groupId = CONCENTRATOR_DEFINITION.groups.pool.id;
 const network = Network.ETHEREUM_MAINNET;
+
 const address = '0xc8ff37f7d057df1bb9ad681b53fa4726f268e0e8';
 
 @Register.ContractPositionFetcher({ appId, groupId, network })

@@ -23,7 +23,7 @@ type EnzymeFinanceVaultsResponse = {
 
 const query = gql`
   query fetchEnzymeVaults {
-    funds(first: 100, orderBy: investmentCount, orderDirection: desc) {
+    funds(first: 250, orderBy: investmentCount, orderDirection: desc) {
       id
     }
   }

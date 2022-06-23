@@ -16,11 +16,13 @@ import { PolygonGoodGhostingGameContractPositionFetcher } from './polygon/good-g
   providers: [
     GoodGhostingAppDefinition,
     GoodGhostingContractFactory,
+    GoodGhostingGameContractPositionFetcherHelper,
+    GoodGhostingGameConfigFetcherHelper,
+    GoodGhostingBalanceFetcherHelper,
+    // Polygon
     PolygonGoodGhostingBalanceFetcher,
     PolygonGoodGhostingGameContractPositionFetcher,
-    GoodGhostingGameContractPositionFetcherHelper,
-    GoodGhostingBalanceFetcherHelper,
-    GoodGhostingGameConfigFetcherHelper,
+    // Celo
     CeloGoodGhostingBalanceFetcher,
     CeloGoodGhostingGameContractPositionFetcher,
   ],
