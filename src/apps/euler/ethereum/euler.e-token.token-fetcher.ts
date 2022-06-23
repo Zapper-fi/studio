@@ -88,13 +88,12 @@ export class EthereumEulerETokenTokenFetcher implements PositionFetcher<AppToken
           multicall.wrap(eTokenContract).decimals(),
           multicall.wrap(eTokenContract).convertBalanceToUnderlying(utils.parseEther('1')),
         ]);
-        const underlyingToken = baseTokens.find(token => token?.address === market.id.toLowerCase());
-
+        const underlyingToken = baseTokens.find(token => token.address === market.id.toLowerCase());
         if (totalSupplyRaw.isZero() || !underlyingToken) return null;
 
         const supply = Number(totalSupplyRaw) / 10 ** decimals;
         const symbol = `E${market.symbol}`;
-        const pricePerShare = Number(utils.formatEther(pricePerShareRaw));
+        const pricePerShare = Number(pricePerShareRaw) / 10 ** 18;
         const price = underlyingToken.price * pricePerShare;
         const liquidity = supply * underlyingToken.price;
         const interestRate = Number(market.interestRate) / 10 ** decimals;
@@ -109,23 +108,23 @@ export class EthereumEulerETokenTokenFetcher implements PositionFetcher<AppToken
         const statsItems = [
           {
             label: 'Liquidity',
-            value: buildDollarDisplayItem(dataProps.liquidity),
+            value: buildDollarDisplayItem(liquidity),
           },
           {
             label: 'Supply APY',
-            value: buildPercentageDisplayItem(dataProps.supplyAPY),
+            value: buildPercentageDisplayItem(supplyAPY),
           },
         ];
 
         const displayProps = {
-          label: `${market.name} (E)`,
+          label: market.name,
           secondaryLabel: buildDollarDisplayItem(price),
           images: getImagesFromToken(underlyingToken),
           statsItems,
         };
 
-        return {
-          type: ContractType.APP_TOKEN as const,
+        const token: AppTokenPosition = {
+          type: ContractType.APP_TOKEN,
           address: market.eTokenAddress,
           appId,
           groupId,
@@ -139,6 +138,8 @@ export class EthereumEulerETokenTokenFetcher implements PositionFetcher<AppToken
           dataProps,
           displayProps,
         };
+
+        return token;
       }),
     );
 
