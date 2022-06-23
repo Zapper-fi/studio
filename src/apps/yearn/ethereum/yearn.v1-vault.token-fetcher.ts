@@ -6,7 +6,7 @@ import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
-import { YearnVaultTokenHelper } from '../helpers/yearn.vault.token-helper';
+import { YearnV1VaultTokenHelper } from '../helpers/yearn.v1-vault.token-helper';
 import { YEARN_DEFINITION } from '../yearn.definition';
 
 const appId = YEARN_DEFINITION.id;
@@ -15,10 +15,10 @@ const network = Network.ETHEREUM_MAINNET;
 
 @Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
 export class EthereumYearnV1VaultTokenFetcher implements PositionFetcher<AppTokenPosition> {
-  constructor(@Inject(YearnVaultTokenHelper) private readonly yearnVaultTokenHelper: YearnVaultTokenHelper) {}
+  constructor(@Inject(YearnV1VaultTokenHelper) private readonly yearnVaultTokenHelper: YearnV1VaultTokenHelper) {}
 
   async getPositions() {
-    return this.yearnVaultTokenHelper.getV1Tokens({
+    return this.yearnVaultTokenHelper.getTokens({
       network,
       dependencies: [
         // @TODO: Move over Aave V1

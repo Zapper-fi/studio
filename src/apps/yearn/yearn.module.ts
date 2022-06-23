@@ -12,8 +12,9 @@ import { EthereumYearnV2VaultTokenFetcher } from './ethereum/yearn.v2-vault.toke
 import { EthereumYearnYieldTokenFetcher } from './ethereum/yearn.yield.token-fetcher';
 import { FantomYearnBalanceFetcher } from './fantom/yearn.balance-fetcher';
 import { FantomYearnV2VaultTokenFetcher } from './fantom/yearn.v2-vault.token-fetcher';
+import { YearnV1VaultTokenHelper } from './helpers/yearn.v1-vault.token-helper';
+import { YearnV2VaultTokenHelper } from './helpers/yearn.v2-vault.token-helper';
 import { YearnVaultTokenDefinitionsResolver } from './helpers/yearn.vault.token-definitions-resolver';
-import { YearnVaultTokenHelper } from './helpers/yearn.vault.token-helper';
 import { YearnAppDefinition, YEARN_DEFINITION } from './yearn.definition';
 
 @Register.AppModule({
@@ -22,7 +23,8 @@ import { YearnAppDefinition, YEARN_DEFINITION } from './yearn.definition';
   providers: [
     YearnAppDefinition,
     YearnContractFactory,
-    YearnVaultTokenHelper,
+    YearnV1VaultTokenHelper,
+    YearnV2VaultTokenHelper,
     YearnVaultTokenDefinitionsResolver,
     EthereumYearnBalanceFetcher,
     EthereumYearnFarmContractPositionFetcher,
