@@ -14,7 +14,7 @@ const appId = AURIGAMI_DEFINITION.id;
 const groupId = AURIGAMI_DEFINITION.groups.supply.id;
 const network = Network.AURORA_MAINNET;
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
 export class AuroraAurigamiSupplyTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
