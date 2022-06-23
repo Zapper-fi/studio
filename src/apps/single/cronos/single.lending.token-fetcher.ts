@@ -11,14 +11,14 @@ import { SingleContractFactory, SingleVault } from '../contracts';
 import { SINGLE_DEFINITION } from '../single.definition';
 import { SingleProtocol } from '../types';
 
+import { BASE_API_URL } from './common';
+
 const appId = SINGLE_DEFINITION.id;
 const groupId = SINGLE_DEFINITION.groups.lending.id;
 const network = Network.CRONOS_MAINNET;
 
-const BASE_API_URL = 'https://api.singlefinance.io/api/protocol/contracts';
-
 const resolveVaultAddresses = async () => {
-  const { vaults } = await axios.get<SingleProtocol>(BASE_API_URL).then(v => v.data);
+  const { vaults } = await axios.get<SingleProtocol>(`${BASE_API_URL}/protocol/contracts`).then(v => v.data);
   return vaults.map(({ address }) => address.toLowerCase());
 };
 

@@ -2,3 +2,8 @@
 /* tslint:disable */
 /* eslint-disable */
 export { SingleVault__factory } from './SingleVault__factory';
+export { VvsCraftsman__factory } from './VvsCraftsman__factory';
+export { VvsCraftsmanV2__factory } from './VvsCraftsmanV2__factory';
+export { VvsPair__factory } from './VvsPair__factory';
+export { VvsRewarder__factory } from './VvsRewarder__factory';
+export { WMasterChef__factory } from './WMasterChef__factory';
