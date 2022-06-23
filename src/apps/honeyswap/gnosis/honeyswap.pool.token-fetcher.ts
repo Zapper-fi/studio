@@ -1,6 +1,5 @@
 import { Inject } from '@nestjs/common';
 
-import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { UniswapV2TheGraphPoolTokenAddressStrategy } from '~apps/uniswap-v2';
 import { UniswapV2PoolTokenHelper } from '~apps/uniswap-v2/helpers/uniswap-v2.pool.token-helper';
@@ -15,10 +14,9 @@ const appId = HONEYSWAP_DEFINITION.id;
 const groupId = HONEYSWAP_DEFINITION.groups.pool.id;
 const network = Network.GNOSIS_MAINNET;
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
 export class GnosisHoneyswapPoolTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(HoneyswapContractFactory) private readonly honeyswapContractFactory: HoneyswapContractFactory,
     @Inject(UniswapV2PoolTokenHelper)
     private readonly uniswapV2PoolTokenHelper: UniswapV2PoolTokenHelper,

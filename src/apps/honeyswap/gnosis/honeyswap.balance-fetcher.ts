@@ -8,8 +8,8 @@ import { Network } from '~types/network.interface';
 
 import { HONEYSWAP_DEFINITION } from '../honeyswap.definition';
 
-const network = Network.GNOSIS_MAINNET;
 const appId = HONEYSWAP_DEFINITION.id;
+const network = Network.GNOSIS_MAINNET;
 
 @Register.BalanceFetcher(HONEYSWAP_DEFINITION.id, network)
 export class GnosisHoneyswapBalanceFetcher implements BalanceFetcher {

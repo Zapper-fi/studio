@@ -25,7 +25,7 @@ export class PolygonKlimaBondContractPositionFetcher implements PositionFetcher<
     private readonly olympusContractPositionHelper: OlympusBondContractPositionHelper,
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
   ) {}
-  async getPositions(): Promise<ContractPosition[]> {
+  async getPositions() {
     const klimaToken = await this.appToolkit.getBaseTokenPrice({
       address: KLIMA_DEFINITION.token!.address,
       network,
