@@ -6,7 +6,6 @@ import { AuroraBastionProtocolBalanceFetcher } from './aurora/bastion-protocol.b
 import { AuroraBastionProtocolBorrowContractPositionFetcher } from './aurora/bastion-protocol.borrow.contract-position-fetcher';
 import { AuroraBastionProtocolSupplyTokenFetcher } from './aurora/bastion-protocol.supply.token-fetcher';
 import { AuroraBastionProtocolSwapTokenFetcher } from './aurora/bastion-protocol.swap.token-fetcher';
-import { AuroraBastionProtocolTvlFetcher } from './aurora/bastion-protocol.tvl-fetcher';
 import { BastionProtocolAppDefinition, BASTION_PROTOCOL_DEFINITION } from './bastion-protocol.definition';
 import { BastionProtocolContractFactory } from './contracts';
 import { BastionSupplyTokenHelper } from './helper/bastion-protocol.supply.token-helper';
@@ -18,7 +17,6 @@ import { BastionSupplyTokenHelper } from './helper/bastion-protocol.supply.token
     AuroraBastionProtocolBorrowContractPositionFetcher,
     AuroraBastionProtocolSupplyTokenFetcher,
     AuroraBastionProtocolSwapTokenFetcher,
-    AuroraBastionProtocolTvlFetcher,
     BastionProtocolAppDefinition,
     BastionProtocolContractFactory,
     BastionSupplyTokenHelper,
