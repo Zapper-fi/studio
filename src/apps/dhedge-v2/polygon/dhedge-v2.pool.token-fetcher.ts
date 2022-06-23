@@ -4,6 +4,7 @@ import { filter } from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
+import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getAppImg } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
@@ -72,6 +73,7 @@ export class PolygonDhedgeV2PoolTokenFetcher implements PositionFetcher<AppToken
         ) as BaseToken[];
         const pricePerShare = Number(pool.tokenPrice) / 10 ** decimals;
         const price = pricePerShare * dUSD.price;
+        const liquidity = supply * price;
         const images = [getAppImg(DHEDGE_V_2_DEFINITION.id)];
 
         const token: AppTokenPosition = {
@@ -86,10 +88,18 @@ export class PolygonDhedgeV2PoolTokenFetcher implements PositionFetcher<AppToken
           tokens,
           price,
           pricePerShare,
-          dataProps: {},
+          dataProps: {
+            liquidity,
+          },
           displayProps: {
             label: pool.name,
             images,
+            statsItems: [
+              {
+                label: 'Liquidity',
+                value: buildDollarDisplayItem(liquidity),
+              },
+            ],
           },
         };
 

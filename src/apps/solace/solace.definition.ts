@@ -39,6 +39,7 @@ export const SOLACE_DEFINITION = appDefinition({
       id: 'policies',
       type: GroupType.POSITION,
       label: 'Policies',
+      isHiddenFromExplore: true,
     },
   },
 
@@ -46,10 +47,8 @@ export const SOLACE_DEFINITION = appDefinition({
   keywords: [],
 
   links: {
-    learn: '',
     github: 'https://github.com/solace-fi',
     twitter: 'https://twitter.com/SolaceFi/',
-    telegram: '',
     discord: 'https://discord.com/invite/7v8qsyepfu/',
     medium: 'https://medium.com/solace-fi/',
   },

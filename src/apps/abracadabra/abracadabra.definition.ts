@@ -10,6 +10,7 @@ export const ABRACADABRA_DEFINITION = appDefinition({
     mSpell: { id: 'm-spell', type: GroupType.POSITION, label: 'mSpell' },
     cauldron: { id: 'cauldron', type: GroupType.POSITION, label: 'Cauldrons' },
     farm: { id: 'farm', type: GroupType.POSITION, label: 'Farms' },
+    degenbox: { id: 'degenbox', type: GroupType.POSITION, label: 'Abracadabra Degenbox' },
   },
   name: 'Abracadabra',
   description: `Abracadabra is a lending platform that uses interest-bearing tokens as collateral to borrow a USD pegged stable coin that can be used as any other stablecoin. Abracadabra provides the opportunity for users to unlock the capital of their yield.`,

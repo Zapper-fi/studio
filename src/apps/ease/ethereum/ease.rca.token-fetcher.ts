@@ -42,7 +42,11 @@ export class EthereumEaseRcaTokenFetcher implements PositionFetcher<AppTokenPosi
       groupId,
       network,
       dependencies: [
-        { appId: YEARN_DEFINITION.id, groupIds: [YEARN_DEFINITION.groups.vault.id], network },
+        {
+          appId: YEARN_DEFINITION.id,
+          groupIds: [YEARN_DEFINITION.groups.v1Vault.id, YEARN_DEFINITION.groups.v2Vault.id],
+          network,
+        },
         { appId: AAVE_V2_DEFINITION.id, groupIds: [AAVE_V2_DEFINITION.groups.supply.id], network },
         { appId: COMPOUND_DEFINITION.id, groupIds: [COMPOUND_DEFINITION.groups.supply.id], network },
         //TODO: migrate

@@ -13,7 +13,7 @@ const appId = IMPERMAX_DEFINITION.id;
 const groupId = IMPERMAX_DEFINITION.groups.borrow.id;
 const network = Network.ETHEREUM_MAINNET;
 
-@Register.ContractPositionFetcher({ appId, groupId, network })
+@Register.ContractPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
 export class EthereumImpermaxBorrowContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(CompoundBorrowContractPositionHelper)

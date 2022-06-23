@@ -16,7 +16,7 @@ const network = Network.POLYGON_MAINNET;
 export class PolygonKlimaSTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
-  async getPositions(): Promise<AppTokenPosition[]> {
+  async getPositions() {
     return this.appToolkit.helpers.vaultTokenHelper.getTokens({
       network,
       appId,
