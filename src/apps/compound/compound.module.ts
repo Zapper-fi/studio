@@ -12,7 +12,6 @@ import { CompoundClaimableBalanceHelper } from './helper/compound.claimable.bala
 import { CompoundLendingMetaHelper } from './helper/compound.lending.meta-helper';
 import { CompoundSupplyBalanceHelper } from './helper/compound.supply.balance-helper';
 import { CompoundSupplyTokenHelper } from './helper/compound.supply.token-helper';
-import { CompoundTvlHelper } from './helper/compound.tvl-helper';
 
 @Register.AppModule({
   appId: COMPOUND_DEFINITION.id,
@@ -30,7 +29,6 @@ import { CompoundTvlHelper } from './helper/compound.tvl-helper';
     CompoundBorrowContractPositionHelper,
     CompoundBorrowBalanceHelper,
     CompoundContractFactory,
-    CompoundTvlHelper,
   ],
   exports: [
     CompoundClaimableBalanceHelper,
@@ -40,7 +38,6 @@ import { CompoundTvlHelper } from './helper/compound.tvl-helper';
     CompoundBorrowContractPositionHelper,
     CompoundBorrowBalanceHelper,
     CompoundContractFactory,
-    CompoundTvlHelper,
   ],
 })
 export class CompoundAppModule extends AbstractApp() {}
