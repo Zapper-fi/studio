@@ -6,4 +6,5 @@ export const OPTION_TYPES = {
   4: 'Short Put Quote',
 };
 
-export const REGISTRY_ADDRESS = '0x7c7abddbcb6c731237f7546d3e4c5165531fb0c1';
+// From https://github.com/lyra-finance/subgraph/blob/master/addresses/mainnet-ovm/lyra.json
+export const REGISTRY_ADDRESS = '0x6555c4bebc5a7b2b2dac66bb621ce86e7e92e53f';

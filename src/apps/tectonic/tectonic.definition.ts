@@ -5,7 +5,7 @@ import { Network } from '~types/network.interface';
 
 export const TECTONIC_DEFINITION = appDefinition({
   id: 'tectonic',
-  name: 'tectonic',
+  name: 'Tectonic',
   description:
     'Tectonic is the first DeFi protocol designed to maximize capital efficiency, benefiting liquidity providers, traders, and borrowers.',
   url: 'https://tectonic.finance/',

@@ -61,13 +61,6 @@ interface EulerMarketsResponse {
   };
 }
 
-type EulerTokenDataProps = {
-  liquidity: number;
-  interestRate: number;
-  borrowAPY: number;
-  supplyAPY: number;
-};
-
 @Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
 export class EthereumEulerETokenTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
@@ -101,8 +94,8 @@ export class EthereumEulerETokenTokenFetcher implements PositionFetcher<AppToken
 
         const supply = Number(totalSupplyRaw) / 10 ** decimals;
         const symbol = `E${market.symbol}`;
-        const price = underlyingToken.price;
         const pricePerShare = Number(utils.formatEther(pricePerShareRaw));
+        const price = underlyingToken.price * pricePerShare;
         const liquidity = supply * underlyingToken.price;
         const interestRate = Number(market.interestRate) / 10 ** decimals;
         const supplyAPY = (Number(market.supplyAPY) * 100) / 1e27;
@@ -126,7 +119,7 @@ export class EthereumEulerETokenTokenFetcher implements PositionFetcher<AppToken
 
         const displayProps = {
           label: `${market.name} (E)`,
-          secondaryLabel: buildDollarDisplayItem(underlyingToken.price * Number(utils.formatEther(pricePerShare))),
+          secondaryLabel: buildDollarDisplayItem(price),
           images: getImagesFromToken(underlyingToken),
           statsItems,
         };

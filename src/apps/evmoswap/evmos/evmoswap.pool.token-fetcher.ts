@@ -1,6 +1,5 @@
 import { Inject } from '@nestjs/common';
 
-import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { UniswapV2ContractFactory } from '~apps/uniswap-v2/contracts';
 import { UniswapV2OnChainPoolTokenAddressStrategy } from '~apps/uniswap-v2/helpers/uniswap-v2.on-chain.pool-token-address-strategy';
@@ -9,7 +8,6 @@ import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
-import { EvmoswapContractFactory } from '../contracts';
 import { EVMOSWAP_DEFINITION } from '../evmoswap.definition';
 
 const appId = EVMOSWAP_DEFINITION.id;
@@ -23,10 +21,7 @@ export class EvmosEvmoswapPoolTokenFetcher implements PositionFetcher<AppTokenPo
     private readonly uniswapV2ContractFactory: UniswapV2ContractFactory,
     @Inject(UniswapV2OnChainPoolTokenAddressStrategy)
     private readonly uniswapV2OnChainPoolTokenAddressStrategy: UniswapV2OnChainPoolTokenAddressStrategy,
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(UniswapV2PoolTokenHelper)
-    @Inject(EvmoswapContractFactory)
-    private readonly evmoswapContractFactory: EvmoswapContractFactory,
     @Inject(UniswapV2PoolTokenHelper)
     private readonly uniswapV2PoolTokenHelper: UniswapV2PoolTokenHelper,
   ) {}
@@ -36,7 +31,7 @@ export class EvmosEvmoswapPoolTokenFetcher implements PositionFetcher<AppTokenPo
       network,
       appId,
       groupId,
-      factoryAddress: '0xF24E36e53628C3086493B9EfA785ab9DD85232EB',
+      factoryAddress: '0xf24e36e53628c3086493b9efa785ab9dd85232eb',
       resolveFactoryContract: ({ address, network }) =>
         this.uniswapV2ContractFactory.uniswapFactory({ address, network }),
       resolvePoolContract: ({ address, network }) => this.uniswapV2ContractFactory.uniswapPair({ address, network }),

@@ -18,16 +18,11 @@ const network = Network.AURORA_MAINNET;
 export class AuroraBastionProtocolSwapTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(CurvePoolTokenHelper) private readonly curvePoolTokenHelper: CurvePoolTokenHelper,
-    @Inject(BastionProtocolContractFactory) private readonly bastionProtocolContractFactory: BastionProtocolContractFactory,
-  ) { }
+    @Inject(BastionProtocolContractFactory)
+    private readonly bastionProtocolContractFactory: BastionProtocolContractFactory,
+  ) {}
 
-  async getLPTokenPrice({
-    tokens,
-    reserves,
-    poolContract,
-    multicall,
-    supply,
-  }) {
+  async getLPTokenPrice({ tokens, reserves, poolContract, multicall, supply }) {
     const virtualPriceRaw = await multicall.wrap(poolContract).getVirtualPrice();
     const virtualPrice = Number(virtualPriceRaw) / 10 ** 18;
     const reservesUSD = tokens.map((t, i) => reserves[i] * t.price);
@@ -42,16 +37,14 @@ export class AuroraBastionProtocolSwapTokenFetcher implements PositionFetcher<Ap
         label: 'cUSDC/cUSDT Pool',
         swapAddress: '0x6287e912a9Ccd4D5874aE15d3c89556b2a05f080',
         tokenAddress: '0x0039f0641156cac478b0DebAb086D78B66a69a01',
-      }
-    ]
+      },
+    ];
     const appTokenDefinition = [
       {
         appId,
-        groupIds: [
-          BASTION_PROTOCOL_DEFINITION.groups.supply.id,
-        ],
+        groupIds: [BASTION_PROTOCOL_DEFINITION.groups.supply.id],
         network,
-      }
+      },
     ];
     return this.curvePoolTokenHelper.getTokens({
       network,
@@ -64,17 +57,24 @@ export class AuroraBastionProtocolSwapTokenFetcher implements PositionFetcher<Ap
       resolvePoolTokenContract: ({ network, definition }) =>
         this.bastionProtocolContractFactory.erc20({ network, address: definition.tokenAddress }),
       resolvePoolCoinAddresses: ({ multicall, poolContract }) =>
-        Promise.all([
-          multicall.wrap(poolContract).getToken(0),
-          multicall.wrap(poolContract).getToken(1),
-        ]),
+        Promise.all([multicall.wrap(poolContract).getToken(0), multicall.wrap(poolContract).getToken(1)]),
       resolvePoolReserves: ({ multicall, poolContract }) =>
         Promise.all([
-          multicall.wrap(poolContract).getTokenBalance(0).then(v => v.toString()),
-          multicall.wrap(poolContract).getTokenBalance(1).then(v => v.toString()),
+          multicall
+            .wrap(poolContract)
+            .getTokenBalance(0)
+            .then(v => v.toString()),
+          multicall
+            .wrap(poolContract)
+            .getTokenBalance(1)
+            .then(v => v.toString()),
         ]),
       resolvePoolVolume: undefined,
-      resolvePoolFee: ({ multicall, poolContract }) => multicall.wrap(poolContract).swapStorage().then((r) => r.swapFee),
+      resolvePoolFee: ({ multicall, poolContract }) =>
+        multicall
+          .wrap(poolContract)
+          .swapStorage()
+          .then(r => r.swapFee),
       resolvePoolTokenPrice: this.getLPTokenPrice,
       resolvePoolTokenSymbol: ({ multicall, poolTokenContract }) => multicall.wrap(poolTokenContract).symbol(),
       resolvePoolTokenSupply: ({ multicall, poolTokenContract }) => multicall.wrap(poolTokenContract).totalSupply(),

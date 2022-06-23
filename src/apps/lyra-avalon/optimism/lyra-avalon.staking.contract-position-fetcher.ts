@@ -2,6 +2,7 @@ import { Inject } from '@nestjs/common';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
+import { ARRAKIS_DEFINITION } from '~apps/arrakis/arrakis.definition';
 import { SynthetixSingleStakingIsActiveStrategy, SynthetixSingleStakingRoiStrategy } from '~apps/synthetix';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
@@ -36,7 +37,7 @@ export class OptimismLyraAvalonStakingContractPositionFetcher implements Positio
       network,
       appId,
       groupId,
-      dependencies: [{ appId: 'sorbet', groupIds: ['pool'], network }],
+      dependencies: [{ appId: ARRAKIS_DEFINITION.id, groupIds: [ARRAKIS_DEFINITION.groups.pool.id], network }],
       resolveFarmContract: ({ network, address }) => this.lyraContractFactory.stakingRewards({ network, address }),
       resolveIsActive: this.synthetixSingleStakingIsActiveStrategy.build({
         resolvePeriodFinish: ({ contract, multicall }) => multicall.wrap(contract).periodFinish(),

@@ -12,7 +12,7 @@ const appId = IRON_BANK_DEFINITION.id;
 const groupId = IRON_BANK_DEFINITION.groups.borrow.id;
 const network = Network.AVALANCHE_MAINNET;
 
-@Register.ContractPositionFetcher({ appId, groupId, network })
+@Register.ContractPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
 export class AvalancheIronBankBorrowContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(CompoundBorrowContractPositionHelper)

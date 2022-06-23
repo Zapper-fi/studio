@@ -22,12 +22,12 @@ export class EvmosEvmoswapFarmContractPositionFetcher implements PositionFetcher
   ) {}
 
   async getPositions() {
-    const positions = await this.appToolkit.helpers.masterChefContractPositionHelper.getContractPositions<EvmoswapMasterchef>(
-      {
+    const positions =
+      await this.appToolkit.helpers.masterChefContractPositionHelper.getContractPositions<EvmoswapMasterchef>({
         network,
         groupId,
         appId,
-        address: '0x8C1196601dd52998fa84b28b2F8DBADd3B3C9Df0',
+        address: '0x8c1196601dd52998fa84b28b2f8dbadd3b3c9df0',
         dependencies: [{ appId, groupIds: [EVMOSWAP_DEFINITION.groups.pool.id], network }],
         resolveContract: opts => this.evmoswapContractFactory.evmoswapMasterchef(opts),
         resolvePoolLength: ({ multicall, contract }) => multicall.wrap(contract).poolLength(),
@@ -51,8 +51,7 @@ export class EvmosEvmoswapFarmContractPositionFetcher implements PositionFetcher
             return multicall.wrap(contract).emoPerSecond();
           },
         }),
-      },
-    );
+      });
 
     return positions;
   }
