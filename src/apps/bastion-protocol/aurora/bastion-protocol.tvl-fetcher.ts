@@ -19,16 +19,12 @@ export type BastionBorrowContractPositionDataProps = BastionSupplyTokenDataProps
 
 @Register.TvlFetcher({ appId, network })
 export class AuroraBastionProtocolTvlFetcher implements TvlFetcher {
-  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) { }
-
+  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
   async getTvl() {
     const appTokens = await this.appToolkit.getAppTokenPositions<BastionSupplyTokenDataProps>({
       appId,
-      groupIds: [
-        BASTION_PROTOCOL_DEFINITION.groups.supply.id,
-        BASTION_PROTOCOL_DEFINITION.groups.swap.id,
-      ],
+      groupIds: [BASTION_PROTOCOL_DEFINITION.groups.supply.id, BASTION_PROTOCOL_DEFINITION.groups.swap.id],
       network,
     });
 

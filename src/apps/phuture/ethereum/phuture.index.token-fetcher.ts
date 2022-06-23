@@ -20,6 +20,10 @@ const network = Network.ETHEREUM_MAINNET;
 type AssetDetails = {
   id: string;
   name: string;
+  vTokens: {
+    platformTotalSupply: number;
+    totalAmount: number;
+  }[];
 };
 
 type IndexDetails = {
@@ -43,6 +47,10 @@ const query = gql`
         asset {
           id
           name
+          vTokens {
+            platformTotalSupply
+            totalAmount
+          }
         }
       }
       inactiveAssets {
@@ -50,6 +58,10 @@ const query = gql`
         asset {
           id
           name
+          vTokens {
+            platformTotalSupply
+            totalAmount
+          }
         }
       }
     }
@@ -78,8 +90,14 @@ export class EthereumPhutureIndexTokenFetcher implements PositionFetcher<AppToke
       }
 
       const assets = [...activeAssets, ...inactiveAssets];
-
-      const pricePerShare = assets.map(({ shares }) => shares / supply);
+      const pricePerShare = assets.map(
+        ({
+          shares,
+          asset: {
+            vTokens: [{ platformTotalSupply, totalAmount }],
+          },
+        }) => ((totalAmount / platformTotalSupply) * shares) / supply,
+      );
       let liquidity = 0;
 
       const tokens: Token[] = _.compact(
@@ -90,7 +108,7 @@ export class EthereumPhutureIndexTokenFetcher implements PositionFetcher<AppToke
           }
 
           const { price, symbol, decimals } = asset;
-          liquidity += price * shares;
+          liquidity += shares * price;
 
           return {
             address: id,
@@ -142,7 +160,6 @@ export class EthereumPhutureIndexTokenFetcher implements PositionFetcher<AppToke
       endpoint: phutureSubgraph,
       query,
     });
-
     return indexes;
   }
 }
