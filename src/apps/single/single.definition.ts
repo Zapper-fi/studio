@@ -5,7 +5,7 @@ import { Network } from '~types/network.interface';
 
 export const SINGLE_DEFINITION = appDefinition({
   id: 'single',
-  name: 'single',
+  name: 'Single Finance',
   description:
     'Single Finance is a super intuitive platform for all your DeFi investments, minimizing correlations with the general market. Our signature strategy is a pseudo-market-neutral strategy. Everything here, including capital protection and return calculation, is worked out from your injected capital in USD. Everything is visualized. And everything is at your fingertips. We also launched LP Time Machine, a performance analytics tool for liquidity pools across all EVM compatible chains. The tool shows the full breakdown of backward-simulated P & L (based on capital marked to USD), including LP rewards, DEX reward tokens, and value change due to the price impact.',
   url: 'https://app.singlefinance.io/',
