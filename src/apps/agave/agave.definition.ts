@@ -5,7 +5,7 @@ import { Network } from '~types/network.interface';
 
 export const AGAVE_DEFINITION = appDefinition({
   id: 'agave',
-  name: 'agave',
+  name: 'Agave',
   description:
     'Agave rewards depositors with passive income and lets them use their deposits as collateral to borrow and lend digital assets.',
   url: 'https://agave.finance/',
