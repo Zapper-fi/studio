@@ -14,19 +14,22 @@ export const AGAVE_DEFINITION = appDefinition({
     deposit: {
       id: 'deposit',
       type: GroupType.TOKEN,
-      label: 'Deposit',
+      label: 'Lending',
+      groupLabel: 'Deposit',
     },
 
     stableBorrow: {
       id: 'stable-borrow',
       type: GroupType.TOKEN,
-      label: 'Borrow',
+      label: 'Lending',
+      groupLabel: 'Borrow',
     },
 
     variableBorrow: {
       id: 'variable-borrow',
       type: GroupType.TOKEN,
-      label: 'Borrow',
+      label: 'Lending',
+      groupLabel: 'Borrow',
     },
 
     claimable: {
@@ -35,6 +38,35 @@ export const AGAVE_DEFINITION = appDefinition({
       label: 'Reward',
       isHiddenFromExplore: true,
     },
+  },
+  presentationConfig: {
+    tabs: [
+      {
+        label: 'Lending',
+        viewType: 'split',
+        views: [
+          {
+            viewType: 'list',
+            label: 'Deposit',
+            groupIds: ['deposit'],
+          },
+          {
+            viewType: 'split',
+            label: 'Borrow',
+            views: [
+              {
+                label: 'Variable',
+                groupIds: ['variable-borrow'],
+              },
+              {
+                label: 'Stable',
+                groupIds: ['stable-borrow'],
+              },
+            ],
+          },
+        ],
+      },
+    ],
   },
 
   tags: [AppTag.LENDING],

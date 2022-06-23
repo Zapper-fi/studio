@@ -14,7 +14,7 @@ const appId = BASTION_PROTOCOL_DEFINITION.id;
 const groupId = BASTION_PROTOCOL_DEFINITION.groups.swap.id;
 const network = Network.AURORA_MAINNET;
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
 export class AuroraBastionProtocolSwapTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(CurvePoolTokenHelper) private readonly curvePoolTokenHelper: CurvePoolTokenHelper,

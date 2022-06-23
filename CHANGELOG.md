@@ -4,6 +4,54 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.88.0](https://github.com/Zapper-fi/studio/compare/v0.87.0...v0.88.0) (2022-06-23)
+
+
+### Features
+
+* **single:** Add Single Finance vaults ([#727](https://github.com/Zapper-fi/studio/issues/727)) ([b03b54e](https://github.com/Zapper-fi/studio/commit/b03b54ebcdeb33fd296d328e74964ea93a1f6061))
+
+
+### Bug Fixes
+
+* add borrow liquidity to stats in coslend ([#741](https://github.com/Zapper-fi/studio/issues/741)) ([aa955c5](https://github.com/Zapper-fi/studio/commit/aa955c589f1fe01a2c373c5e9b5a8faceafce378))
+* **single:** Adjust Single Finance name and add logo ([e1fddde](https://github.com/Zapper-fi/studio/commit/e1fdddebccfd46de8563eef5a1f19a05f579585a))
+* **uniswap-v2:** Fix silently failing pool addresses ([#743](https://github.com/Zapper-fi/studio/issues/743)) ([f0ff5a0](https://github.com/Zapper-fi/studio/commit/f0ff5a0ef1818cc1e2913ee7bbc556540f9af5f0))
+
+## [0.87.0](https://github.com/Zapper-fi/studio/compare/v0.86.0...v0.87.0) (2022-06-23)
+
+
+### Features
+
+* **agave:** Add presentation config and missing logo ([#737](https://github.com/Zapper-fi/studio/issues/737)) ([2994f05](https://github.com/Zapper-fi/studio/commit/2994f052bf7af87ee9e4895cba5d36d0217a6b79))
+* **bastion:** Add presentation config, fix displayed APY and remove custom tvl fetcher ([#740](https://github.com/Zapper-fi/studio/issues/740)) ([9d6f4a1](https://github.com/Zapper-fi/studio/commit/9d6f4a1880cdee337b6c291b30bc523ddd186af4))
+
+
+### Bug Fixes
+
+* euler borrow supply ([#703](https://github.com/Zapper-fi/studio/issues/703)) ([cd3d072](https://github.com/Zapper-fi/studio/commit/cd3d07295a7d70c3a0308b8e520ada8c9f3ef57f))
+* refactored solace's helpers to be injectable + enabled solace TVL ([#692](https://github.com/Zapper-fi/studio/issues/692)) ([a9d8d40](https://github.com/Zapper-fi/studio/commit/a9d8d4092116cbc9db87af850619d8ef46988113))
+
+## [0.86.0](https://github.com/Zapper-fi/studio/compare/v0.85.0...v0.86.0) (2022-06-23)
+
+
+### Features
+
+* **aurigami:** Add presentation config and remove custom tvl fetcher ([#736](https://github.com/Zapper-fi/studio/issues/736)) ([0d34ebd](https://github.com/Zapper-fi/studio/commit/0d34ebd2aca41511c412fcc659f96e9ce2784f7e))
+* **tectonic:** Add presentation config and fix supply displayed APY ([#734](https://github.com/Zapper-fi/studio/issues/734)) ([e67a9fb](https://github.com/Zapper-fi/studio/commit/e67a9fbab28385ce586622c2f14465e4ae49f3e0))
+
+## [0.85.0](https://github.com/Zapper-fi/studio/compare/v0.84.0...v0.85.0) (2022-06-23)
+
+
+### Features
+
+* **abracadabra:** Added support for Degenbox Deposits ([#731](https://github.com/Zapper-fi/studio/issues/731)) ([003c75f](https://github.com/Zapper-fi/studio/commit/003c75f0a297368fda3e240a2280328edf09d1f7))
+
+
+### Bug Fixes
+
+* **yearn:** Rename v1 vaults ([#733](https://github.com/Zapper-fi/studio/issues/733)) ([d2448c3](https://github.com/Zapper-fi/studio/commit/d2448c3d0b605e5b2bc65ab86fdad026d92fcf2b))
+
 ## [0.84.0](https://github.com/Zapper-fi/studio/compare/v0.83.0...v0.84.0) (2022-06-23)
 
 

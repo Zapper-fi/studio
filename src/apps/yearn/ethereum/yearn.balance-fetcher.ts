@@ -72,7 +72,7 @@ export class EthereumYearnBalanceFetcher implements BalanceFetcher {
         assets: yieldTokenBalances,
       },
       {
-        label: 'Vaults (V1)',
+        label: 'V1 Vaults',
         assets: v1VaultTokenBalances,
       },
       {
