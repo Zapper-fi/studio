@@ -29,12 +29,12 @@ export const AGAVE_DEFINITION = appDefinition({
       label: 'Borrow',
     },
 
-    // claimable: {
-    //   id: 'claimable',
-    //   type: GroupType.POSITION,
-    //   label: 'Reward',
-    //   isHiddenFromExplore: true,
-    // },
+    claimable: {
+      id: 'claimable',
+      type: GroupType.POSITION,
+      label: 'Reward',
+      isHiddenFromExplore: true,
+    },
   },
 
   tags: [AppTag.LENDING],

@@ -2,7 +2,7 @@ import { Inject } from '@nestjs/common';
 
 import { Register } from '~app-toolkit/decorators';
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
-import { AaveV2LendingBalanceHelper, AaveV2HealthFactorMetaHelper } from '~apps/aave-v2';
+import { AaveV2LendingBalanceHelper, AaveV2HealthFactorMetaHelper, AaveV2ClaimableBalanceHelper } from '~apps/aave-v2';
 import { BalanceFetcher } from '~balance/balance-fetcher.interface';
 import { Network } from '~types/network.interface';
 
@@ -14,7 +14,7 @@ const network = Network.GNOSIS_MAINNET;
 export class GnosisAgaveBalanceFetcher implements BalanceFetcher {
   constructor(
     @Inject(AaveV2LendingBalanceHelper) private readonly aaveV2LendingBalanceHelper: AaveV2LendingBalanceHelper,
-    //@Inject(AaveV2ClaimableBalanceHelper) private readonly aaveV2ClaimableBalanceHelper: AaveV2ClaimableBalanceHelper,
+    @Inject(AaveV2ClaimableBalanceHelper) private readonly aaveV2ClaimableBalanceHelper: AaveV2ClaimableBalanceHelper,
     @Inject(AaveV2HealthFactorMetaHelper) private readonly healthFactorHelper: AaveV2HealthFactorMetaHelper,
   ) {}
 
