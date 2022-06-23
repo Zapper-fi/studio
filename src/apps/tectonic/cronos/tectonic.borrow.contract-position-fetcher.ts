@@ -1,10 +1,10 @@
 import { Inject } from '@nestjs/common';
 
 import { Register } from '~app-toolkit/decorators';
+import { CompoundBorrowContractPositionHelper } from '~apps/compound';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
-import { CompoundBorrowContractPositionHelper } from '~apps/compound';
 
 import { TECTONIC_DEFINITION } from '../tectonic.definition';
 

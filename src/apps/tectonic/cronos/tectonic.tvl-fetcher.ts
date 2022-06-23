@@ -1,9 +1,9 @@
 import { Inject } from '@nestjs/common';
 
 import { Register } from '~app-toolkit/decorators';
+import { CompoundTvlHelper } from '~apps/compound';
 import { TvlFetcher } from '~stats/tvl/tvl-fetcher.interface';
 import { Network } from '~types/network.interface';
-import { CompoundTvlHelper } from '~apps/compound';
 
 import { TECTONIC_DEFINITION } from '../tectonic.definition';
 
