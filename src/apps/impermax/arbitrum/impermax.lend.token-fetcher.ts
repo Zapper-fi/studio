@@ -14,7 +14,7 @@ const network = Network.ARBITRUM_MAINNET;
 
 const address = '0x8c3736e2fe63cc2cd89ee228d9dbcab6ce5b767b';
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
 export class ArbitrumImpermaxLendTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(@Inject(ImpermaxLendTokenHelper) private readonly impermaxLendTokenHelper: ImpermaxLendTokenHelper) {}
 
