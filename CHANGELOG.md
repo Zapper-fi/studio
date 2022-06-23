@@ -4,6 +4,20 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.84.0](https://github.com/Zapper-fi/studio/compare/v0.83.0...v0.84.0) (2022-06-23)
+
+
+### Features
+
+* **compound:** Remove TVL helper, use group-based instead ([#729](https://github.com/Zapper-fi/studio/issues/729)) ([b95c888](https://github.com/Zapper-fi/studio/commit/b95c88802925d55ff430ba49c9bc26f00c007e1e))
+
+## [0.83.0](https://github.com/Zapper-fi/studio/compare/v0.82.2...v0.83.0) (2022-06-23)
+
+
+### Features
+
+* **yearn:** Split V1 and V2 vaults ([#722](https://github.com/Zapper-fi/studio/issues/722)) ([0c39266](https://github.com/Zapper-fi/studio/commit/0c39266aa7ab0d84269c3f2606eba92bf8f634d0))
+
 ## [0.82.2](https://github.com/Zapper-fi/studio/compare/v0.82.1...v0.82.2) (2022-06-23)
 
 
