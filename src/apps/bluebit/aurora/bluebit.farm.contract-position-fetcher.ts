@@ -23,7 +23,7 @@ export class AuroraBluebitFarmContractPositionFetcher implements PositionFetcher
 
   async getPositions() {
     return this.appToolkit.helpers.masterChefContractPositionHelper.getContractPositions<Bluebit>({
-      address: '0x947dD92990343aE1D6Cbe2102ea84eF73Bc5790E',
+      address: '0x947dd92990343ae1d6cbe2102ea84ef73bc5790e',
       appId,
       groupId,
       network,

@@ -24,25 +24,6 @@ const _abi = [
     inputs: [
       {
         indexed: false,
-        internalType: 'string',
-        name: 'action',
-        type: 'string',
-      },
-      {
-        indexed: false,
-        internalType: 'bool',
-        name: 'pauseState',
-        type: 'bool',
-      },
-    ],
-    name: 'ActionPaused',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
         internalType: 'contract TToken',
         name: 'tToken',
         type: 'address',

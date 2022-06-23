@@ -8,11 +8,11 @@ import { Network } from '~types/network.interface';
 import { SynthetixMintrContractPositionBalanceHelper } from '../helpers/synthetix.mintr.contract-position-balance-helper';
 import { SYNTHETIX_DEFINITION } from '../synthetix.definition';
 
-@Register.ContractPositionBalanceFetcher({
-  appId: SYNTHETIX_DEFINITION.id,
-  groupId: SYNTHETIX_DEFINITION.groups.mintr.id,
-  network: Network.OPTIMISM_MAINNET,
-})
+const appId = SYNTHETIX_DEFINITION.id;
+const groupId = SYNTHETIX_DEFINITION.groups.mintr.id;
+const network = Network.OPTIMISM_MAINNET;
+
+@Register.ContractPositionBalanceFetcher({ appId, groupId, network })
 export class OptimismSynthetixMintrContractPositionBalanceFetcher
   implements PositionBalanceFetcher<ContractPositionBalance>
 {

@@ -2,14 +2,14 @@ import { Inject } from '@nestjs/common';
 
 import { Register } from '~app-toolkit/decorators';
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
+import { CompoundLendingMetaHelper } from '~apps/compound';
 import { BalanceFetcher } from '~balance/balance-fetcher.interface';
 import { Network } from '~types/network.interface';
-import { CompoundLendingMetaHelper, CompoundSupplyBalanceHelper } from '~apps/compound';
 
 import { TectonicContractFactory } from '../contracts';
+import { TectonicBorrowBalanceHelper } from '../helper/tectonic.borrow.balance-helper';
 import { TectonicClaimableBalanceHelper } from '../helper/tectonic.claimable.balance-helper';
 import { TectonicSupplyBalanceHelper } from '../helper/tectonic.supply.balance-helper';
-import { TectonicBorrowBalanceHelper } from '../helper/tectonic.borrow.balance-helper';
 import { TECTONIC_DEFINITION } from '../tectonic.definition';
 
 const appId = TECTONIC_DEFINITION.id;

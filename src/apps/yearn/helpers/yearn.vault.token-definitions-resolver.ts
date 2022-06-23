@@ -70,6 +70,7 @@ export type YearnVaultData = {
 
 type GetVaultDefinitionsParams = {
   network: Network;
+  vaultType: 'v1' | 'v2';
   vaultsToIgnore: string[];
 };
 
@@ -85,12 +86,13 @@ export class YearnVaultTokenDefinitionsResolver {
     return data;
   }
 
-  async getVaultDefinitions({ network, vaultsToIgnore }: GetVaultDefinitionsParams) {
+  async getVaultDefinitions({ network, vaultsToIgnore, vaultType }: GetVaultDefinitionsParams) {
     const definitionsData = await this.getVaultDefinitionsData(network);
 
     return definitionsData
       .filter(vault => vault.type === 'v1' || !!vault.endorsed) // Remove experimental v2 vaults
       .filter(vault => !vault.special) // Remove "special" vaults
-      .filter(vault => !vaultsToIgnore.includes(vault.address.toLowerCase())); // Remove vaults not having the same structure as the other
+      .filter(vault => !vaultsToIgnore.includes(vault.address.toLowerCase())) // Remove vaults not having the same structure as the other
+      .filter(vault => vault.type === vaultType);
   }
 }

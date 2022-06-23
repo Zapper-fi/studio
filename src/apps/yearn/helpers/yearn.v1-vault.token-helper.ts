@@ -32,7 +32,7 @@ export type YearnVaultTokenHelperParams = {
 };
 
 @Injectable()
-export class YearnVaultTokenHelper {
+export class YearnV1VaultTokenHelper {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(YearnContractFactory) private readonly yearnContractFactory: YearnContractFactory,
@@ -49,21 +49,12 @@ export class YearnVaultTokenHelper {
     network: Network;
     multicall: EthersMulticall;
   }) {
-    if (vaultDefinition.type === 'v2') {
-      const contract = this.yearnContractFactory.yearnVaultV2({ address: vaultDefinition.address, network });
-      const pricePerShareRaw = await multicall
-        .wrap(contract)
-        .pricePerShare()
-        .catch(() => 0);
-      return Number(pricePerShareRaw) / 10 ** vaultDefinition.decimals;
-    } else {
-      const contract = this.yearnContractFactory.yearnVault({ address: vaultDefinition.address, network });
-      const pricePerShareRaw = await multicall
-        .wrap(contract)
-        .getPricePerFullShare()
-        .catch(() => 0);
-      return Number(pricePerShareRaw) / 10 ** 18;
-    }
+    const contract = this.yearnContractFactory.yearnVault({ address: vaultDefinition.address, network });
+    const pricePerShareRaw = await multicall
+      .wrap(contract)
+      .getPricePerFullShare()
+      .catch(() => 0);
+    return Number(pricePerShareRaw) / 10 ** 18;
   }
 
   async getTokens({ network, vaultsToIgnore = [], dependencies = [] }: YearnVaultTokenHelperParams) {
@@ -72,7 +63,11 @@ export class YearnVaultTokenHelper {
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
     const appTokens = await this.appToolkit.getAppTokenPositions(...dependencies);
     const allTokens = [...appTokens, ...baseTokens];
-    const vaultDefinitions = await this.tokenDefinitionsResolver.getVaultDefinitions({ network, vaultsToIgnore });
+    const vaultDefinitions = await this.tokenDefinitionsResolver.getVaultDefinitions({
+      network,
+      vaultsToIgnore,
+      vaultType: 'v1',
+    });
 
     const vaultTokens = await Promise.all(
       vaultDefinitions.map(async vault => {
@@ -82,7 +77,7 @@ export class YearnVaultTokenHelper {
 
         const type = ContractType.APP_TOKEN;
         const appId = YEARN_DEFINITION.id;
-        const groupId = YEARN_DEFINITION.groups.vault.id;
+        const groupId = YEARN_DEFINITION.groups.v1Vault.id;
         const vaultAddress = vault.address.toLowerCase();
         const erc20Contract = this.yearnContractFactory.erc20({ address: vaultAddress, network });
 
@@ -100,10 +95,10 @@ export class YearnVaultTokenHelper {
         const tokens = [underlyingToken];
         const liquidity = price * supply;
         const apy = vault.apy?.net_apy;
-        const isBlocked = vault.emergencyShutdown || vault.type === 'v1' || vault.migration?.available;
+        const isBlocked = true; // all v1 vaults are considered as blocked
 
         // Display props
-        const label = `${getLabelFromToken(underlyingToken)} Vault`;
+        const label = getLabelFromToken(underlyingToken);
         const secondaryLabel = buildDollarDisplayItem(price);
         const images = getImagesFromToken(underlyingToken);
         const statsItems = [

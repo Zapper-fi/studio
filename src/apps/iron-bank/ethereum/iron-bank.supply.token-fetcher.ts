@@ -13,7 +13,7 @@ const appId = IRON_BANK_DEFINITION.id;
 const groupId = IRON_BANK_DEFINITION.groups.supply.id;
 const network = Network.ETHEREUM_MAINNET;
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
 export class EthereumIronBankSupplyTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(IronBankContractFactory) private readonly ironBankContractFactory: IronBankContractFactory,
@@ -25,7 +25,7 @@ export class EthereumIronBankSupplyTokenFetcher implements PositionFetcher<AppTo
       network,
       appId,
       groupId,
-      comptrollerAddress: '0xAB1c342C7bf5Ec5F02ADEA1c2270670bCa144CbB',
+      comptrollerAddress: '0xab1c342c7bf5ec5f02adea1c2270670bca144cbb',
       getComptrollerContract: ({ address, network }) =>
         this.ironBankContractFactory.ironBankComptroller({ address, network }),
       getTokenContract: ({ address, network }) => this.ironBankContractFactory.ironBankCToken({ address, network }),
