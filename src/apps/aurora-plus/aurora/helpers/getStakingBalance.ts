@@ -44,7 +44,7 @@ export default async function getStakingBalance(
             if(!!aurora) tokens.push(drillBalance(aurora, userTotalDeposit));
             streamIDs.forEach((streamID:number) => {
               if(!rewardTokens[streamID]) return;
-              tokens.push(drillBalance(rewardTokens[streamID], rewardTokenValues[streamID].toString()));
+              tokens.push(drillBalance(rewardTokens[streamID]!, rewardTokenValues[streamID].toString()));
             });
 
             console.log(tokens);
