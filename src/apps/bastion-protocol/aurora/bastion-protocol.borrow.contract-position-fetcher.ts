@@ -3,7 +3,10 @@ import { isNumber } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
-import { buildDollarDisplayItem, buildPercentageDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
+import {
+  buildDollarDisplayItem,
+  buildPercentageDisplayItem,
+} from '~app-toolkit/helpers/presentation/display-item.present';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
@@ -19,26 +22,27 @@ const appId = BASTION_PROTOCOL_DEFINITION.id;
 const groupId = BASTION_PROTOCOL_DEFINITION.groups.borrow.id;
 const network = Network.AURORA_MAINNET;
 
-@Register.ContractPositionFetcher({ appId, groupId, network })
+@Register.ContractPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
 export class AuroraBastionProtocolBorrowContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(BastionProtocolContractFactory)
     private readonly bastionProtocolContractFactory: BastionProtocolContractFactory,
-  ) { }
+  ) {}
 
   async getPositions() {
     const appTokens = await this.appToolkit.getAppTokenPositions<BastionSupplyTokenDataProps>({
       appId,
-      groupIds: [
-        BASTION_PROTOCOL_DEFINITION.groups.supply.id,
-      ],
+      groupIds: [BASTION_PROTOCOL_DEFINITION.groups.supply.id],
       network,
     });
 
     const multicall = this.appToolkit.getMulticall(network);
     const promisedPositions = appTokens.map(async appToken => {
-      const contract = this.bastionProtocolContractFactory.bastionProtocolCtoken({ network, address: appToken.address });
+      const contract = this.bastionProtocolContractFactory.bastionProtocolCtoken({
+        network,
+        address: appToken.address,
+      });
 
       // Get the cash reserves of the market. Cash reserves are the underlying assets that are available to borrow
       const cashRaw = await multicall.wrap(contract).getCash();
@@ -65,15 +69,15 @@ export class AuroraBastionProtocolBorrowContractPositionFetcher implements Posit
       const borrowApy = appToken.dataProps.borrowApy;
 
       // Display Props
-      const label = `Borrowed ${getLabelFromToken(appToken.tokens[0])}`;
+      const label = `${getLabelFromToken(appToken.tokens[0])}`;
       const secondaryLabel = buildDollarDisplayItem(underlyingPrice);
       const tertiaryLabel = isNumber(borrowApy) ? `${(borrowApy * 100).toFixed(3)}% APR` : '';
       const images = appToken.displayProps.images;
       const statsItems = isNumber(borrowApy)
         ? [
-          { label: 'Borrow APR', value: buildPercentageDisplayItem(borrowApy) },
-          { label: 'Liquidity', value: buildDollarDisplayItem(dataProps.liquidity) },
-        ]
+            { label: 'APY', value: buildPercentageDisplayItem(borrowApy * 100) },
+            { label: 'Liquidity', value: buildDollarDisplayItem(borrowLiquidity) },
+          ]
         : [];
 
       const contractPosition: ContractPosition<BastionSupplyTokenDataProps> = {

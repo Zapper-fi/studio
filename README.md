@@ -18,7 +18,7 @@
 </div>
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-48-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-50-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 ## Description
@@ -202,6 +202,10 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/reganwrench"><img src="https://avatars.githubusercontent.com/u/98139806?v=4?s=64" width="64px;" alt=""/><br /><sub><b>reganwrench</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=reganwrench" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/scruffy-dev"><img src="https://avatars.githubusercontent.com/u/82269917?v=4?s=64" width="64px;" alt=""/><br /><sub><b>scruffy-dev</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=scruffy-dev" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/Emile-Filteau"><img src="https://avatars.githubusercontent.com/u/1054341?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Émile Filteau-Tessier</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=Emile-Filteau" title="Code">💻</a> <a href="#question-Emile-Filteau" title="Answering Questions">💬</a> <a href="#maintenance-Emile-Filteau" title="Maintenance">🚧</a></td>
+    <td align="center"><a href="https://github.com/SamIam-0x"><img src="https://avatars.githubusercontent.com/u/43358952?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Sam &#124; Zapper</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=SamIam-0x" title="Documentation">📖</a> <a href="#question-SamIam-0x" title="Answering Questions">💬</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://www.singlefinance.io/"><img src="https://avatars.githubusercontent.com/u/92788245?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Single Finance Lab</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=singlefinance" title="Code">💻</a></td>
   </tr>
 </table>
 

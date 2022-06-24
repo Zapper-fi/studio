@@ -60,13 +60,6 @@ interface EulerMarketsResponse {
   };
 }
 
-type EulerTokenDataProps = {
-  liquidity: number;
-  interestRate: number;
-  borrowAPY: number;
-  supplyAPY: number;
-};
-
 @Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
 export class EthereumEulerDTokenTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
@@ -94,14 +87,14 @@ export class EthereumEulerDTokenTokenFetcher implements PositionFetcher<AppToken
           multicall.wrap(dTokenContract).decimals(),
         ]);
 
-        const underlyingToken = baseTokens.find(token => token?.address === market.id.toLowerCase());
+        const underlyingToken = baseTokens.find(token => token.address === market.id.toLowerCase());
         if (totalSupplyRaw.isZero() || !underlyingToken) return null;
 
-        const supply = Number(market.totalBalances) / 10 ** decimals;
+        const supply = Number(totalSupplyRaw) / 10 ** decimals;
         const symbol = `D${market.symbol}`;
         const price = underlyingToken.price;
         const pricePerShare = 1;
-        const liquidity = Number(totalSupplyRaw) * underlyingToken.price;
+        const liquidity = supply * underlyingToken.price * -1;
         const interestRate = Number(market.interestRate) / 10 ** decimals;
         const borrowAPY = (Number(market.borrowAPY) * 100) / 1e27;
 
@@ -114,23 +107,23 @@ export class EthereumEulerDTokenTokenFetcher implements PositionFetcher<AppToken
         const statsItems = [
           {
             label: 'Liquidity',
-            value: buildDollarDisplayItem(dataProps.liquidity),
+            value: buildDollarDisplayItem(liquidity),
           },
           {
-            label: 'Borrow APY',
-            value: buildPercentageDisplayItem(dataProps.borrowAPY),
+            label: 'APY',
+            value: buildPercentageDisplayItem(borrowAPY),
           },
         ];
 
         const displayProps = {
-          label: `${market.name} (D)`,
+          label: market.name,
           secondaryLabel: buildDollarDisplayItem(price),
           images: getImagesFromToken(underlyingToken),
           statsItems,
         };
 
-        return {
-          type: ContractType.APP_TOKEN as const,
+        const token: AppTokenPosition = {
+          type: ContractType.APP_TOKEN,
           address: market.dTokenAddress,
           appId,
           groupId,
@@ -144,6 +137,8 @@ export class EthereumEulerDTokenTokenFetcher implements PositionFetcher<AppToken
           dataProps,
           displayProps,
         };
+
+        return token;
       }),
     );
 
