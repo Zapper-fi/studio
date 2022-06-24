@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.89.0](https://github.com/Zapper-fi/studio/compare/v0.88.1...v0.89.0) (2022-06-24)
+
+
+### Features
+
+* **presentation:** Add support for dropdown ([#749](https://github.com/Zapper-fi/studio/issues/749)) ([cd04f48](https://github.com/Zapper-fi/studio/commit/cd04f48b3da4638388c0b4cde1e20600c23068a1))
+
+
+### Bug Fixes
+
+* **agave:** Update agave.definition.ts ([168efec](https://github.com/Zapper-fi/studio/commit/168efec4845483ce2ff4a53ea4ea02993b548dcc))
+
 ## [0.88.1](https://github.com/Zapper-fi/studio/compare/v0.88.0...v0.88.1) (2022-06-23)
 
 
