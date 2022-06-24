@@ -55,10 +55,12 @@ export const AGAVE_DEFINITION = appDefinition({
             label: 'Borrow',
             views: [
               {
+                viewType: 'list',
                 label: 'Variable',
                 groupIds: ['variable-borrow'],
               },
               {
+                viewType: 'list',
                 label: 'Stable',
                 groupIds: ['stable-borrow'],
               },

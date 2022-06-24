@@ -27,7 +27,7 @@ export class CronosSingleLendingTokenFetcher implements PositionFetcher<AppToken
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(SingleContractFactory) private readonly singleContractFactory: SingleContractFactory,
-  ) { }
+  ) {}
 
   async getPositions() {
     return this.appToolkit.helpers.vaultTokenHelper.getTokens<SingleVault>({

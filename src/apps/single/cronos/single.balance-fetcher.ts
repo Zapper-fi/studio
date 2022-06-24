@@ -14,7 +14,7 @@ const network = Network.CRONOS_MAINNET;
 
 @Register.BalanceFetcher(SINGLE_DEFINITION.id, network)
 export class CronosSingleBalanceFetcher implements BalanceFetcher {
-  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) { }
+  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
   async getVaultTokenBalances(address: string) {
     return this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
