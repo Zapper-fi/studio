@@ -22,15 +22,17 @@ export class EvmosCronusFinanceTvlFetcher implements TvlFetcher {
     });
     const appTokens = await this.appToolkit.getAppTokenPositions({
       appId: appId,
-      groupIds: ['jar'],
+      groupIds: ['pool'],
       network,
     });
 
     let tvl = 0;
     farmings.forEach(farming => {
-      const stakedToken = appTokens.find(v => v.address === farming.tokens[0].address);
+      if (farming) {
+        const stakedToken = appTokens.find(v => v.address === farming.tokens[0].address);
 
-      tvl += Number(farming.dataProps.totalValueLocked) * (stakedToken?.price || 0);
+        tvl += Number(farming.dataProps.totalValueLocked) * (stakedToken?.price || 0);
+      }
     });
 
     return tvl;

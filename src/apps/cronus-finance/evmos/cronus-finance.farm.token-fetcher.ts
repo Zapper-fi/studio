@@ -28,7 +28,7 @@ export class EvmosCronusFinanceFarmTokenFetcher implements PositionFetcher<AppTo
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
     const appTokens = await this.appToolkit.getAppTokenPositions({
       appId: appId,
-      groupIds: ['jar'],
+      groupIds: ['pool'],
       network,
     });
     const allTokens = [...appTokens, ...baseTokens];

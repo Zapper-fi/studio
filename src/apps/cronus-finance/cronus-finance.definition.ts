@@ -10,10 +10,10 @@ export const CRONUS_FINANCE_DEFINITION = appDefinition({
   url: 'https://cronusfinancexyz.com',
 
   groups: {
-    jar: {
-      id: 'jar',
+    pool: {
+      id: 'pool',
       type: GroupType.TOKEN,
-      label: 'Jars',
+      label: 'Pools',
     },
 
     farm: {

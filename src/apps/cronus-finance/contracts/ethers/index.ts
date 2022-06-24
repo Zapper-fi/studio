@@ -2,7 +2,9 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { CronusFinanceFarm } from './CronusFinanceFarm';
-export type { CronusFinanceJar } from './CronusFinanceJar';
+export type { CronusFinancePool } from './CronusFinancePool';
+export type { CronusFinancePoolFactory } from './CronusFinancePoolFactory';
 export * as factories from './factories';
 export { CronusFinanceFarm__factory } from './factories/CronusFinanceFarm__factory';
-export { CronusFinanceJar__factory } from './factories/CronusFinanceJar__factory';
+export { CronusFinancePoolFactory__factory } from './factories/CronusFinancePoolFactory__factory';
+export { CronusFinancePool__factory } from './factories/CronusFinancePool__factory';

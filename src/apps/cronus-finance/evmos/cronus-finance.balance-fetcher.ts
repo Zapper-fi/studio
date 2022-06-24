@@ -20,11 +20,11 @@ export class EvmosCronusFinanceBalanceFetcher implements BalanceFetcher {
     @Inject(CronusFinanceContractFactory) private readonly cronusFinanceContractFactory: CronusFinanceContractFactory,
   ) {}
 
-  async getJarTokenBalances(address: string) {
+  async getPoolTokenBalances(address: string) {
     return this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
       address,
       appId: CRONUS_FINANCE_DEFINITION.id,
-      groupId: CRONUS_FINANCE_DEFINITION.groups.jar.id,
+      groupId: CRONUS_FINANCE_DEFINITION.groups.pool.id,
       network: Network.EVMOS_MAINNET,
     });
   }
@@ -33,7 +33,7 @@ export class EvmosCronusFinanceBalanceFetcher implements BalanceFetcher {
     return this.appToolkit.helpers.contractPositionBalanceHelper.getContractPositionBalances({
       address,
       appId: CRONUS_FINANCE_DEFINITION.id,
-      groupId: CRONUS_FINANCE_DEFINITION.groups.jar.id,
+      groupId: CRONUS_FINANCE_DEFINITION.groups.farm.id,
       network: Network.EVMOS_MAINNET,
       resolveBalances: async ({ address, contractPosition, multicall }) => {
         // Resolve the staked token and reward token from the contract position object
@@ -44,10 +44,11 @@ export class EvmosCronusFinanceBalanceFetcher implements BalanceFetcher {
         const contract = this.cronusFinanceContractFactory.cronusFinanceFarm(contractPosition);
 
         // Resolve the requested address' staked balance and earned balance
-        const [[stakedBalanceRaw], rewardBalanceRaw] = await Promise.all([
+        const [userInfo, rewardBalanceRaw] = await Promise.all([
           multicall.wrap(contract).userInfo(0, address),
           multicall.wrap(contract).pendingTokens(0, address),
         ]);
+        const stakedBalanceRaw = userInfo[4];
 
         // Drill the balance into the token object. Drill will push the balance into the token tree,
         // thereby showing the user's exposure to underlying tokens of the jar token!
@@ -60,15 +61,15 @@ export class EvmosCronusFinanceBalanceFetcher implements BalanceFetcher {
   }
 
   async getBalances(address: string) {
-    const [jarTokenBalances, farmBalances] = await Promise.all([
-      this.getJarTokenBalances(address),
+    const [poolTokenBalances, farmBalances] = await Promise.all([
+      this.getPoolTokenBalances(address),
       this.getFarmBalances(address),
     ]);
 
     return presentBalanceFetcherResponse([
       {
-        label: 'Jars',
-        assets: jarTokenBalances,
+        label: 'Pools',
+        assets: poolTokenBalances,
       },
       {
         label: 'Farms',

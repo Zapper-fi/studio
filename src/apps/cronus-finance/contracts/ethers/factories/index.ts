@@ -2,4 +2,5 @@
 /* tslint:disable */
 /* eslint-disable */
 export { CronusFinanceFarm__factory } from './CronusFinanceFarm__factory';
-export { CronusFinanceJar__factory } from './CronusFinanceJar__factory';
+export { CronusFinancePool__factory } from './CronusFinancePool__factory';
+export { CronusFinancePoolFactory__factory } from './CronusFinancePoolFactory__factory';
