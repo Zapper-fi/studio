@@ -25,7 +25,7 @@ export class EthereumPoolTogetherV4TicketTokenFetcher implements PositionFetcher
     const prizePools = await this.prizePoolRegistry.getV4PrizePools(network);
 
     return this.poolTogetherV4PrizePoolTokenHelper.getAppTokens({
-      network: Network.ETHEREUM_MAINNET,
+      network,
       prizePoolAddresses: prizePools?.map(prizePoolAddresses => prizePoolAddresses.prizePoolAddress) || [],
     });
   }

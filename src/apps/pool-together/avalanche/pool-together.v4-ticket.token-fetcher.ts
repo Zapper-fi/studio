@@ -25,7 +25,7 @@ export class AvalanchePoolTogetherV4TicketTokenFetcher implements PositionFetche
     const prizePools = await this.prizePoolRegistry.getV4PrizePools(network);
 
     return this.poolTogetherV4PrizePoolTokenHelper.getAppTokens({
-      network: Network.AVALANCHE_MAINNET,
+      network,
       prizePoolAddresses: prizePools?.map(prizePoolAddresses => prizePoolAddresses.prizePoolAddress) || [],
     });
   }
