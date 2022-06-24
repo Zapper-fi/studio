@@ -110,7 +110,7 @@ export class EthereumEulerDTokenTokenFetcher implements PositionFetcher<AppToken
             value: buildDollarDisplayItem(liquidity),
           },
           {
-            label: 'Borrow APY',
+            label: 'APY',
             value: buildPercentageDisplayItem(borrowAPY),
           },
         ];
