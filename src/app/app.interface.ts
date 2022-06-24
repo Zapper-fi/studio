@@ -72,29 +72,16 @@ export type AppLinks = {
   medium?: string;
 };
 
+type ListView = { viewType: 'list'; label: string; groupIds: string[] };
+type DropdownView = { viewType: 'dropdown'; label: string; options: (ListView | SplitView)[] };
+type SplitView = {
+  viewType: 'split';
+  label: string;
+  views: (ListView | SplitView)[];
+};
+
 export type PresentationConfig = {
-  tabs: (
-    | { viewType: 'list'; label: string; groupIds: string[] }
-    | {
-        viewType: 'split';
-        label: string;
-        views: (
-          | {
-              viewType: 'list';
-              label: string;
-              groupIds: string[];
-            }
-          | {
-              viewType: 'split';
-              label: string;
-              views: {
-                label: string;
-                groupIds: string[];
-              }[];
-            }
-        )[];
-      }
-  )[];
+  tabs: (ListView | DropdownView | SplitView)[];
 };
 
 export type AppDefinitionObject = {
