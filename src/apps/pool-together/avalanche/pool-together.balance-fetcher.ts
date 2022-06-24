@@ -7,7 +7,6 @@ import { BalanceFetcher } from '~balance/balance-fetcher.interface';
 import { Network } from '~types/network.interface';
 
 import { PoolTogetherClaimableTokenBalancesHelper } from '../helpers/pool-together-v3.claimable.balance-helper';
-import { PoolTogetherAirdropTokenBalancesHelper } from '../helpers/pool-together.airdrop.balance-helper';
 import { POOL_TOGETHER_DEFINITION } from '../pool-together.definition';
 
 const network = Network.AVALANCHE_MAINNET;
@@ -18,8 +17,6 @@ export class AvalanchePoolTogetherBalanceFetcher implements BalanceFetcher {
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(PoolTogetherClaimableTokenBalancesHelper)
     private readonly claimableTokenBalancesHelper: PoolTogetherClaimableTokenBalancesHelper,
-    @Inject(PoolTogetherAirdropTokenBalancesHelper)
-    private readonly airdropTokenBalancesHelper: PoolTogetherAirdropTokenBalancesHelper,
   ) {}
 
   async getV4TokenBalances(address: string) {
@@ -31,33 +28,8 @@ export class AvalanchePoolTogetherBalanceFetcher implements BalanceFetcher {
     });
   }
 
-  async getV3TokenBalances(address: string) {
-    return this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
-      network,
-      appId: POOL_TOGETHER_DEFINITION.id,
-      groupId: POOL_TOGETHER_DEFINITION.groups.v3.id,
-      address,
-    });
-  }
-
-  async getV3PodTokenBalances(address: string) {
-    return this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
-      network,
-      appId: POOL_TOGETHER_DEFINITION.id,
-      groupId: POOL_TOGETHER_DEFINITION.groups.v3Pod.id,
-      address,
-    });
-  }
-
   async getClaimableBalances(address: string) {
     return this.claimableTokenBalancesHelper.getBalances({
-      address,
-      network,
-    });
-  }
-
-  async getAirdropBalances(address: string) {
-    return this.airdropTokenBalancesHelper.getBalances({
       address,
       network,
     });

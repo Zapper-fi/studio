@@ -13,7 +13,7 @@ const appId = POOL_TOGETHER_DEFINITION.id;
 const groupId = POOL_TOGETHER_DEFINITION.groups.v4.id;
 const network = Network.AVALANCHE_MAINNET;
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
 export class AvalanchePoolTogetherV4TicketTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(PoolTogetherV4PrizePoolTokenHelper)
