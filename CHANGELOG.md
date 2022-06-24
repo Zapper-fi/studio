@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.90.0](https://github.com/Zapper-fi/studio/compare/v0.89.0...v0.90.0) (2022-06-24)
+
+
+### Features
+
+* **single:** Add SINGLE LYF positions ([#738](https://github.com/Zapper-fi/studio/issues/738)) ([140f856](https://github.com/Zapper-fi/studio/commit/140f856ff040de2dd4a3fa3f414a861c2d79844f))
+
+
+### Bug Fixes
+
+* Minor fixes ([#750](https://github.com/Zapper-fi/studio/issues/750)) ([2450167](https://github.com/Zapper-fi/studio/commit/24501672d4cacc1d33bbc7bbe0a535541c143aa3))
+
 ## [0.89.0](https://github.com/Zapper-fi/studio/compare/v0.88.1...v0.89.0) (2022-06-24)
 
 
