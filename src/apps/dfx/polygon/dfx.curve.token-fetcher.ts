@@ -4,7 +4,7 @@ import _ from 'lodash';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
-import { getAppImg } from '~app-toolkit/helpers/presentation/image.present';
+import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
@@ -76,7 +76,7 @@ export class PolygonDfxCurveTokenFetcher implements PositionFetcher<AppTokenPosi
         const [, baseToken, quoteToken] = name.split('-');
         const label = `${baseToken.toUpperCase()}/${quoteToken.toUpperCase()}`;
         const secondaryLabel = buildDollarDisplayItem(price);
-        const images = [getAppImg(appId)];
+        const images = tokens.map(v => getImagesFromToken(v)).flat();
 
         // Create token object
         const lpToken: AppTokenPosition = {

@@ -21,6 +21,7 @@ export const LLAMA_AIRFORCE_DEFINITION = appDefinition({
       id: 'airdrop',
       type: GroupType.TOKEN,
       label: 'Airdrop',
+      isHiddenFromExplore: true,
     },
   },
 

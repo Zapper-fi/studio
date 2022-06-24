@@ -65,7 +65,7 @@ export class EthereumDfxStakingContractPositionFetcher implements PositionFetche
 
         // Prepare display props
         const label = getLabelFromToken(stakedToken);
-        const images = getImagesFromToken(stakedToken);
+        const images = tokens.map(v => getImagesFromToken(v)).flat();
         const secondaryLabel = buildDollarDisplayItem(stakedToken.price);
         const statsItems = [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }];
 

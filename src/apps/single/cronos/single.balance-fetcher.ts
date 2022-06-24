@@ -26,7 +26,7 @@ export class CronosSingleBalanceFetcher implements BalanceFetcher {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(SingleContractFactory) private readonly singleContractFactory: SingleContractFactory,
-  ) { }
+  ) {}
 
   async getVaultTokenBalances(address: string) {
     return this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
