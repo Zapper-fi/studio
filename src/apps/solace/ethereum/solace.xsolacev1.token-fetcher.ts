@@ -2,6 +2,7 @@ import { Inject } from '@nestjs/common';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
+import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
 import { WithMetaType } from '~position/display.interface';
@@ -20,7 +21,6 @@ const network = Network.ETHEREUM_MAINNET;
 const SOLACE_ADDRESS = '0x501ace9c35e60f03a2af4d484f49f9b1efde9f40';
 const XSOLACE_V1_ADDRESS = '0x501ace5ac3af20f49d53242b6d208f3b91cfc411';
 const symbol = 'xSOLACEv1';
-const decimals = 18;
 const ONE_ETHER = '1000000000000000000';
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
@@ -36,13 +36,17 @@ export class EthereumSolaceXsolacev1TokenFetcher implements PositionFetcher<AppT
 
     const solace = baseTokens.find((t: WithMetaType<Token>) => t.address === SOLACE_ADDRESS)!;
     const xsolacev1 = this.solaceContractFactory.xSolacev1({ address: XSOLACE_V1_ADDRESS, network });
-    const mcxs = multicall.wrap(xsolacev1);
-    const [supplyRaw, pricePerShareRaw] = await Promise.all([mcxs.totalSupply(), mcxs.xSolaceToSolace(ONE_ETHER)]);
+    const [decimals, supplyRaw, pricePerShareRaw] = await Promise.all([
+      multicall.wrap(xsolacev1).decimals(),
+      multicall.wrap(xsolacev1).totalSupply(),
+      multicall.wrap(xsolacev1).xSolaceToSolace(ONE_ETHER),
+    ]);
 
     const supply = Number(supplyRaw) / 10 ** decimals;
     const pricePerShare = Number(pricePerShareRaw) / 10 ** decimals;
     const price = solace.price * pricePerShare;
     const tokens = [solace];
+    const liquidity = price * supply;
 
     const token: AppTokenPosition = {
       type: ContractType.APP_TOKEN,
@@ -56,10 +60,13 @@ export class EthereumSolaceXsolacev1TokenFetcher implements PositionFetcher<AppT
       price,
       pricePerShare,
       tokens,
-      dataProps: {},
+      dataProps: {
+        liquidity,
+      },
       displayProps: {
         label: symbol,
         images: getImagesFromToken(solace),
+        statsItems: [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }],
       },
     };
 

@@ -41,7 +41,7 @@ export class BinanceSmartChainPancakeswapIfoCakeContractPositionFetcher implemen
       resolveContract: opts => this.contractFactory.pancakeswapIfoChef(opts),
       resolvePoolLength: async () => BigNumber.from(1),
       resolveDepositTokenAddress: ({ multicall, contract }) => multicall.wrap(contract).token(),
-      resolveTotalValueLocked: ({ multicall }) => multicall.wrap(cakeChefContract).balanceOf(),
+      resolveLiquidity: ({ multicall }) => multicall.wrap(cakeChefContract).balanceOf(),
       rewardRateUnit: RewardRateUnit.BLOCK,
       resolveRewardTokenAddresses: ({ multicall, contract }) => multicall.wrap(contract).token(),
       resolveRewardRate: this.appToolkit.helpers.masterChefDefaultRewardsPerBlockStrategy.build({

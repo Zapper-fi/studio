@@ -28,7 +28,7 @@ export class PolygonMarketXyzBalanceFetcher implements BalanceFetcher {
       supplyGroupId: MARKET_XYZ_DEFINITION.groups.supply.id,
       borrowGroupId: MARKET_XYZ_DEFINITION.groups.borrow.id,
       network: Network.POLYGON_MAINNET,
-      fuseLensAddress: '0xe4D84b252308645098846312286E6c6D2846DbB0',
+      fuseLensAddress: '0xe4d84b252308645098846312286e6c6d2846dbb0',
       getTokenContract: ({ address, network }) => this.compoundContractFactory.compoundCToken({ address, network }),
       getBalanceRaw: ({ contract, address, multicall }) => multicall.wrap(contract).balanceOf(address),
       getBorrowBalanceRaw: ({ contract, address, multicall }) =>

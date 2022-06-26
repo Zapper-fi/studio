@@ -13,12 +13,14 @@ export const RARI_FUSE_DEFINITION = appDefinition({
       id: 'supply',
       type: GroupType.TOKEN,
       label: 'Lending',
+      groupLabel: 'Supply',
     },
 
     borrow: {
       id: 'borrow',
       type: GroupType.POSITION,
       label: 'Lending',
+      groupLabel: 'Borrow',
     },
   },
 

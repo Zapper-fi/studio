@@ -25,7 +25,7 @@ const appId = CURVE_DEFINITION.id;
 const groupId = CURVE_DEFINITION.groups.pool.id;
 const network = Network.ETHEREUM_MAINNET;
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
 export class EthereumCurvePoolTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(CurveV1PoolTokenHelper)
@@ -67,7 +67,7 @@ export class EthereumCurvePoolTokenFetcher implements PositionFetcher<AppTokenPo
         statsUrl: 'https://stats.curve.fi/raw-stats/apys.json',
       }),
       this.curveV2PoolTokenHelper.getTokens({
-        network: Network.ETHEREUM_MAINNET,
+        network,
         appId: CURVE_DEFINITION.id,
         groupId: CURVE_DEFINITION.groups.pool.id,
         baseCurveTokens: v1Pools,
@@ -76,14 +76,14 @@ export class EthereumCurvePoolTokenFetcher implements PositionFetcher<AppTokenPo
       }),
       this.curveFactoryPoolTokenHelper.getTokens({
         factoryAddress: '0x0959158b6040d32d04c301a72cbfd6b39e21c9ae',
-        network: Network.ETHEREUM_MAINNET,
+        network,
         appId: CURVE_DEFINITION.id,
         groupId: CURVE_DEFINITION.groups.pool.id,
         baseCurveTokens: v1Pools,
       }),
       this.curveFactoryPoolTokenHelper.getTokens({
         factoryAddress: '0xb9fc157394af804a3578134a6585c0dc9cc990d4',
-        network: Network.ETHEREUM_MAINNET,
+        network,
         appId: CURVE_DEFINITION.id,
         groupId: CURVE_DEFINITION.groups.pool.id,
         baseCurveTokens: v1Pools,
@@ -98,13 +98,17 @@ export class EthereumCurvePoolTokenFetcher implements PositionFetcher<AppTokenPo
             network,
           },
           { appId: 'convex', groupIds: ['farm'], network },
-          { appId: YEARN_DEFINITION.id, groupIds: [YEARN_DEFINITION.groups.vault.id], network },
+          {
+            appId: YEARN_DEFINITION.id,
+            groupIds: [YEARN_DEFINITION.groups.v1Vault.id, YEARN_DEFINITION.groups.v2Vault.id],
+            network,
+          },
           { appId: TOKEMAK_DEFINITION.id, groupIds: [TOKEMAK_DEFINITION.groups.reactor.id], network },
         ],
       }),
       this.curveCryptoFactoryPoolTokenHelper.getTokens({
         factoryAddress: '0xf18056bbd320e96a48e3fbf8bc061322531aac99',
-        network: Network.ETHEREUM_MAINNET,
+        network,
         appId: CURVE_DEFINITION.id,
         groupId: CURVE_DEFINITION.groups.pool.id,
         baseCurveTokens: v1Pools,

@@ -69,7 +69,7 @@ export class EthereumMapleStakedBptTokenFetcher implements PositionFetcher<AppTo
         const tokens = [mplUsdcAppToken];
 
         // Display Props
-        const label = `Staked ${getLabelFromToken(mplUsdcAppToken)}`;
+        const label = getLabelFromToken(mplUsdcAppToken);
         const secondaryLabel = buildDollarDisplayItem(price);
         const images = mplUsdcAppToken.displayProps.images;
 

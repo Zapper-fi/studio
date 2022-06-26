@@ -8,8 +8,9 @@ export const QI_DAO_DEFINITION = appDefinition({
   name: 'Qi Dao',
   description: `Qi Dao is a lending and stablecoin protocol native to Polygon.`,
   groups: {
-    escrowedQi: { id: 'escrowed-qi', type: GroupType.POSITION, label: 'Escrowed QI' },
+    escrowedQi: { id: 'escrowed-qi', type: GroupType.POSITION, label: 'Escrowed QI', isHiddenFromExplore: true },
     farm: { id: 'farm', type: GroupType.POSITION, label: 'Staking' },
+    anchorVault: { id: 'anchor-vault', type: GroupType.POSITION, label: 'Anchor Vaults' },
     vault: { id: 'vault', type: GroupType.POSITION, label: 'Vaults' },
     yield: { id: 'yield', type: GroupType.TOKEN, label: 'Yield' },
   },
@@ -25,6 +26,7 @@ export const QI_DAO_DEFINITION = appDefinition({
   supportedNetworks: {
     [Network.FANTOM_OPERA_MAINNET]: [AppAction.VIEW],
     [Network.POLYGON_MAINNET]: [AppAction.VIEW],
+    [Network.GNOSIS_MAINNET]: [AppAction.VIEW],
   },
 });
 

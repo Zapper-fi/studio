@@ -8,13 +8,13 @@ import { Network } from '~types/network.interface';
 import { ImpermaxCollateralTokenHelper } from '../helpers/impermax.collateral.token-fetcher-helper';
 import { IMPERMAX_DEFINITION } from '../impermax.definition';
 
-import { address } from './impermax.lend.token-fetcher';
-
 const appId = IMPERMAX_DEFINITION.id;
 const groupId = IMPERMAX_DEFINITION.groups.collateral.id;
 const network = Network.POLYGON_MAINNET;
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
+const address = '0xbb92270716c8c424849f17ccc12f4f24ad4064d6';
+
+@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
 export class PolygonImpermaxCollateralTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(ImpermaxCollateralTokenHelper)

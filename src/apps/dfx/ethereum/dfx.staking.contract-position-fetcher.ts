@@ -19,10 +19,6 @@ const appId = DFX_DEFINITION.id;
 const groupId = DFX_DEFINITION.groups.staking.id;
 const network = Network.ETHEREUM_MAINNET;
 
-type DfxCurveContractPositionDataProps = {
-  liquidity: number;
-};
-
 @Register.ContractPositionFetcher({ appId, groupId, network })
 export class EthereumDfxStakingContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
@@ -32,15 +28,19 @@ export class EthereumDfxStakingContractPositionFetcher implements PositionFetche
 
   async getPositions() {
     const stakingDefinitions = Addresses[network].amm.map(({ staking: stakingAddress, curve: curveAddress }) => ({
-      address: stakingAddress.toLowerCase(),
-      stakedTokenAddress: curveAddress.toLowerCase(),
-      rewardTokenAddress: Addresses[network].dfx.toLowerCase(),
+      address: stakingAddress,
+      stakedTokenAddress: curveAddress,
+      rewardTokenAddress: Addresses[network].dfx,
     }));
 
     // Reward token is DFX which is a base token
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
     // Staked tokens are AMM LPs so resolve these
-    const appTokens = await this.appToolkit.getAppTokenPositions({ appId: 'dfx', groupIds: ['dfx-curve'], network });
+    const appTokens = await this.appToolkit.getAppTokenPositions({
+      appId: DFX_DEFINITION.id,
+      groupIds: [DFX_DEFINITION.groups.dfxCurve.id],
+      network,
+    });
     const allTokens = [...baseTokens, ...appTokens];
 
     // Create a multicall wrapper instance to batch chain RPC calls together
@@ -48,8 +48,8 @@ export class EthereumDfxStakingContractPositionFetcher implements PositionFetche
 
     const positions = await Promise.all(
       stakingDefinitions.map(async ({ address, stakedTokenAddress, rewardTokenAddress }) => {
-        const stakedToken = allTokens.find(v => v.address.toLowerCase() === stakedTokenAddress);
-        const rewardToken = allTokens.find(v => v.address.toLowerCase() === rewardTokenAddress);
+        const stakedToken = allTokens.find(v => v.address === stakedTokenAddress);
+        const rewardToken = allTokens.find(v => v.address === rewardTokenAddress);
         if (!stakedToken || !rewardToken) return null;
 
         const tokens = [supplied(stakedToken), claimable(rewardToken)];
@@ -64,11 +64,12 @@ export class EthereumDfxStakingContractPositionFetcher implements PositionFetche
         const liquidity = Number(balanceRaw) / 10 ** stakedToken.decimals;
 
         // Prepare display props
-        const label = `Staked ${getLabelFromToken(stakedToken)}`;
-        const images = getImagesFromToken(stakedToken);
+        const label = getLabelFromToken(stakedToken);
+        const images = tokens.map(v => getImagesFromToken(v)).flat();
         const secondaryLabel = buildDollarDisplayItem(stakedToken.price);
+        const statsItems = [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }];
 
-        const position: ContractPosition<DfxCurveContractPositionDataProps> = {
+        const position: ContractPosition = {
           type: ContractType.POSITION,
           appId,
           groupId,
@@ -82,6 +83,7 @@ export class EthereumDfxStakingContractPositionFetcher implements PositionFetche
             label,
             secondaryLabel,
             images,
+            statsItems,
           },
         };
         return position;

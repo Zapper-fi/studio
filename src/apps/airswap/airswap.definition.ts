@@ -16,8 +16,8 @@ export const AIRSWAP_DEFINITION = appDefinition({
     medium: 'https://airswap.medium.com/',
   },
   groups: {
-    sASTv2: { id: 's-ast-v2', type: GroupType.TOKEN, label: 'Staking' },
-    sASTv3: { id: 's-ast-v3', type: GroupType.TOKEN, label: 'Staking' },
+    sASTv2: { id: 's-ast-v2', type: GroupType.TOKEN, label: 'Staking', groupLabel: 'Farms' },
+    sASTv3: { id: 's-ast-v3', type: GroupType.TOKEN, label: 'Staking', groupLabel: 'Farms' },
   },
   tags: [AppTag.DECENTRALIZED_EXCHANGE],
   supportedNetworks: {
