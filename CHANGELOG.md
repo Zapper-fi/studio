@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.91.0](https://github.com/Zapper-fi/studio/compare/v0.90.0...v0.91.0) (2022-06-26)
+
+
+### Features
+
+* **cache:** Align @Cache to match Zapper API ([#755](https://github.com/Zapper-fi/studio/issues/755)) ([f0b5cd7](https://github.com/Zapper-fi/studio/commit/f0b5cd779dc50d4b0ca602b514cc0d5a0b9ad0fb))
+
 ## [0.90.0](https://github.com/Zapper-fi/studio/compare/v0.89.0...v0.90.0) (2022-06-24)
 
 
