@@ -47,12 +47,15 @@ export class EthereumAcrossPoolTokenFetcher implements PositionFetcher<AppTokenP
         if (!underlyingToken) return null;
 
         const supply = Number(supplyRaw) / 10 ** decimals;
+        if (supply == 0) return null;
+
         const pricePerShare = Number(pricePerShareRaw) / 10 ** underlyingToken.decimals;
         const price = underlyingToken.price * pricePerShare;
         const tokens = [underlyingToken];
         const secondaryLabel = buildDollarDisplayItem(price);
         const images = [getTokenImg(underlyingToken.address, network)];
         const liquidity = price * supply;
+
         const dataProps = { liquidity };
         const label = labelRaw.slice(7);
         const displayProps = {
