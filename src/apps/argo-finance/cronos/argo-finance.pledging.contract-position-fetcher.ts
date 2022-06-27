@@ -20,7 +20,7 @@ const network = Network.CRONOS_MAINNET;
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
 export class CronosArgoFinancePledgingContractPositionFetcher implements PositionFetcher<ContractPosition> {
-  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
+  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) { }
 
   async getVePosition(address: string) {
     const multicall = this.appToolkit.getMulticall(network);
@@ -49,7 +49,7 @@ export class CronosArgoFinancePledgingContractPositionFetcher implements Positio
       tokens,
       dataProps: { liquidity },
       displayProps: {
-        label: 'xARGO',
+        label: 'xARGO Pledging',
         secondaryLabel: buildDollarDisplayItem(price),
         images: getImagesFromToken(baseToken),
       },
