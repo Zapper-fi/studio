@@ -2,6 +2,7 @@ import { gql } from 'graphql-request';
 
 import { TheGraphHelper } from '~app-toolkit/helpers/the-graph/the-graph.helper';
 import { GET_PAIRS } from '../graphql/getPairs';
+import { GET_POSITIONS } from '../graphql/getPositions';
 import { GET_USER_POSITIONS } from '../graphql/getUserPositions';
 
 interface gqlFetchAllParams<T> {
@@ -102,6 +103,16 @@ export const getUserPositions = (address: string, network: string, graphHelper: 
     endpoint: `https://api.thegraph.com/subgraphs/name/mean-finance/dca-v2-${network}`,
     query: GET_USER_POSITIONS,
     variables: { address },
+    dataToSearch: 'positions',
+  });
+};
+
+export const getPositions = (network: string, graphHelper: TheGraphHelper) => {
+  return gqlFetchAll<MeanFinancePosition>({
+    graphHelper,
+    endpoint: `https://api.thegraph.com/subgraphs/name/mean-finance/dca-v2-${network}`,
+    query: GET_POSITIONS,
+    variables: {},
     dataToSearch: 'positions',
   });
 };

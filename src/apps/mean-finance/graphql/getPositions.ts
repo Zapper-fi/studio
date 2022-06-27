@@ -4,12 +4,12 @@ export const GET_POSITIONS = gql`
   query getPositions($first: Int, $skip: Int) {
     positions(
       where: {
-        orderDirection: desc
-        orderBy: createdAtTimestamp
-        first: $first,
-        skip: $skip,
         status_in: [ACTIVE, COMPLETED],
       }
+      orderDirection: desc,
+      orderBy: createdAtTimestamp,
+      first: $first,
+      skip: $skip,
     ) {
       id
       executedSwaps

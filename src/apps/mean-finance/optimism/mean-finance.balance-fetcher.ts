@@ -64,6 +64,7 @@ export class OptimismMeanFinanceBalanceFetcher implements BalanceFetcher {
           toWithdraw,
           remainingLiquidity,
           remainingSwaps,
+          totalValueLocked: balanceUSD,
         },
         displayProps: {
           label,

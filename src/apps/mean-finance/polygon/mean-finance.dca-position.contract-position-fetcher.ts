@@ -1,38 +1,37 @@
 import { Inject } from '@nestjs/common';
 import { sumBy } from 'lodash';
-
-import { drillBalance } from '~app-toolkit';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
-import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
+import { drillBalance } from '~app-toolkit/helpers/balance/token-balance.helper';
 import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { BalanceFetcher } from '~balance/balance-fetcher.interface';
 import { ContractType } from '~position/contract.interface';
-import { ContractPositionBalance } from '~position/position-balance.interface';
+import { PositionFetcher } from '~position/position-fetcher.interface';
+import { ContractPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
-import { getUserPositions } from '../helpers/graph';
+import { MeanFinanceContractFactory } from '../contracts';
+import { getPositions } from '../helpers/graph';
 import { STRING_SWAP_INTERVALS } from '../helpers/intervals';
 import { MEAN_FINANCE_DEFINITION } from '../mean-finance.definition';
 
+const appId = MEAN_FINANCE_DEFINITION.id;
+const groupId = MEAN_FINANCE_DEFINITION.groups.dcaPosition.id;
 const network = Network.POLYGON_MAINNET;
 
-@Register.BalanceFetcher(MEAN_FINANCE_DEFINITION.id, network)
-export class PolygonMeanFinanceBalanceFetcher implements BalanceFetcher {
-  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) { }
+@Register.ContractPositionFetcher({ appId, groupId, network })
+export class PolygonMeanFinanceDcaPositionContractPositionFetcher implements PositionFetcher<ContractPosition> {
+  constructor(
+    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
+    @Inject(MeanFinanceContractFactory) private readonly meanFinanceContractFactory: MeanFinanceContractFactory,
+  ) { }
 
-  async getUserPositions(address: string) {
+  async getPositions() {
     const graphHelper = this.appToolkit.helpers.theGraphHelper;
-    const data = await getUserPositions(address.toLocaleLowerCase(), Network.POLYGON_MAINNET, graphHelper);
-    return data.positions;
-  }
-
-  async getBalances(address: string) {
-    const positions = await this.getUserPositions(address);
-
+    const data = await getPositions(Network.POLYGON_MAINNET, graphHelper);
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
+    const positions = data.positions;
 
-    const contractPositionBalances: ContractPositionBalance[] = positions.map(dcaPosition => {
+    const contractPositions: ContractPosition[] = positions.map(dcaPosition => {
       const toWithdraw = dcaPosition.current.idleSwapped;
       const remainingLiquidity = dcaPosition.current.remainingLiquidity;
       const remainingSwaps = dcaPosition.current.remainingSwaps;
@@ -74,11 +73,6 @@ export class PolygonMeanFinanceBalanceFetcher implements BalanceFetcher {
       };
     });
 
-    return presentBalanceFetcherResponse([
-      {
-        label: 'Mean Finance Positions',
-        assets: contractPositionBalances,
-      },
-    ]);
+    return contractPositions;
   }
 }
