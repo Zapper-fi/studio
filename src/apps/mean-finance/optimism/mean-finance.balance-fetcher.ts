@@ -11,7 +11,7 @@ import { ContractType } from '~position/contract.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { Network } from '~types/network.interface';
 
-import { getCurrentPositions } from '../helpers/graph';
+import { getUserPositions } from '../helpers/graph';
 import { STRING_SWAP_INTERVALS } from '../helpers/intervals';
 import { MEAN_FINANCE_DEFINITION } from '../mean-finance.definition';
 
@@ -23,7 +23,7 @@ export class OptimismMeanFinanceBalanceFetcher implements BalanceFetcher {
 
   async getUserPositions(address: string) {
     const graphHelper = this.appToolkit.helpers.theGraphHelper;
-    const data = await getCurrentPositions(address.toLocaleLowerCase(), Network.OPTIMISM_MAINNET, graphHelper);
+    const data = await getUserPositions(address.toLocaleLowerCase(), Network.OPTIMISM_MAINNET, graphHelper);
     return data.positions;
   }
 

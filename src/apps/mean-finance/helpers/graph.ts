@@ -1,6 +1,68 @@
 import { gql } from 'graphql-request';
 
 import { TheGraphHelper } from '~app-toolkit/helpers/the-graph/the-graph.helper';
+import { GET_PAIRS } from '../graphql/getPairs';
+import { GET_USER_POSITIONS } from '../graphql/getUserPositions';
+
+interface gqlFetchAllParams<T> {
+  graphHelper: TheGraphHelper;
+  query: string;
+  endpoint: string;
+  variables: any;
+  dataToSearch: string;
+  offset?: number;
+  first?: number;
+  prevResults?: T;
+}
+export const gqlFetchAll = async <T>({
+  graphHelper,
+  query,
+  endpoint,
+  variables,
+  dataToSearch,
+  offset,
+  first,
+  prevResults,
+}: gqlFetchAllParams<T>): Promise<T> => {
+  const firstToUse = first || 1000;
+  const offsetToUse = offset || 0;
+
+  const results = await graphHelper.requestGraph<T>({
+    endpoint,
+    query,
+    variables: {
+      ...variables,
+      first: firstToUse,
+      skip: offsetToUse,
+    },
+  });
+
+  if (results[dataToSearch].length === firstToUse + offsetToUse) {
+    return gqlFetchAll({
+      graphHelper,
+      query,
+      endpoint,
+      variables,
+      dataToSearch,
+      first: offsetToUse + firstToUse,
+      offset: firstToUse,
+      prevResults,
+    });
+  }
+
+  if (prevResults) {
+    return {
+      ...prevResults,
+      ...results,
+      [dataToSearch]: {
+        ...prevResults[dataToSearch],
+        ...results[dataToSearch],
+      }
+    };
+  } else {
+    return results;
+  }
+}
 
 type MeanFinancePosition = {
   positions: {
@@ -34,43 +96,13 @@ type MeanFinancePosition = {
   }[];
 };
 
-export const getCurrentPositions = (address: string, network: string, graphHelper: TheGraphHelper) => {
-  const query = gql`
-    query getCurrentPositions($address: String!) {
-      positions(where: { user: $address, status_in: [ACTIVE, COMPLETED] }) {
-        id
-        executedSwaps
-        user
-        from {
-          address: id
-          decimals
-          name
-          symbol
-        }
-        to {
-          address: id
-          decimals
-          name
-          symbol
-        }
-        status
-        swapInterval {
-          interval
-        }
-        current {
-          rate
-          remainingSwaps
-          remainingLiquidity
-          idleSwapped
-        }
-      }
-    }
-  `;
-
-  return graphHelper.requestGraph<MeanFinancePosition>({
+export const getUserPositions = (address: string, network: string, graphHelper: TheGraphHelper) => {
+  return gqlFetchAll<MeanFinancePosition>({
+    graphHelper,
     endpoint: `https://api.thegraph.com/subgraphs/name/mean-finance/dca-v2-${network}`,
-    query: query,
+    query: GET_USER_POSITIONS,
     variables: { address },
+    dataToSearch: 'positions',
   });
 };
 
@@ -93,28 +125,11 @@ type MeanFinancePair = {
 };
 
 export const getPairs = (network: string, graphHelper: TheGraphHelper) => {
-  const query = gql`
-    query getAvailablePairs {
-      pairs(first: 1000) {
-        id
-        tokenA {
-          address: id
-          decimals
-          name
-          symbol
-        }
-        tokenB {
-          address: id
-          decimals
-          name
-          symbol
-        }
-      }
-    }
-  `;
-
-  return graphHelper.requestGraph<MeanFinancePair>({
+  return gqlFetchAll<MeanFinancePair>({
+    graphHelper,
     endpoint: `https://api.thegraph.com/subgraphs/name/mean-finance/dca-v2-${network}`,
-    query: query,
+    query: GET_PAIRS,
+    variables: {},
+    dataToSearch: 'pairs',
   });
 };
