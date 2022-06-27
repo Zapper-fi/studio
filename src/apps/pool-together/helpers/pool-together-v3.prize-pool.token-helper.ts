@@ -70,6 +70,8 @@ export class PoolTogetherV3PrizePoolTokenHelper {
         const pricePerShare = 1; // Minted 1:1
         const price = underlyingToken.price * pricePerShare;
         const liquidity = totalSupply * underlyingToken.price;
+        const liquidityTicket = ticketSupply * underlyingToken.price;
+        const liquiditySponsorship = sponsorshipSupply * underlyingToken.price;
         const tokens = [underlyingToken];
 
         // Display Props
@@ -136,7 +138,7 @@ export class PoolTogetherV3PrizePoolTokenHelper {
 
           dataProps: {
             apy,
-            liquidity,
+            liquidity: liquidityTicket,
             faucetAddresses,
           },
 
@@ -151,7 +153,7 @@ export class PoolTogetherV3PrizePoolTokenHelper {
               },
               {
                 label: 'Liquidity',
-                value: buildDollarDisplayItem(liquidity),
+                value: buildDollarDisplayItem(liquidityTicket),
               },
             ],
           },
@@ -172,7 +174,7 @@ export class PoolTogetherV3PrizePoolTokenHelper {
 
           dataProps: {
             apy,
-            liquidity,
+            liquidity: liquiditySponsorship,
             faucetAddresses,
           },
 
@@ -187,7 +189,7 @@ export class PoolTogetherV3PrizePoolTokenHelper {
               },
               {
                 label: 'Liquidity',
-                value: buildDollarDisplayItem(liquidity),
+                value: buildDollarDisplayItem(liquiditySponsorship),
               },
             ],
           },
