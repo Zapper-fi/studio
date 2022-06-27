@@ -19,7 +19,7 @@ const groupId = CRONUS_FINANCE_DEFINITION.groups.farm.id;
 const network = Network.EVMOS_MAINNET;
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
-export class EvmosCronusFinanceFarmTokenFetcher implements PositionFetcher<ContractPosition> {
+export class EvmosCronusFinanceFarmContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(CronusFinanceContractFactory) private readonly cronusFinanceContractFactory: CronusFinanceContractFactory,

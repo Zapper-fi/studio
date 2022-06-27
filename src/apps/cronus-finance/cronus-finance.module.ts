@@ -5,7 +5,7 @@ import { UniswapV2AppModule } from '~apps/uniswap-v2';
 import { CronusFinanceContractFactory } from './contracts';
 import { CronusFinanceAppDefinition, CRONUS_FINANCE_DEFINITION } from './cronus-finance.definition';
 import { EvmosCronusFinanceBalanceFetcher } from './evmos/cronus-finance.balance-fetcher';
-import { EvmosCronusFinanceFarmTokenFetcher } from './evmos/cronus-finance.farm.token-fetcher';
+import { EvmosCronusFinanceFarmContractPositionFetcher } from './evmos/cronus-finance.farm.contract-position-fetcher';
 import { EvmosCronusFinancePoolTokenFetcher } from './evmos/cronus-finance.pool.token-fetcher';
 
 @Register.AppModule({
@@ -14,7 +14,7 @@ import { EvmosCronusFinancePoolTokenFetcher } from './evmos/cronus-finance.pool.
   providers: [
     CronusFinanceAppDefinition,
     CronusFinanceContractFactory,
-    EvmosCronusFinanceFarmTokenFetcher,
+    EvmosCronusFinanceFarmContractPositionFetcher,
     EvmosCronusFinanceBalanceFetcher,
     EvmosCronusFinancePoolTokenFetcher,
   ],
