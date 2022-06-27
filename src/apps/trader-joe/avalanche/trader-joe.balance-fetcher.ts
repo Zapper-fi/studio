@@ -69,7 +69,7 @@ export class AvalancheTraderJoeBalanceFetcher implements BalanceFetcher {
       address,
       appId,
       network,
-      groupId: TRADER_JOE_DEFINITION.groups.veJoeFarm.id,
+      groupId: TRADER_JOE_DEFINITION.groups.veJoe.id,
       resolveContract: opts => this.traderJoeContractFactory.traderJoeVeJoeStaking(opts),
       resolveStakedTokenBalance: ({ multicall, contract }) =>
         multicall
@@ -202,7 +202,7 @@ export class AvalancheTraderJoeBalanceFetcher implements BalanceFetcher {
         assets: [...sJoeBalances],
       },
       {
-        label: 'veJOE Staking',
+        label: 'veJOE',
         assets: [...veJoeBalances],
       },
       {
