@@ -4,6 +4,7 @@ import { BigNumber } from 'ethers';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { RewardRateUnit } from '~app-toolkit/helpers/master-chef/master-chef.contract-position-helper';
+import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
@@ -350,6 +351,7 @@ export class BinanceSmartChainPancakeswapSyrupStakingContractPositionFetcher
           return multicall.wrap(contract).rewardPerBlock();
         },
       }),
+      resolveLabel: ({ rewardTokens }) => `Earn ${getLabelFromToken(rewardTokens[0])}`,
     });
   }
 }
