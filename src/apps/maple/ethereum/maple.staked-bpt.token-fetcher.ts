@@ -66,6 +66,7 @@ export class EthereumMapleStakedBptTokenFetcher implements PositionFetcher<AppTo
         const supply = Number(supplyRaw) / 10 ** decimals;
         const pricePerShare = 1;
         const price = mplUsdcAppToken.price;
+        const liquidity = supply * price;
         const tokens = [mplUsdcAppToken];
 
         // Display Props
@@ -86,7 +87,9 @@ export class EthereumMapleStakedBptTokenFetcher implements PositionFetcher<AppTo
           price,
           tokens,
 
-          dataProps: {},
+          dataProps: {
+            liquidity,
+          },
 
           displayProps: {
             label,
