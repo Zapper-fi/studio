@@ -14,7 +14,7 @@ export const CURVE_V1_POOL_DEFINITIONS: CurvePoolDefinition[] = [
 export const CURVE_V2_POOL_DEFINITIONS: CurvePoolDefinition[] = [
   {
     queryKey: 'tricrypto',
-    label: 'TriCrypto Curve',
+    label: 'TriCrypto',
     swapAddress: '0x0e3dc2bcbfea84072a0c794b7653d3db364154e0',
     tokenAddress: '0x99e8ed28b97c7f1878776ed94ffc77cabfb9b726',
     gaugeAddress: '0xf98450b5602fa59cc66e1379dffb6fddc724cfc4',
