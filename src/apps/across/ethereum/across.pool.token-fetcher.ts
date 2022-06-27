@@ -4,7 +4,7 @@ import { compact } from 'lodash';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
-import { getAppImg } from '~app-toolkit/helpers/presentation/image.present';
+import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
@@ -51,7 +51,7 @@ export class EthereumAcrossPoolTokenFetcher implements PositionFetcher<AppTokenP
         const price = underlyingToken.price * pricePerShare;
         const tokens = [underlyingToken];
         const secondaryLabel = buildDollarDisplayItem(price);
-        const images = [getAppImg(ACROSS_DEFINITION.id)];
+        const images = [getTokenImg(underlyingToken.address, network)];
         const liquidity = price * supply;
         const dataProps = { liquidity };
         const label = labelRaw.slice(7);
