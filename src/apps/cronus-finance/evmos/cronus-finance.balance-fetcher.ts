@@ -4,6 +4,7 @@ import { drillBalance } from '~app-toolkit';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
+import { UniswapV2TheGraphPoolTokenBalanceHelper } from '~apps/uniswap-v2';
 import { BalanceFetcher } from '~balance/balance-fetcher.interface';
 import { isClaimable, isSupplied } from '~position/position.utils';
 import { Network } from '~types/network.interface';
@@ -18,14 +19,18 @@ export class EvmosCronusFinanceBalanceFetcher implements BalanceFetcher {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(CronusFinanceContractFactory) private readonly cronusFinanceContractFactory: CronusFinanceContractFactory,
+    @Inject(UniswapV2TheGraphPoolTokenBalanceHelper)
+    private readonly uniswapV2TheGraphPoolTokenBalanceHelper: UniswapV2TheGraphPoolTokenBalanceHelper,
   ) {}
 
   async getPoolTokenBalances(address: string) {
-    return this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
-      address,
+    return this.uniswapV2TheGraphPoolTokenBalanceHelper.getBalances({
       appId: CRONUS_FINANCE_DEFINITION.id,
       groupId: CRONUS_FINANCE_DEFINITION.groups.pool.id,
-      network: Network.EVMOS_MAINNET,
+      network,
+      address,
+      subgraphUrl: 'https://thegraph.cronusfinancexyz.com/subgraphs/name/exchange',
+      symbolPrefix: 'CLP',
     });
   }
 
