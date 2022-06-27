@@ -11,10 +11,6 @@ import { Network } from '~types/network.interface';
 import { PoolTogetherContractFactory } from '../contracts';
 import { POOL_TOGETHER_DEFINITION } from '../pool-together.definition';
 
-export type PoolTogetherPodTokenDataProps = {
-  liquidity: number;
-};
-
 type GetPodTokensParams = {
   network: Network;
   registryAddress: string;
@@ -52,9 +48,7 @@ export class PoolTogetherV3PodTokenHelper {
         const underlyingToken = baseTokens.find(p => p.address === underlyingTokenAddress);
 
         // Bail early if no underlying token is found
-        if (!underlyingToken) {
-          return null;
-        }
+        if (!underlyingToken) return null;
 
         const supply = Number(totalSupplyRaw) / 10 ** decimals;
         const pricePerShare = Number(pricePerShareRaw) / 10 ** decimals;
@@ -66,7 +60,7 @@ export class PoolTogetherV3PodTokenHelper {
         const secondaryLabel = buildDollarDisplayItem(price);
         const images = [getTokenImg(underlyingToken.address, network)];
 
-        const token: AppTokenPosition<PoolTogetherPodTokenDataProps> = {
+        const token: AppTokenPosition = {
           type: ContractType.APP_TOKEN,
           address: podAddress,
           appId: POOL_TOGETHER_DEFINITION.id,
