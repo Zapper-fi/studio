@@ -50,7 +50,6 @@ export const CURVE_V2_POOL_DEFINITIONS: CurvePoolDefinition[] = [
   },
   {
     queryKey: 'mai3pool3crv',
-    label: 'MAI-3Pool',
     swapAddress: '0x447646e84498552e62ecf097cc305eabfff09308',
     tokenAddress: '0x447646e84498552e62ecf097cc305eabfff09308',
   },
