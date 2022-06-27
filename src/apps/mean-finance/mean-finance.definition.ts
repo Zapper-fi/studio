@@ -7,7 +7,7 @@ export const MEAN_FINANCE_DEFINITION = appDefinition({
   id: 'mean-finance',
   name: 'Mean Finance',
   description:
-    'Our protocol enables users to Dollar Cost Average (DCA) any ERC20 into any ERC20 with their preferred period frequency.',
+    'Mean Finance enables users to Dollar Cost Average (DCA) any ERC20 into any ERC20 with their preferred period frequency.',
   url: 'https://mean.finance',
 
   groups: {
