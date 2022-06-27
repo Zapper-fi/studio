@@ -4,6 +4,30 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.93.0](https://github.com/Zapper-fi/studio/compare/v0.92.0...v0.93.0) (2022-06-27)
+
+
+### Features
+
+* **cronus:** Add support for Cronus Finance ([#688](https://github.com/Zapper-fi/studio/issues/688)) ([82fe88e](https://github.com/Zapper-fi/studio/commit/82fe88e0f18a71d58f78415fc801a66422b2d3a3))
+
+
+### Bug Fixes
+
+* **cache:** Adjust cache timeout keys ([63120f9](https://github.com/Zapper-fi/studio/commit/63120f919a0da4468d6547b7824d12fc0f12f864))
+
+## [0.92.0](https://github.com/Zapper-fi/studio/compare/v0.91.0...v0.92.0) (2022-06-27)
+
+
+### Features
+
+* **uniswap-v2:** Build cache key from subgraph URL ([#757](https://github.com/Zapper-fi/studio/issues/757)) ([7d5c2e6](https://github.com/Zapper-fi/studio/commit/7d5c2e6431f8f0000a6c432b4d08d4eb99cc497a))
+
+
+### Bug Fixes
+
+* removed 'borrow' prefix on aave-v2 positions ([#759](https://github.com/Zapper-fi/studio/issues/759)) ([664760e](https://github.com/Zapper-fi/studio/commit/664760e6f76a7798d81cca698379d97026c15e31))
+
 ## [0.91.0](https://github.com/Zapper-fi/studio/compare/v0.90.0...v0.91.0) (2022-06-26)
 
 
