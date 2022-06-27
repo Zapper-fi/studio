@@ -15,15 +15,15 @@ import { ArgoFinanceContractFactory } from '../contracts';
 import { ADDRESSES } from './consts';
 
 const appId = ARGO_FINANCE_DEFINITION.id;
-const groupId = ARGO_FINANCE_DEFINITION.groups.pledging.id;
+const groupId = ARGO_FINANCE_DEFINITION.groups.xArgo.id;
 const network = Network.CRONOS_MAINNET;
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
-export class CronosArgoFinancePledgingTokenFetcher implements PositionFetcher<AppTokenPosition> {
+export class CronosArgoFinanceXArgoTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(ArgoFinanceContractFactory) private readonly argoFinanceContractFactory: ArgoFinanceContractFactory,
-  ) { }
+  ) {}
 
   async getVePosition(address: string, baseAddress: string) {
     const multicall = this.appToolkit.getMulticall(network);

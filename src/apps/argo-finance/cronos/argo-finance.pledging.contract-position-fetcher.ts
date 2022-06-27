@@ -20,15 +20,15 @@ const network = Network.CRONOS_MAINNET;
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
 export class CronosArgoFinancePledgingContractPositionFetcher implements PositionFetcher<ContractPosition> {
-  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) { }
+  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
   async getVePosition(address: string) {
     const multicall = this.appToolkit.getMulticall(network);
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
     const contractTokens = await this.appToolkit.getAppTokenPositions({
       appId,
-      groupIds: [groupId],
-      network,
+      groupIds: [ARGO_FINANCE_DEFINITION.groups.xArgo.id],
+      network
     });
     const baseToken = contractTokens.find(t => t.symbol === 'xARGO')!;
     const croToken = baseTokens.find(t => t.symbol === 'WCRO')!;
