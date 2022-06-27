@@ -59,15 +59,6 @@ type CurvePoolTokenHelperParams<T = CurveToken, V = Erc20> = {
   }) => Promise<number>;
 };
 
-const labelAllowList = ['3pool', '2pool', 'tricrypto2', 'tricrypto'];
-function rebindLabel(opt: { expectedLabel?: string; fallbackLabel: string }) {
-  if (opt.expectedLabel && labelAllowList.includes(opt.expectedLabel.toLowerCase())) {
-    return opt.expectedLabel;
-  }
-
-  return opt.fallbackLabel;
-}
-
 const isMetaPool = (token: Token) =>
   token.type === ContractType.APP_TOKEN &&
   token.appId === CURVE_DEFINITION.id &&
@@ -151,10 +142,7 @@ export class CurvePoolTokenHelper {
 
         // Display Properties
         const underlyingLabels = tokens.map(v => (isMetaPool(v) ? getLabelFromToken(v) : v.symbol)); // Flatten metapool label
-        const label = rebindLabel({
-          expectedLabel: definition.label,
-          fallbackLabel: underlyingLabels.join(' / '),
-        });
+        const label = definition.label ?? underlyingLabels.join(' / ');
         const secondaryLabel = reservePercentages.map(p => `${Math.floor(p * 100)}%`).join(' / ');
         const images = underlyingTokens.map(t => getImagesFromToken(t)).flat();
 
