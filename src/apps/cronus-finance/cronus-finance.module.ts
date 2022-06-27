@@ -7,7 +7,6 @@ import { CronusFinanceAppDefinition, CRONUS_FINANCE_DEFINITION } from './cronus-
 import { EvmosCronusFinanceBalanceFetcher } from './evmos/cronus-finance.balance-fetcher';
 import { EvmosCronusFinanceFarmTokenFetcher } from './evmos/cronus-finance.farm.token-fetcher';
 import { EvmosCronusFinancePoolTokenFetcher } from './evmos/cronus-finance.pool.token-fetcher';
-import { EvmosCronusFinanceTvlFetcher } from './evmos/cronus-finance.tvl-fetcher';
 
 @Register.AppModule({
   appId: CRONUS_FINANCE_DEFINITION.id,
@@ -18,7 +17,6 @@ import { EvmosCronusFinanceTvlFetcher } from './evmos/cronus-finance.tvl-fetcher
     EvmosCronusFinanceFarmTokenFetcher,
     EvmosCronusFinanceBalanceFetcher,
     EvmosCronusFinancePoolTokenFetcher,
-    EvmosCronusFinanceTvlFetcher,
   ],
 })
 export class CronusFinanceAppModule extends AbstractApp() {}

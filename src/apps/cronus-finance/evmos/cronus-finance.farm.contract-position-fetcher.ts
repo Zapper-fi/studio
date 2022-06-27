@@ -1,4 +1,5 @@
 import { Inject } from '@nestjs/common';
+import { compact } from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
@@ -6,7 +7,7 @@ import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/displa
 import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
-import { AppTokenPosition, ContractPosition } from '~position/position.interface';
+import { ContractPosition } from '~position/position.interface';
 import { claimable, supplied } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 
@@ -18,7 +19,7 @@ const groupId = CRONUS_FINANCE_DEFINITION.groups.farm.id;
 const network = Network.EVMOS_MAINNET;
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
-export class EvmosCronusFinanceFarmTokenFetcher implements PositionFetcher<AppTokenPosition> {
+export class EvmosCronusFinanceFarmTokenFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(CronusFinanceContractFactory) private readonly cronusFinanceContractFactory: CronusFinanceContractFactory,
@@ -34,17 +35,17 @@ export class EvmosCronusFinanceFarmTokenFetcher implements PositionFetcher<AppTo
     const allTokens = [...appTokens, ...baseTokens];
     const multicall = this.appToolkit.getMulticall(network);
 
+    const crn = '0x1488346419ffc85c6d54e71be80a222971fb2240';
     const farmAddresses = [
-      '0xcfe952774e02816472C25Ea0BbEfdb42DF52b671', // wevmos-crn lp staking
-      '0xDF6F5bCB002d9c1516E6A197a370507B944AD1a6', // wevmos-usdc lp staking
-      '0x43cfc66318187E93e66aAa9558F4b9318621c01e', // crn-usdc lp staking
-    ].map(e => e.toLowerCase());
+      '0xcfe952774e02816472c25ea0bbefdb42df52b671', // wevmos-crn lp staking
+      '0xdf6f5bcb002d9c1516e6a197a370507b944ad1a6', // wevmos-usdc lp staking
+      '0x43cfc66318187e93e66aaa9558f4b9318621c01e', // crn-usdc lp staking
+    ];
     const stakedTokens = [
       '0x28c98da13f22fe98a93d79442b3f81c7e9c5c3c0', // wevmos-crn
-      '0xc3edBd08EBE51cB5e824ecd1Df6AaFaead3bee47', // wevmos-usdc
+      '0xc3edbd08ebe51cb5e824ecd1df6aafaead3bee47', // wevmos-usdc
       '0x80ee8297c9fcf6bbe2f4d4c9b50831cb65d61bf0', // crn-usdc
-    ].map(e => e.toLowerCase());
-    const crn = '0x1488346419FFc85C6D54E71be80a222971fb2240'.toLowerCase();
+    ];
 
     const farmDefinitions = farmAddresses.map((farm, index) => ({
       address: farm,
@@ -94,6 +95,6 @@ export class EvmosCronusFinanceFarmTokenFetcher implements PositionFetcher<AppTo
       }),
     );
 
-    return tokens as any;
+    return compact(tokens);
   }
 }

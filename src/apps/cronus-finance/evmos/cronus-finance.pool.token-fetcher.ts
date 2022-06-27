@@ -1,6 +1,5 @@
 import { Inject } from '@nestjs/common';
 
-import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { UniswapV2PoolTokenHelper, UniswapV2TheGraphPoolTokenAddressStrategy } from '~apps/uniswap-v2';
 import { PositionFetcher } from '~position/position-fetcher.interface';
@@ -14,10 +13,9 @@ const appId = CRONUS_FINANCE_DEFINITION.id;
 const groupId = CRONUS_FINANCE_DEFINITION.groups.pool.id;
 const network = Network.EVMOS_MAINNET;
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
 export class EvmosCronusFinancePoolTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(CronusFinanceContractFactory) private readonly cronusFinanceContractFactory: CronusFinanceContractFactory,
     @Inject(UniswapV2PoolTokenHelper)
     private readonly uniswapV2PoolTokenHelper: UniswapV2PoolTokenHelper,
@@ -30,7 +28,7 @@ export class EvmosCronusFinancePoolTokenFetcher implements PositionFetcher<AppTo
       network: Network.EVMOS_MAINNET,
       appId,
       groupId,
-      factoryAddress: '0x20570b7bFf86B2f92068622D0805160f318554Be',
+      factoryAddress: '0x20570b7bff86b2f92068622d0805160f318554be',
       resolveFactoryContract: ({ address, network }) =>
         this.cronusFinanceContractFactory.cronusFinancePoolFactory({
           address,
