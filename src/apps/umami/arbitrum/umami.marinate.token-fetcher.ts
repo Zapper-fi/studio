@@ -30,7 +30,7 @@ export type UmamiApiDatas = {
   marinate: UmamiMarinateApiObject;
 };
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
 export class ArbitrumUmamiMarinateTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
@@ -45,12 +45,9 @@ export class ArbitrumUmamiMarinateTokenFetcher implements PositionFetcher<AppTok
     const data = await axios.get<UmamiApiDatas>('https://horseysauce.xyz/').then(v => v.data);
 
     const { marinate } = data;
-    const { apr, marinateTVL } = marinate;
+    const { apr } = marinate;
 
-    return {
-      apr,
-      marinateTVL,
-    };
+    return apr;
   }
 
   async getPositions() {
@@ -74,11 +71,13 @@ export class ArbitrumUmamiMarinateTokenFetcher implements PositionFetcher<AppTok
     const underlyingToken = baseTokenDependencies.find(v => v.address === UMAMI_ADDRESS);
     if (!underlyingToken) return [];
 
-    const { apr, marinateTVL } = await this.getUmamiInformations();
+    const aprRaw = await this.getUmamiInformations();
+    const apr = Number(aprRaw);
 
     const tokens = [underlyingToken];
     const pricePerShare = 1.0;
     const price = pricePerShare * underlyingToken.price;
+    const liquidity = supply * price;
     const label = `Marinating UMAMI`;
     const images = getImagesFromToken(underlyingToken);
     const secondaryLabel = buildDollarDisplayItem(price);
@@ -86,11 +85,11 @@ export class ArbitrumUmamiMarinateTokenFetcher implements PositionFetcher<AppTok
     const statsItems = [
       {
         label: 'Liquidity',
-        value: buildDollarDisplayItem(parseFloat(marinateTVL)),
+        value: buildDollarDisplayItem(liquidity),
       },
       {
         label: 'APR',
-        value: buildPercentageDisplayItem(parseFloat(apr)),
+        value: buildPercentageDisplayItem(apr),
       },
     ];
 
@@ -106,7 +105,9 @@ export class ArbitrumUmamiMarinateTokenFetcher implements PositionFetcher<AppTok
       pricePerShare,
       price,
       tokens,
-      dataProps: {},
+      dataProps: {
+        liquidity,
+      },
       displayProps: {
         label,
         images,
