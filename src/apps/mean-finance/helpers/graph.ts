@@ -39,6 +39,17 @@ export const gqlFetchAll = async <T>({
   });
 
   if (results[dataToSearch].length === firstToUse + offsetToUse) {
+    let newPrevResults = results;
+    if (prevResults) {
+      newPrevResults = {
+        ...prevResults,
+        ...results,
+        [dataToSearch]: [
+          ...prevResults[dataToSearch],
+          ...results[dataToSearch],
+        ],
+      };
+    }
     return gqlFetchAll({
       graphHelper,
       query,
@@ -47,7 +58,7 @@ export const gqlFetchAll = async <T>({
       dataToSearch,
       first: offsetToUse + firstToUse,
       offset: firstToUse,
-      prevResults,
+      prevResults: newPrevResults,
     });
   }
 
@@ -55,10 +66,10 @@ export const gqlFetchAll = async <T>({
     return {
       ...prevResults,
       ...results,
-      [dataToSearch]: {
+      [dataToSearch]: [
         ...prevResults[dataToSearch],
         ...results[dataToSearch],
-      }
+      ],
     };
   } else {
     return results;

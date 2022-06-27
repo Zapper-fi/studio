@@ -5,6 +5,8 @@ import { Register } from '~app-toolkit/decorators';
 import { drillBalance } from '~app-toolkit/helpers/balance/token-balance.helper';
 import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
+import { WithMetaType } from '~position/display.interface';
+import { BaseTokenBalance } from '~position/position-balance.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
@@ -37,19 +39,32 @@ export class PolygonMeanFinanceDcaPositionContractPositionFetcher implements Pos
       const remainingSwaps = dcaPosition.current.remainingSwaps;
       const swapInterval = dcaPosition.swapInterval.interval;
 
-      const from = baseTokens.find(v => v.address === dcaPosition.from.address)!;
-      const to = baseTokens.find(v => v.address === dcaPosition.to.address)!;
-      from.network = network;
-      to.network = network;
+      const from = baseTokens.find(v => v.address === dcaPosition.from.address);
+      const to = baseTokens.find(v => v.address === dcaPosition.to.address);
 
-      const tokens = [drillBalance(from, remainingLiquidity), drillBalance(to, toWithdraw)];
+      const tokens: WithMetaType<BaseTokenBalance>[] = [];
+      let images: string[] = [];
+      if (from) {
+        from.network = network;
+        tokens.push(drillBalance(from, remainingLiquidity));
+        images = [
+          ...images,
+          ...getImagesFromToken(from),
+        ];
+      }
+      if (to) {
+        to.network = network;
+        tokens.push(drillBalance(to, toWithdraw));
+        images = [
+          ...images,
+          ...getImagesFromToken(to),
+        ];
+      }
+
       const balanceUSD = sumBy(tokens, t => t.balanceUSD);
 
       const label = `Swapping ${from?.symbol} to ${to?.symbol}`;
       const secondaryLabel = parseInt(remainingSwaps, 10) && STRING_SWAP_INTERVALS[swapInterval] ? `${STRING_SWAP_INTERVALS[swapInterval](remainingSwaps)} left` : 'Position finished';
-
-      const imagesFrom = getImagesFromToken(from);
-      const imagesTo = getImagesFromToken(to);
 
       return {
         type: ContractType.POSITION,
@@ -68,7 +83,7 @@ export class PolygonMeanFinanceDcaPositionContractPositionFetcher implements Pos
         displayProps: {
           label,
           secondaryLabel,
-          images: [...imagesFrom, ...imagesTo],
+          images,
         },
       };
     });
