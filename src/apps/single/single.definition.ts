@@ -16,9 +16,16 @@ export const SINGLE_DEFINITION = appDefinition({
       type: GroupType.TOKEN,
       label: 'Lending',
     },
+
+    lyf: {
+      id: 'lyf',
+      type: GroupType.TOKEN,
+      label: 'LYF',
+    },
   },
 
   tags: [AppTag.FARMING, AppTag.STAKING, AppTag.YIELD_AGGREGATOR, AppTag.CROSS_CHAIN, AppTag.LENDING],
+
   keywords: [],
   links: {},
 

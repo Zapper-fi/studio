@@ -96,7 +96,10 @@ export class BalancerV2TheGraphPoolTokenDataStrategy {
 
   @Cache({
     instance: 'business',
-    key: (network: Network) => `studio-balancer-v2-events-pool-token-addresses:${network}:balancer-v2`,
+    key: (subgraphUrl: string) => {
+      const [namespace, name] = subgraphUrl.split('/').slice(-2);
+      return `studio:balancer-v2-fork:pool-token-addresses:${namespace}:${name}`;
+    },
     ttl: 5 * 60,
   })
   async getPoolAddresses(

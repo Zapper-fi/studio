@@ -4,6 +4,60 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.93.1](https://github.com/Zapper-fi/studio/compare/v0.93.0...v0.93.1) (2022-06-27)
+
+
+### Bug Fixes
+
+* Added liquidity on a Maple position + Umami TVL ([#760](https://github.com/Zapper-fi/studio/issues/760)) ([baaca0d](https://github.com/Zapper-fi/studio/commit/baaca0d59dfa058ce8def6f61b394b4db613b507))
+* **cronus:** Names ([105b31c](https://github.com/Zapper-fi/studio/commit/105b31c6b9d40782672f5247c900bc45ff99825a))
+* **cronus:** Small clean-up, add logo ([a652d01](https://github.com/Zapper-fi/studio/commit/a652d010899d813587012c7e8da31d78d73cad6f))
+* **images:** Support asset images upload ([#763](https://github.com/Zapper-fi/studio/issues/763)) ([a6c99f4](https://github.com/Zapper-fi/studio/commit/a6c99f402ca22e6fd80107d1c3ac55b910968a0a))
+* **lyra-avalon:** Get Lyra Avalon registry contract from addresses in GitHub ([#764](https://github.com/Zapper-fi/studio/issues/764)) ([dcb5dad](https://github.com/Zapper-fi/studio/commit/dcb5dadf83bb2c8e2565dd4fb153a17ca698b4e7))
+
+## [0.93.0](https://github.com/Zapper-fi/studio/compare/v0.92.0...v0.93.0) (2022-06-27)
+
+
+### Features
+
+* **cronus:** Add support for Cronus Finance ([#688](https://github.com/Zapper-fi/studio/issues/688)) ([82fe88e](https://github.com/Zapper-fi/studio/commit/82fe88e0f18a71d58f78415fc801a66422b2d3a3))
+
+
+### Bug Fixes
+
+* **cache:** Adjust cache timeout keys ([63120f9](https://github.com/Zapper-fi/studio/commit/63120f919a0da4468d6547b7824d12fc0f12f864))
+
+## [0.92.0](https://github.com/Zapper-fi/studio/compare/v0.91.0...v0.92.0) (2022-06-27)
+
+
+### Features
+
+* **uniswap-v2:** Build cache key from subgraph URL ([#757](https://github.com/Zapper-fi/studio/issues/757)) ([7d5c2e6](https://github.com/Zapper-fi/studio/commit/7d5c2e6431f8f0000a6c432b4d08d4eb99cc497a))
+
+
+### Bug Fixes
+
+* removed 'borrow' prefix on aave-v2 positions ([#759](https://github.com/Zapper-fi/studio/issues/759)) ([664760e](https://github.com/Zapper-fi/studio/commit/664760e6f76a7798d81cca698379d97026c15e31))
+
+## [0.91.0](https://github.com/Zapper-fi/studio/compare/v0.90.0...v0.91.0) (2022-06-26)
+
+
+### Features
+
+* **cache:** Align @Cache to match Zapper API ([#755](https://github.com/Zapper-fi/studio/issues/755)) ([f0b5cd7](https://github.com/Zapper-fi/studio/commit/f0b5cd779dc50d4b0ca602b514cc0d5a0b9ad0fb))
+
+## [0.90.0](https://github.com/Zapper-fi/studio/compare/v0.89.0...v0.90.0) (2022-06-24)
+
+
+### Features
+
+* **single:** Add SINGLE LYF positions ([#738](https://github.com/Zapper-fi/studio/issues/738)) ([140f856](https://github.com/Zapper-fi/studio/commit/140f856ff040de2dd4a3fa3f414a861c2d79844f))
+
+
+### Bug Fixes
+
+* Minor fixes ([#750](https://github.com/Zapper-fi/studio/issues/750)) ([2450167](https://github.com/Zapper-fi/studio/commit/24501672d4cacc1d33bbc7bbe0a535541c143aa3))
+
 ## [0.89.0](https://github.com/Zapper-fi/studio/compare/v0.88.1...v0.89.0) (2022-06-24)
 
 
