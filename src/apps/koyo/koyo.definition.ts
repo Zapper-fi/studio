@@ -1,6 +1,6 @@
 import { Register } from '~app-toolkit/decorators';
 import { appDefinition, AppDefinition } from '~app/app.definition';
-import { AppAction, AppTag } from '~app/app.interface';
+import { AppAction, AppTag, GroupType } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
 export const KOYO_DEFINITION = appDefinition({
@@ -8,13 +8,20 @@ export const KOYO_DEFINITION = appDefinition({
   name: 'Kōyō Finance',
   description: 'Kōyō is the first next-generation AMM protocol in the Boba ecosystem.',
   url: 'https://koyo.finance',
-  groups: {},
+  groups: {
+    pool: { id: 'pool', type: GroupType.TOKEN, label: 'Pools' },
+  },
   tags: [AppTag.DECENTRALIZED_EXCHANGE],
   keywords: [],
-  links: {},
+
+  links: {
+    github: 'https://github.com/koyo-finance/',
+    twitter: 'https://twitter.com/koyofinance/',
+    discord: 'https://docs.koyo.finance/discord/',
+  },
 
   supportedNetworks: {
-    [Network.AVALANCHE_MAINNET]: [AppAction.VIEW],
+    [Network.BOBA_MAINNET]: [AppAction.VIEW],
   },
 
   primaryColor: '#fff',
