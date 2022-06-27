@@ -85,9 +85,7 @@ export class EthereumPhutureIndexTokenFetcher implements PositionFetcher<AppToke
 
     const indexPositions = indexes.map(({ id, name, totalSupply: supply, assets: activeAssets, inactiveAssets }) => {
       const index = baseTokenDependencies.find(({ address }) => address === id);
-      if (index === undefined) {
-        return null;
-      }
+      if (index === undefined) return null;
 
       const assets = [...activeAssets, ...inactiveAssets];
       const pricePerShare = assets.map(
@@ -103,9 +101,7 @@ export class EthereumPhutureIndexTokenFetcher implements PositionFetcher<AppToke
       const tokens: Token[] = _.compact(
         assets.map(({ shares, asset: { id, name } }) => {
           const asset = baseTokenDependencies.find(({ address }) => address === id);
-          if (asset === undefined) {
-            return null;
-          }
+          if (asset === undefined) return null;
 
           const { price, symbol, decimals } = asset;
           liquidity += shares * price;

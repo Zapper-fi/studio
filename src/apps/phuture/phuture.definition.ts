@@ -6,8 +6,8 @@ import { Network } from '~types/network.interface';
 export const PHUTURE_DEFINITION = appDefinition({
   id: 'phuture',
   name: 'Phuture',
-  tags: [AppTag.ASSET_MANAGEMENT, AppTag.FUND_MANAGER, AppTag.STAKING],
-  keywords: [], // TODO: add keywords
+  tags: [AppTag.ASSET_MANAGEMENT, AppTag.FUND_MANAGER],
+  keywords: ['index funds', 'asset management'],
   description:
     'Phuture is a decentralised crypto index platform that simplifies investments through automated, themed index funds.',
   groups: {
@@ -17,7 +17,7 @@ export const PHUTURE_DEFINITION = appDefinition({
       label: 'Index',
       groupLabel: 'Indexes',
     },
-  }, // TODO: add groups
+  },
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
   },
