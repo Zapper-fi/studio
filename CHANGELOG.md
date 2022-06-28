@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.97.0](https://github.com/Zapper-fi/studio/compare/v0.96.0...v0.97.0) (2022-06-28)
+
+
+### Features
+
+* **mean-finance:** Improve Mean Finance label to show position info ([#781](https://github.com/Zapper-fi/studio/issues/781)) ([e042010](https://github.com/Zapper-fi/studio/commit/e042010540f672606bf5aadcce6959fdab7f01fe))
+
+
+### Bug Fixes
+
+* **positions:** Adjust signature on metatype helpers ([#786](https://github.com/Zapper-fi/studio/issues/786)) ([f395856](https://github.com/Zapper-fi/studio/commit/f395856440c21c280aed49ec1f7f7a5b9149ac68))
+
 ## [0.96.0](https://github.com/Zapper-fi/studio/compare/v0.95.0...v0.96.0) (2022-06-28)
 
 
