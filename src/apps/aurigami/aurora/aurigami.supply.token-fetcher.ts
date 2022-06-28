@@ -1,6 +1,5 @@
 import { Inject } from '@nestjs/common';
 
-import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { CompoundSupplyTokenHelper } from '~apps/compound';
 import { PositionFetcher } from '~position/position-fetcher.interface';
@@ -17,7 +16,6 @@ const network = Network.AURORA_MAINNET;
 @Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
 export class AuroraAurigamiSupplyTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(AurigamiContractFactory) private readonly aurigamiContractFactory: AurigamiContractFactory,
     @Inject(CompoundSupplyTokenHelper) private readonly compoundSupplyTokenHelper: CompoundSupplyTokenHelper,
   ) {}
