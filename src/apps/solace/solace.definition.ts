@@ -56,6 +56,8 @@ export const SOLACE_DEFINITION = appDefinition({
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
     [Network.POLYGON_MAINNET]: [AppAction.VIEW],
+    [Network.AURORA_MAINNET]: [AppAction.VIEW],
+    [Network.FANTOM_OPERA_MAINNET]: [AppAction.VIEW],
   },
 
   primaryColor: '#fff',
