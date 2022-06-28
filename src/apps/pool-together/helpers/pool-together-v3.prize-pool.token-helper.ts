@@ -19,13 +19,13 @@ import { V3PrizePool } from './pool-together.api.prize-pool-registry';
 
 export type PoolTogetherV3TicketTokenDataProps = {
   apy: number;
-  totalLiquidity: number;
+  liquidity: number;
   faucetAddresses: string[];
 };
 
 type GetTicketTokensParams = {
   network: Network;
-  dependencies: AppGroupsDefinition[];
+  dependencies?: AppGroupsDefinition[];
   prizePools: V3PrizePool[];
 };
 
@@ -35,7 +35,7 @@ export class PoolTogetherV3PrizePoolTokenHelper {
     @Inject(PoolTogetherContractFactory) private readonly contractFactory: PoolTogetherContractFactory,
   ) {}
 
-  async getTokens({ network, dependencies, prizePools }: GetTicketTokensParams) {
+  async getTokens({ network, dependencies = [], prizePools }: GetTicketTokensParams) {
     const multicall = this.appToolkit.getMulticall(network);
 
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
@@ -69,7 +69,9 @@ export class PoolTogetherV3PrizePoolTokenHelper {
 
         const pricePerShare = 1; // Minted 1:1
         const price = underlyingToken.price * pricePerShare;
-        const totalLiquidity = totalSupply * underlyingToken.price;
+        const liquidity = totalSupply * underlyingToken.price;
+        const liquidityTicket = ticketSupply * underlyingToken.price;
+        const liquiditySponsorship = sponsorshipSupply * underlyingToken.price;
         const tokens = [underlyingToken];
 
         // Display Props
@@ -114,7 +116,7 @@ export class PoolTogetherV3PrizePoolTokenHelper {
             const rewardTokenPrice = rewardMarketObj?.price ?? rewardPriceObj?.price ?? 0;
 
             const totalDripDailyValue = totalDripPerDay * rewardTokenPrice;
-            return (totalDripDailyValue / totalLiquidity) * 365;
+            return (totalDripDailyValue / liquidity) * 365;
           }),
         );
 
@@ -136,7 +138,7 @@ export class PoolTogetherV3PrizePoolTokenHelper {
 
           dataProps: {
             apy,
-            totalLiquidity,
+            liquidity: liquidityTicket,
             faucetAddresses,
           },
 
@@ -151,7 +153,7 @@ export class PoolTogetherV3PrizePoolTokenHelper {
               },
               {
                 label: 'Liquidity',
-                value: buildDollarDisplayItem(totalLiquidity),
+                value: buildDollarDisplayItem(liquidityTicket),
               },
             ],
           },
@@ -172,7 +174,7 @@ export class PoolTogetherV3PrizePoolTokenHelper {
 
           dataProps: {
             apy,
-            totalLiquidity,
+            liquidity: liquiditySponsorship,
             faucetAddresses,
           },
 
@@ -187,7 +189,7 @@ export class PoolTogetherV3PrizePoolTokenHelper {
               },
               {
                 label: 'Liquidity',
-                value: buildDollarDisplayItem(totalLiquidity),
+                value: buildDollarDisplayItem(liquiditySponsorship),
               },
             ],
           },

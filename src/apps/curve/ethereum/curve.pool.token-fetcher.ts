@@ -53,6 +53,7 @@ export class EthereumCurvePoolTokenFetcher implements PositionFetcher<AppTokenPo
           { appId: 'iron-bank', groupIds: ['supply'], network },
           { appId: YEARN_DEFINITION.id, groupIds: [YEARN_DEFINITION.groups.yield.id], network },
           { appId: 'convex', groupIds: ['deposit'], network },
+          { appId: 'fixed-forex', groupIds: ['forex'], network },
         ],
       }),
     ]);

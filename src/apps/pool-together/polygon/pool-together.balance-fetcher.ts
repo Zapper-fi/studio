@@ -10,7 +10,9 @@ import { Network } from '~types/network.interface';
 import { PoolTogetherClaimableTokenBalancesHelper } from '../helpers/pool-together-v3.claimable.balance-helper';
 import { POOL_TOGETHER_DEFINITION } from '../pool-together.definition';
 
-@Register.BalanceFetcher(POOL_TOGETHER_DEFINITION.id, Network.POLYGON_MAINNET)
+const network = Network.POLYGON_MAINNET;
+
+@Register.BalanceFetcher(POOL_TOGETHER_DEFINITION.id, network)
 export class PolygonPoolTogetherBalanceFetcher implements BalanceFetcher {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
@@ -20,7 +22,7 @@ export class PolygonPoolTogetherBalanceFetcher implements BalanceFetcher {
 
   async getV4TokenBalances(address: string) {
     return this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
-      network: Network.POLYGON_MAINNET,
+      network,
       appId: POOL_TOGETHER_DEFINITION.id,
       groupId: POOL_TOGETHER_DEFINITION.groups.v4.id,
       address,
@@ -29,7 +31,7 @@ export class PolygonPoolTogetherBalanceFetcher implements BalanceFetcher {
 
   async getV3TokenBalances(address: string) {
     return this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
-      network: Network.POLYGON_MAINNET,
+      network,
       appId: POOL_TOGETHER_DEFINITION.id,
       groupId: POOL_TOGETHER_DEFINITION.groups.v3.id,
       address,
@@ -39,7 +41,7 @@ export class PolygonPoolTogetherBalanceFetcher implements BalanceFetcher {
   async getClaimableBalances(address: string) {
     return this.claimableTokenBalancesHelper.getBalances({
       address,
-      network: Network.POLYGON_MAINNET,
+      network,
     });
   }
 
