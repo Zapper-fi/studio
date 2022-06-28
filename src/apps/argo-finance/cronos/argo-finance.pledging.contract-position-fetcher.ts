@@ -27,8 +27,8 @@ export class CronosArgoFinancePledgingContractPositionFetcher implements Positio
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
     const contractTokens = await this.appToolkit.getAppTokenPositions({
       appId,
-      groupIds: [groupId],
-      network,
+      groupIds: [ARGO_FINANCE_DEFINITION.groups.xArgo.id],
+      network
     });
     const baseToken = contractTokens.find(t => t.symbol === 'xARGO')!;
     const croToken = baseTokens.find(t => t.symbol === 'WCRO')!;
@@ -49,7 +49,7 @@ export class CronosArgoFinancePledgingContractPositionFetcher implements Positio
       tokens,
       dataProps: { liquidity },
       displayProps: {
-        label: 'xARGO',
+        label: 'xARGO Pledging',
         secondaryLabel: buildDollarDisplayItem(price),
         images: getImagesFromToken(baseToken),
       },
