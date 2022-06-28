@@ -18,8 +18,7 @@ const network = Network.AVALANCHE_MAINNET;
 export class AvalancheTraderJoeSJoeContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(TraderJoeContractFactory)
-    private readonly contractFactory: TraderJoeContractFactory,
+    @Inject(TraderJoeContractFactory) private readonly contractFactory: TraderJoeContractFactory,
   ) {}
 
   async getPositions() {

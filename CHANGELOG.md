@@ -4,6 +4,30 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.94.0](https://github.com/Zapper-fi/studio/compare/v0.93.3...v0.94.0) (2022-06-28)
+
+
+### Features
+
+* **pancakeswap:** Add missing ANTEX farm ([#774](https://github.com/Zapper-fi/studio/issues/774)) ([b4159b5](https://github.com/Zapper-fi/studio/commit/b4159b5f8333f595297acd9819403f78acf760c9))
+
+
+### Bug Fixes
+
+* **curve,iron-bank:** Add dependencies on Fixed Forex for Forex tokens ([6579e44](https://github.com/Zapper-fi/studio/commit/6579e448a52b5a06d0ed58fe0d0991d49b09c87c))
+
+## [0.93.3](https://github.com/Zapper-fi/studio/compare/v0.93.2...v0.93.3) (2022-06-28)
+
+
+### Bug Fixes
+
+* bunch of smol fixes (trader-joe, across, qiDao, maple) ([#773](https://github.com/Zapper-fi/studio/issues/773)) ([ee2e2a3](https://github.com/Zapper-fi/studio/commit/ee2e2a303040c011e4712f6c27e0b86239b8c3d1))
+* **rari-fuse:** Add dependency to mStable imUSD ([dd80ee8](https://github.com/Zapper-fi/studio/commit/dd80ee8faa8df8025b896f5b66c978d243a589a8))
+* remove curve label suffix in a non invasive manner ([#766](https://github.com/Zapper-fi/studio/issues/766)) ([59245d7](https://github.com/Zapper-fi/studio/commit/59245d7ff6f222d00b496dac93bccc568f5053ba))
+* revert rebindLabel on curve ([#771](https://github.com/Zapper-fi/studio/issues/771)) ([b142def](https://github.com/Zapper-fi/studio/commit/b142deffa67e9086ad3dece155074d1fb3b86db6))
+* split ticket and sponsorship liquidity (pool-together) ([#769](https://github.com/Zapper-fi/studio/issues/769)) ([71edf22](https://github.com/Zapper-fi/studio/commit/71edf22654c9a016fc71e7d363806430fc0422a2))
+* update curve pool definitions ([#772](https://github.com/Zapper-fi/studio/issues/772)) ([b84fa9a](https://github.com/Zapper-fi/studio/commit/b84fa9a54269596a5e4ada867584128bb5189d31))
+
 ## [0.93.2](https://github.com/Zapper-fi/studio/compare/v0.93.1...v0.93.2) (2022-06-27)
 
 
