@@ -28,7 +28,7 @@ export class CronosArgoFinanceXArgoTokenFetcher implements PositionFetcher<AppTo
   async getVePosition(address: string, baseAddress: string) {
     const multicall = this.appToolkit.getMulticall(network);
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
-    let baseToken = baseTokens.find(t => t.address === baseAddress)!;
+    const baseToken = baseTokens.find(t => t.address === baseAddress)!;
     const veToken = multicall.wrap(this.appToolkit.globalContracts.erc20({ address, network }));
     const [supplyRaw, decimals, symbol] = await Promise.all([
       veToken.totalSupply(),
