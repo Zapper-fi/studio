@@ -7,6 +7,7 @@ import { drillBalance } from '~app-toolkit/helpers/balance/token-balance.helper'
 import { WithMetaType } from '~position/display.interface';
 import { BaseTokenBalance } from '~position/position-balance.interface';
 import { TvlFetcher } from '~stats/tvl/tvl-fetcher.interface';
+import { MetaType } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 import { getPositions } from '../helpers/graph';
 
@@ -39,7 +40,10 @@ export class OptimismMeanFinanceTvlFetcher implements TvlFetcher {
       }
       if (to) {
         to.network = network;
-        tokens.push(drillBalance(to, toWithdraw));
+        tokens.push({
+          ...drillBalance(to, toWithdraw),
+          metaType: MetaType.CLAIMABLE,
+        });
       }
 
       const balanceUSD = sumBy(tokens, t => t.balanceUSD);
