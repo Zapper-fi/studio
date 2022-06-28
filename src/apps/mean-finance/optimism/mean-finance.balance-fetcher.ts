@@ -42,6 +42,11 @@ export class OptimismMeanFinanceBalanceFetcher implements BalanceFetcher {
       const swapInterval = Number(dcaPosition.swapInterval.interval) as keyof typeof STRING_SWAP_INTERVALS;
       const rawRate = dcaPosition.current.rate;
       const rate = Number(rawRate) / 10 ** Number(dcaPosition.from.decimals);
+      let formattedRate = rate.toFixed(3);
+
+      if (rate < 0.001) {
+        formattedRate = '<0.001'
+      }
 
       const from = baseTokens.find(v => v.address === dcaPosition.from.address);
       const to = baseTokens.find(v => v.address === dcaPosition.to.address);
@@ -71,7 +76,7 @@ export class OptimismMeanFinanceBalanceFetcher implements BalanceFetcher {
       let label = '';
 
       if (remainingSwaps > 0) {
-        label = `Swapping ${rate} ${from?.symbol || dcaPosition.from.symbol} ${swapIntervalAdverb} to ${to?.symbol || dcaPosition.from.symbol}`;
+        label = `Swapping ~${formattedRate} ${from?.symbol || dcaPosition.from.symbol} ${swapIntervalAdverb} to ${to?.symbol || dcaPosition.from.symbol}`;
       } else {
         label = `Swapping ${from?.symbol || dcaPosition.from.symbol} to ${to?.symbol || dcaPosition.from.symbol}`;
       }
