@@ -3,7 +3,7 @@ import { Inject } from '@nestjs/common';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
-import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
+import { getAppAssetImage } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
@@ -56,7 +56,7 @@ export class CronosArgoFinanceXArgoTokenFetcher implements PositionFetcher<AppTo
       displayProps: {
         label: symbol,
         secondaryLabel: buildDollarDisplayItem(price),
-        images: [getTokenImg(address, network)],
+        images: [getAppAssetImage(appId, address)],
         statsItems: [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }],
       },
     };
