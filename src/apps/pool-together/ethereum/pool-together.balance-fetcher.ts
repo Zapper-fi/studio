@@ -1,5 +1,4 @@
 import { Inject } from '@nestjs/common';
-import { compact } from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
@@ -11,7 +10,9 @@ import { PoolTogetherClaimableTokenBalancesHelper } from '../helpers/pool-togeth
 import { PoolTogetherAirdropTokenBalancesHelper } from '../helpers/pool-together.airdrop.balance-helper';
 import { POOL_TOGETHER_DEFINITION } from '../pool-together.definition';
 
-@Register.BalanceFetcher(POOL_TOGETHER_DEFINITION.id, Network.ETHEREUM_MAINNET)
+const network = Network.ETHEREUM_MAINNET;
+
+@Register.BalanceFetcher(POOL_TOGETHER_DEFINITION.id, network)
 export class EthereumPoolTogetherBalanceFetcher implements BalanceFetcher {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
@@ -23,7 +24,7 @@ export class EthereumPoolTogetherBalanceFetcher implements BalanceFetcher {
 
   async getV4TokenBalances(address: string) {
     return this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
-      network: Network.ETHEREUM_MAINNET,
+      network,
       appId: POOL_TOGETHER_DEFINITION.id,
       groupId: POOL_TOGETHER_DEFINITION.groups.v4.id,
       address,
@@ -32,7 +33,7 @@ export class EthereumPoolTogetherBalanceFetcher implements BalanceFetcher {
 
   async getV3TokenBalances(address: string) {
     return this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
-      network: Network.ETHEREUM_MAINNET,
+      network,
       appId: POOL_TOGETHER_DEFINITION.id,
       groupId: POOL_TOGETHER_DEFINITION.groups.v3.id,
       address,
@@ -41,7 +42,7 @@ export class EthereumPoolTogetherBalanceFetcher implements BalanceFetcher {
 
   async getV3PodTokenBalances(address: string) {
     return this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
-      network: Network.ETHEREUM_MAINNET,
+      network,
       appId: POOL_TOGETHER_DEFINITION.id,
       groupId: POOL_TOGETHER_DEFINITION.groups.v3Pod.id,
       address,
@@ -51,14 +52,14 @@ export class EthereumPoolTogetherBalanceFetcher implements BalanceFetcher {
   async getClaimableBalances(address: string) {
     return this.claimableTokenBalancesHelper.getBalances({
       address,
-      network: Network.ETHEREUM_MAINNET,
+      network,
     });
   }
 
   async getAirdropBalances(address: string) {
     return this.airdropTokenBalancesHelper.getBalances({
       address,
-      network: Network.ETHEREUM_MAINNET,
+      network,
     });
   }
 
@@ -86,11 +87,11 @@ export class EthereumPoolTogetherBalanceFetcher implements BalanceFetcher {
       },
       {
         label: 'Rewards',
-        assets: compact(claimableBalances),
+        assets: claimableBalances,
       },
       {
         label: 'Airdrops',
-        assets: compact(airdropBalances),
+        assets: airdropBalances,
       },
     ]);
   }

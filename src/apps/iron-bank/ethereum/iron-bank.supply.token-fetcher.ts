@@ -26,6 +26,7 @@ export class EthereumIronBankSupplyTokenFetcher implements PositionFetcher<AppTo
       appId,
       groupId,
       comptrollerAddress: '0xab1c342c7bf5ec5f02adea1c2270670bca144cbb',
+      dependencies: [{ appId: 'fixed-forex', groupIds: ['forex'], network }],
       getComptrollerContract: ({ address, network }) =>
         this.ironBankContractFactory.ironBankComptroller({ address, network }),
       getTokenContract: ({ address, network }) => this.ironBankContractFactory.ironBankCToken({ address, network }),
