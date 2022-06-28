@@ -46,9 +46,10 @@ export class FantomSolaceBondsContractPositionFetcher implements PositionFetcher
       BOND_TELLER_ADDRESSES.map(async bondTellerAddress => {
         const bondTellerContract = this.solaceContractFactory.bondTellerErc20({ address: bondTellerAddress, network });
 
-        const [underlyingAddressRaw, underWritingPoolAddress] = await Promise.all([
+        const [underlyingAddressRaw, underWritingPoolAddress, name] = await Promise.all([
           multicall.wrap(bondTellerContract).principal(),
           multicall.wrap(bondTellerContract).underwritingPool(),
+          multicall.wrap(bondTellerContract).name(),
         ]);
 
         const underlyingAddress = underlyingAddressRaw.toLowerCase();
@@ -73,7 +74,7 @@ export class FantomSolaceBondsContractPositionFetcher implements PositionFetcher
             liquidity,
           },
           displayProps: {
-            label: `${getLabelFromToken(depositToken)}`,
+            label: name,
             images: getImagesFromToken(depositToken),
             statsItems: [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }],
           },
