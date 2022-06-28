@@ -28,7 +28,7 @@ export class CronosVvsFinanceFarmContractPositionFetcher implements PositionFetc
         network,
         groupId,
         appId,
-        address: '0xDccd6455AE04b03d785F12196B492b18129564bc',
+        address: '0xdccd6455ae04b03d785f12196b492b18129564bc',
         dependencies: [{ appId, groupIds: [VVS_FINANCE_DEFINITION.groups.pool.id], network }],
         resolveContract: opts => this.contractFactory.vvsCraftsman(opts),
         resolvePoolLength: ({ multicall, contract }) => multicall.wrap(contract).poolLength(),
