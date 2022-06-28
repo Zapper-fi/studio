@@ -4,6 +4,28 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.96.0](https://github.com/Zapper-fi/studio/compare/v0.95.0...v0.96.0) (2022-06-28)
+
+
+### Features
+
+* **sushiswap:** Add xSUSHI and Meowshi dependencies on dependees ([#782](https://github.com/Zapper-fi/studio/issues/782)) ([600e10b](https://github.com/Zapper-fi/studio/commit/600e10bde7205570c4012f798b781bb2b9d07f63))
+
+## [0.95.0](https://github.com/Zapper-fi/studio/compare/v0.94.0...v0.95.0) (2022-06-28)
+
+
+### Features
+
+* **mean-finance:** Add Mean Finance integration ([#753](https://github.com/Zapper-fi/studio/issues/753)) ([516ae1a](https://github.com/Zapper-fi/studio/commit/516ae1afa623b4be9a1d63dd2409b7089d8b74ad))
+
+
+### Bug Fixes
+
+* **argo:** Add xARGO logo and fix labels ([#765](https://github.com/Zapper-fi/studio/issues/765)) ([efba3b4](https://github.com/Zapper-fi/studio/commit/efba3b4f6eb34244bb0b33ea0113bfef969a47ca))
+* borrow liquidity has to be lower then supply liquidity ([#777](https://github.com/Zapper-fi/studio/issues/777)) ([4ce52d5](https://github.com/Zapper-fi/studio/commit/4ce52d54dab0723d46e8157f67bf7979e56ff777))
+* escrowed qi-dao position should be shown in explorer ([#779](https://github.com/Zapper-fi/studio/issues/779)) ([5ffc473](https://github.com/Zapper-fi/studio/commit/5ffc473bfc681b47a1d95f9b588369d5a2037f3b))
+* remove curve suffix for harmony 3pool definition ([#780](https://github.com/Zapper-fi/studio/issues/780)) ([db1047c](https://github.com/Zapper-fi/studio/commit/db1047c8aa7b72b7b38cd5ea4f602262dab74d53))
+
 ## [0.94.0](https://github.com/Zapper-fi/studio/compare/v0.93.3...v0.94.0) (2022-06-28)
 
 
