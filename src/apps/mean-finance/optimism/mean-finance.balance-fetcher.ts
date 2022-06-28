@@ -63,8 +63,7 @@ export class OptimismMeanFinanceBalanceFetcher implements BalanceFetcher {
       }
       if (to) {
         to.network = network;
-        const claimableTo = claimable(to) as WithMetaType<BaseToken>;
-        tokens.push(drillBalance(claimableTo, toWithdraw));
+        tokens.push(drillBalance(claimable(to), toWithdraw));
         images = [
           ...images,
           ...getImagesFromToken(to),

@@ -41,8 +41,7 @@ export class OptimismMeanFinanceTvlFetcher implements TvlFetcher {
       }
       if (to) {
         to.network = network;
-        const claimableTo = claimable(to) as WithMetaType<BaseToken>;
-        tokens.push(drillBalance(claimableTo, toWithdraw));
+        tokens.push(drillBalance(claimable(to), toWithdraw));
       }
 
       const balanceUSD = sumBy(tokens, t => t.balanceUSD);
