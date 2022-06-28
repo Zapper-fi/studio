@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.94.0](https://github.com/Zapper-fi/studio/compare/v0.93.3...v0.94.0) (2022-06-28)
+
+
+### Features
+
+* **pancakeswap:** Add missing ANTEX farm ([#774](https://github.com/Zapper-fi/studio/issues/774)) ([b4159b5](https://github.com/Zapper-fi/studio/commit/b4159b5f8333f595297acd9819403f78acf760c9))
+
+
+### Bug Fixes
+
+* **curve,iron-bank:** Add dependencies on Fixed Forex for Forex tokens ([6579e44](https://github.com/Zapper-fi/studio/commit/6579e448a52b5a06d0ed58fe0d0991d49b09c87c))
+
 ## [0.93.3](https://github.com/Zapper-fi/studio/compare/v0.93.2...v0.93.3) (2022-06-28)
 
 
