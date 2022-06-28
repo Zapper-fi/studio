@@ -15,7 +15,7 @@ const appId = SOLACE_DEFINITION.id;
 const groupId = SOLACE_DEFINITION.groups.policies.id;
 const network = Network.POLYGON_MAINNET;
 
-const FRAX_ADDRESS = '0x45c32fa6df82ead1e2ef74d17b76547eddfaff89';
+const DAI_ADDRESS = '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063';
 const SOLACE_COVER_PRODUCT_ADDRESS = '0x501acec83d440c00644ca5c48d059e1840852a64';
 const SOLACE_ADDRESS = '0x501ace9c35e60f03a2af4d484f49f9b1efde9f40';
 
@@ -25,8 +25,8 @@ export class PolygonSolacePoliciesContractPositionFetcher implements PositionFet
 
   async getPositions() {
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
-    const frax = baseTokens.find(t => t.address === FRAX_ADDRESS)!;
-    const tokens = [supplied(frax)];
+    const dai = baseTokens.find(t => t.address === DAI_ADDRESS)!;
+    const tokens = [supplied(dai)];
 
     const position: ContractPosition = {
       type: ContractType.POSITION,

@@ -4,30 +4,20 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { SolaceCoverProduct, SolaceCoverProductInterface } from '../SolaceCoverProduct';
+import type { SolaceCoverProductV3, SolaceCoverProductV3Interface } from '../SolaceCoverProductV3';
 
 const _abi = [
   {
     inputs: [
       {
         internalType: 'address',
-        name: 'governance_',
+        name: '_governance',
         type: 'address',
       },
       {
         internalType: 'address',
-        name: 'registry_',
+        name: '_registry',
         type: 'address',
-      },
-      {
-        internalType: 'string',
-        name: 'domain_',
-        type: 'string',
-      },
-      {
-        internalType: 'string',
-        name: 'version_',
-        type: 'string',
       },
     ],
     stateMutability: 'nonpayable',
@@ -114,19 +104,6 @@ const _abi = [
     inputs: [
       {
         indexed: false,
-        internalType: 'uint256',
-        name: 'cooldownPeriod',
-        type: 'uint256',
-      },
-    ],
-    name: 'CooldownPeriodSet',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
         internalType: 'address',
         name: 'policyholder',
         type: 'address',
@@ -134,49 +111,11 @@ const _abi = [
       {
         indexed: false,
         internalType: 'uint256',
-        name: 'startTime',
+        name: 'debtAmount',
         type: 'uint256',
       },
     ],
-    name: 'CooldownStarted',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: 'address',
-        name: 'policyholder',
-        type: 'address',
-      },
-    ],
-    name: 'CooldownStopped',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: 'address',
-        name: 'from',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'address',
-        name: 'policyholder',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'amount',
-        type: 'uint256',
-      },
-    ],
-    name: 'DepositMade',
+    name: 'DebtSet',
     type: 'event',
   },
   {
@@ -222,25 +161,12 @@ const _abi = [
     inputs: [
       {
         indexed: false,
-        internalType: 'bool',
-        name: 'isReferralOn',
-        type: 'bool',
-      },
-    ],
-    name: 'IsReferralOnSet',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
         internalType: 'uint256',
-        name: 'maxRateDenom',
+        name: 'timestamp',
         type: 'uint256',
       },
     ],
-    name: 'MaxRateDenomSet',
+    name: 'LatestChargedTimeSet',
     type: 'event',
   },
   {
@@ -252,8 +178,14 @@ const _abi = [
         name: 'maxRateNum',
         type: 'uint256',
       },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'maxRateDenom',
+        type: 'uint256',
+      },
     ],
-    name: 'MaxRateNumSet',
+    name: 'MaxRateSet',
     type: 'event',
   },
   {
@@ -279,7 +211,7 @@ const _abi = [
         type: 'uint256',
       },
     ],
-    name: 'PolicyCreated',
+    name: 'PolicyCanceled',
     type: 'event',
   },
   {
@@ -292,20 +224,7 @@ const _abi = [
         type: 'uint256',
       },
     ],
-    name: 'PolicyDeactivated',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'activeCoverLimit',
-        type: 'uint256',
-      },
-    ],
-    name: 'PolicyManagerUpdated',
+    name: 'PolicyCreated',
     type: 'event',
   },
   {
@@ -327,95 +246,6 @@ const _abi = [
       {
         indexed: false,
         internalType: 'address',
-        name: 'policyholder',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'amount',
-        type: 'uint256',
-      },
-    ],
-    name: 'PremiumCharged',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: 'address',
-        name: 'policyholder',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'actualPremium',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'chargedPremium',
-        type: 'uint256',
-      },
-    ],
-    name: 'PremiumPartiallyCharged',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'referralReward',
-        type: 'uint256',
-      },
-    ],
-    name: 'ReferralRewardSet',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: 'address',
-        name: 'rewardEarner',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'rewardPointsEarned',
-        type: 'uint256',
-      },
-    ],
-    name: 'ReferralRewardsEarned',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'referralThreshold',
-        type: 'uint256',
-      },
-    ],
-    name: 'ReferralThresholdSet',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: 'address',
         name: 'registry',
         type: 'address',
       },
@@ -429,17 +259,24 @@ const _abi = [
       {
         indexed: false,
         internalType: 'address',
-        name: 'policyholder',
+        name: 'signer',
         type: 'address',
       },
+    ],
+    name: 'SignerAdded',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
       {
         indexed: false,
-        internalType: 'uint256',
-        name: 'amountGifted',
-        type: 'uint256',
+        internalType: 'address',
+        name: 'signer',
+        type: 'address',
       },
     ],
-    name: 'RewardPointsSet',
+    name: 'SignerRemoved',
     type: 'event',
   },
   {
@@ -468,81 +305,9 @@ const _abi = [
     type: 'event',
   },
   {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: 'address',
-        name: 'policyholder',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'amount',
-        type: 'uint256',
-      },
-    ],
-    name: 'WithdrawMade',
-    type: 'event',
-  },
-  {
     inputs: [],
     name: 'acceptGovernance',
     outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'policyholder',
-        type: 'address',
-      },
-    ],
-    name: 'accountBalanceOf',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: 'balance',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'policyholder_',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'coverLimit_',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'amount_',
-        type: 'uint256',
-      },
-      {
-        internalType: 'bytes',
-        name: 'referralCode_',
-        type: 'bytes',
-      },
-    ],
-    name: 'activatePolicy',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: 'policyID',
-        type: 'uint256',
-      },
-    ],
     stateMutability: 'nonpayable',
     type: 'function',
   },
@@ -557,6 +322,19 @@ const _abi = [
       },
     ],
     stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'signer',
+        type: 'address',
+      },
+    ],
+    name: 'addSigner',
+    outputs: [],
+    stateMutability: 'nonpayable',
     type: 'function',
   },
   {
@@ -583,7 +361,7 @@ const _abi = [
     outputs: [
       {
         internalType: 'uint256',
-        name: 'availableCoverCapacity_',
+        name: 'capacity',
         type: 'uint256',
       },
     ],
@@ -623,62 +401,48 @@ const _abi = [
     type: 'function',
   },
   {
-    inputs: [],
-    name: 'chargeCycle',
-    outputs: [
+    inputs: [
       {
         internalType: 'uint256',
-        name: 'chargeCycle_',
+        name: '_premium',
         type: 'uint256',
       },
+      {
+        internalType: 'uint256',
+        name: '_deadline',
+        type: 'uint256',
+      },
+      {
+        internalType: 'bytes',
+        name: '_signature',
+        type: 'bytes',
+      },
     ],
-    stateMutability: 'view',
+    name: 'cancel',
+    outputs: [],
+    stateMutability: 'nonpayable',
     type: 'function',
   },
   {
     inputs: [
       {
         internalType: 'address[]',
-        name: 'holders',
+        name: '_policyholders',
         type: 'address[]',
       },
-      {
-        internalType: 'uint256[]',
-        name: 'premiums',
-        type: 'uint256[]',
-      },
     ],
-    name: 'chargePremiums',
+    name: 'cancelPolicies',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
   },
   {
     inputs: [],
-    name: 'cooldownPeriod',
+    name: 'chargeCycle',
     outputs: [
       {
         internalType: 'uint256',
-        name: 'cooldownPeriod_',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'policyholder_',
-        type: 'address',
-      },
-    ],
-    name: 'cooldownStart',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: 'cooldownStart_',
+        name: '',
         type: 'uint256',
       },
     ],
@@ -689,7 +453,7 @@ const _abi = [
     inputs: [
       {
         internalType: 'uint256',
-        name: 'policyID_',
+        name: '',
         type: 'uint256',
       },
     ],
@@ -697,36 +461,11 @@ const _abi = [
     outputs: [
       {
         internalType: 'uint256',
-        name: 'amount',
+        name: '',
         type: 'uint256',
       },
     ],
     stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'deactivatePolicy',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'policyholder',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'amount',
-        type: 'uint256',
-      },
-    ],
-    name: 'deposit',
-    outputs: [],
-    stateMutability: 'nonpayable',
     type: 'function',
   },
   {
@@ -751,16 +490,16 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: 'bytes',
-        name: 'referralCode',
-        type: 'bytes',
+        internalType: 'uint256',
+        name: 'index',
+        type: 'uint256',
       },
     ],
-    name: 'getReferrerFromReferralCode',
+    name: 'getSigner',
     outputs: [
       {
         internalType: 'address',
-        name: 'referrer',
+        name: 'signer',
         type: 'address',
       },
     ],
@@ -821,30 +560,11 @@ const _abi = [
     inputs: [
       {
         internalType: 'address',
-        name: 'policyholder',
+        name: 'signer',
         type: 'address',
       },
     ],
-    name: 'isReferralCodeUsed',
-    outputs: [
-      {
-        internalType: 'bool',
-        name: 'isReferralCodeUsed_',
-        type: 'bool',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'bytes',
-        name: 'referralCode',
-        type: 'bytes',
-      },
-    ],
-    name: 'isReferralCodeValid',
+    name: 'isSigner',
     outputs: [
       {
         internalType: 'bool',
@@ -857,12 +577,12 @@ const _abi = [
   },
   {
     inputs: [],
-    name: 'isReferralOn',
+    name: 'latestChargedTime',
     outputs: [
       {
-        internalType: 'bool',
-        name: 'isReferralOn_',
-        type: 'bool',
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
       },
     ],
     stateMutability: 'view',
@@ -894,7 +614,7 @@ const _abi = [
     outputs: [
       {
         internalType: 'uint256',
-        name: 'maxRateDenom_',
+        name: '',
         type: 'uint256',
       },
     ],
@@ -907,7 +627,7 @@ const _abi = [
     outputs: [
       {
         internalType: 'uint256',
-        name: 'maxRateNum_',
+        name: '',
         type: 'uint256',
       },
     ],
@@ -918,7 +638,7 @@ const _abi = [
     inputs: [
       {
         internalType: 'uint256',
-        name: 'coverLimit',
+        name: '_coverLimit',
         type: 'uint256',
       },
     ],
@@ -926,7 +646,26 @@ const _abi = [
     outputs: [
       {
         internalType: 'uint256',
-        name: 'minRequiredAccountBalance_',
+        name: 'mrab',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: '_policyholder',
+        type: 'address',
+      },
+    ],
+    name: 'minScpRequired',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: 'amount',
         type: 'uint256',
       },
     ],
@@ -941,6 +680,19 @@ const _abi = [
         internalType: 'string',
         name: '',
         type: 'string',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'numSigners',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: 'count',
+        type: 'uint256',
       },
     ],
     stateMutability: 'view',
@@ -971,8 +723,21 @@ const _abi = [
     outputs: [
       {
         internalType: 'bool',
-        name: 'status',
+        name: '',
         type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'paymentManager',
+    outputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
       },
     ],
     stateMutability: 'view',
@@ -992,23 +757,10 @@ const _abi = [
     type: 'function',
   },
   {
-    inputs: [],
-    name: 'policyCount',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: 'count',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
     inputs: [
       {
         internalType: 'address',
-        name: 'policyholder_',
+        name: '',
         type: 'address',
       },
     ],
@@ -1016,7 +768,7 @@ const _abi = [
     outputs: [
       {
         internalType: 'uint256',
-        name: 'policyID',
+        name: '',
         type: 'uint256',
       },
     ],
@@ -1027,7 +779,7 @@ const _abi = [
     inputs: [
       {
         internalType: 'uint256',
-        name: 'policyID_',
+        name: '_policyID',
         type: 'uint256',
       },
     ],
@@ -1046,45 +798,101 @@ const _abi = [
     inputs: [
       {
         internalType: 'address',
-        name: 'policyholder_',
+        name: '_user',
         type: 'address',
       },
-    ],
-    name: 'premiumsPaidOf',
-    outputs: [
       {
         internalType: 'uint256',
-        name: 'premiumsPaid_',
+        name: '_coverLimit',
         type: 'uint256',
       },
     ],
-    stateMutability: 'view',
+    name: 'purchase',
+    outputs: [],
+    stateMutability: 'nonpayable',
     type: 'function',
   },
   {
-    inputs: [],
-    name: 'referralReward',
+    inputs: [
+      {
+        internalType: 'address',
+        name: '_user',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: '_coverLimit',
+        type: 'uint256',
+      },
+      {
+        internalType: 'address',
+        name: '_token',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: '_amount',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: '_price',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: '_priceDeadline',
+        type: 'uint256',
+      },
+      {
+        internalType: 'bytes',
+        name: '_signature',
+        type: 'bytes',
+      },
+    ],
+    name: 'purchaseWithNonStable',
     outputs: [
       {
         internalType: 'uint256',
-        name: 'referralReward_',
+        name: 'policyID',
         type: 'uint256',
       },
     ],
-    stateMutability: 'view',
+    stateMutability: 'nonpayable',
     type: 'function',
   },
   {
-    inputs: [],
-    name: 'referralThreshold',
-    outputs: [
+    inputs: [
+      {
+        internalType: 'address',
+        name: '_user',
+        type: 'address',
+      },
       {
         internalType: 'uint256',
-        name: 'referralThreshold_',
+        name: '_coverLimit',
+        type: 'uint256',
+      },
+      {
+        internalType: 'address',
+        name: '_token',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: '_amount',
         type: 'uint256',
       },
     ],
-    stateMutability: 'view',
+    name: 'purchaseWithStable',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: 'policyID',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'nonpayable',
     type: 'function',
   },
   {
@@ -1093,7 +901,7 @@ const _abi = [
     outputs: [
       {
         internalType: 'address',
-        name: 'registry_',
+        name: '',
         type: 'address',
       },
     ],
@@ -1104,19 +912,13 @@ const _abi = [
     inputs: [
       {
         internalType: 'address',
-        name: 'policyholder_',
+        name: 'signer',
         type: 'address',
       },
     ],
-    name: 'rewardPointsOf',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: 'rewardPoints_',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
+    name: 'removeSigner',
+    outputs: [],
+    stateMutability: 'nonpayable',
     type: 'function',
   },
   {
@@ -1125,7 +927,7 @@ const _abi = [
     outputs: [
       {
         internalType: 'address',
-        name: 'riskManager_',
+        name: '',
         type: 'address',
       },
     ],
@@ -1205,7 +1007,7 @@ const _abi = [
     inputs: [
       {
         internalType: 'string',
-        name: 'baseURI_',
+        name: '_baseURI',
         type: 'string',
       },
     ],
@@ -1217,9 +1019,9 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: 'uint256',
-        name: 'chargeCycle_',
-        type: 'uint256',
+        internalType: 'enum ISolaceCoverProductV3.ChargePeriod',
+        name: '_chargeCycle',
+        type: 'uint8',
       },
     ],
     name: 'setChargeCycle',
@@ -1231,24 +1033,11 @@ const _abi = [
     inputs: [
       {
         internalType: 'uint256',
-        name: 'cooldownPeriod_',
+        name: '_timestamp',
         type: 'uint256',
       },
     ],
-    name: 'setCooldownPeriod',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'bool',
-        name: 'isReferralOn_',
-        type: 'bool',
-      },
-    ],
-    name: 'setIsReferralOn',
+    name: 'setChargedTime',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -1257,24 +1046,16 @@ const _abi = [
     inputs: [
       {
         internalType: 'uint256',
-        name: 'maxRateDenom_',
+        name: '_maxRateNum',
         type: 'uint256',
       },
-    ],
-    name: 'setMaxRateDenom',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
       {
         internalType: 'uint256',
-        name: 'maxRateNum_',
+        name: '_maxRateDenom',
         type: 'uint256',
       },
     ],
-    name: 'setMaxRateNum',
+    name: 'setMaxRate',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -1283,7 +1064,7 @@ const _abi = [
     inputs: [
       {
         internalType: 'bool',
-        name: 'paused_',
+        name: '_paused',
         type: 'bool',
       },
     ],
@@ -1308,56 +1089,12 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: 'uint256',
-        name: 'referralReward_',
-        type: 'uint256',
-      },
-    ],
-    name: 'setReferralReward',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: 'referralThreshhold_',
-        type: 'uint256',
-      },
-    ],
-    name: 'setReferralThreshold',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
         internalType: 'address',
-        name: 'registry_',
+        name: '_registry',
         type: 'address',
       },
     ],
     name: 'setRegistry',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'policyholder_',
-        type: 'address',
-      },
-      {
-        internalType: 'uint256',
-        name: 'rewardPoints_',
-        type: 'uint256',
-      },
-    ],
-    name: 'setRewardPoints',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -1406,8 +1143,21 @@ const _abi = [
     outputs: [
       {
         internalType: 'string',
-        name: 'tokenURI_',
+        name: 'uri',
         type: 'string',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'totalSupply',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
       },
     ],
     stateMutability: 'view',
@@ -1440,35 +1190,78 @@ const _abi = [
     inputs: [
       {
         internalType: 'uint256',
-        name: 'newCoverLimit_',
+        name: 'premium',
+        type: 'uint256',
+      },
+      {
+        internalType: 'address',
+        name: 'policyholder',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'deadline',
         type: 'uint256',
       },
       {
         internalType: 'bytes',
-        name: 'referralCode_',
+        name: 'signature',
         type: 'bytes',
       },
     ],
-    name: 'updateCoverLimit',
-    outputs: [],
-    stateMutability: 'nonpayable',
+    name: 'verifyPremium',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
     type: 'function',
   },
   {
-    inputs: [],
-    name: 'withdraw',
-    outputs: [],
-    stateMutability: 'nonpayable',
+    inputs: [
+      {
+        internalType: 'address',
+        name: 'token',
+        type: 'address',
+      },
+      {
+        internalType: 'uint256',
+        name: 'price',
+        type: 'uint256',
+      },
+      {
+        internalType: 'uint256',
+        name: 'deadline',
+        type: 'uint256',
+      },
+      {
+        internalType: 'bytes',
+        name: 'signature',
+        type: 'bytes',
+      },
+    ],
+    name: 'verifyPrice',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
     type: 'function',
   },
 ];
 
-export class SolaceCoverProduct__factory {
+export class SolaceCoverProductV3__factory {
   static readonly abi = _abi;
-  static createInterface(): SolaceCoverProductInterface {
-    return new utils.Interface(_abi) as SolaceCoverProductInterface;
+  static createInterface(): SolaceCoverProductV3Interface {
+    return new utils.Interface(_abi) as SolaceCoverProductV3Interface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): SolaceCoverProduct {
-    return new Contract(address, _abi, signerOrProvider) as SolaceCoverProduct;
+  static connect(address: string, signerOrProvider: Signer | Provider): SolaceCoverProductV3 {
+    return new Contract(address, _abi, signerOrProvider) as SolaceCoverProductV3;
   }
 }
