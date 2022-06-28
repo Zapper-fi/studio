@@ -35,6 +35,7 @@ export class BadgerClaimableContractPositionBalanceHelper {
   ) {}
 
   @Cache({
+    instance: 'user',
     key: ({ address, network }: BadgerClaimableContractPositionBalanceHelperParams) =>
       `apps-v3:${BADGER_DEFINITION.id}:${network}:accumulated-rewards:${address}`,
     ttl: 5 * 60, // 5 minutes

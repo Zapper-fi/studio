@@ -45,6 +45,7 @@ export class UniswapV2TheGraphPoolTokenAddressStrategy {
   constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
   @Cache({
+    instance: 'business',
     key: (subgraphUrl: string) => {
       const [namespace, name] = subgraphUrl.split('/').slice(-2);
       return `studio:uniswap-v2-fork:pool-token-addresses:${namespace}:${name}`;

@@ -14,36 +14,24 @@ type DeserializeInto<T = unknown> = DeserializeIntoArray<T> | ClassConstructor<T
 
 type CacheKeyBuilder = (...args: any) => string;
 type CacheTtlBuilder = (...args: any) => number;
-type CacheForceUpdateBuilder = (...args: any) => boolean;
 
 export type CacheOptions = {
-  instance?: 'user' | 'business';
   key: string | CacheKeyBuilder;
-  /** In seconds */
-  ttl?: number | null | CacheTtlBuilder;
-  /** In seconds */
-  localTtl?: number | null | CacheTtlBuilder;
-  forceUpdate?: boolean | CacheForceUpdateBuilder;
+  instance?: 'user' | 'business';
+  ttl?: number | CacheTtlBuilder; // seconds
+  localTtl?: number | CacheTtlBuilder; // seconds
   deserializeInto?: DeserializeInto;
   cacheNull?: boolean;
 };
 
 export const Cache = (options: CacheOptions) => {
-  const {
-    ttl = null,
-    instance = 'business',
-    localTtl = null,
-    forceUpdate = false,
-    deserializeInto = undefined,
-    cacheNull = false,
-  } = options;
+  const { key, ttl, instance, localTtl, deserializeInto, cacheNull } = options;
 
   return applyDecorators(
-    SetMetadata(CACHE_KEY, options.key),
+    SetMetadata(CACHE_KEY, key),
     SetMetadata(CACHE_INSTANCE, instance),
     SetMetadata(CACHE_TTL, ttl),
     SetMetadata(CACHE_LOCAL_TTL, localTtl),
-    SetMetadata(CACHE_FORCE_UPDATE, forceUpdate),
     SetMetadata(CACHE_DESERIALIZE_INTO, deserializeInto),
     SetMetadata(CACHE_SHOULD_CACHE_NULL, cacheNull),
   );

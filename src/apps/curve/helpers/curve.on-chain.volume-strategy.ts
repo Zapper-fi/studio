@@ -20,6 +20,7 @@ type GetBlockResponse = {
 @Injectable()
 export class CurveOnChainVolumeStrategy {
   @Cache({
+    instance: 'business',
     key: daysAgo => `curve:block-from-days-ago:${daysAgo}`,
     ttl: 60,
   })

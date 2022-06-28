@@ -17,7 +17,11 @@ export class TokenService {
     });
   }
 
-  @Cache({ key: (network: Network) => `token-prices:${network}`, ttl: 60 })
+  @Cache({
+    instance: 'business',
+    key: (network: Network) => `token-prices:${network}`,
+    ttl: 60,
+  })
   async getTokenPrices(network: Network) {
     const { data: tokenPrices } = await this.axios.get<BaseToken[]>('/v2/prices', { params: { network } });
     return tokenPrices;
