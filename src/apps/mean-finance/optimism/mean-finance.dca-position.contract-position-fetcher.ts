@@ -12,7 +12,6 @@ import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
-import { MeanFinanceContractFactory } from '../contracts';
 import { getPositions } from '../helpers/graph';
 import { STRING_SWAP_INTERVALS } from '../helpers/intervals';
 import { MEAN_FINANCE_DEFINITION } from '../mean-finance.definition';
@@ -23,14 +22,11 @@ const network = Network.OPTIMISM_MAINNET;
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
 export class OptimismMeanFinanceDcaPositionContractPositionFetcher implements PositionFetcher<ContractPosition> {
-  constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(MeanFinanceContractFactory) private readonly meanFinanceContractFactory: MeanFinanceContractFactory,
-  ) { }
+  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
   async getPositions() {
     const graphHelper = this.appToolkit.helpers.theGraphHelper;
-    const data = await getPositions(Network.OPTIMISM_MAINNET, graphHelper);
+    const data = await getPositions(network, graphHelper);
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
     const positions = data.positions;
 
@@ -48,30 +44,27 @@ export class OptimismMeanFinanceDcaPositionContractPositionFetcher implements Po
       if (from) {
         from.network = network;
         tokens.push(drillBalance(from, remainingLiquidity));
-        images = [
-          ...images,
-          ...getImagesFromToken(from),
-        ];
+        images = [...images, ...getImagesFromToken(from)];
       }
       if (to) {
         to.network = network;
         tokens.push(drillBalance(to, toWithdraw));
-        images = [
-          ...images,
-          ...getImagesFromToken(to),
-        ];
+        images = [...images, ...getImagesFromToken(to)];
       }
 
       const balanceUSD = sumBy(tokens, t => t.balanceUSD);
 
       const label = `Swapping ${from?.symbol} to ${to?.symbol}`;
-      const secondaryLabel = parseInt(remainingSwaps, 10) && STRING_SWAP_INTERVALS[swapInterval] ? `${STRING_SWAP_INTERVALS[swapInterval](remainingSwaps)} left` : 'Position finished';
+      const secondaryLabel =
+        parseInt(remainingSwaps, 10) && STRING_SWAP_INTERVALS[swapInterval]
+          ? `${STRING_SWAP_INTERVALS[swapInterval](remainingSwaps)} left`
+          : 'Position finished';
 
       return {
         type: ContractType.POSITION,
         address: dcaPosition.id,
-        appId: MEAN_FINANCE_DEFINITION.id,
-        groupId: MEAN_FINANCE_DEFINITION.groups.dcaPosition.id,
+        appId,
+        groupId,
         network,
         tokens,
         balanceUSD,
@@ -79,7 +72,7 @@ export class OptimismMeanFinanceDcaPositionContractPositionFetcher implements Po
           toWithdraw,
           remainingLiquidity,
           remainingSwaps,
-          totalValueLocked: balanceUSD,
+          liquidity: balanceUSD,
         },
         displayProps: {
           label,

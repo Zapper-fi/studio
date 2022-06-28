@@ -20,7 +20,7 @@ const network = Network.OPTIMISM_MAINNET;
 
 @Register.BalanceFetcher(MEAN_FINANCE_DEFINITION.id, network)
 export class OptimismMeanFinanceBalanceFetcher implements BalanceFetcher {
-  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) { }
+  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
   async getUserPositions(address: string) {
     const graphHelper = this.appToolkit.helpers.theGraphHelper;
@@ -47,24 +47,21 @@ export class OptimismMeanFinanceBalanceFetcher implements BalanceFetcher {
       if (from) {
         from.network = network;
         tokens.push(drillBalance(from, remainingLiquidity));
-        images = [
-          ...images,
-          ...getImagesFromToken(from),
-        ];
+        images = [...images, ...getImagesFromToken(from)];
       }
       if (to) {
         to.network = network;
         tokens.push(drillBalance(to, toWithdraw));
-        images = [
-          ...images,
-          ...getImagesFromToken(to),
-        ];
+        images = [...images, ...getImagesFromToken(to)];
       }
 
       const balanceUSD = sumBy(tokens, t => t.balanceUSD);
 
       const label = `Swapping ${from?.symbol} to ${to?.symbol}`;
-      const secondaryLabel = parseInt(remainingSwaps, 10) && STRING_SWAP_INTERVALS[swapInterval] ? `${STRING_SWAP_INTERVALS[swapInterval](remainingSwaps)} left` : 'Position finished';
+      const secondaryLabel =
+        parseInt(remainingSwaps, 10) && STRING_SWAP_INTERVALS[swapInterval]
+          ? `${STRING_SWAP_INTERVALS[swapInterval](remainingSwaps)} left`
+          : 'Position finished';
 
       return {
         type: ContractType.POSITION,
