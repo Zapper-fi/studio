@@ -27,12 +27,36 @@ const ONE_DAY = FOUR_HOURS * 6;
 const ONE_WEEK = ONE_DAY * 7;
 
 export const STRING_SWAP_INTERVALS = {
-  [ONE_MINUTE]: (left: number) => `${toReadable(left, ONE_MINUTE)} (${left} swaps)`,
-  [FIVE_MINUTES]: (left: number) => `${toReadable(left, FIVE_MINUTES)} (${left} swaps)`,
-  [FIFTEEN_MINUTES]: (left: number) => `${toReadable(left, FIFTEEN_MINUTES)} (${left} swaps)`,
-  [THIRTY_MINUTES]: (left: number) => `${toReadable(left, THIRTY_MINUTES)} (${left} swaps)`,
-  [ONE_HOUR]: (left: number) => `${toReadable(left, ONE_HOUR)} (${left} swaps)`,
-  [FOUR_HOURS]: (left: number) => `${toReadable(left, FOUR_HOURS)} (${left} swaps)`,
-  [ONE_DAY]: (left: number) => `${toReadable(left, ONE_DAY)} (${left} swaps)`,
-  [ONE_WEEK]: (left: number) => `${toReadable(left, ONE_WEEK)} (${left} swaps)`,
+  [ONE_MINUTE]: {
+    plural: (left: number) => `${toReadable(left, ONE_MINUTE)} (${left} swaps)`,
+    adverb: 'every 1 minute',
+  },
+  [FIVE_MINUTES]: {
+    plural: (left: number) => `${toReadable(left, FIVE_MINUTES)} (${left} swaps)`,
+    adverb: 'every 5 minutes',
+  },
+  [FIFTEEN_MINUTES]: {
+    plural: (left: number) => `${toReadable(left, FIFTEEN_MINUTES)} (${left} swaps)`,
+    adverb: 'every 15 minutes',
+  },
+  [THIRTY_MINUTES]: {
+    plural: (left: number) => `${toReadable(left, THIRTY_MINUTES)} (${left} swaps)`,
+    adverb: 'every 30 minutes',
+  },
+  [ONE_HOUR]: {
+    plural: (left: number) => `${toReadable(left, ONE_HOUR)} (${left} swaps)`,
+    adverb: 'every hour',
+  },
+  [FOUR_HOURS]: {
+    plural: (left: number) => `${toReadable(left, FOUR_HOURS)} (${left} swaps)`,
+    adverb: 'every 4 hours',
+  },
+  [ONE_DAY]: {
+    plural: (left: number) => `${toReadable(left, ONE_DAY)} (${left} swaps)`,
+    adverb: 'every day',
+  },
+  [ONE_WEEK]: {
+    plural: (left: number) => `${toReadable(left, ONE_WEEK)} (${left} swaps)`,
+    adverb: 'every week',
+  },
 };
