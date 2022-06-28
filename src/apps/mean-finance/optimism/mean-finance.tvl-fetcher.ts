@@ -11,6 +11,8 @@ import { Network } from '~types/network.interface';
 import { getPositions } from '../helpers/graph';
 
 import { MEAN_FINANCE_DEFINITION } from '../mean-finance.definition';
+import { claimable } from '~position/position.utils';
+import { BaseToken } from '~position/token.interface';
 
 const appId = MEAN_FINANCE_DEFINITION.id;
 const network = Network.OPTIMISM_MAINNET;
@@ -39,7 +41,7 @@ export class OptimismMeanFinanceTvlFetcher implements TvlFetcher {
       }
       if (to) {
         to.network = network;
-        tokens.push(drillBalance(to, toWithdraw));
+        tokens.push(drillBalance(claimable(to), toWithdraw));
       }
 
       const balanceUSD = sumBy(tokens, t => t.balanceUSD);
