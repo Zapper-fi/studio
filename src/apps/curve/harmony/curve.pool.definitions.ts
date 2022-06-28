@@ -3,7 +3,7 @@ import { CurvePoolDefinition } from '../curve.types';
 export const CURVE_V1_POOL_DEFINITIONS: CurvePoolDefinition[] = [
   {
     queryKey: '3pool',
-    label: '3Pool Curve',
+    label: '3Pool',
     swapAddress: '0xc5cfada84e902ad92dd40194f0883ad49639b023',
     tokenAddress: '0xc5cfada84e902ad92dd40194f0883ad49639b023',
     gaugeAddress: '0xbf7e49483881c76487b0989cd7d9a8239b20ca41',
