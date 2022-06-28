@@ -3,7 +3,7 @@ import { Inject } from '@nestjs/common';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
-import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { getAppAssetImage } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
@@ -15,11 +15,11 @@ import { ArgoFinanceContractFactory } from '../contracts';
 import { ADDRESSES } from './consts';
 
 const appId = ARGO_FINANCE_DEFINITION.id;
-const groupId = ARGO_FINANCE_DEFINITION.groups.pledging.id;
+const groupId = ARGO_FINANCE_DEFINITION.groups.xArgo.id;
 const network = Network.CRONOS_MAINNET;
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
-export class CronosArgoFinancePledgingTokenFetcher implements PositionFetcher<AppTokenPosition> {
+export class CronosArgoFinanceXArgoTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(ArgoFinanceContractFactory) private readonly argoFinanceContractFactory: ArgoFinanceContractFactory,
@@ -56,7 +56,7 @@ export class CronosArgoFinancePledgingTokenFetcher implements PositionFetcher<Ap
       displayProps: {
         label: symbol,
         secondaryLabel: buildDollarDisplayItem(price),
-        images: getImagesFromToken(baseToken),
+        images: [getAppAssetImage(appId, address)],
         statsItems: [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }],
       },
     };
