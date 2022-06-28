@@ -10,7 +10,8 @@ import { BalanceFetcher } from '~balance/balance-fetcher.interface';
 import { ContractType } from '~position/contract.interface';
 import { WithMetaType } from '~position/display.interface';
 import { BaseTokenBalance, ContractPositionBalance } from '~position/position-balance.interface';
-import { MetaType } from '~position/position.interface';
+import { claimable } from '~position/position.utils';
+import { BaseToken } from '~position/token.interface';
 import { Network } from '~types/network.interface';
 
 import { getUserPositions } from '../helpers/graph';
@@ -57,10 +58,8 @@ export class PolygonMeanFinanceBalanceFetcher implements BalanceFetcher {
       }
       if (to) {
         to.network = network;
-        tokens.push({
-          ...drillBalance(to, toWithdraw),
-          metaType: MetaType.CLAIMABLE,
-        });
+        const claimableTo = claimable(to) as WithMetaType<BaseToken>;
+        tokens.push(drillBalance(claimableTo, toWithdraw));
         images = [
           ...images,
           ...getImagesFromToken(to),

@@ -7,11 +7,12 @@ import { drillBalance } from '~app-toolkit/helpers/balance/token-balance.helper'
 import { WithMetaType } from '~position/display.interface';
 import { BaseTokenBalance } from '~position/position-balance.interface';
 import { TvlFetcher } from '~stats/tvl/tvl-fetcher.interface';
-import { MetaType } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 import { getPositions } from '../helpers/graph';
 
 import { MEAN_FINANCE_DEFINITION } from '../mean-finance.definition';
+import { claimable } from '~position/position.utils';
+import { BaseToken } from '~position/token.interface';
 
 const appId = MEAN_FINANCE_DEFINITION.id;
 const network = Network.POLYGON_MAINNET;
@@ -40,10 +41,8 @@ export class PolygonMeanFinanceTvlFetcher implements TvlFetcher {
       }
       if (to) {
         to.network = network;
-        tokens.push({
-          ...drillBalance(to, toWithdraw),
-          metaType: MetaType.CLAIMABLE,
-        });
+        const claimableTo = claimable(to) as WithMetaType<BaseToken>;
+        tokens.push(drillBalance(claimableTo, toWithdraw));
       }
 
       const balanceUSD = sumBy(tokens, t => t.balanceUSD);

@@ -9,7 +9,8 @@ import { WithMetaType } from '~position/display.interface';
 import { BaseTokenBalance } from '~position/position-balance.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
-import { MetaType } from '~position/position.interface';
+import { claimable } from '~position/position.utils';
+import { BaseToken } from '~position/token.interface';
 import { Network } from '~types/network.interface';
 
 import { MeanFinanceContractFactory } from '../contracts';
@@ -57,10 +58,8 @@ export class PolygonMeanFinanceDcaPositionContractPositionFetcher implements Pos
       }
       if (to) {
         to.network = network;
-        tokens.push({
-          ...drillBalance(to, toWithdraw),
-          metaType: MetaType.CLAIMABLE,
-        });
+        const claimableTo = claimable(to) as WithMetaType<BaseToken>;
+        tokens.push(drillBalance(claimableTo, toWithdraw));
         images = [
           ...images,
           ...getImagesFromToken(to),
