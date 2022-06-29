@@ -16,6 +16,12 @@ export const ARGO_FINANCE_DEFINITION = appDefinition({
       type: GroupType.POSITION,
       label: 'Pledging',
     },
+
+    xArgo: {
+      id: 'x-argo',
+      type: GroupType.TOKEN,
+      label: 'x-argo',
+    },
   },
 
   tags: [AppTag.LIQUID_STAKING],

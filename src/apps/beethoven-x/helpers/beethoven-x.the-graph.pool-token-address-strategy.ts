@@ -3,7 +3,6 @@ import { gql } from 'graphql-request';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Cache } from '~cache/cache.decorator';
-import { Network } from '~types/network.interface';
 
 type PoolsResponse = {
   pools: {
@@ -35,7 +34,10 @@ export class BeethovenXTheGraphPoolTokenDataStrategy {
 
   @Cache({
     instance: 'business',
-    key: (network: Network) => `studio-beethoven-x-events-pool-token-addresses:${network}:beethoven-x`,
+    key: (subgraphUrl: string) => {
+      const [namespace, name] = subgraphUrl.split('/').slice(-2);
+      return `studio:beethoven-x2-fork:pool-token-addresses:${namespace}:${name}`;
+    },
     ttl: 5 * 60,
   })
   async getPoolAddresses(subgraphUrl: string, minLiquidity: number, poolsQuery: string) {

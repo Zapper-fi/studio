@@ -56,9 +56,7 @@ export class PoolTogetherV4PrizePoolTokenHelper {
         const supply = Number(supplyRaw) / 10 ** decimals;
 
         const underlyingToken = baseTokens.find(t => t?.address === underlyingTokenAddress);
-        if (!underlyingToken) {
-          return null;
-        }
+        if (!underlyingToken) return null;
 
         const pricePerShare = 1; // Minted 1:1
         const price = underlyingToken.price * pricePerShare;

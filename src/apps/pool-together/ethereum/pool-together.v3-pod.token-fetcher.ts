@@ -12,7 +12,7 @@ const appId = POOL_TOGETHER_DEFINITION.id;
 const groupId = POOL_TOGETHER_DEFINITION.groups.v3Pod.id;
 const network = Network.ETHEREUM_MAINNET;
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
 export class EthereumPoolTogetherPodTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(PoolTogetherV3PodTokenHelper)

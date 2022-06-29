@@ -20,13 +20,13 @@ export class ArbitrumUmamiBalanceFetcher implements BalanceFetcher {
   ) {}
 
   async getMarinatedBalance(address: string) {
-    const wETH_ADDRESS = '0x82af49447d8a07e3bd95bd0d56f35241523fbab1'.toLowerCase();
-    const mUMAMI_ADDRESS = '0x2AdAbD6E8Ce3e82f52d9998a7f64a90d294A92A4'.toLowerCase();
+    const wETH_ADDRESS = '0x82af49447d8a07e3bd95bd0d56f35241523fbab1';
+    const mUMAMI_ADDRESS = '0x2adabd6e8ce3e82f52d9998a7f64a90d294a92a4';
     return this.appToolkit.helpers.contractPositionBalanceHelper.getContractPositionBalances({
       address,
       appId: UMAMI_DEFINITION.id,
       groupId: UMAMI_DEFINITION.groups.marinate.id,
-      network: Network.ARBITRUM_MAINNET,
+      network,
       resolveBalances: async ({ address, contractPosition, multicall }) => {
         const stakedToken = contractPosition.tokens.find(item => item.address === mUMAMI_ADDRESS)!;
         const rewardToken = contractPosition.tokens.find(item => item.address === wETH_ADDRESS)!;
@@ -48,7 +48,7 @@ export class ArbitrumUmamiBalanceFetcher implements BalanceFetcher {
       address,
       appId: UMAMI_DEFINITION.id,
       groupId: UMAMI_DEFINITION.groups.compound.id,
-      network: Network.ARBITRUM_MAINNET,
+      network,
     });
   }
 

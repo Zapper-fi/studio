@@ -34,7 +34,7 @@ export type UmamiApiDatas = {
   mUmamiCompounder: UmamiCompounderApiObject;
 };
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
 export class ArbitrumUmamiCompoundTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
@@ -48,18 +48,14 @@ export class ArbitrumUmamiCompoundTokenFetcher implements PositionFetcher<AppTok
   async getUmamiInformations() {
     const data = await axios.get<UmamiApiDatas>('https://horseysauce.xyz/').then(v => v.data);
 
-    const { marinate, mUmamiCompounder } = data;
+    const { marinate } = data;
     const { apy } = marinate;
-    const { tvl } = mUmamiCompounder;
-    return {
-      apy,
-      tvl,
-    };
+    return apy;
   }
 
   async getPositions() {
-    const mUMAMI_ADDRESS = '0x2AdAbD6E8Ce3e82f52d9998a7f64a90d294A92A4'.toLowerCase();
-    const cmUMAMI_ADDRESS = '0x1922C36F3bc762Ca300b4a46bB2102F84B1684aB'.toLowerCase();
+    const mUMAMI_ADDRESS = '0x2adabd6e8ce3e82f52d9998a7f64a90d294a92a4';
+    const cmUMAMI_ADDRESS = '0x1922c36f3bc762ca300b4a46bb2102f84b1684ab';
     const multicall = this.appToolkit.getMulticall(network);
 
     const underlyingTokenContract = this.umamiContractFactory.umamiMarinate({
@@ -72,26 +68,28 @@ export class ArbitrumUmamiCompoundTokenFetcher implements PositionFetcher<AppTok
     });
 
     const appTokens = await this.appToolkit.getAppTokenPositions({
-      appId: 'umami',
-      groupIds: ['marinate'],
+      appId: UMAMI_DEFINITION.id,
+      groupIds: [UMAMI_DEFINITION.groups.marinate.id],
       network,
     });
+
     const [symbol, decimals, supplyRaw, balanceRaw] = await Promise.all([
       multicall.wrap(contract).symbol(),
       multicall.wrap(contract).decimals(),
       multicall.wrap(contract).totalSupply(),
       multicall.wrap(underlyingTokenContract).balanceOf(cmUMAMI_ADDRESS),
     ]);
-    const underlyingToken = appTokens.find(v => v.address === mUMAMI_ADDRESS);
 
+    const underlyingToken = appTokens.find(v => v.address === mUMAMI_ADDRESS);
     if (!underlyingToken) return [];
 
-    const { apy, tvl } = await this.getUmamiInformations();
+    const apy = await this.getUmamiInformations();
 
     const supply = Number(supplyRaw) / 10 ** decimals;
     const reserve = Number(balanceRaw) / 10 ** decimals;
     const pricePerShare = reserve / supply;
     const price = pricePerShare * underlyingToken.price;
+    const liquidity = supply * price;
     const tokens = [underlyingToken];
     const label = `Compounding Marinating UMAMI`;
     const images = getImagesFromToken(underlyingToken);
@@ -100,7 +98,7 @@ export class ArbitrumUmamiCompoundTokenFetcher implements PositionFetcher<AppTok
     const statsItems = [
       {
         label: 'Liquidity',
-        value: buildDollarDisplayItem(tvl),
+        value: buildDollarDisplayItem(liquidity),
       },
       {
         label: 'APY',
@@ -120,7 +118,9 @@ export class ArbitrumUmamiCompoundTokenFetcher implements PositionFetcher<AppTok
       pricePerShare,
       price,
       tokens,
-      dataProps: {},
+      dataProps: {
+        liquidity,
+      },
       displayProps: {
         label,
         images,
