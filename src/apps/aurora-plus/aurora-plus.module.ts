@@ -15,4 +15,4 @@ import { AuroraPlusContractFactory } from './contracts';
     AuroraPlusContractFactory,
   ],
 })
-export class AuroraPlusAppModule extends AbstractApp() { }
+export class AuroraPlusAppModule extends AbstractApp() {}

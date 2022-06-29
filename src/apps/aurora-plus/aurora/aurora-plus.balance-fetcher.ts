@@ -17,12 +17,11 @@ const network = Network.AURORA_MAINNET;
 export class AuroraAuroraPlusBalanceFetcher implements BalanceFetcher {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(AuroraPlusContractFactory) private readonly auroraPlusContractFactory: AuroraPlusContractFactory) { }
+    @Inject(AuroraPlusContractFactory) private readonly auroraPlusContractFactory: AuroraPlusContractFactory,
+  ) {}
 
   async getBalances(address: string) {
     const tokenBalances = await getStakingBalance(address, this.appToolkit, this.auroraPlusContractFactory);
-    return presentBalanceFetcherResponse([
-      { label: 'Staked Aurora', assets: tokenBalances },
-    ]);
+    return presentBalanceFetcherResponse([{ label: 'Staked Aurora', assets: tokenBalances }]);
   }
 }
