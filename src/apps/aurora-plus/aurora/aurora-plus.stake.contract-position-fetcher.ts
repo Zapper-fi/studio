@@ -6,12 +6,13 @@ import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.pres
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
 import { ContractType } from '~position/contract.interface';
+import { BaseToken } from '~position/token.interface';
 import { claimable, supplied } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 
 import { AURORA_PLUS_DEFINITION } from '../aurora-plus.definition';
 import { AuroraPlusContractFactory } from '../contracts';
-import { range } from 'lodash';
+import { compact, range } from 'lodash';
 
 const appId = AURORA_PLUS_DEFINITION.id;
 const groupId = AURORA_PLUS_DEFINITION.groups.stake.id;
@@ -32,9 +33,9 @@ export class AuroraAuroraPlusStakeContractPositionFetcher implements PositionFet
 
   async getPositions() {
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
-    let tokens:any = [];
+    let tokens:BaseToken[] = [];
     const aurora = baseTokens.find(t => t.address === AURORA_ADDRESS)!;
-    if (!aurora) tokens.push(supplied(aurora));
+    if (!!aurora) tokens.push(supplied(aurora));
 
     const multicall = this.appToolkit.getMulticall(network);
     const staking = this.auroraPlusContractFactory.staking({ address: AURORA_STAKING_ADDRESS, network });
@@ -42,8 +43,8 @@ export class AuroraAuroraPlusStakeContractPositionFetcher implements PositionFet
     const streamCount = await staking.getStreamsCount();
     const streamIDs = range(0, streamCount.toNumber());
     const rewardTokenAddresses = await Promise.all(streamIDs.map((streamID:number) => mcs.getStream(streamID).then(r => r.rewardToken.toLowerCase())));
-    const rewardTokens = rewardTokenAddresses.map((addr:string) => baseTokens.find(t => t.address === addr));
-    rewardTokens.forEach(token => { if(!!token) tokens.push(claimable(token))});
+    const rewardTokens = rewardTokenAddresses.map(addr => baseTokens.find(t => t.address === addr));
+    tokens.push(...compact(rewardTokens).map(v => claimable(v)));
 
     const position: ContractPosition = {
       type: ContractType.POSITION,
@@ -54,7 +55,7 @@ export class AuroraAuroraPlusStakeContractPositionFetcher implements PositionFet
       tokens: tokens,
       dataProps: {},
       displayProps: {
-        label: `Staked Aurora`,
+        label: `Staked AURORA`,
         images: getImagesFromToken(aurora),
       },
     };

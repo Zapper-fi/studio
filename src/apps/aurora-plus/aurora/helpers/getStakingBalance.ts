@@ -5,6 +5,7 @@ import { drillBalance } from '~app-toolkit';
 import { IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { MetaType } from '~position/position.interface';
 import { Network } from '~types/network.interface';
+import { BaseToken } from '~position/token.interface';
 
 import { AuroraPlusContractFactory } from '../../contracts';
 import AURORA_DEFINITION from '../../aurora-plus.definition';
@@ -40,14 +41,13 @@ export default async function getStakingBalance(
 
             const userTotalDeposit = (await mcs.getUserTotalDeposit(address)).toString();
 
-            let tokens:any = [];
+            let tokens:BaseToken[] = [];
             if(!!aurora) tokens.push(drillBalance(aurora, userTotalDeposit));
             streamIDs.forEach((streamID:number) => {
               if(!rewardTokens[streamID]) return;
               tokens.push(drillBalance(rewardTokens[streamID]!, rewardTokenValues[streamID].toString()));
             });
 
-            console.log(tokens);
             return tokens;
         },
     });
