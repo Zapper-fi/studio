@@ -44,7 +44,7 @@ export class EthereumSolacePoliciesContractPositionFetcher implements PositionFe
     const tokens = [supplied(dai)];
 
     let liquidity = 0;
-    for(var i = 0; i < PREMIUM_POOL_TOKENS.length; ++i) {
+    for (let i = 0; i < PREMIUM_POOL_TOKENS.length; ++i) {
       const tokenAddr = PREMIUM_POOL_TOKENS[i];
       const tokenContract = this.solaceContractFactory.erc20({ address: tokenAddr, network });
       const [balanceOfRaw, decimals] = await Promise.all([
@@ -53,7 +53,7 @@ export class EthereumSolacePoliciesContractPositionFetcher implements PositionFe
       ]);
       const balanceOf = Number(balanceOfRaw) / 10 ** decimals;
       const tokenZapper = baseTokens.find(t => t.address === tokenAddr)!;
-      if(!!tokenZapper) liquidity += balanceOf * tokenZapper.price;
+      if (tokenZapper) liquidity += balanceOf * tokenZapper.price;
     }
 
     const position: ContractPosition = {

@@ -28,7 +28,7 @@ export class SolacePolicyBalanceHelper {
         // does the user have a policy?
         const spi = this.solaceContractFactory.solaceCoverProductV3({ address: SOLACE_COVER_PRODUCT_ADDRESS, network });
         const policyID = await spi.policyOf(address);
-        if(policyID.eq(0)) return [];
+        if (policyID.eq(0)) return [];
         // Resolve the staked token and reward token from the contract position object
         const stakedToken = contractPosition.tokens.find(t => t.metaType === MetaType.SUPPLIED)!;
         const scp = this.solaceContractFactory.erc20({ address: SOLACE_COVER_POINTS_ADDRESS, network });
