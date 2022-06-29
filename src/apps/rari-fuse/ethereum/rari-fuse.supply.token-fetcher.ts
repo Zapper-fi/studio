@@ -44,6 +44,7 @@ export class EthereumRariFuseSupplyTokenFetcher implements PositionFetcher<AppTo
       { appId: OLYMPUS_DEFINITION.id, groupIds: [OLYMPUS_DEFINITION.groups.gOhm.id], network },
       { appId: 'mstable', groupIds: ['imusd'], network },
       { appId: 'sushiswap', groupIds: ['x-sushi'], network },
+      { appId: 'harvest', groupIds: ['i-farm'], network },
     );
 
     const markets = await Promise.all(
