@@ -3,9 +3,9 @@ import { appDefinition, AppDefinition } from '~app/app.definition';
 import { GroupType, AppAction, AppTag } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
-export const POOL_TOGETHER_DEFINITION = appDefinition({
-  id: 'pool-together',
-  name: 'PoolTogether',
+export const POOL_TOGETHER_V4_DEFINITION = appDefinition({
+  id: 'pool-together-v4',
+  name: 'PoolTogetherV4',
   description: `PoolTogether is a crypto-powered savings protocol based on Premium Bonds. Save money and have a chance to win every week.`,
   url: 'https://pooltogether.com/',
   links: {
@@ -16,15 +16,14 @@ export const POOL_TOGETHER_DEFINITION = appDefinition({
     medium: 'https://medium.com/pooltogether',
   },
   groups: {
-    v3: { id: 'v3', type: GroupType.TOKEN, label: 'Prize Pools', groupLabel: 'Deposit', isHiddenFromExplore: true },
+    ticket: { id: 'ticket', type: GroupType.TOKEN, label: 'PoolTogether', groupLabel: 'Deposit' },
     claimable: { id: 'claimable', type: GroupType.TOKEN, label: 'Rewards', isHiddenFromExplore: true },
-    v3Pod: { id: 'v3-pod', type: GroupType.POSITION, label: 'Prize Pods', isHiddenFromExplore: true },
   },
   tags: [AppTag.LOTTERY],
   supportedNetworks: {
-    [Network.CELO_MAINNET]: [AppAction.VIEW, AppAction.TRANSACT],
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW, AppAction.TRANSACT],
     [Network.POLYGON_MAINNET]: [AppAction.VIEW, AppAction.TRANSACT],
+    [Network.AVALANCHE_MAINNET]: [AppAction.VIEW],
   },
   primaryColor: '#843ff3',
   token: {
@@ -33,11 +32,11 @@ export const POOL_TOGETHER_DEFINITION = appDefinition({
   },
 });
 
-@Register.AppDefinition(POOL_TOGETHER_DEFINITION.id)
-export class PoolTogetherAppDefinition extends AppDefinition {
+@Register.AppDefinition(POOL_TOGETHER_V4_DEFINITION.id)
+export class PoolTogetherV4AppDefinition extends AppDefinition {
   constructor() {
-    super(POOL_TOGETHER_DEFINITION);
+    super(POOL_TOGETHER_V4_DEFINITION);
   }
 }
 
-export default POOL_TOGETHER_DEFINITION;
+export default POOL_TOGETHER_V4_DEFINITION;

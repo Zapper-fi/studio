@@ -1,5 +1,5 @@
-export { POOL_TOGETHER_DEFINITION, PoolTogetherAppDefinition } from './pool-together.definition';
-export { PoolTogetherAppModule } from './pool-together.module';
+export { POOL_TOGETHER_V4_DEFINITION, PoolTogetherV4AppDefinition } from './pool-together-v4.definition';
+export { PoolTogetherV4AppModule } from './pool-together-v4.module';
 export { PoolTogetherContractFactory } from './contracts';
 
 /* Contracts */

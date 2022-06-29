@@ -10,19 +10,6 @@ export type V4PrizePool = {
   underlyingTokenAddress: string;
 };
 
-export type V3PrizePool = {
-  prizePoolAddress: string;
-  prizeStrategyAddress: string;
-  ticketAddress: string;
-  sponsorshipAddress: string;
-  underlyingTokenAddress: string;
-  tokenFaucets: {
-    tokenFaucetAddress: string;
-    assetAddress: string;
-    measureAddress: string;
-  }[];
-};
-
 type V4ApiPrizePool = {
   metadata: {
     address: string;
@@ -36,25 +23,8 @@ type V4ApiPrizePool = {
   yieldSource: string;
 };
 
-type V3ApiPrizePool = {
-  metadata: {
-    address: string;
-    tokenFaucets: string[];
-  };
-  prizePool: string;
-  token: string;
-  ticket: string;
-  sponsorship: string;
-  prizeStrategy: string;
-  tokenFaucets: {
-    tokenFaucet: string;
-    measure: string;
-    asset: string;
-  }[];
-};
-
 @Injectable()
-export class PoolTogetherApiPrizePoolRegistry {
+export class PoolTogetherV4ApiPrizePoolRegistry {
   ///////////////////// V4 Prize Pools /////////////////////
   async getV4PrizePools(network: Network): Promise<V4PrizePool[]> {
     const prizePoolUrl = `https://pooltogether-api.com/v4/addresses/prize-pools/${NETWORK_IDS[network]}`;

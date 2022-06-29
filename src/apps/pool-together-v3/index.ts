@@ -1,6 +1,6 @@
-export { POOL_TOGETHER_DEFINITION, PoolTogetherAppDefinition } from './pool-together.definition';
-export { PoolTogetherAppModule } from './pool-together.module';
-export { PoolTogetherContractFactory } from './contracts';
+export { POOL_TOGETHER_V3_DEFINITION, PoolTogetherV3AppDefinition } from './pool-together-v3.definition';
+export { PoolTogetherV3AppModule } from './pool-together-v3.module';
+export { PoolTogetherV3ContractFactory } from './contracts';
 
 /* Contracts */
 export type { PoolTogetherMerkleDistributor } from './contracts';

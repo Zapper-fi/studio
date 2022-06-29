@@ -12,10 +12,10 @@ import { AppTokenPosition } from '~position/position.interface';
 import { AppGroupsDefinition } from '~position/position.service';
 import { Network } from '~types/network.interface';
 
-import { PoolTogetherContractFactory } from '../contracts';
-import { POOL_TOGETHER_DEFINITION } from '../pool-together.definition';
+import { PoolTogetherV3ContractFactory } from '../contracts';
+import { POOL_TOGETHER_V3_DEFINITION } from '../pool-together-v3.definition';
 
-import { V3PrizePool } from './pool-together.api.prize-pool-registry';
+import { V3PrizePool } from './pool-together-v3.api.prize-pool-registry';
 
 export type PoolTogetherV3TicketTokenDataProps = {
   apy: number;
@@ -32,7 +32,7 @@ type GetTicketTokensParams = {
 export class PoolTogetherV3PrizePoolTokenHelper {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(PoolTogetherContractFactory) private readonly contractFactory: PoolTogetherContractFactory,
+    @Inject(PoolTogetherV3ContractFactory) private readonly contractFactory: PoolTogetherV3ContractFactory,
   ) {}
 
   async getTokens({ network, dependencies = [], prizePools }: GetTicketTokensParams) {
@@ -126,8 +126,8 @@ export class PoolTogetherV3PrizePoolTokenHelper {
         const ticket: AppTokenPosition<PoolTogetherV3TicketTokenDataProps> = {
           type: ContractType.APP_TOKEN,
           address: ticketAddress,
-          appId: POOL_TOGETHER_DEFINITION.id,
-          groupId: POOL_TOGETHER_DEFINITION.groups.v3.id,
+          appId: POOL_TOGETHER_V3_DEFINITION.id,
+          groupId: POOL_TOGETHER_V3_DEFINITION.groups.ticket.id,
           network,
           symbol: ticketSymbol,
           decimals: ticketDecimals,
@@ -162,8 +162,8 @@ export class PoolTogetherV3PrizePoolTokenHelper {
         const sponsorship: AppTokenPosition<PoolTogetherV3TicketTokenDataProps> = {
           type: ContractType.APP_TOKEN,
           address: sponsorshipAddress,
-          appId: POOL_TOGETHER_DEFINITION.id,
-          groupId: POOL_TOGETHER_DEFINITION.groups.v3.id,
+          appId: POOL_TOGETHER_V3_DEFINITION.id,
+          groupId: POOL_TOGETHER_V3_DEFINITION.groups.ticket.id,
           network,
           symbol: sponsorshipSymbol,
           decimals: ticketDecimals,

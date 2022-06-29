@@ -4,17 +4,17 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Cache } from '~cache/cache.decorator';
 import { Network } from '~types/network.interface';
 
-import { PoolTogetherContractFactory } from '../contracts';
+import { PoolTogetherV3ContractFactory } from '../contracts';
 
 type GetAddressesParams = {
   network: Network;
   poolAddress: string;
 };
 
-export class PoolTogetherFaucetAddressHelper {
+export class PoolTogetherV3FaucetAddressHelper {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(PoolTogetherContractFactory) private readonly contractFactory: PoolTogetherContractFactory,
+    @Inject(PoolTogetherV3ContractFactory) private readonly contractFactory: PoolTogetherV3ContractFactory,
   ) {}
 
   @Cache({

@@ -9,10 +9,10 @@ import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
 import { PoolTogetherContractFactory } from '../contracts';
-import { POOL_TOGETHER_DEFINITION } from '../pool-together.definition';
+import { POOL_TOGETHER_V4_DEFINITION } from '../pool-together-v4.definition';
 
-const appId = POOL_TOGETHER_DEFINITION.id;
-const groupId = POOL_TOGETHER_DEFINITION.groups.v4.id;
+const appId = POOL_TOGETHER_V4_DEFINITION.id;
+const groupId = POOL_TOGETHER_V4_DEFINITION.groups.ticket.id;
 
 type GetTokenMarketDataParams = {
   network: Network;

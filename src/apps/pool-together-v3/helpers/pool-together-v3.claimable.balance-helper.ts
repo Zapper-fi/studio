@@ -9,8 +9,8 @@ import { ContractType } from '~position/contract.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { Network } from '~types/network.interface';
 
-import { PoolTogetherContractFactory } from '../contracts';
-import { POOL_TOGETHER_DEFINITION } from '../pool-together.definition';
+import { PoolTogetherV3ContractFactory } from '../contracts';
+import { POOL_TOGETHER_V3_DEFINITION } from '../pool-together-v3.definition';
 
 import { PoolTogetherV3TicketTokenDataProps } from './pool-together-v3.prize-pool.token-helper';
 
@@ -19,10 +19,10 @@ type GetClaimableTokenBalanceParams = {
   network: Network;
 };
 
-export class PoolTogetherClaimableTokenBalancesHelper {
+export class PoolTogetherV3ClaimableTokenBalancesHelper {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(PoolTogetherContractFactory) private readonly contractFactory: PoolTogetherContractFactory,
+    @Inject(PoolTogetherV3ContractFactory) private readonly contractFactory: PoolTogetherV3ContractFactory,
   ) {}
 
   async getBalances({ address, network }: GetClaimableTokenBalanceParams) {
@@ -30,8 +30,8 @@ export class PoolTogetherClaimableTokenBalancesHelper {
     const prices = await this.appToolkit.getBaseTokenPrices(network);
 
     const poolTogetherTokens = await this.appToolkit.getAppTokenPositions<PoolTogetherV3TicketTokenDataProps>({
-      appId: POOL_TOGETHER_DEFINITION.id,
-      groupIds: [POOL_TOGETHER_DEFINITION.groups.v3.id],
+      appId: POOL_TOGETHER_V3_DEFINITION.id,
+      groupIds: [POOL_TOGETHER_V3_DEFINITION.groups.ticket.id],
       network: network,
     });
 
@@ -67,8 +67,8 @@ export class PoolTogetherClaimableTokenBalancesHelper {
         const positionBalance: ContractPositionBalance = {
           type: ContractType.POSITION,
           address: faucetAddress,
-          appId: POOL_TOGETHER_DEFINITION.id,
-          groupId: POOL_TOGETHER_DEFINITION.groups.claimable.id,
+          appId: POOL_TOGETHER_V3_DEFINITION.id,
+          groupId: POOL_TOGETHER_V3_DEFINITION.groups.claimable.id,
           network,
           tokens,
           balanceUSD,

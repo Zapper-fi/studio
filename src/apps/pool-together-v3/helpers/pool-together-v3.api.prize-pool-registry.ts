@@ -3,13 +3,6 @@ import Axios from 'axios';
 
 import { Network, NETWORK_IDS } from '~types/network.interface';
 
-export type V4PrizePool = {
-  prizePoolAddress: string;
-  prizeStrategyAddress: string;
-  ticketAddress: string;
-  underlyingTokenAddress: string;
-};
-
 export type V3PrizePool = {
   prizePoolAddress: string;
   prizeStrategyAddress: string;
@@ -21,19 +14,6 @@ export type V3PrizePool = {
     assetAddress: string;
     measureAddress: string;
   }[];
-};
-
-type V4ApiPrizePool = {
-  metadata: {
-    address: string;
-    type: string;
-    version: string;
-  };
-  prizePool: string;
-  token: string;
-  ticket: string;
-  prizeStrategy: string;
-  yieldSource: string;
 };
 
 type V3ApiPrizePool = {
@@ -54,7 +34,7 @@ type V3ApiPrizePool = {
 };
 
 @Injectable()
-export class PoolTogetherApiPrizePoolRegistry {
+export class PoolTogetherV3ApiPrizePoolRegistry {
   ///////////////////// V3 Prize Pools /////////////////////
   async getV3PrizePools(network: Network): Promise<V3PrizePool[]> {
     const prizePoolUrl = `https://pooltogether-api.com/v3/addresses/prize-pools/${NETWORK_IDS[network]}`;

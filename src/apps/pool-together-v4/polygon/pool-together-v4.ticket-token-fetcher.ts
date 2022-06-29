@@ -5,12 +5,12 @@ import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
+import { PoolTogetherV4ApiPrizePoolRegistry } from '../helpers/pool-together-v4.api.prize-pool-registry';
 import { PoolTogetherV4PrizePoolTokenHelper } from '../helpers/pool-together-v4.prize-pool.token-helper';
-import { PoolTogetherApiPrizePoolRegistry } from '../helpers/pool-together.api.prize-pool-registry';
-import { POOL_TOGETHER_DEFINITION } from '../pool-together.definition';
+import { POOL_TOGETHER_V4_DEFINITION } from '../pool-together-v4.definition';
 
-const appId = POOL_TOGETHER_DEFINITION.id;
-const groupId = POOL_TOGETHER_DEFINITION.groups.v4.id;
+const appId = POOL_TOGETHER_V4_DEFINITION.id;
+const groupId = POOL_TOGETHER_V4_DEFINITION.groups.ticket.id;
 const network = Network.POLYGON_MAINNET;
 
 @Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
@@ -18,7 +18,7 @@ export class PolygonPoolTogetherV4TicketTokenFetcher implements PositionFetcher<
   constructor(
     @Inject(PoolTogetherV4PrizePoolTokenHelper)
     private readonly poolTogetherV4PrizePoolTokenHelper: PoolTogetherV4PrizePoolTokenHelper,
-    @Inject(PoolTogetherApiPrizePoolRegistry) private readonly prizePoolRegistry: PoolTogetherApiPrizePoolRegistry,
+    @Inject(PoolTogetherV4ApiPrizePoolRegistry) private readonly prizePoolRegistry: PoolTogetherV4ApiPrizePoolRegistry,
   ) {}
 
   async getPositions() {

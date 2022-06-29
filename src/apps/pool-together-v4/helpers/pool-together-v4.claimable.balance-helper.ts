@@ -5,12 +5,13 @@ import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
+import { POOL_TOGETHER_V3_DEFINITION } from '~apps/pool-together-v3';
 import { ContractType } from '~position/contract.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { Network } from '~types/network.interface';
 
 import { PoolTogetherContractFactory } from '../contracts';
-import { POOL_TOGETHER_DEFINITION } from '../pool-together.definition';
+import POOL_TOGETHER_V4_DEFINITION from '../pool-together-v4.definition';
 
 type GetClaimableTokenBalanceParams = {
   address: string;
@@ -23,7 +24,7 @@ type PoolTogetherV3TicketTokenDataProps = {
   faucetAddresses: string[];
 };
 
-export class PoolTogetherClaimableTokenBalancesHelper {
+export class PoolTogetherV4ClaimableTokenBalancesHelper {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(PoolTogetherContractFactory) private readonly contractFactory: PoolTogetherContractFactory,
@@ -34,8 +35,8 @@ export class PoolTogetherClaimableTokenBalancesHelper {
     const prices = await this.appToolkit.getBaseTokenPrices(network);
 
     const poolTogetherTokens = await this.appToolkit.getAppTokenPositions<PoolTogetherV3TicketTokenDataProps>({
-      appId: POOL_TOGETHER_DEFINITION.id,
-      groupIds: [POOL_TOGETHER_DEFINITION.groups.v3.id],
+      appId: POOL_TOGETHER_V3_DEFINITION.id,
+      groupIds: [POOL_TOGETHER_V3_DEFINITION.groups.ticket.id],
       network: network,
     });
 
@@ -71,8 +72,8 @@ export class PoolTogetherClaimableTokenBalancesHelper {
         const positionBalance: ContractPositionBalance = {
           type: ContractType.POSITION,
           address: faucetAddress,
-          appId: POOL_TOGETHER_DEFINITION.id,
-          groupId: POOL_TOGETHER_DEFINITION.groups.claimable.id,
+          appId: POOL_TOGETHER_V4_DEFINITION.id,
+          groupId: POOL_TOGETHER_V4_DEFINITION.groups.claimable.id,
           network,
           tokens,
           balanceUSD,

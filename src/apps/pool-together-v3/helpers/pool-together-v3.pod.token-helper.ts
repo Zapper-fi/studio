@@ -8,8 +8,8 @@ import { ContractType } from '~position/contract.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
-import { PoolTogetherContractFactory } from '../contracts';
-import { POOL_TOGETHER_DEFINITION } from '../pool-together.definition';
+import { PoolTogetherV3ContractFactory } from '../contracts';
+import { POOL_TOGETHER_V3_DEFINITION } from '../pool-together-v3.definition';
 
 type GetPodTokensParams = {
   network: Network;
@@ -19,7 +19,7 @@ type GetPodTokensParams = {
 export class PoolTogetherV3PodTokenHelper {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(PoolTogetherContractFactory) private readonly contractFactory: PoolTogetherContractFactory,
+    @Inject(PoolTogetherV3ContractFactory) private readonly contractFactory: PoolTogetherV3ContractFactory,
   ) {}
 
   async getTokens({ network, registryAddress }: GetPodTokensParams) {
@@ -63,8 +63,8 @@ export class PoolTogetherV3PodTokenHelper {
         const token: AppTokenPosition = {
           type: ContractType.APP_TOKEN,
           address: podAddress,
-          appId: POOL_TOGETHER_DEFINITION.id,
-          groupId: POOL_TOGETHER_DEFINITION.groups.v3.id,
+          appId: POOL_TOGETHER_V3_DEFINITION.id,
+          groupId: POOL_TOGETHER_V3_DEFINITION.groups.ticket.id,
           network,
           symbol,
           decimals,

@@ -11,7 +11,7 @@ import { ContractPositionBalance } from '~position/position-balance.interface';
 import { Network } from '~types/network.interface';
 
 import { PoolTogetherContractFactory } from '../contracts';
-import { POOL_TOGETHER_DEFINITION } from '../pool-together.definition';
+import { POOL_TOGETHER_V4_DEFINITION } from '../pool-together-v4.definition';
 
 type GetAirdropTokenBalanceParams = {
   address: string;
@@ -20,7 +20,7 @@ type GetAirdropTokenBalanceParams = {
   airDropToken?: string;
 };
 
-export class PoolTogetherAirdropTokenBalancesHelper {
+export class PoolTogetherV4AirdropTokenBalancesHelper {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(PoolTogetherContractFactory) private readonly contractFactory: PoolTogetherContractFactory,
@@ -58,8 +58,8 @@ export class PoolTogetherAirdropTokenBalancesHelper {
     const positionBalance: ContractPositionBalance = {
       type: ContractType.POSITION,
       address: merkleAddress,
-      appId: POOL_TOGETHER_DEFINITION.id,
-      groupId: POOL_TOGETHER_DEFINITION.groups.claimable.id,
+      appId: POOL_TOGETHER_V4_DEFINITION.id,
+      groupId: POOL_TOGETHER_V4_DEFINITION.groups.claimable.id,
       network,
       tokens,
       balanceUSD,
