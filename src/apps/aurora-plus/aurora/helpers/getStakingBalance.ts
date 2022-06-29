@@ -2,7 +2,7 @@ import { range } from 'lodash';
 
 import { drillBalance } from '~app-toolkit';
 import { IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { BaseToken } from '~position/token.interface';
+import { BaseTokenBalance } from '~position/position-balance.interface';
 import { Network } from '~types/network.interface';
 
 import AURORA_DEFINITION from '../../aurora-plus.definition';
@@ -41,7 +41,7 @@ export default async function getStakingBalance(
 
       const userTotalDeposit = (await mcs.getUserTotalDeposit(address)).toString();
 
-      const tokens: BaseToken[] = [];
+      const tokens: BaseTokenBalance[] = [];
       if (aurora) tokens.push(drillBalance(aurora, userTotalDeposit));
       streamIDs.forEach((streamID: number) => {
         if (!rewardTokens[streamID]) return;
