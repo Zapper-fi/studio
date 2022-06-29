@@ -4,6 +4,20 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.99.0](https://github.com/Zapper-fi/studio/compare/v0.98.0...v0.99.0) (2022-06-29)
+
+
+### Features
+
+* **coslend:** add prensentation config ([#798](https://github.com/Zapper-fi/studio/issues/798)) ([55574f7](https://github.com/Zapper-fi/studio/commit/55574f77aba67186aecf6aade588bf934d6078fa))
+* **euler:** add presentation config ([#800](https://github.com/Zapper-fi/studio/issues/800)) ([321c2f1](https://github.com/Zapper-fi/studio/commit/321c2f100293c4390297f29825cb99b8993623ad))
+* **sturdy:** add presentation config ([#799](https://github.com/Zapper-fi/studio/issues/799)) ([fbe966f](https://github.com/Zapper-fi/studio/commit/fbe966f2cbd7a40fe100bf5ff7adb633651b3c84))
+
+
+### Bug Fixes
+
+* Removed tvl fetchers ([#784](https://github.com/Zapper-fi/studio/issues/784)) ([92f7372](https://github.com/Zapper-fi/studio/commit/92f737228516003a74e8f24c63d9170a2f4896bc))
+
 ## [0.98.0](https://github.com/Zapper-fi/studio/compare/v0.97.2...v0.98.0) (2022-06-29)
 
 
