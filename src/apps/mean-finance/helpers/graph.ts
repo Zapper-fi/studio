@@ -1,80 +1,7 @@
-import { gql } from 'graphql-request';
-
 import { TheGraphHelper } from '~app-toolkit/helpers/the-graph/the-graph.helper';
 import { GET_PAIRS } from '../graphql/getPairs';
 import { GET_POSITIONS } from '../graphql/getPositions';
 import { GET_USER_POSITIONS } from '../graphql/getUserPositions';
-
-interface gqlFetchAllParams<T> {
-  graphHelper: TheGraphHelper;
-  query: string;
-  endpoint: string;
-  variables: any;
-  dataToSearch: string;
-  offset?: number;
-  first?: number;
-  prevResults?: T;
-}
-export const gqlFetchAll = async <T>({
-  graphHelper,
-  query,
-  endpoint,
-  variables,
-  dataToSearch,
-  offset,
-  first,
-  prevResults,
-}: gqlFetchAllParams<T>): Promise<T> => {
-  const firstToUse = first || 1000;
-  const offsetToUse = offset || 0;
-
-  const results = await graphHelper.requestGraph<T>({
-    endpoint,
-    query,
-    variables: {
-      ...variables,
-      first: firstToUse,
-      skip: offsetToUse,
-    },
-  });
-
-  if (results[dataToSearch].length === firstToUse + offsetToUse) {
-    let newPrevResults = results;
-    if (prevResults) {
-      newPrevResults = {
-        ...prevResults,
-        ...results,
-        [dataToSearch]: [
-          ...prevResults[dataToSearch],
-          ...results[dataToSearch],
-        ],
-      };
-    }
-    return gqlFetchAll({
-      graphHelper,
-      query,
-      endpoint,
-      variables,
-      dataToSearch,
-      first: offsetToUse + firstToUse,
-      offset: firstToUse,
-      prevResults: newPrevResults,
-    });
-  }
-
-  if (prevResults) {
-    return {
-      ...prevResults,
-      ...results,
-      [dataToSearch]: [
-        ...prevResults[dataToSearch],
-        ...results[dataToSearch],
-      ],
-    };
-  } else {
-    return results;
-  }
-}
 
 type MeanFinancePosition = {
   positions: {
@@ -109,8 +36,7 @@ type MeanFinancePosition = {
 };
 
 export const getUserPositions = (address: string, network: string, graphHelper: TheGraphHelper) => {
-  return gqlFetchAll<MeanFinancePosition>({
-    graphHelper,
+  return graphHelper.gqlFetchAll<MeanFinancePosition>({
     endpoint: `https://api.thegraph.com/subgraphs/name/mean-finance/dca-v2-${network}`,
     query: GET_USER_POSITIONS,
     variables: { address },
@@ -119,8 +45,7 @@ export const getUserPositions = (address: string, network: string, graphHelper: 
 };
 
 export const getPositions = (network: string, graphHelper: TheGraphHelper) => {
-  return gqlFetchAll<MeanFinancePosition>({
-    graphHelper,
+  return graphHelper.gqlFetchAll<MeanFinancePosition>({
     endpoint: `https://api.thegraph.com/subgraphs/name/mean-finance/dca-v2-${network}`,
     query: GET_POSITIONS,
     variables: {},
@@ -147,8 +72,7 @@ type MeanFinancePair = {
 };
 
 export const getPairs = (network: string, graphHelper: TheGraphHelper) => {
-  return gqlFetchAll<MeanFinancePair>({
-    graphHelper,
+  return graphHelper.gqlFetchAll<MeanFinancePair>({
     endpoint: `https://api.thegraph.com/subgraphs/name/mean-finance/dca-v2-${network}`,
     query: GET_PAIRS,
     variables: {},
