@@ -15,7 +15,7 @@ export type SynthetixSynthTokenHelperParams = {
 };
 
 @Injectable()
-export class SynthetixTrasnferrableSnxTokenHelper {
+export class SynthetixTransferrableSnxTokenHelper {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(SynthetixContractFactory) private readonly contractFactory: SynthetixContractFactory,

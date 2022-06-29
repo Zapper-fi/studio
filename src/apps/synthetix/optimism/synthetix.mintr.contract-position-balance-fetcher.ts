@@ -22,6 +22,6 @@ export class OptimismSynthetixMintrContractPositionBalanceFetcher
   ) {}
 
   async getBalances(address: string) {
-    return this.synthetixMintrContractPositionBalanceHelper.getBalances({ address, network: Network.OPTIMISM_MAINNET });
+    return this.synthetixMintrContractPositionBalanceHelper.getBalances({ address, network });
   }
 }
