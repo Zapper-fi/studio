@@ -32,7 +32,10 @@ export const EULER_DEFINITION = appDefinition({
 
   tags: [AppTag.LENDING],
   keywords: [],
-  links: {},
+  links: {
+    twitter: 'https://twitter.com/eulerfinance',
+    discord: 'https://discord.com/invite/CdG97VSYGk',
+  },
 
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],

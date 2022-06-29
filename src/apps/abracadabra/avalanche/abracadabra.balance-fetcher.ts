@@ -3,6 +3,7 @@ import { Inject } from '@nestjs/common';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
+import { SushiSwapBentoBoxContractPositionBalanceHelper } from '~apps/sushiswap-bentobox';
 import { BalanceFetcher } from '~balance/balance-fetcher.interface';
 import { Network } from '~types/network.interface';
 
@@ -20,6 +21,8 @@ export class AvalancheAbracadabraBalanceFetcher implements BalanceFetcher {
     @Inject(AbracadabraCauldronBalanceHelper)
     private readonly abracadabraCauldronBalanceHelper: AbracadabraCauldronBalanceHelper,
     @Inject(AbracadabraContractFactory) private readonly contractFactory: AbracadabraContractFactory,
+    @Inject(SushiSwapBentoBoxContractPositionBalanceHelper)
+    private readonly degenboxBalanceHelper: SushiSwapBentoBoxContractPositionBalanceHelper,
   ) {}
 
   private async getStakedSpellBalances(address: string) {
@@ -28,6 +31,14 @@ export class AvalancheAbracadabraBalanceFetcher implements BalanceFetcher {
       groupId: ABRACADABRA_DEFINITION.groups.stakedSpell.id,
       network,
       address,
+    });
+  }
+
+  private async getDegenboxBalances(address: string) {
+    return this.degenboxBalanceHelper.getBalances({
+      address,
+      network,
+      bentoBoxAddress: '0x1fc83f75499b7620d53757f0b01e2ae626aae530',
     });
   }
 
@@ -58,11 +69,12 @@ export class AvalancheAbracadabraBalanceFetcher implements BalanceFetcher {
   }
 
   async getBalances(address: string) {
-    const [stakedSpellBalances, cauldronBalances, farmBalances, mspellBalances] = await Promise.all([
+    const [stakedSpellBalances, cauldronBalances, farmBalances, mspellBalances, degenboxBalances] = await Promise.all([
       this.getStakedSpellBalances(address),
       this.getCauldronBalances(address),
       this.getFarmBalances(address),
       this.getMspellBalance(address),
+      this.getDegenboxBalances(address),
     ]);
 
     return presentBalanceFetcherResponse([
@@ -81,6 +93,10 @@ export class AvalancheAbracadabraBalanceFetcher implements BalanceFetcher {
       {
         label: 'mSPELL',
         assets: mspellBalances,
+      },
+      {
+        label: 'Abracadabra Degenbox',
+        assets: degenboxBalances,
       },
     ]);
   }

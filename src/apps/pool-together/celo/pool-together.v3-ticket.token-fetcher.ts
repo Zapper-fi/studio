@@ -9,13 +9,11 @@ import { PoolTogetherV3PrizePoolTokenHelper } from '../helpers/pool-together-v3.
 import { PoolTogetherApiPrizePoolRegistry } from '../helpers/pool-together.api.prize-pool-registry';
 import { POOL_TOGETHER_DEFINITION } from '../pool-together.definition';
 
+const appId = POOL_TOGETHER_DEFINITION.id;
+const groupId = POOL_TOGETHER_DEFINITION.groups.v3.id;
 const network = Network.CELO_MAINNET;
 
-@Register.TokenPositionFetcher({
-  appId: POOL_TOGETHER_DEFINITION.id,
-  groupId: POOL_TOGETHER_DEFINITION.groups.v3.id,
-  network,
-})
+@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
 export class CeloPoolTogetherV3TicketTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(PoolTogetherV3PrizePoolTokenHelper)
@@ -27,9 +25,8 @@ export class CeloPoolTogetherV3TicketTokenFetcher implements PositionFetcher<App
     const prizePools = await this.prizePoolRegistry.getV3PrizePools(network);
 
     return this.poolTogetherV3PrizePoolTokenHelper.getTokens({
-      network: Network.CELO_MAINNET,
+      network,
       prizePools,
-      dependencies: [],
     });
   }
 }

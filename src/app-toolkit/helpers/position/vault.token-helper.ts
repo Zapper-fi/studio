@@ -13,11 +13,11 @@ import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.pres
 import { EthersMulticall } from '~multicall';
 import { ContractType } from '~position/contract.interface';
 import { StatsItem } from '~position/display.interface';
-import { AppTokenPosition, Token } from '~position/position.interface';
+import { AppTokenPosition, ExchangeableAppTokenDataProps, Token } from '~position/position.interface';
 import { AppGroupsDefinition } from '~position/position.service';
 import { Network } from '~types/network.interface';
 
-export type VaultTokenDataProps = {
+export type VaultTokenDataProps = ExchangeableAppTokenDataProps & {
   liquidity: number;
   reserve: number;
 };
@@ -27,6 +27,7 @@ export type VaultTokenHelperParams<T> = {
   appId: string;
   groupId: string;
   dependencies?: AppGroupsDefinition[];
+  exchangeable?: boolean;
   resolveContract: (opts: { address: string; network: Network }) => T;
   resolveVaultAddresses: (opts: { multicall: EthersMulticall; network: Network }) => string[] | Promise<string[]>;
   resolveUnderlyingTokenAddress: (opts: { multicall: EthersMulticall; contract: T }) => string | Promise<string | null>;
@@ -58,6 +59,7 @@ export class VaultTokenHelper {
     appId,
     groupId,
     dependencies = [],
+    exchangeable = false,
     resolveVaultAddresses,
     resolveContract,
     resolveUnderlyingTokenAddress,
@@ -131,6 +133,7 @@ export class VaultTokenHelper {
           dataProps: {
             liquidity,
             reserve,
+            exchangeable,
           },
 
           displayProps: {

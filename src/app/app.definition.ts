@@ -4,7 +4,15 @@ import { uniq, keys, mapValues, zipObject } from 'lodash';
 import { Network } from '~types/network.interface';
 import { ArrayOfOneOrMore } from '~types/utils';
 
-import { AddressFormat, AppDefinitionObject, AppGroup, AppLinks, AppAction, AppTag } from './app.interface';
+import {
+  AddressFormat,
+  AppDefinitionObject,
+  AppGroup,
+  AppLinks,
+  AppAction,
+  AppTag,
+  PresentationConfig,
+} from './app.interface';
 
 function toNetworkWithActionsArray(
   supportedNetworks: Record<string, AppAction[]>,
@@ -48,6 +56,7 @@ export class AppDefinition {
     this.links = definitionRaw.links;
     this.description = definitionRaw.description ?? '';
     this.groups = definitionRaw.groups;
+    this.presentationConfig = definitionRaw.presentationConfig;
     this.supportedNetworks = toNetworkWithActionsArray(definitionRaw.supportedNetworks);
     this.primaryColor = definitionRaw.primaryColor ?? '';
     this.token = definitionRaw.token ?? null;
@@ -68,6 +77,7 @@ export class AppDefinition {
   readonly name: string;
   readonly description?: string;
   readonly groups: Record<string, AppGroup>;
+  readonly presentationConfig?: PresentationConfig;
   readonly url: string;
   readonly links: AppLinks;
   readonly deprecated?: boolean;

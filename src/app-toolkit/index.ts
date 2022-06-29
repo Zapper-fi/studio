@@ -26,7 +26,7 @@ export type {
   MasterChefDespositTokenAddressStrategy,
   MasterChefRewardTokenAddressesStrategy,
   MasterChefRewardRateStrategy,
-  MasterChefTotalValueLockedStrategy,
+  MasterChefLiquidityStrategy,
   MasterChefLabelStrategy,
   MasterChefContractPositionDataProps,
 } from './helpers/master-chef/master-chef.contract-position-helper';
@@ -45,7 +45,7 @@ export type {
   SingleStakingFarmDefinition,
   SingleStakingFarmRois,
   SingleStakingFarmDataProps,
-  SingleStakingFarmResolveTotalValueLockedParams,
+  SingleStakingFarmResolveLiquidityParams,
   SingleStakingFarmResolveIsActiveParams,
   SingleStakingFarmResolveRoisParams,
   SingleStakingFarmContractPositionHelperParams,

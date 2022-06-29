@@ -21,16 +21,19 @@ export class EthereumBadgerClaimableContractPositionFetcher implements PositionF
 
   async getPositions() {
     return this.appToolkit.helpers.merkleContractPositionHelper.getContractPositions({
-      address: '0x635eb2c39c75954bb53ebc011bdc6afaace115a6',
+      address: '0x660802fc641b154aba66a62137e71f331b6d787a',
       appId,
       groupId,
       network,
-      dependencies: [{ appId: BADGER_DEFINITION.id, groupIds: [BADGER_DEFINITION.groups.vault.id], network }],
+      dependencies: [
+        { appId: BADGER_DEFINITION.id, groupIds: [BADGER_DEFINITION.groups.vault.id], network },
+        { appId: 'sushiswap', groupIds: ['x-sushi'], network },
+      ],
       rewardTokenAddresses: [
-        '0x11cdb42b0eb46d95f990bedd4695a6e3fa034978',
-        '0xbfa641051ba0a0ad1b0acf549a89536a0d76472e',
-        '0x0c2153e8ae4db8233c61717cdc4c75630e952561',
-        '0xe774d1fb3133b037aa17d39165b8f45f444f632d',
+        '0x3472a5a71965499acd81997a54bba8d852c6e53d',
+        '0x8798249c2e607446efb7ad49ec89dd1865ff4272',
+        '0x798d1be841a82a273720ce31c822c61a67a601c3',
+        '0xa0246c9032bc3a600820415ae600c6388619a14d',
       ],
     });
   }

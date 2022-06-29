@@ -5,6 +5,7 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { ARRAKIS_DEFINITION } from '~apps/arrakis/arrakis.definition';
 import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition, Token } from '~position/position.interface';
@@ -39,7 +40,12 @@ export class OptimismThalesPool2ContractPositionFetcher implements PositionFetch
 
   async getPositions() {
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
-    const appTokens = await this.appToolkit.getAppTokenPositions({ appId: 'sorbet', groupIds: ['pool'], network });
+    const appTokens = await this.appToolkit.getAppTokenPositions({
+      appId: ARRAKIS_DEFINITION.id,
+      groupIds: [ARRAKIS_DEFINITION.groups.pool.id],
+      network,
+    });
+
     const allTokens = [...appTokens, ...baseTokens];
     const multicall = this.appToolkit.getMulticall(network);
 
@@ -73,6 +79,7 @@ export class OptimismThalesPool2ContractPositionFetcher implements PositionFetch
             label,
             images,
             secondaryLabel,
+            statsItems: [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }],
           },
         };
 

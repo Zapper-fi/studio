@@ -165,7 +165,7 @@ export class UniswapV2TheGraphPoolTokenBalanceHelper {
         const isBlocked = false;
 
         // Display Props
-        const label = `${symbolPrefix} ${tokens[0].symbol} / ${tokens[1].symbol}`;
+        const label = `${tokens[0].symbol} / ${tokens[1].symbol}`;
         const secondaryLabel = reservePercentages.map(p => `${Math.round(p * 100)}%`).join(' / ');
         const images = [getTokenImg(tokens[0].address, network), getTokenImg(tokens[1].address, network)];
         const statsItems = [

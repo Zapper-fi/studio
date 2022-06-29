@@ -11,9 +11,10 @@ import { IMPERMAX_DEFINITION } from '../impermax.definition';
 const appId = IMPERMAX_DEFINITION.id;
 const groupId = IMPERMAX_DEFINITION.groups.lend.id;
 const network = Network.POLYGON_MAINNET;
-export const address = '0xBB92270716C8c424849F17cCc12F4F24AD4064D6'.toLowerCase();
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
+export const address = '0xbb92270716c8c424849f17ccc12f4f24ad4064d6';
+
+@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
 export class PolygonImpermaxLendTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(@Inject(ImpermaxLendTokenHelper) private readonly impermaxLendTokenHelper: ImpermaxLendTokenHelper) {}
 

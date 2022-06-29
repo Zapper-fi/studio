@@ -16,8 +16,8 @@ export const DFX_DEFINITION = appDefinition({
     medium: 'https://medium.com/dfxfinance',
   },
   groups: {
-    dfxCurve: { id: 'dfx-curve', type: GroupType.TOKEN, label: 'DFX Curves' },
-    staking: { id: 'staking', type: GroupType.POSITION, label: 'DFX Staking' },
+    dfxCurve: { id: 'dfx-curve', type: GroupType.TOKEN, label: 'DFX Curves', groupLabel: 'Pools' },
+    staking: { id: 'staking', type: GroupType.POSITION, label: 'DFX Staking', groupLabel: 'Farms' },
   },
   tags: [AppTag.DECENTRALIZED_EXCHANGE, AppTag.LIQUIDITY_POOL, AppTag.STABLECOIN],
   supportedNetworks: {

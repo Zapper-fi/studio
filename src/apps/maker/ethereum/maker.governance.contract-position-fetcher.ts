@@ -33,9 +33,9 @@ export class EthereumMakerGovernanceContractPositionFetcher implements PositionF
 
   async getPositions() {
     return this.appToolkit.helpers.singleStakingFarmContractPositionHelper.getContractPositions<MakerGovernance>({
-      network: Network.ETHEREUM_MAINNET,
-      appId: MAKER_DEFINITION.id,
-      groupId: MAKER_DEFINITION.groups.governance.id,
+      network,
+      appId,
+      groupId,
       resolveFarmDefinitions: async () => FARMS,
       resolveFarmContract: ({ network, address }) => this.makerContractFactory.makerGovernance({ network, address }),
       resolveIsActive: () => true,

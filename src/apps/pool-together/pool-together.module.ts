@@ -2,14 +2,11 @@ import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { AvalanchePoolTogetherBalanceFetcher } from './avalanche/pool-together.balance-fetcher';
-import { AvalanchePoolTogetherTvlFetcher } from './avalanche/pool-together.tvl-fetcher';
 import { AvalanchePoolTogetherV4TicketTokenFetcher } from './avalanche/pool-together.v4-ticket.token-fetcher';
 import { CeloPoolTogetherBalanceFetcher } from './celo/pool-together.balance-fetcher';
-import { CeloPoolTogetherTvlFetcher } from './celo/pool-together.tvl-fetcher';
 import { CeloPoolTogetherV3TicketTokenFetcher } from './celo/pool-together.v3-ticket.token-fetcher';
 import { PoolTogetherContractFactory } from './contracts';
 import { EthereumPoolTogetherBalanceFetcher } from './ethereum/pool-together.balance-fetcher';
-import { EthereumPoolTogetherTvlFetcher } from './ethereum/pool-together.tvl-fetcher';
 import { EthereumPoolTogetherPodTokenFetcher } from './ethereum/pool-together.v3-pod.token-fetcher';
 import { EthereumPoolTogetherV3TicketTokenFetcher } from './ethereum/pool-together.v3-ticket.token-fetcher';
 import { EthereumPoolTogetherV4TicketTokenFetcher } from './ethereum/pool-together.v4-ticket.token-fetcher';
@@ -21,7 +18,6 @@ import { PoolTogetherV4PrizePoolTokenHelper } from './helpers/pool-together-v4.p
 import { PoolTogetherAirdropTokenBalancesHelper } from './helpers/pool-together.airdrop.balance-helper';
 import { PoolTogetherApiPrizePoolRegistry } from './helpers/pool-together.api.prize-pool-registry';
 import { PolygonPoolTogetherBalanceFetcher } from './polygon/pool-together.balance-fetcher';
-import { PolygonPoolTogetherTvlFetcher } from './polygon/pool-together.tvl-fetcher';
 import { PolygonPoolTogetherV3TicketTokenFetcher } from './polygon/pool-together.v3-ticket.token-fetcher';
 import { PolygonPoolTogetherV4TicketTokenFetcher } from './polygon/pool-together.v4-ticket.token-fetcher';
 import POOL_TOGETHER_DEFINITION, { PoolTogetherAppDefinition } from './pool-together.definition';
@@ -30,26 +26,27 @@ import POOL_TOGETHER_DEFINITION, { PoolTogetherAppDefinition } from './pool-toge
   appId: POOL_TOGETHER_DEFINITION.id,
   providers: [
     PoolTogetherAppDefinition,
-    PoolTogetherApiPrizePoolRegistry,
     PoolTogetherContractFactory,
+    PoolTogetherApiPrizePoolRegistry,
+    // Helpers
     PoolTogetherAirdropTokenBalancesHelper,
     PoolTogetherClaimableTokenBalancesHelper,
     PoolTogetherFaucetAddressHelper,
     PoolTogetherV3PodTokenHelper,
     PoolTogetherV3PrizePoolTokenHelper,
     PoolTogetherV4PrizePoolTokenHelper,
-    AvalanchePoolTogetherTvlFetcher,
+    // Avalanche
     AvalanchePoolTogetherBalanceFetcher,
     AvalanchePoolTogetherV4TicketTokenFetcher,
-    CeloPoolTogetherTvlFetcher,
+    // Celo
     CeloPoolTogetherBalanceFetcher,
     CeloPoolTogetherV3TicketTokenFetcher,
-    EthereumPoolTogetherTvlFetcher,
+    // Ethereum
     EthereumPoolTogetherBalanceFetcher,
     EthereumPoolTogetherPodTokenFetcher,
     EthereumPoolTogetherV3TicketTokenFetcher,
     EthereumPoolTogetherV4TicketTokenFetcher,
-    PolygonPoolTogetherTvlFetcher,
+    // Polygon
     PolygonPoolTogetherBalanceFetcher,
     PolygonPoolTogetherV3TicketTokenFetcher,
     PolygonPoolTogetherV4TicketTokenFetcher,

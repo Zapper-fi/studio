@@ -17,12 +17,10 @@ const groupId = SOLACE_DEFINITION.groups.scp.id;
 const network = Network.ETHEREUM_MAINNET;
 
 const SCP_ADDRESS = '0x501acee83a6f269b77c167c6701843d454e2efa0';
-const symbol = 'SCP';
-const decimals = 18;
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 const SOLACE_ADDRESS = '0x501ace9c35e60f03a2af4d484f49f9b1efde9f40';
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
 export class EthereumSolaceScpTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
@@ -34,13 +32,18 @@ export class EthereumSolaceScpTokenFetcher implements PositionFetcher<AppTokenPo
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
 
     const eth = baseTokens.find(t => t.address === ZERO_ADDRESS)!;
-    const scp = this.solaceContractFactory.scp({ address: SCP_ADDRESS, network });
-    const mcscp = multicall.wrap(scp);
-    const [supplyRaw, pricePerShareRaw] = await Promise.all([mcscp.totalSupply(), mcscp.pricePerShare()]);
+    const scpTokenContract = this.solaceContractFactory.scp({ address: SCP_ADDRESS, network });
+    const [symbol, decimals, supplyRaw, pricePerShareRaw] = await Promise.all([
+      multicall.wrap(scpTokenContract).symbol(),
+      multicall.wrap(scpTokenContract).decimals(),
+      multicall.wrap(scpTokenContract).totalSupply(),
+      multicall.wrap(scpTokenContract).pricePerShare(),
+    ]);
 
     const supply = Number(supplyRaw) / 10 ** decimals;
     const pricePerShare = Number(pricePerShareRaw) / 10 ** decimals;
     const price = eth.price * pricePerShare;
+    const liquidity = supply * price;
     const tokens = [eth];
 
     const token: AppTokenPosition = {
@@ -55,11 +58,14 @@ export class EthereumSolaceScpTokenFetcher implements PositionFetcher<AppTokenPo
       price,
       pricePerShare,
       tokens,
-      dataProps: {},
+      dataProps: {
+        liquidity,
+      },
       displayProps: {
         label: symbol,
         secondaryLabel: buildDollarDisplayItem(price),
-        images: [getTokenImg(SOLACE_ADDRESS, Network.ETHEREUM_MAINNET)],
+        images: [getTokenImg(SOLACE_ADDRESS, network)],
+        statsItems: [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }],
       },
     };
 
