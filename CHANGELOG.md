@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.97.2](https://github.com/Zapper-fi/studio/compare/v0.97.1...v0.97.2) (2022-06-29)
+
+
+### Bug Fixes
+
+* **cache:** Update cache decorator ([#788](https://github.com/Zapper-fi/studio/issues/788)) ([2fd74bc](https://github.com/Zapper-fi/studio/commit/2fd74bc91ce5f928394345e02bc5d597b8f0ce0f))
+
 ## [0.97.1](https://github.com/Zapper-fi/studio/compare/v0.97.0...v0.97.1) (2022-06-29)
 
 
