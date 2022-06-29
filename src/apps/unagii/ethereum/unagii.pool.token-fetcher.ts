@@ -14,8 +14,6 @@ import { Network } from '~types/network.interface';
 import { UnagiiContractFactory } from '../contracts';
 import { UNAGII_DEFINITION } from '../unagii.definition';
 
-const network = Network.ETHEREUM_MAINNET;
-
 const vaultAddresses = [
   '0x9ce3018375d305ce3c3303a26ef62d3d2eb8561a',
   '0x7f75d72886d6a8677321e5602d18948abcb4281a',
@@ -24,11 +22,11 @@ const vaultAddresses = [
   '0x8ef11c51a666c53aeeec504f120cd1435e451342',
 ];
 
-@Register.TokenPositionFetcher({
-  appId: UNAGII_DEFINITION.id,
-  groupId: UNAGII_DEFINITION.groups.vault.id,
-  network,
-})
+const appId = UNAGII_DEFINITION.id;
+const groupId = UNAGII_DEFINITION.groups.vault.id;
+const network = Network.ETHEREUM_MAINNET;
+
+@Register.TokenPositionFetcher({ appId, groupId, network })
 export class EthereumUnagiiPoolTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
@@ -47,9 +45,9 @@ export class EthereumUnagiiPoolTokenFetcher implements PositionFetcher<AppTokenP
           multicall.wrap(vaultContract).token(),
           multicall.wrap(vaultContract).uToken(),
         ]);
-        //tokenAddressRaw
-        const uTokenContract = this.unagiiContractFactory.erc20({ address: tokenAddressRaw, network });
-        const [totalSupplyRaw, decimalsRaw, symbol] = await Promise.all([
+        const tokenAddress = tokenAddressRaw.toLowerCase();
+        const uTokenContract = this.unagiiContractFactory.erc20({ address: tokenAddress, network });
+        const [totalSupplyRaw, decimals, symbol] = await Promise.all([
           multicall.wrap(uTokenContract).totalSupply(),
           multicall.wrap(uTokenContract).decimals(),
           multicall.wrap(uTokenContract).symbol(),
@@ -64,14 +62,14 @@ export class EthereumUnagiiPoolTokenFetcher implements PositionFetcher<AppTokenP
 
         // Determine total supply
         const underlyingPrice = underlyingToken.price || 0;
-        const totalSupply = Number(totalSupplyRaw) / 10 ** Number(decimalsRaw);
+        const supply = Number(totalSupplyRaw) / 10 ** decimals;
         const underlyingAssets = Number(totalAssetsRaw) / 10 ** underlyingToken.decimals;
 
         // Determine the price per share
-        const pricePerShare = underlyingAssets / totalSupply;
+        const pricePerShare = underlyingAssets / supply;
         const price = pricePerShare * underlyingToken.price;
 
-        const reserve = totalSupply * pricePerShare;
+        const reserve = supply * pricePerShare;
         const liquidity = reserve * underlyingPrice;
 
         const tokens = [{ ...underlyingToken, reserve }];
@@ -89,7 +87,7 @@ export class EthereumUnagiiPoolTokenFetcher implements PositionFetcher<AppTokenP
             },
             {
               label: 'Supply',
-              value: buildNumberDisplayItem(totalSupply),
+              value: buildNumberDisplayItem(supply),
             },
           ],
         };
@@ -99,14 +97,14 @@ export class EthereumUnagiiPoolTokenFetcher implements PositionFetcher<AppTokenP
         };
 
         const token: AppTokenPosition = {
-          address: tokenAddressRaw.toLowerCase(),
+          address: tokenAddress,
           type: ContractType.APP_TOKEN,
-          network: Network.ETHEREUM_MAINNET,
-          appId: UNAGII_DEFINITION.id,
-          groupId: UNAGII_DEFINITION.groups.vault.id,
+          network,
+          appId,
+          groupId,
           symbol,
-          decimals: Number(decimalsRaw),
-          supply: totalSupply,
+          decimals,
+          supply,
           price,
           pricePerShare,
           tokens,

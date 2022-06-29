@@ -44,6 +44,7 @@ export class ImpermaxCollateralTokenHelper {
       resolveReserve: () => 0,
       resolvePricePerShare: () => 1, // Note: assumes not liquidated
     });
+
     return tokens;
   }
 }

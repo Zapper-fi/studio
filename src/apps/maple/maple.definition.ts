@@ -20,6 +20,8 @@ export const MAPLE_DEFINITION = appDefinition({
       id: 'staked-bpt',
       type: GroupType.TOKEN,
       label: 'Staked BPT',
+      groupLabel: 'Farms',
+      isHiddenFromExplore: true,
     },
 
     pool: {

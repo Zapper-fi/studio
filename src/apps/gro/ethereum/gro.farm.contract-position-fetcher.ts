@@ -4,7 +4,6 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { CURVE_DEFINITION } from '~apps/curve';
 import { UNISWAP_V2_DEFINITION } from '~apps/uniswap-v2/uniswap-v2.definition';
-import { DefaultDataProps } from '~position/display.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
@@ -23,9 +22,9 @@ export class EthereumGroFarmContractPositionFetcher implements PositionFetcher<C
     @Inject(GroContractFactory) private readonly groContractFactory: GroContractFactory,
   ) {}
 
-  async getPositions(): Promise<ContractPosition<DefaultDataProps>[]> {
+  async getPositions() {
     return this.appToolkit.helpers.masterChefContractPositionHelper.getContractPositions<GroLpTokenStaker>({
-      address: '0x2E32bAd45a1C29c1EA27cf4dD588DF9e68ED376C'.toLowerCase(),
+      address: '0x2e32bad45a1c29c1ea27cf4dd588df9e68ed376c',
       appId,
       groupId,
       network,

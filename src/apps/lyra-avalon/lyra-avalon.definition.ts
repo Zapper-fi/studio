@@ -21,18 +21,23 @@ export const LYRA_AVALON_DEFINITION = appDefinition({
       id: 'pool',
       type: GroupType.TOKEN,
       label: 'Liquidity Pool',
+      groupLabel: 'Pools',
     },
 
     staking: {
       id: 'staking',
       type: GroupType.TOKEN,
       label: 'Staking',
+      groupLabel: 'Farms',
     },
   },
 
   tags: [AppTag.OPTIONS],
   keywords: [],
-  links: {},
+  links: {
+    discord: 'https://discord.com/invite/P49mj6UbmC',
+    github: 'https://github.com/lyra-finance',
+  },
 
   supportedNetworks: {
     [Network.OPTIMISM_MAINNET]: [AppAction.VIEW],

@@ -13,7 +13,7 @@ const appId = POOL_TOGETHER_DEFINITION.id;
 const groupId = POOL_TOGETHER_DEFINITION.groups.v4.id;
 const network = Network.ETHEREUM_MAINNET;
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
 export class EthereumPoolTogetherV4TicketTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(PoolTogetherV4PrizePoolTokenHelper)
@@ -25,7 +25,7 @@ export class EthereumPoolTogetherV4TicketTokenFetcher implements PositionFetcher
     const prizePools = await this.prizePoolRegistry.getV4PrizePools(network);
 
     return this.poolTogetherV4PrizePoolTokenHelper.getAppTokens({
-      network: Network.ETHEREUM_MAINNET,
+      network,
       prizePoolAddresses: prizePools?.map(prizePoolAddresses => prizePoolAddresses.prizePoolAddress) || [],
     });
   }

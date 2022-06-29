@@ -8,7 +8,6 @@ import { ContractPosition } from '~position/position.interface';
 import { claimable, locked } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 
-import { GroContractFactory } from '../contracts';
 import { GRO_DEFINITION } from '../gro.definition';
 
 const appId = GRO_DEFINITION.id;
@@ -17,14 +16,11 @@ const network = Network.ETHEREUM_MAINNET;
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
 export class EthereumGroVestingContractPositionFetcher implements PositionFetcher<ContractPosition> {
-  constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(GroContractFactory) private readonly groContractFactory: GroContractFactory,
-  ) {}
+  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
   async getPositions() {
-    const groVestingAddress = '0x748218256AfE0A19a88EBEB2E0C5Ce86d2178360';
-    const groDaoToken = '0x3Ec8798B81485A254928B70CDA1cf0A2BB0B74D7';
+    const groVestingAddress = '0x748218256afe0a19a88ebeb2e0c5ce86d2178360';
+    const groDaoToken = '0x3ec8798b81485a254928b70cda1cf0a2bb0b74d7';
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
     const underlyingToken = baseTokens.find(v => v.address === groDaoToken.toLowerCase());
     const tokens = [locked(underlyingToken!), claimable(underlyingToken!)];

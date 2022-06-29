@@ -1,4 +1,5 @@
 import { Inject } from '@nestjs/common';
+import { compact } from 'lodash';
 
 import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
@@ -85,6 +86,6 @@ export class PoolTogetherClaimableTokenBalancesHelper {
       }),
     );
 
-    return claimableBalances;
+    return compact(claimableBalances);
   }
 }

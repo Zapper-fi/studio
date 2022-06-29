@@ -53,7 +53,7 @@ export class CacheOnIntervalService implements OnModuleInit, OnModuleDestroy {
     this.registeredCacheKeys.push(cacheKey);
   }
 
-  private registerCache(instance: any, methodName: string) {
+  registerCache(instance: any, methodName: string) {
     const logger = this.logger;
     const methodRef = instance[methodName];
     const cacheKey: CacheOnIntervalOptions['key'] = this.reflector.get(CACHE_ON_INTERVAL_KEY, methodRef);

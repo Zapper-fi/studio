@@ -4,6 +4,7 @@ import axios from 'axios';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { Register } from '~app-toolkit/decorators';
+import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
@@ -79,6 +80,7 @@ export class AvalancheSymphonyYoloContractPositionFetcher implements PositionFet
           displayProps: {
             label,
             images,
+            statsItems: [{ label: 'Liquidity', value: buildDollarDisplayItem(tokenBalanceUSD) }],
           },
         };
 
