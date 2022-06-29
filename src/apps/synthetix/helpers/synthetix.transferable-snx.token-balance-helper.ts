@@ -13,7 +13,7 @@ export type SynthetixTransferableSnxTokenBalanceHelperParams = {
 };
 
 @Injectable()
-export class SynthetixTrasnferrableSnxTokenBalanceHelper {
+export class SynthetixTransferrableSnxTokenBalanceHelper {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(SynthetixContractFactory) private readonly contractFactory: SynthetixContractFactory,
