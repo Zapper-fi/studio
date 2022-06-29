@@ -10,6 +10,7 @@ import { WithMetaType } from '~position/display.interface';
 import { BaseTokenBalance } from '~position/position-balance.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
+import { claimable } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 
 import { getPositions } from '../helpers/graph';
@@ -33,8 +34,15 @@ export class OptimismMeanFinanceDcaPositionContractPositionFetcher implements Po
     const contractPositions: ContractPosition[] = positions.map(dcaPosition => {
       const toWithdraw = dcaPosition.current.idleSwapped;
       const remainingLiquidity = dcaPosition.current.remainingLiquidity;
-      const remainingSwaps = dcaPosition.current.remainingSwaps;
-      const swapInterval = dcaPosition.swapInterval.interval;
+      const remainingSwaps = Number(dcaPosition.current.remainingSwaps);
+      const swapInterval = Number(dcaPosition.swapInterval.interval) as keyof typeof STRING_SWAP_INTERVALS;
+      const rawRate = dcaPosition.current.rate;
+      const rate = Number(rawRate) / 10 ** Number(dcaPosition.from.decimals);
+      let formattedRate = rate.toFixed(3);
+
+      if (rate < 0.001) {
+        formattedRate = '<0.001';
+      }
 
       const from = baseTokens.find(v => v.address === dcaPosition.from.address);
       const to = baseTokens.find(v => v.address === dcaPosition.to.address);
@@ -48,18 +56,26 @@ export class OptimismMeanFinanceDcaPositionContractPositionFetcher implements Po
       }
       if (to) {
         to.network = network;
-        tokens.push(drillBalance(to, toWithdraw));
+        tokens.push(drillBalance(claimable(to), toWithdraw));
         images = [...images, ...getImagesFromToken(to)];
       }
 
       const balanceUSD = sumBy(tokens, t => t.balanceUSD);
+      const swapIntervalAdverb = STRING_SWAP_INTERVALS[swapInterval].adverb;
+      let label = '';
 
-      const label = `Swapping ${from?.symbol} to ${to?.symbol}`;
+      if (remainingSwaps > 0) {
+        label = `Swapping ~${formattedRate} ${from?.symbol || dcaPosition.from.symbol} ${swapIntervalAdverb} to ${
+          to?.symbol || dcaPosition.from.symbol
+        }`;
+      } else {
+        label = `Swapping ${from?.symbol || dcaPosition.from.symbol} to ${to?.symbol || dcaPosition.from.symbol}`;
+      }
+
       const secondaryLabel =
-        parseInt(remainingSwaps, 10) && STRING_SWAP_INTERVALS[swapInterval]
-          ? `${STRING_SWAP_INTERVALS[swapInterval](remainingSwaps)} left`
+        remainingSwaps && STRING_SWAP_INTERVALS[swapInterval]
+          ? `${STRING_SWAP_INTERVALS[swapInterval].plural(remainingSwaps)} left`
           : 'Position finished';
-
       return {
         type: ContractType.POSITION,
         address: dcaPosition.id,
