@@ -15,20 +15,21 @@ export const EULER_DEFINITION = appDefinition({
       id: 'e-token',
       type: GroupType.TOKEN,
       label: 'Lending',
-      groupLabel: 'E Token',
+      groupLabel: 'Supply',
     },
 
     dToken: {
       id: 'd-token',
       type: GroupType.TOKEN,
       label: 'Lending',
-      groupLabel: 'D Token',
+      groupLabel: 'Borrow',
     },
 
     pToken: {
       id: 'p-token',
       type: GroupType.TOKEN,
       label: 'P Token',
+      isHiddenFromExplore: true,
     },
   },
   presentationConfig: {
@@ -39,17 +40,16 @@ export const EULER_DEFINITION = appDefinition({
         views: [
           {
             viewType: 'list',
-            label: 'E Token',
+            label: 'Supply',
             groupIds: ['e-token'],
           },
           {
             viewType: 'list',
-            label: 'D Token',
+            label: 'Borrow',
             groupIds: ['d-token'],
           },
         ],
       },
-      { label: 'P Token', viewType: 'list', groupIds: ['p-token'] },
     ],
   },
   tags: [AppTag.LENDING],
