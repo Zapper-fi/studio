@@ -14,13 +14,15 @@ export const EULER_DEFINITION = appDefinition({
     eToken: {
       id: 'e-token',
       type: GroupType.TOKEN,
-      label: 'E Token',
+      label: 'Lending',
+      groupLabel: 'E Token',
     },
 
     dToken: {
       id: 'd-token',
       type: GroupType.TOKEN,
-      label: 'D Token',
+      label: 'Lending',
+      groupLabel: 'D Token',
     },
 
     pToken: {
@@ -29,7 +31,27 @@ export const EULER_DEFINITION = appDefinition({
       label: 'P Token',
     },
   },
-
+  presentationConfig: {
+    tabs: [
+      {
+        label: 'Lending',
+        viewType: 'split',
+        views: [
+          {
+            viewType: 'list',
+            label: 'E Token',
+            groupIds: ['e-token'],
+          },
+          {
+            viewType: 'list',
+            label: 'D Token',
+            groupIds: ['d-token'],
+          },
+        ],
+      },
+      { label: 'P Token', viewType: 'list', groupIds: ['p-token'] },
+    ],
+  },
   tags: [AppTag.LENDING],
   keywords: [],
   links: {
