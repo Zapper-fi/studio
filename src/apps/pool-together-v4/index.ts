@@ -4,12 +4,6 @@ export { PoolTogetherContractFactory } from './contracts';
 
 /* Contracts */
 export type { PoolTogetherMerkleDistributor } from './contracts';
-export type { PoolTogetherV3MultiTokenListener } from './contracts';
-export type { PoolTogetherV3MultipleWinnersPrizeStrategy } from './contracts';
-export type { PoolTogetherV3Pod } from './contracts';
-export type { PoolTogetherV3PodRegistry } from './contracts';
-export type { PoolTogetherV3PrizePool } from './contracts';
-export type { PoolTogetherV3Ticket } from './contracts';
 export type { PoolTogetherV3TokenFaucet } from './contracts';
 export type { PoolTogetherV4PrizePool } from './contracts';
 export type { PoolTogetherV4Ticket } from './contracts';

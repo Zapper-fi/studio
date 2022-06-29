@@ -22,15 +22,6 @@ export class EthereumPoolTogetherBalanceFetcher implements BalanceFetcher {
     private readonly airdropTokenBalancesHelper: PoolTogetherAirdropTokenBalancesHelper,
   ) {}
 
-  async getV4TokenBalances(address: string) {
-    return this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
-      network,
-      appId: POOL_TOGETHER_DEFINITION.id,
-      groupId: POOL_TOGETHER_DEFINITION.groups.v4.id,
-      address,
-    });
-  }
-
   async getV3TokenBalances(address: string) {
     return this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
       network,
@@ -64,8 +55,7 @@ export class EthereumPoolTogetherBalanceFetcher implements BalanceFetcher {
   }
 
   async getBalances(address: string) {
-    const [v4TokenBalance, v3TokenBalances, podTokenBalances, claimableBalances, airdropBalances] = await Promise.all([
-      this.getV4TokenBalances(address),
+    const [v3TokenBalances, podTokenBalances, claimableBalances, airdropBalances] = await Promise.all([
       this.getV3TokenBalances(address),
       this.getV3PodTokenBalances(address),
       this.getClaimableBalances(address),
@@ -73,10 +63,6 @@ export class EthereumPoolTogetherBalanceFetcher implements BalanceFetcher {
     ]);
 
     return presentBalanceFetcherResponse([
-      {
-        label: 'PoolTogether',
-        assets: v4TokenBalance,
-      },
       {
         label: 'Prize Pools',
         assets: v3TokenBalances,

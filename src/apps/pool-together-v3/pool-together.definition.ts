@@ -17,7 +17,6 @@ export const POOL_TOGETHER_DEFINITION = appDefinition({
   },
   groups: {
     v3: { id: 'v3', type: GroupType.TOKEN, label: 'Prize Pools', groupLabel: 'Deposit', isHiddenFromExplore: true },
-    v4: { id: 'v4', type: GroupType.TOKEN, label: 'PoolTogether', groupLabel: 'Deposit' },
     claimable: { id: 'claimable', type: GroupType.TOKEN, label: 'Rewards', isHiddenFromExplore: true },
     v3Pod: { id: 'v3-pod', type: GroupType.POSITION, label: 'Prize Pods', isHiddenFromExplore: true },
   },
@@ -26,7 +25,6 @@ export const POOL_TOGETHER_DEFINITION = appDefinition({
     [Network.CELO_MAINNET]: [AppAction.VIEW, AppAction.TRANSACT],
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW, AppAction.TRANSACT],
     [Network.POLYGON_MAINNET]: [AppAction.VIEW, AppAction.TRANSACT],
-    [Network.AVALANCHE_MAINNET]: [AppAction.VIEW],
   },
   primaryColor: '#843ff3',
   token: {

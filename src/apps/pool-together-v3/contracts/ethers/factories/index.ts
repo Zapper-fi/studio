@@ -9,5 +9,3 @@ export { PoolTogetherV3PodRegistry__factory } from './PoolTogetherV3PodRegistry_
 export { PoolTogetherV3PrizePool__factory } from './PoolTogetherV3PrizePool__factory';
 export { PoolTogetherV3Ticket__factory } from './PoolTogetherV3Ticket__factory';
 export { PoolTogetherV3TokenFaucet__factory } from './PoolTogetherV3TokenFaucet__factory';
-export { PoolTogetherV4PrizePool__factory } from './PoolTogetherV4PrizePool__factory';
-export { PoolTogetherV4Ticket__factory } from './PoolTogetherV4Ticket__factory';

@@ -12,8 +12,6 @@ import { PoolTogetherV3PodRegistry__factory } from './ethers';
 import { PoolTogetherV3PrizePool__factory } from './ethers';
 import { PoolTogetherV3Ticket__factory } from './ethers';
 import { PoolTogetherV3TokenFaucet__factory } from './ethers';
-import { PoolTogetherV4PrizePool__factory } from './ethers';
-import { PoolTogetherV4Ticket__factory } from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
@@ -51,12 +49,6 @@ export class PoolTogetherContractFactory extends ContractFactory {
   poolTogetherV3TokenFaucet({ address, network }: ContractOpts) {
     return PoolTogetherV3TokenFaucet__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
-  poolTogetherV4PrizePool({ address, network }: ContractOpts) {
-    return PoolTogetherV4PrizePool__factory.connect(address, this.appToolkit.getNetworkProvider(network));
-  }
-  poolTogetherV4Ticket({ address, network }: ContractOpts) {
-    return PoolTogetherV4Ticket__factory.connect(address, this.appToolkit.getNetworkProvider(network));
-  }
 }
 
 export type { PoolTogetherMerkleDistributor } from './ethers';
@@ -67,5 +59,3 @@ export type { PoolTogetherV3PodRegistry } from './ethers';
 export type { PoolTogetherV3PrizePool } from './ethers';
 export type { PoolTogetherV3Ticket } from './ethers';
 export type { PoolTogetherV3TokenFaucet } from './ethers';
-export type { PoolTogetherV4PrizePool } from './ethers';
-export type { PoolTogetherV4Ticket } from './ethers';

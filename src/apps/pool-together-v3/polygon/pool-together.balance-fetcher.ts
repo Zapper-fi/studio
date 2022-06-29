@@ -20,15 +20,6 @@ export class PolygonPoolTogetherBalanceFetcher implements BalanceFetcher {
     private readonly claimableTokenBalancesHelper: PoolTogetherClaimableTokenBalancesHelper,
   ) {}
 
-  async getV4TokenBalances(address: string) {
-    return this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
-      network,
-      appId: POOL_TOGETHER_DEFINITION.id,
-      groupId: POOL_TOGETHER_DEFINITION.groups.v4.id,
-      address,
-    });
-  }
-
   async getV3TokenBalances(address: string) {
     return this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
       network,
@@ -46,17 +37,12 @@ export class PolygonPoolTogetherBalanceFetcher implements BalanceFetcher {
   }
 
   async getBalances(address: string) {
-    const [v4TokenBalance, v3TokenBalances, claimableBalances] = await Promise.all([
-      this.getV4TokenBalances(address),
+    const [v3TokenBalances, claimableBalances] = await Promise.all([
       this.getV3TokenBalances(address),
       this.getClaimableBalances(address),
     ]);
 
     return presentBalanceFetcherResponse([
-      {
-        label: 'PoolTogether',
-        assets: v4TokenBalance,
-      },
       {
         label: 'Prize Pools',
         assets: v3TokenBalances,
