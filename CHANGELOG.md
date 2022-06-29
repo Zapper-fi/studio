@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.97.1](https://github.com/Zapper-fi/studio/compare/v0.97.0...v0.97.1) (2022-06-29)
+
+
+### Bug Fixes
+
+* **pool-together:** Update pool-together.definition.ts ([bd52812](https://github.com/Zapper-fi/studio/commit/bd5281258e6260f2a508d756df4f8b2d5fc778eb))
+* **rari-fuse:** Add dependency to Harvest for iFARM ([#790](https://github.com/Zapper-fi/studio/issues/790)) ([0a503a3](https://github.com/Zapper-fi/studio/commit/0a503a396fbfa6fa4849697419e9f8cb04a90719))
+
 ## [0.97.0](https://github.com/Zapper-fi/studio/compare/v0.96.0...v0.97.0) (2022-06-28)
 
 
