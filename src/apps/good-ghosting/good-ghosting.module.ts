@@ -20,14 +20,11 @@ import { CeloGoodGhostingGameContractPositionFetcher } from './celo/good-ghostin
     GoodGhostingContractFactory,
     GoodGhostingGameContractPositionFetcherHelper,
     GoodGhostingGameConfigFetcherHelper,
-<<<<<<< HEAD
-=======
     GoodGhostingBalanceFetcherHelper,
     // Polygon
     PolygonGoodGhostingBalanceFetcher,
     PolygonGoodGhostingGameContractPositionFetcher,
     // Celo
->>>>>>> 84ff57d00a4e4cd08b15494fdd0541bf614c9614
     CeloGoodGhostingBalanceFetcher,
     CeloGoodGhostingGameContractPositionFetcher,
   ],
