@@ -4,6 +4,21 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.100.0](https://github.com/Zapper-fi/studio/compare/v0.99.1...v0.100.0) (2022-06-30)
+
+
+### Features
+
+* **solace:** Update Solace Finance integration, add Aurora support ([#778](https://github.com/Zapper-fi/studio/issues/778)) ([0bbdf46](https://github.com/Zapper-fi/studio/commit/0bbdf46b4174398de49655e88ccc16066543e7bd))
+
+
+### Bug Fixes
+
+* **good-ghosting:** Removed support for inactive games ([#806](https://github.com/Zapper-fi/studio/issues/806)) ([35b4b72](https://github.com/Zapper-fi/studio/commit/35b4b72754843e6664e7cb98cb4d66978fc3cd44))
+* **pool-together:** Split PoolTogether app into v3 and v4 ([#797](https://github.com/Zapper-fi/studio/issues/797)) ([abbecd6](https://github.com/Zapper-fi/studio/commit/abbecd692e361e019c7d62c0f48f2ec67603c66a))
+* **rari-fuse:** Add missing Arrakis Finance dependency ([#808](https://github.com/Zapper-fi/studio/issues/808)) ([5e6a85e](https://github.com/Zapper-fi/studio/commit/5e6a85ec655b36fb9ee59759cf8c36256ff3c6db))
+* **tectonic:** Fix Tectonic token APY and liquidity calculation ([#805](https://github.com/Zapper-fi/studio/issues/805)) ([7b566ae](https://github.com/Zapper-fi/studio/commit/7b566ae4bf77824ae2d0866b756c9df19a4328a1))
+
 ## [0.99.1](https://github.com/Zapper-fi/studio/compare/v0.99.0...v0.99.1) (2022-06-30)
 
 
