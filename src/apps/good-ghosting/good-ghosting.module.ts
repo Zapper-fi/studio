@@ -10,8 +10,6 @@ import { GoodGhostingGameConfigFetcherHelper } from './helpers/good-ghosting.gam
 import { GoodGhostingGameContractPositionFetcherHelper } from './helpers/good-ghosting.game.contract-position-fetcher-helper';
 import { PolygonGoodGhostingBalanceFetcher } from './polygon/good-ghosting.balance-fetcher';
 import { PolygonGoodGhostingGameContractPositionFetcher } from './polygon/good-ghosting.game.contract-position-fetcher';
-import { CeloGoodGhostingBalanceFetcher } from './celo/good-ghosting.balance-fetcher';
-import { CeloGoodGhostingGameContractPositionFetcher } from './celo/good-ghosting.game.contract-position-fetcher';
 
 @Register.AppModule({
   appId: GOOD_GHOSTING_DEFINITION.id,

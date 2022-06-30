@@ -10,11 +10,6 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ContractType } from '~position/contract.interface';
 import { getAppImg } from '~app-toolkit/helpers/presentation/image.present';
 
-import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { getAppImg } from '~app-toolkit/helpers/presentation/image.present';
-import { ContractType } from '~position/contract.interface';
-import { ContractPositionBalance } from '~position/position-balance.interface';
-
 import { isClaimable, isSupplied } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 
@@ -84,7 +79,6 @@ export class GoodGhostingBalanceFetcherHelper {
         let balance = amountPaid;
         let playerIncentive = BigNumber.from(0);
         const isWinner = mostRecentSegmentPaid === gameLastSegment;
-        const playerTokens = [];
 
         if (winnerCount && isWinner) {
           const playerInterest = gameInterest.div(winnerCount);
@@ -95,21 +89,21 @@ export class GoodGhostingBalanceFetcherHelper {
           playerIncentive = incentiveAmount.div(winnerCount);
         }
 
-        if (!player.withdrawn) {
-          if (stakedToken) {
-            const stakedTokenBalance = drillBalance(stakedToken, amountPaid.toString());
-            playerTokens.push(stakedTokenBalance);
-          }
+        if (player.withdrawn) {
+          return {};
+        }
 
-          if (rewardToken && isWinner) {
-            const claimableTokenBalance = drillBalance(rewardToken, balance.toString());
-            playerTokens.push(claimableTokenBalance);
-          }
+        const stakedTokenBalance = drillBalance(stakedToken, amountPaid.toString());
+        const playerTokens = [stakedTokenBalance];
 
-          if (incentiveToken && isWinner) {
-            const incentiveTokenBalance = drillBalance(incentiveToken, playerIncentive.toString());
-            playerTokens.push(incentiveTokenBalance);
-          }
+        if (rewardToken && isWinner) {
+          const claimableTokenBalance = drillBalance(rewardToken, balance.toString());
+          playerTokens.push(claimableTokenBalance);
+        }
+
+        if (incentiveToken && isWinner) {
+          const incentiveTokenBalance = drillBalance(incentiveToken, playerIncentive.toString());
+          playerTokens.push(incentiveTokenBalance);
         }
 
         const tokens = playerTokens.filter(v => v.balanceUSD > 0);
