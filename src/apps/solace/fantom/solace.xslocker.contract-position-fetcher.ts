@@ -15,13 +15,13 @@ import { SOLACE_DEFINITION } from '../solace.definition';
 
 const appId = SOLACE_DEFINITION.id;
 const groupId = SOLACE_DEFINITION.groups.xslocker.id;
-const network = Network.POLYGON_MAINNET;
+const network = Network.FANTOM_OPERA_MAINNET;
 
 const SOLACE_ADDRESS = '0x501ace9c35e60f03a2af4d484f49f9b1efde9f40';
 const XSLOCKER_ADDRESS = '0x501ace47c5b0c2099c4464f681c3fa2ecd3146c1';
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
-export class PolygonSolaceXslockerContractPositionFetcher implements PositionFetcher<ContractPosition> {
+export class FantomSolaceXslockerContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(SolaceContractFactory) private readonly solaceContractFactory: SolaceContractFactory,

@@ -15,24 +15,24 @@ import { SOLACE_DEFINITION } from '../solace.definition';
 
 const appId = SOLACE_DEFINITION.id;
 const groupId = SOLACE_DEFINITION.groups.policies.id;
-const network = Network.POLYGON_MAINNET;
+const network = Network.AURORA_MAINNET;
 
-const DAI_ADDRESS = '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063';
+const DAI_ADDRESS = '0xe3520349f477a5f6eb06107066048508498a291b';
 const SOLACE_COVER_PRODUCT_ADDRESS = '0x501acec83d440c00644ca5c48d059e1840852a64';
 const SOLACE_ADDRESS = '0x501ace9c35e60f03a2af4d484f49f9b1efde9f40';
 
-const PREMIUM_POOL_ADDRESS = '0x37cd57c6c7243455ac66631ce37bb7f977c71442';
+const PREMIUM_POOL_ADDRESS = '0x0436c20030d0c2e278e7e8e4b42d304a6420d3bb';
 const PREMIUM_POOL_TOKENS = [
   '0x501ace9c35e60f03a2af4d484f49f9b1efde9f40', // solace
-  '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063', // dai
-  '0x2791bca1f2de4661ed88a30c99a7a9449aa84174', // usdc
-  '0xc2132d05d31c914a87c6611c10748aeb04b58e8f', // usdt
-  '0x45c32fa6df82ead1e2ef74d17b76547eddfaff89', // frax
-  '0xa3fa99a148fa48d14ed51d610c367c61876997f1', // mimatic
+  '0xe3520349f477a5f6eb06107066048508498a291b', // dai
+  '0xb12bfca5a55806aaf64e99521918a4bf0fc40802', // usdc
+  '0x4988a896b1227218e4a686fde5eabdcabd91571f', // usdt
+  '0xda2585430fef327ad8ee44af8f1f989a2a91a3d2', // frax
+  '0xdfa46478f9e5ea86d57387849598dbfb2e964b02', // mimatic
 ];
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
-export class PolygonSolacePoliciesContractPositionFetcher implements PositionFetcher<ContractPosition> {
+export class AuroraSolacePoliciesContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(SolaceContractFactory) private readonly solaceContractFactory: SolaceContractFactory,
@@ -69,7 +69,7 @@ export class PolygonSolacePoliciesContractPositionFetcher implements PositionFet
       },
       displayProps: {
         label: `Solace Portfolio Insurance`, // @TODO Might be nice to include cover amount!
-        images: [getTokenImg(SOLACE_ADDRESS, Network.POLYGON_MAINNET)],
+        images: [getTokenImg(SOLACE_ADDRESS, Network.AURORA_MAINNET)],
         statsItems: [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }],
       },
     };
