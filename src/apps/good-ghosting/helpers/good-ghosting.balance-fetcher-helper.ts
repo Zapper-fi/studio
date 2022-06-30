@@ -79,7 +79,6 @@ export class GoodGhostingBalanceFetcherHelper {
         let balance = amountPaid;
         let playerIncentive = BigNumber.from(0);
         const isWinner = mostRecentSegmentPaid === gameLastSegment;
-        const contractPositionBalance: ContractPositionBalance = {};
 
         if (winnerCount && isWinner) {
           const playerInterest = gameInterest.div(winnerCount);
@@ -91,16 +90,17 @@ export class GoodGhostingBalanceFetcherHelper {
         }
 
         if (player.withdrawn) {
-          contractPositionBalance['type'] = ContractType.POSITION;
-          contractPositionBalance['network'] = network;
-          contractPositionBalance['appId'] = appId;
-          contractPositionBalance['groupId'] = groupId;
-          contractPositionBalance['tokens'] = [];
-          contractPositionBalance['balanceUSD'] = 0;
-          contractPositionBalance['dataProps'] = {};
-          contractPositionBalance['displayProps'] = {};
-
-          return contractPositionBalance;
+          return (ContractPositionBalance = {
+            type: ContractType.POSITION,
+            network,
+            address: contractPosition.address,
+            appId,
+            groupId,
+            tokens: [],
+            balanceUSD: 0,
+            dataProps: {},
+            displayProps: {},
+          });
         }
 
         const stakedTokenBalance = drillBalance(stakedToken, amountPaid.toString());
@@ -120,20 +120,21 @@ export class GoodGhostingBalanceFetcherHelper {
         const balanceUSD = sumBy(tokens, t => t.balanceUSD);
         const statsItems = [{ label: 'Strategy', value: gameConfig.strategyProvider }];
 
-        contractPositionBalance['type'] = ContractType.POSITION;
-        contractPositionBalance['network'] = network;
-        contractPositionBalance['appId'] = appId;
-        contractPositionBalance['groupId'] = groupId;
-        contractPositionBalance['tokens'] = tokens;
-        contractPositionBalance['balanceUSD'] = balanceUSD;
-        contractPositionBalance['dataProps'] = {};
-        contractPositionBalance['displayProps'] = {
-          label: gameConfig.gameName,
-          images: [getAppImg(appId)],
-          statsItems,
-        };
-
-        return contractPositionBalance;
+        return (ContractPositionBalance = {
+          type: ContractType.POSITION,
+          network,
+          address: contractPosition.address,
+          appId,
+          groupId,
+          tokens,
+          balanceUSD,
+          dataProps: {},
+          displayProps: {
+            label: gameConfig.gameName,
+            images: [getAppImg(appId)],
+            statsItems,
+          },
+        });
       }),
     );
 
