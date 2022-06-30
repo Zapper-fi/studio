@@ -90,7 +90,7 @@ export class GoodGhostingBalanceFetcherHelper {
         }
 
         if (player.withdrawn) {
-          return (ContractPositionBalance = {
+          const balancePositionWithdrawn: ContractPositionBalance = {
             type: ContractType.POSITION,
             network,
             address: contractPosition.address,
@@ -100,7 +100,9 @@ export class GoodGhostingBalanceFetcherHelper {
             balanceUSD: 0,
             dataProps: {},
             displayProps: {},
-          });
+          };
+
+          return balancePositionWithdrawn;
         }
 
         const stakedTokenBalance = drillBalance(stakedToken, amountPaid.toString());
@@ -120,7 +122,7 @@ export class GoodGhostingBalanceFetcherHelper {
         const balanceUSD = sumBy(tokens, t => t.balanceUSD);
         const statsItems = [{ label: 'Strategy', value: gameConfig.strategyProvider }];
 
-        return (ContractPositionBalance = {
+        const contractPositionBalance: ContractPositionBalance = {
           type: ContractType.POSITION,
           network,
           address: contractPosition.address,
@@ -134,7 +136,9 @@ export class GoodGhostingBalanceFetcherHelper {
             images: [getAppImg(appId)],
             statsItems,
           },
-        });
+        };
+
+        return contractPositionBalance;
       }),
     );
 
