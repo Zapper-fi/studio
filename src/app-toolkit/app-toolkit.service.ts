@@ -3,6 +3,7 @@ import { BigNumber as BigNumberJS } from 'bignumber.js';
 import { Cache } from 'cache-manager';
 import { ethers } from 'ethers';
 
+import { AppService } from '~app/app.service';
 import { ContractFactory } from '~contract';
 import { MulticallService } from '~multicall/multicall.service';
 import { NetworkProviderService } from '~network-provider/network-provider.service';
@@ -20,6 +21,7 @@ export class AppToolkit implements IAppToolkit {
   constructor(
     // We need the forward ref here, since there is a circular dependency on the AppToolkit, since each helper needs the toolkit
     @Inject(forwardRef(() => AppToolkitHelperRegistry)) private readonly helperRegistry: AppToolkitHelperRegistry,
+    @Inject(AppService) private readonly appService: AppService,
     @Inject(NetworkProviderService) private readonly networkProviderService: NetworkProviderService,
     @Inject(PositionService) private readonly positionService: PositionService,
     @Inject(TokenService) private readonly tokenService: TokenService,
@@ -27,6 +29,16 @@ export class AppToolkit implements IAppToolkit {
     @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
   ) {
     this.contractFactory = new ContractFactory((network: Network) => this.networkProviderService.getProvider(network));
+  }
+
+  // Apps
+
+  async getApps() {
+    return this.appService.getApps();
+  }
+
+  async getApp(appId: string) {
+    return this.appService.getApp(appId);
   }
 
   // Network Related
