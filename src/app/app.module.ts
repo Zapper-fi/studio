@@ -4,12 +4,13 @@ import { DiscoveryModule } from '@nestjs/core';
 import { AppRegistry } from '~app/app.registry';
 import { AppService } from '~app/app.service';
 
+import { AppApiSource } from './app.api';
 import { AppController } from './app.controller';
 
 @Module({
   imports: [DiscoveryModule],
   controllers: [AppController],
-  providers: [AppService, AppRegistry],
+  providers: [AppService, AppApiSource, AppRegistry],
   exports: [AppService],
 })
 export class AppModule {}
