@@ -2,6 +2,7 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
+import { ARRAKIS_DEFINITION } from '~apps/arrakis/arrakis.definition';
 import { CompoundContractFactory } from '~apps/compound';
 import { CompoundSupplyTokenHelper } from '~apps/compound/helper/compound.supply.token-helper';
 import { CURVE_DEFINITION } from '~apps/curve';
@@ -42,6 +43,7 @@ export class EthereumRariFuseSupplyTokenFetcher implements PositionFetcher<AppTo
         network,
       },
       { appId: OLYMPUS_DEFINITION.id, groupIds: [OLYMPUS_DEFINITION.groups.gOhm.id], network },
+      { appId: ARRAKIS_DEFINITION.id, groupIds: [ARRAKIS_DEFINITION.groups.pool.id], network },
       { appId: 'mstable', groupIds: ['imusd'], network },
       { appId: 'sushiswap', groupIds: ['x-sushi'], network },
       { appId: 'harvest', groupIds: ['i-farm'], network },
