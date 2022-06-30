@@ -4,6 +4,16 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.99.1](https://github.com/Zapper-fi/studio/compare/v0.99.0...v0.99.1) (2022-06-30)
+
+
+### Bug Fixes
+
+* **arrakis:** Add missing app logo ([fd285d8](https://github.com/Zapper-fi/studio/commit/fd285d85ad0635bddd3c0811f3146a851da923f6))
+* farms has been renamed to governance ([#802](https://github.com/Zapper-fi/studio/issues/802)) ([8d36159](https://github.com/Zapper-fi/studio/commit/8d361597b8a265d51872e4f9abc9721f8af327e4))
+* **tokemak:** remove hidden flag from position group ([#801](https://github.com/Zapper-fi/studio/issues/801)) ([fa885ba](https://github.com/Zapper-fi/studio/commit/fa885ba4d8ba6768800ad7f451c76fd6caffc280))
+* **yearn:** Fix governance reward token as a Curve dependency ([#804](https://github.com/Zapper-fi/studio/issues/804)) ([84ff57d](https://github.com/Zapper-fi/studio/commit/84ff57d00a4e4cd08b15494fdd0541bf614c9614))
+
 ## [0.99.0](https://github.com/Zapper-fi/studio/compare/v0.98.0...v0.99.0) (2022-06-29)
 
 

@@ -9,8 +9,7 @@ import { BondTellerEth__factory } from './ethers';
 import { BondTellerMatic__factory } from './ethers';
 import { Scp__factory } from './ethers';
 import { Solace__factory } from './ethers';
-import { SolaceCoverProduct__factory } from './ethers';
-import { SolaceCoverProductV2__factory } from './ethers';
+import { SolaceCoverProductV3__factory } from './ethers';
 import { StakingRewards__factory } from './ethers';
 import { XSolacev1__factory } from './ethers';
 import { XsLocker__factory } from './ethers';
@@ -39,11 +38,8 @@ export class SolaceContractFactory extends ContractFactory {
   solace({ address, network }: ContractOpts) {
     return Solace__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
-  solaceCoverProduct({ address, network }: ContractOpts) {
-    return SolaceCoverProduct__factory.connect(address, this.appToolkit.getNetworkProvider(network));
-  }
-  solaceCoverProductV2({ address, network }: ContractOpts) {
-    return SolaceCoverProductV2__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  solaceCoverProductV3({ address, network }: ContractOpts) {
+    return SolaceCoverProductV3__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
   stakingRewards({ address, network }: ContractOpts) {
     return StakingRewards__factory.connect(address, this.appToolkit.getNetworkProvider(network));
@@ -61,8 +57,7 @@ export type { BondTellerEth } from './ethers';
 export type { BondTellerMatic } from './ethers';
 export type { Scp } from './ethers';
 export type { Solace } from './ethers';
-export type { SolaceCoverProduct } from './ethers';
-export type { SolaceCoverProductV2 } from './ethers';
+export type { SolaceCoverProductV3 } from './ethers';
 export type { StakingRewards } from './ethers';
 export type { XSolacev1 } from './ethers';
 export type { XsLocker } from './ethers';

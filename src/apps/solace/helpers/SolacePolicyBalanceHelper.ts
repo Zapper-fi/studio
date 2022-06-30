@@ -8,6 +8,9 @@ import { Network } from '~types/network.interface';
 import { SolaceContractFactory } from '../contracts';
 import { SOLACE_DEFINITION } from '../solace.definition';
 
+const SOLACE_COVER_POINTS_ADDRESS = '0x501ace72166956f57b44dbbcc531a8e741449997';
+const SOLACE_COVER_PRODUCT_ADDRESS = '0x501ACeB72d62C9875825b71d9f78a27780B5624d';
+
 @Injectable()
 export class SolacePolicyBalanceHelper {
   constructor(
@@ -22,13 +25,15 @@ export class SolacePolicyBalanceHelper {
       groupId: SOLACE_DEFINITION.groups.policies.id,
       network,
       resolveBalances: async ({ address, contractPosition }) => {
+        // does the user have a policy?
+        const spi = this.solaceContractFactory.solaceCoverProductV3({ address: SOLACE_COVER_PRODUCT_ADDRESS, network });
+        const policyID = await spi.policyOf(address);
+        if(policyID.eq(0)) return [];
         // Resolve the staked token and reward token from the contract position object
         const stakedToken = contractPosition.tokens.find(t => t.metaType === MetaType.SUPPLIED)!;
-
-        const product = this.solaceContractFactory.solaceCoverProduct({ address: contractPosition.address, network });
-        const bal = await product.accountBalanceOf(address);
-
-        return [drillBalance(stakedToken, bal.toString())];
+        const scp = this.solaceContractFactory.erc20({ address: SOLACE_COVER_POINTS_ADDRESS, network });
+        const balRaw = await scp.balanceOf(address);
+        return [drillBalance(stakedToken, balRaw.toString())];
       },
     });
   }
