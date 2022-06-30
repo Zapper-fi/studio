@@ -16,10 +16,7 @@ const groupId = GOOD_GHOSTING_DEFINITION.groups.game.id;
 
 @Register.BalanceFetcher(GOOD_GHOSTING_DEFINITION.id, network)
 export class CeloGoodGhostingBalanceFetcher implements BalanceFetcher {
-  constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(GoodGhostingBalanceFetcherHelper) private readonly helper: GoodGhostingBalanceFetcherHelper,
-  ) {}
+  constructor(@Inject(GoodGhostingBalanceFetcherHelper) private readonly helper: GoodGhostingBalanceFetcherHelper) {}
 
   async getBalances(address: string) {
     const gameBalance = await this.helper.getGameBalances(network, networkId, appId, groupId, address);

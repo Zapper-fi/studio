@@ -21,7 +21,6 @@ const networkId = NetworkId.CeloMainnet;
 @Register.ContractPositionFetcher({ appId, groupId, network })
 export class CeloGoodGhostingGameContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(GoodGhostingContractFactory) private readonly goodGhostingContractFactory: GoodGhostingContractFactory,
 
     @Inject(GoodGhostingGameContractPositionFetcherHelper)
