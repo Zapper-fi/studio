@@ -99,7 +99,10 @@ export class GoodGhostingBalanceFetcherHelper {
             tokens: [],
             balanceUSD: 0,
             dataProps: {},
-            displayProps: {},
+            displayProps: {
+              label: appId,
+              images: [getAppImg(appId)],
+            },
           };
 
           return balancePositionWithdrawn;
