@@ -97,7 +97,6 @@ export class UniswapV2PoolTokenHelper {
     resolvePoolTokenSupply,
     resolvePoolUnderlyingTokenAddresses,
     resolvePoolReserves,
-    resolveTokenDisplayPrefix = symbol => symbol,
     resolveTokenDisplaySymbol = token => token.symbol,
     resolvePoolVolumes = async () => [],
   }: UniswapV2PoolTokenHelperParams<T, V>) {
@@ -115,7 +114,7 @@ export class UniswapV2PoolTokenHelper {
       factoryAddress,
       resolveFactoryContract,
       resolvePoolContract,
-    }).catch(() => []);
+    });
 
     const poolVolumes: ResolvePoolVolumesResponse = await resolvePoolVolumes({
       appId,
@@ -181,8 +180,7 @@ export class UniswapV2PoolTokenHelper {
         const isBlocked = blockedPools.includes(address);
 
         // Display Props
-        const prefix = resolveTokenDisplayPrefix(symbol);
-        const label = `${prefix} ${resolveTokenDisplaySymbol(tokens[0])} / ${resolveTokenDisplaySymbol(tokens[1])}`;
+        const label = `${resolveTokenDisplaySymbol(tokens[0])} / ${resolveTokenDisplaySymbol(tokens[1])}`;
         const secondaryLabel = reservePercentages.map(p => `${Math.round(p * 100)}%`).join(' / ');
         const images = tokens.map(v => getImagesFromToken(v)).flat();
         const statsItems = [
@@ -194,13 +192,13 @@ export class UniswapV2PoolTokenHelper {
 
         const poolToken: AppTokenPosition<UniswapV2PoolTokenDataProps> = {
           type,
-          network,
           address,
-          decimals,
-          symbol,
-          supply,
+          network,
           appId,
           groupId,
+          symbol,
+          decimals,
+          supply,
           price,
           pricePerShare,
           tokens,

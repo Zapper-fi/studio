@@ -25,7 +25,7 @@ export class PolygonKlimaBondContractPositionFetcher implements PositionFetcher<
     private readonly olympusContractPositionHelper: OlympusBondContractPositionHelper,
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
   ) {}
-  async getPositions(): Promise<ContractPosition[]> {
+  async getPositions() {
     const klimaToken = await this.appToolkit.getBaseTokenPrice({
       address: KLIMA_DEFINITION.token!.address,
       network,
@@ -35,12 +35,12 @@ export class PolygonKlimaBondContractPositionFetcher implements PositionFetcher<
 
     const depositories = [
       {
-        depositoryAddress: '0x7De627C56D26529145a5f9D85948ecBeAF9a4b34',
+        depositoryAddress: '0x7de627c56d26529145a5f9d85948ecbeaf9a4b34',
         symbol: 'BCT LP',
         images: [getTokenImg(BCT_ADDRESS, network)],
       },
       {
-        depositoryAddress: '0x27217c3F5bEc4c12Fa506A101bC4bd15417AEAa8',
+        depositoryAddress: '0x27217c3f5bec4c12fa506a101bc4bd15417aeaa8',
         symbol: 'MC02 LP',
         images: [getTokenImg(MC02_ADDRESS, network)],
       },
@@ -55,12 +55,12 @@ export class PolygonKlimaBondContractPositionFetcher implements PositionFetcher<
         images: [getTokenImg(BCT_ADDRESS, network), getTokenImg(USDC_ADDRESS, network)],
       },
       {
-        depositoryAddress: '0xb5aF101742EcAe095944F60C384d09453006bFde',
+        depositoryAddress: '0xb5af101742ecae095944f60c384d09453006bfde',
         symbol: 'KLIMA-USDC LP',
         images: [getAppImg(appId), getTokenImg(USDC_ADDRESS, network)],
       },
       {
-        depositoryAddress: '0xf9c3FC299dE5f86d9CD6a724e6B44933720f5e6D',
+        depositoryAddress: '0xf9c3fc299de5f86d9cd6a724e6b44933720f5e6d',
         symbol: 'KLIMA-MC02 LP',
         images: [getAppImg(appId), getTokenImg(MC02_ADDRESS, network)],
       },

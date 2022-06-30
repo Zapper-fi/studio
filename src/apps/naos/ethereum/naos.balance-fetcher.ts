@@ -9,6 +9,8 @@ import { Network } from '~types/network.interface';
 import { NaosStakingPools, NaosContractFactory } from '../contracts';
 import { NAOS_DEFINITION } from '../naos.definition';
 
+const network = Network.ETHEREUM_MAINNET;
+
 @Register.BalanceFetcher(NAOS_DEFINITION.id, Network.ETHEREUM_MAINNET)
 export class EthereumNaosBalanceFetcher implements BalanceFetcher {
   constructor(
@@ -18,7 +20,6 @@ export class EthereumNaosBalanceFetcher implements BalanceFetcher {
   ) {}
 
   async getStakedBalances(address: string) {
-    const network = Network.ETHEREUM_MAINNET;
     return this.appToolkit.helpers.masterChefContractPositionBalanceHelper.getBalances<NaosStakingPools>({
       address,
       appId: NAOS_DEFINITION.id,

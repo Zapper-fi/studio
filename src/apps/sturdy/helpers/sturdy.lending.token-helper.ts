@@ -14,6 +14,7 @@ type SturdyLendingTokenHelperParams = Pick<
   | 'groupId'
   | 'network'
   | 'protocolDataProviderAddress'
+  | 'isDebt'
   | 'resolveTokenAddress'
   | 'resolveLendingRate'
   | 'resolveLabel'
@@ -32,6 +33,7 @@ export class SturdyLendingTokenHelper {
     groupId,
     network,
     protocolDataProviderAddress,
+    isDebt,
     resolveTokenAddress,
     resolveLendingRate,
     resolveLabel,
@@ -42,6 +44,7 @@ export class SturdyLendingTokenHelper {
       groupId,
       network,
       protocolDataProviderAddress,
+      isDebt,
       resolveContract: ({ address }) => this.contractFactory.sturdyLendingPool({ network, address }),
       resolveReserveTokens: ({ contract }) => contract.getReservesList(),
       resolveReserveTokenAddresses: async ({ contract, multicall, reserveTokenAddress }) =>

@@ -23,7 +23,7 @@ type EnzymeFinanceVaultsResponse = {
 
 const query = gql`
   query fetchEnzymeVaults {
-    funds(first: 100, orderBy: investmentCount, orderDirection: desc) {
+    funds(first: 250, orderBy: investmentCount, orderDirection: desc) {
       id
     }
   }
@@ -33,7 +33,7 @@ const appId = ENZYME_FINANCE_DEFINITION.id;
 const groupId = ENZYME_FINANCE_DEFINITION.groups.vault.id;
 const network = Network.ETHEREUM_MAINNET;
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
 export class EthereumEnzymeFinanceVaultTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(EnzymeFinanceContractFactory) private readonly enzymeFinanceContractFactory: EnzymeFinanceContractFactory,

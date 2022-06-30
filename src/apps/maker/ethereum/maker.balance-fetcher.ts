@@ -39,7 +39,7 @@ export class EthereumMakerBalanceFetcher implements BalanceFetcher {
       address,
       appId: MAKER_DEFINITION.id,
       groupId: MAKER_DEFINITION.groups.governance.id,
-      network: Network.ETHEREUM_MAINNET,
+      network,
       resolveContract: ({ address, network }) => this.makerContractFactory.makerGovernance({ address, network }),
       resolveStakedTokenBalance: ({ contract, address, multicall }) => multicall.wrap(contract).deposits(address),
       resolveRewardTokenBalances: () => 0, // Autocompounds

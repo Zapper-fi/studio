@@ -43,9 +43,7 @@ export class PoolTogetherAirdropTokenBalancesHelper {
     if (isClaimed) return [];
 
     const claimableToken = baseTokens.find(p => p.symbol === 'POOL');
-    if (!claimableToken) {
-      return null;
-    }
+    if (!claimableToken) return [];
 
     const claimableBalanceRaw = String(parseInt(merkleResponseData.amount, 16));
     const claimableTokenBalance = drillBalance(claimableToken, claimableBalanceRaw);

@@ -1,9 +1,8 @@
 import { Inject } from '@nestjs/common';
 
-import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
-import { AaveV2LendingBalanceHelper, AaveV2ClaimableBalanceHelper, AaveV2HealthFactorMetaHelper } from '~apps/aave-v2';
+import { AaveV2LendingBalanceHelper, AaveV2HealthFactorMetaHelper, AaveV2ClaimableBalanceHelper } from '~apps/aave-v2';
 import { BalanceFetcher } from '~balance/balance-fetcher.interface';
 import { Network } from '~types/network.interface';
 
@@ -14,7 +13,6 @@ const network = Network.GNOSIS_MAINNET;
 @Register.BalanceFetcher(AGAVE_DEFINITION.id, network)
 export class GnosisAgaveBalanceFetcher implements BalanceFetcher {
   constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(AaveV2LendingBalanceHelper) private readonly aaveV2LendingBalanceHelper: AaveV2LendingBalanceHelper,
     @Inject(AaveV2ClaimableBalanceHelper) private readonly aaveV2ClaimableBalanceHelper: AaveV2ClaimableBalanceHelper,
     @Inject(AaveV2HealthFactorMetaHelper) private readonly healthFactorHelper: AaveV2HealthFactorMetaHelper,
@@ -45,14 +43,14 @@ export class GnosisAgaveBalanceFetcher implements BalanceFetcher {
     ]).then(v => v.flat());
   }
 
-  private async getClaimableBalances(address: string) {
-    return this.aaveV2ClaimableBalanceHelper.getClaimableBalances({
-      address,
-      appId: AGAVE_DEFINITION.id,
-      groupId: AGAVE_DEFINITION.groups.claimable.id,
-      network,
-    });
-  }
+  // private async getClaimableBalances(address: string) {
+  //   return this.aaveV2ClaimableBalanceHelper.getClaimableBalances({
+  //     address,
+  //     appId: AGAVE_DEFINITION.id,
+  //     groupId: AGAVE_DEFINITION.groups.claimable.id,
+  //     network,
+  //   });
+  // }
 
   private async getHealthFactorMeta(address: string) {
     return this.healthFactorHelper.getHealthFactor({
@@ -63,9 +61,10 @@ export class GnosisAgaveBalanceFetcher implements BalanceFetcher {
   }
 
   async getBalances(address: string) {
-    const [lendingBalances, claimable, healthFactorMeta] = await Promise.all([
+    //const [lendingBalances, claimable, healthFactorMeta] = await Promise.all([
+    const [lendingBalances, healthFactorMeta] = await Promise.all([
       this.getLendingBalances(address),
-      this.getClaimableBalances(address),
+      //this.getClaimableBalances(address),
       this.getHealthFactorMeta(address),
     ]);
 
@@ -75,10 +74,10 @@ export class GnosisAgaveBalanceFetcher implements BalanceFetcher {
         assets: lendingBalances,
         meta: lendingBalances.find(v => v.balanceUSD < 0) ? [healthFactorMeta] : [],
       },
-      {
-        label: 'Reward',
-        assets: claimable,
-      },
+      // {
+      //   label: 'Reward',
+      //   assets: claimable,
+      // },
     ]);
   }
 }

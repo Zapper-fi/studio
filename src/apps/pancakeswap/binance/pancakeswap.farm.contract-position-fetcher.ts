@@ -36,7 +36,7 @@ export class BinanceSmartChainPancakeswapFarmContractPositionFetcher implements 
           .wrap(contract)
           .poolInfo(poolIndex)
           .then(i => i.lpToken),
-      resolveTotalValueLocked: async ({ multicall, depositTokenAddress, address, poolIndex }) => {
+      resolveLiquidity: async ({ multicall, depositTokenAddress, address, poolIndex }) => {
         const tokenContract = this.contractFactory.erc20({ network, address: depositTokenAddress });
         const balanceRaw = await multicall.wrap(tokenContract).balanceOf(address);
         if (poolIndex !== 0) return balanceRaw;

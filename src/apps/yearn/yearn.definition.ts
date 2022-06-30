@@ -8,8 +8,9 @@ export const YEARN_DEFINITION = appDefinition({
   name: 'Yearn',
   description: `Automate your yield. DeFi made simple.`,
   groups: {
-    farm: { id: 'farm', type: GroupType.POSITION, label: 'Governance', isHiddenFromExplore: true },
-    vault: { id: 'vault', type: GroupType.TOKEN, label: 'Vaults' },
+    v1Vault: { id: 'v1-vault', type: GroupType.TOKEN, label: 'V1 Vaults' },
+    v2Vault: { id: 'v2-vault', type: GroupType.TOKEN, label: 'Vaults' },
+    governance: { id: 'governance', type: GroupType.POSITION, label: 'Governance' },
     yield: { id: 'yield', type: GroupType.TOKEN, label: 'Yield Tokens', isHiddenFromExplore: true }, // We seem to have these twice e.g. the same yUSDT is here and in vaults
   },
   url: 'https://yearn.finance/',

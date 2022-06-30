@@ -5,7 +5,7 @@ import { Network } from '~types/network.interface';
 
 export const BASTION_PROTOCOL_DEFINITION = appDefinition({
   id: 'bastion-protocol',
-  name: 'bastion protocol',
+  name: 'Bastion',
   description: 'Liquidity Foundation of Aurora',
   url: 'https://bastionprotocol.com/',
 
@@ -13,13 +13,15 @@ export const BASTION_PROTOCOL_DEFINITION = appDefinition({
     supply: {
       id: 'supply',
       type: GroupType.TOKEN,
-      label: 'Supply',
+      label: 'Lending',
+      groupLabel: 'Supply',
     },
 
     borrow: {
       id: 'borrow',
       type: GroupType.TOKEN,
-      label: 'Borrow',
+      label: 'Lending',
+      groupLabel: 'Borrow',
     },
 
     swap: {
@@ -28,7 +30,27 @@ export const BASTION_PROTOCOL_DEFINITION = appDefinition({
       label: 'Stableswap Pools',
     },
   },
-
+  presentationConfig: {
+    tabs: [
+      {
+        label: 'Lending',
+        viewType: 'split',
+        views: [
+          {
+            viewType: 'list',
+            label: 'Supply',
+            groupIds: ['supply'],
+          },
+          {
+            viewType: 'list',
+            label: 'Borrow',
+            groupIds: ['borrow'],
+          },
+        ],
+      },
+      { label: 'Stableswap Pools', viewType: 'list', groupIds: ['swap'] },
+    ],
+  },
   tags: [AppTag.LENDING, AppTag.LIQUIDITY_POOL],
   keywords: [],
   links: {},

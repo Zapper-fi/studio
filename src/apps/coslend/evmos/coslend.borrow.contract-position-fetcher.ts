@@ -12,7 +12,7 @@ const appId = COSLEND_DEFINITION.id;
 const groupId = COSLEND_DEFINITION.groups.borrow.id;
 const network = Network.EVMOS_MAINNET;
 
-@Register.ContractPositionFetcher({ appId, groupId, network })
+@Register.ContractPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
 export class EvmosCoslendBorrowContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(CoslendBorrowContractPositionHelper)

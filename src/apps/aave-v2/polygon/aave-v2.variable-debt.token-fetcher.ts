@@ -15,10 +15,7 @@ const network = Network.POLYGON_MAINNET;
 
 @Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
 export class PolygonAaveV2VariableDebtTokenFetcher implements PositionFetcher<AppTokenPosition> {
-  constructor(
-    @Inject(AaveV2LendingTokenHelper)
-    private readonly aaveV2LendingTokenHelper: AaveV2LendingTokenHelper,
-  ) {}
+  constructor(@Inject(AaveV2LendingTokenHelper) private readonly aaveV2LendingTokenHelper: AaveV2LendingTokenHelper) {}
 
   async getPositions() {
     return this.aaveV2LendingTokenHelper.getTokens({
@@ -29,7 +26,7 @@ export class PolygonAaveV2VariableDebtTokenFetcher implements PositionFetcher<Ap
       protocolDataProviderAddress: '0x7551b5d2763519d4e37e8b81929d336de671d46d',
       resolveTokenAddress: ({ reserveTokenAddressesData }) => reserveTokenAddressesData.variableDebtTokenAddress,
       resolveLendingRate: ({ reserveData }) => reserveData.variableBorrowRate,
-      resolveLabel: ({ reserveToken }) => `Borrowed ${getLabelFromToken(reserveToken)}`,
+      resolveLabel: ({ reserveToken }) => getLabelFromToken(reserveToken),
       resolveApyLabel: ({ apy }) => `${(apy * 100).toFixed(3)}% APR (variable)`,
     });
   }

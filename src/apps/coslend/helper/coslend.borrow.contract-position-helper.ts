@@ -77,12 +77,15 @@ export class CoslendBorrowContractPositionHelper {
       const borrowApy = appToken.dataProps.borrowApy;
 
       // Display Props
-      const label = `Borrowed ${getLabelFromToken(appToken.tokens[0])}`;
+      const label = `${getLabelFromToken(appToken.tokens[0])}`;
       const secondaryLabel = buildDollarDisplayItem(underlyingPrice);
       const tertiaryLabel = isNumber(borrowApy) ? `${(borrowApy * 100).toFixed(3)}% APR` : '';
       const images = appToken.displayProps.images;
       const statsItems = isNumber(borrowApy)
-        ? [{ label: 'Borrow APR', value: buildPercentageDisplayItem(borrowApy) }]
+        ? [
+            { label: 'Borrow APR', value: buildPercentageDisplayItem(borrowApy) },
+            { label: 'Liquidity', value: buildDollarDisplayItem(borrowLiquidity) },
+          ]
         : [];
 
       const contractPosition: ContractPosition<CoslendSupplyTokenDataProps> = {

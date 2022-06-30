@@ -26,7 +26,7 @@ export class PolygonAaveV2StableDebtTokenFetcher implements PositionFetcher<AppT
       protocolDataProviderAddress: '0x7551b5d2763519d4e37e8b81929d336de671d46d',
       resolveTokenAddress: ({ reserveTokenAddressesData }) => reserveTokenAddressesData.stableDebtTokenAddress,
       resolveLendingRate: ({ reserveData }) => reserveData.stableBorrowRate,
-      resolveLabel: ({ reserveToken }) => `Borrowed ${getLabelFromToken(reserveToken)}`,
+      resolveLabel: ({ reserveToken }) => getLabelFromToken(reserveToken),
       resolveApyLabel: ({ apy }) => `${(apy * 100).toFixed(3)}% APR (stable)`,
     });
   }

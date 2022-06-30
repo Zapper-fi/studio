@@ -143,6 +143,7 @@ export class CurvePoolTokenHelper {
         // Display Properties
         const underlyingLabels = tokens.map(v => (isMetaPool(v) ? getLabelFromToken(v) : v.symbol)); // Flatten metapool label
         const label = definition.label ?? underlyingLabels.join(' / ');
+
         const secondaryLabel = reservePercentages.map(p => `${Math.floor(p * 100)}%`).join(' / ');
         const images = underlyingTokens.map(t => getImagesFromToken(t)).flat();
 

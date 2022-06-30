@@ -38,7 +38,37 @@ export const AAVE_V2_DEFINITION = appDefinition({
       isHiddenFromExplore: true,
     },
   },
-
+  presentationConfig: {
+    tabs: [
+      {
+        label: 'Lending',
+        viewType: 'split',
+        views: [
+          {
+            viewType: 'list',
+            label: 'Supply',
+            groupIds: ['supply'],
+          },
+          {
+            viewType: 'split',
+            label: 'Borrow',
+            views: [
+              {
+                viewType: 'list',
+                label: 'Variable',
+                groupIds: ['variable-debt'],
+              },
+              {
+                viewType: 'list',
+                label: 'Stable',
+                groupIds: ['stable-debt'],
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW, AppAction.TRANSACT],
     [Network.AVALANCHE_MAINNET]: [AppAction.VIEW, AppAction.TRANSACT],
