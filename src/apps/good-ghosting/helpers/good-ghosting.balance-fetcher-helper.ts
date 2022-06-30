@@ -77,6 +77,7 @@ export class GoodGhostingBalanceFetcherHelper {
         let balance = amountPaid;
         let playerIncentive = BigNumber.from(0);
         const isWinner = mostRecentSegmentPaid === gameLastSegment;
+        const playerTokens = [];
 
         if (winnerCount && isWinner) {
           const playerInterest = gameInterest.div(winnerCount);
@@ -87,21 +88,21 @@ export class GoodGhostingBalanceFetcherHelper {
           playerIncentive = incentiveAmount.div(winnerCount);
         }
 
-        if (player.withdrawn) {
-          balance = BigNumber.from(0);
-        }
+        if (!player.withdrawn) {
+          if (stakedToken) {
+            const stakedTokenBalance = drillBalance(stakedToken, amountPaid.toString());
+            playerTokens.push(stakedTokenBalance);
+          }
 
-        const stakedTokenBalance = drillBalance(stakedToken, amountPaid.toString());
-        const playerTokens = [stakedTokenBalance];
+          if (rewardToken && isWinner) {
+            const claimableTokenBalance = drillBalance(rewardToken, balance.toString());
+            playerTokens.push(claimableTokenBalance);
+          }
 
-        if (rewardToken && isWinner) {
-          const claimableTokenBalance = drillBalance(rewardToken, balance.toString());
-          playerTokens.push(claimableTokenBalance);
-        }
-
-        if (incentiveToken && isWinner) {
-          const incentiveTokenBalance = drillBalance(incentiveToken, playerIncentive.toString());
-          playerTokens.push(incentiveTokenBalance);
+          if (incentiveToken && isWinner) {
+            const incentiveTokenBalance = drillBalance(incentiveToken, playerIncentive.toString());
+            playerTokens.push(incentiveTokenBalance);
+          }
         }
 
         const tokens = playerTokens.filter(v => v.balanceUSD > 0);
