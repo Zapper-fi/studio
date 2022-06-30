@@ -2,6 +2,7 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
+import { CURVE_DEFINITION } from '~apps/curve/curve.definition';
 import {
   SynthetixContractFactory,
   SynthetixRewards,
@@ -46,6 +47,7 @@ export class EthereumYearnGovernanceContractPositionFetcher implements PositionF
       groupId,
       network,
       resolveFarmDefinitions: async () => FARMS,
+      dependencies: [{ appId: CURVE_DEFINITION.id, groupIds: [CURVE_DEFINITION.groups.pool.id], network }],
       resolveFarmContract: ({ network, address }) =>
         this.synthetixContractFactory.synthetixRewards({ network, address }),
       resolveIsActive: this.synthetixSingleStakingIsActiveStrategy.build({
