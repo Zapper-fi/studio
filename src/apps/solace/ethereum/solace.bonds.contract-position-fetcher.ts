@@ -53,14 +53,15 @@ export class EthereumSolaceBondsContractPositionFetcher implements PositionFetch
       BOND_TELLER_ADDRESSES.map(async bondTellerAddress => {
         const bondTellerContract = this.solaceContractFactory.bondTellerErc20({ address: bondTellerAddress, network });
 
-        const [underlyingAddressRaw, underWritingPoolAddress] = await Promise.all([
+        const [underlyingAddressRaw, underWritingPoolAddress, name] = await Promise.all([
           multicall.wrap(bondTellerContract).principal(),
           multicall.wrap(bondTellerContract).underwritingPool(),
+          multicall.wrap(bondTellerContract).name(),
         ]);
 
         const underlyingAddress = underlyingAddressRaw.toLowerCase();
 
-        const depositToken = allTokens.find(v => v.address === underlyingAddress);
+        const depositToken = baseTokens.find(v => v.address === underlyingAddress);
         if (!depositToken || !solaceToken) return null;
         const tokens = [supplied(depositToken), claimable(solaceToken)];
 
@@ -80,7 +81,7 @@ export class EthereumSolaceBondsContractPositionFetcher implements PositionFetch
             liquidity,
           },
           displayProps: {
-            label: `${getLabelFromToken(depositToken)}`,
+            label: name,
             images: getImagesFromToken(depositToken),
             statsItems: [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }],
           },

@@ -5,7 +5,7 @@ import { PositionBalanceFetcher } from '~position/position-balance-fetcher.inter
 import { AppTokenPositionBalance } from '~position/position-balance.interface';
 import { Network } from '~types/network.interface';
 
-import { SynthetixTrasnferrableSnxTokenBalanceHelper } from '../helpers/synthetix.transferable-snx.token-balance-helper';
+import { SynthetixTransferrableSnxTokenBalanceHelper } from '../helpers/synthetix.transferable-snx.token-balance-helper';
 import { SYNTHETIX_DEFINITION } from '../synthetix.definition';
 
 const appId = SYNTHETIX_DEFINITION.id;
@@ -15,8 +15,8 @@ const network = Network.ETHEREUM_MAINNET;
 @Register.TokenPositionBalanceFetcher({ appId, groupId, network })
 export class EthereumSynthetixTransferableSnxBalanceFetcher implements PositionBalanceFetcher<AppTokenPositionBalance> {
   constructor(
-    @Inject(SynthetixTrasnferrableSnxTokenBalanceHelper)
-    private readonly tokenBalanceHelper: SynthetixTrasnferrableSnxTokenBalanceHelper,
+    @Inject(SynthetixTransferrableSnxTokenBalanceHelper)
+    private readonly tokenBalanceHelper: SynthetixTransferrableSnxTokenBalanceHelper,
   ) {}
 
   async getBalances(address: string) {

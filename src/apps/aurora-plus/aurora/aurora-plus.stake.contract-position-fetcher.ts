@@ -1,12 +1,14 @@
 import { Inject } from '@nestjs/common';
+import { compact, range } from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
-import { ContractType } from '~position/contract.interface';
 import { claimable, supplied } from '~position/position.utils';
+import { BaseToken } from '~position/token.interface';
 import { Network } from '~types/network.interface';
 
 import { AURORA_PLUS_DEFINITION } from '../aurora-plus.definition';
@@ -16,34 +18,34 @@ const appId = AURORA_PLUS_DEFINITION.id;
 const groupId = AURORA_PLUS_DEFINITION.groups.stake.id;
 const network = Network.AURORA_MAINNET;
 
-const AURORA_ADDRESS = "0x8bec47865ade3b172a928df8f990bc7f2a3b9f79".toLowerCase();
-const AURORA_STAKING_ADDRESS = "0xccc2b1ad21666a5847a804a73a41f904c4a4a0ec".toLowerCase();
-const BASTION_ADDRESS = "0x9f1f933c660a1dc856f0e0fe058435879c5ccef0".toLowerCase();
-const AURIGAMI_ADDRESS = "0x09c9d464b58d96837f8d8b6f4d9fe4ad408d3a4f".toLowerCase();
-const USN_ADDRESS = "0x5183e1b1091804bc2602586919e6880ac1cf2896".toLowerCase();
-const TRISOLARIS_ADDRESS = "0xfa94348467f64d5a457f75f8bc40495d33c65abb".toLowerCase();
-
+const AURORA_ADDRESS = '0x8bec47865ade3b172a928df8f990bc7f2a3b9f79'.toLowerCase();
+const AURORA_STAKING_ADDRESS = '0xccc2b1ad21666a5847a804a73a41f904c4a4a0ec'.toLowerCase();
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
-export class AuroraAuroraPlusStakeContractPositionFetcher implements PositionFetcher<ContractPosition>
-{
+export class AuroraAuroraPlusStakeContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(APP_TOOLKIT)
     private readonly appToolkit: IAppToolkit,
     @Inject(AuroraPlusContractFactory)
     private readonly auroraPlusContractFactory: AuroraPlusContractFactory,
-  ) { }
+  ) {}
 
   async getPositions() {
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
+    const tokens: BaseToken[] = [];
     const aurora = baseTokens.find(t => t.address === AURORA_ADDRESS)!;
-    const bastion = baseTokens.find(t => t.address === BASTION_ADDRESS)!;
-    const aurigami = baseTokens.find(t => t.address === AURIGAMI_ADDRESS)!;
-    const usn = baseTokens.find(t => t.address === USN_ADDRESS)!;
-    const trisolaris = baseTokens.find(t => t.address === TRISOLARIS_ADDRESS)!;
+    if (aurora) tokens.push(supplied(aurora));
 
-    // console.log(aurora, bastion, aurigami, usn, trisolaris);
-    if (!aurora) return [];
+    const multicall = this.appToolkit.getMulticall(network);
+    const staking = this.auroraPlusContractFactory.staking({ address: AURORA_STAKING_ADDRESS, network });
+    const mcs = multicall.wrap(staking);
+    const streamCount = await staking.getStreamsCount();
+    const streamIDs = range(0, streamCount.toNumber());
+    const rewardTokenAddresses = await Promise.all(
+      streamIDs.map((streamID: number) => mcs.getStream(streamID).then(r => r.rewardToken.toLowerCase())),
+    );
+    const rewardTokens = rewardTokenAddresses.map(addr => baseTokens.find(t => t.address === addr));
+    tokens.push(...compact(rewardTokens).map(v => claimable(v)));
 
     const position: ContractPosition = {
       type: ContractType.POSITION,
@@ -51,10 +53,10 @@ export class AuroraAuroraPlusStakeContractPositionFetcher implements PositionFet
       appId,
       groupId,
       network,
-      tokens: [supplied(aurora), claimable(aurora), claimable(bastion), claimable(aurigami), claimable(usn), claimable(trisolaris)],
+      tokens: tokens,
       dataProps: {},
       displayProps: {
-        label: `Staked Aurora`,
+        label: `Staked AURORA`,
         images: getImagesFromToken(aurora),
       },
     };

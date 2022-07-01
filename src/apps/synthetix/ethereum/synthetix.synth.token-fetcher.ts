@@ -12,12 +12,12 @@ const appId = SYNTHETIX_DEFINITION.id;
 const groupId = SYNTHETIX_DEFINITION.groups.synth.id;
 const network = Network.ETHEREUM_MAINNET;
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
 export class EthereumSynthetixSynthTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(@Inject(SynthetixSynthTokenHelper) private readonly tokenHelper: SynthetixSynthTokenHelper) {}
 
   async getPositions() {
-    return this.tokenHelper.getTokens({
+    return await this.tokenHelper.getTokens({
       network,
       resolverAddress: '0x823be81bbf96bec0e25ca13170f5aacb5b79ba83',
       exchangeable: true,
