@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.100.2](https://github.com/Zapper-fi/studio/compare/v0.100.1...v0.100.2) (2022-07-01)
+
+
+### Bug Fixes
+
+* **curve:** Fix Curve label for cases with a single app token like ibEUR / sEUR ([f95426b](https://github.com/Zapper-fi/studio/commit/f95426b9891628b7c89b3d9e9a7acf97d5bfa8fd))
+
 ## [0.100.1](https://github.com/Zapper-fi/studio/compare/v0.100.0...v0.100.1) (2022-06-30)
 
 
