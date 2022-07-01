@@ -4,6 +4,15 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.100.3](https://github.com/Zapper-fi/studio/compare/v0.100.2...v0.100.3) (2022-07-01)
+
+
+### Bug Fixes
+
+* add aurora plus logo ([#817](https://github.com/Zapper-fi/studio/issues/817)) ([1c30bd4](https://github.com/Zapper-fi/studio/commit/1c30bd44cd07ad088a570996299742dcd4688a50))
+* **global:** Roll API key ([4894859](https://github.com/Zapper-fi/studio/commit/489485930607adc5c7dd9fa3ad23b48e38838528))
+* solace fix addresses and style ([#815](https://github.com/Zapper-fi/studio/issues/815)) ([2659337](https://github.com/Zapper-fi/studio/commit/2659337aea1f2913f14147f15a3f6745357e4398))
+
 ## [0.100.2](https://github.com/Zapper-fi/studio/compare/v0.100.1...v0.100.2) (2022-07-01)
 
 
