@@ -18,7 +18,7 @@ const appId = SOLACE_DEFINITION.id;
 const groupId = SOLACE_DEFINITION.groups.bonds.id;
 const network = Network.ETHEREUM_MAINNET;
 
-const SOLACE_TOKEN_ADDRESS = '0x501ace9c35e60f03a2af4d484f49f9b1efde9f40';
+const SOLACE_ADDRESS = '0x501ace9c35e60f03a2af4d484f49f9b1efde9f40';
 
 const BOND_TELLER_ADDRESSES = [
   '0x501ace677634fd09a876e88126076933b686967a', // DAI Bond
