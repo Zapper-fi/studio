@@ -65,9 +65,12 @@ export class CurvePoolTokenHelper {
 
   private async resolvePoolLabel(tokens: Token[]) {
     // Determine source app prefix from underlying tokens (Aave V2, Yearn, etc.)
-    const appSourcesAll = tokens.filter(isAppToken).map(v => v.appId);
+    const appTokens = tokens.filter(isAppToken);
+    const appSourcesAll = appTokens.map(v => v.appId);
     const appSources = uniq(appSourcesAll).filter(v => v !== CURVE_DEFINITION.id);
-    const appSource = appSources.length === 1 ? await this.appToolkit.getApp(appSources[0]) : null;
+
+    const hasSingleAppSource = appTokens.length === tokens.length && appSources.length === 1;
+    const appSource = hasSingleAppSource ? await this.appToolkit.getApp(appSources[0]) : null;
     const appSourcePrefix = appSource?.name.replace(/V\d$/, '').trim();
 
     // Determine the pool label from the underlying labels
