@@ -18,7 +18,7 @@ const groupId = SOLACE_DEFINITION.groups.policies.id;
 const network = Network.POLYGON_MAINNET;
 
 const DAI_ADDRESS = '0x8f3cf7ad23cd3cadbd9735aff958023239c6a063';
-const SOLACE_COVER_PRODUCT_ADDRESS = '0x501acec83d440c00644ca5c48d059e1840852a64';
+const SOLACE_COVER_PRODUCT_ADDRESS = '0x501aceb72d62c9875825b71d9f78a27780b5624d';
 const SOLACE_ADDRESS = '0x501ace9c35e60f03a2af4d484f49f9b1efde9f40';
 
 const PREMIUM_POOL_ADDRESS = '0x37cd57c6c7243455ac66631ce37bb7f977c71442';
@@ -45,7 +45,7 @@ export class PolygonSolacePoliciesContractPositionFetcher implements PositionFet
     const tokens = [supplied(dai)];
 
     let liquidity = 0;
-    for(var i = 0; i < PREMIUM_POOL_TOKENS.length; ++i) {
+    for (let i = 0; i < PREMIUM_POOL_TOKENS.length; ++i) {
       const tokenAddr = PREMIUM_POOL_TOKENS[i];
       const tokenContract = this.solaceContractFactory.erc20({ address: tokenAddr, network });
       const [balanceOfRaw, decimals] = await Promise.all([
@@ -54,7 +54,7 @@ export class PolygonSolacePoliciesContractPositionFetcher implements PositionFet
       ]);
       const balanceOf = Number(balanceOfRaw) / 10 ** decimals;
       const tokenZapper = baseTokens.find(t => t.address === tokenAddr)!;
-      if(!!tokenZapper) liquidity += balanceOf * tokenZapper.price;
+      if (tokenZapper) liquidity += balanceOf * tokenZapper.price;
     }
 
     const position: ContractPosition = {
