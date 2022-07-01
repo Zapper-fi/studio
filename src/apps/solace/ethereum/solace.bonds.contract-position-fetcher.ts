@@ -4,7 +4,7 @@ import { compact } from 'lodash';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
-import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
@@ -18,7 +18,7 @@ const appId = SOLACE_DEFINITION.id;
 const groupId = SOLACE_DEFINITION.groups.bonds.id;
 const network = Network.ETHEREUM_MAINNET;
 
-const SOLACE_TOKEN_ADDRESS = '0x501ace9c35e60f03a2af4d484f49f9b1efde9f40';
+const SOLACE_ADDRESS = '0x501ace9c35e60f03a2af4d484f49f9b1efde9f40';
 
 const BOND_TELLER_ADDRESSES = [
   '0x501ace677634fd09a876e88126076933b686967a', // DAI Bond
@@ -40,14 +40,7 @@ export class EthereumSolaceBondsContractPositionFetcher implements PositionFetch
   async getPositions() {
     const multicall = this.appToolkit.getMulticall(network);
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
-    const appTokens = await this.appToolkit.getAppTokenPositions({
-      appId,
-      groupIds: [SOLACE_DEFINITION.groups.scp.id],
-      network,
-    });
-
-    const allTokens = [...appTokens, ...baseTokens];
-    const solaceToken = baseTokens.find(t => t.address === SOLACE_TOKEN_ADDRESS)!;
+    const solaceToken = baseTokens.find(t => t.address === SOLACE_ADDRESS)!;
 
     const positions = await Promise.all(
       BOND_TELLER_ADDRESSES.map(async bondTellerAddress => {
