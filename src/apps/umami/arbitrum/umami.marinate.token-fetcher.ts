@@ -1,9 +1,14 @@
 import { Inject } from '@nestjs/common';
+import axios from 'axios';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
-import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
+import {
+  buildDollarDisplayItem,
+  buildPercentageDisplayItem,
+} from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { CacheOnInterval } from '~cache/cache-on-interval.decorator';
 import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
@@ -16,12 +21,34 @@ const appId = UMAMI_DEFINITION.id;
 const groupId = UMAMI_DEFINITION.groups.marinate.id;
 const network = Network.ARBITRUM_MAINNET;
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
+type UmamiMarinateApiObject = {
+  apr: string;
+  marinateTVL: string;
+};
+
+export type UmamiApiDatas = {
+  marinate: UmamiMarinateApiObject;
+};
+
+@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
 export class ArbitrumUmamiMarinateTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(UmamiContractFactory) private readonly umamiContractFactory: UmamiContractFactory,
   ) {}
+
+  @CacheOnInterval({
+    key: `studio:${network}:${appId}:${groupId}:informations`,
+    timeout: 15 * 60 * 1000,
+  })
+  async getUmamiInformations() {
+    const data = await axios.get<UmamiApiDatas>('https://horseysauce.xyz/').then(v => v.data);
+
+    const { marinate } = data;
+    const { apr } = marinate;
+
+    return apr;
+  }
 
   async getPositions() {
     const UMAMI_ADDRESS = '0x1622bF67e6e5747b81866fE0b85178a93C7F86e3'.toLowerCase();
@@ -43,12 +70,28 @@ export class ArbitrumUmamiMarinateTokenFetcher implements PositionFetcher<AppTok
     const baseTokenDependencies = await this.appToolkit.getBaseTokenPrices(network);
     const underlyingToken = baseTokenDependencies.find(v => v.address === UMAMI_ADDRESS);
     if (!underlyingToken) return [];
+
+    const aprRaw = await this.getUmamiInformations();
+    const apr = Number(aprRaw);
+
     const tokens = [underlyingToken];
     const pricePerShare = 1.0;
     const price = pricePerShare * underlyingToken.price;
+    const liquidity = supply * price;
     const label = `Marinating UMAMI`;
     const images = getImagesFromToken(underlyingToken);
     const secondaryLabel = buildDollarDisplayItem(price);
+
+    const statsItems = [
+      {
+        label: 'Liquidity',
+        value: buildDollarDisplayItem(liquidity),
+      },
+      {
+        label: 'APR',
+        value: buildPercentageDisplayItem(apr),
+      },
+    ];
 
     const token: AppTokenPosition = {
       type: ContractType.APP_TOKEN,
@@ -62,11 +105,14 @@ export class ArbitrumUmamiMarinateTokenFetcher implements PositionFetcher<AppTok
       pricePerShare,
       price,
       tokens,
-      dataProps: {},
+      dataProps: {
+        liquidity,
+      },
       displayProps: {
         label,
         images,
         secondaryLabel,
+        statsItems,
       },
     };
     return [token];

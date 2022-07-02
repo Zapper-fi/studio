@@ -1,32 +1,23 @@
 import { applyDecorators, SetMetadata } from '@nestjs/common';
 
-export const CACHE_KEY = 'CACHE_KEY';
-export const CACHE_TTL = 'CACHE_TTL';
-export const CACHE_INSTANCE = 'CACHE_INSTANCE';
-const CACHE_FAIL_ON_MISSING_CACHE = 'CACHE_FAIL_ON_MISSING_CACHE';
+export const CACHE_DECORATOR = 'CACHE_DECORATOR';
 
 type CacheKeyBuilder = (...args: any) => string;
 type CacheTtlBuilder = (...args: any) => number;
 
 export type CacheOptions = {
+  instance?: 'user' | 'business';
   key: string | CacheKeyBuilder;
-  ttl?: number | null | CacheTtlBuilder;
-  instance?: 'business' | 'user';
-  failOnMissingData?: boolean;
+  /** In seconds */
+  ttl?: number | CacheTtlBuilder;
 };
 
-export const Cache = (options: CacheOptions) => {
-  const { failOnMissingData = false, ttl = null, instance = 'business' } = options;
-
+export const Cache = ({ key, ttl, instance }: CacheOptions) => {
   return applyDecorators(
-    SetMetadata(CACHE_KEY, options.key),
-    SetMetadata(CACHE_INSTANCE, instance),
-    SetMetadata(CACHE_TTL, ttl),
-    SetMetadata(
-      CACHE_FAIL_ON_MISSING_CACHE,
-      // Do not throw locally if cached data is missing, try to fetch it
-      // to ease development
-      process.env.NODE_ENV !== 'production' ? failOnMissingData : false,
-    ),
+    SetMetadata(CACHE_DECORATOR, {
+      key,
+      ttl,
+      instance: instance || 'business',
+    }),
   );
 };

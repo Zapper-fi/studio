@@ -23,8 +23,8 @@ export class DefaultBalancePresenterFactory {
 
       async present(_address: string, balances: PositionBalance[]) {
         // Build labelled groups by the labels defined in the app definition
-        const app = this.appService.getApp(appId);
-        const products = Object.values(app.groups).map(group => {
+        const app = await this.appService.getApp(appId);
+        const products = Object.values(app!.groups).map(group => {
           const groupBalances = balances.filter(v => v.groupId === group.id);
           return { label: group.label, assets: groupBalances };
         });

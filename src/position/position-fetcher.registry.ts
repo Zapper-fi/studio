@@ -1,7 +1,9 @@
 import { Inject, OnModuleInit } from '@nestjs/common';
-import { DiscoveryService } from '@nestjs/core';
+import { DiscoveryService, Reflector } from '@nestjs/core';
 import { compact } from 'lodash';
 
+import { CACHE_ON_INTERVAL_KEY, CACHE_ON_INTERVAL_TIMEOUT } from '~cache/cache-on-interval.decorator';
+import { CacheOnIntervalService } from '~cache/cache-on-interval.service';
 import { Network } from '~types/network.interface';
 import { Registry } from '~utils/build-registry';
 
@@ -18,13 +20,24 @@ import {
 import { PositionFetcher } from './position-fetcher.interface';
 import { AbstractPosition, Position } from './position.interface';
 
+export const buildAppPositionsCacheKey = (opts: {
+  type: ContractType;
+  network: Network;
+  appId: string;
+  groupId: string;
+}) => `apps-v3:${opts.type}:${opts.network}:${opts.appId}:${opts.groupId}`;
+
 export class PositionFetcherRegistry implements OnModuleInit {
   private registry: Registry<
     [ContractType, Network, string, string],
     { fetcher: PositionFetcher<Position>; options: PositionOptions }
   > = new Map();
 
-  constructor(@Inject(DiscoveryService) private readonly discoveryService: DiscoveryService) {}
+  constructor(
+    @Inject(DiscoveryService) private readonly discoveryService: DiscoveryService,
+    @Inject(CacheOnIntervalService) private readonly cacheOnIntervalService: CacheOnIntervalService,
+    @Inject(Reflector) private readonly reflector: Reflector,
+  ) {}
 
   onModuleInit() {
     const wrappers = this.discoveryService.getProviders();
@@ -44,6 +57,12 @@ export class PositionFetcherRegistry implements OnModuleInit {
         const appId = Reflect.getMetadata(POSITION_FETCHER_APP, wrapper.metatype);
         const groupId = Reflect.getMetadata(POSITION_FETCHER_GROUP, wrapper.metatype);
         const options = Reflect.getMetadata(POSITION_FETCHER_OPTIONS, wrapper.metatype);
+
+        // Register the position fetcher in the caching module
+        const cacheKey = buildAppPositionsCacheKey({ type, network, appId, groupId });
+        Reflect.defineMetadata(CACHE_ON_INTERVAL_KEY, cacheKey, wrapper.instance['getPositions']);
+        Reflect.defineMetadata(CACHE_ON_INTERVAL_TIMEOUT, 45 * 1000, wrapper.instance['getPositions']);
+        this.cacheOnIntervalService.registerCache(wrapper.instance, 'getPositions');
 
         if (!this.registry.get(type)) this.registry.set(type, new Map());
         if (!this.registry.get(type)!.get(network)) this.registry.get(type)!.set(network, new Map());

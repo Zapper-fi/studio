@@ -37,7 +37,11 @@ export class EthereumUniswapV2PoolTokenFetcher implements PositionFetcher<AppTok
       appId,
       groupId: UNISWAP_V2_DEFINITION.groups.pool.id,
       factoryAddress: '0x5c69bee701ef814a2b6a3edd4b1652cb9cc5aa6f',
-      hiddenTokens: ['0x62359ed7505efc61ff1d56fef82158ccaffa23d7', '0x35bd01fc9d6d5d81ca9e055db88dc49aa2c699a8'],
+      hiddenTokens: [
+        '0x62359ed7505efc61ff1d56fef82158ccaffa23d7',
+        '0x35bd01fc9d6d5d81ca9e055db88dc49aa2c699a8',
+        '0x6adb2e268de2aa1abf6578e4a8119b960e02928f',
+      ],
       blockedPools: ['0x9cbfb60a09a9a33a10312da0f39977cbdb7fde23'], // Uniswap V2: SAITAMA - has a transfer fee (not supported by our zap)
       appTokenDependencies: [{ appId: 'alpha-v1', groupIds: ['lending'], network }],
       resolveFactoryContract: ({ address, network }) =>

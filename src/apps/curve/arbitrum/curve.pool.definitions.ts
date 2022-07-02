@@ -3,7 +3,7 @@ import { CurvePoolDefinition } from '../curve.types';
 export const CURVE_V1_POOL_DEFINITIONS: CurvePoolDefinition[] = [
   {
     queryKey: '2pool',
-    label: '2Pool Curve',
+    label: '2Pool',
     swapAddress: '0x7f90122bf0700f9e7e1f688fe926940e8839f353',
     tokenAddress: '0x7f90122bf0700f9e7e1f688fe926940e8839f353',
     gaugeAddress: '0xbf7e49483881c76487b0989cd7d9a8239b20ca41',
@@ -11,7 +11,6 @@ export const CURVE_V1_POOL_DEFINITIONS: CurvePoolDefinition[] = [
   },
   {
     queryKey: 'renBTC',
-    label: 'renBTC Curve',
     swapAddress: '0x3e01dd8a5e1fb3481f0f589056b428fc308af0fb',
     tokenAddress: '0x3e01dd8a5e1fb3481f0f589056b428fc308af0fb',
     gaugeAddress: '0xc2b1df84112619d190193e48148000e3990bf627',
@@ -22,7 +21,7 @@ export const CURVE_V1_POOL_DEFINITIONS: CurvePoolDefinition[] = [
 export const CURVE_V2_POOL_DEFINITIONS: CurvePoolDefinition[] = [
   {
     queryKey: 'tricrypto',
-    label: 'TriCrypto Curve',
+    label: 'TriCrypto',
     swapAddress: '0x960ea3e3c7fb317332d990873d354e18d7645590',
     tokenAddress: '0x8e0b8c8bb9db49a46697f3a5bb8a308e744821d2',
     gaugeAddress: '0x97e2768e8e73511ca874545dc5ff8067eb19b787',
@@ -30,7 +29,6 @@ export const CURVE_V2_POOL_DEFINITIONS: CurvePoolDefinition[] = [
   },
   {
     queryKey: 'eursusd',
-    label: 'EURs-USD',
     swapAddress: '0xa827a652ead76c6b0b3d19dba05452e06e25c27e',
     tokenAddress: '0x3dfe1324a0ee9d86337d06aeb829deb4528db9ca',
     gaugeAddress: '0x37c7ef6b0e23c9bd9b620a6dabbfec13ce30d824',
