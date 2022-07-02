@@ -41,13 +41,13 @@ export class CronosChainMmfinanceFarmContractPositionFetcher implements Position
         const balanceRaw = await multicall.wrap(tokenContract).balanceOf(address);
         if (poolIndex !== 0) return balanceRaw;
 
-        const autoCakeChefContract = this.contractFactory.mmfinanceCakeChef({
+        const autoMeerkatChefContract = this.contractFactory.mmfinanceMeerkatChef({
           network,
           address: '0xa80240eb5d7e05d3f250cf000eec0891d00b51cc',
         });
 
         // Subtract the balance reserve for Auto CAKE staking
-        const autoCakeVaultBalanceRaw = await multicall.wrap(autoCakeChefContract).balanceOf();
+        const autoCakeVaultBalanceRaw = await multicall.wrap(autoMeerkatChefContract).balanceOf();
         return balanceRaw.sub(autoCakeVaultBalanceRaw);
       },
       resolveRewardTokenAddresses: ({ multicall, contract }) => multicall.wrap(contract).meerkat(),

@@ -8,7 +8,7 @@ import { BalanceFetcher } from '~balance/balance-fetcher.interface';
 import { Network } from '~types/network.interface';
 
 import {
-  MmfinanceCakeChef,
+  MmfinanceMeerkatChef,
   MmfinanceChef,
   MmfinanceChefV2,
   MmfinanceContractFactory,
@@ -112,13 +112,13 @@ export class CronosChainMmfinanceBalanceFetcher implements BalanceFetcher {
 
   private async getAutoCakeBalances(address: string) {
     // Autocompounding Cake Farm
-    return this.appToolkit.helpers.masterChefContractPositionBalanceHelper.getBalances<MmfinanceCakeChef>({
+    return this.appToolkit.helpers.masterChefContractPositionBalanceHelper.getBalances<MmfinanceMeerkatChef>({
       address,
       appId,
       network,
       groupId: MMFINANCE_DEFINITION.groups.autoMmf.id,
       resolveChefContract: ({ contractAddress }) =>
-        this.contractFactory.mmfinanceCakeChef({ network, address: contractAddress }),
+        this.contractFactory.mmfinanceMeerkatChef({ network, address: contractAddress }),
       resolveStakedTokenBalance: this.appToolkit.helpers.masterChefDefaultStakedBalanceStrategy.build({
         resolveStakedBalance: async ({ multicall, contract, address }) => {
           const [userInfo, pricePerShareRaw] = await Promise.all([

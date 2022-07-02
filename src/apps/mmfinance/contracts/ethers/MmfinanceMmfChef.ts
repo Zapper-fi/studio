@@ -17,7 +17,7 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
 
-export interface MmfinanceCakeChefInterface extends utils.Interface {
+export interface MmfinanceMmfChefInterface extends utils.Interface {
   functions: {
     'MAX_CALL_FEE()': FunctionFragment;
     'MAX_PERFORMANCE_FEE()': FunctionFragment;
@@ -264,12 +264,12 @@ export type WithdrawEvent = TypedEvent<[string, BigNumber, BigNumber], WithdrawE
 
 export type WithdrawEventFilter = TypedEventFilter<WithdrawEvent>;
 
-export interface MmfinanceCakeChef extends BaseContract {
+export interface MmfinanceMmfChef extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: MmfinanceCakeChefInterface;
+  interface: MmfinanceMmfChefInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

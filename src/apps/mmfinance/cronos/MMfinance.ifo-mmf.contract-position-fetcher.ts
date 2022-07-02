@@ -23,7 +23,7 @@ export class CronosChainMmfinanceIfoCakeContractPositionFetcher implements Posit
   ) { }
 
   getPositions() {
-    const cakeChefContract = this.contractFactory.mmfinanceCakeChef({
+    const cakeChefContract = this.contractFactory.mmfinanceMeerkatChef({
       network,
       address: '0xa80240eb5d7e05d3f250cf000eec0891d00b51cc',
     });

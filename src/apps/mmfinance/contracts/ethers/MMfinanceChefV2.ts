@@ -279,7 +279,7 @@ export type EmergencyWithdrawEvent = TypedEvent<[string, BigNumber, BigNumber], 
 
 export type EmergencyWithdrawEventFilter = TypedEventFilter<EmergencyWithdrawEvent>;
 
-export interface InitEventObject {}
+export interface InitEventObject { }
 export type InitEvent = TypedEvent<[], InitEventObject>;
 
 export type InitEventFilter = TypedEventFilter<InitEvent>;

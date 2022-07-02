@@ -8,7 +8,7 @@ import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
-import { MmfinanceCakeChef, MmfinanceContractFactory } from '../contracts';
+import { MmfinanceContractFactory, MmfinanceMmfChef } from '../contracts';
 import { MMFINANCE_DEFINITION } from '../mmfinance.definition';
 
 const appId = MMFINANCE_DEFINITION.id;
@@ -28,13 +28,13 @@ export class CronosChainMmfinanceAutoCakeContractPositionFetcher implements Posi
       network,
       address: '0x6bE34986Fdd1A91e4634eb6b9F8017439b7b5EDc',
     });
-    return this.appToolkit.helpers.masterChefContractPositionHelper.getContractPositions<MmfinanceCakeChef>({
+    return this.appToolkit.helpers.masterChefContractPositionHelper.getContractPositions<MmfinanceMmfChef>({
       network,
       groupId,
       appId,
       minimumTvl: 10000,
       address: '0xa80240eb5d7e05d3f250cf000eec0891d00b51cc',
-      resolveContract: opts => this.contractFactory.mmfinanceCakeChef(opts),
+      resolveContract: opts => this.contractFactory.mmfinanceMmfChef(opts),
       resolvePoolLength: async () => BigNumber.from(1),
       resolveDepositTokenAddress: ({ multicall, contract }) => multicall.wrap(contract).token(),
       resolveLiquidity: ({ multicall, contract }) => multicall.wrap(contract).balanceOf(),
