@@ -12,7 +12,7 @@ import { MMfinanceContractFactory, MMfinanceIfoChef } from '../contracts';
 import { MMFINANCE_DEFINITION } from '../mmfinance.definition';
 
 const appId = MMFINANCE_DEFINITION.id;
-const groupId = MMFINANCE_DEFINITION.groups.ifoCake.id;
+const groupId = MMFINANCE_DEFINITION.groups.ifoMmf.id;
 const network = Network.CRONOS_MAINNET;
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
@@ -51,7 +51,7 @@ export class CronosChainMMfinanceIfoCakeContractPositionFetcher implements Posit
             .poolInfo(0)
             .then(i => i.allocPoint),
         resolveTotalAllocPoints: ({ multicall }) => multicall.wrap(chefContract).totalAllocPoint(),
-        resolveTotalRewardRate: ({ multicall }) => multicall.wrap(chefContract).cakePerBlock(),
+        resolveTotalRewardRate: ({ multicall }) => multicall.wrap(chefContract).meerkatPerBlock(),
       }),
     });
   }

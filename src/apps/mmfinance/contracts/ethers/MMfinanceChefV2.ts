@@ -49,8 +49,8 @@ export interface MMfinanceChefV2Interface extends utils.Interface {
     'boostContract()': FunctionFragment;
     'burnAdmin()': FunctionFragment;
     'burnCake(bool)': FunctionFragment;
-    'cakePerBlock(bool)': FunctionFragment;
-    'cakePerBlockToBurn()': FunctionFragment;
+    'meerkatPerBlock(bool)': FunctionFragment;
+    'meerkatPerBlockToBurn()': FunctionFragment;
     'cakeRateToBurn()': FunctionFragment;
     'cakeRateToRegularFarm()': FunctionFragment;
     'cakeRateToSpecialFarm()': FunctionFragment;
@@ -96,8 +96,8 @@ export interface MMfinanceChefV2Interface extends utils.Interface {
       | 'boostContract'
       | 'burnAdmin'
       | 'burnCake'
-      | 'cakePerBlock'
-      | 'cakePerBlockToBurn'
+      | 'meerkatPerBlock'
+      | 'meerkatPerBlockToBurn'
       | 'cakeRateToBurn'
       | 'cakeRateToRegularFarm'
       | 'cakeRateToSpecialFarm'
@@ -141,8 +141,8 @@ export interface MMfinanceChefV2Interface extends utils.Interface {
   encodeFunctionData(functionFragment: 'boostContract', values?: undefined): string;
   encodeFunctionData(functionFragment: 'burnAdmin', values?: undefined): string;
   encodeFunctionData(functionFragment: 'burnCake', values: [boolean]): string;
-  encodeFunctionData(functionFragment: 'cakePerBlock', values: [boolean]): string;
-  encodeFunctionData(functionFragment: 'cakePerBlockToBurn', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'meerkatPerBlock', values: [boolean]): string;
+  encodeFunctionData(functionFragment: 'meerkatPerBlockToBurn', values?: undefined): string;
   encodeFunctionData(functionFragment: 'cakeRateToBurn', values?: undefined): string;
   encodeFunctionData(functionFragment: 'cakeRateToRegularFarm', values?: undefined): string;
   encodeFunctionData(functionFragment: 'cakeRateToSpecialFarm', values?: undefined): string;
@@ -188,8 +188,8 @@ export interface MMfinanceChefV2Interface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'boostContract', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'burnAdmin', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'burnCake', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'cakePerBlock', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'cakePerBlockToBurn', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'meerkatPerBlock', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'meerkatPerBlockToBurn', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'cakeRateToBurn', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'cakeRateToRegularFarm', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'cakeRateToSpecialFarm', data: BytesLike): Result;
@@ -420,9 +420,9 @@ export interface MMfinanceChefV2 extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
 
-    cakePerBlock(_isRegular: boolean, overrides?: CallOverrides): Promise<[BigNumber] & { amount: BigNumber }>;
+    meerkatPerBlock(_isRegular: boolean, overrides?: CallOverrides): Promise<[BigNumber] & { amount: BigNumber }>;
 
-    cakePerBlockToBurn(overrides?: CallOverrides): Promise<[BigNumber] & { amount: BigNumber }>;
+    meerkatPerBlockToBurn(overrides?: CallOverrides): Promise<[BigNumber] & { amount: BigNumber }>;
 
     cakeRateToBurn(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -580,9 +580,9 @@ export interface MMfinanceChefV2 extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
-  cakePerBlock(_isRegular: boolean, overrides?: CallOverrides): Promise<BigNumber>;
+  meerkatPerBlock(_isRegular: boolean, overrides?: CallOverrides): Promise<BigNumber>;
 
-  cakePerBlockToBurn(overrides?: CallOverrides): Promise<BigNumber>;
+  meerkatPerBlockToBurn(overrides?: CallOverrides): Promise<BigNumber>;
 
   cakeRateToBurn(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -737,9 +737,9 @@ export interface MMfinanceChefV2 extends BaseContract {
 
     burnCake(_withUpdate: boolean, overrides?: CallOverrides): Promise<void>;
 
-    cakePerBlock(_isRegular: boolean, overrides?: CallOverrides): Promise<BigNumber>;
+    meerkatPerBlock(_isRegular: boolean, overrides?: CallOverrides): Promise<BigNumber>;
 
-    cakePerBlockToBurn(overrides?: CallOverrides): Promise<BigNumber>;
+    meerkatPerBlockToBurn(overrides?: CallOverrides): Promise<BigNumber>;
 
     cakeRateToBurn(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -953,9 +953,9 @@ export interface MMfinanceChefV2 extends BaseContract {
 
     burnCake(_withUpdate: boolean, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
 
-    cakePerBlock(_isRegular: boolean, overrides?: CallOverrides): Promise<BigNumber>;
+    meerkatPerBlock(_isRegular: boolean, overrides?: CallOverrides): Promise<BigNumber>;
 
-    cakePerBlockToBurn(overrides?: CallOverrides): Promise<BigNumber>;
+    meerkatPerBlockToBurn(overrides?: CallOverrides): Promise<BigNumber>;
 
     cakeRateToBurn(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1087,9 +1087,9 @@ export interface MMfinanceChefV2 extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
-    cakePerBlock(_isRegular: boolean, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    meerkatPerBlock(_isRegular: boolean, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    cakePerBlockToBurn(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    meerkatPerBlockToBurn(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     cakeRateToBurn(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 

@@ -22,7 +22,7 @@ export interface MMfinanceChefInterface extends utils.Interface {
     'BONUS_MULTIPLIER()': FunctionFragment;
     'add(uint256,address,bool)': FunctionFragment;
     'cake()': FunctionFragment;
-    'cakePerBlock()': FunctionFragment;
+    'meerkatPerBlock()': FunctionFragment;
     'deposit(uint256,uint256)': FunctionFragment;
     'dev(address)': FunctionFragment;
     'devaddr()': FunctionFragment;
@@ -55,7 +55,7 @@ export interface MMfinanceChefInterface extends utils.Interface {
       | 'BONUS_MULTIPLIER'
       | 'add'
       | 'cake'
-      | 'cakePerBlock'
+      | 'meerkatPerBlock'
       | 'deposit'
       | 'dev'
       | 'devaddr'
@@ -86,7 +86,7 @@ export interface MMfinanceChefInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'BONUS_MULTIPLIER', values?: undefined): string;
   encodeFunctionData(functionFragment: 'add', values: [BigNumberish, string, boolean]): string;
   encodeFunctionData(functionFragment: 'cake', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'cakePerBlock', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'meerkatPerBlock', values?: undefined): string;
   encodeFunctionData(functionFragment: 'deposit', values: [BigNumberish, BigNumberish]): string;
   encodeFunctionData(functionFragment: 'dev', values: [string]): string;
   encodeFunctionData(functionFragment: 'devaddr', values?: undefined): string;
@@ -116,7 +116,7 @@ export interface MMfinanceChefInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'BONUS_MULTIPLIER', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'add', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'cake', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'cakePerBlock', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'meerkatPerBlock', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'deposit', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'dev', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'devaddr', data: BytesLike): Result;
@@ -225,7 +225,7 @@ export interface MMfinanceChef extends BaseContract {
 
     cake(overrides?: CallOverrides): Promise<[string]>;
 
-    cakePerBlock(overrides?: CallOverrides): Promise<[BigNumber]>;
+    meerkatPerBlock(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     deposit(
       _pid: BigNumberish,
@@ -340,7 +340,7 @@ export interface MMfinanceChef extends BaseContract {
 
   cake(overrides?: CallOverrides): Promise<string>;
 
-  cakePerBlock(overrides?: CallOverrides): Promise<BigNumber>;
+  meerkatPerBlock(overrides?: CallOverrides): Promise<BigNumber>;
 
   deposit(
     _pid: BigNumberish,
@@ -450,7 +450,7 @@ export interface MMfinanceChef extends BaseContract {
 
     cake(overrides?: CallOverrides): Promise<string>;
 
-    cakePerBlock(overrides?: CallOverrides): Promise<BigNumber>;
+    meerkatPerBlock(overrides?: CallOverrides): Promise<BigNumber>;
 
     deposit(_pid: BigNumberish, _amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
 
@@ -558,7 +558,7 @@ export interface MMfinanceChef extends BaseContract {
 
     cake(overrides?: CallOverrides): Promise<BigNumber>;
 
-    cakePerBlock(overrides?: CallOverrides): Promise<BigNumber>;
+    meerkatPerBlock(overrides?: CallOverrides): Promise<BigNumber>;
 
     deposit(
       _pid: BigNumberish,
@@ -651,7 +651,7 @@ export interface MMfinanceChef extends BaseContract {
 
     cake(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    cakePerBlock(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    meerkatPerBlock(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     deposit(
       _pid: BigNumberish,

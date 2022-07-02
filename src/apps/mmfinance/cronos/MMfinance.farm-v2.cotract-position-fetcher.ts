@@ -48,7 +48,7 @@ export class CronosChainMMfinanceFarmV2ContractPositionFetcher implements Positi
         },
         resolveTotalRewardRate: async ({ multicall, contract, poolIndex }) => {
           const poolInfo = await multicall.wrap(contract).poolInfo(poolIndex);
-          return multicall.wrap(contract).cakePerBlock(poolInfo.isRegular);
+          return multicall.wrap(contract).meerkatPerBlock(poolInfo.isRegular);
         },
       }),
     });

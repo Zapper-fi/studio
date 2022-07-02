@@ -89,7 +89,7 @@ export class CronosChainMMfinanceBalanceFetcher implements BalanceFetcher {
       address,
       appId,
       network,
-      groupId: MMFINANCE_DEFINITION.groups.ifoCake.id,
+      groupId: MMFINANCE_DEFINITION.groups.ifoMmf.id,
       resolveChefContract: ({ contractAddress }) =>
         this.contractFactory.MMfinanceIfoChef({ network, address: contractAddress }),
       resolveStakedTokenBalance: this.appToolkit.helpers.masterChefDefaultStakedBalanceStrategy.build({
@@ -116,7 +116,7 @@ export class CronosChainMMfinanceBalanceFetcher implements BalanceFetcher {
       address,
       appId,
       network,
-      groupId: MMFINANCE_DEFINITION.groups.autoCake.id,
+      groupId: MMFINANCE_DEFINITION.groups.autoMmf.id,
       resolveChefContract: ({ contractAddress }) =>
         this.contractFactory.MMfinanceCakeChef({ network, address: contractAddress }),
       resolveStakedTokenBalance: this.appToolkit.helpers.masterChefDefaultStakedBalanceStrategy.build({
@@ -143,7 +143,7 @@ export class CronosChainMMfinanceBalanceFetcher implements BalanceFetcher {
       address,
       appId,
       network,
-      groupId: MMFINANCE_DEFINITION.groups.syrupCake.id,
+      groupId: MMFINANCE_DEFINITION.groups.syrupMmf.id,
       resolveChefContract: ({ contractAddress }) =>
         this.contractFactory.MMfinanceSyrupCake({ network, address: contractAddress }),
       resolveStakedTokenBalance: this.appToolkit.helpers.masterChefDefaultStakedBalanceStrategy.build({

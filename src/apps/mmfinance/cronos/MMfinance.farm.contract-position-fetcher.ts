@@ -59,7 +59,7 @@ export class CronosChainMMfinanceFarmContractPositionFetcher implements Position
             .poolInfo(poolIndex)
             .then(i => i.allocPoint),
         resolveTotalAllocPoints: ({ multicall, contract }) => multicall.wrap(contract).totalAllocPoint(),
-        resolveTotalRewardRate: ({ multicall, contract }) => multicall.wrap(contract).cakePerBlock(),
+        resolveTotalRewardRate: ({ multicall, contract }) => multicall.wrap(contract).meerkatPerBlock(),
       }),
     });
   }

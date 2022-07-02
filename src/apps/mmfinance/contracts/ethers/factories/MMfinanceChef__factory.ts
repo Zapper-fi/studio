@@ -26,7 +26,7 @@ const _abi = [
       },
       {
         internalType: 'uint256',
-        name: '_cakePerBlock',
+        name: '_meerkatPerBlock',
         type: 'uint256',
       },
       {
@@ -183,7 +183,7 @@ const _abi = [
   },
   {
     inputs: [],
-    name: 'cakePerBlock',
+    name: 'meerkatPerBlock',
     outputs: [
       {
         internalType: 'uint256',

@@ -14,7 +14,7 @@ import { MMfinanceContractFactory, MMfinanceSyrupCake } from '../contracts';
 import { MMFINANCE_DEFINITION } from '../mmfinance.definition';
 
 const appId = MMFINANCE_DEFINITION.id;
-const groupId = MMFINANCE_DEFINITION.groups.syrupCake.id;
+const groupId = MMFINANCE_DEFINITION.groups.syrupMmf.id;
 const network = Network.CRONOS_MAINNET;
 
 @Register.ContractPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
@@ -42,14 +42,14 @@ export class CronosChainMMfinanceSyrupCakeContractPositionFetcher implements Pos
         const masterChefV2Address = '0xa5f8c5dbd5f286960b9d90548680ae5ebff07652';
         const masterChefV2Contract = this.contractFactory.MMfinanceChefV2({ address: masterChefV2Address, network });
         const poolInfo = await multicall.wrap(masterChefV2Contract).poolInfo(0);
-        const cakePerBlock = await multicall.wrap(masterChefV2Contract).cakePerBlock(poolInfo.isRegular);
+        const meerkatPerBlock = await multicall.wrap(masterChefV2Contract).meerkatPerBlock(poolInfo.isRegular);
         const poolAllocPoints = poolInfo.allocPoint;
         const totalAllocPoints = await (poolInfo.isRegular
           ? masterChefV2Contract.totalRegularAllocPoint()
           : masterChefV2Contract.totalSpecialAllocPoint());
 
         const poolShare = Number(poolAllocPoints) / Number(totalAllocPoints);
-        const rewardPerBlock = poolShare * Number(cakePerBlock);
+        const rewardPerBlock = poolShare * Number(meerkatPerBlock);
         return rewardPerBlock;
       },
     });

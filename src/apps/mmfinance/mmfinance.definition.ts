@@ -17,11 +17,11 @@ export const MMFINANCE_DEFINITION = appDefinition({
   },
   groups: {
     pool: { id: 'pool', type: GroupType.TOKEN, label: 'Pools' },
-    // farmV2: { id: 'farm-v2', type: GroupType.POSITION, label: 'Farms' },
-    // syrupStaking: { id: 'syrup-staking', type: GroupType.POSITION, label: 'Syrup Pools' },
-    // syrupMmf: { id: 'syrup-mmf', type: GroupType.POSITION, label: 'Syrup Pools' },
-    // autoMmf: { id: 'auto-mmf', type: GroupType.POSITION, label: 'Auto MMF', isHiddenFromExplore: true }, // This is the old staking mmf staking contract, and the rewards are being counted towards the TVL
-    // ifoMmf: { id: 'ifo-mmf', type: GroupType.POSITION, label: 'IFO Mmf', isHiddenFromExplore: true },
+    farmV2: { id: 'farm-v2', type: GroupType.POSITION, label: 'Farms' },
+    syrupStaking: { id: 'syrup-staking', type: GroupType.POSITION, label: 'Syrup Pools' },
+    syrupMmf: { id: 'syrup-mmf', type: GroupType.POSITION, label: 'Syrup Pools' },
+    autoMmf: { id: 'auto-mmf', type: GroupType.POSITION, label: 'Auto MMF', isHiddenFromExplore: true }, // This is the old staking mmf staking contract, and the rewards are being counted towards the TVL
+    ifoMmf: { id: 'ifo-mmf', type: GroupType.POSITION, label: 'IFO Mmf', isHiddenFromExplore: true },
     farm: { id: 'farm', type: GroupType.POSITION, label: 'Legacy Farms', isHiddenFromExplore: true },
   },
   supportedNetworks: { [Network.CRONOS_MAINNET]: [AppAction.VIEW] },

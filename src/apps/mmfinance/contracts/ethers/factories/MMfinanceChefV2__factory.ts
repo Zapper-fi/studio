@@ -500,7 +500,7 @@ const _abi = [
         type: 'bool',
       },
     ],
-    name: 'cakePerBlock',
+    name: 'meerkatPerBlock',
     outputs: [
       {
         internalType: 'uint256',
@@ -513,7 +513,7 @@ const _abi = [
   },
   {
     inputs: [],
-    name: 'cakePerBlockToBurn',
+    name: 'meerkatPerBlockToBurn',
     outputs: [
       {
         internalType: 'uint256',
