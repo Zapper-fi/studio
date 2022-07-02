@@ -5,14 +5,18 @@ import { AuroraPlusAppDefinition, AURORA_PLUS_DEFINITION } from './aurora-plus.d
 import { AuroraAuroraPlusBalanceFetcher } from './aurora/aurora-plus.balance-fetcher';
 import { AuroraAuroraPlusStakeContractPositionFetcher } from './aurora/aurora-plus.stake.contract-position-fetcher';
 import { AuroraPlusContractFactory } from './contracts';
+import { AuroraPlusStakingBalanceHelper } from './helpers/aurora-plus.staking-balance-helper';
 
 @Register.AppModule({
   appId: AURORA_PLUS_DEFINITION.id,
   providers: [
-    AuroraAuroraPlusBalanceFetcher,
-    AuroraAuroraPlusStakeContractPositionFetcher,
     AuroraPlusAppDefinition,
     AuroraPlusContractFactory,
+    // Helper
+    AuroraPlusStakingBalanceHelper,
+    // Aurora
+    AuroraAuroraPlusBalanceFetcher,
+    AuroraAuroraPlusStakeContractPositionFetcher,
   ],
 })
 export class AuroraPlusAppModule extends AbstractApp() {}
