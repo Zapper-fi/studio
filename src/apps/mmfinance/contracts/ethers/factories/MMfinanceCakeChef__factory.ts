@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { MMfinanceCakeChef, MMfinanceCakeChefInterface } from '../MMfinanceCakeChef';
+import type { MmfinanceCakeChef, MmfinanceCakeChefInterface } from '../MmfinanceCakeChef';
 
 const _abi = [
   {
@@ -269,7 +269,7 @@ const _abi = [
   },
   {
     inputs: [],
-    name: 'calculateHarvestCakeRewards',
+    name: 'calculateHarvestMeerkatRewards',
     outputs: [
       {
         internalType: 'uint256',
@@ -282,7 +282,7 @@ const _abi = [
   },
   {
     inputs: [],
-    name: 'calculateTotalPendingCakeRewards',
+    name: 'calculateTotalPendingMeerkatRewards',
     outputs: [
       {
         internalType: 'uint256',
@@ -610,7 +610,7 @@ const _abi = [
       },
       {
         internalType: 'uint256',
-        name: 'cakeAtLastUserAction',
+        name: 'meerkatAtLastUserAction',
         type: 'uint256',
       },
       {
@@ -670,12 +670,12 @@ const _abi = [
   },
 ];
 
-export class MMfinanceCakeChef__factory {
+export class MmfinanceCakeChef__factory {
   static readonly abi = _abi;
-  static createInterface(): MMfinanceCakeChefInterface {
-    return new utils.Interface(_abi) as MMfinanceCakeChefInterface;
+  static createInterface(): MmfinanceCakeChefInterface {
+    return new utils.Interface(_abi) as MmfinanceCakeChefInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): MMfinanceCakeChef {
-    return new Contract(address, _abi, signerOrProvider) as MMfinanceCakeChef;
+  static connect(address: string, signerOrProvider: Signer | Provider): MmfinanceCakeChef {
+    return new Contract(address, _abi, signerOrProvider) as MmfinanceCakeChef;
   }
 }

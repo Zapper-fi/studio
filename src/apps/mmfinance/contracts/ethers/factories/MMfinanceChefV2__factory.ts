@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { MMfinanceChefV2, MMfinanceChefV2Interface } from '../MMfinanceChefV2';
+import type { MmfinanceChefV2, MmfinanceChefV2Interface } from '../MmfinanceChefV2';
 
 const _abi = [
   {
@@ -243,7 +243,7 @@ const _abi = [
         type: 'uint256',
       },
     ],
-    name: 'UpdateCakeRate',
+    name: 'UpdateMeerkatRate',
     type: 'event',
   },
   {
@@ -270,7 +270,7 @@ const _abi = [
       {
         indexed: false,
         internalType: 'uint256',
-        name: 'accCakePerShare',
+        name: 'accMeerkatPerShare',
         type: 'uint256',
       },
     ],
@@ -487,7 +487,7 @@ const _abi = [
         type: 'bool',
       },
     ],
-    name: 'burnCake',
+    name: 'burnMeerkat',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -526,7 +526,7 @@ const _abi = [
   },
   {
     inputs: [],
-    name: 'cakeRateToBurn',
+    name: 'meerkatRateToBurn',
     outputs: [
       {
         internalType: 'uint256',
@@ -539,7 +539,7 @@ const _abi = [
   },
   {
     inputs: [],
-    name: 'cakeRateToRegularFarm',
+    name: 'meerkatRateToRegularFarm',
     outputs: [
       {
         internalType: 'uint256',
@@ -552,7 +552,7 @@ const _abi = [
   },
   {
     inputs: [],
-    name: 'cakeRateToSpecialFarm',
+    name: 'meerkatRateToSpecialFarm',
     outputs: [
       {
         internalType: 'uint256',
@@ -703,7 +703,7 @@ const _abi = [
         type: 'address',
       },
     ],
-    name: 'pendingCake',
+    name: 'pendingMeerkat',
     outputs: [
       {
         internalType: 'uint256',
@@ -726,7 +726,7 @@ const _abi = [
     outputs: [
       {
         internalType: 'uint256',
-        name: 'accCakePerShare',
+        name: 'accMeerkatPerShare',
         type: 'uint256',
       },
       {
@@ -907,7 +907,7 @@ const _abi = [
         type: 'bool',
       },
     ],
-    name: 'updateCakeRate',
+    name: 'updateMeerkatRate',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -926,7 +926,7 @@ const _abi = [
         components: [
           {
             internalType: 'uint256',
-            name: 'accCakePerShare',
+            name: 'accMeerkatPerShare',
             type: 'uint256',
           },
           {
@@ -1049,12 +1049,12 @@ const _abi = [
   },
 ];
 
-export class MMfinanceChefV2__factory {
+export class MmfinanceChefV2__factory {
   static readonly abi = _abi;
-  static createInterface(): MMfinanceChefV2Interface {
-    return new utils.Interface(_abi) as MMfinanceChefV2Interface;
+  static createInterface(): MmfinanceChefV2Interface {
+    return new utils.Interface(_abi) as MmfinanceChefV2Interface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): MMfinanceChefV2 {
-    return new Contract(address, _abi, signerOrProvider) as MMfinanceChefV2;
+  static connect(address: string, signerOrProvider: Signer | Provider): MmfinanceChefV2 {
+    return new Contract(address, _abi, signerOrProvider) as MmfinanceChefV2;
   }
 }

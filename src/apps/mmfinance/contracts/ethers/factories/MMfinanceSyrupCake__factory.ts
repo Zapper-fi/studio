@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { MMfinanceSyrupCake, MMfinanceSyrupCakeInterface } from '../MMfinanceSyrupCake';
+import type { MmfinanceSyrupCake, MmfinanceSyrupCakeInterface } from '../MmfinanceSyrupCake';
 
 const _abi = [
   {
@@ -323,11 +323,11 @@ const _abi = [
       {
         indexed: false,
         internalType: 'address',
-        name: 'VCake',
+        name: 'VMeerkat',
         type: 'address',
       },
     ],
-    name: 'NewVCakeContract',
+    name: 'NewVMeerkatContract',
     type: 'event',
   },
   {
@@ -686,7 +686,7 @@ const _abi = [
   },
   {
     inputs: [],
-    name: 'VCake',
+    name: 'VMeerkat',
     outputs: [
       {
         internalType: 'address',
@@ -751,7 +751,7 @@ const _abi = [
   },
   {
     inputs: [],
-    name: 'cakePoolPID',
+    name: 'meerkatPoolPID',
     outputs: [
       {
         internalType: 'uint256',
@@ -802,7 +802,7 @@ const _abi = [
   },
   {
     inputs: [],
-    name: 'calculateTotalPendingCakeRewards',
+    name: 'calculateTotalPendingMeerkatRewards',
     outputs: [
       {
         internalType: 'uint256',
@@ -1252,11 +1252,11 @@ const _abi = [
     inputs: [
       {
         internalType: 'address',
-        name: '_VCake',
+        name: '_VMeerkat',
         type: 'address',
       },
     ],
-    name: 'setVCakeContract',
+    name: 'setVMeerkatContract',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -1438,7 +1438,7 @@ const _abi = [
       },
       {
         internalType: 'uint256',
-        name: 'cakeAtLastUserAction',
+        name: 'meerkatAtLastUserAction',
         type: 'uint256',
       },
       {
@@ -1549,12 +1549,12 @@ const _abi = [
   },
 ];
 
-export class MMfinanceSyrupCake__factory {
+export class MmfinanceSyrupCake__factory {
   static readonly abi = _abi;
-  static createInterface(): MMfinanceSyrupCakeInterface {
-    return new utils.Interface(_abi) as MMfinanceSyrupCakeInterface;
+  static createInterface(): MmfinanceSyrupCakeInterface {
+    return new utils.Interface(_abi) as MmfinanceSyrupCakeInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): MMfinanceSyrupCake {
-    return new Contract(address, _abi, signerOrProvider) as MMfinanceSyrupCake;
+  static connect(address: string, signerOrProvider: Signer | Provider): MmfinanceSyrupCake {
+    return new Contract(address, _abi, signerOrProvider) as MmfinanceSyrupCake;
   }
 }

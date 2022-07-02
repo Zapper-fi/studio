@@ -17,7 +17,7 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
 
-export interface MMfinanceSyrupCakeInterface extends utils.Interface {
+export interface MmfinanceSyrupCakeInterface extends utils.Interface {
   functions: {
     'BOOST_WEIGHT()': FunctionFragment;
     'BOOST_WEIGHT_LIMIT()': FunctionFragment;
@@ -35,15 +35,15 @@ export interface MMfinanceSyrupCakeInterface extends utils.Interface {
     'PRECISION_FACTOR()': FunctionFragment;
     'PRECISION_FACTOR_SHARE()': FunctionFragment;
     'UNLOCK_FREE_DURATION()': FunctionFragment;
-    'VCake()': FunctionFragment;
+    'VMeerkat()': FunctionFragment;
     'admin()': FunctionFragment;
     'available()': FunctionFragment;
     'balanceOf()': FunctionFragment;
     'boostContract()': FunctionFragment;
-    'cakePoolPID()': FunctionFragment;
+    'meerkatPoolPID()': FunctionFragment;
     'calculateOverdueFee(address)': FunctionFragment;
     'calculatePerformanceFee(address)': FunctionFragment;
-    'calculateTotalPendingCakeRewards()': FunctionFragment;
+    'calculateTotalPendingMeerkatRewards()': FunctionFragment;
     'calculateWithdrawFee(address,uint256)': FunctionFragment;
     'deposit(uint256,uint256)': FunctionFragment;
     'freeOverdueFeeUsers(address)': FunctionFragment;
@@ -75,7 +75,7 @@ export interface MMfinanceSyrupCakeInterface extends utils.Interface {
     'setPerformanceFeeContract(uint256)': FunctionFragment;
     'setTreasury(address)': FunctionFragment;
     'setUnlockFreeDuration(uint256)': FunctionFragment;
-    'setVCakeContract(address)': FunctionFragment;
+    'setVMeerkatContract(address)': FunctionFragment;
     'setWithdrawFee(uint256)': FunctionFragment;
     'setWithdrawFeeContract(uint256)': FunctionFragment;
     'setWithdrawFeePeriod(uint256)': FunctionFragment;
@@ -115,15 +115,15 @@ export interface MMfinanceSyrupCakeInterface extends utils.Interface {
       | 'PRECISION_FACTOR'
       | 'PRECISION_FACTOR_SHARE'
       | 'UNLOCK_FREE_DURATION'
-      | 'VCake'
+      | 'VMeerkat'
       | 'admin'
       | 'available'
       | 'balanceOf'
       | 'boostContract'
-      | 'cakePoolPID'
+      | 'meerkatPoolPID'
       | 'calculateOverdueFee'
       | 'calculatePerformanceFee'
-      | 'calculateTotalPendingCakeRewards'
+      | 'calculateTotalPendingMeerkatRewards'
       | 'calculateWithdrawFee'
       | 'deposit'
       | 'freeOverdueFeeUsers'
@@ -155,7 +155,7 @@ export interface MMfinanceSyrupCakeInterface extends utils.Interface {
       | 'setPerformanceFeeContract'
       | 'setTreasury'
       | 'setUnlockFreeDuration'
-      | 'setVCakeContract'
+      | 'setVMeerkatContract'
       | 'setWithdrawFee'
       | 'setWithdrawFeeContract'
       | 'setWithdrawFeePeriod'
@@ -193,15 +193,15 @@ export interface MMfinanceSyrupCakeInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'PRECISION_FACTOR', values?: undefined): string;
   encodeFunctionData(functionFragment: 'PRECISION_FACTOR_SHARE', values?: undefined): string;
   encodeFunctionData(functionFragment: 'UNLOCK_FREE_DURATION', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'VCake', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'VMeerkat', values?: undefined): string;
   encodeFunctionData(functionFragment: 'admin', values?: undefined): string;
   encodeFunctionData(functionFragment: 'available', values?: undefined): string;
   encodeFunctionData(functionFragment: 'balanceOf', values?: undefined): string;
   encodeFunctionData(functionFragment: 'boostContract', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'cakePoolPID', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'meerkatPoolPID', values?: undefined): string;
   encodeFunctionData(functionFragment: 'calculateOverdueFee', values: [string]): string;
   encodeFunctionData(functionFragment: 'calculatePerformanceFee', values: [string]): string;
-  encodeFunctionData(functionFragment: 'calculateTotalPendingCakeRewards', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'calculateTotalPendingMeerkatRewards', values?: undefined): string;
   encodeFunctionData(functionFragment: 'calculateWithdrawFee', values: [string, BigNumberish]): string;
   encodeFunctionData(functionFragment: 'deposit', values: [BigNumberish, BigNumberish]): string;
   encodeFunctionData(functionFragment: 'freeOverdueFeeUsers', values: [string]): string;
@@ -233,7 +233,7 @@ export interface MMfinanceSyrupCakeInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'setPerformanceFeeContract', values: [BigNumberish]): string;
   encodeFunctionData(functionFragment: 'setTreasury', values: [string]): string;
   encodeFunctionData(functionFragment: 'setUnlockFreeDuration', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setVCakeContract', values: [string]): string;
+  encodeFunctionData(functionFragment: 'setVMeerkatContract', values: [string]): string;
   encodeFunctionData(functionFragment: 'setWithdrawFee', values: [BigNumberish]): string;
   encodeFunctionData(functionFragment: 'setWithdrawFeeContract', values: [BigNumberish]): string;
   encodeFunctionData(functionFragment: 'setWithdrawFeePeriod', values: [BigNumberish]): string;
@@ -270,15 +270,15 @@ export interface MMfinanceSyrupCakeInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'PRECISION_FACTOR', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'PRECISION_FACTOR_SHARE', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'UNLOCK_FREE_DURATION', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'VCake', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'VMeerkat', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'admin', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'available', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'boostContract', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'cakePoolPID', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'meerkatPoolPID', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'calculateOverdueFee', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'calculatePerformanceFee', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'calculateTotalPendingCakeRewards', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'calculateTotalPendingMeerkatRewards', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'calculateWithdrawFee', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'deposit', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'freeOverdueFeeUsers', data: BytesLike): Result;
@@ -310,7 +310,7 @@ export interface MMfinanceSyrupCakeInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'setPerformanceFeeContract', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'setTreasury', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'setUnlockFreeDuration', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'setVCakeContract', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setVMeerkatContract', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'setWithdrawFee', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'setWithdrawFeeContract', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'setWithdrawFeePeriod', data: BytesLike): Result;
@@ -349,7 +349,7 @@ export interface MMfinanceSyrupCakeInterface extends utils.Interface {
     'NewPerformanceFeeContract(uint256)': EventFragment;
     'NewTreasury(address)': EventFragment;
     'NewUnlockFreeDuration(uint256)': EventFragment;
-    'NewVCakeContract(address)': EventFragment;
+    'NewVMeerkatContract(address)': EventFragment;
     'NewWithdrawFee(uint256)': EventFragment;
     'NewWithdrawFeeContract(uint256)': EventFragment;
     'NewWithdrawFeePeriod(uint256)': EventFragment;
@@ -379,7 +379,7 @@ export interface MMfinanceSyrupCakeInterface extends utils.Interface {
   getEvent(nameOrSignatureOrTopic: 'NewPerformanceFeeContract'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'NewTreasury'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'NewUnlockFreeDuration'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'NewVCakeContract'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'NewVMeerkatContract'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'NewWithdrawFee'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'NewWithdrawFeeContract'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'NewWithdrawFeePeriod'): EventFragment;
@@ -419,7 +419,7 @@ export type HarvestEvent = TypedEvent<[string, BigNumber], HarvestEventObject>;
 
 export type HarvestEventFilter = TypedEventFilter<HarvestEvent>;
 
-export interface InitEventObject { }
+export interface InitEventObject {}
 export type InitEvent = TypedEvent<[], InitEventObject>;
 
 export type InitEventFilter = TypedEventFilter<InitEvent>;
@@ -519,12 +519,12 @@ export type NewUnlockFreeDurationEvent = TypedEvent<[BigNumber], NewUnlockFreeDu
 
 export type NewUnlockFreeDurationEventFilter = TypedEventFilter<NewUnlockFreeDurationEvent>;
 
-export interface NewVCakeContractEventObject {
-  VCake: string;
+export interface NewVMeerkatContractEventObject {
+  VMeerkat: string;
 }
-export type NewVCakeContractEvent = TypedEvent<[string], NewVCakeContractEventObject>;
+export type NewVMeerkatContractEvent = TypedEvent<[string], NewVMeerkatContractEventObject>;
 
-export type NewVCakeContractEventFilter = TypedEventFilter<NewVCakeContractEvent>;
+export type NewVMeerkatContractEventFilter = TypedEventFilter<NewVMeerkatContractEvent>;
 
 export interface NewWithdrawFeeEventObject {
   withdrawFee: BigNumber;
@@ -555,7 +555,7 @@ export type OwnershipTransferredEvent = TypedEvent<[string, string], OwnershipTr
 
 export type OwnershipTransferredEventFilter = TypedEventFilter<OwnershipTransferredEvent>;
 
-export interface PauseEventObject { }
+export interface PauseEventObject {}
 export type PauseEvent = TypedEvent<[], PauseEventObject>;
 
 export type PauseEventFilter = TypedEventFilter<PauseEvent>;
@@ -576,7 +576,7 @@ export type UnlockEvent = TypedEvent<[string, BigNumber, BigNumber], UnlockEvent
 
 export type UnlockEventFilter = TypedEventFilter<UnlockEvent>;
 
-export interface UnpauseEventObject { }
+export interface UnpauseEventObject {}
 export type UnpauseEvent = TypedEvent<[], UnpauseEventObject>;
 
 export type UnpauseEventFilter = TypedEventFilter<UnpauseEvent>;
@@ -597,12 +597,12 @@ export type WithdrawEvent = TypedEvent<[string, BigNumber, BigNumber], WithdrawE
 
 export type WithdrawEventFilter = TypedEventFilter<WithdrawEvent>;
 
-export interface MMfinanceSyrupCake extends BaseContract {
+export interface MmfinanceSyrupCake extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: MMfinanceSyrupCakeInterface;
+  interface: MmfinanceSyrupCakeInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -652,7 +652,7 @@ export interface MMfinanceSyrupCake extends BaseContract {
 
     UNLOCK_FREE_DURATION(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    VCake(overrides?: CallOverrides): Promise<[string]>;
+    VMeerkat(overrides?: CallOverrides): Promise<[string]>;
 
     admin(overrides?: CallOverrides): Promise<[string]>;
 
@@ -662,13 +662,13 @@ export interface MMfinanceSyrupCake extends BaseContract {
 
     boostContract(overrides?: CallOverrides): Promise<[string]>;
 
-    cakePoolPID(overrides?: CallOverrides): Promise<[BigNumber]>;
+    meerkatPoolPID(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     calculateOverdueFee(_user: string, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     calculatePerformanceFee(_user: string, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    calculateTotalPendingCakeRewards(overrides?: CallOverrides): Promise<[BigNumber]>;
+    calculateTotalPendingMeerkatRewards(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     calculateWithdrawFee(_user: string, _shares: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -780,8 +780,8 @@ export interface MMfinanceSyrupCake extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
 
-    setVCakeContract(
-      _VCake: string,
+    setVMeerkatContract(
+      _VMeerkat: string,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
 
@@ -832,7 +832,7 @@ export interface MMfinanceSyrupCake extends BaseContract {
       [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, boolean, BigNumber] & {
         shares: BigNumber;
         lastDepositedTime: BigNumber;
-        cakeAtLastUserAction: BigNumber;
+        meerkatAtLastUserAction: BigNumber;
         lastUserActionTime: BigNumber;
         lockStartTime: BigNumber;
         lockEndTime: BigNumber;
@@ -893,7 +893,7 @@ export interface MMfinanceSyrupCake extends BaseContract {
 
   UNLOCK_FREE_DURATION(overrides?: CallOverrides): Promise<BigNumber>;
 
-  VCake(overrides?: CallOverrides): Promise<string>;
+  VMeerkat(overrides?: CallOverrides): Promise<string>;
 
   admin(overrides?: CallOverrides): Promise<string>;
 
@@ -903,13 +903,13 @@ export interface MMfinanceSyrupCake extends BaseContract {
 
   boostContract(overrides?: CallOverrides): Promise<string>;
 
-  cakePoolPID(overrides?: CallOverrides): Promise<BigNumber>;
+  meerkatPoolPID(overrides?: CallOverrides): Promise<BigNumber>;
 
   calculateOverdueFee(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
 
   calculatePerformanceFee(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
 
-  calculateTotalPendingCakeRewards(overrides?: CallOverrides): Promise<BigNumber>;
+  calculateTotalPendingMeerkatRewards(overrides?: CallOverrides): Promise<BigNumber>;
 
   calculateWithdrawFee(_user: string, _shares: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1021,8 +1021,8 @@ export interface MMfinanceSyrupCake extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
-  setVCakeContract(
-    _VCake: string,
+  setVMeerkatContract(
+    _VMeerkat: string,
     overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
@@ -1073,7 +1073,7 @@ export interface MMfinanceSyrupCake extends BaseContract {
     [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, boolean, BigNumber] & {
       shares: BigNumber;
       lastDepositedTime: BigNumber;
-      cakeAtLastUserAction: BigNumber;
+      meerkatAtLastUserAction: BigNumber;
       lastUserActionTime: BigNumber;
       lockStartTime: BigNumber;
       lockEndTime: BigNumber;
@@ -1134,7 +1134,7 @@ export interface MMfinanceSyrupCake extends BaseContract {
 
     UNLOCK_FREE_DURATION(overrides?: CallOverrides): Promise<BigNumber>;
 
-    VCake(overrides?: CallOverrides): Promise<string>;
+    VMeerkat(overrides?: CallOverrides): Promise<string>;
 
     admin(overrides?: CallOverrides): Promise<string>;
 
@@ -1144,13 +1144,13 @@ export interface MMfinanceSyrupCake extends BaseContract {
 
     boostContract(overrides?: CallOverrides): Promise<string>;
 
-    cakePoolPID(overrides?: CallOverrides): Promise<BigNumber>;
+    meerkatPoolPID(overrides?: CallOverrides): Promise<BigNumber>;
 
     calculateOverdueFee(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     calculatePerformanceFee(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
 
-    calculateTotalPendingCakeRewards(overrides?: CallOverrides): Promise<BigNumber>;
+    calculateTotalPendingMeerkatRewards(overrides?: CallOverrides): Promise<BigNumber>;
 
     calculateWithdrawFee(_user: string, _shares: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1214,7 +1214,7 @@ export interface MMfinanceSyrupCake extends BaseContract {
 
     setUnlockFreeDuration(_unlockFreeDuration: BigNumberish, overrides?: CallOverrides): Promise<void>;
 
-    setVCakeContract(_VCake: string, overrides?: CallOverrides): Promise<void>;
+    setVMeerkatContract(_VMeerkat: string, overrides?: CallOverrides): Promise<void>;
 
     setWithdrawFee(_withdrawFee: BigNumberish, overrides?: CallOverrides): Promise<void>;
 
@@ -1247,7 +1247,7 @@ export interface MMfinanceSyrupCake extends BaseContract {
       [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, boolean, BigNumber] & {
         shares: BigNumber;
         lastDepositedTime: BigNumber;
-        cakeAtLastUserAction: BigNumber;
+        meerkatAtLastUserAction: BigNumber;
         lastUserActionTime: BigNumber;
         lockStartTime: BigNumber;
         lockEndTime: BigNumber;
@@ -1346,8 +1346,8 @@ export interface MMfinanceSyrupCake extends BaseContract {
     'NewUnlockFreeDuration(uint256)'(unlockFreeDuration?: null): NewUnlockFreeDurationEventFilter;
     NewUnlockFreeDuration(unlockFreeDuration?: null): NewUnlockFreeDurationEventFilter;
 
-    'NewVCakeContract(address)'(VCake?: null): NewVCakeContractEventFilter;
-    NewVCakeContract(VCake?: null): NewVCakeContractEventFilter;
+    'NewVMeerkatContract(address)'(VMeerkat?: null): NewVMeerkatContractEventFilter;
+    NewVMeerkatContract(VMeerkat?: null): NewVMeerkatContractEventFilter;
 
     'NewWithdrawFee(uint256)'(withdrawFee?: null): NewWithdrawFeeEventFilter;
     NewWithdrawFee(withdrawFee?: null): NewWithdrawFeeEventFilter;
@@ -1416,7 +1416,7 @@ export interface MMfinanceSyrupCake extends BaseContract {
 
     UNLOCK_FREE_DURATION(overrides?: CallOverrides): Promise<BigNumber>;
 
-    VCake(overrides?: CallOverrides): Promise<BigNumber>;
+    VMeerkat(overrides?: CallOverrides): Promise<BigNumber>;
 
     admin(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1426,13 +1426,13 @@ export interface MMfinanceSyrupCake extends BaseContract {
 
     boostContract(overrides?: CallOverrides): Promise<BigNumber>;
 
-    cakePoolPID(overrides?: CallOverrides): Promise<BigNumber>;
+    meerkatPoolPID(overrides?: CallOverrides): Promise<BigNumber>;
 
     calculateOverdueFee(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     calculatePerformanceFee(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
 
-    calculateTotalPendingCakeRewards(overrides?: CallOverrides): Promise<BigNumber>;
+    calculateTotalPendingMeerkatRewards(overrides?: CallOverrides): Promise<BigNumber>;
 
     calculateWithdrawFee(_user: string, _shares: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1538,7 +1538,10 @@ export interface MMfinanceSyrupCake extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
 
-    setVCakeContract(_VCake: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setVMeerkatContract(
+      _VMeerkat: string,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<BigNumber>;
 
     setWithdrawFee(
       _withdrawFee: BigNumberish,
@@ -1631,7 +1634,7 @@ export interface MMfinanceSyrupCake extends BaseContract {
 
     UNLOCK_FREE_DURATION(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    VCake(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    VMeerkat(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     admin(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1641,13 +1644,13 @@ export interface MMfinanceSyrupCake extends BaseContract {
 
     boostContract(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    cakePoolPID(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    meerkatPoolPID(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     calculateOverdueFee(_user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     calculatePerformanceFee(_user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    calculateTotalPendingCakeRewards(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    calculateTotalPendingMeerkatRewards(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     calculateWithdrawFee(
       _user: string,
@@ -1769,8 +1772,8 @@ export interface MMfinanceSyrupCake extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
-    setVCakeContract(
-      _VCake: string,
+    setVMeerkatContract(
+      _VMeerkat: string,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 

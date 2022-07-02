@@ -8,7 +8,7 @@ import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
-import { MMfinanceContractFactory } from '../contracts';
+import { MmfinanceContractFactory } from '../contracts';
 import { MMFINANCE_DEFINITION } from '../mmfinance.definition';
 
 // @TODO: Should be indexed from BQ events or logs
@@ -295,10 +295,10 @@ const groupId = MMFINANCE_DEFINITION.groups.syrupStaking.id;
 const network = Network.CRONOS_MAINNET;
 
 @Register.ContractPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
-export class CronosChainMMfinanceSyrupStakingContractPositionFetcher implements PositionFetcher<ContractPosition> {
+export class CronosChainMmfinanceSyrupStakingContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(MMfinanceContractFactory) private readonly contractFactory: MMfinanceContractFactory,
+    @Inject(MmfinanceContractFactory) private readonly contractFactory: MmfinanceContractFactory,
   ) { }
 
   async getPositions() {
@@ -313,7 +313,7 @@ export class CronosChainMMfinanceSyrupStakingContractPositionFetcher implements 
       resolvePoolIndexIsValid: async ({ poolIndex, multicall }) => {
         // Filter out any legacy SmartChef addresses that weren't deployed by the SmartChef contract
         const smartChefAddress = FARMS[poolIndex];
-        const contract = this.contractFactory.MMfinanceSmartChef({ network, address: smartChefAddress });
+        const contract = this.contractFactory.mmfinanceSmartChef({ network, address: smartChefAddress });
         const wrapped = multicall.wrap(contract);
         const factoryAddress = await wrapped.SMART_CHEF_FACTORY().catch(() => null);
         return !!factoryAddress;
@@ -322,17 +322,17 @@ export class CronosChainMMfinanceSyrupStakingContractPositionFetcher implements 
       resolvePoolLength: async () => BigNumber.from(FARMS.length),
       resolveRewardTokenAddresses: ({ multicall, poolIndex }) => {
         const smartChefAddress = FARMS[poolIndex];
-        const contract = this.contractFactory.MMfinanceSmartChef({ network, address: smartChefAddress });
+        const contract = this.contractFactory.mmfinanceSmartChef({ network, address: smartChefAddress });
         return multicall.wrap(contract).rewardToken();
       },
       resolveDepositTokenAddress: ({ multicall, poolIndex }) => {
         const smartChefAddress = FARMS[poolIndex];
-        const contract = this.contractFactory.MMfinanceSmartChef({ network, address: smartChefAddress });
+        const contract = this.contractFactory.mmfinanceSmartChef({ network, address: smartChefAddress });
         return multicall.wrap(contract).stakedToken();
       },
       resolveEndBlock: async ({ multicall, poolIndex }) => {
         const smartChefAddress = FARMS[poolIndex];
-        const contract = this.contractFactory.MMfinanceSmartChef({ network, address: smartChefAddress });
+        const contract = this.contractFactory.mmfinanceSmartChef({ network, address: smartChefAddress });
         return multicall
           .wrap(contract)
           .bonusEndBlock()
@@ -344,7 +344,7 @@ export class CronosChainMMfinanceSyrupStakingContractPositionFetcher implements 
         resolveTotalAllocPoints: async () => '1',
         resolveTotalRewardRate: ({ multicall, poolIndex }) => {
           const smartChefAddress = FARMS[poolIndex];
-          const contract = this.contractFactory.MMfinanceSmartChef({ network, address: smartChefAddress });
+          const contract = this.contractFactory.mmfinanceSmartChef({ network, address: smartChefAddress });
           return multicall.wrap(contract).rewardPerBlock();
         },
       }),

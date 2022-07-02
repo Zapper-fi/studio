@@ -2,8 +2,8 @@
   {
     "inputs": [
       {
-        "internalType": "contract CakeToken",
-        "name": "_cake",
+        "internalType": "contract MeerkatToken",
+        "name": "_meerkat",
         "type": "address"
       },
       {
@@ -162,10 +162,10 @@
   },
   {
     "inputs": [],
-    "name": "cake",
+    "name": "meerkat",
     "outputs": [
       {
-        "internalType": "contract CakeToken",
+        "internalType": "contract MeerkatToken",
         "name": "",
         "type": "address"
       }
@@ -352,7 +352,7 @@
         "type": "address"
       }
     ],
-    "name": "pendingCake",
+    "name": "pendingMeerkat",
     "outputs": [
       {
         "internalType": "uint256",
@@ -390,7 +390,7 @@
       },
       {
         "internalType": "uint256",
-        "name": "accCakePerShare",
+        "name": "accMeerkatPerShare",
         "type": "uint256"
       }
     ],

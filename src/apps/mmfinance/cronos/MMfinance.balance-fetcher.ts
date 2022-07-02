@@ -8,13 +8,13 @@ import { BalanceFetcher } from '~balance/balance-fetcher.interface';
 import { Network } from '~types/network.interface';
 
 import {
-  MMfinanceCakeChef,
-  MMfinanceChef,
-  MMfinanceChefV2,
-  MMfinanceContractFactory,
-  MMfinanceIfoChef,
-  MMfinanceSmartChef,
-  MMfinanceSyrupCake,
+  MmfinanceCakeChef,
+  MmfinanceChef,
+  MmfinanceChefV2,
+  MmfinanceContractFactory,
+  MmfinanceIfoChef,
+  MmfinanceSmartChef,
+  MmfinanceSyrupCake,
 } from '../contracts';
 import { MMFINANCE_DEFINITION } from '../mmfinance.definition';
 
@@ -22,10 +22,10 @@ const appId = MMFINANCE_DEFINITION.id;
 const network = Network.CRONOS_MAINNET;
 
 @Register.BalanceFetcher(appId, network)
-export class CronosChainMMfinanceBalanceFetcher implements BalanceFetcher {
+export class CronosChainMmfinanceBalanceFetcher implements BalanceFetcher {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(MMfinanceContractFactory) private readonly contractFactory: MMfinanceContractFactory,
+    @Inject(MmfinanceContractFactory) private readonly contractFactory: MmfinanceContractFactory,
   ) { }
 
   private async getPoolBalances(address: string) {
@@ -39,13 +39,13 @@ export class CronosChainMMfinanceBalanceFetcher implements BalanceFetcher {
 
   private async getLegacyFarmBalances(address: string) {
     // LP and Manual Cake Farms
-    return this.appToolkit.helpers.masterChefContractPositionBalanceHelper.getBalances<MMfinanceChef>({
+    return this.appToolkit.helpers.masterChefContractPositionBalanceHelper.getBalances<MmfinanceChef>({
       address,
       appId,
       network,
       groupId: MMFINANCE_DEFINITION.groups.farm.id,
       resolveChefContract: ({ contractAddress }) =>
-        this.contractFactory.MMfinanceChef({ network, address: contractAddress }),
+        this.contractFactory.mmfinanceChef({ network, address: contractAddress }),
       resolveStakedTokenBalance: this.appToolkit.helpers.masterChefDefaultStakedBalanceStrategy.build({
         resolveStakedBalance: ({ multicall, contract, contractPosition }) =>
           multicall
@@ -55,20 +55,20 @@ export class CronosChainMMfinanceBalanceFetcher implements BalanceFetcher {
       }),
       resolveClaimableTokenBalances: this.appToolkit.helpers.masterChefDefaultClaimableBalanceStrategy.build({
         resolveClaimableBalance: ({ multicall, contract, contractPosition }) =>
-          multicall.wrap(contract).pendingCake(contractPosition.dataProps.poolIndex, address),
+          multicall.wrap(contract).pendingMeerkat(contractPosition.dataProps.poolIndex, address),
       }),
     });
   }
 
   private async getFarmBalances(address: string) {
     // LP and Manual Cake Farms
-    return this.appToolkit.helpers.masterChefContractPositionBalanceHelper.getBalances<MMfinanceChefV2>({
+    return this.appToolkit.helpers.masterChefContractPositionBalanceHelper.getBalances<MmfinanceChefV2>({
       address,
       appId,
       network,
       groupId: MMFINANCE_DEFINITION.groups.farmV2.id,
       resolveChefContract: ({ contractAddress }) =>
-        this.contractFactory.MMfinanceChefV2({ network, address: contractAddress }),
+        this.contractFactory.mmfinanceChefV2({ network, address: contractAddress }),
       resolveStakedTokenBalance: this.appToolkit.helpers.masterChefDefaultStakedBalanceStrategy.build({
         resolveStakedBalance: ({ multicall, contract, contractPosition }) =>
           multicall
@@ -78,20 +78,20 @@ export class CronosChainMMfinanceBalanceFetcher implements BalanceFetcher {
       }),
       resolveClaimableTokenBalances: this.appToolkit.helpers.masterChefDefaultClaimableBalanceStrategy.build({
         resolveClaimableBalance: ({ multicall, contract, contractPosition }) =>
-          multicall.wrap(contract).pendingCake(contractPosition.dataProps.poolIndex, address),
+          multicall.wrap(contract).pendingMeerkat(contractPosition.dataProps.poolIndex, address),
       }),
     });
   }
 
   private async getIfoCakeBalances(address: string) {
     // IFO Cake Farm
-    return this.appToolkit.helpers.masterChefContractPositionBalanceHelper.getBalances<MMfinanceIfoChef>({
+    return this.appToolkit.helpers.masterChefContractPositionBalanceHelper.getBalances<MmfinanceIfoChef>({
       address,
       appId,
       network,
       groupId: MMFINANCE_DEFINITION.groups.ifoMmf.id,
       resolveChefContract: ({ contractAddress }) =>
-        this.contractFactory.MMfinanceIfoChef({ network, address: contractAddress }),
+        this.contractFactory.mmfinanceIfoChef({ network, address: contractAddress }),
       resolveStakedTokenBalance: this.appToolkit.helpers.masterChefDefaultStakedBalanceStrategy.build({
         resolveStakedBalance: async ({ multicall, contract }) => {
           const [userInfo, pricePerShareRaw] = await Promise.all([
@@ -112,13 +112,13 @@ export class CronosChainMMfinanceBalanceFetcher implements BalanceFetcher {
 
   private async getAutoCakeBalances(address: string) {
     // Autocompounding Cake Farm
-    return this.appToolkit.helpers.masterChefContractPositionBalanceHelper.getBalances<MMfinanceCakeChef>({
+    return this.appToolkit.helpers.masterChefContractPositionBalanceHelper.getBalances<MmfinanceCakeChef>({
       address,
       appId,
       network,
       groupId: MMFINANCE_DEFINITION.groups.autoMmf.id,
       resolveChefContract: ({ contractAddress }) =>
-        this.contractFactory.MMfinanceCakeChef({ network, address: contractAddress }),
+        this.contractFactory.mmfinanceCakeChef({ network, address: contractAddress }),
       resolveStakedTokenBalance: this.appToolkit.helpers.masterChefDefaultStakedBalanceStrategy.build({
         resolveStakedBalance: async ({ multicall, contract, address }) => {
           const [userInfo, pricePerShareRaw] = await Promise.all([
@@ -139,13 +139,13 @@ export class CronosChainMMfinanceBalanceFetcher implements BalanceFetcher {
 
   private async getSyrupCakeBalances(address: string) {
     // Autocompounding Cake Farm
-    return this.appToolkit.helpers.masterChefContractPositionBalanceHelper.getBalances<MMfinanceSyrupCake>({
+    return this.appToolkit.helpers.masterChefContractPositionBalanceHelper.getBalances<MmfinanceSyrupCake>({
       address,
       appId,
       network,
       groupId: MMFINANCE_DEFINITION.groups.syrupMmf.id,
       resolveChefContract: ({ contractAddress }) =>
-        this.contractFactory.MMfinanceSyrupCake({ network, address: contractAddress }),
+        this.contractFactory.mmfinanceSyrupCake({ network, address: contractAddress }),
       resolveStakedTokenBalance: this.appToolkit.helpers.masterChefDefaultStakedBalanceStrategy.build({
         resolveStakedBalance: async ({ multicall, contract, address }) => {
           const [userInfo, pricePerShareRaw] = await Promise.all([
@@ -167,13 +167,13 @@ export class CronosChainMMfinanceBalanceFetcher implements BalanceFetcher {
 
   private async getSyrupPoolBalances(address: string) {
     // Syrup Pools (single-staking)
-    return this.appToolkit.helpers.masterChefContractPositionBalanceHelper.getBalances<MMfinanceSmartChef>({
+    return this.appToolkit.helpers.masterChefContractPositionBalanceHelper.getBalances<MmfinanceSmartChef>({
       address,
       appId,
       network,
       groupId: MMFINANCE_DEFINITION.groups.syrupStaking.id,
       resolveChefContract: ({ contractAddress }) =>
-        this.contractFactory.MMfinanceSmartChef({ network, address: contractAddress }),
+        this.contractFactory.mmfinanceSmartChef({ network, address: contractAddress }),
       resolveStakedTokenBalance: this.appToolkit.helpers.masterChefDefaultStakedBalanceStrategy.build({
         resolveStakedBalance: ({ multicall, contract, address }) =>
           multicall

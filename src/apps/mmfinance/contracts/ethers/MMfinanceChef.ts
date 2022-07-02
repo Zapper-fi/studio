@@ -17,11 +17,11 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
 
-export interface MMfinanceChefInterface extends utils.Interface {
+export interface MmfinanceChefInterface extends utils.Interface {
   functions: {
     'BONUS_MULTIPLIER()': FunctionFragment;
     'add(uint256,address,bool)': FunctionFragment;
-    'cake()': FunctionFragment;
+    'meerkat()': FunctionFragment;
     'meerkatPerBlock()': FunctionFragment;
     'deposit(uint256,uint256)': FunctionFragment;
     'dev(address)': FunctionFragment;
@@ -34,7 +34,7 @@ export interface MMfinanceChefInterface extends utils.Interface {
     'migrate(uint256)': FunctionFragment;
     'migrator()': FunctionFragment;
     'owner()': FunctionFragment;
-    'pendingCake(uint256,address)': FunctionFragment;
+    'pendingMeerkat(uint256,address)': FunctionFragment;
     'poolInfo(uint256)': FunctionFragment;
     'poolLength()': FunctionFragment;
     'renounceOwnership()': FunctionFragment;
@@ -54,7 +54,7 @@ export interface MMfinanceChefInterface extends utils.Interface {
     nameOrSignatureOrTopic:
       | 'BONUS_MULTIPLIER'
       | 'add'
-      | 'cake'
+      | 'meerkat'
       | 'meerkatPerBlock'
       | 'deposit'
       | 'dev'
@@ -67,7 +67,7 @@ export interface MMfinanceChefInterface extends utils.Interface {
       | 'migrate'
       | 'migrator'
       | 'owner'
-      | 'pendingCake'
+      | 'pendingMeerkat'
       | 'poolInfo'
       | 'poolLength'
       | 'renounceOwnership'
@@ -85,7 +85,7 @@ export interface MMfinanceChefInterface extends utils.Interface {
 
   encodeFunctionData(functionFragment: 'BONUS_MULTIPLIER', values?: undefined): string;
   encodeFunctionData(functionFragment: 'add', values: [BigNumberish, string, boolean]): string;
-  encodeFunctionData(functionFragment: 'cake', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'meerkat', values?: undefined): string;
   encodeFunctionData(functionFragment: 'meerkatPerBlock', values?: undefined): string;
   encodeFunctionData(functionFragment: 'deposit', values: [BigNumberish, BigNumberish]): string;
   encodeFunctionData(functionFragment: 'dev', values: [string]): string;
@@ -98,7 +98,7 @@ export interface MMfinanceChefInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'migrate', values: [BigNumberish]): string;
   encodeFunctionData(functionFragment: 'migrator', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'pendingCake', values: [BigNumberish, string]): string;
+  encodeFunctionData(functionFragment: 'pendingMeerkat', values: [BigNumberish, string]): string;
   encodeFunctionData(functionFragment: 'poolInfo', values: [BigNumberish]): string;
   encodeFunctionData(functionFragment: 'poolLength', values?: undefined): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
@@ -115,7 +115,7 @@ export interface MMfinanceChefInterface extends utils.Interface {
 
   decodeFunctionResult(functionFragment: 'BONUS_MULTIPLIER', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'add', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'cake', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'meerkat', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'meerkatPerBlock', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'deposit', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'dev', data: BytesLike): Result;
@@ -128,7 +128,7 @@ export interface MMfinanceChefInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'migrate', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'migrator', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'pendingCake', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'pendingMeerkat', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'poolInfo', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'poolLength', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'renounceOwnership', data: BytesLike): Result;
@@ -191,12 +191,12 @@ export type WithdrawEvent = TypedEvent<[string, BigNumber, BigNumber], WithdrawE
 
 export type WithdrawEventFilter = TypedEventFilter<WithdrawEvent>;
 
-export interface MMfinanceChef extends BaseContract {
+export interface MmfinanceChef extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: MMfinanceChefInterface;
+  interface: MmfinanceChefInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -223,7 +223,7 @@ export interface MMfinanceChef extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
 
-    cake(overrides?: CallOverrides): Promise<[string]>;
+    meerkat(overrides?: CallOverrides): Promise<[string]>;
 
     meerkatPerBlock(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -265,7 +265,7 @@ export interface MMfinanceChef extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
-    pendingCake(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    pendingMeerkat(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     poolInfo(
       arg0: BigNumberish,
@@ -275,7 +275,7 @@ export interface MMfinanceChef extends BaseContract {
         lpToken: string;
         allocPoint: BigNumber;
         lastRewardBlock: BigNumber;
-        accCakePerShare: BigNumber;
+        accMeerkatPerShare: BigNumber;
       }
     >;
 
@@ -338,7 +338,7 @@ export interface MMfinanceChef extends BaseContract {
     overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
-  cake(overrides?: CallOverrides): Promise<string>;
+  meerkat(overrides?: CallOverrides): Promise<string>;
 
   meerkatPerBlock(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -380,7 +380,7 @@ export interface MMfinanceChef extends BaseContract {
 
   owner(overrides?: CallOverrides): Promise<string>;
 
-  pendingCake(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<BigNumber>;
+  pendingMeerkat(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<BigNumber>;
 
   poolInfo(
     arg0: BigNumberish,
@@ -390,7 +390,7 @@ export interface MMfinanceChef extends BaseContract {
       lpToken: string;
       allocPoint: BigNumber;
       lastRewardBlock: BigNumber;
-      accCakePerShare: BigNumber;
+      accMeerkatPerShare: BigNumber;
     }
   >;
 
@@ -448,7 +448,7 @@ export interface MMfinanceChef extends BaseContract {
 
     add(_allocPoint: BigNumberish, _lpToken: string, _withUpdate: boolean, overrides?: CallOverrides): Promise<void>;
 
-    cake(overrides?: CallOverrides): Promise<string>;
+    meerkat(overrides?: CallOverrides): Promise<string>;
 
     meerkatPerBlock(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -474,7 +474,7 @@ export interface MMfinanceChef extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    pendingCake(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingMeerkat(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     poolInfo(
       arg0: BigNumberish,
@@ -484,7 +484,7 @@ export interface MMfinanceChef extends BaseContract {
         lpToken: string;
         allocPoint: BigNumber;
         lastRewardBlock: BigNumber;
-        accCakePerShare: BigNumber;
+        accMeerkatPerShare: BigNumber;
       }
     >;
 
@@ -556,7 +556,7 @@ export interface MMfinanceChef extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
 
-    cake(overrides?: CallOverrides): Promise<BigNumber>;
+    meerkat(overrides?: CallOverrides): Promise<BigNumber>;
 
     meerkatPerBlock(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -595,7 +595,7 @@ export interface MMfinanceChef extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    pendingCake(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingMeerkat(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     poolInfo(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -649,7 +649,7 @@ export interface MMfinanceChef extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
-    cake(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    meerkat(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     meerkatPerBlock(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -691,7 +691,7 @@ export interface MMfinanceChef extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    pendingCake(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    pendingMeerkat(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     poolInfo(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 

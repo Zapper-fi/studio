@@ -7,7 +7,7 @@ import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
-import { MMfinanceChef, MMfinanceContractFactory } from '../contracts';
+import { MmfinanceChef, MmfinanceContractFactory } from '../contracts';
 import { MMFINANCE_DEFINITION } from '../mmfinance.definition';
 
 const appId = MMFINANCE_DEFINITION.id;
@@ -15,21 +15,21 @@ const groupId = MMFINANCE_DEFINITION.groups.farm.id;
 const network = Network.CRONOS_MAINNET;
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
-export class CronosChainMMfinanceFarmContractPositionFetcher implements PositionFetcher<ContractPosition> {
+export class CronosChainMmfinanceFarmContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(MMfinanceContractFactory) private readonly contractFactory: MMfinanceContractFactory,
+    @Inject(MmfinanceContractFactory) private readonly contractFactory: MmfinanceContractFactory,
   ) { }
 
   getPositions() {
-    return this.appToolkit.helpers.masterChefContractPositionHelper.getContractPositions<MMfinanceChef>({
+    return this.appToolkit.helpers.masterChefContractPositionHelper.getContractPositions<MmfinanceChef>({
       network,
       groupId,
       appId,
       minimumTvl: 10000,
       address: '0x6bE34986Fdd1A91e4634eb6b9F8017439b7b5EDc',
       dependencies: [{ appId, groupIds: [MMFINANCE_DEFINITION.groups.pool.id], network }],
-      resolveContract: opts => this.contractFactory.MMfinanceChef(opts),
+      resolveContract: opts => this.contractFactory.mmfinanceChef(opts),
       resolvePoolLength: async ({ multicall, contract }) => multicall.wrap(contract).poolLength(),
       resolveDepositTokenAddress: ({ multicall, contract, poolIndex }) =>
         multicall
@@ -41,7 +41,7 @@ export class CronosChainMMfinanceFarmContractPositionFetcher implements Position
         const balanceRaw = await multicall.wrap(tokenContract).balanceOf(address);
         if (poolIndex !== 0) return balanceRaw;
 
-        const autoCakeChefContract = this.contractFactory.MMfinanceCakeChef({
+        const autoCakeChefContract = this.contractFactory.mmfinanceCakeChef({
           network,
           address: '0xa80240eb5d7e05d3f250cf000eec0891d00b51cc',
         });
@@ -50,7 +50,7 @@ export class CronosChainMMfinanceFarmContractPositionFetcher implements Position
         const autoCakeVaultBalanceRaw = await multicall.wrap(autoCakeChefContract).balanceOf();
         return balanceRaw.sub(autoCakeVaultBalanceRaw);
       },
-      resolveRewardTokenAddresses: ({ multicall, contract }) => multicall.wrap(contract).cake(),
+      resolveRewardTokenAddresses: ({ multicall, contract }) => multicall.wrap(contract).meerkat(),
       rewardRateUnit: RewardRateUnit.BLOCK,
       resolveRewardRate: this.appToolkit.helpers.masterChefDefaultRewardsPerBlockStrategy.build({
         resolvePoolAllocPoints: ({ multicall, contract, poolIndex }) =>

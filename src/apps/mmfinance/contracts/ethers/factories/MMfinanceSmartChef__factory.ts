@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { MMfinanceSmartChef, MMfinanceSmartChefInterface } from '../MMfinanceSmartChef';
+import type { MmfinanceSmartChef, MmfinanceSmartChefInterface } from '../MmfinanceSmartChef';
 
 const _abi = [
   {
@@ -562,12 +562,12 @@ const _abi = [
   },
 ];
 
-export class MMfinanceSmartChef__factory {
+export class MmfinanceSmartChef__factory {
   static readonly abi = _abi;
-  static createInterface(): MMfinanceSmartChefInterface {
-    return new utils.Interface(_abi) as MMfinanceSmartChefInterface;
+  static createInterface(): MmfinanceSmartChefInterface {
+    return new utils.Interface(_abi) as MmfinanceSmartChefInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): MMfinanceSmartChef {
-    return new Contract(address, _abi, signerOrProvider) as MMfinanceSmartChef;
+  static connect(address: string, signerOrProvider: Signer | Provider): MmfinanceSmartChef {
+    return new Contract(address, _abi, signerOrProvider) as MmfinanceSmartChef;
   }
 }

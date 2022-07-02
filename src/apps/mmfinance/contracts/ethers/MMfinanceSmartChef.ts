@@ -17,7 +17,7 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
 
-export interface MMfinanceSmartChefInterface extends utils.Interface {
+export interface MmfinanceSmartChefInterface extends utils.Interface {
   functions: {
     'PRECISION_FACTOR()': FunctionFragment;
     'SMART_CHEF_FACTORY()': FunctionFragment;
@@ -230,12 +230,12 @@ export type WithdrawEvent = TypedEvent<[string, BigNumber], WithdrawEventObject>
 
 export type WithdrawEventFilter = TypedEventFilter<WithdrawEvent>;
 
-export interface MMfinanceSmartChef extends BaseContract {
+export interface MmfinanceSmartChef extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: MMfinanceSmartChefInterface;
+  interface: MmfinanceSmartChefInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

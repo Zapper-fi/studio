@@ -17,7 +17,7 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
 
-export interface MMfinancePairInterface extends utils.Interface {
+export interface MmfinancePairInterface extends utils.Interface {
   functions: {
     'DOMAIN_SEPARATOR()': FunctionFragment;
     'MINIMUM_LIQUIDITY()': FunctionFragment;
@@ -212,12 +212,12 @@ export type TransferEvent = TypedEvent<[string, string, BigNumber], TransferEven
 
 export type TransferEventFilter = TypedEventFilter<TransferEvent>;
 
-export interface MMfinancePair extends BaseContract {
+export interface MmfinancePair extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: MMfinancePairInterface;
+  interface: MmfinancePairInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

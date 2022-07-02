@@ -8,42 +8,38 @@ import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
-import { MMfinanceContractFactory, MMfinanceIfoChef } from '../contracts';
+import { MmfinanceCakeChef, MmfinanceContractFactory } from '../contracts';
 import { MMFINANCE_DEFINITION } from '../mmfinance.definition';
 
 const appId = MMFINANCE_DEFINITION.id;
-const groupId = MMFINANCE_DEFINITION.groups.ifoMmf.id;
+const groupId = MMFINANCE_DEFINITION.groups.autoMmf.id;
 const network = Network.CRONOS_MAINNET;
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
-export class CronosChainMMfinanceIfoCakeContractPositionFetcher implements PositionFetcher<ContractPosition> {
+export class CronosChainMmfinanceAutoCakeContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(MMfinanceContractFactory) private readonly contractFactory: MMfinanceContractFactory,
+    @Inject(MmfinanceContractFactory)
+    private readonly contractFactory: MmfinanceContractFactory,
   ) { }
 
   getPositions() {
-    const cakeChefContract = this.contractFactory.MMfinanceCakeChef({
-      network,
-      address: '0xa80240eb5d7e05d3f250cf000eec0891d00b51cc',
-    });
-
-    const chefContract = this.contractFactory.MMfinanceChef({
+    const chefContract = this.contractFactory.mmfinanceChef({
       network,
       address: '0x6bE34986Fdd1A91e4634eb6b9F8017439b7b5EDc',
     });
-    return this.appToolkit.helpers.masterChefContractPositionHelper.getContractPositions<MMfinanceIfoChef>({
+    return this.appToolkit.helpers.masterChefContractPositionHelper.getContractPositions<MmfinanceCakeChef>({
       network,
       groupId,
       appId,
       minimumTvl: 10000,
-      address: '0x1b2a2f6ed4a1401e8c73b4c2b6172455ce2f78e8',
-      resolveContract: opts => this.contractFactory.MMfinanceIfoChef(opts),
+      address: '0xa80240eb5d7e05d3f250cf000eec0891d00b51cc',
+      resolveContract: opts => this.contractFactory.mmfinanceCakeChef(opts),
       resolvePoolLength: async () => BigNumber.from(1),
       resolveDepositTokenAddress: ({ multicall, contract }) => multicall.wrap(contract).token(),
-      resolveLiquidity: ({ multicall }) => multicall.wrap(cakeChefContract).balanceOf(),
-      rewardRateUnit: RewardRateUnit.BLOCK,
+      resolveLiquidity: ({ multicall, contract }) => multicall.wrap(contract).balanceOf(),
       resolveRewardTokenAddresses: ({ multicall, contract }) => multicall.wrap(contract).token(),
+      rewardRateUnit: RewardRateUnit.BLOCK,
       resolveRewardRate: this.appToolkit.helpers.masterChefDefaultRewardsPerBlockStrategy.build({
         resolvePoolAllocPoints: ({ multicall }) =>
           multicall

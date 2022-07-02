@@ -5,14 +5,14 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { CacheOnInterval } from '~cache/cache-on-interval.decorator';
 import { Network } from '~types/network.interface';
 
-import { MMfinanceContractFactory } from '../contracts';
+import { MmfinanceContractFactory } from '../contracts';
 import { MMFINANCE_DEFINITION } from '../mmfinance.definition';
 
 @Injectable()
-export class CronosChainMMfinancePoolAddressCacheManager {
+export class CronosChainMmfinancePoolAddressCacheManager {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(MMfinanceContractFactory) protected readonly contractFactory: MMfinanceContractFactory,
+    @Inject(MmfinanceContractFactory) protected readonly contractFactory: MmfinanceContractFactory,
   ) { }
 
   @CacheOnInterval({
@@ -32,7 +32,7 @@ export class CronosChainMMfinancePoolAddressCacheManager {
   private async getChefPoolAddresses() {
     const network = Network.CRONOS_MAINNET;
     const chefAddress = '0x6bE34986Fdd1A91e4634eb6b9F8017439b7b5EDc';
-    const chefContract = this.contractFactory.MMfinanceChef({ address: chefAddress, network });
+    const chefContract = this.contractFactory.mmfinanceChef({ address: chefAddress, network });
 
     const provider = this.appToolkit.getNetworkProvider(network);
     const multicall = this.appToolkit.getMulticall(network);
@@ -44,7 +44,7 @@ export class CronosChainMMfinancePoolAddressCacheManager {
         const poolInfo = await multicall.wrap(chefContract).poolInfo(v);
         // console.log(poolInfo);
         const lpTokenAddress = poolInfo.lpToken.toLowerCase();
-        const lpTokenContract = this.contractFactory.MMfinancePair({ address: lpTokenAddress, network });
+        const lpTokenContract = this.contractFactory.mmfinancePair({ address: lpTokenAddress, network });
 
         // Some EOAs exist on the MasterChef contract; calling these breaks multicall
         const code = await provider.getCode(lpTokenAddress);
@@ -78,7 +78,7 @@ export class CronosChainMMfinancePoolAddressCacheManager {
   // private async getChefV2PoolAddresses() {
   //   const network = Network.CRONOS_MAINNET;
   //   const chefAddress = '0x6bE34986Fdd1A91e4634eb6b9F8017439b7b5EDc';
-  //   const chefContract = this.contractFactory.MMfinanceChefV2({ address: chefAddress, network });
+  //   const chefContract = this.contractFactory.mmfinanceChefV2({ address: chefAddress, network });
 
   //   const provider = this.appToolkit.getNetworkProvider(network);
   //   const multicall = this.appToolkit.getMulticall(network);
@@ -88,7 +88,7 @@ export class CronosChainMMfinancePoolAddressCacheManager {
   //     range(0, Number(numPools)).map(async v => {
   //       const lpTokenAddressRaw = await multicall.wrap(chefContract).lpToken(v);
   //       const lpTokenAddress = lpTokenAddressRaw.toLowerCase();
-  //       const lpTokenContract = this.contractFactory.MMfinancePair({ address: lpTokenAddress, network });
+  //       const lpTokenContract = this.contractFactory.mmfinancePair({ address: lpTokenAddress, network });
 
   //       // Some EOAs exist on the MasterChef contract; calling these breaks multicall
   //       const code = await provider.getCode(lpTokenAddress);

@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { MMfinanceIfoChef, MMfinanceIfoChefInterface } from '../MMfinanceIfoChef';
+import type { MmfinanceIfoChef, MmfinanceIfoChefInterface } from '../MmfinanceIfoChef';
 
 const _abi = [
   {
@@ -373,7 +373,7 @@ const _abi = [
   },
   {
     inputs: [],
-    name: 'calculateHarvestCakeRewards',
+    name: 'calculateHarvestMeerkatRewards',
     outputs: [
       {
         internalType: 'uint256',
@@ -386,7 +386,7 @@ const _abi = [
   },
   {
     inputs: [],
-    name: 'calculateTotalPendingCakeRewards',
+    name: 'calculateTotalPendingMeerkatRewards',
     outputs: [
       {
         internalType: 'uint256',
@@ -836,7 +836,7 @@ const _abi = [
       },
       {
         internalType: 'uint256',
-        name: 'cakeAtLastUserAction',
+        name: 'meerkatAtLastUserAction',
         type: 'uint256',
       },
       {
@@ -896,12 +896,12 @@ const _abi = [
   },
 ];
 
-export class MMfinanceIfoChef__factory {
+export class MmfinanceIfoChef__factory {
   static readonly abi = _abi;
-  static createInterface(): MMfinanceIfoChefInterface {
-    return new utils.Interface(_abi) as MMfinanceIfoChefInterface;
+  static createInterface(): MmfinanceIfoChefInterface {
+    return new utils.Interface(_abi) as MmfinanceIfoChefInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): MMfinanceIfoChef {
-    return new Contract(address, _abi, signerOrProvider) as MMfinanceIfoChef;
+  static connect(address: string, signerOrProvider: Signer | Provider): MmfinanceIfoChef {
+    return new Contract(address, _abi, signerOrProvider) as MmfinanceIfoChef;
   }
 }

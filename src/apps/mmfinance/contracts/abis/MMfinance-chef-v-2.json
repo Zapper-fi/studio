@@ -235,7 +235,7 @@
         "type": "uint256"
       }
     ],
-    "name": "UpdateCakeRate",
+    "name": "UpdateMeerkatRate",
     "type": "event"
   },
   {
@@ -262,7 +262,7 @@
       {
         "indexed": false,
         "internalType": "uint256",
-        "name": "accCakePerShare",
+        "name": "accMeerkatPerShare",
         "type": "uint256"
       }
     ],
@@ -479,7 +479,7 @@
         "type": "bool"
       }
     ],
-    "name": "burnCake",
+    "name": "burnMeerkat",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -518,7 +518,7 @@
   },
   {
     "inputs": [],
-    "name": "cakeRateToBurn",
+    "name": "meerkatRateToBurn",
     "outputs": [
       {
         "internalType": "uint256",
@@ -531,7 +531,7 @@
   },
   {
     "inputs": [],
-    "name": "cakeRateToRegularFarm",
+    "name": "meerkatRateToRegularFarm",
     "outputs": [
       {
         "internalType": "uint256",
@@ -544,7 +544,7 @@
   },
   {
     "inputs": [],
-    "name": "cakeRateToSpecialFarm",
+    "name": "meerkatRateToSpecialFarm",
     "outputs": [
       {
         "internalType": "uint256",
@@ -695,7 +695,7 @@
         "type": "address"
       }
     ],
-    "name": "pendingCake",
+    "name": "pendingMeerkat",
     "outputs": [
       {
         "internalType": "uint256",
@@ -718,7 +718,7 @@
     "outputs": [
       {
         "internalType": "uint256",
-        "name": "accCakePerShare",
+        "name": "accMeerkatPerShare",
         "type": "uint256"
       },
       {
@@ -899,7 +899,7 @@
         "type": "bool"
       }
     ],
-    "name": "updateCakeRate",
+    "name": "updateMeerkatRate",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -918,7 +918,7 @@
         "components": [
           {
             "internalType": "uint256",
-            "name": "accCakePerShare",
+            "name": "accMeerkatPerShare",
             "type": "uint256"
           },
           {

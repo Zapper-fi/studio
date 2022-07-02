@@ -33,7 +33,7 @@ export const MMFINANCE_DEFINITION = appDefinition({
 });
 
 @Register.AppDefinition(MMFINANCE_DEFINITION.id)
-export class MMfinanceAppDefinition extends AppDefinition {
+export class MmfinanceAppDefinition extends AppDefinition {
   constructor() {
     super(MMFINANCE_DEFINITION);
   }

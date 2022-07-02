@@ -17,7 +17,7 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
 
-export interface MMfinanceIfoChefInterface extends utils.Interface {
+export interface MmfinanceIfoChefInterface extends utils.Interface {
   functions: {
     'MAX_CALL_FEE()': FunctionFragment;
     'MAX_PERFORMANCE_FEE()': FunctionFragment;
@@ -26,8 +26,8 @@ export interface MMfinanceIfoChefInterface extends utils.Interface {
     'admin()': FunctionFragment;
     'available()': FunctionFragment;
     'balanceOf()': FunctionFragment;
-    'calculateHarvestCakeRewards()': FunctionFragment;
-    'calculateTotalPendingCakeRewards()': FunctionFragment;
+    'calculateHarvestMeerkatRewards()': FunctionFragment;
+    'calculateTotalPendingMeerkatRewards()': FunctionFragment;
     'callFee()': FunctionFragment;
     'deposit(uint256)': FunctionFragment;
     'emergencyWithdraw()': FunctionFragment;
@@ -76,8 +76,8 @@ export interface MMfinanceIfoChefInterface extends utils.Interface {
       | 'admin'
       | 'available'
       | 'balanceOf'
-      | 'calculateHarvestCakeRewards'
-      | 'calculateTotalPendingCakeRewards'
+      | 'calculateHarvestMeerkatRewards'
+      | 'calculateTotalPendingMeerkatRewards'
       | 'callFee'
       | 'deposit'
       | 'emergencyWithdraw'
@@ -124,8 +124,8 @@ export interface MMfinanceIfoChefInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'admin', values?: undefined): string;
   encodeFunctionData(functionFragment: 'available', values?: undefined): string;
   encodeFunctionData(functionFragment: 'balanceOf', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'calculateHarvestCakeRewards', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'calculateTotalPendingCakeRewards', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'calculateHarvestMeerkatRewards', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'calculateTotalPendingMeerkatRewards', values?: undefined): string;
   encodeFunctionData(functionFragment: 'callFee', values?: undefined): string;
   encodeFunctionData(functionFragment: 'deposit', values: [BigNumberish]): string;
   encodeFunctionData(functionFragment: 'emergencyWithdraw', values?: undefined): string;
@@ -171,8 +171,8 @@ export interface MMfinanceIfoChefInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'admin', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'available', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'calculateHarvestCakeRewards', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'calculateTotalPendingCakeRewards', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'calculateHarvestMeerkatRewards', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'calculateTotalPendingMeerkatRewards', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'callFee', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'deposit', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'emergencyWithdraw', data: BytesLike): Result;
@@ -267,7 +267,7 @@ export type OwnershipTransferredEvent = TypedEvent<[string, string], OwnershipTr
 
 export type OwnershipTransferredEventFilter = TypedEventFilter<OwnershipTransferredEvent>;
 
-export interface PauseEventObject { }
+export interface PauseEventObject {}
 export type PauseEvent = TypedEvent<[], PauseEventObject>;
 
 export type PauseEventFilter = TypedEventFilter<PauseEvent>;
@@ -279,7 +279,7 @@ export type PausedEvent = TypedEvent<[string], PausedEventObject>;
 
 export type PausedEventFilter = TypedEventFilter<PausedEvent>;
 
-export interface UnpauseEventObject { }
+export interface UnpauseEventObject {}
 export type UnpauseEvent = TypedEvent<[], UnpauseEventObject>;
 
 export type UnpauseEventFilter = TypedEventFilter<UnpauseEvent>;
@@ -338,12 +338,12 @@ export type ZeroFreeIFOEvent = TypedEvent<[string, BigNumber], ZeroFreeIFOEventO
 
 export type ZeroFreeIFOEventFilter = TypedEventFilter<ZeroFreeIFOEvent>;
 
-export interface MMfinanceIfoChef extends BaseContract {
+export interface MmfinanceIfoChef extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: MMfinanceIfoChefInterface;
+  interface: MmfinanceIfoChefInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -375,9 +375,9 @@ export interface MMfinanceIfoChef extends BaseContract {
 
     balanceOf(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    calculateHarvestCakeRewards(overrides?: CallOverrides): Promise<[BigNumber]>;
+    calculateHarvestMeerkatRewards(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    calculateTotalPendingCakeRewards(overrides?: CallOverrides): Promise<[BigNumber]>;
+    calculateTotalPendingMeerkatRewards(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     callFee(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -492,7 +492,7 @@ export interface MMfinanceIfoChef extends BaseContract {
       [BigNumber, BigNumber, BigNumber, BigNumber] & {
         shares: BigNumber;
         lastDepositedTime: BigNumber;
-        cakeAtLastUserAction: BigNumber;
+        meerkatAtLastUserAction: BigNumber;
         lastUserActionTime: BigNumber;
       }
     >;
@@ -523,9 +523,9 @@ export interface MMfinanceIfoChef extends BaseContract {
 
   balanceOf(overrides?: CallOverrides): Promise<BigNumber>;
 
-  calculateHarvestCakeRewards(overrides?: CallOverrides): Promise<BigNumber>;
+  calculateHarvestMeerkatRewards(overrides?: CallOverrides): Promise<BigNumber>;
 
-  calculateTotalPendingCakeRewards(overrides?: CallOverrides): Promise<BigNumber>;
+  calculateTotalPendingMeerkatRewards(overrides?: CallOverrides): Promise<BigNumber>;
 
   callFee(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -640,7 +640,7 @@ export interface MMfinanceIfoChef extends BaseContract {
     [BigNumber, BigNumber, BigNumber, BigNumber] & {
       shares: BigNumber;
       lastDepositedTime: BigNumber;
-      cakeAtLastUserAction: BigNumber;
+      meerkatAtLastUserAction: BigNumber;
       lastUserActionTime: BigNumber;
     }
   >;
@@ -671,9 +671,9 @@ export interface MMfinanceIfoChef extends BaseContract {
 
     balanceOf(overrides?: CallOverrides): Promise<BigNumber>;
 
-    calculateHarvestCakeRewards(overrides?: CallOverrides): Promise<BigNumber>;
+    calculateHarvestMeerkatRewards(overrides?: CallOverrides): Promise<BigNumber>;
 
-    calculateTotalPendingCakeRewards(overrides?: CallOverrides): Promise<BigNumber>;
+    calculateTotalPendingMeerkatRewards(overrides?: CallOverrides): Promise<BigNumber>;
 
     callFee(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -761,7 +761,7 @@ export interface MMfinanceIfoChef extends BaseContract {
       [BigNumber, BigNumber, BigNumber, BigNumber] & {
         shares: BigNumber;
         lastDepositedTime: BigNumber;
-        cakeAtLastUserAction: BigNumber;
+        meerkatAtLastUserAction: BigNumber;
         lastUserActionTime: BigNumber;
       }
     >;
@@ -854,9 +854,9 @@ export interface MMfinanceIfoChef extends BaseContract {
 
     balanceOf(overrides?: CallOverrides): Promise<BigNumber>;
 
-    calculateHarvestCakeRewards(overrides?: CallOverrides): Promise<BigNumber>;
+    calculateHarvestMeerkatRewards(overrides?: CallOverrides): Promise<BigNumber>;
 
-    calculateTotalPendingCakeRewards(overrides?: CallOverrides): Promise<BigNumber>;
+    calculateTotalPendingMeerkatRewards(overrides?: CallOverrides): Promise<BigNumber>;
 
     callFee(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -970,9 +970,9 @@ export interface MMfinanceIfoChef extends BaseContract {
 
     balanceOf(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    calculateHarvestCakeRewards(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    calculateHarvestMeerkatRewards(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    calculateTotalPendingCakeRewards(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    calculateTotalPendingMeerkatRewards(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     callFee(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 

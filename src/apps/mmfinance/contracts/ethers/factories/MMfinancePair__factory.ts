@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { MMfinancePair, MMfinancePairInterface } from '../MMfinancePair';
+import type { MmfinancePair, MmfinancePairInterface } from '../MmfinancePair';
 
 const _abi = [
   {
@@ -720,12 +720,12 @@ const _abi = [
   },
 ];
 
-export class MMfinancePair__factory {
+export class MmfinancePair__factory {
   static readonly abi = _abi;
-  static createInterface(): MMfinancePairInterface {
-    return new utils.Interface(_abi) as MMfinancePairInterface;
+  static createInterface(): MmfinancePairInterface {
+    return new utils.Interface(_abi) as MmfinancePairInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): MMfinancePair {
-    return new Contract(address, _abi, signerOrProvider) as MMfinancePair;
+  static connect(address: string, signerOrProvider: Signer | Provider): MmfinancePair {
+    return new Contract(address, _abi, signerOrProvider) as MmfinancePair;
   }
 }
