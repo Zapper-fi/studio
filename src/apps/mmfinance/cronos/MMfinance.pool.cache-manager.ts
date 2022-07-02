@@ -122,10 +122,9 @@ export class CronosChainMMfinancePoolAddressCacheManager {
     key: `apps-v3:${MMFINANCE_DEFINITION.id}:static-pool-addresses`,
     timeout: 15 * 60 * 1000,
   })
-  private async getStaticPoolAddresses() {
-    return [''];
-  }
-
+  // private async getStaticPoolAddresses() {
+  //   return [''];
+  // }
   async getPoolAddresses(): Promise<string[]> {
     const [topPoolAddresses, chefPoolAddresses] = await Promise.all([
       this.getTopPoolAddresses(),
