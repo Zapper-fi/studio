@@ -1,27 +1,25 @@
 import { Inject } from '@nestjs/common';
 
-import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
 import { BalanceFetcher } from '~balance/balance-fetcher.interface';
 import { Network } from '~types/network.interface';
 
 import { AURORA_PLUS_DEFINITION } from '../aurora-plus.definition';
-import { AuroraPlusContractFactory } from '../contracts';
-
-import getStakingBalance from './helpers/getStakingBalance';
+import { AuroraPlusStakingBalanceHelper } from '../helpers/aurora-plus.staking-balance-helper';
 
 const network = Network.AURORA_MAINNET;
 
 @Register.BalanceFetcher(AURORA_PLUS_DEFINITION.id, network)
 export class AuroraAuroraPlusBalanceFetcher implements BalanceFetcher {
   constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(AuroraPlusContractFactory) private readonly auroraPlusContractFactory: AuroraPlusContractFactory,
+    @Inject(AuroraPlusStakingBalanceHelper)
+    private readonly auroraPlusStakingBalanceHelper: AuroraPlusStakingBalanceHelper,
   ) {}
 
   async getBalances(address: string) {
-    const tokenBalances = await getStakingBalance(address, this.appToolkit, this.auroraPlusContractFactory);
+    const tokenBalances = await this.auroraPlusStakingBalanceHelper.getStakingBalance({ address, network });
+
     return presentBalanceFetcherResponse([{ label: 'Staked Aurora', assets: tokenBalances }]);
   }
 }
