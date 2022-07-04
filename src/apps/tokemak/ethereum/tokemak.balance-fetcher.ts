@@ -8,7 +8,7 @@ import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
 import { BalanceFetcher } from '~balance/balance-fetcher.interface';
-import { Cache } from '~cache/cache.decorator';
+import { CacheOnInterval } from '~cache/cache-on-interval.decorator';
 import { ContractType } from '~position/contract.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { claimable } from '~position/position.utils';
@@ -60,10 +60,9 @@ export class EthereumTokemakBalanceFetcher implements BalanceFetcher {
     });
   }
 
-  @Cache({
-    key: (address: string) =>
-      `studio:${TOKEMAK_DEFINITION.id}:${TOKEMAK_DEFINITION.groups.farm}:${network}:${address}:claimable`,
-    ttl: 15 * 60, // 15 min
+  @CacheOnInterval({
+    key: `studio:${TOKEMAK_DEFINITION.id}:${TOKEMAK_DEFINITION.groups.farm}:${network}:cycle-rewards-hash`,
+    timeout: 15 * 60 * 1000, // 15 min
   })
   async getCycleRewardsHash() {
     const multicall = this.appToolkit.getMulticall(network);

@@ -5,7 +5,7 @@ import { Network } from '~types/network.interface';
 
 export const HONEYSWAP_DEFINITION = appDefinition({
   id: 'honeyswap',
-  name: 'honeyswap',
+  name: 'Honeyswap',
   description:
     'Honeyswap is a decentralized exchange built on the Gnosis Chain this enables users to experience fast and secure transactions with incredibly low fees.',
   url: 'https://honeyswap.org/',

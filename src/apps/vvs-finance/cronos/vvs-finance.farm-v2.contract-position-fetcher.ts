@@ -19,8 +19,8 @@ const appId = VVS_FINANCE_DEFINITION.id;
 const groupId = VVS_FINANCE_DEFINITION.groups.farmV2.id;
 const network = Network.CRONOS_MAINNET;
 
-const craftsmanV1ContractAddress = '0xDccd6455AE04b03d785F12196B492b18129564bc';
-const address = '0xbc149c62EFe8AFC61728fC58b1b66a0661712e76'; // craftsmanV2
+const craftsmanV1ContractAddress = '0xdccd6455ae04b03d785f12196b492b18129564bc';
+const address = '0xbc149c62efe8afc61728fc58b1b66a0661712e76'; // craftsmanV2
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
 export class CronosVvsFinanceFarmV2ContractPositionFetcher implements PositionFetcher<ContractPosition> {

@@ -24,6 +24,7 @@ export class EthereumSushiSwapBentoBoxContractPositionFetcher implements Positio
       bentoBoxAddress: '0xf5bce5077908a1b7370b9ae04adc565ebd643966',
       network,
       subgraphUrl: 'https://api.thegraph.com/subgraphs/name/sushiswap/bentobox',
+      dependencies: [{ appId: 'sushiswap', groupIds: ['x-sushi', 'meowshi'], network }],
     });
   }
 }

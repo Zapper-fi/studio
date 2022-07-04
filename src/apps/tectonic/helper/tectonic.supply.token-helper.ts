@@ -1,13 +1,13 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { BigNumberish } from 'ethers';
+import { BigNumber } from 'ethers';
 import _ from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ETH_ADDR_ALIAS, ZERO_ADDRESS } from '~app-toolkit/constants/address';
-import { BLOCKS_PER_DAY } from '~app-toolkit/constants/blocks';
 import {
   buildDollarDisplayItem,
   buildPercentageDisplayItem,
+  buildNumberDisplayItem,
 } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
 import { EthersMulticall as Multicall } from '~multicall/multicall.ethers';
@@ -19,6 +19,26 @@ import { BaseToken } from '~position/token.interface';
 import { Network } from '~types/network.interface';
 
 import { TectonicCore, TectonicContractFactory, TectonicTToken } from '../contracts';
+
+import { tectonicConst } from './constants';
+
+const getAnnualApy = (ratePerBlock: BigNumber): number => {
+  // The current supply rate as an unsigned integer, scaled by 1e18.
+  const borrowRate = ratePerBlock;
+  const dailyYieldRate =
+    borrowRate
+      .mul(BigNumber.from(tectonicConst.BLOCKS_PER_DAY))
+      .mul(10000000)
+      .div(BigNumber.from(tectonicConst.ETH_MANTISSA))
+      .toNumber() /
+      10000000 +
+    1;
+  const annualYieldRate = (Math.pow(dailyYieldRate, tectonicConst.DAYS_PER_YEAR) - 1) * 10000;
+
+  // updated to percentage number with 4 digits precision.
+  // e.g. 20.05% will be returned as 0.2005
+  return Math.round(annualYieldRate) / 10000;
+};
 
 export type TectonicSupplyTokenDataProps = {
   supplyApy: number;
@@ -39,13 +59,16 @@ type TectonicSupplyTokenHelperParams<T = TectonicCore, V = TectonicTToken> = {
   getTectonicCoreContract: (opts: { address: string; network: Network }) => T;
   getTokenContract: (opts: { address: string; network: Network }) => V;
   getAllMarkets: (opts: { contract: T; multicall: Multicall }) => string[] | Promise<string[]>;
-  getExchangeRate: (opts: { contract: V; multicall: Multicall }) => Promise<BigNumberish>;
-  getSupplyRate: (opts: { contract: V; multicall: Multicall }) => Promise<BigNumberish>;
-  getBorrowRate: (opts: { contract: V; multicall: Multicall }) => Promise<BigNumberish>;
+  getTokenSymbol: (opts: { contract: V }) => Promise<string>;
+  getTokenDecimals: (opts: { contract: V }) => Promise<number>;
+  getExchangeRate: (opts: { contract: V; multicall: Multicall }) => Promise<BigNumber>;
+  getSupplyRate: (opts: { contract: V; multicall: Multicall }) => Promise<BigNumber>;
+  getBorrowRate: (opts: { contract: V; multicall: Multicall }) => Promise<BigNumber>;
+  getTotalSupply: (opts: { contract: V }) => Promise<BigNumber>;
+  getTotalBorrow: (opts: { contract: V }) => Promise<BigNumber>;
   getUnderlyingAddress: (opts: { contract: V; multicall: Multicall }) => Promise<string>;
   getExchangeRateMantissa: (opts: { tokenDecimals: number; underlyingTokenDecimals: number }) => number;
   getDisplayLabel?: (opts: { contract: V; multicall: Multicall; underlyingToken: Token }) => Promise<string>;
-  getDenormalizedRate?: (opts: { rate: BigNumberish; blocksPerDay: number; decimals: number }) => number;
 };
 
 @Injectable()
@@ -67,13 +90,15 @@ export class TectonicSupplyTokenHelper {
     getTokenContract,
     getAllMarkets,
     getExchangeRate,
+    getTokenSymbol,
+    getTokenDecimals,
     getSupplyRate,
     getBorrowRate,
+    getTotalSupply,
+    getTotalBorrow,
     getUnderlyingAddress,
     getExchangeRateMantissa,
     getDisplayLabel,
-    getDenormalizedRate = ({ blocksPerDay, rate }) =>
-      Math.pow(1 + (blocksPerDay * Number(rate)) / Number(1e18), 365) - 1,
   }: TectonicSupplyTokenHelperParams<T, V>) {
     const multicall = this.appToolkit.getMulticall(network);
 
@@ -89,7 +114,6 @@ export class TectonicSupplyTokenHelper {
     const tokens = await Promise.all(
       marketTokenAddressesRaw.map(async marketTokenAddressRaw => {
         const address = marketTokenAddressRaw.toLowerCase();
-        const erc20TokenContract = this.contractFactory.erc20({ address, network });
         const contract = getTokenContract({ address, network });
 
         const underlyingAddress = await getUnderlyingAddress({ contract, multicall })
@@ -99,47 +123,43 @@ export class TectonicSupplyTokenHelper {
         const underlyingToken = allTokens.find(v => v.address === underlyingAddress);
         if (!underlyingToken) return null;
 
-        const [symbol, decimals, supplyRaw, rateRaw, supplyRateRaw, borrowRateRaw] = await Promise.all([
-          erc20TokenContract.symbol(),
-          erc20TokenContract.decimals(),
-          erc20TokenContract.totalSupply(),
+        const [symbol, decimals, supplyRaw, borrowRaw, rateRaw, supplyRateRaw, borrowRateRaw] = await Promise.all([
+          getTokenSymbol({ contract }),
+          getTokenDecimals({ contract }),
+          getTotalSupply({ contract }),
+          getTotalBorrow({ contract }),
           getExchangeRate({ contract, multicall }),
-          getSupplyRate({ contract, multicall }).catch(() => 0),
-          getBorrowRate({ contract, multicall }).catch(() => 0),
+          getSupplyRate({ contract, multicall }).catch(() => BigNumber.from(0)),
+          getBorrowRate({ contract, multicall }).catch(() => BigNumber.from(0)),
         ]);
 
         // Data Props
         const type = ContractType.APP_TOKEN;
-        const supply = Number(supplyRaw) / 10 ** decimals;
         const underlyingTokenDecimals = underlyingToken.decimals;
+        const underlyingSupplyRaw = supplyRaw.mul(rateRaw).div(BigNumber.from(tectonicConst.ETH_MANTISSA));
+        const underlyingSupply = Number(underlyingSupplyRaw) / 10 ** underlyingTokenDecimals;
+        const borrow = Number(borrowRaw) / 10 ** underlyingTokenDecimals;
+        const liquidity = underlyingSupply - borrow;
+
         const mantissa = getExchangeRateMantissa({ tokenDecimals: decimals, underlyingTokenDecimals });
         const pricePerShare = Number(rateRaw) / 10 ** mantissa;
         const price = pricePerShare * underlyingToken.price;
-        const liquidity = price * supply;
+
         const tokens = [underlyingToken];
-        const blocksPerDay = BLOCKS_PER_DAY[network];
-        const supplyApy = getDenormalizedRate({
-          blocksPerDay,
-          rate: supplyRateRaw,
-          decimals: underlyingToken.decimals,
-        });
-        const borrowApy = getDenormalizedRate({
-          blocksPerDay,
-          rate: borrowRateRaw,
-          decimals: underlyingToken.decimals,
-        });
+        const supplyApy = getAnnualApy(supplyRateRaw);
+        const borrowApy = getAnnualApy(borrowRateRaw);
 
         // Display Props
         const label = getDisplayLabel
           ? await getDisplayLabel({ contract, multicall, underlyingToken })
           : underlyingToken.symbol;
         const secondaryLabel = buildDollarDisplayItem(underlyingToken.price);
-        const tertiaryLabel = `${(supplyApy * 100).toFixed(3)}% APY`;
+        const tertiaryLabel = `${supplyApy * 100}% APY`;
         const images = [getTokenImg(underlyingToken.address, network)];
         const balanceDisplayMode = BalanceDisplayMode.UNDERLYING;
         const statsItems = [
-          { label: 'Supply APY', value: buildPercentageDisplayItem(supplyApy) },
-          { label: 'Liquidity', value: buildDollarDisplayItem(liquidity) },
+          { label: 'APY', value: buildPercentageDisplayItem(supplyApy * 100) },
+          { label: 'Liquidity', value: buildNumberDisplayItem(liquidity) },
         ];
 
         const token: AppTokenPosition<TectonicSupplyTokenDataProps> = {
@@ -150,7 +170,7 @@ export class TectonicSupplyTokenHelper {
           groupId,
           symbol,
           decimals,
-          supply,
+          supply: underlyingSupply,
           price,
           pricePerShare,
           tokens,

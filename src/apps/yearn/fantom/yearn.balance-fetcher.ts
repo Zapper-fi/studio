@@ -14,22 +14,22 @@ const network = Network.FANTOM_OPERA_MAINNET;
 export class FantomYearnBalanceFetcher implements BalanceFetcher {
   constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
-  private async getVaultBalances(address: string) {
+  private async getV2VaultBalances(address: string) {
     return await this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
       network,
       appId: YEARN_DEFINITION.id,
-      groupId: YEARN_DEFINITION.groups.vault.id,
+      groupId: YEARN_DEFINITION.groups.v2Vault.id,
       address,
     });
   }
 
   async getBalances(address: string) {
-    const [vaultBalances] = await Promise.all([this.getVaultBalances(address)]);
+    const v2VaultBalances = await this.getV2VaultBalances(address);
 
     return presentBalanceFetcherResponse([
       {
         label: 'Vaults',
-        assets: vaultBalances,
+        assets: v2VaultBalances,
       },
     ]);
   }

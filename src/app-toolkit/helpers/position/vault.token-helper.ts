@@ -23,14 +23,49 @@ export type VaultTokenDataProps = ExchangeableAppTokenDataProps & {
 };
 
 export type VaultTokenHelperParams<T> = {
+  /**
+   * Network enum for a given vault
+   */
   network: Network;
+  /**
+   * The application id value should match up to the folder name of a given app
+   */
   appId: string;
+  /**
+   * The group id that is defined for a given app. The value should be obtainable within
+   * an app's definition file under the groups key.
+   */
   groupId: string;
+  /**
+   * If the vault is dependant on other apps for proper function, then a valid
+   * application definition must be passed in.
+   */
   dependencies?: AppGroupsDefinition[];
+  /**
+   * Is this token exchangeable?
+   */
   exchangeable?: boolean;
+  /**
+   * The contract factory which will be leveraged during the entire token retrieval process.
+   * Usually, you can use the application specific generated contract factory. The factory
+   * is normally stored within an app folder under the `contracts/` sub-folder
+   */
   resolveContract: (opts: { address: string; network: Network }) => T;
+  /**
+   * The address of a vault we wish to retrieve our tokens from.
+   * You can either use static string addresses, leverage the multicall function (which should map to the
+   * the contract passed in via resolveContract) or other methods (such as an external API call).
+   */
   resolveVaultAddresses: (opts: { multicall: EthersMulticall; network: Network }) => string[] | Promise<string[]>;
+  /**
+   * The address of an underlying token which correponds to a vault deposit.
+   * You can either use static string addresses, leverage the multicall function (which should map to the
+   * the contract passed in via resolveContract) or other methods (such as an external API call).
+   */
   resolveUnderlyingTokenAddress: (opts: { multicall: EthersMulticall; contract: T }) => string | Promise<string | null>;
+  /**
+   * How do we resolve the reserve (aka: the liquidity or total supply) of a given underlying token.
+   */
   resolveReserve: (opts: {
     address: string;
     contract: T;
@@ -38,6 +73,9 @@ export type VaultTokenHelperParams<T> = {
     underlyingToken: Token;
     network: Network;
   }) => number | Promise<number>;
+  /**
+   * How do we resolve the price of a given share of an underlying token.
+   */
   resolvePricePerShare: (opts: {
     contract: T;
     multicall: EthersMulticall;
@@ -45,8 +83,22 @@ export type VaultTokenHelperParams<T> = {
     reserve: number;
     supply: number;
   }) => number | Promise<number>;
+  /**
+   * How to retrieve the APY of a given vault.
+   * The APY MUST be a value between 1 - 100 and NOT a fractional value.
+   * e.g: A value of 6 corresponds to 6%, 42.56 would correspond to 42.56%.
+   * If empty, we default to 0
+   */
   resolveApy?: (opts: { vaultAddress: string; multicall: EthersMulticall; contract: T }) => Promise<number>;
+  /**
+   * How do we resolve the label that will be displayed on the frontend.
+   * By default, we will use the symbol.
+   */
   resolvePrimaryLabel?: (opts: { symbol: string; vaultAddress: string; underlyingToken: Token }) => string;
+  /**
+   * How do we resolve the images that will be displayed on the frontend.
+   * By default, we will attempt to use the underlying token's image.
+   */
   resolveImages?: (opts: { underlyingToken: Token }) => string[];
 };
 
@@ -54,6 +106,9 @@ export type VaultTokenHelperParams<T> = {
 export class VaultTokenHelper {
   constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
+  /**
+   * Retrieve all tokens within a given vault.
+   */
   async getTokens<T>({
     network,
     appId,

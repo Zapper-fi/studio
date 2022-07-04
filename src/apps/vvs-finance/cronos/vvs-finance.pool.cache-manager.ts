@@ -32,7 +32,7 @@ export class CronosVvsFinancePoolAddressCacheManager {
   })
   private async getCraftsmanPoolAddresses() {
     const craftsmanContract = this.contractFactory.vvsCraftsman({
-      address: '0xDccd6455AE04b03d785F12196B492b18129564bc',
+      address: '0xdccd6455ae04b03d785f12196b492b18129564bc',
       network,
     });
 
@@ -73,7 +73,7 @@ export class CronosVvsFinancePoolAddressCacheManager {
     const multicall = this.appToolkit.getMulticall(network);
     const craftsmanV2Contract = multicall.wrap(
       this.contractFactory.vvsCraftsmanV2({
-        address: '0xbc149c62EFe8AFC61728fC58b1b66a0661712e76',
+        address: '0xbc149c62efe8afc61728fc58b1b66a0661712e76',
         network,
       }),
     );

@@ -114,7 +114,7 @@ export class UniswapV2PoolTokenHelper {
       factoryAddress,
       resolveFactoryContract,
       resolvePoolContract,
-    }).catch(() => []);
+    });
 
     const poolVolumes: ResolvePoolVolumesResponse = await resolvePoolVolumes({
       appId,
@@ -192,13 +192,13 @@ export class UniswapV2PoolTokenHelper {
 
         const poolToken: AppTokenPosition<UniswapV2PoolTokenDataProps> = {
           type,
-          network,
           address,
-          decimals,
-          symbol,
-          supply,
+          network,
           appId,
           groupId,
+          symbol,
+          decimals,
+          supply,
           price,
           pricePerShare,
           tokens,

@@ -33,7 +33,7 @@ const appId = MAPLE_DEFINITION.id;
 const groupId = MAPLE_DEFINITION.groups.stakedBpt.id;
 const network = Network.ETHEREUM_MAINNET;
 
-@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
+@Register.TokenPositionFetcher({ appId, groupId, network })
 export class EthereumMapleStakedBptTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
@@ -66,6 +66,7 @@ export class EthereumMapleStakedBptTokenFetcher implements PositionFetcher<AppTo
         const supply = Number(supplyRaw) / 10 ** decimals;
         const pricePerShare = 1;
         const price = mplUsdcAppToken.price;
+        const liquidity = supply * price;
         const tokens = [mplUsdcAppToken];
 
         // Display Props
@@ -86,7 +87,9 @@ export class EthereumMapleStakedBptTokenFetcher implements PositionFetcher<AppTo
           price,
           tokens,
 
-          dataProps: {},
+          dataProps: {
+            liquidity,
+          },
 
           displayProps: {
             label,

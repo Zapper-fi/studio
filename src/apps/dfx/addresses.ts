@@ -1,66 +1,66 @@
 const ethereum = {
-  dfx: '0x888888435FDe8e7d4c54cAb67f206e4199454c60',
+  dfx: '0x888888435fde8e7d4c54cab67f206e4199454c60',
   amm: [
     {
       pair: 'cadcUsdc',
-      curve: '0xa6C0CbCaebd93AD3C6c94412EC06aaA37870216d',
-      staking: '0x84Bf8151394dcF32146965753B28760550f3D7A8',
+      curve: '0xa6c0cbcaebd93ad3c6c94412ec06aaa37870216d',
+      staking: '0x84bf8151394dcf32146965753b28760550f3d7a8',
     },
     {
       pair: 'eursUsdc',
-      curve: '0x1a4Ffe0DCbDB4d551cfcA61A5626aFD190731347',
-      staking: '0x5EaAEff69f2aB64d1CC0244FB31B236cA989544f',
+      curve: '0x1a4ffe0dcbdb4d551cfca61a5626afd190731347',
+      staking: '0x5eaaeff69f2ab64d1cc0244fb31b236ca989544f',
     },
     {
       pair: 'xsgdUsdc',
-      curve: '0x2baB29a12a9527a179Da88F422cDaaA223A90bD5',
-      staking: '0xd52D48Db08e8224ef6E2be8F54f3c84e790b1c32',
+      curve: '0x2bab29a12a9527a179da88f422cdaaa223a90bd5',
+      staking: '0xd52d48db08e8224ef6e2be8f54f3c84e790b1c32',
     },
     {
       pair: 'nzdsUsdc',
-      curve: '0xE9669516e09f5710023566458F329cCE6437AaaC',
-      staking: '0xe06FA52e0d2D58Fe192285bfa0507F09cDd9824a',
+      curve: '0xe9669516e09f5710023566458f329cce6437aaac',
+      staking: '0xe06fa52e0d2d58fe192285bfa0507f09cdd9824a',
     },
     {
       pair: 'trybUsdc',
-      curve: '0xC574A613A3900e4314da13eB2287f13689A5b64D',
-      staking: '0xdDB720069fdfE7BE2E2883A1c06BE0f353f7C4c8',
+      curve: '0xc574a613a3900e4314da13eb2287f13689a5b64d',
+      staking: '0xddb720069fdfe7be2e2883a1c06be0f353f7c4c8',
     },
     {
       pair: 'xidrUsdc',
-      curve: '0xdD39379AB7C93b9bAAE29E6eC03795d0bC99a889',
-      staking: '0xE29B7285c1169a9765e2a9BfE74209077Bee55D6',
+      curve: '0xdd39379ab7c93b9baae29e6ec03795d0bc99a889',
+      staking: '0xe29b7285c1169a9765e2a9bfe74209077bee55d6',
     },
   ],
 };
 
 const polygon = {
-  dfx: '0xE7804D91dfCDE7F776c90043E03eAa6Df87E6395',
+  dfx: '0xe7804d91dfcde7f776c90043e03eaa6df87e6395',
   amm: [
     {
       pair: 'cadcUsdc',
-      curve: '0x288Ab1b113C666Abb097BB2bA51B8f3759D7729e',
-      staking: '0xa523959588E51B5BeA8D39fd861ab34101181A19',
+      curve: '0x288ab1b113c666abb097bb2ba51b8f3759d7729e',
+      staking: '0xa523959588e51b5bea8d39fd861ab34101181a19',
     },
     {
       pair: 'eursUsdc',
-      curve: '0xB72d390E07F40D37D42dfCc43E954Ae7c738Ad44',
-      staking: '0x419062c0DbEC658a943333Bc783617C58D25F316',
+      curve: '0xb72d390e07f40d37d42dfcc43e954ae7c738ad44',
+      staking: '0x419062c0dbec658a943333bc783617c58d25f316',
     },
     {
       pair: 'xsgdUsdc',
-      curve: '0x8e3e9cB46E593Ec0CaF4a1Dcd6DF3A79a87b1fd7',
-      staking: '0x600E825F058A93146acD5877084E7d4525c5d846',
+      curve: '0x8e3e9cb46e593ec0caf4a1dcd6df3a79a87b1fd7',
+      staking: '0x600e825f058a93146acd5877084e7d4525c5d846',
     },
     {
       pair: 'nzdsUsdc',
-      curve: '0x931d6A6cC3F992beee80a1A14a6530d34104B000',
-      staking: '0x308Ce99A085a25A9C3D0f2b96bb511017e955711',
+      curve: '0x931d6a6cc3f992beee80a1a14a6530d34104b000',
+      staking: '0x308ce99a085a25a9c3d0f2b96bb511017e955711',
     },
     {
       pair: 'trybUsdc',
-      curve: '0xeA75Cd0b12A8B48F5bDDaD37cEB15F8Cb3D2cC75',
-      staking: '0x19914181a811Ab9eB25C81d6dF1972bF02C45CBE',
+      curve: '0xea75cd0b12a8b48f5bddad37ceb15f8cb3d2cc75',
+      staking: '0x19914181a811ab9eb25c81d6df1972bf02c45cbe',
     },
   ],
 };

@@ -7,7 +7,7 @@ export const SOLACE_DEFINITION = appDefinition({
   id: 'solace',
   name: 'Solace',
   description:
-    'Solace is an insurance protocol that is aiming to invent the future of DeFi Insurance. The protocol helps you to protect your funds against smart-contracts exploits across 180+ protocols with an intelligent single policy that automatically adjusts coverage to changes in your positions.',
+    'Solace is an insurance protocol that is aiming to invent the future of DeFi Insurance. The protocol helps you to protect your funds against smart-contracts exploits across 200+ protocols with an intelligent single policy that automatically adjusts coverage to changes in your positions.',
   url: 'https://solace.fi',
 
   groups: {
@@ -39,6 +39,7 @@ export const SOLACE_DEFINITION = appDefinition({
       id: 'policies',
       type: GroupType.POSITION,
       label: 'Policies',
+      isHiddenFromExplore: true,
     },
   },
 
@@ -46,10 +47,9 @@ export const SOLACE_DEFINITION = appDefinition({
   keywords: [],
 
   links: {
-    learn: '',
     github: 'https://github.com/solace-fi',
     twitter: 'https://twitter.com/SolaceFi/',
-    telegram: '',
+    telegram: 'https://t.me/solacefi',
     discord: 'https://discord.com/invite/7v8qsyepfu/',
     medium: 'https://medium.com/solace-fi/',
   },
@@ -57,6 +57,8 @@ export const SOLACE_DEFINITION = appDefinition({
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
     [Network.POLYGON_MAINNET]: [AppAction.VIEW],
+    [Network.AURORA_MAINNET]: [AppAction.VIEW],
+    [Network.FANTOM_OPERA_MAINNET]: [AppAction.VIEW],
   },
 
   primaryColor: '#fff',
