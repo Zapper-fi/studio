@@ -4,6 +4,21 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.101.0](https://github.com/Zapper-fi/studio/compare/v0.100.3...v0.101.0) (2022-07-04)
+
+
+### Features
+
+* add pool ratio to statsItem ([#825](https://github.com/Zapper-fi/studio/issues/825)) ([8743b5e](https://github.com/Zapper-fi/studio/commit/8743b5eb3a301a53921186d3742054abec5a5a63))
+* **qi-dao:** add arbitrum support ([#821](https://github.com/Zapper-fi/studio/issues/821)) ([b85bf99](https://github.com/Zapper-fi/studio/commit/b85bf998933c1533b37f25c1644b180db90061b0))
+
+
+### Bug Fixes
+
+* filtered out maple pool positions without liquidity ([#823](https://github.com/Zapper-fi/studio/issues/823)) ([0ec9d67](https://github.com/Zapper-fi/studio/commit/0ec9d67ffce11bddff15397efd4514f4d8843920))
+* refactor aurora-plus's helper making it injectable ([#818](https://github.com/Zapper-fi/studio/issues/818)) ([ecb109d](https://github.com/Zapper-fi/studio/commit/ecb109ddcca20d6a5af46b3d5d0e1f45b5373718))
+* removed prefix from coslend positions label ([#822](https://github.com/Zapper-fi/studio/issues/822)) ([e08a8bc](https://github.com/Zapper-fi/studio/commit/e08a8bc11e804193102805fe1062af885d899ede))
+
 ## [0.100.3](https://github.com/Zapper-fi/studio/compare/v0.100.2...v0.100.3) (2022-07-01)
 
 
