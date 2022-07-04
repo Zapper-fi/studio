@@ -13,7 +13,7 @@ const appId = POOL_TOGETHER_V3_DEFINITION.id;
 const groupId = POOL_TOGETHER_V3_DEFINITION.groups.ticket.id;
 const network = Network.POLYGON_MAINNET;
 
-@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
+@Register.TokenPositionFetcher({ appId, groupId, network })
 export class PolygonPoolTogetherV3TicketTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(PoolTogetherV3PrizePoolTokenHelper)
