@@ -97,14 +97,16 @@ export class ArrakisPoolTokenHelper {
         const price = liquidity / supply;
         const pricePerShare = reserves.map(r => r / supply);
         const reservePercentages = tokens.map((t, i) => reserves[i] * (t.price / liquidity));
+        const ratio = reservePercentages.map(p => `${Math.round(p * 100)}%`).join(' / ');
 
         // Display Props
         const label = tokens.map(v => v.symbol).join(' / ');
-        const secondaryLabel = reservePercentages.map(p => `${Math.round(p * 100)}%`).join(' / ');
+        const secondaryLabel = ratio;
         const images = tokens.map(v => getTokenImg(v.address, network));
         const statsItems = [
           { label: 'Liquidity', value: buildDollarDisplayItem(liquidity) },
           { label: 'Fee', value: buildPercentageDisplayItem(fee) },
+          { label: 'Ratio', value: ratio },
         ];
 
         const token: AppTokenPosition<ArrakisPoolTokenDataProps> = {
