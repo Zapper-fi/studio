@@ -83,7 +83,7 @@ export class CoslendBorrowContractPositionHelper {
       const images = appToken.displayProps.images;
       const statsItems = isNumber(borrowApy)
         ? [
-            { label: 'Borrow APR', value: buildPercentageDisplayItem(borrowApy) },
+            { label: 'APR', value: buildPercentageDisplayItem(borrowApy) },
             { label: 'Liquidity', value: buildDollarDisplayItem(borrowLiquidity) },
           ]
         : [];
