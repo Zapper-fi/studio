@@ -1,17 +1,16 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { compact } from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getAppImg } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
-import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { Network, NETWORK_IDS } from '~types/network.interface';
 
 import { ACROSS_V2_DEFINITION } from '../across-v2.definition';
-import { ACROSS_V2_POOL_DEFINITIONS, POOL_TOKENS } from '../across.pool.definitions';
+import { Acrossv2PoolDefinition } from '../across.types';
+import { POOL_TOKENS } from '../across.pool.definitions';
 import { AcrossV2ContractFactory } from '../contracts';
 
 const appId = ACROSS_V2_DEFINITION.id;
@@ -19,21 +18,24 @@ const groupId = ACROSS_V2_DEFINITION.groups.pool.id;
 const network = Network.ETHEREUM_MAINNET;
 const networkId = NETWORK_IDS[network]
 
-@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
-export class EthereumAcrossV2PoolTokenFetcher implements PositionFetcher<AppTokenPosition> {
+
+type AcrossPoolTokensParams = {
+  network: Network;
+  definition: Acrossv2PoolDefinition;
+};
+
+
+@Injectable()
+export class AcrossPoolTokenHelper {
   constructor(
     @Inject(AcrossV2ContractFactory) private readonly acrossV2ContractFactory: AcrossV2ContractFactory,
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
   ) {}
 
-  async getPositions() {
+  async getPosition({network, definition}: AcrossPoolTokensParams): Promise<AppTokenPosition[]>{
     const multicall = this.appToolkit.getMulticall(network);
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
-    const poolAddress = await ACROSS_V2_POOL_DEFINITIONS.find(pool => pool.chainId === networkId)
-    let address = ''
-    if(poolAddress) {
-      address = poolAddress.poolAddress;
-    }
+    let poolAddress = definition.poolAddress
     const tokens = await Promise.all(
       POOL_TOKENS.map(async pool => {
         const underlyingToken = baseTokens.find(v => v.symbol === token.symbol);
@@ -45,7 +47,7 @@ export class EthereumAcrossV2PoolTokenFetcher implements PositionFetcher<AppToke
           multicall.wrap(tokenContract).symbol(),
           multicall.wrap(tokenContract).decimals(),
           multicall.wrap(tokenContract).totalSupply(),
-          multicall.wrap(tokenContract).balanceOf(address),
+          multicall.wrap(tokenContract).balanceOf(poolAddress),
         ]);
 
         if (!underlyingToken) return null;
@@ -62,7 +64,7 @@ export class EthereumAcrossV2PoolTokenFetcher implements PositionFetcher<AppToke
           label,
           secondaryLabel,
           images,
-          statsItems: [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }],
+          statsItems: [{ label: 'Pool', value: buildDollarDisplayItem(liquidity) }],
         };
 
         const token: AppTokenPosition = {
@@ -84,7 +86,6 @@ export class EthereumAcrossV2PoolTokenFetcher implements PositionFetcher<AppToke
         return token;
       }),
     );
-
-    return compact(tokens);
+     return compact(tokens);
   }
 }

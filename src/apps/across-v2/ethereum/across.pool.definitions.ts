@@ -1,5 +1,22 @@
-import { AcrosstTokenDefinition } from './across.types';
+import { Acrossv2PoolDefinition,  AcrosstTokenDefinition } from '../across.types';
 
+export const ACROSS_V2_ETH_HUBPOOL_DEFINITION: Acrossv2PoolDefinition = 
+  {
+    queryKey: 'HubPool',
+    label: 'Across HubPool',
+    poolAddress: '0xc186fA914353c44b2E33eBE05f21846F1048bEda',
+    chainId: 1,
+    isSpokePool: false,
+  }
+;
+
+export const ACROSS_V2_ETH_SPOKEPOOL_DEFINITION: Acrossv2PoolDefinition = {
+    queryKey: 'SpokePool',
+    label: 'Across Ethereum_SpokePool',
+    poolAddress: '0x4D9079Bb4165aeb4084c526a32695dCfd2F77381',
+    chainId: 1,
+    isSpokePool: true,
+  }
 
 export const POOL_TOKENS:AcrosstTokenDefinition[] = [
   {

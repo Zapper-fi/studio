@@ -6,7 +6,8 @@ import { ArbitrumAcrossV2BalanceFetcher } from './arbitrum/across-v2.balance-fet
 import { ArbitrumAcrossV2PoolTokenFetcher } from './arbitrum/across-v2.pool.token-fetcher';
 import { AcrossV2ContractFactory } from './contracts';
 import { EthereumAcrossV2BalanceFetcher } from './ethereum/across-v2.balance-fetcher';
-import { EthereumAcrossV2PoolTokenFetcher } from './ethereum/across-v2.pool.token-fetcher';
+import { EthereumAcrossV2HubPoolTokenFetcher } from './ethereum/across-v2.hub.pool.token-fetcher';
+import { EthereumAcrossV2SpokePoolTokenFetcher } from './ethereum/across-v2.spoke.pool.token-fetcher';
 import { OptimismAcrossV2BalanceFetcher } from './optimism/across-v2.balance-fetcher';
 import { OptimismAcrossV2PoolTokenFetcher } from './optimism/across-v2.pool.token-fetcher';
 import { PolygonAcrossV2BalanceFetcher } from './polygon/across-v2.balance-fetcher';
@@ -20,7 +21,8 @@ import { PolygonAcrossV2PoolTokenFetcher } from './polygon/across-v2.pool.token-
     ArbitrumAcrossV2BalanceFetcher,
     ArbitrumAcrossV2PoolTokenFetcher,
     EthereumAcrossV2BalanceFetcher,
-    EthereumAcrossV2PoolTokenFetcher,
+    EthereumAcrossV2HubPoolTokenFetcher,
+    EthereumAcrossV2SpokePoolTokenFetcher,
     OptimismAcrossV2BalanceFetcher,
     OptimismAcrossV2PoolTokenFetcher,
     PolygonAcrossV2BalanceFetcher,
