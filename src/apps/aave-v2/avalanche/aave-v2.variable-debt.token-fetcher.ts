@@ -15,10 +15,7 @@ const network = Network.AVALANCHE_MAINNET;
 
 @Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
 export class AvalancheAaveV2VariableDebtTokenFetcher implements PositionFetcher<AppTokenPosition> {
-  constructor(
-    @Inject(AaveV2LendingTokenHelper)
-    private readonly aaveV2LendingTokenHelper: AaveV2LendingTokenHelper,
-  ) {}
+  constructor(@Inject(AaveV2LendingTokenHelper) private readonly aaveV2LendingTokenHelper: AaveV2LendingTokenHelper) {}
 
   async getPositions() {
     return this.aaveV2LendingTokenHelper.getTokens({
@@ -29,7 +26,7 @@ export class AvalancheAaveV2VariableDebtTokenFetcher implements PositionFetcher<
       protocolDataProviderAddress: '0x65285e9dfab318f57051ab2b139cccf232945451',
       resolveTokenAddress: ({ reserveTokenAddressesData }) => reserveTokenAddressesData.variableDebtTokenAddress,
       resolveLendingRate: ({ reserveData }) => reserveData.variableBorrowRate,
-      resolveLabel: ({ reserveToken }) => `Borrowed ${getLabelFromToken(reserveToken)}`,
+      resolveLabel: ({ reserveToken }) => getLabelFromToken(reserveToken),
       resolveApyLabel: ({ apy }) => `${(apy * 100).toFixed(3)}% APR (variable)`,
     });
   }

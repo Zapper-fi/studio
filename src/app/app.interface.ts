@@ -72,6 +72,18 @@ export type AppLinks = {
   medium?: string;
 };
 
+type ListView = { viewType: 'list'; label: string; groupIds: string[] };
+type DropdownView = { viewType: 'dropdown'; label: string; options: (ListView | SplitView)[] };
+type SplitView = {
+  viewType: 'split';
+  label: string;
+  views: (ListView | SplitView)[];
+};
+
+export type PresentationConfig = {
+  tabs: (ListView | DropdownView | SplitView)[];
+};
+
 export type AppDefinitionObject = {
   id: string;
   name: string;
@@ -79,6 +91,7 @@ export type AppDefinitionObject = {
   keywords?: string[];
   description: string;
   groups: Record<string, AppGroup>;
+  presentationConfig?: PresentationConfig;
   supportedNetworks: { [N in Network]?: AppAction[] };
   primaryColor?: string;
   url: string;

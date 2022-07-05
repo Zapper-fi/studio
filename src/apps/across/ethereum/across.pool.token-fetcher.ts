@@ -4,7 +4,7 @@ import { compact } from 'lodash';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
-import { getAppImg } from '~app-toolkit/helpers/presentation/image.present';
+import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
@@ -33,7 +33,7 @@ export class EthereumAcrossPoolTokenFetcher implements PositionFetcher<AppTokenP
     const tokens = await Promise.all(
       ACROSS_V1_POOL_DEFINITIONS.map(async pool => {
         const tokenContract = this.acrossContractFactory.badgerPool({ address: pool.poolAddress, network });
-        const [label, symbol, decimals, supplyRaw, l1TokenAddressRaw, pricePerShareRaw] = await Promise.all([
+        const [labelRaw, symbol, decimals, supplyRaw, l1TokenAddressRaw, pricePerShareRaw] = await Promise.all([
           multicall.wrap(tokenContract).name(),
           multicall.wrap(tokenContract).symbol(),
           multicall.wrap(tokenContract).decimals(),
@@ -47,13 +47,17 @@ export class EthereumAcrossPoolTokenFetcher implements PositionFetcher<AppTokenP
         if (!underlyingToken) return null;
 
         const supply = Number(supplyRaw) / 10 ** decimals;
+        if (supply == 0) return null;
+
         const pricePerShare = Number(pricePerShareRaw) / 10 ** underlyingToken.decimals;
         const price = underlyingToken.price * pricePerShare;
         const tokens = [underlyingToken];
         const secondaryLabel = buildDollarDisplayItem(price);
-        const images = [getAppImg(ACROSS_DEFINITION.id)];
+        const images = [getTokenImg(underlyingToken.address, network)];
         const liquidity = price * supply;
+
         const dataProps = { liquidity };
+        const label = labelRaw.slice(7);
         const displayProps = {
           label,
           secondaryLabel,

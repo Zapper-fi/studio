@@ -6,6 +6,7 @@ import { BigNumber } from 'ethers';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { RewardRateUnit } from '~app-toolkit/helpers/master-chef/master-chef.contract-position-helper';
+import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
@@ -17,7 +18,7 @@ const appId = PANCAKESWAP_DEFINITION.id;
 const groupId = PANCAKESWAP_DEFINITION.groups.syrupCake.id;
 const network = Network.BINANCE_SMART_CHAIN_MAINNET;
 
-@Register.ContractPositionFetcher({ appId, groupId, network })
+@Register.ContractPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
 export class BinanceSmartChainPancakeswapSyrupCakeContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
@@ -44,14 +45,15 @@ export class BinanceSmartChainPancakeswapSyrupCakeContractPositionFetcher implem
         const poolInfo = await multicall.wrap(masterChefV2Contract).poolInfo(0);
         const cakePerBlock = await multicall.wrap(masterChefV2Contract).cakePerBlock(poolInfo.isRegular);
         const poolAllocPoints = poolInfo.allocPoint;
-        const totalAllocPoints = poolInfo.isRegular
+        const totalAllocPoints = await (poolInfo.isRegular
           ? masterChefV2Contract.totalRegularAllocPoint()
-          : masterChefV2Contract.totalSpecialAllocPoint();
+          : masterChefV2Contract.totalSpecialAllocPoint());
 
         const poolShare = Number(poolAllocPoints) / Number(totalAllocPoints);
         const rewardPerBlock = poolShare * Number(cakePerBlock);
         return rewardPerBlock;
       },
+      resolveLabel: ({ rewardTokens }) => `Earn ${getLabelFromToken(rewardTokens[0])}`,
     });
   }
 }

@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { BigNumber, BigNumberish } from 'ethers';
-import { compact } from 'lodash';
+import { compact, uniq } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ETH_ADDR_ALIAS, ZERO_ADDRESS } from '~app-toolkit/constants/address';
@@ -13,7 +13,7 @@ import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/pres
 import { Erc20 } from '~contract/contracts';
 import { EthersMulticall as Multicall } from '~multicall/multicall.ethers';
 import { ContractType } from '~position/contract.interface';
-import { AppTokenPosition, Token } from '~position/position.interface';
+import { AppTokenPosition, isAppToken, Token } from '~position/position.interface';
 import { AppGroupsDefinition } from '~position/position.service';
 import { Network } from '~types/network.interface';
 
@@ -59,14 +59,26 @@ type CurvePoolTokenHelperParams<T = CurveToken, V = Erc20> = {
   }) => Promise<number>;
 };
 
-const isMetaPool = (token: Token) =>
-  token.type === ContractType.APP_TOKEN &&
-  token.appId === CURVE_DEFINITION.id &&
-  token.groupId === CURVE_DEFINITION.groups.pool.id;
-
 @Injectable()
 export class CurvePoolTokenHelper {
   constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
+
+  private async resolvePoolLabel(tokens: Token[]) {
+    // Determine source app prefix from underlying tokens (Aave V2, Yearn, etc.)
+    const appTokens = tokens.filter(isAppToken);
+    const appSourcesAll = appTokens.map(v => v.appId);
+    const appSources = uniq(appSourcesAll).filter(v => v !== CURVE_DEFINITION.id);
+
+    const hasSingleAppSource = appTokens.length === tokens.length && appSources.length === 1;
+    const appSource = hasSingleAppSource ? await this.appToolkit.getApp(appSources[0]) : null;
+    const appSourcePrefix = appSource?.name.replace(/V\d$/, '').trim();
+
+    // Determine the pool label from the underlying labels
+    const labels = tokens.map(v => getLabelFromToken(v));
+    const poolLabel = labels.join(' / ');
+
+    return compact([appSourcePrefix, poolLabel]).join(' ');
+  }
 
   async getTokens<T = CurveToken, V = Erc20>({
     network,
@@ -139,11 +151,11 @@ export class CurvePoolTokenHelper {
         const reservesUSD = tokens.map((t, i) => reserves[i] * t.price);
         const liquidity = reservesUSD.reduce((total, r) => total + r, 0);
         const reservePercentages = reservesUSD.map(reserveUSD => reserveUSD / liquidity);
+        const ratio = reservePercentages.map(p => `${Math.floor(p * 100)}%`).join(' / ');
 
         // Display Properties
-        const underlyingLabels = tokens.map(v => (isMetaPool(v) ? getLabelFromToken(v) : v.symbol)); // Flatten metapool label
-        const label = definition.label ?? underlyingLabels.join(' / ');
-        const secondaryLabel = reservePercentages.map(p => `${Math.floor(p * 100)}%`).join(' / ');
+        const label = await this.resolvePoolLabel(tokens);
+        const secondaryLabel = ratio;
         const images = underlyingTokens.map(t => getImagesFromToken(t)).flat();
 
         const curvePoolToken: AppTokenPosition<CurvePoolTokenDataProps> = {
@@ -186,6 +198,10 @@ export class CurvePoolTokenHelper {
               {
                 label: 'Fee',
                 value: buildPercentageDisplayItem(fee),
+              },
+              {
+                label: 'Ratio',
+                value: ratio,
               },
             ],
           },

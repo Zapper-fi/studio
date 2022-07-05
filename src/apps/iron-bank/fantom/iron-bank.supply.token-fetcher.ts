@@ -13,7 +13,7 @@ const appId = IRON_BANK_DEFINITION.id;
 const groupId = IRON_BANK_DEFINITION.groups.supply.id;
 const network = Network.FANTOM_OPERA_MAINNET;
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
 export class FantomIronBankSupplyTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(IronBankContractFactory) private readonly ironBankContractFactory: IronBankContractFactory,
@@ -33,7 +33,6 @@ export class FantomIronBankSupplyTokenFetcher implements PositionFetcher<AppToke
       getExchangeRate: ({ contract, multicall }) => multicall.wrap(contract).exchangeRateCurrent(),
       getSupplyRate: ({ contract, multicall }) => multicall.wrap(contract).supplyRatePerBlock(),
       getBorrowRate: ({ contract, multicall }) => multicall.wrap(contract).borrowRatePerBlock(),
-      getBorrowRateLabel: () => 'Borrow APY',
       getUnderlyingAddress: ({ contract, multicall }) => multicall.wrap(contract).underlying(),
       getExchangeRateMantissa: ({ underlyingTokenDecimals }) => underlyingTokenDecimals + 10,
     });

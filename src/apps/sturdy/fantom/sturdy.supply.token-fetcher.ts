@@ -13,7 +13,7 @@ const appId = STURDY_DEFINITION.id;
 const groupId = STURDY_DEFINITION.groups.supply.id;
 const network = Network.FANTOM_OPERA_MAINNET;
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
 export class FantomSturdySupplyTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(@Inject(SturdyLendingTokenHelper) private readonly sturdyLendingTokenHelper: SturdyLendingTokenHelper) {}
 

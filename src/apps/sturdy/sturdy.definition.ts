@@ -31,7 +31,37 @@ export const STURDY_DEFINITION = appDefinition({
       groupLabel: 'Borrow',
     },
   },
-
+  presentationConfig: {
+    tabs: [
+      {
+        label: 'Lending',
+        viewType: 'split',
+        views: [
+          {
+            viewType: 'list',
+            label: 'Supply',
+            groupIds: ['supply'],
+          },
+          {
+            viewType: 'split',
+            label: 'Borrow',
+            views: [
+              {
+                viewType: 'list',
+                label: 'Variable',
+                groupIds: ['variable-debt'],
+              },
+              {
+                viewType: 'list',
+                label: 'Stable',
+                groupIds: ['stable-debt'],
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
   tags: [AppTag.LENDING],
 
   links: {

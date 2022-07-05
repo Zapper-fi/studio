@@ -69,7 +69,8 @@ export class TvlService {
 
   async getTvl({ appId, network }: { appId: string; network: Network }): Promise<AppTvl> {
     try {
-      const { name: appName } = this.appService.getApp(appId);
+      const app = await this.appService.getApp(appId);
+      const appName = app!.name;
       const customTvlFetcher = this.tvlFetcherRegistry.get({ network, appId });
 
       let tvl = await customTvlFetcher?.getTvl();

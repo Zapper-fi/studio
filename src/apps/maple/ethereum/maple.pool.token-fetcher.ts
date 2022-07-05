@@ -63,8 +63,9 @@ export class EthereumMaplePoolTokenFetcher implements PositionFetcher<AppTokenPo
         const pricePerShare = 1;
         const price = underlyingToken.price;
         const tokens = [underlyingToken];
-        const liquidity = price * supply;
         const apy = Number(pool.apy) / 10000;
+        const liquidity = price * supply;
+        if (liquidity <= 0) return null;
 
         // Display Props
         const label = pool.poolName;

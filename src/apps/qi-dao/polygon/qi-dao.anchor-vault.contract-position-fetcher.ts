@@ -1,5 +1,5 @@
 import { Inject } from '@nestjs/common';
-import _, { sumBy } from 'lodash';
+import _ from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
@@ -85,11 +85,6 @@ export class PolygonQiDaoAnchorVaultPositionFetcher implements PositionFetcher<C
 
         return contractPosition;
       }),
-    );
-
-    console.log(
-      'anchor',
-      sumBy(_.compact(anchorVaultContractPositions), v => v.dataProps.liquidity),
     );
 
     return _.compact(anchorVaultContractPositions);

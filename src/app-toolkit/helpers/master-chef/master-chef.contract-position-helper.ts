@@ -144,7 +144,7 @@ export class MasterChefContractPositionHelper {
         .wrap(this.appToolkit.globalContracts.erc20({ network, address: depositTokenAddress }))
         .balanceOf(address),
     resolveAddress = async ({ contract }) => (contract as unknown as Contract).address,
-    resolveLabel = ({ stakedToken }) => `Staked ${getLabelFromToken(stakedToken)}`,
+    resolveLabel = ({ stakedToken }) => `${getLabelFromToken(stakedToken)}`,
   }: MasterChefContractPositionHelperParams<T>): Promise<ContractPosition<MasterChefContractPositionDataProps>[]> {
     const provider = this.appToolkit.getNetworkProvider(network);
     const multicall = this.appToolkit.getMulticall(network);
@@ -282,7 +282,7 @@ export class MasterChefContractPositionHelper {
         const secondaryLabel = buildDollarDisplayItem(stakedToken.price);
         const images = getImagesFromToken(stakedToken);
         const statsItems = [
-          { label: 'APY', value: buildPercentageDisplayItem(yearlyROI) },
+          { label: 'APR', value: buildPercentageDisplayItem(yearlyROI * 100) },
           { label: 'Liquidity', value: buildDollarDisplayItem(liquidity) },
         ];
         const displayProps = {

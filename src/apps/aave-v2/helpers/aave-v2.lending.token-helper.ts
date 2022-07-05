@@ -136,7 +136,7 @@ export class AaveV2LendingTokenHelper {
         const pricePerShare = 1; // Minted 1:1
         const price = pricePerShare * reserveToken.price;
         const liquidityAmount = price * supply;
-        const liquidity = isDebt == true ? -liquidityAmount : liquidityAmount;
+        const contextualizedLiquidity = isDebt == true ? -liquidityAmount : liquidityAmount;
         const lendingRateRaw = resolveLendingRate({ reserveData });
         const apy = Number(lendingRateRaw) / 10 ** 27;
         const liquidationThresholdRaw = reserveConfigurationData.liquidationThreshold;
@@ -147,8 +147,9 @@ export class AaveV2LendingTokenHelper {
           apy,
           exchangeable: exchangeable ?? false,
           enabledAsCollateral,
-          liquidity,
+          liquidity: contextualizedLiquidity,
           liquidationThreshold,
+          isActive: Boolean(liquidityAmount > 0),
         };
 
         // Display Props
@@ -157,8 +158,8 @@ export class AaveV2LendingTokenHelper {
         const tertiaryLabel = resolveApyLabel({ apy });
         const images = getImagesFromToken(reserveToken);
         const statsItems = [
-          { label: 'APY', value: buildPercentageDisplayItem(apy) },
-          { label: 'Liquidity', value: buildDollarDisplayItem(liquidity) },
+          { label: 'APY', value: buildPercentageDisplayItem(apy * 100) },
+          { label: 'Liquidity', value: buildDollarDisplayItem(liquidityAmount) },
         ];
 
         const token: AppTokenPosition<AaveV2LendingTokenDataProps> = {

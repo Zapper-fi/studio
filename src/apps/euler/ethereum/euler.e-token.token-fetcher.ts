@@ -1,11 +1,15 @@
 import { Inject } from '@nestjs/common';
+import { utils } from 'ethers';
 import { gql } from 'graphql-request';
 import { compact } from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { Register } from '~app-toolkit/decorators';
-import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
+import {
+  buildDollarDisplayItem,
+  buildPercentageDisplayItem,
+} from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { EulerContractFactory } from '~apps/euler';
 import { ContractType } from '~position/contract.interface';
@@ -27,7 +31,6 @@ const query = gql`
         interestRate
         borrowAPY
         supplyAPY
-        totalSupply
         twap
         name
         symbol
@@ -44,7 +47,6 @@ interface EulerMarket {
   interestRate: string;
   borrowAPY: string;
   supplyAPY: string;
-  totalSupply: string;
   twap: string;
   name: string;
   symbol: string;
@@ -58,13 +60,6 @@ interface EulerMarketsResponse {
     markets: EulerMarket[];
   };
 }
-
-type EulerTokenDataProps = {
-  liquidity: number;
-  interestRate: number;
-  borrowAPY: number;
-  supplyAPY: number;
-};
 
 @Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
 export class EthereumEulerETokenTokenFetcher implements PositionFetcher<AppTokenPosition> {
@@ -88,52 +83,47 @@ export class EthereumEulerETokenTokenFetcher implements PositionFetcher<AppToken
           network,
         });
 
-        const [totalSupplyRaw, decimals] = await Promise.all([
+        const [totalSupplyRaw, decimals, pricePerShareRaw] = await Promise.all([
           multicall.wrap(eTokenContract).totalSupply(),
           multicall.wrap(eTokenContract).decimals(),
+          multicall.wrap(eTokenContract).convertBalanceToUnderlying(utils.parseEther('1')),
         ]);
         const underlyingToken = baseTokens.find(token => token.address === market.id.toLowerCase());
         if (totalSupplyRaw.isZero() || !underlyingToken) return null;
 
         const supply = Number(totalSupplyRaw) / 10 ** decimals;
         const symbol = `E${market.symbol}`;
-        const price = underlyingToken.price;
-        const pricePerShare = Number(supply) / Number(market.totalBalances);
+        const pricePerShare = Number(pricePerShareRaw) / 10 ** 18;
+        const price = underlyingToken.price * pricePerShare;
         const liquidity = supply * underlyingToken.price;
         const interestRate = Number(market.interestRate) / 10 ** decimals;
-        const borrowAPY = Number(market.borrowAPY) / 10 ** 25;
-        const supplyAPY = Number(market.supplyAPY) / 10 ** 25;
+        const supplyAPY = (Number(market.supplyAPY) * 100) / 1e27;
 
         const dataProps = {
           liquidity,
           interestRate,
-          borrowAPY,
           supplyAPY,
         };
 
         const statsItems = [
           {
             label: 'Liquidity',
-            value: buildDollarDisplayItem(dataProps.liquidity),
+            value: buildDollarDisplayItem(liquidity),
           },
           {
-            label: 'Borrow APY',
-            value: buildDollarDisplayItem(dataProps.borrowAPY),
-          },
-          {
-            label: 'Supply APY',
-            value: buildDollarDisplayItem(dataProps.supplyAPY),
+            label: 'APY',
+            value: buildPercentageDisplayItem(supplyAPY),
           },
         ];
 
         const displayProps = {
-          label: `Euler E token ${market.name}`,
+          label: market.name,
           secondaryLabel: buildDollarDisplayItem(price),
           images: getImagesFromToken(underlyingToken),
           statsItems,
         };
 
-        const token: AppTokenPosition<EulerTokenDataProps> = {
+        const token: AppTokenPosition = {
           type: ContractType.APP_TOKEN,
           address: market.eTokenAddress,
           appId,

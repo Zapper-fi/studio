@@ -22,7 +22,7 @@ const network = Network.POLYGON_MAINNET;
 const YOLO_ADDRESS = '0x935b97586fe291750f46bf4ed7beb8e1c3d110a2';
 const TOKENLIST_URL = 'https://raw.githubusercontent.com/symphony-finance/token-list/master/symphony.tokenlist.json';
 
-@Register.ContractPositionFetcher({ appId, groupId, network })
+@Register.ContractPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
 export class PolygonSymphonyYoloContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,

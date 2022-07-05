@@ -75,7 +75,9 @@ export class CompoundBorrowContractPositionHelper {
       const underlyingPrice = appToken.tokens[0].price;
       // Liquidity is the total supply of "cash" multiplied by the price of an underlying token
       const borrowedPositionliquidity = cashSupply * underlyingPrice;
-      const borrowLiquidity = underlyingLiquidity - borrowedPositionliquidity;
+
+      const borrowLiquidity =
+        borrowedPositionliquidity > underlyingLiquidity ? 0 : underlyingLiquidity - borrowedPositionliquidity;
 
       const dataProps = {
         ...appToken.dataProps,
@@ -84,6 +86,7 @@ export class CompoundBorrowContractPositionHelper {
         // The amount borrowed can be derived simply by substracting the liquidity from the total supply
         // of tokens
         borrow: borrowLiquidity,
+        isActive: Boolean(borrowLiquidity > 0),
       };
       const borrowApy = appToken.dataProps.borrowApy;
 
@@ -94,8 +97,8 @@ export class CompoundBorrowContractPositionHelper {
       const images = appToken.displayProps.images;
       const statsItems = isNumber(borrowApy)
         ? [
-            { label: 'APY', value: buildPercentageDisplayItem(borrowApy) },
-            { label: 'Liquidity', value: buildDollarDisplayItem(dataProps.liquidity) },
+            { label: 'APY', value: buildPercentageDisplayItem(borrowApy * 100) },
+            { label: 'Liquidity', value: buildDollarDisplayItem(borrowLiquidity) },
           ]
         : [];
 

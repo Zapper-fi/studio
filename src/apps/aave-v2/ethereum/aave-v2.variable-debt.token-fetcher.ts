@@ -15,10 +15,7 @@ const network = Network.ETHEREUM_MAINNET;
 
 @Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
 export class EthereumAaveV2VariableDebtTokenFetcher implements PositionFetcher<AppTokenPosition> {
-  constructor(
-    @Inject(AaveV2LendingTokenHelper)
-    private readonly aaveV2LendingTokenHelper: AaveV2LendingTokenHelper,
-  ) {}
+  constructor(@Inject(AaveV2LendingTokenHelper) private readonly aaveV2LendingTokenHelper: AaveV2LendingTokenHelper) {}
 
   async getPositions() {
     return await this.aaveV2LendingTokenHelper.getTokens({
@@ -30,7 +27,7 @@ export class EthereumAaveV2VariableDebtTokenFetcher implements PositionFetcher<A
       resolveTokenAddress: ({ reserveTokenAddressesData }) => reserveTokenAddressesData.variableDebtTokenAddress,
       resolveLendingRate: ({ reserveData }) => reserveData.variableBorrowRate,
       resolveLabel: ({ reserveToken }) => getLabelFromToken(reserveToken),
-      resolveApyLabel: ({ apy }) => `${apy.toFixed(3)}% APR (variable)`,
+      resolveApyLabel: ({ apy }) => `${(apy * 100).toFixed(3)}% APR (variable)`,
     });
   }
 }

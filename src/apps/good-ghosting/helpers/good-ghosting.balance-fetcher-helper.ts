@@ -3,11 +3,13 @@ import { BigNumber } from 'ethers';
 import { sumBy, compact } from 'lodash';
 
 import { drillBalance } from '~app-toolkit';
+
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 
 import { ContractType } from '~position/contract.interface';
 import { getAppImg } from '~app-toolkit/helpers/presentation/image.present';
+
 import { isClaimable, isSupplied } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 
@@ -88,7 +90,22 @@ export class GoodGhostingBalanceFetcherHelper {
         }
 
         if (player.withdrawn) {
-          balance = BigNumber.from(0);
+          const balancePositionWithdrawn: ContractPositionBalance = {
+            type: ContractType.POSITION,
+            network,
+            address: contractPosition.address,
+            appId,
+            groupId,
+            tokens: [],
+            balanceUSD: 0,
+            dataProps: {},
+            displayProps: {
+              label: appId,
+              images: [getAppImg(appId)],
+            },
+          };
+
+          return balancePositionWithdrawn;
         }
 
         const stakedTokenBalance = drillBalance(stakedToken, amountPaid.toString());
