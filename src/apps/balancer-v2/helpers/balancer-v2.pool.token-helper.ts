@@ -113,7 +113,8 @@ export class BalancerV2PoolTokensHelper {
           labelStrategy === BalancerV2PoolLabelStrategy.POOL_NAME
             ? await multicall.wrap(poolContract).name()
             : tokens.map(v => v.symbol).join(' / ');
-        const secondaryLabel = reservePercentages.map(p => `${Math.round(p * 100)}%`).join(' / ');
+        const ratio = reservePercentages.map(p => `${Math.round(p * 100)}%`).join(' / ');
+        const secondaryLabel = ratio;
         const images = tokens.map(v => getTokenImg(v.address, network));
 
         const token: AppTokenPosition<BalancerV2PoolTokenDataProps> = {
@@ -145,6 +146,10 @@ export class BalancerV2PoolTokensHelper {
               {
                 label: 'Liquidity',
                 value: buildDollarDisplayItem(liquidity),
+              },
+              {
+                label: 'Ratio',
+                value: ratio,
               },
             ],
           },

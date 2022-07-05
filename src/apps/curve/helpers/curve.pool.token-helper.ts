@@ -151,10 +151,11 @@ export class CurvePoolTokenHelper {
         const reservesUSD = tokens.map((t, i) => reserves[i] * t.price);
         const liquidity = reservesUSD.reduce((total, r) => total + r, 0);
         const reservePercentages = reservesUSD.map(reserveUSD => reserveUSD / liquidity);
+        const ratio = reservePercentages.map(p => `${Math.floor(p * 100)}%`).join(' / ');
 
         // Display Properties
         const label = await this.resolvePoolLabel(tokens);
-        const secondaryLabel = reservePercentages.map(p => `${Math.floor(p * 100)}%`).join(' / ');
+        const secondaryLabel = ratio;
         const images = underlyingTokens.map(t => getImagesFromToken(t)).flat();
 
         const curvePoolToken: AppTokenPosition<CurvePoolTokenDataProps> = {
@@ -197,6 +198,10 @@ export class CurvePoolTokenHelper {
               {
                 label: 'Fee',
                 value: buildPercentageDisplayItem(fee),
+              },
+              {
+                label: 'Ratio',
+                value: ratio,
               },
             ],
           },
