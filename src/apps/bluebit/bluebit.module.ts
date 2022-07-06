@@ -4,7 +4,6 @@ import { UniswapV2AppModule } from '~apps/uniswap-v2';
 
 import { AuroraBluebitBalanceFetcher } from './aurora/bluebit.balance-fetcher';
 import { AuroraBluebitFarmContractPositionFetcher } from './aurora/bluebit.farm.contract-position-fetcher';
-import { AuroraBluebitVaultTokenFetcher } from './aurora/bluebit.vault.token-fetcher';
 import { BluebitAppDefinition, BLUEBIT_DEFINITION } from './bluebit.definition';
 import { BluebitContractFactory } from './contracts';
 
@@ -14,7 +13,6 @@ import { BluebitContractFactory } from './contracts';
   providers: [
     AuroraBluebitBalanceFetcher,
     AuroraBluebitFarmContractPositionFetcher,
-    AuroraBluebitVaultTokenFetcher,
     BluebitAppDefinition,
     BluebitContractFactory,
   ],
