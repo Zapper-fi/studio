@@ -2,7 +2,6 @@ import { Inject } from '@nestjs/common';
 import { compact, isNull, valuesIn } from "lodash";
 import Axios from 'axios';
 
-import { EthersMulticall } from '~multicall';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { PositionFetcher } from '~position/position-fetcher.interface';
