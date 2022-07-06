@@ -22,7 +22,7 @@ export class OptimismAelinFarmContractPositionBalanceFetcher
     private readonly appToolkit: IAppToolkit,
     @Inject(AelinContractFactory)
     private readonly aelinContractFactory: AelinContractFactory,
-  ) {}
+  ) { }
 
   async getBalances(address: string) {
     return this.appToolkit.helpers.singleStakingContractPositionBalanceHelper.getBalances<AelinStaking>({

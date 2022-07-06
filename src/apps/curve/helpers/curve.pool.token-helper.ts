@@ -22,6 +22,7 @@ import { CURVE_DEFINITION } from '../curve.definition';
 import { CurvePoolDefinition } from '../curve.types';
 
 export type CurvePoolTokenDataProps = {
+  gaugeAddress?: string;
   swapAddress: string;
   liquidity: number;
   volume: number;
@@ -61,7 +62,7 @@ type CurvePoolTokenHelperParams<T = CurveToken, V = Erc20> = {
 
 @Injectable()
 export class CurvePoolTokenHelper {
-  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
+  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) { }
 
   private async resolvePoolLabel(tokens: Token[]) {
     // Determine source app prefix from underlying tokens (Aave V2, Yearn, etc.)
@@ -106,7 +107,7 @@ export class CurvePoolTokenHelper {
 
     const curvePoolTokens = await Promise.all(
       poolDefinitions.map(async definition => {
-        const { tokenAddress, swapAddress } = definition;
+        const { gaugeAddress, tokenAddress, swapAddress } = definition;
         const poolContract = resolvePoolContract({ network, definition });
         const poolTokenContract = resolvePoolTokenContract({ network, definition });
         const rawTokenAddresses = await resolvePoolCoinAddresses({ multicall, poolContract });
@@ -172,6 +173,7 @@ export class CurvePoolTokenHelper {
           tokens,
 
           dataProps: {
+            gaugeAddress,
             swapAddress,
             liquidity,
             volume,
