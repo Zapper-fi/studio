@@ -54,7 +54,7 @@ export class OptimismVelodromeBalanceFetcher implements BalanceFetcher {
       network,
       resolveContract: ({ address, network }) => this.contractFactory.velodromeVe({ address, network }),
       resolveStakedTokenBalance: async ({ contract, address, multicall }) => {
-        const veCount = Number(await multicall.wrap(contract).tokenOfOwnerByIndex(address, 0));
+        const veCount = Number(await multicall.wrap(contract).balanceOf(address));
         return sum(
           await Promise.all(
             range(veCount).map(async i => {
