@@ -84,7 +84,7 @@ export class UniswapV2PoolTokenHelper {
     appId,
     groupId,
     factoryAddress,
-    fee = 0.003,
+    fee = 0.3,
     minLiquidity = 0,
     hiddenTokens = [],
     blockedPools = [],
