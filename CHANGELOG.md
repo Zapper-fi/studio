@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.103.0](https://github.com/Zapper-fi/studio/compare/v0.102.0...v0.103.0) (2022-07-06)
+
+
+### Features
+
+* **velodrome:** Implement Velodrome ([#832](https://github.com/Zapper-fi/studio/issues/832)) ([4201d07](https://github.com/Zapper-fi/studio/commit/4201d0718bbf37f72af06e92a3205f00a47af29a))
+
 ## [0.102.0](https://github.com/Zapper-fi/studio/compare/v0.101.0...v0.102.0) (2022-07-06)
 
 
