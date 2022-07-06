@@ -3,6 +3,7 @@ import { Inject } from '@nestjs/common';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { RewardRateUnit } from '~app-toolkit/helpers/master-chef/master-chef.contract-position-helper';
+import { TRISOLARIS_DEFINITION } from '~apps/trisolaris';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
@@ -27,13 +28,7 @@ export class AuroraBluebitFarmContractPositionFetcher implements PositionFetcher
       appId,
       groupId,
       network,
-      dependencies: [
-        {
-          appId,
-          groupIds: [BLUEBIT_DEFINITION.groups.vault.id],
-          network,
-        },
-      ],
+      dependencies: [{ appId, groupIds: [TRISOLARIS_DEFINITION.groups.pool.id], network }],
       resolveContract: opts => this.bluebitContractFactory.bluebit(opts),
       resolvePoolLength: async ({ multicall, contract }) => multicall.wrap(contract).poolLength(),
       resolveDepositTokenAddress: async ({ poolIndex, contract, multicall }) => {
