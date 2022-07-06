@@ -62,7 +62,7 @@ type CurvePoolTokenHelperParams<T = CurveToken, V = Erc20> = {
 
 @Injectable()
 export class CurvePoolTokenHelper {
-  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) { }
+  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
   private async resolvePoolLabel(tokens: Token[]) {
     // Determine source app prefix from underlying tokens (Aave V2, Yearn, etc.)

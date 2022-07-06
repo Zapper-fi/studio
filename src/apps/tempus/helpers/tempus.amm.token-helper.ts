@@ -19,7 +19,7 @@ export class TempusAmmTokenFetcher {
     @Inject(CurvePoolTokenHelper)
     private readonly curvePoolTokenHelper: CurvePoolTokenHelper,
     @Inject(TempusContractFactory) private readonly contractFactory: TempusContractFactory,
-  ) { }
+  ) {}
 
   async getPositions(network: Network) {
     const data = await getTempusData(network);

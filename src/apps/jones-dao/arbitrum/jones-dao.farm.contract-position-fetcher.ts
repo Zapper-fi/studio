@@ -25,7 +25,7 @@ export class ArbitrumJonesDaoFarmContractPositionFetcher implements PositionFetc
     private readonly synthetixSingleStakingIsActiveStrategy: SynthetixSingleStakingIsActiveStrategy,
     @Inject(SynthetixSingleStakingRoiStrategy)
     private readonly synthetixSingleStakingRoiStrategy: SynthetixSingleStakingRoiStrategy,
-  ) { }
+  ) {}
 
   async getPositions() {
     const multicall = this.appToolkit.getMulticall(network);

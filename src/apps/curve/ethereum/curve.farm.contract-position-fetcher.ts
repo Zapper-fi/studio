@@ -85,7 +85,7 @@ export class EthereumCurveFarmContractPositionFetcher implements PositionFetcher
     private readonly curveGaugeIsActiveStrategy: CurveGaugeIsActiveStrategy,
     @Inject(CurveFactoryGaugeAddressHelper)
     private readonly curveFactoryGaugeAddressHelper: CurveFactoryGaugeAddressHelper,
-  ) { }
+  ) {}
 
   private async getSingleGaugeFarms() {
     return this.appToolkit.helpers.singleStakingFarmContractPositionHelper.getContractPositions<CurveGauge>({
