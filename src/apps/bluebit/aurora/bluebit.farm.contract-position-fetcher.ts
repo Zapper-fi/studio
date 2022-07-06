@@ -28,7 +28,7 @@ export class AuroraBluebitFarmContractPositionFetcher implements PositionFetcher
       appId,
       groupId,
       network,
-      dependencies: [{ appId, groupIds: [TRISOLARIS_DEFINITION.groups.pool.id], network }],
+      dependencies: [{ appId: TRISOLARIS_DEFINITION.id, groupIds: [TRISOLARIS_DEFINITION.groups.pool.id], network }],
       resolveContract: opts => this.bluebitContractFactory.bluebit(opts),
       resolvePoolLength: async ({ multicall, contract }) => multicall.wrap(contract).poolLength(),
       resolveDepositTokenAddress: async ({ poolIndex, contract, multicall }) => {

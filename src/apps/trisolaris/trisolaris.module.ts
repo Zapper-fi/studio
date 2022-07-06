@@ -1,5 +1,6 @@
 import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
+import { UniswapV2AppModule } from '~apps/uniswap-v2';
 
 import { AuroraTrisolarisBalanceFetcher } from './aurora/trisolaris.balance-fetcher';
 import { AuroraTrisolarisFarmContractPositionFetcher } from './aurora/trisolaris.farm.contract-position-fetcher';
@@ -10,6 +11,7 @@ import { TrisolarisAppDefinition, TRISOLARIS_DEFINITION } from './trisolaris.def
 
 @Register.AppModule({
   appId: TRISOLARIS_DEFINITION.id,
+  imports: [UniswapV2AppModule],
   providers: [
     AuroraTrisolarisBalanceFetcher,
     AuroraTrisolarisFarmContractPositionFetcher,

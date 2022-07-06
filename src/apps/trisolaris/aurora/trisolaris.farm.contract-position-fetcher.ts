@@ -11,7 +11,7 @@ import TRISOLARIS_DEFINITION from '../trisolaris.definition';
 
 const appId = TRISOLARIS_DEFINITION.id;
 const groupId = TRISOLARIS_DEFINITION.groups.farm.id;
-const network = Network.AVALANCHE_MAINNET;
+const network = Network.AURORA_MAINNET;
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
 export class AuroraTrisolarisFarmContractPositionFetcher implements PositionFetcher<ContractPosition> {

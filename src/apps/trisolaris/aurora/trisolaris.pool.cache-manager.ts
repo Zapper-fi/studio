@@ -36,11 +36,11 @@ export class AuroraTrisolarisPoolAddressCacheManager {
 
         // Some EOAs exist on the MasterChef contract; calling these breaks multicall
         const code = await provider.getCode(lpTokenAddress);
-        if (code === '0x') return false;
+        if (code === '0x') return null;
 
-        const isPool = multicall
+        const isPool = await multicall
           .wrap(lpTokenContract)
-          .factory()
+          .token0()
           .then(() => true)
           .catch(() => false);
         if (!isPool) return null;
