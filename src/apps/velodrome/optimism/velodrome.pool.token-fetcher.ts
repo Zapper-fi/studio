@@ -4,6 +4,7 @@ import { BigNumber } from 'ethers';
 
 import { Register } from '~app-toolkit/decorators';
 import { CurvePoolTokenHelper } from '~apps/curve';
+import { CacheOnInterval } from '~cache/cache-on-interval.decorator';
 import { Erc20 } from '~contract/contracts';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
@@ -29,10 +30,10 @@ export class OptimismVelodromePoolsTokenFetcher implements PositionFetcher<AppTo
     @Inject(VelodromeContractFactory) private readonly contractFactory: VelodromeContractFactory,
   ) {}
 
-  // @CacheOnInterval({
-  //   key: `apps-v1:${network}:${appId}:${groupId}:definitions`,
-  //   timeout: 15 * 60 * 1000,
-  // })
+  @CacheOnInterval({
+    key: `apps-v1:${network}:${appId}:${groupId}:definitions`,
+    timeout: 15 * 60 * 1000,
+  })
   async getDefinitions() {
     const { data } = await Axios.get<{ data: PairData[] }>('https://api.velodrome.finance/api/v1/pairs');
     return data;
