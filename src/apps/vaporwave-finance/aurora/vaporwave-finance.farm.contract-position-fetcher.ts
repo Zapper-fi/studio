@@ -15,7 +15,7 @@ import { getBaseERC20Token } from './vaporwave-finance.vault.token-fetcher';
 import { claimable, supplied } from "~position/position.utils";
 import { ContractType } from "~position/contract.interface";
 import auroraStakePools from './aurora_stake'
-
+import { CacheOnInterval } from "~cache/cache-on-interval.decorator";
 
 const appId = VAPORWAVE_FINANCE_DEFINITION.id;
 const groupId = VAPORWAVE_FINANCE_DEFINITION.groups.farm.id;
@@ -29,14 +29,35 @@ export class AuroraVaporwaveFinanceFarmContractPositionFetcher implements Positi
     private readonly vaporwaveFinanceContractFactory: VaporwaveFinanceContractFactory,
   ) { }
 
-  async getPositions() {
-    // http://localhost:5001/apps/vaporwave-finance/positions?groupIds[]=farm&network=aurora
+
+  @CacheOnInterval({
+    key: `apps-v3:${network}:${appId}:${groupId}:want_prices`,
+    timeout: 15 * 60 * 1000,
+  })
+  async getWantPrices() {
     const wantPrices = await Axios.get("https://api.vaporwave.farm/lps").then(
       (v) => v.data
     )
+    return wantPrices
+  }
+
+  @CacheOnInterval({
+    key: `apps-v3:${network}:${appId}:${groupId}:base_token`,
+    timeout: 15 * 60 * 1000,
+  })
+  async getBaseTokenPrices() {
     const baseTokenPrices = await Axios.get("https://api.vaporwave.farm/prices").then(
       (v) => v.data
     )
+    return baseTokenPrices
+  }
+
+
+  async getPositions() {
+    // http://localhost:5001/apps/vaporwave-finance/positions?groupIds[]=farm&network=aurora
+    const wantPrices = await this.getWantPrices()
+    const baseTokenPrices = await this.getBaseTokenPrices()
+
     const multicall = this.appToolkit.getMulticall(network);
 
     const positions = await Promise.all(

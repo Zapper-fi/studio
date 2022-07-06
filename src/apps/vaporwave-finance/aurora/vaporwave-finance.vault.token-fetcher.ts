@@ -14,6 +14,7 @@ import { VaporwaveFinanceContractFactory } from '../contracts';
 import { VAPORWAVE_FINANCE_DEFINITION } from '../vaporwave-finance.definition';
 import { buildDollarDisplayItem } from "~app-toolkit/helpers/presentation/display-item.present";
 import { BaseToken } from '~position/token.interface';
+import { CacheOnInterval } from "~cache/cache-on-interval.decorator";
 
 
 const appId = VAPORWAVE_FINANCE_DEFINITION.id;
@@ -69,6 +70,9 @@ export async function getBaseERC20Token(
 
 }
 
+
+
+
 @Register.TokenPositionFetcher({ appId, groupId, network })
 export class AuroraVaporwaveFinanceVaultTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
@@ -77,24 +81,70 @@ export class AuroraVaporwaveFinanceVaultTokenFetcher implements PositionFetcher<
     private readonly vaporwaveFinanceContractFactory: VaporwaveFinanceContractFactory,
   ) { }
 
-  async getPositions() {
-    // http://localhost:5001/apps/vaporwave-finance/tokens?groupIds[]=vault&network=aurora
-    const vaultData = await Axios.get<VaporwaveVaultDetails[]>("https://api.vaporwave.farm/vaults").then(
-      (v) => v.data
-    );
-    const vtokenPrices = await Axios.get("https://api.vaporwave.farm/vaportokenprices").then(
-      (v) => v.data[network]
-    );
-    const apyData = await Axios.get("https://api.vaporwave.farm/apy").then(
-      (v) => v.data
-    )
+
+  @CacheOnInterval({
+    key: `apps-v3:${network}:${appId}:${groupId}:want_prices`,
+    timeout: 15 * 60 * 1000,
+  })
+  async getWantPrices() {
     const wantPrices = await Axios.get("https://api.vaporwave.farm/lps").then(
       (v) => v.data
     )
+    return wantPrices
+  }
+
+  @CacheOnInterval({
+    key: `apps-v3:${network}:${appId}:${groupId}:base_token`,
+    timeout: 15 * 60 * 1000,
+  })
+  async getBaseTokenPrices() {
     const baseTokenPrices = await Axios.get("https://api.vaporwave.farm/prices").then(
       (v) => v.data
     )
-    const multicall = this.appToolkit.getMulticall(network);
+    return baseTokenPrices
+  }
+
+  @CacheOnInterval({
+    key: `apps-v3:${network}:${appId}:${groupId}:vaults`,
+    timeout: 15 * 60 * 1000,
+  })
+  async getVaults() {
+    const vaultData = await Axios.get<VaporwaveVaultDetails[]>("https://api.vaporwave.farm/vaults").then(
+      (v) => v.data
+    )
+    return vaultData
+  }
+
+  @CacheOnInterval({
+    key: `apps-v3:${network}:${appId}:${groupId}:vaportokenprices`,
+    timeout: 15 * 60 * 1000,
+  })
+  async getVTokenPrices() {
+    const vtokenPrices = await Axios.get("https://api.vaporwave.farm/vaportokenprices").then(
+      (v) => v.data
+    )
+    return vtokenPrices
+  }
+
+  @CacheOnInterval({
+    key: `apps-v3:${network}:${appId}:${groupId}:apy`,
+    timeout: 15 * 60 * 1000,
+  })
+  async getAPY() {
+    const apy = await Axios.get("https://api.vaporwave.farm/apy").then(
+      (v) => v.data
+    )
+    return apy
+  }
+
+  async getPositions() {
+    // http://localhost:5001/apps/vaporwave-finance/tokens?groupIds[]=vault&network=aurora
+    const vaultData = await this.getVaults()
+    const vtokenPrices = await this.getVTokenPrices()
+    const apyData = await this.getAPY()
+    const wantPrices = await this.getWantPrices()
+    const baseTokenPrices = await this.getBaseTokenPrices()
+    const multicall = this.appToolkit.getMulticall(network)
 
     const tokens = await Promise.all(
       vaultData.map(async (vault) => {
