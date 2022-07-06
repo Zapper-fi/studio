@@ -4,6 +4,20 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.102.0](https://github.com/Zapper-fi/studio/compare/v0.101.0...v0.102.0) (2022-07-06)
+
+
+### Features
+
+* **phuture:** Phuture Finance Ethereum integration ([#828](https://github.com/Zapper-fi/studio/issues/828)) ([eff5cc9](https://github.com/Zapper-fi/studio/commit/eff5cc9e1a2d94becde84f08d66ec89e620e8515))
+* **trisolaris:** Add Trisolaris integration and fix Bluebit ([#833](https://github.com/Zapper-fi/studio/issues/833)) ([cf2d4a9](https://github.com/Zapper-fi/studio/commit/cf2d4a9ad3a94f2e6c61649c378bc807ecfc7cca))
+
+
+### Bug Fixes
+
+* disabled pool-together-v3's TVL ([#824](https://github.com/Zapper-fi/studio/issues/824)) ([9e1ac42](https://github.com/Zapper-fi/studio/commit/9e1ac42f44f95456cb4d7c109ffcbbf688555643))
+* **rari-fuse:** Fix failing RPC calls in Rari Fuse ([#830](https://github.com/Zapper-fi/studio/issues/830)) ([124853b](https://github.com/Zapper-fi/studio/commit/124853bf5766483917f17cbc4024b84dd8ba3a29))
+
 ## [0.101.0](https://github.com/Zapper-fi/studio/compare/v0.100.3...v0.101.0) (2022-07-04)
 
 
