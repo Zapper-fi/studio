@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.104.0](https://github.com/Zapper-fi/studio/compare/v0.103.0...v0.104.0) (2022-07-07)
+
+
+### Features
+
+* **tvl:** Include groups in TVL by default, exclude with override ([#837](https://github.com/Zapper-fi/studio/issues/837)) ([ae7587d](https://github.com/Zapper-fi/studio/commit/ae7587d506f120214bcd7a20e5b464153930b536))
+
 ## [0.103.0](https://github.com/Zapper-fi/studio/compare/v0.102.0...v0.103.0) (2022-07-06)
 
 
