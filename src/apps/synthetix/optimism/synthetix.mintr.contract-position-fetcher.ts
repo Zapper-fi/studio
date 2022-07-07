@@ -12,7 +12,7 @@ const appId = SYNTHETIX_DEFINITION.id;
 const groupId = SYNTHETIX_DEFINITION.groups.mintr.id;
 const network = Network.OPTIMISM_MAINNET;
 
-@Register.ContractPositionFetcher({ appId, groupId, network })
+@Register.ContractPositionFetcher({ appId, groupId, network, options: { excludeFromTvl: true } })
 export class OptimismSynthetixMintrContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(SynthetixMintrContractPositionHelper)

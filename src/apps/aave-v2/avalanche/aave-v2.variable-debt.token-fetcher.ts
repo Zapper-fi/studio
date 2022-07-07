@@ -13,7 +13,7 @@ const appId = AAVE_V2_DEFINITION.id;
 const groupId = AAVE_V2_DEFINITION.groups.variableDebt.id;
 const network = Network.AVALANCHE_MAINNET;
 
-@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
+@Register.TokenPositionFetcher({ appId, groupId, network })
 export class AvalancheAaveV2VariableDebtTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(@Inject(AaveV2LendingTokenHelper) private readonly aaveV2LendingTokenHelper: AaveV2LendingTokenHelper) {}
 

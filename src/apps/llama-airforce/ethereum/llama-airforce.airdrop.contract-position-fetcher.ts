@@ -12,7 +12,7 @@ const appId = LLAMA_AIRFORCE_DEFINITION.id;
 const groupId = LLAMA_AIRFORCE_DEFINITION.groups.airdrop.id;
 const network = Network.ETHEREUM_MAINNET;
 
-@Register.ContractPositionFetcher({ appId, groupId, network })
+@Register.ContractPositionFetcher({ appId, groupId, network, options: { excludeFromTvl: true } })
 export class EthereumLlamaAirforceAirdropContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
