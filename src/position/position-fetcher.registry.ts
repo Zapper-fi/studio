@@ -115,7 +115,7 @@ export class PositionFetcherRegistry implements OnModuleInit {
     const groupIds = types.map(type => {
       const groupIds = this.getGroupIdsForApp({ type, network, appId });
       const tvlEnabledGroupIds = groupIds.filter(
-        groupId => this.getOptions({ type, appId, groupId, network }).includeInTvl,
+        groupId => !this.getOptions({ type, appId, groupId, network }).excludeFromTvl,
       );
       return { type, groupIds: compact(tvlEnabledGroupIds) };
     });

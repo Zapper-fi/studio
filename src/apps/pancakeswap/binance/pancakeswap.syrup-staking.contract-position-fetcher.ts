@@ -296,7 +296,7 @@ const appId = PANCAKESWAP_DEFINITION.id;
 const groupId = PANCAKESWAP_DEFINITION.groups.syrupStaking.id;
 const network = Network.BINANCE_SMART_CHAIN_MAINNET;
 
-@Register.ContractPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
+@Register.ContractPositionFetcher({ appId, groupId, network })
 export class BinanceSmartChainPancakeswapSyrupStakingContractPositionFetcher
   implements PositionFetcher<ContractPosition>
 {

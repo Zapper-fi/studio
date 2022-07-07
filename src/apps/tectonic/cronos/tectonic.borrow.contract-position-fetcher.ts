@@ -12,7 +12,7 @@ const appId = TECTONIC_DEFINITION.id;
 const groupId = TECTONIC_DEFINITION.groups.borrow.id;
 const network = Network.CRONOS_MAINNET;
 
-@Register.ContractPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
+@Register.ContractPositionFetcher({ appId, groupId, network })
 export class CronosTectonicBorrowContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(CompoundBorrowContractPositionHelper)

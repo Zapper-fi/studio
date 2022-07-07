@@ -15,7 +15,7 @@ const appId = VVS_FINANCE_DEFINITION.id;
 const groupId = VVS_FINANCE_DEFINITION.groups.pool.id;
 const network = Network.CRONOS_MAINNET;
 
-@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
+@Register.TokenPositionFetcher({ appId, groupId, network })
 export class CronosVvsFinancePoolTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(UniswapV2PoolTokenHelper)
