@@ -17,7 +17,7 @@ const appId = TRISOLARIS_DEFINITION.id;
 const groupId = TRISOLARIS_DEFINITION.groups.pool.id;
 const network = Network.AURORA_MAINNET;
 
-@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
+@Register.TokenPositionFetcher({ appId, groupId, network })
 export class AuroraTrisolarisPoolTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(UniswapV2PoolTokenHelper)
