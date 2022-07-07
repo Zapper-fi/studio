@@ -3,9 +3,9 @@ import { utils } from 'ethers';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
-import { getAppAssetImage } from '~app-toolkit/helpers/presentation/image.present';
+import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
+import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
-import { BalanceDisplayMode } from '~position/display.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { claimable } from '~position/position.utils';
@@ -13,7 +13,7 @@ import { Network } from '~types/network.interface';
 
 import { ANGLE_DEFINITION } from '../angle.definition';
 import { AngleContractFactory } from '../contracts';
-import { fetchTokenList, getApr } from '../helpers/angle.api';
+import { AngleApiHelper } from '../helpers/angle.api';
 
 const appId = ANGLE_DEFINITION.id;
 const groupId = ANGLE_DEFINITION.groups.veangle.id;
@@ -24,6 +24,8 @@ export class EthereumAngleVeAngleTokenFetcher implements PositionFetcher<AppToke
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(AngleContractFactory) private readonly angleContractFactory: AngleContractFactory,
+    @Inject(AngleApiHelper)
+    private readonly angleApiHelper: AngleApiHelper,
   ) {}
 
   async getPositions() {
@@ -35,7 +37,7 @@ export class EthereumAngleVeAngleTokenFetcher implements PositionFetcher<AppToke
     });
     const allTokens = [...appTokens, ...baseTokens];
 
-    const tokenList = await fetchTokenList();
+    const tokenList = await this.angleApiHelper.fetchTokenList();
 
     const angleTokenFromTokenList = Object.entries(tokenList).find(v => v[1].symbol === 'ANGLE')!;
     const veAngleTokenFromTokenList = Object.entries(tokenList).find(v => v[1].symbol === 'veANGLE')!;
@@ -51,7 +53,7 @@ export class EthereumAngleVeAngleTokenFetcher implements PositionFetcher<AppToke
       network,
     });
 
-    const apr = (await getApr())[veAngleTokenFromTokenList[1].symbol];
+    const apr = (await this.angleApiHelper.getApr())[veAngleTokenFromTokenList[1].symbol];
 
     const multicall = this.appToolkit.getMulticall(network);
     const totalSupply = await multicall.wrap(contract)['totalSupply()']();
@@ -69,10 +71,9 @@ export class EthereumAngleVeAngleTokenFetcher implements PositionFetcher<AppToke
       tokens: [angleToken, claimable(sanUSDC_EUR!)],
       displayProps: {
         label: 'veANGLE',
-        secondaryLabel: `APR: ${apr.value}`,
-        images: [getAppAssetImage(ANGLE_DEFINITION.id, veAngleTokenFromTokenList[1].symbol)],
-        appName: 'Angle',
-        balanceDisplayMode: BalanceDisplayMode.UNDERLYING,
+        secondaryLabel: buildDollarDisplayItem(angleToken.price),
+        tertiaryLabel: `APR: ${apr.value}`,
+        images: getImagesFromToken(angleToken),
       },
     } as AppTokenPosition;
     return token;

@@ -5,14 +5,13 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { getAppAssetImage } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
-import { BalanceDisplayMode } from '~position/display.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
 import { ANGLE_DEFINITION } from '../angle.definition';
 import { AngleContractFactory } from '../contracts';
-import { fetchTokenList, getApr } from '../helpers/angle.api';
+import { AngleApiHelper } from '../helpers/angle.api';
 
 const appId = ANGLE_DEFINITION.id;
 const groupId = ANGLE_DEFINITION.groups.santoken.id;
@@ -23,6 +22,8 @@ export class EthereumAngleSantokenTokenFetcher implements PositionFetcher<AppTok
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(AngleContractFactory) private readonly angleContractFactory: AngleContractFactory,
+    @Inject(AngleApiHelper)
+    private readonly angleApiHelper: AngleApiHelper,
   ) {}
 
   async getPositions() {
@@ -36,8 +37,8 @@ export class EthereumAngleSantokenTokenFetcher implements PositionFetcher<AppTok
     });
     const allTokens = [...appTokens, ...baseTokens];
 
-    const tokenList = await fetchTokenList();
-    const APR = await getApr();
+    const tokenList = await this.angleApiHelper.fetchTokenList();
+    const APR = await this.angleApiHelper.getApr();
 
     const sanTokens = Object.entries(tokenList).filter(v => v[1].name.startsWith('sanToken'));
 
@@ -93,8 +94,6 @@ export class EthereumAngleSantokenTokenFetcher implements PositionFetcher<AppTok
           displayProps: {
             label: symbol,
             images: [getAppAssetImage(ANGLE_DEFINITION.id, tokenListData.symbol)],
-            appName: 'Angle',
-            balanceDisplayMode: BalanceDisplayMode.DEFAULT,
           },
         } as AppTokenPosition;
 

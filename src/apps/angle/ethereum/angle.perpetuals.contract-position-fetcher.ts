@@ -2,6 +2,7 @@ import { Inject } from '@nestjs/common';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
+import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
@@ -41,8 +42,7 @@ export class EthereumAnglePerpetualsContractPositionFetcher implements PositionF
           network,
         });
 
-        const [name, symbol, poolManager, baseURI] = await Promise.all([
-          multicall.wrap(perpContract).name(),
+        const [symbol, poolManager, baseURI] = await Promise.all([
           multicall.wrap(perpContract).symbol(),
           multicall.wrap(perpContract).poolManager(),
           multicall.wrap(perpContract).baseURI(),
@@ -72,9 +72,8 @@ export class EthereumAnglePerpetualsContractPositionFetcher implements PositionF
             baseURI,
           },
           displayProps: {
-            label: `${name} ${underlyingToken.symbol}`,
-            images: [''],
-            appName: 'Angle',
+            label: getLabelFromToken(underlyingToken),
+            images: getImagesFromToken(underlyingToken),
           },
         } as ContractPosition;
         return position;

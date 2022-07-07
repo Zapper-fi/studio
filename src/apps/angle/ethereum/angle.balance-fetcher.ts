@@ -12,49 +12,17 @@ import { Network } from '~types/network.interface';
 
 import { ANGLE_DEFINITION } from '../angle.definition';
 import { AngleContractFactory } from '../contracts';
-import { callAngleApi } from '../helpers/angle.api';
+import { AngleApiHelper } from '../helpers/angle.api';
 
 const network = Network.ETHEREUM_MAINNET;
-
-type TVault = {
-  address: string;
-  collateral: string;
-  collateralAmount: number;
-  collateralRatio: number;
-  debt: number;
-  debtString: string;
-  id: number;
-  liquidationPrice: number;
-  rate: number;
-  stablecoin: string;
-  symbol: string;
-};
-
-type TPerpetual = {
-  perpetualID: string;
-  owner: string;
-  decimals: string;
-  margin: string;
-  committedAmount: string;
-  entryRate: string;
-  perpetualManager: string;
-  stableAddress: string;
-  collatAddress: string;
-  stableName: string;
-  collatName: string;
-  openingTimestamp: string;
-  lastUpdateTimestamp: string;
-  openingBlockNumber: string;
-  lastUpdateBlockNumber: string;
-  status: string;
-  claimable: number;
-};
 
 @Register.BalanceFetcher(ANGLE_DEFINITION.id, network)
 export class EthereumAngleBalanceFetcher implements BalanceFetcher {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(AngleContractFactory) private readonly angleContractFactory: AngleContractFactory,
+    @Inject(AngleApiHelper)
+    private readonly angleApiHelper: AngleApiHelper,
   ) {}
 
   async getVeAngleTokenBalances(address: string) {
@@ -67,10 +35,7 @@ export class EthereumAngleBalanceFetcher implements BalanceFetcher {
   }
 
   async getSanUSDCClaimableBalance(address: string) {
-    const { rewardsData } = await callAngleApi<{ rewardsData: { totalClaimable: number } }>('dao', {
-      chainId: 1,
-      user: address,
-    });
+    const { rewardsData } = await this.angleApiHelper.getRewardsData(address);
     const contractPositions = await this.appToolkit.getAppTokenPositions({
       appId: ANGLE_DEFINITION.id,
       groupIds: [ANGLE_DEFINITION.groups.santoken.id],
@@ -97,10 +62,7 @@ export class EthereumAngleBalanceFetcher implements BalanceFetcher {
       network,
     });
 
-    const { perpetuals } = await callAngleApi<{ perpetuals: TPerpetual[] }>('perpetuals', {
-      chainId: 1,
-      user: address,
-    });
+    const { perpetuals } = await this.angleApiHelper.getUserPerpetuals(address);
 
     const balances = perpetuals.map(perp => {
       const contractPosition = contractPositions.find(
@@ -133,12 +95,7 @@ export class EthereumAngleBalanceFetcher implements BalanceFetcher {
       network,
     });
 
-    const vaults = Object.values(
-      await callAngleApi<Record<string, TVault>>('vaults', {
-        chainId: 1,
-        user: address,
-      }),
-    );
+    const vaults = Object.values(await this.angleApiHelper.getUserVaults(address));
 
     const balances = vaults.map(vault => {
       const contractPosition = contractPositions.find(v => v.address.toLowerCase() === vault.address.toLowerCase());
@@ -192,21 +149,6 @@ export class EthereumAngleBalanceFetcher implements BalanceFetcher {
             value: sumBy(perpetuals, perp => perp.balanceUSD),
             type: 'number',
           },
-          // {
-          //   label: 'Margin (ETH)',
-          //   value: 10,
-          //   type: 'number',
-          // },
-          // {
-          //   label: 'PnL',
-          //   value: 10,
-          //   type: 'dollar',
-          // },
-          // {
-          //   label: 'Liquidation price',
-          //   value: 10,
-          //   type: 'dollar',
-          // },
         ],
       },
     ]);
