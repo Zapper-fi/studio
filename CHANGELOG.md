@@ -4,6 +4,19 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.105.0](https://github.com/Zapper-fi/studio/compare/v0.104.0...v0.105.0) (2022-07-07)
+
+
+### Features
+
+* **bluebit:** Support ve token ([#840](https://github.com/Zapper-fi/studio/issues/840)) ([048f3d8](https://github.com/Zapper-fi/studio/commit/048f3d82cefdd6f4dadede02785791c7874447d9))
+* **uniswap-v2:** Added projected APY based on 24h volume ([#835](https://github.com/Zapper-fi/studio/issues/835)) ([d39175e](https://github.com/Zapper-fi/studio/commit/d39175e9d41183a185c85f97b387aec059cbceba))
+
+
+### Bug Fixes
+
+* **tectonic:** Fix supply position liquidity ([#841](https://github.com/Zapper-fi/studio/issues/841)) ([27da2d2](https://github.com/Zapper-fi/studio/commit/27da2d28c426e12ac187bdcb1a58f28b823d42a8))
+
 ## [0.104.0](https://github.com/Zapper-fi/studio/compare/v0.103.0...v0.104.0) (2022-07-07)
 
 
