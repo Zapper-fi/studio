@@ -4,8 +4,11 @@ import Axios, { AxiosInstance } from 'axios';
 import { sumBy } from 'lodash';
 
 import { AppService } from '~app/app.service';
+import { ContractType } from '~position/contract.interface';
 import { PositionFetcherRegistry } from '~position/position-fetcher.registry';
+import { AppTokenPosition } from '~position/position.interface';
 import { PositionService } from '~position/position.service';
+import { isSupplied } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 
 type AppTvl = {
@@ -50,7 +53,7 @@ export class TvlService {
       appId,
     });
 
-    const [appTokens, positions] = await Promise.all([
+    const [appTokens, allContractPositions] = await Promise.all([
       this.positionService.getAppTokenPositions<{ liquidity?: number }>({ appId, network, groupIds: tokenGroupIds }),
       this.positionService.getAppContractPositions<{ liquidity?: number }>({
         appId,
@@ -59,8 +62,17 @@ export class TvlService {
       }),
     ]);
 
+    // Remove contract positions that would be double counted
+    // i.e: Farms that consist of app tokens already included in the TVL
+    const contractPositions = allContractPositions.filter(position => {
+      const suppliedTokens = position.tokens.filter(isSupplied);
+      const suppliedAppTokens = suppliedTokens.filter((t): t is AppTokenPosition => t.type === ContractType.APP_TOKEN);
+      const isDoubleCountedPosition = suppliedAppTokens.find(t => t.appId === appId && t.network === network);
+      return !isDoubleCountedPosition;
+    });
+
     const appTokensTvl = sumBy(appTokens, t => t.dataProps.liquidity ?? 0);
-    const positionsTvl = sumBy(positions, p => p.dataProps.liquidity ?? 0);
+    const positionsTvl = sumBy(contractPositions, p => p.dataProps.liquidity ?? 0);
     return appTokensTvl + positionsTvl;
   }
 
