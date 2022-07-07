@@ -4,8 +4,6 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { AngleAgtoken__factory } from './ethers';
-import { AngleAngleToken__factory } from './ethers';
 import { AnglePerpetualManager__factory } from './ethers';
 import { AnglePoolManager__factory } from './ethers';
 import { AngleSantoken__factory } from './ethers';
@@ -22,12 +20,6 @@ export class AngleContractFactory extends ContractFactory {
     super((network: Network) => appToolkit.getNetworkProvider(network));
   }
 
-  angleAgtoken({ address, network }: ContractOpts) {
-    return AngleAgtoken__factory.connect(address, this.appToolkit.getNetworkProvider(network));
-  }
-  angleAngleToken({ address, network }: ContractOpts) {
-    return AngleAngleToken__factory.connect(address, this.appToolkit.getNetworkProvider(network));
-  }
   anglePerpetualManager({ address, network }: ContractOpts) {
     return AnglePerpetualManager__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
@@ -48,8 +40,6 @@ export class AngleContractFactory extends ContractFactory {
   }
 }
 
-export type { AngleAgtoken } from './ethers';
-export type { AngleAngleToken } from './ethers';
 export type { AnglePerpetualManager } from './ethers';
 export type { AnglePoolManager } from './ethers';
 export type { AngleSantoken } from './ethers';
