@@ -8,8 +8,6 @@ import { PositionFetcherRegistry } from '~position/position-fetcher.registry';
 import { PositionService } from '~position/position.service';
 import { Network } from '~types/network.interface';
 
-import { TvlFetcherRegistry } from './tvl-fetcher.registry';
-
 type AppTvl = {
   appId: string;
   appName: string;
@@ -22,7 +20,6 @@ export class TvlService {
   private readonly axios: AxiosInstance;
 
   constructor(
-    @Inject(TvlFetcherRegistry) private readonly tvlFetcherRegistry: TvlFetcherRegistry,
     @Inject(AppService) private readonly appService: AppService,
     @Inject(ConfigService) private readonly configService: ConfigService,
     @Inject(PositionFetcherRegistry) private readonly positionRegistry: PositionFetcherRegistry,
@@ -47,7 +44,7 @@ export class TvlService {
     }
   }
 
-  private async getGroupBasedTvl({ appId, network }: { appId: string; network: Network }) {
+  private async getTvlFromGroups({ appId, network }: { appId: string; network: Network }) {
     const [{ groupIds: tokenGroupIds }, { groupIds: positionGroupIds }] = this.positionRegistry.getTvlEnabledGroupsIds({
       network,
       appId,
@@ -71,11 +68,7 @@ export class TvlService {
     try {
       const app = await this.appService.getApp(appId);
       const appName = app!.name;
-      const customTvlFetcher = this.tvlFetcherRegistry.get({ network, appId });
-
-      let tvl = await customTvlFetcher?.getTvl();
-      tvl ??= await this.getGroupBasedTvl({ appId, network });
-
+      const tvl = await this.getTvlFromGroups({ appId, network });
       return { appId, appName, network, tvl };
     } catch (e) {
       const apiTvl = await this.getTvlFromApi({ appId, network });
