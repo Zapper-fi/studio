@@ -36,7 +36,6 @@ export class CronosTectonicSupplyTokenFetcher implements PositionFetcher<AppToke
       getSupplyRate: ({ contract }) => contract.supplyRatePerBlock(),
       getBorrowRate: ({ contract }) => contract.borrowRatePerBlock(),
       getTotalSupply: ({ contract }) => contract.totalSupply(),
-      getTotalBorrow: ({ contract }) => contract.callStatic.totalBorrowsCurrent(),
       getUnderlyingAddress: ({ contract }) => contract.underlying(),
       getExchangeRateMantissa: ({ underlyingTokenDecimals }) => underlyingTokenDecimals + 10,
     });

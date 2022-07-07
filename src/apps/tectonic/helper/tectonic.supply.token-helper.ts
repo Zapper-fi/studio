@@ -65,7 +65,6 @@ type TectonicSupplyTokenHelperParams<T = TectonicCore, V = TectonicTToken> = {
   getSupplyRate: (opts: { contract: V; multicall: Multicall }) => Promise<BigNumber>;
   getBorrowRate: (opts: { contract: V; multicall: Multicall }) => Promise<BigNumber>;
   getTotalSupply: (opts: { contract: V }) => Promise<BigNumber>;
-  getTotalBorrow: (opts: { contract: V }) => Promise<BigNumber>;
   getUnderlyingAddress: (opts: { contract: V; multicall: Multicall }) => Promise<string>;
   getExchangeRateMantissa: (opts: { tokenDecimals: number; underlyingTokenDecimals: number }) => number;
   getDisplayLabel?: (opts: { contract: V; multicall: Multicall; underlyingToken: Token }) => Promise<string>;
@@ -95,7 +94,6 @@ export class TectonicSupplyTokenHelper {
     getSupplyRate,
     getBorrowRate,
     getTotalSupply,
-    getTotalBorrow,
     getUnderlyingAddress,
     getExchangeRateMantissa,
     getDisplayLabel,
@@ -123,11 +121,10 @@ export class TectonicSupplyTokenHelper {
         const underlyingToken = allTokens.find(v => v.address === underlyingAddress);
         if (!underlyingToken) return null;
 
-        const [symbol, decimals, supplyRaw, borrowRaw, rateRaw, supplyRateRaw, borrowRateRaw] = await Promise.all([
+        const [symbol, decimals, supplyRaw, rateRaw, supplyRateRaw, borrowRateRaw] = await Promise.all([
           getTokenSymbol({ contract }),
           getTokenDecimals({ contract }),
           getTotalSupply({ contract }),
-          getTotalBorrow({ contract }),
           getExchangeRate({ contract, multicall }),
           getSupplyRate({ contract, multicall }).catch(() => BigNumber.from(0)),
           getBorrowRate({ contract, multicall }).catch(() => BigNumber.from(0)),
@@ -138,12 +135,11 @@ export class TectonicSupplyTokenHelper {
         const underlyingTokenDecimals = underlyingToken.decimals;
         const underlyingSupplyRaw = supplyRaw.mul(rateRaw).div(BigNumber.from(tectonicConst.ETH_MANTISSA));
         const underlyingSupply = Number(underlyingSupplyRaw) / 10 ** underlyingTokenDecimals;
-        const borrow = Number(borrowRaw) / 10 ** underlyingTokenDecimals;
-        const liquidity = underlyingSupply - borrow;
 
         const mantissa = getExchangeRateMantissa({ tokenDecimals: decimals, underlyingTokenDecimals });
         const pricePerShare = Number(rateRaw) / 10 ** mantissa;
         const price = pricePerShare * underlyingToken.price;
+        const liquidity = underlyingSupply * underlyingToken.price;
 
         const tokens = [underlyingToken];
         const supplyApy = getAnnualApy(supplyRateRaw);
