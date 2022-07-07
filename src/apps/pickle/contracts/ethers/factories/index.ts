@@ -7,3 +7,5 @@ export { PickleJarSingleRewardStaking__factory } from './PickleJarSingleRewardSt
 export { PickleMiniChefV2__factory } from './PickleMiniChefV2__factory';
 export { PickleRegistry__factory } from './PickleRegistry__factory';
 export { PickleRewarder__factory } from './PickleRewarder__factory';
+export { PickleVotingEscrow__factory } from './PickleVotingEscrow__factory';
+export { PickleVotingEscrowReward__factory } from './PickleVotingEscrowReward__factory';

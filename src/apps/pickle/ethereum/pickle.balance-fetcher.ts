@@ -4,15 +4,17 @@ import { TokenBalanceHelper } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
-import {
-  CurveVotingEscrow,
-  CurveVotingEscrowContractPositionBalanceHelper,
-  CurveVotingEscrowReward,
-} from '~apps/curve';
+import { CurveVotingEscrowContractPositionBalanceHelper } from '~apps/curve';
 import { BalanceFetcher } from '~balance/balance-fetcher.interface';
 import { Network } from '~types/network.interface';
 
-import { PickleContractFactory, PickleJarMasterchef, PickleJarSingleRewardStaking } from '../contracts';
+import {
+  PickleContractFactory,
+  PickleJarMasterchef,
+  PickleJarSingleRewardStaking,
+  PickleVotingEscrow,
+  PickleVotingEscrowReward,
+} from '../contracts';
 import { PICKLE_DEFINITION } from '../pickle.definition';
 
 @Register.BalanceFetcher(PICKLE_DEFINITION.id, Network.ETHEREUM_MAINNET)
@@ -36,15 +38,17 @@ export class EthereumPickleBalanceFetcher implements BalanceFetcher {
   }
 
   private async getVotingEscrowBalances(address: string) {
-    return this.curveVotingEscrowContractPositionBalanceHelper.getBalances<CurveVotingEscrow, CurveVotingEscrowReward>({
+    return this.curveVotingEscrowContractPositionBalanceHelper.getBalances<
+      PickleVotingEscrow,
+      PickleVotingEscrowReward
+    >({
       address,
       appId: PICKLE_DEFINITION.id,
       groupId: PICKLE_DEFINITION.groups.votingEscrow.id,
       network: Network.ETHEREUM_MAINNET,
-      resolveContract: ({ contractFactory, address, network }) =>
-        contractFactory.curveVotingEscrow({ network, address }),
-      resolveRewardContract: ({ contractFactory, address, network }) =>
-        contractFactory.curveVotingEscrowReward({ network, address }),
+      resolveContract: ({ address, network }) => this.pickleContractFactory.pickleVotingEscrow({ network, address }),
+      resolveRewardContract: ({ address, network }) =>
+        this.pickleContractFactory.pickleVotingEscrowReward({ network, address }),
       resolveLockedTokenBalance: ({ contract, multicall }) =>
         multicall
           .wrap(contract)
