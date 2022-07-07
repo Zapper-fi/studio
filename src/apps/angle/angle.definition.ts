@@ -28,8 +28,6 @@ export const ANGLE_DEFINITION = appDefinition({
   },
 
   groups: {
-    angle: { id: 'angle', type: GroupType.TOKEN, label: 'Protocol token' },
-    agtoken: { id: 'agtoken', type: GroupType.TOKEN, label: 'Stable token' },
     santoken: { id: 'santoken', type: GroupType.TOKEN, label: 'Yield bearing' },
     veangle: { id: 'veangle', type: GroupType.POSITION, label: 'Voting token / locked' },
     perpetuals: { id: 'perpetuals', type: GroupType.POSITION, label: 'Perpetual' },

@@ -57,24 +57,6 @@ export class EthereumAngleBalanceFetcher implements BalanceFetcher {
     @Inject(AngleContractFactory) private readonly angleContractFactory: AngleContractFactory,
   ) {}
 
-  async getAgTokenBalances(address: string) {
-    return this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
-      address,
-      appId: ANGLE_DEFINITION.id,
-      groupId: ANGLE_DEFINITION.groups.agtoken.id,
-      network: Network.ETHEREUM_MAINNET,
-    });
-  }
-
-  async getAngleTokenBalances(address: string) {
-    return this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
-      address,
-      appId: ANGLE_DEFINITION.id,
-      groupId: ANGLE_DEFINITION.groups.angle.id,
-      network: Network.ETHEREUM_MAINNET,
-    });
-  }
-
   async getVeAngleTokenBalances(address: string) {
     return this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
       address,
@@ -186,17 +168,7 @@ export class EthereumAngleBalanceFetcher implements BalanceFetcher {
   }
 
   async getBalances(address: string) {
-    const [
-      agTokenBalances,
-      angleTokenBalances,
-      veAngleTokenBalances,
-      sanTokenBalances,
-      perpetuals,
-      vaults,
-      sanUSDCClaimableBalance,
-    ] = await Promise.all([
-      this.getAgTokenBalances(address),
-      this.getAngleTokenBalances(address),
+    const [veAngleTokenBalances, sanTokenBalances, perpetuals, vaults, sanUSDCClaimableBalance] = await Promise.all([
       this.getVeAngleTokenBalances(address),
       this.getSanTokenBalances(address),
       this.getPerpetuals(address),
@@ -205,8 +177,6 @@ export class EthereumAngleBalanceFetcher implements BalanceFetcher {
     ]);
 
     return presentBalanceFetcherResponse([
-      { label: 'agTokens', assets: agTokenBalances },
-      { label: 'ANGLE', assets: angleTokenBalances },
       { label: 'veANGLE', assets: veAngleTokenBalances },
       { label: 'sanUSDC_EUR', assets: sanUSDCClaimableBalance },
       { label: 'sanTokens', assets: sanTokenBalances },
@@ -216,29 +186,28 @@ export class EthereumAngleBalanceFetcher implements BalanceFetcher {
       {
         label: 'Perpetuals',
         assets: perpetuals,
-        // meta: [
-        //   {
-        //     label: 'Position size (ETH)',
-        //     value: 10,
-        //     type: 'number',
-        //   },
-
-        //   {
-        //     label: 'Margin (ETH)',
-        //     value: 10,
-        //     type: 'number',
-        //   },
-        //   {
-        //     label: 'PnL',
-        //     value: 10,
-        //     type: 'dollar',
-        //   },
-        //   {
-        //     label: 'Liquidation price',
-        //     value: 10,
-        //     type: 'dollar',
-        //   },
-        // ],
+        meta: [
+          {
+            label: 'Position size (ETH)',
+            value: sumBy(perpetuals, perp => perp.balanceUSD),
+            type: 'number',
+          },
+          // {
+          //   label: 'Margin (ETH)',
+          //   value: 10,
+          //   type: 'number',
+          // },
+          // {
+          //   label: 'PnL',
+          //   value: 10,
+          //   type: 'dollar',
+          // },
+          // {
+          //   label: 'Liquidation price',
+          //   value: 10,
+          //   type: 'dollar',
+          // },
+        ],
       },
     ]);
   }

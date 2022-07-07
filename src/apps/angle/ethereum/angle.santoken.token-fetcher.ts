@@ -3,6 +3,7 @@ import { utils } from 'ethers';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
+import { getAppAssetImage } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
 import { BalanceDisplayMode } from '~position/display.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
@@ -91,7 +92,7 @@ export class EthereumAngleSantokenTokenFetcher implements PositionFetcher<AppTok
           },
           displayProps: {
             label: symbol,
-            images: [tokenListData.logoURI],
+            images: [getAppAssetImage(ANGLE_DEFINITION.id, tokenListData.symbol)],
             appName: 'Angle',
             balanceDisplayMode: BalanceDisplayMode.DEFAULT,
           },
