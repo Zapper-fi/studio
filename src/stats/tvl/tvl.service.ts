@@ -73,6 +73,7 @@ export class TvlService {
 
     const appTokensTvl = sumBy(appTokens, t => t.dataProps.liquidity ?? 0);
     const positionsTvl = sumBy(contractPositions, p => p.dataProps.liquidity ?? 0);
+
     return appTokensTvl + positionsTvl;
   }
 
@@ -84,7 +85,7 @@ export class TvlService {
       return { appId, appName, network, tvl };
     } catch (e) {
       const apiTvl = await this.getTvlFromApi({ appId, network });
-      if (!apiTvl) throw new NotFoundException('No TVL registered on Studio and on Zapper API');
+      if (!apiTvl) throw new NotFoundException(`No TVL found for ${appId} on ${network} on Studio or on Zapper API`);
       return apiTvl;
     }
   }
