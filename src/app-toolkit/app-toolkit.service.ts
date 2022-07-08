@@ -8,7 +8,10 @@ import { ContractFactory } from '~contract';
 import { MulticallService } from '~multicall/multicall.service';
 import { NetworkProviderService } from '~network-provider/network-provider.service';
 import { DefaultDataProps } from '~position/display.interface';
+import { PositionKeyService } from '~position/position-key.service';
+import { AppTokenPosition, ContractPosition, NonFungibleToken } from '~position/position.interface';
 import { AppGroupsDefinition, PositionService } from '~position/position.service';
+import { BaseToken } from '~position/token.interface';
 import { TokenService } from '~token/token.service';
 import { Network } from '~types/network.interface';
 
@@ -24,6 +27,7 @@ export class AppToolkit implements IAppToolkit {
     @Inject(AppService) private readonly appService: AppService,
     @Inject(NetworkProviderService) private readonly networkProviderService: NetworkProviderService,
     @Inject(PositionService) private readonly positionService: PositionService,
+    @Inject(PositionKeyService) private readonly positionKeyService: PositionKeyService,
     @Inject(TokenService) private readonly tokenService: TokenService,
     @Inject(MulticallService) private readonly multicallService: MulticallService,
     @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
@@ -73,6 +77,15 @@ export class AppToolkit implements IAppToolkit {
 
   getAppContractPositions<T = DefaultDataProps>(...appTokenDefinitions: AppGroupsDefinition[]) {
     return this.positionService.getAppContractPositions<T>(...appTokenDefinitions);
+  }
+
+  // Position Key
+
+  getPositionKey(
+    position: ContractPosition | AppTokenPosition | BaseToken | NonFungibleToken,
+    pickFields: string[] = [],
+  ) {
+    return this.positionKeyService.getPositionKey(position, pickFields);
   }
 
   // Cache
