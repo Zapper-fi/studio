@@ -6,12 +6,13 @@ import { drillBalance } from '~app-toolkit';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
+import { CurveVotingEscrowContractPositionBalanceHelper } from '~apps/curve/helpers/curve.voting-escrow.contract-position-balance-helper';
 import { BalanceFetcher } from '~balance/balance-fetcher.interface';
 import { isBorrowed, isSupplied } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 
 import { ANGLE_DEFINITION } from '../angle.definition';
-import { AngleContractFactory } from '../contracts';
+import { AngleContractFactory, AngleSantoken, AngleVeangle } from '../contracts';
 import { AngleApiHelper } from '../helpers/angle.api';
 
 const network = Network.ETHEREUM_MAINNET;
@@ -23,27 +24,28 @@ export class EthereumAngleBalanceFetcher implements BalanceFetcher {
     @Inject(AngleContractFactory) private readonly angleContractFactory: AngleContractFactory,
     @Inject(AngleApiHelper)
     private readonly angleApiHelper: AngleApiHelper,
+    @Inject(CurveVotingEscrowContractPositionBalanceHelper)
+    private readonly curveVotingEscrowContractPositionBalanceHelper: CurveVotingEscrowContractPositionBalanceHelper,
   ) {}
 
   async getVeAngleTokenBalances(address: string) {
-    return this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
+    return this.curveVotingEscrowContractPositionBalanceHelper.getBalances<AngleVeangle, AngleSantoken>({
       address,
+      network,
       appId: ANGLE_DEFINITION.id,
       groupId: ANGLE_DEFINITION.groups.veangle.id,
-      network: Network.ETHEREUM_MAINNET,
+      resolveContract: ({ address }) => this.angleContractFactory.angleVeangle({ network, address }),
+      resolveRewardContract: ({ address }) => this.angleContractFactory.angleSantoken({ address, network }),
+      resolveLockedTokenBalance: ({ contract, multicall }) =>
+        multicall
+          .wrap(contract)
+          .locked(address)
+          .then(v => v.amount),
+      resolveRewardTokenBalance: async () => {
+        const { rewardsData } = await this.angleApiHelper.getRewardsData(address);
+        return rewardsData.totalClaimable;
+      },
     });
-  }
-
-  async getSanUSDCClaimableBalance(address: string) {
-    const { rewardsData } = await this.angleApiHelper.getRewardsData(address);
-    const contractPositions = await this.appToolkit.getAppTokenPositions({
-      appId: ANGLE_DEFINITION.id,
-      groupIds: [ANGLE_DEFINITION.groups.santoken.id],
-      network,
-    });
-
-    const contractPosition = contractPositions.find(v => v.symbol == 'sanUSDC_EUR')!;
-    return [drillBalance(contractPosition, rewardsData.totalClaimable.toString())];
   }
 
   async getSanTokenBalances(address: string) {
@@ -125,17 +127,15 @@ export class EthereumAngleBalanceFetcher implements BalanceFetcher {
   }
 
   async getBalances(address: string) {
-    const [veAngleTokenBalances, sanTokenBalances, perpetuals, vaults, sanUSDCClaimableBalance] = await Promise.all([
+    const [veAngleTokenBalances, sanTokenBalances, perpetuals, vaults] = await Promise.all([
       this.getVeAngleTokenBalances(address),
       this.getSanTokenBalances(address),
       this.getPerpetuals(address),
       this.getVaults(address),
-      this.getSanUSDCClaimableBalance(address),
     ]);
 
     return presentBalanceFetcherResponse([
       { label: 'veANGLE', assets: veAngleTokenBalances },
-      { label: 'sanUSDC_EUR', assets: sanUSDCClaimableBalance },
       { label: 'sanTokens', assets: sanTokenBalances },
 
       { label: 'Vaults', assets: vaults },
