@@ -37,47 +37,51 @@ export class PolygonAtlendisV1BalanceFetcher implements BalanceFetcher {
     });
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
 
-    const positions = data.positions.map(async position => {
-      const underlyingToken = baseTokens.find(
-        t => t.address.toLowerCase() === position.pool.parameters.underlyingToken.toLowerCase(),
-      );
-      if (!underlyingToken) return null;
-      const positionManagerAddress = '0x55E4e70a725C1439dac6B9412B71fC8372Bd73e9';
+    const positions = await Promise.all(
+      data.positions.map(async position => {
+        const underlyingToken = baseTokens.find(
+          t => t.address.toLowerCase() === position.pool.parameters.underlyingToken.toLowerCase(),
+        );
+        if (!underlyingToken) return null;
+        const positionManagerAddress = '0x55E4e70a725C1439dac6B9412B71fC8372Bd73e9';
 
-      const positionContract: ContractPosition = {
-        type: ContractType.POSITION,
-        appId: ATLENDIS_V_1_DEFINITION.id,
-        groupId: ATLENDIS_V_1_DEFINITION.groups.position.id,
-        address: positionManagerAddress,
-        network,
-        tokens: [supplied(underlyingToken)],
-        dataProps: {
-          tokenId: position.tokenId,
-        },
-        displayProps: {
-          label: getLabelFromToken(underlyingToken),
-          images: getImagesFromToken(underlyingToken),
-        },
-      };
+        const positionContract: ContractPosition = {
+          type: ContractType.POSITION,
+          appId: ATLENDIS_V_1_DEFINITION.id,
+          groupId: ATLENDIS_V_1_DEFINITION.groups.position.id,
+          address: positionManagerAddress,
+          network,
+          tokens: [supplied(underlyingToken)],
+          dataProps: {
+            tokenId: position.tokenId,
+          },
+          displayProps: {
+            label: getLabelFromToken(underlyingToken),
+            images: getImagesFromToken(underlyingToken),
+          },
+        };
 
-      const contract = this.atlendisContractFactory.positionManager({
-        address: positionManagerAddress,
-        network,
-      });
+        const contract = this.atlendisContractFactory.positionManager({
+          address: positionManagerAddress,
+          network,
+        });
 
-      const { bondsQuantity, normalizedDepositedAmount } = await contract.getPositionRepartition(position.tokenId);
+        const { bondsQuantity, normalizedDepositedAmount } = await contract.getPositionRepartition(position.tokenId);
 
-      const tokenBalances = [
-        drillBalance(positionContract.tokens[0], BigNumber.from(bondsQuantity).toString()),
-        drillBalance(positionContract.tokens[0], BigNumber.from(normalizedDepositedAmount).toString()),
-      ];
-      const contractPositionBalance: ContractPositionBalance = {
-        ...positionContract,
-        tokens: tokenBalances,
-        balanceUSD: sumBy(tokenBalances, v => v.balanceUSD),
-      };
-      return contractPositionBalance;
-    });
+        const tokenBalances = [
+          drillBalance(
+            positionContract.tokens[0],
+            BigNumber.from(bondsQuantity).add(BigNumber.from(normalizedDepositedAmount)).toString(),
+          ),
+        ];
+        const contractPositionBalance: ContractPositionBalance = {
+          ...positionContract,
+          tokens: tokenBalances,
+          balanceUSD: sumBy(tokenBalances, v => v.balanceUSD),
+        };
+        return contractPositionBalance;
+      }),
+    );
     return positions;
   }
 
