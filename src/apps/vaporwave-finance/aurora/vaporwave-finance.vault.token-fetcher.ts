@@ -5,7 +5,7 @@ import Axios from 'axios';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { PositionFetcher } from '~position/position-fetcher.interface';
-import { AppTokenPosition } from '~position/position.interface';
+import { AppTokenPosition, Token } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 import { ContractType } from '~position/contract.interface';
 
@@ -14,6 +14,9 @@ import { VAPORWAVE_FINANCE_DEFINITION } from '../vaporwave-finance.definition';
 import { buildDollarDisplayItem } from "~app-toolkit/helpers/presentation/display-item.present";
 import { BaseToken } from '~position/token.interface';
 import { CacheOnInterval } from "~cache/cache-on-interval.decorator";
+import TRISOLARIS_DEFINITION from '~apps/trisolaris/trisolaris.definition';
+import { DefaultDataProps, WithMetaType } from '~position/display.interface';
+import e from 'express';
 
 
 const appId = VAPORWAVE_FINANCE_DEFINITION.id;
@@ -39,38 +42,28 @@ export type VaporwaveVaultDetails = {
 };
 
 
-export async function getBaseERC20Token(
-  address: string,
-  appToolkit: IAppToolkit): Promise<BaseToken> {
+export async function getRegisteredToken(
+  tokenAddress: string,
+  symbol: string,
+  registeredTokens: (BaseToken | AppTokenPosition<DefaultDataProps>)[],
+) {
+  let wantToken: BaseToken | AppTokenPosition<DefaultDataProps> | undefined = undefined
 
-  const multicall = appToolkit.getMulticall(network);
-  const tokenContract = appToolkit.globalContracts.erc20({ address: address, network });
-  const [symbol, decimal] = await Promise.all([
-    multicall
-      .wrap(tokenContract)
-      .symbol()
-      .catch(() => ""),
-    multicall
-      .wrap(tokenContract)
-      .decimals()
-      .catch(() => 0),
-  ]);
+  if (tokenAddress) {
+    const underlyingTokenAddress = tokenAddress.toLowerCase();
+    wantToken = registeredTokens.find(p => p.address === underlyingTokenAddress);
+  } else {
+    const tokenSymbol = symbol
+    wantToken = registeredTokens.find(p => p.symbol === tokenSymbol);
+  }
 
-  const token: BaseToken = {
-    type: ContractType.BASE_TOKEN,
-    address: address,
-    network: network,
-    price: 0,
-    symbol: symbol,
-    decimals: decimal,
-  };
-
-  return token
+  if (!wantToken) {
+    return null;
+  } else {
+    return wantToken;
+  }
 
 }
-
-
-
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
 export class AuroraVaporwaveFinanceVaultTokenFetcher implements PositionFetcher<AppTokenPosition> {
@@ -145,6 +138,11 @@ export class AuroraVaporwaveFinanceVaultTokenFetcher implements PositionFetcher<
     const baseTokenPrices = await this.getBaseTokenPrices()
     const multicall = this.appToolkit.getMulticall(network)
 
+    const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
+    const appTokens = await this.appToolkit.getAppTokenPositions({ appId: TRISOLARIS_DEFINITION.id, groupIds: [TRISOLARIS_DEFINITION.groups.pool.id], network });
+    const allTokens = [...appTokens, ...baseTokens];
+
+
     const tokens = await Promise.all(
       vaultData.map(async (vault) => {
         if (vault.status != "active") {
@@ -167,32 +165,9 @@ export class AuroraVaporwaveFinanceVaultTokenFetcher implements PositionFetcher<
 
         // Denormalize the supply
         const supply = Number(supplyRaw) / 10 ** decimals;
-
-        const tokens: BaseToken[] = [];
-        let wantTokenPrice = 0
-        if (!vault.tokenAddress) {
-          // non-ERC token
-          const wantTokenPrice = baseTokenPrices[vault.oracleId]
-          if (!wantTokenPrice) {
-            return null
-          } else {
-            const nonERC20Token: BaseToken = {
-              type: ContractType.BASE_TOKEN,
-              address: "",
-              network: network,
-              price: wantTokenPrice,
-              symbol: vault.oracleId,
-              decimals: 18,
-            };
-            tokens.push(nonERC20Token)
-          }
-        } else {
-          // If it has an address, it should be an ERC-20 token
-          const underlyingTokenAddress = vault.tokenAddress.toLowerCase();
-          const wantToken = await getBaseERC20Token(underlyingTokenAddress, this.appToolkit)
-          wantToken.price = wantPrices[vault.id] || baseTokenPrices[wantToken.symbol]
-          tokens.push(wantToken)
-        }
+        let wantToken = await getRegisteredToken(vault.tokenAddress, vault.oracleId, allTokens)
+        if (!wantToken) return;
+        let tokens = [wantToken]
 
         // Denormalize the price per share
         const pricePerShare = Number(vault.pricePerFullShare) / 10 ** 18;

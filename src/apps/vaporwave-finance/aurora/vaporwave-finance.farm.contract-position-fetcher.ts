@@ -10,11 +10,13 @@ import { Network } from '~types/network.interface';
 
 import { VaporwaveFinanceContractFactory } from '../contracts';
 import { VAPORWAVE_FINANCE_DEFINITION } from '../vaporwave-finance.definition';
-import { getBaseERC20Token } from './vaporwave-finance.vault.token-fetcher';
+import { getRegisteredToken } from './vaporwave-finance.vault.token-fetcher';
 import { claimable, supplied } from "~position/position.utils";
 import { ContractType } from "~position/contract.interface";
 import auroraStakePools from './aurora_stake'
 import { CacheOnInterval } from "~cache/cache-on-interval.decorator";
+import TRISOLARIS_DEFINITION from '~apps/trisolaris/trisolaris.definition';
+import { DefaultDataProps } from '~position/display.interface';
 
 const appId = VAPORWAVE_FINANCE_DEFINITION.id;
 const groupId = VAPORWAVE_FINANCE_DEFINITION.groups.farm.id;
@@ -58,6 +60,9 @@ export class AuroraVaporwaveFinanceFarmContractPositionFetcher implements Positi
     const baseTokenPrices = await this.getBaseTokenPrices()
 
     const multicall = this.appToolkit.getMulticall(network);
+    const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
+    const appTokens = await this.appToolkit.getAppTokenPositions({ appId: TRISOLARIS_DEFINITION.id, groupIds: [TRISOLARIS_DEFINITION.groups.pool.id], network });
+    const allTokens = [...appTokens, ...baseTokens];
 
     const positions = await Promise.all(
       auroraStakePools.map(
@@ -67,11 +72,13 @@ export class AuroraVaporwaveFinanceFarmContractPositionFetcher implements Positi
           tokenAddress,
           token,
           logo,
+          earnedOracleId,
         }) => {
 
-          const stakedToken = await getBaseERC20Token(tokenAddress, this.appToolkit)
-          const earnedToken = await getBaseERC20Token(earnedTokenAddress, this.appToolkit)
-          // get prices!
+          const stakedToken = await getRegisteredToken(tokenAddress, token, allTokens)
+          const earnedToken = await getRegisteredToken(earnedTokenAddress, earnedOracleId, allTokens)
+          if (!stakedToken || !earnedToken) return null;
+
 
           const tokens = [supplied(stakedToken), claimable(earnedToken)];
 
@@ -116,6 +123,6 @@ export class AuroraVaporwaveFinanceFarmContractPositionFetcher implements Positi
       )
     );
 
-    return positions
+    return positions.filter((x): x is ContractPosition<DefaultDataProps> => x !== null)
   }
 }
