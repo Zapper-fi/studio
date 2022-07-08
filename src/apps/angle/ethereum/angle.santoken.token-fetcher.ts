@@ -3,7 +3,7 @@ import { utils } from 'ethers';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
-import { getAppAssetImage } from '~app-toolkit/helpers/presentation/image.present';
+import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
@@ -30,12 +30,6 @@ export class EthereumAngleSantokenTokenFetcher implements PositionFetcher<AppTok
     const multicall = this.appToolkit.getMulticall(network);
 
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
-    const appTokens = await this.appToolkit.getAppTokenPositions({
-      appId: 'angle',
-      groupIds: ['santoken'],
-      network,
-    });
-    const allTokens = [...appTokens, ...baseTokens];
 
     const tokenList = await this.angleApiHelper.fetchTokenList();
     const APR = await this.angleApiHelper.getApr();
@@ -62,7 +56,10 @@ export class EthereumAngleSantokenTokenFetcher implements PositionFetcher<AppTok
           network,
         });
         const collateralMap = await multicall.wrap(stableMasterContract).collateralMap(poolManager);
-        const underlyingToken = allTokens.find(v => v.address.toLowerCase() === collateralMap.token.toLowerCase());
+        const underlyingToken = baseTokens.find(v => v.address.toLowerCase() === collateralMap.token.toLowerCase());
+        const agToken = baseTokens.find(v => v.symbol === 'agEUR');
+
+        if (!underlyingToken || !agToken) return null;
 
         const price = collateralMap.sanRate
           .mul(utils.parseEther(underlyingToken!.price.toString()))
@@ -70,8 +67,6 @@ export class EthereumAngleSantokenTokenFetcher implements PositionFetcher<AppTok
 
         // Denormalize the supply
         const supply = Number(supplyRaw) / 10 ** decimals;
-
-        const tokenListData = tokenList[sanToken[0]];
 
         const apr = APR[symbol];
 
@@ -93,7 +88,7 @@ export class EthereumAngleSantokenTokenFetcher implements PositionFetcher<AppTok
           },
           displayProps: {
             label: symbol,
-            images: [getAppAssetImage(ANGLE_DEFINITION.id, tokenListData.symbol)],
+            images: [...getImagesFromToken(underlyingToken), getImagesFromToken(agToken)],
           },
         } as AppTokenPosition;
 
