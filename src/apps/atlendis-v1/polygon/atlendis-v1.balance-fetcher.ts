@@ -10,6 +10,7 @@ import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/pres
 import { BalanceFetcher } from '~balance/balance-fetcher.interface';
 import { ContractType } from '~position/contract.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
+import { ContractPosition } from '~position/position.interface';
 import { supplied } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 
@@ -38,7 +39,7 @@ export class PolygonAtlendisV1BalanceFetcher implements BalanceFetcher {
       if (!underlyingToken) return null;
       const positionManagerAddress = '0x55E4e70a725C1439dac6B9412B71fC8372Bd73e9';
 
-      const positionContract = {
+      const positionContract: ContractPosition = {
         type: ContractType.POSITION,
         appId: ATLENDIS_V_1_DEFINITION.id,
         groupId: ATLENDIS_V_1_DEFINITION.groups.position.id,
@@ -58,7 +59,7 @@ export class PolygonAtlendisV1BalanceFetcher implements BalanceFetcher {
         drillBalance(positionContract.tokens[0], BigNumber.from(position.normalizedAmount).toString()),
       ];
       const contractPositionBalance: ContractPositionBalance = {
-        ...position,
+        ...positionContract,
         tokens: tokenBalances,
         balanceUSD: sumBy(tokenBalances, v => v.balanceUSD),
       };
