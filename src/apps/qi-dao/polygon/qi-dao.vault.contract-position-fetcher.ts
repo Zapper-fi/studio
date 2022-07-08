@@ -12,7 +12,7 @@ const appId = QI_DAO_DEFINITION.id;
 const groupId = QI_DAO_DEFINITION.groups.vault.id;
 const network = Network.POLYGON_MAINNET;
 
-@Register.ContractPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
+@Register.ContractPositionFetcher({ appId, groupId, network })
 export class PolygonQiDaoVaultPositionFetcher
   implements PositionFetcher<ContractPosition<QiDaoVaultPositionDataProps>>
 {

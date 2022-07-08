@@ -14,7 +14,7 @@ const network = Network.POLYGON_MAINNET;
 
 export const address = '0xbb92270716c8c424849f17ccc12f4f24ad4064d6';
 
-@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
+@Register.TokenPositionFetcher({ appId, groupId, network })
 export class PolygonImpermaxLendTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(@Inject(ImpermaxLendTokenHelper) private readonly impermaxLendTokenHelper: ImpermaxLendTokenHelper) {}
 

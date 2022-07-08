@@ -13,7 +13,7 @@ const appId = CRONUS_FINANCE_DEFINITION.id;
 const groupId = CRONUS_FINANCE_DEFINITION.groups.pool.id;
 const network = Network.EVMOS_MAINNET;
 
-@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
+@Register.TokenPositionFetcher({ appId, groupId, network })
 export class EvmosCronusFinancePoolTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(CronusFinanceContractFactory) private readonly cronusFinanceContractFactory: CronusFinanceContractFactory,

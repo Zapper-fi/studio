@@ -22,7 +22,7 @@ const network = Network.AVALANCHE_MAINNET;
 const YOLO_ADDRESS = '0x44f91814c5c766E0762C8C23d65759F631c0ABBD';
 const TOKENLIST_URL = 'https://raw.githubusercontent.com/symphony-finance/token-list/master/symphony.tokenlist.json';
 
-@Register.ContractPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
+@Register.ContractPositionFetcher({ appId, groupId, network })
 export class AvalancheSymphonyYoloContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,

@@ -84,7 +84,7 @@ export class UniswapV2PoolTokenHelper {
     appId,
     groupId,
     factoryAddress,
-    fee = 0.003,
+    fee = 0.3,
     minLiquidity = 0,
     hiddenTokens = [],
     blockedPools = [],
@@ -179,6 +179,8 @@ export class UniswapV2PoolTokenHelper {
         const volumeChangePercentage = poolVolumes.find(v => v.poolAddress === address)?.volumeChangePercentage ?? 0;
         const isBlocked = blockedPools.includes(address);
         const ratio = reservePercentages.map(p => `${Math.round(p * 100)}%`).join(' / ');
+        const projectedYearlyVolume = volume * 365;
+        const apy = (projectedYearlyVolume * 100) / liquidity;
 
         // Display Props
         const label = `${resolveTokenDisplaySymbol(tokens[0])} / ${resolveTokenDisplaySymbol(tokens[1])}`;
@@ -186,6 +188,7 @@ export class UniswapV2PoolTokenHelper {
         const images = tokens.map(v => getImagesFromToken(v)).flat();
         const statsItems = [
           { label: 'Volume', value: buildDollarDisplayItem(volume) },
+          { label: 'APY', value: buildPercentageDisplayItem(apy) },
           { label: 'Fee', value: buildPercentageDisplayItem(fee) },
           { label: 'Reserves', value: reserves.map(v => (v < 0.01 ? '<0.01' : v.toFixed(2))).join(' / ') },
           { label: 'Liquidity', value: buildDollarDisplayItem(liquidity) },

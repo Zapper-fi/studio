@@ -12,9 +12,11 @@ const appId = QI_DAO_DEFINITION.id;
 const groupId = QI_DAO_DEFINITION.groups.vault.id;
 const network = Network.ARBITRUM_MAINNET;
 
-@Register.ContractPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
-export class ArbitrumQiDaoVaultPositionFetcher implements PositionFetcher<ContractPosition<QiDaoVaultPositionDataProps>> {
-  constructor(@Inject(QiDaoVaultPositionHelper) private readonly qiDaoVaultPositionHelper: QiDaoVaultPositionHelper) { }
+@Register.ContractPositionFetcher({ appId, groupId, network })
+export class ArbitrumQiDaoVaultPositionFetcher
+  implements PositionFetcher<ContractPosition<QiDaoVaultPositionDataProps>>
+{
+  constructor(@Inject(QiDaoVaultPositionHelper) private readonly qiDaoVaultPositionHelper: QiDaoVaultPositionHelper) {}
 
   getPositions() {
     return this.qiDaoVaultPositionHelper.getPositions({

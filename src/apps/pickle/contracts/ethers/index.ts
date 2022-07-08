@@ -7,6 +7,8 @@ export type { PickleJarSingleRewardStaking } from './PickleJarSingleRewardStakin
 export type { PickleMiniChefV2 } from './PickleMiniChefV2';
 export type { PickleRegistry } from './PickleRegistry';
 export type { PickleRewarder } from './PickleRewarder';
+export type { PickleVotingEscrow } from './PickleVotingEscrow';
+export type { PickleVotingEscrowReward } from './PickleVotingEscrowReward';
 export * as factories from './factories';
 export { PickleJarMasterchef__factory } from './factories/PickleJarMasterchef__factory';
 export { PickleJarSingleRewardStaking__factory } from './factories/PickleJarSingleRewardStaking__factory';
@@ -14,3 +16,5 @@ export { PickleJar__factory } from './factories/PickleJar__factory';
 export { PickleMiniChefV2__factory } from './factories/PickleMiniChefV2__factory';
 export { PickleRegistry__factory } from './factories/PickleRegistry__factory';
 export { PickleRewarder__factory } from './factories/PickleRewarder__factory';
+export { PickleVotingEscrowReward__factory } from './factories/PickleVotingEscrowReward__factory';
+export { PickleVotingEscrow__factory } from './factories/PickleVotingEscrow__factory';
