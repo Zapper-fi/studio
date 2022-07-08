@@ -1,6 +1,7 @@
 import { Inject } from '@nestjs/common';
 import { gql } from 'graphql-request';
 import _ from 'lodash';
+
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
@@ -9,11 +10,10 @@ import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition, Token } from '~position/position.interface';
 import { Network } from '~types/network.interface';
-import { PhutureContractFactory } from '../contracts';
+
 import { PHUTURE_DEFINITION } from '../phuture.definition';
 
 const appId = PHUTURE_DEFINITION.id;
-const appName = PHUTURE_DEFINITION.name;
 const groupId = PHUTURE_DEFINITION.groups.index.id;
 const network = Network.ETHEREUM_MAINNET;
 
@@ -74,10 +74,7 @@ type QueryResult = {
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
 export class EthereumPhutureIndexTokenFetcher implements PositionFetcher<AppTokenPosition> {
-  constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(PhutureContractFactory) private readonly phutureContractFactory: PhutureContractFactory,
-  ) {}
+  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
   async getPositions() {
     const indexes = await this.getIndexes();
@@ -132,7 +129,6 @@ export class EthereumPhutureIndexTokenFetcher implements PositionFetcher<AppToke
         displayProps: {
           label: name,
           images,
-          appName,
           secondaryLabel,
         },
         groupId,
