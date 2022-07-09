@@ -25,6 +25,7 @@ export class ArbitrumPlutusVeTokenFetcher implements PositionFetcher<AppTokenPos
     const multicall = this.appToolkit.getMulticall(network);
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
     const baseToken = baseTokens.find(t => t.address === baseAddress)!;
+
     const veToken = multicall.wrap(this.appToolkit.globalContracts.erc20({ address, network }));
     const [supplyRaw, decimals, symbol] = await Promise.all([
       veToken.totalSupply(),
