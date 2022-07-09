@@ -33,7 +33,7 @@ export class AuroraTrisolarisBalanceFetcher implements BalanceFetcher {
       address,
       appId: TRISOLARIS_DEFINITION.id,
       groupId: TRISOLARIS_DEFINITION.groups.farm.id,
-      network: Network.AVALANCHE_MAINNET,
+      network,
       resolveChefContract: ({ contractAddress, network }) =>
         this.contractFactory.trisolarisMasterChef({ network, address: contractAddress }),
       resolveStakedTokenBalance: this.appToolkit.helpers.masterChefDefaultStakedBalanceStrategy.build({
