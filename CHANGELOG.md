@@ -4,6 +4,31 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.107.0](https://github.com/Zapper-fi/studio/compare/v0.106.0...v0.107.0) (2022-07-08)
+
+
+### Features
+
+* **pooltogether:** Add Optimism support ([#848](https://github.com/Zapper-fi/studio/issues/848)) ([a7b613e](https://github.com/Zapper-fi/studio/commit/a7b613edcd44a830cae56584fd03295130afde0e))
+
+
+### Bug Fixes
+
+* **diffusion:** add missing logo ([#847](https://github.com/Zapper-fi/studio/issues/847)) ([19d858a](https://github.com/Zapper-fi/studio/commit/19d858a805b78cb57031cc3dbfc548b0ff7abbc2))
+
+## [0.106.0](https://github.com/Zapper-fi/studio/compare/v0.105.0...v0.106.0) (2022-07-08)
+
+
+### Features
+
+* **pirex:** Support pxCVX ([#845](https://github.com/Zapper-fi/studio/issues/845)) ([833c26c](https://github.com/Zapper-fi/studio/commit/833c26c39275d23349779fb4fa13ad72897b01a0))
+
+
+### Bug Fixes
+
+* **lyra-avalon:** Add unique keys on Lyra Avalon positions ([#846](https://github.com/Zapper-fi/studio/issues/846)) ([78ff09f](https://github.com/Zapper-fi/studio/commit/78ff09ffd99c7fc48d6e18075b80ae0a550d795f))
+* **phuture:** add logo ([6c5c469](https://github.com/Zapper-fi/studio/commit/6c5c469d679bdd68f55cbec8f36f7ac672ad303f))
+
 ## [0.105.0](https://github.com/Zapper-fi/studio/compare/v0.104.0...v0.105.0) (2022-07-07)
 
 
