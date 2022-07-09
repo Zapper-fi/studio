@@ -1,9 +1,3 @@
-export enum ABIVersion {
-  v001 = '0.0.1',
-  v002 = '0.0.2',
-  v003 = '0.0.3',
-}
-
 export enum NetworkId {
   EthereumMainnet = '1',
   Kovan = '42',
@@ -12,6 +6,20 @@ export enum NetworkId {
   CeloMainnet = '42220',
   CeloAlfajores = '44787',
 }
+
+export type Player = {
+  gameId: string;
+  playerId: string;
+  withdrawn: boolean;
+  isWaiting: boolean;
+  interestAmount: string;
+  incentiveAmount: string;
+  paidAmount: string;
+  isGameCompleted: string;
+  rewardAmount: string;
+  gameAPY: string;
+  totalEarningsConverted: string;
+};
 
 export type GamesResponse = Record<
   string,
@@ -43,3 +51,5 @@ export type GamesResponse = Record<
     performanceFee: string;
   }
 >;
+
+export const BASE_API_URL = 'https://goodghosting-api.com/v1';
