@@ -4,6 +4,19 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.108.0](https://github.com/Zapper-fi/studio/compare/v0.107.0...v0.108.0) (2022-07-09)
+
+
+### Features
+
+* **llama-airforce:** Fix Pirex Vaults ([#852](https://github.com/Zapper-fi/studio/issues/852)) ([1b797f5](https://github.com/Zapper-fi/studio/commit/1b797f5f8cf0bed291f142a1313b5a9497b7cf91))
+* **llama-airforce:** Support uCVX pounder and claims ([#844](https://github.com/Zapper-fi/studio/issues/844)) ([78383b1](https://github.com/Zapper-fi/studio/commit/78383b1b14444e2e181681db5114fafd5b5e7651))
+
+
+### Bug Fixes
+
+* **phuture:** phuture index liquidity ([#850](https://github.com/Zapper-fi/studio/issues/850)) ([597ea2b](https://github.com/Zapper-fi/studio/commit/597ea2b95446863f50d49113c17b7a898974d908))
+
 ## [0.107.0](https://github.com/Zapper-fi/studio/compare/v0.106.0...v0.107.0) (2022-07-08)
 
 
