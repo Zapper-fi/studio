@@ -36,9 +36,9 @@ export class EvmosKinesisLabsPoolTokenFetcher implements PositionFetcher<AppToke
 
   async getPositions() {
     const basePools = await this.curvePoolTokenHelper.getTokens<KinesisLabsPool, Erc20>({
-      network: network,
-      appId: appId,
-      groupId: groupId,
+      network,
+      appId,
+      groupId,
       resolvePoolDefinitions: async () => KINESIS_LABS_BASEPOOL_DEFINITIONS,
       resolvePoolContract: ({ network, definition }) =>
         this.kinesisLabsContractFactory.kinesisLabsPool({ network, address: definition.swapAddress }),

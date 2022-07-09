@@ -10,7 +10,9 @@ import { Network } from '~types/network.interface';
 import { MarketXyzLendingBalanceHelper } from '../helpers/market-xyz.lending.balance-helper';
 import { MARKET_XYZ_DEFINITION } from '../market-xyz.definition';
 
-@Register.BalanceFetcher(MARKET_XYZ_DEFINITION.id, Network.FANTOM_OPERA_MAINNET)
+const network = Network.FANTOM_OPERA_MAINNET;
+
+@Register.BalanceFetcher(MARKET_XYZ_DEFINITION.id, network)
 export class FantomMarketXyzBalanceFetcher implements BalanceFetcher {
   constructor(
     @Inject(CompoundContractFactory)
@@ -27,7 +29,7 @@ export class FantomMarketXyzBalanceFetcher implements BalanceFetcher {
       appId: MARKET_XYZ_DEFINITION.id,
       supplyGroupId: MARKET_XYZ_DEFINITION.groups.supply.id,
       borrowGroupId: MARKET_XYZ_DEFINITION.groups.borrow.id,
-      network: Network.FANTOM_OPERA_MAINNET,
+      network,
       fuseLensAddress: '0x5ab6215ab8344c28b899efde93bee47b124200fb',
       getTokenContract: ({ address, network }) => this.compoundContractFactory.compoundCToken({ address, network }),
       getBalanceRaw: ({ contract, address, multicall }) => multicall.wrap(contract).balanceOf(address),
