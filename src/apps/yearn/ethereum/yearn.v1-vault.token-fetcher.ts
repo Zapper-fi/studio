@@ -13,7 +13,7 @@ const appId = YEARN_DEFINITION.id;
 const groupId = YEARN_DEFINITION.groups.v1Vault.id;
 const network = Network.ETHEREUM_MAINNET;
 
-@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
+@Register.TokenPositionFetcher({ appId, groupId, network })
 export class EthereumYearnV1VaultTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(@Inject(YearnV1VaultTokenHelper) private readonly yearnVaultTokenHelper: YearnV1VaultTokenHelper) {}
 

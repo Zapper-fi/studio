@@ -74,7 +74,8 @@ export class EthereumUnagiiPoolTokenFetcher implements PositionFetcher<AppTokenP
 
         const tokens = [{ ...underlyingToken, reserve }];
         const reservePercentages = tokens.map(t => reserve * (t.price / liquidity));
-        const secondaryLabel = reservePercentages.map(p => `${Math.round(p * 100)}%`).join(' / ');
+        const ratio = reservePercentages.map(p => `${Math.round(p * 100)}%`).join(' / ');
+        const secondaryLabel = ratio;
 
         const displayProps = {
           label: symbol,
@@ -88,6 +89,10 @@ export class EthereumUnagiiPoolTokenFetcher implements PositionFetcher<AppTokenP
             {
               label: 'Supply',
               value: buildNumberDisplayItem(supply),
+            },
+            {
+              label: 'Ratio',
+              value: ratio,
             },
           ],
         };

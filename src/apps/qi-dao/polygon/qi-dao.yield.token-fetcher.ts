@@ -32,7 +32,7 @@ const appId = QI_DAO_DEFINITION.id;
 const groupId = QI_DAO_DEFINITION.groups.yield.id;
 const network = Network.POLYGON_MAINNET;
 
-@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
+@Register.TokenPositionFetcher({ appId, groupId, network })
 export class PolygonQiDaoYieldTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,

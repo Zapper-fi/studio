@@ -30,7 +30,7 @@ export type BadgerApiTokensResponseEntry = {
 
 export type BadgerApiTokensResponse = Record<string, BadgerApiTokensResponseEntry>;
 
-@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
+@Register.TokenPositionFetcher({ appId, groupId, network })
 export class ArbitrumBadgerVaultTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(@Inject(BadgerVaultTokenHelper) private readonly badgerVaultTokenHelper: BadgerVaultTokenHelper) {}
 

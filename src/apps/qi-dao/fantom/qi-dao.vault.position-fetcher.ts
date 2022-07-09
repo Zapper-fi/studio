@@ -13,7 +13,7 @@ const appId = QI_DAO_DEFINITION.id;
 const groupId = QI_DAO_DEFINITION.groups.vault.id;
 const network = Network.FANTOM_OPERA_MAINNET;
 
-@Register.ContractPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
+@Register.ContractPositionFetcher({ appId, groupId, network })
 export class FantomQiDaoVaultPositionFetcher implements PositionFetcher<ContractPosition<QiDaoVaultPositionDataProps>> {
   constructor(@Inject(QiDaoVaultPositionHelper) private readonly qiDaoVaultPositionHelper: QiDaoVaultPositionHelper) {}
 

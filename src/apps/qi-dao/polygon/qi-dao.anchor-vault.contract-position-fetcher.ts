@@ -36,7 +36,7 @@ const appId = QI_DAO_DEFINITION.id;
 const groupId = QI_DAO_DEFINITION.groups.anchorVault.id;
 const network = Network.POLYGON_MAINNET;
 
-@Register.ContractPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
+@Register.ContractPositionFetcher({ appId, groupId, network })
 export class PolygonQiDaoAnchorVaultPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,

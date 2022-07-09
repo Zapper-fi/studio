@@ -34,7 +34,7 @@ export class EthereumRariFuseBorrowContractPositionBalanceFetcher
     const network = Network.ETHEREUM_MAINNET;
     const fuseLensAddress = '0x8da38681826f4abbe089643d2b3fe4c6e4730493';
     const fuseLens = this.rariFuseContractFactory.rariFusePoolLens({ address: fuseLensAddress, network });
-    const poolsBySupplier = await fuseLens.getPoolsBySupplierWithData(address);
+    const poolsBySupplier = await fuseLens.getPoolsBySupplier(address);
     const participatedComptrollers = poolsBySupplier[1].map(p => p.comptroller.toLowerCase());
 
     return this.appToolkit.helpers.contractPositionBalanceHelper.getContractPositionBalances<CompoundBorrowContractPositionDataProps>(

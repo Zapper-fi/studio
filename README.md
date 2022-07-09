@@ -18,7 +18,9 @@
 </div>
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
 [![All Contributors](https://img.shields.io/badge/all_contributors-50-orange.svg?style=flat-square)](#contributors-)
+
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 ## Description
@@ -72,7 +74,6 @@ pnpm studio create-group [app-id]
 pnpm studio create-token-fetcher [app-id]
 pnpm studio create-contract-position-fetcher [app-id]
 pnpm studio create-balance-fetcher [app-id]
-pnpm studio create-tvl-fetcher [app-id]
 ```
 
 ## Clearing the cache
