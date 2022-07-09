@@ -5,6 +5,7 @@ import { LlamaAirforceContractFactory } from './contracts';
 import { EthereumLlamaAirforceAirdropContractPositionBalanceFetcher } from './ethereum/llama-airforce.airdrop.contract-position-balance-fetcher';
 import { EthereumLlamaAirforceAirdropContractPositionFetcher } from './ethereum/llama-airforce.airdrop.contract-position-fetcher';
 import { EthereumLlamaAirforceMerkleCache } from './ethereum/llama-airforce.merkle-cache';
+import { EthereumLlamaAirforceVaultPirexTokenFetcher } from './ethereum/llama-airforce.vault.pirex.token-fetcher';
 import { EthereumLlamaAirforceVaultTokenFetcher } from './ethereum/llama-airforce.vault.token-fetcher';
 import { LlamaAirforceAppDefinition, LLAMA_AIRFORCE_DEFINITION } from './llama-airforce.definition';
 
@@ -18,6 +19,7 @@ import { LlamaAirforceAppDefinition, LLAMA_AIRFORCE_DEFINITION } from './llama-a
     EthereumLlamaAirforceAirdropContractPositionFetcher,
     EthereumLlamaAirforceAirdropContractPositionBalanceFetcher,
     EthereumLlamaAirforceVaultTokenFetcher,
+    EthereumLlamaAirforceVaultPirexTokenFetcher,
   ],
 })
 export class LlamaAirforceAppModule extends AbstractApp() {}
