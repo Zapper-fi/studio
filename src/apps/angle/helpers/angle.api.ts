@@ -93,7 +93,7 @@ type TVault = {
 export class AngleApiHelper {
   constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
-  async #callAngleApi<T>(endpoint: string, params?: Record<string, any>): Promise<T> {
+  private async callAngleApi<T>(endpoint: string, params?: Record<string, any>): Promise<T> {
     let url = `${BASE_URL}/${endpoint}`;
     if (params) {
       url += `?${querystring.stringify(params)}`;
@@ -108,7 +108,7 @@ export class AngleApiHelper {
     ttl: 15 * 60,
   })
   async getApr() {
-    return this.#callAngleApi<Record<string, TAPR>>('apr');
+    return this.callAngleApi<Record<string, TAPR>>('apr');
   }
 
   @Cache({
@@ -117,7 +117,7 @@ export class AngleApiHelper {
     ttl: 15 * 60,
   })
   async getVaultManagers() {
-    return this.#callAngleApi<Record<string, TVaultManager>>('vaultManagers', { chainId: 1 });
+    return this.callAngleApi<Record<string, TVaultManager>>('vaultManagers', { chainId: 1 });
   }
 
   @Cache({
@@ -126,7 +126,7 @@ export class AngleApiHelper {
     ttl: 15 * 60,
   })
   async getUserPerpetuals(address: string) {
-    return this.#callAngleApi<{ perpetuals: TPerpetual[] }>('perpetuals', {
+    return this.callAngleApi<{ perpetuals: TPerpetual[] }>('perpetuals', {
       chainId: 1,
       user: address,
     });
@@ -138,7 +138,7 @@ export class AngleApiHelper {
     ttl: 15 * 60,
   })
   async getUserVaults(address: string) {
-    return this.#callAngleApi<Record<string, TVault>>('vaults', {
+    return this.callAngleApi<Record<string, TVault>>('vaults', {
       chainId: 1,
       user: address,
     });
@@ -150,7 +150,7 @@ export class AngleApiHelper {
     ttl: 30 * 60,
   })
   async getRewardsData(address: string) {
-    return this.#callAngleApi<{ rewardsData: { totalClaimable: number } }>('dao', {
+    return this.callAngleApi<{ rewardsData: { totalClaimable: number } }>('dao', {
       chainId: 1,
       user: address,
     });

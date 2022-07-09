@@ -9,7 +9,6 @@ import { Network } from '~types/network.interface';
 
 import { ANGLE_DEFINITION } from '../angle.definition';
 import { AngleContractFactory, AngleVeangle, AngleSantoken } from '../contracts';
-import { AngleApiHelper } from '../helpers/angle.api';
 
 const appId = ANGLE_DEFINITION.id;
 const groupId = ANGLE_DEFINITION.groups.veangle.id;
@@ -20,8 +19,6 @@ export class EthereumAngleVeAngleContractPositionFetcher implements PositionFetc
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(AngleContractFactory) private readonly angleContractFactory: AngleContractFactory,
-    @Inject(AngleApiHelper)
-    private readonly angleApiHelper: AngleApiHelper,
     @Inject(CurveVotingEscrowContractPositionHelper)
     private readonly curveVotingEscrowContractPositionHelper: CurveVotingEscrowContractPositionHelper,
   ) {}
