@@ -7,7 +7,7 @@ export enum NetworkId {
   CeloAlfajores = '44787',
 }
 
-export type Player = {
+export type PlayerResponse = {
   gameId: string;
   playerId: string;
   withdrawn: boolean;
@@ -19,6 +19,21 @@ export type Player = {
   rewardAmount: string;
   gameAPY: string;
   totalEarningsConverted: string;
+  pooltotalEarningsConverted: string;
+  isWinner: boolean;
+  poolAPY: string;
+};
+
+export type PlayerBalance = {
+  incentiveAmount: number;
+  interestAmount: number;
+  withdrawn: boolean;
+  isWinner: boolean;
+  paidAmount: number;
+  rewardAmount: number;
+  poolAPY: number;
+  pooltotalEarningsConverted: number;
+  playerId: string;
 };
 
 export type GamesResponse = Record<

@@ -6,7 +6,7 @@ import { CacheOnInterval } from '~cache/cache-on-interval.decorator';
 import { Network } from '~types';
 
 import GOOD_GHOSTING_DEFINITION from '../good-ghosting.definition';
-import { GamesResponse, Player, BASE_API_URL } from './constants';
+import { GamesResponse, PlayerBalance, PlayerResponse, BASE_API_URL } from './constants';
 
 @Injectable()
 export class GoodGhostingGameConfigFetcherHelper {
@@ -70,10 +70,10 @@ export class GoodGhostingGameConfigFetcherHelper {
 
   async getPlayerGameBalances(playerAddress: string, networkId: string) {
     const url = `${BASE_API_URL}/players/active-games?networkId=${networkId}&playerAddress=${playerAddress}`;
-    const response = await axios.get<Player[]>(url);
+    const response = await axios.get<PlayerResponse[]>(url);
 
     const player = response.data;
-    const balances: Record<string, Player> = {};
+    const balances: Record<string, PlayerBalance> = {};
 
     for (let i = 0; i < player.length; i += 1) {
       const {
@@ -90,14 +90,14 @@ export class GoodGhostingGameConfigFetcherHelper {
       } = player[i];
 
       balances[gameId] = {
-        incentiveAmount: parseFloat(incentiveAmount).toFixed(3),
-        interestAmount: parseFloat(interestAmount).toFixed(3),
+        incentiveAmount: parseFloat(parseFloat(incentiveAmount).toFixed(3)),
+        interestAmount: parseFloat(parseFloat(interestAmount).toFixed(3)),
         withdrawn,
         isWinner,
         paidAmount: parseFloat(paidAmount),
-        rewardAmount: parseFloat(rewardAmount).toFixed(3),
+        rewardAmount: parseFloat(parseFloat(rewardAmount).toFixed(3)),
         poolAPY: parseFloat(gameAPY),
-        pooltotalEarningsConverted: parseFloat(totalEarningsConverted).toFixed(3),
+        pooltotalEarningsConverted: parseFloat(parseFloat(totalEarningsConverted).toFixed(3)),
         playerId,
       };
     }
