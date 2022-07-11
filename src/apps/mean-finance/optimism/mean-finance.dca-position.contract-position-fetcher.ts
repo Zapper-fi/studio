@@ -30,6 +30,7 @@ export class OptimismMeanFinanceDcaPositionContractPositionFetcher implements Po
     const data = await getPositions(network, graphHelper);
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
     const positions = data.positions;
+    const dcaHubAddress = '0x059d306a25c4ce8d7437d25743a8b94520536bd5';
 
     const contractPositions: ContractPosition[] = positions.map(dcaPosition => {
       const toWithdraw = dcaPosition.current.idleSwapped;
@@ -76,15 +77,16 @@ export class OptimismMeanFinanceDcaPositionContractPositionFetcher implements Po
         remainingSwaps && STRING_SWAP_INTERVALS[swapInterval]
           ? `${STRING_SWAP_INTERVALS[swapInterval].plural(remainingSwaps)} left`
           : 'Position finished';
-      return {
+
+      const position: ContractPosition = {
         type: ContractType.POSITION,
-        address: dcaPosition.id,
+        address: dcaHubAddress,
         appId,
         groupId,
         network,
         tokens,
-        balanceUSD,
         dataProps: {
+          id: dcaPosition.id,
           toWithdraw,
           remainingLiquidity,
           remainingSwaps,
@@ -96,6 +98,9 @@ export class OptimismMeanFinanceDcaPositionContractPositionFetcher implements Po
           images,
         },
       };
+
+      position.key = this.appToolkit.getPositionKey(position, ['id']);
+      return position;
     });
 
     return contractPositions;
