@@ -12,7 +12,7 @@ const appId = SYNTHETIX_DEFINITION.id;
 const groupId = SYNTHETIX_DEFINITION.groups.transferableSnx.id;
 const network = Network.OPTIMISM_MAINNET;
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Register.TokenPositionFetcher({ appId, groupId, network, options: { excludeFromTvl: true } })
 export class OptimismSynthetixTransferableSnxTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(SynthetixTransferrableSnxTokenHelper) private readonly tokenHelper: SynthetixTransferrableSnxTokenHelper,

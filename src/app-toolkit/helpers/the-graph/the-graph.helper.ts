@@ -66,10 +66,7 @@ export class TheGraphHelper {
         newPrevResults = {
           ...prevResults,
           ...results,
-          [dataToSearch]: [
-            ...prevResults[dataToSearch],
-            ...results[dataToSearch],
-          ],
+          [dataToSearch]: [...prevResults[dataToSearch], ...results[dataToSearch]],
         };
       }
 
@@ -88,10 +85,7 @@ export class TheGraphHelper {
       return {
         ...prevResults,
         ...results,
-        [dataToSearch]: [
-          ...prevResults[dataToSearch],
-          ...results[dataToSearch],
-        ],
+        [dataToSearch]: [...prevResults[dataToSearch], ...results[dataToSearch]],
       };
     } else {
       return results;

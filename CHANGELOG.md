@@ -4,6 +4,98 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.109.0](https://github.com/Zapper-fi/studio/compare/v0.108.0...v0.109.0) (2022-07-11)
+
+
+### Features
+
+* **angle:** Add Angle integration ([#831](https://github.com/Zapper-fi/studio/issues/831)) ([4d48dfc](https://github.com/Zapper-fi/studio/commit/4d48dfc3126edf14d16795d314671cc0192f00ce))
+* **symphony:** Symphony Finance Optimism Integration ([#857](https://github.com/Zapper-fi/studio/issues/857)) ([d28d2d6](https://github.com/Zapper-fi/studio/commit/d28d2d6d5535b986a20a9237cfdd5b4ff2598948))
+
+
+### Bug Fixes
+
+* **mean-finance:** Fix types, fix address in DCA positions ([#859](https://github.com/Zapper-fi/studio/issues/859)) ([856824b](https://github.com/Zapper-fi/studio/commit/856824bfb3e232acb993f4269e4e04003aac24cb))
+
+## [0.108.0](https://github.com/Zapper-fi/studio/compare/v0.107.0...v0.108.0) (2022-07-09)
+
+
+### Features
+
+* **llama-airforce:** Fix Pirex Vaults ([#852](https://github.com/Zapper-fi/studio/issues/852)) ([1b797f5](https://github.com/Zapper-fi/studio/commit/1b797f5f8cf0bed291f142a1313b5a9497b7cf91))
+* **llama-airforce:** Support uCVX pounder and claims ([#844](https://github.com/Zapper-fi/studio/issues/844)) ([78383b1](https://github.com/Zapper-fi/studio/commit/78383b1b14444e2e181681db5114fafd5b5e7651))
+
+
+### Bug Fixes
+
+* **phuture:** phuture index liquidity ([#850](https://github.com/Zapper-fi/studio/issues/850)) ([597ea2b](https://github.com/Zapper-fi/studio/commit/597ea2b95446863f50d49113c17b7a898974d908))
+
+## [0.107.0](https://github.com/Zapper-fi/studio/compare/v0.106.0...v0.107.0) (2022-07-08)
+
+
+### Features
+
+* **pooltogether:** Add Optimism support ([#848](https://github.com/Zapper-fi/studio/issues/848)) ([a7b613e](https://github.com/Zapper-fi/studio/commit/a7b613edcd44a830cae56584fd03295130afde0e))
+
+
+### Bug Fixes
+
+* **diffusion:** add missing logo ([#847](https://github.com/Zapper-fi/studio/issues/847)) ([19d858a](https://github.com/Zapper-fi/studio/commit/19d858a805b78cb57031cc3dbfc548b0ff7abbc2))
+
+## [0.106.0](https://github.com/Zapper-fi/studio/compare/v0.105.0...v0.106.0) (2022-07-08)
+
+
+### Features
+
+* **pirex:** Support pxCVX ([#845](https://github.com/Zapper-fi/studio/issues/845)) ([833c26c](https://github.com/Zapper-fi/studio/commit/833c26c39275d23349779fb4fa13ad72897b01a0))
+
+
+### Bug Fixes
+
+* **lyra-avalon:** Add unique keys on Lyra Avalon positions ([#846](https://github.com/Zapper-fi/studio/issues/846)) ([78ff09f](https://github.com/Zapper-fi/studio/commit/78ff09ffd99c7fc48d6e18075b80ae0a550d795f))
+* **phuture:** add logo ([6c5c469](https://github.com/Zapper-fi/studio/commit/6c5c469d679bdd68f55cbec8f36f7ac672ad303f))
+
+## [0.105.0](https://github.com/Zapper-fi/studio/compare/v0.104.0...v0.105.0) (2022-07-07)
+
+
+### Features
+
+* **bluebit:** Support ve token ([#840](https://github.com/Zapper-fi/studio/issues/840)) ([048f3d8](https://github.com/Zapper-fi/studio/commit/048f3d82cefdd6f4dadede02785791c7874447d9))
+* **uniswap-v2:** Added projected APY based on 24h volume ([#835](https://github.com/Zapper-fi/studio/issues/835)) ([d39175e](https://github.com/Zapper-fi/studio/commit/d39175e9d41183a185c85f97b387aec059cbceba))
+
+
+### Bug Fixes
+
+* **tectonic:** Fix supply position liquidity ([#841](https://github.com/Zapper-fi/studio/issues/841)) ([27da2d2](https://github.com/Zapper-fi/studio/commit/27da2d28c426e12ac187bdcb1a58f28b823d42a8))
+
+## [0.104.0](https://github.com/Zapper-fi/studio/compare/v0.103.0...v0.104.0) (2022-07-07)
+
+
+### Features
+
+* **tvl:** Include groups in TVL by default, exclude with override ([#837](https://github.com/Zapper-fi/studio/issues/837)) ([ae7587d](https://github.com/Zapper-fi/studio/commit/ae7587d506f120214bcd7a20e5b464153930b536))
+
+## [0.103.0](https://github.com/Zapper-fi/studio/compare/v0.102.0...v0.103.0) (2022-07-06)
+
+
+### Features
+
+* **velodrome:** Implement Velodrome ([#832](https://github.com/Zapper-fi/studio/issues/832)) ([4201d07](https://github.com/Zapper-fi/studio/commit/4201d0718bbf37f72af06e92a3205f00a47af29a))
+
+## [0.102.0](https://github.com/Zapper-fi/studio/compare/v0.101.0...v0.102.0) (2022-07-06)
+
+
+### Features
+
+* **phuture:** Phuture Finance Ethereum integration ([#828](https://github.com/Zapper-fi/studio/issues/828)) ([eff5cc9](https://github.com/Zapper-fi/studio/commit/eff5cc9e1a2d94becde84f08d66ec89e620e8515))
+* **trisolaris:** Add Trisolaris integration and fix Bluebit ([#833](https://github.com/Zapper-fi/studio/issues/833)) ([cf2d4a9](https://github.com/Zapper-fi/studio/commit/cf2d4a9ad3a94f2e6c61649c378bc807ecfc7cca))
+
+
+### Bug Fixes
+
+* disabled pool-together-v3's TVL ([#824](https://github.com/Zapper-fi/studio/issues/824)) ([9e1ac42](https://github.com/Zapper-fi/studio/commit/9e1ac42f44f95456cb4d7c109ffcbbf688555643))
+* **rari-fuse:** Fix failing RPC calls in Rari Fuse ([#830](https://github.com/Zapper-fi/studio/issues/830)) ([124853b](https://github.com/Zapper-fi/studio/commit/124853bf5766483917f17cbc4024b84dd8ba3a29))
+
 ## [0.101.0](https://github.com/Zapper-fi/studio/compare/v0.100.3...v0.101.0) (2022-07-04)
 
 

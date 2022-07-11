@@ -30,7 +30,6 @@ const network = Network.ETHEREUM_MAINNET;
   appId,
   groupId,
   network,
-  options: { includeInTvl: true },
 })
 export class EthereumMaplePoolTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(

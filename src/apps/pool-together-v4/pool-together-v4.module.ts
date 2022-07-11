@@ -10,6 +10,8 @@ import { PoolTogetherV4AirdropTokenBalancesHelper } from './helpers/pool-togethe
 import { PoolTogetherV4ApiPrizePoolRegistry } from './helpers/pool-together-v4.api.prize-pool-registry';
 import { PoolTogetherV4ClaimableTokenBalancesHelper } from './helpers/pool-together-v4.claimable.balance-helper';
 import { PoolTogetherV4PrizePoolTokenHelper } from './helpers/pool-together-v4.prize-pool.token-helper';
+import { OptimismPoolTogetherV4BalanceFetcher } from './optimism/pool-together-v4.balance-fetcher';
+import { OptimismPoolTogetherV4TicketTokenFetcher } from './optimism/pool-together-v4.ticket-token-fetcher';
 import { PolygonPoolTogetherV4BalanceFetcher } from './polygon/pool-together-v4.balance-fetcher';
 import { PolygonPoolTogetherV4TicketTokenFetcher } from './polygon/pool-together-v4.ticket-token-fetcher';
 import POOL_TOGETHER_V4_DEFINITION, { PoolTogetherV4AppDefinition } from './pool-together-v4.definition';
@@ -33,6 +35,9 @@ import POOL_TOGETHER_V4_DEFINITION, { PoolTogetherV4AppDefinition } from './pool
     // Polygon
     PolygonPoolTogetherV4BalanceFetcher,
     PolygonPoolTogetherV4TicketTokenFetcher,
+    // Optimism
+    OptimismPoolTogetherV4BalanceFetcher,
+    OptimismPoolTogetherV4TicketTokenFetcher,
   ],
 })
 export class PoolTogetherV4AppModule extends AbstractApp() {}

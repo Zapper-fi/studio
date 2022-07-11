@@ -27,7 +27,10 @@ export const SINGLE_DEFINITION = appDefinition({
   tags: [AppTag.FARMING, AppTag.STAKING, AppTag.YIELD_AGGREGATOR, AppTag.CROSS_CHAIN, AppTag.LENDING],
 
   keywords: [],
-  links: {},
+  links: {
+    twitter: 'https://twitter.com/single_finance',
+    discord: 'https://discord.com/invite/97W57CjJme',
+  },
 
   supportedNetworks: {
     [Network.CRONOS_MAINNET]: [AppAction.VIEW],

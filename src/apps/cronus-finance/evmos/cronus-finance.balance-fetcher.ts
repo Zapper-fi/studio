@@ -39,7 +39,7 @@ export class EvmosCronusFinanceBalanceFetcher implements BalanceFetcher {
       address,
       appId: CRONUS_FINANCE_DEFINITION.id,
       groupId: CRONUS_FINANCE_DEFINITION.groups.farm.id,
-      network: Network.EVMOS_MAINNET,
+      network,
       resolveBalances: async ({ address, contractPosition, multicall }) => {
         // Resolve the staked token and reward token from the contract position object
         const stakedToken = contractPosition.tokens.find(isSupplied)!;

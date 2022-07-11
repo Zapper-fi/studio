@@ -1,6 +1,7 @@
 import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
-import { CurveAppModule } from '~apps/curve';
+import { CurveVotingEscrowContractPositionBalanceHelper } from '~apps/curve';
+import { CurveVotingEscrowContractPositionHelper } from '~apps/curve/helpers/curve.voting-escrow.contract-position-helper';
 import { SynthetixAppModule } from '~apps/synthetix';
 
 import { ArbitrumPickleBalanceFetcher } from './arbitrum/pickle.balance-fetcher';
@@ -21,12 +22,15 @@ import { PolygonPickleJarTokenFetcher } from './polygon/pickle.jar.token-fetcher
 
 @Register.AppModule({
   appId: PICKLE_DEFINITION.id,
-  imports: [SynthetixAppModule, CurveAppModule],
+  imports: [SynthetixAppModule],
   providers: [
     PickleAppDefinition,
     PickleApiJarRegistry,
     PickleOnChainJarRegistry,
     PickleContractFactory,
+    // External Helpers
+    CurveVotingEscrowContractPositionHelper,
+    CurveVotingEscrowContractPositionBalanceHelper,
     // Arbitrum
     ArbitrumPickleJarTokenFetcher,
     ArbitrumPickleFarmContractPositionFetcher,
