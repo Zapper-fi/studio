@@ -3,15 +3,15 @@ import axios from 'axios';
 
 import { SingleStakingFarmDefinition } from '~app-toolkit';
 import { CacheOnInterval } from '~cache/cache-on-interval.decorator';
-import { Network } from '~types';
 
 import GOOD_GHOSTING_DEFINITION from '../good-ghosting.definition';
+
 import { GamesResponse, PlayerBalance, PlayerResponse, BASE_API_URL } from './constants';
 
 @Injectable()
 export class GoodGhostingGameConfigFetcherHelper {
   @CacheOnInterval({
-    key: `studio:${GOOD_GHOSTING_DEFINITION.id}:${GOOD_GHOSTING_DEFINITION.groups.game}:${Network.POLYGON_MAINNET}:addresses`,
+    key: `studio:${GOOD_GHOSTING_DEFINITION.id}:${GOOD_GHOSTING_DEFINITION.groups.game}:addresses`,
     timeout: 15 * 60 * 1000,
   })
   async getCachedGameConfigsData() {
