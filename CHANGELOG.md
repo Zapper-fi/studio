@@ -4,6 +4,19 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.109.0](https://github.com/Zapper-fi/studio/compare/v0.108.0...v0.109.0) (2022-07-11)
+
+
+### Features
+
+* **angle:** Add Angle integration ([#831](https://github.com/Zapper-fi/studio/issues/831)) ([4d48dfc](https://github.com/Zapper-fi/studio/commit/4d48dfc3126edf14d16795d314671cc0192f00ce))
+* **symphony:** Symphony Finance Optimism Integration ([#857](https://github.com/Zapper-fi/studio/issues/857)) ([d28d2d6](https://github.com/Zapper-fi/studio/commit/d28d2d6d5535b986a20a9237cfdd5b4ff2598948))
+
+
+### Bug Fixes
+
+* **mean-finance:** Fix types, fix address in DCA positions ([#859](https://github.com/Zapper-fi/studio/issues/859)) ([856824b](https://github.com/Zapper-fi/studio/commit/856824bfb3e232acb993f4269e4e04003aac24cb))
+
 ## [0.108.0](https://github.com/Zapper-fi/studio/compare/v0.107.0...v0.108.0) (2022-07-09)
 
 
