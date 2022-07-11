@@ -157,16 +157,16 @@ export class AuroraVaporwaveFinanceVaultTokenFetcher implements PositionFetcher<
           supply,
           pricePerShare,
           price,
-          tokens: tokens,
+          tokens,
           dataProps: {
             apy: apyData[vault.id],
-            liquidity: liquidity,
+            liquidity,
           },
           displayProps: {
-            label: label,
-            images: images,
-            secondaryLabel: secondaryLabel,
-            tertiaryLabel: tertiaryLabel,
+            label,
+            images,
+            secondaryLabel,
+            tertiaryLabel,
           },
         };
 
