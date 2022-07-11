@@ -27,7 +27,7 @@ const groupId = UNAGII_DEFINITION.groups.vault.id;
 const network = Network.ETHEREUM_MAINNET;
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
-export class EthereumUnagiiPoolTokenFetcher implements PositionFetcher<AppTokenPosition> {
+export class EthereumUnagiiVaultTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(UnagiiContractFactory)
