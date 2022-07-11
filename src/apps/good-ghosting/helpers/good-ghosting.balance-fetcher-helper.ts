@@ -3,13 +3,10 @@ import { BigNumber } from 'ethers';
 import { sumBy, compact } from 'lodash';
 
 import { drillBalance } from '~app-toolkit';
-
-import { ContractPositionBalance } from '~position/position-balance.interface';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-
-import { ContractType } from '~position/contract.interface';
 import { getAppImg } from '~app-toolkit/helpers/presentation/image.present';
-
+import { ContractType } from '~position/contract.interface';
+import { ContractPositionBalance } from '~position/position-balance.interface';
 import { isClaimable, isSupplied } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 

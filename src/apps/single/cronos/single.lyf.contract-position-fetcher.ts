@@ -34,7 +34,7 @@ export class CronosSingleLyfContractPositionFetcher implements PositionFetcher<C
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(SingleContractFactory) private readonly singleContractFactory: SingleContractFactory,
-  ) { }
+  ) {}
 
   async getPositions() {
     const { wmasterchefs } = await axios.get<SingleProtocol>(`${BASE_API_URL}/protocol/contracts`).then(v => v.data);

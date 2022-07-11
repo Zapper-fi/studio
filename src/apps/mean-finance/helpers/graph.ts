@@ -1,4 +1,5 @@
 import { TheGraphHelper } from '~app-toolkit/helpers/the-graph/the-graph.helper';
+
 import { GET_PAIRS } from '../graphql/getPairs';
 import { GET_POSITIONS } from '../graphql/getPositions';
 import { GET_USER_POSITIONS } from '../graphql/getUserPositions';
