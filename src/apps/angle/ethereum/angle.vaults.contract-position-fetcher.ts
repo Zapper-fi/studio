@@ -54,7 +54,7 @@ export class EthereumAngleVaultsContractPositionFetcher implements PositionFetch
           maxLTV: vaultManager.maxLTV,
         },
         displayProps: {
-          label: `${getLabelFromToken(collateralToken)}/${getLabelFromToken(stableToken)}`,
+          label: `${getLabelFromToken(collateralToken)} - ${getLabelFromToken(stableToken)} vault`,
           images: [...getImagesFromToken(collateralToken), ...getImagesFromToken(stableToken)],
         },
       };
