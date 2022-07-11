@@ -5,14 +5,14 @@ export const auroraStakePools = [
     logo: 'single-assets/VWAVE.png',
     token: 'VWAVE',
     tokenDecimals: 18,
-    tokenAddress: '0x2451dB68DeD81900C4F16ae1af597E9658689734', //  staking token, VWAVE token
+    tokenAddress: '0x2451db68ded81900c4f16ae1af597e9658689734', //  staking token, VWAVE token
     tokenOracle: 'tokens',
     tokenOracleId: 'VWAVE',
     earnedToken: 'WETH',
     vaultPlatform: 'Vaporwave',
     earnedTokenDecimals: 18,
-    earnedTokenAddress: '0xC9BdeEd33CD01541e1eeD10f90519d2C06Fe3feB', //  WETH
-    earnContractAddress: '0x586009baA80010833637f4C371bca2496EA70225', //  VWAVE reward pool
+    earnedTokenAddress: '0xc9bdeed33cd01541e1eed10f90519d2c06fe3feb', //  WETH
+    earnContractAddress: '0x586009baa80010833637f4c371bca2496ea70225', //  VWAVE reward pool
     earnedOracle: 'tokens',
     earnedOracleId: 'WETH',
     partnership: false,
@@ -39,15 +39,15 @@ export const auroraStakePools = [
     assets: ['VWAVE', 'NEAR'],
     token: 'vwave-near-TrisolarisLP',
     tokenDecimals: 18,
-    tokenAddress: '0xFd3fDA44cd7F1EA9e9856B56d21F64FC1A417b8E', //  vault token
+    tokenAddress: '0xfd3fda44cd7f1ea9e9856b56d21f64fc1a417b8e', //  vault token
     tokenOracle: 'lps',
     vaultPlatform: 'Vaporwave',
     tokenOracleId: 'vaporwave-vwave-near',
     isVaporLP: true,
     earnedToken: 'VWAVE',
     earnedTokenDecimals: 18,
-    earnedTokenAddress: '0x2451dB68DeD81900C4F16ae1af597E9658689734', //  reward token earned by boost
-    earnContractAddress: '0x1a753380E261F0EafFD7282EC978D90B4d3ce31E', //  contract address of reward pool
+    earnedTokenAddress: '0x2451db68ded81900c4f16ae1af597e9658689734', //  reward token earned by boost
+    earnContractAddress: '0x1a753380e261f0eaffd7282ec978d90b4d3ce31e', //  contract address of reward pool
     earnedOracle: 'tokens', //  basis for earned token
     earnedOracleId: 'VWAVE', //  reward token oracle
     partnership: false, //  is partnership
@@ -68,4 +68,4 @@ export const auroraStakePools = [
   },
 ];
 
-export default auroraStakePools
+export default auroraStakePools;
