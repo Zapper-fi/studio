@@ -27,7 +27,7 @@ export class CronosChainMmfinanceAutoCakeContractPositionFetcher implements Posi
     const chefContract = this.contractFactory.mmfinanceChef({
       network,
       address: '0x6bE34986Fdd1A91e4634eb6b9F8017439b7b5EDc',
-    });
+    })
     return this.appToolkit.helpers.masterChefContractPositionHelper.getContractPositions<MmfinanceMmfChef>({
       network,
       groupId,

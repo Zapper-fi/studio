@@ -212,15 +212,15 @@ export class CronosChainMmfinanceBalanceFetcher implements BalanceFetcher {
         assets: poolBalances,
       },
       {
-        label: 'Auto CAKE',
+        label: 'Auto MMF',
         assets: autoCakeBalances,
       },
       {
-        label: 'IFO CAKE',
+        label: 'IFO MMF',
         assets: ifoCakeBalances,
       },
       {
-        label: 'Staked CAKE',
+        label: 'Staked MMF',
         assets: syrupCakeBalances,
       },
       {
