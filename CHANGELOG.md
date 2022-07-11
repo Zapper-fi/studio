@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.110.1](https://github.com/Zapper-fi/studio/compare/v0.110.0...v0.110.1) (2022-07-11)
+
+
+### Bug Fixes
+
+* **symphony:** Add missing supported network in definition file ([#865](https://github.com/Zapper-fi/studio/issues/865)) ([72ea80c](https://github.com/Zapper-fi/studio/commit/72ea80c8ba02a5bd7cd2ae5bf53ffac52647b219))
+
 ## [0.110.0](https://github.com/Zapper-fi/studio/compare/v0.109.0...v0.110.0) (2022-07-11)
 
 
