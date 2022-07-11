@@ -43,8 +43,7 @@ export class EthereumAnglePerpetualsContractPositionFetcher implements PositionF
           network,
         });
 
-        const [symbol, poolManager, baseURI] = await Promise.all([
-          multicall.wrap(perpContract).symbol(),
+        const [poolManager, baseURI] = await Promise.all([
           multicall.wrap(perpContract).poolManager(),
           multicall.wrap(perpContract).baseURI(),
         ]);
@@ -61,13 +60,12 @@ export class EthereumAnglePerpetualsContractPositionFetcher implements PositionF
 
         if (!underlyingToken) return null;
 
-        const position = {
+        const position: ContractPosition = {
           type: ContractType.POSITION,
           appId,
           groupId,
           address: perpetualManager,
           network,
-          symbol,
           tokens: [supplied(underlyingToken)],
           dataProps: {
             baseURI,
@@ -76,7 +74,8 @@ export class EthereumAnglePerpetualsContractPositionFetcher implements PositionF
             label: getLabelFromToken(underlyingToken),
             images: getImagesFromToken(underlyingToken),
           },
-        } as ContractPosition;
+        };
+
         return position;
       }),
     );

@@ -71,7 +71,7 @@ export class EthereumAngleSantokenTokenFetcher implements PositionFetcher<AppTok
 
         const apr = APR[symbol];
 
-        const token = {
+        const token: AppTokenPosition = {
           type: ContractType.APP_TOKEN,
           appId,
           groupId,
@@ -89,9 +89,9 @@ export class EthereumAngleSantokenTokenFetcher implements PositionFetcher<AppTok
           },
           displayProps: {
             label: symbol,
-            images: [...getImagesFromToken(underlyingToken), getImagesFromToken(agToken)],
+            images: [...getImagesFromToken(underlyingToken), ...getImagesFromToken(agToken)],
           },
-        } as AppTokenPosition;
+        };
 
         return token;
       }),
