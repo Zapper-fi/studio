@@ -1,13 +1,13 @@
 import { Inject } from '@nestjs/common';
 import { BigNumber } from 'bignumber.js';
 
-import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
 import { BalanceFetcher } from '~balance/balance-fetcher.interface';
-import { isSupplied, isClaimable } from '~position/position.utils';
 import { Network } from '~types/network.interface';
+
+import { getXVaultBalances } from '../helpers/get-xvault-balances';
 
 import {
   VvsFinanceContractFactory,
@@ -15,8 +15,8 @@ import {
   VvsCraftsmanV2,
   VvsVault,
   VvsSmartCraftInitializable,
+  VvsBoost,
 } from '../contracts';
-import type { XvvsVaultContractPositionDataProps } from '../types';
 import { VVS_FINANCE_DEFINITION } from '../vvs-finance.definition';
 
 const appId = VVS_FINANCE_DEFINITION.id;
@@ -142,46 +142,22 @@ export class CronosVvsFinanceBalanceFetcher implements BalanceFetcher {
   }
 
   private async getXvvsVaultBalances(address: string) {
-    const multicall = this.appToolkit.getMulticall(network);
-    const contractPositions = await this.appToolkit.getAppContractPositions<XvvsVaultContractPositionDataProps>({
+    return getXVaultBalances<VvsBoost>({
+      accountAddress: address,
+      appToolkit: this.appToolkit,
       network,
       appId,
       groupIds: [VVS_FINANCE_DEFINITION.groups.xvvsVault.id],
+      resolveContract: ({ contractAddress, network }) => (
+        this.contractFactory.vvsBoost({ network, address: contractAddress })
+      ),
+      resolveUserInfo: async ({ contract, multicall, accountAddress }) => (
+        (await multicall.wrap(contract).getUserInfo(accountAddress))[2]
+      ),
+      resolveClaimableTokenBalance: ({ contract, multicall, accountAddress }) => (
+        multicall.wrap(contract).pendingVVS(accountAddress)
+      )
     });
-
-    const balances = await Promise.all(
-      contractPositions.map(async contractPosition => {
-        const contract = this.contractFactory.vvsBoost({ network, address: contractPosition.address });
-
-        const stakedToken = contractPosition.tokens.find(isSupplied);
-        const claimableToken = contractPosition.tokens.find(isClaimable);
-
-        const stakedTokenBalances =
-          stakedToken && !contractPosition.dataProps.isClaimable
-            ? (await multicall.wrap(contract).getUserInfo(address))[2]
-                .filter(stake => Number(stake.poolId) === contractPosition.dataProps.poolIndex && stake.active)
-                .map(stake => {
-                  const balanceRaw = stake.amount;
-                  return drillBalance(stakedToken, balanceRaw.toString());
-                })
-            : [];
-
-        const claimableTokenBalances =
-          claimableToken && contractPosition.dataProps.isClaimable
-            ? [drillBalance(claimableToken, (await multicall.wrap(contract).pendingVVS(address)).toString())]
-            : [];
-
-        const tokens = [...stakedTokenBalances, ...claimableTokenBalances].filter(v => v.balanceUSD > 0);
-
-        return {
-          ...contractPosition,
-          balanceUSD: tokens.reduce((p, c) => p + c.balanceUSD, 0),
-          tokens,
-        };
-      }),
-    );
-
-    return balances;
   }
 
   async getBalances(address: string) {
