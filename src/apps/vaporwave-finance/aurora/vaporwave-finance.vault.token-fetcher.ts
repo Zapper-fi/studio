@@ -70,7 +70,7 @@ export class AuroraVaporwaveFinanceVaultTokenFetcher implements PositionFetcher<
   ) {}
 
   @CacheOnInterval({
-    key: `apps-v3:${network}:${appId}:${groupId}:vaults`,
+    key: `studio:${network}:${appId}:${groupId}:vaults`,
     timeout: 15 * 60 * 1000,
   })
   async getVaults() {
@@ -79,7 +79,7 @@ export class AuroraVaporwaveFinanceVaultTokenFetcher implements PositionFetcher<
   }
 
   @CacheOnInterval({
-    key: `apps-v3:${network}:${appId}:${groupId}:vaportokenprices`,
+    key: `studio:${network}:${appId}:${groupId}:vaportokenprices`,
     timeout: 15 * 60 * 1000,
   })
   async getVTokenPrices() {
@@ -88,7 +88,7 @@ export class AuroraVaporwaveFinanceVaultTokenFetcher implements PositionFetcher<
   }
 
   @CacheOnInterval({
-    key: `apps-v3:${network}:${appId}:${groupId}:apy`,
+    key: `studio:${network}:${appId}:${groupId}:apy`,
     timeout: 15 * 60 * 1000,
   })
   async getAPY() {
