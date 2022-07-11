@@ -31,6 +31,7 @@ export class OptimismMeanFinanceBalanceFetcher implements BalanceFetcher {
 
   async getBalances(address: string) {
     const positions = await this.getUserPositions(address);
+    const dcaHubAddress = '0x059d306a25c4ce8d7437d25743a8b94520536bd5';
 
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
 
@@ -79,15 +80,16 @@ export class OptimismMeanFinanceBalanceFetcher implements BalanceFetcher {
           ? `${STRING_SWAP_INTERVALS[swapInterval].plural(remainingSwaps)} left`
           : 'Position finished';
 
-      return {
+      const position: ContractPositionBalance = {
         type: ContractType.POSITION,
-        address: dcaPosition.id,
+        address: dcaHubAddress,
         appId: MEAN_FINANCE_DEFINITION.id,
         groupId: MEAN_FINANCE_DEFINITION.groups.dcaPosition.id,
         network,
         tokens,
         balanceUSD,
         dataProps: {
+          id: dcaPosition.id,
           toWithdraw,
           remainingLiquidity,
           remainingSwaps,
@@ -99,6 +101,9 @@ export class OptimismMeanFinanceBalanceFetcher implements BalanceFetcher {
           images,
         },
       };
+
+      position.key = this.appToolkit.getPositionKey(position, ['id']);
+      return position;
     });
 
     return presentBalanceFetcherResponse([

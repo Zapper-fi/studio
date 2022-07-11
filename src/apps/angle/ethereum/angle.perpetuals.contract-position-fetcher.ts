@@ -1,4 +1,5 @@
 import { Inject } from '@nestjs/common';
+import { compact } from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
@@ -80,6 +81,6 @@ export class EthereumAnglePerpetualsContractPositionFetcher implements PositionF
       }),
     );
 
-    return perps;
+    return compact(perps);
   }
 }

@@ -1,5 +1,6 @@
 import { Inject } from '@nestjs/common';
 import { utils } from 'ethers';
+import { compact } from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
@@ -96,6 +97,6 @@ export class EthereumAngleSantokenTokenFetcher implements PositionFetcher<AppTok
       }),
     );
 
-    return tokens;
+    return compact(tokens);
   }
 }
