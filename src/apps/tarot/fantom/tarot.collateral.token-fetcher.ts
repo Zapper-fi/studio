@@ -14,38 +14,35 @@ import { Network } from '~types/network.interface';
 import { TarotContractFactory } from '../contracts';
 import { TAROT_DEFINITION } from '../tarot.definition';
 
+const tarotFactoryAddresses = [
+  '0x35c052bbf8338b06351782a565aa9aad173432ea', // Tarot Classic
+  '0xf6d943c8904195d0f69ba03d97c0baf5bbdcd01b', // Tarot Requiem
+  '0xbf76f858b42bb9b196a87e43235c2f0058cf7322', // Tarot Carcosa
+];
+
 const appId = TAROT_DEFINITION.id;
 const groupId = TAROT_DEFINITION.groups.collateral.id;
 const network = Network.FANTOM_OPERA_MAINNET;
 
-@Register.TokenPositionFetcher({
-  appId,
-  groupId,
-  network,
-})
+@Register.TokenPositionFetcher({ appId, groupId, network })
 export class FantomTarotCollateralTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(TarotContractFactory) private readonly contractFactory: TarotContractFactory,
   ) {}
 
-  async getPositions(): Promise<AppTokenPosition[]> {
+  async getPositions() {
     const multicall = this.appToolkit.getMulticall(network);
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
     const appTokens = await this.appToolkit.getAppTokenPositions(
       { appId: CURVE_DEFINITION.id, groupIds: [CURVE_DEFINITION.groups.pool.id], network },
-      { appId: TAROT_DEFINITION.id, groupIds: [TAROT_DEFINITION.groups.supplyVault.id], network },
+      { appId: TAROT_DEFINITION.id, groupIds: [TAROT_DEFINITION.groups.vault.id], network },
       { appId: 'spiritswap', groupIds: ['pool'], network },
       { appId: 'spookyswap', groupIds: ['pool'], network },
       { appId: 'tomb', groupIds: ['pool'], network },
     );
 
     const allTokens = [...appTokens, ...baseTokens];
-    const tarotFactoryAddresses = [
-      '0x35c052bbf8338b06351782a565aa9aad173432ea', // Tarot Classic
-      '0xf6d943c8904195d0f69ba03d97c0baf5bbdcd01b', // Tarot Requiem
-      '0xbf76f858b42bb9b196a87e43235c2f0058cf7322', // Tarot Carcosa
-    ];
 
     const allCollateralTokens = await Promise.all(
       tarotFactoryAddresses.map(async tarotFactoryAddress => {
@@ -80,31 +77,34 @@ export class FantomTarotCollateralTokenFetcher implements PositionFetcher<AppTok
             const underlyingToken = allTokens.find(v => v.address === underlyingTokenAddress);
             if (!underlyingToken) return null;
 
-            const [exchangeRateRaw, supplyRaw] = await Promise.all([
+            const [exchangeRateRaw, supplyRaw, decimals] = await Promise.all([
               multicall.wrap(tarotVault).exchangeRate(),
               multicall.wrap(tarotVault).totalSupply(),
+              multicall.wrap(tarotVault).decimals(),
             ]);
 
-            const supply = Number(supplyRaw) / 10 ** 18;
-            const pricePerShare = Number(exchangeRateRaw) / 10 ** 18;
+            const supply = Number(supplyRaw) / 10 ** decimals;
+            const pricePerShare = Number(exchangeRateRaw) / 10 ** decimals;
             const price = pricePerShare * underlyingToken.price;
             const liquidity = price * supply;
 
             const collateralToken: AppTokenPosition = {
               type: ContractType.APP_TOKEN,
               appId,
-              network: Network.FANTOM_OPERA_MAINNET,
-              groupId: TAROT_DEFINITION.groups.collateral.id,
+              network,
+              groupId,
               address: collateralTokenAddress,
-              symbol: `cTAROT-${underlyingToken.symbol}`,
-              decimals: 18,
+              symbol: underlyingToken.symbol,
+              decimals,
               supply,
               pricePerShare,
               price,
               tokens: [underlyingToken],
-              dataProps: { liquidity },
+              dataProps: {
+                liquidity,
+              },
               displayProps: {
-                label: `Deposited ${getLabelFromToken(underlyingToken)} in Tarot`,
+                label: getLabelFromToken(underlyingToken),
                 images: getImagesFromToken(underlyingToken),
                 statsItems: [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }],
               },
