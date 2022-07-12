@@ -23,13 +23,11 @@ export class EthereumAngleSantokenTokenFetcher implements PositionFetcher<AppTok
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(AngleContractFactory) private readonly angleContractFactory: AngleContractFactory,
-    @Inject(AngleApiHelper)
-    private readonly angleApiHelper: AngleApiHelper,
+    @Inject(AngleApiHelper) private readonly angleApiHelper: AngleApiHelper,
   ) {}
 
   async getPositions() {
     const multicall = this.appToolkit.getMulticall(network);
-
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
 
     const tokenList = await this.angleApiHelper.fetchTokenList();
@@ -57,7 +55,7 @@ export class EthereumAngleSantokenTokenFetcher implements PositionFetcher<AppTok
           network,
         });
         const collateralMap = await multicall.wrap(stableMasterContract).collateralMap(poolManager);
-        const underlyingToken = baseTokens.find(v => v.address.toLowerCase() === collateralMap.token.toLowerCase());
+        const underlyingToken = baseTokens.find(v => v.address === collateralMap.token.toLowerCase());
         const agToken = baseTokens.find(v => v.symbol === 'agEUR');
 
         if (!underlyingToken || !agToken) return null;

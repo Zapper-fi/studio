@@ -53,7 +53,7 @@ export class EthereumAngleBalanceFetcher implements BalanceFetcher {
       address,
       appId: ANGLE_DEFINITION.id,
       groupId: ANGLE_DEFINITION.groups.santoken.id,
-      network: Network.ETHEREUM_MAINNET,
+      network,
     });
   }
 
@@ -100,14 +100,14 @@ export class EthereumAngleBalanceFetcher implements BalanceFetcher {
     const vaults = Object.values(await this.angleApiHelper.getUserVaults(address));
 
     const balances = vaults.map(vault => {
-      const contractPosition = contractPositions.find(v => v.address.toLowerCase() === vault.address.toLowerCase());
+      const contractPosition = contractPositions.find(v => v.address === vault.address.toLowerCase());
       if (!contractPosition) return null;
 
       const collateralToken = contractPosition!.tokens.find(isSupplied)!;
       const borrowedToken = contractPosition!.tokens.find(isBorrowed)!;
 
-      const collateral = utils.parseUnits(vault.collateralAmount.toString(), collateralToken.decimals);
-      const debt = utils.parseUnits(vault.debt.toString(), borrowedToken.decimals);
+      const collateral = vault.collateralAmount / 10 ** collateralToken.decimals;
+      const debt = vault.debt / 10 ** borrowedToken.decimals;
 
       const tokens = [
         drillBalance(collateralToken, collateral.toString()),
@@ -135,11 +135,18 @@ export class EthereumAngleBalanceFetcher implements BalanceFetcher {
     ]);
 
     return presentBalanceFetcherResponse([
-      { label: 'veANGLE', assets: veAngleTokenBalances },
-      { label: 'sanTokens', assets: sanTokenBalances },
-
-      { label: 'Vaults', assets: vaults },
-
+      {
+        label: 'veANGLE',
+        assets: veAngleTokenBalances,
+      },
+      {
+        label: 'sanTokens',
+        assets: sanTokenBalances,
+      },
+      {
+        label: 'Vaults',
+        assets: vaults,
+      },
       {
         label: 'Perpetuals',
         assets: perpetuals,

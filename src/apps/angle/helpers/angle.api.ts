@@ -1,9 +1,8 @@
 import querystring from 'node:querystring';
 
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import Axios from 'axios';
 
-import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Cache } from '~cache/cache.decorator';
 import { Network } from '~types/network.interface';
 
@@ -91,7 +90,7 @@ type TVault = {
 
 @Injectable()
 export class AngleApiHelper {
-  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
+  constructor() {}
 
   private async callAngleApi<T>(endpoint: string, params?: Record<string, any>): Promise<T> {
     let url = `${BASE_URL}/${endpoint}`;
