@@ -1,1 +1,1 @@
-export { MMFINANCE_DEFINITION, MMfinanceAppDefinition } from './mmfinance.definition';
+export { MMFINANCE_DEFINITION, MmfinanceAppDefinition } from './mmfinance.definition';

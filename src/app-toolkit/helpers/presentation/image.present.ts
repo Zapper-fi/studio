@@ -6,8 +6,12 @@ export const getTokenImg = (address: string, network: Network = Network.ETHEREUM
   return `https://storage.googleapis.com/zapper-fi-assets/tokens/${network}/${address}.png`;
 };
 
-export const getAppImg = (appName: string) => {
-  return `https://storage.googleapis.com/zapper-fi-assets/apps/${appName}.png`;
+export const getAppImg = (appId: string) => {
+  return `https://storage.googleapis.com/zapper-fi-assets/apps/${appId}.png`;
+};
+
+export const getAppAssetImage = (appId: string, filename: string) => {
+  return `https://storage.googleapis.com/zapper-fi-assets/apps/${appId}/${filename}.png`;
 };
 
 export const getNetworkImg = (network: Network) => {

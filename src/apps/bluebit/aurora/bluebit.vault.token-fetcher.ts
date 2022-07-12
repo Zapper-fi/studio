@@ -16,7 +16,7 @@ const groupId = BLUEBIT_DEFINITION.groups.vault.id;
 const network = Network.AURORA_MAINNET;
 
 const zeroAddress = '0x0000000000000000000000000000000000000000';
-const statsAddress = '0x36C6FBA304009a036BaaE1a24a570B450Ae14a5C';
+const statsAddress = '0x36c6fba304009a036baae1a24a570b450ae14a5c';
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
 export class AuroraBluebitVaultTokenFetcher implements PositionFetcher<AppTokenPosition> {
@@ -54,7 +54,7 @@ export class AuroraBluebitVaultTokenFetcher implements PositionFetcher<AppTokenP
       groupId,
       minLiquidity: 10000,
       fee: 0.003,
-      factoryAddress: '0xc66F594268041dB60507F00703b152492fb176E7',
+      factoryAddress: '0xc66f594268041db60507f00703b152492fb176e7',
       resolveFactoryContract: opts => this.bluebitContractFactory.bluebit(opts),
       resolvePoolContract: opts => this.uniswapV2ContractFactory.uniswapPair(opts),
       resolvePoolTokenAddresses: () => this.getVaults(),

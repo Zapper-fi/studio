@@ -12,9 +12,9 @@ const appId = IMPERMAX_DEFINITION.id;
 const groupId = IMPERMAX_DEFINITION.groups.collateral.id;
 const network = Network.POLYGON_MAINNET;
 
-const address = '0x8c3736e2fe63cc2cd89ee228d9dbcab6ce5b767b';
+const address = '0xbb92270716c8c424849f17ccc12f4f24ad4064d6';
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
 export class PolygonImpermaxCollateralTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(ImpermaxCollateralTokenHelper)

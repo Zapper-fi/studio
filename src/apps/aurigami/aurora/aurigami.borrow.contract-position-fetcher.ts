@@ -12,7 +12,7 @@ const appId = AURIGAMI_DEFINITION.id;
 const groupId = AURIGAMI_DEFINITION.groups.borrow.id;
 const network = Network.AURORA_MAINNET;
 
-@Register.ContractPositionFetcher({ appId, groupId, network })
+@Register.ContractPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
 export class AuroraAurigamiBorrowContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(CompoundBorrowContractPositionHelper)

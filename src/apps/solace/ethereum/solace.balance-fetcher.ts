@@ -6,14 +6,10 @@ import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation
 import { BalanceFetcher } from '~balance/balance-fetcher.interface';
 import { Network } from '~types/network.interface';
 
-import { SolaceContractFactory } from '../contracts';
+import { SolaceBondBalanceHelper } from '../helpers/SolaceBondBalanceHelper';
+import { SolacePolicyBalanceHelper } from '../helpers/SolacePolicyBalanceHelper';
+import { SolaceXSBalanceHelper } from '../helpers/SolaceXSBalanceHelper';
 import { SOLACE_DEFINITION } from '../solace.definition';
-
-import getBondBalance from './helpers/getBondBalance';
-import getPolicyBalance from './helpers/getPolicyBalance';
-import getScpBalance from './helpers/getScpBalance';
-import getXSLockerBalance from './helpers/getXSLockerBalance';
-import getXSolaceV1Balance from './helpers/getXSolaceV1Balance';
 
 const network = Network.ETHEREUM_MAINNET;
 
@@ -21,23 +17,83 @@ const network = Network.ETHEREUM_MAINNET;
 export class EthereumSolaceBalanceFetcher implements BalanceFetcher {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(SolaceContractFactory) private readonly solaceContractFactory: SolaceContractFactory,
+    @Inject(SolaceBondBalanceHelper)
+    private readonly solaceBondBalanceHelper: SolaceBondBalanceHelper,
+    @Inject(SolacePolicyBalanceHelper)
+    private readonly solacePolicyBalanceHelper: SolacePolicyBalanceHelper,
+    @Inject(SolaceXSBalanceHelper)
+    private readonly solaceXSBalanceHelper: SolaceXSBalanceHelper,
   ) {}
+
+  async getScpBalance(address: string) {
+    return this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
+      address,
+      appId: SOLACE_DEFINITION.id,
+      groupId: SOLACE_DEFINITION.groups.scp.id,
+      network,
+    });
+  }
+
+  async getXSolaceV1Balance(address: string) {
+    return this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
+      address,
+      appId: SOLACE_DEFINITION.id,
+      groupId: SOLACE_DEFINITION.groups.xsolacev1.id,
+      network,
+    });
+  }
+
+  async getXSLockerBalance(address: string) {
+    return this.solaceXSBalanceHelper.getBalances({
+      address,
+      network,
+    });
+  }
+
+  async getBondBalance(address: string) {
+    return this.solaceBondBalanceHelper.getBalances({
+      address,
+      network,
+    });
+  }
+
+  async getPolicyBalance(address: string) {
+    return this.solacePolicyBalanceHelper.getBalances({
+      address,
+      network,
+    });
+  }
 
   async getBalances(address: string) {
     const [scpBal, xsolaceBal, xslockerBal, bondBal, policyBal] = await Promise.all([
-      getScpBalance(address, this.appToolkit),
-      getXSolaceV1Balance(address, this.appToolkit),
-      getXSLockerBalance(address, this.appToolkit, this.solaceContractFactory),
-      getBondBalance(address, this.appToolkit, this.solaceContractFactory),
-      getPolicyBalance(address, this.appToolkit, this.solaceContractFactory),
+      this.getScpBalance(address),
+      this.getXSolaceV1Balance(address),
+      this.getXSLockerBalance(address),
+      this.getBondBalance(address),
+      this.getPolicyBalance(address),
     ]);
+
     return presentBalanceFetcherResponse([
-      { label: 'SCP', assets: scpBal },
-      { label: 'xSOLACEv1', assets: xsolaceBal },
-      { label: 'xsLocker', assets: xslockerBal },
-      { label: 'Bonds', assets: bondBal },
-      { label: 'Policies', assets: policyBal },
+      {
+        label: 'SCP',
+        assets: scpBal,
+      },
+      {
+        label: 'xSOLACEv1',
+        assets: xsolaceBal,
+      },
+      {
+        label: 'xsLocker',
+        assets: xslockerBal,
+      },
+      {
+        label: 'Bonds',
+        assets: bondBal,
+      },
+      {
+        label: 'Policies',
+        assets: policyBal,
+      },
     ]);
   }
 }

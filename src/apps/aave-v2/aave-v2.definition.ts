@@ -54,10 +54,12 @@ export const AAVE_V2_DEFINITION = appDefinition({
             label: 'Borrow',
             views: [
               {
+                viewType: 'list',
                 label: 'Variable',
                 groupIds: ['variable-debt'],
               },
               {
+                viewType: 'list',
                 label: 'Stable',
                 groupIds: ['stable-debt'],
               },
