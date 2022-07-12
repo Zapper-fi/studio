@@ -96,10 +96,8 @@ export class CompoundSupplyTokenHelper {
         const erc20TokenContract = this.contractFactory.erc20({ address, network });
         const contract = getTokenContract({ address, network });
 
-        const underlyingAddress = await getUnderlyingAddress({ contract, multicall })
-          .then(t => t.toLowerCase().replace(ETH_ADDR_ALIAS, ZERO_ADDRESS))
-          .catch(() => ZERO_ADDRESS);
-
+        const underlyingAddressRaw = await getUnderlyingAddress({ contract, multicall });
+        const underlyingAddress = underlyingAddressRaw.toLowerCase().replace(ETH_ADDR_ALIAS, ZERO_ADDRESS);
         const underlyingToken = allTokens.find(v => v.address === underlyingAddress);
         if (!underlyingToken) return null;
 
