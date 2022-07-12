@@ -19,7 +19,7 @@ export class CronosVvsFinancePoolAddressCacheManager {
   ) {}
 
   @CacheOnInterval({
-    key: `apps-v3:${VVS_FINANCE_DEFINITION.id}:graph-top-pool-addresses`,
+    key: `studio:${VVS_FINANCE_DEFINITION.id}:graph-top-pool-addresses`,
     timeout: 15 * 60 * 1000,
   })
   private async getTopPoolAddresses() {
@@ -27,7 +27,7 @@ export class CronosVvsFinancePoolAddressCacheManager {
   }
 
   @CacheOnInterval({
-    key: `apps-v3:${VVS_FINANCE_DEFINITION.id}:craftsman-pool-addresses`,
+    key: `studio:${VVS_FINANCE_DEFINITION.id}:craftsman-pool-addresses`,
     timeout: 15 * 60 * 1000,
   })
   private async getCraftsmanPoolAddresses() {
@@ -66,7 +66,7 @@ export class CronosVvsFinancePoolAddressCacheManager {
   }
 
   @CacheOnInterval({
-    key: `apps-v3:${VVS_FINANCE_DEFINITION.id}:craftsman-v2-pools`,
+    key: `studio:${VVS_FINANCE_DEFINITION.id}:craftsman-v2-pools`,
     timeout: 15 * 60 * 1000,
   })
   async getCraftsmanV2Pools() {
@@ -108,7 +108,7 @@ export class CronosVvsFinancePoolAddressCacheManager {
   }
 
   @CacheOnInterval({
-    key: `apps-v3:${VVS_FINANCE_DEFINITION.id}:craftsman-v2-pool-addresses`,
+    key: `studio:${VVS_FINANCE_DEFINITION.id}:craftsman-v2-pool-addresses`,
     timeout: 15 * 60 * 1000,
   })
   private async getCraftsmanV2PoolAddresses() {
