@@ -75,7 +75,7 @@ export class EthereumAngleSantokenTokenFetcher implements PositionFetcher<AppTok
           type: ContractType.APP_TOKEN,
           appId,
           groupId,
-          address: sanToken[0],
+          address: sanToken[0].toLowerCase(),
           network,
           symbol,
           decimals,

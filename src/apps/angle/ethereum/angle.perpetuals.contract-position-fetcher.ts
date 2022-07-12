@@ -71,7 +71,7 @@ export class EthereumAnglePerpetualsContractPositionFetcher implements PositionF
             baseURI,
           },
           displayProps: {
-            label: getLabelFromToken(underlyingToken),
+            label: `${getLabelFromToken(underlyingToken)}/EUR Perp`,
             images: getImagesFromToken(underlyingToken),
           },
         };

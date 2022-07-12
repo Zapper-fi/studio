@@ -164,11 +164,10 @@ export class CoslendSupplyTokenHelper {
           ? await getDisplayLabel({ contract, multicall, underlyingToken })
           : underlyingToken.symbol;
         const secondaryLabel = buildDollarDisplayItem(underlyingToken.price);
-        const tertiaryLabel = `${(supplyApy * 100).toFixed(3)}% APY`;
         const images = [getTokenImg(underlyingToken.address, network)];
         const balanceDisplayMode = BalanceDisplayMode.UNDERLYING;
         const statsItems = [
-          { label: 'APY', value: buildPercentageDisplayItem(supplyApy) },
+          { label: 'APY', value: buildPercentageDisplayItem(supplyApy * 100) },
           { label: 'Liquidity', value: buildDollarDisplayItem(liquidity) },
         ];
 
@@ -196,7 +195,6 @@ export class CoslendSupplyTokenHelper {
           displayProps: {
             label,
             secondaryLabel,
-            tertiaryLabel,
             images,
             statsItems,
             balanceDisplayMode,
