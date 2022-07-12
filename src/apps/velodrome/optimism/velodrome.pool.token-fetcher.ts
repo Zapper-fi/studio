@@ -31,7 +31,7 @@ export class OptimismVelodromePoolsTokenFetcher implements PositionFetcher<AppTo
   ) {}
 
   @CacheOnInterval({
-    key: `apps-v1:${network}:${appId}:${groupId}:definitions`,
+    key: `studio:${network}:${appId}:${groupId}:definitions`,
     timeout: 15 * 60 * 1000,
   })
   async getDefinitions() {

@@ -10,11 +10,11 @@ import { VaporwaveFinanceAppDefinition, VAPORWAVE_FINANCE_DEFINITION } from './v
 @Register.AppModule({
   appId: VAPORWAVE_FINANCE_DEFINITION.id,
   providers: [
+    VaporwaveFinanceAppDefinition,
+    VaporwaveFinanceContractFactory,
     AuroraVaporwaveFinanceBalanceFetcher,
     AuroraVaporwaveFinanceFarmContractPositionFetcher,
     AuroraVaporwaveFinanceVaultTokenFetcher,
-    VaporwaveFinanceAppDefinition,
-    VaporwaveFinanceContractFactory,
   ],
 })
 export class VaporwaveFinanceAppModule extends AbstractApp() {}
