@@ -12,7 +12,7 @@ const appId = COMPOUND_DEFINITION.id;
 const groupId = COMPOUND_DEFINITION.groups.borrow.id;
 const network = Network.ETHEREUM_MAINNET;
 
-@Register.ContractPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
+@Register.ContractPositionFetcher({ appId, groupId, network })
 export class EthereumCompoundBorrowContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(CompoundBorrowContractPositionHelper)

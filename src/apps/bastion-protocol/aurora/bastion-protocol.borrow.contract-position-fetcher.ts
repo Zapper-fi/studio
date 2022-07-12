@@ -22,7 +22,7 @@ const appId = BASTION_PROTOCOL_DEFINITION.id;
 const groupId = BASTION_PROTOCOL_DEFINITION.groups.borrow.id;
 const network = Network.AURORA_MAINNET;
 
-@Register.ContractPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
+@Register.ContractPositionFetcher({ appId, groupId, network })
 export class AuroraBastionProtocolBorrowContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,

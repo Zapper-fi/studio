@@ -43,7 +43,10 @@ export const PLUTUS_DEFINITION = appDefinition({
   },
   tags: [AppTag.ASSET_MANAGEMENT, AppTag.FARMING],
   keywords: [],
-  links: {},
+  links: {
+    discord: 'https://discord.com/invite/plutusdao',
+    twitter: 'https://twitter.com/PlutusDAO_io',
+  },
 
   supportedNetworks: {
     [Network.ARBITRUM_MAINNET]: [AppAction.VIEW],

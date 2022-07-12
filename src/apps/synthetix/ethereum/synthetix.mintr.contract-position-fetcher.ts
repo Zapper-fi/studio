@@ -43,7 +43,7 @@ const appId = SYNTHETIX_DEFINITION.id;
 const groupId = SYNTHETIX_DEFINITION.groups.mintr.id;
 const network = Network.ETHEREUM_MAINNET;
 
-@Register.ContractPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
+@Register.ContractPositionFetcher({ appId, groupId, network, options: { excludeFromTvl: true } })
 export class EthereumSynthetixMintrContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(SynthetixMintrContractPositionHelper)

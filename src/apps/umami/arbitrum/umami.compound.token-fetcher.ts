@@ -34,7 +34,7 @@ export type UmamiApiDatas = {
   mUmamiCompounder: UmamiCompounderApiObject;
 };
 
-@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
+@Register.TokenPositionFetcher({ appId, groupId, network })
 export class ArbitrumUmamiCompoundTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,

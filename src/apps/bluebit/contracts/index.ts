@@ -5,6 +5,7 @@ import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
 import { Bluebit__factory } from './ethers';
+import { BluebitVeToken__factory } from './ethers';
 import { Stats__factory } from './ethers';
 import { Vault__factory } from './ethers';
 
@@ -20,6 +21,9 @@ export class BluebitContractFactory extends ContractFactory {
   bluebit({ address, network }: ContractOpts) {
     return Bluebit__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  bluebitVeToken({ address, network }: ContractOpts) {
+    return BluebitVeToken__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   stats({ address, network }: ContractOpts) {
     return Stats__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
@@ -29,5 +33,6 @@ export class BluebitContractFactory extends ContractFactory {
 }
 
 export type { Bluebit } from './ethers';
+export type { BluebitVeToken } from './ethers';
 export type { Stats } from './ethers';
 export type { Vault } from './ethers';

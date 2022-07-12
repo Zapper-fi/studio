@@ -16,7 +16,7 @@ export class AuroraTrisolarisPoolAddressCacheManager {
   ) {}
 
   @CacheOnInterval({
-    key: `apps-v3:${TRISOLARIS_DEFINITION.id}:chef-v2-pool-addresses`,
+    key: `studio:${TRISOLARIS_DEFINITION.id}:chef-v2-pool-addresses`,
     timeout: 15 * 60 * 1000,
   })
   private async getChefV2PoolAddresses() {
