@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.110.2](https://github.com/Zapper-fi/studio/compare/v0.110.1...v0.110.2) (2022-07-12)
+
+
+### Bug Fixes
+
+* **compound:** Remove dangerous catch statement when retrieving underlying token address ([#869](https://github.com/Zapper-fi/studio/issues/869)) ([d1d43ce](https://github.com/Zapper-fi/studio/commit/d1d43ce5a6ca1bbe5a1ee58456bf9755470b0a3f))
+
 ## [0.110.1](https://github.com/Zapper-fi/studio/compare/v0.110.0...v0.110.1) (2022-07-11)
 
 
