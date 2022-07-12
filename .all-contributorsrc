@@ -481,6 +481,70 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "FiboApe",
+      "name": "FiboApe",
+      "avatar_url": "https://avatars.githubusercontent.com/u/94012134?v=4",
+      "profile": "https://github.com/FiboApe",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "teddav",
+      "name": "David",
+      "avatar_url": "https://avatars.githubusercontent.com/u/9486739?v=4",
+      "profile": "https://github.com/teddav",
+      "contributions": [
+        "code",
+        "bug"
+      ]
+    },
+    {
+      "login": "0xAlunara",
+      "name": "0xAlunara",
+      "avatar_url": "https://avatars.githubusercontent.com/u/88008691?v=4",
+      "profile": "https://github.com/0xAlunara",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "jn-lp",
+      "name": "Eugene Lepeico",
+      "avatar_url": "https://avatars.githubusercontent.com/u/21959994?v=4",
+      "profile": "https://github.com/jn-lp",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "FredCoen",
+      "name": "FredCoen",
+      "avatar_url": "https://avatars.githubusercontent.com/u/43670554?v=4",
+      "profile": "https://github.com/FredCoen",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "VaporwaveFinance",
+      "name": "VaporwaveFinance",
+      "avatar_url": "https://avatars.githubusercontent.com/u/95114728?v=4",
+      "profile": "https://github.com/VaporwaveFinance",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "peezebit",
+      "name": "peezebit",
+      "avatar_url": "https://avatars.githubusercontent.com/u/79215347?v=4",
+      "profile": "https://github.com/peezebit",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7
