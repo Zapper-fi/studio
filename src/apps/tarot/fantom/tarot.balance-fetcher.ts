@@ -30,7 +30,7 @@ export class FantomTarotBalanceFetcher implements BalanceFetcher {
       appId: TAROT_DEFINITION.id,
       groupId: TAROT_DEFINITION.groups.supply.id,
       network,
-      getTokenContract: ({ address, network }) => this.contractFactory.erc20({ address, network }),
+      getTokenContract: ({ address, network }) => this.contractFactory.tarotBorrowable({ address, network }),
       getBalanceRaw: ({ contract, address, multicall }) => multicall.wrap(contract).balanceOf(address),
     });
   }
