@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.110.4](https://github.com/Zapper-fi/studio/compare/v0.110.3...v0.110.4) (2022-07-13)
+
+
+### Bug Fixes
+
+* **compound:** Remove unused variable ([cd90713](https://github.com/Zapper-fi/studio/commit/cd907135eb58463307b7adfa473d54ed5ceba325))
+* **compound:** Ugly fix to find the cETH address ([1c4a54d](https://github.com/Zapper-fi/studio/commit/1c4a54dff97009505a9c218fb3a93a1d12c1e0a4))
+
 ## [0.110.3](https://github.com/Zapper-fi/studio/compare/v0.110.2...v0.110.3) (2022-07-13)
 
 
