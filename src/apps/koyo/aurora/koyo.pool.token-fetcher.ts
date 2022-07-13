@@ -11,10 +11,10 @@ import { KOYO_DEFINITION } from '../koyo.definition';
 
 const appId = KOYO_DEFINITION.id;
 const groupId = KOYO_DEFINITION.groups.pool.id;
-const network = Network.BOBA_MAINNET;
+const network = Network.AURORA_MAINNET;
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
-export class BobaKoyoPoolTokenFetcher implements PositionFetcher<AppTokenPosition> {
+export class AuroraKoyoPoolTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(KoyoPoolTokensHelper) private readonly poolTokensHelper: KoyoPoolTokensHelper,
     @Inject(KoyoTheGraphPoolTokenDataStrategy)
@@ -26,9 +26,9 @@ export class BobaKoyoPoolTokenFetcher implements PositionFetcher<AppTokenPositio
       network,
       appId,
       groupId,
-      vaultAddress: '0x2a4409cc7d2ae7ca1e3d915337d1b6ba2350d6a3',
+      vaultAddress: '0x0613ADbD846CB73E65aA474b785F52697af04c0b',
       resolvePoolTokenAddresses: this.koyoTheGraphPoolTokenDataStrategy.build({
-        subgraphUrl: 'https://api.thegraph.com/subgraphs/name/koyo-finance/exchange-subgraph-boba',
+        subgraphUrl: 'https://api.thegraph.com/subgraphs/name/koyo-finance/exchange-subgraph-aurora',
       }),
     });
   }

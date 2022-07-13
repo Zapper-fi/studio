@@ -15,6 +15,5 @@ export const MULTICALL_ADDRESSES: Record<Network, string | null> = {
   [Network.CRONOS_MAINNET]: '0x845c4753954c347175b4179b2d5b18de1629f94f',
   [Network.AURORA_MAINNET]: '0x67d66e8ec1fd25d98b3ccd3b19b7dc4b4b7fc493',
   [Network.EVMOS_MAINNET]: '0xa7d0561ead7da21bd6d2f0bc89849c60703be505',
-  [Network.BOBA_MAINNET]: '0x1E3d8eB89D99dcc23284DCe40f3A72a3Ef4cDDfA',
   [Network.BITCOIN_MAINNET]: null,
 };

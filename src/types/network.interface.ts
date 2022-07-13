@@ -14,7 +14,6 @@ export enum Network {
   CRONOS_MAINNET = 'cronos',
   AURORA_MAINNET = 'aurora',
   EVMOS_MAINNET = 'evmos',
-  BOBA_MAINNET = 'boba',
 }
 
 export const NETWORK_IDS: Record<Network, number | null> = {
@@ -34,5 +33,4 @@ export const NETWORK_IDS: Record<Network, number | null> = {
   [Network.AURORA_MAINNET]: 1313161554,
   [Network.EVMOS_MAINNET]: 9001,
   [Network.BITCOIN_MAINNET]: 1285,
-  [Network.BOBA_MAINNET]: 288,
 };
