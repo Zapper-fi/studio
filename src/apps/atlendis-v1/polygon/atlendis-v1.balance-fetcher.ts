@@ -40,7 +40,7 @@ export class PolygonAtlendisV1BalanceFetcher implements BalanceFetcher {
     const positions = await Promise.all(
       data.positions.map(async position => {
         const underlyingToken = baseTokens.find(
-          t => t.address.toLowerCase() === position.pool.parameters.underlyingToken.toLowerCase(),
+          t => t.address.toLowerCase() === position.pool.parameters.token.address.toLowerCase(),
         );
         if (!underlyingToken) return null;
         const positionManagerAddress = '0x55E4e70a725C1439dac6B9412B71fC8372Bd73e9';
