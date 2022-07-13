@@ -1,11 +1,11 @@
 import { Inject } from '@nestjs/common';
+import _ from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { TRISOLARIS_DEFINITION } from '~apps/trisolaris/trisolaris.definition';
 import { ContractType } from '~position/contract.interface';
-import { DefaultDataProps } from '~position/display.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
 import { claimable, supplied } from '~position/position.utils';
@@ -42,7 +42,7 @@ export class AuroraVaporwaveFinanceFarmContractPositionFetcher implements Positi
         const tokens = [supplied(stakedToken), claimable(earnedToken)];
         const stakedTokenContract = this.appToolkit.globalContracts.erc20({ address: tokenAddress, network });
         const [balanceRaw] = await Promise.all([multicall.wrap(stakedTokenContract).balanceOf(earnContractAddress)]);
-        const totalValueLocked = Number(balanceRaw) / 10 ** stakedToken.decimals;
+        const liquidity = Number(balanceRaw) / 10 ** stakedToken.decimals;
 
         const label = getLabelFromToken(stakedToken);
         const images = getImagesFromToken(stakedToken);
@@ -56,7 +56,7 @@ export class AuroraVaporwaveFinanceFarmContractPositionFetcher implements Positi
           network,
           tokens,
           dataProps: {
-            totalValueLocked,
+            liquidity,
           },
           displayProps: {
             label,
@@ -68,6 +68,6 @@ export class AuroraVaporwaveFinanceFarmContractPositionFetcher implements Positi
       }),
     );
 
-    return positions.filter((x): x is ContractPosition<DefaultDataProps> => x !== null);
+    return _.compact(positions);
   }
 }

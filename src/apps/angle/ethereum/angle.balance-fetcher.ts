@@ -12,7 +12,7 @@ import { isBorrowed, isSupplied } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 
 import { ANGLE_DEFINITION } from '../angle.definition';
-import { AngleContractFactory, AngleSantoken, AngleVeangle } from '../contracts';
+import { AngleContractFactory, AngleLiquidityGauge, AngleVeangle } from '../contracts';
 import { AngleApiHelper } from '../helpers/angle.api';
 
 const network = Network.ETHEREUM_MAINNET;
@@ -29,13 +29,13 @@ export class EthereumAngleBalanceFetcher implements BalanceFetcher {
   ) {}
 
   async getVeAngleTokenBalances(address: string) {
-    return this.curveVotingEscrowContractPositionBalanceHelper.getBalances<AngleVeangle, AngleSantoken>({
+    return this.curveVotingEscrowContractPositionBalanceHelper.getBalances<AngleVeangle, AngleLiquidityGauge>({
       address,
       network,
       appId: ANGLE_DEFINITION.id,
       groupId: ANGLE_DEFINITION.groups.veangle.id,
       resolveContract: ({ address }) => this.angleContractFactory.angleVeangle({ network, address }),
-      resolveRewardContract: ({ address }) => this.angleContractFactory.angleSantoken({ address, network }),
+      resolveRewardContract: ({ address }) => this.angleContractFactory.angleLiquidityGauge({ address, network }),
       resolveLockedTokenBalance: ({ contract, multicall }) =>
         multicall
           .wrap(contract)
@@ -76,7 +76,7 @@ export class EthereumAngleBalanceFetcher implements BalanceFetcher {
 
       const positionSize = BigNumber.from(perp.committedAmount);
 
-      const tokens = [drillBalance(collateralToken, utils.formatUnits(positionSize, collateralToken.decimals))];
+      const tokens = [drillBalance(collateralToken, positionSize.toString())];
       const balance = positionSize.mul(utils.parseEther(collateralToken.price.toString())).div(utils.parseEther('1'));
       const balanceUSD = Number(utils.formatUnits(balance, collateralToken.decimals));
 

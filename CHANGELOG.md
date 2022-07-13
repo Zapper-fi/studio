@@ -4,6 +4,34 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.110.2](https://github.com/Zapper-fi/studio/compare/v0.110.1...v0.110.2) (2022-07-12)
+
+
+### Bug Fixes
+
+* **compound:** Remove dangerous catch statement when retrieving underlying token address ([#869](https://github.com/Zapper-fi/studio/issues/869)) ([d1d43ce](https://github.com/Zapper-fi/studio/commit/d1d43ce5a6ca1bbe5a1ee58456bf9755470b0a3f))
+
+## [0.110.1](https://github.com/Zapper-fi/studio/compare/v0.110.0...v0.110.1) (2022-07-11)
+
+
+### Bug Fixes
+
+* **symphony:** Add missing supported network in definition file ([#865](https://github.com/Zapper-fi/studio/issues/865)) ([72ea80c](https://github.com/Zapper-fi/studio/commit/72ea80c8ba02a5bd7cd2ae5bf53ffac52647b219))
+
+## [0.110.0](https://github.com/Zapper-fi/studio/compare/v0.109.0...v0.110.0) (2022-07-11)
+
+
+### Features
+
+* **atlendis:** Integrate Atlendis lending app ([#842](https://github.com/Zapper-fi/studio/issues/842)) ([b5a9e66](https://github.com/Zapper-fi/studio/commit/b5a9e6605d23dd4152649a786826fc94a967e621))
+
+
+### Bug Fixes
+
+* **angle:** Fix Angle images ([#862](https://github.com/Zapper-fi/studio/issues/862)) ([12b9367](https://github.com/Zapper-fi/studio/commit/12b9367a828273dce3351230f3fa807d19be6db7))
+* **apps:** fix display issues for Angle Protocol app ([#863](https://github.com/Zapper-fi/studio/issues/863)) ([ee81980](https://github.com/Zapper-fi/studio/commit/ee81980cd24abb7b8ea62718f0bce2a3a915a230))
+* **vaporware:** Fix linting, adjust labels and prices to use Zapper indexed images and prices ([#860](https://github.com/Zapper-fi/studio/issues/860)) ([566b97d](https://github.com/Zapper-fi/studio/commit/566b97d15be3502b740e8b43bb7489707fbabc6f))
+
 ## [0.109.0](https://github.com/Zapper-fi/studio/compare/v0.108.0...v0.109.0) (2022-07-11)
 
 

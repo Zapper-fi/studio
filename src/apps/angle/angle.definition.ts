@@ -5,7 +5,7 @@ import { Network } from '~types/network.interface';
 
 export const ANGLE_DEFINITION = appDefinition({
   id: 'angle',
-  name: 'angle',
+  name: 'Angle Protocol',
   description:
     'Angle is an over-collateralized, decentralized and capital-efficient stablecoin protocol. It is based on two smart contract modules. Angle Core module allows to mint agEUR from any token at face value, open perpetuals on collateral/stablecoin pairs, or deposit tokens to earn yield. Angle Borrowing module allows to borrow or get leverage with agEUR from tokens deposited as collateral. Angle is governed by veANGLE holders.',
   url: 'https://www.angle.money/',

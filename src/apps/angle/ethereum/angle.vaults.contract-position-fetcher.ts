@@ -41,13 +41,12 @@ export class EthereumAngleVaultsContractPositionFetcher implements PositionFetch
       );
       if (!collateralToken || !stableToken) return null;
 
-      return {
+      const position: ContractPosition = {
         type: ContractType.POSITION,
         appId,
         groupId,
         address: vaultManager.address,
         network,
-        symbol: vaultManager.symbol,
         tokens: [supplied(collateralToken), borrowed(stableToken)],
         dataProps: {
           totalDebt: vaultManager.totalDebt,
@@ -55,10 +54,12 @@ export class EthereumAngleVaultsContractPositionFetcher implements PositionFetch
           maxLTV: vaultManager.maxLTV,
         },
         displayProps: {
-          label: `${getLabelFromToken(collateralToken)}/${getLabelFromToken(stableToken)}`,
+          label: `${getLabelFromToken(collateralToken)} - ${getLabelFromToken(stableToken)} vault`,
           images: [...getImagesFromToken(collateralToken), ...getImagesFromToken(stableToken)],
         },
-      } as ContractPosition;
+      };
+
+      return position;
     });
 
     return compact(positions);

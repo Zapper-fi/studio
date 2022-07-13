@@ -24,6 +24,7 @@ export const YEARN_DEFINITION = appDefinition({
       id: 'governance',
       type: GroupType.POSITION,
       label: 'Governance',
+      isHiddenFromExplore: true,
     },
 
     yield: {

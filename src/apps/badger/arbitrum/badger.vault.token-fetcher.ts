@@ -35,7 +35,7 @@ export class ArbitrumBadgerVaultTokenFetcher implements PositionFetcher<AppToken
   constructor(@Inject(BadgerVaultTokenHelper) private readonly badgerVaultTokenHelper: BadgerVaultTokenHelper) {}
 
   @CacheOnInterval({
-    key: `apps-v3:${network}:${appId}:${groupId}:definitions`,
+    key: `studio:${appId}:${groupId}:${network}:definitions`,
     timeout: 15 * 60 * 1000,
   })
   async getVaultDefinitions() {
