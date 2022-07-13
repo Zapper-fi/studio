@@ -7,7 +7,9 @@ export const GET_USER_POSITIONS = gql`
       normalizedAmount
       pool {
         parameters {
-          underlyingToken
+          token {
+            address
+          }
         }
       }
     }
