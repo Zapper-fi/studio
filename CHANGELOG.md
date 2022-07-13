@@ -4,6 +4,15 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.110.3](https://github.com/Zapper-fi/studio/compare/v0.110.2...v0.110.3) (2022-07-13)
+
+
+### Bug Fixes
+
+* **atlendis-v1:** Fix API query ([#874](https://github.com/Zapper-fi/studio/issues/874)) ([9653439](https://github.com/Zapper-fi/studio/commit/96534397b0d8eac2153beb1f93cbe4e8a1319e5c))
+* **balance:** Remove dependencies on Studio implementations of MulticallService and PositionService ([#873](https://github.com/Zapper-fi/studio/issues/873)) ([21aa047](https://github.com/Zapper-fi/studio/commit/21aa047cb5bec13b99669a9270cbfe309ea9e670))
+* Bunch of app fixes ([#829](https://github.com/Zapper-fi/studio/issues/829)) ([094a6e8](https://github.com/Zapper-fi/studio/commit/094a6e8ce93572c444589bf76928798fcdf10b1b))
+
 ## [0.110.2](https://github.com/Zapper-fi/studio/compare/v0.110.1...v0.110.2) (2022-07-12)
 
 
