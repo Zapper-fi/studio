@@ -80,6 +80,7 @@ export class CompoundSupplyTokenHelper {
       Math.pow(1 + (blocksPerDay * Number(rate)) / Number(1e18), 365) - 1,
   }: CompoundSupplyTokenHelperParams<T, V>) {
     const multicall = this.appToolkit.getMulticall(network);
+    const provider = this.appToolkit.getNetworkProvider(network);
 
     if (!allTokens.length) {
       const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
@@ -96,7 +97,13 @@ export class CompoundSupplyTokenHelper {
         const erc20TokenContract = this.contractFactory.erc20({ address, network });
         const contract = getTokenContract({ address, network });
 
-        const underlyingAddressRaw = await getUnderlyingAddress({ contract, multicall });
+        const underlyingAddressRaw = await getUnderlyingAddress({ contract, multicall }).catch(err => {
+          // if the underlying call failed, it's the compound-wrapped native token
+          const isCompoundWrappedNativeToken = err.message.includes('Multicall call failed for');
+          if (isCompoundWrappedNativeToken) return ZERO_ADDRESS;
+          throw err;
+        });
+
         const underlyingAddress = underlyingAddressRaw.toLowerCase().replace(ETH_ADDR_ALIAS, ZERO_ADDRESS);
         const underlyingToken = allTokens.find(v => v.address === underlyingAddress);
         if (!underlyingToken) return null;
