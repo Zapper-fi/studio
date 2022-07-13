@@ -80,7 +80,6 @@ export class CompoundSupplyTokenHelper {
       Math.pow(1 + (blocksPerDay * Number(rate)) / Number(1e18), 365) - 1,
   }: CompoundSupplyTokenHelperParams<T, V>) {
     const multicall = this.appToolkit.getMulticall(network);
-    const provider = this.appToolkit.getNetworkProvider(network);
 
     if (!allTokens.length) {
       const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
