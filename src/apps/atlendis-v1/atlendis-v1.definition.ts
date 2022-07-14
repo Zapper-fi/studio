@@ -10,10 +10,10 @@ export const ATLENDIS_V_1_DEFINITION = appDefinition({
   url: 'https://app.atlendis.io/',
 
   groups: {
-    position: {
-      id: 'position',
+    lending: {
+      id: 'lending',
       type: GroupType.POSITION,
-      label: 'Positions',
+      label: 'Lending',
     },
   },
 
