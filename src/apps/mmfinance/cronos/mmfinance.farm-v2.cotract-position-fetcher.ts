@@ -19,7 +19,7 @@ export class CronosChainMmfinanceFarmV2ContractPositionFetcher implements Positi
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(MmfinanceContractFactory) private readonly contractFactory: MmfinanceContractFactory,
-  ) {}
+  ) { }
 
   getPositions() {
     return this.appToolkit.helpers.masterChefContractPositionHelper.getContractPositions<MmfinanceChefV2>({
@@ -32,7 +32,7 @@ export class CronosChainMmfinanceFarmV2ContractPositionFetcher implements Positi
       resolveContract: opts => this.contractFactory.mmfinanceChefV2(opts),
       resolvePoolLength: async ({ multicall, contract }) => multicall.wrap(contract).poolLength(),
       resolveDepositTokenAddress: ({ multicall, contract, poolIndex }) => multicall.wrap(contract).lpToken(poolIndex),
-      resolveRewardTokenAddresses: ({ multicall, contract }) => multicall.wrap(contract).CAKE(),
+      resolveRewardTokenAddresses: ({ multicall, contract }) => multicall.wrap(contract).MEERKAT(),
       rewardRateUnit: RewardRateUnit.BLOCK,
       resolveRewardRate: this.appToolkit.helpers.masterChefDefaultRewardsPerBlockStrategy.build({
         resolvePoolAllocPoints: ({ multicall, contract, poolIndex }) =>

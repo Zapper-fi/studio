@@ -20,10 +20,10 @@ export class CronosChainMmfinanceIfoCakeContractPositionFetcher implements Posit
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(MmfinanceContractFactory) private readonly contractFactory: MmfinanceContractFactory,
-  ) {}
+  ) { }
 
   getPositions() {
-    const cakeChefContract = this.contractFactory.mmfinanceMmfChef({
+    const mmfChefContract = this.contractFactory.mmfinanceMeerkatChef({
       network,
       address: '0xa80240eb5d7e05d3f250cf000eec0891d00b51cc',
     });
@@ -41,7 +41,7 @@ export class CronosChainMmfinanceIfoCakeContractPositionFetcher implements Posit
       resolveContract: opts => this.contractFactory.mmfinanceIfoChef(opts),
       resolvePoolLength: async () => BigNumber.from(1),
       resolveDepositTokenAddress: ({ multicall, contract }) => multicall.wrap(contract).token(),
-      resolveLiquidity: ({ multicall }) => multicall.wrap(cakeChefContract).balanceOf(),
+      resolveLiquidity: ({ multicall }) => multicall.wrap(mmfChefContract).balanceOf(),
       rewardRateUnit: RewardRateUnit.BLOCK,
       resolveRewardTokenAddresses: ({ multicall, contract }) => multicall.wrap(contract).token(),
       resolveRewardRate: this.appToolkit.helpers.masterChefDefaultRewardsPerBlockStrategy.build({

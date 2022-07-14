@@ -2,14 +2,14 @@ import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
 import { UniswapV2AppModule } from '~apps/uniswap-v2';
 
-// import { CronosChainMmfinanceAutoCakeContractPositionFetcher } from './cronos/mmfinance.auto-cake.contract-position-fetcher';
+// import { CronosChainMmfinanceAutoMeerkatContractPositionFetcher } from './cronos/mmfinance.auto-Meerkat.contract-position-fetcher';
 // import { CronosChainMmfinanceBalanceFetcher } from './cronos/mmfinance.balance-fetcher';
 // import { CronosChainMmfinanceFarmV2ContractPositionFetcher } from './cronos/mmfinance.farm-v2.cotract-position-fetcher';
 import { MmfinanceContractFactory } from './contracts';
-// import { CronosChainMmfinanceIfoCakeContractPositionFetcher } from './cronos/mmfinance.ifo-cake.contract-position-fetcher';
+// import { CronosChainMmfinanceIfoMeerkatContractPositionFetcher } from './cronos/mmfinance.ifo-Meerkat.contract-position-fetcher';
 import { CronosChainMmfinancePoolAddressCacheManager } from './cronos/mmfinance.pool.cache-manager';
 import { CronosChainMmfinancePoolTokenFetcher } from './cronos/mmfinance.pool.token-fetcher';
-// import { CronosChainMmfinanceSyrupCakeContractPositionFetcher } from './cronos/mmfinance.syrup-cake.contract-position-fetcher';
+// import { CronosChainMmfinanceSyrupMeerkatContractPositionFetcher } from './cronos/mmfinance.syrup-Meerkat.contract-position-fetcher';
 // import { CronosChainMmfinanceSyrupStakingContractPositionFetcher } from './cronos/mmfinance.syrup-staking.contract-position-fetcher';
 import { MmfinanceAppDefinition, MMFINANCE_DEFINITION } from './mmfinance.definition';
 
@@ -20,15 +20,15 @@ import { MmfinanceAppDefinition, MMFINANCE_DEFINITION } from './mmfinance.defini
     MmfinanceAppDefinition,
     MmfinanceContractFactory,
     // CronosChainMmfinanceBalanceFetcher,
-    // CronosChainMmfinanceAutoCakeContractPositionFetcher,
-    // CronosChainMmfinanceIfoCakeContractPositionFetcher,
+    // CronosChainMmfinanceAutoMeerkatContractPositionFetcher,
+    // CronosChainMmfinanceIfoMeerkatContractPositionFetcher,
     // CronosChainMmfinanceFarmContractPositionFetcher,
     // CronosChainMmfinanceFarmV2ContractPositionFetcher,
-    // CronosChainMmfinanceSyrupCakeContractPositionFetcher,
+    // CronosChainMmfinanceSyrupMeerkatContractPositionFetcher,
     // CronosChainMmfinanceSyrupStakingContractPositionFetcher,
     CronosChainMmfinancePoolTokenFetcher,
     CronosChainMmfinancePoolAddressCacheManager,
   ],
   exports: [MmfinanceContractFactory],
 })
-export class MmfinanceAppModule extends AbstractApp() {}
+export class MmfinanceAppModule extends AbstractApp() { }

@@ -23,7 +23,7 @@ export class CronosChainMmfinancePoolTokenFetcher implements PositionFetcher<App
     @Inject(CronosChainMmfinancePoolAddressCacheManager)
     private readonly MmfinancePoolAddressCacheManager: CronosChainMmfinancePoolAddressCacheManager,
     @Inject(MmfinanceContractFactory) private readonly contractFactory: MmfinanceContractFactory, // @Inject(UniswapV2ContractFactory) private readonly uniswapV2ContractFactory: UniswapV2ContractFactory,
-  ) {}
+  ) { }
 
   getPositions() {
     return this.poolTokenHelper.getTokens<MmfinanceChef, UniswapPair>({

@@ -19,7 +19,7 @@ export class CronosChainMmfinanceFarmContractPositionFetcher implements Position
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(MmfinanceContractFactory) private readonly contractFactory: MmfinanceContractFactory,
-  ) {}
+  ) { }
 
   getPositions() {
     return this.appToolkit.helpers.masterChefContractPositionHelper.getContractPositions<MmfinanceChef>({
@@ -41,12 +41,12 @@ export class CronosChainMmfinanceFarmContractPositionFetcher implements Position
         const balanceRaw = await multicall.wrap(tokenContract).balanceOf(address);
         if (poolIndex !== 0) return balanceRaw;
 
-        const autoMeerkatChefContract = this.contractFactory.mmfinanceMmfChef({
+        const autoMeerkatChefContract = this.contractFactory.mmfinanceMeerkatChef({
           network,
           address: '0xa80240eb5d7e05d3f250cf000eec0891d00b51cc',
         });
 
-        // Subtract the balance reserve for Auto CAKE staking
+        // Subtract the balance reserve for Auto MEERKAT staking
         const autoCakeVaultBalanceRaw = await multicall.wrap(autoMeerkatChefContract).balanceOf();
         return balanceRaw.sub(autoCakeVaultBalanceRaw);
       },
