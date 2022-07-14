@@ -26,7 +26,7 @@ export class CronosChainMmfinanceBalanceFetcher implements BalanceFetcher {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(MmfinanceContractFactory) private readonly contractFactory: MmfinanceContractFactory,
-  ) { }
+  ) {}
 
   private async getPoolBalances(address: string) {
     return this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({

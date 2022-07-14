@@ -21,7 +21,7 @@ export class GoodGhostingBalanceFetcherHelper {
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(GoodGhostingGameConfigFetcherHelper)
     private readonly goodGhostingGameConfigFetcherHelper: GoodGhostingGameConfigFetcherHelper,
-  ) { }
+  ) {}
 
   async getGameBalances(network: Network, networkId: string, appId: string, groupId: string, address: string) {
     const getGameConfigs = this.goodGhostingGameConfigFetcherHelper.getGameConfigs(networkId);
