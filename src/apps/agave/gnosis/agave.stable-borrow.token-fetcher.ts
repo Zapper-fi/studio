@@ -13,7 +13,7 @@ const appId = AGAVE_DEFINITION.id;
 const groupId = AGAVE_DEFINITION.groups.stableBorrow.id;
 const network = Network.GNOSIS_MAINNET;
 
-@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
+@Register.TokenPositionFetcher({ appId, groupId, network })
 export class GnosisAgaveStableBorrowTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(@Inject(AaveV2LendingTokenHelper) private readonly aaveV2LendingTokenHelper: AaveV2LendingTokenHelper) {}
 

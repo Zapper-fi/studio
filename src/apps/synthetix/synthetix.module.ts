@@ -11,6 +11,7 @@ import { EthereumSynthetixSynthTokenBalanceFetcher } from './ethereum/synthetix.
 import { EthereumSynthetixSynthTokenFetcher } from './ethereum/synthetix.synth.token-fetcher';
 import { EthereumSynthetixTransferableSnxBalanceFetcher } from './ethereum/synthetix.transferable-snx.token-balance-fetcher';
 import { EthereumSynthetixTransferableSnxTokenFetcher } from './ethereum/synthetix.transferable-snx.token-fetcher';
+import { SynthetixHoldersHelper } from './helpers/synthetix.holders.helpers';
 import { SynthetixMintrContractPositionBalanceHelper } from './helpers/synthetix.mintr.contract-position-balance-helper';
 import { SynthetixMintrContractPositionHelper } from './helpers/synthetix.mintr.contract-position-helper';
 import { SynthetixMintrMetaHelper } from './helpers/synthetix.mintr.meta-helper';
@@ -47,6 +48,7 @@ import { SynthetixAppDefinition, SYNTHETIX_DEFINITION } from './synthetix.defini
     SynthetixSynthTokenBalanceHelper,
     SynthetixTransferrableSnxTokenHelper,
     SynthetixTransferrableSnxTokenBalanceHelper,
+    SynthetixHoldersHelper,
     // Ethereum
     EthereumSynthetixFarmContractPositionFetcher,
     EthereumSynthetixFarmContractPositionBalanceFetcher,

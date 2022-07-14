@@ -114,7 +114,7 @@ export class CronosSingleLyfContractPositionFetcher implements PositionFetcher<C
           type: ContractType.POSITION,
           appId,
           groupId,
-          address: '0x70f699f902628Af04dc5323C37CfA69e22140741', // SingleBank contract on CRONOS,
+          address: '0x70f699f902628af04dc5323c37cfa69e22140741', // SingleBank contract on CRONOS,
           network,
           tokens: [supplied(stakedToken), claimable(vvsToken), ...compact(multiYieldClaimables)],
           dataProps: {

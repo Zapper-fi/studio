@@ -30,7 +30,7 @@ const BOND_TELLER_ADDRESSES = [
   '0x501ace43a70b62744037c0ec78dd043be35ef653', // FTM Bond
 ];
 
-@Register.ContractPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
+@Register.ContractPositionFetcher({ appId, groupId, network })
 export class FantomSolaceBondsContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,

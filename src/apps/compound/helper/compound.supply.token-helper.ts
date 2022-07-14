@@ -96,10 +96,14 @@ export class CompoundSupplyTokenHelper {
         const erc20TokenContract = this.contractFactory.erc20({ address, network });
         const contract = getTokenContract({ address, network });
 
-        const underlyingAddress = await getUnderlyingAddress({ contract, multicall })
-          .then(t => t.toLowerCase().replace(ETH_ADDR_ALIAS, ZERO_ADDRESS))
-          .catch(() => ZERO_ADDRESS);
+        const underlyingAddressRaw = await getUnderlyingAddress({ contract, multicall }).catch(err => {
+          // if the underlying call failed, it's the compound-wrapped native token
+          const isCompoundWrappedNativeToken = err.message.includes('Multicall call failed for');
+          if (isCompoundWrappedNativeToken) return ZERO_ADDRESS;
+          throw err;
+        });
 
+        const underlyingAddress = underlyingAddressRaw.toLowerCase().replace(ETH_ADDR_ALIAS, ZERO_ADDRESS);
         const underlyingToken = allTokens.find(v => v.address === underlyingAddress);
         if (!underlyingToken) return null;
 

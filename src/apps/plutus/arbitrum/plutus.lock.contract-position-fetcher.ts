@@ -28,13 +28,6 @@ export class ArbitrumPlutusLockContractPositionFetcher implements PositionFetche
         network,
         appId,
         groupId,
-        dependencies: [
-          {
-            appId,
-            groupIds: [groupId],
-            network,
-          },
-        ],
         resolveFarmAddresses: () => [VAULTS.PLS_LOCK],
         resolveFarmContract: ({ address, network }) =>
           this.plutusContractFactory.plutusEpochStaking({ address, network }),

@@ -54,6 +54,7 @@ export class OptimismLyraAvalonOptionsContractPositionFetcher implements Positio
             },
             dataProps: {},
           };
+
           const positions = _.keys(OPTION_TYPES).map(key => {
             return {
               ...position,
@@ -73,7 +74,12 @@ export class OptimismLyraAvalonOptionsContractPositionFetcher implements Positio
               },
             } as ContractPosition<LyraAvalonOptionContractPositionDataProps>;
           });
-          return positions;
+
+          const positionsWithKey = positions.map(p => ({
+            key: this.appToolkit.getPositionKey(p, ['optionType', 'strikeId']),
+            ...p,
+          }));
+          return positionsWithKey;
         });
         return _.flatten(strikes);
       });

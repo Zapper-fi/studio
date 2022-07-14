@@ -303,6 +303,7 @@ export class MasterChefContractPositionHelper {
           displayProps,
         };
 
+        position.key = this.appToolkit.getPositionKey(position, ['poolIndex']);
         return position;
       }),
     );

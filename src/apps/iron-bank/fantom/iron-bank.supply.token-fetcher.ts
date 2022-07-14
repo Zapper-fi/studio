@@ -13,7 +13,7 @@ const appId = IRON_BANK_DEFINITION.id;
 const groupId = IRON_BANK_DEFINITION.groups.supply.id;
 const network = Network.FANTOM_OPERA_MAINNET;
 
-@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
+@Register.TokenPositionFetcher({ appId, groupId, network })
 export class FantomIronBankSupplyTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(IronBankContractFactory) private readonly ironBankContractFactory: IronBankContractFactory,

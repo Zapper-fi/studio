@@ -31,7 +31,7 @@ const BOND_TELLER_ADDRESSES = [
   '0x501ace35f0b7fad91c199824b8fe555ee9037aa3', // AURORA Bond
 ];
 
-@Register.ContractPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
+@Register.ContractPositionFetcher({ appId, groupId, network })
 export class AuroraSolaceBondsContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,

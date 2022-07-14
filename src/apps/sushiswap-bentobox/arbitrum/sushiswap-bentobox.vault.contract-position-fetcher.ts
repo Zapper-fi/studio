@@ -12,7 +12,7 @@ const appId = SUSHISWAP_BENTOBOX_DEFINITION.id;
 const groupId = SUSHISWAP_BENTOBOX_DEFINITION.groups.vault.id;
 const network = Network.ARBITRUM_MAINNET;
 
-@Register.ContractPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
+@Register.ContractPositionFetcher({ appId, groupId, network })
 export class ArbitrumSushiSwapBentoBoxContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(SushiSwapBentoBoxContractPositionHelper)
