@@ -12,7 +12,7 @@ const appId = BADGER_DEFINITION.id;
 const groupId = BADGER_DEFINITION.groups.claimable.id;
 const network = Network.ETHEREUM_MAINNET;
 
-@Register.ContractPositionFetcher({ appId, groupId, network })
+@Register.ContractPositionFetcher({ appId, groupId, network, options: { excludeFromTvl: true } })
 export class EthereumBadgerClaimableContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(APP_TOOLKIT)
@@ -25,7 +25,10 @@ export class EthereumBadgerClaimableContractPositionFetcher implements PositionF
       appId,
       groupId,
       network,
-      dependencies: [{ appId: BADGER_DEFINITION.id, groupIds: [BADGER_DEFINITION.groups.vault.id], network }],
+      dependencies: [
+        { appId: BADGER_DEFINITION.id, groupIds: [BADGER_DEFINITION.groups.vault.id], network },
+        { appId: 'sushiswap', groupIds: ['x-sushi'], network },
+      ],
       rewardTokenAddresses: [
         '0x3472a5a71965499acd81997a54bba8d852c6e53d',
         '0x8798249c2e607446efb7ad49ec89dd1865ff4272',

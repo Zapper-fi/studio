@@ -75,7 +75,9 @@ export class CompoundBorrowContractPositionHelper {
       const underlyingPrice = appToken.tokens[0].price;
       // Liquidity is the total supply of "cash" multiplied by the price of an underlying token
       const borrowedPositionliquidity = cashSupply * underlyingPrice;
-      const borrowLiquidity = underlyingLiquidity - borrowedPositionliquidity;
+
+      const borrowLiquidity =
+        borrowedPositionliquidity > underlyingLiquidity ? 0 : underlyingLiquidity - borrowedPositionliquidity;
 
       const dataProps = {
         ...appToken.dataProps,

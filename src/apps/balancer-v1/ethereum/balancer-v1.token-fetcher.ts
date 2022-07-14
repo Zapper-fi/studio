@@ -72,7 +72,8 @@ export class EthereumBalancerV1PoolTokenFetcher implements PositionFetcher<AppTo
       const fee = Number(pool.swapFee);
       const lastVolume = pool.swaps.length > 0 ? +pool.swaps[0].poolTotalSwapVolume : +pool.totalSwapVolume;
       const volume = +pool.totalSwapVolume - lastVolume;
-      const secondaryLabel = weight.map(p => `${Math.round(p * 100)}%`).join(' / ');
+      const ratio = weight.map(p => `${Math.round(p * 100)}%`).join(' / ');
+      const secondaryLabel = ratio;
 
       const displayProps = {
         label,
@@ -94,6 +95,10 @@ export class EthereumBalancerV1PoolTokenFetcher implements PositionFetcher<AppTo
           {
             label: 'Fee',
             value: buildPercentageDisplayItem(fee),
+          },
+          {
+            label: 'Ratio',
+            value: ratio,
           },
         ],
       };

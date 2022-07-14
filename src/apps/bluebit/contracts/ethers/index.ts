@@ -2,9 +2,11 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { Bluebit } from './Bluebit';
+export type { BluebitVeToken } from './BluebitVeToken';
 export type { Stats } from './Stats';
 export type { Vault } from './Vault';
 export * as factories from './factories';
+export { BluebitVeToken__factory } from './factories/BluebitVeToken__factory';
 export { Bluebit__factory } from './factories/Bluebit__factory';
 export { Stats__factory } from './factories/Stats__factory';
 export { Vault__factory } from './factories/Vault__factory';

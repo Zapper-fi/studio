@@ -5,7 +5,7 @@ import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
-import { CurveVotingEscrow, CurveVotingEscrowReward } from '../contracts';
+import { CurveContractFactory, CurveVotingEscrow, CurveVotingEscrowReward } from '../contracts';
 import { CURVE_DEFINITION } from '../curve.definition';
 import { CurveVotingEscrowContractPositionHelper } from '../helpers/curve.voting-escrow.contract-position-helper';
 
@@ -13,11 +13,13 @@ const appId = CURVE_DEFINITION.id;
 const groupId = CURVE_DEFINITION.groups.votingEscrow.id;
 const network = Network.ETHEREUM_MAINNET;
 
-@Register.ContractPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
+@Register.ContractPositionFetcher({ appId, groupId, network })
 export class EthereumCurveVotingEscrowContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(CurveVotingEscrowContractPositionHelper)
     private readonly curveVotingEscrowContractPositionHelper: CurveVotingEscrowContractPositionHelper,
+    @Inject(CurveContractFactory)
+    private readonly curveContractFactory: CurveContractFactory,
   ) {}
 
   async getPositions() {
@@ -37,9 +39,8 @@ export class EthereumCurveVotingEscrowContractPositionFetcher implements Positio
           network,
         },
       ],
-      resolveContract: ({ contractFactory, address }) => contractFactory.curveVotingEscrow({ network, address }),
-      resolveRewardContract: ({ contractFactory, address }) =>
-        contractFactory.curveVotingEscrowReward({ network, address }),
+      resolveContract: ({ address }) => this.curveContractFactory.curveVotingEscrow({ network, address }),
+      resolveRewardContract: ({ address }) => this.curveContractFactory.curveVotingEscrowReward({ network, address }),
       resolveLockedTokenAddress: ({ contract, multicall }) => multicall.wrap(contract).token(),
       resolveRewardTokenAddress: ({ contract, multicall }) => multicall.wrap(contract).token(),
     });

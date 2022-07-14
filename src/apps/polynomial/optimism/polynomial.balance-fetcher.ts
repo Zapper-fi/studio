@@ -11,7 +11,7 @@ import { PolynomialContractFactory } from '../contracts';
 import { POLYNOMIAL_DEFINITION } from '../polynomial.definition';
 
 const network = Network.OPTIMISM_MAINNET;
-const resolverAddress = '0xE38462409A2d960D9431ac452d5ffA20f4120f51'.toLowerCase();
+const resolverAddress = '0xe38462409a2d960d9431ac452d5ffa20f4120f51';
 
 @Register.BalanceFetcher(POLYNOMIAL_DEFINITION.id, network)
 export class OptimismPolynomialBalanceFetcher implements BalanceFetcher {
@@ -25,7 +25,7 @@ export class OptimismPolynomialBalanceFetcher implements BalanceFetcher {
       address,
       appId: POLYNOMIAL_DEFINITION.id,
       groupId: POLYNOMIAL_DEFINITION.groups.vaults.id,
-      network: Network.OPTIMISM_MAINNET,
+      network,
       resolveBalances: async ({ address, network, multicall, contractPosition: position }) => {
         const token = position.tokens[0];
         const contract = this.contractFactory.vaults({ address: resolverAddress, network });

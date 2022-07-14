@@ -3,20 +3,19 @@ import axios from 'axios';
 
 import { SingleStakingFarmDefinition } from '~app-toolkit';
 import { CacheOnInterval } from '~cache/cache-on-interval.decorator';
-import { Network } from '~types';
 
 import GOOD_GHOSTING_DEFINITION from '../good-ghosting.definition';
 
-import { GamesResponse } from './constants';
+import { GamesResponse, PlayerBalance, PlayerResponse, BASE_API_URL } from './constants';
 
 @Injectable()
 export class GoodGhostingGameConfigFetcherHelper {
   @CacheOnInterval({
-    key: `studio:${GOOD_GHOSTING_DEFINITION.id}:${GOOD_GHOSTING_DEFINITION.groups.game}:${Network.POLYGON_MAINNET}:addresses`,
+    key: `studio:${GOOD_GHOSTING_DEFINITION.id}:${GOOD_GHOSTING_DEFINITION.groups.game}:addresses`,
     timeout: 15 * 60 * 1000,
   })
   async getCachedGameConfigsData() {
-    const url = `https://goodghosting-api.com/v1/games`;
+    const url = `${BASE_API_URL}/games`;
     const response = await axios.get<GamesResponse>(url);
     return response.data;
   }
@@ -47,6 +46,7 @@ export class GoodGhostingGameConfigFetcherHelper {
 
       if (rewardTokenAddress) {
         rewardTokenAddresses.push(rewardTokenAddress);
+        rewardTokenAddresses.push(depositTokenAddress);
       }
 
       if (rewardTokenAddress && incentiveTokenAddress) {
@@ -66,5 +66,41 @@ export class GoodGhostingGameConfigFetcherHelper {
     }
 
     return farms;
+  }
+
+  async getPlayerGameBalances(playerAddress: string, networkId: string) {
+    const url = `${BASE_API_URL}/players/active-games?networkId=${networkId}&playerAddress=${playerAddress}`;
+    const response = await axios.get<PlayerResponse[]>(url);
+
+    const player = response.data;
+    const balances: Record<string, PlayerBalance> = {};
+
+    for (let i = 0; i < player.length; i += 1) {
+      const {
+        gameId,
+        incentiveAmount,
+        interestAmount,
+        withdrawn,
+        isWinner,
+        paidAmount,
+        playerId,
+        rewardAmount,
+        totalEarningsConverted,
+        gameAPY,
+      } = player[i];
+
+      balances[gameId] = {
+        incentiveAmount: parseFloat(parseFloat(incentiveAmount).toFixed(3)),
+        interestAmount: parseFloat(parseFloat(interestAmount).toFixed(3)),
+        withdrawn,
+        isWinner,
+        paidAmount: parseFloat(paidAmount),
+        rewardAmount: parseFloat(parseFloat(rewardAmount).toFixed(3)),
+        poolAPY: parseFloat(gameAPY),
+        pooltotalEarningsConverted: parseFloat(parseFloat(totalEarningsConverted).toFixed(3)),
+        playerId,
+      };
+    }
+    return balances;
   }
 }

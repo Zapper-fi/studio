@@ -25,14 +25,14 @@ export class CronosVvsFinancePoolTokenFetcher implements PositionFetcher<AppToke
     @Inject(VvsFinanceContractFactory) private readonly contractFactory: VvsFinanceContractFactory,
   ) {}
 
-  getPositions() {
-    return this.poolTokenHelper.getTokens<VvsFactory, UniswapPair>({
+  async getPositions() {
+    return await this.poolTokenHelper.getTokens<VvsFactory, UniswapPair>({
       network,
       appId,
       groupId,
       minLiquidity: 10000,
       fee: 0.003,
-      factoryAddress: '0x3B44B2a187a7b3824131F8db5a74194D0a42Fc15',
+      factoryAddress: '0x3b44b2a187a7b3824131f8db5a74194d0a42fc15',
       resolveFactoryContract: opts => this.contractFactory.vvsFactory(opts),
       resolvePoolContract: opts => this.contractFactory.vvsPair(opts),
       resolvePoolTokenAddresses: () => this.vvsFinancePoolAddressCacheManager.getPoolAddresses(),
