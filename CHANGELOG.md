@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.111.1](https://github.com/Zapper-fi/studio/compare/v0.111.0...v0.111.1) (2022-07-14)
+
+
+### Bug Fixes
+
+* **koyo:** Add missing empty ContractFactory ([1704b4e](https://github.com/Zapper-fi/studio/commit/1704b4efb23bf0cefb1c459e0fc515e200221702))
+
 ## [0.111.0](https://github.com/Zapper-fi/studio/compare/v0.110.4...v0.111.0) (2022-07-14)
 
 
