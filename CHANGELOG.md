@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.111.0](https://github.com/Zapper-fi/studio/compare/v0.110.4...v0.111.0) (2022-07-14)
+
+
+### Features
+
+* **koyo-finance:** Add support for Kōyō Finance ([#876](https://github.com/Zapper-fi/studio/issues/876)) ([0ec4763](https://github.com/Zapper-fi/studio/commit/0ec47631591720df8dffaebc56d76962c67af6ce))
+
+
+### Bug Fixes
+
+* **atlendis-v1:** Fix decimals in balance, fix checksum address ([#877](https://github.com/Zapper-fi/studio/issues/877)) ([402baab](https://github.com/Zapper-fi/studio/commit/402baab8e1a271e24815a32bc597d9796c74b5a3))
+
 ## [0.110.4](https://github.com/Zapper-fi/studio/compare/v0.110.3...v0.110.4) (2022-07-13)
 
 
