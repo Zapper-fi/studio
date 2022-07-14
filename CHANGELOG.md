@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.111.2](https://github.com/Zapper-fi/studio/compare/v0.111.1...v0.111.2) (2022-07-14)
+
+
+### Bug Fixes
+
+* **blocks:** Update average blocks per day for Moonriver ([793715a](https://github.com/Zapper-fi/studio/commit/793715ae6892229f3bfe396639219d39844e238e))
+
 ## [0.111.1](https://github.com/Zapper-fi/studio/compare/v0.111.0...v0.111.1) (2022-07-14)
 
 
