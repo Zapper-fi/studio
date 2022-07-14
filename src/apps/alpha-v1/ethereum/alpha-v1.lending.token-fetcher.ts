@@ -27,7 +27,7 @@ const appId = ALPHA_V1_DEFINITION.id;
 const groupId = ALPHA_V1_DEFINITION.groups.lending.id;
 const network = Network.ETHEREUM_MAINNET;
 
-@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
+@Register.TokenPositionFetcher({ appId, groupId, network })
 export class EthereumAlphaV1LendingTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
@@ -64,7 +64,7 @@ export class EthereumAlphaV1LendingTokenFetcher implements PositionFetcher<AppTo
     ]);
 
     // Data Props
-    const price = new BigNumber(ethToken.price).times(totalEthRaw.toString()).div(totalSupplyRaw.toString()).toNumber();
+    const price = (ethToken.price * Number(totalEthRaw)) / Number(totalSupplyRaw);
     const reserve = Number(totalEthRaw) / 10 ** ethToken.decimals;
     const supply = Number(totalSupplyRaw) / 10 ** decimals;
     const pricePerShare = Number(totalEthRaw) / Number(totalSupplyRaw);
@@ -78,7 +78,7 @@ export class EthereumAlphaV1LendingTokenFetcher implements PositionFetcher<AppTo
     const secondaryLabel = buildDollarDisplayItem(price);
     const images = [getTokenImg(ethToken.address, network)];
     const statsItems = [
-      { label: 'Supply APY', value: buildPercentageDisplayItem(supplyApy) },
+      { label: 'APY', value: buildPercentageDisplayItem(supplyApy) },
       { label: 'Liquidity', value: buildDollarDisplayItem(liquidity) },
     ];
 

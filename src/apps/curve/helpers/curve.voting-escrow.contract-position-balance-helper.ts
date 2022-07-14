@@ -9,8 +9,6 @@ import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
-import { CurveContractFactory as ContractFactory } from '../contracts';
-
 import { CurveVotingEscrowContractPositionDataProps } from './curve.voting-escrow.contract-position-helper';
 
 type CurveVotingEscrowContractPositionBalanceHelperParams<T, V = null> = {
@@ -18,8 +16,8 @@ type CurveVotingEscrowContractPositionBalanceHelperParams<T, V = null> = {
   appId: string;
   groupId: string;
   network: Network;
-  resolveContract: (opts: { contractFactory: ContractFactory; network: Network; address: string }) => T;
-  resolveRewardContract?: (opts: { contractFactory: ContractFactory; network: Network; address: string }) => V;
+  resolveContract: (opts: { network: Network; address: string }) => T;
+  resolveRewardContract?: (opts: { network: Network; address: string }) => V;
   resolveLockedTokenBalance: (opts: {
     contract: T;
     multicall: EthersMulticall;
@@ -34,10 +32,7 @@ type CurveVotingEscrowContractPositionBalanceHelperParams<T, V = null> = {
 
 @Injectable()
 export class CurveVotingEscrowContractPositionBalanceHelper {
-  constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(ContractFactory) private readonly contractFactory: ContractFactory,
-  ) {}
+  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
   async getBalances<T, V = null>({
     address,
@@ -49,7 +44,6 @@ export class CurveVotingEscrowContractPositionBalanceHelper {
     resolveLockedTokenBalance,
     resolveRewardTokenBalance,
   }: CurveVotingEscrowContractPositionBalanceHelperParams<T, V>): Promise<ContractPositionBalance[]> {
-    const contractFactory = this.contractFactory;
     const multicall = this.appToolkit.getMulticall(network);
     const contractPositions = await this.appToolkit.getAppContractPositions<CurveVotingEscrowContractPositionDataProps>(
       {
@@ -66,14 +60,14 @@ export class CurveVotingEscrowContractPositionBalanceHelper {
         if (!lockedToken) return null;
 
         // Resolve escrowed token
-        const contract = resolveContract({ contractFactory, network, address: contractPosition.address });
+        const contract = resolveContract({ network, address: contractPosition.address });
         const lockedTokenBalanceRaw = await resolveLockedTokenBalance({ contract, multicall, address });
         const lockedTokenBalance = drillBalance(lockedToken, lockedTokenBalanceRaw.toString());
         const tokens = [lockedTokenBalance];
 
         if (rewardToken && resolveRewardContract && resolveRewardTokenBalance) {
           const rewardAddress = contractPosition.dataProps.rewardAddress!;
-          const rewardContract = resolveRewardContract({ contractFactory, network, address: rewardAddress });
+          const rewardContract = resolveRewardContract({ network, address: rewardAddress });
           const rewardTokenBalanceRaw = await resolveRewardTokenBalance({
             contract: rewardContract,
             multicall,

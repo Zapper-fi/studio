@@ -13,7 +13,7 @@ const appId = AAVE_V2_DEFINITION.id;
 const groupId = AAVE_V2_DEFINITION.groups.supply.id;
 const network = Network.POLYGON_MAINNET;
 
-@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
+@Register.TokenPositionFetcher({ appId, groupId, network })
 export class PolygonAaveV2SupplyTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(@Inject(AaveV2LendingTokenHelper) private readonly aaveV2LendingTokenHelper: AaveV2LendingTokenHelper) {}
 
@@ -22,6 +22,7 @@ export class PolygonAaveV2SupplyTokenFetcher implements PositionFetcher<AppToken
       appId,
       groupId,
       network,
+      dependencies: [{ appId: 'sushiswap', groupIds: ['x-sushi'], network }],
       protocolDataProviderAddress: '0x7551b5d2763519d4e37e8b81929d336de671d46d',
       resolveTokenAddress: ({ reserveTokenAddressesData }) => reserveTokenAddressesData.aTokenAddress,
       resolveLendingRate: ({ reserveData }) => reserveData.liquidityRate,

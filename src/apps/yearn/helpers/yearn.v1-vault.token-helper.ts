@@ -102,7 +102,7 @@ export class YearnV1VaultTokenHelper {
         const secondaryLabel = buildDollarDisplayItem(price);
         const images = getImagesFromToken(underlyingToken);
         const statsItems = [
-          { label: 'APY', value: buildPercentageDisplayItem(apy) },
+          { label: 'APY', value: buildPercentageDisplayItem(apy * 100) },
           { label: 'Liquidity', value: buildDollarDisplayItem(liquidity) },
         ];
 

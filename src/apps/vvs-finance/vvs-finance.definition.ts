@@ -5,7 +5,7 @@ import { Network } from '~types/network.interface';
 
 export const VVS_FINANCE_DEFINITION = appDefinition({
   id: 'vvs-finance',
-  name: 'vvs-finance',
+  name: 'VVS Finance',
   description: 'Very, Very Simple DeFi',
   url: 'https://vvs.finance/',
 

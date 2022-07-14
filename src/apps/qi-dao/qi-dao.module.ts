@@ -1,6 +1,8 @@
 import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
 
+import { ArbitrumQiDaoBalanceFetcher } from './arbitrum/qi-dao.balance-fetcher';
+import { ArbitrumQiDaoVaultPositionFetcher } from './arbitrum/qi-dao.vault.position-fetcher';
 import { QiDaoContractFactory } from './contracts';
 import { FantomQiDaoBalanceFetcher } from './fantom/qi-dao.balance-fetcher';
 import { FantomQiDaoFarmContractPositionFetcher } from './fantom/qi-dao.farm.contract-position-fetcher';
@@ -38,6 +40,9 @@ import { QiDaoAppDefinition, QI_DAO_DEFINITION } from './qi-dao.definition';
     // Gnosis
     GnosisQiDaoBalanceFetcher,
     GnosisQiDaoVaultPositionFetcher,
+    // Arbitrum
+    ArbitrumQiDaoBalanceFetcher,
+    ArbitrumQiDaoVaultPositionFetcher,
   ],
 })
 export class QiDaoAppModule extends AbstractApp() {}

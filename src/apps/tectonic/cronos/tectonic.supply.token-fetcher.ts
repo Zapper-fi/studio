@@ -13,7 +13,7 @@ const appId = TECTONIC_DEFINITION.id;
 const groupId = TECTONIC_DEFINITION.groups.supply.id;
 const network = Network.CRONOS_MAINNET;
 
-@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
+@Register.TokenPositionFetcher({ appId, groupId, network })
 export class CronosTectonicSupplyTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(TectonicContractFactory) private readonly tectonicContractFactory: TectonicContractFactory,
@@ -29,11 +29,14 @@ export class CronosTectonicSupplyTokenFetcher implements PositionFetcher<AppToke
       getTectonicCoreContract: ({ address, network }) =>
         this.tectonicContractFactory.tectonicCore({ address, network }),
       getTokenContract: ({ address, network }) => this.tectonicContractFactory.tectonicTToken({ address, network }),
-      getAllMarkets: ({ contract, multicall }) => multicall.wrap(contract).getAllMarkets(),
-      getExchangeRate: ({ contract, multicall }) => multicall.wrap(contract).callStatic.exchangeRateCurrent(),
-      getSupplyRate: ({ contract, multicall }) => multicall.wrap(contract).supplyRatePerBlock(),
-      getBorrowRate: ({ contract, multicall }) => multicall.wrap(contract).borrowRatePerBlock(),
-      getUnderlyingAddress: ({ contract, multicall }) => multicall.wrap(contract).underlying(),
+      getAllMarkets: ({ contract }) => contract.getAllMarkets(),
+      getTokenSymbol: ({ contract }) => contract.symbol(),
+      getTokenDecimals: ({ contract }) => contract.decimals(),
+      getExchangeRate: ({ contract }) => contract.callStatic.exchangeRateCurrent(),
+      getSupplyRate: ({ contract }) => contract.supplyRatePerBlock(),
+      getBorrowRate: ({ contract }) => contract.borrowRatePerBlock(),
+      getTotalSupply: ({ contract }) => contract.totalSupply(),
+      getUnderlyingAddress: ({ contract }) => contract.underlying(),
       getExchangeRateMantissa: ({ underlyingTokenDecimals }) => underlyingTokenDecimals + 10,
     });
   }

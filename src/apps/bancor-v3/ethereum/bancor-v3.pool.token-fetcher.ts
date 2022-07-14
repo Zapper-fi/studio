@@ -16,7 +16,7 @@ const network = Network.ETHEREUM_MAINNET;
 const bancorAddress = '0xeEF417e1D5CC832e619ae18D2F140De2999dD4fB'.toLowerCase();
 const bntPoolAddress = '0x02651E355D26f3506C1E644bA393FDD9Ac95EaCa'.toLowerCase();
 
-@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
+@Register.TokenPositionFetcher({ appId, groupId, network })
 export class EthereumBancorV3TokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
@@ -45,6 +45,7 @@ export class EthereumBancorV3TokenFetcher implements PositionFetcher<AppTokenPos
       appId,
       groupId,
       network,
+      dependencies: [{ appId: 'sushiswap', groupIds: ['x-sushi'], network }],
       resolveVaultAddresses: () => vaults,
       resolveContract: ({ address, network }) => this.contractFactory.poolToken({ address, network }),
       resolveUnderlyingTokenAddress: ({ multicall, contract }) =>

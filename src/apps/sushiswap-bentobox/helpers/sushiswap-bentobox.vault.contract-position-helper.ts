@@ -9,6 +9,7 @@ import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
 import { Cache } from '~cache/cache.decorator';
 import { ContractType } from '~position/contract.interface';
 import { ContractPosition } from '~position/position.interface';
+import { AppGroupsDefinition } from '~position/position.service';
 import { supplied } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 
@@ -33,6 +34,7 @@ type SushiswapBentoBoxGetPositionParams = {
   bentoBoxAddress: string;
   network: Network;
   subgraphUrl: string;
+  dependencies?: AppGroupsDefinition[];
 };
 
 const appId = SUSHISWAP_BENTOBOX_DEFINITION.id;
@@ -57,9 +59,11 @@ export class SushiSwapBentoBoxContractPositionHelper {
     return response.tokens ?? [];
   }
 
-  async getPositions({ bentoBoxAddress, network, subgraphUrl }: SushiswapBentoBoxGetPositionParams) {
+  async getPositions({ bentoBoxAddress, network, subgraphUrl, dependencies = [] }: SushiswapBentoBoxGetPositionParams) {
     const multicall = this.appToolkit.getMulticall(network);
-    const prices = await this.appToolkit.getBaseTokenPrices(network);
+    const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
+    const appTokens = await this.appToolkit.getAppTokenPositions(...dependencies);
+    const allTokens = [...appTokens, ...baseTokens];
 
     // Get all configured tokens in this Bentobox
     const bentoBoxTokens = await this.getBentoBoxTokens({ url: subgraphUrl, network });
@@ -68,29 +72,29 @@ export class SushiSwapBentoBoxContractPositionHelper {
       bentoBoxTokens.map(async token => {
         const tokenAddress = token.id.toLowerCase();
 
-        const baseToken = prices.find(p => p.address === tokenAddress);
-        if (!baseToken) return null;
+        const underlyingToken = allTokens.find(p => p.address === tokenAddress);
+        if (!underlyingToken) return null;
 
         const tokenContract = this.sushiSwapBentoBoxContractFactory.erc20({ address: tokenAddress, network });
         const balanceOfRaw = await multicall.wrap(tokenContract).balanceOf(bentoBoxAddress);
-        const balanceOf = Number(balanceOfRaw) / 10 ** baseToken.decimals;
-        const liquidity = balanceOf * baseToken.price;
+        const balanceOf = Number(balanceOfRaw) / 10 ** underlyingToken.decimals;
+        const liquidity = balanceOf * underlyingToken.price;
 
         const position: ContractPosition = {
           type: ContractType.POSITION,
+          address: bentoBoxAddress,
           network,
-          address: baseToken.address,
           appId,
           groupId,
-          tokens: [supplied(baseToken)],
+          tokens: [supplied(underlyingToken)],
           dataProps: {
             liquidity,
           },
           displayProps: {
             statsItems: [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }],
-            label: `${baseToken.symbol} Deposit`,
-            secondaryLabel: buildDollarDisplayItem(baseToken.price),
-            images: [getTokenImg(baseToken.address, network)],
+            label: `${underlyingToken.symbol} Deposit`,
+            secondaryLabel: buildDollarDisplayItem(underlyingToken.price),
+            images: [getTokenImg(underlyingToken.address, network)],
           },
         };
 

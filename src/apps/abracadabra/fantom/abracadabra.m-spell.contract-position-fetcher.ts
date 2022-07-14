@@ -12,6 +12,7 @@ import { AbracadabraContractFactory, AbracadabraMspell } from '../contracts';
 const appId = ABRACADABRA_DEFINITION.id;
 const groupId = ABRACADABRA_DEFINITION.groups.mSpell.id;
 const network = Network.FANTOM_OPERA_MAINNET;
+
 @Register.ContractPositionFetcher({ appId, groupId, network })
 export class FantomAbracadabraMspellContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(

@@ -1,4 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
+import { sumBy } from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
@@ -10,7 +11,15 @@ import { Network } from '~types/network.interface';
 
 import { SYNTHETIX_DEFINITION } from '../synthetix.definition';
 
+type Holder = {
+  id: string;
+  collateral: string;
+  transferable: string;
+  initialDebtOwnership: string;
+};
+
 export type SynthetixMintrContractPositionHelperParams = {
+  holders: Holder[];
   network: Network;
 };
 
@@ -18,7 +27,7 @@ export type SynthetixMintrContractPositionHelperParams = {
 export class SynthetixMintrContractPositionHelper {
   constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
-  async getPositions({ network }: SynthetixMintrContractPositionHelperParams) {
+  async getPositions({ holders, network }: SynthetixMintrContractPositionHelperParams) {
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
 
     const snxToken = baseTokens.find(p => p.symbol === 'SNX')!;
@@ -26,9 +35,10 @@ export class SynthetixMintrContractPositionHelper {
     const tokens = [supplied(snxToken), borrowed(susdToken)];
 
     // Display Props
-    const label = `Minted ${susdToken.symbol}`;
+    const label = susdToken.symbol;
     const secondaryLabel = buildDollarDisplayItem(snxToken.price);
     const images = [getTokenImg(snxToken.address, network), getTokenImg(susdToken.address, network)];
+    const liquidity = sumBy(holders, v => (Number(v.collateral) - Number(v.transferable)) * snxToken.price);
 
     const position: ContractPosition = {
       type: ContractType.POSITION,
@@ -37,7 +47,9 @@ export class SynthetixMintrContractPositionHelper {
       groupId: SYNTHETIX_DEFINITION.groups.mintr.id,
       network,
       tokens,
-      dataProps: {},
+      dataProps: {
+        liquidity,
+      },
       displayProps: {
         label,
         secondaryLabel,

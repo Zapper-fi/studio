@@ -12,7 +12,7 @@ const appId = SUSHISWAP_BENTOBOX_DEFINITION.id;
 const groupId = SUSHISWAP_BENTOBOX_DEFINITION.groups.vault.id;
 const network = Network.ETHEREUM_MAINNET;
 
-@Register.ContractPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
+@Register.ContractPositionFetcher({ appId, groupId, network })
 export class EthereumSushiSwapBentoBoxContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(SushiSwapBentoBoxContractPositionHelper)
@@ -24,6 +24,7 @@ export class EthereumSushiSwapBentoBoxContractPositionFetcher implements Positio
       bentoBoxAddress: '0xf5bce5077908a1b7370b9ae04adc565ebd643966',
       network,
       subgraphUrl: 'https://api.thegraph.com/subgraphs/name/sushiswap/bentobox',
+      dependencies: [{ appId: 'sushiswap', groupIds: ['x-sushi', 'meowshi'], network }],
     });
   }
 }
