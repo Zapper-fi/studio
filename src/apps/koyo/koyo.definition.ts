@@ -6,7 +6,8 @@ import { Network } from '~types/network.interface';
 export const KOYO_DEFINITION = appDefinition({
   id: 'koyo',
   name: 'Kōyō Finance',
-  description: 'Kōyō is the first next-generation AMM protocol in the Boba ecosystem.',
+  description:
+    'Kōyō is a AMM protocol based on Balancer aimed at providing stable pools alongside variable rate, multi token pools.',
   url: 'https://koyo.finance',
   groups: {
     pool: { id: 'pool', type: GroupType.TOKEN, label: 'Pools' },
@@ -22,6 +23,7 @@ export const KOYO_DEFINITION = appDefinition({
 
   supportedNetworks: {
     [Network.AURORA_MAINNET]: [AppAction.VIEW],
+    [Network.MOONRIVER_MAINNET]: [AppAction.VIEW],
   },
 
   primaryColor: '#fff',
