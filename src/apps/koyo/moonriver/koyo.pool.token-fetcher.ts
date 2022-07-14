@@ -26,7 +26,7 @@ export class MoonriverKoyoPoolTokenFetcher implements PositionFetcher<AppTokenPo
       network,
       appId,
       groupId,
-      vaultAddress: '0xEa1E627c12DF4e054D61FD408Ff7186353aC6cA1',
+      vaultAddress: '0xea1e627c12df4e054d61fd408ff7186353ac6ca1',
       resolvePoolTokenAddresses: this.theGraphPoolTokenDataStrategy.build({
         subgraphUrl: 'https://api.thegraph.com/subgraphs/name/koyo-finance/exchange-subgraph-moonriver',
       }),

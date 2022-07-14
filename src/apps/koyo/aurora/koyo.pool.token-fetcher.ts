@@ -26,7 +26,7 @@ export class AuroraKoyoPoolTokenFetcher implements PositionFetcher<AppTokenPosit
       network,
       appId,
       groupId,
-      vaultAddress: '0x0613ADbD846CB73E65aA474b785F52697af04c0b',
+      vaultAddress: '0x0613adbd846cb73e65aa474b785f52697af04c0b',
       resolvePoolTokenAddresses: this.theGraphPoolTokenDataStrategy.build({
         subgraphUrl: 'https://api.thegraph.com/subgraphs/name/koyo-finance/exchange-subgraph-aurora',
       }),
