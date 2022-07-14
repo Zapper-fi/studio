@@ -1,5 +1,6 @@
 import { Inject } from '@nestjs/common';
-import { BigNumber } from 'ethers';
+import { BigNumber } from 'bignumber.js';
+import { getAddress } from 'ethers/lib/utils';
 import { sumBy } from 'lodash';
 
 import { drillBalance } from '~app-toolkit';
@@ -33,7 +34,7 @@ export class PolygonAtlendisV1BalanceFetcher implements BalanceFetcher {
     const data = await graphHelper.requestGraph({
       endpoint: 'https://atlendis.herokuapp.com/graphql',
       query: GET_USER_POSITIONS,
-      variables: { address },
+      variables: { address: getAddress(address) },
     });
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
 
@@ -43,17 +44,17 @@ export class PolygonAtlendisV1BalanceFetcher implements BalanceFetcher {
           t => t.address.toLowerCase() === position.pool.parameters.token.address.toLowerCase(),
         );
         if (!underlyingToken) return null;
-        const positionManagerAddress = '0x55E4e70a725C1439dac6B9412B71fC8372Bd73e9';
+        const positionManagerAddress = '0x55e4e70a725c1439dac6b9412b71fc8372bd73e9';
 
         const positionContract: ContractPosition = {
           type: ContractType.POSITION,
           appId: ATLENDIS_V_1_DEFINITION.id,
-          groupId: ATLENDIS_V_1_DEFINITION.groups.position.id,
+          groupId: ATLENDIS_V_1_DEFINITION.groups.lending.id,
           address: positionManagerAddress,
           network,
           tokens: [supplied(underlyingToken)],
           dataProps: {
-            tokenId: position.tokenId,
+            tokenId: new BigNumber(position.tokenId).toString(),
           },
           displayProps: {
             label: getLabelFromToken(underlyingToken),
@@ -67,18 +68,21 @@ export class PolygonAtlendisV1BalanceFetcher implements BalanceFetcher {
         });
 
         const { bondsQuantity, normalizedDepositedAmount } = await contract.getPositionRepartition(position.tokenId);
+        const balanceRawWei = new BigNumber(bondsQuantity.toString())
+          .plus(normalizedDepositedAmount.toString())
+          .toString();
+        const balanceRaw = new BigNumber(balanceRawWei)
+          .div(10 ** 18)
+          .times(10 ** positionContract.tokens[0].decimals)
+          .toString();
 
-        const tokenBalances = [
-          drillBalance(
-            positionContract.tokens[0],
-            BigNumber.from(bondsQuantity).add(BigNumber.from(normalizedDepositedAmount)).toString(),
-          ),
-        ];
+        const tokenBalances = [drillBalance(positionContract.tokens[0], balanceRaw)];
         const contractPositionBalance: ContractPositionBalance = {
           ...positionContract,
           tokens: tokenBalances,
           balanceUSD: sumBy(tokenBalances, v => v.balanceUSD),
         };
+
         return contractPositionBalance;
       }),
     );
