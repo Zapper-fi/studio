@@ -13,7 +13,7 @@ export class CronosChainMmfinancePoolAddressCacheManager {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(MmfinanceContractFactory) protected readonly contractFactory: MmfinanceContractFactory,
-  ) { }
+  ) {}
 
   // @CacheOnInterval({
   //   key: `apps-v3:${MMFINANCE_DEFINITION.id}:graph-top-pool-addresses`,

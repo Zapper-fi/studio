@@ -31,4 +31,4 @@ import { MmfinanceAppDefinition, MMFINANCE_DEFINITION } from './mmfinance.defini
   ],
   exports: [MmfinanceContractFactory],
 })
-export class MmfinanceAppModule extends AbstractApp() { }
+export class MmfinanceAppModule extends AbstractApp() {}

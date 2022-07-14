@@ -21,7 +21,7 @@ export class CronosChainMmfinanceAutoMMFContractPositionFetcher implements Posit
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(MmfinanceContractFactory)
     private readonly contractFactory: MmfinanceContractFactory,
-  ) { }
+  ) {}
 
   getPositions() {
     const chefContract = this.contractFactory.mmfinanceChef({

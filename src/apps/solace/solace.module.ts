@@ -17,8 +17,6 @@ import { EthereumSolaceXslockerContractPositionFetcher } from './ethereum/solace
 import { EthereumSolaceXsolacev1TokenFetcher } from './ethereum/solace.xsolacev1.token-fetcher';
 // Aurora
 // Polygon
-import { PolygonSolacePoliciesContractPositionFetcher } from './polygon/solace.policies.contract-position-fetcher';
-import { PolygonSolaceXslockerContractPositionFetcher } from './polygon/solace.xslocker.contract-position-fetcher';
 // Fantom
 import { FantomSolaceBalanceFetcher } from './fantom/solace.balance-fetcher';
 import { FantomSolaceBondsContractPositionFetcher } from './fantom/solace.bonds.contract-position-fetcher';
@@ -29,6 +27,8 @@ import { SolacePolicyBalanceHelper } from './helpers/SolacePolicyBalanceHelper';
 import { SolaceXSBalanceHelper } from './helpers/SolaceXSBalanceHelper';
 import { PolygonSolaceBalanceFetcher } from './polygon/solace.balance-fetcher';
 import { PolygonSolaceBondsContractPositionFetcher } from './polygon/solace.bonds.contract-position-fetcher';
+import { PolygonSolacePoliciesContractPositionFetcher } from './polygon/solace.policies.contract-position-fetcher';
+import { PolygonSolaceXslockerContractPositionFetcher } from './polygon/solace.xslocker.contract-position-fetcher';
 import SOLACE_DEFINITION, { SolaceAppDefinition } from './solace.definition';
 
 @Register.AppModule({

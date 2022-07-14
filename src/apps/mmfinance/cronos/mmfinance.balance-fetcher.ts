@@ -38,7 +38,7 @@ export class CronosChainMmfinanceBalanceFetcher implements BalanceFetcher {
   }
 
   private async getLegacyFarmBalances(address: string) {
-    // LP and Manual Cake Farms
+    // LP and Manual Mmf Farms
     return this.appToolkit.helpers.masterChefContractPositionBalanceHelper.getBalances<MmfinanceChef>({
       address,
       appId,
@@ -61,7 +61,7 @@ export class CronosChainMmfinanceBalanceFetcher implements BalanceFetcher {
   }
 
   private async getFarmBalances(address: string) {
-    // LP and Manual Cake Farms
+    // LP and Manual Mmf Farms
     return this.appToolkit.helpers.masterChefContractPositionBalanceHelper.getBalances<MmfinanceChefV2>({
       address,
       appId,
@@ -83,8 +83,8 @@ export class CronosChainMmfinanceBalanceFetcher implements BalanceFetcher {
     });
   }
 
-  private async getIfoCakeBalances(address: string) {
-    // IFO Cake Farm
+  private async getIfoMmfBalances(address: string) {
+    // IFO Mmf Farm
     return this.appToolkit.helpers.masterChefContractPositionBalanceHelper.getBalances<MmfinanceIfoChef>({
       address,
       appId,
@@ -110,8 +110,8 @@ export class CronosChainMmfinanceBalanceFetcher implements BalanceFetcher {
     });
   }
 
-  private async getAutoCakeBalances(address: string) {
-    // Autocompounding Cake Farm
+  private async getAutoMmfBalances(address: string) {
+    // Autocompounding Mmf Farm
     return this.appToolkit.helpers.masterChefContractPositionBalanceHelper.getBalances<MmfinanceMeerkatChef>({
       address,
       appId,
@@ -138,7 +138,7 @@ export class CronosChainMmfinanceBalanceFetcher implements BalanceFetcher {
   }
 
   private async getSyrupMeerkatBalances(address: string) {
-    // Autocompounding Cake Farm
+    // Autocompounding Mmf Farm
     return this.appToolkit.helpers.masterChefContractPositionBalanceHelper.getBalances<MmfinanceSyrupMeerkat>({
       address,
       appId,
@@ -192,17 +192,17 @@ export class CronosChainMmfinanceBalanceFetcher implements BalanceFetcher {
       poolBalances,
       legacyFarmBalances,
       farmBalances,
-      autoCakeBalances,
-      syrupCakeBalances,
-      ifoCakeBalances,
+      autoMmfBalances,
+      syrupMmfBalances,
+      ifoMmfBalances,
       syrupPoolBalances,
     ] = await Promise.all([
       this.getPoolBalances(address),
       this.getLegacyFarmBalances(address),
       this.getFarmBalances(address),
-      this.getAutoCakeBalances(address),
+      this.getAutoMmfBalances(address),
       this.getSyrupMeerkatBalances(address),
-      this.getIfoCakeBalances(address),
+      this.getIfoMmfBalances(address),
       this.getSyrupPoolBalances(address),
     ]);
 
@@ -213,15 +213,15 @@ export class CronosChainMmfinanceBalanceFetcher implements BalanceFetcher {
       },
       {
         label: 'Auto MMF',
-        assets: autoCakeBalances,
+        assets: autoMmfBalances,
       },
       {
         label: 'IFO MMF',
-        assets: ifoCakeBalances,
+        assets: ifoMmfBalances,
       },
       {
         label: 'Staked MMF',
-        assets: syrupCakeBalances,
+        assets: syrupMmfBalances,
       },
       {
         label: 'Farms',

@@ -23,7 +23,7 @@ export class CronosChainMmfinanceSyrupMeerkatContractPositionFetcher implements 
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(MmfinanceContractFactory)
     private readonly contractFactory: MmfinanceContractFactory,
-  ) { }
+  ) {}
 
   getPositions() {
     return this.appToolkit.helpers.masterChefContractPositionHelper.getContractPositions<MmfinanceSyrupMeerkat>({
