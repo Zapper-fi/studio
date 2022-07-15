@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { BigNumberish } from 'ethers';
 
 import { drillBalance } from '~app-toolkit';
-import { EthersMulticall as Multicall } from '~multicall/multicall.ethers';
+import { IMulticallWrapper } from '~multicall/multicall.interface';
 import { ContractPosition } from '~position/position.interface';
 import { isClaimable } from '~position/position.utils';
 
@@ -12,7 +12,7 @@ import { MasterChefContractPositionDataProps } from './master-chef.contract-posi
 export type MasterChefDefaultClaimableBalanceStrategyParams<T> = {
   resolveClaimableBalance: (opts: {
     address: string;
-    multicall: Multicall;
+    multicall: IMulticallWrapper;
     contract: T;
     contractPosition: ContractPosition<MasterChefContractPositionDataProps>;
   }) => Promise<BigNumberish>;

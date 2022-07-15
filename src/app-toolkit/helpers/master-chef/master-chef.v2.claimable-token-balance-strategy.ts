@@ -3,7 +3,7 @@ import { BigNumberish } from 'ethers';
 
 import { drillBalance } from '~app-toolkit';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
-import { EthersMulticall as Multicall } from '~multicall/multicall.ethers';
+import { IMulticallWrapper } from '~multicall/multicall.interface';
 import { ContractPosition } from '~position/position.interface';
 import { isClaimable } from '~position/position.utils';
 import { Network } from '~types/network.interface';
@@ -15,19 +15,19 @@ import { MasterChefDefaultClaimableBalanceStrategy } from './master-chef.default
 export type MasterChefV2ClaimableBalanceStrategyParams<T, V> = {
   resolvePrimaryClaimableBalance: (opts: {
     address: string;
-    multicall: Multicall;
+    multicall: IMulticallWrapper;
     contract: T;
     contractPosition: ContractPosition<MasterChefContractPositionDataProps>;
   }) => Promise<BigNumberish>;
   resolveRewarderAddress: (opts: {
-    multicall: Multicall;
+    multicall: IMulticallWrapper;
     contract: T;
     contractPosition: ContractPosition<MasterChefContractPositionDataProps>;
   }) => Promise<string>;
   resolveRewarderContract: (opts: { rewarderAddress: string; network: Network }) => V;
   resolveSecondaryClaimableBalance: (opts: {
     address: string;
-    multicall: Multicall;
+    multicall: IMulticallWrapper;
     rewarderContract: V;
     contractPosition: ContractPosition<MasterChefContractPositionDataProps>;
   }) => Promise<BigNumberish>;

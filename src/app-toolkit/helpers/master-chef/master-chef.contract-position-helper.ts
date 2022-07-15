@@ -6,7 +6,7 @@ import _, { compact, isArray, toLower } from 'lodash';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { BLOCKS_PER_DAY } from '~app-toolkit/constants/blocks';
-import { EthersMulticall as Multicall } from '~multicall/multicall.ethers';
+import { IMulticallWrapper } from '~multicall/multicall.interface';
 import { ContractType } from '~position/contract.interface';
 import { AppTokenPosition, ContractPosition, Token } from '~position/position.interface';
 import { AppGroupsDefinition } from '~position/position.service';
@@ -29,31 +29,31 @@ export type MasterChefRewardAddressStrategy<T> = (opts: { contract: T; poolIndex
 export type MasterChefPoolLengthStrategy<T> = (opts: {
   network: Network;
   contract: T;
-  multicall: Multicall;
+  multicall: IMulticallWrapper;
 }) => BigNumberish | Promise<BigNumberish>;
 
 export type MasterChefPoolIndexIsValidStrategy<T> = (opts: {
   contract: T;
-  multicall: Multicall;
+  multicall: IMulticallWrapper;
   poolIndex: number;
 }) => Promise<boolean>;
 
 export type MasterChefEndBlockStrategy<T> = (opts: {
   contract: T;
-  multicall: Multicall;
+  multicall: IMulticallWrapper;
   poolIndex: number;
 }) => Promise<number>;
 
 export type MasterChefDespositTokenAddressStrategy<T> = (opts: {
   contract: T;
-  multicall: Multicall;
+  multicall: IMulticallWrapper;
   poolIndex: number;
   network: Network;
 }) => Promise<string>;
 
 export type MasterChefRewardTokenAddressesStrategy<T> = (opts: {
   contract: T;
-  multicall: Multicall;
+  multicall: IMulticallWrapper;
   poolIndex: number;
   network: Network;
 }) => Promise<string | string[]>;
@@ -62,7 +62,7 @@ export type MasterChefRewardRateStrategy<T> = (opts: {
   network: Network;
   contract: T;
   address: string;
-  multicall: Multicall;
+  multicall: IMulticallWrapper;
   depositTokenAddress: string;
   poolIndex: number;
   baseTokens: BaseToken[];
@@ -73,7 +73,7 @@ export type MasterChefLiquidityStrategy<T> = (opts: {
   contract: T;
   address: string;
   network: Network;
-  multicall: Multicall;
+  multicall: IMulticallWrapper;
   depositTokenAddress: string;
   poolIndex: number;
   baseTokens: BaseToken[];
