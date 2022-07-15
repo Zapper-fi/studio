@@ -15,11 +15,11 @@ import { UnagiiContractFactory } from '../contracts';
 import { UNAGII_DEFINITION } from '../unagii.definition';
 
 const vaultAddresses = [
-  '0x9ce3018375d305ce3c3303a26ef62d3d2eb8561a',
-  '0x7f75d72886d6a8677321e5602d18948abcb4281a',
-  '0x1eb06eae3263a35619dc87812a8e7ec811b59e63',
-  '0xb088d7c71ea9ebaed981c103fc3019b59950d2c9',
-  '0x8ef11c51a666c53aeeec504f120cd1435e451342',
+  { address: '0x7f75d72886d6a8677321e5602d18948abcb4281a', isActive: true }, // USDC V2
+  { address: '0x9ce3018375d305ce3c3303a26ef62d3d2eb8561a', isActive: false }, // DAI V2 (deprecated)
+  { address: '0x1eb06eae3263a35619dc87812a8e7ec811b59e63', isActive: false }, // USDT  (deprecated)
+  { address: '0xb088d7c71ea9ebaed981c103fc3019b59950d2c9', isActive: true }, // WBTC V2
+  { address: '0x8ef11c51a666c53aeeec504f120cd1435e451342', isActive: true }, // ETH V2
 ];
 
 const appId = UNAGII_DEFINITION.id;
@@ -27,7 +27,7 @@ const groupId = UNAGII_DEFINITION.groups.vault.id;
 const network = Network.ETHEREUM_MAINNET;
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
-export class EthereumUnagiiPoolTokenFetcher implements PositionFetcher<AppTokenPosition> {
+export class EthereumUnagiiVaultTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(UnagiiContractFactory)
@@ -39,7 +39,7 @@ export class EthereumUnagiiPoolTokenFetcher implements PositionFetcher<AppTokenP
 
     const vaultTokens = await Promise.all(
       vaultAddresses.map(async vault => {
-        const vaultContract = this.unagiiContractFactory.unagiiV2Vault({ address: vault, network });
+        const vaultContract = this.unagiiContractFactory.unagiiV2Vault({ address: vault.address, network });
         const [totalAssetsRaw, underlyingTokenAddressRaw, tokenAddressRaw] = await Promise.all([
           multicall.wrap(vaultContract).totalAssets(),
           multicall.wrap(vaultContract).token(),
@@ -57,7 +57,6 @@ export class EthereumUnagiiPoolTokenFetcher implements PositionFetcher<AppTokenP
             ? ZERO_ADDRESS
             : underlyingTokenAddressRaw.toLowerCase();
         const underlyingToken = await this.appToolkit.getBaseTokenPrice({ network, address: underlyingTokenAddress });
-
         if (!underlyingToken) return null;
 
         // Determine total supply
@@ -99,6 +98,7 @@ export class EthereumUnagiiPoolTokenFetcher implements PositionFetcher<AppTokenP
 
         const dataProps = {
           liquidity,
+          isActive: vault.isActive,
         };
 
         const token: AppTokenPosition = {

@@ -16,7 +16,7 @@ export class BinanceSmartChainPancakeswapPoolAddressCacheManager {
   ) {}
 
   @CacheOnInterval({
-    key: `apps-v3:${PANCAKESWAP_DEFINITION.id}:graph-top-pool-addresses`,
+    key: `studio:${PANCAKESWAP_DEFINITION.id}:graph-top-pool-addresses`,
     timeout: 15 * 60 * 1000,
   })
   private async getTopPoolAddresses() {
@@ -26,7 +26,7 @@ export class BinanceSmartChainPancakeswapPoolAddressCacheManager {
   }
 
   @CacheOnInterval({
-    key: `apps-v3:${PANCAKESWAP_DEFINITION.id}:chef-pool-addresses`,
+    key: `studio:${PANCAKESWAP_DEFINITION.id}:chef-pool-addresses`,
     timeout: 15 * 60 * 1000,
   })
   private async getChefPoolAddresses() {
@@ -73,7 +73,7 @@ export class BinanceSmartChainPancakeswapPoolAddressCacheManager {
   }
 
   @CacheOnInterval({
-    key: `apps-v3:${PANCAKESWAP_DEFINITION.id}:chef-v2-pool-addresses`,
+    key: `studio:${PANCAKESWAP_DEFINITION.id}:chef-v2-pool-addresses`,
     timeout: 15 * 60 * 1000,
   })
   private async getChefV2PoolAddresses() {
@@ -120,7 +120,7 @@ export class BinanceSmartChainPancakeswapPoolAddressCacheManager {
   }
 
   @CacheOnInterval({
-    key: `apps-v3:${PANCAKESWAP_DEFINITION.id}:static-pool-addresses`,
+    key: `studio:${PANCAKESWAP_DEFINITION.id}:static-pool-addresses`,
     timeout: 15 * 60 * 1000,
   })
   private async getStaticPoolAddresses() {

@@ -13,12 +13,12 @@ import { TrisolarisAppDefinition, TRISOLARIS_DEFINITION } from './trisolaris.def
   appId: TRISOLARIS_DEFINITION.id,
   imports: [UniswapV2AppModule],
   providers: [
+    TrisolarisAppDefinition,
+    TrisolarisContractFactory,
     AuroraTrisolarisBalanceFetcher,
     AuroraTrisolarisFarmContractPositionFetcher,
     AuroraTrisolarisPoolAddressCacheManager,
     AuroraTrisolarisPoolTokenFetcher,
-    TrisolarisAppDefinition,
-    TrisolarisContractFactory,
   ],
 })
 export class TrisolarisAppModule extends AbstractApp() {}

@@ -18,7 +18,11 @@ export const POLYNOMIAL_DEFINITION = appDefinition({
   },
   tags: [AppTag.ASSET_MANAGEMENT, AppTag.OPTIONS],
   keywords: [],
-  links: {},
+  links: {
+    discord: 'https://discord.com/invite/polynomial',
+    medium: 'https://medium.com/polynomial-protocol',
+    twitter: 'https://twitter.com/polynomialfi',
+  },
 
   supportedNetworks: {
     [Network.OPTIMISM_MAINNET]: [AppAction.VIEW],
