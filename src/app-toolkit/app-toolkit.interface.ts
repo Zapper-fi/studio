@@ -4,7 +4,7 @@ import { ethers } from 'ethers';
 
 import { AppDefinition } from '~app/app.definition';
 import { IContractFactory } from '~contract/contracts';
-import { EthersMulticall } from '~multicall';
+import { IMulticallWrapper } from '~multicall/multicall.interface';
 import { DefaultDataProps } from '~position/display.interface';
 import { AppTokenPosition, ContractPosition, NonFungibleToken } from '~position/position.interface';
 import { AppGroupsDefinition } from '~position/position.service';
@@ -26,7 +26,7 @@ export interface IAppToolkit {
 
   getNetworkProvider(network: Network): StaticJsonRpcProvider;
 
-  getMulticall(network: Network): EthersMulticall;
+  getMulticall(network: Network): IMulticallWrapper;
 
   // Base Tokens
 
