@@ -24,6 +24,7 @@ export const KOYO_DEFINITION = appDefinition({
   supportedNetworks: {
     [Network.AURORA_MAINNET]: [AppAction.VIEW],
     [Network.MOONRIVER_MAINNET]: [AppAction.VIEW],
+    [Network.POLYGON_MAINNET]: [AppAction.VIEW],
   },
 
   primaryColor: '#fff',
