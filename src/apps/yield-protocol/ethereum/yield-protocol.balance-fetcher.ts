@@ -25,7 +25,7 @@ export const CAULDRON = '0xc88191f8cb8e6d4a668b047c1c8503432c3ca867';
 export const LADLE = '0x6cb18ff2a33e981d1e38a663ca056c0a5265066a';
 
 type YieldVaultRes = {
-  vaultOwner?: {
+  account?: {
     id: string;
     vaults: {
       debtAmount: number;
@@ -57,7 +57,7 @@ type YieldVaultContractPositionDataProps = {
 
 const vaultsQuery = gql`
   query ($address: ID!) {
-    vaultOwner(id: $address) {
+    account(id: $address) {
       id
       vaults {
         debtAmount
@@ -95,12 +95,12 @@ export class EthereumYieldProtocolBalanceFetcher implements BalanceFetcher {
       query: vaultsQuery,
       variables: { address },
     });
-    const vaultOwner = data.vaultOwner;
+    const account = data.account;
 
-    if (!vaultOwner) return [];
+    if (!account) return [];
 
     const positions = await Promise.all(
-      vaultOwner.vaults.map(async vault => {
+      account.vaults.map(async vault => {
         const {
           debtAmount,
           collateralAmount,
