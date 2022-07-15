@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { identity, sumBy } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { EthersMulticall as Multicall } from '~multicall';
+import { IMulticallWrapper } from '~multicall/multicall.interface';
 import { DefaultDataProps, WithMetaType } from '~position/display.interface';
 import { ContractPositionBalance, TokenBalance } from '~position/position-balance.interface';
 import { ContractPosition } from '~position/position.interface';
@@ -17,7 +17,7 @@ type GetTokenBalancesParams<T> = {
   resolveBalances: (opts: {
     address: string;
     network: Network;
-    multicall: Multicall;
+    multicall: IMulticallWrapper;
     contractPosition: ContractPosition<T>;
   }) => Promise<WithMetaType<TokenBalance>[]>;
 };

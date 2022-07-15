@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { compact } from 'lodash';
 
-import { EthersMulticall as Multicall } from '~multicall/multicall.ethers';
+import { IMulticallWrapper } from '~multicall/multicall.interface';
 
 import { CurveFactoryPool, CurveV1Pool, CurveV1PoolLegacy, CurveV2Pool } from '../contracts';
 
@@ -13,7 +13,7 @@ export class CurveOnChainReserveStrategy {
       multicall,
     }: {
       poolContract: CurveV1Pool | CurveV1PoolLegacy | CurveV2Pool | CurveFactoryPool;
-      multicall: Multicall;
+      multicall: IMulticallWrapper;
     }) => {
       const tokenAddresses = await Promise.all([
         multicall

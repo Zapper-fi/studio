@@ -8,7 +8,7 @@ import {
   buildPercentageDisplayItem,
 } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { EthersMulticall as Multicall } from '~multicall/multicall.ethers';
+import { IMulticallWrapper } from '~multicall/multicall.interface';
 import { ContractType } from '~position/contract.interface';
 import { AppTokenPosition, ExchangeableAppTokenDataProps, Token } from '~position/position.interface';
 import { AppGroupsDefinition } from '~position/position.service';
@@ -51,17 +51,17 @@ export type AaveV2LendingTokenHelperParams<T = AaveProtocolDataProvider> = {
   resolveReserveTokens?: (opts: { contract: T }) => Promise<string[]>;
   resolveReserveTokenAddresses?: (opts: {
     contract: T;
-    multicall: Multicall;
+    multicall: IMulticallWrapper;
     reserveTokenAddress: string;
   }) => Promise<ReserveTokenAddressesData>;
   resolveReserveData?: (opts: {
     contract: T;
-    multicall: Multicall;
+    multicall: IMulticallWrapper;
     reserveTokenAddress: string;
   }) => Promise<ReserveData>;
   resolveReserveConfigurationData?: (opts: {
     contract: T;
-    multicall: Multicall;
+    multicall: IMulticallWrapper;
     reserveTokenAddress: string;
   }) => Promise<ReserveConfigurationData>;
   exchangeable?: boolean;

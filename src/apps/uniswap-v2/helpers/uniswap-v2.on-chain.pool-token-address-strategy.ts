@@ -3,16 +3,20 @@ import { BigNumberish } from 'ethers';
 import _ from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { EthersMulticall as Multicall } from '~multicall/multicall.ethers';
+import { IMulticallWrapper } from '~multicall/multicall.interface';
 
 import { UniswapFactory, UniswapPair } from '../contracts';
 
 import { UniswapV2PoolTokenHelperParams } from './uniswap-v2.pool.token-helper';
 
 type GetPoolAddressListParams<T = UniswapFactory, V = UniswapPair> = {
-  resolvePoolsLength: (opts: { multicall: Multicall; factoryContract: T }) => Promise<BigNumberish>;
-  resolvePoolAddress: (opts: { multicall: Multicall; factoryContract: T; poolIndex: number }) => Promise<string>;
-  resolvePoolAddressIsValid?: (opts: { multicall: Multicall; poolContract: V }) => Promise<boolean>;
+  resolvePoolsLength: (opts: { multicall: IMulticallWrapper; factoryContract: T }) => Promise<BigNumberish>;
+  resolvePoolAddress: (opts: {
+    multicall: IMulticallWrapper;
+    factoryContract: T;
+    poolIndex: number;
+  }) => Promise<string>;
+  resolvePoolAddressIsValid?: (opts: { multicall: IMulticallWrapper; poolContract: V }) => Promise<boolean>;
 };
 
 @Injectable()
