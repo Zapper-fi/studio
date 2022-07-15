@@ -1,12 +1,12 @@
 import { compact } from 'lodash';
 
-import { EthersMulticall as Multicall } from '~multicall';
+import { IMulticallWrapper } from '~multicall/multicall.interface';
 
 import { KinesisLabsPool } from '../contracts';
 
 export class KinesisLabsOnChainReserveStrategy {
   build() {
-    return async ({ poolContract, multicall }: { poolContract: KinesisLabsPool; multicall: Multicall }) => {
+    return async ({ poolContract, multicall }: { poolContract: KinesisLabsPool; multicall: IMulticallWrapper }) => {
       const tokenAddresses = await Promise.all([
         multicall
           .wrap(poolContract)

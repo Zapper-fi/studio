@@ -2,10 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { BigNumberish } from 'ethers';
 
 import { SingleStakingFarmResolveIsActiveParams } from '~app-toolkit/helpers/position/single-staking-farm.contract-position-helper';
-import { EthersMulticall as Multicall } from '~multicall/multicall.ethers';
+import { IMulticallWrapper } from '~multicall/multicall.interface';
 
 export type SynthetixSingleStakingIsActiveStrategyParams<T> = {
-  resolvePeriodFinish: (opts: { contract: T; multicall: Multicall }) => Promise<BigNumberish>;
+  resolvePeriodFinish: (opts: { contract: T; multicall: IMulticallWrapper }) => Promise<BigNumberish>;
 };
 
 @Injectable()
