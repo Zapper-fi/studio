@@ -4,7 +4,7 @@ import { compact, sumBy } from 'lodash';
 
 import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { EthersMulticall } from '~multicall';
+import { IMulticallWrapper } from '~multicall/multicall.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { MetaType } from '~position/position.interface';
 import { Network } from '~types/network.interface';
@@ -20,12 +20,12 @@ type CurveVotingEscrowContractPositionBalanceHelperParams<T, V = null> = {
   resolveRewardContract?: (opts: { network: Network; address: string }) => V;
   resolveLockedTokenBalance: (opts: {
     contract: T;
-    multicall: EthersMulticall;
+    multicall: IMulticallWrapper;
     address: string;
   }) => Promise<BigNumberish>;
   resolveRewardTokenBalance?: (opts: {
     contract: V;
-    multicall: EthersMulticall;
+    multicall: IMulticallWrapper;
     address: string;
   }) => Promise<BigNumberish>;
 };
