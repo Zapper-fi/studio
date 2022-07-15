@@ -10,7 +10,7 @@ import {
   buildPercentageDisplayItem,
 } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { EthersMulticall } from '~multicall';
+import { IMulticallWrapper } from '~multicall/multicall.interface';
 import { ContractType } from '~position/contract.interface';
 import { StatsItem } from '~position/display.interface';
 import { AppTokenPosition, ExchangeableAppTokenDataProps, Token } from '~position/position.interface';
@@ -56,20 +56,23 @@ export type VaultTokenHelperParams<T> = {
    * You can either use static string addresses, leverage the multicall function (which should map to the
    * the contract passed in via resolveContract) or other methods (such as an external API call).
    */
-  resolveVaultAddresses: (opts: { multicall: EthersMulticall; network: Network }) => string[] | Promise<string[]>;
+  resolveVaultAddresses: (opts: { multicall: IMulticallWrapper; network: Network }) => string[] | Promise<string[]>;
   /**
    * The address of an underlying token which correponds to a vault deposit.
    * You can either use static string addresses, leverage the multicall function (which should map to the
    * the contract passed in via resolveContract) or other methods (such as an external API call).
    */
-  resolveUnderlyingTokenAddress: (opts: { multicall: EthersMulticall; contract: T }) => string | Promise<string | null>;
+  resolveUnderlyingTokenAddress: (opts: {
+    multicall: IMulticallWrapper;
+    contract: T;
+  }) => string | Promise<string | null>;
   /**
    * How do we resolve the reserve (aka: the liquidity or total supply) of a given underlying token.
    */
   resolveReserve: (opts: {
     address: string;
     contract: T;
-    multicall: EthersMulticall;
+    multicall: IMulticallWrapper;
     underlyingToken: Token;
     network: Network;
   }) => number | Promise<number>;
@@ -78,7 +81,7 @@ export type VaultTokenHelperParams<T> = {
    */
   resolvePricePerShare: (opts: {
     contract: T;
-    multicall: EthersMulticall;
+    multicall: IMulticallWrapper;
     underlyingToken: Token;
     reserve: number;
     supply: number;
@@ -89,7 +92,7 @@ export type VaultTokenHelperParams<T> = {
    * e.g: A value of 6 corresponds to 6%, 42.56 would correspond to 42.56%.
    * If empty, we default to 0
    */
-  resolveApy?: (opts: { vaultAddress: string; multicall: EthersMulticall; contract: T }) => Promise<number>;
+  resolveApy?: (opts: { vaultAddress: string; multicall: IMulticallWrapper; contract: T }) => Promise<number>;
   /**
    * How do we resolve the label that will be displayed on the frontend.
    * By default, we will use the symbol.
