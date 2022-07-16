@@ -3,3 +3,4 @@
 /* eslint-disable */
 export { LlamaAirforceMerkleDistributor__factory } from './LlamaAirforceMerkleDistributor__factory';
 export { LlamaAirforceUnionVault__factory } from './LlamaAirforceUnionVault__factory';
+export { LlamaAirforceUnionVaultPirex__factory } from './LlamaAirforceUnionVaultPirex__factory';

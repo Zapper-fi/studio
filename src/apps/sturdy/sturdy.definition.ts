@@ -10,9 +10,58 @@ export const STURDY_DEFINITION = appDefinition({
   url: 'https://app.sturdy.finance/',
 
   groups: {
-    lending: { id: 'lending', type: GroupType.TOKEN, label: 'Lending' },
-  },
+    supply: {
+      id: 'supply',
+      type: GroupType.TOKEN,
+      label: 'Lending',
+      groupLabel: 'Supply',
+    },
 
+    stableDebt: {
+      id: 'stable-debt',
+      type: GroupType.TOKEN,
+      label: 'Lending',
+      groupLabel: 'Borrow',
+    },
+
+    variableDebt: {
+      id: 'variable-debt',
+      type: GroupType.TOKEN,
+      label: 'Lending',
+      groupLabel: 'Borrow',
+    },
+  },
+  presentationConfig: {
+    tabs: [
+      {
+        label: 'Lending',
+        viewType: 'split',
+        views: [
+          {
+            viewType: 'list',
+            label: 'Supply',
+            groupIds: ['supply'],
+          },
+          {
+            viewType: 'split',
+            label: 'Borrow',
+            views: [
+              {
+                viewType: 'list',
+                label: 'Variable',
+                groupIds: ['variable-debt'],
+              },
+              {
+                viewType: 'list',
+                label: 'Stable',
+                groupIds: ['stable-debt'],
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
   tags: [AppTag.LENDING],
 
   links: {
@@ -22,6 +71,7 @@ export const STURDY_DEFINITION = appDefinition({
   },
 
   supportedNetworks: {
+    [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
     [Network.FANTOM_OPERA_MAINNET]: [AppAction.VIEW],
   },
 

@@ -16,6 +16,12 @@ import { SYNTHETIX_DEFINITION } from '../synthetix.definition';
 export type SynthetixSynthTokenHelperParams = {
   network: Network;
   resolverAddress: string;
+  exchangeable?: boolean;
+};
+
+export type SynthetixAppTokenDataProps = {
+  exchangeable: boolean;
+  liquidity: number;
 };
 
 @Injectable()
@@ -25,7 +31,7 @@ export class SynthetixSynthTokenHelper {
     @Inject(SynthetixContractFactory) private readonly contractFactory: SynthetixContractFactory,
   ) {}
 
-  async getTokens({ network, resolverAddress }: SynthetixSynthTokenHelperParams) {
+  async getTokens({ network, resolverAddress, exchangeable = false }: SynthetixSynthTokenHelperParams) {
     const multicall = this.appToolkit.getMulticall(network);
 
     const addressResolverContract = this.contractFactory.synthetixAddressResolver({
@@ -54,17 +60,19 @@ export class SynthetixSynthTokenHelper {
         const price = Number(synthPrices[i]) / 10 ** 18;
         const pricePerShare = 1;
         const tokens = [];
+        const liquidity = supply * price;
 
         // Display Props
         const label = symbol;
         const secondaryLabel = buildDollarDisplayItem(price);
         const images = [getTokenImg(address, network)];
+        const statsItems = [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }];
 
-        const token: AppTokenPosition = {
+        const token: AppTokenPosition<SynthetixAppTokenDataProps> = {
           type: ContractType.APP_TOKEN,
           appId: SYNTHETIX_DEFINITION.id,
           groupId: SYNTHETIX_DEFINITION.groups.synth.id,
-          network: network,
+          network,
           address,
           symbol,
           decimals,
@@ -73,12 +81,16 @@ export class SynthetixSynthTokenHelper {
           pricePerShare,
           tokens,
 
-          dataProps: {},
+          dataProps: {
+            exchangeable,
+            liquidity,
+          },
 
           displayProps: {
             label,
             secondaryLabel,
             images,
+            statsItems,
           },
         };
 

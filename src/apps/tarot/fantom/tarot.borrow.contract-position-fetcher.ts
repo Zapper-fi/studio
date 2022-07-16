@@ -1,12 +1,12 @@
 import { Inject } from '@nestjs/common';
 
 import { Register } from '~app-toolkit/decorators';
+import { CompoundBorrowContractPositionHelper } from '~apps/compound/helper/compound.borrow.contract-position-helper';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
-import { TarotBorrowable, TarotContractFactory } from '../contracts';
-import { CompoundBorrowContractPositionHelper } from '../helper/compound.borrow.contract-position-helper';
+import { TarotContractFactory } from '../contracts';
 import { TAROT_DEFINITION } from '../tarot.definition';
 
 const appId = TAROT_DEFINITION.id;
@@ -18,18 +18,17 @@ export class FantomTarotBorrowContractPositionFetcher implements PositionFetcher
   constructor(
     @Inject(CompoundBorrowContractPositionHelper)
     private readonly compoundBorrowContractPositionHelper: CompoundBorrowContractPositionHelper,
-    @Inject(TarotContractFactory)
-    private readonly tarotContractFactory: TarotContractFactory,
+    @Inject(TarotContractFactory) private readonly tarotContractFactory: TarotContractFactory,
   ) {}
 
   async getPositions() {
-    return this.compoundBorrowContractPositionHelper.getPositions<TarotBorrowable>({
+    return this.compoundBorrowContractPositionHelper.getPositions({
       network,
       appId,
       groupId,
       supplyGroupId: TAROT_DEFINITION.groups.supply.id,
-      resolveContract: ({ address, network }) => this.tarotContractFactory.tarotBorrowable({ address, network }),
-      resolveCashRaw: ({ multicall, contract }) => multicall.wrap(contract).totalBalance(),
+      resolveCashRaw: ({ multicall, address, network }) =>
+        multicall.wrap(this.tarotContractFactory.tarotBorrowable({ address, network })).totalBalance(),
     });
   }
 }

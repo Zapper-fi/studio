@@ -151,7 +151,7 @@ export class ArbitrumYieldProtocolLendTokenFetcher implements PositionFetcher<Ap
         const displayProps: DisplayProps = {
           label: `fy${underlyingToken.symbol}`,
           secondaryLabel: displayName,
-          tertiaryLabel: matured ? 'Matured' : '',
+          tertiaryLabel: matured ? 'Matured' : undefined,
           images: getImagesFromToken(underlyingToken),
         };
 

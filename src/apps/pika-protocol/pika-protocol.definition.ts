@@ -14,7 +14,8 @@ export const PIKA_PROTOCOL_DEFINITION = appDefinition({
     vault: {
       id: 'vault',
       type: GroupType.POSITION,
-      label: 'contract-position',
+      label: 'Vault',
+      groupLabel: 'Vault',
     },
   },
 

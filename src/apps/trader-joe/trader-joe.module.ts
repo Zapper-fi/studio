@@ -8,8 +8,7 @@ import { AvalancheTraderJoeChefV2FarmContractPositionFetcher } from './avalanche
 import { AvalancheTraderJoeChefV3FarmContractPositionFetcher } from './avalanche/trader-joe.chef-v3-farm.contract-position-fetcher';
 import { AvalancheTraderJoePoolTokenFetcher } from './avalanche/trader-joe.pool.token-fetcher';
 import { AvalancheTraderJoeSJoeContractPositionFetcher } from './avalanche/trader-joe.s-joe.contract-position-fetcher';
-import { AvalancheTraderJoeTvlFetcher } from './avalanche/trader-joe.tvl-fetcher';
-import { AvalancheTraderJoeVeJoeFarmContractPositionFetcher } from './avalanche/trader-joe.ve-joe-farm.contract-position-fetcher';
+import { AvalancheTraderJoeVeJoeContractPositionFetcher } from './avalanche/trader-joe.ve-joe-farm.contract-position-fetcher';
 import { AvalancheTraderJoeXJoeTokenFetcher } from './avalanche/trader-joe.x-joe.token-fetcher';
 import { TraderJoeContractFactory } from './contracts';
 import { TraderJoeAppDefinition, TRADER_JOE_DEFINITION } from './trader-joe.definition';
@@ -20,7 +19,6 @@ import { TraderJoeAppDefinition, TRADER_JOE_DEFINITION } from './trader-joe.defi
   providers: [
     TraderJoeAppDefinition,
     TraderJoeContractFactory,
-    AvalancheTraderJoeTvlFetcher,
     AvalancheTraderJoeBalanceFetcher,
     AvalancheTraderJoeChefV2FarmContractPositionFetcher,
     AvalancheTraderJoeChefV3FarmContractPositionFetcher,
@@ -28,7 +26,7 @@ import { TraderJoeAppDefinition, TRADER_JOE_DEFINITION } from './trader-joe.defi
     AvalancheTraderJoePoolTokenFetcher,
     AvalancheTraderJoeXJoeTokenFetcher,
     AvalancheTraderJoeSJoeContractPositionFetcher,
-    AvalancheTraderJoeVeJoeFarmContractPositionFetcher,
+    AvalancheTraderJoeVeJoeContractPositionFetcher,
   ],
 })
 export class TraderJoeAppModule extends AbstractApp() {}

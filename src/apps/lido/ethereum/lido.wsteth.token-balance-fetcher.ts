@@ -5,11 +5,11 @@ import { Network } from '~types/network.interface';
 
 import LIDO_DEFINITION from '../lido.definition';
 
-@Register.TokenPositionBalanceFetcher({
-  appId: LIDO_DEFINITION.id,
-  groupId: LIDO_DEFINITION.groups.wsteth.id,
-  network: Network.ETHEREUM_MAINNET,
-})
+const appId = LIDO_DEFINITION.id;
+const groupId = LIDO_DEFINITION.groups.wsteth.id;
+const network = Network.ETHEREUM_MAINNET;
+
+@Register.TokenPositionBalanceFetcher({ appId, groupId, network })
 export class EthereumLidoWstethTokenBalanceFetcher implements PositionBalanceFetcher<AppTokenPositionBalance> {
   async getBalances(_address: string) {
     // Already counted in base tokens, remove double count

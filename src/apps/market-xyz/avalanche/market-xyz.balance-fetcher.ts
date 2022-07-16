@@ -10,7 +10,9 @@ import { Network } from '~types/network.interface';
 import { MarketXyzLendingBalanceHelper } from '../helpers/market-xyz.lending.balance-helper';
 import { MARKET_XYZ_DEFINITION } from '../market-xyz.definition';
 
-@Register.BalanceFetcher(MARKET_XYZ_DEFINITION.id, Network.AVALANCHE_MAINNET)
+const network = Network.AVALANCHE_MAINNET;
+
+@Register.BalanceFetcher(MARKET_XYZ_DEFINITION.id, network)
 export class AvalancheMarketXyzBalanceFetcher implements BalanceFetcher {
   constructor(
     @Inject(CompoundContractFactory)
@@ -27,8 +29,8 @@ export class AvalancheMarketXyzBalanceFetcher implements BalanceFetcher {
       appId: MARKET_XYZ_DEFINITION.id,
       supplyGroupId: MARKET_XYZ_DEFINITION.groups.supply.id,
       borrowGroupId: MARKET_XYZ_DEFINITION.groups.borrow.id,
-      network: Network.AVALANCHE_MAINNET,
-      fuseLensAddress: '0x56563aB1740539983Ff4D487Ea3a3e47e23A19F9',
+      network,
+      fuseLensAddress: '0x56563ab1740539983ff4d487ea3a3e47e23a19f9',
       getTokenContract: ({ address, network }) => this.compoundContractFactory.compoundCToken({ address, network }),
       getBalanceRaw: ({ contract, address, multicall }) => multicall.wrap(contract).balanceOf(address),
       getBorrowBalanceRaw: ({ contract, address, multicall }) =>

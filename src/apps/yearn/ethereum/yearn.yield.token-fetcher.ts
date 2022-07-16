@@ -20,11 +20,11 @@ type YearnYieldTokenDataProps = {
   reserve: number;
 };
 
-@Register.TokenPositionFetcher({
-  appId: YEARN_DEFINITION.id,
-  groupId: YEARN_DEFINITION.groups.yield.id,
-  network: Network.ETHEREUM_MAINNET,
-})
+const appId = YEARN_DEFINITION.id;
+const groupId = YEARN_DEFINITION.groups.yield.id;
+const network = Network.ETHEREUM_MAINNET;
+
+@Register.TokenPositionFetcher({ appId, groupId, network })
 export class EthereumYearnYieldTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
@@ -33,7 +33,6 @@ export class EthereumYearnYieldTokenFetcher implements PositionFetcher<AppTokenP
   ) {}
 
   async getPositions() {
-    const network = Network.ETHEREUM_MAINNET;
     const multicall = this.appToolkit.getMulticall(network);
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
 
@@ -62,16 +61,16 @@ export class EthereumYearnYieldTokenFetcher implements PositionFetcher<AppTokenP
         const tokens = [underlyingToken];
 
         // Display Props
-        const label = symbol;
+        const label = underlyingToken.symbol;
         const secondaryLabel = buildDollarDisplayItem(price);
         const images = [getTokenImg(underlyingToken.address, network)];
-        const statsItems = [];
+        const statsItems = [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }];
 
         const yieldToken: AppTokenPosition<YearnYieldTokenDataProps> = {
           type: ContractType.APP_TOKEN,
           address: yToken.address,
-          appId: YEARN_DEFINITION.id,
-          groupId: YEARN_DEFINITION.groups.yield.id,
+          appId,
+          groupId,
           network,
           symbol,
           decimals,

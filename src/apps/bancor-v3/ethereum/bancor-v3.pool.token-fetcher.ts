@@ -45,6 +45,7 @@ export class EthereumBancorV3TokenFetcher implements PositionFetcher<AppTokenPos
       appId,
       groupId,
       network,
+      dependencies: [{ appId: 'sushiswap', groupIds: ['x-sushi'], network }],
       resolveVaultAddresses: () => vaults,
       resolveContract: ({ address, network }) => this.contractFactory.poolToken({ address, network }),
       resolveUnderlyingTokenAddress: ({ multicall, contract }) =>

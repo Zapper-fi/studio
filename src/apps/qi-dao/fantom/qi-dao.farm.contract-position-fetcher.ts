@@ -37,11 +37,11 @@ const FARMS: { chefAddress: string; dependencies?: AppGroupsDefinition[] }[] = [
   },
 ];
 
-@Register.ContractPositionFetcher({
-  appId: QI_DAO_DEFINITION.id,
-  groupId: QI_DAO_DEFINITION.groups.farm.id,
-  network: Network.FANTOM_OPERA_MAINNET,
-})
+const appId = QI_DAO_DEFINITION.id;
+const groupId = QI_DAO_DEFINITION.groups.farm.id;
+const network = Network.FANTOM_OPERA_MAINNET;
+
+@Register.ContractPositionFetcher({ appId, groupId, network })
 export class FantomQiDaoFarmContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
@@ -53,9 +53,9 @@ export class FantomQiDaoFarmContractPositionFetcher implements PositionFetcher<C
       FARMS.map(farm =>
         this.appToolkit.helpers.masterChefContractPositionHelper.getContractPositions<QiDaoMasterChef>({
           address: farm.chefAddress,
-          appId: QI_DAO_DEFINITION.id,
-          groupId: QI_DAO_DEFINITION.groups.farm.id,
-          network: Network.FANTOM_OPERA_MAINNET,
+          appId,
+          groupId,
+          network,
           dependencies: farm.dependencies,
           resolveContract: ({ address, network }) => this.contractFactory.qiDaoMasterChef({ address, network }),
           resolvePoolLength: ({ multicall, contract }) => multicall.wrap(contract).poolLength(),

@@ -14,31 +14,39 @@ export const PLUTUS_DEFINITION = appDefinition({
       id: 've',
       type: GroupType.TOKEN,
       label: 'veTokens',
+      groupLabel: 'Farms',
     },
     lock: {
       id: 'lock',
       type: GroupType.POSITION,
       label: 'Locked PLS',
+      groupLabel: 'Farms',
     },
     jones: {
       id: 'jones',
       type: GroupType.POSITION,
       label: 'Staked PlsJones',
+      groupLabel: 'Farms',
     },
     dpx: {
       id: 'dpx',
       type: GroupType.POSITION,
       label: 'Staked PlsDPX',
+      groupLabel: 'Farms',
     },
     stake: {
       id: 'stake',
       type: GroupType.POSITION,
       label: 'Staked PLS',
+      groupLabel: 'Farms',
     },
   },
   tags: [AppTag.ASSET_MANAGEMENT, AppTag.FARMING],
   keywords: [],
-  links: {},
+  links: {
+    discord: 'https://discord.com/invite/plutusdao',
+    twitter: 'https://twitter.com/PlutusDAO_io',
+  },
 
   supportedNetworks: {
     [Network.ARBITRUM_MAINNET]: [AppAction.VIEW],

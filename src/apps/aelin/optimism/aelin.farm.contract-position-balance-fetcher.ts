@@ -9,11 +9,11 @@ import { Network } from '~types/network.interface';
 import { AELIN_DEFINITION } from '../aelin.definition';
 import { AelinContractFactory, AelinStaking } from '../contracts';
 
-@Register.ContractPositionBalanceFetcher({
-  appId: AELIN_DEFINITION.id,
-  groupId: AELIN_DEFINITION.groups.farm.id,
-  network: Network.OPTIMISM_MAINNET,
-})
+const appId = AELIN_DEFINITION.id;
+const groupId = AELIN_DEFINITION.groups.farm.id;
+const network = Network.OPTIMISM_MAINNET;
+
+@Register.ContractPositionBalanceFetcher({ appId, groupId, network })
 export class OptimismAelinFarmContractPositionBalanceFetcher
   implements PositionBalanceFetcher<ContractPositionBalance>
 {
@@ -27,9 +27,9 @@ export class OptimismAelinFarmContractPositionBalanceFetcher
   async getBalances(address: string) {
     return this.appToolkit.helpers.singleStakingContractPositionBalanceHelper.getBalances<AelinStaking>({
       address,
-      appId: AELIN_DEFINITION.id,
-      groupId: AELIN_DEFINITION.groups.farm.id,
-      network: Network.OPTIMISM_MAINNET,
+      appId,
+      groupId,
+      network,
       resolveContract: ({ address, network }) => this.aelinContractFactory.aelinStaking({ address, network }),
       resolveStakedTokenBalance: ({ contract, address, multicall }) => multicall.wrap(contract).balanceOf(address),
       resolveRewardTokenBalances: ({ contract, address, multicall }) => multicall.wrap(contract).earned(address),

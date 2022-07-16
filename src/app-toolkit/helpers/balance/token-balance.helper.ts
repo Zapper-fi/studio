@@ -3,7 +3,7 @@ import BigNumberJS from 'bignumber.js';
 import { identity, isArray, pick } from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-import { EthersMulticall } from '~multicall/multicall.ethers';
+import { IMulticallWrapper } from '~multicall/multicall.interface';
 import { ContractType } from '~position/contract.interface';
 import { DefaultDataProps, StatsItem, WithMetaType } from '~position/display.interface';
 import { AppTokenPositionBalance, BaseTokenBalance } from '~position/position-balance.interface';
@@ -20,7 +20,7 @@ type GetTokenBalancesParams<T> = {
   address: string;
   filter?: (contractPosition: AppTokenPosition<T>) => boolean;
   resolveBalance?: (opts: {
-    multicall: EthersMulticall;
+    multicall: IMulticallWrapper;
     address: string;
     token: AppTokenPosition<T>;
   }) => Promise<string>;
@@ -67,7 +67,7 @@ export const drillBalance = <T extends Token>(
   // Token share stats item
   const userStatsItems: StatsItem[] = [];
   if (token.supply > 0) {
-    const share = balance / token.supply;
+    const share = (balance / token.supply) * 100;
     userStatsItems.push({ label: 'Share', value: buildPercentageDisplayItem(share) });
   }
 

@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { sumBy } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { EthersMulticall as Multicall } from '~multicall/multicall.ethers';
+import { IMulticallWrapper } from '~multicall/multicall.interface';
 import { WithMetaType } from '~position/display.interface';
 import { ContractPositionBalance, TokenBalance } from '~position/position-balance.interface';
 import { ContractPosition } from '~position/position.interface';
@@ -17,7 +17,7 @@ export type MasterChefChefContractStrategy<T> = (opts: { network: Network; contr
 export type MasterChefClaimableTokenBalanceStrategy<T> = (opts: {
   address: string;
   network: Network;
-  multicall: Multicall;
+  multicall: IMulticallWrapper;
   contract: T;
   contractPosition: ContractPosition<MasterChefContractPositionDataProps>;
 }) => Promise<WithMetaType<TokenBalance>[]>;
@@ -25,7 +25,7 @@ export type MasterChefClaimableTokenBalanceStrategy<T> = (opts: {
 export type MasterChefStakedTokenBalanceStrategy<T> = (opts: {
   address: string;
   network: Network;
-  multicall: Multicall;
+  multicall: IMulticallWrapper;
   contract: T;
   contractPosition: ContractPosition<MasterChefContractPositionDataProps>;
 }) => Promise<WithMetaType<TokenBalance> | null>;

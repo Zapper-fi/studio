@@ -8,7 +8,6 @@ import { FantomBeethovenXBalanceFetcher } from './fantom/beethoven-x.balance-fet
 import { FantomBeethovenXFBeetsTokenFetcher } from './fantom/beethoven-x.f-beets.token-fetcher';
 import { FantomBeethovenXFarmContractPositionFetcher } from './fantom/beethoven-x.farm.contract-position-fetcher';
 import { FantomBeethovenXPoolTokenFetcher } from './fantom/beethoven-x.pool.token-fetcher';
-import { FantomBeethovenXTvlFetcher } from './fantom/beethoven-x.tvl-fetcher';
 import { BeethovenXTheGraphPoolTokenDataStrategy } from './helpers/beethoven-x.the-graph.pool-token-address-strategy';
 
 @Register.AppModule({
@@ -22,7 +21,6 @@ import { BeethovenXTheGraphPoolTokenDataStrategy } from './helpers/beethoven-x.t
     FantomBeethovenXPoolTokenFetcher,
     FantomBeethovenXFBeetsTokenFetcher,
     FantomBeethovenXBalanceFetcher,
-    FantomBeethovenXTvlFetcher,
     // Helpers
     BeethovenXTheGraphPoolTokenDataStrategy,
   ],

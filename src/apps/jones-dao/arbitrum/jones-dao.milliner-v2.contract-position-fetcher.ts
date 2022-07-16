@@ -24,9 +24,9 @@ export class ArbitrumJonesDaoMillinerV2ContractPositionFetcher implements Positi
   async getPositions() {
     return this.appToolkit.helpers.masterChefContractPositionHelper.getContractPositions<JonesMillinerV2>({
       address: '0xb94d1959084081c5a11c460012ab522f5a0fd756',
-      appId: JONES_DAO_DEFINITION.id,
-      groupId: JONES_DAO_DEFINITION.groups.millinerV2.id,
-      network: Network.ARBITRUM_MAINNET,
+      appId,
+      groupId,
+      network,
       dependencies: [{ appId: 'sushiswap', groupIds: ['pool'], network }],
       resolveContract: ({ address, network }) => this.contractFactory.jonesMillinerV2({ address, network }),
       resolvePoolLength: ({ multicall, contract }) => multicall.wrap(contract).poolLength(),

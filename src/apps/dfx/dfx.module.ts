@@ -15,9 +15,11 @@ import { PolygonDfxStakingContractPositionFetcher } from './polygon/dfx.staking.
   providers: [
     DfxAppDefinition,
     DfxContractFactory,
+    // Ethereum
     EthereumDfxBalanceFetcher,
     EthereumDfxCurveTokenFetcher,
     EthereumDfxStakingContractPositionFetcher,
+    // Polygon
     PolygonDfxBalanceFetcher,
     PolygonDfxCurveTokenFetcher,
     PolygonDfxStakingContractPositionFetcher,

@@ -31,6 +31,7 @@ export class EthereumOlympusGOhmTokenFetcher implements PositionFetcher<AppToken
       appId,
       groupId,
       network,
+      exchangeable: true,
       dependencies: [{ appId, groupIds: [OLYMPUS_DEFINITION.groups.sOhm.id], network }],
       resolveVaultAddresses: () => ['0x0ab87046fbb341d058f17cbc4c1133f25a20a52f'], // gOHM
       resolveContract: ({ address, network }) => this.contractFactory.olympusGOhmToken({ address, network }),

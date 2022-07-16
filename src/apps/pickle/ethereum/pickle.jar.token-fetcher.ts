@@ -37,7 +37,11 @@ export class EthereumPickleJarTokenFetcher implements PositionFetcher<AppTokenPo
       network,
       dependencies: [
         { appId: CURVE_DEFINITION.id, groupIds: [CURVE_DEFINITION.groups.pool.id], network },
-        { appId: YEARN_DEFINITION.id, groupIds: [YEARN_DEFINITION.groups.vault.id], network },
+        {
+          appId: YEARN_DEFINITION.id,
+          groupIds: [YEARN_DEFINITION.groups.v1Vault.id, YEARN_DEFINITION.groups.v2Vault.id],
+          network,
+        },
         { appId: UNISWAP_V2_DEFINITION.id, groupIds: [UNISWAP_V2_DEFINITION.groups.pool.id], network },
         { appId: 'sushiswap', groupIds: ['pool'], network },
       ],

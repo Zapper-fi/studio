@@ -8,13 +8,11 @@ import { Network } from '~types/network.interface';
 import { QiDaoVaultPositionHelper, QiDaoVaultPositionDataProps } from '../helpers/qi-dao.vault.position-helper';
 import { QI_DAO_DEFINITION } from '../qi-dao.definition';
 
+const appId = QI_DAO_DEFINITION.id;
+const groupId = QI_DAO_DEFINITION.groups.vault.id;
 const network = Network.POLYGON_MAINNET;
 
-@Register.ContractPositionFetcher({
-  appId: QI_DAO_DEFINITION.id,
-  groupId: QI_DAO_DEFINITION.groups.vault.id,
-  network: Network.POLYGON_MAINNET,
-})
+@Register.ContractPositionFetcher({ appId, groupId, network })
 export class PolygonQiDaoVaultPositionFetcher
   implements PositionFetcher<ContractPosition<QiDaoVaultPositionDataProps>>
 {
@@ -25,7 +23,7 @@ export class PolygonQiDaoVaultPositionFetcher
   ) {}
 
   async getPositions() {
-    return this.qiDaoVaultPositionHelper.getPositions({
+    const test = await this.qiDaoVaultPositionHelper.getPositions({
       network,
       debtTokenAddress: '0xa3fa99a148fa48d14ed51d610c367c61876997f1',
       dependencies: [
@@ -99,5 +97,7 @@ export class PolygonQiDaoVaultPositionFetcher
         },
       ],
     });
+
+    return test;
   }
 }

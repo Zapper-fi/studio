@@ -28,6 +28,7 @@ export const SYMPHONY_DEFINITION = appDefinition({
   },
   supportedNetworks: {
     [Network.POLYGON_MAINNET]: [AppAction.VIEW],
+    [Network.OPTIMISM_MAINNET]: [AppAction.VIEW],
     [Network.AVALANCHE_MAINNET]: [AppAction.VIEW],
   },
   primaryColor: '#1f222c',

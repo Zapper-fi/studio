@@ -10,6 +10,7 @@ import { PancakeswapContractFactory, PancakeswapChef } from '../contracts';
 import { PANCAKESWAP_DEFINITION } from '../pancakeswap.definition';
 
 import { BinanceSmartChainPancakeswapPoolAddressCacheManager } from './pancakeswap.pool.cache-manager';
+
 const appId = PANCAKESWAP_DEFINITION.id;
 const groupId = PANCAKESWAP_DEFINITION.groups.pool.id;
 const network = Network.BINANCE_SMART_CHAIN_MAINNET;

@@ -30,6 +30,7 @@ export class EthereumOlympusSOhmV1TokenFetcher implements PositionFetcher<AppTok
       appId,
       groupId,
       network,
+      exchangeable: true,
       resolveContract: ({ address, network }) => this.contractFactory.olympusSOhmV1Token({ address, network }),
       resolveVaultAddresses: () => ['0x04f2694c8fcee23e8fd0dfea1d4f5bb8c352111f'], // sOHMv1
       resolveUnderlyingTokenAddress: () => '0x383518188c0c6d7730d91b2c03a03c837814a899', // OHMv1

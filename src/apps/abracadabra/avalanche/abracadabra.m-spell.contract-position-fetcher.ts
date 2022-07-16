@@ -12,6 +12,7 @@ import { AbracadabraContractFactory, AbracadabraMspell } from '../contracts';
 const appId = ABRACADABRA_DEFINITION.id;
 const groupId = ABRACADABRA_DEFINITION.groups.mSpell.id;
 const network = Network.AVALANCHE_MAINNET;
+
 @Register.ContractPositionFetcher({ appId, groupId, network })
 export class AvalancheAbracadabraMspellContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(

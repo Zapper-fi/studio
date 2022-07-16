@@ -15,7 +15,7 @@ const appId = PANCAKESWAP_DEFINITION.id;
 const groupId = PANCAKESWAP_DEFINITION.groups.ifoCake.id;
 const network = Network.BINANCE_SMART_CHAIN_MAINNET;
 
-@Register.ContractPositionFetcher({ appId, groupId, network })
+@Register.ContractPositionFetcher({ appId, groupId, network, options: { excludeFromTvl: true } })
 export class BinanceSmartChainPancakeswapIfoCakeContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
@@ -41,7 +41,7 @@ export class BinanceSmartChainPancakeswapIfoCakeContractPositionFetcher implemen
       resolveContract: opts => this.contractFactory.pancakeswapIfoChef(opts),
       resolvePoolLength: async () => BigNumber.from(1),
       resolveDepositTokenAddress: ({ multicall, contract }) => multicall.wrap(contract).token(),
-      resolveTotalValueLocked: ({ multicall }) => multicall.wrap(cakeChefContract).balanceOf(),
+      resolveLiquidity: ({ multicall }) => multicall.wrap(cakeChefContract).balanceOf(),
       rewardRateUnit: RewardRateUnit.BLOCK,
       resolveRewardTokenAddresses: ({ multicall, contract }) => multicall.wrap(contract).token(),
       resolveRewardRate: this.appToolkit.helpers.masterChefDefaultRewardsPerBlockStrategy.build({

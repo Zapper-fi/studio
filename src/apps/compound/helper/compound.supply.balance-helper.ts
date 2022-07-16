@@ -3,7 +3,7 @@ import { BigNumberish } from 'ethers';
 
 import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { EthersMulticall as Multicall } from '~multicall/multicall.ethers';
+import { IMulticallWrapper } from '~multicall/multicall.interface';
 import { Network } from '~types/network.interface';
 
 import { CompoundCToken } from '../contracts';
@@ -16,7 +16,7 @@ type CompoundSupplyBalanceHelperParams<T> = {
   appId: string;
   groupId: string;
   getTokenContract: (opts: { address: string; network: Network }) => T;
-  getBalanceRaw: (opts: { contract: T; multicall: Multicall; address: string }) => Promise<BigNumberish>;
+  getBalanceRaw: (opts: { contract: T; multicall: IMulticallWrapper; address: string }) => Promise<BigNumberish>;
 };
 
 @Injectable()

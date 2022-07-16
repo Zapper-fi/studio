@@ -5,21 +5,21 @@ import { PositionBalanceFetcher } from '~position/position-balance-fetcher.inter
 import { AppTokenPositionBalance } from '~position/position-balance.interface';
 import { Network } from '~types/network.interface';
 
-import { SynthetixTrasnferrableSnxTokenBalanceHelper } from '../helpers/synthetix.transferable-snx.token-balance-helper';
+import { SynthetixTransferrableSnxTokenBalanceHelper } from '../helpers/synthetix.transferable-snx.token-balance-helper';
 import { SYNTHETIX_DEFINITION } from '../synthetix.definition';
 
-@Register.TokenPositionBalanceFetcher({
-  appId: SYNTHETIX_DEFINITION.id,
-  groupId: SYNTHETIX_DEFINITION.groups.transferableSnx.id,
-  network: Network.OPTIMISM_MAINNET,
-})
+const appId = SYNTHETIX_DEFINITION.id;
+const groupId = SYNTHETIX_DEFINITION.groups.transferableSnx.id;
+const network = Network.OPTIMISM_MAINNET;
+
+@Register.TokenPositionBalanceFetcher({ appId, groupId, network })
 export class OptimismSynthetixTransferableSnxBalanceFetcher implements PositionBalanceFetcher<AppTokenPositionBalance> {
   constructor(
-    @Inject(SynthetixTrasnferrableSnxTokenBalanceHelper)
-    private readonly tokenBalanceHelper: SynthetixTrasnferrableSnxTokenBalanceHelper,
+    @Inject(SynthetixTransferrableSnxTokenBalanceHelper)
+    private readonly tokenBalanceHelper: SynthetixTransferrableSnxTokenBalanceHelper,
   ) {}
 
   async getBalances(address: string) {
-    return this.tokenBalanceHelper.getBalances({ address, network: Network.OPTIMISM_MAINNET });
+    return this.tokenBalanceHelper.getBalances({ address, network });
   }
 }
