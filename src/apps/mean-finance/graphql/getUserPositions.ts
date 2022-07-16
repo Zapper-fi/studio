@@ -3,14 +3,11 @@ import { gql } from 'graphql-request';
 export const GET_USER_POSITIONS = gql`
   query getUserPositions($address: String!, $first: Int, $skip: Int) {
     positions(
-      where: {
-        user: $address,
-        status_in: [ACTIVE, COMPLETED],
-      },
-      first: $first,
-      skip: $skip,
-      orderDirection: desc,
-      orderBy: createdAtTimestamp,
+      where: { user: $address, status_in: [ACTIVE, COMPLETED] }
+      first: $first
+      skip: $skip
+      orderDirection: desc
+      orderBy: createdAtTimestamp
     ) {
       id
       executedSwaps

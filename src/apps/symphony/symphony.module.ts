@@ -26,4 +26,4 @@ import { SymphonyAppDefinition, SYMPHONY_DEFINITION } from './symphony.definitio
     OptimismSymphonyYoloContractPositionFetcher,
   ],
 })
-export class SymphonyAppModule extends AbstractApp() { }
+export class SymphonyAppModule extends AbstractApp() {}
