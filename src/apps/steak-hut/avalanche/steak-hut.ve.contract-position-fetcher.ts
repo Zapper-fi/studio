@@ -10,15 +10,15 @@ import { SteakHutContractFactory } from '../contracts';
 import { STEAK_HUT_DEFINITION } from '../steak-hut.definition';
 
 const appId = STEAK_HUT_DEFINITION.id;
-const groupId = STEAK_HUT_DEFINITION.groups.steaking.id;
+const groupId = STEAK_HUT_DEFINITION.groups.ve.id;
 const network = Network.AVALANCHE_MAINNET;
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
-export class AvalancheSteakHutSteakingContractPositionFetcher implements PositionFetcher<ContractPosition> {
+export class AvalancheSteakHutVotedEscrowContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(SteakHutContractFactory) private readonly steakHutContractFactory: SteakHutContractFactory,
-  ) {}
+  ) { }
 
   async getPositions() {
     return [];

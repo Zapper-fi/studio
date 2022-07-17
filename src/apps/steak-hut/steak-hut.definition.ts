@@ -11,6 +11,7 @@ export const STEAK_HUT_DEFINITION = appDefinition({
   url: 'https://www.steakhut.finance/',
 
   groups: {
+
     ve: {
       id: 've',
       type: GroupType.TOKEN,
@@ -21,12 +22,6 @@ export const STEAK_HUT_DEFINITION = appDefinition({
       id: 'staking',
       type: GroupType.TOKEN,
       label: 'Staking',
-    },
-
-    steaking: {
-      id: 'steaking',
-      type: GroupType.TOKEN,
-      label: 'Steaking',
     },
 
     pool: {

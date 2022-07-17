@@ -18,7 +18,7 @@ export class AvalancheSteakHutStakingContractPositionFetcher implements Position
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(SteakHutContractFactory) private readonly steakHutContractFactory: SteakHutContractFactory,
-  ) {}
+  ) { }
 
   async getPositions() {
     return [];
