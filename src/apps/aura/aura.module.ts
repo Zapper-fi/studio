@@ -1,7 +1,5 @@
 import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
-import { AuraBaseRewardPoolHelper } from '~apps/aura/helpers/aura.base-reward-pool-helper';
-import { AuraBalancerPoolsHelper } from '~apps/aura/helpers/aura-balancer-pools-helper.service';
 import { BalancerV2AppModule } from '~apps/balancer-v2';
 import { SynthetixAppModule } from '~apps/synthetix';
 
@@ -14,6 +12,8 @@ import { EthereumAuraLockerContractPositionFetcher } from './ethereum/aura.locke
 import { EthereumAuraPoolsContractPositionFetcher } from './ethereum/aura.pools.contract-position-fetcher';
 import { EthereumAuraPoolsTokenFetcher } from './ethereum/aura.pools.token-fetcher';
 import { EthereumAuraStakingContractPositionFetcher } from './ethereum/aura.staking.contract-position-fetcher';
+import { AuraBalancerPoolsHelper } from './helpers/aura.balancer-pools-helper';
+import { AuraBaseRewardPoolHelper } from './helpers/aura.base-reward-pool-helper';
 
 @Register.AppModule({
   appId: AURA_DEFINITION.id,
