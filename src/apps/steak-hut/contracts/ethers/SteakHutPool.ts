@@ -19,107 +19,169 @@ import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './com
 
 export interface SteakHutPoolInterface extends utils.Interface {
   functions: {
-    'balance()': FunctionFragment;
-    'deposit(uint256)': FunctionFragment;
-    'emergencyWithdraw()': FunctionFragment;
-    'inputToken()': FunctionFragment;
-    'isRewarderEnabled()': FunctionFragment;
+    'BMCJ()': FunctionFragment;
+    'JOE()': FunctionFragment;
+    'add(address)': FunctionFragment;
+    'deposit(uint256,uint256)': FunctionFragment;
+    'emergencyWithdraw(uint256)': FunctionFragment;
+    'fetchUserLPBal(uint256,address)': FunctionFragment;
+    'isSteakMasterChefEnabled()': FunctionFragment;
     'owner()': FunctionFragment;
-    'pendingTokens(address)': FunctionFragment;
-    'poolInfo()': FunctionFragment;
+    'pendingHerdRewards(uint256)': FunctionFragment;
+    'pendingJoe(uint256,address)': FunctionFragment;
+    'poolFee()': FunctionFragment;
+    'poolInfo(uint256)': FunctionFragment;
+    'poolLength()': FunctionFragment;
+    'poolLpSupply(uint256)': FunctionFragment;
     'renounceOwnership()': FunctionFragment;
-    'rewardToken()': FunctionFragment;
-    'setRewardRate(uint256)': FunctionFragment;
-    'setRewarderEnabled(bool)': FunctionFragment;
-    'tokenPerSec()': FunctionFragment;
+    'setPoolStatus(uint256,bool)': FunctionFragment;
+    'setRewardFee(uint256)': FunctionFragment;
+    'setSteakMasterChefEnabled(bool)': FunctionFragment;
+    'setTreasuryAddress(address)': FunctionFragment;
     'transferOwnership(address)': FunctionFragment;
-    'userInfo(address)': FunctionFragment;
-    'withdraw()': FunctionFragment;
+    'treasuryWallet()': FunctionFragment;
+    'userInfo(uint256,address)': FunctionFragment;
+    'voter()': FunctionFragment;
+    'withdraw(uint256,uint256)': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | 'balance'
+      | 'BMCJ'
+      | 'JOE'
+      | 'add'
       | 'deposit'
       | 'emergencyWithdraw'
-      | 'inputToken'
-      | 'isRewarderEnabled'
+      | 'fetchUserLPBal'
+      | 'isSteakMasterChefEnabled'
       | 'owner'
-      | 'pendingTokens'
+      | 'pendingHerdRewards'
+      | 'pendingJoe'
+      | 'poolFee'
       | 'poolInfo'
+      | 'poolLength'
+      | 'poolLpSupply'
       | 'renounceOwnership'
-      | 'rewardToken'
-      | 'setRewardRate'
-      | 'setRewarderEnabled'
-      | 'tokenPerSec'
+      | 'setPoolStatus'
+      | 'setRewardFee'
+      | 'setSteakMasterChefEnabled'
+      | 'setTreasuryAddress'
       | 'transferOwnership'
+      | 'treasuryWallet'
       | 'userInfo'
+      | 'voter'
       | 'withdraw',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'balance', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'deposit', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'emergencyWithdraw', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'inputToken', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'isRewarderEnabled', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'BMCJ', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'JOE', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'add', values: [string]): string;
+  encodeFunctionData(functionFragment: 'deposit', values: [BigNumberish, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'emergencyWithdraw', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'fetchUserLPBal', values: [BigNumberish, string]): string;
+  encodeFunctionData(functionFragment: 'isSteakMasterChefEnabled', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'pendingTokens', values: [string]): string;
-  encodeFunctionData(functionFragment: 'poolInfo', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'pendingHerdRewards', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'pendingJoe', values: [BigNumberish, string]): string;
+  encodeFunctionData(functionFragment: 'poolFee', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'poolInfo', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'poolLength', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'poolLpSupply', values: [BigNumberish]): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'rewardToken', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'setRewardRate', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setRewarderEnabled', values: [boolean]): string;
-  encodeFunctionData(functionFragment: 'tokenPerSec', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'setPoolStatus', values: [BigNumberish, boolean]): string;
+  encodeFunctionData(functionFragment: 'setRewardFee', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'setSteakMasterChefEnabled', values: [boolean]): string;
+  encodeFunctionData(functionFragment: 'setTreasuryAddress', values: [string]): string;
   encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
-  encodeFunctionData(functionFragment: 'userInfo', values: [string]): string;
-  encodeFunctionData(functionFragment: 'withdraw', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'treasuryWallet', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'userInfo', values: [BigNumberish, string]): string;
+  encodeFunctionData(functionFragment: 'voter', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'withdraw', values: [BigNumberish, BigNumberish]): string;
 
-  decodeFunctionResult(functionFragment: 'balance', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'BMCJ', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'JOE', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'add', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'deposit', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'emergencyWithdraw', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'inputToken', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'isRewarderEnabled', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'fetchUserLPBal', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'isSteakMasterChefEnabled', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'pendingTokens', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'pendingHerdRewards', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'pendingJoe', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'poolFee', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'poolInfo', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'poolLength', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'poolLpSupply', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'renounceOwnership', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'rewardToken', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'setRewardRate', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'setRewarderEnabled', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'tokenPerSec', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setPoolStatus', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setRewardFee', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setSteakMasterChefEnabled', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setTreasuryAddress', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'transferOwnership', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'treasuryWallet', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'userInfo', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'voter', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'withdraw', data: BytesLike): Result;
 
   events: {
-    'Deposit(address,uint256)': EventFragment;
-    'IsRewarderEnabled(bool)': EventFragment;
+    'Add(uint256,address)': EventFragment;
+    'Claim(address,uint256,uint256)': EventFragment;
+    'Deposit(address,uint256,uint256)': EventFragment;
+    'EmergencyWithdraw(address,uint256,uint256)': EventFragment;
     'OwnershipTransferred(address,address)': EventFragment;
-    'RewardRateUpdated(uint256,uint256)': EventFragment;
-    'Withdraw(address,uint256)': EventFragment;
+    'SetPoolStatus(uint256,bool)': EventFragment;
+    'SetRewardFee(uint256)': EventFragment;
+    'SetSteakMasterChefEnabled(bool)': EventFragment;
+    'SetTreasury(address)': EventFragment;
+    'Withdraw(address,uint256,uint256)': EventFragment;
   };
 
+  getEvent(nameOrSignatureOrTopic: 'Add'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Claim'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Deposit'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'IsRewarderEnabled'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'EmergencyWithdraw'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'OwnershipTransferred'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'RewardRateUpdated'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'SetPoolStatus'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'SetRewardFee'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'SetSteakMasterChefEnabled'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'SetTreasury'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Withdraw'): EventFragment;
 }
 
-export interface DepositEventObject {
+export interface AddEventObject {
+  pid: BigNumber;
+  lpToken: string;
+}
+export type AddEvent = TypedEvent<[BigNumber, string], AddEventObject>;
+
+export type AddEventFilter = TypedEventFilter<AddEvent>;
+
+export interface ClaimEventObject {
   user: string;
+  pid: BigNumber;
   amount: BigNumber;
 }
-export type DepositEvent = TypedEvent<[string, BigNumber], DepositEventObject>;
+export type ClaimEvent = TypedEvent<[string, BigNumber, BigNumber], ClaimEventObject>;
+
+export type ClaimEventFilter = TypedEventFilter<ClaimEvent>;
+
+export interface DepositEventObject {
+  user: string;
+  pid: BigNumber;
+  amount: BigNumber;
+}
+export type DepositEvent = TypedEvent<[string, BigNumber, BigNumber], DepositEventObject>;
 
 export type DepositEventFilter = TypedEventFilter<DepositEvent>;
 
-export interface IsRewarderEnabledEventObject {
-  isEnabled: boolean;
+export interface EmergencyWithdrawEventObject {
+  user: string;
+  pid: BigNumber;
+  amount: BigNumber;
 }
-export type IsRewarderEnabledEvent = TypedEvent<[boolean], IsRewarderEnabledEventObject>;
+export type EmergencyWithdrawEvent = TypedEvent<[string, BigNumber, BigNumber], EmergencyWithdrawEventObject>;
 
-export type IsRewarderEnabledEventFilter = TypedEventFilter<IsRewarderEnabledEvent>;
+export type EmergencyWithdrawEventFilter = TypedEventFilter<EmergencyWithdrawEvent>;
 
 export interface OwnershipTransferredEventObject {
   previousOwner: string;
@@ -129,19 +191,41 @@ export type OwnershipTransferredEvent = TypedEvent<[string, string], OwnershipTr
 
 export type OwnershipTransferredEventFilter = TypedEventFilter<OwnershipTransferredEvent>;
 
-export interface RewardRateUpdatedEventObject {
-  oldRate: BigNumber;
-  newRate: BigNumber;
+export interface SetPoolStatusEventObject {
+  pid: BigNumber;
+  poolStatus: boolean;
 }
-export type RewardRateUpdatedEvent = TypedEvent<[BigNumber, BigNumber], RewardRateUpdatedEventObject>;
+export type SetPoolStatusEvent = TypedEvent<[BigNumber, boolean], SetPoolStatusEventObject>;
 
-export type RewardRateUpdatedEventFilter = TypedEventFilter<RewardRateUpdatedEvent>;
+export type SetPoolStatusEventFilter = TypedEventFilter<SetPoolStatusEvent>;
+
+export interface SetRewardFeeEventObject {
+  rewardFee: BigNumber;
+}
+export type SetRewardFeeEvent = TypedEvent<[BigNumber], SetRewardFeeEventObject>;
+
+export type SetRewardFeeEventFilter = TypedEventFilter<SetRewardFeeEvent>;
+
+export interface SetSteakMasterChefEnabledEventObject {
+  isEnabled: boolean;
+}
+export type SetSteakMasterChefEnabledEvent = TypedEvent<[boolean], SetSteakMasterChefEnabledEventObject>;
+
+export type SetSteakMasterChefEnabledEventFilter = TypedEventFilter<SetSteakMasterChefEnabledEvent>;
+
+export interface SetTreasuryEventObject {
+  treasuryAddress: string;
+}
+export type SetTreasuryEvent = TypedEvent<[string], SetTreasuryEventObject>;
+
+export type SetTreasuryEventFilter = TypedEventFilter<SetTreasuryEvent>;
 
 export interface WithdrawEventObject {
   user: string;
+  pid: BigNumber;
   amount: BigNumber;
 }
-export type WithdrawEvent = TypedEvent<[string, BigNumber], WithdrawEventObject>;
+export type WithdrawEvent = TypedEvent<[string, BigNumber, BigNumber], WithdrawEventObject>;
 
 export type WithdrawEventFilter = TypedEventFilter<WithdrawEvent>;
 
@@ -168,177 +252,272 @@ export interface SteakHutPool extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    balance(overrides?: CallOverrides): Promise<[BigNumber]>;
+    BMCJ(overrides?: CallOverrides): Promise<[string]>;
+
+    JOE(overrides?: CallOverrides): Promise<[string]>;
+
+    add(_lpToken: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
 
     deposit(
+      _pid: BigNumberish,
       _amount: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
 
-    emergencyWithdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
-
-    inputToken(overrides?: CallOverrides): Promise<[string]>;
-
-    isRewarderEnabled(overrides?: CallOverrides): Promise<[boolean]>;
-
-    owner(overrides?: CallOverrides): Promise<[string]>;
-
-    pendingTokens(_user: string, overrides?: CallOverrides): Promise<[BigNumber] & { pending: BigNumber }>;
-
-    poolInfo(overrides?: CallOverrides): Promise<
-      [BigNumber, BigNumber] & {
-        accTokenPerShare: BigNumber;
-        lastRewardTimestamp: BigNumber;
-      }
-    >;
-
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
-
-    rewardToken(overrides?: CallOverrides): Promise<[string]>;
-
-    setRewardRate(
-      _tokenPerSec: BigNumberish,
+    emergencyWithdraw(
+      _pid: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
 
-    setRewarderEnabled(
+    fetchUserLPBal(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    isSteakMasterChefEnabled(overrides?: CallOverrides): Promise<[boolean]>;
+
+    owner(overrides?: CallOverrides): Promise<[string]>;
+
+    pendingHerdRewards(_pid: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    pendingJoe(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    poolFee(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    poolInfo(
+      arg0: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<
+      [string, BigNumber, BigNumber, BigNumber, boolean] & {
+        lpToken: string;
+        accJoePerShare: BigNumber;
+        lastRewardTimestamp: BigNumber;
+        totalLpSupply: BigNumber;
+        poolEnabled: boolean;
+      }
+    >;
+
+    poolLength(overrides?: CallOverrides): Promise<[BigNumber] & { pools: BigNumber }>;
+
+    poolLpSupply(_pid: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber] & { lpValue: BigNumber }>;
+
+    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+
+    setPoolStatus(
+      _pid: BigNumberish,
+      _isPoolEnabled: boolean,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<ContractTransaction>;
+
+    setRewardFee(
+      _fee: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<ContractTransaction>;
+
+    setSteakMasterChefEnabled(
       _isEnabled: boolean,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
 
-    tokenPerSec(overrides?: CallOverrides): Promise<[BigNumber]>;
+    setTreasuryAddress(
+      _walletAddress: string,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<ContractTransaction>;
 
     transferOwnership(
       newOwner: string,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
 
-    userInfo(
-      arg0: string,
-      overrides?: CallOverrides,
-    ): Promise<
-      [BigNumber, BigNumber, BigNumber] & {
-        amount: BigNumber;
-        rewardDebt: BigNumber;
-        unpaidRewards: BigNumber;
-      }
-    >;
+    treasuryWallet(overrides?: CallOverrides): Promise<[string]>;
 
-    withdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    userInfo(
+      arg0: BigNumberish,
+      arg1: string,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; rewardDebt: BigNumber }>;
+
+    voter(overrides?: CallOverrides): Promise<[string]>;
+
+    withdraw(
+      _pid: BigNumberish,
+      _amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<ContractTransaction>;
   };
 
-  balance(overrides?: CallOverrides): Promise<BigNumber>;
+  BMCJ(overrides?: CallOverrides): Promise<string>;
+
+  JOE(overrides?: CallOverrides): Promise<string>;
+
+  add(_lpToken: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
 
   deposit(
+    _pid: BigNumberish,
     _amount: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
-  emergencyWithdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
-
-  inputToken(overrides?: CallOverrides): Promise<string>;
-
-  isRewarderEnabled(overrides?: CallOverrides): Promise<boolean>;
-
-  owner(overrides?: CallOverrides): Promise<string>;
-
-  pendingTokens(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-  poolInfo(overrides?: CallOverrides): Promise<
-    [BigNumber, BigNumber] & {
-      accTokenPerShare: BigNumber;
-      lastRewardTimestamp: BigNumber;
-    }
-  >;
-
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
-
-  rewardToken(overrides?: CallOverrides): Promise<string>;
-
-  setRewardRate(
-    _tokenPerSec: BigNumberish,
+  emergencyWithdraw(
+    _pid: BigNumberish,
     overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
-  setRewarderEnabled(
+  fetchUserLPBal(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+  isSteakMasterChefEnabled(overrides?: CallOverrides): Promise<boolean>;
+
+  owner(overrides?: CallOverrides): Promise<string>;
+
+  pendingHerdRewards(_pid: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+
+  pendingJoe(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+  poolFee(overrides?: CallOverrides): Promise<BigNumber>;
+
+  poolInfo(
+    arg0: BigNumberish,
+    overrides?: CallOverrides,
+  ): Promise<
+    [string, BigNumber, BigNumber, BigNumber, boolean] & {
+      lpToken: string;
+      accJoePerShare: BigNumber;
+      lastRewardTimestamp: BigNumber;
+      totalLpSupply: BigNumber;
+      poolEnabled: boolean;
+    }
+  >;
+
+  poolLength(overrides?: CallOverrides): Promise<BigNumber>;
+
+  poolLpSupply(_pid: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+
+  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+
+  setPoolStatus(
+    _pid: BigNumberish,
+    _isPoolEnabled: boolean,
+    overrides?: Overrides & { from?: string | Promise<string> },
+  ): Promise<ContractTransaction>;
+
+  setRewardFee(
+    _fee: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> },
+  ): Promise<ContractTransaction>;
+
+  setSteakMasterChefEnabled(
     _isEnabled: boolean,
     overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
-  tokenPerSec(overrides?: CallOverrides): Promise<BigNumber>;
+  setTreasuryAddress(
+    _walletAddress: string,
+    overrides?: Overrides & { from?: string | Promise<string> },
+  ): Promise<ContractTransaction>;
 
   transferOwnership(
     newOwner: string,
     overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
-  userInfo(
-    arg0: string,
-    overrides?: CallOverrides,
-  ): Promise<
-    [BigNumber, BigNumber, BigNumber] & {
-      amount: BigNumber;
-      rewardDebt: BigNumber;
-      unpaidRewards: BigNumber;
-    }
-  >;
+  treasuryWallet(overrides?: CallOverrides): Promise<string>;
 
-  withdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  userInfo(
+    arg0: BigNumberish,
+    arg1: string,
+    overrides?: CallOverrides,
+  ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; rewardDebt: BigNumber }>;
+
+  voter(overrides?: CallOverrides): Promise<string>;
+
+  withdraw(
+    _pid: BigNumberish,
+    _amount: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> },
+  ): Promise<ContractTransaction>;
 
   callStatic: {
-    balance(overrides?: CallOverrides): Promise<BigNumber>;
+    BMCJ(overrides?: CallOverrides): Promise<string>;
 
-    deposit(_amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    JOE(overrides?: CallOverrides): Promise<string>;
 
-    emergencyWithdraw(overrides?: CallOverrides): Promise<void>;
+    add(_lpToken: string, overrides?: CallOverrides): Promise<void>;
 
-    inputToken(overrides?: CallOverrides): Promise<string>;
+    deposit(_pid: BigNumberish, _amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
 
-    isRewarderEnabled(overrides?: CallOverrides): Promise<boolean>;
+    emergencyWithdraw(_pid: BigNumberish, overrides?: CallOverrides): Promise<void>;
+
+    fetchUserLPBal(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    isSteakMasterChefEnabled(overrides?: CallOverrides): Promise<boolean>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    pendingTokens(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingHerdRewards(_pid: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
 
-    poolInfo(overrides?: CallOverrides): Promise<
-      [BigNumber, BigNumber] & {
-        accTokenPerShare: BigNumber;
+    pendingJoe(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    poolFee(overrides?: CallOverrides): Promise<BigNumber>;
+
+    poolInfo(
+      arg0: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<
+      [string, BigNumber, BigNumber, BigNumber, boolean] & {
+        lpToken: string;
+        accJoePerShare: BigNumber;
         lastRewardTimestamp: BigNumber;
+        totalLpSupply: BigNumber;
+        poolEnabled: boolean;
       }
     >;
+
+    poolLength(overrides?: CallOverrides): Promise<BigNumber>;
+
+    poolLpSupply(_pid: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
-    rewardToken(overrides?: CallOverrides): Promise<string>;
+    setPoolStatus(_pid: BigNumberish, _isPoolEnabled: boolean, overrides?: CallOverrides): Promise<void>;
 
-    setRewardRate(_tokenPerSec: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setRewardFee(_fee: BigNumberish, overrides?: CallOverrides): Promise<void>;
 
-    setRewarderEnabled(_isEnabled: boolean, overrides?: CallOverrides): Promise<void>;
+    setSteakMasterChefEnabled(_isEnabled: boolean, overrides?: CallOverrides): Promise<void>;
 
-    tokenPerSec(overrides?: CallOverrides): Promise<BigNumber>;
+    setTreasuryAddress(_walletAddress: string, overrides?: CallOverrides): Promise<void>;
 
     transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
 
-    userInfo(
-      arg0: string,
-      overrides?: CallOverrides,
-    ): Promise<
-      [BigNumber, BigNumber, BigNumber] & {
-        amount: BigNumber;
-        rewardDebt: BigNumber;
-        unpaidRewards: BigNumber;
-      }
-    >;
+    treasuryWallet(overrides?: CallOverrides): Promise<string>;
 
-    withdraw(overrides?: CallOverrides): Promise<void>;
+    userInfo(
+      arg0: BigNumberish,
+      arg1: string,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; rewardDebt: BigNumber }>;
+
+    voter(overrides?: CallOverrides): Promise<string>;
+
+    withdraw(_pid: BigNumberish, _amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
-    'Deposit(address,uint256)'(user?: null, amount?: null): DepositEventFilter;
-    Deposit(user?: null, amount?: null): DepositEventFilter;
+    'Add(uint256,address)'(pid?: BigNumberish | null, lpToken?: string | null): AddEventFilter;
+    Add(pid?: BigNumberish | null, lpToken?: string | null): AddEventFilter;
 
-    'IsRewarderEnabled(bool)'(isEnabled?: null): IsRewarderEnabledEventFilter;
-    IsRewarderEnabled(isEnabled?: null): IsRewarderEnabledEventFilter;
+    'Claim(address,uint256,uint256)'(user?: string | null, pid?: BigNumberish | null, amount?: null): ClaimEventFilter;
+    Claim(user?: string | null, pid?: BigNumberish | null, amount?: null): ClaimEventFilter;
+
+    'Deposit(address,uint256,uint256)'(
+      user?: string | null,
+      pid?: BigNumberish | null,
+      amount?: null,
+    ): DepositEventFilter;
+    Deposit(user?: string | null, pid?: BigNumberish | null, amount?: null): DepositEventFilter;
+
+    'EmergencyWithdraw(address,uint256,uint256)'(
+      user?: string | null,
+      pid?: BigNumberish | null,
+      amount?: null,
+    ): EmergencyWithdrawEventFilter;
+    EmergencyWithdraw(user?: string | null, pid?: BigNumberish | null, amount?: null): EmergencyWithdrawEventFilter;
 
     'OwnershipTransferred(address,address)'(
       previousOwner?: string | null,
@@ -346,99 +525,174 @@ export interface SteakHutPool extends BaseContract {
     ): OwnershipTransferredEventFilter;
     OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
 
-    'RewardRateUpdated(uint256,uint256)'(oldRate?: null, newRate?: null): RewardRateUpdatedEventFilter;
-    RewardRateUpdated(oldRate?: null, newRate?: null): RewardRateUpdatedEventFilter;
+    'SetPoolStatus(uint256,bool)'(pid?: BigNumberish | null, poolStatus?: null): SetPoolStatusEventFilter;
+    SetPoolStatus(pid?: BigNumberish | null, poolStatus?: null): SetPoolStatusEventFilter;
 
-    'Withdraw(address,uint256)'(user?: null, amount?: null): WithdrawEventFilter;
-    Withdraw(user?: null, amount?: null): WithdrawEventFilter;
+    'SetRewardFee(uint256)'(rewardFee?: null): SetRewardFeeEventFilter;
+    SetRewardFee(rewardFee?: null): SetRewardFeeEventFilter;
+
+    'SetSteakMasterChefEnabled(bool)'(isEnabled?: null): SetSteakMasterChefEnabledEventFilter;
+    SetSteakMasterChefEnabled(isEnabled?: null): SetSteakMasterChefEnabledEventFilter;
+
+    'SetTreasury(address)'(treasuryAddress?: null): SetTreasuryEventFilter;
+    SetTreasury(treasuryAddress?: null): SetTreasuryEventFilter;
+
+    'Withdraw(address,uint256,uint256)'(
+      user?: string | null,
+      pid?: BigNumberish | null,
+      amount?: null,
+    ): WithdrawEventFilter;
+    Withdraw(user?: string | null, pid?: BigNumberish | null, amount?: null): WithdrawEventFilter;
   };
 
   estimateGas: {
-    balance(overrides?: CallOverrides): Promise<BigNumber>;
+    BMCJ(overrides?: CallOverrides): Promise<BigNumber>;
 
-    deposit(_amount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    JOE(overrides?: CallOverrides): Promise<BigNumber>;
 
-    emergencyWithdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    add(_lpToken: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
 
-    inputToken(overrides?: CallOverrides): Promise<BigNumber>;
-
-    isRewarderEnabled(overrides?: CallOverrides): Promise<BigNumber>;
-
-    owner(overrides?: CallOverrides): Promise<BigNumber>;
-
-    pendingTokens(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-    poolInfo(overrides?: CallOverrides): Promise<BigNumber>;
-
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
-
-    rewardToken(overrides?: CallOverrides): Promise<BigNumber>;
-
-    setRewardRate(
-      _tokenPerSec: BigNumberish,
+    deposit(
+      _pid: BigNumberish,
+      _amount: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
 
-    setRewarderEnabled(
+    emergencyWithdraw(
+      _pid: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<BigNumber>;
+
+    fetchUserLPBal(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    isSteakMasterChefEnabled(overrides?: CallOverrides): Promise<BigNumber>;
+
+    owner(overrides?: CallOverrides): Promise<BigNumber>;
+
+    pendingHerdRewards(_pid: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+
+    pendingJoe(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    poolFee(overrides?: CallOverrides): Promise<BigNumber>;
+
+    poolInfo(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+
+    poolLength(overrides?: CallOverrides): Promise<BigNumber>;
+
+    poolLpSupply(_pid: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+
+    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+
+    setPoolStatus(
+      _pid: BigNumberish,
+      _isPoolEnabled: boolean,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<BigNumber>;
+
+    setRewardFee(_fee: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+
+    setSteakMasterChefEnabled(
       _isEnabled: boolean,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
 
-    tokenPerSec(overrides?: CallOverrides): Promise<BigNumber>;
+    setTreasuryAddress(
+      _walletAddress: string,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<BigNumber>;
 
     transferOwnership(
       newOwner: string,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
 
-    userInfo(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    treasuryWallet(overrides?: CallOverrides): Promise<BigNumber>;
 
-    withdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    userInfo(arg0: BigNumberish, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+
+    voter(overrides?: CallOverrides): Promise<BigNumber>;
+
+    withdraw(
+      _pid: BigNumberish,
+      _amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    balance(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    BMCJ(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    JOE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    add(_lpToken: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
 
     deposit(
+      _pid: BigNumberish,
       _amount: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
-    emergencyWithdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
-
-    inputToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    isRewarderEnabled(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    pendingTokens(_user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    poolInfo(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
-
-    rewardToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    setRewardRate(
-      _tokenPerSec: BigNumberish,
+    emergencyWithdraw(
+      _pid: BigNumberish,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
-    setRewarderEnabled(
+    fetchUserLPBal(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    isSteakMasterChefEnabled(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    pendingHerdRewards(_pid: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    pendingJoe(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    poolFee(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    poolInfo(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    poolLength(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    poolLpSupply(_pid: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+
+    setPoolStatus(
+      _pid: BigNumberish,
+      _isPoolEnabled: boolean,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<PopulatedTransaction>;
+
+    setRewardFee(
+      _fee: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<PopulatedTransaction>;
+
+    setSteakMasterChefEnabled(
       _isEnabled: boolean,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
-    tokenPerSec(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    setTreasuryAddress(
+      _walletAddress: string,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<PopulatedTransaction>;
 
     transferOwnership(
       newOwner: string,
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
-    userInfo(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    treasuryWallet(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    withdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    userInfo(arg0: BigNumberish, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    voter(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    withdraw(
+      _pid: BigNumberish,
+      _amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<PopulatedTransaction>;
   };
 }

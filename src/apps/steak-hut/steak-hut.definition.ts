@@ -11,13 +11,6 @@ export const STEAK_HUT_DEFINITION = appDefinition({
   url: 'https://www.steakhut.finance/',
 
   groups: {
-
-    ve: {
-      id: 've',
-      type: GroupType.TOKEN,
-      label: 'VotedEscrow',
-    },
-
     staking: {
       id: 'staking',
       type: GroupType.TOKEN,
