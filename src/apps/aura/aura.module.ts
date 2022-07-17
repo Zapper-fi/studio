@@ -21,15 +21,17 @@ import { AuraBaseRewardPoolHelper } from './helpers/aura.base-reward-pool-helper
   providers: [
     AuraAppDefinition,
     AuraContractFactory,
-    AuraBalancerPoolsHelper,
-    AuraBaseRewardPoolHelper,
+    // Ethereum
+    EthereumAuraBalanceFetcher,
     EthereumAuraChefTokenFetcher,
+    EthereumAuraPoolsTokenFetcher,
     EthereumAuraChefContractPositionFetcher,
+    EthereumAuraPoolsContractPositionFetcher,
     EthereumAuraLockerContractPositionFetcher,
     EthereumAuraStakingContractPositionFetcher,
-    EthereumAuraPoolsTokenFetcher,
-    EthereumAuraPoolsContractPositionFetcher,
-    EthereumAuraBalanceFetcher,
+    // Helpers
+    AuraBalancerPoolsHelper,
+    AuraBaseRewardPoolHelper,
   ],
 })
 export class AuraAppModule extends AbstractApp() {}
