@@ -24,8 +24,17 @@ export const ROCKET_POOL_DEFINITION = appDefinition({
   },
 
   groups: {
-    rpl: { id: 'rpl', type: GroupType.TOKEN, label: 'RPL' },
-    reth: { id: 'reth', type: GroupType.TOKEN, label: 'rETH' },
+    staking: {
+      id: 'staking',
+      type: GroupType.POSITION,
+      label: 'Staking',
+    },
+
+    oracleDaoBond: {
+      id: 'oracle-dao-bond',
+      type: GroupType.POSITION,
+      label: 'Oracle DAO Bond',
+    },
   },
 
   primaryColor: '#f97516',
