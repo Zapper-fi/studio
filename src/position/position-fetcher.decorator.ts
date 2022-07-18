@@ -11,7 +11,7 @@ export const POSITION_FETCHER_TYPE = 'POSITION_FETCHER_TYPE';
 export const POSITION_FETCHER_OPTIONS = 'POSITION_FETCHER_OPTIONS';
 
 export type PositionOptions = {
-  includeInTvl?: boolean;
+  excludeFromTvl?: boolean;
 };
 
 export const PositionFetcher =

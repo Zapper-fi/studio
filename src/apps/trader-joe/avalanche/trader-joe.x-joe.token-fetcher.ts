@@ -14,7 +14,7 @@ const appId = TRADER_JOE_DEFINITION.id;
 const groupId = TRADER_JOE_DEFINITION.groups.xJoe.id;
 const network = Network.AVALANCHE_MAINNET;
 
-@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
+@Register.TokenPositionFetcher({ appId, groupId, network })
 export class AvalancheTraderJoeXJoeTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,

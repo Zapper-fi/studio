@@ -2,5 +2,6 @@
 /* tslint:disable */
 /* eslint-disable */
 export { Bluebit__factory } from './Bluebit__factory';
+export { BluebitVeToken__factory } from './BluebitVeToken__factory';
 export { Stats__factory } from './Stats__factory';
 export { Vault__factory } from './Vault__factory';

@@ -2,10 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { BigNumberish } from 'ethers';
 
 import { SingleStakingFarmContractPositionHelperParams } from '~app-toolkit';
-import { EthersMulticall } from '~multicall';
+import { IMulticallWrapper } from '~multicall/multicall.interface';
 
 type CurveGaugeIsActiveStrategyParams<T> = {
-  resolveInflationRate: (opts: { multicall: EthersMulticall; contract: T }) => Promise<BigNumberish>;
+  resolveInflationRate: (opts: { multicall: IMulticallWrapper; contract: T }) => Promise<BigNumberish>;
 };
 
 @Injectable()

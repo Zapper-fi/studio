@@ -5,7 +5,7 @@ import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { CompoundCToken } from '~apps/compound';
 import { CompoundSupplyTokenDataProps } from '~apps/compound/helper/compound.supply.token-helper';
-import { EthersMulticall as Multicall } from '~multicall/multicall.ethers';
+import { IMulticallWrapper } from '~multicall/multicall.interface';
 import { Network } from '~types';
 
 import { MarketXyzContractFactory } from '../contracts';
@@ -18,8 +18,8 @@ type MarketXyzLendingBalanceHelperParams<T> = {
   borrowGroupId: string;
   fuseLensAddress: string;
   getTokenContract: (opts: { address: string; network: Network }) => T;
-  getBalanceRaw: (opts: { contract: T; multicall: Multicall; address: string }) => Promise<BigNumberish>;
-  getBorrowBalanceRaw: (opts: { contract: T; multicall: Multicall; address: string }) => Promise<BigNumberish>;
+  getBalanceRaw: (opts: { contract: T; multicall: IMulticallWrapper; address: string }) => Promise<BigNumberish>;
+  getBorrowBalanceRaw: (opts: { contract: T; multicall: IMulticallWrapper; address: string }) => Promise<BigNumberish>;
 };
 
 @Injectable()

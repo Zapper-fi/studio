@@ -12,7 +12,7 @@ const appId = AAVE_V2_DEFINITION.id;
 const groupId = AAVE_V2_DEFINITION.groups.claimable.id;
 const network = Network.ETHEREUM_MAINNET;
 
-@Register.ContractPositionFetcher({ appId, groupId, network })
+@Register.ContractPositionFetcher({ appId, groupId, network, options: { excludeFromTvl: true } })
 export class EthereumAaveV2ClaimableContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(AaveV2ClaimableContractPositionHelper)

@@ -13,7 +13,7 @@ const appId = CRONUS_FINANCE_DEFINITION.id;
 const groupId = CRONUS_FINANCE_DEFINITION.groups.pool.id;
 const network = Network.EVMOS_MAINNET;
 
-@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
+@Register.TokenPositionFetcher({ appId, groupId, network })
 export class EvmosCronusFinancePoolTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(CronusFinanceContractFactory) private readonly cronusFinanceContractFactory: CronusFinanceContractFactory,
@@ -25,7 +25,7 @@ export class EvmosCronusFinancePoolTokenFetcher implements PositionFetcher<AppTo
 
   async getPositions() {
     return this.uniswapV2PoolTokenHelper.getTokens({
-      network: Network.EVMOS_MAINNET,
+      network,
       appId,
       groupId,
       factoryAddress: '0x20570b7bff86b2f92068622d0805160f318554be',
@@ -38,7 +38,7 @@ export class EvmosCronusFinancePoolTokenFetcher implements PositionFetcher<AppTo
         this.cronusFinanceContractFactory.cronusFinancePool({ address, network }),
       resolvePoolTokenAddresses: this.uniswapV2TheGraphPoolTokenAddressStrategy.build({
         subgraphUrl: 'https://thegraph.cronusfinancexyz.com/subgraphs/name/exchange',
-        first: 500,
+        first: 200,
       }),
       resolvePoolTokenSymbol: ({ multicall, poolContract }) => multicall.wrap(poolContract).symbol(),
       resolvePoolTokenSupply: ({ multicall, poolContract }) => multicall.wrap(poolContract).totalSupply(),

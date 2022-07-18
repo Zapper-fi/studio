@@ -30,7 +30,7 @@ const BOND_TELLER_ADDRESSES = [
   '0x501acef4f8397413c33b13cb39670ad2f17bfe62', // FRAX Bond
 ];
 
-@Register.ContractPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
+@Register.ContractPositionFetcher({ appId, groupId, network })
 export class EthereumSolaceBondsContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,

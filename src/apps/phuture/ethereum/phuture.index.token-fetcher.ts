@@ -1,6 +1,7 @@
 import { Inject } from '@nestjs/common';
 import { gql } from 'graphql-request';
 import _ from 'lodash';
+
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
@@ -9,11 +10,10 @@ import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition, Token } from '~position/position.interface';
 import { Network } from '~types/network.interface';
-import { PhutureContractFactory } from '../contracts';
+
 import { PHUTURE_DEFINITION } from '../phuture.definition';
 
 const appId = PHUTURE_DEFINITION.id;
-const appName = PHUTURE_DEFINITION.name;
 const groupId = PHUTURE_DEFINITION.groups.index.id;
 const network = Network.ETHEREUM_MAINNET;
 
@@ -74,16 +74,13 @@ type QueryResult = {
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
 export class EthereumPhutureIndexTokenFetcher implements PositionFetcher<AppTokenPosition> {
-  constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(PhutureContractFactory) private readonly phutureContractFactory: PhutureContractFactory,
-  ) {}
+  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
   async getPositions() {
     const indexes = await this.getIndexes();
     const baseTokenDependencies = await this.appToolkit.getBaseTokenPrices(network);
 
-    const indexPositions = indexes.map(({ id, name, totalSupply: supply, assets: activeAssets, inactiveAssets }) => {
+    const indexPositions = indexes.map(({ id, name, totalSupply: supplyRaw, assets: activeAssets, inactiveAssets }) => {
       const index = baseTokenDependencies.find(({ address }) => address === id);
       if (index === undefined) return null;
 
@@ -94,9 +91,9 @@ export class EthereumPhutureIndexTokenFetcher implements PositionFetcher<AppToke
           asset: {
             vTokens: [{ platformTotalSupply, totalAmount }],
           },
-        }) => ((totalAmount / platformTotalSupply) * shares) / supply,
+        }) => ((totalAmount / platformTotalSupply) * shares) / supplyRaw,
       );
-      let liquidity = 0;
+      let liquidityRaw = 0;
 
       const tokens: Token[] = _.compact(
         assets.map(({ shares, asset: { id, name } }) => {
@@ -104,7 +101,7 @@ export class EthereumPhutureIndexTokenFetcher implements PositionFetcher<AppToke
           if (asset === undefined) return null;
 
           const { price, symbol, decimals } = asset;
-          liquidity += shares * price;
+          liquidityRaw += shares * price;
 
           return {
             address: id,
@@ -118,31 +115,36 @@ export class EthereumPhutureIndexTokenFetcher implements PositionFetcher<AppToke
         }),
       );
 
-      const price = liquidity / supply;
+      const symbol = index.symbol;
+      const decimals = index.decimals;
+      const price = liquidityRaw / supplyRaw;
+      const liquidity = liquidityRaw / 10 ** decimals;
+      const supply = supplyRaw / 10 ** decimals;
       const secondaryLabel = buildDollarDisplayItem(price);
 
       const images = tokens.flatMap(token => getImagesFromToken(token));
       const indexPosition: AppTokenPosition = {
+        type: ContractType.APP_TOKEN,
         address: id,
         appId,
+        groupId,
+        network,
+        decimals,
+        supply,
+        price,
+        pricePerShare,
+        symbol,
+        tokens,
+
         dataProps: {
           liquidity,
         },
-        decimals: index.decimals,
+
         displayProps: {
           label: name,
           images,
-          appName,
           secondaryLabel,
         },
-        groupId,
-        network,
-        price,
-        pricePerShare,
-        supply,
-        symbol: index.symbol,
-        tokens,
-        type: ContractType.APP_TOKEN,
       };
 
       return indexPosition;

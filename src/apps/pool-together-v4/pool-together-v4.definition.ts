@@ -24,6 +24,7 @@ export const POOL_TOGETHER_V4_DEFINITION = appDefinition({
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW, AppAction.TRANSACT],
     [Network.POLYGON_MAINNET]: [AppAction.VIEW, AppAction.TRANSACT],
     [Network.AVALANCHE_MAINNET]: [AppAction.VIEW],
+    [Network.OPTIMISM_MAINNET]: [AppAction.VIEW],
   },
   primaryColor: '#843ff3',
   token: {

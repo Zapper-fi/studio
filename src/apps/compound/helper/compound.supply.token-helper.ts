@@ -10,7 +10,7 @@ import {
   buildPercentageDisplayItem,
 } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
-import { EthersMulticall as Multicall } from '~multicall/multicall.ethers';
+import { IMulticallWrapper } from '~multicall/multicall.interface';
 import { ContractType } from '~position/contract.interface';
 import { BalanceDisplayMode } from '~position/display.interface';
 import { AppTokenPosition, ExchangeableAppTokenDataProps, Token } from '~position/position.interface';
@@ -38,14 +38,14 @@ type CompoundSupplyTokenHelperParams<T = CompoundComptroller, V = CompoundCToken
   marketName?: string;
   getComptrollerContract: (opts: { address: string; network: Network }) => T;
   getTokenContract: (opts: { address: string; network: Network }) => V;
-  getAllMarkets: (opts: { contract: T; multicall: Multicall }) => string[] | Promise<string[]>;
-  getExchangeRate: (opts: { contract: V; multicall: Multicall }) => Promise<BigNumberish>;
-  getSupplyRate: (opts: { contract: V; multicall: Multicall }) => Promise<BigNumberish>;
-  getBorrowRate: (opts: { contract: V; multicall: Multicall }) => Promise<BigNumberish>;
+  getAllMarkets: (opts: { contract: T; multicall: IMulticallWrapper }) => string[] | Promise<string[]>;
+  getExchangeRate: (opts: { contract: V; multicall: IMulticallWrapper }) => Promise<BigNumberish>;
+  getSupplyRate: (opts: { contract: V; multicall: IMulticallWrapper }) => Promise<BigNumberish>;
+  getBorrowRate: (opts: { contract: V; multicall: IMulticallWrapper }) => Promise<BigNumberish>;
   getSupplyRateLabel?: () => string;
-  getUnderlyingAddress: (opts: { contract: V; multicall: Multicall }) => Promise<string>;
+  getUnderlyingAddress: (opts: { contract: V; multicall: IMulticallWrapper }) => Promise<string>;
   getExchangeRateMantissa: (opts: { tokenDecimals: number; underlyingTokenDecimals: number }) => number;
-  getDisplayLabel?: (opts: { contract: V; multicall: Multicall; underlyingToken: Token }) => Promise<string>;
+  getDisplayLabel?: (opts: { contract: V; multicall: IMulticallWrapper; underlyingToken: Token }) => Promise<string>;
   getDenormalizedRate?: (opts: { rate: BigNumberish; blocksPerDay: number; decimals: number }) => number;
   exchangeable?: boolean;
 };
@@ -96,10 +96,14 @@ export class CompoundSupplyTokenHelper {
         const erc20TokenContract = this.contractFactory.erc20({ address, network });
         const contract = getTokenContract({ address, network });
 
-        const underlyingAddress = await getUnderlyingAddress({ contract, multicall })
-          .then(t => t.toLowerCase().replace(ETH_ADDR_ALIAS, ZERO_ADDRESS))
-          .catch(() => ZERO_ADDRESS);
+        const underlyingAddressRaw = await getUnderlyingAddress({ contract, multicall }).catch(err => {
+          // if the underlying call failed, it's the compound-wrapped native token
+          const isCompoundWrappedNativeToken = err.message.includes('Multicall call failed for');
+          if (isCompoundWrappedNativeToken) return ZERO_ADDRESS;
+          throw err;
+        });
 
+        const underlyingAddress = underlyingAddressRaw.toLowerCase().replace(ETH_ADDR_ALIAS, ZERO_ADDRESS);
         const underlyingToken = allTokens.find(v => v.address === underlyingAddress);
         if (!underlyingToken) return null;
 

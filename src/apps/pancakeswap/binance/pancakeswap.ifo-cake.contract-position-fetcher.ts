@@ -15,7 +15,7 @@ const appId = PANCAKESWAP_DEFINITION.id;
 const groupId = PANCAKESWAP_DEFINITION.groups.ifoCake.id;
 const network = Network.BINANCE_SMART_CHAIN_MAINNET;
 
-@Register.ContractPositionFetcher({ appId, groupId, network })
+@Register.ContractPositionFetcher({ appId, groupId, network, options: { excludeFromTvl: true } })
 export class BinanceSmartChainPancakeswapIfoCakeContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,

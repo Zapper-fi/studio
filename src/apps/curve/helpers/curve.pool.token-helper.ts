@@ -11,7 +11,7 @@ import {
 } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { Erc20 } from '~contract/contracts';
-import { EthersMulticall as Multicall } from '~multicall/multicall.ethers';
+import { IMulticallWrapper } from '~multicall/multicall.interface';
 import { ContractType } from '~position/contract.interface';
 import { AppTokenPosition, isAppToken, Token } from '~position/position.interface';
 import { AppGroupsDefinition } from '~position/position.service';
@@ -22,6 +22,7 @@ import { CURVE_DEFINITION } from '../curve.definition';
 import { CurvePoolDefinition } from '../curve.types';
 
 export type CurvePoolTokenDataProps = {
+  gaugeAddress?: string;
   swapAddress: string;
   liquidity: number;
   volume: number;
@@ -36,7 +37,7 @@ type CurvePoolTokenHelperParams<T = CurveToken, V = Erc20> = {
   minLiquidity?: number;
   appTokenDependencies?: AppGroupsDefinition[];
   baseCurveTokens?: AppTokenPosition[];
-  resolvePoolDefinitions: (opts: { network: Network; multicall: Multicall }) => Promise<CurvePoolDefinition[]>;
+  resolvePoolDefinitions: (opts: { network: Network; multicall: IMulticallWrapper }) => Promise<CurvePoolDefinition[]>;
   resolvePoolVolume?: (opts: {
     poolContract: T;
     tokens: Token[];
@@ -45,13 +46,13 @@ type CurvePoolTokenHelperParams<T = CurveToken, V = Erc20> = {
   }) => Promise<number>;
   resolvePoolContract: (opts: { network: Network; definition: CurvePoolDefinition }) => T;
   resolvePoolTokenContract: (opts: { network: Network; definition: CurvePoolDefinition }) => V;
-  resolvePoolCoinAddresses: (opts: { multicall: Multicall; poolContract: T }) => Promise<string[]>;
-  resolvePoolReserves: (opts: { multicall: Multicall; poolContract: T }) => Promise<string[]>;
-  resolvePoolFee: (opts: { multicall: Multicall; poolContract: T }) => Promise<BigNumberish>;
-  resolvePoolTokenSymbol: (opts: { multicall: Multicall; poolTokenContract: V }) => Promise<string>;
-  resolvePoolTokenSupply: (opts: { multicall: Multicall; poolTokenContract: V }) => Promise<BigNumber>;
+  resolvePoolCoinAddresses: (opts: { multicall: IMulticallWrapper; poolContract: T }) => Promise<string[]>;
+  resolvePoolReserves: (opts: { multicall: IMulticallWrapper; poolContract: T }) => Promise<string[]>;
+  resolvePoolFee: (opts: { multicall: IMulticallWrapper; poolContract: T }) => Promise<BigNumberish>;
+  resolvePoolTokenSymbol: (opts: { multicall: IMulticallWrapper; poolTokenContract: V }) => Promise<string>;
+  resolvePoolTokenSupply: (opts: { multicall: IMulticallWrapper; poolTokenContract: V }) => Promise<BigNumber>;
   resolvePoolTokenPrice: (opts: {
-    multicall: Multicall;
+    multicall: IMulticallWrapper;
     poolContract: T;
     tokens: Token[];
     reserves: number[];
@@ -106,7 +107,7 @@ export class CurvePoolTokenHelper {
 
     const curvePoolTokens = await Promise.all(
       poolDefinitions.map(async definition => {
-        const { tokenAddress, swapAddress } = definition;
+        const { gaugeAddress, tokenAddress, swapAddress } = definition;
         const poolContract = resolvePoolContract({ network, definition });
         const poolTokenContract = resolvePoolTokenContract({ network, definition });
         const rawTokenAddresses = await resolvePoolCoinAddresses({ multicall, poolContract });
@@ -172,6 +173,7 @@ export class CurvePoolTokenHelper {
           tokens,
 
           dataProps: {
+            gaugeAddress,
             swapAddress,
             liquidity,
             volume,
