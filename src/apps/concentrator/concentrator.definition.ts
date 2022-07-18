@@ -8,21 +8,30 @@ export const CONCENTRATOR_DEFINITION = appDefinition({
   name: 'Concentrator',
   description: 'Boost your Convex yields by ~50%',
   url: 'https://concentrator.aladdin.club/',
+
   groups: {
     acrv: {
       id: 'acrv',
       type: GroupType.TOKEN,
       label: 'Farm',
     },
+
     pool: {
       id: 'pool',
       type: GroupType.POSITION,
       label: 'Pools',
     },
+
+    ifo: {
+      id: 'ifo',
+      type: GroupType.TOKEN,
+      label: 'IFO',
+    },
   },
 
   tags: [AppTag.FARMING],
   keywords: [],
+
   links: {
     github: 'https://github.com/AladdinDAO',
   },
