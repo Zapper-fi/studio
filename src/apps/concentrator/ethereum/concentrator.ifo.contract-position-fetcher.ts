@@ -14,7 +14,7 @@ const appId = CONCENTRATOR_DEFINITION.id;
 const groupId = CONCENTRATOR_DEFINITION.groups.ifo.id;
 const network = Network.ETHEREUM_MAINNET;
 
-const address = '0x3Cf54F3A1969be9916DAD548f3C084331C4450b5';
+const address = '0x3cf54f3a1969be9916dad548f3c084331c4450b5';
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
 export class EthereumConcentratorIfoContractPositionFetcher implements PositionFetcher<ContractPosition> {
