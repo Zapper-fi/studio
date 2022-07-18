@@ -4,6 +4,15 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.114.0](https://github.com/Zapper-fi/studio/compare/v0.113.0...v0.114.0) (2022-07-18)
+
+
+### Features
+
+* **rari-fuse:** Integrate presentation config for explore page ([#853](https://github.com/Zapper-fi/studio/issues/853)) ([2eb555f](https://github.com/Zapper-fi/studio/commit/2eb555f9ab46ffe5fb589a9aae8e6eace0d0cbe4))
+* **rocket-pool:** Integrate Rocket Pool ([#834](https://github.com/Zapper-fi/studio/issues/834)) ([cec77a1](https://github.com/Zapper-fi/studio/commit/cec77a1d677f4b519cdb26f70a29192467308ac1))
+* **rocket-pool:** Remove duplicate positions, create positions ([#894](https://github.com/Zapper-fi/studio/issues/894)) ([9079a75](https://github.com/Zapper-fi/studio/commit/9079a75589a5311ddc664e7d24ef835e8ce54d32))
+
 ## [0.113.0](https://github.com/Zapper-fi/studio/compare/v0.112.1...v0.113.0) (2022-07-16)
 
 
