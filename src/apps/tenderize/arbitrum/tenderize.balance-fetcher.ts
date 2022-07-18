@@ -40,11 +40,11 @@ export class ArbitrumTenderizeBalanceFetcher implements BalanceFetcher {
 
     return presentBalanceFetcherResponse([
       {
-        label: 'TenderTokens',
+        label: 'Tender',
         assets: tenderTokenBalances,
       },
       {
-        label: 'SwapTokens',
+        label: 'Swap',
         assets: swapTokenBalances,
       },
     ]);
