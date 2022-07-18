@@ -3,6 +3,7 @@ import { Inject } from '@nestjs/common';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
+import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
@@ -57,7 +58,7 @@ export class ArbitrumTenderizeSwapTokenFetcher implements PositionFetcher<AppTok
       price,
       type: ContractType.APP_TOKEN,
       displayProps: {
-        label: symbol,
+        label: `${getLabelFromToken(tenderToken)} / ${getLabelFromToken(underlyingToken)}`,
         secondaryLabel: buildDollarDisplayItem(price),
         images: [],
         statsItems: [],

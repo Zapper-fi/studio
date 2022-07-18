@@ -50,7 +50,7 @@ export class ArbitrumTenderizeTenderTokenFetcher implements PositionFetcher<AppT
       supply,
       tokens: [],
       dataProps: {},
-      pricePerShare: 1,
+      pricePerShare: Number(virtualPrice) / 10 ** decimals,
       price,
       type: ContractType.APP_TOKEN,
       displayProps: {
