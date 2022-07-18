@@ -9,26 +9,32 @@ import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
 import { TenderizeContractFactory } from '../contracts';
-import { arbitrumEndpoint } from '../helpers/constants';
+import { ethereumEndpoint } from '../helpers/constants';
 import { ConfigResponse, configQuery } from '../helpers/queries';
 import { TENDERIZE_DEFINITION } from '../tenderize.definition';
 
 const appId = TENDERIZE_DEFINITION.id;
-const groupId = TENDERIZE_DEFINITION.groups.swaptokens.id;
-const network = Network.ARBITRUM_MAINNET;
+const groupId = TENDERIZE_DEFINITION.groups.swap.id;
+const network = Network.ETHEREUM_MAINNET;
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
-export class ArbitrumTenderizeSwaptokensTokenFetcher implements PositionFetcher<AppTokenPosition> {
+export class EthereumTenderizeSwapTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(TenderizeContractFactory) private readonly tenderizeContractFactory: TenderizeContractFactory,
   ) {}
 
-  async getPosition(address: string, steak: string) {
+  async getPosition(address: string, steak: string, tenderAddress: string) {
     const multicall = this.appToolkit.getMulticall(network);
     const contract = this.tenderizeContractFactory.erc20({ address, network });
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
     const underlyingToken = baseTokens.find(v => v.address === steak)!;
+    const tenderTokens = await this.appToolkit.getAppTokenPositions({
+      appId: TENDERIZE_DEFINITION.id,
+      groupIds: [TENDERIZE_DEFINITION.groups.tender.id],
+      network: Network.ETHEREUM_MAINNET,
+    });
+    const tenderToken = tenderTokens.find(v => v.address === tenderAddress)!;
 
     const [symbol, decimals, totalSupply] = await Promise.all([
       multicall.wrap(contract).symbol(),
@@ -45,9 +51,9 @@ export class ArbitrumTenderizeSwaptokensTokenFetcher implements PositionFetcher<
       symbol,
       decimals,
       supply,
-      tokens: [],
+      tokens: [tenderToken, underlyingToken],
       dataProps: {},
-      pricePerShare: 1,
+      pricePerShare: [0.5, 0.5],
       price,
       type: ContractType.APP_TOKEN,
       displayProps: {
@@ -63,12 +69,12 @@ export class ArbitrumTenderizeSwaptokensTokenFetcher implements PositionFetcher<
 
   async getPositions() {
     const data = await this.appToolkit.helpers.theGraphHelper.request<ConfigResponse>({
-      endpoint: arbitrumEndpoint,
+      endpoint: ethereumEndpoint,
       query: configQuery,
     });
 
     const positions = await Promise.all(
-      data.configs.map(async config => await this.getPosition(config.lpToken, config.steak, config.symbol)),
+      data.configs.map(async config => await this.getPosition(config.lpToken, config.steak, config.tenderToken)),
     );
     return positions;
   }

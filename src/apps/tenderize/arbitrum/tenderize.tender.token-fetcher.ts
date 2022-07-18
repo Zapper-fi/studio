@@ -4,6 +4,7 @@ import Axios from 'axios';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
+import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
@@ -16,11 +17,11 @@ import { APYResponse } from '../helpers/types';
 import { TENDERIZE_DEFINITION } from '../tenderize.definition';
 
 const appId = TENDERIZE_DEFINITION.id;
-const groupId = TENDERIZE_DEFINITION.groups.tendertokens.id;
+const groupId = TENDERIZE_DEFINITION.groups.tender.id;
 const network = Network.ARBITRUM_MAINNET;
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
-export class ArbitrumTenderizeTenderTokensTokenFetcher implements PositionFetcher<AppTokenPosition> {
+export class ArbitrumTenderizeTenderTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(TenderizeContractFactory) private readonly tenderizeContractFactory: TenderizeContractFactory,
@@ -56,7 +57,7 @@ export class ArbitrumTenderizeTenderTokensTokenFetcher implements PositionFetche
         label: symbol,
         secondaryLabel: buildDollarDisplayItem(price),
         tertiaryLabel: `${apy}% APY`,
-        images: [`https://app.tenderize.me/tender${symbol}.svg`],
+        images: getImagesFromToken(underlyingToken),
         statsItems: [],
       },
     };

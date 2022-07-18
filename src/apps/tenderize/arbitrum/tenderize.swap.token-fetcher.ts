@@ -1,5 +1,4 @@
 import { Inject } from '@nestjs/common';
-import Axios from 'axios';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
@@ -10,27 +9,32 @@ import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
 import { TenderizeContractFactory } from '../contracts';
-import { ethereumEndpoint } from '../helpers/constants';
-import { tenderTokenFetcherQuery, TenderTokenFetcherResponse } from '../helpers/queries';
-import { APYResponse } from '../helpers/types';
+import { arbitrumEndpoint } from '../helpers/constants';
+import { ConfigResponse, configQuery } from '../helpers/queries';
 import { TENDERIZE_DEFINITION } from '../tenderize.definition';
 
 const appId = TENDERIZE_DEFINITION.id;
-const groupId = TENDERIZE_DEFINITION.groups.tendertokens.id;
-const network = Network.ETHEREUM_MAINNET;
+const groupId = TENDERIZE_DEFINITION.groups.swap.id;
+const network = Network.ARBITRUM_MAINNET;
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
-export class EthereumTenderizeTenderTokensTokenFetcher implements PositionFetcher<AppTokenPosition> {
+export class ArbitrumTenderizeSwapTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(TenderizeContractFactory) private readonly tenderizeContractFactory: TenderizeContractFactory,
   ) {}
 
-  async getPosition(address: string, steak: string, virtualPrice: string, apy: string) {
+  async getPosition(address: string, steak: string, tenderAddress: string) {
     const multicall = this.appToolkit.getMulticall(network);
     const contract = this.tenderizeContractFactory.erc20({ address, network });
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
     const underlyingToken = baseTokens.find(v => v.address === steak)!;
+    const tenderTokens = await this.appToolkit.getAppTokenPositions({
+      appId: TENDERIZE_DEFINITION.id,
+      groupIds: [TENDERIZE_DEFINITION.groups.tender.id],
+      network: Network.ARBITRUM_MAINNET,
+    });
+    const tenderToken = tenderTokens.find(v => v.address === tenderAddress)!;
 
     const [symbol, decimals, totalSupply] = await Promise.all([
       multicall.wrap(contract).symbol(),
@@ -38,7 +42,7 @@ export class EthereumTenderizeTenderTokensTokenFetcher implements PositionFetche
       multicall.wrap(contract).totalSupply(),
     ]);
     const supply = Number(totalSupply) / 10 ** decimals;
-    const price = underlyingToken.price * (Number(virtualPrice) / 10 ** decimals);
+    const price = underlyingToken.price;
     const token: AppTokenPosition = {
       address,
       network,
@@ -47,16 +51,15 @@ export class EthereumTenderizeTenderTokensTokenFetcher implements PositionFetche
       symbol,
       decimals,
       supply,
-      tokens: [],
+      tokens: [tenderToken, underlyingToken],
       dataProps: {},
-      pricePerShare: 1,
+      pricePerShare: [0.5, 0.5],
       price,
       type: ContractType.APP_TOKEN,
       displayProps: {
         label: symbol,
         secondaryLabel: buildDollarDisplayItem(price),
-        tertiaryLabel: `${apy}% APY`,
-        images: [`https://app.tenderize.me/tender${symbol}.svg`],
+        images: [],
         statsItems: [],
       },
     };
@@ -65,20 +68,13 @@ export class EthereumTenderizeTenderTokensTokenFetcher implements PositionFetche
   }
 
   async getPositions() {
-    const data = await this.appToolkit.helpers.theGraphHelper.request<TenderTokenFetcherResponse>({
-      endpoint: ethereumEndpoint,
-      query: tenderTokenFetcherQuery,
+    const data = await this.appToolkit.helpers.theGraphHelper.request<ConfigResponse>({
+      endpoint: arbitrumEndpoint,
+      query: configQuery,
     });
 
-    const { data: apyData } = await Axios.get<APYResponse>('https://www.tenderize.me/api/apy');
-    const apyArr = Object.values(apyData);
     const positions = await Promise.all(
-      data.configs.map(async config => {
-        const apy = apyArr.find(item => item.subgraphId === config.id)?.apy;
-        const virtualPrice =
-          data.tenderSwaps.find(item => item.id === config.id)?.virtualPrice ?? '1000000000000000000';
-        return await this.getPosition(config.tenderToken, config.steak, virtualPrice, apy ?? '0');
-      }),
+      data.configs.map(async config => await this.getPosition(config.lpToken, config.steak, config.tenderToken)),
     );
     return positions;
   }

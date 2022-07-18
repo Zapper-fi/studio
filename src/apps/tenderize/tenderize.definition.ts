@@ -10,14 +10,14 @@ export const TENDERIZE_DEFINITION = appDefinition({
   url: 'https://app.tenderize.me',
 
   groups: {
-    tendertokens: {
-      id: 'tendertokens',
+    tender: {
+      id: 'tender',
       type: GroupType.TOKEN,
-      label: 'tendertokens',
+      label: 'Tender Tokens',
     },
 
-    swaptokens: {
-      id: 'swaptokens',
+    swap: {
+      id: 'swap',
       type: GroupType.TOKEN,
       label: 'Pools',
     },

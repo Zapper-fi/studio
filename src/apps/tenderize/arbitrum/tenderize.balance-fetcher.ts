@@ -18,7 +18,7 @@ export class ArbitrumTenderizeBalanceFetcher implements BalanceFetcher {
     return this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
       address,
       appId: TENDERIZE_DEFINITION.id,
-      groupId: TENDERIZE_DEFINITION.groups.tendertokens.id,
+      groupId: TENDERIZE_DEFINITION.groups.tender.id,
       network,
     });
   }
@@ -27,7 +27,7 @@ export class ArbitrumTenderizeBalanceFetcher implements BalanceFetcher {
     return this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
       address,
       appId: TENDERIZE_DEFINITION.id,
-      groupId: TENDERIZE_DEFINITION.groups.swaptokens.id,
+      groupId: TENDERIZE_DEFINITION.groups.swap.id,
       network,
     });
   }
