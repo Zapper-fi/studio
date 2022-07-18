@@ -50,7 +50,7 @@ export class EthereumConcentratorBalanceFetcher implements BalanceFetcher {
     });
   }
 
-  async getIFOBalances(address: string) {
+  async getIfoBalances(address: string) {
     return this.appToolkit.helpers.masterChefContractPositionBalanceHelper.getBalances<AladdinConcentratorIfoVault>({
       address,
       appId: CONCENTRATOR_DEFINITION.id,
@@ -77,10 +77,10 @@ export class EthereumConcentratorBalanceFetcher implements BalanceFetcher {
   }
 
   async getBalances(address: string) {
-    const [aCrvTokenBalances, poolBalances, IFOBalances] = await Promise.all([
+    const [aCrvTokenBalances, poolBalances, ifoBalances] = await Promise.all([
       this.getTokenBalances(address),
       this.getPoolBalances(address),
-      this.getIFOBalances(address),
+      this.getIfoBalances(address),
     ]);
 
     return presentBalanceFetcherResponse([
@@ -90,7 +90,11 @@ export class EthereumConcentratorBalanceFetcher implements BalanceFetcher {
       },
       {
         label: 'Pools',
-        assets: [...poolBalances, ...IFOBalances],
+        assets: [...poolBalances],
+      },
+      {
+        label: 'IFO Vaults',
+        assets: [...ifoBalances],
       },
     ]);
   }

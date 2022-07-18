@@ -24,7 +24,7 @@ export const CONCENTRATOR_DEFINITION = appDefinition({
 
     ifo: {
       id: 'ifo',
-      type: GroupType.TOKEN,
+      type: GroupType.POSITION,
       label: 'IFO',
     },
   },
