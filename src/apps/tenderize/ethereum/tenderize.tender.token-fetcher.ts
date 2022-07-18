@@ -1,5 +1,6 @@
 import { Inject } from '@nestjs/common';
 import Axios from 'axios';
+import { compact } from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
@@ -32,15 +33,21 @@ export class EthereumTenderizeTenderTokenFetcher implements PositionFetcher<AppT
     const contract = this.tenderizeContractFactory.erc20({ address, network });
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
     const underlyingToken = baseTokens.find(v => v.address === steak)!;
+    if (!underlyingToken) return null;
 
     const [symbol, decimals, totalSupply] = await Promise.all([
       multicall.wrap(contract).symbol(),
       multicall.wrap(contract).decimals(),
       multicall.wrap(contract).totalSupply(),
     ]);
+
+    const tokens = [underlyingToken];
     const supply = Number(totalSupply) / 10 ** decimals;
-    const price = underlyingToken.price * (Number(virtualPrice) / 10 ** decimals);
+    const pricePerShare = Number(virtualPrice) / 10 ** decimals;
+    const price = underlyingToken.price * pricePerShare;
+
     const token: AppTokenPosition = {
+      type: ContractType.APP_TOKEN,
       address,
       network,
       appId,
@@ -48,11 +55,10 @@ export class EthereumTenderizeTenderTokenFetcher implements PositionFetcher<AppT
       symbol,
       decimals,
       supply,
-      tokens: [],
-      dataProps: {},
-      pricePerShare: Number(virtualPrice) / 10 ** decimals,
+      tokens,
+      pricePerShare,
       price,
-      type: ContractType.APP_TOKEN,
+      dataProps: {},
       displayProps: {
         label: symbol,
         secondaryLabel: buildDollarDisplayItem(price),
@@ -81,6 +87,7 @@ export class EthereumTenderizeTenderTokenFetcher implements PositionFetcher<AppT
         return await this.getPosition(config.tenderToken, config.steak, virtualPrice, apy ?? '0');
       }),
     );
-    return positions;
+
+    return compact(positions);
   }
 }
