@@ -19,6 +19,15 @@ export class AvalancheSteakHutBalanceFetcher implements BalanceFetcher {
     @Inject(SteakHutContractFactory) private readonly contractFactory: SteakHutContractFactory,
   ) {}
 
+  private async getTokenBalances(address: string) {
+    return this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
+      appId,
+      groupId: STEAK_HUT_DEFINITION.groups.ve.id,
+      network,
+      address,
+    });
+  }
+
   private async getStakedBalances(address: string) {
     return this.appToolkit.helpers.singleStakingContractPositionBalanceHelper.getBalances<SteakHutStaking>({
       appId,
@@ -30,7 +39,7 @@ export class AvalancheSteakHutBalanceFetcher implements BalanceFetcher {
         multicall
           .wrap(contract)
           .userInfo(address)
-          .then(x => x.rewardDebt),
+          .then(x => x.amount),
       resolveRewardTokenBalances: ({ contract, address, multicall }) => multicall.wrap(contract).pendingTokens(address),
     });
   }
@@ -58,12 +67,17 @@ export class AvalancheSteakHutBalanceFetcher implements BalanceFetcher {
   }
 
   async getBalances(address: string) {
-    const [stakedBalances, poolBalances] = await Promise.all([
+    const [tokenBalances, stakedBalances, poolBalances] = await Promise.all([
+      this.getTokenBalances(address),
       this.getStakedBalances(address),
       this.getPoolBalances(address),
     ]);
 
     return presentBalanceFetcherResponse([
+      {
+        label: 'Tokens',
+        assets: tokenBalances,
+      },
       {
         label: 'Staking',
         assets: stakedBalances,

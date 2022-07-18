@@ -3,6 +3,7 @@ import { flatten } from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
+import { TRADER_JOE_DEFINITION } from '~apps/trader-joe';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
@@ -26,6 +27,10 @@ export class AvalancheSteakHutStakingContractPositionFetcher implements Position
       appId,
       groupId,
       network,
+      dependencies: [
+        { appId, groupIds: [STEAK_HUT_DEFINITION.groups.ve.id], network },
+        { appId: TRADER_JOE_DEFINITION.id, groupIds: [TRADER_JOE_DEFINITION.groups.xJoe.id], network },
+      ],
       resolveFarmAddresses: async () => [address],
       resolveStakedTokenAddress: async ({ multicall, contract }) => multicall.wrap(contract).inputToken(),
       resolveFarmContract: opts => this.contractFactory.steakHutStaking(opts),

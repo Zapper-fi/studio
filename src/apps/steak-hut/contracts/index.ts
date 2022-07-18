@@ -4,6 +4,7 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
+import { SteakHutHjoe__factory } from './ethers';
 import { SteakHutPool__factory } from './ethers';
 import { SteakHutStaking__factory } from './ethers';
 
@@ -16,6 +17,9 @@ export class SteakHutContractFactory extends ContractFactory {
     super((network: Network) => appToolkit.getNetworkProvider(network));
   }
 
+  steakHutHjoe({ address, network }: ContractOpts) {
+    return SteakHutHjoe__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   steakHutPool({ address, network }: ContractOpts) {
     return SteakHutPool__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
@@ -24,5 +28,6 @@ export class SteakHutContractFactory extends ContractFactory {
   }
 }
 
+export type { SteakHutHjoe } from './ethers';
 export type { SteakHutPool } from './ethers';
 export type { SteakHutStaking } from './ethers';

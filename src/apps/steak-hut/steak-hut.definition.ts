@@ -13,14 +13,20 @@ export const STEAK_HUT_DEFINITION = appDefinition({
   groups: {
     staking: {
       id: 'staking',
-      type: GroupType.TOKEN,
+      type: GroupType.POSITION,
       label: 'Staking',
     },
 
     pool: {
       id: 'pool',
-      type: GroupType.TOKEN,
+      type: GroupType.POSITION,
       label: 'Pools',
+    },
+
+    ve: {
+      id: 've',
+      type: GroupType.TOKEN,
+      label: 'VotedEscrow',
     },
   },
 
