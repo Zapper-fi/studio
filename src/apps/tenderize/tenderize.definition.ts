@@ -5,7 +5,7 @@ import { Network } from '~types/network.interface';
 
 export const TENDERIZE_DEFINITION = appDefinition({
   id: 'tenderize',
-  name: 'tenderize',
+  name: 'Tenderize',
   description: 'Connecting Web3 with DeFi through Liquid Staking.',
   url: 'https://app.tenderize.me',
 

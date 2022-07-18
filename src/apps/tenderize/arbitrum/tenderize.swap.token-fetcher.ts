@@ -1,9 +1,10 @@
 import { Inject } from '@nestjs/common';
+import { compact } from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
-import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
@@ -36,15 +37,21 @@ export class ArbitrumTenderizeSwapTokenFetcher implements PositionFetcher<AppTok
       network: Network.ARBITRUM_MAINNET,
     });
     const tenderToken = tenderTokens.find(v => v.address === tenderAddress)!;
+    if (!underlyingToken || !tenderToken) return null;
 
     const [symbol, decimals, totalSupply] = await Promise.all([
       multicall.wrap(contract).symbol(),
       multicall.wrap(contract).decimals(),
       multicall.wrap(contract).totalSupply(),
     ]);
+
+    const tokens = [tenderToken, underlyingToken];
     const supply = Number(totalSupply) / 10 ** decimals;
     const price = underlyingToken.price;
+    const pricePerShare = [0.5, 0.5];
+
     const token: AppTokenPosition = {
+      type: ContractType.APP_TOKEN,
       address,
       network,
       appId,
@@ -52,15 +59,14 @@ export class ArbitrumTenderizeSwapTokenFetcher implements PositionFetcher<AppTok
       symbol,
       decimals,
       supply,
-      tokens: [tenderToken, underlyingToken],
-      dataProps: {},
-      pricePerShare: [0.5, 0.5],
+      tokens,
+      pricePerShare,
       price,
-      type: ContractType.APP_TOKEN,
+      dataProps: {},
       displayProps: {
         label: `${getLabelFromToken(tenderToken)} / ${getLabelFromToken(underlyingToken)}`,
         secondaryLabel: buildDollarDisplayItem(price),
-        images: [],
+        images: [...getImagesFromToken(tenderToken), ...getImagesFromToken(underlyingToken)],
         statsItems: [],
       },
     };
@@ -77,6 +83,7 @@ export class ArbitrumTenderizeSwapTokenFetcher implements PositionFetcher<AppTok
     const positions = await Promise.all(
       data.configs.map(async config => await this.getPosition(config.lpToken, config.steak, config.tenderToken)),
     );
-    return positions;
+
+    return compact(positions);
   }
 }
