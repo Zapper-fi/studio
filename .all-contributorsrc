@@ -180,10 +180,10 @@
       ]
     },
     {
-      "login": "farhaan-ali",
+      "login": "0xfarhaan",
       "name": "Farhaan",
       "avatar_url": "https://avatars.githubusercontent.com/u/59924029?v=4",
-      "profile": "https://github.com/farhaan-ali",
+      "profile": "https://github.com/0xfarhaan",
       "contributions": [
         "code"
       ]
@@ -542,6 +542,42 @@
       "name": "peezebit",
       "avatar_url": "https://avatars.githubusercontent.com/u/79215347?v=4",
       "profile": "https://github.com/peezebit",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "perpetuum7",
+      "name": "p7m",
+      "avatar_url": "https://avatars.githubusercontent.com/u/101750119?v=4",
+      "profile": "https://github.com/perpetuum7",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "0xoats",
+      "name": "0xoats",
+      "avatar_url": "https://avatars.githubusercontent.com/u/106729827?v=4",
+      "profile": "https://github.com/0xoats",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "croc12344",
+      "name": "croc12344",
+      "avatar_url": "https://avatars.githubusercontent.com/u/94607810?v=4",
+      "profile": "https://github.com/croc12344",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "peteriscan",
+      "name": "peteris",
+      "avatar_url": "https://avatars.githubusercontent.com/u/104527020?v=4",
+      "profile": "https://github.com/peteriscan",
       "contributions": [
         "code"
       ]
