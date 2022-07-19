@@ -22,7 +22,7 @@ export class MoonriverKoyoPoolTokenFetcher implements PositionFetcher<AppTokenPo
   ) {}
 
   getPositions() {
-    return this.poolTokensHelper.getTokenMarketData({
+    return this.poolTokensHelper.getPositions({
       network,
       appId,
       groupId,

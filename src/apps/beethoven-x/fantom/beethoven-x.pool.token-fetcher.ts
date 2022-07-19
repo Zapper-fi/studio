@@ -25,7 +25,7 @@ export class FantomBeethovenXPoolTokenFetcher implements PositionFetcher<AppToke
   ) {}
 
   async getPositions() {
-    const tokens = await this.poolTokensHelper.getTokenMarketData({
+    const tokens = await this.poolTokensHelper.getPositions({
       network,
       appId,
       groupId,

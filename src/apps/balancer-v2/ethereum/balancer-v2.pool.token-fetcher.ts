@@ -22,10 +22,13 @@ export class EthereumBalancerV2PoolTokenFetcher implements PositionFetcher<AppTo
   ) {}
 
   getPositions() {
-    return this.poolTokensHelper.getTokenMarketData({
+    return this.poolTokensHelper.getPositions({
       network,
       appId,
       groupId,
+      appTokenDependencies: [
+        { appId: BALANCER_V2_DEFINITION.id, groupIds: [BALANCER_V2_DEFINITION.groups.wrappedAave.id], network },
+      ],
       vaultAddress: '0xba12222222228d8ba445958a75a0704d566bf2c8',
       resolvePoolTokenAddresses: this.balancerV2TheGraphPoolTokenDataStrategy.build({
         subgraphUrl: 'https://api.thegraph.com/subgraphs/name/balancer-labs/balancer-v2',

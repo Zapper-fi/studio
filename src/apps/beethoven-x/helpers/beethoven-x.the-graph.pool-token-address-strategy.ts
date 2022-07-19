@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { gql } from 'graphql-request';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { PoolType } from '~apps/balancer-v2/helpers/balancer-v2.pool-types';
 import { Cache } from '~cache/cache.decorator';
 
 type PoolsResponse = {
@@ -9,6 +10,7 @@ type PoolsResponse = {
     address: string;
     totalLiquidity: string;
     volume24h: string;
+    poolType: PoolType;
   }[];
 };
 
@@ -18,6 +20,7 @@ const DEFAULT_POOLS_QUERY = gql`
       address
       totalLiquidity
       volume24h
+      poolType
     }
   }
 `;
@@ -36,7 +39,7 @@ export class BeethovenXTheGraphPoolTokenDataStrategy {
     instance: 'business',
     key: (subgraphUrl: string) => {
       const [namespace, name] = subgraphUrl.split('/').slice(-2);
-      return `studio:beethoven-x2-fork:pool-token-addresses:${namespace}:${name}`;
+      return `studio:beethoven-x-fork:pool-token-addresses:${namespace}:${name}`;
     },
     ttl: 5 * 60,
   })
@@ -55,6 +58,7 @@ export class BeethovenXTheGraphPoolTokenDataStrategy {
       .map(v => ({
         address: v.address,
         volume: Number(v.volume24h),
+        poolType: v.poolType,
       }));
   }
 
