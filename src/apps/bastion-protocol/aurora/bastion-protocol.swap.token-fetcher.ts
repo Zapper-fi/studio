@@ -42,7 +42,12 @@ export class AuroraBastionProtocolSwapTokenFetcher implements PositionFetcher<Ap
     const appTokenDefinition = [
       {
         appId,
-        groupIds: [BASTION_PROTOCOL_DEFINITION.groups.supply.id],
+        groupIds: [
+          BASTION_PROTOCOL_DEFINITION.groups.supplyMainHub.id,
+          BASTION_PROTOCOL_DEFINITION.groups.supplyStakedNear.id,
+          BASTION_PROTOCOL_DEFINITION.groups.supplyAuroraEcosystem.id,
+          BASTION_PROTOCOL_DEFINITION.groups.supplyMultichain.id,
+        ],
         network,
       },
     ];
