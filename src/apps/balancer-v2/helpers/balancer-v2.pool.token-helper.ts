@@ -85,16 +85,13 @@ export class BalancerV2PoolTokensHelper {
 
         // Resolve underlying tokens
         const poolTokensRaw = await multicall.wrap(vaultContract).getPoolTokens(poolId);
-        const tokenAddresses = poolTokensRaw.tokens.map(v => v.toLowerCase()).filter(v => v !== address);
+        const tokenAddresses = poolTokensRaw.tokens.map(v => v.toLowerCase());
         const dependencies = [...basePools, ...appTokens, ...baseTokens];
         const maybeTokens = tokenAddresses.map(tokenAddress => dependencies.find(p => p.address === tokenAddress));
         const tokens = _.compact(maybeTokens);
         if (tokens.length !== maybeTokens.length) return null;
 
-        const redundantIndex = poolTokensRaw.tokens.findIndex(v => v.toLowerCase() === address);
-        const reservesRaw = poolTokensRaw.balances.filter((_, i) => i !== redundantIndex);
-        const reserves = tokens.map((t, i) => Number(reservesRaw[i]) / 10 ** t.decimals);
-
+        const reserves = tokens.map((t, i) => Number(poolTokensRaw.balances[i]) / 10 ** t.decimals);
         const liquidity = tokens.reduce((acc, v, i) => acc + v.price * reserves[i], 0);
         if (liquidity < minLiquidity) return null;
 
