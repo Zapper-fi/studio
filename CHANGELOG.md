@@ -4,6 +4,19 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.118.0](https://github.com/Zapper-fi/studio/compare/v0.117.1...v0.118.0) (2022-07-19)
+
+
+### Features
+
+* **balancer-v2:** Fix display for Balancer V2 Aave Boosted pools ([#908](https://github.com/Zapper-fi/studio/issues/908)) ([fd68a19](https://github.com/Zapper-fi/studio/commit/fd68a195eb641d8d4233117f00952592b0c09190))
+* **balancer-v2:** Remove redundant filtering, bump cache key ([0700d9b](https://github.com/Zapper-fi/studio/commit/0700d9bf4a665db78be8bb7c362bc8144500463a))
+
+
+### Bug Fixes
+
+* **rocket-pool:** adding logo ([ea86a52](https://github.com/Zapper-fi/studio/commit/ea86a524ff1f612da18374e9ec9484e22029bbb7))
+
 ## [0.117.1](https://github.com/Zapper-fi/studio/compare/v0.117.0...v0.117.1) (2022-07-19)
 
 
