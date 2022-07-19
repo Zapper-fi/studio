@@ -22,7 +22,7 @@ export class ArbitrumBalancerV2PoolTokenFetcher implements PositionFetcher<AppTo
   ) {}
 
   getPositions() {
-    return this.poolTokensHelper.getTokenMarketData({
+    return this.poolTokensHelper.getPositions({
       network,
       appId,
       groupId,

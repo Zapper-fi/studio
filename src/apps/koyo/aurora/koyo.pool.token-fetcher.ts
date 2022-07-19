@@ -22,7 +22,7 @@ export class AuroraKoyoPoolTokenFetcher implements PositionFetcher<AppTokenPosit
   ) {}
 
   getPositions() {
-    return this.poolTokensHelper.getTokenMarketData({
+    return this.poolTokensHelper.getPositions({
       network,
       appId,
       groupId,
