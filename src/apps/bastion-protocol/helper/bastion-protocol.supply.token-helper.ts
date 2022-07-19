@@ -93,7 +93,7 @@ export class BastionSupplyTokenHelper {
         const borrowApy = Math.pow(1 + secondsPerDay * Number(borrowRate), 365) - 1;
 
         // Display Props
-        const label = `${underlyingToken.symbol} in ${realmName}`;
+        const label = `${underlyingToken.symbol}`;
         const secondaryLabel = buildDollarDisplayItem(underlyingToken.price);
         const tertiaryLabel = `${(supplyApy * 100).toFixed(3)}% APY`;
         const images = [getTokenImg(underlyingToken.address, network)];
