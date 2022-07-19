@@ -27,18 +27,24 @@ export const RARI_FUSE_DEFINITION = appDefinition({
   presentationConfig: {
     tabs: [
       {
-        label: '{{ dataProps.marketName }}',
-        viewType: 'split',
-        views: [
+        label: 'Markets',
+        viewType: 'dropdown',
+        options: [
           {
-            viewType: 'list',
-            label: 'Supply',
-            groupIds: ['supply'],
-          },
-          {
-            viewType: 'list',
-            label: 'Borrow',
-            groupIds: ['borrow'],
+            label: '{{ dataProps.marketName }}',
+            viewType: 'split',
+            views: [
+              {
+                viewType: 'list',
+                label: 'Supply',
+                groupIds: ['supply'],
+              },
+              {
+                viewType: 'list',
+                label: 'Borrow',
+                groupIds: ['borrow'],
+              },
+            ],
           },
         ],
       },
