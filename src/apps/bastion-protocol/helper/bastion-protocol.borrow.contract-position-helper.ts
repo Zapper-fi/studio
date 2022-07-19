@@ -1,39 +1,45 @@
-import { Inject } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { isNumber } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { Register } from '~app-toolkit/decorators';
 import {
   buildDollarDisplayItem,
   buildPercentageDisplayItem,
 } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
-import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
 import { borrowed } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 
-import { BASTION_PROTOCOL_DEFINITION } from '../bastion-protocol.definition';
 import { BastionProtocolContractFactory } from '../contracts';
-import { BastionSupplyTokenDataProps } from '../helper/bastion-protocol.supply.token-helper';
 
-const appId = BASTION_PROTOCOL_DEFINITION.id;
-const groupId = BASTION_PROTOCOL_DEFINITION.groups.borrow.id;
-const network = Network.AURORA_MAINNET;
+import { BastionSupplyTokenDataProps } from './bastion-protocol.supply.token-helper';
 
-@Register.ContractPositionFetcher({ appId, groupId, network })
-export class AuroraBastionProtocolBorrowContractPositionFetcher implements PositionFetcher<ContractPosition> {
+export type BastionBorrowContractPositionDataProps = BastionSupplyTokenDataProps & {
+  supply: number;
+  borrow: number;
+};
+
+type BastionBorrowContractPositionHelperParams = {
+  network: Network;
+  appId: string;
+  groupId: string;
+  supplyGroupId: string;
+};
+
+@Injectable()
+export class BastionBorrowContractPositionHelper {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(BastionProtocolContractFactory)
     private readonly bastionProtocolContractFactory: BastionProtocolContractFactory,
   ) {}
 
-  async getPositions() {
+  async getPositions({ network, appId, groupId, supplyGroupId }: BastionBorrowContractPositionHelperParams) {
     const appTokens = await this.appToolkit.getAppTokenPositions<BastionSupplyTokenDataProps>({
       appId,
-      groupIds: [BASTION_PROTOCOL_DEFINITION.groups.supply.id],
+      groupIds: [supplyGroupId],
       network,
     });
 
@@ -56,7 +62,8 @@ export class AuroraBastionProtocolBorrowContractPositionFetcher implements Posit
       const underlyingPrice = appToken.tokens[0].price;
       // We denominate the cashSupply in USD to be consistent with the underlyingLiquidity
       const cashSupplyUSD = cashSupply * underlyingPrice;
-      const borrowLiquidity = underlyingLiquidity - cashSupplyUSD;
+
+      const borrowLiquidity = cashSupplyUSD > underlyingLiquidity ? 0 : underlyingLiquidity - cashSupplyUSD;
 
       const dataProps = {
         ...appToken.dataProps,
@@ -65,13 +72,14 @@ export class AuroraBastionProtocolBorrowContractPositionFetcher implements Posit
         // The amount borrowed can be derived simply by substracting the liquidity from the total supply
         // of tokens
         borrow: borrowLiquidity,
+        isActive: Boolean(borrowLiquidity > 0),
       };
       const borrowApy = appToken.dataProps.borrowApy;
 
       // Display Props
-      const label = `${getLabelFromToken(appToken.tokens[0])}`;
+      const label = getLabelFromToken(appToken.tokens[0]);
       const secondaryLabel = buildDollarDisplayItem(underlyingPrice);
-      const tertiaryLabel = isNumber(borrowApy) ? `${(borrowApy * 100).toFixed(3)}% APR` : '';
+      const tertiaryLabel = isNumber(borrowApy) ? `${(borrowApy * 100).toFixed(3)}% APY` : '';
       const images = appToken.displayProps.images;
       const statsItems = isNumber(borrowApy)
         ? [
@@ -80,7 +88,7 @@ export class AuroraBastionProtocolBorrowContractPositionFetcher implements Posit
           ]
         : [];
 
-      const contractPosition: ContractPosition<BastionSupplyTokenDataProps> = {
+      const contractPosition: ContractPosition<BastionBorrowContractPositionDataProps> = {
         type: ContractType.POSITION,
         address: appToken.address,
         network,
