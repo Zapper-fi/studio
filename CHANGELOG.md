@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.117.0](https://github.com/Zapper-fi/studio/compare/v0.116.0...v0.117.0) (2022-07-19)
+
+
+### Features
+
+* **steak-hut:** Add SteakHut integration ([#890](https://github.com/Zapper-fi/studio/issues/890)) ([570c51a](https://github.com/Zapper-fi/studio/commit/570c51a8795642deb6018bf266b4aa9748f51b1c))
+
 ## [0.116.0](https://github.com/Zapper-fi/studio/compare/v0.115.0...v0.116.0) (2022-07-19)
 
 
