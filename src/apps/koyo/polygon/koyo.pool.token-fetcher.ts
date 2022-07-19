@@ -22,7 +22,7 @@ export class PolygonKoyoPoolTokenFetcher implements PositionFetcher<AppTokenPosi
   ) {}
 
   getPositions() {
-    return this.poolTokensHelper.getTokenMarketData({
+    return this.poolTokensHelper.getPositions({
       network,
       appId,
       groupId,

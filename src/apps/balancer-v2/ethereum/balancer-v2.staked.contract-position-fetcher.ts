@@ -15,7 +15,7 @@ const groupId = BALANCER_V2_DEFINITION.groups.farm.id;
 const network = Network.ETHEREUM_MAINNET;
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
-export class EthereumBalancerV2StakedfContractPositionFetcher implements PositionFetcher<ContractPosition> {
+export class EthereumBalancerV2StakedContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(BalancerV2ContractFactory)
     private readonly balancerV2ContractFactory: BalancerV2ContractFactory,

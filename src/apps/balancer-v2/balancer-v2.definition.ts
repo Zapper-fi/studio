@@ -16,10 +16,37 @@ export const BALANCER_V2_DEFINITION = appDefinition({
     medium: 'https://medium.com/balancer-protocol',
   },
   groups: {
-    pool: { id: 'pool', type: GroupType.TOKEN, label: 'Pools' },
-    farm: { id: 'farm', type: GroupType.POSITION, label: 'Staked', groupLabel: 'Farms' },
-    votingEscrow: { id: 'voting-escrow', type: GroupType.POSITION, label: 'Voting Escrow' },
-    claimable: { id: 'claimable', type: GroupType.POSITION, label: 'Claimable' },
+    pool: {
+      id: 'pool',
+      type: GroupType.TOKEN,
+      label: 'Pools',
+    },
+
+    wrappedAave: {
+      id: 'wrapped-aave',
+      type: GroupType.TOKEN,
+      label: 'Wrapped Aave',
+      isHiddenFromExplore: true,
+    },
+
+    farm: {
+      id: 'farm',
+      type: GroupType.POSITION,
+      label: 'Staked',
+      groupLabel: 'Farms',
+    },
+
+    votingEscrow: {
+      id: 'voting-escrow',
+      type: GroupType.POSITION,
+      label: 'Voting Escrow',
+    },
+
+    claimable: {
+      id: 'claimable',
+      type: GroupType.POSITION,
+      label: 'Claimable',
+    },
   },
   tags: [AppTag.LIQUIDITY_POOL],
   supportedNetworks: {
