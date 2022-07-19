@@ -100,7 +100,7 @@ export class BalancerV2TheGraphPoolTokenDataStrategy {
     instance: 'business',
     key: (subgraphUrl: string) => {
       const [namespace, name] = subgraphUrl.split('/').slice(-2);
-      return `studio:balancer-v2-fork:pool-token-addresses:${namespace}:${name}`;
+      return `studio:balancer-v2-fork:pool-token-addresses:${namespace}:${name}:1`;
     },
     ttl: 5 * 60,
   })
