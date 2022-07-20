@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.119.0](https://github.com/Zapper-fi/studio/compare/v0.118.1...v0.119.0) (2022-07-20)
+
+
+### Features
+
+* **origin-story:** adds origin-story app (OGN staking) ([#907](https://github.com/Zapper-fi/studio/issues/907)) ([13e7a5e](https://github.com/Zapper-fi/studio/commit/13e7a5e7c31c3e780e0ce7bae841ac8058a3a37a))
+
+
+### Bug Fixes
+
+* **origin-story:** Add missing logo and use address instead of ENS ([b1c3b03](https://github.com/Zapper-fi/studio/commit/b1c3b03e6acefc07ad4e357d103ce1c7d1b18a14))
+
 ## [0.118.1](https://github.com/Zapper-fi/studio/compare/v0.118.0...v0.118.1) (2022-07-20)
 
 
