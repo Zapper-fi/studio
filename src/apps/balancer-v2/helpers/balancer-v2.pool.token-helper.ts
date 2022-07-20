@@ -5,7 +5,7 @@ import { isEmpty } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
-import { getLabelFromToken, getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
+import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { AppGroupsDefinition } from '~position/position.service';
@@ -127,7 +127,7 @@ export class BalancerV2PoolTokensHelper {
             : tokens.map(v => getLabelFromToken(v)).join(' / ');
         const ratio = reservePercentages.map(p => `${Math.round(p * 100)}%`).join(' / ');
         const secondaryLabel = ratio;
-        const images = tokens.map(v => getTokenImg(v.address, network));
+        const images = tokens.flatMap(v => getImagesFromToken(v));
 
         const token: AppTokenPosition<BalancerV2PoolTokenDataProps> = {
           type,
