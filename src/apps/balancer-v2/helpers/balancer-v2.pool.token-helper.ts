@@ -26,6 +26,7 @@ type BalancerV2PoolTokenDataProps = {
   reserves: number[];
   weights: number[];
   volume: number;
+  poolId: string;
 };
 
 type GetBalancerV2PoolTokensParams = {
@@ -66,7 +67,6 @@ export class BalancerV2PoolTokensHelper {
       appId,
       groupId,
       network,
-      vaultAddress,
       minLiquidity = 0,
       appTokenDependencies = [],
       resolvePoolLabelStrategy = () => BalancerV2PoolLabelStrategy.TOKEN_SYMBOLS,
@@ -75,23 +75,20 @@ export class BalancerV2PoolTokensHelper {
     const multicall = this.appToolkit.getMulticall(network);
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
     const appTokens = await this.appToolkit.getAppTokenPositions(...appTokenDependencies);
-    const vaultContract = this.contractFactory.balancerVault({ network, address: vaultAddress });
 
     const pools = await Promise.all(
-      poolTokenData.map(async ({ address, volume, poolType }) => {
+      poolTokenData.map(async ({ address, volume, poolType, tokenAddresses, reservesRaw }) => {
         const type = ContractType.APP_TOKEN;
         const poolContract = this.contractFactory.balancerPool({ network, address });
         const poolId = await multicall.wrap(poolContract).getPoolId();
 
         // Resolve underlying tokens
-        const poolTokensRaw = await multicall.wrap(vaultContract).getPoolTokens(poolId);
-        const tokenAddresses = poolTokensRaw.tokens.map(v => v.toLowerCase());
         const dependencies = [...basePools, ...appTokens, ...baseTokens];
         const maybeTokens = tokenAddresses.map(tokenAddress => dependencies.find(p => p.address === tokenAddress));
         const tokens = _.compact(maybeTokens);
         if (tokens.length !== maybeTokens.length) return null;
 
-        const reserves = tokens.map((t, i) => Number(poolTokensRaw.balances[i]) / 10 ** t.decimals);
+        const reserves = tokens.map((t, i) => Number(reservesRaw[i]) / 10 ** t.decimals);
         const liquidity = tokens.reduce((acc, v, i) => acc + v.price * reserves[i], 0);
         if (liquidity < minLiquidity) return null;
 
@@ -146,6 +143,7 @@ export class BalancerV2PoolTokensHelper {
           tokens,
 
           dataProps: {
+            poolId,
             fee,
             liquidity,
             reserves,
