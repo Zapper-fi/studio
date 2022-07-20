@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.118.1](https://github.com/Zapper-fi/studio/compare/v0.118.0...v0.118.1) (2022-07-20)
+
+
+### Bug Fixes
+
+* **balancer-v2:** Use filtered underlying tokens ([#911](https://github.com/Zapper-fi/studio/issues/911)) ([7a641e3](https://github.com/Zapper-fi/studio/commit/7a641e32aedbe0b6c05991a02c16556ed3e5d343))
+* **maple:** Fix APY ([#909](https://github.com/Zapper-fi/studio/issues/909)) ([04c348d](https://github.com/Zapper-fi/studio/commit/04c348d11d477f49fc8d4bc7293cb662af848388))
+
 ## [0.118.0](https://github.com/Zapper-fi/studio/compare/v0.117.1...v0.118.0) (2022-07-19)
 
 
