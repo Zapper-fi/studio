@@ -1,4 +1,4 @@
-import { MetadataItem } from '~position/display.interface';
+import { AnyDisplayItem } from '~position/display.interface';
 import { AppTokenPositionBalance, ContractPositionBalance } from '~position/position-balance.interface';
 
 export type ProductItem = {
@@ -7,7 +7,7 @@ export type ProductItem = {
   meta: MetadataItemWithLabel[];
 };
 
-export type MetadataItemWithLabel = MetadataItem & { label: string };
+export type MetadataItemWithLabel = AnyDisplayItem & { label: string };
 
 export interface TokenBalanceResponse {
   products: ProductItem[];

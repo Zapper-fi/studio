@@ -26,23 +26,25 @@ export type PercentageDisplayItem = {
   value: number;
 };
 
-export type MetadataItem =
+export type InterpolationDisplayItem = {
+  type: 'interpolation';
+  value: {
+    source: string;
+    substitutions: Record<string, AnyDisplayItem>;
+  };
+};
+
+export type AnyDisplayItem =
+  | InterpolationDisplayItem
   | StringDisplayItem
   | NumberDisplayItem
+  | TranslationDisplayItem
   | DollarDisplayItem
-  | PercentageDisplayItem
-  | TranslationDisplayItem;
+  | PercentageDisplayItem;
 
 export type StatsItem = {
   label: string | TranslationDisplayItem;
-  value:
-    | string // @TODO Remove
-    | number // @TODO Remove
-    | StringDisplayItem
-    | NumberDisplayItem
-    | TranslationDisplayItem
-    | DollarDisplayItem
-    | PercentageDisplayItem;
+  value: string | number | AnyDisplayItem;
 };
 
 export enum BalanceDisplayMode {
@@ -53,8 +55,8 @@ export enum BalanceDisplayMode {
 export interface DisplayProps {
   label: string;
   labelDetailed?: string;
-  secondaryLabel?: string | number | DollarDisplayItem | PercentageDisplayItem;
-  tertiaryLabel?: string | number | DollarDisplayItem | PercentageDisplayItem;
+  secondaryLabel?: string | number | AnyDisplayItem;
+  tertiaryLabel?: string | number | AnyDisplayItem;
   images: string[];
   appName?: string;
   statsItems?: StatsItem[];
