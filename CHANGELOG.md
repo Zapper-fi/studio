@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.121.0](https://github.com/Zapper-fi/studio/compare/v0.120.0...v0.121.0) (2022-07-20)
+
+
+### Features
+
+* **qi-dao:** Add missing vaults on Polygon ([#918](https://github.com/Zapper-fi/studio/issues/918)) ([e1b3d68](https://github.com/Zapper-fi/studio/commit/e1b3d684f5042485567ebb8e2692bd32618fec31))
+
 ## [0.120.0](https://github.com/Zapper-fi/studio/compare/v0.119.0...v0.120.0) (2022-07-20)
 
 
