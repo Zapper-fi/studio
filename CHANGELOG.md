@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.122.0](https://github.com/Zapper-fi/studio/compare/v0.121.0...v0.122.0) (2022-07-20)
+
+
+### Features
+
+* **apps:** Add labelDetailed display props for nested display name ([#920](https://github.com/Zapper-fi/studio/issues/920)) ([be2629e](https://github.com/Zapper-fi/studio/commit/be2629e3889ae69b5aa46116a3be5a175d14bf74))
+
 ## [0.121.0](https://github.com/Zapper-fi/studio/compare/v0.120.0...v0.121.0) (2022-07-20)
 
 
