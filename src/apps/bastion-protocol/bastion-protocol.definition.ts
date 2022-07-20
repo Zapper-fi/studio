@@ -107,7 +107,7 @@ export const BASTION_PROTOCOL_DEFINITION = appDefinition({
         ],
       },
       {
-        label: 'Auriora Ecosystem',
+        label: 'Aurora Ecosystem',
         viewType: 'split',
         views: [
           {
