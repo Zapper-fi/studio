@@ -84,7 +84,7 @@ export class OptimismRubiconBathTokenTokenFetcher implements PositionFetcher<App
         const underlyingTokenAddress = underlyingTokenAddressRaw.toLowerCase();
         const underlyingToken = allTokenDependencies.find(v => v.address === underlyingTokenAddress);
         if (!underlyingToken) {
-          console.log('No underlyingToken!', underlyingTokenAddress);
+          // console.log('No underlyingToken!', underlyingTokenAddress);
 
           return null;
         }
@@ -107,6 +107,12 @@ export class OptimismRubiconBathTokenTokenFetcher implements PositionFetcher<App
           tokens,
           price,
           pricePerShare,
+          // TODO: add any data props here
+          dataProps: {},
+          displayProps: {
+            label: '',
+            images: [],
+          },
         };
 
         return token;
