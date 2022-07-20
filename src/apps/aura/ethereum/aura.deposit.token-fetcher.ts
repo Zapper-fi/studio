@@ -4,7 +4,7 @@ import { compact } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
-import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
+import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { BALANCER_V2_DEFINITION } from '~apps/balancer-v2';
 import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
@@ -12,7 +12,6 @@ import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
 import { AURA_DEFINITION } from '../aura.definition';
-import { AuraContractFactory } from '../contracts';
 
 type Pools = {
   pools: {
@@ -33,7 +32,7 @@ type Pools = {
 };
 
 const appId = AURA_DEFINITION.id;
-const groupId = AURA_DEFINITION.groups.pools.id;
+const groupId = AURA_DEFINITION.groups.deposit.id;
 const network = Network.ETHEREUM_MAINNET;
 
 const QUERY = gql`
@@ -58,24 +57,13 @@ const QUERY = gql`
 `;
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
-export class EthereumAuraPoolsTokenFetcher implements PositionFetcher<AppTokenPosition> {
-  constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(AuraContractFactory) private readonly auraContractFactory: AuraContractFactory,
-  ) {}
+export class EthereumAuraDepositTokenFetcher implements PositionFetcher<AppTokenPosition> {
+  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
   async getPositions() {
     const appTokens = await this.appToolkit.getAppTokenPositions(
-      {
-        appId: BALANCER_V2_DEFINITION.id,
-        groupIds: [BALANCER_V2_DEFINITION.groups.pool.id],
-        network,
-      },
-      {
-        appId,
-        groupIds: [AURA_DEFINITION.groups.chef.id],
-        network,
-      },
+      { appId: BALANCER_V2_DEFINITION.id, groupIds: [BALANCER_V2_DEFINITION.groups.pool.id], network },
+      { appId: AURA_DEFINITION.id, groupIds: [AURA_DEFINITION.groups.chef.id], network },
     );
 
     const { pools } = await this.appToolkit.helpers.theGraphHelper.request<Pools>({
@@ -90,9 +78,7 @@ export class EthereumAuraPoolsTokenFetcher implements PositionFetcher<AppTokenPo
         const { decimals, symbol } = depositToken;
 
         const lpToken = appTokens.find(token => token.address.toLowerCase() === lpTokenAddress.toLowerCase());
-        if (!lpToken) {
-          return null;
-        }
+        if (!lpToken) return null;
 
         const supply = Number(totalSupply) / 10 ** decimals;
 
@@ -106,13 +92,13 @@ export class EthereumAuraPoolsTokenFetcher implements PositionFetcher<AppTokenPo
           symbol,
           supply,
           price: lpToken.price,
-          tokens: [lpToken],
-          displayProps: {
-            label: symbol,
-            images: [getTokenImg(address)],
-          },
-          dataProps: {},
           pricePerShare: 1,
+          tokens: [lpToken],
+          dataProps: {},
+          displayProps: {
+            label: getLabelFromToken(lpToken),
+            images: getImagesFromToken(lpToken),
+          },
         };
       },
     );

@@ -57,7 +57,7 @@ export class EthereumAuraBalanceFetcher implements BalanceFetcher {
             ),
           );
 
-          const baseRewardPool = this.auraContractFactory.baseRewardPool(contractPosition);
+          const baseRewardPool = this.auraContractFactory.auraBaseRewardPool(contractPosition);
 
           const extraRewardPools: AuraVirtualBalanceRewardPool[] = contractPosition.dataProps.extraRewards
             .filter(({ rewardToken }) =>
@@ -188,7 +188,7 @@ export class EthereumAuraBalanceFetcher implements BalanceFetcher {
   }
 
   private async getPoolsBalances(address: string) {
-    return this.getBaseRewardPoolBalances({ address, groupId: groups.pools.id });
+    return this.getBaseRewardPoolBalances({ address, groupId: groups.pool.id });
   }
 
   async getBalances(address: string) {

@@ -13,19 +13,34 @@ export const AURA_DEFINITION = appDefinition({
   groups: {
     chef: {
       id: 'chef',
-      type: GroupType.TOKEN,
-      label: 'auraBAL Rewards',
+      type: GroupType.POSITION,
+      label: 'Farms',
     },
+
+    auraBal: {
+      id: 'aura-bal',
+      type: GroupType.TOKEN,
+      label: 'auraBAL',
+    },
+
     staking: {
       id: 'staking',
-      type: GroupType.TOKEN,
+      type: GroupType.POSITION,
       label: 'Staked auraBAL',
     },
-    pools: {
-      id: 'pools',
+
+    deposit: {
+      id: 'deposit',
       type: GroupType.TOKEN,
+      label: 'Deposit',
+    },
+
+    pool: {
+      id: 'pool',
+      type: GroupType.POSITION,
       label: 'Balancer Pools',
     },
+
     locker: {
       id: 'locker',
       type: GroupType.POSITION,

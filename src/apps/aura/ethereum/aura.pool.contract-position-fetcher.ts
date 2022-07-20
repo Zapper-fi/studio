@@ -11,10 +11,9 @@ import { ContractPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
 import { AURA_DEFINITION } from '../aura.definition';
-import { AuraContractFactory } from '../contracts';
 
 const appId = AURA_DEFINITION.id;
-const groupId = AURA_DEFINITION.groups.pools.id;
+const groupId = AURA_DEFINITION.groups.pool.id;
 const network = Network.ETHEREUM_MAINNET;
 
 type RewardPools = {
@@ -32,10 +31,9 @@ const REWARD_POOLS_QUERY = gql`
 `;
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
-export class EthereumAuraPoolsContractPositionFetcher implements PositionFetcher<ContractPosition> {
+export class EthereumAuraPoolContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(AuraContractFactory) private readonly auraContractFactory: AuraContractFactory,
     @Inject(AuraBaseRewardPoolHelper) private readonly auraBaseRewardPoolHelper: AuraBaseRewardPoolHelper,
   ) {}
 
@@ -48,7 +46,11 @@ export class EthereumAuraPoolsContractPositionFetcher implements PositionFetcher
       groupId,
       dependencies: [
         { appId: BALANCER_V2_DEFINITION.id, network, groupIds: [BALANCER_V2_DEFINITION.groups.pool.id] },
-        { appId, network, groupIds: [AURA_DEFINITION.groups.chef.id, groupId] },
+        {
+          appId: AURA_DEFINITION.id,
+          network,
+          groupIds: [AURA_DEFINITION.groups.auraBal.id, AURA_DEFINITION.groups.deposit.id],
+        },
       ],
       rewardPools,
     });

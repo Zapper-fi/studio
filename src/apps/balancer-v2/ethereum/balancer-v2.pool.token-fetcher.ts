@@ -1,6 +1,7 @@
 import { Inject } from '@nestjs/common';
 
 import { Register } from '~app-toolkit/decorators';
+import { AURA_DEFINITION } from '~apps/aura';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
@@ -28,6 +29,7 @@ export class EthereumBalancerV2PoolTokenFetcher implements PositionFetcher<AppTo
       groupId,
       appTokenDependencies: [
         { appId: BALANCER_V2_DEFINITION.id, groupIds: [BALANCER_V2_DEFINITION.groups.wrappedAave.id], network },
+        { appId: AURA_DEFINITION.id, groupIds: [AURA_DEFINITION.groups.auraBal.id], network },
       ],
       vaultAddress: '0xba12222222228d8ba445958a75a0704d566bf2c8',
       resolvePoolTokenAddresses: this.balancerV2TheGraphPoolTokenDataStrategy.build({
