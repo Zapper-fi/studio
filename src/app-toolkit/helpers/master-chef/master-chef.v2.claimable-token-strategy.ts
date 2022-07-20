@@ -2,17 +2,17 @@ import { Injectable } from '@nestjs/common';
 import _ from 'lodash';
 
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
-import { EthersMulticall as Multicall } from '~multicall/multicall.ethers';
+import { IMulticallWrapper } from '~multicall/multicall.interface';
 import { Network } from '~types/network.interface';
 
 import { MasterChefRewardTokenAddressesStrategy } from './master-chef.contract-position-helper';
 
 export type MasterChefV2ClaimableTokenStrategyParams<T, V> = {
-  resolvePrimaryClaimableToken: (opts: { multicall: Multicall; contract: T }) => Promise<string>;
-  resolveRewarderAddress: (opts: { multicall: Multicall; poolIndex: number; contract: T }) => Promise<string>;
+  resolvePrimaryClaimableToken: (opts: { multicall: IMulticallWrapper; contract: T }) => Promise<string>;
+  resolveRewarderAddress: (opts: { multicall: IMulticallWrapper; poolIndex: number; contract: T }) => Promise<string>;
   resolveRewarderContract: (opts: { rewarderAddress: string; network: Network }) => V;
   resolveSecondaryClaimableToken: (opts: {
-    multicall: Multicall;
+    multicall: IMulticallWrapper;
     poolIndex: number;
     rewarderContract: V;
   }) => Promise<string | string[]>;

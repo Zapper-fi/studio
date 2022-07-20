@@ -1,0 +1,16 @@
+[
+  {
+    "inputs": [{ "internalType": "address", "name": "_nodeAddress", "type": "address" }],
+    "name": "getNodeEffectiveRPLStake",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "_nodeAddress", "type": "address" }],
+    "name": "getNodeRPLStake",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]

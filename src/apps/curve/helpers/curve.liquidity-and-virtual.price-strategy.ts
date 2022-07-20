@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { BigNumberish } from 'ethers';
 
-import { EthersMulticall as Multicall } from '~multicall/multicall.ethers';
+import { IMulticallWrapper } from '~multicall/multicall.interface';
 import { Token } from '~position/position.interface';
 
 @Injectable()
@@ -9,7 +9,7 @@ export class CurveLiquidityAndVirtualPriceStrategy {
   build<T>({
     resolveVirtualPrice,
   }: {
-    resolveVirtualPrice: (opts: { multicall: Multicall; poolContract: T }) => Promise<BigNumberish>;
+    resolveVirtualPrice: (opts: { multicall: IMulticallWrapper; poolContract: T }) => Promise<BigNumberish>;
   }) {
     return async ({
       tokens,
@@ -21,7 +21,7 @@ export class CurveLiquidityAndVirtualPriceStrategy {
       tokens: Token[];
       reserves: number[];
       supply: number;
-      multicall: Multicall;
+      multicall: IMulticallWrapper;
       poolContract: T;
     }) => {
       const virtualPriceRaw = await resolveVirtualPrice({ multicall, poolContract });

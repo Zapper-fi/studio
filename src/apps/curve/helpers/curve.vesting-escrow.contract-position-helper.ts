@@ -3,7 +3,7 @@ import { Inject } from '@nestjs/common';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
-import { EthersMulticall as Multicall } from '~multicall/multicall.ethers';
+import { IMulticallWrapper } from '~multicall/multicall.interface';
 import { ContractType } from '~position/contract.interface';
 import { ContractPosition } from '~position/position.interface';
 import { claimable, vesting } from '~position/position.utils';
@@ -17,7 +17,7 @@ type CurveVestingEscrowContractPositionHelperParams<T> = {
   network: Network;
   vestingEscrowAddress: string;
   resolveVestingEscrowContract: (opts: { contractFactory: ContractFactory; address: string }) => T;
-  resolveVestingTokenAddress: (opts: { contract: T; multicall: Multicall }) => Promise<string>;
+  resolveVestingTokenAddress: (opts: { contract: T; multicall: IMulticallWrapper }) => Promise<string>;
 };
 
 export class CurveVestingEscrowContractPositionHelper {

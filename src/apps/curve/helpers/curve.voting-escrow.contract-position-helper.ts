@@ -3,7 +3,7 @@ import { Inject } from '@nestjs/common';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { EthersMulticall as Multicall } from '~multicall/multicall.ethers';
+import { IMulticallWrapper } from '~multicall/multicall.interface';
 import { ContractType } from '~position/contract.interface';
 import { ContractPosition, MetaType } from '~position/position.interface';
 import { AppGroupsDefinition } from '~position/position.service';
@@ -24,8 +24,8 @@ type CurveVotingEscrowContractPositionHelperParams<T, V = null> = {
   appTokenDependencies?: AppGroupsDefinition[];
   resolveContract: (opts: { network: Network; address: string }) => T;
   resolveRewardContract?: (opts: { network: Network; address: string }) => V;
-  resolveLockedTokenAddress: (opts: { contract: T; multicall: Multicall }) => Promise<string>;
-  resolveRewardTokenAddress?: (opts: { contract: V; multicall: Multicall }) => Promise<string>;
+  resolveLockedTokenAddress: (opts: { contract: T; multicall: IMulticallWrapper }) => Promise<string>;
+  resolveRewardTokenAddress?: (opts: { contract: V; multicall: IMulticallWrapper }) => Promise<string>;
 };
 
 export class CurveVotingEscrowContractPositionHelper {

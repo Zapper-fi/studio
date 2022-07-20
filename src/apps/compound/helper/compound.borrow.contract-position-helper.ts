@@ -8,7 +8,7 @@ import {
   buildPercentageDisplayItem,
 } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { EthersMulticall } from '~multicall';
+import { IMulticallWrapper } from '~multicall/multicall.interface';
 import { ContractType } from '~position/contract.interface';
 import { ContractPosition } from '~position/position.interface';
 import { borrowed } from '~position/position.utils';
@@ -32,7 +32,7 @@ type CompoundBorrowContractPositionHelperParams = {
     contract: CompoundCToken;
     address: string;
     network: Network;
-    multicall: EthersMulticall;
+    multicall: IMulticallWrapper;
   }) => Promise<BigNumberish>;
 };
 

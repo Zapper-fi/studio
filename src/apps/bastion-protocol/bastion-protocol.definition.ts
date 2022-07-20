@@ -10,17 +10,59 @@ export const BASTION_PROTOCOL_DEFINITION = appDefinition({
   url: 'https://bastionprotocol.com/',
 
   groups: {
-    supply: {
-      id: 'supply',
+    supplyMainHub: {
+      id: 'supply-main-hub',
       type: GroupType.TOKEN,
-      label: 'Lending',
+      label: 'Main Hub',
       groupLabel: 'Supply',
     },
 
-    borrow: {
-      id: 'borrow',
+    borrowMainHub: {
+      id: 'borrow-main-hub',
       type: GroupType.TOKEN,
-      label: 'Lending',
+      label: 'Main Hub',
+      groupLabel: 'Borrow',
+    },
+
+    supplyStakedNear: {
+      id: 'supply-staked-near',
+      type: GroupType.TOKEN,
+      label: 'Staked NEAR',
+      groupLabel: 'Supply',
+    },
+
+    borrowStakedNear: {
+      id: 'borrow-staked-near',
+      type: GroupType.TOKEN,
+      label: 'Staked NEAR',
+      groupLabel: 'Borrow',
+    },
+
+    supplyAuroraEcosystem: {
+      id: 'supply-aurora-ecosystem',
+      type: GroupType.TOKEN,
+      label: 'Aurora Ecosystem',
+      groupLabel: 'Supply',
+    },
+
+    borrowAuroraEcosystem: {
+      id: 'borrow-aurora-ecosystem',
+      type: GroupType.TOKEN,
+      label: 'Aurora Ecosystem',
+      groupLabel: 'Borrow',
+    },
+
+    supplyMultichain: {
+      id: 'supply-multichain',
+      type: GroupType.TOKEN,
+      label: 'Multichain Realm',
+      groupLabel: 'Supply',
+    },
+
+    borrowMultichain: {
+      id: 'borrow-multichain',
+      type: GroupType.TOKEN,
+      label: 'Multichain Realm',
       groupLabel: 'Borrow',
     },
 
@@ -33,18 +75,66 @@ export const BASTION_PROTOCOL_DEFINITION = appDefinition({
   presentationConfig: {
     tabs: [
       {
-        label: 'Lending',
+        label: 'Main Hub',
         viewType: 'split',
         views: [
           {
             viewType: 'list',
             label: 'Supply',
-            groupIds: ['supply'],
+            groupIds: ['supply-main-hub'],
           },
           {
             viewType: 'list',
             label: 'Borrow',
-            groupIds: ['borrow'],
+            groupIds: ['borrow-main-hub'],
+          },
+        ],
+      },
+      {
+        label: 'Staked Near',
+        viewType: 'split',
+        views: [
+          {
+            viewType: 'list',
+            label: 'Supply',
+            groupIds: ['supply-staked-near'],
+          },
+          {
+            viewType: 'list',
+            label: 'Borrow',
+            groupIds: ['borrow-staked-near'],
+          },
+        ],
+      },
+      {
+        label: 'Auriora Ecosystem',
+        viewType: 'split',
+        views: [
+          {
+            viewType: 'list',
+            label: 'Supply',
+            groupIds: ['supply-aurora-ecosystem'],
+          },
+          {
+            viewType: 'list',
+            label: 'Borrow',
+            groupIds: ['borrow-aurora-ecosystem'],
+          },
+        ],
+      },
+      {
+        label: 'Multichain Realm',
+        viewType: 'split',
+        views: [
+          {
+            viewType: 'list',
+            label: 'Supply',
+            groupIds: ['supply-multichain'],
+          },
+          {
+            viewType: 'list',
+            label: 'Borrow',
+            groupIds: ['borrow-multichain'],
           },
         ],
       },

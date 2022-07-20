@@ -28,7 +28,7 @@ export class CronosArgoFinancePledgingContractPositionFetcher implements Positio
     const contractTokens = await this.appToolkit.getAppTokenPositions({
       appId,
       groupIds: [ARGO_FINANCE_DEFINITION.groups.xArgo.id],
-      network
+      network,
     });
     const baseToken = contractTokens.find(t => t.symbol === 'xARGO')!;
     const croToken = baseTokens.find(t => t.symbol === 'WCRO')!;

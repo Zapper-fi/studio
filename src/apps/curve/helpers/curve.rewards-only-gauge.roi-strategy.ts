@@ -3,7 +3,7 @@ import BigNumber from 'bignumber.js';
 import { range, sum } from 'lodash';
 
 import { SingleStakingFarmContractPositionHelperParams } from '~app-toolkit';
-import { EthersMulticall } from '~multicall';
+import { IMulticallWrapper } from '~multicall/multicall.interface';
 import { WithMetaType } from '~position/display.interface';
 import { Token } from '~position/position.interface';
 import { Network } from '~types/network.interface';
@@ -14,7 +14,7 @@ import { CurvePoolDefinition } from '../curve.types';
 type GetRewardsInUsdOpts = {
   rewardStreamAddress: string;
   rewardTokens: WithMetaType<Token>[];
-  multicall: EthersMulticall;
+  multicall: IMulticallWrapper;
   network: Network;
 };
 

@@ -6,10 +6,12 @@ import { BLOCKS_PER_DAY } from '~app-toolkit/constants/blocks';
 import { Cache } from '~cache/cache.decorator';
 import { Network } from '~types/network.interface';
 
+import { PoolType } from './balancer-v2.pool-types';
+
 type GetPoolsResponse = {
   pools: {
     address: string;
-    poolType: string;
+    poolType: PoolType;
     swapFee: string;
     tokensList: string;
     totalLiquidity: string;
@@ -98,7 +100,7 @@ export class BalancerV2TheGraphPoolTokenDataStrategy {
     instance: 'business',
     key: (subgraphUrl: string) => {
       const [namespace, name] = subgraphUrl.split('/').slice(-2);
-      return `studio:balancer-v2-fork:pool-token-addresses:${namespace}:${name}`;
+      return `studio:balancer-v2-fork:pool-token-addresses:${namespace}:${name}:1`;
     },
     ttl: 5 * 60,
   })
@@ -135,7 +137,7 @@ export class BalancerV2TheGraphPoolTokenDataStrategy {
     return currentPoolsResponse.pools.map(pool => {
       const pastPool = pastPoolsResponse.pools.find(p => p.address === pool.address);
       const volume = pastPool ? Number(pool.totalSwapVolume) - Number(pastPool.totalSwapVolume) : 0;
-      return { address: pool.address, volume };
+      return { address: pool.address, poolType: pool.poolType, volume };
     });
   }
 

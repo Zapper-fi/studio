@@ -9,6 +9,8 @@ import { AuroraKoyoPoolTokenFetcher } from './aurora/koyo.pool.token-fetcher';
 import { KoyoAppDefinition, KOYO_DEFINITION } from './koyo.definition';
 import { MoonriverKoyoBalanceFetcher } from './moonriver/koyo.balance-fetcher';
 import { MoonriverKoyoPoolTokenFetcher } from './moonriver/koyo.pool.token-fetcher';
+import { PolygonKoyoBalanceFetcher } from './polygon/koyo.balance-fetcher';
+import { PolygonKoyoPoolTokenFetcher } from './polygon/koyo.pool.token-fetcher';
 
 @Register.AppModule({
   appId: KOYO_DEFINITION.id,
@@ -20,6 +22,8 @@ import { MoonriverKoyoPoolTokenFetcher } from './moonriver/koyo.pool.token-fetch
     AuroraKoyoBalanceFetcher,
     MoonriverKoyoPoolTokenFetcher,
     MoonriverKoyoBalanceFetcher,
+    PolygonKoyoBalanceFetcher,
+    PolygonKoyoPoolTokenFetcher,
     KoyoAppDefinition,
   ],
 })

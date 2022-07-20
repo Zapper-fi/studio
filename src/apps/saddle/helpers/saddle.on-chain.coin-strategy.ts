@@ -1,12 +1,12 @@
 import { compact } from 'lodash';
 
-import { EthersMulticall as Multicall } from '~multicall';
+import { IMulticallWrapper } from '~multicall/multicall.interface';
 
 import { SaddleSwap } from '../contracts';
 
 export class SaddleOnChainCoinStrategy {
   build() {
-    return async ({ poolContract, multicall }: { poolContract: SaddleSwap; multicall: Multicall }) => {
+    return async ({ poolContract, multicall }: { poolContract: SaddleSwap; multicall: IMulticallWrapper }) => {
       const tokenAddresses = await Promise.all([
         multicall
           .wrap(poolContract)
