@@ -17,10 +17,10 @@ export class BinanceSmartChainOpenleverageBalanceFetcher implements BalanceFetch
 
   async getPoolTokenBalances(address: string) {
     return this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
-      address,
+      network,
       appId: OPENLEVERAGE_DEFINITION.id,
       groupId: OPENLEVERAGE_DEFINITION.groups.pool.id,
-      network
+      address
     })
   }
 
