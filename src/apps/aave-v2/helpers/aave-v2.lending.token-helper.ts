@@ -67,7 +67,8 @@ export type AaveV2LendingTokenHelperParams<T = AaveProtocolDataProvider> = {
   exchangeable?: boolean;
   resolveTokenAddress: (opts: { reserveTokenAddressesData: ReserveTokenAddressesData }) => string;
   resolveLendingRate: (opts: { reserveData: ReserveData }) => BigNumber;
-  resolveLabel: (opts: { reserveToken: Token }) => string;
+  resolveLabel: (opts: { symbol: string; reserveToken: Token }) => string;
+  resolveLabelDetailed?: (opts: { symbol: string; reserveToken: Token }) => string;
   resolveApyLabel: (opts: { apy: number }) => string;
 };
 
@@ -83,13 +84,14 @@ export class AaveV2LendingTokenHelper {
     groupId,
     network,
     dependencies = [],
-    protocolDataProviderAddress,
     isDebt = false,
+    exchangeable = false,
+    protocolDataProviderAddress,
     resolveTokenAddress,
     resolveLendingRate,
-    resolveLabel,
     resolveApyLabel,
-    exchangeable,
+    resolveLabel,
+    resolveLabelDetailed = ({ symbol }) => symbol,
     resolveContract = ({ contractFactory, address }) =>
       contractFactory.aaveProtocolDataProvider({ network, address }) as unknown as T,
     resolveReserveTokens = ({ contract }) =>
@@ -145,7 +147,7 @@ export class AaveV2LendingTokenHelper {
         const tokens = [reserveToken];
         const dataProps = {
           apy,
-          exchangeable: exchangeable ?? false,
+          exchangeable,
           enabledAsCollateral,
           liquidity: contextualizedLiquidity,
           liquidationThreshold,
@@ -153,7 +155,8 @@ export class AaveV2LendingTokenHelper {
         };
 
         // Display Props
-        const label = resolveLabel({ reserveToken });
+        const label = resolveLabel({ symbol, reserveToken });
+        const labelDetailed = resolveLabelDetailed({ symbol, reserveToken });
         const secondaryLabel = buildDollarDisplayItem(reserveToken.price);
         const tertiaryLabel = resolveApyLabel({ apy });
         const images = getImagesFromToken(reserveToken);
@@ -177,6 +180,7 @@ export class AaveV2LendingTokenHelper {
           dataProps,
           displayProps: {
             label,
+            labelDetailed,
             secondaryLabel,
             tertiaryLabel,
             images,

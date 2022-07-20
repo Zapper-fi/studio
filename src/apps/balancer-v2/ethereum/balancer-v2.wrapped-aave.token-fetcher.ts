@@ -4,7 +4,7 @@ import { compact } from 'lodash';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
-import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { AAVE_V2_DEFINITION } from '~apps/aave-v2/aave-v2.definition';
 import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
@@ -56,7 +56,7 @@ export class EthereumBalancerV2WrappedAaveTokenFetcher implements PositionFetche
         if (!underlyingToken) return null;
 
         // Display Props
-        const label = underlyingToken.symbol;
+        const label = getLabelFromToken(underlyingToken);
         const secondaryLabel = buildDollarDisplayItem(underlyingToken.price);
         const images = getImagesFromToken(underlyingToken);
 

@@ -29,7 +29,7 @@ export const getImagesFromToken = (token: Token): string[] => {
 
 export const getLabelFromToken = (token: Token): string => {
   if (token.type === ContractType.APP_TOKEN) {
-    return token.displayProps.label;
+    return token.displayProps.labelDetailed ?? token.displayProps.label;
   }
   return token.symbol;
 };
