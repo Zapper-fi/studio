@@ -28,7 +28,7 @@ export class EthereumAuraChefContractPositionFetcher implements PositionFetcher<
       appId,
       groupId,
       dependencies: [
-        { appId, network, groupIds: [groupId] },
+        { appId: AURA_DEFINITION.id, network, groupIds: [AURA_DEFINITION.groups.auraBal.id] },
         { appId: BALANCER_V2_DEFINITION.id, network, groupIds: [BALANCER_V2_DEFINITION.groups.pool.id] },
       ],
       resolvePoolIndexIsValid: async ({ contract, poolIndex, multicall }) =>

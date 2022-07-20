@@ -17,7 +17,7 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
 
-export interface BaseRewardPoolInterface extends utils.Interface {
+export interface AuraBaseRewardPoolInterface extends utils.Interface {
   functions: {
     'addExtraReward(address)': FunctionFragment;
     'balanceOf(address)': FunctionFragment;
@@ -219,12 +219,12 @@ export type WithdrawnEvent = TypedEvent<[string, BigNumber], WithdrawnEventObjec
 
 export type WithdrawnEventFilter = TypedEventFilter<WithdrawnEvent>;
 
-export interface BaseRewardPool extends BaseContract {
+export interface AuraBaseRewardPool extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: BaseRewardPoolInterface;
+  interface: AuraBaseRewardPoolInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

@@ -4,7 +4,7 @@ import { BigNumber } from 'ethers';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { AURA_DEFINITION, AuraContractFactory } from '~apps/aura';
 import { AuraBaseRewardPoolDataProps } from '~apps/aura/aura.types';
-import { BaseRewardPool } from '~apps/aura/contracts';
+import { AuraBaseRewardPool } from '~apps/aura/contracts';
 import { SynthetixSingleStakingIsActiveStrategy, SynthetixSingleStakingRoiStrategy } from '~apps/synthetix';
 import { ContractPosition } from '~position/position.interface';
 import { AppGroupsDefinition } from '~position/position.service';
@@ -56,15 +56,16 @@ export class AuraBaseRewardPoolHelper {
     const rewardsDataProps = await this.getRewardsDataProps({ rewardPools, network });
 
     const contractPositions: ContractPosition[] =
-      await this.appToolkit.helpers.singleStakingFarmContractPositionHelper.getContractPositions<BaseRewardPool>({
+      await this.appToolkit.helpers.singleStakingFarmContractPositionHelper.getContractPositions<AuraBaseRewardPool>({
         network,
         appId,
         groupId,
         dependencies,
-        resolveFarmContract: ({ address, network }) => this.auraContractFactory.baseRewardPool({ address, network }),
+        resolveFarmContract: ({ address, network }) =>
+          this.auraContractFactory.auraBaseRewardPool({ address, network }),
         resolveFarmAddresses: () => rewardPools,
         resolveLiquidity: ({ contract, multicall }) => multicall.wrap(contract).totalSupply(),
-        resolveIsActive: this.isActiveStrategy.build<BaseRewardPool>({
+        resolveIsActive: this.isActiveStrategy.build<AuraBaseRewardPool>({
           resolvePeriodFinish: ({ contract, multicall }) => multicall.wrap(contract).periodFinish(),
         }),
         resolveRewardTokenAddresses: async ({ contract }) => {
@@ -74,7 +75,7 @@ export class AuraBaseRewardPoolHelper {
         },
         resolveStakedTokenAddress: ({ contract, multicall }) => multicall.wrap(contract).stakingToken(),
         resolveRois: opts => {
-          const strategy = this.roiStrategy.build<BaseRewardPool>({
+          const strategy = this.roiStrategy.build<AuraBaseRewardPool>({
             resolveRewardRates: async ({ contract, multicall }) => {
               // Platform reward (e.g. BAL)
               const rewardRate = await contract.rewardRate();
@@ -178,7 +179,7 @@ export class AuraBaseRewardPoolHelper {
 
     return Promise.all(
       rewardPools.map(async rewardPool => {
-        const contract = this.auraContractFactory.baseRewardPool({ address: rewardPool, network });
+        const contract = this.auraContractFactory.auraBaseRewardPool({ address: rewardPool, network });
 
         const extraRewardsLength = Number(await contract.extraRewardsLength());
 

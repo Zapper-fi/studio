@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { BalancerHelpers, BalancerHelpersInterface } from '../BalancerHelpers';
+import type { AuraBalancerHelpers, AuraBalancerHelpersInterface } from '../AuraBalancerHelpers';
 
 const _abi = [
   {
@@ -155,12 +155,12 @@ const _abi = [
   },
 ];
 
-export class BalancerHelpers__factory {
+export class AuraBalancerHelpers__factory {
   static readonly abi = _abi;
-  static createInterface(): BalancerHelpersInterface {
-    return new utils.Interface(_abi) as BalancerHelpersInterface;
+  static createInterface(): AuraBalancerHelpersInterface {
+    return new utils.Interface(_abi) as AuraBalancerHelpersInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): BalancerHelpers {
-    return new Contract(address, _abi, signerOrProvider) as BalancerHelpers;
+  static connect(address: string, signerOrProvider: Signer | Provider): AuraBalancerHelpers {
+    return new Contract(address, _abi, signerOrProvider) as AuraBalancerHelpers;
   }
 }

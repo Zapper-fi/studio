@@ -47,7 +47,7 @@ export declare namespace IVault {
   };
 }
 
-export interface BalancerHelpersInterface extends utils.Interface {
+export interface AuraBalancerHelpersInterface extends utils.Interface {
   functions: {
     'queryExit(bytes32,address,address,(address[],uint256[],bytes,bool))': FunctionFragment;
     'queryJoin(bytes32,address,address,(address[],uint256[],bytes,bool))': FunctionFragment;
@@ -73,12 +73,12 @@ export interface BalancerHelpersInterface extends utils.Interface {
   events: {};
 }
 
-export interface BalancerHelpers extends BaseContract {
+export interface AuraBalancerHelpers extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: BalancerHelpersInterface;
+  interface: AuraBalancerHelpersInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
