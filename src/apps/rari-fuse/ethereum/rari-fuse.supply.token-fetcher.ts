@@ -2,6 +2,8 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
+import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { AAVE_V2_DEFINITION } from '~apps/aave-v2';
 import { ARRAKIS_DEFINITION } from '~apps/arrakis/arrakis.definition';
 import { CompoundContractFactory } from '~apps/compound';
 import { CompoundSupplyTokenHelper } from '~apps/compound/helper/compound.supply.token-helper';
@@ -37,6 +39,7 @@ export class EthereumRariFuseSupplyTokenFetcher implements PositionFetcher<AppTo
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
     const appTokens = await this.appToolkit.getAppTokenPositions(
       { appId: CURVE_DEFINITION.id, groupIds: [CURVE_DEFINITION.groups.pool.id], network },
+      { appId: AAVE_V2_DEFINITION.id, groupIds: [AAVE_V2_DEFINITION.groups.supply.id], network },
       {
         appId: YEARN_DEFINITION.id,
         groupIds: [YEARN_DEFINITION.groups.v1Vault.id, YEARN_DEFINITION.groups.v2Vault.id],
@@ -72,7 +75,7 @@ export class EthereumRariFuseSupplyTokenFetcher implements PositionFetcher<AppTo
           getUnderlyingAddress: ({ contract, multicall }) => multicall.wrap(contract).underlying(),
           getExchangeRateMantissa: ({ underlyingTokenDecimals, tokenDecimals }) =>
             18 + underlyingTokenDecimals - tokenDecimals,
-          getDisplayLabel: async ({ underlyingToken }) => `${underlyingToken.symbol} in ${pool.name}`,
+          getDisplayLabel: async ({ underlyingToken }) => getLabelFromToken(underlyingToken),
         });
       }),
     );
