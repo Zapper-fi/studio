@@ -52,6 +52,7 @@ export enum BalanceDisplayMode {
 
 export interface DisplayProps {
   label: string;
+  labelDetailed?: string;
   secondaryLabel?: string | number | DollarDisplayItem | PercentageDisplayItem;
   tertiaryLabel?: string | number | DollarDisplayItem | PercentageDisplayItem;
   images: string[];
