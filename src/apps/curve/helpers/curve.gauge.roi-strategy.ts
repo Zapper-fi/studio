@@ -2,14 +2,14 @@ import { Injectable } from '@nestjs/common';
 import { BigNumberish } from 'ethers';
 
 import { SingleStakingFarmContractPositionHelperParams } from '~app-toolkit';
-import { EthersMulticall } from '~multicall';
+import { IMulticallWrapper } from '~multicall/multicall.interface';
 import { Network } from '~types/network.interface';
 
 type CurveGaugeRoiStrategyParams<T, V> = {
-  resolveInflationRate: (opts: { multicall: EthersMulticall; gaugeContract: T }) => Promise<BigNumberish>;
-  resolveWorkingSupply: (opts: { multicall: EthersMulticall; gaugeContract: T }) => Promise<BigNumberish>;
+  resolveInflationRate: (opts: { multicall: IMulticallWrapper; gaugeContract: T }) => Promise<BigNumberish>;
+  resolveWorkingSupply: (opts: { multicall: IMulticallWrapper; gaugeContract: T }) => Promise<BigNumberish>;
   resolveRelativeWeight: (opts: {
-    multicall: EthersMulticall;
+    multicall: IMulticallWrapper;
     controllerContract: V;
     address: string;
   }) => Promise<BigNumberish>;

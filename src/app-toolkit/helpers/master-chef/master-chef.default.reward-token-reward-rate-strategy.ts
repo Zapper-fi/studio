@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { BigNumberish } from 'ethers';
 import { isArray } from 'lodash';
 
-import { EthersMulticall as Multicall } from '~multicall/multicall.ethers';
+import { IMulticallWrapper } from '~multicall/multicall.interface';
 import { Network } from '~types/network.interface';
 
 import { MasterChefRewardRateStrategy } from './master-chef.contract-position-helper';
@@ -11,25 +11,25 @@ export type MasterChefDefaultRewardRateStrategyParams<T> = {
   resolveTotalAllocPoints: (opts: {
     network: Network;
     contract: T;
-    multicall: Multicall;
+    multicall: IMulticallWrapper;
     poolIndex: number;
   }) => BigNumberish | Promise<BigNumberish>;
   resolvePoolAllocPoints: (opts: {
     network: Network;
     contract: T;
-    multicall: Multicall;
+    multicall: IMulticallWrapper;
     poolIndex: number;
   }) => BigNumberish | Promise<BigNumberish>;
   resolveTotalRewardRate: (opts: {
     network: Network;
     contract: T;
-    multicall: Multicall;
+    multicall: IMulticallWrapper;
     poolIndex: number;
   }) => Promise<BigNumberish | BigNumberish[]>;
   resolveRewardMultiplier?: (opts: {
     network: Network;
     contract: T;
-    multicall: Multicall;
+    multicall: IMulticallWrapper;
     poolIndex: number;
   }) => Promise<BigNumberish | BigNumberish[]>;
 };

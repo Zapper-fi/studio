@@ -20,6 +20,7 @@ import { AlphaV1ContractFactory } from '../contracts';
 type AlphaV1LendingTokenDataProps = {
   supplyApy: number;
   reserve: number;
+  liquidity: number;
 };
 
 const appId = ALPHA_V1_DEFINITION.id;
@@ -63,19 +64,23 @@ export class EthereumAlphaV1LendingTokenFetcher implements PositionFetcher<AppTo
     ]);
 
     // Data Props
-    const price = new BigNumber(ethToken.price).times(totalEthRaw.toString()).div(totalSupplyRaw.toString()).toNumber();
+    const price = (ethToken.price * Number(totalEthRaw)) / Number(totalSupplyRaw);
     const reserve = Number(totalEthRaw) / 10 ** ethToken.decimals;
     const supply = Number(totalSupplyRaw) / 10 ** decimals;
     const pricePerShare = Number(totalEthRaw) / Number(totalSupplyRaw);
     const utilizationRate = new BigNumber(totalDebtValueRaw.div(totalEthRaw).toString());
     const supplyApy = this.tripleSlope(utilizationRate).times(utilizationRate).times(0.9).toNumber();
     const tokens = [ethToken];
+    const liquidity = price * supply;
 
     // Display Props
     const label = symbol;
     const secondaryLabel = buildDollarDisplayItem(price);
     const images = [getTokenImg(ethToken.address, network)];
-    const statsItems = [{ label: 'Supply APY', value: buildPercentageDisplayItem(supplyApy) }];
+    const statsItems = [
+      { label: 'APY', value: buildPercentageDisplayItem(supplyApy) },
+      { label: 'Liquidity', value: buildDollarDisplayItem(liquidity) },
+    ];
 
     const token: AppTokenPosition<AlphaV1LendingTokenDataProps> = {
       type: ContractType.APP_TOKEN,
@@ -93,6 +98,7 @@ export class EthereumAlphaV1LendingTokenFetcher implements PositionFetcher<AppTo
       dataProps: {
         supplyApy,
         reserve,
+        liquidity,
       },
 
       displayProps: {

@@ -65,5 +65,15 @@ export interface NonFungibleToken extends AbstractToken {
   };
 }
 
+export type ExchangeableAppTokenDataProps = {
+  exchangeable: boolean;
+};
+
 export type Token = BaseToken | AppTokenPosition | NonFungibleToken;
 export type Position<T = DefaultDataProps> = ContractPosition<T> | AppTokenPosition<T>;
+
+export const isBaseToken = (token: any): token is BaseToken => token.type === ContractType.BASE_TOKEN;
+export const isAppToken = (token: any): token is AppTokenPosition => token.type === ContractType.APP_TOKEN;
+export const isContractPosition = (token: any): token is ContractPosition => token.type === ContractType.POSITION;
+export const isNonFungibleToken = (token: any): token is NonFungibleToken =>
+  token.type === ContractType.NON_FUNGIBLE_TOKEN;

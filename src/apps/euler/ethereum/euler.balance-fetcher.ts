@@ -19,7 +19,7 @@ export class EthereumEulerBalanceFetcher implements BalanceFetcher {
       address,
       appId: EULER_DEFINITION.id,
       groupId: EULER_DEFINITION.groups.eToken.id,
-      network: network,
+      network,
     });
   }
 
@@ -28,7 +28,7 @@ export class EthereumEulerBalanceFetcher implements BalanceFetcher {
       address,
       appId: EULER_DEFINITION.id,
       groupId: EULER_DEFINITION.groups.dToken.id,
-      network: network,
+      network,
     });
   }
 
@@ -37,7 +37,7 @@ export class EthereumEulerBalanceFetcher implements BalanceFetcher {
       address,
       appId: EULER_DEFINITION.id,
       groupId: EULER_DEFINITION.groups.pToken.id,
-      network: network,
+      network,
     });
   }
 

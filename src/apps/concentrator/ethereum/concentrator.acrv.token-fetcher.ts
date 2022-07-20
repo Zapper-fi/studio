@@ -2,6 +2,7 @@ import { Inject } from '@nestjs/common';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
+import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getAppImg } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
@@ -14,7 +15,8 @@ import { ConcentratorContractFactory } from '../contracts';
 const appId = CONCENTRATOR_DEFINITION.id;
 const groupId = CONCENTRATOR_DEFINITION.groups.acrv.id;
 const network = Network.ETHEREUM_MAINNET;
-export const address = '0x2b95A1Dcc3D405535f9ed33c219ab38E8d7e0884'.toLowerCase(); // EIP-1967 proxy
+
+export const address = '0x2b95a1dcc3d405535f9ed33c219ab38e8d7e0884'; // EIP-1967 proxy
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
 export class EthereumConcentratorAcrvTokenFetcher implements PositionFetcher<AppTokenPosition> {
@@ -40,6 +42,7 @@ export class EthereumConcentratorAcrvTokenFetcher implements PositionFetcher<App
     const supply = Number(supplyRaw) / 10 ** decimals;
     const pricePerShare = Number(underlyingRaw) / Number(supplyRaw);
     const price = underlyingToken.price * pricePerShare;
+    const liquidity = price * supply;
 
     // TODO: add additional properties from https://concentrator-api.aladdin.club/apy/
     const label = `Concentrator aCRV`;
@@ -57,10 +60,11 @@ export class EthereumConcentratorAcrvTokenFetcher implements PositionFetcher<App
       tokens: [underlyingToken],
       price,
       pricePerShare,
-      dataProps: {},
+      dataProps: { liquidity },
       displayProps: {
         label,
         images,
+        statsItems: [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }],
       },
     };
 

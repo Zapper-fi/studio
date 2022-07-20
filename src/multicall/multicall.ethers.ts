@@ -5,6 +5,7 @@ import { FunctionFragment, Interface } from 'ethers/lib/utils';
 import { Multicall } from '~contract/contracts';
 
 import { MulticallContract } from './multicall.contract';
+import { IMulticallWrapper } from './multicall.interface';
 
 export type ContractCall = {
   fragment: FunctionFragment;
@@ -14,7 +15,7 @@ export type ContractCall = {
 
 type TargetContract = Pick<Contract, 'functions' | 'interface' | 'callStatic' | 'address'>;
 
-export class EthersMulticall {
+export class EthersMulticall implements IMulticallWrapper {
   private multicall: Multicall;
   private dataLoader: DataLoader<ContractCall, any>;
 

@@ -23,7 +23,7 @@ type EnzymeFinanceVaultsResponse = {
 
 const query = gql`
   query fetchEnzymeVaults {
-    funds(first: 100, orderBy: investmentCount, orderDirection: desc) {
+    funds(first: 250, orderBy: investmentCount, orderDirection: desc) {
       id
     }
   }
@@ -96,12 +96,18 @@ export class EthereumEnzymeFinanceVaultTokenFetcher implements PositionFetcher<A
         const pricePerShare = 1;
         const price = totalAssetUnderManagement / supply;
         const tokens = compact(underlyingTokens);
+        const liquidity = price * supply;
 
         const label = name;
         const secondaryLabel = buildDollarDisplayItem(price);
         const images = [getAppImg(appId)];
-        const dataProps = {};
-        const displayProps = { label, secondaryLabel, images };
+        const dataProps = { liquidity };
+        const displayProps = {
+          label,
+          secondaryLabel,
+          images,
+          statsItems: [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }],
+        };
 
         const token: AppTokenPosition = {
           type: ContractType.APP_TOKEN,

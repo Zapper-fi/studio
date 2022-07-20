@@ -2,6 +2,7 @@ import { Inject } from '@nestjs/common';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
+import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
@@ -27,9 +28,19 @@ export class EthereumSolaceXslockerContractPositionFetcher implements PositionFe
   ) {}
 
   async getPositions() {
+    const multicall = this.appToolkit.getMulticall(network);
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
     const solace = baseTokens.find(t => t.address === SOLACE_ADDRESS)!;
     if (!solace) return [];
+
+    const solaceTokenContract = this.solaceContractFactory.erc20({ address: SOLACE_ADDRESS, network });
+    const [balanceOfRaw, decimals] = await Promise.all([
+      multicall.wrap(solaceTokenContract).balanceOf(XSLOCKER_ADDRESS),
+      multicall.wrap(solaceTokenContract).decimals(),
+    ]);
+
+    const balanceOf = Number(balanceOfRaw) / 10 ** decimals;
+    const liquidity = balanceOf * solace.price;
 
     const position: ContractPosition = {
       type: ContractType.POSITION,
@@ -38,10 +49,13 @@ export class EthereumSolaceXslockerContractPositionFetcher implements PositionFe
       groupId,
       network,
       tokens: [supplied(solace), claimable(solace)],
-      dataProps: {},
+      dataProps: {
+        liquidity,
+      },
       displayProps: {
         label: `xsLOCK`,
         images: getImagesFromToken(solace),
+        statsItems: [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }],
       },
     };
 

@@ -5,7 +5,7 @@ import { sumBy } from 'lodash';
 
 import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { EthersMulticall as Multicall } from '~multicall/multicall.ethers';
+import { IMulticallWrapper } from '~multicall/multicall.interface';
 import { DefaultDataProps } from '~position/display.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { ContractPosition } from '~position/position.interface';
@@ -19,13 +19,13 @@ type OlympusBondV1ContractPositionBalanceHelperParams<T, V> = {
   network: Network;
   resolveDepositoryContract: (opts: { depositoryAddress: string; network: Network }) => T;
   resolveTotalPayout: (opts: {
-    multicall: Multicall;
+    multicall: IMulticallWrapper;
     contract: T;
     address: string;
     contractPosition: ContractPosition<V>;
   }) => Promise<BigNumberish>;
   resolveClaimablePayout: (opts: {
-    multicall: Multicall;
+    multicall: IMulticallWrapper;
     contract: T;
     address: string;
     contractPosition: ContractPosition<V>;

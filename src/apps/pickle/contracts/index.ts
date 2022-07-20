@@ -10,6 +10,8 @@ import { PickleJarSingleRewardStaking__factory } from './ethers';
 import { PickleMiniChefV2__factory } from './ethers';
 import { PickleRegistry__factory } from './ethers';
 import { PickleRewarder__factory } from './ethers';
+import { PickleVotingEscrow__factory } from './ethers';
+import { PickleVotingEscrowReward__factory } from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
@@ -38,6 +40,12 @@ export class PickleContractFactory extends ContractFactory {
   pickleRewarder({ address, network }: ContractOpts) {
     return PickleRewarder__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  pickleVotingEscrow({ address, network }: ContractOpts) {
+    return PickleVotingEscrow__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
+  pickleVotingEscrowReward({ address, network }: ContractOpts) {
+    return PickleVotingEscrowReward__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
 }
 
 export type { PickleJar } from './ethers';
@@ -46,3 +54,5 @@ export type { PickleJarSingleRewardStaking } from './ethers';
 export type { PickleMiniChefV2 } from './ethers';
 export type { PickleRegistry } from './ethers';
 export type { PickleRewarder } from './ethers';
+export type { PickleVotingEscrow } from './ethers';
+export type { PickleVotingEscrowReward } from './ethers';

@@ -16,7 +16,7 @@ const appId = LIDO_DEFINITION.id;
 const groupId = LIDO_DEFINITION.groups.wsteth.id;
 const network = Network.ETHEREUM_MAINNET;
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Register.TokenPositionFetcher({ appId, groupId, network, options: { excludeFromTvl: true } })
 export class EthereumLidoWstethTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
@@ -35,6 +35,7 @@ export class EthereumLidoWstethTokenFetcher implements PositionFetcher<AppTokenP
       multicall.wrap(contract).totalSupply(),
     ]);
     const supply = Number(totalSupply) / 10 ** decimals;
+    const liquidity = wstethToken.price * supply;
     const token: AppTokenPosition = {
       address,
       network,
@@ -52,6 +53,12 @@ export class EthereumLidoWstethTokenFetcher implements PositionFetcher<AppTokenP
         label: symbol,
         secondaryLabel: buildDollarDisplayItem(wstethToken.price),
         images: [getTokenImg(address, network)],
+        statsItems: [
+          {
+            label: 'Liquidity',
+            value: buildDollarDisplayItem(liquidity),
+          },
+        ],
       },
     };
 

@@ -1,10 +1,10 @@
 import { Inject } from '@nestjs/common';
 import { compact } from 'lodash';
 
-import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { BalancerV2PoolLabelStrategy, BalancerV2PoolTokensHelper } from '~apps/balancer-v2';
 import { OLYMPUS_DEFINITION } from '~apps/olympus';
+import { YEARN_DEFINITION } from '~apps/yearn';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
@@ -19,14 +19,13 @@ const network = Network.FANTOM_OPERA_MAINNET;
 @Register.TokenPositionFetcher({ appId, groupId, network })
 export class FantomBeethovenXPoolTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(BalancerV2PoolTokensHelper) private readonly poolTokensHelper: BalancerV2PoolTokensHelper,
     @Inject(BeethovenXTheGraphPoolTokenDataStrategy)
     private readonly beethovenXTheGraphPoolTokenDataStrategy: BeethovenXTheGraphPoolTokenDataStrategy,
   ) {}
 
   async getPositions() {
-    const tokens = await this.poolTokensHelper.getTokenMarketData({
+    const tokens = await this.poolTokensHelper.getPositions({
       network,
       appId,
       groupId,
@@ -39,6 +38,11 @@ export class FantomBeethovenXPoolTokenFetcher implements PositionFetcher<AppToke
         {
           appId: BEETHOVEN_X_DEFINITION.id,
           groupIds: [BEETHOVEN_X_DEFINITION.groups.fBeets.id],
+          network,
+        },
+        {
+          appId: YEARN_DEFINITION.id,
+          groupIds: [YEARN_DEFINITION.groups.v2Vault.id],
           network,
         },
         {

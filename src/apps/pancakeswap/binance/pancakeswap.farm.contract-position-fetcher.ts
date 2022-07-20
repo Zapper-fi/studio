@@ -14,7 +14,7 @@ const appId = PANCAKESWAP_DEFINITION.id;
 const groupId = PANCAKESWAP_DEFINITION.groups.farm.id;
 const network = Network.BINANCE_SMART_CHAIN_MAINNET;
 
-@Register.ContractPositionFetcher({ appId, groupId, network })
+@Register.ContractPositionFetcher({ appId, groupId, network, options: { excludeFromTvl: true } })
 export class BinanceSmartChainPancakeswapFarmContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
@@ -36,7 +36,7 @@ export class BinanceSmartChainPancakeswapFarmContractPositionFetcher implements 
           .wrap(contract)
           .poolInfo(poolIndex)
           .then(i => i.lpToken),
-      resolveTotalValueLocked: async ({ multicall, depositTokenAddress, address, poolIndex }) => {
+      resolveLiquidity: async ({ multicall, depositTokenAddress, address, poolIndex }) => {
         const tokenContract = this.contractFactory.erc20({ network, address: depositTokenAddress });
         const balanceRaw = await multicall.wrap(tokenContract).balanceOf(address);
         if (poolIndex !== 0) return balanceRaw;

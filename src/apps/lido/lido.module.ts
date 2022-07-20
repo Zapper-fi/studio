@@ -4,7 +4,6 @@ import { AbstractApp } from '~app/app.dynamic-module';
 import { LidoContractFactory } from './contracts';
 import { EthereumLidoStethTokenBalanceFetcher } from './ethereum/lido.steth.token-balance-fetcher';
 import { EthereumLidoStethTokenFetcher } from './ethereum/lido.steth.token-fetcher';
-import { EthereumLidoTvlFetcher } from './ethereum/lido.tvl-fetcher';
 import { EthereumLidoWstethTokenBalanceFetcher } from './ethereum/lido.wsteth.token-balance-fetcher';
 import { EthereumLidoWstethTokenFetcher } from './ethereum/lido.wsteth.token-fetcher';
 import LIDO_DEFINITION, { LidoAppDefinition } from './lido.definition';
@@ -14,7 +13,6 @@ import LIDO_DEFINITION, { LidoAppDefinition } from './lido.definition';
   providers: [
     LidoAppDefinition,
     LidoContractFactory,
-    EthereumLidoTvlFetcher,
     EthereumLidoStethTokenFetcher,
     EthereumLidoWstethTokenFetcher,
     EthereumLidoStethTokenBalanceFetcher,

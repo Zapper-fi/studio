@@ -9,6 +9,8 @@ import { Network } from '~types/network.interface';
 
 import { YEARN_DEFINITION } from '../yearn.definition';
 
+const network = Network.ETHEREUM_MAINNET;
+
 @Register.BalanceFetcher(YEARN_DEFINITION.id, Network.ETHEREUM_MAINNET)
 export class EthereumYearnBalanceFetcher implements BalanceFetcher {
   constructor(
@@ -19,19 +21,28 @@ export class EthereumYearnBalanceFetcher implements BalanceFetcher {
 
   private async getYieldTokens(address: string) {
     return await this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
-      network: Network.ETHEREUM_MAINNET,
+      address,
       appId: YEARN_DEFINITION.id,
       groupId: YEARN_DEFINITION.groups.yield.id,
-      address,
+      network,
     });
   }
 
-  private async getVaultTokenBalances(address: string) {
+  private async getV1VaultTokenBalances(address: string) {
     return await this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
-      network: Network.ETHEREUM_MAINNET,
-      appId: YEARN_DEFINITION.id,
-      groupId: YEARN_DEFINITION.groups.vault.id,
       address,
+      appId: YEARN_DEFINITION.id,
+      groupId: YEARN_DEFINITION.groups.v1Vault.id,
+      network,
+    });
+  }
+
+  private async getV2VaultTokenBalances(address: string) {
+    return await this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
+      address,
+      appId: YEARN_DEFINITION.id,
+      groupId: YEARN_DEFINITION.groups.v2Vault.id,
+      network,
     });
   }
 
@@ -39,8 +50,8 @@ export class EthereumYearnBalanceFetcher implements BalanceFetcher {
     return this.appToolkit.helpers.singleStakingContractPositionBalanceHelper.getBalances<SynthetixRewards>({
       address,
       appId: YEARN_DEFINITION.id,
-      groupId: YEARN_DEFINITION.groups.farm.id,
-      network: Network.ETHEREUM_MAINNET,
+      groupId: YEARN_DEFINITION.groups.governance.id,
+      network,
       resolveContract: ({ address, network }) => this.synthetixContractFactory.synthetixRewards({ address, network }),
       resolveStakedTokenBalance: ({ contract, address, multicall }) => multicall.wrap(contract).balanceOf(address),
       resolveRewardTokenBalances: ({ contract, address, multicall }) => multicall.wrap(contract).earned(address),
@@ -48,9 +59,10 @@ export class EthereumYearnBalanceFetcher implements BalanceFetcher {
   }
 
   async getBalances(address: string) {
-    const [yieldTokenBalances, vaultTokenBalances, governanceBalances] = await Promise.all([
+    const [yieldTokenBalances, v1VaultTokenBalances, v2VaultTokenBalances, governanceBalances] = await Promise.all([
       this.getYieldTokens(address),
-      this.getVaultTokenBalances(address),
+      this.getV1VaultTokenBalances(address),
+      this.getV2VaultTokenBalances(address),
       this.getGovernanceBalances(address),
     ]);
 
@@ -60,8 +72,12 @@ export class EthereumYearnBalanceFetcher implements BalanceFetcher {
         assets: yieldTokenBalances,
       },
       {
+        label: 'V1 Vaults',
+        assets: v1VaultTokenBalances,
+      },
+      {
         label: 'Vaults',
-        assets: vaultTokenBalances,
+        assets: v2VaultTokenBalances,
       },
       {
         label: 'Governance',
