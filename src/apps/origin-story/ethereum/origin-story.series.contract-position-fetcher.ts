@@ -1,5 +1,5 @@
 import { Inject } from '@nestjs/common';
-import { BigNumber, ethers } from 'ethers';
+import { ethers } from 'ethers';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
@@ -21,7 +21,7 @@ const OGN_ADDRESSES = {
 };
 
 const SERIES_ADDRESSES = {
-  ethereum: 'series.ognstaking.eth',
+  ethereum: '0xcce8e784c777fb9435f89f4e45f8b7fc49f7669f',
 };
 
 export type OriginStoryDetails = {
