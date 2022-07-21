@@ -31,13 +31,13 @@ export class OptimismRubiconBathTokenTokenFetcher implements PositionFetcher<App
   async getPositions() {
     // For now, hardcoded in docs
     const bathTokens = [
-      '0xB0bE5d911E3BD4Ee2A8706cF1fAc8d767A550497'.toLowerCase(),
-      '0x7571CC9895D8E997853B1e0A1521eBd8481aa186'.toLowerCase(),
-      '0xe0e112e8f33d3f437D1F895cbb1A456836125952'.toLowerCase(),
-      '0x60daEC2Fc9d2e0de0577A5C708BcaDBA1458A833'.toLowerCase(),
-      '0xfFBD695bf246c514110f5DAe3Fa88B8c2f42c411'.toLowerCase(),
-      '0xeb5F29AfaaA3f44eca8559c3e8173003060e919f'.toLowerCase(),
-      '0x574a21fE5ea9666DbCA804C9d69d8Caf21d5322b'.toLowerCase(),
+      '0xb0be5d911e3bd4ee2a8706cf1fac8d767a550497',
+      '0x7571cc9895d8e997853b1e0a1521ebd8481aa186',
+      '0xe0e112e8f33d3f437d1f895cbb1a456836125952',
+      '0x60daec2fc9d2e0de0577a5c708bcadba1458a833',
+      '0xffbd695bf246c514110f5dae3fa88b8c2f42c411',
+      '0xeb5f29afaaa3f44eca8559c3e8173003060e919f',
+      '0x574a21fe5ea9666dbca804c9d69d8caf21d5322b',
     ];
     // Create a multicall wrapper instance to batch chain RPC calls together
     const multicall = this.appToolkit.getMulticall(network);
