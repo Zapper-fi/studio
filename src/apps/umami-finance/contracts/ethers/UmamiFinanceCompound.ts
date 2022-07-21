@@ -17,7 +17,7 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
 
-export interface UmamiCompoundInterface extends utils.Interface {
+export interface UmamiFinanceCompoundInterface extends utils.Interface {
   functions: {
     'ADMIN_FEE_BIPS()': FunctionFragment;
     'ADMIN_ROLE()': FunctionFragment;
@@ -391,12 +391,12 @@ export type WithdrawEvent = TypedEvent<[string, BigNumber], WithdrawEventObject>
 
 export type WithdrawEventFilter = TypedEventFilter<WithdrawEvent>;
 
-export interface UmamiCompound extends BaseContract {
+export interface UmamiFinanceCompound extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: UmamiCompoundInterface;
+  interface: UmamiFinanceCompoundInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
