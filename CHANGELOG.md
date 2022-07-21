@@ -4,6 +4,42 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.122.1](https://github.com/Zapper-fi/studio/compare/v0.122.0...v0.122.1) (2022-07-21)
+
+
+### Bug Fixes
+
+* **umami-finance:** Rename umami to umami-finance to avoid ad blocker gripes ([#924](https://github.com/Zapper-fi/studio/issues/924)) ([c410456](https://github.com/Zapper-fi/studio/commit/c410456cc128d4afee17fbedd2b2725eafb66de4))
+
+## [0.122.0](https://github.com/Zapper-fi/studio/compare/v0.121.0...v0.122.0) (2022-07-20)
+
+
+### Features
+
+* **apps:** Add labelDetailed display props for nested display name ([#920](https://github.com/Zapper-fi/studio/issues/920)) ([be2629e](https://github.com/Zapper-fi/studio/commit/be2629e3889ae69b5aa46116a3be5a175d14bf74))
+
+## [0.121.0](https://github.com/Zapper-fi/studio/compare/v0.120.0...v0.121.0) (2022-07-20)
+
+
+### Features
+
+* **qi-dao:** Add missing vaults on Polygon ([#918](https://github.com/Zapper-fi/studio/issues/918)) ([e1b3d68](https://github.com/Zapper-fi/studio/commit/e1b3d684f5042485567ebb8e2692bd32618fec31))
+
+## [0.120.0](https://github.com/Zapper-fi/studio/compare/v0.119.0...v0.120.0) (2022-07-20)
+
+
+### Features
+
+* **aura:** Add Aura Finance ([#892](https://github.com/Zapper-fi/studio/issues/892)) ([efa1003](https://github.com/Zapper-fi/studio/commit/efa10034011e1386ee18659f233d4f05901ead1a))
+
+
+### Bug Fixes
+
+* **aura:** Small fixes before shipping to production ([#917](https://github.com/Zapper-fi/studio/issues/917)) ([c21e466](https://github.com/Zapper-fi/studio/commit/c21e466fd195989fc013ef5b201e81155909b672))
+* **bastion:** Fix label typo ([#914](https://github.com/Zapper-fi/studio/issues/914)) ([2f8b2b0](https://github.com/Zapper-fi/studio/commit/2f8b2b0ba7c026d8ce695a0c26dbe0be8d8b7188))
+* **coslend:** Update comptroller address ([#913](https://github.com/Zapper-fi/studio/issues/913)) ([c8edd3e](https://github.com/Zapper-fi/studio/commit/c8edd3e90907521bde8c94abc8ef7797c89d5dfc))
+* **rari-fuse:** Remove market in label, add Aave V2 as a dependency ([#916](https://github.com/Zapper-fi/studio/issues/916)) ([e881657](https://github.com/Zapper-fi/studio/commit/e881657faa2f79083252c166b0d4d0e557ccbd4d))
+
 ## [0.119.0](https://github.com/Zapper-fi/studio/compare/v0.118.1...v0.119.0) (2022-07-20)
 
 
