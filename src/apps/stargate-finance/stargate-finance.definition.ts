@@ -27,6 +27,12 @@ export const STARGATE_FINANCE_DEFINITION = appDefinition({
       type: GroupType.TOKEN,
       label: 'VotedEscrow',
     },
+
+    eth: {
+      id: 'eth',
+      type: GroupType.TOKEN,
+      label: 'Wrapper',
+    },
   },
 
   tags: [AppTag.CROSS_CHAIN],
