@@ -4,19 +4,16 @@ import { Register } from '~app-toolkit/decorators';
 import { BalanceFetcher } from '~balance/balance-fetcher.interface';
 import { Network } from '~types/network.interface';
 
+import { StargateFinanceBalanceHelper } from '../helpers';
 import { STARGATE_FINANCE_DEFINITION } from '../stargate-finance.definition';
-
-import { StargateFinanceBalanceHelper } from '../helpers'
 
 const network = Network.AVALANCHE_MAINNET;
 
 @Register.BalanceFetcher(STARGATE_FINANCE_DEFINITION.id, network)
 export class AvalancheStargateFinanceBalanceFetcher implements BalanceFetcher {
-  constructor(
-    @Inject(StargateFinanceBalanceHelper) private readonly helper: StargateFinanceBalanceHelper,
-  ) { }
+  constructor(@Inject(StargateFinanceBalanceHelper) private readonly helper: StargateFinanceBalanceHelper) {}
 
   async getBalances(address: string) {
-    return this.helper.getBalances({ network, address })
+    return this.helper.getBalances({ network, address });
   }
 }

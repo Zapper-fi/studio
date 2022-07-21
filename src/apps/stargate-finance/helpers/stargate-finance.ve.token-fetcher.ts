@@ -13,7 +13,7 @@ export class StargateFinanceVeTokenHelper {
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(StargateFinanceContractFactory)
     private readonly contractFactory: StargateFinanceContractFactory,
-  ) { }
+  ) {}
 
   async getPositions({ network, address }) {
     return await this.appToolkit.helpers.vaultTokenHelper.getTokens<StargateVe>({

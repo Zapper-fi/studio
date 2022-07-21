@@ -1,7 +1,6 @@
 import { Inject } from '@nestjs/common';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
-
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 
 import { StargateFinanceContractFactory, StargateEth } from '../contracts';
@@ -15,7 +14,7 @@ export class StargateFinanceEthTokenHelper {
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(StargateFinanceContractFactory)
     private readonly contractFactory: StargateFinanceContractFactory,
-  ) { }
+  ) {}
 
   async getPositions({ network, address }) {
     return await this.appToolkit.helpers.vaultTokenHelper.getTokens<StargateEth>({

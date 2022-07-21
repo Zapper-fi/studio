@@ -85,4 +85,4 @@ import { StargateFinanceAppDefinition, STARGATE_FINANCE_DEFINITION } from './sta
     StargateFinanceVeTokenHelper,
   ],
 })
-export class StargateFinanceAppModule extends AbstractApp() { }
+export class StargateFinanceAppModule extends AbstractApp() {}

@@ -13,7 +13,7 @@ export class StargateFinanceFarmHelper {
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(StargateFinanceContractFactory)
     private readonly contractFactory: StargateFinanceContractFactory,
-  ) { }
+  ) {}
 
   async getPositions({ network, address }) {
     return this.appToolkit.helpers.masterChefContractPositionHelper.getContractPositions<StargateFarm>({

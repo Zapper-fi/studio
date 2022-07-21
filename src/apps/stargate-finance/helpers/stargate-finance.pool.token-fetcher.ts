@@ -13,7 +13,7 @@ export class StargateFinancePoolTokenHelper {
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(StargateFinanceContractFactory)
     private readonly contractFactory: StargateFinanceContractFactory,
-  ) { }
+  ) {}
 
   async getPositions({ network, addresses }) {
     return await this.appToolkit.helpers.vaultTokenHelper.getTokens<StargatePool>({
@@ -26,6 +26,6 @@ export class StargateFinancePoolTokenHelper {
       resolveUnderlyingTokenAddress: ({ multicall, contract }) => multicall.wrap(contract).token(),
       resolveReserve: ({ multicall, contract }) => multicall.wrap(contract).totalSupply().then(Number),
       resolvePricePerShare: ({ underlyingToken }) => underlyingToken.price,
-    })
+    });
   }
 }

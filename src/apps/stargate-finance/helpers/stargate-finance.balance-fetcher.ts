@@ -2,8 +2,8 @@ import { Inject } from '@nestjs/common';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
-import { StargateFinanceContractFactory, StargateFarm } from '../contracts';
 
+import { StargateFinanceContractFactory, StargateFarm } from '../contracts';
 import { STARGATE_FINANCE_DEFINITION } from '../stargate-finance.definition';
 
 const appId = STARGATE_FINANCE_DEFINITION.id;
@@ -11,8 +11,8 @@ const appId = STARGATE_FINANCE_DEFINITION.id;
 export class StargateFinanceBalanceHelper {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(StargateFinanceContractFactory) private readonly contractFactory: StargateFinanceContractFactory
-  ) { }
+    @Inject(StargateFinanceContractFactory) private readonly contractFactory: StargateFinanceContractFactory,
+  ) {}
 
   private async getVeBalances({ network, address }) {
     return this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
