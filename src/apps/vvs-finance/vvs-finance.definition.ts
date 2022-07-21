@@ -16,7 +16,7 @@ export const VVS_FINANCE_DEFINITION = appDefinition({
     autoVvsMine: { id: 'auto-vvs-mine', type: GroupType.POSITION, label: 'Auto VVS Mine', groupLabel: 'Mines' },
     mine: { id: 'mine', type: GroupType.POSITION, label: 'Mine', groupLabel: 'Mines' },
     xvvs: { id: 'xvvs', type: GroupType.TOKEN, label: 'xVVS', groupLabel: 'xVVS' },
-    xvvsVault: { id: 'xvvs-vault', type: GroupType.TOKEN, label: 'xVVS Vault', groupLabel: 'xVVS' },
+    xvvsVault: { id: 'xvvs-vault', type: GroupType.POSITION, label: 'xVVS Vault', groupLabel: 'xVVS' },
   },
 
   tags: [AppTag.DECENTRALIZED_EXCHANGE, AppTag.FARMING, AppTag.LIQUIDITY_POOL, AppTag.LIQUID_STAKING],
