@@ -1,20 +1,22 @@
 import { Inject } from '@nestjs/common';
 
-import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
-import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
 import { BalanceFetcher } from '~balance/balance-fetcher.interface';
 import { Network } from '~types/network.interface';
 
 import { STARGATE_FINANCE_DEFINITION } from '../stargate-finance.definition';
 
+import { StargateFinanceBalanceHelper } from '../helpers'
+
 const network = Network.POLYGON_MAINNET;
 
 @Register.BalanceFetcher(STARGATE_FINANCE_DEFINITION.id, network)
 export class PolygonStargateFinanceBalanceFetcher implements BalanceFetcher {
-  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
+  constructor(
+    @Inject(StargateFinanceBalanceHelper) private readonly helper: StargateFinanceBalanceHelper,
+  ) { }
 
   async getBalances(address: string) {
-    return presentBalanceFetcherResponse([]);
+    return this.helper.getBalances({ network, address })
   }
 }
