@@ -18,7 +18,7 @@ export class AuroraBastionProtocolSupplyMainHubTokenFetcher implements PositionF
   constructor(@Inject(BastionSupplyTokenHelper) private readonly bastionSupplyTokenHelper: BastionSupplyTokenHelper) {}
   async getPositions() {
     const tokens = await this.bastionSupplyTokenHelper.getTokens({
-      comptrollerAddress: '0x6De54724e128274520606f038591A00C5E94a1F6',
+      comptrollerAddress: '0x6de54724e128274520606f038591a00c5e94a1f6',
       realmName: 'Main Hub',
       network,
       appId,

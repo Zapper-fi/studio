@@ -13,7 +13,7 @@ import { LIQUITY_DEFINITION } from '../liquity.definition';
 
 const troveManagerAddress = '0xa39739ef8b0231dbfa0dcda07d7e29faabcf4bb2';
 const stabilityPoolAddress = '0x66017d22b0f8556afdd19fc67041899eb65a21bb';
-const stakingAddress = '0x4f9Fbb3f1E99B56e0Fe2892e623Ed36A76Fc605d';
+const stakingAddress = '0x4f9fbb3f1e99b56e0fe2892e623ed36a76fc605d';
 const collateralTokenSymbol = 'ETH';
 const debtTokenSymbol = 'LUSD';
 const govTokenSymbol = 'LQTY';

@@ -12,7 +12,7 @@ import { VELODROME_DEFINITION } from '../velodrome.definition';
 const appId = VELODROME_DEFINITION.id;
 const groupId = VELODROME_DEFINITION.groups.votingEscrow.id;
 const network = Network.OPTIMISM_MAINNET;
-const address = '0x9c7305eb78a432ced5C4D14Cac27E8Ed569A2e26'.toLowerCase();
+const address = '0x9c7305eb78a432ced5c4d14cac27e8ed569a2e26';
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
 export class OptimismVelodromeVotingEscrowContractPositionFetcher implements PositionFetcher<ContractPosition> {
