@@ -18,13 +18,13 @@ const groupId = MAKER_DEFINITION.groups.vault.id;
 const network = Network.ETHEREUM_MAINNET;
 
 export class MakerBProtocolAdapter {
-  private readonly BCDP_MANGER = '0x3f30c2381CD8B917Dd96EB2f1A4F96D91324BBed';
-  private readonly CDP_MANAGER = '0x5ef30b9986345249bc32d8928B7ee64DE9435E39';
-  private readonly GET_CDPS = '0x36a724Bd100c39f0Ea4D3A20F7097eE01A8Ff573';
-  private readonly MCD_VAT = '0x35D1b3F3D7966A1DFe207aa4514C12a259A0492B';
-  private readonly MCD_SPOT = '0x65C79fcB50Ca1594B025960e539eD7A9a6D434A3';
-  private readonly PROXY_REGISTRY = '0x4678f0a6958e4D2Bc4F1BAF7Bc52E8F3564f3fE4';
-  private readonly JAR = '0x3C36cCf03dAB88c1b1AC1eb9C3Fb5dB0b6763cFF';
+  private readonly BCDP_MANGER = '0x3f30c2381cd8b917dd96eb2f1a4f96d91324bbed';
+  private readonly CDP_MANAGER = '0x5ef30b9986345249bc32d8928b7ee64de9435e39';
+  private readonly GET_CDPS = '0x36a724bd100c39f0ea4d3a20f7097ee01a8ff573';
+  private readonly MCD_VAT = '0x35d1b3f3d7966a1dfe207aa4514c12a259a0492b';
+  private readonly MCD_SPOT = '0x65c79fcb50ca1594b025960e539ed7a9a6d434a3';
+  private readonly PROXY_REGISTRY = '0x4678f0a6958e4d2bc4f1baf7bc52e8f3564f3fe4';
+  private readonly JAR = '0x3c36ccf03dab88c1b1ac1eb9c3fb5db0b6763cff';
   private readonly ILKs = [
     {
       name: 'ETH-A',

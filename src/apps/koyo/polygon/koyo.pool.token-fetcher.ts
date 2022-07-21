@@ -26,7 +26,7 @@ export class PolygonKoyoPoolTokenFetcher implements PositionFetcher<AppTokenPosi
       network,
       appId,
       groupId,
-      vaultAddress: '0xACf8489ccb47DA2D7306d827bbEDe05bFA6fea1b',
+      vaultAddress: '0xacf8489ccb47da2d7306d827bbede05bfa6fea1b',
       resolvePoolTokenAddresses: this.theGraphPoolTokenDataStrategy.build({
         subgraphUrl: 'https://api.thegraph.com/subgraphs/name/koyo-finance/exchange-subgraph-matic',
       }),

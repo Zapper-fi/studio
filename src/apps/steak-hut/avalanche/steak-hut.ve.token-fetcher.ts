@@ -15,7 +15,7 @@ const appId = STEAK_HUT_DEFINITION.id;
 const groupId = STEAK_HUT_DEFINITION.groups.ve.id;
 const network = Network.AVALANCHE_MAINNET;
 
-const address = '0xe7250b05bd8DEE615ecC681eda1196aDD5156F2B'.toLowerCase();
+const address = '0xe7250b05bd8dee615ecc681eda1196add5156f2b'.toLowerCase();
 
 // TODO: remove when this becomes a baseToken
 

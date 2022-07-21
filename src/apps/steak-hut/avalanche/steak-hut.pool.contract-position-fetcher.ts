@@ -23,7 +23,7 @@ export class AvalancheSteakHutPoolContractPositionFetcher implements PositionFet
 
   async getPositions() {
     return this.appToolkit.helpers.masterChefContractPositionHelper.getContractPositions<SteakHutPool>({
-      address: '0xddBfBd5dc3BA0FeB96Cb513B689966b2176d4c09'.toLowerCase(),
+      address: '0xddbfbd5dc3ba0feb96cb513b689966b2176d4c09'.toLowerCase(),
       appId,
       groupId,
       network,

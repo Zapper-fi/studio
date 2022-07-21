@@ -29,11 +29,11 @@ export class EthereumAnglePerpetualsContractPositionFetcher implements PositionF
     const baseTokenDependencies = await this.appToolkit.getBaseTokenPrices(network);
 
     const perpetualManagers = [
-      '0xfc8f9eefC5FCe1D9dAcE2B0a11A1e184381787C4',
-      '0x5efE48F8383921d950683C46B87E28e21DEa9FB5',
-      '0x98fDBC5497599eFF830923ea1EE152Adb9a4cEA5',
-      '0x4121a258674e507c990cDF390F74d4EF27592114',
-      '0xB924497a1157B1F8835c93cb7F3d4Aa6D2f227BA',
+      '0xfc8f9eefc5fce1d9dace2b0a11a1e184381787c4',
+      '0x5efe48f8383921d950683c46b87e28e21dea9fb5',
+      '0x98fdbc5497599eff830923ea1ee152adb9a4cea5',
+      '0x4121a258674e507c990cdf390f74d4ef27592114',
+      '0xb924497a1157b1f8835c93cb7f3d4aa6d2f227ba',
     ];
 
     const perps = await Promise.all(

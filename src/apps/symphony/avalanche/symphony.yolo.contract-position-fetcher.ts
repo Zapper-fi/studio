@@ -19,7 +19,7 @@ import { SYMPHONY_DEFINITION } from '../symphony.definition';
 const appId = SYMPHONY_DEFINITION.id;
 const groupId = SYMPHONY_DEFINITION.groups.yolo.id;
 const network = Network.AVALANCHE_MAINNET;
-const YOLO_ADDRESS = '0x44f91814c5c766E0762C8C23d65759F631c0ABBD';
+const YOLO_ADDRESS = '0x44f91814c5c766e0762c8c23d65759f631c0abbd';
 const TOKENLIST_URL = 'https://raw.githubusercontent.com/symphony-finance/token-list/master/symphony.tokenlist.json';
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
