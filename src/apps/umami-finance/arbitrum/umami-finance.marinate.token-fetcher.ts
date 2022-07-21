@@ -14,31 +14,27 @@ import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
-import { UmamiContractFactory } from '../contracts';
-import { UMAMI_DEFINITION } from '../umami.definition';
+import { UmamiFinanceContractFactory } from '../contracts';
+import { UMAMI_FINANCE_DEFINITION } from '../umami-finance.definition';
 
-const appId = UMAMI_DEFINITION.id;
-const groupId = UMAMI_DEFINITION.groups.compound.id;
+const appId = UMAMI_FINANCE_DEFINITION.id;
+const groupId = UMAMI_FINANCE_DEFINITION.groups.marinate.id;
 const network = Network.ARBITRUM_MAINNET;
 
 type UmamiMarinateApiObject = {
-  apy: string;
-};
-
-type UmamiCompounderApiObject = {
-  tvl: number;
+  apr: string;
+  marinateTVL: string;
 };
 
 export type UmamiApiDatas = {
   marinate: UmamiMarinateApiObject;
-  mUmamiCompounder: UmamiCompounderApiObject;
 };
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
-export class ArbitrumUmamiCompoundTokenFetcher implements PositionFetcher<AppTokenPosition> {
+export class ArbitrumUmamiMarinateTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(UmamiContractFactory) private readonly umamiContractFactory: UmamiContractFactory,
+    @Inject(UmamiFinanceContractFactory) private readonly contractFactory: UmamiFinanceContractFactory,
   ) {}
 
   @CacheOnInterval({
@@ -49,49 +45,40 @@ export class ArbitrumUmamiCompoundTokenFetcher implements PositionFetcher<AppTok
     const data = await axios.get<UmamiApiDatas>('https://horseysauce.xyz/').then(v => v.data);
 
     const { marinate } = data;
-    const { apy } = marinate;
-    return apy;
+    const { apr } = marinate;
+
+    return apr;
   }
 
   async getPositions() {
-    const mUMAMI_ADDRESS = '0x2adabd6e8ce3e82f52d9998a7f64a90d294a92a4';
-    const cmUMAMI_ADDRESS = '0x1922c36f3bc762ca300b4a46bb2102f84b1684ab';
+    const UMAMI_ADDRESS = '0x1622bF67e6e5747b81866fE0b85178a93C7F86e3'.toLowerCase();
+    const M_UMAMI_ADDRESS = '0x2AdAbD6E8Ce3e82f52d9998a7f64a90d294A92A4'.toLowerCase();
     const multicall = this.appToolkit.getMulticall(network);
 
-    const underlyingTokenContract = this.umamiContractFactory.umamiMarinate({
-      address: mUMAMI_ADDRESS,
-      network,
-    });
-    const contract = this.umamiContractFactory.umamiCompound({
-      address: cmUMAMI_ADDRESS,
+    const contract = this.contractFactory.umamiFinanceMarinate({
+      address: M_UMAMI_ADDRESS,
       network,
     });
 
-    const appTokens = await this.appToolkit.getAppTokenPositions({
-      appId: UMAMI_DEFINITION.id,
-      groupIds: [UMAMI_DEFINITION.groups.marinate.id],
-      network,
-    });
-
-    const [symbol, decimals, supplyRaw, balanceRaw] = await Promise.all([
+    const [symbol, decimals, supplyRaw] = await Promise.all([
       multicall.wrap(contract).symbol(),
       multicall.wrap(contract).decimals(),
       multicall.wrap(contract).totalSupply(),
-      multicall.wrap(underlyingTokenContract).balanceOf(cmUMAMI_ADDRESS),
     ]);
+    const supply = Number(supplyRaw) / 10 ** decimals;
 
-    const underlyingToken = appTokens.find(v => v.address === mUMAMI_ADDRESS);
+    const baseTokenDependencies = await this.appToolkit.getBaseTokenPrices(network);
+    const underlyingToken = baseTokenDependencies.find(v => v.address === UMAMI_ADDRESS);
     if (!underlyingToken) return [];
 
-    const apy = await this.getUmamiInformations();
+    const aprRaw = await this.getUmamiInformations();
+    const apr = Number(aprRaw);
 
-    const supply = Number(supplyRaw) / 10 ** decimals;
-    const reserve = Number(balanceRaw) / 10 ** decimals;
-    const pricePerShare = reserve / supply;
+    const tokens = [underlyingToken];
+    const pricePerShare = 1.0;
     const price = pricePerShare * underlyingToken.price;
     const liquidity = supply * price;
-    const tokens = [underlyingToken];
-    const label = `Compounding Marinating UMAMI`;
+    const label = `Marinating UMAMI`;
     const images = getImagesFromToken(underlyingToken);
     const secondaryLabel = buildDollarDisplayItem(price);
 
@@ -101,8 +88,8 @@ export class ArbitrumUmamiCompoundTokenFetcher implements PositionFetcher<AppTok
         value: buildDollarDisplayItem(liquidity),
       },
       {
-        label: 'APY',
-        value: buildPercentageDisplayItem(parseFloat(apy)),
+        label: 'APR',
+        value: buildPercentageDisplayItem(apr),
       },
     ];
 
@@ -110,7 +97,7 @@ export class ArbitrumUmamiCompoundTokenFetcher implements PositionFetcher<AppTok
       type: ContractType.APP_TOKEN,
       appId,
       groupId,
-      address: cmUMAMI_ADDRESS,
+      address: M_UMAMI_ADDRESS,
       network,
       symbol,
       decimals,

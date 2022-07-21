@@ -17,7 +17,7 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
 
-export interface UmamiMarinateInterface extends utils.Interface {
+export interface UmamiFinanceMarinateInterface extends utils.Interface {
   functions: {
     'ADMIN_ROLE()': FunctionFragment;
     'BASE()': FunctionFragment;
@@ -477,12 +477,12 @@ export type WithdrawMultiplierEvent = TypedEvent<[string, string, BigNumber, Big
 
 export type WithdrawMultiplierEventFilter = TypedEventFilter<WithdrawMultiplierEvent>;
 
-export interface UmamiMarinate extends BaseContract {
+export interface UmamiFinanceMarinate extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: UmamiMarinateInterface;
+  interface: UmamiFinanceMarinateInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

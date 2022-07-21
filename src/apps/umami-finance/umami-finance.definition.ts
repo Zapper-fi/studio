@@ -3,8 +3,8 @@ import { appDefinition, AppDefinition } from '~app/app.definition';
 import { AppAction, AppTag, GroupType } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
-export const UMAMI_DEFINITION = appDefinition({
-  id: 'umami',
+export const UMAMI_FINANCE_DEFINITION = appDefinition({
+  id: 'umami-finance',
   name: 'Umami Finance',
   description:
     'Umami’s expanding menu of strategy vaults and staking options offers sustainable, risk-hedged passive income in WETH and USDC sourced from across Arbitrum’s DeFi ecosystem.',
@@ -41,11 +41,11 @@ export const UMAMI_DEFINITION = appDefinition({
   primaryColor: '#fff',
 });
 
-@Register.AppDefinition(UMAMI_DEFINITION.id)
-export class UmamiAppDefinition extends AppDefinition {
+@Register.AppDefinition(UMAMI_FINANCE_DEFINITION.id)
+export class UmamiFinanceAppDefinition extends AppDefinition {
   constructor() {
-    super(UMAMI_DEFINITION);
+    super(UMAMI_FINANCE_DEFINITION);
   }
 }
 
-export default UMAMI_DEFINITION;
+export default UMAMI_FINANCE_DEFINITION;
