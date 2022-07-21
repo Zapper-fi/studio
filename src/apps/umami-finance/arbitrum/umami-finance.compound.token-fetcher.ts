@@ -43,14 +43,15 @@ export class ArbitrumUmamiFinanceCompoundTokenFetcher implements PositionFetcher
 
   @CacheOnInterval({
     key: `studio:${network}:${appId}:${groupId}:informations`,
-    timeout: 15 * 60 * 1000,
+    timeout: 5 * 60 * 1000,
   })
   async getUmamiInformations() {
-    const data = await axios.get<UmamiApiDatas>('https://horseysauce.xyz/').then(v => v.data);
-
-    const { marinate } = data;
-    const { apy } = marinate;
-    return apy;
+    try {
+      const data = await axios.get<UmamiApiDatas>('https://horseysauce.xyz/').then(v => v.data);
+      return parseFloat(data.marinate.apy);
+    } catch (err) {
+      return 0;
+    }
   }
 
   async getPositions() {
@@ -84,7 +85,6 @@ export class ArbitrumUmamiFinanceCompoundTokenFetcher implements PositionFetcher
     if (!underlyingToken) return [];
 
     const apy = await this.getUmamiInformations();
-
     const supply = Number(supplyRaw) / 10 ** decimals;
     const reserve = Number(balanceRaw) / 10 ** decimals;
     const pricePerShare = reserve / supply;
@@ -102,7 +102,7 @@ export class ArbitrumUmamiFinanceCompoundTokenFetcher implements PositionFetcher
       },
       {
         label: 'APY',
-        value: buildPercentageDisplayItem(parseFloat(apy)),
+        value: buildPercentageDisplayItem(apy),
       },
     ];
 

@@ -39,15 +39,15 @@ export class ArbitrumUmamiMarinateTokenFetcher implements PositionFetcher<AppTok
 
   @CacheOnInterval({
     key: `studio:${network}:${appId}:${groupId}:informations`,
-    timeout: 15 * 60 * 1000,
+    timeout: 5 * 60 * 1000,
   })
   async getUmamiInformations() {
-    const data = await axios.get<UmamiApiDatas>('https://horseysauce.xyz/').then(v => v.data);
-
-    const { marinate } = data;
-    const { apr } = marinate;
-
-    return apr;
+    try {
+      const data = await axios.get<UmamiApiDatas>('https://horseysauce.xyz/').then(v => v.data);
+      return Number(data.marinate.apr);
+    } catch (err) {
+      return 0;
+    }
   }
 
   async getPositions() {
@@ -71,9 +71,7 @@ export class ArbitrumUmamiMarinateTokenFetcher implements PositionFetcher<AppTok
     const underlyingToken = baseTokenDependencies.find(v => v.address === UMAMI_ADDRESS);
     if (!underlyingToken) return [];
 
-    const aprRaw = await this.getUmamiInformations();
-    const apr = Number(aprRaw);
-
+    const apr = await this.getUmamiInformations();
     const tokens = [underlyingToken];
     const pricePerShare = 1.0;
     const price = pricePerShare * underlyingToken.price;
