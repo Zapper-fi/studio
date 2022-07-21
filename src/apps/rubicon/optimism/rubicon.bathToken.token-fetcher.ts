@@ -1,8 +1,11 @@
 import { Inject } from '@nestjs/common';
 import { BigNumber } from 'ethers/lib/ethers';
+import _ from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
+import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
+import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
@@ -28,13 +31,13 @@ export class OptimismRubiconBathTokenTokenFetcher implements PositionFetcher<App
   async getPositions() {
     // For now, hardcoded in docs
     const bathTokens = [
-      '0xB0bE5d911E3BD4Ee2A8706cF1fAc8d767A550497',
-      '0x7571CC9895D8E997853B1e0A1521eBd8481aa186',
-      '0xe0e112e8f33d3f437D1F895cbb1A456836125952',
-      '0x60daEC2Fc9d2e0de0577A5C708BcaDBA1458A833',
-      '0xfFBD695bf246c514110f5DAe3Fa88B8c2f42c411',
-      '0xeb5F29AfaaA3f44eca8559c3e8173003060e919f',
-      '0x574a21fE5ea9666DbCA804C9d69d8Caf21d5322b',
+      '0xB0bE5d911E3BD4Ee2A8706cF1fAc8d767A550497'.toLowerCase(),
+      '0x7571CC9895D8E997853B1e0A1521eBd8481aa186'.toLowerCase(),
+      '0xe0e112e8f33d3f437D1F895cbb1A456836125952'.toLowerCase(),
+      '0x60daEC2Fc9d2e0de0577A5C708BcaDBA1458A833'.toLowerCase(),
+      '0xfFBD695bf246c514110f5DAe3Fa88B8c2f42c411'.toLowerCase(),
+      '0xeb5F29AfaaA3f44eca8559c3e8173003060e919f'.toLowerCase(),
+      '0x574a21fE5ea9666DbCA804C9d69d8Caf21d5322b'.toLowerCase(),
     ];
     // Create a multicall wrapper instance to batch chain RPC calls together
     const multicall = this.appToolkit.getMulticall(network);
@@ -43,16 +46,15 @@ export class OptimismRubiconBathTokenTokenFetcher implements PositionFetcher<App
 
     const allTokenDependencies = [...appTokenDependencies];
 
-    // We will build a token object for each jar address, using data retrieved on-chain with Ethers
     const tokens = await Promise.all(
       bathTokens.map(async btAddress => {
-        // Instantiate a smart contract instance pointing to the jar token address
+        // Instantiate a smart contract instance pointing to the Bath Token address
         const contract = this.rubiconContractFactory.bathToken({
           address: btAddress,
           network,
         });
 
-        // Request the symbol, decimals, ands supply for the jar token
+        // Request the symbol, decimals, ands supply for the Bath Token
         const [symbol, decimals, supplyRaw] = await Promise.all([
           multicall.wrap(contract).symbol(),
           multicall.wrap(contract).decimals(),
@@ -63,9 +65,9 @@ export class OptimismRubiconBathTokenTokenFetcher implements PositionFetcher<App
         const supply = Number(supplyRaw) / 10 ** decimals;
 
         // *******price ************
-        // A user can deposit base tokens like LOOKS or LQTY
+        // A user can deposit base tokens like WETH or USDC
 
-        // Request the underlying token address and ratio for the jar token
+        // Request the underlying token address and ratio for the Bath Token
         const [underlyingTokenAddressRaw, ratioRaw] = await Promise.all([
           multicall
             .wrap(contract)
@@ -76,11 +78,10 @@ export class OptimismRubiconBathTokenTokenFetcher implements PositionFetcher<App
             .convertToAssets(BigNumber.from((1e18).toString()))
             .catch(() => 'Convert to assets failed'),
         ]);
-        // console.log('underlyingTokenAddressRaw', underlyingTokenAddressRaw, 'ratioRaw', ratioRaw.toString());
 
         // Find the underlying token in our dependencies.
         // Note: If it is not found, then we have not indexed the underlying token, and we cannot
-        // index the jar token since its price depends on the underlying token price.
+        // index the Bath Token since its price depends on the underlying token price.
         const underlyingTokenAddress = underlyingTokenAddressRaw.toLowerCase();
         const underlyingToken = allTokenDependencies.find(v => v.address === underlyingTokenAddress);
         if (!underlyingToken) {
@@ -93,6 +94,13 @@ export class OptimismRubiconBathTokenTokenFetcher implements PositionFetcher<App
         // Denormalize the price per share
         const pricePerShare = Number(ratioRaw) / 10 ** 18;
         const price = pricePerShare * underlyingToken.price;
+
+        // As a label, we'll use the underlying label (i.e.: 'WETH' or 'UNI-V2 WETH / ETH'), and suffix it with 'Jar'
+        const label = `bath${getLabelFromToken(underlyingToken)}`;
+        // For images, we'll use the underlying token images as well
+        const images = getImagesFromToken(underlyingToken);
+        // For the secondary label, we'll use the price of the Bath Token
+        const secondaryLabel = buildDollarDisplayItem(price);
 
         // Create the token object
         const token: AppTokenPosition = {
@@ -107,11 +115,11 @@ export class OptimismRubiconBathTokenTokenFetcher implements PositionFetcher<App
           tokens,
           price,
           pricePerShare,
-          // TODO: add any data props here
           dataProps: {},
           displayProps: {
-            label: '',
-            images: [],
+            label,
+            images,
+            secondaryLabel,
           },
         };
 
@@ -119,6 +127,6 @@ export class OptimismRubiconBathTokenTokenFetcher implements PositionFetcher<App
       }),
     );
 
-    return tokens;
+    return _.compact(tokens);
   }
 }
