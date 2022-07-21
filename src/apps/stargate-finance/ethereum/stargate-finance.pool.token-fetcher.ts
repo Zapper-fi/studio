@@ -1,13 +1,13 @@
 import { Inject } from '@nestjs/common';
 
-import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
-import { StargateFinanceContractFactory, StargatePool } from '../contracts';
 import { STARGATE_FINANCE_DEFINITION } from '../stargate-finance.definition';
+
+import { StargateFinancePoolTokenHelper } from '../helpers'
 
 const appId = STARGATE_FINANCE_DEFINITION.id;
 const groupId = STARGATE_FINANCE_DEFINITION.groups.pool.id;
@@ -22,22 +22,11 @@ const addresses = [
 @Register.TokenPositionFetcher({ appId, groupId, network })
 export class EthereumStargateFinancePoolTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(StargateFinanceContractFactory)
-    private readonly contractFactory: StargateFinanceContractFactory,
+    @Inject(StargateFinancePoolTokenHelper)
+    private readonly helper: StargateFinancePoolTokenHelper,
   ) { }
 
   async getPositions() {
-    return await this.appToolkit.helpers.vaultTokenHelper.getTokens<StargatePool>({
-      appId,
-      groupId,
-      network,
-      dependencies: [{ appId, groupIds: [STARGATE_FINANCE_DEFINITION.groups.eth.id], network }],
-      resolveVaultAddresses: () => addresses.map(x => x.toLowerCase()),
-      resolveContract: ({ address, network }) => this.contractFactory.stargatePool({ address, network }),
-      resolveUnderlyingTokenAddress: ({ multicall, contract }) => multicall.wrap(contract).token(),
-      resolveReserve: ({ multicall, contract }) => multicall.wrap(contract).totalSupply().then(Number),
-      resolvePricePerShare: ({ underlyingToken }) => underlyingToken.price,
-    })
+    return await this.helper.getPositions({ network, addresses })
   }
 }

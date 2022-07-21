@@ -8,10 +8,22 @@ import { EthereumStargateFinanceFarmContractPositionFetcher } from './ethereum/s
 import { EthereumStargateFinancePoolTokenFetcher } from './ethereum/stargate-finance.pool.token-fetcher';
 import { EthereumStargateFinanceVeTokenFetcher } from './ethereum/stargate-finance.ve.token-fetcher';
 import { StargateFinanceAppDefinition, STARGATE_FINANCE_DEFINITION } from './stargate-finance.definition';
+import {
+  StargateFinanceBalanceHelper,
+  StargateFinanceEthTokenHelper,
+  StargateFinanceFarmHelper,
+  StargateFinancePoolTokenHelper,
+  StargateFinanceVeTokenHelper
+} from './helpers'
 
 @Register.AppModule({
   appId: STARGATE_FINANCE_DEFINITION.id,
   providers: [
+    StargateFinanceBalanceHelper,
+    StargateFinanceEthTokenHelper,
+    StargateFinanceFarmHelper,
+    StargateFinancePoolTokenHelper,
+    StargateFinanceVeTokenHelper,
     EthereumStargateFinanceBalanceFetcher,
     EthereumStargateFinanceEthTokenFetcher,
     EthereumStargateFinanceFarmContractPositionFetcher,
@@ -21,4 +33,4 @@ import { StargateFinanceAppDefinition, STARGATE_FINANCE_DEFINITION } from './sta
     StargateFinanceContractFactory,
   ],
 })
-export class StargateFinanceAppModule extends AbstractApp() {}
+export class StargateFinanceAppModule extends AbstractApp() { }
