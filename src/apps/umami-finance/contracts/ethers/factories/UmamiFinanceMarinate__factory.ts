@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { UmamiMarinate, UmamiMarinateInterface } from '../UmamiMarinate';
+import type { UmamiFinanceMarinate, UmamiFinanceMarinateInterface } from '../UmamiFinanceMarinate';
 
 const _abi = [
   {
@@ -1572,12 +1572,12 @@ const _abi = [
   },
 ];
 
-export class UmamiMarinate__factory {
+export class UmamiFinanceMarinate__factory {
   static readonly abi = _abi;
-  static createInterface(): UmamiMarinateInterface {
-    return new utils.Interface(_abi) as UmamiMarinateInterface;
+  static createInterface(): UmamiFinanceMarinateInterface {
+    return new utils.Interface(_abi) as UmamiFinanceMarinateInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): UmamiMarinate {
-    return new Contract(address, _abi, signerOrProvider) as UmamiMarinate;
+  static connect(address: string, signerOrProvider: Signer | Provider): UmamiFinanceMarinate {
+    return new Contract(address, _abi, signerOrProvider) as UmamiFinanceMarinate;
   }
 }

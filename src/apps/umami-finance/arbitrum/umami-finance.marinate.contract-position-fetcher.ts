@@ -10,31 +10,30 @@ import { ContractPosition } from '~position/position.interface';
 import { claimable, supplied } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 
-import { UMAMI_DEFINITION } from '../umami.definition';
+import { UMAMI_FINANCE_DEFINITION } from '../umami-finance.definition';
 
-const appId = UMAMI_DEFINITION.id;
-const groupId = UMAMI_DEFINITION.groups.marinate.id;
+const appId = UMAMI_FINANCE_DEFINITION.id;
+const groupId = UMAMI_FINANCE_DEFINITION.groups.marinate.id;
 const network = Network.ARBITRUM_MAINNET;
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
-export class ArbitrumUmamiMarinateContractPositionFetcher implements PositionFetcher<ContractPosition> {
+export class ArbitrumUmamiFinanceMarinateContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
   async getPositions() {
-    const wETH_ADDRESS = '0x82af49447d8a07e3bd95bd0d56f35241523fbab1';
-    const mUMAMI_ADDRESS = '0x2adabd6e8ce3e82f52d9998a7f64a90d294a92a4';
+    const WETH_ADDRESS = '0x82af49447d8a07e3bd95bd0d56f35241523fbab1';
+    const M_UMAMI_ADDRESS = '0x2adabd6e8ce3e82f52d9998a7f64a90d294a92a4';
 
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
     const appTokens = await this.appToolkit.getAppTokenPositions({
-      appId: UMAMI_DEFINITION.id,
-      groupIds: [UMAMI_DEFINITION.groups.marinate.id],
+      appId: UMAMI_FINANCE_DEFINITION.id,
+      groupIds: [UMAMI_FINANCE_DEFINITION.groups.marinate.id],
       network,
     });
 
     const allTokens = [...baseTokens, ...appTokens];
-    const stakedToken = allTokens.find(v => v.address === mUMAMI_ADDRESS);
-    const rewardToken = allTokens.find(v => v.address === wETH_ADDRESS);
-
+    const stakedToken = allTokens.find(v => v.address === M_UMAMI_ADDRESS);
+    const rewardToken = allTokens.find(v => v.address === WETH_ADDRESS);
     if (!stakedToken || !rewardToken) return [];
 
     const tokens = [supplied(stakedToken), claimable(rewardToken)];
@@ -46,7 +45,7 @@ export class ArbitrumUmamiMarinateContractPositionFetcher implements PositionFet
       type: ContractType.POSITION,
       appId,
       groupId,
-      address: mUMAMI_ADDRESS,
+      address: M_UMAMI_ADDRESS,
       network,
       tokens,
       displayProps: {

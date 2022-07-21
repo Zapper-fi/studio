@@ -14,11 +14,11 @@ import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
-import { UmamiContractFactory } from '../contracts';
-import { UMAMI_DEFINITION } from '../umami.definition';
+import { UmamiFinanceContractFactory } from '../contracts';
+import { UMAMI_FINANCE_DEFINITION } from '../umami-finance.definition';
 
-const appId = UMAMI_DEFINITION.id;
-const groupId = UMAMI_DEFINITION.groups.compound.id;
+const appId = UMAMI_FINANCE_DEFINITION.id;
+const groupId = UMAMI_FINANCE_DEFINITION.groups.compound.id;
 const network = Network.ARBITRUM_MAINNET;
 
 type UmamiMarinateApiObject = {
@@ -35,41 +35,42 @@ export type UmamiApiDatas = {
 };
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
-export class ArbitrumUmamiCompoundTokenFetcher implements PositionFetcher<AppTokenPosition> {
+export class ArbitrumUmamiFinanceCompoundTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(UmamiContractFactory) private readonly umamiContractFactory: UmamiContractFactory,
+    @Inject(UmamiFinanceContractFactory) private readonly contractFactory: UmamiFinanceContractFactory,
   ) {}
 
   @CacheOnInterval({
     key: `studio:${network}:${appId}:${groupId}:informations`,
-    timeout: 15 * 60 * 1000,
+    timeout: 5 * 60 * 1000,
   })
   async getUmamiInformations() {
-    const data = await axios.get<UmamiApiDatas>('https://horseysauce.xyz/').then(v => v.data);
-
-    const { marinate } = data;
-    const { apy } = marinate;
-    return apy;
+    try {
+      const data = await axios.get<UmamiApiDatas>('https://horseysauce.xyz/').then(v => v.data);
+      return parseFloat(data.marinate.apy);
+    } catch (err) {
+      return 0;
+    }
   }
 
   async getPositions() {
-    const mUMAMI_ADDRESS = '0x2adabd6e8ce3e82f52d9998a7f64a90d294a92a4';
-    const cmUMAMI_ADDRESS = '0x1922c36f3bc762ca300b4a46bb2102f84b1684ab';
+    const M_UMAMI_ADDESS = '0x2adabd6e8ce3e82f52d9998a7f64a90d294a92a4';
+    const CM_UMAMI_ADDRESS = '0x1922c36f3bc762ca300b4a46bb2102f84b1684ab';
     const multicall = this.appToolkit.getMulticall(network);
 
-    const underlyingTokenContract = this.umamiContractFactory.umamiMarinate({
-      address: mUMAMI_ADDRESS,
+    const underlyingTokenContract = this.contractFactory.umamiFinanceMarinate({
+      address: M_UMAMI_ADDESS,
       network,
     });
-    const contract = this.umamiContractFactory.umamiCompound({
-      address: cmUMAMI_ADDRESS,
+    const contract = this.contractFactory.umamiFinanceCompound({
+      address: CM_UMAMI_ADDRESS,
       network,
     });
 
     const appTokens = await this.appToolkit.getAppTokenPositions({
-      appId: UMAMI_DEFINITION.id,
-      groupIds: [UMAMI_DEFINITION.groups.marinate.id],
+      appId: UMAMI_FINANCE_DEFINITION.id,
+      groupIds: [UMAMI_FINANCE_DEFINITION.groups.marinate.id],
       network,
     });
 
@@ -77,14 +78,13 @@ export class ArbitrumUmamiCompoundTokenFetcher implements PositionFetcher<AppTok
       multicall.wrap(contract).symbol(),
       multicall.wrap(contract).decimals(),
       multicall.wrap(contract).totalSupply(),
-      multicall.wrap(underlyingTokenContract).balanceOf(cmUMAMI_ADDRESS),
+      multicall.wrap(underlyingTokenContract).balanceOf(CM_UMAMI_ADDRESS),
     ]);
 
-    const underlyingToken = appTokens.find(v => v.address === mUMAMI_ADDRESS);
+    const underlyingToken = appTokens.find(v => v.address === M_UMAMI_ADDESS);
     if (!underlyingToken) return [];
 
     const apy = await this.getUmamiInformations();
-
     const supply = Number(supplyRaw) / 10 ** decimals;
     const reserve = Number(balanceRaw) / 10 ** decimals;
     const pricePerShare = reserve / supply;
@@ -102,7 +102,7 @@ export class ArbitrumUmamiCompoundTokenFetcher implements PositionFetcher<AppTok
       },
       {
         label: 'APY',
-        value: buildPercentageDisplayItem(parseFloat(apy)),
+        value: buildPercentageDisplayItem(apy),
       },
     ];
 
@@ -110,7 +110,7 @@ export class ArbitrumUmamiCompoundTokenFetcher implements PositionFetcher<AppTok
       type: ContractType.APP_TOKEN,
       appId,
       groupId,
-      address: cmUMAMI_ADDRESS,
+      address: CM_UMAMI_ADDRESS,
       network,
       symbol,
       decimals,
