@@ -13,8 +13,8 @@ import { BancorV3ContractFactory, BntPool, PoolCollection, PoolToken } from '../
 const appId = BANCOR_V3_DEFINITION.id;
 const groupId = BANCOR_V3_DEFINITION.groups.pool.id;
 const network = Network.ETHEREUM_MAINNET;
-const bancorAddress = '0xeef417e1d5cc832e619ae18d2f140de2999dd4fb'.toLowerCase();
-const bntPoolAddress = '0x02651e355d26f3506c1e644ba393fdd9ac95eaca'.toLowerCase();
+const bancorAddress = '0xeef417e1d5cc832e619ae18d2f140de2999dd4fb';
+const bntPoolAddress = '0x02651e355d26f3506c1e644ba393fdd9ac95eaca';
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
 export class EthereumBancorV3TokenFetcher implements PositionFetcher<AppTokenPosition> {

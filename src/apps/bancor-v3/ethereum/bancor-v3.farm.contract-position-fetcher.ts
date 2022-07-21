@@ -12,7 +12,7 @@ import { BancorV3ContractFactory, StandardRewards } from '../contracts';
 const appId = BANCOR_V3_DEFINITION.id;
 const groupId = BANCOR_V3_DEFINITION.groups.farm.id;
 const network = Network.ETHEREUM_MAINNET;
-const address = '0xb0b958398abb0b5db4ce4d7598fb868f5a00f372'.toLowerCase();
+const address = '0xb0b958398abb0b5db4ce4d7598fb868f5a00f372';
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
 export class EthereumBancorV3ContractPositionFetcher implements PositionFetcher<ContractPosition> {

@@ -41,11 +41,11 @@ export class AvalancheSteakHutStakingContractPositionFetcher implements Position
   }
 
   async getHJoePositions() {
-    return this.getSingleStakingPosition('0x4e664284b7fbd10633768d59c17d959d9cb8dee2'.toLowerCase());
+    return this.getSingleStakingPosition('0x4e664284b7fbd10633768d59c17d959d9cb8dee2');
   }
 
   async getSteakPosition() {
-    return this.getSingleStakingPosition('0x1f6866e1a684247886545503f8e6e76e328ade34'.toLowerCase());
+    return this.getSingleStakingPosition('0x1f6866e1a684247886545503f8e6e76e328ade34');
   }
 
   async getPositions() {
