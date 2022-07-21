@@ -18,7 +18,7 @@ export class AuroraBastionProtocolSupplyStakedNearTokenFetcher implements Positi
   constructor(@Inject(BastionSupplyTokenHelper) private readonly bastionSupplyTokenHelper: BastionSupplyTokenHelper) {}
   async getPositions() {
     const tokens = await this.bastionSupplyTokenHelper.getTokens({
-      comptrollerAddress: '0xE550A886716241AFB7ee276e647207D7667e1E79',
+      comptrollerAddress: '0xe550a886716241afb7ee276e647207d7667e1e79',
       realmName: 'Staked Near',
       network,
       appId,

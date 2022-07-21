@@ -18,7 +18,7 @@ export class AuroraBastionProtocolSupplyAuroraEcosystemTokenFetcher implements P
   constructor(@Inject(BastionSupplyTokenHelper) private readonly bastionSupplyTokenHelper: BastionSupplyTokenHelper) {}
   async getPositions() {
     const tokens = await this.bastionSupplyTokenHelper.getTokens({
-      comptrollerAddress: '0xe1cf09BDa2e089c63330F0Ffe3F6D6b790835973',
+      comptrollerAddress: '0xe1cf09bda2e089c63330f0ffe3f6d6b790835973',
       realmName: 'Aurora Ecosystem',
       network,
       appId,

@@ -100,12 +100,12 @@ export class PolygonQiDaoVaultPositionFetcher
           vaultInfoAddress: '0xff2c44fb819757225a176e825255a01b3b8bb051',
         },
         {
-          nftAddress: '0x7CbF49E4214C7200AF986bc4aACF7bc79dd9C19a', // Celsius X Doge (cxDoge)
-          vaultInfoAddress: '0x7CbF49E4214C7200AF986bc4aACF7bc79dd9C19a',
+          nftAddress: '0x7cbf49e4214c7200af986bc4aacf7bc79dd9c19a', // Celsius X Doge (cxDoge)
+          vaultInfoAddress: '0x7cbf49e4214c7200af986bc4aacf7bc79dd9c19a',
         },
         {
-          nftAddress: '0x506533B9C16eE2472A6BF37cc320aE45a0a24F11', // Celsius X ADA (cxADA)
-          vaultInfoAddress: '0x506533B9C16eE2472A6BF37cc320aE45a0a24F11',
+          nftAddress: '0x506533b9c16ee2472a6bf37cc320ae45a0a24f11', // Celsius X ADA (cxADA)
+          vaultInfoAddress: '0x506533b9c16ee2472a6bf37cc320ae45a0a24f11',
         },
         {
           nftAddress: '0x7d36999a69f2b99bf3fb98866cbbe47af43696c8', // Celsius X WETH (cxWETH)

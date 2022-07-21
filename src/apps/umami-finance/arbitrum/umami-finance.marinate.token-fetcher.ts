@@ -51,8 +51,8 @@ export class ArbitrumUmamiMarinateTokenFetcher implements PositionFetcher<AppTok
   }
 
   async getPositions() {
-    const UMAMI_ADDRESS = '0x1622bF67e6e5747b81866fE0b85178a93C7F86e3'.toLowerCase();
-    const M_UMAMI_ADDRESS = '0x2AdAbD6E8Ce3e82f52d9998a7f64a90d294A92A4'.toLowerCase();
+    const UMAMI_ADDRESS = '0x1622bf67e6e5747b81866fe0b85178a93c7f86e3';
+    const M_UMAMI_ADDRESS = '0x2adabd6e8ce3e82f52d9998a7f64a90d294a92a4';
     const multicall = this.appToolkit.getMulticall(network);
 
     const contract = this.contractFactory.umamiFinanceMarinate({

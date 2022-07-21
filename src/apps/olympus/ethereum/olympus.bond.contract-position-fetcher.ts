@@ -20,7 +20,7 @@ export class EthereumOlympusBondContractPositionFetcher implements PositionFetch
   ) {}
   async getPositions(): Promise<ContractPosition[]> {
     const network = Network.ETHEREUM_MAINNET;
-    const depositories = [{ depositoryAddress: '0x9025046c6fb25Fb39e720d97a8FD881ED69a1Ef6', symbol: 'gOHM' }];
+    const depositories = [{ depositoryAddress: '0x9025046c6fb25fb39e720d97a8fd881ed69a1ef6', symbol: 'gOHM' }];
 
     return this.olympusContractPositionHelper.getPositions({
       appId: OLYMPUS_DEFINITION.id,

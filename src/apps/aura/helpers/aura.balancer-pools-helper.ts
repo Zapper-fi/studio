@@ -132,7 +132,7 @@ export class AuraBalancerPoolsHelper {
     const { id, tokens } = balancerPool;
 
     const balancerHelpers = this.auraContractFactory.auraBalancerHelpers({
-      address: '0x5aDDCCa35b7A0D07C74063c48700C8590E87864E',
+      address: '0x5addcca35b7a0d07c74063c48700c8590e87864e',
       network,
     });
 
