@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.122.1](https://github.com/Zapper-fi/studio/compare/v0.122.0...v0.122.1) (2022-07-21)
+
+
+### Bug Fixes
+
+* **umami-finance:** Rename umami to umami-finance to avoid ad blocker gripes ([#924](https://github.com/Zapper-fi/studio/issues/924)) ([c410456](https://github.com/Zapper-fi/studio/commit/c410456cc128d4afee17fbedd2b2725eafb66de4))
+
 ## [0.122.0](https://github.com/Zapper-fi/studio/compare/v0.121.0...v0.122.0) (2022-07-20)
 
 
