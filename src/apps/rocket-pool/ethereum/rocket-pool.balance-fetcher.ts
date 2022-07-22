@@ -24,10 +24,6 @@ export class EthereumRocketPoolBalanceFetcher implements BalanceFetcher {
     @Inject(RocketPoolContractFactory) private readonly rocketPoolContractFactory: RocketPoolContractFactory,
   ) {}
 
-  async getStakedBalances(address: string) {
-    return [await this.getStakedEthBalance(address), await this.getStakedRplBalance(address)].flat();
-  }
-
   async getStakedEthBalance(address: string) {
     return this.appToolkit.helpers.contractPositionBalanceHelper.getContractPositionBalances({
       address,
@@ -81,15 +77,20 @@ export class EthereumRocketPoolBalanceFetcher implements BalanceFetcher {
   }
 
   async getBalances(address: string) {
-    const [stakedBalances, oracleDaoBondBalances] = await Promise.all([
-      this.getStakedBalances(address),
+    const [miniPoolBalances, stakedRplBalances, oracleDaoBondBalances] = await Promise.all([
+      this.getStakedEthBalance(address),
+      this.getStakedRplBalance(address),
       this.getOracleDaoBondBalances(address),
     ]);
 
     return presentBalanceFetcherResponse([
       {
+        label: 'Minipools',
+        assets: [...miniPoolBalances],
+      },
+      {
         label: 'Staking',
-        assets: [...stakedBalances],
+        assets: [...stakedRplBalances],
       },
       {
         label: 'Oracle DAO Bond',
