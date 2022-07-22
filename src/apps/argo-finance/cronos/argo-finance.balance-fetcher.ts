@@ -42,6 +42,7 @@ export class CronosArgoFinanceBalanceFetcher implements BalanceFetcher {
           multicall.wrap(contract)._balances(address),
           multicall.wrap(contract).claimableRewards(address),
         ]);
+
         // Drill the balance into the token object. Drill will push the balance into the token tree,
         // thereby showing the user's exposure to underlying tokens of the jar token!
         return [
@@ -49,13 +50,13 @@ export class CronosArgoFinanceBalanceFetcher implements BalanceFetcher {
           drillBalance(
             rewardToken,
             rewardBalanceRaw
-              .find(token => token.token === '0xb966b5d6a0fcd5b373b180bbe072bbfbbee10552')!
+              .find(token => token.token.toLowerCase() === '0xb966b5d6a0fcd5b373b180bbe072bbfbbee10552')!
               .amount.toString(),
           ),
           drillBalance(
             rewardToken2,
             rewardBalanceRaw
-              .find(token => token.token === '0x5c7f8a570d578ed84e63fdfa7b1ee72deae1ae23')!
+              .find(token => token.token.toLowerCase() === '0x5c7f8a570d578ed84e63fdfa7b1ee72deae1ae23')!
               .amount.toString(),
           )!,
         ];
