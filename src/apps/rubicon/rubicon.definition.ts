@@ -26,14 +26,20 @@ export const RUBICON_DEFINITION = appDefinition({
     AppTag.LIQUID_STAKING,
   ],
 
-  keywords: [],
-  links: {},
+  keywords: ['dex', 'orderBook', 'ethereum', 'CLOBmaxis', 'rbcn'],
+
+  links: {
+    github: 'https://github.com/rubiconDeFi',
+    twitter: 'https://twitter.com/rubicondefi',
+    discord: 'https://discord.com/invite/E7pS24J',
+    medium: 'https://medium.com/rubicon-finance',
+  },
 
   supportedNetworks: {
     [Network.OPTIMISM_MAINNET]: [AppAction.VIEW],
   },
 
-  primaryColor: '#fff',
+  primaryColor: '#ba2f2a',
 });
 
 @Register.AppDefinition(RUBICON_DEFINITION.id)
