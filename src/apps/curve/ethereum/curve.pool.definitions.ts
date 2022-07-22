@@ -189,6 +189,21 @@ export const CURVE_V1_METAPOOL_DEFINITIONS: CurvePoolDefinition[] = [
     swapAddress: '0x618788357d0ebd8a37e763adab3bc575d54c2c7d',
     tokenAddress: '0x6ba5b4e438fa0aaf7c1bd179285af65d13bd3d90',
   },
+  {
+    queryKey: '2pool',
+    swapAddress: '0x1005f7406f32a61bd760cfa14accd2737913d546',
+    tokenAddress: '0x1005f7406f32a61bd760cfa14accd2737913d546',
+  },
+  {
+    queryKey: '4pool',
+    swapAddress: '0x4e0915c88bc70750d68c481540f081fefaf22273',
+    tokenAddress: '0x4e0915c88bc70750d68c481540f081fefaf22273',
+  },
+  {
+    queryKey: 'fraxusdc',
+    swapAddress: '0xdcef968d416a41cdac0ed8702fac8128a64241a2',
+    tokenAddress: '0x3175df0976dfa876431c2e9ee6bc45b65d3473cc',
+  },
 ];
 
 export const CURVE_V2_POOL_DEFINITIONS: CurvePoolDefinition[] = [
@@ -223,5 +238,25 @@ export const CURVE_V2_POOL_DEFINITIONS: CurvePoolDefinition[] = [
     queryKey: 'eursusd',
     swapAddress: '0x98a7f18d4e56cfe84e3d081b40001b3d5bd3eb8b',
     tokenAddress: '0x3d229e1b4faab62f621ef2f6a610961f7bd7b23b',
+  },
+  {
+    queryKey: 'teth',
+    swapAddress: '0x752ebeb79963cf0732e9c0fec72a49fd1defaeac',
+    tokenAddress: '0xcb08717451aae9ef950a2524e33b6dcaba60147b',
+  },
+  {
+    queryKey: 'spelleth',
+    swapAddress: '0x98638facf9a3865cd033f36548713183f6996122',
+    tokenAddress: '0x8282bd15dca2ea2bdf24163e8f2781b30c43a2ef',
+  },
+  {
+    queryKey: 'xautusd',
+    swapAddress: '0xadcfcf9894335dc340f6cd182afa45999f45fc44',
+    tokenAddress: '0x8484673ca7bff40f82b041916881aea15ee84834',
+  },
+  {
+    queryKey: 'euroc',
+    swapAddress: '0xe84f5b1582ba325fdf9ce6b0c1f087ccfc924e54',
+    tokenAddress: '0x70fc957eb90e37af82acdbd12675699797745f68',
   },
 ];
