@@ -12,7 +12,7 @@ const appId = BANANO_DEFINITION.id;
 const groupId = BANANO_DEFINITION.groups.farm.id;
 const network = Network.POLYGON_MAINNET;
 
-const BENIS = '0xefa4aED9Cf41A8A0FcdA4e88EfA2F60675bAeC9F';
+const BENIS = '0xefa4aed9cf41a8a0fcda4e88efa2f60675baec9f';
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
 export class PolygonBananoFarmContractPositionFetcher implements PositionFetcher<ContractPosition> {

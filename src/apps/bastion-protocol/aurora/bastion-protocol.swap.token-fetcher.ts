@@ -35,8 +35,8 @@ export class AuroraBastionProtocolSwapTokenFetcher implements PositionFetcher<Ap
       {
         queryKey: 'cusdccusdt',
         label: 'cUSDC/cUSDT Pool',
-        swapAddress: '0x6287e912a9Ccd4D5874aE15d3c89556b2a05f080',
-        tokenAddress: '0x0039f0641156cac478b0DebAb086D78B66a69a01',
+        swapAddress: '0x6287e912a9ccd4d5874ae15d3c89556b2a05f080',
+        tokenAddress: '0x0039f0641156cac478b0debab086d78b66a69a01',
       },
     ];
     const appTokenDefinition = [
