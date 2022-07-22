@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.124.0](https://github.com/Zapper-fi/studio/compare/v0.123.0...v0.124.0) (2022-07-22)
+
+
+### Features
+
+* **argo:** Fix address lowercasing ([#934](https://github.com/Zapper-fi/studio/issues/934)) ([2be2952](https://github.com/Zapper-fi/studio/commit/2be295298073c889dd66b8b1fabd91951cc48280))
+
 ## [0.123.0](https://github.com/Zapper-fi/studio/compare/v0.122.1...v0.123.0) (2022-07-22)
 
 
