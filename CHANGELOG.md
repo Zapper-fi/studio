@@ -4,6 +4,22 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.123.0](https://github.com/Zapper-fi/studio/compare/v0.122.1...v0.123.0) (2022-07-22)
+
+
+### Features
+
+* **curve:** Add missing teth, spelleth, xautusd, euroc, 2pool, 4pool, fraxusdc ([#931](https://github.com/Zapper-fi/studio/issues/931)) ([a51fad7](https://github.com/Zapper-fi/studio/commit/a51fad7c0e43046386d0b7bc400834aa228993ba))
+* **ethereum:** Extract Ethereum Staking integration, and deduct RocketPool double count ([#932](https://github.com/Zapper-fi/studio/issues/932)) ([e4db440](https://github.com/Zapper-fi/studio/commit/e4db44025af7520e6f5f251adce7060986c1644c))
+* **lint:** Add Zapper plugin ([#929](https://github.com/Zapper-fi/studio/issues/929)) ([455f566](https://github.com/Zapper-fi/studio/commit/455f566c8d9f6d8c9c3884dbaa386f4154317d0a))
+* **rocket-pool:** Add Rocket Pool staked ETH ([#930](https://github.com/Zapper-fi/studio/issues/930)) ([968e48d](https://github.com/Zapper-fi/studio/commit/968e48d8b7620909b939c3c1e66dd93d776f46ff))
+* **rubicon:** Add Rubicon.finance and Rubicon Bath Tokens ([#922](https://github.com/Zapper-fi/studio/issues/922)) ([df20875](https://github.com/Zapper-fi/studio/commit/df20875f96ffed8a7cddff9c8ed542c1966ed346))
+
+
+### Bug Fixes
+
+* **pool-together-v4:** Update logo ([#927](https://github.com/Zapper-fi/studio/issues/927)) ([14788e3](https://github.com/Zapper-fi/studio/commit/14788e39c613c4e027ce150d19221a95ca5ed0eb))
+
 ## [0.122.1](https://github.com/Zapper-fi/studio/compare/v0.122.0...v0.122.1) (2022-07-21)
 
 
