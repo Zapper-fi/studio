@@ -16,6 +16,5 @@ import { RocketPoolAppDefinition, ROCKET_POOL_DEFINITION } from './rocket-pool.d
     EthereumRocketPoolOracleDaoBondContractPositionFetcher,
     EthereumRocketPoolStakingContractPositionFetcher,
   ],
-  exports: [RocketPoolContractFactory],
 })
 export class RocketPoolAppModule extends AbstractApp() {}
