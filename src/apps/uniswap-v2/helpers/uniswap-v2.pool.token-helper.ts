@@ -7,6 +7,8 @@ import { keyBy, sortBy } from 'lodash';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import {
   buildDollarDisplayItem,
+  buildInterpolationDisplayItem,
+  buildNumberDisplayItem,
   buildPercentageDisplayItem,
 } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
@@ -196,7 +198,16 @@ export class UniswapV2PoolTokenHelper {
           { label: 'Volume', value: buildDollarDisplayItem(volume) },
           { label: 'APY', value: buildPercentageDisplayItem(apy) },
           { label: 'Fee', value: buildPercentageDisplayItem(fee) },
-          { label: 'Reserves', value: reserves.map(v => (v < 0.01 ? '<0.01' : v.toFixed(2))).join(' / ') },
+          {
+            label: 'Reserves',
+            value: buildInterpolationDisplayItem({
+              source: '{{ reserve0 }} / {{ reserve1 }}',
+              substitutions: {
+                reserve0: buildNumberDisplayItem(reserves[0]),
+                reserve1: buildNumberDisplayItem(reserves[1]),
+              },
+            }),
+          },
           { label: 'Liquidity', value: buildDollarDisplayItem(liquidity) },
           { label: 'Ratio', value: ratio },
         ];
