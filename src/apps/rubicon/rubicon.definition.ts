@@ -5,7 +5,7 @@ import { Network } from '~types/network.interface';
 
 export const RUBICON_DEFINITION = appDefinition({
   id: 'rubicon',
-  name: 'rubicon',
+  name: 'Rubicon',
   description: 'Rubicon is the order book exchange standard of Ethereum',
   url: 'https://app.rubicon.finance',
 
