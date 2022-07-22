@@ -26,6 +26,16 @@ interface gqlFetchAllParams<T> {
   prevResults?: T;
 }
 
+interface gqlFetchAllStableParams<T> {
+  query: string;
+  endpoint: string;
+  variables?: Variables;
+  dataToSearch: string;
+  lastId?: string;
+  first?: number;
+  prevResults?: T;
+}
+
 @Injectable()
 export class TheGraphHelper {
   async request<T = any>({ endpoint, query, variables, headers }: RequestParams) {
@@ -77,6 +87,57 @@ export class TheGraphHelper {
         dataToSearch,
         first: first,
         offset: offset + first,
+        prevResults: newPrevResults,
+      });
+    }
+
+    if (prevResults) {
+      return {
+        ...prevResults,
+        ...results,
+        [dataToSearch]: [...prevResults[dataToSearch], ...results[dataToSearch]],
+      };
+    } else {
+      return results;
+    }
+  }
+
+  async gqlFetchAllStable<T = any>({
+    query,
+    endpoint,
+    variables = {},
+    dataToSearch,
+    first = 1000,
+    lastId = '',
+    prevResults,
+  }: gqlFetchAllStableParams<T>): Promise<T> {
+    const results = await this.requestGraph<T>({
+      endpoint,
+      query,
+      variables: {
+        ...variables,
+        first: first,
+        lastId,
+      },
+    });
+
+    if (results[dataToSearch].length === first) {
+      let newPrevResults = results;
+      if (prevResults) {
+        newPrevResults = {
+          ...prevResults,
+          ...results,
+          [dataToSearch]: [...prevResults[dataToSearch], ...results[dataToSearch]],
+        };
+      }
+
+      return this.gqlFetchAllStable({
+        query,
+        endpoint,
+        variables,
+        dataToSearch,
+        first: first,
+        lastId: results[dataToSearch][results[dataToSearch].length - 1].id,
         prevResults: newPrevResults,
       });
     }

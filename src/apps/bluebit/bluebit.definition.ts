@@ -30,7 +30,7 @@ export const BLUEBIT_DEFINITION = appDefinition({
     medium: 'https://bluebitfinance.medium.com/',
   },
   token: {
-    address: '0x4148d2Ce7816F0AE378d98b40eB3A7211E1fcF0D',
+    address: '0x4148d2ce7816f0ae378d98b40eb3a7211e1fcf0d',
     network: Network.AURORA_MAINNET,
   },
 

@@ -23,7 +23,7 @@ export const ANGLE_DEFINITION = appDefinition({
   keywords: ['stablecoin'],
 
   token: {
-    address: '0x31429d1856aD1377A8A0079410B297e1a9e214c2',
+    address: '0x31429d1856ad1377a8a0079410b297e1a9e214c2',
     network: Network.ETHEREUM_MAINNET,
   },
 

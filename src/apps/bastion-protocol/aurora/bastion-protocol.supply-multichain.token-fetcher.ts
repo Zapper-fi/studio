@@ -18,7 +18,7 @@ export class AuroraBastionProtocolSupplyMultichainTokenFetcher implements Positi
   constructor(@Inject(BastionSupplyTokenHelper) private readonly bastionSupplyTokenHelper: BastionSupplyTokenHelper) {}
   async getPositions() {
     const tokens = await this.bastionSupplyTokenHelper.getTokens({
-      comptrollerAddress: '0xA195b3d7AA34E47Fb2D2e5A682DF2d9EFA2daF06',
+      comptrollerAddress: '0xa195b3d7aa34e47fb2d2e5a682df2d9efa2daf06',
       realmName: 'Multichain Realm',
       network,
       appId,

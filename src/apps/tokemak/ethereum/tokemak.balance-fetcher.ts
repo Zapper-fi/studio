@@ -29,7 +29,7 @@ type ClaimableDataResponse = {
 
 const network = Network.ETHEREUM_MAINNET;
 const rewardContractAddress = '0x79dd22579112d8a5f7347c5ed7e609e60da713c5';
-const rewardsHashContractAddress = '0x5ec3EC6A8aC774c7d53665ebc5DDf89145d02fB6';
+const rewardsHashContractAddress = '0x5ec3ec6a8ac774c7d53665ebc5ddf89145d02fb6';
 
 @Register.BalanceFetcher(TOKEMAK_DEFINITION.id, Network.ETHEREUM_MAINNET)
 export class EthereumTokemakBalanceFetcher implements BalanceFetcher {

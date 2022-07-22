@@ -27,7 +27,7 @@ export const MM_FINANCE_DEFINITION = appDefinition({
   supportedNetworks: { [Network.CRONOS_MAINNET]: [AppAction.VIEW] },
   primaryColor: '#cda16f',
   token: {
-    address: '0x97749c9B61F878a880DfE312d2594AE07AEd7656',
+    address: '0x97749c9b61f878a880dfe312d2594ae07aed7656',
     network: Network.CRONOS_MAINNET,
   },
 });

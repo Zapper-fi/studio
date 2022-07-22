@@ -21,7 +21,7 @@ export class CronosMmFinancePoolAddressCacheManager {
   })
   private async getChefPoolAddresses() {
     const network = Network.CRONOS_MAINNET;
-    const chefAddress = '0x6bE34986Fdd1A91e4634eb6b9F8017439b7b5EDc';
+    const chefAddress = '0x6be34986fdd1a91e4634eb6b9f8017439b7b5edc';
     const chefContract = this.contractFactory.mmFinanceChef({ address: chefAddress, network });
 
     const provider = this.appToolkit.getNetworkProvider(network);
