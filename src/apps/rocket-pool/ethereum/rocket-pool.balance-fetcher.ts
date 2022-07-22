@@ -10,6 +10,10 @@ import { Network } from '~types/network.interface';
 
 import { RocketPoolContractFactory } from '../contracts';
 import { ROCKET_POOL_DEFINITION } from '../rocket-pool.definition';
+import {
+  rocketMinipoolManagerAddress,
+  rocketNodeStakingAddress,
+} from './rocket-pool.staking.contract-position-fetcher';
 
 const network = Network.ETHEREUM_MAINNET;
 
@@ -21,11 +25,35 @@ export class EthereumRocketPoolBalanceFetcher implements BalanceFetcher {
   ) {}
 
   async getStakedBalances(address: string) {
+    return [await this.getStakedEthBalance(address), await this.getStakedRplBalance(address)].flat();
+  }
+
+  async getStakedEthBalance(address: string) {
     return this.appToolkit.helpers.contractPositionBalanceHelper.getContractPositionBalances({
       address,
       appId: ROCKET_POOL_DEFINITION.id,
       groupId: ROCKET_POOL_DEFINITION.groups.staking.id,
       network: Network.ETHEREUM_MAINNET,
+      filter: p => p.address == rocketMinipoolManagerAddress,
+      resolveBalances: async ({ address, contractPosition }) => {
+        const token = contractPosition.tokens.find(isSupplied)!;
+        const contract = this.rocketPoolContractFactory.rocketMinipoolManager(contractPosition);
+        const minipoolCount = (await contract.getNodeActiveMinipoolCount(address)).toNumber();
+        const minipoolDepositSize = 16 * 10 ** 18; // 16 ETH
+        const balanceRaw = minipoolCount * minipoolDepositSize;
+        const tokenBalance = drillBalance(token, balanceRaw.toString());
+        return [tokenBalance];
+      },
+    });
+  }
+
+  async getStakedRplBalance(address: string) {
+    return this.appToolkit.helpers.contractPositionBalanceHelper.getContractPositionBalances({
+      address,
+      appId: ROCKET_POOL_DEFINITION.id,
+      groupId: ROCKET_POOL_DEFINITION.groups.staking.id,
+      network: Network.ETHEREUM_MAINNET,
+      filter: p => p.address == rocketNodeStakingAddress,
       resolveBalances: async ({ address, contractPosition }) => {
         const token = contractPosition.tokens.find(isSupplied)!;
         const contract = this.rocketPoolContractFactory.rocketNodeStaking(contractPosition);
