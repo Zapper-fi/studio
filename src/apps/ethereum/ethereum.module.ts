@@ -9,7 +9,6 @@ import { EthereumEthereumGenesisDepositContractPositionFetcher } from './ethereu
 
 @Register.AppModule({
   appId: ETHEREUM_DEFINITION.id,
-  imports: [RocketPoolAppModule],
   providers: [
     EthereumAppDefinition,
     EthereumContractFactory,

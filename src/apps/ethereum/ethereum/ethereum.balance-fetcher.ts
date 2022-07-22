@@ -1,6 +1,7 @@
 import { Inject } from '@nestjs/common';
 import { BigNumber } from 'bignumber.js';
 import { gql } from 'graphql-request';
+import { sumBy } from 'lodash';
 
 import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
@@ -14,17 +15,19 @@ import { Network } from '~types/network.interface';
 import { ETHEREUM_DEFINITION } from '../ethereum.definition';
 
 type Eth2DepositsResponse = {
-  depositor: {
-    depositCount: string;
-  };
+  deposits: {
+    id: string;
+    amount: string;
+  }[];
 };
 
-const GQL_ENDPOINT = `https://api.thegraph.com/subgraphs/name/smallonotation/eth2-genesis-analytics`;
+const GQL_ENDPOINT = `https://api.thegraph.com/subgraphs/name/terryyyyyy/eth2staking`;
 
 const ETH2_DEPOSITS_QUERY = gql`
-  query getEth2Deposits($address: String!) {
-    depositor(id: $address) {
-      depositCount
+  query getEth2Deposits($address: String!, $first: Int, $lastId: String) {
+    deposits(where: { from: $address, isDepositor: true, id_gt: $lastId }, first: $first) {
+      id
+      amount
     }
   }
 `;
@@ -33,10 +36,7 @@ const network = Network.ETHEREUM_MAINNET;
 
 @Register.BalanceFetcher(ETHEREUM_DEFINITION.id, network)
 export class EthereumEthereumBalanceFetcher implements BalanceFetcher {
-  constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(RocketPoolContractFactory) private readonly rocketPoolContractFactory: RocketPoolContractFactory,
-  ) {}
+  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
   async getStakedBalances(address: string) {
     return this.appToolkit.helpers.contractPositionBalanceHelper.getContractPositionBalances({
@@ -46,26 +46,16 @@ export class EthereumEthereumBalanceFetcher implements BalanceFetcher {
       network,
       resolveBalances: async ({ contractPosition }) => {
         const token = contractPosition.tokens[0];
-        const data = await this.appToolkit.helpers.theGraphHelper.request<Eth2DepositsResponse>({
+        const data = await this.appToolkit.helpers.theGraphHelper.gqlFetchAllStable<Eth2DepositsResponse>({
           endpoint: GQL_ENDPOINT,
           query: ETH2_DEPOSITS_QUERY,
+          dataToSearch: 'deposits',
           variables: {
             address: address.toLowerCase(),
           },
         });
 
-        const depositCount = Number(data.depositor?.depositCount ?? 0);
-        if (depositCount === 0) return [drillBalance(token, '0')];
-
-        const rocketPoolManager = this.rocketPoolContractFactory.rocketMinipoolManager({
-          address: rocketMinipoolManagerAddress,
-          network,
-        });
-
-        // To avoid double counting, deduct the number of minipools from the deposits associated with this address
-        const minipoolCount = (await rocketPoolManager.getNodeActiveMinipoolCount(address)).toNumber();
-        const poolCount = depositCount - minipoolCount;
-        const balanceRaw = new BigNumber(poolCount).times(32).times(1e18).toFixed(0);
+        const balanceRaw = new BigNumber(data.deposits.length).times(32).times(1e18).toFixed(0);
         return [drillBalance(token, balanceRaw)];
       },
     });
