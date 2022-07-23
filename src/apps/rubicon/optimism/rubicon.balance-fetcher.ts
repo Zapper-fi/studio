@@ -12,12 +12,13 @@ const network = Network.OPTIMISM_MAINNET;
 
 @Register.BalanceFetcher(RUBICON_DEFINITION.id, network)
 export class OptimismRubiconBalanceFetcher implements BalanceFetcher {
-  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) { }
+  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
+
   async getBathTokenBalances(address: string) {
     return this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
       address,
       appId: RUBICON_DEFINITION.id,
-      groupId: RUBICON_DEFINITION.groups.bathToken.id,
+      groupId: RUBICON_DEFINITION.groups.bath.id,
       network: network,
     });
   }

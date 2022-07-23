@@ -15,18 +15,18 @@ import { RubiconContractFactory } from '../contracts';
 import { RUBICON_DEFINITION } from '../rubicon.definition';
 
 const appId = RUBICON_DEFINITION.id;
-const groupId = RUBICON_DEFINITION.groups.bathToken.id;
+const groupId = RUBICON_DEFINITION.groups.bath.id;
 const network = Network.OPTIMISM_MAINNET;
 
 // Test:
 // http://localhost:5001/apps/rubicon/tokens?groupIds[]=bathToken&network=optimism
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
-export class OptimismRubiconBathTokenTokenFetcher implements PositionFetcher<AppTokenPosition> {
+export class OptimismRubiconBathTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(RubiconContractFactory) private readonly rubiconContractFactory: RubiconContractFactory,
-  ) { }
+  ) {}
 
   async getPositions() {
     // For now, hardcoded in docs
@@ -56,27 +56,14 @@ export class OptimismRubiconBathTokenTokenFetcher implements PositionFetcher<App
 
         // Request the underlying token address and ratio for the Bath Token
         const [underlyingTokenAddressRaw, ratioRaw] = await Promise.all([
-          multicall
-            .wrap(contract)
-            .asset()
-            .catch(() => ''),
-          multicall
-            .wrap(contract)
-            .convertToAssets(BigNumber.from((1e18).toString()))
-            .catch(() => 'Convert to assets failed'),
+          multicall.wrap(contract).asset(),
+          multicall.wrap(contract).convertToAssets(BigNumber.from((1e18).toString())),
         ]);
-
-        const underlyingERC20 = this.rubiconContractFactory.bathToken({
-          address: underlyingTokenAddressRaw,
-          network,
-        });
-
-        // http://localhost:5001/apps/rubicon/tokens?groupIds[]=bathToken&network=optimism
 
         // Request the symbol, decimals, ands supply for the Bath Token
         const [symbol, decimals, supplyRaw] = await Promise.all([
           multicall.wrap(contract).symbol(),
-          multicall.wrap(underlyingERC20).decimals(),
+          multicall.wrap(contract).decimals(),
           multicall.wrap(contract).totalSupply(),
         ]);
 
@@ -91,30 +78,23 @@ export class OptimismRubiconBathTokenTokenFetcher implements PositionFetcher<App
         // index the Bath Token since its price depends on the underlying token price.
         const underlyingTokenAddress = underlyingTokenAddressRaw.toLowerCase();
         const underlyingToken = allTokenDependencies.find(v => v.address === underlyingTokenAddress);
-        if (!underlyingToken) {
-          // console.log('No underlyingToken!', underlyingTokenAddress);
-
-          return null;
-        }
+        if (!underlyingToken) return null;
         const tokens = [underlyingToken];
 
         // Denormalize the price per share
         const pricePerShare = Number(ratioRaw) / 10 ** 18;
         const price = pricePerShare * underlyingToken.price;
 
-        // As a label, we'll use the underlying label (i.e.: 'WETH' or 'UNI-V2 WETH / ETH'), and suffix it with 'Jar'
-        const label = `bath${getLabelFromToken(underlyingToken)}`;
-        // For images, we'll use the underlying token images as well
+        const label = getLabelFromToken(underlyingToken);
         const images = getImagesFromToken(underlyingToken);
-        // For the secondary label, we'll use the price of the Bath Token
         const secondaryLabel = buildDollarDisplayItem(price);
 
         // Create the token object
         const token: AppTokenPosition = {
           type: ContractType.APP_TOKEN,
+          address: btAddress,
           appId,
           groupId,
-          address: btAddress,
           network,
           symbol,
           decimals,
