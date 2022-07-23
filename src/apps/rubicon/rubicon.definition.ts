@@ -11,8 +11,8 @@ export const RUBICON_DEFINITION = appDefinition({
 
   // https://studio.zapper.fi/docs/tutorial/update-app-definition#what-are-groups
   groups: {
-    bathToken: {
-      id: 'bathToken',
+    bath: {
+      id: 'bath',
       type: GroupType.TOKEN,
       label: 'Bath Tokens',
     },
