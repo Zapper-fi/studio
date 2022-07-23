@@ -54,19 +54,6 @@ export class OptimismRubiconBathTokenTokenFetcher implements PositionFetcher<App
           network,
         });
 
-        // Request the symbol, decimals, ands supply for the Bath Token
-        const [symbol, decimals, supplyRaw] = await Promise.all([
-          multicall.wrap(contract).symbol(),
-          multicall.wrap(contract).decimals(),
-          multicall.wrap(contract).totalSupply(),
-        ]);
-
-        // Denormalize the supply
-        const supply = Number(supplyRaw) / 10 ** decimals;
-
-        // *******price ************
-        // A user can deposit base tokens like WETH or USDC
-
         // Request the underlying token address and ratio for the Bath Token
         const [underlyingTokenAddressRaw, ratioRaw] = await Promise.all([
           multicall
@@ -78,6 +65,26 @@ export class OptimismRubiconBathTokenTokenFetcher implements PositionFetcher<App
             .convertToAssets(BigNumber.from((1e18).toString()))
             .catch(() => 'Convert to assets failed'),
         ]);
+
+        const underlyingERC20 = this.rubiconContractFactory.bathToken({
+          address: underlyingTokenAddressRaw,
+          network,
+        });
+
+        // http://localhost:5001/apps/rubicon/tokens?groupIds[]=bathToken&network=optimism
+
+        // Request the symbol, decimals, ands supply for the Bath Token
+        const [symbol, decimals, supplyRaw] = await Promise.all([
+          multicall.wrap(contract).symbol(),
+          multicall.wrap(underlyingERC20).decimals(),
+          multicall.wrap(contract).totalSupply(),
+        ]);
+
+        // Denormalize the supply
+        const supply = Number(supplyRaw) / 10 ** decimals;
+
+        // *******price ************
+        // A user can deposit base tokens like WETH or USDC
 
         // Find the underlying token in our dependencies.
         // Note: If it is not found, then we have not indexed the underlying token, and we cannot
