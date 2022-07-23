@@ -18,7 +18,6 @@ const groupId = MEAN_FINANCE_DEFINITION.groups.dcaPosition.id;
 const network = Network.OPTIMISM_MAINNET;
 
 type MeanFinanceDcaPositionContractPositionDataProps = {
-  id: string;
   liquidity: number;
   from: string;
   to: string;
@@ -60,7 +59,6 @@ export class OptimismMeanFinanceDcaPositionContractPositionFetcher implements Po
         dataProps: {
           from: from.address,
           to: to.address,
-          id: dcaPosition.id,
           liquidity,
         },
         displayProps: {
@@ -78,9 +76,27 @@ export class OptimismMeanFinanceDcaPositionContractPositionFetcher implements Po
 
     const mergedPositions = groupedPositions.map(positionsForDirectionalPair => {
       const totalLiquidity = sumBy(positionsForDirectionalPair, v => v.dataProps.liquidity);
-      const mergedPosition = positionsForDirectionalPair[0];
-      mergedPosition.dataProps.liquidity = totalLiquidity;
-      mergedPosition.displayProps.secondaryLabel = `${positionsForDirectionalPair.length} active positions`;
+
+      const anyPosition = positionsForDirectionalPair[0];
+      const mergedPosition: ContractPosition<MeanFinanceDcaPositionContractPositionDataProps> = {
+        type: ContractType.POSITION,
+        address: dcaHubAddress,
+        appId: MEAN_FINANCE_DEFINITION.id,
+        groupId: MEAN_FINANCE_DEFINITION.groups.dcaPosition.id,
+        network,
+        tokens: anyPosition.tokens,
+        dataProps: {
+          from: anyPosition.dataProps.from,
+          to: anyPosition.dataProps.to,
+          liquidity: totalLiquidity,
+        },
+        displayProps: {
+          label: anyPosition.displayProps.label,
+          secondaryLabel: `${positionsForDirectionalPair.length} active positions`,
+          images: anyPosition.displayProps.images,
+        },
+      };
+
       return mergedPosition;
     });
 
