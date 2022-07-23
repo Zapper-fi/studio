@@ -1,7 +1,10 @@
 import { Inject } from '@nestjs/common';
+import { BigNumber } from 'bignumber.js';
+import { range } from 'lodash';
 
 import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { Register } from '~app-toolkit/decorators';
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
 import { BalanceFetcher } from '~balance/balance-fetcher.interface';
@@ -27,12 +30,21 @@ export class ArbitrumPlutusBalanceFetcher implements BalanceFetcher {
     @Inject(PlutusContractFactory) private readonly contractFactory: PlutusContractFactory,
   ) {}
 
-  async getTokenBalances(address: string) {
+  async getPlsDpxTokenBalances(address: string) {
     return this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
       address,
       network,
       appId,
-      groupId: PLUTUS_DEFINITION.groups.ve.id,
+      groupId: PLUTUS_DEFINITION.groups.plsDpx.id,
+    });
+  }
+
+  async getPlsJonesTokenAddresses(address: string) {
+    return this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
+      address,
+      network,
+      appId,
+      groupId: PLUTUS_DEFINITION.groups.plsJones.id,
     });
   }
 
@@ -48,7 +60,62 @@ export class ArbitrumPlutusBalanceFetcher implements BalanceFetcher {
           .wrap(contract)
           .stakedDetails(address)
           .then(details => details.amount),
-      resolveRewardTokenBalances: () => [], // TODO: implement
+      resolveRewardTokenBalances: async ({ contract, address, contractPosition, multicall, network }) => {
+        const plsDpx = contractPosition.tokens.find(v => v.symbol === 'plsDPX');
+        const plsJones = contractPosition.tokens.find(v => v.symbol === 'plsJONES');
+        if (!plsDpx || !plsJones) return [];
+
+        const rewardsAddress = await multicall.wrap(contract).stakingRewards();
+        if (rewardsAddress === ZERO_ADDRESS) return [];
+
+        const rewardsContract = this.contractFactory.plutusEpochStakingRewardsRolling({
+          address: rewardsAddress,
+          network,
+        });
+
+        const currentEpoch = await multicall.wrap(contract).currentEpoch();
+        const epochsToClaim = range(0, Number(currentEpoch) - 1); // 1 based
+        const claimAmounts = await Promise.all(
+          epochsToClaim.map(async epoch => {
+            const EPOCH_DURATION = 2_628_000; // seconds
+
+            const rewardsForEpoch = await multicall.wrap(rewardsContract).epochRewards(epoch);
+            const claimDetails = await multicall.wrap(rewardsContract).claimDetails(address, epoch);
+            const userPlsDpxShare = await multicall
+              .wrap(rewardsContract)
+              .calculateShare(address, epoch, rewardsForEpoch.plsDpx);
+            const userPlsJonesShare = await multicall
+              .wrap(rewardsContract)
+              .calculateShare(address, epoch, rewardsForEpoch.plsJones);
+            if (Number(userPlsDpxShare) === 0 && Number(userPlsJonesShare) === 0) return [];
+
+            const now = Date.now() / 1000;
+            const vestedDuration =
+              claimDetails.lastClaimedTimestamp > rewardsForEpoch.addedAtTimestamp
+                ? now - claimDetails.lastClaimedTimestamp
+                : now - rewardsForEpoch.addedAtTimestamp;
+
+            const claimablePlsDpx = BigNumber.min(
+              new BigNumber(userPlsDpxShare.toString()).times(vestedDuration).div(EPOCH_DURATION),
+              new BigNumber(userPlsDpxShare.toString()).minus(claimDetails.plsDpxClaimedAmt.toString()),
+            );
+
+            const claimablePlsJones = BigNumber.min(
+              new BigNumber(userPlsJonesShare.toString()).times(vestedDuration).div(EPOCH_DURATION),
+              new BigNumber(userPlsJonesShare.toString()).minus(claimDetails.plsJonesClaimedAmt.toString()),
+            );
+
+            return [claimablePlsDpx, claimablePlsJones];
+          }),
+        );
+
+        const amounts = claimAmounts.reduce(
+          (acc, amounts) => [acc[0].plus(amounts[0]), acc[1].plus(amounts[1])],
+          [new BigNumber(0), new BigNumber(0)],
+        );
+
+        return [amounts[0].toFixed(0), amounts[1].toFixed(0)];
+      },
     });
   }
 
@@ -136,18 +203,24 @@ export class ArbitrumPlutusBalanceFetcher implements BalanceFetcher {
   }
 
   async getBalances(address: string) {
-    const [tokenBalances, lockedBalances, dpxBalances, jonesBalances, plsBalances] = await Promise.all([
-      this.getTokenBalances(address),
-      this.getLockedBalances(address),
-      this.getStakedDPXBalances(address),
-      this.getStakedJonesBalances(address),
-      this.getStakedPlsBalances(address),
-    ]);
+    const [plsDpxTokenBalances, plsJonesTokenBalances, lockedBalances, dpxBalances, jonesBalances, plsBalances] =
+      await Promise.all([
+        this.getPlsDpxTokenBalances(address),
+        this.getPlsJonesTokenAddresses(address),
+        this.getLockedBalances(address),
+        this.getStakedDPXBalances(address),
+        this.getStakedJonesBalances(address),
+        this.getStakedPlsBalances(address),
+      ]);
 
     return presentBalanceFetcherResponse([
       {
-        label: 'Tokens',
-        assets: tokenBalances,
+        label: 'plsDPX',
+        assets: plsDpxTokenBalances,
+      },
+      {
+        label: 'plsJONES',
+        assets: plsJonesTokenBalances,
       },
       {
         label: 'Locked',

@@ -28,7 +28,13 @@ export class ArbitrumPlutusDpxContractPositionFetcher implements PositionFetcher
       appId,
       groupId,
       network,
-      dependencies: [{ appId, groupIds: [PLUTUS_DEFINITION.groups.ve.id], network }],
+      dependencies: [
+        {
+          appId: PLUTUS_DEFINITION.id,
+          groupIds: [PLUTUS_DEFINITION.groups.plsDpx.id, PLUTUS_DEFINITION.groups.plsJones.id],
+          network,
+        },
+      ],
       resolveContract: opts => this.contractFactory.plsDpxPlutusChef(opts),
       resolvePoolLength: async () => 1,
       resolveDepositTokenAddress: async ({ multicall, contract }) => multicall.wrap(contract).plsDpx(),
