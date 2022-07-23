@@ -36,7 +36,7 @@ const network = Network.ETHEREUM_MAINNET;
 
 @Register.BalanceFetcher(ETHEREUM_DEFINITION.id, network)
 export class EthereumEthereumBalanceFetcher implements BalanceFetcher {
-  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
+  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) { }
 
   async getStakedBalances(address: string) {
     return this.appToolkit.helpers.contractPositionBalanceHelper.getContractPositionBalances({
@@ -46,7 +46,7 @@ export class EthereumEthereumBalanceFetcher implements BalanceFetcher {
       network,
       resolveBalances: async ({ contractPosition }) => {
         const token = contractPosition.tokens[0];
-        const data = await this.appToolkit.helpers.theGraphHelper.gqlFetchAllStable<Eth2DepositsResponse>({
+        const data = await this.appToolkit.helpers.theGraphHelper.gqlFetchAll<Eth2DepositsResponse>({
           endpoint: GQL_ENDPOINT,
           query: ETH2_DEPOSITS_QUERY,
           dataToSearch: 'deposits',
