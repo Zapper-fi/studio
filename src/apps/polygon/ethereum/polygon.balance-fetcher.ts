@@ -14,7 +14,7 @@ import { POLYGON_DEFINITION } from '../polygon.definition';
 
 import { PolygonStakingContractPositionDataProps } from './polygon.staking.contract-position-fetcher';
 
-type Eth2DepositsResponse = {
+type DelegatedMaticResponse = {
   delegators: {
     validatorId: string;
     delegatedAmount: string;
@@ -39,7 +39,7 @@ export class EthereumPolygonBalanceFetcher implements BalanceFetcher {
   constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
   async getDelegatedBalances(address: string) {
-    const data = await this.appToolkit.helpers.theGraphHelper.gqlFetchAll<Eth2DepositsResponse>({
+    const data = await this.appToolkit.helpers.theGraphHelper.gqlFetchAll<DelegatedMaticResponse>({
       endpoint: GQL_ENDPOINT,
       query: DELEGATED_MATIC_QUERY,
       dataToSearch: 'delegators',
