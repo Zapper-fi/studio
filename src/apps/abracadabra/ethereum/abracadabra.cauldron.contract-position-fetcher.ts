@@ -3,6 +3,7 @@ import { Inject } from '@nestjs/common';
 import { Register } from '~app-toolkit/decorators';
 import { CURVE_DEFINITION } from '~apps/curve';
 import { OLYMPUS_DEFINITION } from '~apps/olympus';
+import { STARGATE_FINANCE_DEFINITION } from '~apps/stargate-finance/stargate-finance.definition';
 import { YEARN_DEFINITION } from '~apps/yearn/yearn.definition';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
@@ -67,6 +68,7 @@ export class EthereumAbracadabraCauldronContractPositionFetcher implements Posit
         { appId: ABRACADABRA_DEFINITION.id, groupIds: [ABRACADABRA_DEFINITION.groups.stakedSpell.id], network },
         { appId: CURVE_DEFINITION.id, groupIds: [CURVE_DEFINITION.groups.pool.id], network },
         { appId: OLYMPUS_DEFINITION.id, groupIds: [OLYMPUS_DEFINITION.groups.wsOhmV1.id], network },
+        { appId: STARGATE_FINANCE_DEFINITION.id, groupIds: [STARGATE_FINANCE_DEFINITION.groups.pool.id], network },
         {
           appId: YEARN_DEFINITION.id,
           groupIds: [YEARN_DEFINITION.groups.v1Vault.id, YEARN_DEFINITION.groups.v2Vault.id],
@@ -75,7 +77,6 @@ export class EthereumAbracadabraCauldronContractPositionFetcher implements Posit
         // @TODO: Migrate these over
         { appId: 'convex', groupIds: ['deposit'], network },
         { appId: 'sushiswap', groupIds: ['pool'], network },
-        { appId: 'stargate', groupIds: ['pool'], network },
       ],
     });
   }
