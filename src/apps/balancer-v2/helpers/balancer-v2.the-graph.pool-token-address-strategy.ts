@@ -90,6 +90,7 @@ type BalancerV2TheGraphPoolTokenDataStrategyParams = {
   minLiquidity?: number;
   currentPoolsQuery?: string;
   pastPoolsQuery?: string;
+  skipVolume?: boolean;
 };
 
 @Injectable()
@@ -110,29 +111,32 @@ export class BalancerV2TheGraphPoolTokenDataStrategy {
     currentPoolsQuery: string,
     pastPoolsQuery: string,
     network: Network,
+    skipVolume: boolean,
   ) {
     const provider = this.appToolkit.getNetworkProvider(network);
     const graphHelper = this.appToolkit.helpers.theGraphHelper;
     const blockToday = await provider.getBlockNumber();
     const blockYesterday = blockToday - BLOCKS_PER_DAY[network];
 
-    const [currentPoolsResponse, pastPoolsResponse] = await Promise.all([
-      graphHelper.request<GetPoolsResponse>({
-        endpoint: subgraphUrl,
-        query: currentPoolsQuery,
-        variables: {
-          minLiquidity,
-        },
-      }),
-      graphHelper.request<GetPoolsResponse>({
+    const currentPoolsResponse = await graphHelper.request<GetPoolsResponse>({
+      endpoint: subgraphUrl,
+      query: currentPoolsQuery,
+      variables: {
+        minLiquidity,
+      },
+    });
+
+    let pastPoolsResponse = { pools: [] } as GetPoolsResponse;
+    if (!skipVolume) {
+      pastPoolsResponse = await graphHelper.request<GetPoolsResponse>({
         endpoint: subgraphUrl,
         query: pastPoolsQuery,
         variables: {
           blockYesterday,
           minLiquidity,
         },
-      }),
-    ]);
+      });
+    }
 
     return currentPoolsResponse.pools.map(pool => {
       const pastPool = pastPoolsResponse.pools.find(p => p.address === pool.address);
@@ -146,6 +150,7 @@ export class BalancerV2TheGraphPoolTokenDataStrategy {
     minLiquidity = 0,
     currentPoolsQuery = DEFAULT_GET_CURRENT_POOLS_QUERY,
     pastPoolsQuery = DEFAULT_GET_PAST_POOLS_QUERY,
+    skipVolume = false,
   }: BalancerV2TheGraphPoolTokenDataStrategyParams) {
     return async ({ network }: { network: Network }) => {
       const poolAddresses = await this.getPoolAddresses(
@@ -154,6 +159,7 @@ export class BalancerV2TheGraphPoolTokenDataStrategy {
         currentPoolsQuery,
         pastPoolsQuery,
         network,
+        skipVolume,
       );
 
       return poolAddresses;
