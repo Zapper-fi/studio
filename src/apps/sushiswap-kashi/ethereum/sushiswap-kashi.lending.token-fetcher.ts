@@ -22,6 +22,7 @@ export class EthereumSushiswapKashiLendingTokenFetcher implements PositionFetche
     return this.lendingTokenHelper.getTokens({
       network,
       subgraphUrl: 'https://api.thegraph.com/subgraphs/name/sushiswap/bentobox',
+      subgraphVersion: 1,
       first: 1000,
     });
   }

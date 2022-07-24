@@ -22,6 +22,7 @@ export class ArbitrumSushiswapKashiLendingTokenFetcher implements PositionFetche
     return this.lendingTokenHelper.getTokens({
       network,
       subgraphUrl: 'https://api.thegraph.com/subgraphs/name/sushiswap/arbitrum-bentobox',
+      subgraphVersion: 1,
       first: 1000,
     });
   }

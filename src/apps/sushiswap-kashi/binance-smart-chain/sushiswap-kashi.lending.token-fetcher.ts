@@ -22,6 +22,7 @@ export class BinanceSmartChainSushiswapKashiLendingTokenFetcher implements Posit
     return this.lendingTokenHelper.getTokens({
       network,
       subgraphUrl: 'https://api.thegraph.com/subgraphs/name/sushiswap/bsc-bentobox',
+      subgraphVersion: 1,
       first: 1000,
     });
   }

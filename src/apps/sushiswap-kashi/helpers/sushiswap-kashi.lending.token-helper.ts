@@ -25,11 +25,20 @@ type SushiswapKashiLendingTokenDataProps = {
 type SushiswapKashiLendingTokenHelperParams = {
   network: Network;
   subgraphUrl: string;
+  subgraphVersion: 1 | 2;
   first?: number;
   dependencies?: AppGroupsDefinition[];
 };
 
-type PairsResponse = {
+type PairDetails = {
+  pairAddress: string;
+  assetAddress: string;
+  collateralAddress: string;
+  supplyAPR: string;
+  borrowAPR: string;
+};
+
+type KashiSubgraphV1PairsResponse = {
   kashiPairs?: {
     id: string;
     supplyAPR: string;
@@ -43,12 +52,46 @@ type PairsResponse = {
   }[];
 };
 
-const pairsQuery = gql`
+const kashiSubgraphV1PairsQuery = gql`
   query getPairs($first: Int) {
     kashiPairs(first: $first) {
       id
       supplyAPR
       borrowAPR
+      asset {
+        id
+      }
+      collateral {
+        id
+      }
+    }
+  }
+`;
+
+type KashiSubgraphV2PairsResponse = {
+  kashiPairs?: {
+    id: string;
+    kpi: {
+      supplyAPR: string;
+      borrowAPR: string;
+    };
+    asset: {
+      id: string;
+    };
+    collateral: {
+      id: string;
+    };
+  }[];
+};
+
+const kashiSubgraphV2PairsQuery = gql`
+  query getPairs($first: Int) {
+    kashiPairs(first: $first) {
+      id
+      kpi {
+        supplyAPR
+        borrowAPR
+      }
       asset {
         id
       }
@@ -66,28 +109,56 @@ export class SushiswapKashiLendingTokenHelper {
     @Inject(SushiswapKashiContractFactory) private readonly contractFactory: SushiswapKashiContractFactory,
   ) {}
 
-  async getTokens({ network, subgraphUrl, first, dependencies = [] }: SushiswapKashiLendingTokenHelperParams) {
+  async getTokens({
+    network,
+    subgraphUrl,
+    first,
+    subgraphVersion,
+    dependencies = [],
+  }: SushiswapKashiLendingTokenHelperParams) {
     const multicall = this.appToolkit.getMulticall(network);
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
     const appTokens = await this.appToolkit.getAppTokenPositions(...dependencies);
     const allTokens = [...appTokens, ...baseTokens];
 
-    const pairsData = await this.appToolkit.helpers.theGraphHelper.request<PairsResponse>({
-      endpoint: subgraphUrl,
-      query: pairsQuery,
-      variables: {
-        first,
-      },
-    });
+    let pairs: PairDetails[] = [];
+    if (subgraphVersion === 1) {
+      const pairsData = await this.appToolkit.helpers.theGraphHelper.request<KashiSubgraphV1PairsResponse>({
+        endpoint: subgraphUrl,
+        query: kashiSubgraphV1PairsQuery,
+        variables: {
+          first,
+        },
+      });
 
-    const pairs = pairsData.kashiPairs ?? [];
+      pairs = (pairsData.kashiPairs ?? []).map(pair => ({
+        pairAddress: pair.id.toLowerCase(),
+        collateralAddress: pair.collateral.id.toLowerCase(),
+        assetAddress: pair.asset.id.toLowerCase(),
+        supplyAPR: pair.supplyAPR,
+        borrowAPR: pair.borrowAPR,
+      }));
+    } else {
+      const pairsData = await this.appToolkit.helpers.theGraphHelper.request<KashiSubgraphV2PairsResponse>({
+        endpoint: subgraphUrl,
+        query: kashiSubgraphV2PairsQuery,
+        variables: {
+          first,
+        },
+      });
+
+      pairs = (pairsData.kashiPairs ?? []).map(pair => ({
+        pairAddress: pair.id.toLowerCase(),
+        collateralAddress: pair.collateral.id.toLowerCase(),
+        assetAddress: pair.asset.id.toLowerCase(),
+        supplyAPR: pair.kpi.supplyAPR,
+        borrowAPR: pair.kpi.borrowAPR,
+      }));
+    }
 
     const tokens = await Promise.all(
       pairs.map(async pair => {
-        const pairAddress = pair.id;
-        const collateralAddress = pair.collateral.id.toLowerCase();
-        const assetAddress = pair.asset.id.toLowerCase();
-
+        const { pairAddress, collateralAddress, assetAddress } = pair;
         const underlyingCollateralToken = allTokens.find(p => p.address === collateralAddress);
         const underlyingAssetToken = allTokens.find(p => p.address === assetAddress);
         if (!underlyingCollateralToken || !underlyingAssetToken) return null;

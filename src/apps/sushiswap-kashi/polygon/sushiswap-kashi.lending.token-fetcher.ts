@@ -21,7 +21,8 @@ export class PolygonSushiswapKashiLendingTokenFetcher implements PositionFetcher
   getPositions() {
     return this.lendingTokenHelper.getTokens({
       network,
-      subgraphUrl: 'https://api.thegraph.com/subgraphs/name/sushiswap/matic-bentobox',
+      subgraphUrl: 'https://api.thegraph.com/subgraphs/name/sushiswap/kashi-polygon',
+      subgraphVersion: 2,
       first: 1000,
     });
   }
