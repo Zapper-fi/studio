@@ -4,6 +4,22 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.125.0](https://github.com/Zapper-fi/studio/compare/v0.124.0...v0.125.0) (2022-07-24)
+
+
+### Features
+
+* **mean-finance:** Use lodash to refactor positions and remove call to pairs ([#937](https://github.com/Zapper-fi/studio/issues/937)) ([016c187](https://github.com/Zapper-fi/studio/commit/016c187a2f30836c7641e7a02f63def18877d8d2))
+* **plutus:** Add new locks, split plsJONES and plsDPX groups, add claimables ([#939](https://github.com/Zapper-fi/studio/issues/939)) ([7c137e2](https://github.com/Zapper-fi/studio/commit/7c137e2fff56831339614459ee82becbd8e2e42b))
+* **polygon:** Add delegated MATIC ([#938](https://github.com/Zapper-fi/studio/issues/938)) ([615691e](https://github.com/Zapper-fi/studio/commit/615691e0563fc2bcc367505ed3172f5a9acf8d05))
+* **rubicon:** Slight clean-up ([0af15de](https://github.com/Zapper-fi/studio/commit/0af15def0add0874eab89473cce5d3d9c4711703))
+
+
+### Bug Fixes
+
+* **mean-finance:** Fix liquidity for Mean Finance positions ([#905](https://github.com/Zapper-fi/studio/issues/905)) ([f8128d8](https://github.com/Zapper-fi/studio/commit/f8128d8d9ed2e356826e374943a3c4b4fae02264))
+* **rubicon:** Correct Rubicon definition name, fix Bath Token decimal issues, and add labels ([#933](https://github.com/Zapper-fi/studio/issues/933)) ([12d2c2a](https://github.com/Zapper-fi/studio/commit/12d2c2a8d24bf1c72cf896b7b9de4b0c0048486c))
+
 ## [0.124.0](https://github.com/Zapper-fi/studio/compare/v0.123.0...v0.124.0) (2022-07-22)
 
 
