@@ -16,6 +16,12 @@ const appId = PLUTUS_DEFINITION.id;
 const groupId = PLUTUS_DEFINITION.groups.lock.id;
 const network = Network.ARBITRUM_MAINNET;
 
+const labels = {
+  [VAULTS.PLS_LOCK_1_MONTH]: 'PLS 1 Month Lock',
+  [VAULTS.PLS_LOCK_3_MONTH]: 'PLS 3 Month Lock',
+  [VAULTS.PLS_LOCK_6_MONTH]: 'PLS 6 Month Lock',
+};
+
 @Register.ContractPositionFetcher({ appId, groupId, network })
 export class ArbitrumPlutusLockContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
@@ -36,6 +42,7 @@ export class ArbitrumPlutusLockContractPositionFetcher implements PositionFetche
             network,
           },
         ],
+        resolveLabel: (address: string) => labels[address],
         resolveFarmAddresses: () => [VAULTS.PLS_LOCK_1_MONTH, VAULTS.PLS_LOCK_3_MONTH, VAULTS.PLS_LOCK_6_MONTH],
         resolveFarmContract: ({ address, network }) =>
           this.plutusContractFactory.plutusEpochStaking({ address, network }),
