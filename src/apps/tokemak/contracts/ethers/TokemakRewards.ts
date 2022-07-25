@@ -15,14 +15,14 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export declare namespace Rewards {
   export type RecipientStruct = {
-    chainId: BigNumberish;
-    cycle: BigNumberish;
-    wallet: string;
-    amount: BigNumberish;
+    chainId: PromiseOrValue<BigNumberish>;
+    cycle: PromiseOrValue<BigNumberish>;
+    wallet: PromiseOrValue<string>;
+    amount: PromiseOrValue<BigNumberish>;
   };
 
   export type RecipientStructOutput = [BigNumber, BigNumber, string, BigNumber] & {
@@ -61,16 +61,21 @@ export interface TokemakRewardsInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: 'claim',
-    values: [Rewards.RecipientStruct, BigNumberish, BytesLike, BytesLike],
+    values: [
+      Rewards.RecipientStruct,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'claimedAmounts', values: [string]): string;
+  encodeFunctionData(functionFragment: 'claimedAmounts', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'getClaimableAmount', values: [Rewards.RecipientStruct]): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
   encodeFunctionData(functionFragment: 'rewardsSigner', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'setSigner', values: [string]): string;
+  encodeFunctionData(functionFragment: 'setSigner', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'tokeToken', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
 
   decodeFunctionResult(functionFragment: 'claim', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'claimedAmounts', data: BytesLike): Result;
@@ -142,75 +147,75 @@ export interface TokemakRewards extends BaseContract {
   functions: {
     claim(
       recipient: Rewards.RecipientStruct,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    claimedAmounts(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    claimedAmounts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     getClaimableAmount(recipient: Rewards.RecipientStruct, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     rewardsSigner(overrides?: CallOverrides): Promise<[string]>;
 
     setSigner(
-      newSigner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newSigner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     tokeToken(overrides?: CallOverrides): Promise<[string]>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
   claim(
     recipient: Rewards.RecipientStruct,
-    v: BigNumberish,
-    r: BytesLike,
-    s: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    v: PromiseOrValue<BigNumberish>,
+    r: PromiseOrValue<BytesLike>,
+    s: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  claimedAmounts(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  claimedAmounts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   getClaimableAmount(recipient: Rewards.RecipientStruct, overrides?: CallOverrides): Promise<BigNumber>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   rewardsSigner(overrides?: CallOverrides): Promise<string>;
 
   setSigner(
-    newSigner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newSigner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   tokeToken(overrides?: CallOverrides): Promise<string>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
     claim(
       recipient: Rewards.RecipientStruct,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    claimedAmounts(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    claimedAmounts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getClaimableAmount(recipient: Rewards.RecipientStruct, overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -220,11 +225,11 @@ export interface TokemakRewards extends BaseContract {
 
     rewardsSigner(overrides?: CallOverrides): Promise<string>;
 
-    setSigner(newSigner: string, overrides?: CallOverrides): Promise<void>;
+    setSigner(newSigner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     tokeToken(overrides?: CallOverrides): Promise<string>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
@@ -232,10 +237,13 @@ export interface TokemakRewards extends BaseContract {
     Claimed(cycle?: null, recipient?: null, amount?: null): ClaimedEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
 
     'SignerSet(address)'(newSigner?: null): SignerSetEventFilter;
     SignerSet(newSigner?: null): SignerSetEventFilter;
@@ -244,61 +252,64 @@ export interface TokemakRewards extends BaseContract {
   estimateGas: {
     claim(
       recipient: Rewards.RecipientStruct,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    claimedAmounts(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    claimedAmounts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getClaimableAmount(recipient: Rewards.RecipientStruct, overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     rewardsSigner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    setSigner(newSigner: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setSigner(
+      newSigner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     tokeToken(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     claim(
       recipient: Rewards.RecipientStruct,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    claimedAmounts(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    claimedAmounts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getClaimableAmount(recipient: Rewards.RecipientStruct, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     rewardsSigner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setSigner(
-      newSigner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newSigner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     tokeToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

@@ -15,9 +15,12 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
-export type PairsStruct = { owner: string; netCashOutAmount: BigNumberish };
+export type PairsStruct = {
+  owner: PromiseOrValue<string>;
+  netCashOutAmount: PromiseOrValue<BigNumberish>;
+};
 
 export type PairsStructOutput = [string, BigNumber] & {
   owner: string;
@@ -203,93 +206,162 @@ export interface AnglePerpetualManagerInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'DEFAULT_ADMIN_ROLE', values?: undefined): string;
   encodeFunctionData(functionFragment: 'GUARDIAN_ROLE', values?: undefined): string;
   encodeFunctionData(functionFragment: 'POOLMANAGER_ROLE', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'addToPerpetual', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'approve', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'addToPerpetual',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'approve',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'baseURI', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'closePerpetual', values: [BigNumberish, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'deployCollateral', values: [string[], string, string, string]): string;
-  encodeFunctionData(functionFragment: 'earned', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'forceClosePerpetuals', values: [BigNumberish[]]): string;
-  encodeFunctionData(functionFragment: 'getApproved', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'getCashOutAmount', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'getReward', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'getRoleAdmin', values: [BytesLike]): string;
-  encodeFunctionData(functionFragment: 'grantRole', values: [BytesLike, string]): string;
+  encodeFunctionData(
+    functionFragment: 'closePerpetual',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'deployCollateral',
+    values: [PromiseOrValue<string>[], PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'earned', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'forceClosePerpetuals', values: [PromiseOrValue<BigNumberish>[]]): string;
+  encodeFunctionData(functionFragment: 'getApproved', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'getCashOutAmount',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'getReward', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'getRoleAdmin', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(
+    functionFragment: 'grantRole',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'haBonusMalusDeposit', values?: undefined): string;
   encodeFunctionData(functionFragment: 'haBonusMalusWithdraw', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'hasRole', values: [BytesLike, string]): string;
-  encodeFunctionData(functionFragment: 'initialize', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'isApprovedForAll', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'isApprovedOrOwner', values: [string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'hasRole', values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'initialize', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'isApprovedForAll',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'isApprovedOrOwner',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'keeperFeesClosingCap', values?: undefined): string;
   encodeFunctionData(functionFragment: 'keeperFeesLiquidationCap', values?: undefined): string;
   encodeFunctionData(functionFragment: 'keeperFeesLiquidationRatio', values?: undefined): string;
   encodeFunctionData(functionFragment: 'lastUpdateTime', values?: undefined): string;
   encodeFunctionData(functionFragment: 'limitHAHedge', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'liquidatePerpetuals', values: [BigNumberish[]]): string;
+  encodeFunctionData(functionFragment: 'liquidatePerpetuals', values: [PromiseOrValue<BigNumberish>[]]): string;
   encodeFunctionData(functionFragment: 'lockTime', values?: undefined): string;
   encodeFunctionData(functionFragment: 'maintenanceMargin', values?: undefined): string;
   encodeFunctionData(functionFragment: 'maxLeverage', values?: undefined): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'notifyRewardAmount', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'notifyRewardAmount', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(
     functionFragment: 'openPerpetual',
-    values: [string, BigNumberish, BigNumberish, BigNumberish, BigNumberish],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'oracle', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'ownerOf', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'ownerOf', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'pause', values?: undefined): string;
   encodeFunctionData(functionFragment: 'paused', values?: undefined): string;
   encodeFunctionData(functionFragment: 'periodFinish', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'perpetualData', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'perpetualRewardPerTokenPaid', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'perpetualData', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'perpetualRewardPerTokenPaid', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'poolManager', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'recoverERC20', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'removeFromPerpetual', values: [BigNumberish, BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'renounceRole', values: [BytesLike, string]): string;
-  encodeFunctionData(functionFragment: 'revokeRole', values: [BytesLike, string]): string;
+  encodeFunctionData(
+    functionFragment: 'recoverERC20',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'removeFromPerpetual',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'renounceRole',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'revokeRole',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'rewardPerTokenStored', values?: undefined): string;
   encodeFunctionData(functionFragment: 'rewardRate', values?: undefined): string;
   encodeFunctionData(functionFragment: 'rewardToken', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'rewards', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'rewards', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'rewardsDistribution', values?: undefined): string;
   encodeFunctionData(functionFragment: 'rewardsDuration', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'safeTransferFrom(address,address,uint256)',
-    values: [string, string, BigNumberish],
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(
     functionFragment: 'safeTransferFrom(address,address,uint256,bytes)',
-    values: [string, string, BigNumberish, BytesLike],
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<BytesLike>],
   ): string;
-  encodeFunctionData(functionFragment: 'setApprovalForAll', values: [string, boolean]): string;
-  encodeFunctionData(functionFragment: 'setBaseURI', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setBoundsPerpetual', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setFeeKeeper', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setFeeManager', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setHAFees', values: [BigNumberish[], BigNumberish[], BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setKeeperFeesCap', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setKeeperFeesClosing', values: [BigNumberish[], BigNumberish[]]): string;
-  encodeFunctionData(functionFragment: 'setKeeperFeesLiquidationRatio', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setLockTime', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setNewRewardsDistribution', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setOracle', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setRewardDistribution', values: [BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'setTargetAndLimitHAHedge', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'supportsInterface', values: [BytesLike]): string;
+  encodeFunctionData(
+    functionFragment: 'setApprovalForAll',
+    values: [PromiseOrValue<string>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(functionFragment: 'setBaseURI', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'setBoundsPerpetual',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'setFeeKeeper',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'setFeeManager', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'setHAFees',
+    values: [PromiseOrValue<BigNumberish>[], PromiseOrValue<BigNumberish>[], PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'setKeeperFeesCap',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'setKeeperFeesClosing',
+    values: [PromiseOrValue<BigNumberish>[], PromiseOrValue<BigNumberish>[]],
+  ): string;
+  encodeFunctionData(functionFragment: 'setKeeperFeesLiquidationRatio', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setLockTime', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setNewRewardsDistribution', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setOracle', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'setRewardDistribution',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'setTargetAndLimitHAHedge',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'supportsInterface', values: [PromiseOrValue<BytesLike>]): string;
   encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
   encodeFunctionData(functionFragment: 'targetHAHedge', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'tokenURI', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'tokenURI', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'totalHedgeAmount', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transferFrom', values: [string, string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'transferFrom',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'unpause', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'xHAFeesDeposit', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'xHAFeesWithdraw', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'xKeeperFeesClosing', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'yHAFeesDeposit', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'yHAFeesWithdraw', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'yKeeperFeesClosing', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'xHAFeesDeposit', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'xHAFeesWithdraw', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'xKeeperFeesClosing', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'yHAFeesDeposit', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'yHAFeesWithdraw', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'yKeeperFeesClosing', values: [PromiseOrValue<BigNumberish>]): string;
 
   decodeFunctionResult(functionFragment: 'BASE_PARAMS', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'BASE_TOKENS', data: BytesLike): Result;
@@ -691,79 +763,91 @@ export interface AnglePerpetualManager extends BaseContract {
     POOLMANAGER_ROLE(overrides?: CallOverrides): Promise<[string]>;
 
     addToPerpetual(
-      perpetualID: BigNumberish,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      perpetualID: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     approve(
-      to: string,
-      perpetualID: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      perpetualID: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    balanceOf(owner: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOf(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     baseURI(overrides?: CallOverrides): Promise<[string]>;
 
     closePerpetual(
-      perpetualID: BigNumberish,
-      to: string,
-      minCashOutAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      perpetualID: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      minCashOutAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     deployCollateral(
-      governorList: string[],
-      guardian: string,
-      feeManager_: string,
-      oracle_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      governorList: PromiseOrValue<string>[],
+      guardian: PromiseOrValue<string>,
+      feeManager_: PromiseOrValue<string>,
+      oracle_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    earned(perpetualID: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    earned(perpetualID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     forceClosePerpetuals(
-      perpetualIDs: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      perpetualIDs: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    getApproved(perpetualID: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    getApproved(perpetualID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
     getCashOutAmount(
-      perpetualID: BigNumberish,
-      rate: BigNumberish,
+      perpetualID: PromiseOrValue<BigNumberish>,
+      rate: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber]>;
 
     getReward(
-      perpetualID: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      perpetualID: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<[string]>;
+    getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[string]>;
 
     grantRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     haBonusMalusDeposit(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     haBonusMalusWithdraw(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    hasRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<[boolean]>;
+    hasRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[boolean]>;
 
     initialize(
-      poolManager_: string,
-      rewardToken_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      poolManager_: PromiseOrValue<string>,
+      rewardToken_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    isApprovedForAll(owner: string, operator: string, overrides?: CallOverrides): Promise<[boolean]>;
+    isApprovedForAll(
+      owner: PromiseOrValue<string>,
+      operator: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[boolean]>;
 
-    isApprovedOrOwner(spender: string, perpetualID: BigNumberish, overrides?: CallOverrides): Promise<[boolean]>;
+    isApprovedOrOwner(
+      spender: PromiseOrValue<string>,
+      perpetualID: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[boolean]>;
 
     keeperFeesClosingCap(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -776,8 +860,8 @@ export interface AnglePerpetualManager extends BaseContract {
     limitHAHedge(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     liquidatePerpetuals(
-      perpetualIDs: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      perpetualIDs: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     lockTime(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -789,31 +873,31 @@ export interface AnglePerpetualManager extends BaseContract {
     name(overrides?: CallOverrides): Promise<[string]>;
 
     notifyRewardAmount(
-      reward: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      reward: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     openPerpetual(
-      owner: string,
-      margin: BigNumberish,
-      committedAmount: BigNumberish,
-      maxOracleRate: BigNumberish,
-      minNetMargin: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      owner: PromiseOrValue<string>,
+      margin: PromiseOrValue<BigNumberish>,
+      committedAmount: PromiseOrValue<BigNumberish>,
+      maxOracleRate: PromiseOrValue<BigNumberish>,
+      minNetMargin: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     oracle(overrides?: CallOverrides): Promise<[string]>;
 
-    ownerOf(perpetualID: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    ownerOf(perpetualID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
-    pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     paused(overrides?: CallOverrides): Promise<[boolean]>;
 
     periodFinish(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     perpetualData(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -824,34 +908,34 @@ export interface AnglePerpetualManager extends BaseContract {
       }
     >;
 
-    perpetualRewardPerTokenPaid(arg0: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    perpetualRewardPerTokenPaid(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     poolManager(overrides?: CallOverrides): Promise<[string]>;
 
     recoverERC20(
-      tokenAddress: string,
-      to: string,
-      tokenAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tokenAddress: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     removeFromPerpetual(
-      perpetualID: BigNumberish,
-      amount: BigNumberish,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      perpetualID: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     renounceRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     revokeRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     rewardPerTokenStored(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -860,136 +944,136 @@ export interface AnglePerpetualManager extends BaseContract {
 
     rewardToken(overrides?: CallOverrides): Promise<[string]>;
 
-    rewards(arg0: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    rewards(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     rewardsDistribution(overrides?: CallOverrides): Promise<[string]>;
 
     rewardsDuration(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     'safeTransferFrom(address,address,uint256)'(
-      from: string,
-      to: string,
-      perpetualID: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      perpetualID: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     'safeTransferFrom(address,address,uint256,bytes)'(
-      from: string,
-      to: string,
-      perpetualID: BigNumberish,
-      _data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      perpetualID: PromiseOrValue<BigNumberish>,
+      _data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setApprovalForAll(
-      operator: string,
-      approved: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      operator: PromiseOrValue<string>,
+      approved: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setBaseURI(
-      _baseURI: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _baseURI: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setBoundsPerpetual(
-      _maxLeverage: BigNumberish,
-      _maintenanceMargin: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _maxLeverage: PromiseOrValue<BigNumberish>,
+      _maintenanceMargin: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setFeeKeeper(
-      feeDeposit: BigNumberish,
-      feeWithdraw: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      feeDeposit: PromiseOrValue<BigNumberish>,
+      feeWithdraw: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setFeeManager(
-      feeManager_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      feeManager_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setHAFees(
-      _xHAFees: BigNumberish[],
-      _yHAFees: BigNumberish[],
-      deposit: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _xHAFees: PromiseOrValue<BigNumberish>[],
+      _yHAFees: PromiseOrValue<BigNumberish>[],
+      deposit: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setKeeperFeesCap(
-      _keeperFeesLiquidationCap: BigNumberish,
-      _keeperFeesClosingCap: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _keeperFeesLiquidationCap: PromiseOrValue<BigNumberish>,
+      _keeperFeesClosingCap: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setKeeperFeesClosing(
-      _xKeeperFeesClosing: BigNumberish[],
-      _yKeeperFeesClosing: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _xKeeperFeesClosing: PromiseOrValue<BigNumberish>[],
+      _yKeeperFeesClosing: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setKeeperFeesLiquidationRatio(
-      _keeperFeesLiquidationRatio: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _keeperFeesLiquidationRatio: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setLockTime(
-      _lockTime: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _lockTime: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setNewRewardsDistribution(
-      _rewardsDistribution: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardsDistribution: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setOracle(
-      oracle_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      oracle_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setRewardDistribution(
-      _rewardsDuration: BigNumberish,
-      _rewardsDistribution: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardsDuration: PromiseOrValue<BigNumberish>,
+      _rewardsDistribution: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setTargetAndLimitHAHedge(
-      _targetHAHedge: BigNumberish,
-      _limitHAHedge: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _targetHAHedge: PromiseOrValue<BigNumberish>,
+      _limitHAHedge: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<[boolean]>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[boolean]>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
 
     targetHAHedge(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    tokenURI(perpetualID: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    tokenURI(perpetualID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
     totalHedgeAmount(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transferFrom(
-      from: string,
-      to: string,
-      perpetualID: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      perpetualID: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    xHAFeesDeposit(arg0: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    xHAFeesDeposit(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    xHAFeesWithdraw(arg0: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    xHAFeesWithdraw(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    xKeeperFeesClosing(arg0: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    xKeeperFeesClosing(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    yHAFeesDeposit(arg0: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    yHAFeesDeposit(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    yHAFeesWithdraw(arg0: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    yHAFeesWithdraw(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    yKeeperFeesClosing(arg0: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    yKeeperFeesClosing(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
   };
 
   BASE_PARAMS(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1003,79 +1087,91 @@ export interface AnglePerpetualManager extends BaseContract {
   POOLMANAGER_ROLE(overrides?: CallOverrides): Promise<string>;
 
   addToPerpetual(
-    perpetualID: BigNumberish,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    perpetualID: PromiseOrValue<BigNumberish>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   approve(
-    to: string,
-    perpetualID: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    to: PromiseOrValue<string>,
+    perpetualID: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   baseURI(overrides?: CallOverrides): Promise<string>;
 
   closePerpetual(
-    perpetualID: BigNumberish,
-    to: string,
-    minCashOutAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    perpetualID: PromiseOrValue<BigNumberish>,
+    to: PromiseOrValue<string>,
+    minCashOutAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   deployCollateral(
-    governorList: string[],
-    guardian: string,
-    feeManager_: string,
-    oracle_: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    governorList: PromiseOrValue<string>[],
+    guardian: PromiseOrValue<string>,
+    feeManager_: PromiseOrValue<string>,
+    oracle_: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  earned(perpetualID: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  earned(perpetualID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   forceClosePerpetuals(
-    perpetualIDs: BigNumberish[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    perpetualIDs: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  getApproved(perpetualID: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  getApproved(perpetualID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   getCashOutAmount(
-    perpetualID: BigNumberish,
-    rate: BigNumberish,
+    perpetualID: PromiseOrValue<BigNumberish>,
+    rate: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber, BigNumber]>;
 
   getReward(
-    perpetualID: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    perpetualID: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<string>;
+  getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
   grantRole(
-    role: BytesLike,
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    role: PromiseOrValue<BytesLike>,
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   haBonusMalusDeposit(overrides?: CallOverrides): Promise<BigNumber>;
 
   haBonusMalusWithdraw(overrides?: CallOverrides): Promise<BigNumber>;
 
-  hasRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<boolean>;
+  hasRole(
+    role: PromiseOrValue<BytesLike>,
+    account: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<boolean>;
 
   initialize(
-    poolManager_: string,
-    rewardToken_: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    poolManager_: PromiseOrValue<string>,
+    rewardToken_: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  isApprovedForAll(owner: string, operator: string, overrides?: CallOverrides): Promise<boolean>;
+  isApprovedForAll(
+    owner: PromiseOrValue<string>,
+    operator: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<boolean>;
 
-  isApprovedOrOwner(spender: string, perpetualID: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+  isApprovedOrOwner(
+    spender: PromiseOrValue<string>,
+    perpetualID: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<boolean>;
 
   keeperFeesClosingCap(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1088,8 +1184,8 @@ export interface AnglePerpetualManager extends BaseContract {
   limitHAHedge(overrides?: CallOverrides): Promise<BigNumber>;
 
   liquidatePerpetuals(
-    perpetualIDs: BigNumberish[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    perpetualIDs: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   lockTime(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1101,31 +1197,31 @@ export interface AnglePerpetualManager extends BaseContract {
   name(overrides?: CallOverrides): Promise<string>;
 
   notifyRewardAmount(
-    reward: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    reward: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   openPerpetual(
-    owner: string,
-    margin: BigNumberish,
-    committedAmount: BigNumberish,
-    maxOracleRate: BigNumberish,
-    minNetMargin: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    owner: PromiseOrValue<string>,
+    margin: PromiseOrValue<BigNumberish>,
+    committedAmount: PromiseOrValue<BigNumberish>,
+    maxOracleRate: PromiseOrValue<BigNumberish>,
+    minNetMargin: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   oracle(overrides?: CallOverrides): Promise<string>;
 
-  ownerOf(perpetualID: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  ownerOf(perpetualID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
-  pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   paused(overrides?: CallOverrides): Promise<boolean>;
 
   periodFinish(overrides?: CallOverrides): Promise<BigNumber>;
 
   perpetualData(
-    arg0: BigNumberish,
+    arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -1136,34 +1232,34 @@ export interface AnglePerpetualManager extends BaseContract {
     }
   >;
 
-  perpetualRewardPerTokenPaid(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  perpetualRewardPerTokenPaid(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   poolManager(overrides?: CallOverrides): Promise<string>;
 
   recoverERC20(
-    tokenAddress: string,
-    to: string,
-    tokenAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    tokenAddress: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    tokenAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   removeFromPerpetual(
-    perpetualID: BigNumberish,
-    amount: BigNumberish,
-    to: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    perpetualID: PromiseOrValue<BigNumberish>,
+    amount: PromiseOrValue<BigNumberish>,
+    to: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   renounceRole(
-    role: BytesLike,
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    role: PromiseOrValue<BytesLike>,
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   revokeRole(
-    role: BytesLike,
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    role: PromiseOrValue<BytesLike>,
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   rewardPerTokenStored(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1172,133 +1268,136 @@ export interface AnglePerpetualManager extends BaseContract {
 
   rewardToken(overrides?: CallOverrides): Promise<string>;
 
-  rewards(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  rewards(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   rewardsDistribution(overrides?: CallOverrides): Promise<string>;
 
   rewardsDuration(overrides?: CallOverrides): Promise<BigNumber>;
 
   'safeTransferFrom(address,address,uint256)'(
-    from: string,
-    to: string,
-    perpetualID: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    from: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    perpetualID: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   'safeTransferFrom(address,address,uint256,bytes)'(
-    from: string,
-    to: string,
-    perpetualID: BigNumberish,
-    _data: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    from: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    perpetualID: PromiseOrValue<BigNumberish>,
+    _data: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setApprovalForAll(
-    operator: string,
-    approved: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    operator: PromiseOrValue<string>,
+    approved: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setBaseURI(
-    _baseURI: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _baseURI: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setBoundsPerpetual(
-    _maxLeverage: BigNumberish,
-    _maintenanceMargin: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _maxLeverage: PromiseOrValue<BigNumberish>,
+    _maintenanceMargin: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setFeeKeeper(
-    feeDeposit: BigNumberish,
-    feeWithdraw: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    feeDeposit: PromiseOrValue<BigNumberish>,
+    feeWithdraw: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setFeeManager(
-    feeManager_: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    feeManager_: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setHAFees(
-    _xHAFees: BigNumberish[],
-    _yHAFees: BigNumberish[],
-    deposit: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _xHAFees: PromiseOrValue<BigNumberish>[],
+    _yHAFees: PromiseOrValue<BigNumberish>[],
+    deposit: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setKeeperFeesCap(
-    _keeperFeesLiquidationCap: BigNumberish,
-    _keeperFeesClosingCap: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _keeperFeesLiquidationCap: PromiseOrValue<BigNumberish>,
+    _keeperFeesClosingCap: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setKeeperFeesClosing(
-    _xKeeperFeesClosing: BigNumberish[],
-    _yKeeperFeesClosing: BigNumberish[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _xKeeperFeesClosing: PromiseOrValue<BigNumberish>[],
+    _yKeeperFeesClosing: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setKeeperFeesLiquidationRatio(
-    _keeperFeesLiquidationRatio: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _keeperFeesLiquidationRatio: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setLockTime(
-    _lockTime: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _lockTime: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setNewRewardsDistribution(
-    _rewardsDistribution: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _rewardsDistribution: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  setOracle(oracle_: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  setOracle(
+    oracle_: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   setRewardDistribution(
-    _rewardsDuration: BigNumberish,
-    _rewardsDistribution: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _rewardsDuration: PromiseOrValue<BigNumberish>,
+    _rewardsDistribution: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setTargetAndLimitHAHedge(
-    _targetHAHedge: BigNumberish,
-    _limitHAHedge: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _targetHAHedge: PromiseOrValue<BigNumberish>,
+    _limitHAHedge: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<boolean>;
+  supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<boolean>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
 
   targetHAHedge(overrides?: CallOverrides): Promise<BigNumber>;
 
-  tokenURI(perpetualID: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  tokenURI(perpetualID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   totalHedgeAmount(overrides?: CallOverrides): Promise<BigNumber>;
 
   transferFrom(
-    from: string,
-    to: string,
-    perpetualID: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    from: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    perpetualID: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  xHAFeesDeposit(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  xHAFeesDeposit(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  xHAFeesWithdraw(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  xHAFeesWithdraw(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  xKeeperFeesClosing(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  xKeeperFeesClosing(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  yHAFeesDeposit(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  yHAFeesDeposit(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  yHAFeesWithdraw(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  yHAFeesWithdraw(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  yKeeperFeesClosing(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  yKeeperFeesClosing(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   callStatic: {
     BASE_PARAMS(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1311,58 +1410,86 @@ export interface AnglePerpetualManager extends BaseContract {
 
     POOLMANAGER_ROLE(overrides?: CallOverrides): Promise<string>;
 
-    addToPerpetual(perpetualID: BigNumberish, amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    addToPerpetual(
+      perpetualID: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    approve(to: string, perpetualID: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    approve(
+      to: PromiseOrValue<string>,
+      perpetualID: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     baseURI(overrides?: CallOverrides): Promise<string>;
 
     closePerpetual(
-      perpetualID: BigNumberish,
-      to: string,
-      minCashOutAmount: BigNumberish,
+      perpetualID: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      minCashOutAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     deployCollateral(
-      governorList: string[],
-      guardian: string,
-      feeManager_: string,
-      oracle_: string,
+      governorList: PromiseOrValue<string>[],
+      guardian: PromiseOrValue<string>,
+      feeManager_: PromiseOrValue<string>,
+      oracle_: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    earned(perpetualID: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    earned(perpetualID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    forceClosePerpetuals(perpetualIDs: BigNumberish[], overrides?: CallOverrides): Promise<void>;
+    forceClosePerpetuals(perpetualIDs: PromiseOrValue<BigNumberish>[], overrides?: CallOverrides): Promise<void>;
 
-    getApproved(perpetualID: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    getApproved(perpetualID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
     getCashOutAmount(
-      perpetualID: BigNumberish,
-      rate: BigNumberish,
+      perpetualID: PromiseOrValue<BigNumberish>,
+      rate: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber]>;
 
-    getReward(perpetualID: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    getReward(perpetualID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<string>;
+    getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
-    grantRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<void>;
+    grantRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     haBonusMalusDeposit(overrides?: CallOverrides): Promise<BigNumber>;
 
     haBonusMalusWithdraw(overrides?: CallOverrides): Promise<BigNumber>;
 
-    hasRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<boolean>;
+    hasRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    initialize(poolManager_: string, rewardToken_: string, overrides?: CallOverrides): Promise<void>;
+    initialize(
+      poolManager_: PromiseOrValue<string>,
+      rewardToken_: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    isApprovedForAll(owner: string, operator: string, overrides?: CallOverrides): Promise<boolean>;
+    isApprovedForAll(
+      owner: PromiseOrValue<string>,
+      operator: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    isApprovedOrOwner(spender: string, perpetualID: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    isApprovedOrOwner(
+      spender: PromiseOrValue<string>,
+      perpetualID: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     keeperFeesClosingCap(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1374,7 +1501,7 @@ export interface AnglePerpetualManager extends BaseContract {
 
     limitHAHedge(overrides?: CallOverrides): Promise<BigNumber>;
 
-    liquidatePerpetuals(perpetualIDs: BigNumberish[], overrides?: CallOverrides): Promise<void>;
+    liquidatePerpetuals(perpetualIDs: PromiseOrValue<BigNumberish>[], overrides?: CallOverrides): Promise<void>;
 
     lockTime(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1384,20 +1511,20 @@ export interface AnglePerpetualManager extends BaseContract {
 
     name(overrides?: CallOverrides): Promise<string>;
 
-    notifyRewardAmount(reward: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    notifyRewardAmount(reward: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     openPerpetual(
-      owner: string,
-      margin: BigNumberish,
-      committedAmount: BigNumberish,
-      maxOracleRate: BigNumberish,
-      minNetMargin: BigNumberish,
+      owner: PromiseOrValue<string>,
+      margin: PromiseOrValue<BigNumberish>,
+      committedAmount: PromiseOrValue<BigNumberish>,
+      maxOracleRate: PromiseOrValue<BigNumberish>,
+      minNetMargin: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     oracle(overrides?: CallOverrides): Promise<string>;
 
-    ownerOf(perpetualID: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    ownerOf(perpetualID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
     pause(overrides?: CallOverrides): Promise<void>;
 
@@ -1406,7 +1533,7 @@ export interface AnglePerpetualManager extends BaseContract {
     periodFinish(overrides?: CallOverrides): Promise<BigNumber>;
 
     perpetualData(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -1417,22 +1544,35 @@ export interface AnglePerpetualManager extends BaseContract {
       }
     >;
 
-    perpetualRewardPerTokenPaid(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    perpetualRewardPerTokenPaid(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     poolManager(overrides?: CallOverrides): Promise<string>;
 
-    recoverERC20(tokenAddress: string, to: string, tokenAmount: BigNumberish, overrides?: CallOverrides): Promise<void>;
-
-    removeFromPerpetual(
-      perpetualID: BigNumberish,
-      amount: BigNumberish,
-      to: string,
+    recoverERC20(
+      tokenAddress: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    renounceRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<void>;
+    removeFromPerpetual(
+      perpetualID: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    revokeRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<void>;
+    renounceRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    revokeRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     rewardPerTokenStored(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1440,121 +1580,145 @@ export interface AnglePerpetualManager extends BaseContract {
 
     rewardToken(overrides?: CallOverrides): Promise<string>;
 
-    rewards(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    rewards(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     rewardsDistribution(overrides?: CallOverrides): Promise<string>;
 
     rewardsDuration(overrides?: CallOverrides): Promise<BigNumber>;
 
     'safeTransferFrom(address,address,uint256)'(
-      from: string,
-      to: string,
-      perpetualID: BigNumberish,
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      perpetualID: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     'safeTransferFrom(address,address,uint256,bytes)'(
-      from: string,
-      to: string,
-      perpetualID: BigNumberish,
-      _data: BytesLike,
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      perpetualID: PromiseOrValue<BigNumberish>,
+      _data: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    setApprovalForAll(operator: string, approved: boolean, overrides?: CallOverrides): Promise<void>;
+    setApprovalForAll(
+      operator: PromiseOrValue<string>,
+      approved: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setBaseURI(_baseURI: string, overrides?: CallOverrides): Promise<void>;
+    setBaseURI(_baseURI: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     setBoundsPerpetual(
-      _maxLeverage: BigNumberish,
-      _maintenanceMargin: BigNumberish,
+      _maxLeverage: PromiseOrValue<BigNumberish>,
+      _maintenanceMargin: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    setFeeKeeper(feeDeposit: BigNumberish, feeWithdraw: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setFeeKeeper(
+      feeDeposit: PromiseOrValue<BigNumberish>,
+      feeWithdraw: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setFeeManager(feeManager_: string, overrides?: CallOverrides): Promise<void>;
+    setFeeManager(feeManager_: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     setHAFees(
-      _xHAFees: BigNumberish[],
-      _yHAFees: BigNumberish[],
-      deposit: BigNumberish,
+      _xHAFees: PromiseOrValue<BigNumberish>[],
+      _yHAFees: PromiseOrValue<BigNumberish>[],
+      deposit: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     setKeeperFeesCap(
-      _keeperFeesLiquidationCap: BigNumberish,
-      _keeperFeesClosingCap: BigNumberish,
+      _keeperFeesLiquidationCap: PromiseOrValue<BigNumberish>,
+      _keeperFeesClosingCap: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     setKeeperFeesClosing(
-      _xKeeperFeesClosing: BigNumberish[],
-      _yKeeperFeesClosing: BigNumberish[],
+      _xKeeperFeesClosing: PromiseOrValue<BigNumberish>[],
+      _yKeeperFeesClosing: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    setKeeperFeesLiquidationRatio(_keeperFeesLiquidationRatio: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setKeeperFeesLiquidationRatio(
+      _keeperFeesLiquidationRatio: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setLockTime(_lockTime: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setLockTime(_lockTime: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setNewRewardsDistribution(_rewardsDistribution: string, overrides?: CallOverrides): Promise<void>;
+    setNewRewardsDistribution(_rewardsDistribution: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setOracle(oracle_: string, overrides?: CallOverrides): Promise<void>;
+    setOracle(oracle_: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     setRewardDistribution(
-      _rewardsDuration: BigNumberish,
-      _rewardsDistribution: string,
+      _rewardsDuration: PromiseOrValue<BigNumberish>,
+      _rewardsDistribution: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     setTargetAndLimitHAHedge(
-      _targetHAHedge: BigNumberish,
-      _limitHAHedge: BigNumberish,
+      _targetHAHedge: PromiseOrValue<BigNumberish>,
+      _limitHAHedge: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<boolean>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<boolean>;
 
     symbol(overrides?: CallOverrides): Promise<string>;
 
     targetHAHedge(overrides?: CallOverrides): Promise<BigNumber>;
 
-    tokenURI(perpetualID: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    tokenURI(perpetualID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
     totalHedgeAmount(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transferFrom(from: string, to: string, perpetualID: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    transferFrom(
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      perpetualID: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     unpause(overrides?: CallOverrides): Promise<void>;
 
-    xHAFeesDeposit(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    xHAFeesDeposit(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    xHAFeesWithdraw(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    xHAFeesWithdraw(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    xKeeperFeesClosing(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    xKeeperFeesClosing(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    yHAFeesDeposit(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    yHAFeesDeposit(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    yHAFeesWithdraw(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    yHAFeesWithdraw(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    yKeeperFeesClosing(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    yKeeperFeesClosing(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   filters: {
     'Approval(address,address,uint256)'(
-      owner?: string | null,
-      approved?: string | null,
-      tokenId?: BigNumberish | null,
+      owner?: PromiseOrValue<string> | null,
+      approved?: PromiseOrValue<string> | null,
+      tokenId?: PromiseOrValue<BigNumberish> | null,
     ): ApprovalEventFilter;
-    Approval(owner?: string | null, approved?: string | null, tokenId?: BigNumberish | null): ApprovalEventFilter;
+    Approval(
+      owner?: PromiseOrValue<string> | null,
+      approved?: PromiseOrValue<string> | null,
+      tokenId?: PromiseOrValue<BigNumberish> | null,
+    ): ApprovalEventFilter;
 
     'ApprovalForAll(address,address,bool)'(
-      owner?: string | null,
-      operator?: string | null,
+      owner?: PromiseOrValue<string> | null,
+      operator?: PromiseOrValue<string> | null,
       approved?: null,
     ): ApprovalForAllEventFilter;
-    ApprovalForAll(owner?: string | null, operator?: string | null, approved?: null): ApprovalForAllEventFilter;
+    ApprovalForAll(
+      owner?: PromiseOrValue<string> | null,
+      operator?: PromiseOrValue<string> | null,
+      approved?: null,
+    ): ApprovalForAllEventFilter;
 
     'BaseURIUpdated(string)'(_baseURI?: null): BaseURIUpdatedEventFilter;
     BaseURIUpdated(_baseURI?: null): BaseURIUpdatedEventFilter;
@@ -1634,54 +1798,70 @@ export interface AnglePerpetualManager extends BaseContract {
     ): PerpetualsForceClosedEventFilter;
 
     'Recovered(address,address,uint256)'(
-      tokenAddress?: string | null,
-      to?: string | null,
+      tokenAddress?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
       amount?: null,
     ): RecoveredEventFilter;
-    Recovered(tokenAddress?: string | null, to?: string | null, amount?: null): RecoveredEventFilter;
+    Recovered(
+      tokenAddress?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      amount?: null,
+    ): RecoveredEventFilter;
 
     'RewardAdded(uint256)'(_reward?: null): RewardAddedEventFilter;
     RewardAdded(_reward?: null): RewardAddedEventFilter;
 
-    'RewardPaid(address,uint256)'(_user?: string | null, _reward?: null): RewardPaidEventFilter;
-    RewardPaid(_user?: string | null, _reward?: null): RewardPaidEventFilter;
+    'RewardPaid(address,uint256)'(_user?: PromiseOrValue<string> | null, _reward?: null): RewardPaidEventFilter;
+    RewardPaid(_user?: PromiseOrValue<string> | null, _reward?: null): RewardPaidEventFilter;
 
     'RewardsDistributionDurationUpdated(uint256,address)'(
       _rewardsDuration?: null,
-      _rewardsDistributor?: string | null,
+      _rewardsDistributor?: PromiseOrValue<string> | null,
     ): RewardsDistributionDurationUpdatedEventFilter;
     RewardsDistributionDurationUpdated(
       _rewardsDuration?: null,
-      _rewardsDistributor?: string | null,
+      _rewardsDistributor?: PromiseOrValue<string> | null,
     ): RewardsDistributionDurationUpdatedEventFilter;
 
-    'RewardsDistributionUpdated(address)'(_rewardsDistributor?: string | null): RewardsDistributionUpdatedEventFilter;
-    RewardsDistributionUpdated(_rewardsDistributor?: string | null): RewardsDistributionUpdatedEventFilter;
+    'RewardsDistributionUpdated(address)'(
+      _rewardsDistributor?: PromiseOrValue<string> | null,
+    ): RewardsDistributionUpdatedEventFilter;
+    RewardsDistributionUpdated(
+      _rewardsDistributor?: PromiseOrValue<string> | null,
+    ): RewardsDistributionUpdatedEventFilter;
 
     'RoleAdminChanged(bytes32,bytes32,bytes32)'(
-      role?: BytesLike | null,
-      previousAdminRole?: BytesLike | null,
-      newAdminRole?: BytesLike | null,
+      role?: PromiseOrValue<BytesLike> | null,
+      previousAdminRole?: PromiseOrValue<BytesLike> | null,
+      newAdminRole?: PromiseOrValue<BytesLike> | null,
     ): RoleAdminChangedEventFilter;
     RoleAdminChanged(
-      role?: BytesLike | null,
-      previousAdminRole?: BytesLike | null,
-      newAdminRole?: BytesLike | null,
+      role?: PromiseOrValue<BytesLike> | null,
+      previousAdminRole?: PromiseOrValue<BytesLike> | null,
+      newAdminRole?: PromiseOrValue<BytesLike> | null,
     ): RoleAdminChangedEventFilter;
 
     'RoleGranted(bytes32,address,address)'(
-      role?: BytesLike | null,
-      account?: string | null,
-      sender?: string | null,
+      role?: PromiseOrValue<BytesLike> | null,
+      account?: PromiseOrValue<string> | null,
+      sender?: PromiseOrValue<string> | null,
     ): RoleGrantedEventFilter;
-    RoleGranted(role?: BytesLike | null, account?: string | null, sender?: string | null): RoleGrantedEventFilter;
+    RoleGranted(
+      role?: PromiseOrValue<BytesLike> | null,
+      account?: PromiseOrValue<string> | null,
+      sender?: PromiseOrValue<string> | null,
+    ): RoleGrantedEventFilter;
 
     'RoleRevoked(bytes32,address,address)'(
-      role?: BytesLike | null,
-      account?: string | null,
-      sender?: string | null,
+      role?: PromiseOrValue<BytesLike> | null,
+      account?: PromiseOrValue<string> | null,
+      sender?: PromiseOrValue<string> | null,
     ): RoleRevokedEventFilter;
-    RoleRevoked(role?: BytesLike | null, account?: string | null, sender?: string | null): RoleRevokedEventFilter;
+    RoleRevoked(
+      role?: PromiseOrValue<BytesLike> | null,
+      account?: PromiseOrValue<string> | null,
+      sender?: PromiseOrValue<string> | null,
+    ): RoleRevokedEventFilter;
 
     'TargetAndLimitHAHedgeUpdated(uint64,uint64)'(
       _targetHAHedge?: null,
@@ -1690,11 +1870,15 @@ export interface AnglePerpetualManager extends BaseContract {
     TargetAndLimitHAHedgeUpdated(_targetHAHedge?: null, _limitHAHedge?: null): TargetAndLimitHAHedgeUpdatedEventFilter;
 
     'Transfer(address,address,uint256)'(
-      from?: string | null,
-      to?: string | null,
-      tokenId?: BigNumberish | null,
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      tokenId?: PromiseOrValue<BigNumberish> | null,
     ): TransferEventFilter;
-    Transfer(from?: string | null, to?: string | null, tokenId?: BigNumberish | null): TransferEventFilter;
+    Transfer(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      tokenId?: PromiseOrValue<BigNumberish> | null,
+    ): TransferEventFilter;
 
     'Unpaused(address)'(account?: null): UnpausedEventFilter;
     Unpaused(account?: null): UnpausedEventFilter;
@@ -1712,75 +1896,91 @@ export interface AnglePerpetualManager extends BaseContract {
     POOLMANAGER_ROLE(overrides?: CallOverrides): Promise<BigNumber>;
 
     addToPerpetual(
-      perpetualID: BigNumberish,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      perpetualID: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     approve(
-      to: string,
-      perpetualID: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      perpetualID: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     baseURI(overrides?: CallOverrides): Promise<BigNumber>;
 
     closePerpetual(
-      perpetualID: BigNumberish,
-      to: string,
-      minCashOutAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      perpetualID: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      minCashOutAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     deployCollateral(
-      governorList: string[],
-      guardian: string,
-      feeManager_: string,
-      oracle_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      governorList: PromiseOrValue<string>[],
+      guardian: PromiseOrValue<string>,
+      feeManager_: PromiseOrValue<string>,
+      oracle_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    earned(perpetualID: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    earned(perpetualID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     forceClosePerpetuals(
-      perpetualIDs: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      perpetualIDs: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    getApproved(perpetualID: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getApproved(perpetualID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getCashOutAmount(perpetualID: BigNumberish, rate: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getCashOutAmount(
+      perpetualID: PromiseOrValue<BigNumberish>,
+      rate: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     getReward(
-      perpetualID: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      perpetualID: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     grantRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     haBonusMalusDeposit(overrides?: CallOverrides): Promise<BigNumber>;
 
     haBonusMalusWithdraw(overrides?: CallOverrides): Promise<BigNumber>;
 
-    hasRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-    initialize(
-      poolManager_: string,
-      rewardToken_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    hasRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    isApprovedForAll(owner: string, operator: string, overrides?: CallOverrides): Promise<BigNumber>;
+    initialize(
+      poolManager_: PromiseOrValue<string>,
+      rewardToken_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    isApprovedOrOwner(spender: string, perpetualID: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    isApprovedForAll(
+      owner: PromiseOrValue<string>,
+      operator: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
+    isApprovedOrOwner(
+      spender: PromiseOrValue<string>,
+      perpetualID: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     keeperFeesClosingCap(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1793,8 +1993,8 @@ export interface AnglePerpetualManager extends BaseContract {
     limitHAHedge(overrides?: CallOverrides): Promise<BigNumber>;
 
     liquidatePerpetuals(
-      perpetualIDs: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      perpetualIDs: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     lockTime(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1806,59 +2006,59 @@ export interface AnglePerpetualManager extends BaseContract {
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
     notifyRewardAmount(
-      reward: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      reward: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     openPerpetual(
-      owner: string,
-      margin: BigNumberish,
-      committedAmount: BigNumberish,
-      maxOracleRate: BigNumberish,
-      minNetMargin: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      owner: PromiseOrValue<string>,
+      margin: PromiseOrValue<BigNumberish>,
+      committedAmount: PromiseOrValue<BigNumberish>,
+      maxOracleRate: PromiseOrValue<BigNumberish>,
+      minNetMargin: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     oracle(overrides?: CallOverrides): Promise<BigNumber>;
 
-    ownerOf(perpetualID: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    ownerOf(perpetualID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     paused(overrides?: CallOverrides): Promise<BigNumber>;
 
     periodFinish(overrides?: CallOverrides): Promise<BigNumber>;
 
-    perpetualData(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    perpetualData(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    perpetualRewardPerTokenPaid(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    perpetualRewardPerTokenPaid(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     poolManager(overrides?: CallOverrides): Promise<BigNumber>;
 
     recoverERC20(
-      tokenAddress: string,
-      to: string,
-      tokenAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tokenAddress: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     removeFromPerpetual(
-      perpetualID: BigNumberish,
-      amount: BigNumberish,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      perpetualID: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     renounceRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     revokeRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     rewardPerTokenStored(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1867,127 +2067,136 @@ export interface AnglePerpetualManager extends BaseContract {
 
     rewardToken(overrides?: CallOverrides): Promise<BigNumber>;
 
-    rewards(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    rewards(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     rewardsDistribution(overrides?: CallOverrides): Promise<BigNumber>;
 
     rewardsDuration(overrides?: CallOverrides): Promise<BigNumber>;
 
     'safeTransferFrom(address,address,uint256)'(
-      from: string,
-      to: string,
-      perpetualID: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      perpetualID: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     'safeTransferFrom(address,address,uint256,bytes)'(
-      from: string,
-      to: string,
-      perpetualID: BigNumberish,
-      _data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      perpetualID: PromiseOrValue<BigNumberish>,
+      _data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setApprovalForAll(
-      operator: string,
-      approved: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      operator: PromiseOrValue<string>,
+      approved: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setBaseURI(_baseURI: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setBaseURI(
+      _baseURI: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setBoundsPerpetual(
-      _maxLeverage: BigNumberish,
-      _maintenanceMargin: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _maxLeverage: PromiseOrValue<BigNumberish>,
+      _maintenanceMargin: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setFeeKeeper(
-      feeDeposit: BigNumberish,
-      feeWithdraw: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      feeDeposit: PromiseOrValue<BigNumberish>,
+      feeWithdraw: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setFeeManager(feeManager_: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setFeeManager(
+      feeManager_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setHAFees(
-      _xHAFees: BigNumberish[],
-      _yHAFees: BigNumberish[],
-      deposit: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _xHAFees: PromiseOrValue<BigNumberish>[],
+      _yHAFees: PromiseOrValue<BigNumberish>[],
+      deposit: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setKeeperFeesCap(
-      _keeperFeesLiquidationCap: BigNumberish,
-      _keeperFeesClosingCap: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _keeperFeesLiquidationCap: PromiseOrValue<BigNumberish>,
+      _keeperFeesClosingCap: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setKeeperFeesClosing(
-      _xKeeperFeesClosing: BigNumberish[],
-      _yKeeperFeesClosing: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _xKeeperFeesClosing: PromiseOrValue<BigNumberish>[],
+      _yKeeperFeesClosing: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setKeeperFeesLiquidationRatio(
-      _keeperFeesLiquidationRatio: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _keeperFeesLiquidationRatio: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setLockTime(
-      _lockTime: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _lockTime: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setNewRewardsDistribution(
-      _rewardsDistribution: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardsDistribution: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setOracle(oracle_: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setOracle(
+      oracle_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setRewardDistribution(
-      _rewardsDuration: BigNumberish,
-      _rewardsDistribution: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardsDuration: PromiseOrValue<BigNumberish>,
+      _rewardsDistribution: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setTargetAndLimitHAHedge(
-      _targetHAHedge: BigNumberish,
-      _limitHAHedge: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _targetHAHedge: PromiseOrValue<BigNumberish>,
+      _limitHAHedge: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
     targetHAHedge(overrides?: CallOverrides): Promise<BigNumber>;
 
-    tokenURI(perpetualID: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    tokenURI(perpetualID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     totalHedgeAmount(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferFrom(
-      from: string,
-      to: string,
-      perpetualID: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      perpetualID: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    xHAFeesDeposit(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    xHAFeesDeposit(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    xHAFeesWithdraw(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    xHAFeesWithdraw(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    xKeeperFeesClosing(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    xKeeperFeesClosing(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    yHAFeesDeposit(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    yHAFeesDeposit(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    yHAFeesWithdraw(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    yHAFeesWithdraw(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    yKeeperFeesClosing(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    yKeeperFeesClosing(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -2002,81 +2211,89 @@ export interface AnglePerpetualManager extends BaseContract {
     POOLMANAGER_ROLE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     addToPerpetual(
-      perpetualID: BigNumberish,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      perpetualID: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     approve(
-      to: string,
-      perpetualID: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      perpetualID: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    balanceOf(owner: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    balanceOf(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     baseURI(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     closePerpetual(
-      perpetualID: BigNumberish,
-      to: string,
-      minCashOutAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      perpetualID: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      minCashOutAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     deployCollateral(
-      governorList: string[],
-      guardian: string,
-      feeManager_: string,
-      oracle_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      governorList: PromiseOrValue<string>[],
+      guardian: PromiseOrValue<string>,
+      feeManager_: PromiseOrValue<string>,
+      oracle_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    earned(perpetualID: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    earned(perpetualID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     forceClosePerpetuals(
-      perpetualIDs: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      perpetualIDs: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    getApproved(perpetualID: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getApproved(perpetualID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getCashOutAmount(
-      perpetualID: BigNumberish,
-      rate: BigNumberish,
+      perpetualID: PromiseOrValue<BigNumberish>,
+      rate: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     getReward(
-      perpetualID: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      perpetualID: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     grantRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     haBonusMalusDeposit(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     haBonusMalusWithdraw(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    hasRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    initialize(
-      poolManager_: string,
-      rewardToken_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    hasRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    isApprovedForAll(owner: string, operator: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    initialize(
+      poolManager_: PromiseOrValue<string>,
+      rewardToken_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    isApprovedForAll(
+      owner: PromiseOrValue<string>,
+      operator: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     isApprovedOrOwner(
-      spender: string,
-      perpetualID: BigNumberish,
+      spender: PromiseOrValue<string>,
+      perpetualID: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
@@ -2091,8 +2308,8 @@ export interface AnglePerpetualManager extends BaseContract {
     limitHAHedge(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     liquidatePerpetuals(
-      perpetualIDs: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      perpetualIDs: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     lockTime(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -2104,59 +2321,62 @@ export interface AnglePerpetualManager extends BaseContract {
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     notifyRewardAmount(
-      reward: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      reward: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     openPerpetual(
-      owner: string,
-      margin: BigNumberish,
-      committedAmount: BigNumberish,
-      maxOracleRate: BigNumberish,
-      minNetMargin: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      owner: PromiseOrValue<string>,
+      margin: PromiseOrValue<BigNumberish>,
+      committedAmount: PromiseOrValue<BigNumberish>,
+      maxOracleRate: PromiseOrValue<BigNumberish>,
+      minNetMargin: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     oracle(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    ownerOf(perpetualID: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    ownerOf(perpetualID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     paused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     periodFinish(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    perpetualData(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    perpetualData(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    perpetualRewardPerTokenPaid(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    perpetualRewardPerTokenPaid(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     poolManager(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     recoverERC20(
-      tokenAddress: string,
-      to: string,
-      tokenAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tokenAddress: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      tokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     removeFromPerpetual(
-      perpetualID: BigNumberish,
-      amount: BigNumberish,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      perpetualID: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     renounceRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     revokeRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     rewardPerTokenStored(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -2165,135 +2385,135 @@ export interface AnglePerpetualManager extends BaseContract {
 
     rewardToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    rewards(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    rewards(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     rewardsDistribution(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     rewardsDuration(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     'safeTransferFrom(address,address,uint256)'(
-      from: string,
-      to: string,
-      perpetualID: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      perpetualID: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     'safeTransferFrom(address,address,uint256,bytes)'(
-      from: string,
-      to: string,
-      perpetualID: BigNumberish,
-      _data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      perpetualID: PromiseOrValue<BigNumberish>,
+      _data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setApprovalForAll(
-      operator: string,
-      approved: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      operator: PromiseOrValue<string>,
+      approved: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setBaseURI(
-      _baseURI: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _baseURI: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setBoundsPerpetual(
-      _maxLeverage: BigNumberish,
-      _maintenanceMargin: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _maxLeverage: PromiseOrValue<BigNumberish>,
+      _maintenanceMargin: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setFeeKeeper(
-      feeDeposit: BigNumberish,
-      feeWithdraw: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      feeDeposit: PromiseOrValue<BigNumberish>,
+      feeWithdraw: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setFeeManager(
-      feeManager_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      feeManager_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setHAFees(
-      _xHAFees: BigNumberish[],
-      _yHAFees: BigNumberish[],
-      deposit: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _xHAFees: PromiseOrValue<BigNumberish>[],
+      _yHAFees: PromiseOrValue<BigNumberish>[],
+      deposit: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setKeeperFeesCap(
-      _keeperFeesLiquidationCap: BigNumberish,
-      _keeperFeesClosingCap: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _keeperFeesLiquidationCap: PromiseOrValue<BigNumberish>,
+      _keeperFeesClosingCap: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setKeeperFeesClosing(
-      _xKeeperFeesClosing: BigNumberish[],
-      _yKeeperFeesClosing: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _xKeeperFeesClosing: PromiseOrValue<BigNumberish>[],
+      _yKeeperFeesClosing: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setKeeperFeesLiquidationRatio(
-      _keeperFeesLiquidationRatio: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _keeperFeesLiquidationRatio: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setLockTime(
-      _lockTime: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _lockTime: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setNewRewardsDistribution(
-      _rewardsDistribution: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardsDistribution: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setOracle(
-      oracle_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      oracle_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setRewardDistribution(
-      _rewardsDuration: BigNumberish,
-      _rewardsDistribution: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardsDuration: PromiseOrValue<BigNumberish>,
+      _rewardsDistribution: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setTargetAndLimitHAHedge(
-      _targetHAHedge: BigNumberish,
-      _limitHAHedge: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _targetHAHedge: PromiseOrValue<BigNumberish>,
+      _limitHAHedge: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     targetHAHedge(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    tokenURI(perpetualID: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    tokenURI(perpetualID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalHedgeAmount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferFrom(
-      from: string,
-      to: string,
-      perpetualID: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      perpetualID: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    xHAFeesDeposit(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    xHAFeesDeposit(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    xHAFeesWithdraw(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    xHAFeesWithdraw(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    xKeeperFeesClosing(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    xKeeperFeesClosing(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    yHAFeesDeposit(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    yHAFeesDeposit(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    yHAFeesWithdraw(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    yHAFeesWithdraw(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    yKeeperFeesClosing(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    yKeeperFeesClosing(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }

@@ -15,11 +15,11 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export type AccountInfoStruct = {
-  total: BigNumberish;
-  startTime: BigNumberish;
+  total: PromiseOrValue<BigNumberish>;
+  startTime: PromiseOrValue<BigNumberish>;
 };
 
 export type AccountInfoStructOutput = [BigNumber, BigNumber] & {
@@ -113,12 +113,15 @@ export interface GroVestingInterface extends utils.Interface {
 
   encodeFunctionData(functionFragment: 'PERCENTAGE_DECIMAL_FACTOR', values?: undefined): string;
   encodeFunctionData(functionFragment: 'TIME_LOCK', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'accountInfos', values: [string]): string;
-  encodeFunctionData(functionFragment: 'calcPartialExit', values: [string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'accountInfos', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'calcPartialExit',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'distributer', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'exit', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'extend', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'getVestingDates', values: [string]): string;
+  encodeFunctionData(functionFragment: 'exit', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'extend', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'getVestingDates', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'globalStartTime', values?: undefined): string;
   encodeFunctionData(functionFragment: 'hodlerClaims', values?: undefined): string;
   encodeFunctionData(functionFragment: 'initUnlockedPercent', values?: undefined): string;
@@ -131,24 +134,27 @@ export interface GroVestingInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'paused', values?: undefined): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'setDistributer', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setHodlerClaims', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setInitUnlockedPercent', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setInstantUnlockedPercent', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setMaxLockPeriod', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setStatus', values: [boolean]): string;
-  encodeFunctionData(functionFragment: 'setVester', values: [string, boolean]): string;
-  encodeFunctionData(functionFragment: 'totalBalance', values: [string]): string;
+  encodeFunctionData(functionFragment: 'setDistributer', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setHodlerClaims', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setInitUnlockedPercent', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setInstantUnlockedPercent', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setMaxLockPeriod', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setStatus', values: [PromiseOrValue<boolean>]): string;
+  encodeFunctionData(functionFragment: 'setVester', values: [PromiseOrValue<string>, PromiseOrValue<boolean>]): string;
+  encodeFunctionData(functionFragment: 'totalBalance', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'totalGroove', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalLockedAmount', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'totalWithdrawn', values: [string]): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
-  encodeFunctionData(functionFragment: 'userMigrated', values: [string]): string;
-  encodeFunctionData(functionFragment: 'vest', values: [boolean, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'vestedBalance', values: [string]): string;
-  encodeFunctionData(functionFragment: 'vesters', values: [string]): string;
-  encodeFunctionData(functionFragment: 'vestingBalance', values: [string]): string;
-  encodeFunctionData(functionFragment: 'withdrawals', values: [string]): string;
+  encodeFunctionData(functionFragment: 'totalWithdrawn', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'userMigrated', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'vest',
+    values: [PromiseOrValue<boolean>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'vestedBalance', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'vesters', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'vestingBalance', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'withdrawals', values: [PromiseOrValue<string>]): string;
 
   decodeFunctionResult(functionFragment: 'PERCENTAGE_DECIMAL_FACTOR', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'TIME_LOCK', data: BytesLike): Result;
@@ -362,25 +368,29 @@ export interface GroVesting extends BaseContract {
     TIME_LOCK(overrides?: CallOverrides): Promise<[string]>;
 
     accountInfos(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { total: BigNumber; startTime: BigNumber }>;
 
-    calcPartialExit(account: string, amount: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+    calcPartialExit(
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber, BigNumber]>;
 
     distributer(overrides?: CallOverrides): Promise<[string]>;
 
     exit(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     extend(
-      extension: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      extension: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    getVestingDates(account: string, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+    getVestingDates(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
 
     globalStartTime(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -388,7 +398,7 @@ export interface GroVesting extends BaseContract {
 
     initUnlockedPercent(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    initialize(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    initialize(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     initialized(overrides?: CallOverrides): Promise<[boolean]>;
 
@@ -404,73 +414,79 @@ export interface GroVesting extends BaseContract {
 
     paused(overrides?: CallOverrides): Promise<[boolean]>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     setDistributer(
-      _distributer: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _distributer: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setHodlerClaims(
-      _hodlerClaims: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _hodlerClaims: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setInitUnlockedPercent(
-      _initUnlockedPercent: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _initUnlockedPercent: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setInstantUnlockedPercent(
-      _instantUnlockPercent: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _instantUnlockPercent: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setMaxLockPeriod(
-      maxPeriodFactor: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      maxPeriodFactor: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setStatus(
-      pause: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pause: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setVester(
-      vester: string,
-      status: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vester: PromiseOrValue<string>,
+      status: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    totalBalance(account: string, overrides?: CallOverrides): Promise<[BigNumber] & { unvested: BigNumber }>;
+    totalBalance(
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber] & { unvested: BigNumber }>;
 
     totalGroove(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     totalLockedAmount(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    totalWithdrawn(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    totalWithdrawn(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    userMigrated(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    userMigrated(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     vest(
-      vest: boolean,
-      account: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vest: PromiseOrValue<boolean>,
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    vestedBalance(account: string, overrides?: CallOverrides): Promise<[BigNumber] & { unvested: BigNumber }>;
+    vestedBalance(
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber] & { unvested: BigNumber }>;
 
-    vesters(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    vesters(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
-    vestingBalance(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    vestingBalance(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    withdrawals(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    withdrawals(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
   };
 
   PERCENTAGE_DECIMAL_FACTOR(overrides?: CallOverrides): Promise<BigNumber>;
@@ -478,22 +494,29 @@ export interface GroVesting extends BaseContract {
   TIME_LOCK(overrides?: CallOverrides): Promise<string>;
 
   accountInfos(
-    arg0: string,
+    arg0: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber, BigNumber] & { total: BigNumber; startTime: BigNumber }>;
 
-  calcPartialExit(account: string, amount: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+  calcPartialExit(
+    account: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<[BigNumber, BigNumber]>;
 
   distributer(overrides?: CallOverrides): Promise<string>;
 
-  exit(amount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
-
-  extend(
-    extension: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+  exit(
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  getVestingDates(account: string, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+  extend(
+    extension: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
+
+  getVestingDates(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
 
   globalStartTime(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -501,7 +524,7 @@ export interface GroVesting extends BaseContract {
 
   initUnlockedPercent(overrides?: CallOverrides): Promise<BigNumber>;
 
-  initialize(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  initialize(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   initialized(overrides?: CallOverrides): Promise<boolean>;
 
@@ -517,70 +540,73 @@ export interface GroVesting extends BaseContract {
 
   paused(overrides?: CallOverrides): Promise<boolean>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   setDistributer(
-    _distributer: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _distributer: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setHodlerClaims(
-    _hodlerClaims: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _hodlerClaims: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setInitUnlockedPercent(
-    _initUnlockedPercent: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _initUnlockedPercent: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setInstantUnlockedPercent(
-    _instantUnlockPercent: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _instantUnlockPercent: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setMaxLockPeriod(
-    maxPeriodFactor: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    maxPeriodFactor: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  setStatus(pause: boolean, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  setStatus(
+    pause: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   setVester(
-    vester: string,
-    status: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    vester: PromiseOrValue<string>,
+    status: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  totalBalance(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  totalBalance(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   totalGroove(overrides?: CallOverrides): Promise<BigNumber>;
 
   totalLockedAmount(overrides?: CallOverrides): Promise<BigNumber>;
 
-  totalWithdrawn(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  totalWithdrawn(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  userMigrated(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  userMigrated(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   vest(
-    vest: boolean,
-    account: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    vest: PromiseOrValue<boolean>,
+    account: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  vestedBalance(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  vestedBalance(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  vesters(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  vesters(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-  vestingBalance(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  vestingBalance(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  withdrawals(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  withdrawals(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   callStatic: {
     PERCENTAGE_DECIMAL_FACTOR(overrides?: CallOverrides): Promise<BigNumber>;
@@ -588,19 +614,23 @@ export interface GroVesting extends BaseContract {
     TIME_LOCK(overrides?: CallOverrides): Promise<string>;
 
     accountInfos(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { total: BigNumber; startTime: BigNumber }>;
 
-    calcPartialExit(account: string, amount: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+    calcPartialExit(
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber, BigNumber]>;
 
     distributer(overrides?: CallOverrides): Promise<string>;
 
-    exit(amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    exit(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    extend(extension: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    extend(extension: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    getVestingDates(account: string, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+    getVestingDates(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
 
     globalStartTime(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -626,74 +656,97 @@ export interface GroVesting extends BaseContract {
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
-    setDistributer(_distributer: string, overrides?: CallOverrides): Promise<void>;
+    setDistributer(_distributer: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setHodlerClaims(_hodlerClaims: string, overrides?: CallOverrides): Promise<void>;
+    setHodlerClaims(_hodlerClaims: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setInitUnlockedPercent(_initUnlockedPercent: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setInitUnlockedPercent(
+      _initUnlockedPercent: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setInstantUnlockedPercent(_instantUnlockPercent: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setInstantUnlockedPercent(
+      _instantUnlockPercent: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setMaxLockPeriod(maxPeriodFactor: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setMaxLockPeriod(maxPeriodFactor: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setStatus(pause: boolean, overrides?: CallOverrides): Promise<void>;
+    setStatus(pause: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
 
-    setVester(vester: string, status: boolean, overrides?: CallOverrides): Promise<void>;
+    setVester(
+      vester: PromiseOrValue<string>,
+      status: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    totalBalance(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    totalBalance(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     totalGroove(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalLockedAmount(overrides?: CallOverrides): Promise<BigNumber>;
 
-    totalWithdrawn(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    totalWithdrawn(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    userMigrated(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    userMigrated(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-    vest(vest: boolean, account: string, amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    vest(
+      vest: PromiseOrValue<boolean>,
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    vestedBalance(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    vestedBalance(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    vesters(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    vesters(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-    vestingBalance(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    vestingBalance(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    withdrawals(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    withdrawals(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   filters: {
     'LogExit(address,uint256,uint256,uint256,uint256)'(
-      user?: string | null,
+      user?: PromiseOrValue<string> | null,
       totalLockedAmount?: null,
       amount?: null,
       unlocked?: null,
       penalty?: null,
     ): LogExitEventFilter;
     LogExit(
-      user?: string | null,
+      user?: PromiseOrValue<string> | null,
       totalLockedAmount?: null,
       amount?: null,
       unlocked?: null,
       penalty?: null,
     ): LogExitEventFilter;
 
-    'LogExtend(address,uint256,tuple)'(user?: string | null, newPeriod?: null, newVesting?: null): LogExtendEventFilter;
-    LogExtend(user?: string | null, newPeriod?: null, newVesting?: null): LogExtendEventFilter;
+    'LogExtend(address,uint256,tuple)'(
+      user?: PromiseOrValue<string> | null,
+      newPeriod?: null,
+      newVesting?: null,
+    ): LogExtendEventFilter;
+    LogExtend(user?: PromiseOrValue<string> | null, newPeriod?: null, newVesting?: null): LogExtendEventFilter;
 
     'LogInstantExit(address,uint256,uint256)'(
-      user?: string | null,
+      user?: PromiseOrValue<string> | null,
       mintingAmount?: null,
       penalty?: null,
     ): LogInstantExitEventFilter;
-    LogInstantExit(user?: string | null, mintingAmount?: null, penalty?: null): LogInstantExitEventFilter;
+    LogInstantExit(
+      user?: PromiseOrValue<string> | null,
+      mintingAmount?: null,
+      penalty?: null,
+    ): LogInstantExitEventFilter;
 
     'LogMaxLockPeriod(uint256)'(newMaxPeriod?: null): LogMaxLockPeriodEventFilter;
     LogMaxLockPeriod(newMaxPeriod?: null): LogMaxLockPeriodEventFilter;
 
-    'LogMigrate(address,tuple)'(user?: string | null, vesting?: null): LogMigrateEventFilter;
-    LogMigrate(user?: string | null, vesting?: null): LogMigrateEventFilter;
+    'LogMigrate(address,tuple)'(user?: PromiseOrValue<string> | null, vesting?: null): LogMigrateEventFilter;
+    LogMigrate(user?: PromiseOrValue<string> | null, vesting?: null): LogMigrateEventFilter;
 
     'LogNewBonusContract(address)'(bonusContract?: null): LogNewBonusContractEventFilter;
     LogNewBonusContract(bonusContract?: null): LogNewBonusContractEventFilter;
@@ -714,21 +767,29 @@ export interface GroVesting extends BaseContract {
     LogSetStatus(pause?: null): LogSetStatusEventFilter;
 
     'LogVest(address,uint256,uint256,tuple)'(
-      user?: string | null,
+      user?: PromiseOrValue<string> | null,
       totalLockedAmount?: null,
       amount?: null,
       vesting?: null,
     ): LogVestEventFilter;
-    LogVest(user?: string | null, totalLockedAmount?: null, amount?: null, vesting?: null): LogVestEventFilter;
+    LogVest(
+      user?: PromiseOrValue<string> | null,
+      totalLockedAmount?: null,
+      amount?: null,
+      vesting?: null,
+    ): LogVestEventFilter;
 
     'LogVester(address,bool)'(vester?: null, status?: null): LogVesterEventFilter;
     LogVester(vester?: null, status?: null): LogVesterEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
   };
 
   estimateGas: {
@@ -736,17 +797,27 @@ export interface GroVesting extends BaseContract {
 
     TIME_LOCK(overrides?: CallOverrides): Promise<BigNumber>;
 
-    accountInfos(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    accountInfos(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    calcPartialExit(account: string, amount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    calcPartialExit(
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     distributer(overrides?: CallOverrides): Promise<BigNumber>;
 
-    exit(amount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    exit(
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    extend(extension: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    extend(
+      extension: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    getVestingDates(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getVestingDates(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     globalStartTime(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -754,7 +825,7 @@ export interface GroVesting extends BaseContract {
 
     initUnlockedPercent(overrides?: CallOverrides): Promise<BigNumber>;
 
-    initialize(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    initialize(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     initialized(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -770,70 +841,73 @@ export interface GroVesting extends BaseContract {
 
     paused(overrides?: CallOverrides): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     setDistributer(
-      _distributer: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _distributer: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setHodlerClaims(
-      _hodlerClaims: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _hodlerClaims: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setInitUnlockedPercent(
-      _initUnlockedPercent: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _initUnlockedPercent: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setInstantUnlockedPercent(
-      _instantUnlockPercent: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _instantUnlockPercent: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setMaxLockPeriod(
-      maxPeriodFactor: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      maxPeriodFactor: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setStatus(pause: boolean, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setStatus(
+      pause: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setVester(
-      vester: string,
-      status: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vester: PromiseOrValue<string>,
+      status: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    totalBalance(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    totalBalance(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     totalGroove(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalLockedAmount(overrides?: CallOverrides): Promise<BigNumber>;
 
-    totalWithdrawn(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    totalWithdrawn(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    userMigrated(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    userMigrated(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     vest(
-      vest: boolean,
-      account: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vest: PromiseOrValue<boolean>,
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    vestedBalance(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    vestedBalance(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    vesters(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    vesters(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    vestingBalance(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    vestingBalance(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    withdrawals(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    withdrawals(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -841,23 +915,27 @@ export interface GroVesting extends BaseContract {
 
     TIME_LOCK(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    accountInfos(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    accountInfos(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    calcPartialExit(account: string, amount: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    calcPartialExit(
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     distributer(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     exit(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     extend(
-      extension: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      extension: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    getVestingDates(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getVestingDates(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     globalStartTime(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -865,7 +943,7 @@ export interface GroVesting extends BaseContract {
 
     initUnlockedPercent(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    initialize(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    initialize(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     initialized(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -881,72 +959,72 @@ export interface GroVesting extends BaseContract {
 
     paused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     setDistributer(
-      _distributer: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _distributer: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setHodlerClaims(
-      _hodlerClaims: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _hodlerClaims: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setInitUnlockedPercent(
-      _initUnlockedPercent: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _initUnlockedPercent: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setInstantUnlockedPercent(
-      _instantUnlockPercent: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _instantUnlockPercent: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setMaxLockPeriod(
-      maxPeriodFactor: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      maxPeriodFactor: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setStatus(
-      pause: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pause: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setVester(
-      vester: string,
-      status: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vester: PromiseOrValue<string>,
+      status: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    totalBalance(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    totalBalance(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalGroove(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalLockedAmount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    totalWithdrawn(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    totalWithdrawn(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    userMigrated(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    userMigrated(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     vest(
-      vest: boolean,
-      account: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vest: PromiseOrValue<boolean>,
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    vestedBalance(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    vestedBalance(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    vesters(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    vesters(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    vestingBalance(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    vestingBalance(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    withdrawals(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    withdrawals(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }

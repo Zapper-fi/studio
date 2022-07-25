@@ -15,15 +15,15 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export declare namespace IPool {
   export type DepositStruct = {
-    tokenAmount: BigNumberish;
-    weight: BigNumberish;
-    lockedFrom: BigNumberish;
-    lockedUntil: BigNumberish;
-    isYield: boolean;
+    tokenAmount: PromiseOrValue<BigNumberish>;
+    weight: PromiseOrValue<BigNumberish>;
+    lockedFrom: PromiseOrValue<BigNumberish>;
+    lockedUntil: PromiseOrValue<BigNumberish>;
+    isYield: PromiseOrValue<boolean>;
   };
 
   export type DepositStructOutput = [BigNumber, BigNumber, BigNumber, BigNumber, boolean] & {
@@ -105,36 +105,57 @@ export interface IlluviumCorePoolInterface extends utils.Interface {
       | 'yieldRewardsPerWeight',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'blockNumber', values?: undefined): string;
   encodeFunctionData(functionFragment: 'factory', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getDeposit', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'getDepositsLength', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'getDeposit',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'getDepositsLength', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'ilv', values?: undefined): string;
   encodeFunctionData(functionFragment: 'isFlashPool', values?: undefined): string;
   encodeFunctionData(functionFragment: 'lastYieldDistribution', values?: undefined): string;
   encodeFunctionData(functionFragment: 'now256', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'pendingVaultRewards', values: [string]): string;
-  encodeFunctionData(functionFragment: 'pendingYieldRewards', values: [string]): string;
+  encodeFunctionData(functionFragment: 'pendingVaultRewards', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'pendingYieldRewards', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'poolToken', values?: undefined): string;
   encodeFunctionData(functionFragment: 'poolTokenReserve', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'processRewards', values: [boolean]): string;
-  encodeFunctionData(functionFragment: 'receiveVaultRewards', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'rewardToWeight', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setVault', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setWeight', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'processRewards', values: [PromiseOrValue<boolean>]): string;
+  encodeFunctionData(functionFragment: 'receiveVaultRewards', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'rewardToWeight',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'setVault', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setWeight', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'silv', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'stake', values: [BigNumberish, BigNumberish, boolean]): string;
-  encodeFunctionData(functionFragment: 'stakeAsPool', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'stake',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'stakeAsPool',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'sync', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'unstake', values: [BigNumberish, BigNumberish, boolean]): string;
-  encodeFunctionData(functionFragment: 'updateStakeLock', values: [BigNumberish, BigNumberish, boolean]): string;
-  encodeFunctionData(functionFragment: 'users', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'unstake',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'updateStakeLock',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(functionFragment: 'users', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'usersLockingWeight', values?: undefined): string;
   encodeFunctionData(functionFragment: 'vault', values?: undefined): string;
   encodeFunctionData(functionFragment: 'vaultRewardsPerWeight', values?: undefined): string;
   encodeFunctionData(functionFragment: 'weight', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'weightToReward', values: [BigNumberish, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'weightToReward',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'yieldRewardsPerWeight', values?: undefined): string;
 
   decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result;
@@ -297,19 +318,19 @@ export interface IlluviumCorePool extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    balanceOf(_user: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOf(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     blockNumber(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     factory(overrides?: CallOverrides): Promise<[string]>;
 
     getDeposit(
-      _user: string,
-      _depositId: BigNumberish,
+      _user: PromiseOrValue<string>,
+      _depositId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[IPool.DepositStructOutput]>;
 
-    getDepositsLength(_user: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getDepositsLength(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     ilv(overrides?: CallOverrides): Promise<[string]>;
 
@@ -319,70 +340,76 @@ export interface IlluviumCorePool extends BaseContract {
 
     now256(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    pendingVaultRewards(_staker: string, overrides?: CallOverrides): Promise<[BigNumber] & { pending: BigNumber }>;
+    pendingVaultRewards(
+      _staker: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber] & { pending: BigNumber }>;
 
-    pendingYieldRewards(_staker: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    pendingYieldRewards(_staker: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     poolToken(overrides?: CallOverrides): Promise<[string]>;
 
     poolTokenReserve(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     processRewards(
-      _useSILV: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _useSILV: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     receiveVaultRewards(
-      _rewardsAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardsAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     rewardToWeight(
-      reward: BigNumberish,
-      rewardPerWeight: BigNumberish,
+      reward: PromiseOrValue<BigNumberish>,
+      rewardPerWeight: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
-    setVault(_vault: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    setVault(
+      _vault: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     setWeight(
-      _weight: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _weight: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     silv(overrides?: CallOverrides): Promise<[string]>;
 
     stake(
-      _amount: BigNumberish,
-      _lockUntil: BigNumberish,
-      _useSILV: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      _lockUntil: PromiseOrValue<BigNumberish>,
+      _useSILV: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     stakeAsPool(
-      _staker: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _staker: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    sync(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    sync(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     unstake(
-      _depositId: BigNumberish,
-      _amount: BigNumberish,
-      _useSILV: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _depositId: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      _useSILV: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateStakeLock(
-      depositId: BigNumberish,
-      lockedUntil: BigNumberish,
-      useSILV: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      depositId: PromiseOrValue<BigNumberish>,
+      lockedUntil: PromiseOrValue<BigNumberish>,
+      useSILV: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     users(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -402,23 +429,27 @@ export interface IlluviumCorePool extends BaseContract {
     weight(overrides?: CallOverrides): Promise<[number]>;
 
     weightToReward(
-      _weight: BigNumberish,
-      rewardPerWeight: BigNumberish,
+      _weight: PromiseOrValue<BigNumberish>,
+      rewardPerWeight: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
     yieldRewardsPerWeight(overrides?: CallOverrides): Promise<[BigNumber]>;
   };
 
-  balanceOf(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   blockNumber(overrides?: CallOverrides): Promise<BigNumber>;
 
   factory(overrides?: CallOverrides): Promise<string>;
 
-  getDeposit(_user: string, _depositId: BigNumberish, overrides?: CallOverrides): Promise<IPool.DepositStructOutput>;
+  getDeposit(
+    _user: PromiseOrValue<string>,
+    _depositId: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<IPool.DepositStructOutput>;
 
-  getDepositsLength(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getDepositsLength(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   ilv(overrides?: CallOverrides): Promise<string>;
 
@@ -428,66 +459,73 @@ export interface IlluviumCorePool extends BaseContract {
 
   now256(overrides?: CallOverrides): Promise<BigNumber>;
 
-  pendingVaultRewards(_staker: string, overrides?: CallOverrides): Promise<BigNumber>;
+  pendingVaultRewards(_staker: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  pendingYieldRewards(_staker: string, overrides?: CallOverrides): Promise<BigNumber>;
+  pendingYieldRewards(_staker: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   poolToken(overrides?: CallOverrides): Promise<string>;
 
   poolTokenReserve(overrides?: CallOverrides): Promise<BigNumber>;
 
   processRewards(
-    _useSILV: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _useSILV: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   receiveVaultRewards(
-    _rewardsAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _rewardsAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  rewardToWeight(reward: BigNumberish, rewardPerWeight: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  rewardToWeight(
+    reward: PromiseOrValue<BigNumberish>,
+    rewardPerWeight: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
-  setVault(_vault: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  setVault(
+    _vault: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   setWeight(
-    _weight: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _weight: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   silv(overrides?: CallOverrides): Promise<string>;
 
   stake(
-    _amount: BigNumberish,
-    _lockUntil: BigNumberish,
-    _useSILV: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _amount: PromiseOrValue<BigNumberish>,
+    _lockUntil: PromiseOrValue<BigNumberish>,
+    _useSILV: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   stakeAsPool(
-    _staker: string,
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _staker: PromiseOrValue<string>,
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  sync(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  sync(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   unstake(
-    _depositId: BigNumberish,
-    _amount: BigNumberish,
-    _useSILV: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _depositId: PromiseOrValue<BigNumberish>,
+    _amount: PromiseOrValue<BigNumberish>,
+    _useSILV: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateStakeLock(
-    depositId: BigNumberish,
-    lockedUntil: BigNumberish,
-    useSILV: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    depositId: PromiseOrValue<BigNumberish>,
+    lockedUntil: PromiseOrValue<BigNumberish>,
+    useSILV: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   users(
-    arg0: string,
+    arg0: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -506,20 +544,28 @@ export interface IlluviumCorePool extends BaseContract {
 
   weight(overrides?: CallOverrides): Promise<number>;
 
-  weightToReward(_weight: BigNumberish, rewardPerWeight: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  weightToReward(
+    _weight: PromiseOrValue<BigNumberish>,
+    rewardPerWeight: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   yieldRewardsPerWeight(overrides?: CallOverrides): Promise<BigNumber>;
 
   callStatic: {
-    balanceOf(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     blockNumber(overrides?: CallOverrides): Promise<BigNumber>;
 
     factory(overrides?: CallOverrides): Promise<string>;
 
-    getDeposit(_user: string, _depositId: BigNumberish, overrides?: CallOverrides): Promise<IPool.DepositStructOutput>;
+    getDeposit(
+      _user: PromiseOrValue<string>,
+      _depositId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<IPool.DepositStructOutput>;
 
-    getDepositsLength(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getDepositsLength(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     ilv(overrides?: CallOverrides): Promise<string>;
 
@@ -529,48 +575,61 @@ export interface IlluviumCorePool extends BaseContract {
 
     now256(overrides?: CallOverrides): Promise<BigNumber>;
 
-    pendingVaultRewards(_staker: string, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingVaultRewards(_staker: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    pendingYieldRewards(_staker: string, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingYieldRewards(_staker: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     poolToken(overrides?: CallOverrides): Promise<string>;
 
     poolTokenReserve(overrides?: CallOverrides): Promise<BigNumber>;
 
-    processRewards(_useSILV: boolean, overrides?: CallOverrides): Promise<void>;
+    processRewards(_useSILV: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
 
-    receiveVaultRewards(_rewardsAmount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    receiveVaultRewards(_rewardsAmount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    rewardToWeight(reward: BigNumberish, rewardPerWeight: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    rewardToWeight(
+      reward: PromiseOrValue<BigNumberish>,
+      rewardPerWeight: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    setVault(_vault: string, overrides?: CallOverrides): Promise<void>;
+    setVault(_vault: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setWeight(_weight: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setWeight(_weight: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     silv(overrides?: CallOverrides): Promise<string>;
 
-    stake(_amount: BigNumberish, _lockUntil: BigNumberish, _useSILV: boolean, overrides?: CallOverrides): Promise<void>;
+    stake(
+      _amount: PromiseOrValue<BigNumberish>,
+      _lockUntil: PromiseOrValue<BigNumberish>,
+      _useSILV: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    stakeAsPool(_staker: string, _amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    stakeAsPool(
+      _staker: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     sync(overrides?: CallOverrides): Promise<void>;
 
     unstake(
-      _depositId: BigNumberish,
-      _amount: BigNumberish,
-      _useSILV: boolean,
+      _depositId: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      _useSILV: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     updateStakeLock(
-      depositId: BigNumberish,
-      lockedUntil: BigNumberish,
-      useSILV: boolean,
+      depositId: PromiseOrValue<BigNumberish>,
+      lockedUntil: PromiseOrValue<BigNumberish>,
+      useSILV: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     users(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -589,85 +648,125 @@ export interface IlluviumCorePool extends BaseContract {
 
     weight(overrides?: CallOverrides): Promise<number>;
 
-    weightToReward(_weight: BigNumberish, rewardPerWeight: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    weightToReward(
+      _weight: PromiseOrValue<BigNumberish>,
+      rewardPerWeight: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     yieldRewardsPerWeight(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   filters: {
     'PoolWeightUpdated(address,uint32,uint32)'(
-      _by?: string | null,
+      _by?: PromiseOrValue<string> | null,
       _fromVal?: null,
       _toVal?: null,
     ): PoolWeightUpdatedEventFilter;
-    PoolWeightUpdated(_by?: string | null, _fromVal?: null, _toVal?: null): PoolWeightUpdatedEventFilter;
+    PoolWeightUpdated(
+      _by?: PromiseOrValue<string> | null,
+      _fromVal?: null,
+      _toVal?: null,
+    ): PoolWeightUpdatedEventFilter;
 
     'StakeLockUpdated(address,uint256,uint64,uint64)'(
-      _by?: string | null,
+      _by?: PromiseOrValue<string> | null,
       depositId?: null,
       lockedFrom?: null,
       lockedUntil?: null,
     ): StakeLockUpdatedEventFilter;
     StakeLockUpdated(
-      _by?: string | null,
+      _by?: PromiseOrValue<string> | null,
       depositId?: null,
       lockedFrom?: null,
       lockedUntil?: null,
     ): StakeLockUpdatedEventFilter;
 
-    'Staked(address,address,uint256)'(_by?: string | null, _from?: string | null, amount?: null): StakedEventFilter;
-    Staked(_by?: string | null, _from?: string | null, amount?: null): StakedEventFilter;
+    'Staked(address,address,uint256)'(
+      _by?: PromiseOrValue<string> | null,
+      _from?: PromiseOrValue<string> | null,
+      amount?: null,
+    ): StakedEventFilter;
+    Staked(
+      _by?: PromiseOrValue<string> | null,
+      _from?: PromiseOrValue<string> | null,
+      amount?: null,
+    ): StakedEventFilter;
 
     'Synchronized(address,uint256,uint64)'(
-      _by?: string | null,
+      _by?: PromiseOrValue<string> | null,
       yieldRewardsPerWeight?: null,
       lastYieldDistribution?: null,
     ): SynchronizedEventFilter;
     Synchronized(
-      _by?: string | null,
+      _by?: PromiseOrValue<string> | null,
       yieldRewardsPerWeight?: null,
       lastYieldDistribution?: null,
     ): SynchronizedEventFilter;
 
-    'Unstaked(address,address,uint256)'(_by?: string | null, _to?: string | null, amount?: null): UnstakedEventFilter;
-    Unstaked(_by?: string | null, _to?: string | null, amount?: null): UnstakedEventFilter;
+    'Unstaked(address,address,uint256)'(
+      _by?: PromiseOrValue<string> | null,
+      _to?: PromiseOrValue<string> | null,
+      amount?: null,
+    ): UnstakedEventFilter;
+    Unstaked(
+      _by?: PromiseOrValue<string> | null,
+      _to?: PromiseOrValue<string> | null,
+      amount?: null,
+    ): UnstakedEventFilter;
 
     'VaultRewardsClaimed(address,address,uint256)'(
-      _by?: string | null,
-      _to?: string | null,
+      _by?: PromiseOrValue<string> | null,
+      _to?: PromiseOrValue<string> | null,
       amount?: null,
     ): VaultRewardsClaimedEventFilter;
-    VaultRewardsClaimed(_by?: string | null, _to?: string | null, amount?: null): VaultRewardsClaimedEventFilter;
+    VaultRewardsClaimed(
+      _by?: PromiseOrValue<string> | null,
+      _to?: PromiseOrValue<string> | null,
+      amount?: null,
+    ): VaultRewardsClaimedEventFilter;
 
-    'VaultRewardsReceived(address,uint256)'(_by?: string | null, amount?: null): VaultRewardsReceivedEventFilter;
-    VaultRewardsReceived(_by?: string | null, amount?: null): VaultRewardsReceivedEventFilter;
+    'VaultRewardsReceived(address,uint256)'(
+      _by?: PromiseOrValue<string> | null,
+      amount?: null,
+    ): VaultRewardsReceivedEventFilter;
+    VaultRewardsReceived(_by?: PromiseOrValue<string> | null, amount?: null): VaultRewardsReceivedEventFilter;
 
     'VaultUpdated(address,address,address)'(
-      _by?: string | null,
+      _by?: PromiseOrValue<string> | null,
       _fromVal?: null,
       _toVal?: null,
     ): VaultUpdatedEventFilter;
-    VaultUpdated(_by?: string | null, _fromVal?: null, _toVal?: null): VaultUpdatedEventFilter;
+    VaultUpdated(_by?: PromiseOrValue<string> | null, _fromVal?: null, _toVal?: null): VaultUpdatedEventFilter;
 
     'YieldClaimed(address,address,bool,uint256)'(
-      _by?: string | null,
-      _to?: string | null,
+      _by?: PromiseOrValue<string> | null,
+      _to?: PromiseOrValue<string> | null,
       sIlv?: null,
       amount?: null,
     ): YieldClaimedEventFilter;
-    YieldClaimed(_by?: string | null, _to?: string | null, sIlv?: null, amount?: null): YieldClaimedEventFilter;
+    YieldClaimed(
+      _by?: PromiseOrValue<string> | null,
+      _to?: PromiseOrValue<string> | null,
+      sIlv?: null,
+      amount?: null,
+    ): YieldClaimedEventFilter;
   };
 
   estimateGas: {
-    balanceOf(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     blockNumber(overrides?: CallOverrides): Promise<BigNumber>;
 
     factory(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getDeposit(_user: string, _depositId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getDeposit(
+      _user: PromiseOrValue<string>,
+      _depositId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    getDepositsLength(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getDepositsLength(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     ilv(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -677,59 +776,72 @@ export interface IlluviumCorePool extends BaseContract {
 
     now256(overrides?: CallOverrides): Promise<BigNumber>;
 
-    pendingVaultRewards(_staker: string, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingVaultRewards(_staker: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    pendingYieldRewards(_staker: string, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingYieldRewards(_staker: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     poolToken(overrides?: CallOverrides): Promise<BigNumber>;
 
     poolTokenReserve(overrides?: CallOverrides): Promise<BigNumber>;
 
-    processRewards(_useSILV: boolean, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
-
-    receiveVaultRewards(
-      _rewardsAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    processRewards(
+      _useSILV: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    rewardToWeight(reward: BigNumberish, rewardPerWeight: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    receiveVaultRewards(
+      _rewardsAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    setVault(_vault: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    rewardToWeight(
+      reward: PromiseOrValue<BigNumberish>,
+      rewardPerWeight: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    setWeight(_weight: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setVault(
+      _vault: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    setWeight(
+      _weight: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     silv(overrides?: CallOverrides): Promise<BigNumber>;
 
     stake(
-      _amount: BigNumberish,
-      _lockUntil: BigNumberish,
-      _useSILV: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      _lockUntil: PromiseOrValue<BigNumberish>,
+      _useSILV: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     stakeAsPool(
-      _staker: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _staker: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    sync(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    sync(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     unstake(
-      _depositId: BigNumberish,
-      _amount: BigNumberish,
-      _useSILV: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _depositId: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      _useSILV: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     updateStakeLock(
-      depositId: BigNumberish,
-      lockedUntil: BigNumberish,
-      useSILV: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      depositId: PromiseOrValue<BigNumberish>,
+      lockedUntil: PromiseOrValue<BigNumberish>,
+      useSILV: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    users(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    users(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     usersLockingWeight(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -739,21 +851,29 @@ export interface IlluviumCorePool extends BaseContract {
 
     weight(overrides?: CallOverrides): Promise<BigNumber>;
 
-    weightToReward(_weight: BigNumberish, rewardPerWeight: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    weightToReward(
+      _weight: PromiseOrValue<BigNumberish>,
+      rewardPerWeight: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     yieldRewardsPerWeight(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    balanceOf(_user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    balanceOf(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     blockNumber(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     factory(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getDeposit(_user: string, _depositId: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getDeposit(
+      _user: PromiseOrValue<string>,
+      _depositId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    getDepositsLength(_user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getDepositsLength(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     ilv(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -763,72 +883,72 @@ export interface IlluviumCorePool extends BaseContract {
 
     now256(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    pendingVaultRewards(_staker: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    pendingVaultRewards(_staker: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    pendingYieldRewards(_staker: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    pendingYieldRewards(_staker: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     poolToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     poolTokenReserve(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     processRewards(
-      _useSILV: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _useSILV: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     receiveVaultRewards(
-      _rewardsAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardsAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     rewardToWeight(
-      reward: BigNumberish,
-      rewardPerWeight: BigNumberish,
+      reward: PromiseOrValue<BigNumberish>,
+      rewardPerWeight: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     setVault(
-      _vault: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _vault: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setWeight(
-      _weight: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _weight: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     silv(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     stake(
-      _amount: BigNumberish,
-      _lockUntil: BigNumberish,
-      _useSILV: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      _lockUntil: PromiseOrValue<BigNumberish>,
+      _useSILV: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     stakeAsPool(
-      _staker: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _staker: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    sync(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    sync(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     unstake(
-      _depositId: BigNumberish,
-      _amount: BigNumberish,
-      _useSILV: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _depositId: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      _useSILV: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateStakeLock(
-      depositId: BigNumberish,
-      lockedUntil: BigNumberish,
-      useSILV: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      depositId: PromiseOrValue<BigNumberish>,
+      lockedUntil: PromiseOrValue<BigNumberish>,
+      useSILV: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    users(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    users(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     usersLockingWeight(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -839,8 +959,8 @@ export interface IlluviumCorePool extends BaseContract {
     weight(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     weightToReward(
-      _weight: BigNumberish,
-      rewardPerWeight: BigNumberish,
+      _weight: PromiseOrValue<BigNumberish>,
+      rewardPerWeight: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 

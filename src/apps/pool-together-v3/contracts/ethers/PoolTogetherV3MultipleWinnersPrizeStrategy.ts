@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface PoolTogetherV3MultipleWinnersPrizeStrategyInterface extends utils.Interface {
   functions: {
@@ -125,30 +125,61 @@ export interface PoolTogetherV3MultipleWinnersPrizeStrategyInterface extends uti
       | 'transferOwnership',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'addExternalErc20Award', values: [string]): string;
-  encodeFunctionData(functionFragment: 'addExternalErc20Awards', values: [string[]]): string;
-  encodeFunctionData(functionFragment: 'addExternalErc721Award', values: [string, BigNumberish[]]): string;
-  encodeFunctionData(functionFragment: 'beforeTokenMint', values: [string, BigNumberish, string, string]): string;
-  encodeFunctionData(functionFragment: 'beforeTokenTransfer', values: [string, string, BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'calculateNextPrizePeriodStartTime', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'addExternalErc20Award', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'addExternalErc20Awards', values: [PromiseOrValue<string>[]]): string;
+  encodeFunctionData(
+    functionFragment: 'addExternalErc721Award',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>[]],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'beforeTokenMint',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'beforeTokenTransfer',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'calculateNextPrizePeriodStartTime',
+    values: [PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'canCompleteAward', values?: undefined): string;
   encodeFunctionData(functionFragment: 'canStartAward', values?: undefined): string;
   encodeFunctionData(functionFragment: 'cancelAward', values?: undefined): string;
   encodeFunctionData(functionFragment: 'completeAward', values?: undefined): string;
   encodeFunctionData(functionFragment: 'currentPrize', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'estimateRemainingBlocksToPrize', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'estimateRemainingBlocksToPrize',
+    values: [PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'getExternalErc20Awards', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getExternalErc721AwardTokenIds', values: [string]): string;
+  encodeFunctionData(functionFragment: 'getExternalErc721AwardTokenIds', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'getExternalErc721Awards', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getLastRngLockBlock', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getLastRngRequestId', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'initialize',
-    values: [BigNumberish, BigNumberish, string, string, string, string, string[]],
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>[],
+    ],
   ): string;
   encodeFunctionData(
     functionFragment: 'initializeMultipleWinners',
-    values: [BigNumberish, BigNumberish, string, string, string, string, BigNumberish],
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'isPrizePeriodOver', values?: undefined): string;
   encodeFunctionData(functionFragment: 'isRngCompleted', values?: undefined): string;
@@ -162,25 +193,34 @@ export interface PoolTogetherV3MultipleWinnersPrizeStrategyInterface extends uti
   encodeFunctionData(functionFragment: 'prizePeriodSeconds', values?: undefined): string;
   encodeFunctionData(functionFragment: 'prizePeriodStartedAt', values?: undefined): string;
   encodeFunctionData(functionFragment: 'prizePool', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'removeExternalErc20Award', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'removeExternalErc721Award', values: [string, string]): string;
+  encodeFunctionData(
+    functionFragment: 'removeExternalErc20Award',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'removeExternalErc721Award',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
   encodeFunctionData(functionFragment: 'rng', values?: undefined): string;
   encodeFunctionData(functionFragment: 'rngRequestTimeout', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'setNumberOfWinners', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setPeriodicPrizeStrategyListener', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setRngRequestTimeout', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setRngService', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setSplitExternalErc20Awards', values: [boolean]): string;
-  encodeFunctionData(functionFragment: 'setTokenListener', values: [string]): string;
+  encodeFunctionData(functionFragment: 'setNumberOfWinners', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setPeriodicPrizeStrategyListener', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setRngRequestTimeout', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setRngService', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setSplitExternalErc20Awards', values: [PromiseOrValue<boolean>]): string;
+  encodeFunctionData(functionFragment: 'setTokenListener', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'splitExternalErc20Awards', values?: undefined): string;
   encodeFunctionData(functionFragment: 'sponsorship', values?: undefined): string;
   encodeFunctionData(functionFragment: 'startAward', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'supportsInterface', values: [BytesLike]): string;
+  encodeFunctionData(functionFragment: 'supportsInterface', values: [PromiseOrValue<BytesLike>]): string;
   encodeFunctionData(functionFragment: 'ticket', values?: undefined): string;
   encodeFunctionData(functionFragment: 'tokenListener', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transferExternalERC20', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'transferExternalERC20',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
 
   decodeFunctionResult(functionFragment: 'addExternalErc20Award', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'addExternalErc20Awards', data: BytesLike): Result;
@@ -442,57 +482,63 @@ export interface PoolTogetherV3MultipleWinnersPrizeStrategy extends BaseContract
 
   functions: {
     addExternalErc20Award(
-      _externalErc20: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _externalErc20: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     addExternalErc20Awards(
-      _externalErc20s: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _externalErc20s: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     addExternalErc721Award(
-      _externalErc721: string,
-      _tokenIds: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _externalErc721: PromiseOrValue<string>,
+      _tokenIds: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     beforeTokenMint(
-      to: string,
-      amount: BigNumberish,
-      controlledToken: string,
-      referrer: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      controlledToken: PromiseOrValue<string>,
+      referrer: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     beforeTokenTransfer(
-      from: string,
-      to: string,
-      amount: BigNumberish,
-      controlledToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      controlledToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    calculateNextPrizePeriodStartTime(currentTime: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    calculateNextPrizePeriodStartTime(
+      currentTime: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     canCompleteAward(overrides?: CallOverrides): Promise<[boolean]>;
 
     canStartAward(overrides?: CallOverrides): Promise<[boolean]>;
 
-    cancelAward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    cancelAward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    completeAward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    completeAward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     currentPrize(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     estimateRemainingBlocksToPrize(
-      secondsPerBlockMantissa: BigNumberish,
+      secondsPerBlockMantissa: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
     getExternalErc20Awards(overrides?: CallOverrides): Promise<[string[]]>;
 
-    getExternalErc721AwardTokenIds(_externalErc721: string, overrides?: CallOverrides): Promise<[BigNumber[]]>;
+    getExternalErc721AwardTokenIds(
+      _externalErc721: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber[]]>;
 
     getExternalErc721Awards(overrides?: CallOverrides): Promise<[string[]]>;
 
@@ -501,25 +547,25 @@ export interface PoolTogetherV3MultipleWinnersPrizeStrategy extends BaseContract
     getLastRngRequestId(overrides?: CallOverrides): Promise<[number]>;
 
     initialize(
-      _prizePeriodStart: BigNumberish,
-      _prizePeriodSeconds: BigNumberish,
-      _prizePool: string,
-      _ticket: string,
-      _sponsorship: string,
-      _rng: string,
-      externalErc20Awards: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _prizePeriodStart: PromiseOrValue<BigNumberish>,
+      _prizePeriodSeconds: PromiseOrValue<BigNumberish>,
+      _prizePool: PromiseOrValue<string>,
+      _ticket: PromiseOrValue<string>,
+      _sponsorship: PromiseOrValue<string>,
+      _rng: PromiseOrValue<string>,
+      externalErc20Awards: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     initializeMultipleWinners(
-      _prizePeriodStart: BigNumberish,
-      _prizePeriodSeconds: BigNumberish,
-      _prizePool: string,
-      _ticket: string,
-      _sponsorship: string,
-      _rng: string,
-      _numberOfWinners: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _prizePeriodStart: PromiseOrValue<BigNumberish>,
+      _prizePeriodSeconds: PromiseOrValue<BigNumberish>,
+      _prizePool: PromiseOrValue<string>,
+      _ticket: PromiseOrValue<string>,
+      _sponsorship: PromiseOrValue<string>,
+      _rng: PromiseOrValue<string>,
+      _numberOfWinners: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     isPrizePeriodOver(overrides?: CallOverrides): Promise<[boolean]>;
@@ -547,127 +593,136 @@ export interface PoolTogetherV3MultipleWinnersPrizeStrategy extends BaseContract
     prizePool(overrides?: CallOverrides): Promise<[string]>;
 
     removeExternalErc20Award(
-      _externalErc20: string,
-      _prevExternalErc20: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _externalErc20: PromiseOrValue<string>,
+      _prevExternalErc20: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     removeExternalErc721Award(
-      _externalErc721: string,
-      _prevExternalErc721: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _externalErc721: PromiseOrValue<string>,
+      _prevExternalErc721: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     rng(overrides?: CallOverrides): Promise<[string]>;
 
     rngRequestTimeout(overrides?: CallOverrides): Promise<[number]>;
 
     setNumberOfWinners(
-      count: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      count: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setPeriodicPrizeStrategyListener(
-      _periodicPrizeStrategyListener: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _periodicPrizeStrategyListener: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setRngRequestTimeout(
-      _rngRequestTimeout: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rngRequestTimeout: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setRngService(
-      rngService: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      rngService: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setSplitExternalErc20Awards(
-      _splitExternalErc20Awards: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _splitExternalErc20Awards: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setTokenListener(
-      _tokenListener: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokenListener: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     splitExternalErc20Awards(overrides?: CallOverrides): Promise<[boolean]>;
 
     sponsorship(overrides?: CallOverrides): Promise<[string]>;
 
-    startAward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    startAward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<[boolean]>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[boolean]>;
 
     ticket(overrides?: CallOverrides): Promise<[string]>;
 
     tokenListener(overrides?: CallOverrides): Promise<[string]>;
 
     transferExternalERC20(
-      to: string,
-      externalToken: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      externalToken: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
   addExternalErc20Award(
-    _externalErc20: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _externalErc20: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   addExternalErc20Awards(
-    _externalErc20s: string[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _externalErc20s: PromiseOrValue<string>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   addExternalErc721Award(
-    _externalErc721: string,
-    _tokenIds: BigNumberish[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _externalErc721: PromiseOrValue<string>,
+    _tokenIds: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   beforeTokenMint(
-    to: string,
-    amount: BigNumberish,
-    controlledToken: string,
-    referrer: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    to: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    controlledToken: PromiseOrValue<string>,
+    referrer: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   beforeTokenTransfer(
-    from: string,
-    to: string,
-    amount: BigNumberish,
-    controlledToken: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    from: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    controlledToken: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  calculateNextPrizePeriodStartTime(currentTime: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  calculateNextPrizePeriodStartTime(
+    currentTime: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   canCompleteAward(overrides?: CallOverrides): Promise<boolean>;
 
   canStartAward(overrides?: CallOverrides): Promise<boolean>;
 
-  cancelAward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  cancelAward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  completeAward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  completeAward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   currentPrize(overrides?: CallOverrides): Promise<BigNumber>;
 
-  estimateRemainingBlocksToPrize(secondsPerBlockMantissa: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  estimateRemainingBlocksToPrize(
+    secondsPerBlockMantissa: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   getExternalErc20Awards(overrides?: CallOverrides): Promise<string[]>;
 
-  getExternalErc721AwardTokenIds(_externalErc721: string, overrides?: CallOverrides): Promise<BigNumber[]>;
+  getExternalErc721AwardTokenIds(
+    _externalErc721: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber[]>;
 
   getExternalErc721Awards(overrides?: CallOverrides): Promise<string[]>;
 
@@ -676,25 +731,25 @@ export interface PoolTogetherV3MultipleWinnersPrizeStrategy extends BaseContract
   getLastRngRequestId(overrides?: CallOverrides): Promise<number>;
 
   initialize(
-    _prizePeriodStart: BigNumberish,
-    _prizePeriodSeconds: BigNumberish,
-    _prizePool: string,
-    _ticket: string,
-    _sponsorship: string,
-    _rng: string,
-    externalErc20Awards: string[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _prizePeriodStart: PromiseOrValue<BigNumberish>,
+    _prizePeriodSeconds: PromiseOrValue<BigNumberish>,
+    _prizePool: PromiseOrValue<string>,
+    _ticket: PromiseOrValue<string>,
+    _sponsorship: PromiseOrValue<string>,
+    _rng: PromiseOrValue<string>,
+    externalErc20Awards: PromiseOrValue<string>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   initializeMultipleWinners(
-    _prizePeriodStart: BigNumberish,
-    _prizePeriodSeconds: BigNumberish,
-    _prizePool: string,
-    _ticket: string,
-    _sponsorship: string,
-    _rng: string,
-    _numberOfWinners: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _prizePeriodStart: PromiseOrValue<BigNumberish>,
+    _prizePeriodSeconds: PromiseOrValue<BigNumberish>,
+    _prizePool: PromiseOrValue<string>,
+    _ticket: PromiseOrValue<string>,
+    _sponsorship: PromiseOrValue<string>,
+    _rng: PromiseOrValue<string>,
+    _numberOfWinners: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   isPrizePeriodOver(overrides?: CallOverrides): Promise<boolean>;
@@ -722,105 +777,108 @@ export interface PoolTogetherV3MultipleWinnersPrizeStrategy extends BaseContract
   prizePool(overrides?: CallOverrides): Promise<string>;
 
   removeExternalErc20Award(
-    _externalErc20: string,
-    _prevExternalErc20: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _externalErc20: PromiseOrValue<string>,
+    _prevExternalErc20: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   removeExternalErc721Award(
-    _externalErc721: string,
-    _prevExternalErc721: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _externalErc721: PromiseOrValue<string>,
+    _prevExternalErc721: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   rng(overrides?: CallOverrides): Promise<string>;
 
   rngRequestTimeout(overrides?: CallOverrides): Promise<number>;
 
   setNumberOfWinners(
-    count: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    count: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setPeriodicPrizeStrategyListener(
-    _periodicPrizeStrategyListener: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _periodicPrizeStrategyListener: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setRngRequestTimeout(
-    _rngRequestTimeout: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _rngRequestTimeout: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setRngService(
-    rngService: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    rngService: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setSplitExternalErc20Awards(
-    _splitExternalErc20Awards: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _splitExternalErc20Awards: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setTokenListener(
-    _tokenListener: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _tokenListener: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   splitExternalErc20Awards(overrides?: CallOverrides): Promise<boolean>;
 
   sponsorship(overrides?: CallOverrides): Promise<string>;
 
-  startAward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  startAward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<boolean>;
+  supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<boolean>;
 
   ticket(overrides?: CallOverrides): Promise<string>;
 
   tokenListener(overrides?: CallOverrides): Promise<string>;
 
   transferExternalERC20(
-    to: string,
-    externalToken: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    to: PromiseOrValue<string>,
+    externalToken: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    addExternalErc20Award(_externalErc20: string, overrides?: CallOverrides): Promise<void>;
+    addExternalErc20Award(_externalErc20: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    addExternalErc20Awards(_externalErc20s: string[], overrides?: CallOverrides): Promise<void>;
+    addExternalErc20Awards(_externalErc20s: PromiseOrValue<string>[], overrides?: CallOverrides): Promise<void>;
 
     addExternalErc721Award(
-      _externalErc721: string,
-      _tokenIds: BigNumberish[],
+      _externalErc721: PromiseOrValue<string>,
+      _tokenIds: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides,
     ): Promise<void>;
 
     beforeTokenMint(
-      to: string,
-      amount: BigNumberish,
-      controlledToken: string,
-      referrer: string,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      controlledToken: PromiseOrValue<string>,
+      referrer: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     beforeTokenTransfer(
-      from: string,
-      to: string,
-      amount: BigNumberish,
-      controlledToken: string,
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      controlledToken: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    calculateNextPrizePeriodStartTime(currentTime: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    calculateNextPrizePeriodStartTime(
+      currentTime: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     canCompleteAward(overrides?: CallOverrides): Promise<boolean>;
 
@@ -833,13 +891,16 @@ export interface PoolTogetherV3MultipleWinnersPrizeStrategy extends BaseContract
     currentPrize(overrides?: CallOverrides): Promise<BigNumber>;
 
     estimateRemainingBlocksToPrize(
-      secondsPerBlockMantissa: BigNumberish,
+      secondsPerBlockMantissa: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     getExternalErc20Awards(overrides?: CallOverrides): Promise<string[]>;
 
-    getExternalErc721AwardTokenIds(_externalErc721: string, overrides?: CallOverrides): Promise<BigNumber[]>;
+    getExternalErc721AwardTokenIds(
+      _externalErc721: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber[]>;
 
     getExternalErc721Awards(overrides?: CallOverrides): Promise<string[]>;
 
@@ -848,24 +909,24 @@ export interface PoolTogetherV3MultipleWinnersPrizeStrategy extends BaseContract
     getLastRngRequestId(overrides?: CallOverrides): Promise<number>;
 
     initialize(
-      _prizePeriodStart: BigNumberish,
-      _prizePeriodSeconds: BigNumberish,
-      _prizePool: string,
-      _ticket: string,
-      _sponsorship: string,
-      _rng: string,
-      externalErc20Awards: string[],
+      _prizePeriodStart: PromiseOrValue<BigNumberish>,
+      _prizePeriodSeconds: PromiseOrValue<BigNumberish>,
+      _prizePool: PromiseOrValue<string>,
+      _ticket: PromiseOrValue<string>,
+      _sponsorship: PromiseOrValue<string>,
+      _rng: PromiseOrValue<string>,
+      externalErc20Awards: PromiseOrValue<string>[],
       overrides?: CallOverrides,
     ): Promise<void>;
 
     initializeMultipleWinners(
-      _prizePeriodStart: BigNumberish,
-      _prizePeriodSeconds: BigNumberish,
-      _prizePool: string,
-      _ticket: string,
-      _sponsorship: string,
-      _rng: string,
-      _numberOfWinners: BigNumberish,
+      _prizePeriodStart: PromiseOrValue<BigNumberish>,
+      _prizePeriodSeconds: PromiseOrValue<BigNumberish>,
+      _prizePool: PromiseOrValue<string>,
+      _ticket: PromiseOrValue<string>,
+      _sponsorship: PromiseOrValue<string>,
+      _rng: PromiseOrValue<string>,
+      _numberOfWinners: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -894,14 +955,14 @@ export interface PoolTogetherV3MultipleWinnersPrizeStrategy extends BaseContract
     prizePool(overrides?: CallOverrides): Promise<string>;
 
     removeExternalErc20Award(
-      _externalErc20: string,
-      _prevExternalErc20: string,
+      _externalErc20: PromiseOrValue<string>,
+      _prevExternalErc20: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     removeExternalErc721Award(
-      _externalErc721: string,
-      _prevExternalErc721: string,
+      _externalErc721: PromiseOrValue<string>,
+      _prevExternalErc721: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -911,17 +972,23 @@ export interface PoolTogetherV3MultipleWinnersPrizeStrategy extends BaseContract
 
     rngRequestTimeout(overrides?: CallOverrides): Promise<number>;
 
-    setNumberOfWinners(count: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setNumberOfWinners(count: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setPeriodicPrizeStrategyListener(_periodicPrizeStrategyListener: string, overrides?: CallOverrides): Promise<void>;
+    setPeriodicPrizeStrategyListener(
+      _periodicPrizeStrategyListener: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setRngRequestTimeout(_rngRequestTimeout: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setRngRequestTimeout(_rngRequestTimeout: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setRngService(rngService: string, overrides?: CallOverrides): Promise<void>;
+    setRngService(rngService: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setSplitExternalErc20Awards(_splitExternalErc20Awards: boolean, overrides?: CallOverrides): Promise<void>;
+    setSplitExternalErc20Awards(
+      _splitExternalErc20Awards: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setTokenListener(_tokenListener: string, overrides?: CallOverrides): Promise<void>;
+    setTokenListener(_tokenListener: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     splitExternalErc20Awards(overrides?: CallOverrides): Promise<boolean>;
 
@@ -929,42 +996,53 @@ export interface PoolTogetherV3MultipleWinnersPrizeStrategy extends BaseContract
 
     startAward(overrides?: CallOverrides): Promise<void>;
 
-    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<boolean>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<boolean>;
 
     ticket(overrides?: CallOverrides): Promise<string>;
 
     tokenListener(overrides?: CallOverrides): Promise<string>;
 
     transferExternalERC20(
-      to: string,
-      externalToken: string,
-      amount: BigNumberish,
+      to: PromiseOrValue<string>,
+      externalToken: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
-    'ExternalErc20AwardAdded(address)'(externalErc20?: string | null): ExternalErc20AwardAddedEventFilter;
-    ExternalErc20AwardAdded(externalErc20?: string | null): ExternalErc20AwardAddedEventFilter;
+    'ExternalErc20AwardAdded(address)'(
+      externalErc20?: PromiseOrValue<string> | null,
+    ): ExternalErc20AwardAddedEventFilter;
+    ExternalErc20AwardAdded(externalErc20?: PromiseOrValue<string> | null): ExternalErc20AwardAddedEventFilter;
 
-    'ExternalErc20AwardRemoved(address)'(externalErc20Award?: string | null): ExternalErc20AwardRemovedEventFilter;
-    ExternalErc20AwardRemoved(externalErc20Award?: string | null): ExternalErc20AwardRemovedEventFilter;
+    'ExternalErc20AwardRemoved(address)'(
+      externalErc20Award?: PromiseOrValue<string> | null,
+    ): ExternalErc20AwardRemovedEventFilter;
+    ExternalErc20AwardRemoved(externalErc20Award?: PromiseOrValue<string> | null): ExternalErc20AwardRemovedEventFilter;
 
     'ExternalErc721AwardAdded(address,uint256[])'(
-      externalErc721?: string | null,
+      externalErc721?: PromiseOrValue<string> | null,
       tokenIds?: null,
     ): ExternalErc721AwardAddedEventFilter;
-    ExternalErc721AwardAdded(externalErc721?: string | null, tokenIds?: null): ExternalErc721AwardAddedEventFilter;
+    ExternalErc721AwardAdded(
+      externalErc721?: PromiseOrValue<string> | null,
+      tokenIds?: null,
+    ): ExternalErc721AwardAddedEventFilter;
 
-    'ExternalErc721AwardRemoved(address)'(externalErc721Award?: string | null): ExternalErc721AwardRemovedEventFilter;
-    ExternalErc721AwardRemoved(externalErc721Award?: string | null): ExternalErc721AwardRemovedEventFilter;
+    'ExternalErc721AwardRemoved(address)'(
+      externalErc721Award?: PromiseOrValue<string> | null,
+    ): ExternalErc721AwardRemovedEventFilter;
+    ExternalErc721AwardRemoved(
+      externalErc721Award?: PromiseOrValue<string> | null,
+    ): ExternalErc721AwardRemovedEventFilter;
 
     'Initialized(uint256,uint256,address,address,address,address,address[])'(
       prizePeriodStart?: null,
       prizePeriodSeconds?: null,
-      prizePool?: string | null,
+      prizePool?: PromiseOrValue<string> | null,
       ticket?: null,
       sponsorship?: null,
       rng?: null,
@@ -973,7 +1051,7 @@ export interface PoolTogetherV3MultipleWinnersPrizeStrategy extends BaseContract
     Initialized(
       prizePeriodStart?: null,
       prizePeriodSeconds?: null,
-      prizePool?: string | null,
+      prizePool?: PromiseOrValue<string> | null,
       ticket?: null,
       sponsorship?: null,
       rng?: null,
@@ -987,52 +1065,61 @@ export interface PoolTogetherV3MultipleWinnersPrizeStrategy extends BaseContract
     NumberOfWinnersSet(numberOfWinners?: null): NumberOfWinnersSetEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
 
     'PeriodicPrizeStrategyListenerSet(address)'(
-      periodicPrizeStrategyListener?: string | null,
+      periodicPrizeStrategyListener?: PromiseOrValue<string> | null,
     ): PeriodicPrizeStrategyListenerSetEventFilter;
     PeriodicPrizeStrategyListenerSet(
-      periodicPrizeStrategyListener?: string | null,
+      periodicPrizeStrategyListener?: PromiseOrValue<string> | null,
     ): PeriodicPrizeStrategyListenerSetEventFilter;
 
     'PrizePoolAwardCancelled(address,address,uint32,uint32)'(
-      operator?: string | null,
-      prizePool?: string | null,
-      rngRequestId?: BigNumberish | null,
+      operator?: PromiseOrValue<string> | null,
+      prizePool?: PromiseOrValue<string> | null,
+      rngRequestId?: PromiseOrValue<BigNumberish> | null,
       rngLockBlock?: null,
     ): PrizePoolAwardCancelledEventFilter;
     PrizePoolAwardCancelled(
-      operator?: string | null,
-      prizePool?: string | null,
-      rngRequestId?: BigNumberish | null,
+      operator?: PromiseOrValue<string> | null,
+      prizePool?: PromiseOrValue<string> | null,
+      rngRequestId?: PromiseOrValue<BigNumberish> | null,
       rngLockBlock?: null,
     ): PrizePoolAwardCancelledEventFilter;
 
     'PrizePoolAwardStarted(address,address,uint32,uint32)'(
-      operator?: string | null,
-      prizePool?: string | null,
-      rngRequestId?: BigNumberish | null,
+      operator?: PromiseOrValue<string> | null,
+      prizePool?: PromiseOrValue<string> | null,
+      rngRequestId?: PromiseOrValue<BigNumberish> | null,
       rngLockBlock?: null,
     ): PrizePoolAwardStartedEventFilter;
     PrizePoolAwardStarted(
-      operator?: string | null,
-      prizePool?: string | null,
-      rngRequestId?: BigNumberish | null,
+      operator?: PromiseOrValue<string> | null,
+      prizePool?: PromiseOrValue<string> | null,
+      rngRequestId?: PromiseOrValue<BigNumberish> | null,
       rngLockBlock?: null,
     ): PrizePoolAwardStartedEventFilter;
 
-    'PrizePoolAwarded(address,uint256)'(operator?: string | null, randomNumber?: null): PrizePoolAwardedEventFilter;
-    PrizePoolAwarded(operator?: string | null, randomNumber?: null): PrizePoolAwardedEventFilter;
+    'PrizePoolAwarded(address,uint256)'(
+      operator?: PromiseOrValue<string> | null,
+      randomNumber?: null,
+    ): PrizePoolAwardedEventFilter;
+    PrizePoolAwarded(operator?: PromiseOrValue<string> | null, randomNumber?: null): PrizePoolAwardedEventFilter;
 
     'PrizePoolOpened(address,uint256)'(
-      operator?: string | null,
-      prizePeriodStartedAt?: BigNumberish | null,
+      operator?: PromiseOrValue<string> | null,
+      prizePeriodStartedAt?: PromiseOrValue<BigNumberish> | null,
     ): PrizePoolOpenedEventFilter;
-    PrizePoolOpened(operator?: string | null, prizePeriodStartedAt?: BigNumberish | null): PrizePoolOpenedEventFilter;
+    PrizePoolOpened(
+      operator?: PromiseOrValue<string> | null,
+      prizePeriodStartedAt?: PromiseOrValue<BigNumberish> | null,
+    ): PrizePoolOpenedEventFilter;
 
     'RngRequestFailed()'(): RngRequestFailedEventFilter;
     RngRequestFailed(): RngRequestFailedEventFilter;
@@ -1040,69 +1127,75 @@ export interface PoolTogetherV3MultipleWinnersPrizeStrategy extends BaseContract
     'RngRequestTimeoutSet(uint32)'(rngRequestTimeout?: null): RngRequestTimeoutSetEventFilter;
     RngRequestTimeoutSet(rngRequestTimeout?: null): RngRequestTimeoutSetEventFilter;
 
-    'RngServiceUpdated(address)'(rngService?: string | null): RngServiceUpdatedEventFilter;
-    RngServiceUpdated(rngService?: string | null): RngServiceUpdatedEventFilter;
+    'RngServiceUpdated(address)'(rngService?: PromiseOrValue<string> | null): RngServiceUpdatedEventFilter;
+    RngServiceUpdated(rngService?: PromiseOrValue<string> | null): RngServiceUpdatedEventFilter;
 
     'SplitExternalErc20AwardsSet(bool)'(splitExternalErc20Awards?: null): SplitExternalErc20AwardsSetEventFilter;
     SplitExternalErc20AwardsSet(splitExternalErc20Awards?: null): SplitExternalErc20AwardsSetEventFilter;
 
-    'TokenListenerUpdated(address)'(tokenListener?: string | null): TokenListenerUpdatedEventFilter;
-    TokenListenerUpdated(tokenListener?: string | null): TokenListenerUpdatedEventFilter;
+    'TokenListenerUpdated(address)'(tokenListener?: PromiseOrValue<string> | null): TokenListenerUpdatedEventFilter;
+    TokenListenerUpdated(tokenListener?: PromiseOrValue<string> | null): TokenListenerUpdatedEventFilter;
   };
 
   estimateGas: {
     addExternalErc20Award(
-      _externalErc20: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _externalErc20: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     addExternalErc20Awards(
-      _externalErc20s: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _externalErc20s: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     addExternalErc721Award(
-      _externalErc721: string,
-      _tokenIds: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _externalErc721: PromiseOrValue<string>,
+      _tokenIds: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     beforeTokenMint(
-      to: string,
-      amount: BigNumberish,
-      controlledToken: string,
-      referrer: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      controlledToken: PromiseOrValue<string>,
+      referrer: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     beforeTokenTransfer(
-      from: string,
-      to: string,
-      amount: BigNumberish,
-      controlledToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      controlledToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    calculateNextPrizePeriodStartTime(currentTime: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    calculateNextPrizePeriodStartTime(
+      currentTime: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     canCompleteAward(overrides?: CallOverrides): Promise<BigNumber>;
 
     canStartAward(overrides?: CallOverrides): Promise<BigNumber>;
 
-    cancelAward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    cancelAward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    completeAward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    completeAward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     currentPrize(overrides?: CallOverrides): Promise<BigNumber>;
 
     estimateRemainingBlocksToPrize(
-      secondsPerBlockMantissa: BigNumberish,
+      secondsPerBlockMantissa: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     getExternalErc20Awards(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getExternalErc721AwardTokenIds(_externalErc721: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getExternalErc721AwardTokenIds(
+      _externalErc721: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     getExternalErc721Awards(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1111,25 +1204,25 @@ export interface PoolTogetherV3MultipleWinnersPrizeStrategy extends BaseContract
     getLastRngRequestId(overrides?: CallOverrides): Promise<BigNumber>;
 
     initialize(
-      _prizePeriodStart: BigNumberish,
-      _prizePeriodSeconds: BigNumberish,
-      _prizePool: string,
-      _ticket: string,
-      _sponsorship: string,
-      _rng: string,
-      externalErc20Awards: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _prizePeriodStart: PromiseOrValue<BigNumberish>,
+      _prizePeriodSeconds: PromiseOrValue<BigNumberish>,
+      _prizePool: PromiseOrValue<string>,
+      _ticket: PromiseOrValue<string>,
+      _sponsorship: PromiseOrValue<string>,
+      _rng: PromiseOrValue<string>,
+      externalErc20Awards: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     initializeMultipleWinners(
-      _prizePeriodStart: BigNumberish,
-      _prizePeriodSeconds: BigNumberish,
-      _prizePool: string,
-      _ticket: string,
-      _sponsorship: string,
-      _rng: string,
-      _numberOfWinners: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _prizePeriodStart: PromiseOrValue<BigNumberish>,
+      _prizePeriodSeconds: PromiseOrValue<BigNumberish>,
+      _prizePool: PromiseOrValue<string>,
+      _ticket: PromiseOrValue<string>,
+      _sponsorship: PromiseOrValue<string>,
+      _rng: PromiseOrValue<string>,
+      _numberOfWinners: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     isPrizePeriodOver(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1157,110 +1250,113 @@ export interface PoolTogetherV3MultipleWinnersPrizeStrategy extends BaseContract
     prizePool(overrides?: CallOverrides): Promise<BigNumber>;
 
     removeExternalErc20Award(
-      _externalErc20: string,
-      _prevExternalErc20: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _externalErc20: PromiseOrValue<string>,
+      _prevExternalErc20: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     removeExternalErc721Award(
-      _externalErc721: string,
-      _prevExternalErc721: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _externalErc721: PromiseOrValue<string>,
+      _prevExternalErc721: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     rng(overrides?: CallOverrides): Promise<BigNumber>;
 
     rngRequestTimeout(overrides?: CallOverrides): Promise<BigNumber>;
 
     setNumberOfWinners(
-      count: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      count: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setPeriodicPrizeStrategyListener(
-      _periodicPrizeStrategyListener: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _periodicPrizeStrategyListener: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setRngRequestTimeout(
-      _rngRequestTimeout: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rngRequestTimeout: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setRngService(rngService: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setRngService(
+      rngService: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setSplitExternalErc20Awards(
-      _splitExternalErc20Awards: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _splitExternalErc20Awards: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setTokenListener(
-      _tokenListener: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokenListener: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     splitExternalErc20Awards(overrides?: CallOverrides): Promise<BigNumber>;
 
     sponsorship(overrides?: CallOverrides): Promise<BigNumber>;
 
-    startAward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    startAward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     ticket(overrides?: CallOverrides): Promise<BigNumber>;
 
     tokenListener(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferExternalERC20(
-      to: string,
-      externalToken: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      externalToken: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     addExternalErc20Award(
-      _externalErc20: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _externalErc20: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     addExternalErc20Awards(
-      _externalErc20s: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _externalErc20s: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     addExternalErc721Award(
-      _externalErc721: string,
-      _tokenIds: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _externalErc721: PromiseOrValue<string>,
+      _tokenIds: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     beforeTokenMint(
-      to: string,
-      amount: BigNumberish,
-      controlledToken: string,
-      referrer: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      controlledToken: PromiseOrValue<string>,
+      referrer: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     beforeTokenTransfer(
-      from: string,
-      to: string,
-      amount: BigNumberish,
-      controlledToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      controlledToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     calculateNextPrizePeriodStartTime(
-      currentTime: BigNumberish,
+      currentTime: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
@@ -1268,20 +1364,23 @@ export interface PoolTogetherV3MultipleWinnersPrizeStrategy extends BaseContract
 
     canStartAward(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    cancelAward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    cancelAward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    completeAward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    completeAward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     currentPrize(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     estimateRemainingBlocksToPrize(
-      secondsPerBlockMantissa: BigNumberish,
+      secondsPerBlockMantissa: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     getExternalErc20Awards(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getExternalErc721AwardTokenIds(_externalErc721: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getExternalErc721AwardTokenIds(
+      _externalErc721: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     getExternalErc721Awards(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1290,25 +1389,25 @@ export interface PoolTogetherV3MultipleWinnersPrizeStrategy extends BaseContract
     getLastRngRequestId(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     initialize(
-      _prizePeriodStart: BigNumberish,
-      _prizePeriodSeconds: BigNumberish,
-      _prizePool: string,
-      _ticket: string,
-      _sponsorship: string,
-      _rng: string,
-      externalErc20Awards: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _prizePeriodStart: PromiseOrValue<BigNumberish>,
+      _prizePeriodSeconds: PromiseOrValue<BigNumberish>,
+      _prizePool: PromiseOrValue<string>,
+      _ticket: PromiseOrValue<string>,
+      _sponsorship: PromiseOrValue<string>,
+      _rng: PromiseOrValue<string>,
+      externalErc20Awards: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     initializeMultipleWinners(
-      _prizePeriodStart: BigNumberish,
-      _prizePeriodSeconds: BigNumberish,
-      _prizePool: string,
-      _ticket: string,
-      _sponsorship: string,
-      _rng: string,
-      _numberOfWinners: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _prizePeriodStart: PromiseOrValue<BigNumberish>,
+      _prizePeriodSeconds: PromiseOrValue<BigNumberish>,
+      _prizePool: PromiseOrValue<string>,
+      _ticket: PromiseOrValue<string>,
+      _sponsorship: PromiseOrValue<string>,
+      _rng: PromiseOrValue<string>,
+      _numberOfWinners: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     isPrizePeriodOver(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1336,75 +1435,75 @@ export interface PoolTogetherV3MultipleWinnersPrizeStrategy extends BaseContract
     prizePool(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     removeExternalErc20Award(
-      _externalErc20: string,
-      _prevExternalErc20: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _externalErc20: PromiseOrValue<string>,
+      _prevExternalErc20: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     removeExternalErc721Award(
-      _externalErc721: string,
-      _prevExternalErc721: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _externalErc721: PromiseOrValue<string>,
+      _prevExternalErc721: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     rng(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     rngRequestTimeout(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setNumberOfWinners(
-      count: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      count: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setPeriodicPrizeStrategyListener(
-      _periodicPrizeStrategyListener: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _periodicPrizeStrategyListener: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setRngRequestTimeout(
-      _rngRequestTimeout: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rngRequestTimeout: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setRngService(
-      rngService: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      rngService: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setSplitExternalErc20Awards(
-      _splitExternalErc20Awards: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _splitExternalErc20Awards: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setTokenListener(
-      _tokenListener: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokenListener: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     splitExternalErc20Awards(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     sponsorship(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    startAward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    startAward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     ticket(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     tokenListener(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferExternalERC20(
-      to: string,
-      externalToken: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      externalToken: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

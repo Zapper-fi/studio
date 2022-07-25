@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface PoolInterface extends utils.Interface {
   functions: {
@@ -109,16 +109,36 @@ export interface PoolInterface extends utils.Interface {
 
   encodeFunctionData(functionFragment: 'DOMAIN_SEPARATOR', values?: undefined): string;
   encodeFunctionData(functionFragment: 'PERMIT_TYPEHASH', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'allowance', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'approve', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
+  encodeFunctionData(functionFragment: 'allowance', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'approve',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'base', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'burn', values: [string, string, BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'burnForBase', values: [string, BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'buyBase', values: [string, BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'buyBasePreview', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'buyFYToken', values: [string, BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'buyFYTokenPreview', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'burn',
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'burnForBase',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'buyBase',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'buyBasePreview', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'buyFYToken',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'buyFYTokenPreview', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'cumulativeBalancesRatio', values?: undefined): string;
   encodeFunctionData(functionFragment: 'decimals', values?: undefined): string;
   encodeFunctionData(functionFragment: 'deploymentChainId', values?: undefined): string;
@@ -129,29 +149,63 @@ export interface PoolInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'getCache', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getFYTokenBalance', values?: undefined): string;
   encodeFunctionData(functionFragment: 'maturity', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'mint', values: [string, string, BigNumberish, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'mint',
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
+  ): string;
   encodeFunctionData(
     functionFragment: 'mintWithBase',
-    values: [string, string, BigNumberish, BigNumberish, BigNumberish],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'nonces', values: [string]): string;
+  encodeFunctionData(functionFragment: 'nonces', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
     functionFragment: 'permit',
-    values: [string, string, BigNumberish, BigNumberish, BigNumberish, BytesLike, BytesLike],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'retrieveBase', values: [string]): string;
-  encodeFunctionData(functionFragment: 'retrieveFYToken', values: [string]): string;
+  encodeFunctionData(functionFragment: 'retrieveBase', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'retrieveFYToken', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'scaleFactor', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'sellBase', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'sellBasePreview', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'sellFYToken', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'sellFYTokenPreview', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'sellBase',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'sellBasePreview', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'sellFYToken',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'sellFYTokenPreview', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
   encodeFunctionData(functionFragment: 'sync', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transfer', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferFrom', values: [string, string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'transfer',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'transferFrom',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'ts', values?: undefined): string;
   encodeFunctionData(functionFragment: 'version', values?: undefined): string;
 
@@ -293,50 +347,54 @@ export interface Pool extends BaseContract {
 
     PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<[string]>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     approve(
-      spender: string,
-      wad: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      wad: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    balanceOf(guy: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOf(guy: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     base(overrides?: CallOverrides): Promise<[string]>;
 
     burn(
-      baseTo: string,
-      fyTokenTo: string,
-      minRatio: BigNumberish,
-      maxRatio: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      baseTo: PromiseOrValue<string>,
+      fyTokenTo: PromiseOrValue<string>,
+      minRatio: PromiseOrValue<BigNumberish>,
+      maxRatio: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     burnForBase(
-      to: string,
-      minRatio: BigNumberish,
-      maxRatio: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      minRatio: PromiseOrValue<BigNumberish>,
+      maxRatio: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     buyBase(
-      to: string,
-      tokenOut: BigNumberish,
-      max: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      tokenOut: PromiseOrValue<BigNumberish>,
+      max: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    buyBasePreview(tokenOut: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    buyBasePreview(tokenOut: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     buyFYToken(
-      to: string,
-      fyTokenOut: BigNumberish,
-      max: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      fyTokenOut: PromiseOrValue<BigNumberish>,
+      max: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    buyFYTokenPreview(fyTokenOut: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    buyFYTokenPreview(fyTokenOut: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     cumulativeBalancesRatio(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -359,79 +417,82 @@ export interface Pool extends BaseContract {
     maturity(overrides?: CallOverrides): Promise<[number]>;
 
     mint(
-      to: string,
-      remainder: string,
-      minRatio: BigNumberish,
-      maxRatio: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      remainder: PromiseOrValue<string>,
+      minRatio: PromiseOrValue<BigNumberish>,
+      maxRatio: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     mintWithBase(
-      to: string,
-      remainder: string,
-      fyTokenToBuy: BigNumberish,
-      minRatio: BigNumberish,
-      maxRatio: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      remainder: PromiseOrValue<string>,
+      fyTokenToBuy: PromiseOrValue<BigNumberish>,
+      minRatio: PromiseOrValue<BigNumberish>,
+      maxRatio: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     permit(
-      owner: string,
-      spender: string,
-      amount: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    retrieveBase(to: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    retrieveBase(
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     retrieveFYToken(
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     scaleFactor(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     sellBase(
-      to: string,
-      min: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      min: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    sellBasePreview(baseIn: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    sellBasePreview(baseIn: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     sellFYToken(
-      to: string,
-      min: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      min: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    sellFYTokenPreview(fyTokenIn: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    sellFYTokenPreview(fyTokenIn: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
 
-    sync(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    sync(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transfer(
-      dst: string,
-      wad: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      dst: PromiseOrValue<string>,
+      wad: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferFrom(
-      src: string,
-      dst: string,
-      wad: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      src: PromiseOrValue<string>,
+      dst: PromiseOrValue<string>,
+      wad: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     ts(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -443,50 +504,54 @@ export interface Pool extends BaseContract {
 
   PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<string>;
 
-  allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+  allowance(
+    owner: PromiseOrValue<string>,
+    spender: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   approve(
-    spender: string,
-    wad: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    wad: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  balanceOf(guy: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(guy: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   base(overrides?: CallOverrides): Promise<string>;
 
   burn(
-    baseTo: string,
-    fyTokenTo: string,
-    minRatio: BigNumberish,
-    maxRatio: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    baseTo: PromiseOrValue<string>,
+    fyTokenTo: PromiseOrValue<string>,
+    minRatio: PromiseOrValue<BigNumberish>,
+    maxRatio: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   burnForBase(
-    to: string,
-    minRatio: BigNumberish,
-    maxRatio: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    to: PromiseOrValue<string>,
+    minRatio: PromiseOrValue<BigNumberish>,
+    maxRatio: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   buyBase(
-    to: string,
-    tokenOut: BigNumberish,
-    max: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    to: PromiseOrValue<string>,
+    tokenOut: PromiseOrValue<BigNumberish>,
+    max: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  buyBasePreview(tokenOut: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  buyBasePreview(tokenOut: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   buyFYToken(
-    to: string,
-    fyTokenOut: BigNumberish,
-    max: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    to: PromiseOrValue<string>,
+    fyTokenOut: PromiseOrValue<BigNumberish>,
+    max: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  buyFYTokenPreview(fyTokenOut: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  buyFYTokenPreview(fyTokenOut: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   cumulativeBalancesRatio(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -509,79 +574,82 @@ export interface Pool extends BaseContract {
   maturity(overrides?: CallOverrides): Promise<number>;
 
   mint(
-    to: string,
-    remainder: string,
-    minRatio: BigNumberish,
-    maxRatio: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    to: PromiseOrValue<string>,
+    remainder: PromiseOrValue<string>,
+    minRatio: PromiseOrValue<BigNumberish>,
+    maxRatio: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   mintWithBase(
-    to: string,
-    remainder: string,
-    fyTokenToBuy: BigNumberish,
-    minRatio: BigNumberish,
-    maxRatio: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    to: PromiseOrValue<string>,
+    remainder: PromiseOrValue<string>,
+    fyTokenToBuy: PromiseOrValue<BigNumberish>,
+    minRatio: PromiseOrValue<BigNumberish>,
+    maxRatio: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   name(overrides?: CallOverrides): Promise<string>;
 
-  nonces(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   permit(
-    owner: string,
-    spender: string,
-    amount: BigNumberish,
-    deadline: BigNumberish,
-    v: BigNumberish,
-    r: BytesLike,
-    s: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    owner: PromiseOrValue<string>,
+    spender: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    deadline: PromiseOrValue<BigNumberish>,
+    v: PromiseOrValue<BigNumberish>,
+    r: PromiseOrValue<BytesLike>,
+    s: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  retrieveBase(to: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  retrieveBase(
+    to: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   retrieveFYToken(
-    to: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    to: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   scaleFactor(overrides?: CallOverrides): Promise<BigNumber>;
 
   sellBase(
-    to: string,
-    min: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    to: PromiseOrValue<string>,
+    min: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  sellBasePreview(baseIn: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  sellBasePreview(baseIn: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   sellFYToken(
-    to: string,
-    min: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    to: PromiseOrValue<string>,
+    min: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  sellFYTokenPreview(fyTokenIn: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  sellFYTokenPreview(fyTokenIn: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
 
-  sync(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  sync(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   transfer(
-    dst: string,
-    wad: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    dst: PromiseOrValue<string>,
+    wad: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferFrom(
-    src: string,
-    dst: string,
-    wad: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    src: PromiseOrValue<string>,
+    dst: PromiseOrValue<string>,
+    wad: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   ts(overrides?: CallOverrides): Promise<BigNumber>;
@@ -593,36 +661,54 @@ export interface Pool extends BaseContract {
 
     PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<string>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    approve(spender: string, wad: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    approve(
+      spender: PromiseOrValue<string>,
+      wad: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    balanceOf(guy: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(guy: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     base(overrides?: CallOverrides): Promise<string>;
 
     burn(
-      baseTo: string,
-      fyTokenTo: string,
-      minRatio: BigNumberish,
-      maxRatio: BigNumberish,
+      baseTo: PromiseOrValue<string>,
+      fyTokenTo: PromiseOrValue<string>,
+      minRatio: PromiseOrValue<BigNumberish>,
+      maxRatio: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber, BigNumber]>;
 
     burnForBase(
-      to: string,
-      minRatio: BigNumberish,
-      maxRatio: BigNumberish,
+      to: PromiseOrValue<string>,
+      minRatio: PromiseOrValue<BigNumberish>,
+      maxRatio: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { tokensBurned: BigNumber; baseOut: BigNumber }>;
 
-    buyBase(to: string, tokenOut: BigNumberish, max: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    buyBase(
+      to: PromiseOrValue<string>,
+      tokenOut: PromiseOrValue<BigNumberish>,
+      max: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    buyBasePreview(tokenOut: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    buyBasePreview(tokenOut: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    buyFYToken(to: string, fyTokenOut: BigNumberish, max: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    buyFYToken(
+      to: PromiseOrValue<string>,
+      fyTokenOut: PromiseOrValue<BigNumberish>,
+      max: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    buyFYTokenPreview(fyTokenOut: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    buyFYTokenPreview(fyTokenOut: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     cumulativeBalancesRatio(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -645,50 +731,58 @@ export interface Pool extends BaseContract {
     maturity(overrides?: CallOverrides): Promise<number>;
 
     mint(
-      to: string,
-      remainder: string,
-      minRatio: BigNumberish,
-      maxRatio: BigNumberish,
+      to: PromiseOrValue<string>,
+      remainder: PromiseOrValue<string>,
+      minRatio: PromiseOrValue<BigNumberish>,
+      maxRatio: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber, BigNumber]>;
 
     mintWithBase(
-      to: string,
-      remainder: string,
-      fyTokenToBuy: BigNumberish,
-      minRatio: BigNumberish,
-      maxRatio: BigNumberish,
+      to: PromiseOrValue<string>,
+      remainder: PromiseOrValue<string>,
+      fyTokenToBuy: PromiseOrValue<BigNumberish>,
+      minRatio: PromiseOrValue<BigNumberish>,
+      maxRatio: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber, BigNumber]>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     permit(
-      owner: string,
-      spender: string,
-      amount: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    retrieveBase(to: string, overrides?: CallOverrides): Promise<BigNumber>;
+    retrieveBase(to: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    retrieveFYToken(to: string, overrides?: CallOverrides): Promise<BigNumber>;
+    retrieveFYToken(to: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     scaleFactor(overrides?: CallOverrides): Promise<BigNumber>;
 
-    sellBase(to: string, min: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    sellBase(
+      to: PromiseOrValue<string>,
+      min: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    sellBasePreview(baseIn: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    sellBasePreview(baseIn: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    sellFYToken(to: string, min: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    sellFYToken(
+      to: PromiseOrValue<string>,
+      min: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    sellFYTokenPreview(fyTokenIn: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    sellFYTokenPreview(fyTokenIn: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<string>;
 
@@ -696,9 +790,18 @@ export interface Pool extends BaseContract {
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transfer(dst: string, wad: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transfer(
+      dst: PromiseOrValue<string>,
+      wad: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    transferFrom(src: string, dst: string, wad: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transferFrom(
+      src: PromiseOrValue<string>,
+      dst: PromiseOrValue<string>,
+      wad: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     ts(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -707,26 +810,30 @@ export interface Pool extends BaseContract {
 
   filters: {
     'Approval(address,address,uint256)'(
-      owner?: string | null,
-      spender?: string | null,
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
       value?: null,
     ): ApprovalEventFilter;
-    Approval(owner?: string | null, spender?: string | null, value?: null): ApprovalEventFilter;
+    Approval(
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
+      value?: null,
+    ): ApprovalEventFilter;
 
     'Liquidity(uint32,address,address,address,int256,int256,int256)'(
       maturity?: null,
-      from?: string | null,
-      to?: string | null,
-      fyTokenTo?: string | null,
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      fyTokenTo?: PromiseOrValue<string> | null,
       bases?: null,
       fyTokens?: null,
       poolTokens?: null,
     ): LiquidityEventFilter;
     Liquidity(
       maturity?: null,
-      from?: string | null,
-      to?: string | null,
-      fyTokenTo?: string | null,
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      fyTokenTo?: PromiseOrValue<string> | null,
       bases?: null,
       fyTokens?: null,
       poolTokens?: null,
@@ -741,15 +848,29 @@ export interface Pool extends BaseContract {
 
     'Trade(uint32,address,address,int256,int256)'(
       maturity?: null,
-      from?: string | null,
-      to?: string | null,
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
       bases?: null,
       fyTokens?: null,
     ): TradeEventFilter;
-    Trade(maturity?: null, from?: string | null, to?: string | null, bases?: null, fyTokens?: null): TradeEventFilter;
+    Trade(
+      maturity?: null,
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      bases?: null,
+      fyTokens?: null,
+    ): TradeEventFilter;
 
-    'Transfer(address,address,uint256)'(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
-    Transfer(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
+    'Transfer(address,address,uint256)'(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
+    Transfer(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
   };
 
   estimateGas: {
@@ -757,50 +878,54 @@ export interface Pool extends BaseContract {
 
     PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<BigNumber>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-    approve(
-      spender: string,
-      wad: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    balanceOf(guy: string, overrides?: CallOverrides): Promise<BigNumber>;
+    approve(
+      spender: PromiseOrValue<string>,
+      wad: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    balanceOf(guy: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     base(overrides?: CallOverrides): Promise<BigNumber>;
 
     burn(
-      baseTo: string,
-      fyTokenTo: string,
-      minRatio: BigNumberish,
-      maxRatio: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      baseTo: PromiseOrValue<string>,
+      fyTokenTo: PromiseOrValue<string>,
+      minRatio: PromiseOrValue<BigNumberish>,
+      maxRatio: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     burnForBase(
-      to: string,
-      minRatio: BigNumberish,
-      maxRatio: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      minRatio: PromiseOrValue<BigNumberish>,
+      maxRatio: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     buyBase(
-      to: string,
-      tokenOut: BigNumberish,
-      max: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      tokenOut: PromiseOrValue<BigNumberish>,
+      max: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    buyBasePreview(tokenOut: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    buyBasePreview(tokenOut: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     buyFYToken(
-      to: string,
-      fyTokenOut: BigNumberish,
-      max: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      fyTokenOut: PromiseOrValue<BigNumberish>,
+      max: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    buyFYTokenPreview(fyTokenOut: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    buyFYTokenPreview(fyTokenOut: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     cumulativeBalancesRatio(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -823,76 +948,82 @@ export interface Pool extends BaseContract {
     maturity(overrides?: CallOverrides): Promise<BigNumber>;
 
     mint(
-      to: string,
-      remainder: string,
-      minRatio: BigNumberish,
-      maxRatio: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      remainder: PromiseOrValue<string>,
+      minRatio: PromiseOrValue<BigNumberish>,
+      maxRatio: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     mintWithBase(
-      to: string,
-      remainder: string,
-      fyTokenToBuy: BigNumberish,
-      minRatio: BigNumberish,
-      maxRatio: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      remainder: PromiseOrValue<string>,
+      fyTokenToBuy: PromiseOrValue<BigNumberish>,
+      minRatio: PromiseOrValue<BigNumberish>,
+      maxRatio: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     permit(
-      owner: string,
-      spender: string,
-      amount: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    retrieveBase(to: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    retrieveBase(
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    retrieveFYToken(to: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    retrieveFYToken(
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     scaleFactor(overrides?: CallOverrides): Promise<BigNumber>;
 
     sellBase(
-      to: string,
-      min: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      min: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    sellBasePreview(baseIn: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    sellBasePreview(baseIn: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     sellFYToken(
-      to: string,
-      min: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      min: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    sellFYTokenPreview(fyTokenIn: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    sellFYTokenPreview(fyTokenIn: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
-    sync(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    sync(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
-      dst: string,
-      wad: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      dst: PromiseOrValue<string>,
+      wad: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferFrom(
-      src: string,
-      dst: string,
-      wad: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      src: PromiseOrValue<string>,
+      dst: PromiseOrValue<string>,
+      wad: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     ts(overrides?: CallOverrides): Promise<BigNumber>;
@@ -905,50 +1036,57 @@ export interface Pool extends BaseContract {
 
     PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    approve(
-      spender: string,
-      wad: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    balanceOf(guy: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    approve(
+      spender: PromiseOrValue<string>,
+      wad: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    balanceOf(guy: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     base(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     burn(
-      baseTo: string,
-      fyTokenTo: string,
-      minRatio: BigNumberish,
-      maxRatio: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      baseTo: PromiseOrValue<string>,
+      fyTokenTo: PromiseOrValue<string>,
+      minRatio: PromiseOrValue<BigNumberish>,
+      maxRatio: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     burnForBase(
-      to: string,
-      minRatio: BigNumberish,
-      maxRatio: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      minRatio: PromiseOrValue<BigNumberish>,
+      maxRatio: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     buyBase(
-      to: string,
-      tokenOut: BigNumberish,
-      max: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      tokenOut: PromiseOrValue<BigNumberish>,
+      max: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    buyBasePreview(tokenOut: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    buyBasePreview(tokenOut: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     buyFYToken(
-      to: string,
-      fyTokenOut: BigNumberish,
-      max: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      fyTokenOut: PromiseOrValue<BigNumberish>,
+      max: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    buyFYTokenPreview(fyTokenOut: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    buyFYTokenPreview(
+      fyTokenOut: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     cumulativeBalancesRatio(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -971,82 +1109,85 @@ export interface Pool extends BaseContract {
     maturity(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     mint(
-      to: string,
-      remainder: string,
-      minRatio: BigNumberish,
-      maxRatio: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      remainder: PromiseOrValue<string>,
+      minRatio: PromiseOrValue<BigNumberish>,
+      maxRatio: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     mintWithBase(
-      to: string,
-      remainder: string,
-      fyTokenToBuy: BigNumberish,
-      minRatio: BigNumberish,
-      maxRatio: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      remainder: PromiseOrValue<string>,
+      fyTokenToBuy: PromiseOrValue<BigNumberish>,
+      minRatio: PromiseOrValue<BigNumberish>,
+      maxRatio: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     permit(
-      owner: string,
-      spender: string,
-      amount: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     retrieveBase(
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     retrieveFYToken(
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     scaleFactor(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     sellBase(
-      to: string,
-      min: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      min: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    sellBasePreview(baseIn: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    sellBasePreview(baseIn: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     sellFYToken(
-      to: string,
-      min: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      min: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    sellFYTokenPreview(fyTokenIn: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    sellFYTokenPreview(
+      fyTokenIn: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    sync(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    sync(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transfer(
-      dst: string,
-      wad: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      dst: PromiseOrValue<string>,
+      wad: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferFrom(
-      src: string,
-      dst: string,
-      wad: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      src: PromiseOrValue<string>,
+      dst: PromiseOrValue<string>,
+      wad: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     ts(overrides?: CallOverrides): Promise<PopulatedTransaction>;

@@ -14,7 +14,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface SynthetixAddressResolverInterface extends utils.Interface {
   functions: {
@@ -47,16 +47,25 @@ export interface SynthetixAddressResolverInterface extends utils.Interface {
   ): FunctionFragment;
 
   encodeFunctionData(functionFragment: 'acceptOwnership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'areAddressesImported', values: [BytesLike[], string[]]): string;
-  encodeFunctionData(functionFragment: 'getAddress', values: [BytesLike]): string;
-  encodeFunctionData(functionFragment: 'getSynth', values: [BytesLike]): string;
-  encodeFunctionData(functionFragment: 'importAddresses', values: [BytesLike[], string[]]): string;
-  encodeFunctionData(functionFragment: 'nominateNewOwner', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'areAddressesImported',
+    values: [PromiseOrValue<BytesLike>[], PromiseOrValue<string>[]],
+  ): string;
+  encodeFunctionData(functionFragment: 'getAddress', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(functionFragment: 'getSynth', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(
+    functionFragment: 'importAddresses',
+    values: [PromiseOrValue<BytesLike>[], PromiseOrValue<string>[]],
+  ): string;
+  encodeFunctionData(functionFragment: 'nominateNewOwner', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'nominatedOwner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'rebuildCaches', values: [string[]]): string;
-  encodeFunctionData(functionFragment: 'repository', values: [BytesLike]): string;
-  encodeFunctionData(functionFragment: 'requireAndGetAddress', values: [BytesLike, string]): string;
+  encodeFunctionData(functionFragment: 'rebuildCaches', values: [PromiseOrValue<string>[]]): string;
+  encodeFunctionData(functionFragment: 'repository', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(
+    functionFragment: 'requireAndGetAddress',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
+  ): string;
 
   decodeFunctionResult(functionFragment: 'acceptOwnership', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'areAddressesImported', data: BytesLike): Result;
@@ -127,23 +136,27 @@ export interface SynthetixAddressResolver extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    acceptOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    areAddressesImported(names: BytesLike[], destinations: string[], overrides?: CallOverrides): Promise<[boolean]>;
+    areAddressesImported(
+      names: PromiseOrValue<BytesLike>[],
+      destinations: PromiseOrValue<string>[],
+      overrides?: CallOverrides,
+    ): Promise<[boolean]>;
 
-    getAddress(name: BytesLike, overrides?: CallOverrides): Promise<[string]>;
+    getAddress(name: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[string]>;
 
-    getSynth(key: BytesLike, overrides?: CallOverrides): Promise<[string]>;
+    getSynth(key: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[string]>;
 
     importAddresses(
-      names: BytesLike[],
-      destinations: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      names: PromiseOrValue<BytesLike>[],
+      destinations: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     nominateNewOwner(
-      _owner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<[string]>;
@@ -151,32 +164,40 @@ export interface SynthetixAddressResolver extends BaseContract {
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     rebuildCaches(
-      destinations: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      destinations: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    repository(arg0: BytesLike, overrides?: CallOverrides): Promise<[string]>;
+    repository(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[string]>;
 
-    requireAndGetAddress(name: BytesLike, reason: string, overrides?: CallOverrides): Promise<[string]>;
+    requireAndGetAddress(
+      name: PromiseOrValue<BytesLike>,
+      reason: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[string]>;
   };
 
-  acceptOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  areAddressesImported(names: BytesLike[], destinations: string[], overrides?: CallOverrides): Promise<boolean>;
+  areAddressesImported(
+    names: PromiseOrValue<BytesLike>[],
+    destinations: PromiseOrValue<string>[],
+    overrides?: CallOverrides,
+  ): Promise<boolean>;
 
-  getAddress(name: BytesLike, overrides?: CallOverrides): Promise<string>;
+  getAddress(name: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
-  getSynth(key: BytesLike, overrides?: CallOverrides): Promise<string>;
+  getSynth(key: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
   importAddresses(
-    names: BytesLike[],
-    destinations: string[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    names: PromiseOrValue<BytesLike>[],
+    destinations: PromiseOrValue<string>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   nominateNewOwner(
-    _owner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _owner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   nominatedOwner(overrides?: CallOverrides): Promise<string>;
@@ -184,36 +205,52 @@ export interface SynthetixAddressResolver extends BaseContract {
   owner(overrides?: CallOverrides): Promise<string>;
 
   rebuildCaches(
-    destinations: string[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    destinations: PromiseOrValue<string>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  repository(arg0: BytesLike, overrides?: CallOverrides): Promise<string>;
+  repository(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
-  requireAndGetAddress(name: BytesLike, reason: string, overrides?: CallOverrides): Promise<string>;
+  requireAndGetAddress(
+    name: PromiseOrValue<BytesLike>,
+    reason: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<string>;
 
   callStatic: {
     acceptOwnership(overrides?: CallOverrides): Promise<void>;
 
-    areAddressesImported(names: BytesLike[], destinations: string[], overrides?: CallOverrides): Promise<boolean>;
+    areAddressesImported(
+      names: PromiseOrValue<BytesLike>[],
+      destinations: PromiseOrValue<string>[],
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    getAddress(name: BytesLike, overrides?: CallOverrides): Promise<string>;
+    getAddress(name: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
-    getSynth(key: BytesLike, overrides?: CallOverrides): Promise<string>;
+    getSynth(key: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
-    importAddresses(names: BytesLike[], destinations: string[], overrides?: CallOverrides): Promise<void>;
+    importAddresses(
+      names: PromiseOrValue<BytesLike>[],
+      destinations: PromiseOrValue<string>[],
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    nominateNewOwner(_owner: string, overrides?: CallOverrides): Promise<void>;
+    nominateNewOwner(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<string>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    rebuildCaches(destinations: string[], overrides?: CallOverrides): Promise<void>;
+    rebuildCaches(destinations: PromiseOrValue<string>[], overrides?: CallOverrides): Promise<void>;
 
-    repository(arg0: BytesLike, overrides?: CallOverrides): Promise<string>;
+    repository(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
-    requireAndGetAddress(name: BytesLike, reason: string, overrides?: CallOverrides): Promise<string>;
+    requireAndGetAddress(
+      name: PromiseOrValue<BytesLike>,
+      reason: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<string>;
   };
 
   filters: {
@@ -228,58 +265,69 @@ export interface SynthetixAddressResolver extends BaseContract {
   };
 
   estimateGas: {
-    acceptOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    areAddressesImported(names: BytesLike[], destinations: string[], overrides?: CallOverrides): Promise<BigNumber>;
-
-    getAddress(name: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
-
-    getSynth(key: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
-
-    importAddresses(
-      names: BytesLike[],
-      destinations: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+    areAddressesImported(
+      names: PromiseOrValue<BytesLike>[],
+      destinations: PromiseOrValue<string>[],
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    nominateNewOwner(_owner: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    getAddress(name: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    getSynth(key: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    importAddresses(
+      names: PromiseOrValue<BytesLike>[],
+      destinations: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    nominateNewOwner(
+      _owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     rebuildCaches(
-      destinations: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      destinations: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    repository(arg0: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    repository(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    requireAndGetAddress(name: BytesLike, reason: string, overrides?: CallOverrides): Promise<BigNumber>;
+    requireAndGetAddress(
+      name: PromiseOrValue<BytesLike>,
+      reason: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    acceptOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     areAddressesImported(
-      names: BytesLike[],
-      destinations: string[],
+      names: PromiseOrValue<BytesLike>[],
+      destinations: PromiseOrValue<string>[],
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    getAddress(name: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getAddress(name: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getSynth(key: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getSynth(key: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     importAddresses(
-      names: BytesLike[],
-      destinations: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      names: PromiseOrValue<BytesLike>[],
+      destinations: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     nominateNewOwner(
-      _owner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -287,12 +335,16 @@ export interface SynthetixAddressResolver extends BaseContract {
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     rebuildCaches(
-      destinations: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      destinations: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    repository(arg0: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    repository(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    requireAndGetAddress(name: BytesLike, reason: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    requireAndGetAddress(
+      name: PromiseOrValue<BytesLike>,
+      reason: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
   };
 }

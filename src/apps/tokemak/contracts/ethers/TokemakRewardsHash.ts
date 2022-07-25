@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface TokemakRewardsHashInterface extends utils.Interface {
   functions: {
@@ -37,12 +37,15 @@ export interface TokemakRewardsHashInterface extends utils.Interface {
       | 'transferOwnership',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'cycleHashes', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'cycleHashes', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'latestCycleIndex', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'setCycleHashes', values: [BigNumberish, string, string]): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'setCycleHashes',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
 
   decodeFunctionResult(functionFragment: 'cycleHashes', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'latestCycleIndex', data: BytesLike): Result;
@@ -101,7 +104,7 @@ export interface TokemakRewardsHash extends BaseContract {
 
   functions: {
     cycleHashes(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[string, string] & { latestClaimable: string; cycle: string }>;
 
@@ -109,23 +112,23 @@ export interface TokemakRewardsHash extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     setCycleHashes(
-      index: BigNumberish,
-      latestClaimableIpfsHash: string,
-      cycleIpfsHash: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      index: PromiseOrValue<BigNumberish>,
+      latestClaimableIpfsHash: PromiseOrValue<string>,
+      cycleIpfsHash: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
   cycleHashes(
-    arg0: BigNumberish,
+    arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<[string, string] & { latestClaimable: string; cycle: string }>;
 
@@ -133,23 +136,23 @@ export interface TokemakRewardsHash extends BaseContract {
 
   owner(overrides?: CallOverrides): Promise<string>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   setCycleHashes(
-    index: BigNumberish,
-    latestClaimableIpfsHash: string,
-    cycleIpfsHash: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    index: PromiseOrValue<BigNumberish>,
+    latestClaimableIpfsHash: PromiseOrValue<string>,
+    cycleIpfsHash: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
     cycleHashes(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[string, string] & { latestClaimable: string; cycle: string }>;
 
@@ -160,13 +163,13 @@ export interface TokemakRewardsHash extends BaseContract {
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
     setCycleHashes(
-      index: BigNumberish,
-      latestClaimableIpfsHash: string,
-      cycleIpfsHash: string,
+      index: PromiseOrValue<BigNumberish>,
+      latestClaimableIpfsHash: PromiseOrValue<string>,
+      cycleIpfsHash: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
@@ -178,53 +181,56 @@ export interface TokemakRewardsHash extends BaseContract {
     CycleHashAdded(cycleIndex?: null, latestClaimableHash?: null, cycleHash?: null): CycleHashAddedEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
   };
 
   estimateGas: {
-    cycleHashes(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    cycleHashes(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     latestCycleIndex(overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     setCycleHashes(
-      index: BigNumberish,
-      latestClaimableIpfsHash: string,
-      cycleIpfsHash: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      index: PromiseOrValue<BigNumberish>,
+      latestClaimableIpfsHash: PromiseOrValue<string>,
+      cycleIpfsHash: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    cycleHashes(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    cycleHashes(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     latestCycleIndex(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     setCycleHashes(
-      index: BigNumberish,
-      latestClaimableIpfsHash: string,
-      cycleIpfsHash: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      index: PromiseOrValue<BigNumberish>,
+      latestClaimableIpfsHash: PromiseOrValue<string>,
+      cycleIpfsHash: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

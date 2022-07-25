@@ -15,14 +15,14 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export declare namespace MultiMerkleStash {
   export type ClaimParamStruct = {
-    token: string;
-    index: BigNumberish;
-    amount: BigNumberish;
-    merkleProof: BytesLike[];
+    token: PromiseOrValue<string>;
+    index: PromiseOrValue<BigNumberish>;
+    amount: PromiseOrValue<BigNumberish>;
+    merkleProof: PromiseOrValue<BytesLike>[];
   };
 
   export type ClaimParamStructOutput = [string, BigNumber, BigNumber, string[]] & {
@@ -59,15 +59,30 @@ export interface VotiumMultiMerkleInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: 'claim',
-    values: [string, BigNumberish, string, BigNumberish, BytesLike[]],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>[],
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'claimMulti', values: [string, MultiMerkleStash.ClaimParamStruct[]]): string;
-  encodeFunctionData(functionFragment: 'isClaimed', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'merkleRoot', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'claimMulti',
+    values: [PromiseOrValue<string>, MultiMerkleStash.ClaimParamStruct[]],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'isClaimed',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'merkleRoot', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
-  encodeFunctionData(functionFragment: 'update', values: [string]): string;
-  encodeFunctionData(functionFragment: 'updateMerkleRoot', values: [string, BytesLike]): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'update', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'updateMerkleRoot',
+    values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>],
+  ): string;
 
   decodeFunctionResult(functionFragment: 'claim', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'claimMulti', data: BytesLike): Result;
@@ -141,202 +156,233 @@ export interface VotiumMultiMerkle extends BaseContract {
 
   functions: {
     claim(
-      token: string,
-      index: BigNumberish,
-      account: string,
-      amount: BigNumberish,
-      merkleProof: BytesLike[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      index: PromiseOrValue<BigNumberish>,
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      merkleProof: PromiseOrValue<BytesLike>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     claimMulti(
-      account: string,
+      account: PromiseOrValue<string>,
       claims: MultiMerkleStash.ClaimParamStruct[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    isClaimed(token: string, index: BigNumberish, overrides?: CallOverrides): Promise<[boolean]>;
+    isClaimed(
+      token: PromiseOrValue<string>,
+      index: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[boolean]>;
 
-    merkleRoot(arg0: string, overrides?: CallOverrides): Promise<[string]>;
+    merkleRoot(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[string]>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    update(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    update(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     updateMerkleRoot(
-      token: string,
-      _merkleRoot: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      _merkleRoot: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
   claim(
-    token: string,
-    index: BigNumberish,
-    account: string,
-    amount: BigNumberish,
-    merkleProof: BytesLike[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    token: PromiseOrValue<string>,
+    index: PromiseOrValue<BigNumberish>,
+    account: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    merkleProof: PromiseOrValue<BytesLike>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   claimMulti(
-    account: string,
+    account: PromiseOrValue<string>,
     claims: MultiMerkleStash.ClaimParamStruct[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  isClaimed(token: string, index: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+  isClaimed(
+    token: PromiseOrValue<string>,
+    index: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<boolean>;
 
-  merkleRoot(arg0: string, overrides?: CallOverrides): Promise<string>;
+  merkleRoot(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  update(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  update(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   updateMerkleRoot(
-    token: string,
-    _merkleRoot: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    token: PromiseOrValue<string>,
+    _merkleRoot: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
     claim(
-      token: string,
-      index: BigNumberish,
-      account: string,
-      amount: BigNumberish,
-      merkleProof: BytesLike[],
+      token: PromiseOrValue<string>,
+      index: PromiseOrValue<BigNumberish>,
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      merkleProof: PromiseOrValue<BytesLike>[],
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    claimMulti(account: string, claims: MultiMerkleStash.ClaimParamStruct[], overrides?: CallOverrides): Promise<void>;
+    claimMulti(
+      account: PromiseOrValue<string>,
+      claims: MultiMerkleStash.ClaimParamStruct[],
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    isClaimed(token: string, index: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    isClaimed(
+      token: PromiseOrValue<string>,
+      index: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    merkleRoot(arg0: string, overrides?: CallOverrides): Promise<string>;
+    merkleRoot(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    update(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    update(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    updateMerkleRoot(token: string, _merkleRoot: BytesLike, overrides?: CallOverrides): Promise<void>;
+    updateMerkleRoot(
+      token: PromiseOrValue<string>,
+      _merkleRoot: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
   };
 
   filters: {
     'Claimed(address,uint256,uint256,address,uint256)'(
-      token?: string | null,
+      token?: PromiseOrValue<string> | null,
       index?: null,
       amount?: null,
-      account?: string | null,
-      update?: BigNumberish | null,
+      account?: PromiseOrValue<string> | null,
+      update?: PromiseOrValue<BigNumberish> | null,
     ): ClaimedEventFilter;
     Claimed(
-      token?: string | null,
+      token?: PromiseOrValue<string> | null,
       index?: null,
       amount?: null,
-      account?: string | null,
-      update?: BigNumberish | null,
+      account?: PromiseOrValue<string> | null,
+      update?: PromiseOrValue<BigNumberish> | null,
     ): ClaimedEventFilter;
 
     'MerkleRootUpdated(address,bytes32,uint256)'(
-      token?: string | null,
-      merkleRoot?: BytesLike | null,
-      update?: BigNumberish | null,
+      token?: PromiseOrValue<string> | null,
+      merkleRoot?: PromiseOrValue<BytesLike> | null,
+      update?: PromiseOrValue<BigNumberish> | null,
     ): MerkleRootUpdatedEventFilter;
     MerkleRootUpdated(
-      token?: string | null,
-      merkleRoot?: BytesLike | null,
-      update?: BigNumberish | null,
+      token?: PromiseOrValue<string> | null,
+      merkleRoot?: PromiseOrValue<BytesLike> | null,
+      update?: PromiseOrValue<BigNumberish> | null,
     ): MerkleRootUpdatedEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
   };
 
   estimateGas: {
     claim(
-      token: string,
-      index: BigNumberish,
-      account: string,
-      amount: BigNumberish,
-      merkleProof: BytesLike[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      index: PromiseOrValue<BigNumberish>,
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      merkleProof: PromiseOrValue<BytesLike>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     claimMulti(
-      account: string,
+      account: PromiseOrValue<string>,
       claims: MultiMerkleStash.ClaimParamStruct[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    isClaimed(token: string, index: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    isClaimed(
+      token: PromiseOrValue<string>,
+      index: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    merkleRoot(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    merkleRoot(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    update(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    update(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     updateMerkleRoot(
-      token: string,
-      _merkleRoot: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      _merkleRoot: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     claim(
-      token: string,
-      index: BigNumberish,
-      account: string,
-      amount: BigNumberish,
-      merkleProof: BytesLike[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      index: PromiseOrValue<BigNumberish>,
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      merkleProof: PromiseOrValue<BytesLike>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     claimMulti(
-      account: string,
+      account: PromiseOrValue<string>,
       claims: MultiMerkleStash.ClaimParamStruct[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    isClaimed(token: string, index: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    isClaimed(
+      token: PromiseOrValue<string>,
+      index: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    merkleRoot(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    merkleRoot(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    update(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    update(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     updateMerkleRoot(
-      token: string,
-      _merkleRoot: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      _merkleRoot: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

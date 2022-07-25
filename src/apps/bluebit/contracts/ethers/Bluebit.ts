@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface BluebitInterface extends utils.Interface {
   functions: {
@@ -92,29 +92,47 @@ export interface BluebitInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'manager', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'paused', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'pools', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'pools', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'rewardPerBlock', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'setManager', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setOwner', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setPaused', values: [boolean]): string;
+  encodeFunctionData(functionFragment: 'setManager', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setOwner', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setPaused', values: [PromiseOrValue<boolean>]): string;
   encodeFunctionData(functionFragment: 'totalAllocPoint', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'users', values: [BigNumberish, string]): string;
+  encodeFunctionData(functionFragment: 'users', values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'veToken', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'setveToken', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setBluebitToken', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setPool', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'migratePool', values: [BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'setFactorWeight', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setRewardPerBlock', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setFeeDistributor', values: [string]): string;
+  encodeFunctionData(functionFragment: 'setveToken', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setBluebitToken', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'setPool',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'migratePool',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'setFactorWeight', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setRewardPerBlock', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setFeeDistributor', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'poolLength', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'poolRewards', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'pendingRewards', values: [BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'deposit', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'withdraw', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'harvest', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'poolRewards',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'pendingRewards',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'deposit',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'withdraw',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'harvest', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'harvests', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'compound', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'compound', values: [PromiseOrValue<BigNumberish>]): string;
 
   decodeFunctionResult(functionFragment: 'bluebitToken', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'factorWeight', data: BytesLike): Result;
@@ -335,7 +353,7 @@ export interface Bluebit extends BaseContract {
     paused(overrides?: CallOverrides): Promise<[boolean]>;
 
     pools(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [string, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -353,22 +371,25 @@ export interface Bluebit extends BaseContract {
     rewardPerBlock(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     setManager(
-      _manager: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _manager: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    setOwner(_owner: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    setOwner(
+      _owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     setPaused(
-      _paused: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _paused: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     totalAllocPoint(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     users(
-      arg0: BigNumberish,
-      arg1: string,
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -383,74 +404,78 @@ export interface Bluebit extends BaseContract {
     veToken(overrides?: CallOverrides): Promise<[string]>;
 
     setveToken(
-      _address: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _address: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setBluebitToken(
-      _address: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _address: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setPool(
-      vault: string,
-      allocPoint: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vault: PromiseOrValue<string>,
+      allocPoint: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     migratePool(
-      pid: BigNumberish,
-      vault: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      vault: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setFactorWeight(
-      weight: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      weight: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setRewardPerBlock(
-      _value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setFeeDistributor(
-      _address: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _address: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     poolLength(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     poolRewards(
-      pid: BigNumberish,
-      bluebitTokenTotalSupply: BigNumberish,
+      pid: PromiseOrValue<BigNumberish>,
+      bluebitTokenTotalSupply: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { rewards: BigNumber; fee: BigNumber }>;
 
-    pendingRewards(pid: BigNumberish, account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    pendingRewards(
+      pid: PromiseOrValue<BigNumberish>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     deposit(
-      pid: BigNumberish,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     withdraw(
-      pid: BigNumberish,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     harvest(
-      pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    harvests(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    harvests(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     compound(
-      pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
@@ -469,7 +494,7 @@ export interface Bluebit extends BaseContract {
   paused(overrides?: CallOverrides): Promise<boolean>;
 
   pools(
-    arg0: BigNumberish,
+    arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<
     [string, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -487,22 +512,25 @@ export interface Bluebit extends BaseContract {
   rewardPerBlock(overrides?: CallOverrides): Promise<BigNumber>;
 
   setManager(
-    _manager: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _manager: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  setOwner(_owner: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  setOwner(
+    _owner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   setPaused(
-    _paused: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _paused: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   totalAllocPoint(overrides?: CallOverrides): Promise<BigNumber>;
 
   users(
-    arg0: BigNumberish,
-    arg1: string,
+    arg0: PromiseOrValue<BigNumberish>,
+    arg1: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -517,71 +545,78 @@ export interface Bluebit extends BaseContract {
   veToken(overrides?: CallOverrides): Promise<string>;
 
   setveToken(
-    _address: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _address: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setBluebitToken(
-    _address: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _address: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setPool(
-    vault: string,
-    allocPoint: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    vault: PromiseOrValue<string>,
+    allocPoint: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   migratePool(
-    pid: BigNumberish,
-    vault: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    pid: PromiseOrValue<BigNumberish>,
+    vault: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setFactorWeight(
-    weight: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    weight: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setRewardPerBlock(
-    _value: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _value: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setFeeDistributor(
-    _address: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _address: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   poolLength(overrides?: CallOverrides): Promise<BigNumber>;
 
   poolRewards(
-    pid: BigNumberish,
-    bluebitTokenTotalSupply: BigNumberish,
+    pid: PromiseOrValue<BigNumberish>,
+    bluebitTokenTotalSupply: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber, BigNumber] & { rewards: BigNumber; fee: BigNumber }>;
 
-  pendingRewards(pid: BigNumberish, account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  pendingRewards(
+    pid: PromiseOrValue<BigNumberish>,
+    account: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   deposit(
-    pid: BigNumberish,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    pid: PromiseOrValue<BigNumberish>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   withdraw(
-    pid: BigNumberish,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    pid: PromiseOrValue<BigNumberish>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  harvest(pid: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  harvest(
+    pid: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
-  harvests(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  harvests(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   compound(
-    pid: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    pid: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
@@ -600,7 +635,7 @@ export interface Bluebit extends BaseContract {
     paused(overrides?: CallOverrides): Promise<boolean>;
 
     pools(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [string, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -617,17 +652,17 @@ export interface Bluebit extends BaseContract {
 
     rewardPerBlock(overrides?: CallOverrides): Promise<BigNumber>;
 
-    setManager(_manager: string, overrides?: CallOverrides): Promise<void>;
+    setManager(_manager: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setOwner(_owner: string, overrides?: CallOverrides): Promise<void>;
+    setOwner(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setPaused(_paused: boolean, overrides?: CallOverrides): Promise<void>;
+    setPaused(_paused: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
 
     totalAllocPoint(overrides?: CallOverrides): Promise<BigNumber>;
 
     users(
-      arg0: BigNumberish,
-      arg1: string,
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -641,107 +676,167 @@ export interface Bluebit extends BaseContract {
 
     veToken(overrides?: CallOverrides): Promise<string>;
 
-    setveToken(_address: string, overrides?: CallOverrides): Promise<void>;
+    setveToken(_address: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setBluebitToken(_address: string, overrides?: CallOverrides): Promise<void>;
+    setBluebitToken(_address: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setPool(vault: string, allocPoint: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setPool(
+      vault: PromiseOrValue<string>,
+      allocPoint: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    migratePool(pid: BigNumberish, vault: string, overrides?: CallOverrides): Promise<void>;
+    migratePool(
+      pid: PromiseOrValue<BigNumberish>,
+      vault: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setFactorWeight(weight: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setFactorWeight(weight: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setRewardPerBlock(_value: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setRewardPerBlock(_value: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setFeeDistributor(_address: string, overrides?: CallOverrides): Promise<void>;
+    setFeeDistributor(_address: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     poolLength(overrides?: CallOverrides): Promise<BigNumber>;
 
     poolRewards(
-      pid: BigNumberish,
-      bluebitTokenTotalSupply: BigNumberish,
+      pid: PromiseOrValue<BigNumberish>,
+      bluebitTokenTotalSupply: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { rewards: BigNumber; fee: BigNumber }>;
 
-    pendingRewards(pid: BigNumberish, account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingRewards(
+      pid: PromiseOrValue<BigNumberish>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    deposit(pid: BigNumberish, amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    deposit(
+      pid: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    withdraw(pid: BigNumberish, amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    withdraw(
+      pid: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    harvest(pid: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    harvest(pid: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     harvests(overrides?: CallOverrides): Promise<void>;
 
-    compound(pid: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    compound(pid: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
     'BluebitTokenChanged(address,address)'(
-      previousValue?: string | null,
-      newValue?: string | null,
+      previousValue?: PromiseOrValue<string> | null,
+      newValue?: PromiseOrValue<string> | null,
     ): BluebitTokenChangedEventFilter;
-    BluebitTokenChanged(previousValue?: string | null, newValue?: string | null): BluebitTokenChangedEventFilter;
+    BluebitTokenChanged(
+      previousValue?: PromiseOrValue<string> | null,
+      newValue?: PromiseOrValue<string> | null,
+    ): BluebitTokenChangedEventFilter;
 
     'Compound(uint256,uint256,uint256)'(pid?: null, totalShares?: null, totalSupply?: null): CompoundEventFilter;
     Compound(pid?: null, totalShares?: null, totalSupply?: null): CompoundEventFilter;
 
-    'Deposited(address,uint256,uint256)'(account?: string | null, pid?: null, amount?: null): DepositedEventFilter;
-    Deposited(account?: string | null, pid?: null, amount?: null): DepositedEventFilter;
+    'Deposited(address,uint256,uint256)'(
+      account?: PromiseOrValue<string> | null,
+      pid?: null,
+      amount?: null,
+    ): DepositedEventFilter;
+    Deposited(account?: PromiseOrValue<string> | null, pid?: null, amount?: null): DepositedEventFilter;
 
     'FactorWeightChanged(uint256,uint256)'(
-      previousValue?: BigNumberish | null,
-      newValue?: BigNumberish | null,
+      previousValue?: PromiseOrValue<BigNumberish> | null,
+      newValue?: PromiseOrValue<BigNumberish> | null,
     ): FactorWeightChangedEventFilter;
     FactorWeightChanged(
-      previousValue?: BigNumberish | null,
-      newValue?: BigNumberish | null,
+      previousValue?: PromiseOrValue<BigNumberish> | null,
+      newValue?: PromiseOrValue<BigNumberish> | null,
     ): FactorWeightChangedEventFilter;
 
     'FeeDistributorChanged(address,address)'(
-      previousValue?: string | null,
-      newValue?: string | null,
+      previousValue?: PromiseOrValue<string> | null,
+      newValue?: PromiseOrValue<string> | null,
     ): FeeDistributorChangedEventFilter;
-    FeeDistributorChanged(previousValue?: string | null, newValue?: string | null): FeeDistributorChangedEventFilter;
+    FeeDistributorChanged(
+      previousValue?: PromiseOrValue<string> | null,
+      newValue?: PromiseOrValue<string> | null,
+    ): FeeDistributorChangedEventFilter;
 
-    'Harvest(address,uint256,uint256)'(account?: string | null, pid?: null, amount?: null): HarvestEventFilter;
-    Harvest(account?: string | null, pid?: null, amount?: null): HarvestEventFilter;
+    'Harvest(address,uint256,uint256)'(
+      account?: PromiseOrValue<string> | null,
+      pid?: null,
+      amount?: null,
+    ): HarvestEventFilter;
+    Harvest(account?: PromiseOrValue<string> | null, pid?: null, amount?: null): HarvestEventFilter;
 
-    'Harvests(address,uint256)'(account?: string | null, amount?: null): HarvestsEventFilter;
-    Harvests(account?: string | null, amount?: null): HarvestsEventFilter;
+    'Harvests(address,uint256)'(account?: PromiseOrValue<string> | null, amount?: null): HarvestsEventFilter;
+    Harvests(account?: PromiseOrValue<string> | null, amount?: null): HarvestsEventFilter;
 
     'ManagerChanged(address,address)'(
-      previousValue?: string | null,
-      newValue?: string | null,
+      previousValue?: PromiseOrValue<string> | null,
+      newValue?: PromiseOrValue<string> | null,
     ): ManagerChangedEventFilter;
-    ManagerChanged(previousValue?: string | null, newValue?: string | null): ManagerChangedEventFilter;
+    ManagerChanged(
+      previousValue?: PromiseOrValue<string> | null,
+      newValue?: PromiseOrValue<string> | null,
+    ): ManagerChangedEventFilter;
 
-    'OwnerChanged(address,address)'(previousValue?: string | null, newValue?: string | null): OwnerChangedEventFilter;
-    OwnerChanged(previousValue?: string | null, newValue?: string | null): OwnerChangedEventFilter;
+    'OwnerChanged(address,address)'(
+      previousValue?: PromiseOrValue<string> | null,
+      newValue?: PromiseOrValue<string> | null,
+    ): OwnerChangedEventFilter;
+    OwnerChanged(
+      previousValue?: PromiseOrValue<string> | null,
+      newValue?: PromiseOrValue<string> | null,
+    ): OwnerChangedEventFilter;
 
-    'PauseChanged(bool,bool)'(previousValue?: boolean | null, newValue?: boolean | null): PauseChangedEventFilter;
-    PauseChanged(previousValue?: boolean | null, newValue?: boolean | null): PauseChangedEventFilter;
+    'PauseChanged(bool,bool)'(
+      previousValue?: PromiseOrValue<boolean> | null,
+      newValue?: PromiseOrValue<boolean> | null,
+    ): PauseChangedEventFilter;
+    PauseChanged(
+      previousValue?: PromiseOrValue<boolean> | null,
+      newValue?: PromiseOrValue<boolean> | null,
+    ): PauseChangedEventFilter;
 
-    'PoolChange(address,uint256,uint256)'(vault?: string | null, pid?: null, allocPoint?: null): PoolChangeEventFilter;
-    PoolChange(vault?: string | null, pid?: null, allocPoint?: null): PoolChangeEventFilter;
+    'PoolChange(address,uint256,uint256)'(
+      vault?: PromiseOrValue<string> | null,
+      pid?: null,
+      allocPoint?: null,
+    ): PoolChangeEventFilter;
+    PoolChange(vault?: PromiseOrValue<string> | null, pid?: null, allocPoint?: null): PoolChangeEventFilter;
 
     'RewardPerBlockChanged(uint256,uint256)'(
-      previousValue?: BigNumberish | null,
-      newValue?: BigNumberish | null,
+      previousValue?: PromiseOrValue<BigNumberish> | null,
+      newValue?: PromiseOrValue<BigNumberish> | null,
     ): RewardPerBlockChangedEventFilter;
     RewardPerBlockChanged(
-      previousValue?: BigNumberish | null,
-      newValue?: BigNumberish | null,
+      previousValue?: PromiseOrValue<BigNumberish> | null,
+      newValue?: PromiseOrValue<BigNumberish> | null,
     ): RewardPerBlockChangedEventFilter;
 
-    'Withdrawn(address,uint256,uint256)'(account?: string | null, pid?: null, amount?: null): WithdrawnEventFilter;
-    Withdrawn(account?: string | null, pid?: null, amount?: null): WithdrawnEventFilter;
+    'Withdrawn(address,uint256,uint256)'(
+      account?: PromiseOrValue<string> | null,
+      pid?: null,
+      amount?: null,
+    ): WithdrawnEventFilter;
+    Withdrawn(account?: PromiseOrValue<string> | null, pid?: null, amount?: null): WithdrawnEventFilter;
 
     'veTokenChanged(address,address)'(
-      previousValue?: string | null,
-      newValue?: string | null,
+      previousValue?: PromiseOrValue<string> | null,
+      newValue?: PromiseOrValue<string> | null,
     ): veTokenChangedEventFilter;
-    veTokenChanged(previousValue?: string | null, newValue?: string | null): veTokenChangedEventFilter;
+    veTokenChanged(
+      previousValue?: PromiseOrValue<string> | null,
+      newValue?: PromiseOrValue<string> | null,
+    ): veTokenChangedEventFilter;
   };
 
   estimateGas: {
@@ -759,80 +854,109 @@ export interface Bluebit extends BaseContract {
 
     paused(overrides?: CallOverrides): Promise<BigNumber>;
 
-    pools(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    pools(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     rewardPerBlock(overrides?: CallOverrides): Promise<BigNumber>;
 
-    setManager(_manager: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setManager(
+      _manager: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    setOwner(_owner: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setOwner(
+      _owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    setPaused(_paused: boolean, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setPaused(
+      _paused: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     totalAllocPoint(overrides?: CallOverrides): Promise<BigNumber>;
 
-    users(arg0: BigNumberish, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    users(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     veToken(overrides?: CallOverrides): Promise<BigNumber>;
 
-    setveToken(_address: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setveToken(
+      _address: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    setBluebitToken(_address: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setBluebitToken(
+      _address: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setPool(
-      vault: string,
-      allocPoint: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vault: PromiseOrValue<string>,
+      allocPoint: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     migratePool(
-      pid: BigNumberish,
-      vault: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      vault: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setFactorWeight(
-      weight: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      weight: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setRewardPerBlock(
-      _value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setFeeDistributor(
-      _address: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _address: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     poolLength(overrides?: CallOverrides): Promise<BigNumber>;
 
     poolRewards(
-      pid: BigNumberish,
-      bluebitTokenTotalSupply: BigNumberish,
+      pid: PromiseOrValue<BigNumberish>,
+      bluebitTokenTotalSupply: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    pendingRewards(pid: BigNumberish, account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingRewards(
+      pid: PromiseOrValue<BigNumberish>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     deposit(
-      pid: BigNumberish,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     withdraw(
-      pid: BigNumberish,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    harvest(pid: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    harvest(
+      pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    harvests(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    harvests(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    compound(pid: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    compound(
+      pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -850,100 +974,108 @@ export interface Bluebit extends BaseContract {
 
     paused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    pools(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    pools(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     rewardPerBlock(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setManager(
-      _manager: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _manager: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setOwner(
-      _owner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setPaused(
-      _paused: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _paused: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     totalAllocPoint(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    users(arg0: BigNumberish, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    users(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     veToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setveToken(
-      _address: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _address: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setBluebitToken(
-      _address: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _address: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setPool(
-      vault: string,
-      allocPoint: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vault: PromiseOrValue<string>,
+      allocPoint: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     migratePool(
-      pid: BigNumberish,
-      vault: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      vault: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setFactorWeight(
-      weight: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      weight: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setRewardPerBlock(
-      _value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setFeeDistributor(
-      _address: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _address: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     poolLength(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     poolRewards(
-      pid: BigNumberish,
-      bluebitTokenTotalSupply: BigNumberish,
+      pid: PromiseOrValue<BigNumberish>,
+      bluebitTokenTotalSupply: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    pendingRewards(pid: BigNumberish, account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    pendingRewards(
+      pid: PromiseOrValue<BigNumberish>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     deposit(
-      pid: BigNumberish,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     withdraw(
-      pid: BigNumberish,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     harvest(
-      pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    harvests(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    harvests(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     compound(
-      pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

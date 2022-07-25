@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface StakingThalesInterface extends utils.Interface {
   functions: {
@@ -248,79 +248,96 @@ export interface StakingThalesInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'extraRewardsActive', values?: undefined): string;
   encodeFunctionData(functionFragment: 'feeToken', values?: undefined): string;
   encodeFunctionData(functionFragment: 'fixedPeriodReward', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getAMMBonus', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getAMMBonusPercentage', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getAMMVolume', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getAlreadyClaimedFees', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getAlreadyClaimedRewards', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getBaseReward', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getCRatio', values: [string]): string;
+  encodeFunctionData(functionFragment: 'getAMMBonus', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getAMMBonusPercentage', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getAMMVolume', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getAlreadyClaimedFees', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getAlreadyClaimedRewards', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getBaseReward', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getCRatio', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'getContractFeeFunds', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getContractRewardFunds', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getLastPeriodOfClaimedRewards', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getRewardFeesAvailable', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getRewardsAvailable', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getSNXBonus', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getSNXBonusPercentage', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getSNXDebt', values: [string]): string;
+  encodeFunctionData(functionFragment: 'getLastPeriodOfClaimedRewards', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getRewardFeesAvailable', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getRewardsAvailable', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getSNXBonus', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getSNXBonusPercentage', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getSNXDebt', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'getSNXRateForCurrency', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getSNXRewardsAddress', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getSNXStaked', values: [string]): string;
+  encodeFunctionData(functionFragment: 'getSNXStaked', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'getSNXTargetRatio', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getThalesRoyaleBonus', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getThalesRoyaleBonusPercentage', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getTotalBonus', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getTotalBonusPercentage', values: [string]): string;
+  encodeFunctionData(functionFragment: 'getThalesRoyaleBonus', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getThalesRoyaleBonusPercentage', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getTotalBonus', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getTotalBonusPercentage', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'iEscrowThales', values?: undefined): string;
   encodeFunctionData(functionFragment: 'initNonReentrant', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'initialize',
-    values: [string, string, string, string, BigNumberish, BigNumberish, string],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'lastPauseTime', values?: undefined): string;
   encodeFunctionData(functionFragment: 'lastPeriodTimeStamp', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'lastUnstakeTime', values: [string]): string;
+  encodeFunctionData(functionFragment: 'lastUnstakeTime', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'maxAMMVolumeRewardsPercentage', values?: undefined): string;
   encodeFunctionData(functionFragment: 'maxSNXRewardsPercentage', values?: undefined): string;
   encodeFunctionData(functionFragment: 'maxThalesRoyaleRewardsPercentage', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'nominateNewOwner', values: [string]): string;
+  encodeFunctionData(functionFragment: 'nominateNewOwner', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'nominatedOwner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'paused', values?: undefined): string;
   encodeFunctionData(functionFragment: 'periodExtraReward', values?: undefined): string;
   encodeFunctionData(functionFragment: 'periodsOfStaking', values?: undefined): string;
   encodeFunctionData(functionFragment: 'priceFeed', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'setAMMVolumeRewardsMultiplier', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setAddressResolver', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setClaimEnabled', values: [boolean]): string;
-  encodeFunctionData(functionFragment: 'setDistributeFeesEnabled', values: [boolean]): string;
-  encodeFunctionData(functionFragment: 'setDurationPeriod', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setEscrow', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setExoticBonds', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setExtraRewards', values: [boolean]): string;
-  encodeFunctionData(functionFragment: 'setFixedPeriodReward', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setMaxAMMVolumeRewardsPercentage', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setMaxSNXRewardsPercentage', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setMaxThalesRoyaleRewardsPercentage', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setOwner', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setPaused', values: [boolean]): string;
-  encodeFunctionData(functionFragment: 'setPeriodExtraReward', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setPriceFeed', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setSNXRewards', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setSNXVolumeRewardsMultiplier', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setThalesAMM', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setThalesRoyale', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setThalesStakingRewardsPool', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setUnstakeDurationPeriod', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'stake', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'stakeOnBehalf', values: [BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'stakedBalanceOf', values: [string]): string;
-  encodeFunctionData(functionFragment: 'stakerFeesClaimed', values: [string]): string;
-  encodeFunctionData(functionFragment: 'stakerLifetimeRewardsClaimed', values: [string]): string;
+  encodeFunctionData(functionFragment: 'setAMMVolumeRewardsMultiplier', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setAddressResolver', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setClaimEnabled', values: [PromiseOrValue<boolean>]): string;
+  encodeFunctionData(functionFragment: 'setDistributeFeesEnabled', values: [PromiseOrValue<boolean>]): string;
+  encodeFunctionData(functionFragment: 'setDurationPeriod', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setEscrow', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setExoticBonds', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setExtraRewards', values: [PromiseOrValue<boolean>]): string;
+  encodeFunctionData(functionFragment: 'setFixedPeriodReward', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'setMaxAMMVolumeRewardsPercentage',
+    values: [PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'setMaxSNXRewardsPercentage', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'setMaxThalesRoyaleRewardsPercentage',
+    values: [PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'setOwner', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setPaused', values: [PromiseOrValue<boolean>]): string;
+  encodeFunctionData(functionFragment: 'setPeriodExtraReward', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setPriceFeed', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setSNXRewards', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setSNXVolumeRewardsMultiplier', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setThalesAMM', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setThalesRoyale', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setThalesStakingRewardsPool', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setUnstakeDurationPeriod', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'stake', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'stakeOnBehalf',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'stakedBalanceOf', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'stakerFeesClaimed', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'stakerLifetimeRewardsClaimed', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'stakingToken', values?: undefined): string;
   encodeFunctionData(functionFragment: 'startStakingPeriod', values?: undefined): string;
   encodeFunctionData(functionFragment: 'startTimeStamp', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'startUnstake', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'startUnstake', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'thalesAMM', values?: undefined): string;
   encodeFunctionData(functionFragment: 'thalesRoyale', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalEscrowedLastPeriodEnd', values?: undefined): string;
@@ -328,12 +345,15 @@ export interface StakingThalesInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'totalSNXRewardsInPeriod', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalStakedAmount', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalStakedLastPeriodEnd', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transferOwnershipAtInit', values: [string]): string;
+  encodeFunctionData(functionFragment: 'transferOwnershipAtInit', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'unstake', values?: undefined): string;
   encodeFunctionData(functionFragment: 'unstakeDurationPeriod', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'unstaking', values: [string]): string;
-  encodeFunctionData(functionFragment: 'unstakingAmount', values: [string]): string;
-  encodeFunctionData(functionFragment: 'updateVolume', values: [string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'unstaking', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'unstakingAmount', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'updateVolume',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
 
   decodeFunctionResult(functionFragment: 'AMMVolumeRewardsMultiplier', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'SNXRewards', data: BytesLike): Result;
@@ -803,19 +823,19 @@ export interface StakingThales extends BaseContract {
 
     ThalesStakingRewardsPool(overrides?: CallOverrides): Promise<[string]>;
 
-    acceptOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     addressResolver(overrides?: CallOverrides): Promise<[string]>;
 
     canClosePeriod(overrides?: CallOverrides): Promise<[boolean]>;
 
-    cancelUnstake(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    cancelUnstake(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     claimEnabled(overrides?: CallOverrides): Promise<[boolean]>;
 
-    claimReward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    claimReward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    closePeriod(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    closePeriod(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     currentPeriodFees(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -833,72 +853,72 @@ export interface StakingThales extends BaseContract {
 
     fixedPeriodReward(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getAMMBonus(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getAMMBonus(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getAMMBonusPercentage(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getAMMBonusPercentage(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getAMMVolume(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getAMMVolume(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getAlreadyClaimedFees(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getAlreadyClaimedFees(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getAlreadyClaimedRewards(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getAlreadyClaimedRewards(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getBaseReward(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getBaseReward(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getCRatio(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getCRatio(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     getContractFeeFunds(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     getContractRewardFunds(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getLastPeriodOfClaimedRewards(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getLastPeriodOfClaimedRewards(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getRewardFeesAvailable(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getRewardFeesAvailable(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getRewardsAvailable(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getRewardsAvailable(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getSNXBonus(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getSNXBonus(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getSNXBonusPercentage(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getSNXBonusPercentage(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getSNXDebt(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getSNXDebt(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     getSNXRateForCurrency(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     getSNXRewardsAddress(overrides?: CallOverrides): Promise<[string]>;
 
-    getSNXStaked(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getSNXStaked(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     getSNXTargetRatio(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getThalesRoyaleBonus(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getThalesRoyaleBonus(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getThalesRoyaleBonusPercentage(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getThalesRoyaleBonusPercentage(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getTotalBonus(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getTotalBonus(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getTotalBonusPercentage(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getTotalBonusPercentage(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     iEscrowThales(overrides?: CallOverrides): Promise<[string]>;
 
-    initNonReentrant(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    initNonReentrant(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     initialize(
-      _owner: string,
-      _iEscrowThales: string,
-      _stakingToken: string,
-      _feeToken: string,
-      _durationPeriod: BigNumberish,
-      _unstakeDurationPeriod: BigNumberish,
-      _ISNXRewards: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _owner: PromiseOrValue<string>,
+      _iEscrowThales: PromiseOrValue<string>,
+      _stakingToken: PromiseOrValue<string>,
+      _feeToken: PromiseOrValue<string>,
+      _durationPeriod: PromiseOrValue<BigNumberish>,
+      _unstakeDurationPeriod: PromiseOrValue<BigNumberish>,
+      _ISNXRewards: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     lastPauseTime(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     lastPeriodTimeStamp(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    lastUnstakeTime(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    lastUnstakeTime(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     maxAMMVolumeRewardsPercentage(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -907,8 +927,8 @@ export interface StakingThales extends BaseContract {
     maxThalesRoyaleRewardsPercentage(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     nominateNewOwner(
-      _owner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<[string]>;
@@ -924,138 +944,141 @@ export interface StakingThales extends BaseContract {
     priceFeed(overrides?: CallOverrides): Promise<[string]>;
 
     setAMMVolumeRewardsMultiplier(
-      _AMMVolumeRewardsMultiplier: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _AMMVolumeRewardsMultiplier: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setAddressResolver(
-      _addressResolver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _addressResolver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setClaimEnabled(
-      _claimEnabled: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _claimEnabled: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setDistributeFeesEnabled(
-      _distributeFeesEnabled: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _distributeFeesEnabled: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setDurationPeriod(
-      _durationPeriod: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _durationPeriod: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setEscrow(
-      _escrowThalesContract: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _escrowThalesContract: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setExoticBonds(
-      _exoticBonds: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _exoticBonds: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setExtraRewards(
-      _extraRewardsActive: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _extraRewardsActive: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setFixedPeriodReward(
-      _fixedReward: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _fixedReward: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setMaxAMMVolumeRewardsPercentage(
-      _maxAMMVolumeRewardsPercentage: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _maxAMMVolumeRewardsPercentage: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setMaxSNXRewardsPercentage(
-      _maxSNXRewardsPercentage: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _maxSNXRewardsPercentage: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setMaxThalesRoyaleRewardsPercentage(
-      _maxThalesRoyaleRewardsPercentage: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _maxThalesRoyaleRewardsPercentage: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    setOwner(_owner: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    setOwner(
+      _owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     setPaused(
-      _paused: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _paused: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setPeriodExtraReward(
-      _extraReward: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _extraReward: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setPriceFeed(
-      _priceFeed: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _priceFeed: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setSNXRewards(
-      _snxRewards: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _snxRewards: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setSNXVolumeRewardsMultiplier(
-      _SNXVolumeRewardsMultiplier: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _SNXVolumeRewardsMultiplier: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setThalesAMM(
-      _thalesAMM: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _thalesAMM: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setThalesRoyale(
-      _royale: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _royale: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setThalesStakingRewardsPool(
-      _thalesStakingRewardsPool: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _thalesStakingRewardsPool: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setUnstakeDurationPeriod(
-      _unstakeDurationPeriod: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _unstakeDurationPeriod: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     stake(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     stakeOnBehalf(
-      amount: BigNumberish,
-      staker: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      staker: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    stakedBalanceOf(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    stakedBalanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    stakerFeesClaimed(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    stakerFeesClaimed(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    stakerLifetimeRewardsClaimed(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    stakerLifetimeRewardsClaimed(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     stakingToken(overrides?: CallOverrides): Promise<[string]>;
 
-    startStakingPeriod(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    startStakingPeriod(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     startTimeStamp(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     startUnstake(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     thalesAMM(overrides?: CallOverrides): Promise<[string]>;
@@ -1073,22 +1096,22 @@ export interface StakingThales extends BaseContract {
     totalStakedLastPeriodEnd(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transferOwnershipAtInit(
-      proxyAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      proxyAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    unstake(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    unstake(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     unstakeDurationPeriod(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    unstaking(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    unstaking(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
-    unstakingAmount(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    unstakingAmount(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     updateVolume(
-      account: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
@@ -1100,19 +1123,19 @@ export interface StakingThales extends BaseContract {
 
   ThalesStakingRewardsPool(overrides?: CallOverrides): Promise<string>;
 
-  acceptOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   addressResolver(overrides?: CallOverrides): Promise<string>;
 
   canClosePeriod(overrides?: CallOverrides): Promise<boolean>;
 
-  cancelUnstake(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  cancelUnstake(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   claimEnabled(overrides?: CallOverrides): Promise<boolean>;
 
-  claimReward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  claimReward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  closePeriod(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  closePeriod(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   currentPeriodFees(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1130,72 +1153,72 @@ export interface StakingThales extends BaseContract {
 
   fixedPeriodReward(overrides?: CallOverrides): Promise<BigNumber>;
 
-  getAMMBonus(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getAMMBonus(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  getAMMBonusPercentage(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getAMMBonusPercentage(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  getAMMVolume(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getAMMVolume(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  getAlreadyClaimedFees(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getAlreadyClaimedFees(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  getAlreadyClaimedRewards(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getAlreadyClaimedRewards(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  getBaseReward(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getBaseReward(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  getCRatio(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getCRatio(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   getContractFeeFunds(overrides?: CallOverrides): Promise<BigNumber>;
 
   getContractRewardFunds(overrides?: CallOverrides): Promise<BigNumber>;
 
-  getLastPeriodOfClaimedRewards(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getLastPeriodOfClaimedRewards(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  getRewardFeesAvailable(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getRewardFeesAvailable(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  getRewardsAvailable(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getRewardsAvailable(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  getSNXBonus(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getSNXBonus(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  getSNXBonusPercentage(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getSNXBonusPercentage(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  getSNXDebt(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getSNXDebt(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   getSNXRateForCurrency(overrides?: CallOverrides): Promise<BigNumber>;
 
   getSNXRewardsAddress(overrides?: CallOverrides): Promise<string>;
 
-  getSNXStaked(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getSNXStaked(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   getSNXTargetRatio(overrides?: CallOverrides): Promise<BigNumber>;
 
-  getThalesRoyaleBonus(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getThalesRoyaleBonus(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  getThalesRoyaleBonusPercentage(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getThalesRoyaleBonusPercentage(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  getTotalBonus(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getTotalBonus(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  getTotalBonusPercentage(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getTotalBonusPercentage(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   iEscrowThales(overrides?: CallOverrides): Promise<string>;
 
-  initNonReentrant(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  initNonReentrant(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   initialize(
-    _owner: string,
-    _iEscrowThales: string,
-    _stakingToken: string,
-    _feeToken: string,
-    _durationPeriod: BigNumberish,
-    _unstakeDurationPeriod: BigNumberish,
-    _ISNXRewards: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _owner: PromiseOrValue<string>,
+    _iEscrowThales: PromiseOrValue<string>,
+    _stakingToken: PromiseOrValue<string>,
+    _feeToken: PromiseOrValue<string>,
+    _durationPeriod: PromiseOrValue<BigNumberish>,
+    _unstakeDurationPeriod: PromiseOrValue<BigNumberish>,
+    _ISNXRewards: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   lastPauseTime(overrides?: CallOverrides): Promise<BigNumber>;
 
   lastPeriodTimeStamp(overrides?: CallOverrides): Promise<BigNumber>;
 
-  lastUnstakeTime(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  lastUnstakeTime(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   maxAMMVolumeRewardsPercentage(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1204,8 +1227,8 @@ export interface StakingThales extends BaseContract {
   maxThalesRoyaleRewardsPercentage(overrides?: CallOverrides): Promise<BigNumber>;
 
   nominateNewOwner(
-    _owner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _owner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   nominatedOwner(overrides?: CallOverrides): Promise<string>;
@@ -1221,138 +1244,141 @@ export interface StakingThales extends BaseContract {
   priceFeed(overrides?: CallOverrides): Promise<string>;
 
   setAMMVolumeRewardsMultiplier(
-    _AMMVolumeRewardsMultiplier: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _AMMVolumeRewardsMultiplier: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setAddressResolver(
-    _addressResolver: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _addressResolver: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setClaimEnabled(
-    _claimEnabled: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _claimEnabled: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setDistributeFeesEnabled(
-    _distributeFeesEnabled: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _distributeFeesEnabled: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setDurationPeriod(
-    _durationPeriod: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _durationPeriod: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setEscrow(
-    _escrowThalesContract: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _escrowThalesContract: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setExoticBonds(
-    _exoticBonds: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _exoticBonds: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setExtraRewards(
-    _extraRewardsActive: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _extraRewardsActive: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setFixedPeriodReward(
-    _fixedReward: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _fixedReward: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setMaxAMMVolumeRewardsPercentage(
-    _maxAMMVolumeRewardsPercentage: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _maxAMMVolumeRewardsPercentage: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setMaxSNXRewardsPercentage(
-    _maxSNXRewardsPercentage: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _maxSNXRewardsPercentage: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setMaxThalesRoyaleRewardsPercentage(
-    _maxThalesRoyaleRewardsPercentage: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _maxThalesRoyaleRewardsPercentage: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  setOwner(_owner: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  setOwner(
+    _owner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   setPaused(
-    _paused: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _paused: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setPeriodExtraReward(
-    _extraReward: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _extraReward: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setPriceFeed(
-    _priceFeed: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _priceFeed: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setSNXRewards(
-    _snxRewards: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _snxRewards: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setSNXVolumeRewardsMultiplier(
-    _SNXVolumeRewardsMultiplier: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _SNXVolumeRewardsMultiplier: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setThalesAMM(
-    _thalesAMM: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _thalesAMM: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setThalesRoyale(
-    _royale: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _royale: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setThalesStakingRewardsPool(
-    _thalesStakingRewardsPool: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _thalesStakingRewardsPool: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setUnstakeDurationPeriod(
-    _unstakeDurationPeriod: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _unstakeDurationPeriod: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   stake(
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   stakeOnBehalf(
-    amount: BigNumberish,
-    staker: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    amount: PromiseOrValue<BigNumberish>,
+    staker: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  stakedBalanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  stakedBalanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  stakerFeesClaimed(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  stakerFeesClaimed(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  stakerLifetimeRewardsClaimed(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  stakerLifetimeRewardsClaimed(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   stakingToken(overrides?: CallOverrides): Promise<string>;
 
-  startStakingPeriod(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  startStakingPeriod(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   startTimeStamp(overrides?: CallOverrides): Promise<BigNumber>;
 
   startUnstake(
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   thalesAMM(overrides?: CallOverrides): Promise<string>;
@@ -1370,22 +1396,22 @@ export interface StakingThales extends BaseContract {
   totalStakedLastPeriodEnd(overrides?: CallOverrides): Promise<BigNumber>;
 
   transferOwnershipAtInit(
-    proxyAddress: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    proxyAddress: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  unstake(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  unstake(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   unstakeDurationPeriod(overrides?: CallOverrides): Promise<BigNumber>;
 
-  unstaking(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  unstaking(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-  unstakingAmount(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  unstakingAmount(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   updateVolume(
-    account: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    account: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
@@ -1427,64 +1453,64 @@ export interface StakingThales extends BaseContract {
 
     fixedPeriodReward(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getAMMBonus(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getAMMBonus(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getAMMBonusPercentage(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getAMMBonusPercentage(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getAMMVolume(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getAMMVolume(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getAlreadyClaimedFees(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getAlreadyClaimedFees(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getAlreadyClaimedRewards(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getAlreadyClaimedRewards(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getBaseReward(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getBaseReward(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getCRatio(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getCRatio(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getContractFeeFunds(overrides?: CallOverrides): Promise<BigNumber>;
 
     getContractRewardFunds(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getLastPeriodOfClaimedRewards(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getLastPeriodOfClaimedRewards(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getRewardFeesAvailable(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getRewardFeesAvailable(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getRewardsAvailable(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getRewardsAvailable(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getSNXBonus(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getSNXBonus(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getSNXBonusPercentage(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getSNXBonusPercentage(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getSNXDebt(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getSNXDebt(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getSNXRateForCurrency(overrides?: CallOverrides): Promise<BigNumber>;
 
     getSNXRewardsAddress(overrides?: CallOverrides): Promise<string>;
 
-    getSNXStaked(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getSNXStaked(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getSNXTargetRatio(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getThalesRoyaleBonus(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getThalesRoyaleBonus(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getThalesRoyaleBonusPercentage(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getThalesRoyaleBonusPercentage(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getTotalBonus(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getTotalBonus(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getTotalBonusPercentage(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getTotalBonusPercentage(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     iEscrowThales(overrides?: CallOverrides): Promise<string>;
 
     initNonReentrant(overrides?: CallOverrides): Promise<void>;
 
     initialize(
-      _owner: string,
-      _iEscrowThales: string,
-      _stakingToken: string,
-      _feeToken: string,
-      _durationPeriod: BigNumberish,
-      _unstakeDurationPeriod: BigNumberish,
-      _ISNXRewards: string,
+      _owner: PromiseOrValue<string>,
+      _iEscrowThales: PromiseOrValue<string>,
+      _stakingToken: PromiseOrValue<string>,
+      _feeToken: PromiseOrValue<string>,
+      _durationPeriod: PromiseOrValue<BigNumberish>,
+      _unstakeDurationPeriod: PromiseOrValue<BigNumberish>,
+      _ISNXRewards: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -1492,7 +1518,7 @@ export interface StakingThales extends BaseContract {
 
     lastPeriodTimeStamp(overrides?: CallOverrides): Promise<BigNumber>;
 
-    lastUnstakeTime(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    lastUnstakeTime(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     maxAMMVolumeRewardsPercentage(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1500,7 +1526,7 @@ export interface StakingThales extends BaseContract {
 
     maxThalesRoyaleRewardsPercentage(overrides?: CallOverrides): Promise<BigNumber>;
 
-    nominateNewOwner(_owner: string, overrides?: CallOverrides): Promise<void>;
+    nominateNewOwner(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<string>;
 
@@ -1514,65 +1540,84 @@ export interface StakingThales extends BaseContract {
 
     priceFeed(overrides?: CallOverrides): Promise<string>;
 
-    setAMMVolumeRewardsMultiplier(_AMMVolumeRewardsMultiplier: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setAMMVolumeRewardsMultiplier(
+      _AMMVolumeRewardsMultiplier: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setAddressResolver(_addressResolver: string, overrides?: CallOverrides): Promise<void>;
+    setAddressResolver(_addressResolver: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setClaimEnabled(_claimEnabled: boolean, overrides?: CallOverrides): Promise<void>;
+    setClaimEnabled(_claimEnabled: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
 
-    setDistributeFeesEnabled(_distributeFeesEnabled: boolean, overrides?: CallOverrides): Promise<void>;
+    setDistributeFeesEnabled(_distributeFeesEnabled: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
 
-    setDurationPeriod(_durationPeriod: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setDurationPeriod(_durationPeriod: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setEscrow(_escrowThalesContract: string, overrides?: CallOverrides): Promise<void>;
+    setEscrow(_escrowThalesContract: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setExoticBonds(_exoticBonds: string, overrides?: CallOverrides): Promise<void>;
+    setExoticBonds(_exoticBonds: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setExtraRewards(_extraRewardsActive: boolean, overrides?: CallOverrides): Promise<void>;
+    setExtraRewards(_extraRewardsActive: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
 
-    setFixedPeriodReward(_fixedReward: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setFixedPeriodReward(_fixedReward: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     setMaxAMMVolumeRewardsPercentage(
-      _maxAMMVolumeRewardsPercentage: BigNumberish,
+      _maxAMMVolumeRewardsPercentage: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    setMaxSNXRewardsPercentage(_maxSNXRewardsPercentage: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setMaxSNXRewardsPercentage(
+      _maxSNXRewardsPercentage: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     setMaxThalesRoyaleRewardsPercentage(
-      _maxThalesRoyaleRewardsPercentage: BigNumberish,
+      _maxThalesRoyaleRewardsPercentage: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    setOwner(_owner: string, overrides?: CallOverrides): Promise<void>;
+    setOwner(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setPaused(_paused: boolean, overrides?: CallOverrides): Promise<void>;
+    setPaused(_paused: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
 
-    setPeriodExtraReward(_extraReward: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setPeriodExtraReward(_extraReward: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setPriceFeed(_priceFeed: string, overrides?: CallOverrides): Promise<void>;
+    setPriceFeed(_priceFeed: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setSNXRewards(_snxRewards: string, overrides?: CallOverrides): Promise<void>;
+    setSNXRewards(_snxRewards: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setSNXVolumeRewardsMultiplier(_SNXVolumeRewardsMultiplier: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setSNXVolumeRewardsMultiplier(
+      _SNXVolumeRewardsMultiplier: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setThalesAMM(_thalesAMM: string, overrides?: CallOverrides): Promise<void>;
+    setThalesAMM(_thalesAMM: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setThalesRoyale(_royale: string, overrides?: CallOverrides): Promise<void>;
+    setThalesRoyale(_royale: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setThalesStakingRewardsPool(_thalesStakingRewardsPool: string, overrides?: CallOverrides): Promise<void>;
+    setThalesStakingRewardsPool(
+      _thalesStakingRewardsPool: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setUnstakeDurationPeriod(_unstakeDurationPeriod: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setUnstakeDurationPeriod(
+      _unstakeDurationPeriod: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    stake(amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    stake(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    stakeOnBehalf(amount: BigNumberish, staker: string, overrides?: CallOverrides): Promise<void>;
+    stakeOnBehalf(
+      amount: PromiseOrValue<BigNumberish>,
+      staker: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    stakedBalanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    stakedBalanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    stakerFeesClaimed(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    stakerFeesClaimed(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    stakerLifetimeRewardsClaimed(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    stakerLifetimeRewardsClaimed(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     stakingToken(overrides?: CallOverrides): Promise<string>;
 
@@ -1580,7 +1625,7 @@ export interface StakingThales extends BaseContract {
 
     startTimeStamp(overrides?: CallOverrides): Promise<BigNumber>;
 
-    startUnstake(amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    startUnstake(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     thalesAMM(overrides?: CallOverrides): Promise<string>;
 
@@ -1596,17 +1641,21 @@ export interface StakingThales extends BaseContract {
 
     totalStakedLastPeriodEnd(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transferOwnershipAtInit(proxyAddress: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnershipAtInit(proxyAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     unstake(overrides?: CallOverrides): Promise<void>;
 
     unstakeDurationPeriod(overrides?: CallOverrides): Promise<BigNumber>;
 
-    unstaking(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    unstaking(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-    unstakingAmount(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    unstakingAmount(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    updateVolume(account: string, amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    updateVolume(
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
   };
 
   filters: {
@@ -1742,19 +1791,19 @@ export interface StakingThales extends BaseContract {
 
     ThalesStakingRewardsPool(overrides?: CallOverrides): Promise<BigNumber>;
 
-    acceptOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     addressResolver(overrides?: CallOverrides): Promise<BigNumber>;
 
     canClosePeriod(overrides?: CallOverrides): Promise<BigNumber>;
 
-    cancelUnstake(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    cancelUnstake(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     claimEnabled(overrides?: CallOverrides): Promise<BigNumber>;
 
-    claimReward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    claimReward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    closePeriod(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    closePeriod(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     currentPeriodFees(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1772,72 +1821,72 @@ export interface StakingThales extends BaseContract {
 
     fixedPeriodReward(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getAMMBonus(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getAMMBonus(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getAMMBonusPercentage(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getAMMBonusPercentage(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getAMMVolume(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getAMMVolume(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getAlreadyClaimedFees(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getAlreadyClaimedFees(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getAlreadyClaimedRewards(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getAlreadyClaimedRewards(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getBaseReward(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getBaseReward(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getCRatio(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getCRatio(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getContractFeeFunds(overrides?: CallOverrides): Promise<BigNumber>;
 
     getContractRewardFunds(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getLastPeriodOfClaimedRewards(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getLastPeriodOfClaimedRewards(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getRewardFeesAvailable(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getRewardFeesAvailable(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getRewardsAvailable(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getRewardsAvailable(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getSNXBonus(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getSNXBonus(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getSNXBonusPercentage(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getSNXBonusPercentage(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getSNXDebt(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getSNXDebt(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getSNXRateForCurrency(overrides?: CallOverrides): Promise<BigNumber>;
 
     getSNXRewardsAddress(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getSNXStaked(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getSNXStaked(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getSNXTargetRatio(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getThalesRoyaleBonus(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getThalesRoyaleBonus(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getThalesRoyaleBonusPercentage(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getThalesRoyaleBonusPercentage(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getTotalBonus(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getTotalBonus(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getTotalBonusPercentage(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getTotalBonusPercentage(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     iEscrowThales(overrides?: CallOverrides): Promise<BigNumber>;
 
-    initNonReentrant(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    initNonReentrant(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     initialize(
-      _owner: string,
-      _iEscrowThales: string,
-      _stakingToken: string,
-      _feeToken: string,
-      _durationPeriod: BigNumberish,
-      _unstakeDurationPeriod: BigNumberish,
-      _ISNXRewards: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _owner: PromiseOrValue<string>,
+      _iEscrowThales: PromiseOrValue<string>,
+      _stakingToken: PromiseOrValue<string>,
+      _feeToken: PromiseOrValue<string>,
+      _durationPeriod: PromiseOrValue<BigNumberish>,
+      _unstakeDurationPeriod: PromiseOrValue<BigNumberish>,
+      _ISNXRewards: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     lastPauseTime(overrides?: CallOverrides): Promise<BigNumber>;
 
     lastPeriodTimeStamp(overrides?: CallOverrides): Promise<BigNumber>;
 
-    lastUnstakeTime(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    lastUnstakeTime(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     maxAMMVolumeRewardsPercentage(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1845,7 +1894,10 @@ export interface StakingThales extends BaseContract {
 
     maxThalesRoyaleRewardsPercentage(overrides?: CallOverrides): Promise<BigNumber>;
 
-    nominateNewOwner(_owner: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    nominateNewOwner(
+      _owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1860,118 +1912,142 @@ export interface StakingThales extends BaseContract {
     priceFeed(overrides?: CallOverrides): Promise<BigNumber>;
 
     setAMMVolumeRewardsMultiplier(
-      _AMMVolumeRewardsMultiplier: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _AMMVolumeRewardsMultiplier: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setAddressResolver(
-      _addressResolver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _addressResolver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setClaimEnabled(
-      _claimEnabled: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _claimEnabled: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setDistributeFeesEnabled(
-      _distributeFeesEnabled: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _distributeFeesEnabled: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setDurationPeriod(
-      _durationPeriod: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _durationPeriod: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setEscrow(
-      _escrowThalesContract: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _escrowThalesContract: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setExoticBonds(
-      _exoticBonds: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _exoticBonds: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setExtraRewards(
-      _extraRewardsActive: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _extraRewardsActive: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setFixedPeriodReward(
-      _fixedReward: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _fixedReward: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setMaxAMMVolumeRewardsPercentage(
-      _maxAMMVolumeRewardsPercentage: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _maxAMMVolumeRewardsPercentage: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setMaxSNXRewardsPercentage(
-      _maxSNXRewardsPercentage: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _maxSNXRewardsPercentage: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setMaxThalesRoyaleRewardsPercentage(
-      _maxThalesRoyaleRewardsPercentage: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _maxThalesRoyaleRewardsPercentage: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setOwner(_owner: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setOwner(
+      _owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    setPaused(_paused: boolean, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setPaused(
+      _paused: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setPeriodExtraReward(
-      _extraReward: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _extraReward: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setPriceFeed(_priceFeed: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setPriceFeed(
+      _priceFeed: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    setSNXRewards(_snxRewards: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setSNXRewards(
+      _snxRewards: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setSNXVolumeRewardsMultiplier(
-      _SNXVolumeRewardsMultiplier: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _SNXVolumeRewardsMultiplier: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setThalesAMM(_thalesAMM: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setThalesAMM(
+      _thalesAMM: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    setThalesRoyale(_royale: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setThalesRoyale(
+      _royale: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setThalesStakingRewardsPool(
-      _thalesStakingRewardsPool: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _thalesStakingRewardsPool: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setUnstakeDurationPeriod(
-      _unstakeDurationPeriod: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _unstakeDurationPeriod: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    stake(amount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    stake(
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     stakeOnBehalf(
-      amount: BigNumberish,
-      staker: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      staker: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    stakedBalanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    stakedBalanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    stakerFeesClaimed(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    stakerFeesClaimed(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    stakerLifetimeRewardsClaimed(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    stakerLifetimeRewardsClaimed(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     stakingToken(overrides?: CallOverrides): Promise<BigNumber>;
 
-    startStakingPeriod(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    startStakingPeriod(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     startTimeStamp(overrides?: CallOverrides): Promise<BigNumber>;
 
-    startUnstake(amount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    startUnstake(
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     thalesAMM(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1988,22 +2064,22 @@ export interface StakingThales extends BaseContract {
     totalStakedLastPeriodEnd(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnershipAtInit(
-      proxyAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      proxyAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    unstake(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    unstake(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     unstakeDurationPeriod(overrides?: CallOverrides): Promise<BigNumber>;
 
-    unstaking(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    unstaking(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    unstakingAmount(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    unstakingAmount(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     updateVolume(
-      account: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
@@ -2016,19 +2092,19 @@ export interface StakingThales extends BaseContract {
 
     ThalesStakingRewardsPool(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    acceptOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     addressResolver(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     canClosePeriod(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    cancelUnstake(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    cancelUnstake(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     claimEnabled(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    claimReward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    claimReward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    closePeriod(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    closePeriod(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     currentPeriodFees(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -2046,72 +2122,78 @@ export interface StakingThales extends BaseContract {
 
     fixedPeriodReward(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getAMMBonus(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getAMMBonus(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getAMMBonusPercentage(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getAMMBonusPercentage(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getAMMVolume(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getAMMVolume(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getAlreadyClaimedFees(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getAlreadyClaimedFees(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getAlreadyClaimedRewards(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getAlreadyClaimedRewards(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getBaseReward(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getBaseReward(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getCRatio(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getCRatio(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getContractFeeFunds(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getContractRewardFunds(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getLastPeriodOfClaimedRewards(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getLastPeriodOfClaimedRewards(
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    getRewardFeesAvailable(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getRewardFeesAvailable(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getRewardsAvailable(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getRewardsAvailable(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getSNXBonus(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getSNXBonus(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getSNXBonusPercentage(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getSNXBonusPercentage(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getSNXDebt(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getSNXDebt(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getSNXRateForCurrency(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getSNXRewardsAddress(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getSNXStaked(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getSNXStaked(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getSNXTargetRatio(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getThalesRoyaleBonus(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getThalesRoyaleBonus(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getThalesRoyaleBonusPercentage(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getThalesRoyaleBonusPercentage(
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    getTotalBonus(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getTotalBonus(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getTotalBonusPercentage(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getTotalBonusPercentage(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     iEscrowThales(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    initNonReentrant(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    initNonReentrant(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     initialize(
-      _owner: string,
-      _iEscrowThales: string,
-      _stakingToken: string,
-      _feeToken: string,
-      _durationPeriod: BigNumberish,
-      _unstakeDurationPeriod: BigNumberish,
-      _ISNXRewards: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _owner: PromiseOrValue<string>,
+      _iEscrowThales: PromiseOrValue<string>,
+      _stakingToken: PromiseOrValue<string>,
+      _feeToken: PromiseOrValue<string>,
+      _durationPeriod: PromiseOrValue<BigNumberish>,
+      _unstakeDurationPeriod: PromiseOrValue<BigNumberish>,
+      _ISNXRewards: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     lastPauseTime(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     lastPeriodTimeStamp(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    lastUnstakeTime(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    lastUnstakeTime(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     maxAMMVolumeRewardsPercentage(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -2120,8 +2202,8 @@ export interface StakingThales extends BaseContract {
     maxThalesRoyaleRewardsPercentage(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     nominateNewOwner(
-      _owner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -2137,141 +2219,144 @@ export interface StakingThales extends BaseContract {
     priceFeed(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setAMMVolumeRewardsMultiplier(
-      _AMMVolumeRewardsMultiplier: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _AMMVolumeRewardsMultiplier: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setAddressResolver(
-      _addressResolver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _addressResolver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setClaimEnabled(
-      _claimEnabled: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _claimEnabled: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setDistributeFeesEnabled(
-      _distributeFeesEnabled: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _distributeFeesEnabled: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setDurationPeriod(
-      _durationPeriod: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _durationPeriod: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setEscrow(
-      _escrowThalesContract: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _escrowThalesContract: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setExoticBonds(
-      _exoticBonds: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _exoticBonds: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setExtraRewards(
-      _extraRewardsActive: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _extraRewardsActive: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setFixedPeriodReward(
-      _fixedReward: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _fixedReward: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setMaxAMMVolumeRewardsPercentage(
-      _maxAMMVolumeRewardsPercentage: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _maxAMMVolumeRewardsPercentage: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setMaxSNXRewardsPercentage(
-      _maxSNXRewardsPercentage: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _maxSNXRewardsPercentage: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setMaxThalesRoyaleRewardsPercentage(
-      _maxThalesRoyaleRewardsPercentage: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _maxThalesRoyaleRewardsPercentage: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setOwner(
-      _owner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setPaused(
-      _paused: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _paused: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setPeriodExtraReward(
-      _extraReward: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _extraReward: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setPriceFeed(
-      _priceFeed: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _priceFeed: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setSNXRewards(
-      _snxRewards: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _snxRewards: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setSNXVolumeRewardsMultiplier(
-      _SNXVolumeRewardsMultiplier: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _SNXVolumeRewardsMultiplier: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setThalesAMM(
-      _thalesAMM: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _thalesAMM: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setThalesRoyale(
-      _royale: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _royale: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setThalesStakingRewardsPool(
-      _thalesStakingRewardsPool: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _thalesStakingRewardsPool: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setUnstakeDurationPeriod(
-      _unstakeDurationPeriod: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _unstakeDurationPeriod: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     stake(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     stakeOnBehalf(
-      amount: BigNumberish,
-      staker: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      staker: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    stakedBalanceOf(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    stakedBalanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    stakerFeesClaimed(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    stakerFeesClaimed(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    stakerLifetimeRewardsClaimed(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    stakerLifetimeRewardsClaimed(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     stakingToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    startStakingPeriod(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    startStakingPeriod(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     startTimeStamp(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     startUnstake(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     thalesAMM(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -2289,22 +2374,22 @@ export interface StakingThales extends BaseContract {
     totalStakedLastPeriodEnd(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferOwnershipAtInit(
-      proxyAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      proxyAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    unstake(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    unstake(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     unstakeDurationPeriod(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    unstaking(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    unstaking(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    unstakingAmount(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    unstakingAmount(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     updateVolume(
-      account: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

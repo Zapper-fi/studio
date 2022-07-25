@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface JonesStakingRewardsFactoryInterface extends utils.Interface {
   functions: {
@@ -53,25 +53,41 @@ export interface JonesStakingRewardsFactoryInterface extends utils.Interface {
       | 'withdrawRewardTokensFromContract',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'addToContractWhitelist', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'addToContractWhitelist',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(
     functionFragment: 'deploy',
-    values: [string, BigNumberish, BigNumberish, BigNumberish, BigNumberish, BigNumberish],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'notifyRewardAmount', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'notifyRewardAmount', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'notifyRewardAmounts', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'removeFromContractWhitelist', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'removeFromContractWhitelist',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
   encodeFunctionData(functionFragment: 'rewardsTokenJones', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'stakingID', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'stakingID', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'stakingRewardsGenesis', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'stakingRewardsInfoByStakingToken', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
-  encodeFunctionData(functionFragment: 'withdrawRewardToken', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'stakingRewardsInfoByStakingToken',
+    values: [PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'withdrawRewardToken', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(
     functionFragment: 'withdrawRewardTokensFromContract',
-    values: [BigNumberish, BigNumberish],
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
   ): string;
 
   decodeFunctionResult(functionFragment: 'addToContractWhitelist', data: BytesLike): Result;
@@ -128,46 +144,46 @@ export interface JonesStakingRewardsFactory extends BaseContract {
 
   functions: {
     addToContractWhitelist(
-      _contract: string,
-      _id: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _contract: PromiseOrValue<string>,
+      _id: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     deploy(
-      _stakingToken: string,
-      _rewardAmountJONES: BigNumberish,
-      _rewardsDuration: BigNumberish,
-      _boostedTimePeriod: BigNumberish,
-      _boost: BigNumberish,
-      _id: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _stakingToken: PromiseOrValue<string>,
+      _rewardAmountJONES: PromiseOrValue<BigNumberish>,
+      _rewardsDuration: PromiseOrValue<BigNumberish>,
+      _boostedTimePeriod: PromiseOrValue<BigNumberish>,
+      _boost: PromiseOrValue<BigNumberish>,
+      _id: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     notifyRewardAmount(
-      _id: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _id: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    notifyRewardAmounts(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    notifyRewardAmounts(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     removeFromContractWhitelist(
-      _contract: string,
-      _id: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _contract: PromiseOrValue<string>,
+      _id: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     rewardsTokenJones(overrides?: CallOverrides): Promise<[string]>;
 
-    stakingID(arg0: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    stakingID(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     stakingRewardsGenesis(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     stakingRewardsInfoByStakingToken(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [string, BigNumber, BigNumber] & {
@@ -178,63 +194,63 @@ export interface JonesStakingRewardsFactory extends BaseContract {
     >;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     withdrawRewardToken(
-      _amountJONES: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amountJONES: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     withdrawRewardTokensFromContract(
-      _amountJONES: BigNumberish,
-      _id: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amountJONES: PromiseOrValue<BigNumberish>,
+      _id: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
   addToContractWhitelist(
-    _contract: string,
-    _id: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _contract: PromiseOrValue<string>,
+    _id: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   deploy(
-    _stakingToken: string,
-    _rewardAmountJONES: BigNumberish,
-    _rewardsDuration: BigNumberish,
-    _boostedTimePeriod: BigNumberish,
-    _boost: BigNumberish,
-    _id: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _stakingToken: PromiseOrValue<string>,
+    _rewardAmountJONES: PromiseOrValue<BigNumberish>,
+    _rewardsDuration: PromiseOrValue<BigNumberish>,
+    _boostedTimePeriod: PromiseOrValue<BigNumberish>,
+    _boost: PromiseOrValue<BigNumberish>,
+    _id: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   notifyRewardAmount(
-    _id: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _id: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  notifyRewardAmounts(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  notifyRewardAmounts(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
   removeFromContractWhitelist(
-    _contract: string,
-    _id: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _contract: PromiseOrValue<string>,
+    _id: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   rewardsTokenJones(overrides?: CallOverrides): Promise<string>;
 
-  stakingID(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  stakingID(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   stakingRewardsGenesis(overrides?: CallOverrides): Promise<BigNumber>;
 
   stakingRewardsInfoByStakingToken(
-    arg0: BigNumberish,
+    arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<
     [string, BigNumber, BigNumber] & {
@@ -245,52 +261,60 @@ export interface JonesStakingRewardsFactory extends BaseContract {
   >;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   withdrawRewardToken(
-    _amountJONES: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _amountJONES: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   withdrawRewardTokensFromContract(
-    _amountJONES: BigNumberish,
-    _id: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _amountJONES: PromiseOrValue<BigNumberish>,
+    _id: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    addToContractWhitelist(_contract: string, _id: BigNumberish, overrides?: CallOverrides): Promise<void>;
-
-    deploy(
-      _stakingToken: string,
-      _rewardAmountJONES: BigNumberish,
-      _rewardsDuration: BigNumberish,
-      _boostedTimePeriod: BigNumberish,
-      _boost: BigNumberish,
-      _id: BigNumberish,
+    addToContractWhitelist(
+      _contract: PromiseOrValue<string>,
+      _id: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    notifyRewardAmount(_id: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    deploy(
+      _stakingToken: PromiseOrValue<string>,
+      _rewardAmountJONES: PromiseOrValue<BigNumberish>,
+      _rewardsDuration: PromiseOrValue<BigNumberish>,
+      _boostedTimePeriod: PromiseOrValue<BigNumberish>,
+      _boost: PromiseOrValue<BigNumberish>,
+      _id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    notifyRewardAmount(_id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     notifyRewardAmounts(overrides?: CallOverrides): Promise<void>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    removeFromContractWhitelist(_contract: string, _id: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    removeFromContractWhitelist(
+      _contract: PromiseOrValue<string>,
+      _id: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
     rewardsTokenJones(overrides?: CallOverrides): Promise<string>;
 
-    stakingID(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    stakingID(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     stakingRewardsGenesis(overrides?: CallOverrides): Promise<BigNumber>;
 
     stakingRewardsInfoByStakingToken(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [string, BigNumber, BigNumber] & {
@@ -300,140 +324,146 @@ export interface JonesStakingRewardsFactory extends BaseContract {
       }
     >;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    withdrawRewardToken(_amountJONES: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    withdrawRewardToken(_amountJONES: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     withdrawRewardTokensFromContract(
-      _amountJONES: BigNumberish,
-      _id: BigNumberish,
+      _amountJONES: PromiseOrValue<BigNumberish>,
+      _id: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
   };
 
   filters: {
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
   };
 
   estimateGas: {
     addToContractWhitelist(
-      _contract: string,
-      _id: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _contract: PromiseOrValue<string>,
+      _id: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     deploy(
-      _stakingToken: string,
-      _rewardAmountJONES: BigNumberish,
-      _rewardsDuration: BigNumberish,
-      _boostedTimePeriod: BigNumberish,
-      _boost: BigNumberish,
-      _id: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _stakingToken: PromiseOrValue<string>,
+      _rewardAmountJONES: PromiseOrValue<BigNumberish>,
+      _rewardsDuration: PromiseOrValue<BigNumberish>,
+      _boostedTimePeriod: PromiseOrValue<BigNumberish>,
+      _boost: PromiseOrValue<BigNumberish>,
+      _id: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     notifyRewardAmount(
-      _id: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _id: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    notifyRewardAmounts(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    notifyRewardAmounts(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     removeFromContractWhitelist(
-      _contract: string,
-      _id: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _contract: PromiseOrValue<string>,
+      _id: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     rewardsTokenJones(overrides?: CallOverrides): Promise<BigNumber>;
 
-    stakingID(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    stakingID(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     stakingRewardsGenesis(overrides?: CallOverrides): Promise<BigNumber>;
 
-    stakingRewardsInfoByStakingToken(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    stakingRewardsInfoByStakingToken(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     withdrawRewardToken(
-      _amountJONES: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amountJONES: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     withdrawRewardTokensFromContract(
-      _amountJONES: BigNumberish,
-      _id: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amountJONES: PromiseOrValue<BigNumberish>,
+      _id: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     addToContractWhitelist(
-      _contract: string,
-      _id: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _contract: PromiseOrValue<string>,
+      _id: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     deploy(
-      _stakingToken: string,
-      _rewardAmountJONES: BigNumberish,
-      _rewardsDuration: BigNumberish,
-      _boostedTimePeriod: BigNumberish,
-      _boost: BigNumberish,
-      _id: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _stakingToken: PromiseOrValue<string>,
+      _rewardAmountJONES: PromiseOrValue<BigNumberish>,
+      _rewardsDuration: PromiseOrValue<BigNumberish>,
+      _boostedTimePeriod: PromiseOrValue<BigNumberish>,
+      _boost: PromiseOrValue<BigNumberish>,
+      _id: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     notifyRewardAmount(
-      _id: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _id: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    notifyRewardAmounts(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    notifyRewardAmounts(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     removeFromContractWhitelist(
-      _contract: string,
-      _id: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _contract: PromiseOrValue<string>,
+      _id: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     rewardsTokenJones(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    stakingID(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    stakingID(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     stakingRewardsGenesis(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    stakingRewardsInfoByStakingToken(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    stakingRewardsInfoByStakingToken(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     withdrawRewardToken(
-      _amountJONES: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amountJONES: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     withdrawRewardTokensFromContract(
-      _amountJONES: BigNumberish,
-      _id: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amountJONES: PromiseOrValue<BigNumberish>,
+      _id: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

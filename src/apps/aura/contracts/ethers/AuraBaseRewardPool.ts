@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface AuraBaseRewardPoolInterface extends utils.Interface {
   functions: {
@@ -99,17 +99,20 @@ export interface AuraBaseRewardPoolInterface extends utils.Interface {
       | 'withdrawAndUnwrap',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'addExtraReward', values: [string]): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
+  encodeFunctionData(functionFragment: 'addExtraReward', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'clearExtraRewards', values?: undefined): string;
   encodeFunctionData(functionFragment: 'currentRewards', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'donate', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'donate', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'duration', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'earned', values: [string]): string;
-  encodeFunctionData(functionFragment: 'extraRewards', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'earned', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'extraRewards', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'extraRewardsLength', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getReward()', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getReward(address,bool)', values: [string, boolean]): string;
+  encodeFunctionData(
+    functionFragment: 'getReward(address,bool)',
+    values: [PromiseOrValue<string>, PromiseOrValue<boolean>],
+  ): string;
   encodeFunctionData(functionFragment: 'historicalRewards', values?: undefined): string;
   encodeFunctionData(functionFragment: 'lastTimeRewardApplicable', values?: undefined): string;
   encodeFunctionData(functionFragment: 'lastUpdateTime', values?: undefined): string;
@@ -118,24 +121,33 @@ export interface AuraBaseRewardPoolInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'periodFinish', values?: undefined): string;
   encodeFunctionData(functionFragment: 'pid', values?: undefined): string;
   encodeFunctionData(functionFragment: 'processIdleRewards', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'queueNewRewards', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'queueNewRewards', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'queuedRewards', values?: undefined): string;
   encodeFunctionData(functionFragment: 'rewardManager', values?: undefined): string;
   encodeFunctionData(functionFragment: 'rewardPerToken', values?: undefined): string;
   encodeFunctionData(functionFragment: 'rewardPerTokenStored', values?: undefined): string;
   encodeFunctionData(functionFragment: 'rewardRate', values?: undefined): string;
   encodeFunctionData(functionFragment: 'rewardToken', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'rewards', values: [string]): string;
-  encodeFunctionData(functionFragment: 'stake', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'rewards', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'stake', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'stakeAll', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'stakeFor', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'stakeFor',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'stakingToken', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'userRewardPerTokenPaid', values: [string]): string;
-  encodeFunctionData(functionFragment: 'withdraw', values: [BigNumberish, boolean]): string;
-  encodeFunctionData(functionFragment: 'withdrawAll', values: [boolean]): string;
-  encodeFunctionData(functionFragment: 'withdrawAllAndUnwrap', values: [boolean]): string;
-  encodeFunctionData(functionFragment: 'withdrawAndUnwrap', values: [BigNumberish, boolean]): string;
+  encodeFunctionData(functionFragment: 'userRewardPerTokenPaid', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'withdraw',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(functionFragment: 'withdrawAll', values: [PromiseOrValue<boolean>]): string;
+  encodeFunctionData(functionFragment: 'withdrawAllAndUnwrap', values: [PromiseOrValue<boolean>]): string;
+  encodeFunctionData(
+    functionFragment: 'withdrawAndUnwrap',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<boolean>],
+  ): string;
 
   decodeFunctionResult(functionFragment: 'addExtraReward', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result;
@@ -243,35 +255,35 @@ export interface AuraBaseRewardPool extends BaseContract {
 
   functions: {
     addExtraReward(
-      _reward: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _reward: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    clearExtraRewards(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    clearExtraRewards(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     currentRewards(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     donate(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     duration(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    earned(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    earned(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    extraRewards(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    extraRewards(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
     extraRewardsLength(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    'getReward()'(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    'getReward()'(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     'getReward(address,bool)'(
-      _account: string,
-      _claimExtras: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _account: PromiseOrValue<string>,
+      _claimExtras: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     historicalRewards(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -288,11 +300,11 @@ export interface AuraBaseRewardPool extends BaseContract {
 
     pid(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    processIdleRewards(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    processIdleRewards(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     queueNewRewards(
-      _rewards: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewards: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     queuedRewards(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -307,80 +319,80 @@ export interface AuraBaseRewardPool extends BaseContract {
 
     rewardToken(overrides?: CallOverrides): Promise<[string]>;
 
-    rewards(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    rewards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     stake(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    stakeAll(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    stakeAll(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     stakeFor(
-      _for: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _for: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     stakingToken(overrides?: CallOverrides): Promise<[string]>;
 
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    userRewardPerTokenPaid(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    userRewardPerTokenPaid(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     withdraw(
-      amount: BigNumberish,
-      claim: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      claim: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     withdrawAll(
-      claim: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      claim: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     withdrawAllAndUnwrap(
-      claim: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      claim: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     withdrawAndUnwrap(
-      amount: BigNumberish,
-      claim: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      claim: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
   addExtraReward(
-    _reward: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _reward: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  clearExtraRewards(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  clearExtraRewards(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   currentRewards(overrides?: CallOverrides): Promise<BigNumber>;
 
   donate(
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   duration(overrides?: CallOverrides): Promise<BigNumber>;
 
-  earned(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  earned(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  extraRewards(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  extraRewards(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   extraRewardsLength(overrides?: CallOverrides): Promise<BigNumber>;
 
-  'getReward()'(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  'getReward()'(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   'getReward(address,bool)'(
-    _account: string,
-    _claimExtras: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _account: PromiseOrValue<string>,
+    _claimExtras: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   historicalRewards(overrides?: CallOverrides): Promise<BigNumber>;
@@ -397,11 +409,11 @@ export interface AuraBaseRewardPool extends BaseContract {
 
   pid(overrides?: CallOverrides): Promise<BigNumber>;
 
-  processIdleRewards(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  processIdleRewards(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   queueNewRewards(
-    _rewards: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _rewards: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   queuedRewards(overrides?: CallOverrides): Promise<BigNumber>;
@@ -416,71 +428,75 @@ export interface AuraBaseRewardPool extends BaseContract {
 
   rewardToken(overrides?: CallOverrides): Promise<string>;
 
-  rewards(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  rewards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   stake(
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  stakeAll(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  stakeAll(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   stakeFor(
-    _for: string,
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _for: PromiseOrValue<string>,
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   stakingToken(overrides?: CallOverrides): Promise<string>;
 
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-  userRewardPerTokenPaid(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  userRewardPerTokenPaid(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   withdraw(
-    amount: BigNumberish,
-    claim: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    amount: PromiseOrValue<BigNumberish>,
+    claim: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   withdrawAll(
-    claim: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    claim: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   withdrawAllAndUnwrap(
-    claim: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    claim: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   withdrawAndUnwrap(
-    amount: BigNumberish,
-    claim: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    amount: PromiseOrValue<BigNumberish>,
+    claim: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    addExtraReward(_reward: string, overrides?: CallOverrides): Promise<boolean>;
+    addExtraReward(_reward: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     clearExtraRewards(overrides?: CallOverrides): Promise<void>;
 
     currentRewards(overrides?: CallOverrides): Promise<BigNumber>;
 
-    donate(_amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    donate(_amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<boolean>;
 
     duration(overrides?: CallOverrides): Promise<BigNumber>;
 
-    earned(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    earned(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    extraRewards(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    extraRewards(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
     extraRewardsLength(overrides?: CallOverrides): Promise<BigNumber>;
 
     'getReward()'(overrides?: CallOverrides): Promise<boolean>;
 
-    'getReward(address,bool)'(_account: string, _claimExtras: boolean, overrides?: CallOverrides): Promise<boolean>;
+    'getReward(address,bool)'(
+      _account: PromiseOrValue<string>,
+      _claimExtras: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     historicalRewards(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -498,7 +514,7 @@ export interface AuraBaseRewardPool extends BaseContract {
 
     processIdleRewards(overrides?: CallOverrides): Promise<void>;
 
-    queueNewRewards(_rewards: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    queueNewRewards(_rewards: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<boolean>;
 
     queuedRewards(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -512,68 +528,86 @@ export interface AuraBaseRewardPool extends BaseContract {
 
     rewardToken(overrides?: CallOverrides): Promise<string>;
 
-    rewards(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    rewards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    stake(_amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    stake(_amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<boolean>;
 
     stakeAll(overrides?: CallOverrides): Promise<boolean>;
 
-    stakeFor(_for: string, _amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    stakeFor(
+      _for: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     stakingToken(overrides?: CallOverrides): Promise<string>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    userRewardPerTokenPaid(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    userRewardPerTokenPaid(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    withdraw(amount: BigNumberish, claim: boolean, overrides?: CallOverrides): Promise<boolean>;
+    withdraw(
+      amount: PromiseOrValue<BigNumberish>,
+      claim: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    withdrawAll(claim: boolean, overrides?: CallOverrides): Promise<void>;
+    withdrawAll(claim: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
 
-    withdrawAllAndUnwrap(claim: boolean, overrides?: CallOverrides): Promise<void>;
+    withdrawAllAndUnwrap(claim: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
 
-    withdrawAndUnwrap(amount: BigNumberish, claim: boolean, overrides?: CallOverrides): Promise<boolean>;
+    withdrawAndUnwrap(
+      amount: PromiseOrValue<BigNumberish>,
+      claim: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
   };
 
   filters: {
     'RewardAdded(uint256)'(reward?: null): RewardAddedEventFilter;
     RewardAdded(reward?: null): RewardAddedEventFilter;
 
-    'RewardPaid(address,uint256)'(user?: string | null, reward?: null): RewardPaidEventFilter;
-    RewardPaid(user?: string | null, reward?: null): RewardPaidEventFilter;
+    'RewardPaid(address,uint256)'(user?: PromiseOrValue<string> | null, reward?: null): RewardPaidEventFilter;
+    RewardPaid(user?: PromiseOrValue<string> | null, reward?: null): RewardPaidEventFilter;
 
-    'Staked(address,uint256)'(user?: string | null, amount?: null): StakedEventFilter;
-    Staked(user?: string | null, amount?: null): StakedEventFilter;
+    'Staked(address,uint256)'(user?: PromiseOrValue<string> | null, amount?: null): StakedEventFilter;
+    Staked(user?: PromiseOrValue<string> | null, amount?: null): StakedEventFilter;
 
-    'Withdrawn(address,uint256)'(user?: string | null, amount?: null): WithdrawnEventFilter;
-    Withdrawn(user?: string | null, amount?: null): WithdrawnEventFilter;
+    'Withdrawn(address,uint256)'(user?: PromiseOrValue<string> | null, amount?: null): WithdrawnEventFilter;
+    Withdrawn(user?: PromiseOrValue<string> | null, amount?: null): WithdrawnEventFilter;
   };
 
   estimateGas: {
-    addExtraReward(_reward: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    addExtraReward(
+      _reward: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    clearExtraRewards(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    clearExtraRewards(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     currentRewards(overrides?: CallOverrides): Promise<BigNumber>;
 
-    donate(_amount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    donate(
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     duration(overrides?: CallOverrides): Promise<BigNumber>;
 
-    earned(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    earned(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    extraRewards(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    extraRewards(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     extraRewardsLength(overrides?: CallOverrides): Promise<BigNumber>;
 
-    'getReward()'(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    'getReward()'(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     'getReward(address,bool)'(
-      _account: string,
-      _claimExtras: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _account: PromiseOrValue<string>,
+      _claimExtras: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     historicalRewards(overrides?: CallOverrides): Promise<BigNumber>;
@@ -590,11 +624,11 @@ export interface AuraBaseRewardPool extends BaseContract {
 
     pid(overrides?: CallOverrides): Promise<BigNumber>;
 
-    processIdleRewards(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    processIdleRewards(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     queueNewRewards(
-      _rewards: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewards: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     queuedRewards(overrides?: CallOverrides): Promise<BigNumber>;
@@ -609,75 +643,81 @@ export interface AuraBaseRewardPool extends BaseContract {
 
     rewardToken(overrides?: CallOverrides): Promise<BigNumber>;
 
-    rewards(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    rewards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    stake(_amount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    stake(
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    stakeAll(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    stakeAll(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     stakeFor(
-      _for: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _for: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     stakingToken(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    userRewardPerTokenPaid(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    userRewardPerTokenPaid(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     withdraw(
-      amount: BigNumberish,
-      claim: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      claim: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    withdrawAll(claim: boolean, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    withdrawAll(
+      claim: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     withdrawAllAndUnwrap(
-      claim: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      claim: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     withdrawAndUnwrap(
-      amount: BigNumberish,
-      claim: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      claim: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     addExtraReward(
-      _reward: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _reward: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    clearExtraRewards(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    clearExtraRewards(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     currentRewards(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     donate(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     duration(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    earned(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    earned(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    extraRewards(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    extraRewards(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     extraRewardsLength(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    'getReward()'(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    'getReward()'(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     'getReward(address,bool)'(
-      _account: string,
-      _claimExtras: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _account: PromiseOrValue<string>,
+      _claimExtras: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     historicalRewards(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -694,11 +734,11 @@ export interface AuraBaseRewardPool extends BaseContract {
 
     pid(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    processIdleRewards(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    processIdleRewards(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     queueNewRewards(
-      _rewards: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewards: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     queuedRewards(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -713,47 +753,47 @@ export interface AuraBaseRewardPool extends BaseContract {
 
     rewardToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    rewards(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    rewards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     stake(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    stakeAll(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    stakeAll(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     stakeFor(
-      _for: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _for: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     stakingToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    userRewardPerTokenPaid(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    userRewardPerTokenPaid(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     withdraw(
-      amount: BigNumberish,
-      claim: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      claim: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     withdrawAll(
-      claim: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      claim: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     withdrawAllAndUnwrap(
-      claim: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      claim: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     withdrawAndUnwrap(
-      amount: BigNumberish,
-      claim: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      claim: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

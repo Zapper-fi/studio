@@ -15,31 +15,31 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export declare namespace FusePoolLens {
   export type FusePoolAssetStruct = {
-    cToken: string;
-    underlyingToken: string;
-    underlyingName: string;
-    underlyingSymbol: string;
-    underlyingDecimals: BigNumberish;
-    underlyingBalance: BigNumberish;
-    supplyRatePerBlock: BigNumberish;
-    borrowRatePerBlock: BigNumberish;
-    totalSupply: BigNumberish;
-    totalBorrow: BigNumberish;
-    supplyBalance: BigNumberish;
-    borrowBalance: BigNumberish;
-    liquidity: BigNumberish;
-    membership: boolean;
-    exchangeRate: BigNumberish;
-    underlyingPrice: BigNumberish;
-    oracle: string;
-    collateralFactor: BigNumberish;
-    reserveFactor: BigNumberish;
-    adminFee: BigNumberish;
-    fuseFee: BigNumberish;
+    cToken: PromiseOrValue<string>;
+    underlyingToken: PromiseOrValue<string>;
+    underlyingName: PromiseOrValue<string>;
+    underlyingSymbol: PromiseOrValue<string>;
+    underlyingDecimals: PromiseOrValue<BigNumberish>;
+    underlyingBalance: PromiseOrValue<BigNumberish>;
+    supplyRatePerBlock: PromiseOrValue<BigNumberish>;
+    borrowRatePerBlock: PromiseOrValue<BigNumberish>;
+    totalSupply: PromiseOrValue<BigNumberish>;
+    totalBorrow: PromiseOrValue<BigNumberish>;
+    supplyBalance: PromiseOrValue<BigNumberish>;
+    borrowBalance: PromiseOrValue<BigNumberish>;
+    liquidity: PromiseOrValue<BigNumberish>;
+    membership: PromiseOrValue<boolean>;
+    exchangeRate: PromiseOrValue<BigNumberish>;
+    underlyingPrice: PromiseOrValue<BigNumberish>;
+    oracle: PromiseOrValue<string>;
+    collateralFactor: PromiseOrValue<BigNumberish>;
+    reserveFactor: PromiseOrValue<BigNumberish>;
+    adminFee: PromiseOrValue<BigNumberish>;
+    fuseFee: PromiseOrValue<BigNumberish>;
   };
 
   export type FusePoolAssetStructOutput = [
@@ -89,10 +89,10 @@ export declare namespace FusePoolLens {
   };
 
   export type CTokenOwnershipStruct = {
-    cToken: string;
-    admin: string;
-    adminHasRights: boolean;
-    fuseAdminHasRights: boolean;
+    cToken: PromiseOrValue<string>;
+    admin: PromiseOrValue<string>;
+    adminHasRights: PromiseOrValue<boolean>;
+    fuseAdminHasRights: PromiseOrValue<boolean>;
   };
 
   export type CTokenOwnershipStructOutput = [string, string, boolean, boolean] & {
@@ -103,10 +103,10 @@ export declare namespace FusePoolLens {
   };
 
   export type FusePoolUserStruct = {
-    account: string;
-    totalBorrow: BigNumberish;
-    totalCollateral: BigNumberish;
-    health: BigNumberish;
+    account: PromiseOrValue<string>;
+    totalBorrow: PromiseOrValue<BigNumberish>;
+    totalCollateral: PromiseOrValue<BigNumberish>;
+    health: PromiseOrValue<BigNumberish>;
     assets: FusePoolLens.FusePoolAssetStruct[];
   };
 
@@ -127,11 +127,11 @@ export declare namespace FusePoolLens {
 
 export declare namespace FusePoolDirectory {
   export type FusePoolStruct = {
-    name: string;
-    creator: string;
-    comptroller: string;
-    blockPosted: BigNumberish;
-    timestampPosted: BigNumberish;
+    name: PromiseOrValue<string>;
+    creator: PromiseOrValue<string>;
+    comptroller: PromiseOrValue<string>;
+    blockPosted: PromiseOrValue<BigNumberish>;
+    timestampPosted: PromiseOrValue<BigNumberish>;
   };
 
   export type FusePoolStructOutput = [string, string, string, BigNumber, BigNumber] & {
@@ -143,7 +143,7 @@ export declare namespace FusePoolDirectory {
   };
 }
 
-export interface PoolLensInterface extends utils.Interface {
+export interface MarketXyzPoolLensInterface extends utils.Interface {
   functions: {
     'directory()': FunctionFragment;
     'getPoolAssetsWithData(address)': FunctionFragment;
@@ -182,23 +182,32 @@ export interface PoolLensInterface extends utils.Interface {
   ): FunctionFragment;
 
   encodeFunctionData(functionFragment: 'directory', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getPoolAssetsWithData', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getPoolOwnership', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getPoolSummary', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getPoolUserSummary', values: [string, string]): string;
+  encodeFunctionData(functionFragment: 'getPoolAssetsWithData', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getPoolOwnership', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getPoolSummary', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'getPoolUserSummary',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(
     functionFragment: 'getPoolUsersWithData(address[],uint256)',
-    values: [string[], BigNumberish],
+    values: [PromiseOrValue<string>[], PromiseOrValue<BigNumberish>],
   ): string;
-  encodeFunctionData(functionFragment: 'getPoolUsersWithData(address,uint256)', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'getPoolsByAccountWithData', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getPoolsBySupplier', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getPoolsBySupplierWithData', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getPublicPoolUsersWithData', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'getPoolUsersWithData(address,uint256)',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'getPoolsByAccountWithData', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getPoolsBySupplier', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getPoolsBySupplierWithData', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getPublicPoolUsersWithData', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'getPublicPoolsWithData', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getUserSummary', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getWhitelistedPoolsByAccount', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getWhitelistedPoolsByAccountWithData', values: [string]): string;
+  encodeFunctionData(functionFragment: 'getUserSummary', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getWhitelistedPoolsByAccount', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'getWhitelistedPoolsByAccountWithData',
+    values: [PromiseOrValue<string>],
+  ): string;
 
   decodeFunctionResult(functionFragment: 'directory', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getPoolAssetsWithData', data: BytesLike): Result;
@@ -219,12 +228,12 @@ export interface PoolLensInterface extends utils.Interface {
   events: {};
 }
 
-export interface PoolLens extends BaseContract {
+export interface MarketXyzPoolLens extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: PoolLensInterface;
+  interface: MarketXyzPoolLensInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -245,183 +254,186 @@ export interface PoolLens extends BaseContract {
     directory(overrides?: CallOverrides): Promise<[string]>;
 
     getPoolAssetsWithData(
-      comptroller: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      comptroller: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     getPoolOwnership(
-      comptroller: string,
+      comptroller: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[string, boolean, boolean, FusePoolLens.CTokenOwnershipStructOutput[]]>;
 
     getPoolSummary(
-      comptroller: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      comptroller: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     getPoolUserSummary(
-      comptroller: string,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      comptroller: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     'getPoolUsersWithData(address[],uint256)'(
-      comptrollers: string[],
-      maxHealth: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      comptrollers: PromiseOrValue<string>[],
+      maxHealth: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     'getPoolUsersWithData(address,uint256)'(
-      comptroller: string,
-      maxHealth: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      comptroller: PromiseOrValue<string>,
+      maxHealth: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     getPoolsByAccountWithData(
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     getPoolsBySupplier(
-      account: string,
+      account: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber[], FusePoolDirectory.FusePoolStructOutput[]]>;
 
     getPoolsBySupplierWithData(
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     getPublicPoolUsersWithData(
-      maxHealth: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      maxHealth: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    getPublicPoolsWithData(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    getPublicPoolsWithData(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     getUserSummary(
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     getWhitelistedPoolsByAccount(
-      account: string,
+      account: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber[], FusePoolDirectory.FusePoolStructOutput[]]>;
 
     getWhitelistedPoolsByAccountWithData(
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
   directory(overrides?: CallOverrides): Promise<string>;
 
   getPoolAssetsWithData(
-    comptroller: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    comptroller: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   getPoolOwnership(
-    comptroller: string,
+    comptroller: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<[string, boolean, boolean, FusePoolLens.CTokenOwnershipStructOutput[]]>;
 
   getPoolSummary(
-    comptroller: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    comptroller: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   getPoolUserSummary(
-    comptroller: string,
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    comptroller: PromiseOrValue<string>,
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   'getPoolUsersWithData(address[],uint256)'(
-    comptrollers: string[],
-    maxHealth: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    comptrollers: PromiseOrValue<string>[],
+    maxHealth: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   'getPoolUsersWithData(address,uint256)'(
-    comptroller: string,
-    maxHealth: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    comptroller: PromiseOrValue<string>,
+    maxHealth: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   getPoolsByAccountWithData(
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   getPoolsBySupplier(
-    account: string,
+    account: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber[], FusePoolDirectory.FusePoolStructOutput[]]>;
 
   getPoolsBySupplierWithData(
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   getPublicPoolUsersWithData(
-    maxHealth: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    maxHealth: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  getPublicPoolsWithData(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  getPublicPoolsWithData(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   getUserSummary(
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   getWhitelistedPoolsByAccount(
-    account: string,
+    account: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber[], FusePoolDirectory.FusePoolStructOutput[]]>;
 
   getWhitelistedPoolsByAccountWithData(
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
     directory(overrides?: CallOverrides): Promise<string>;
 
     getPoolAssetsWithData(
-      comptroller: string,
+      comptroller: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<FusePoolLens.FusePoolAssetStructOutput[]>;
 
     getPoolOwnership(
-      comptroller: string,
+      comptroller: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[string, boolean, boolean, FusePoolLens.CTokenOwnershipStructOutput[]]>;
 
-    getPoolSummary(comptroller: string, overrides?: CallOverrides): Promise<[BigNumber, BigNumber, string[], string[]]>;
+    getPoolSummary(
+      comptroller: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber, BigNumber, string[], string[]]>;
 
     getPoolUserSummary(
-      comptroller: string,
-      account: string,
+      comptroller: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber]>;
 
     'getPoolUsersWithData(address[],uint256)'(
-      comptrollers: string[],
-      maxHealth: BigNumberish,
+      comptrollers: PromiseOrValue<string>[],
+      maxHealth: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[FusePoolLens.FusePoolUserStructOutput[][], BigNumber[], BigNumber[]]>;
 
     'getPoolUsersWithData(address,uint256)'(
-      comptroller: string,
-      maxHealth: BigNumberish,
+      comptroller: PromiseOrValue<string>,
+      maxHealth: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[FusePoolLens.FusePoolUserStructOutput[], BigNumber, BigNumber]>;
 
     getPoolsByAccountWithData(
-      account: string,
+      account: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [
@@ -436,12 +448,12 @@ export interface PoolLens extends BaseContract {
     >;
 
     getPoolsBySupplier(
-      account: string,
+      account: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber[], FusePoolDirectory.FusePoolStructOutput[]]>;
 
     getPoolsBySupplierWithData(
-      account: string,
+      account: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [
@@ -456,7 +468,7 @@ export interface PoolLens extends BaseContract {
     >;
 
     getPublicPoolUsersWithData(
-      maxHealth: BigNumberish,
+      maxHealth: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[string[], FusePoolLens.FusePoolUserStructOutput[][], BigNumber[], BigNumber[], boolean[]]>;
 
@@ -474,15 +486,18 @@ export interface PoolLens extends BaseContract {
       ]
     >;
 
-    getUserSummary(account: string, overrides?: CallOverrides): Promise<[BigNumber, BigNumber, boolean]>;
+    getUserSummary(
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber, BigNumber, boolean]>;
 
     getWhitelistedPoolsByAccount(
-      account: string,
+      account: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber[], FusePoolDirectory.FusePoolStructOutput[]]>;
 
     getWhitelistedPoolsByAccountWithData(
-      account: string,
+      account: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [
@@ -503,61 +518,64 @@ export interface PoolLens extends BaseContract {
     directory(overrides?: CallOverrides): Promise<BigNumber>;
 
     getPoolAssetsWithData(
-      comptroller: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      comptroller: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    getPoolOwnership(comptroller: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getPoolOwnership(comptroller: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getPoolSummary(
-      comptroller: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      comptroller: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     getPoolUserSummary(
-      comptroller: string,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      comptroller: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     'getPoolUsersWithData(address[],uint256)'(
-      comptrollers: string[],
-      maxHealth: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      comptrollers: PromiseOrValue<string>[],
+      maxHealth: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     'getPoolUsersWithData(address,uint256)'(
-      comptroller: string,
-      maxHealth: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      comptroller: PromiseOrValue<string>,
+      maxHealth: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     getPoolsByAccountWithData(
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    getPoolsBySupplier(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getPoolsBySupplier(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getPoolsBySupplierWithData(
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     getPublicPoolUsersWithData(
-      maxHealth: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      maxHealth: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    getPublicPoolsWithData(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    getPublicPoolsWithData(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    getUserSummary(account: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    getUserSummary(
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    getWhitelistedPoolsByAccount(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getWhitelistedPoolsByAccount(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getWhitelistedPoolsByAccountWithData(
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
@@ -565,64 +583,67 @@ export interface PoolLens extends BaseContract {
     directory(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getPoolAssetsWithData(
-      comptroller: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      comptroller: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    getPoolOwnership(comptroller: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getPoolOwnership(comptroller: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getPoolSummary(
-      comptroller: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      comptroller: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     getPoolUserSummary(
-      comptroller: string,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      comptroller: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     'getPoolUsersWithData(address[],uint256)'(
-      comptrollers: string[],
-      maxHealth: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      comptrollers: PromiseOrValue<string>[],
+      maxHealth: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     'getPoolUsersWithData(address,uint256)'(
-      comptroller: string,
-      maxHealth: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      comptroller: PromiseOrValue<string>,
+      maxHealth: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     getPoolsByAccountWithData(
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    getPoolsBySupplier(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getPoolsBySupplier(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getPoolsBySupplierWithData(
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     getPublicPoolUsersWithData(
-      maxHealth: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      maxHealth: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    getPublicPoolsWithData(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    getPublicPoolsWithData(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     getUserSummary(
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    getWhitelistedPoolsByAccount(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getWhitelistedPoolsByAccount(
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     getWhitelistedPoolsByAccountWithData(
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

@@ -15,13 +15,13 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export declare namespace IStaticATokenLM {
   export type SignatureParamsStruct = {
-    v: BigNumberish;
-    r: BytesLike;
-    s: BytesLike;
+    v: PromiseOrValue<BigNumberish>;
+    r: PromiseOrValue<BytesLike>;
+    s: PromiseOrValue<BytesLike>;
   };
 
   export type SignatureParamsStructOutput = [number, string, string] & {
@@ -146,52 +146,114 @@ export interface BalancerWrappedAaveTokenInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'REWARD_TOKEN', values?: undefined): string;
   encodeFunctionData(functionFragment: 'STATIC_ATOKEN_LM_REVISION', values?: undefined): string;
   encodeFunctionData(functionFragment: 'UNDERLYING_ASSET_ADDRESS', values?: undefined): string;
-  encodeFunctionData(functionFragment: '_nonces', values: [string]): string;
-  encodeFunctionData(functionFragment: 'allowance', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'approve', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
-  encodeFunctionData(functionFragment: 'claimRewards', values: [string, boolean]): string;
-  encodeFunctionData(functionFragment: 'claimRewardsOnBehalf', values: [string, string, boolean]): string;
-  encodeFunctionData(functionFragment: 'claimRewardsToSelf', values: [boolean]): string;
+  encodeFunctionData(functionFragment: '_nonces', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'allowance', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'approve',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'claimRewards',
+    values: [PromiseOrValue<string>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'claimRewardsOnBehalf',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(functionFragment: 'claimRewardsToSelf', values: [PromiseOrValue<boolean>]): string;
   encodeFunctionData(functionFragment: 'collectAndUpdateRewards', values?: undefined): string;
   encodeFunctionData(functionFragment: 'decimals', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'decreaseAllowance', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'deposit', values: [string, BigNumberish, BigNumberish, boolean]): string;
-  encodeFunctionData(functionFragment: 'dynamicBalanceOf', values: [string]): string;
-  encodeFunctionData(functionFragment: 'dynamicToStaticAmount', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'decreaseAllowance',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'deposit',
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<boolean>,
+    ],
+  ): string;
+  encodeFunctionData(functionFragment: 'dynamicBalanceOf', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'dynamicToStaticAmount', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'getAccRewardsPerToken', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getClaimableRewards', values: [string]): string;
+  encodeFunctionData(functionFragment: 'getClaimableRewards', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'getDomainSeparator', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getIncentivesController', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getLastRewardBlock', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getLifetimeRewards', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getLifetimeRewardsClaimed', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getTotalClaimableRewards', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getUnclaimedRewards', values: [string]): string;
-  encodeFunctionData(functionFragment: 'increaseAllowance', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'initialize', values: [string, string, string, string]): string;
+  encodeFunctionData(functionFragment: 'getUnclaimedRewards', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'increaseAllowance',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'initialize',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'isImplementation', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'metaDeposit',
-    values: [string, string, BigNumberish, BigNumberish, boolean, BigNumberish, IStaticATokenLM.SignatureParamsStruct],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<boolean>,
+      PromiseOrValue<BigNumberish>,
+      IStaticATokenLM.SignatureParamsStruct,
+    ],
   ): string;
   encodeFunctionData(
     functionFragment: 'metaWithdraw',
-    values: [string, string, BigNumberish, BigNumberish, boolean, BigNumberish, IStaticATokenLM.SignatureParamsStruct],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<boolean>,
+      PromiseOrValue<BigNumberish>,
+      IStaticATokenLM.SignatureParamsStruct,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'permit',
-    values: [string, string, BigNumberish, BigNumberish, BigNumberish, BytesLike, BytesLike],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'rate', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'staticToDynamicAmount', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'staticToDynamicAmount', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transfer', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferFrom', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'withdraw', values: [string, BigNumberish, boolean]): string;
-  encodeFunctionData(functionFragment: 'withdrawDynamicAmount', values: [string, BigNumberish, boolean]): string;
+  encodeFunctionData(
+    functionFragment: 'transfer',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'transferFrom',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'withdraw',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'withdrawDynamicAmount',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<boolean>],
+  ): string;
 
   decodeFunctionResult(functionFragment: 'ASSET', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'ATOKEN', data: BytesLike): Result;
@@ -326,61 +388,65 @@ export interface BalancerWrappedAaveToken extends BaseContract {
 
     UNDERLYING_ASSET_ADDRESS(overrides?: CallOverrides): Promise<[string]>;
 
-    _nonces(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    _nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     claimRewards(
-      receiver: string,
-      forceUpdate: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      receiver: PromiseOrValue<string>,
+      forceUpdate: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     claimRewardsOnBehalf(
-      onBehalfOf: string,
-      receiver: string,
-      forceUpdate: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      onBehalfOf: PromiseOrValue<string>,
+      receiver: PromiseOrValue<string>,
+      forceUpdate: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     claimRewardsToSelf(
-      forceUpdate: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      forceUpdate: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    collectAndUpdateRewards(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    collectAndUpdateRewards(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<[number]>;
 
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     deposit(
-      recipient: string,
-      amount: BigNumberish,
-      referralCode: BigNumberish,
-      fromUnderlying: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      referralCode: PromiseOrValue<BigNumberish>,
+      fromUnderlying: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    dynamicBalanceOf(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    dynamicBalanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    dynamicToStaticAmount(amount: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    dynamicToStaticAmount(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     getAccRewardsPerToken(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getClaimableRewards(user: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getClaimableRewards(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     getDomainSeparator(overrides?: CallOverrides): Promise<[string]>;
 
@@ -394,92 +460,92 @@ export interface BalancerWrappedAaveToken extends BaseContract {
 
     getTotalClaimableRewards(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getUnclaimedRewards(user: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getUnclaimedRewards(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     initialize(
-      pool: string,
-      aToken: string,
-      staticATokenName: string,
-      staticATokenSymbol: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pool: PromiseOrValue<string>,
+      aToken: PromiseOrValue<string>,
+      staticATokenName: PromiseOrValue<string>,
+      staticATokenSymbol: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     isImplementation(overrides?: CallOverrides): Promise<[boolean]>;
 
     metaDeposit(
-      depositor: string,
-      recipient: string,
-      value: BigNumberish,
-      referralCode: BigNumberish,
-      fromUnderlying: boolean,
-      deadline: BigNumberish,
+      depositor: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      referralCode: PromiseOrValue<BigNumberish>,
+      fromUnderlying: PromiseOrValue<boolean>,
+      deadline: PromiseOrValue<BigNumberish>,
       sigParams: IStaticATokenLM.SignatureParamsStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     metaWithdraw(
-      owner: string,
-      recipient: string,
-      staticAmount: BigNumberish,
-      dynamicAmount: BigNumberish,
-      toUnderlying: boolean,
-      deadline: BigNumberish,
+      owner: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      staticAmount: PromiseOrValue<BigNumberish>,
+      dynamicAmount: PromiseOrValue<BigNumberish>,
+      toUnderlying: PromiseOrValue<boolean>,
+      deadline: PromiseOrValue<BigNumberish>,
       sigParams: IStaticATokenLM.SignatureParamsStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
 
     permit(
-      owner: string,
-      spender: string,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     rate(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    staticToDynamicAmount(amount: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    staticToDynamicAmount(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
 
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transfer(
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferFrom(
-      sender: string,
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     withdraw(
-      recipient: string,
-      amount: BigNumberish,
-      toUnderlying: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      toUnderlying: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     withdrawDynamicAmount(
-      recipient: string,
-      amount: BigNumberish,
-      toUnderlying: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      toUnderlying: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
@@ -505,61 +571,65 @@ export interface BalancerWrappedAaveToken extends BaseContract {
 
   UNDERLYING_ASSET_ADDRESS(overrides?: CallOverrides): Promise<string>;
 
-  _nonces(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  _nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+  allowance(
+    owner: PromiseOrValue<string>,
+    spender: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   approve(
-    spender: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   claimRewards(
-    receiver: string,
-    forceUpdate: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    receiver: PromiseOrValue<string>,
+    forceUpdate: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   claimRewardsOnBehalf(
-    onBehalfOf: string,
-    receiver: string,
-    forceUpdate: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    onBehalfOf: PromiseOrValue<string>,
+    receiver: PromiseOrValue<string>,
+    forceUpdate: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   claimRewardsToSelf(
-    forceUpdate: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    forceUpdate: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  collectAndUpdateRewards(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  collectAndUpdateRewards(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   decimals(overrides?: CallOverrides): Promise<number>;
 
   decreaseAllowance(
-    spender: string,
-    subtractedValue: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    subtractedValue: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   deposit(
-    recipient: string,
-    amount: BigNumberish,
-    referralCode: BigNumberish,
-    fromUnderlying: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    recipient: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    referralCode: PromiseOrValue<BigNumberish>,
+    fromUnderlying: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  dynamicBalanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  dynamicBalanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  dynamicToStaticAmount(amount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  dynamicToStaticAmount(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   getAccRewardsPerToken(overrides?: CallOverrides): Promise<BigNumber>;
 
-  getClaimableRewards(user: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getClaimableRewards(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   getDomainSeparator(overrides?: CallOverrides): Promise<string>;
 
@@ -573,92 +643,92 @@ export interface BalancerWrappedAaveToken extends BaseContract {
 
   getTotalClaimableRewards(overrides?: CallOverrides): Promise<BigNumber>;
 
-  getUnclaimedRewards(user: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getUnclaimedRewards(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   increaseAllowance(
-    spender: string,
-    addedValue: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    addedValue: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   initialize(
-    pool: string,
-    aToken: string,
-    staticATokenName: string,
-    staticATokenSymbol: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    pool: PromiseOrValue<string>,
+    aToken: PromiseOrValue<string>,
+    staticATokenName: PromiseOrValue<string>,
+    staticATokenSymbol: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   isImplementation(overrides?: CallOverrides): Promise<boolean>;
 
   metaDeposit(
-    depositor: string,
-    recipient: string,
-    value: BigNumberish,
-    referralCode: BigNumberish,
-    fromUnderlying: boolean,
-    deadline: BigNumberish,
+    depositor: PromiseOrValue<string>,
+    recipient: PromiseOrValue<string>,
+    value: PromiseOrValue<BigNumberish>,
+    referralCode: PromiseOrValue<BigNumberish>,
+    fromUnderlying: PromiseOrValue<boolean>,
+    deadline: PromiseOrValue<BigNumberish>,
     sigParams: IStaticATokenLM.SignatureParamsStruct,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   metaWithdraw(
-    owner: string,
-    recipient: string,
-    staticAmount: BigNumberish,
-    dynamicAmount: BigNumberish,
-    toUnderlying: boolean,
-    deadline: BigNumberish,
+    owner: PromiseOrValue<string>,
+    recipient: PromiseOrValue<string>,
+    staticAmount: PromiseOrValue<BigNumberish>,
+    dynamicAmount: PromiseOrValue<BigNumberish>,
+    toUnderlying: PromiseOrValue<boolean>,
+    deadline: PromiseOrValue<BigNumberish>,
     sigParams: IStaticATokenLM.SignatureParamsStruct,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   name(overrides?: CallOverrides): Promise<string>;
 
   permit(
-    owner: string,
-    spender: string,
-    value: BigNumberish,
-    deadline: BigNumberish,
-    v: BigNumberish,
-    r: BytesLike,
-    s: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    owner: PromiseOrValue<string>,
+    spender: PromiseOrValue<string>,
+    value: PromiseOrValue<BigNumberish>,
+    deadline: PromiseOrValue<BigNumberish>,
+    v: PromiseOrValue<BigNumberish>,
+    r: PromiseOrValue<BytesLike>,
+    s: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   rate(overrides?: CallOverrides): Promise<BigNumber>;
 
-  staticToDynamicAmount(amount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  staticToDynamicAmount(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
 
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   transfer(
-    recipient: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    recipient: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferFrom(
-    sender: string,
-    recipient: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    sender: PromiseOrValue<string>,
+    recipient: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   withdraw(
-    recipient: string,
-    amount: BigNumberish,
-    toUnderlying: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    recipient: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    toUnderlying: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   withdrawDynamicAmount(
-    recipient: string,
-    amount: BigNumberish,
-    toUnderlying: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    recipient: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    toUnderlying: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
@@ -684,46 +754,62 @@ export interface BalancerWrappedAaveToken extends BaseContract {
 
     UNDERLYING_ASSET_ADDRESS(overrides?: CallOverrides): Promise<string>;
 
-    _nonces(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    _nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    approve(spender: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    approve(
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    claimRewards(receiver: string, forceUpdate: boolean, overrides?: CallOverrides): Promise<void>;
-
-    claimRewardsOnBehalf(
-      onBehalfOf: string,
-      receiver: string,
-      forceUpdate: boolean,
+    claimRewards(
+      receiver: PromiseOrValue<string>,
+      forceUpdate: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    claimRewardsToSelf(forceUpdate: boolean, overrides?: CallOverrides): Promise<void>;
+    claimRewardsOnBehalf(
+      onBehalfOf: PromiseOrValue<string>,
+      receiver: PromiseOrValue<string>,
+      forceUpdate: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    claimRewardsToSelf(forceUpdate: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
 
     collectAndUpdateRewards(overrides?: CallOverrides): Promise<void>;
 
     decimals(overrides?: CallOverrides): Promise<number>;
 
-    decreaseAllowance(spender: string, subtractedValue: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    decreaseAllowance(
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     deposit(
-      recipient: string,
-      amount: BigNumberish,
-      referralCode: BigNumberish,
-      fromUnderlying: boolean,
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      referralCode: PromiseOrValue<BigNumberish>,
+      fromUnderlying: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    dynamicBalanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    dynamicBalanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    dynamicToStaticAmount(amount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    dynamicToStaticAmount(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getAccRewardsPerToken(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getClaimableRewards(user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getClaimableRewards(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getDomainSeparator(overrides?: CallOverrides): Promise<string>;
 
@@ -737,38 +823,42 @@ export interface BalancerWrappedAaveToken extends BaseContract {
 
     getTotalClaimableRewards(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getUnclaimedRewards(user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getUnclaimedRewards(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    increaseAllowance(spender: string, addedValue: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    increaseAllowance(
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     initialize(
-      pool: string,
-      aToken: string,
-      staticATokenName: string,
-      staticATokenSymbol: string,
+      pool: PromiseOrValue<string>,
+      aToken: PromiseOrValue<string>,
+      staticATokenName: PromiseOrValue<string>,
+      staticATokenSymbol: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     isImplementation(overrides?: CallOverrides): Promise<boolean>;
 
     metaDeposit(
-      depositor: string,
-      recipient: string,
-      value: BigNumberish,
-      referralCode: BigNumberish,
-      fromUnderlying: boolean,
-      deadline: BigNumberish,
+      depositor: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      referralCode: PromiseOrValue<BigNumberish>,
+      fromUnderlying: PromiseOrValue<boolean>,
+      deadline: PromiseOrValue<BigNumberish>,
       sigParams: IStaticATokenLM.SignatureParamsStruct,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     metaWithdraw(
-      owner: string,
-      recipient: string,
-      staticAmount: BigNumberish,
-      dynamicAmount: BigNumberish,
-      toUnderlying: boolean,
-      deadline: BigNumberish,
+      owner: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      staticAmount: PromiseOrValue<BigNumberish>,
+      dynamicAmount: PromiseOrValue<BigNumberish>,
+      toUnderlying: PromiseOrValue<boolean>,
+      deadline: PromiseOrValue<BigNumberish>,
       sigParams: IStaticATokenLM.SignatureParamsStruct,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber]>;
@@ -776,66 +866,87 @@ export interface BalancerWrappedAaveToken extends BaseContract {
     name(overrides?: CallOverrides): Promise<string>;
 
     permit(
-      owner: string,
-      spender: string,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     rate(overrides?: CallOverrides): Promise<BigNumber>;
 
-    staticToDynamicAmount(amount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    staticToDynamicAmount(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<string>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transfer(recipient: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transfer(
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    transferFrom(sender: string, recipient: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transferFrom(
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     withdraw(
-      recipient: string,
-      amount: BigNumberish,
-      toUnderlying: boolean,
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      toUnderlying: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber]>;
 
     withdrawDynamicAmount(
-      recipient: string,
-      amount: BigNumberish,
-      toUnderlying: boolean,
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      toUnderlying: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber]>;
   };
 
   filters: {
     'Approval(address,address,uint256)'(
-      owner?: string | null,
-      spender?: string | null,
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
       value?: null,
     ): ApprovalEventFilter;
-    Approval(owner?: string | null, spender?: string | null, value?: null): ApprovalEventFilter;
+    Approval(
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
+      value?: null,
+    ): ApprovalEventFilter;
 
     'Initialized(address,address,string,string)'(
-      pool?: string | null,
+      pool?: PromiseOrValue<string> | null,
       aToken?: null,
       staticATokenName?: null,
       staticATokenSymbol?: null,
     ): InitializedEventFilter;
     Initialized(
-      pool?: string | null,
+      pool?: PromiseOrValue<string> | null,
       aToken?: null,
       staticATokenName?: null,
       staticATokenSymbol?: null,
     ): InitializedEventFilter;
 
-    'Transfer(address,address,uint256)'(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
-    Transfer(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
+    'Transfer(address,address,uint256)'(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
+    Transfer(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
   };
 
   estimateGas: {
@@ -861,61 +972,65 @@ export interface BalancerWrappedAaveToken extends BaseContract {
 
     UNDERLYING_ASSET_ADDRESS(overrides?: CallOverrides): Promise<BigNumber>;
 
-    _nonces(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    _nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-    approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    approve(
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     claimRewards(
-      receiver: string,
-      forceUpdate: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      receiver: PromiseOrValue<string>,
+      forceUpdate: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     claimRewardsOnBehalf(
-      onBehalfOf: string,
-      receiver: string,
-      forceUpdate: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      onBehalfOf: PromiseOrValue<string>,
+      receiver: PromiseOrValue<string>,
+      forceUpdate: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     claimRewardsToSelf(
-      forceUpdate: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      forceUpdate: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    collectAndUpdateRewards(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    collectAndUpdateRewards(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     deposit(
-      recipient: string,
-      amount: BigNumberish,
-      referralCode: BigNumberish,
-      fromUnderlying: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      referralCode: PromiseOrValue<BigNumberish>,
+      fromUnderlying: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    dynamicBalanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    dynamicBalanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    dynamicToStaticAmount(amount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    dynamicToStaticAmount(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getAccRewardsPerToken(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getClaimableRewards(user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getClaimableRewards(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getDomainSeparator(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -929,92 +1044,92 @@ export interface BalancerWrappedAaveToken extends BaseContract {
 
     getTotalClaimableRewards(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getUnclaimedRewards(user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getUnclaimedRewards(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     initialize(
-      pool: string,
-      aToken: string,
-      staticATokenName: string,
-      staticATokenSymbol: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pool: PromiseOrValue<string>,
+      aToken: PromiseOrValue<string>,
+      staticATokenName: PromiseOrValue<string>,
+      staticATokenSymbol: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     isImplementation(overrides?: CallOverrides): Promise<BigNumber>;
 
     metaDeposit(
-      depositor: string,
-      recipient: string,
-      value: BigNumberish,
-      referralCode: BigNumberish,
-      fromUnderlying: boolean,
-      deadline: BigNumberish,
+      depositor: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      referralCode: PromiseOrValue<BigNumberish>,
+      fromUnderlying: PromiseOrValue<boolean>,
+      deadline: PromiseOrValue<BigNumberish>,
       sigParams: IStaticATokenLM.SignatureParamsStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     metaWithdraw(
-      owner: string,
-      recipient: string,
-      staticAmount: BigNumberish,
-      dynamicAmount: BigNumberish,
-      toUnderlying: boolean,
-      deadline: BigNumberish,
+      owner: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      staticAmount: PromiseOrValue<BigNumberish>,
+      dynamicAmount: PromiseOrValue<BigNumberish>,
+      toUnderlying: PromiseOrValue<boolean>,
+      deadline: PromiseOrValue<BigNumberish>,
       sigParams: IStaticATokenLM.SignatureParamsStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
     permit(
-      owner: string,
-      spender: string,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     rate(overrides?: CallOverrides): Promise<BigNumber>;
 
-    staticToDynamicAmount(amount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    staticToDynamicAmount(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferFrom(
-      sender: string,
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     withdraw(
-      recipient: string,
-      amount: BigNumberish,
-      toUnderlying: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      toUnderlying: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     withdrawDynamicAmount(
-      recipient: string,
-      amount: BigNumberish,
-      toUnderlying: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      toUnderlying: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
@@ -1041,61 +1156,68 @@ export interface BalancerWrappedAaveToken extends BaseContract {
 
     UNDERLYING_ASSET_ADDRESS(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    _nonces(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    _nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    approve(
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     claimRewards(
-      receiver: string,
-      forceUpdate: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      receiver: PromiseOrValue<string>,
+      forceUpdate: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     claimRewardsOnBehalf(
-      onBehalfOf: string,
-      receiver: string,
-      forceUpdate: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      onBehalfOf: PromiseOrValue<string>,
+      receiver: PromiseOrValue<string>,
+      forceUpdate: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     claimRewardsToSelf(
-      forceUpdate: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      forceUpdate: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    collectAndUpdateRewards(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    collectAndUpdateRewards(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     deposit(
-      recipient: string,
-      amount: BigNumberish,
-      referralCode: BigNumberish,
-      fromUnderlying: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      referralCode: PromiseOrValue<BigNumberish>,
+      fromUnderlying: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    dynamicBalanceOf(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    dynamicBalanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    dynamicToStaticAmount(amount: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    dynamicToStaticAmount(
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     getAccRewardsPerToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getClaimableRewards(user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getClaimableRewards(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getDomainSeparator(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1109,92 +1231,95 @@ export interface BalancerWrappedAaveToken extends BaseContract {
 
     getTotalClaimableRewards(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getUnclaimedRewards(user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getUnclaimedRewards(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     initialize(
-      pool: string,
-      aToken: string,
-      staticATokenName: string,
-      staticATokenSymbol: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pool: PromiseOrValue<string>,
+      aToken: PromiseOrValue<string>,
+      staticATokenName: PromiseOrValue<string>,
+      staticATokenSymbol: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     isImplementation(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     metaDeposit(
-      depositor: string,
-      recipient: string,
-      value: BigNumberish,
-      referralCode: BigNumberish,
-      fromUnderlying: boolean,
-      deadline: BigNumberish,
+      depositor: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      referralCode: PromiseOrValue<BigNumberish>,
+      fromUnderlying: PromiseOrValue<boolean>,
+      deadline: PromiseOrValue<BigNumberish>,
       sigParams: IStaticATokenLM.SignatureParamsStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     metaWithdraw(
-      owner: string,
-      recipient: string,
-      staticAmount: BigNumberish,
-      dynamicAmount: BigNumberish,
-      toUnderlying: boolean,
-      deadline: BigNumberish,
+      owner: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      staticAmount: PromiseOrValue<BigNumberish>,
+      dynamicAmount: PromiseOrValue<BigNumberish>,
+      toUnderlying: PromiseOrValue<boolean>,
+      deadline: PromiseOrValue<BigNumberish>,
       sigParams: IStaticATokenLM.SignatureParamsStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     permit(
-      owner: string,
-      spender: string,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     rate(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    staticToDynamicAmount(amount: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    staticToDynamicAmount(
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transfer(
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferFrom(
-      sender: string,
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     withdraw(
-      recipient: string,
-      amount: BigNumberish,
-      toUnderlying: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      toUnderlying: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     withdrawDynamicAmount(
-      recipient: string,
-      amount: BigNumberish,
-      toUnderlying: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      toUnderlying: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

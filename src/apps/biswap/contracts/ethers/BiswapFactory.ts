@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface BiswapFactoryInterface extends utils.Interface {
   functions: {
@@ -48,16 +48,22 @@ export interface BiswapFactoryInterface extends utils.Interface {
   ): FunctionFragment;
 
   encodeFunctionData(functionFragment: 'INIT_CODE_HASH', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'allPairs', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'allPairs', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'allPairsLength', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'createPair', values: [string, string]): string;
+  encodeFunctionData(functionFragment: 'createPair', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'feeTo', values?: undefined): string;
   encodeFunctionData(functionFragment: 'feeToSetter', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getPair', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'setDevFee', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setFeeTo', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setFeeToSetter', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setSwapFee', values: [string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'getPair', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'setDevFee',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'setFeeTo', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setFeeToSetter', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'setSwapFee',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
 
   decodeFunctionResult(functionFragment: 'INIT_CODE_HASH', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'allPairs', data: BytesLike): Result;
@@ -113,191 +119,221 @@ export interface BiswapFactory extends BaseContract {
   functions: {
     INIT_CODE_HASH(overrides?: CallOverrides): Promise<[string]>;
 
-    allPairs(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    allPairs(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
     allPairsLength(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     createPair(
-      tokenA: string,
-      tokenB: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tokenA: PromiseOrValue<string>,
+      tokenB: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     feeTo(overrides?: CallOverrides): Promise<[string]>;
 
     feeToSetter(overrides?: CallOverrides): Promise<[string]>;
 
-    getPair(arg0: string, arg1: string, overrides?: CallOverrides): Promise<[string]>;
+    getPair(arg0: PromiseOrValue<string>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[string]>;
 
     setDevFee(
-      _pair: string,
-      _devFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pair: PromiseOrValue<string>,
+      _devFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    setFeeTo(_feeTo: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    setFeeTo(
+      _feeTo: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     setFeeToSetter(
-      _feeToSetter: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _feeToSetter: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setSwapFee(
-      _pair: string,
-      _swapFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pair: PromiseOrValue<string>,
+      _swapFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
   INIT_CODE_HASH(overrides?: CallOverrides): Promise<string>;
 
-  allPairs(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  allPairs(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   allPairsLength(overrides?: CallOverrides): Promise<BigNumber>;
 
   createPair(
-    tokenA: string,
-    tokenB: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    tokenA: PromiseOrValue<string>,
+    tokenB: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   feeTo(overrides?: CallOverrides): Promise<string>;
 
   feeToSetter(overrides?: CallOverrides): Promise<string>;
 
-  getPair(arg0: string, arg1: string, overrides?: CallOverrides): Promise<string>;
+  getPair(arg0: PromiseOrValue<string>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
   setDevFee(
-    _pair: string,
-    _devFee: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pair: PromiseOrValue<string>,
+    _devFee: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  setFeeTo(_feeTo: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  setFeeTo(
+    _feeTo: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   setFeeToSetter(
-    _feeToSetter: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _feeToSetter: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setSwapFee(
-    _pair: string,
-    _swapFee: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pair: PromiseOrValue<string>,
+    _swapFee: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
     INIT_CODE_HASH(overrides?: CallOverrides): Promise<string>;
 
-    allPairs(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    allPairs(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
     allPairsLength(overrides?: CallOverrides): Promise<BigNumber>;
 
-    createPair(tokenA: string, tokenB: string, overrides?: CallOverrides): Promise<string>;
+    createPair(
+      tokenA: PromiseOrValue<string>,
+      tokenB: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<string>;
 
     feeTo(overrides?: CallOverrides): Promise<string>;
 
     feeToSetter(overrides?: CallOverrides): Promise<string>;
 
-    getPair(arg0: string, arg1: string, overrides?: CallOverrides): Promise<string>;
+    getPair(arg0: PromiseOrValue<string>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
-    setDevFee(_pair: string, _devFee: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setDevFee(
+      _pair: PromiseOrValue<string>,
+      _devFee: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setFeeTo(_feeTo: string, overrides?: CallOverrides): Promise<void>;
+    setFeeTo(_feeTo: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setFeeToSetter(_feeToSetter: string, overrides?: CallOverrides): Promise<void>;
+    setFeeToSetter(_feeToSetter: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setSwapFee(_pair: string, _swapFee: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setSwapFee(
+      _pair: PromiseOrValue<string>,
+      _swapFee: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
   };
 
   filters: {
     'PairCreated(address,address,address,uint256)'(
-      token0?: string | null,
-      token1?: string | null,
+      token0?: PromiseOrValue<string> | null,
+      token1?: PromiseOrValue<string> | null,
       pair?: null,
       arg3?: null,
     ): PairCreatedEventFilter;
-    PairCreated(token0?: string | null, token1?: string | null, pair?: null, arg3?: null): PairCreatedEventFilter;
+    PairCreated(
+      token0?: PromiseOrValue<string> | null,
+      token1?: PromiseOrValue<string> | null,
+      pair?: null,
+      arg3?: null,
+    ): PairCreatedEventFilter;
   };
 
   estimateGas: {
     INIT_CODE_HASH(overrides?: CallOverrides): Promise<BigNumber>;
 
-    allPairs(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    allPairs(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     allPairsLength(overrides?: CallOverrides): Promise<BigNumber>;
 
     createPair(
-      tokenA: string,
-      tokenB: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tokenA: PromiseOrValue<string>,
+      tokenB: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     feeTo(overrides?: CallOverrides): Promise<BigNumber>;
 
     feeToSetter(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getPair(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getPair(arg0: PromiseOrValue<string>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     setDevFee(
-      _pair: string,
-      _devFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pair: PromiseOrValue<string>,
+      _devFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setFeeTo(_feeTo: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setFeeTo(
+      _feeTo: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setFeeToSetter(
-      _feeToSetter: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _feeToSetter: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setSwapFee(
-      _pair: string,
-      _swapFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pair: PromiseOrValue<string>,
+      _swapFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     INIT_CODE_HASH(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    allPairs(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    allPairs(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     allPairsLength(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     createPair(
-      tokenA: string,
-      tokenB: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tokenA: PromiseOrValue<string>,
+      tokenB: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     feeTo(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     feeToSetter(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getPair(arg0: string, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getPair(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     setDevFee(
-      _pair: string,
-      _devFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pair: PromiseOrValue<string>,
+      _devFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setFeeTo(
-      _feeTo: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _feeTo: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setFeeToSetter(
-      _feeToSetter: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _feeToSetter: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setSwapFee(
-      _pair: string,
-      _swapFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pair: PromiseOrValue<string>,
+      _swapFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

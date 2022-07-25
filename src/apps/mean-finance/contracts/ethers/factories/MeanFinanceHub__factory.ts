@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { Hub, HubInterface } from '../Hub';
+import type { MeanFinanceHub, MeanFinanceHubInterface } from '../MeanFinanceHub';
 
 const _abi = [
   {
@@ -1902,12 +1902,12 @@ const _abi = [
   },
 ];
 
-export class Hub__factory {
+export class MeanFinanceHub__factory {
   static readonly abi = _abi;
-  static createInterface(): HubInterface {
-    return new utils.Interface(_abi) as HubInterface;
+  static createInterface(): MeanFinanceHubInterface {
+    return new utils.Interface(_abi) as MeanFinanceHubInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): Hub {
-    return new Contract(address, _abi, signerOrProvider) as Hub;
+  static connect(address: string, signerOrProvider: Signer | Provider): MeanFinanceHub {
+    return new Contract(address, _abi, signerOrProvider) as MeanFinanceHub;
   }
 }

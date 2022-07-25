@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface CurveChildLiquidityGaugeFactoryInterface extends utils.Interface {
   functions: {
@@ -71,32 +71,38 @@ export interface CurveChildLiquidityGaugeFactoryInterface extends utils.Interfac
       | 'get_gauge',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'mint', values: [string]): string;
-  encodeFunctionData(functionFragment: 'mint_many', values: [string[]]): string;
-  encodeFunctionData(functionFragment: 'deploy_gauge(address,bytes32)', values: [string, BytesLike]): string;
+  encodeFunctionData(functionFragment: 'mint', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'mint_many', values: [PromiseOrValue<string>[]]): string;
+  encodeFunctionData(
+    functionFragment: 'deploy_gauge(address,bytes32)',
+    values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>],
+  ): string;
   encodeFunctionData(
     functionFragment: 'deploy_gauge(address,bytes32,address)',
-    values: [string, BytesLike, string],
+    values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>, PromiseOrValue<string>],
   ): string;
-  encodeFunctionData(functionFragment: 'set_voting_escrow', values: [string]): string;
-  encodeFunctionData(functionFragment: 'set_implementation', values: [string]): string;
-  encodeFunctionData(functionFragment: 'set_mirrored', values: [string, boolean]): string;
-  encodeFunctionData(functionFragment: 'set_call_proxy', values: [string]): string;
-  encodeFunctionData(functionFragment: 'commit_transfer_ownership', values: [string]): string;
+  encodeFunctionData(functionFragment: 'set_voting_escrow', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'set_implementation', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'set_mirrored',
+    values: [PromiseOrValue<string>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(functionFragment: 'set_call_proxy', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'commit_transfer_ownership', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'accept_transfer_ownership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'is_valid_gauge', values: [string]): string;
-  encodeFunctionData(functionFragment: 'is_mirrored', values: [string]): string;
-  encodeFunctionData(functionFragment: 'last_request', values: [string]): string;
+  encodeFunctionData(functionFragment: 'is_valid_gauge', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'is_mirrored', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'last_request', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'get_implementation', values?: undefined): string;
   encodeFunctionData(functionFragment: 'voting_escrow', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'future_owner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'call_proxy', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'gauge_data', values: [string]): string;
-  encodeFunctionData(functionFragment: 'minted', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'get_gauge_from_lp_token', values: [string]): string;
+  encodeFunctionData(functionFragment: 'gauge_data', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'minted', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'get_gauge_from_lp_token', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'get_gauge_count', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'get_gauge', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'get_gauge', values: [PromiseOrValue<BigNumberish>]): string;
 
   decodeFunctionResult(functionFragment: 'mint', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'mint_many', data: BytesLike): Result;
@@ -224,61 +230,62 @@ export interface CurveChildLiquidityGaugeFactory extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    mint(_gauge: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    mint(
+      _gauge: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     mint_many(
-      _gauges: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _gauges: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     'deploy_gauge(address,bytes32)'(
-      _lp_token: string,
-      _salt: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _lp_token: PromiseOrValue<string>,
+      _salt: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     'deploy_gauge(address,bytes32,address)'(
-      _lp_token: string,
-      _salt: BytesLike,
-      _manager: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _lp_token: PromiseOrValue<string>,
+      _salt: PromiseOrValue<BytesLike>,
+      _manager: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     set_voting_escrow(
-      _voting_escrow: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _voting_escrow: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     set_implementation(
-      _implementation: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _implementation: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     set_mirrored(
-      _gauge: string,
-      _mirrored: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _gauge: PromiseOrValue<string>,
+      _mirrored: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     set_call_proxy(
-      _new_call_proxy: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _new_call_proxy: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     commit_transfer_ownership(
-      _future_owner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _future_owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    accept_transfer_ownership(
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
+    accept_transfer_ownership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    is_valid_gauge(_gauge: string, overrides?: CallOverrides): Promise<[boolean]>;
+    is_valid_gauge(_gauge: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
-    is_mirrored(_gauge: string, overrides?: CallOverrides): Promise<[boolean]>;
+    is_mirrored(_gauge: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
-    last_request(_gauge: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    last_request(_gauge: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     get_implementation(overrides?: CallOverrides): Promise<[string]>;
 
@@ -290,70 +297,73 @@ export interface CurveChildLiquidityGaugeFactory extends BaseContract {
 
     call_proxy(overrides?: CallOverrides): Promise<[string]>;
 
-    gauge_data(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    gauge_data(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    minted(arg0: string, arg1: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    minted(arg0: PromiseOrValue<string>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    get_gauge_from_lp_token(arg0: string, overrides?: CallOverrides): Promise<[string]>;
+    get_gauge_from_lp_token(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[string]>;
 
     get_gauge_count(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    get_gauge(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    get_gauge(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
   };
 
-  mint(_gauge: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  mint(
+    _gauge: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   mint_many(
-    _gauges: string[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _gauges: PromiseOrValue<string>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   'deploy_gauge(address,bytes32)'(
-    _lp_token: string,
-    _salt: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _lp_token: PromiseOrValue<string>,
+    _salt: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   'deploy_gauge(address,bytes32,address)'(
-    _lp_token: string,
-    _salt: BytesLike,
-    _manager: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _lp_token: PromiseOrValue<string>,
+    _salt: PromiseOrValue<BytesLike>,
+    _manager: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   set_voting_escrow(
-    _voting_escrow: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _voting_escrow: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   set_implementation(
-    _implementation: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _implementation: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   set_mirrored(
-    _gauge: string,
-    _mirrored: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _gauge: PromiseOrValue<string>,
+    _mirrored: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   set_call_proxy(
-    _new_call_proxy: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _new_call_proxy: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   commit_transfer_ownership(
-    _future_owner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _future_owner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  accept_transfer_ownership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  accept_transfer_ownership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  is_valid_gauge(_gauge: string, overrides?: CallOverrides): Promise<boolean>;
+  is_valid_gauge(_gauge: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-  is_mirrored(_gauge: string, overrides?: CallOverrides): Promise<boolean>;
+  is_mirrored(_gauge: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-  last_request(_gauge: string, overrides?: CallOverrides): Promise<BigNumber>;
+  last_request(_gauge: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   get_implementation(overrides?: CallOverrides): Promise<string>;
 
@@ -365,47 +375,55 @@ export interface CurveChildLiquidityGaugeFactory extends BaseContract {
 
   call_proxy(overrides?: CallOverrides): Promise<string>;
 
-  gauge_data(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  gauge_data(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  minted(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+  minted(arg0: PromiseOrValue<string>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  get_gauge_from_lp_token(arg0: string, overrides?: CallOverrides): Promise<string>;
+  get_gauge_from_lp_token(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
   get_gauge_count(overrides?: CallOverrides): Promise<BigNumber>;
 
-  get_gauge(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  get_gauge(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   callStatic: {
-    mint(_gauge: string, overrides?: CallOverrides): Promise<void>;
+    mint(_gauge: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    mint_many(_gauges: string[], overrides?: CallOverrides): Promise<void>;
+    mint_many(_gauges: PromiseOrValue<string>[], overrides?: CallOverrides): Promise<void>;
 
-    'deploy_gauge(address,bytes32)'(_lp_token: string, _salt: BytesLike, overrides?: CallOverrides): Promise<string>;
-
-    'deploy_gauge(address,bytes32,address)'(
-      _lp_token: string,
-      _salt: BytesLike,
-      _manager: string,
+    'deploy_gauge(address,bytes32)'(
+      _lp_token: PromiseOrValue<string>,
+      _salt: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<string>;
 
-    set_voting_escrow(_voting_escrow: string, overrides?: CallOverrides): Promise<void>;
+    'deploy_gauge(address,bytes32,address)'(
+      _lp_token: PromiseOrValue<string>,
+      _salt: PromiseOrValue<BytesLike>,
+      _manager: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<string>;
 
-    set_implementation(_implementation: string, overrides?: CallOverrides): Promise<void>;
+    set_voting_escrow(_voting_escrow: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    set_mirrored(_gauge: string, _mirrored: boolean, overrides?: CallOverrides): Promise<void>;
+    set_implementation(_implementation: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    set_call_proxy(_new_call_proxy: string, overrides?: CallOverrides): Promise<void>;
+    set_mirrored(
+      _gauge: PromiseOrValue<string>,
+      _mirrored: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    commit_transfer_ownership(_future_owner: string, overrides?: CallOverrides): Promise<void>;
+    set_call_proxy(_new_call_proxy: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
+
+    commit_transfer_ownership(_future_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     accept_transfer_ownership(overrides?: CallOverrides): Promise<void>;
 
-    is_valid_gauge(_gauge: string, overrides?: CallOverrides): Promise<boolean>;
+    is_valid_gauge(_gauge: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-    is_mirrored(_gauge: string, overrides?: CallOverrides): Promise<boolean>;
+    is_mirrored(_gauge: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-    last_request(_gauge: string, overrides?: CallOverrides): Promise<BigNumber>;
+    last_request(_gauge: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     get_implementation(overrides?: CallOverrides): Promise<string>;
 
@@ -417,39 +435,43 @@ export interface CurveChildLiquidityGaugeFactory extends BaseContract {
 
     call_proxy(overrides?: CallOverrides): Promise<string>;
 
-    gauge_data(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    gauge_data(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    minted(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    minted(arg0: PromiseOrValue<string>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    get_gauge_from_lp_token(arg0: string, overrides?: CallOverrides): Promise<string>;
+    get_gauge_from_lp_token(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
     get_gauge_count(overrides?: CallOverrides): Promise<BigNumber>;
 
-    get_gauge(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    get_gauge(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
   };
 
   filters: {
     'DeployedGauge(address,address,address,bytes32,address)'(
-      _implementation?: string | null,
-      _lp_token?: string | null,
-      _deployer?: string | null,
+      _implementation?: PromiseOrValue<string> | null,
+      _lp_token?: PromiseOrValue<string> | null,
+      _deployer?: PromiseOrValue<string> | null,
       _salt?: null,
       _gauge?: null,
     ): DeployedGaugeEventFilter;
     DeployedGauge(
-      _implementation?: string | null,
-      _lp_token?: string | null,
-      _deployer?: string | null,
+      _implementation?: PromiseOrValue<string> | null,
+      _lp_token?: PromiseOrValue<string> | null,
+      _deployer?: PromiseOrValue<string> | null,
       _salt?: null,
       _gauge?: null,
     ): DeployedGaugeEventFilter;
 
     'Minted(address,address,uint256)'(
-      _user?: string | null,
-      _gauge?: string | null,
+      _user?: PromiseOrValue<string> | null,
+      _gauge?: PromiseOrValue<string> | null,
       _new_total?: null,
     ): MintedEventFilter;
-    Minted(_user?: string | null, _gauge?: string | null, _new_total?: null): MintedEventFilter;
+    Minted(
+      _user?: PromiseOrValue<string> | null,
+      _gauge?: PromiseOrValue<string> | null,
+      _new_total?: null,
+    ): MintedEventFilter;
 
     'UpdateImplementation(address,address)'(
       _old_implementation?: null,
@@ -466,64 +488,67 @@ export interface CurveChildLiquidityGaugeFactory extends BaseContract {
     'UpdateCallProxy(address,address)'(_old_call_proxy?: null, _new_call_proxy?: null): UpdateCallProxyEventFilter;
     UpdateCallProxy(_old_call_proxy?: null, _new_call_proxy?: null): UpdateCallProxyEventFilter;
 
-    'UpdateMirrored(address,bool)'(_gauge?: string | null, _mirrored?: null): UpdateMirroredEventFilter;
-    UpdateMirrored(_gauge?: string | null, _mirrored?: null): UpdateMirroredEventFilter;
+    'UpdateMirrored(address,bool)'(_gauge?: PromiseOrValue<string> | null, _mirrored?: null): UpdateMirroredEventFilter;
+    UpdateMirrored(_gauge?: PromiseOrValue<string> | null, _mirrored?: null): UpdateMirroredEventFilter;
 
     'TransferOwnership(address,address)'(_old_owner?: null, _new_owner?: null): TransferOwnershipEventFilter;
     TransferOwnership(_old_owner?: null, _new_owner?: null): TransferOwnershipEventFilter;
   };
 
   estimateGas: {
-    mint(_gauge: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    mint(_gauge: PromiseOrValue<string>, overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    mint_many(_gauges: string[], overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    mint_many(
+      _gauges: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     'deploy_gauge(address,bytes32)'(
-      _lp_token: string,
-      _salt: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _lp_token: PromiseOrValue<string>,
+      _salt: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     'deploy_gauge(address,bytes32,address)'(
-      _lp_token: string,
-      _salt: BytesLike,
-      _manager: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _lp_token: PromiseOrValue<string>,
+      _salt: PromiseOrValue<BytesLike>,
+      _manager: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     set_voting_escrow(
-      _voting_escrow: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _voting_escrow: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     set_implementation(
-      _implementation: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _implementation: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     set_mirrored(
-      _gauge: string,
-      _mirrored: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _gauge: PromiseOrValue<string>,
+      _mirrored: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     set_call_proxy(
-      _new_call_proxy: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _new_call_proxy: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     commit_transfer_ownership(
-      _future_owner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _future_owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    accept_transfer_ownership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    accept_transfer_ownership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    is_valid_gauge(_gauge: string, overrides?: CallOverrides): Promise<BigNumber>;
+    is_valid_gauge(_gauge: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    is_mirrored(_gauge: string, overrides?: CallOverrides): Promise<BigNumber>;
+    is_mirrored(_gauge: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    last_request(_gauge: string, overrides?: CallOverrides): Promise<BigNumber>;
+    last_request(_gauge: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     get_implementation(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -535,73 +560,74 @@ export interface CurveChildLiquidityGaugeFactory extends BaseContract {
 
     call_proxy(overrides?: CallOverrides): Promise<BigNumber>;
 
-    gauge_data(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    gauge_data(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    minted(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    minted(arg0: PromiseOrValue<string>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    get_gauge_from_lp_token(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    get_gauge_from_lp_token(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     get_gauge_count(overrides?: CallOverrides): Promise<BigNumber>;
 
-    get_gauge(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    get_gauge(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    mint(_gauge: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    mint(
+      _gauge: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
     mint_many(
-      _gauges: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _gauges: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     'deploy_gauge(address,bytes32)'(
-      _lp_token: string,
-      _salt: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _lp_token: PromiseOrValue<string>,
+      _salt: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     'deploy_gauge(address,bytes32,address)'(
-      _lp_token: string,
-      _salt: BytesLike,
-      _manager: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _lp_token: PromiseOrValue<string>,
+      _salt: PromiseOrValue<BytesLike>,
+      _manager: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     set_voting_escrow(
-      _voting_escrow: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _voting_escrow: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     set_implementation(
-      _implementation: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _implementation: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     set_mirrored(
-      _gauge: string,
-      _mirrored: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _gauge: PromiseOrValue<string>,
+      _mirrored: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     set_call_proxy(
-      _new_call_proxy: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _new_call_proxy: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     commit_transfer_ownership(
-      _future_owner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _future_owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    accept_transfer_ownership(
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<PopulatedTransaction>;
+    accept_transfer_ownership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    is_valid_gauge(_gauge: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    is_valid_gauge(_gauge: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    is_mirrored(_gauge: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    is_mirrored(_gauge: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    last_request(_gauge: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    last_request(_gauge: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     get_implementation(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -613,14 +639,18 @@ export interface CurveChildLiquidityGaugeFactory extends BaseContract {
 
     call_proxy(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    gauge_data(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    gauge_data(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    minted(arg0: string, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    minted(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    get_gauge_from_lp_token(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    get_gauge_from_lp_token(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     get_gauge_count(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    get_gauge(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    get_gauge(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }

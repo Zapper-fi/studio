@@ -15,13 +15,13 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export declare namespace BadgerRegistry {
   export type VaultDataStruct = {
-    version: string;
-    status: BigNumberish;
-    list: string[];
+    version: PromiseOrValue<string>;
+    status: PromiseOrValue<BigNumberish>;
+    list: PromiseOrValue<string>[];
   };
 
   export type VaultDataStructOutput = [string, number, string[]] & {
@@ -75,24 +75,33 @@ export interface BadgerRegistryInterface extends utils.Interface {
       | 'versions',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'add', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'addVersions', values: [string]): string;
-  encodeFunctionData(functionFragment: 'addresses', values: [string]): string;
-  encodeFunctionData(functionFragment: 'demote', values: [string, string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'add', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'addVersions', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'addresses', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'demote',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'devGovernance', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'get', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getFilteredProductionVaults', values: [string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'get', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'getFilteredProductionVaults',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'getProductionVaults', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getVaults', values: [string, string]): string;
+  encodeFunctionData(functionFragment: 'getVaults', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'governance', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'initialize', values: [string]): string;
-  encodeFunctionData(functionFragment: 'keys', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'promote', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'remove', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'set', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'setDev', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setGovernance', values: [string]): string;
-  encodeFunctionData(functionFragment: 'versions', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'initialize', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'keys', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'promote',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'remove', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'set', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setDev', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setGovernance', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'versions', values: [PromiseOrValue<BigNumberish>]): string;
 
   decodeFunctionResult(functionFragment: 'add', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'addVersions', data: BytesLike): Result;
@@ -216,176 +225,216 @@ export interface BadgerRegistry extends BaseContract {
 
   functions: {
     add(
-      version: string,
-      vault: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      version: PromiseOrValue<string>,
+      vault: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     addVersions(
-      version: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      version: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    addresses(arg0: string, overrides?: CallOverrides): Promise<[string]>;
+    addresses(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[string]>;
 
     demote(
-      version: string,
-      vault: string,
-      status: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      version: PromiseOrValue<string>,
+      vault: PromiseOrValue<string>,
+      status: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     devGovernance(overrides?: CallOverrides): Promise<[string]>;
 
-    get(key: string, overrides?: CallOverrides): Promise<[string]>;
+    get(key: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[string]>;
 
-    getFilteredProductionVaults(version: string, status: BigNumberish, overrides?: CallOverrides): Promise<[string[]]>;
+    getFilteredProductionVaults(
+      version: PromiseOrValue<string>,
+      status: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[string[]]>;
 
     getProductionVaults(overrides?: CallOverrides): Promise<[BadgerRegistry.VaultDataStructOutput[]]>;
 
-    getVaults(version: string, author: string, overrides?: CallOverrides): Promise<[string[]]>;
+    getVaults(
+      version: PromiseOrValue<string>,
+      author: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[string[]]>;
 
     governance(overrides?: CallOverrides): Promise<[string]>;
 
     initialize(
-      newGovernance: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newGovernance: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    keys(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    keys(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
     promote(
-      version: string,
-      vault: string,
-      status: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      version: PromiseOrValue<string>,
+      vault: PromiseOrValue<string>,
+      status: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     remove(
-      version: string,
-      vault: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      version: PromiseOrValue<string>,
+      vault: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     set(
-      key: string,
-      at: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      key: PromiseOrValue<string>,
+      at: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    setDev(newDev: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    setDev(
+      newDev: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     setGovernance(
-      _newGov: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newGov: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    versions(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    versions(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
   };
 
   add(
-    version: string,
-    vault: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    version: PromiseOrValue<string>,
+    vault: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   addVersions(
-    version: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    version: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  addresses(arg0: string, overrides?: CallOverrides): Promise<string>;
+  addresses(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
   demote(
-    version: string,
-    vault: string,
-    status: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    version: PromiseOrValue<string>,
+    vault: PromiseOrValue<string>,
+    status: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   devGovernance(overrides?: CallOverrides): Promise<string>;
 
-  get(key: string, overrides?: CallOverrides): Promise<string>;
+  get(key: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
-  getFilteredProductionVaults(version: string, status: BigNumberish, overrides?: CallOverrides): Promise<string[]>;
+  getFilteredProductionVaults(
+    version: PromiseOrValue<string>,
+    status: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<string[]>;
 
   getProductionVaults(overrides?: CallOverrides): Promise<BadgerRegistry.VaultDataStructOutput[]>;
 
-  getVaults(version: string, author: string, overrides?: CallOverrides): Promise<string[]>;
+  getVaults(
+    version: PromiseOrValue<string>,
+    author: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<string[]>;
 
   governance(overrides?: CallOverrides): Promise<string>;
 
   initialize(
-    newGovernance: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newGovernance: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  keys(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  keys(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   promote(
-    version: string,
-    vault: string,
-    status: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    version: PromiseOrValue<string>,
+    vault: PromiseOrValue<string>,
+    status: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   remove(
-    version: string,
-    vault: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    version: PromiseOrValue<string>,
+    vault: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   set(
-    key: string,
-    at: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    key: PromiseOrValue<string>,
+    at: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  setDev(newDev: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  setDev(
+    newDev: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   setGovernance(
-    _newGov: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _newGov: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  versions(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  versions(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   callStatic: {
-    add(version: string, vault: string, overrides?: CallOverrides): Promise<void>;
+    add(version: PromiseOrValue<string>, vault: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    addVersions(version: string, overrides?: CallOverrides): Promise<void>;
+    addVersions(version: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    addresses(arg0: string, overrides?: CallOverrides): Promise<string>;
+    addresses(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
-    demote(version: string, vault: string, status: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    demote(
+      version: PromiseOrValue<string>,
+      vault: PromiseOrValue<string>,
+      status: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     devGovernance(overrides?: CallOverrides): Promise<string>;
 
-    get(key: string, overrides?: CallOverrides): Promise<string>;
+    get(key: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
-    getFilteredProductionVaults(version: string, status: BigNumberish, overrides?: CallOverrides): Promise<string[]>;
+    getFilteredProductionVaults(
+      version: PromiseOrValue<string>,
+      status: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<string[]>;
 
     getProductionVaults(overrides?: CallOverrides): Promise<BadgerRegistry.VaultDataStructOutput[]>;
 
-    getVaults(version: string, author: string, overrides?: CallOverrides): Promise<string[]>;
+    getVaults(
+      version: PromiseOrValue<string>,
+      author: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<string[]>;
 
     governance(overrides?: CallOverrides): Promise<string>;
 
-    initialize(newGovernance: string, overrides?: CallOverrides): Promise<void>;
+    initialize(newGovernance: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    keys(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    keys(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
-    promote(version: string, vault: string, status: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    promote(
+      version: PromiseOrValue<string>,
+      vault: PromiseOrValue<string>,
+      status: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    remove(version: string, vault: string, overrides?: CallOverrides): Promise<void>;
+    remove(version: PromiseOrValue<string>, vault: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    set(key: string, at: string, overrides?: CallOverrides): Promise<void>;
+    set(key: PromiseOrValue<string>, at: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setDev(newDev: string, overrides?: CallOverrides): Promise<void>;
+    setDev(newDev: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setGovernance(_newGov: string, overrides?: CallOverrides): Promise<void>;
+    setGovernance(_newGov: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    versions(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    versions(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
   };
 
   filters: {
@@ -423,130 +472,161 @@ export interface BadgerRegistry extends BaseContract {
 
   estimateGas: {
     add(
-      version: string,
-      vault: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      version: PromiseOrValue<string>,
+      vault: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    addVersions(version: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    addVersions(
+      version: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    addresses(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    addresses(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     demote(
-      version: string,
-      vault: string,
-      status: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      version: PromiseOrValue<string>,
+      vault: PromiseOrValue<string>,
+      status: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     devGovernance(overrides?: CallOverrides): Promise<BigNumber>;
 
-    get(key: string, overrides?: CallOverrides): Promise<BigNumber>;
+    get(key: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getFilteredProductionVaults(version: string, status: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getFilteredProductionVaults(
+      version: PromiseOrValue<string>,
+      status: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     getProductionVaults(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getVaults(version: string, author: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getVaults(
+      version: PromiseOrValue<string>,
+      author: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     governance(overrides?: CallOverrides): Promise<BigNumber>;
 
-    initialize(newGovernance: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    initialize(
+      newGovernance: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    keys(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    keys(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     promote(
-      version: string,
-      vault: string,
-      status: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      version: PromiseOrValue<string>,
+      vault: PromiseOrValue<string>,
+      status: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     remove(
-      version: string,
-      vault: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      version: PromiseOrValue<string>,
+      vault: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    set(key: string, at: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    set(
+      key: PromiseOrValue<string>,
+      at: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    setDev(newDev: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setDev(
+      newDev: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    setGovernance(_newGov: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setGovernance(
+      _newGov: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    versions(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    versions(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
     add(
-      version: string,
-      vault: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      version: PromiseOrValue<string>,
+      vault: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     addVersions(
-      version: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      version: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    addresses(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    addresses(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     demote(
-      version: string,
-      vault: string,
-      status: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      version: PromiseOrValue<string>,
+      vault: PromiseOrValue<string>,
+      status: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     devGovernance(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    get(key: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    get(key: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getFilteredProductionVaults(
-      version: string,
-      status: BigNumberish,
+      version: PromiseOrValue<string>,
+      status: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     getProductionVaults(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getVaults(version: string, author: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getVaults(
+      version: PromiseOrValue<string>,
+      author: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     governance(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     initialize(
-      newGovernance: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newGovernance: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    keys(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    keys(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     promote(
-      version: string,
-      vault: string,
-      status: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      version: PromiseOrValue<string>,
+      vault: PromiseOrValue<string>,
+      status: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     remove(
-      version: string,
-      vault: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      version: PromiseOrValue<string>,
+      vault: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     set(
-      key: string,
-      at: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      key: PromiseOrValue<string>,
+      at: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    setDev(newDev: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    setDev(
+      newDev: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
     setGovernance(
-      _newGov: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newGov: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    versions(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    versions(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }

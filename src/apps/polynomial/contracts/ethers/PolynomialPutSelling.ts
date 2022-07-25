@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface PolynomialPutSellingInterface extends utils.Interface {
   functions: {
@@ -122,16 +122,19 @@ export interface PolynomialPutSellingInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'LYRA_MARKET', values?: undefined): string;
   encodeFunctionData(functionFragment: 'LYRA_TOKEN', values?: undefined): string;
   encodeFunctionData(functionFragment: 'authority', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'cancelDeposit', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'cancelWithdraw', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'claimLyra', values: [string]): string;
+  encodeFunctionData(functionFragment: 'cancelDeposit', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'cancelWithdraw', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'claimLyra', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'completeWithdraw', values?: undefined): string;
   encodeFunctionData(functionFragment: 'currentExpiry', values?: undefined): string;
   encodeFunctionData(functionFragment: 'currentListingId', values?: undefined): string;
   encodeFunctionData(functionFragment: 'currentRound', values?: undefined): string;
   encodeFunctionData(functionFragment: 'currentStrike', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'deposit(address,uint256)', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'deposit(uint256)', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'deposit(address,uint256)',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'deposit(uint256)', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'feeReciepient', values?: undefined): string;
   encodeFunctionData(functionFragment: 'ivLimit', values?: undefined): string;
   encodeFunctionData(functionFragment: 'keeper', values?: undefined): string;
@@ -143,25 +146,28 @@ export interface PolynomialPutSellingInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'pendingDeposits', values?: undefined): string;
   encodeFunctionData(functionFragment: 'pendingWithdraws', values?: undefined): string;
   encodeFunctionData(functionFragment: 'performanceFee', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'performanceIndices', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'performanceIndices', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'premiumCollected', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'requestWithdraw', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'sellOptions', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setAuthority', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setCap', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setFeeReciepient', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setFees', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setIvLimit', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setKeeper', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setOwner', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setUserDepositLimit', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'startNewRound', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'requestWithdraw', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'sellOptions', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setAuthority', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setCap', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setFeeReciepient', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'setFees',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'setIvLimit', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setKeeper', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setOwner', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setUserDepositLimit', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'startNewRound', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'totalFunds', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalShares', values?: undefined): string;
   encodeFunctionData(functionFragment: 'unpause', values?: undefined): string;
   encodeFunctionData(functionFragment: 'usedFunds', values?: undefined): string;
   encodeFunctionData(functionFragment: 'userDepositLimit', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'userInfos', values: [string]): string;
+  encodeFunctionData(functionFragment: 'userInfos', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'vaultCapacity', values?: undefined): string;
 
   decodeFunctionResult(functionFragment: 'COLLATERAL', data: BytesLike): Result;
@@ -446,21 +452,21 @@ export interface PolynomialPutSelling extends BaseContract {
     authority(overrides?: CallOverrides): Promise<[string]>;
 
     cancelDeposit(
-      _amt: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amt: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     cancelWithdraw(
-      _shares: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _shares: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     claimLyra(
-      _receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    completeWithdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    completeWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     currentExpiry(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -471,14 +477,14 @@ export interface PolynomialPutSelling extends BaseContract {
     currentStrike(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     'deposit(address,uint256)'(
-      _user: string,
-      _amt: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _user: PromiseOrValue<string>,
+      _amt: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     'deposit(uint256)'(
-      _amt: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amt: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     feeReciepient(overrides?: CallOverrides): Promise<[string]>;
@@ -493,7 +499,7 @@ export interface PolynomialPutSelling extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
-    pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     paused(overrides?: CallOverrides): Promise<[boolean]>;
 
@@ -503,78 +509,78 @@ export interface PolynomialPutSelling extends BaseContract {
 
     performanceFee(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    performanceIndices(arg0: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    performanceIndices(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     premiumCollected(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     requestWithdraw(
-      _shares: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _shares: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     sellOptions(
-      _amt: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amt: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setAuthority(
-      newAuthority: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newAuthority: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setCap(
-      _newCap: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newCap: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setFeeReciepient(
-      _feeReciepient: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _feeReciepient: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setFees(
-      _perfomanceFee: BigNumberish,
-      _managementFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _perfomanceFee: PromiseOrValue<BigNumberish>,
+      _managementFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setIvLimit(
-      _ivLimit: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _ivLimit: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setKeeper(
-      _keeper: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _keeper: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setOwner(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setUserDepositLimit(
-      _depositLimit: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _depositLimit: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     startNewRound(
-      _listingId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _listingId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     totalFunds(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     totalShares(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     usedFunds(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     userDepositLimit(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     userInfos(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -600,21 +606,21 @@ export interface PolynomialPutSelling extends BaseContract {
   authority(overrides?: CallOverrides): Promise<string>;
 
   cancelDeposit(
-    _amt: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _amt: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   cancelWithdraw(
-    _shares: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _shares: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   claimLyra(
-    _receiver: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _receiver: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  completeWithdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  completeWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   currentExpiry(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -625,14 +631,14 @@ export interface PolynomialPutSelling extends BaseContract {
   currentStrike(overrides?: CallOverrides): Promise<BigNumber>;
 
   'deposit(address,uint256)'(
-    _user: string,
-    _amt: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _user: PromiseOrValue<string>,
+    _amt: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   'deposit(uint256)'(
-    _amt: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _amt: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   feeReciepient(overrides?: CallOverrides): Promise<string>;
@@ -647,7 +653,7 @@ export interface PolynomialPutSelling extends BaseContract {
 
   owner(overrides?: CallOverrides): Promise<string>;
 
-  pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   paused(overrides?: CallOverrides): Promise<boolean>;
 
@@ -657,72 +663,78 @@ export interface PolynomialPutSelling extends BaseContract {
 
   performanceFee(overrides?: CallOverrides): Promise<BigNumber>;
 
-  performanceIndices(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  performanceIndices(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   premiumCollected(overrides?: CallOverrides): Promise<BigNumber>;
 
   requestWithdraw(
-    _shares: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _shares: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   sellOptions(
-    _amt: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _amt: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setAuthority(
-    newAuthority: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newAuthority: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setCap(
-    _newCap: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _newCap: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setFeeReciepient(
-    _feeReciepient: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _feeReciepient: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setFees(
-    _perfomanceFee: BigNumberish,
-    _managementFee: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _perfomanceFee: PromiseOrValue<BigNumberish>,
+    _managementFee: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setIvLimit(
-    _ivLimit: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _ivLimit: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  setKeeper(_keeper: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  setKeeper(
+    _keeper: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
-  setOwner(newOwner: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  setOwner(
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   setUserDepositLimit(
-    _depositLimit: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _depositLimit: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   startNewRound(
-    _listingId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _listingId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   totalFunds(overrides?: CallOverrides): Promise<BigNumber>;
 
   totalShares(overrides?: CallOverrides): Promise<BigNumber>;
 
-  unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   usedFunds(overrides?: CallOverrides): Promise<BigNumber>;
 
   userDepositLimit(overrides?: CallOverrides): Promise<BigNumber>;
 
   userInfos(
-    arg0: string,
+    arg0: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -747,11 +759,11 @@ export interface PolynomialPutSelling extends BaseContract {
 
     authority(overrides?: CallOverrides): Promise<string>;
 
-    cancelDeposit(_amt: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    cancelDeposit(_amt: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    cancelWithdraw(_shares: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    cancelWithdraw(_shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    claimLyra(_receiver: string, overrides?: CallOverrides): Promise<void>;
+    claimLyra(_receiver: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     completeWithdraw(overrides?: CallOverrides): Promise<void>;
 
@@ -763,9 +775,13 @@ export interface PolynomialPutSelling extends BaseContract {
 
     currentStrike(overrides?: CallOverrides): Promise<BigNumber>;
 
-    'deposit(address,uint256)'(_user: string, _amt: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    'deposit(address,uint256)'(
+      _user: PromiseOrValue<string>,
+      _amt: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    'deposit(uint256)'(_amt: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    'deposit(uint256)'(_amt: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     feeReciepient(overrides?: CallOverrides): Promise<string>;
 
@@ -789,31 +805,35 @@ export interface PolynomialPutSelling extends BaseContract {
 
     performanceFee(overrides?: CallOverrides): Promise<BigNumber>;
 
-    performanceIndices(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    performanceIndices(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     premiumCollected(overrides?: CallOverrides): Promise<BigNumber>;
 
-    requestWithdraw(_shares: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    requestWithdraw(_shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    sellOptions(_amt: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    sellOptions(_amt: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setAuthority(newAuthority: string, overrides?: CallOverrides): Promise<void>;
+    setAuthority(newAuthority: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setCap(_newCap: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setCap(_newCap: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setFeeReciepient(_feeReciepient: string, overrides?: CallOverrides): Promise<void>;
+    setFeeReciepient(_feeReciepient: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setFees(_perfomanceFee: BigNumberish, _managementFee: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setFees(
+      _perfomanceFee: PromiseOrValue<BigNumberish>,
+      _managementFee: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setIvLimit(_ivLimit: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setIvLimit(_ivLimit: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setKeeper(_keeper: string, overrides?: CallOverrides): Promise<void>;
+    setKeeper(_keeper: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setOwner(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    setOwner(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setUserDepositLimit(_depositLimit: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setUserDepositLimit(_depositLimit: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    startNewRound(_listingId: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    startNewRound(_listingId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     totalFunds(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -826,7 +846,7 @@ export interface PolynomialPutSelling extends BaseContract {
     userDepositLimit(overrides?: CallOverrides): Promise<BigNumber>;
 
     userInfos(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -843,100 +863,125 @@ export interface PolynomialPutSelling extends BaseContract {
 
   filters: {
     'AuthorityUpdated(address,address)'(
-      user?: string | null,
-      newAuthority?: string | null,
+      user?: PromiseOrValue<string> | null,
+      newAuthority?: PromiseOrValue<string> | null,
     ): AuthorityUpdatedEventFilter;
-    AuthorityUpdated(user?: string | null, newAuthority?: string | null): AuthorityUpdatedEventFilter;
+    AuthorityUpdated(
+      user?: PromiseOrValue<string> | null,
+      newAuthority?: PromiseOrValue<string> | null,
+    ): AuthorityUpdatedEventFilter;
 
     'CancelDeposit(address,uint256,uint256)'(
-      user?: string | null,
-      depositRound?: BigNumberish | null,
+      user?: PromiseOrValue<string> | null,
+      depositRound?: PromiseOrValue<BigNumberish> | null,
       amt?: null,
     ): CancelDepositEventFilter;
-    CancelDeposit(user?: string | null, depositRound?: BigNumberish | null, amt?: null): CancelDepositEventFilter;
+    CancelDeposit(
+      user?: PromiseOrValue<string> | null,
+      depositRound?: PromiseOrValue<BigNumberish> | null,
+      amt?: null,
+    ): CancelDepositEventFilter;
 
     'CancelWithdraw(address,uint256,uint256)'(
-      user?: string | null,
-      withdrawnRound?: BigNumberish | null,
+      user?: PromiseOrValue<string> | null,
+      withdrawnRound?: PromiseOrValue<BigNumberish> | null,
       shares?: null,
     ): CancelWithdrawEventFilter;
     CancelWithdraw(
-      user?: string | null,
-      withdrawnRound?: BigNumberish | null,
+      user?: PromiseOrValue<string> | null,
+      withdrawnRound?: PromiseOrValue<BigNumberish> | null,
       shares?: null,
     ): CancelWithdrawEventFilter;
 
     'CompleteWithdraw(address,uint256,uint256,uint256)'(
-      user?: string | null,
-      withdrawnRound?: BigNumberish | null,
+      user?: PromiseOrValue<string> | null,
+      withdrawnRound?: PromiseOrValue<BigNumberish> | null,
       shares?: null,
       funds?: null,
     ): CompleteWithdrawEventFilter;
     CompleteWithdraw(
-      user?: string | null,
-      withdrawnRound?: BigNumberish | null,
+      user?: PromiseOrValue<string> | null,
+      withdrawnRound?: PromiseOrValue<BigNumberish> | null,
       shares?: null,
       funds?: null,
     ): CompleteWithdrawEventFilter;
 
     'Deposit(address,uint256,uint256)'(
-      user?: string | null,
-      depositRound?: BigNumberish | null,
+      user?: PromiseOrValue<string> | null,
+      depositRound?: PromiseOrValue<BigNumberish> | null,
       amt?: null,
     ): DepositEventFilter;
-    Deposit(user?: string | null, depositRound?: BigNumberish | null, amt?: null): DepositEventFilter;
+    Deposit(
+      user?: PromiseOrValue<string> | null,
+      depositRound?: PromiseOrValue<BigNumberish> | null,
+      amt?: null,
+    ): DepositEventFilter;
 
-    'OwnerUpdated(address,address)'(user?: string | null, newOwner?: string | null): OwnerUpdatedEventFilter;
-    OwnerUpdated(user?: string | null, newOwner?: string | null): OwnerUpdatedEventFilter;
+    'OwnerUpdated(address,address)'(
+      user?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnerUpdatedEventFilter;
+    OwnerUpdated(
+      user?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnerUpdatedEventFilter;
 
     'Paused(address)'(account?: null): PausedEventFilter;
     Paused(account?: null): PausedEventFilter;
 
     'RequestWithdraw(address,uint256,uint256)'(
-      user?: string | null,
-      withdrawnRound?: BigNumberish | null,
+      user?: PromiseOrValue<string> | null,
+      withdrawnRound?: PromiseOrValue<BigNumberish> | null,
       shares?: null,
     ): RequestWithdrawEventFilter;
     RequestWithdraw(
-      user?: string | null,
-      withdrawnRound?: BigNumberish | null,
+      user?: PromiseOrValue<string> | null,
+      withdrawnRound?: PromiseOrValue<BigNumberish> | null,
       shares?: null,
     ): RequestWithdrawEventFilter;
 
     'SellOptions(uint256,uint256,uint256,uint256,uint256)'(
-      round?: BigNumberish | null,
+      round?: PromiseOrValue<BigNumberish> | null,
       optionsSold?: null,
       totalCost?: null,
       expiry?: null,
       strikePrice?: null,
     ): SellOptionsEventFilter;
     SellOptions(
-      round?: BigNumberish | null,
+      round?: PromiseOrValue<BigNumberish> | null,
       optionsSold?: null,
       totalCost?: null,
       expiry?: null,
       strikePrice?: null,
     ): SellOptionsEventFilter;
 
-    'SetCap(address,uint256,uint256)'(auth?: string | null, oldCap?: null, newCap?: null): SetCapEventFilter;
-    SetCap(auth?: string | null, oldCap?: null, newCap?: null): SetCapEventFilter;
+    'SetCap(address,uint256,uint256)'(
+      auth?: PromiseOrValue<string> | null,
+      oldCap?: null,
+      newCap?: null,
+    ): SetCapEventFilter;
+    SetCap(auth?: PromiseOrValue<string> | null, oldCap?: null, newCap?: null): SetCapEventFilter;
 
     'SetFeeReciepient(address,address,address)'(
-      auth?: string | null,
+      auth?: PromiseOrValue<string> | null,
       oldReceipient?: null,
       newReceipient?: null,
     ): SetFeeReciepientEventFilter;
-    SetFeeReciepient(auth?: string | null, oldReceipient?: null, newReceipient?: null): SetFeeReciepientEventFilter;
+    SetFeeReciepient(
+      auth?: PromiseOrValue<string> | null,
+      oldReceipient?: null,
+      newReceipient?: null,
+    ): SetFeeReciepientEventFilter;
 
     'SetFees(address,uint256,uint256,uint256,uint256)'(
-      auth?: string | null,
+      auth?: PromiseOrValue<string> | null,
       oldManageFee?: null,
       oldPerfFee?: null,
       newManageFee?: null,
       newPerfFee?: null,
     ): SetFeesEventFilter;
     SetFees(
-      auth?: string | null,
+      auth?: PromiseOrValue<string> | null,
       oldManageFee?: null,
       oldPerfFee?: null,
       newManageFee?: null,
@@ -944,33 +989,33 @@ export interface PolynomialPutSelling extends BaseContract {
     ): SetFeesEventFilter;
 
     'SetIvLimit(address,uint256,uint256)'(
-      auth?: string | null,
+      auth?: PromiseOrValue<string> | null,
       oldLimit?: null,
       newLimit?: null,
     ): SetIvLimitEventFilter;
-    SetIvLimit(auth?: string | null, oldLimit?: null, newLimit?: null): SetIvLimitEventFilter;
+    SetIvLimit(auth?: PromiseOrValue<string> | null, oldLimit?: null, newLimit?: null): SetIvLimitEventFilter;
 
     'SetKeeper(address,address,address)'(
-      auth?: string | null,
+      auth?: PromiseOrValue<string> | null,
       oldKeeper?: null,
       newKeeper?: null,
     ): SetKeeperEventFilter;
-    SetKeeper(auth?: string | null, oldKeeper?: null, newKeeper?: null): SetKeeperEventFilter;
+    SetKeeper(auth?: PromiseOrValue<string> | null, oldKeeper?: null, newKeeper?: null): SetKeeperEventFilter;
 
     'SetUserDepositLimit(address,uint256,uint256)'(
-      auth?: string | null,
+      auth?: PromiseOrValue<string> | null,
       oldDepositLimit?: null,
       newDepositLimit?: null,
     ): SetUserDepositLimitEventFilter;
     SetUserDepositLimit(
-      auth?: string | null,
+      auth?: PromiseOrValue<string> | null,
       oldDepositLimit?: null,
       newDepositLimit?: null,
     ): SetUserDepositLimitEventFilter;
 
     'StartNewRound(uint256,uint256,uint256,uint256,uint256,uint256,uint256)'(
-      round?: BigNumberish | null,
-      listingId?: BigNumberish | null,
+      round?: PromiseOrValue<BigNumberish> | null,
+      listingId?: PromiseOrValue<BigNumberish> | null,
       newIndex?: null,
       expiry?: null,
       strikePrice?: null,
@@ -978,8 +1023,8 @@ export interface PolynomialPutSelling extends BaseContract {
       qty?: null,
     ): StartNewRoundEventFilter;
     StartNewRound(
-      round?: BigNumberish | null,
-      listingId?: BigNumberish | null,
+      round?: PromiseOrValue<BigNumberish> | null,
+      listingId?: PromiseOrValue<BigNumberish> | null,
       newIndex?: null,
       expiry?: null,
       strikePrice?: null,
@@ -1002,16 +1047,22 @@ export interface PolynomialPutSelling extends BaseContract {
 
     authority(overrides?: CallOverrides): Promise<BigNumber>;
 
-    cancelDeposit(_amt: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
-
-    cancelWithdraw(
-      _shares: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    cancelDeposit(
+      _amt: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    claimLyra(_receiver: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    cancelWithdraw(
+      _shares: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    completeWithdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    claimLyra(
+      _receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    completeWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     currentExpiry(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1022,14 +1073,14 @@ export interface PolynomialPutSelling extends BaseContract {
     currentStrike(overrides?: CallOverrides): Promise<BigNumber>;
 
     'deposit(address,uint256)'(
-      _user: string,
-      _amt: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _user: PromiseOrValue<string>,
+      _amt: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     'deposit(uint256)'(
-      _amt: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amt: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     feeReciepient(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1044,7 +1095,7 @@ export interface PolynomialPutSelling extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     paused(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1054,59 +1105,77 @@ export interface PolynomialPutSelling extends BaseContract {
 
     performanceFee(overrides?: CallOverrides): Promise<BigNumber>;
 
-    performanceIndices(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    performanceIndices(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     premiumCollected(overrides?: CallOverrides): Promise<BigNumber>;
 
     requestWithdraw(
-      _shares: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _shares: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    sellOptions(_amt: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    sellOptions(
+      _amt: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    setAuthority(newAuthority: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setAuthority(
+      newAuthority: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    setCap(_newCap: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setCap(
+      _newCap: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setFeeReciepient(
-      _feeReciepient: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _feeReciepient: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setFees(
-      _perfomanceFee: BigNumberish,
-      _managementFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _perfomanceFee: PromiseOrValue<BigNumberish>,
+      _managementFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setIvLimit(_ivLimit: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setIvLimit(
+      _ivLimit: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    setKeeper(_keeper: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setKeeper(
+      _keeper: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    setOwner(newOwner: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setOwner(
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setUserDepositLimit(
-      _depositLimit: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _depositLimit: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     startNewRound(
-      _listingId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _listingId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     totalFunds(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalShares(overrides?: CallOverrides): Promise<BigNumber>;
 
-    unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     usedFunds(overrides?: CallOverrides): Promise<BigNumber>;
 
     userDepositLimit(overrides?: CallOverrides): Promise<BigNumber>;
 
-    userInfos(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    userInfos(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     vaultCapacity(overrides?: CallOverrides): Promise<BigNumber>;
   };
@@ -1123,21 +1192,21 @@ export interface PolynomialPutSelling extends BaseContract {
     authority(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     cancelDeposit(
-      _amt: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amt: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     cancelWithdraw(
-      _shares: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _shares: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     claimLyra(
-      _receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    completeWithdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    completeWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     currentExpiry(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1148,14 +1217,14 @@ export interface PolynomialPutSelling extends BaseContract {
     currentStrike(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     'deposit(address,uint256)'(
-      _user: string,
-      _amt: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _user: PromiseOrValue<string>,
+      _amt: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     'deposit(uint256)'(
-      _amt: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amt: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     feeReciepient(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1170,7 +1239,7 @@ export interface PolynomialPutSelling extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     paused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1180,77 +1249,77 @@ export interface PolynomialPutSelling extends BaseContract {
 
     performanceFee(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    performanceIndices(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    performanceIndices(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     premiumCollected(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     requestWithdraw(
-      _shares: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _shares: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     sellOptions(
-      _amt: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amt: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setAuthority(
-      newAuthority: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newAuthority: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setCap(
-      _newCap: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newCap: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setFeeReciepient(
-      _feeReciepient: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _feeReciepient: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setFees(
-      _perfomanceFee: BigNumberish,
-      _managementFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _perfomanceFee: PromiseOrValue<BigNumberish>,
+      _managementFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setIvLimit(
-      _ivLimit: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _ivLimit: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setKeeper(
-      _keeper: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _keeper: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setOwner(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setUserDepositLimit(
-      _depositLimit: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _depositLimit: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     startNewRound(
-      _listingId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _listingId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     totalFunds(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalShares(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     usedFunds(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     userDepositLimit(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    userInfos(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    userInfos(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     vaultCapacity(overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
