@@ -4,7 +4,7 @@ import { ethers } from 'ethers';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
-import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { getAppAssetImage, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
@@ -121,7 +121,7 @@ export class EthereumOriginDollarVeogvTokenFetcher implements PositionFetcher<Ap
       displayProps: {
         label: `Vote Escrowed ${getLabelFromToken(ogv)}`,
         secondaryLabel: `Up to ${(apy * 100).toFixed(3)}% APY`,
-        images: ['https://governance.ousd.com/veogv.svg'],
+        images: [getAppAssetImage(appId, contract.address)],
         statsItems: [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }],
       },
     };
