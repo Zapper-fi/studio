@@ -8,7 +8,7 @@ import { CacheOnInterval } from '~cache/cache-on-interval.decorator';
 import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
-import { supplied } from '~position/position.utils';
+import { claimable, supplied } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 
 import { POLYGON_DEFINITION } from '../polygon.definition';
@@ -73,7 +73,7 @@ export class EthereumPolygonStakingContractPositionFetcher implements PositionFe
         const maticPosStakingAddress = '0x5e3ef299fddf15eaa0432e6e66473ace8c13d908';
         const maticAddress = '0x7d1afa7b718fb893db30a3abc0cfc608aacfebb0';
         const maticToken = baseTokens.find(v => v.address === maticAddress)!;
-        const tokens = [supplied(maticToken)];
+        const tokens = [supplied(maticToken), claimable(maticToken)];
 
         const label = `Delegated ${getLabelFromToken(maticToken)}: ${validator.name} (ID: ${validator.id})`;
         const images = getImagesFromToken(maticToken);
