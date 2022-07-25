@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface DfxCurveInterface extends utils.Interface {
   functions: {
@@ -105,61 +105,115 @@ export interface DfxCurveInterface extends utils.Interface {
       | 'withdraw',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'allowance', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'approve', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'assimilator', values: [string]): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
+  encodeFunctionData(functionFragment: 'allowance', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'approve',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'assimilator', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'curve', values?: undefined): string;
   encodeFunctionData(functionFragment: 'decimals', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'deposit', values: [BigNumberish, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'deposit',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(
     functionFragment: 'depositWithWhitelist',
-    values: [BigNumberish, string, BigNumberish, BytesLike[], BigNumberish, BigNumberish],
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>[],
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'derivatives', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'derivatives', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'emergency', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'emergencyWithdraw', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'excludeDerivative', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'emergencyWithdraw',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'excludeDerivative', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'frozen', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'isWhitelisted',
-    values: [BigNumberish, string, BigNumberish, BytesLike[]],
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>[],
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'liquidity', values?: undefined): string;
   encodeFunctionData(functionFragment: 'merkleRoot', values?: undefined): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'numeraires', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'numeraires', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(
     functionFragment: 'originSwap',
-    values: [string, string, BigNumberish, BigNumberish, BigNumberish],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'reserves', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setEmergency', values: [boolean]): string;
-  encodeFunctionData(functionFragment: 'setFrozen', values: [boolean]): string;
+  encodeFunctionData(functionFragment: 'reserves', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setEmergency', values: [PromiseOrValue<boolean>]): string;
+  encodeFunctionData(functionFragment: 'setFrozen', values: [PromiseOrValue<boolean>]): string;
   encodeFunctionData(
     functionFragment: 'setParams',
-    values: [BigNumberish, BigNumberish, BigNumberish, BigNumberish, BigNumberish],
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'supportsInterface', values: [BytesLike]): string;
+  encodeFunctionData(functionFragment: 'supportsInterface', values: [PromiseOrValue<BytesLike>]): string;
   encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'targetSwap',
-    values: [string, string, BigNumberish, BigNumberish, BigNumberish],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transfer', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferFrom', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'transfer',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'transferFrom',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'turnOffWhitelisting', values?: undefined): string;
   encodeFunctionData(functionFragment: 'viewCurve', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'viewDeposit', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'viewOriginSwap', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'viewTargetSwap', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'viewWithdraw', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'whitelistedDeposited', values: [string]): string;
+  encodeFunctionData(functionFragment: 'viewDeposit', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'viewOriginSwap',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'viewTargetSwap',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'viewWithdraw', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'whitelistedDeposited', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'whitelistingStage', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'withdraw', values: [BigNumberish, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'withdraw',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
 
   decodeFunctionResult(functionFragment: 'allowance', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'approve', data: BytesLike): Result;
@@ -351,20 +405,26 @@ export interface DfxCurve extends BaseContract {
 
   functions: {
     allowance(
-      _owner: string,
-      _spender: string,
+      _owner: PromiseOrValue<string>,
+      _spender: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber] & { allowance_: BigNumber }>;
 
     approve(
-      _spender: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _spender: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    assimilator(_derivative: string, overrides?: CallOverrides): Promise<[string] & { assimilator_: string }>;
+    assimilator(
+      _derivative: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[string] & { assimilator_: string }>;
 
-    balanceOf(_account: string, overrides?: CallOverrides): Promise<[BigNumber] & { balance_: BigNumber }>;
+    balanceOf(
+      _account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber] & { balance_: BigNumber }>;
 
     curve(overrides?: CallOverrides): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -380,43 +440,43 @@ export interface DfxCurve extends BaseContract {
     decimals(overrides?: CallOverrides): Promise<[number]>;
 
     deposit(
-      _deposit: BigNumberish,
-      _deadline: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _deposit: PromiseOrValue<BigNumberish>,
+      _deadline: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     depositWithWhitelist(
-      index: BigNumberish,
-      account: string,
-      amount: BigNumberish,
-      merkleProof: BytesLike[],
-      _deposit: BigNumberish,
-      _deadline: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      index: PromiseOrValue<BigNumberish>,
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      merkleProof: PromiseOrValue<BytesLike>[],
+      _deposit: PromiseOrValue<BigNumberish>,
+      _deadline: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    derivatives(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    derivatives(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
     emergency(overrides?: CallOverrides): Promise<[boolean]>;
 
     emergencyWithdraw(
-      _curvesToBurn: BigNumberish,
-      _deadline: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _curvesToBurn: PromiseOrValue<BigNumberish>,
+      _deadline: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     excludeDerivative(
-      _derivative: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _derivative: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     frozen(overrides?: CallOverrides): Promise<[boolean]>;
 
     isWhitelisted(
-      index: BigNumberish,
-      account: string,
-      amount: BigNumberish,
-      merkleProof: BytesLike[],
+      index: PromiseOrValue<BigNumberish>,
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      merkleProof: PromiseOrValue<BytesLike>[],
       overrides?: CallOverrides,
     ): Promise<[boolean]>;
 
@@ -428,74 +488,77 @@ export interface DfxCurve extends BaseContract {
 
     name(overrides?: CallOverrides): Promise<[string]>;
 
-    numeraires(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    numeraires(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
     originSwap(
-      _origin: string,
-      _target: string,
-      _originAmount: BigNumberish,
-      _minTargetAmount: BigNumberish,
-      _deadline: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _origin: PromiseOrValue<string>,
+      _target: PromiseOrValue<string>,
+      _originAmount: PromiseOrValue<BigNumberish>,
+      _minTargetAmount: PromiseOrValue<BigNumberish>,
+      _deadline: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
-    reserves(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    reserves(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
     setEmergency(
-      _emergency: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _emergency: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setFrozen(
-      _toFreezeOrNotToFreeze: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _toFreezeOrNotToFreeze: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setParams(
-      _alpha: BigNumberish,
-      _beta: BigNumberish,
-      _feeAtHalt: BigNumberish,
-      _epsilon: BigNumberish,
-      _lambda: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _alpha: PromiseOrValue<BigNumberish>,
+      _beta: PromiseOrValue<BigNumberish>,
+      _feeAtHalt: PromiseOrValue<BigNumberish>,
+      _epsilon: PromiseOrValue<BigNumberish>,
+      _lambda: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    supportsInterface(_interface: BytesLike, overrides?: CallOverrides): Promise<[boolean] & { supports_: boolean }>;
+    supportsInterface(
+      _interface: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<[boolean] & { supports_: boolean }>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
 
     targetSwap(
-      _origin: string,
-      _target: string,
-      _maxOriginAmount: BigNumberish,
-      _targetAmount: BigNumberish,
-      _deadline: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _origin: PromiseOrValue<string>,
+      _target: PromiseOrValue<string>,
+      _maxOriginAmount: PromiseOrValue<BigNumberish>,
+      _targetAmount: PromiseOrValue<BigNumberish>,
+      _deadline: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber] & { totalSupply_: BigNumber }>;
 
     transfer(
-      _recipient: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _recipient: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferFrom(
-      _sender: string,
-      _recipient: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _sender: PromiseOrValue<string>,
+      _recipient: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferOwnership(
-      _newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    turnOffWhitelisting(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    turnOffWhitelisting(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     viewCurve(overrides?: CallOverrides): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -507,46 +570,50 @@ export interface DfxCurve extends BaseContract {
       }
     >;
 
-    viewDeposit(_deposit: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber, BigNumber[]]>;
+    viewDeposit(_deposit: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber, BigNumber[]]>;
 
     viewOriginSwap(
-      _origin: string,
-      _target: string,
-      _originAmount: BigNumberish,
+      _origin: PromiseOrValue<string>,
+      _target: PromiseOrValue<string>,
+      _originAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber] & { targetAmount_: BigNumber }>;
 
     viewTargetSwap(
-      _origin: string,
-      _target: string,
-      _targetAmount: BigNumberish,
+      _origin: PromiseOrValue<string>,
+      _target: PromiseOrValue<string>,
+      _targetAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber] & { originAmount_: BigNumber }>;
 
-    viewWithdraw(_curvesToBurn: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber[]]>;
+    viewWithdraw(_curvesToBurn: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber[]]>;
 
-    whitelistedDeposited(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    whitelistedDeposited(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     whitelistingStage(overrides?: CallOverrides): Promise<[boolean]>;
 
     withdraw(
-      _curvesToBurn: BigNumberish,
-      _deadline: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _curvesToBurn: PromiseOrValue<BigNumberish>,
+      _deadline: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
-  allowance(_owner: string, _spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+  allowance(
+    _owner: PromiseOrValue<string>,
+    _spender: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   approve(
-    _spender: string,
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _spender: PromiseOrValue<string>,
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  assimilator(_derivative: string, overrides?: CallOverrides): Promise<string>;
+  assimilator(_derivative: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
-  balanceOf(_account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   curve(overrides?: CallOverrides): Promise<
     [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -562,43 +629,43 @@ export interface DfxCurve extends BaseContract {
   decimals(overrides?: CallOverrides): Promise<number>;
 
   deposit(
-    _deposit: BigNumberish,
-    _deadline: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _deposit: PromiseOrValue<BigNumberish>,
+    _deadline: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   depositWithWhitelist(
-    index: BigNumberish,
-    account: string,
-    amount: BigNumberish,
-    merkleProof: BytesLike[],
-    _deposit: BigNumberish,
-    _deadline: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    index: PromiseOrValue<BigNumberish>,
+    account: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    merkleProof: PromiseOrValue<BytesLike>[],
+    _deposit: PromiseOrValue<BigNumberish>,
+    _deadline: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  derivatives(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  derivatives(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   emergency(overrides?: CallOverrides): Promise<boolean>;
 
   emergencyWithdraw(
-    _curvesToBurn: BigNumberish,
-    _deadline: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _curvesToBurn: PromiseOrValue<BigNumberish>,
+    _deadline: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   excludeDerivative(
-    _derivative: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _derivative: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   frozen(overrides?: CallOverrides): Promise<boolean>;
 
   isWhitelisted(
-    index: BigNumberish,
-    account: string,
-    amount: BigNumberish,
-    merkleProof: BytesLike[],
+    index: PromiseOrValue<BigNumberish>,
+    account: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    merkleProof: PromiseOrValue<BytesLike>[],
     overrides?: CallOverrides,
   ): Promise<boolean>;
 
@@ -610,74 +677,74 @@ export interface DfxCurve extends BaseContract {
 
   name(overrides?: CallOverrides): Promise<string>;
 
-  numeraires(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  numeraires(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   originSwap(
-    _origin: string,
-    _target: string,
-    _originAmount: BigNumberish,
-    _minTargetAmount: BigNumberish,
-    _deadline: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _origin: PromiseOrValue<string>,
+    _target: PromiseOrValue<string>,
+    _originAmount: PromiseOrValue<BigNumberish>,
+    _minTargetAmount: PromiseOrValue<BigNumberish>,
+    _deadline: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
-  reserves(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  reserves(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   setEmergency(
-    _emergency: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _emergency: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setFrozen(
-    _toFreezeOrNotToFreeze: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _toFreezeOrNotToFreeze: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setParams(
-    _alpha: BigNumberish,
-    _beta: BigNumberish,
-    _feeAtHalt: BigNumberish,
-    _epsilon: BigNumberish,
-    _lambda: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _alpha: PromiseOrValue<BigNumberish>,
+    _beta: PromiseOrValue<BigNumberish>,
+    _feeAtHalt: PromiseOrValue<BigNumberish>,
+    _epsilon: PromiseOrValue<BigNumberish>,
+    _lambda: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  supportsInterface(_interface: BytesLike, overrides?: CallOverrides): Promise<boolean>;
+  supportsInterface(_interface: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<boolean>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
 
   targetSwap(
-    _origin: string,
-    _target: string,
-    _maxOriginAmount: BigNumberish,
-    _targetAmount: BigNumberish,
-    _deadline: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _origin: PromiseOrValue<string>,
+    _target: PromiseOrValue<string>,
+    _maxOriginAmount: PromiseOrValue<BigNumberish>,
+    _targetAmount: PromiseOrValue<BigNumberish>,
+    _deadline: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   transfer(
-    _recipient: string,
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _recipient: PromiseOrValue<string>,
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferFrom(
-    _sender: string,
-    _recipient: string,
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _sender: PromiseOrValue<string>,
+    _recipient: PromiseOrValue<string>,
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferOwnership(
-    _newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  turnOffWhitelisting(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  turnOffWhitelisting(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   viewCurve(overrides?: CallOverrides): Promise<
     [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -689,42 +756,50 @@ export interface DfxCurve extends BaseContract {
     }
   >;
 
-  viewDeposit(_deposit: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber, BigNumber[]]>;
+  viewDeposit(_deposit: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber, BigNumber[]]>;
 
   viewOriginSwap(
-    _origin: string,
-    _target: string,
-    _originAmount: BigNumberish,
+    _origin: PromiseOrValue<string>,
+    _target: PromiseOrValue<string>,
+    _originAmount: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
   viewTargetSwap(
-    _origin: string,
-    _target: string,
-    _targetAmount: BigNumberish,
+    _origin: PromiseOrValue<string>,
+    _target: PromiseOrValue<string>,
+    _targetAmount: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
-  viewWithdraw(_curvesToBurn: BigNumberish, overrides?: CallOverrides): Promise<BigNumber[]>;
+  viewWithdraw(_curvesToBurn: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber[]>;
 
-  whitelistedDeposited(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  whitelistedDeposited(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   whitelistingStage(overrides?: CallOverrides): Promise<boolean>;
 
   withdraw(
-    _curvesToBurn: BigNumberish,
-    _deadline: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _curvesToBurn: PromiseOrValue<BigNumberish>,
+    _deadline: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    allowance(_owner: string, _spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      _owner: PromiseOrValue<string>,
+      _spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    approve(_spender: string, _amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    approve(
+      _spender: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    assimilator(_derivative: string, overrides?: CallOverrides): Promise<string>;
+    assimilator(_derivative: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
-    balanceOf(_account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     curve(overrides?: CallOverrides): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -740,40 +815,40 @@ export interface DfxCurve extends BaseContract {
     decimals(overrides?: CallOverrides): Promise<number>;
 
     deposit(
-      _deposit: BigNumberish,
-      _deadline: BigNumberish,
+      _deposit: PromiseOrValue<BigNumberish>,
+      _deadline: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber[]]>;
 
     depositWithWhitelist(
-      index: BigNumberish,
-      account: string,
-      amount: BigNumberish,
-      merkleProof: BytesLike[],
-      _deposit: BigNumberish,
-      _deadline: BigNumberish,
+      index: PromiseOrValue<BigNumberish>,
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      merkleProof: PromiseOrValue<BytesLike>[],
+      _deposit: PromiseOrValue<BigNumberish>,
+      _deadline: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber[]]>;
 
-    derivatives(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    derivatives(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
     emergency(overrides?: CallOverrides): Promise<boolean>;
 
     emergencyWithdraw(
-      _curvesToBurn: BigNumberish,
-      _deadline: BigNumberish,
+      _curvesToBurn: PromiseOrValue<BigNumberish>,
+      _deadline: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber[]>;
 
-    excludeDerivative(_derivative: string, overrides?: CallOverrides): Promise<void>;
+    excludeDerivative(_derivative: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     frozen(overrides?: CallOverrides): Promise<boolean>;
 
     isWhitelisted(
-      index: BigNumberish,
-      account: string,
-      amount: BigNumberish,
-      merkleProof: BytesLike[],
+      index: PromiseOrValue<BigNumberish>,
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      merkleProof: PromiseOrValue<BytesLike>[],
       overrides?: CallOverrides,
     ): Promise<boolean>;
 
@@ -785,59 +860,63 @@ export interface DfxCurve extends BaseContract {
 
     name(overrides?: CallOverrides): Promise<string>;
 
-    numeraires(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    numeraires(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
     originSwap(
-      _origin: string,
-      _target: string,
-      _originAmount: BigNumberish,
-      _minTargetAmount: BigNumberish,
-      _deadline: BigNumberish,
+      _origin: PromiseOrValue<string>,
+      _target: PromiseOrValue<string>,
+      _originAmount: PromiseOrValue<BigNumberish>,
+      _minTargetAmount: PromiseOrValue<BigNumberish>,
+      _deadline: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    reserves(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    reserves(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
-    setEmergency(_emergency: boolean, overrides?: CallOverrides): Promise<void>;
+    setEmergency(_emergency: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
 
-    setFrozen(_toFreezeOrNotToFreeze: boolean, overrides?: CallOverrides): Promise<void>;
+    setFrozen(_toFreezeOrNotToFreeze: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
 
     setParams(
-      _alpha: BigNumberish,
-      _beta: BigNumberish,
-      _feeAtHalt: BigNumberish,
-      _epsilon: BigNumberish,
-      _lambda: BigNumberish,
+      _alpha: PromiseOrValue<BigNumberish>,
+      _beta: PromiseOrValue<BigNumberish>,
+      _feeAtHalt: PromiseOrValue<BigNumberish>,
+      _epsilon: PromiseOrValue<BigNumberish>,
+      _lambda: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    supportsInterface(_interface: BytesLike, overrides?: CallOverrides): Promise<boolean>;
+    supportsInterface(_interface: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<boolean>;
 
     symbol(overrides?: CallOverrides): Promise<string>;
 
     targetSwap(
-      _origin: string,
-      _target: string,
-      _maxOriginAmount: BigNumberish,
-      _targetAmount: BigNumberish,
-      _deadline: BigNumberish,
+      _origin: PromiseOrValue<string>,
+      _target: PromiseOrValue<string>,
+      _maxOriginAmount: PromiseOrValue<BigNumberish>,
+      _targetAmount: PromiseOrValue<BigNumberish>,
+      _deadline: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transfer(_recipient: string, _amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
-
-    transferFrom(
-      _sender: string,
-      _recipient: string,
-      _amount: BigNumberish,
+    transfer(
+      _recipient: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<boolean>;
 
-    transferOwnership(_newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferFrom(
+      _sender: PromiseOrValue<string>,
+      _recipient: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
+
+    transferOwnership(_newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     turnOffWhitelisting(overrides?: CallOverrides): Promise<void>;
 
@@ -851,56 +930,68 @@ export interface DfxCurve extends BaseContract {
       }
     >;
 
-    viewDeposit(_deposit: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber, BigNumber[]]>;
+    viewDeposit(_deposit: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber, BigNumber[]]>;
 
     viewOriginSwap(
-      _origin: string,
-      _target: string,
-      _originAmount: BigNumberish,
+      _origin: PromiseOrValue<string>,
+      _target: PromiseOrValue<string>,
+      _originAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     viewTargetSwap(
-      _origin: string,
-      _target: string,
-      _targetAmount: BigNumberish,
+      _origin: PromiseOrValue<string>,
+      _target: PromiseOrValue<string>,
+      _targetAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    viewWithdraw(_curvesToBurn: BigNumberish, overrides?: CallOverrides): Promise<BigNumber[]>;
+    viewWithdraw(_curvesToBurn: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber[]>;
 
-    whitelistedDeposited(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    whitelistedDeposited(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     whitelistingStage(overrides?: CallOverrides): Promise<boolean>;
 
-    withdraw(_curvesToBurn: BigNumberish, _deadline: BigNumberish, overrides?: CallOverrides): Promise<BigNumber[]>;
+    withdraw(
+      _curvesToBurn: PromiseOrValue<BigNumberish>,
+      _deadline: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber[]>;
   };
 
   filters: {
     'Approval(address,address,uint256)'(
-      _owner?: string | null,
-      spender?: string | null,
+      _owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
       value?: null,
     ): ApprovalEventFilter;
-    Approval(_owner?: string | null, spender?: string | null, value?: null): ApprovalEventFilter;
+    Approval(
+      _owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
+      value?: null,
+    ): ApprovalEventFilter;
 
     'AssetIncluded(address,address,uint256)'(
-      numeraire?: string | null,
-      reserve?: string | null,
+      numeraire?: PromiseOrValue<string> | null,
+      reserve?: PromiseOrValue<string> | null,
       weight?: null,
     ): AssetIncludedEventFilter;
-    AssetIncluded(numeraire?: string | null, reserve?: string | null, weight?: null): AssetIncludedEventFilter;
+    AssetIncluded(
+      numeraire?: PromiseOrValue<string> | null,
+      reserve?: PromiseOrValue<string> | null,
+      weight?: null,
+    ): AssetIncludedEventFilter;
 
     'AssimilatorIncluded(address,address,address,address)'(
-      derivative?: string | null,
-      numeraire?: string | null,
-      reserve?: string | null,
+      derivative?: PromiseOrValue<string> | null,
+      numeraire?: PromiseOrValue<string> | null,
+      reserve?: PromiseOrValue<string> | null,
       assimilator?: null,
     ): AssimilatorIncludedEventFilter;
     AssimilatorIncluded(
-      derivative?: string | null,
-      numeraire?: string | null,
-      reserve?: string | null,
+      derivative?: PromiseOrValue<string> | null,
+      numeraire?: PromiseOrValue<string> | null,
+      reserve?: PromiseOrValue<string> | null,
       assimilator?: null,
     ): AssimilatorIncludedEventFilter;
 
@@ -911,10 +1002,13 @@ export interface DfxCurve extends BaseContract {
     FrozenSet(isFrozen?: null): FrozenSetEventFilter;
 
     'OwnershipTransfered(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferedEventFilter;
-    OwnershipTransfered(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferedEventFilter;
+    OwnershipTransfered(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferedEventFilter;
 
     'ParametersSet(uint256,uint256,uint256,uint256,uint256)'(
       alpha?: null,
@@ -926,89 +1020,105 @@ export interface DfxCurve extends BaseContract {
     ParametersSet(alpha?: null, beta?: null, delta?: null, epsilon?: null, lambda?: null): ParametersSetEventFilter;
 
     'PartitionRedeemed(address,address,uint256)'(
-      token?: string | null,
-      redeemer?: string | null,
+      token?: PromiseOrValue<string> | null,
+      redeemer?: PromiseOrValue<string> | null,
       value?: null,
     ): PartitionRedeemedEventFilter;
-    PartitionRedeemed(token?: string | null, redeemer?: string | null, value?: null): PartitionRedeemedEventFilter;
+    PartitionRedeemed(
+      token?: PromiseOrValue<string> | null,
+      redeemer?: PromiseOrValue<string> | null,
+      value?: null,
+    ): PartitionRedeemedEventFilter;
 
     'Trade(address,address,address,uint256,uint256)'(
-      trader?: string | null,
-      origin?: string | null,
-      target?: string | null,
+      trader?: PromiseOrValue<string> | null,
+      origin?: PromiseOrValue<string> | null,
+      target?: PromiseOrValue<string> | null,
       originAmount?: null,
       targetAmount?: null,
     ): TradeEventFilter;
     Trade(
-      trader?: string | null,
-      origin?: string | null,
-      target?: string | null,
+      trader?: PromiseOrValue<string> | null,
+      origin?: PromiseOrValue<string> | null,
+      target?: PromiseOrValue<string> | null,
       originAmount?: null,
       targetAmount?: null,
     ): TradeEventFilter;
 
-    'Transfer(address,address,uint256)'(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
-    Transfer(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
+    'Transfer(address,address,uint256)'(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
+    Transfer(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
 
     'WhitelistingStopped()'(): WhitelistingStoppedEventFilter;
     WhitelistingStopped(): WhitelistingStoppedEventFilter;
   };
 
   estimateGas: {
-    allowance(_owner: string, _spender: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-    approve(
-      _spender: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    allowance(
+      _owner: PromiseOrValue<string>,
+      _spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    assimilator(_derivative: string, overrides?: CallOverrides): Promise<BigNumber>;
+    approve(
+      _spender: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    balanceOf(_account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    assimilator(_derivative: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    balanceOf(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     curve(overrides?: CallOverrides): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
     deposit(
-      _deposit: BigNumberish,
-      _deadline: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _deposit: PromiseOrValue<BigNumberish>,
+      _deadline: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     depositWithWhitelist(
-      index: BigNumberish,
-      account: string,
-      amount: BigNumberish,
-      merkleProof: BytesLike[],
-      _deposit: BigNumberish,
-      _deadline: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      index: PromiseOrValue<BigNumberish>,
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      merkleProof: PromiseOrValue<BytesLike>[],
+      _deposit: PromiseOrValue<BigNumberish>,
+      _deadline: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    derivatives(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    derivatives(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     emergency(overrides?: CallOverrides): Promise<BigNumber>;
 
     emergencyWithdraw(
-      _curvesToBurn: BigNumberish,
-      _deadline: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _curvesToBurn: PromiseOrValue<BigNumberish>,
+      _deadline: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     excludeDerivative(
-      _derivative: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _derivative: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     frozen(overrides?: CallOverrides): Promise<BigNumber>;
 
     isWhitelisted(
-      index: BigNumberish,
-      account: string,
-      amount: BigNumberish,
-      merkleProof: BytesLike[],
+      index: PromiseOrValue<BigNumberish>,
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      merkleProof: PromiseOrValue<BytesLike>[],
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
@@ -1018,158 +1128,165 @@ export interface DfxCurve extends BaseContract {
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
-    numeraires(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    numeraires(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     originSwap(
-      _origin: string,
-      _target: string,
-      _originAmount: BigNumberish,
-      _minTargetAmount: BigNumberish,
-      _deadline: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _origin: PromiseOrValue<string>,
+      _target: PromiseOrValue<string>,
+      _originAmount: PromiseOrValue<BigNumberish>,
+      _minTargetAmount: PromiseOrValue<BigNumberish>,
+      _deadline: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    reserves(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    reserves(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    setEmergency(_emergency: boolean, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setEmergency(
+      _emergency: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setFrozen(
-      _toFreezeOrNotToFreeze: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _toFreezeOrNotToFreeze: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setParams(
-      _alpha: BigNumberish,
-      _beta: BigNumberish,
-      _feeAtHalt: BigNumberish,
-      _epsilon: BigNumberish,
-      _lambda: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _alpha: PromiseOrValue<BigNumberish>,
+      _beta: PromiseOrValue<BigNumberish>,
+      _feeAtHalt: PromiseOrValue<BigNumberish>,
+      _epsilon: PromiseOrValue<BigNumberish>,
+      _lambda: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    supportsInterface(_interface: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    supportsInterface(_interface: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
     targetSwap(
-      _origin: string,
-      _target: string,
-      _maxOriginAmount: BigNumberish,
-      _targetAmount: BigNumberish,
-      _deadline: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _origin: PromiseOrValue<string>,
+      _target: PromiseOrValue<string>,
+      _maxOriginAmount: PromiseOrValue<BigNumberish>,
+      _targetAmount: PromiseOrValue<BigNumberish>,
+      _deadline: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
-      _recipient: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _recipient: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferFrom(
-      _sender: string,
-      _recipient: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _sender: PromiseOrValue<string>,
+      _recipient: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferOwnership(
-      _newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    turnOffWhitelisting(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    turnOffWhitelisting(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     viewCurve(overrides?: CallOverrides): Promise<BigNumber>;
 
-    viewDeposit(_deposit: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    viewDeposit(_deposit: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     viewOriginSwap(
-      _origin: string,
-      _target: string,
-      _originAmount: BigNumberish,
+      _origin: PromiseOrValue<string>,
+      _target: PromiseOrValue<string>,
+      _originAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     viewTargetSwap(
-      _origin: string,
-      _target: string,
-      _targetAmount: BigNumberish,
+      _origin: PromiseOrValue<string>,
+      _target: PromiseOrValue<string>,
+      _targetAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    viewWithdraw(_curvesToBurn: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    viewWithdraw(_curvesToBurn: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    whitelistedDeposited(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    whitelistedDeposited(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     whitelistingStage(overrides?: CallOverrides): Promise<BigNumber>;
 
     withdraw(
-      _curvesToBurn: BigNumberish,
-      _deadline: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _curvesToBurn: PromiseOrValue<BigNumberish>,
+      _deadline: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    allowance(_owner: string, _spender: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    approve(
-      _spender: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    allowance(
+      _owner: PromiseOrValue<string>,
+      _spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    assimilator(_derivative: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    approve(
+      _spender: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
-    balanceOf(_account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    assimilator(_derivative: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    balanceOf(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     curve(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     deposit(
-      _deposit: BigNumberish,
-      _deadline: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _deposit: PromiseOrValue<BigNumberish>,
+      _deadline: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     depositWithWhitelist(
-      index: BigNumberish,
-      account: string,
-      amount: BigNumberish,
-      merkleProof: BytesLike[],
-      _deposit: BigNumberish,
-      _deadline: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      index: PromiseOrValue<BigNumberish>,
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      merkleProof: PromiseOrValue<BytesLike>[],
+      _deposit: PromiseOrValue<BigNumberish>,
+      _deadline: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    derivatives(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    derivatives(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     emergency(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     emergencyWithdraw(
-      _curvesToBurn: BigNumberish,
-      _deadline: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _curvesToBurn: PromiseOrValue<BigNumberish>,
+      _deadline: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     excludeDerivative(
-      _derivative: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _derivative: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     frozen(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     isWhitelisted(
-      index: BigNumberish,
-      account: string,
-      amount: BigNumberish,
-      merkleProof: BytesLike[],
+      index: PromiseOrValue<BigNumberish>,
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      merkleProof: PromiseOrValue<BytesLike>[],
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
@@ -1179,103 +1296,103 @@ export interface DfxCurve extends BaseContract {
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    numeraires(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    numeraires(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     originSwap(
-      _origin: string,
-      _target: string,
-      _originAmount: BigNumberish,
-      _minTargetAmount: BigNumberish,
-      _deadline: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _origin: PromiseOrValue<string>,
+      _target: PromiseOrValue<string>,
+      _originAmount: PromiseOrValue<BigNumberish>,
+      _minTargetAmount: PromiseOrValue<BigNumberish>,
+      _deadline: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    reserves(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    reserves(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setEmergency(
-      _emergency: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _emergency: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setFrozen(
-      _toFreezeOrNotToFreeze: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _toFreezeOrNotToFreeze: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setParams(
-      _alpha: BigNumberish,
-      _beta: BigNumberish,
-      _feeAtHalt: BigNumberish,
-      _epsilon: BigNumberish,
-      _lambda: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _alpha: PromiseOrValue<BigNumberish>,
+      _beta: PromiseOrValue<BigNumberish>,
+      _feeAtHalt: PromiseOrValue<BigNumberish>,
+      _epsilon: PromiseOrValue<BigNumberish>,
+      _lambda: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    supportsInterface(_interface: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    supportsInterface(_interface: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     targetSwap(
-      _origin: string,
-      _target: string,
-      _maxOriginAmount: BigNumberish,
-      _targetAmount: BigNumberish,
-      _deadline: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _origin: PromiseOrValue<string>,
+      _target: PromiseOrValue<string>,
+      _maxOriginAmount: PromiseOrValue<BigNumberish>,
+      _targetAmount: PromiseOrValue<BigNumberish>,
+      _deadline: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transfer(
-      _recipient: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _recipient: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferFrom(
-      _sender: string,
-      _recipient: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _sender: PromiseOrValue<string>,
+      _recipient: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      _newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    turnOffWhitelisting(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    turnOffWhitelisting(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     viewCurve(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    viewDeposit(_deposit: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    viewDeposit(_deposit: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     viewOriginSwap(
-      _origin: string,
-      _target: string,
-      _originAmount: BigNumberish,
+      _origin: PromiseOrValue<string>,
+      _target: PromiseOrValue<string>,
+      _originAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     viewTargetSwap(
-      _origin: string,
-      _target: string,
-      _targetAmount: BigNumberish,
+      _origin: PromiseOrValue<string>,
+      _target: PromiseOrValue<string>,
+      _targetAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    viewWithdraw(_curvesToBurn: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    viewWithdraw(_curvesToBurn: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    whitelistedDeposited(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    whitelistedDeposited(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     whitelistingStage(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     withdraw(
-      _curvesToBurn: BigNumberish,
-      _deadline: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _curvesToBurn: PromiseOrValue<BigNumberish>,
+      _deadline: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

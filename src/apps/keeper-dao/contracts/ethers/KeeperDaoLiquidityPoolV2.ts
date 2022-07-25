@@ -16,7 +16,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface KeeperDaoLiquidityPoolV2Interface extends utils.Interface {
   functions: {
@@ -97,37 +97,52 @@ export interface KeeperDaoLiquidityPoolV2Interface extends utils.Interface {
   encodeFunctionData(functionFragment: 'ETHEREUM', values?: undefined): string;
   encodeFunctionData(functionFragment: 'FEE_BASE', values?: undefined): string;
   encodeFunctionData(functionFragment: 'VERSION', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'addOperator', values: [string]): string;
-  encodeFunctionData(functionFragment: 'addPauser', values: [string]): string;
-  encodeFunctionData(functionFragment: 'blacklistRecoverableToken', values: [string]): string;
-  encodeFunctionData(functionFragment: 'borrow', values: [string, BigNumberish, BytesLike]): string;
-  encodeFunctionData(functionFragment: 'borrowableBalance', values: [string]): string;
-  encodeFunctionData(functionFragment: 'deposit', values: [string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'addOperator', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'addPauser', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'blacklistRecoverableToken', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'borrow',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<BytesLike>],
+  ): string;
+  encodeFunctionData(functionFragment: 'borrowableBalance', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'deposit',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'depositFeeInBips', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'initialize(string,address)', values: [string, string]): string;
+  encodeFunctionData(
+    functionFragment: 'initialize(string,address)',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'initialize()', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'initialize(address)', values: [string]): string;
-  encodeFunctionData(functionFragment: 'isOperator', values: [string]): string;
-  encodeFunctionData(functionFragment: 'isPauser', values: [string]): string;
-  encodeFunctionData(functionFragment: 'kToken', values: [string]): string;
-  encodeFunctionData(functionFragment: 'kTokens', values: [string]): string;
-  encodeFunctionData(functionFragment: 'migrate', values: [string]): string;
-  encodeFunctionData(functionFragment: 'operators', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'initialize(address)', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'isOperator', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'isPauser', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'kToken', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'kTokens', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'migrate', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'operators', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'pause', values?: undefined): string;
   encodeFunctionData(functionFragment: 'paused', values?: undefined): string;
   encodeFunctionData(functionFragment: 'poolFeeInBips', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'recoverTokens', values: [string]): string;
-  encodeFunctionData(functionFragment: 'register', values: [string]): string;
-  encodeFunctionData(functionFragment: 'registeredKTokens', values: [string]): string;
-  encodeFunctionData(functionFragment: 'registeredTokens', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'recoverTokens', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'register', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'registeredKTokens', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'registeredTokens', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'renounceOperator', values?: undefined): string;
   encodeFunctionData(functionFragment: 'renouncePauser', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'underlyingBalance', values: [string, string]): string;
+  encodeFunctionData(
+    functionFragment: 'underlyingBalance',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'unpause', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'updateDepositFee', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'updateFeePool', values: [string]): string;
-  encodeFunctionData(functionFragment: 'updatePoolFee', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'withdraw', values: [string, string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'updateDepositFee', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'updateFeePool', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'updatePoolFee', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'withdraw',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
 
   decodeFunctionResult(functionFragment: 'ETHEREUM', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'FEE_BASE', data: BytesLike): Result;
@@ -300,110 +315,117 @@ export interface KeeperDaoLiquidityPoolV2 extends BaseContract {
     VERSION(overrides?: CallOverrides): Promise<[string]>;
 
     addOperator(
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     addPauser(
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     blacklistRecoverableToken(
-      _token: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     borrow(
-      _token: string,
-      _amount: BigNumberish,
-      _data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      _data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    borrowableBalance(_token: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    borrowableBalance(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     deposit(
-      _token: string,
-      _amount: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     depositFeeInBips(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     'initialize(string,address)'(
-      _VERSION: string,
-      _borrower: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _VERSION: PromiseOrValue<string>,
+      _borrower: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    'initialize()'(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    'initialize()'(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     'initialize(address)'(
-      sender: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      sender: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    isOperator(account: string, overrides?: CallOverrides): Promise<[boolean]>;
+    isOperator(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
-    isPauser(account: string, overrides?: CallOverrides): Promise<[boolean]>;
+    isPauser(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
-    kToken(_token: string, overrides?: CallOverrides): Promise<[string]>;
+    kToken(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[string]>;
 
-    kTokens(arg0: string, overrides?: CallOverrides): Promise<[string]>;
+    kTokens(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[string]>;
 
-    migrate(_newLP: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    migrate(
+      _newLP: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
-    operators(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    operators(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
-    pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     paused(overrides?: CallOverrides): Promise<[boolean]>;
 
     poolFeeInBips(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     recoverTokens(
-      _token: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     register(
-      _kToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _kToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    registeredKTokens(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    registeredKTokens(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
-    registeredTokens(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    registeredTokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
-    renounceOperator(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOperator(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    renouncePauser(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renouncePauser(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    underlyingBalance(_token: string, _owner: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    underlyingBalance(
+      _token: PromiseOrValue<string>,
+      _owner: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
-    unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     updateDepositFee(
-      _depositFeeInBips: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _depositFeeInBips: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateFeePool(
-      _newFeePool: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newFeePool: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updatePoolFee(
-      _poolFeeInBips: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _poolFeeInBips: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     withdraw(
-      _to: string,
-      _kToken: string,
-      _kTokenAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _to: PromiseOrValue<string>,
+      _kToken: PromiseOrValue<string>,
+      _kTokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
@@ -414,104 +436,117 @@ export interface KeeperDaoLiquidityPoolV2 extends BaseContract {
   VERSION(overrides?: CallOverrides): Promise<string>;
 
   addOperator(
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  addPauser(account: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  addPauser(
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   blacklistRecoverableToken(
-    _token: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _token: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   borrow(
-    _token: string,
-    _amount: BigNumberish,
-    _data: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _token: PromiseOrValue<string>,
+    _amount: PromiseOrValue<BigNumberish>,
+    _data: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  borrowableBalance(_token: string, overrides?: CallOverrides): Promise<BigNumber>;
+  borrowableBalance(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   deposit(
-    _token: string,
-    _amount: BigNumberish,
-    overrides?: PayableOverrides & { from?: string | Promise<string> },
+    _token: PromiseOrValue<string>,
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   depositFeeInBips(overrides?: CallOverrides): Promise<BigNumber>;
 
   'initialize(string,address)'(
-    _VERSION: string,
-    _borrower: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _VERSION: PromiseOrValue<string>,
+    _borrower: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  'initialize()'(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  'initialize()'(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   'initialize(address)'(
-    sender: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    sender: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  isOperator(account: string, overrides?: CallOverrides): Promise<boolean>;
+  isOperator(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-  isPauser(account: string, overrides?: CallOverrides): Promise<boolean>;
+  isPauser(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-  kToken(_token: string, overrides?: CallOverrides): Promise<string>;
+  kToken(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
-  kTokens(arg0: string, overrides?: CallOverrides): Promise<string>;
+  kTokens(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
-  migrate(_newLP: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  migrate(
+    _newLP: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
-  operators(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  operators(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
-  pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   paused(overrides?: CallOverrides): Promise<boolean>;
 
   poolFeeInBips(overrides?: CallOverrides): Promise<BigNumber>;
 
   recoverTokens(
-    _token: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _token: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  register(_kToken: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  register(
+    _kToken: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
-  registeredKTokens(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  registeredKTokens(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-  registeredTokens(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  registeredTokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
-  renounceOperator(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOperator(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  renouncePauser(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renouncePauser(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  underlyingBalance(_token: string, _owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+  underlyingBalance(
+    _token: PromiseOrValue<string>,
+    _owner: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
-  unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   updateDepositFee(
-    _depositFeeInBips: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _depositFeeInBips: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateFeePool(
-    _newFeePool: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _newFeePool: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updatePoolFee(
-    _poolFeeInBips: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _poolFeeInBips: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   withdraw(
-    _to: string,
-    _kToken: string,
-    _kTokenAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _to: PromiseOrValue<string>,
+    _kToken: PromiseOrValue<string>,
+    _kTokenAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
@@ -521,37 +556,50 @@ export interface KeeperDaoLiquidityPoolV2 extends BaseContract {
 
     VERSION(overrides?: CallOverrides): Promise<string>;
 
-    addOperator(account: string, overrides?: CallOverrides): Promise<void>;
+    addOperator(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    addPauser(account: string, overrides?: CallOverrides): Promise<void>;
+    addPauser(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    blacklistRecoverableToken(_token: string, overrides?: CallOverrides): Promise<void>;
+    blacklistRecoverableToken(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    borrow(_token: string, _amount: BigNumberish, _data: BytesLike, overrides?: CallOverrides): Promise<void>;
+    borrow(
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      _data: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    borrowableBalance(_token: string, overrides?: CallOverrides): Promise<BigNumber>;
+    borrowableBalance(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    deposit(_token: string, _amount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    deposit(
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     depositFeeInBips(overrides?: CallOverrides): Promise<BigNumber>;
 
-    'initialize(string,address)'(_VERSION: string, _borrower: string, overrides?: CallOverrides): Promise<void>;
+    'initialize(string,address)'(
+      _VERSION: PromiseOrValue<string>,
+      _borrower: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     'initialize()'(overrides?: CallOverrides): Promise<void>;
 
-    'initialize(address)'(sender: string, overrides?: CallOverrides): Promise<void>;
+    'initialize(address)'(sender: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    isOperator(account: string, overrides?: CallOverrides): Promise<boolean>;
+    isOperator(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-    isPauser(account: string, overrides?: CallOverrides): Promise<boolean>;
+    isPauser(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-    kToken(_token: string, overrides?: CallOverrides): Promise<string>;
+    kToken(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
-    kTokens(arg0: string, overrides?: CallOverrides): Promise<string>;
+    kTokens(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
-    migrate(_newLP: string, overrides?: CallOverrides): Promise<void>;
+    migrate(_newLP: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    operators(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    operators(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
     pause(overrides?: CallOverrides): Promise<void>;
 
@@ -559,85 +607,99 @@ export interface KeeperDaoLiquidityPoolV2 extends BaseContract {
 
     poolFeeInBips(overrides?: CallOverrides): Promise<BigNumber>;
 
-    recoverTokens(_token: string, overrides?: CallOverrides): Promise<void>;
+    recoverTokens(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    register(_kToken: string, overrides?: CallOverrides): Promise<void>;
+    register(_kToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    registeredKTokens(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    registeredKTokens(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-    registeredTokens(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    registeredTokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
     renounceOperator(overrides?: CallOverrides): Promise<void>;
 
     renouncePauser(overrides?: CallOverrides): Promise<void>;
 
-    underlyingBalance(_token: string, _owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    underlyingBalance(
+      _token: PromiseOrValue<string>,
+      _owner: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     unpause(overrides?: CallOverrides): Promise<void>;
 
-    updateDepositFee(_depositFeeInBips: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    updateDepositFee(_depositFeeInBips: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    updateFeePool(_newFeePool: string, overrides?: CallOverrides): Promise<void>;
+    updateFeePool(_newFeePool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    updatePoolFee(_poolFeeInBips: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    updatePoolFee(_poolFeeInBips: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    withdraw(_to: string, _kToken: string, _kTokenAmount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    withdraw(
+      _to: PromiseOrValue<string>,
+      _kToken: PromiseOrValue<string>,
+      _kTokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
   };
 
   filters: {
     'Borrowed(address,address,uint256,uint256)'(
-      _borrower?: string | null,
-      _token?: string | null,
+      _borrower?: PromiseOrValue<string> | null,
+      _token?: PromiseOrValue<string> | null,
       _amount?: null,
       _fee?: null,
     ): BorrowedEventFilter;
-    Borrowed(_borrower?: string | null, _token?: string | null, _amount?: null, _fee?: null): BorrowedEventFilter;
+    Borrowed(
+      _borrower?: PromiseOrValue<string> | null,
+      _token?: PromiseOrValue<string> | null,
+      _amount?: null,
+      _fee?: null,
+    ): BorrowedEventFilter;
 
     'Deposited(address,address,uint256,uint256)'(
-      _depositor?: string | null,
-      _token?: string | null,
+      _depositor?: PromiseOrValue<string> | null,
+      _token?: PromiseOrValue<string> | null,
       _amount?: null,
       _mintAmount?: null,
     ): DepositedEventFilter;
     Deposited(
-      _depositor?: string | null,
-      _token?: string | null,
+      _depositor?: PromiseOrValue<string> | null,
+      _token?: PromiseOrValue<string> | null,
       _amount?: null,
       _mintAmount?: null,
     ): DepositedEventFilter;
 
-    'EtherReceived(address,uint256)'(_from?: string | null, _amount?: null): EtherReceivedEventFilter;
-    EtherReceived(_from?: string | null, _amount?: null): EtherReceivedEventFilter;
+    'EtherReceived(address,uint256)'(_from?: PromiseOrValue<string> | null, _amount?: null): EtherReceivedEventFilter;
+    EtherReceived(_from?: PromiseOrValue<string> | null, _amount?: null): EtherReceivedEventFilter;
 
-    'OperatorAdded(address)'(account?: string | null): OperatorAddedEventFilter;
-    OperatorAdded(account?: string | null): OperatorAddedEventFilter;
+    'OperatorAdded(address)'(account?: PromiseOrValue<string> | null): OperatorAddedEventFilter;
+    OperatorAdded(account?: PromiseOrValue<string> | null): OperatorAddedEventFilter;
 
-    'OperatorRemoved(address)'(account?: string | null): OperatorRemovedEventFilter;
-    OperatorRemoved(account?: string | null): OperatorRemovedEventFilter;
+    'OperatorRemoved(address)'(account?: PromiseOrValue<string> | null): OperatorRemovedEventFilter;
+    OperatorRemoved(account?: PromiseOrValue<string> | null): OperatorRemovedEventFilter;
 
     'Paused(address)'(account?: null): PausedEventFilter;
     Paused(account?: null): PausedEventFilter;
 
-    'PauserAdded(address)'(account?: string | null): PauserAddedEventFilter;
-    PauserAdded(account?: string | null): PauserAddedEventFilter;
+    'PauserAdded(address)'(account?: PromiseOrValue<string> | null): PauserAddedEventFilter;
+    PauserAdded(account?: PromiseOrValue<string> | null): PauserAddedEventFilter;
 
-    'PauserRemoved(address)'(account?: string | null): PauserRemovedEventFilter;
-    PauserRemoved(account?: string | null): PauserRemovedEventFilter;
+    'PauserRemoved(address)'(account?: PromiseOrValue<string> | null): PauserRemovedEventFilter;
+    PauserRemoved(account?: PromiseOrValue<string> | null): PauserRemovedEventFilter;
 
     'Unpaused(address)'(account?: null): UnpausedEventFilter;
     Unpaused(account?: null): UnpausedEventFilter;
 
     'Withdrew(address,address,address,uint256,uint256)'(
-      _reciever?: string | null,
-      _withdrawer?: string | null,
-      _token?: string | null,
+      _reciever?: PromiseOrValue<string> | null,
+      _withdrawer?: PromiseOrValue<string> | null,
+      _token?: PromiseOrValue<string> | null,
       _amount?: null,
       _burnAmount?: null,
     ): WithdrewEventFilter;
     Withdrew(
-      _reciever?: string | null,
-      _withdrawer?: string | null,
-      _token?: string | null,
+      _reciever?: PromiseOrValue<string> | null,
+      _withdrawer?: PromiseOrValue<string> | null,
+      _token?: PromiseOrValue<string> | null,
       _amount?: null,
       _burnAmount?: null,
     ): WithdrewEventFilter;
@@ -650,96 +712,118 @@ export interface KeeperDaoLiquidityPoolV2 extends BaseContract {
 
     VERSION(overrides?: CallOverrides): Promise<BigNumber>;
 
-    addOperator(account: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    addOperator(
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    addPauser(account: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    addPauser(
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     blacklistRecoverableToken(
-      _token: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     borrow(
-      _token: string,
-      _amount: BigNumberish,
-      _data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      _data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    borrowableBalance(_token: string, overrides?: CallOverrides): Promise<BigNumber>;
+    borrowableBalance(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     deposit(
-      _token: string,
-      _amount: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     depositFeeInBips(overrides?: CallOverrides): Promise<BigNumber>;
 
     'initialize(string,address)'(
-      _VERSION: string,
-      _borrower: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _VERSION: PromiseOrValue<string>,
+      _borrower: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    'initialize()'(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    'initialize()'(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     'initialize(address)'(
-      sender: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      sender: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    isOperator(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    isOperator(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    isPauser(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    isPauser(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    kToken(_token: string, overrides?: CallOverrides): Promise<BigNumber>;
+    kToken(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    kTokens(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    kTokens(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    migrate(_newLP: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    migrate(
+      _newLP: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    operators(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    operators(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     paused(overrides?: CallOverrides): Promise<BigNumber>;
 
     poolFeeInBips(overrides?: CallOverrides): Promise<BigNumber>;
 
-    recoverTokens(_token: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
-
-    register(_kToken: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
-
-    registeredKTokens(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-    registeredTokens(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
-
-    renounceOperator(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
-
-    renouncePauser(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
-
-    underlyingBalance(_token: string, _owner: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-    unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
-
-    updateDepositFee(
-      _depositFeeInBips: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    recoverTokens(
+      _token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    updateFeePool(_newFeePool: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    register(
+      _kToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    registeredKTokens(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    registeredTokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    renounceOperator(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
+
+    renouncePauser(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
+
+    underlyingBalance(
+      _token: PromiseOrValue<string>,
+      _owner: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
+    unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
+
+    updateDepositFee(
+      _depositFeeInBips: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    updateFeePool(
+      _newFeePool: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     updatePoolFee(
-      _poolFeeInBips: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _poolFeeInBips: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     withdraw(
-      _to: string,
-      _kToken: string,
-      _kTokenAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _to: PromiseOrValue<string>,
+      _kToken: PromiseOrValue<string>,
+      _kTokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
@@ -751,110 +835,117 @@ export interface KeeperDaoLiquidityPoolV2 extends BaseContract {
     VERSION(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     addOperator(
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     addPauser(
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     blacklistRecoverableToken(
-      _token: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     borrow(
-      _token: string,
-      _amount: BigNumberish,
-      _data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      _data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    borrowableBalance(_token: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    borrowableBalance(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     deposit(
-      _token: string,
-      _amount: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     depositFeeInBips(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     'initialize(string,address)'(
-      _VERSION: string,
-      _borrower: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _VERSION: PromiseOrValue<string>,
+      _borrower: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    'initialize()'(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    'initialize()'(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     'initialize(address)'(
-      sender: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      sender: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    isOperator(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    isOperator(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    isPauser(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    isPauser(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    kToken(_token: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    kToken(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    kTokens(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    kTokens(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    migrate(_newLP: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    migrate(
+      _newLP: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
-    operators(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    operators(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     paused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     poolFeeInBips(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     recoverTokens(
-      _token: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     register(
-      _kToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _kToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    registeredKTokens(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    registeredKTokens(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    registeredTokens(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    registeredTokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    renounceOperator(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOperator(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    renouncePauser(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renouncePauser(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    underlyingBalance(_token: string, _owner: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    underlyingBalance(
+      _token: PromiseOrValue<string>,
+      _owner: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     updateDepositFee(
-      _depositFeeInBips: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _depositFeeInBips: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateFeePool(
-      _newFeePool: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newFeePool: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updatePoolFee(
-      _poolFeeInBips: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _poolFeeInBips: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     withdraw(
-      _to: string,
-      _kToken: string,
-      _kTokenAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _to: PromiseOrValue<string>,
+      _kToken: PromiseOrValue<string>,
+      _kTokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

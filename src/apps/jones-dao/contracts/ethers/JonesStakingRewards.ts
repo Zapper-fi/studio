@@ -16,7 +16,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface JonesStakingRewardsInterface extends utils.Interface {
   functions: {
@@ -84,35 +84,35 @@ export interface JonesStakingRewardsInterface extends utils.Interface {
       | 'withdrawRewardTokens',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'addToContractWhitelist', values: [string]): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
+  encodeFunctionData(functionFragment: 'addToContractWhitelist', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'boost', values?: undefined): string;
   encodeFunctionData(functionFragment: 'boostedFinish', values?: undefined): string;
   encodeFunctionData(functionFragment: 'boostedTimePeriod', values?: undefined): string;
   encodeFunctionData(functionFragment: 'compound', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'earned', values: [string]): string;
+  encodeFunctionData(functionFragment: 'earned', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'exit', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getReward', values?: undefined): string;
   encodeFunctionData(functionFragment: 'id', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'isContract', values: [string]): string;
+  encodeFunctionData(functionFragment: 'isContract', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'lastTimeRewardApplicable', values?: undefined): string;
   encodeFunctionData(functionFragment: 'lastUpdateTime', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'notifyRewardAmount', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'notifyRewardAmount', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'periodFinish', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'removeFromContractWhitelist', values: [string]): string;
+  encodeFunctionData(functionFragment: 'removeFromContractWhitelist', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'rewardPerToken', values?: undefined): string;
   encodeFunctionData(functionFragment: 'rewardPerTokenStoredJONES', values?: undefined): string;
   encodeFunctionData(functionFragment: 'rewardRateJONES', values?: undefined): string;
   encodeFunctionData(functionFragment: 'rewardsDuration', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'rewardsJONES', values: [string]): string;
+  encodeFunctionData(functionFragment: 'rewardsJONES', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'rewardsTokenJONES', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'stake', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'stake', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'stakingToken', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'userJONESRewardPerTokenPaid', values: [string]): string;
-  encodeFunctionData(functionFragment: 'whitelistedContracts', values: [string]): string;
-  encodeFunctionData(functionFragment: 'withdraw', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'withdrawRewardTokens', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'userJONESRewardPerTokenPaid', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'whitelistedContracts', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'withdraw', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'withdrawRewardTokens', values: [PromiseOrValue<BigNumberish>]): string;
 
   decodeFunctionResult(functionFragment: 'addToContractWhitelist', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result;
@@ -249,11 +249,11 @@ export interface JonesStakingRewards extends BaseContract {
 
   functions: {
     addToContractWhitelist(
-      _contract: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _contract: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    balanceOf(_account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOf(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     boost(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -261,32 +261,35 @@ export interface JonesStakingRewards extends BaseContract {
 
     boostedTimePeriod(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    compound(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    compound(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    earned(_account: string, overrides?: CallOverrides): Promise<[BigNumber] & { JONEStokensEarned: BigNumber }>;
+    earned(
+      _account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber] & { JONEStokensEarned: BigNumber }>;
 
-    exit(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    exit(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    getReward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    getReward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     id(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    isContract(_addr: string, overrides?: CallOverrides): Promise<[boolean]>;
+    isContract(_addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     lastTimeRewardApplicable(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     lastUpdateTime(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     notifyRewardAmount(
-      _rewardJONES: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardJONES: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     periodFinish(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     removeFromContractWhitelist(
-      _contract: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _contract: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     rewardPerToken(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -297,40 +300,40 @@ export interface JonesStakingRewards extends BaseContract {
 
     rewardsDuration(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    rewardsJONES(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    rewardsJONES(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     rewardsTokenJONES(overrides?: CallOverrides): Promise<[string]>;
 
     stake(
-      _amount: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     stakingToken(overrides?: CallOverrides): Promise<[string]>;
 
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    userJONESRewardPerTokenPaid(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    userJONESRewardPerTokenPaid(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    whitelistedContracts(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    whitelistedContracts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     withdraw(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     withdrawRewardTokens(
-      _amountJONES: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amountJONES: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
   addToContractWhitelist(
-    _contract: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _contract: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  balanceOf(_account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   boost(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -338,32 +341,32 @@ export interface JonesStakingRewards extends BaseContract {
 
   boostedTimePeriod(overrides?: CallOverrides): Promise<BigNumber>;
 
-  compound(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  compound(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  earned(_account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  earned(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  exit(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  exit(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  getReward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  getReward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   id(overrides?: CallOverrides): Promise<BigNumber>;
 
-  isContract(_addr: string, overrides?: CallOverrides): Promise<boolean>;
+  isContract(_addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   lastTimeRewardApplicable(overrides?: CallOverrides): Promise<BigNumber>;
 
   lastUpdateTime(overrides?: CallOverrides): Promise<BigNumber>;
 
   notifyRewardAmount(
-    _rewardJONES: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _rewardJONES: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   periodFinish(overrides?: CallOverrides): Promise<BigNumber>;
 
   removeFromContractWhitelist(
-    _contract: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _contract: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   rewardPerToken(overrides?: CallOverrides): Promise<BigNumber>;
@@ -374,37 +377,37 @@ export interface JonesStakingRewards extends BaseContract {
 
   rewardsDuration(overrides?: CallOverrides): Promise<BigNumber>;
 
-  rewardsJONES(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  rewardsJONES(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   rewardsTokenJONES(overrides?: CallOverrides): Promise<string>;
 
   stake(
-    _amount: BigNumberish,
-    overrides?: PayableOverrides & { from?: string | Promise<string> },
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   stakingToken(overrides?: CallOverrides): Promise<string>;
 
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-  userJONESRewardPerTokenPaid(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  userJONESRewardPerTokenPaid(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  whitelistedContracts(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  whitelistedContracts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   withdraw(
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   withdrawRewardTokens(
-    _amountJONES: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _amountJONES: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    addToContractWhitelist(_contract: string, overrides?: CallOverrides): Promise<boolean>;
+    addToContractWhitelist(_contract: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-    balanceOf(_account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     boost(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -414,7 +417,7 @@ export interface JonesStakingRewards extends BaseContract {
 
     compound(overrides?: CallOverrides): Promise<void>;
 
-    earned(_account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    earned(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     exit(overrides?: CallOverrides): Promise<void>;
 
@@ -422,17 +425,17 @@ export interface JonesStakingRewards extends BaseContract {
 
     id(overrides?: CallOverrides): Promise<BigNumber>;
 
-    isContract(_addr: string, overrides?: CallOverrides): Promise<boolean>;
+    isContract(_addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     lastTimeRewardApplicable(overrides?: CallOverrides): Promise<BigNumber>;
 
     lastUpdateTime(overrides?: CallOverrides): Promise<BigNumber>;
 
-    notifyRewardAmount(_rewardJONES: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    notifyRewardAmount(_rewardJONES: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     periodFinish(overrides?: CallOverrides): Promise<BigNumber>;
 
-    removeFromContractWhitelist(_contract: string, overrides?: CallOverrides): Promise<boolean>;
+    removeFromContractWhitelist(_contract: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     rewardPerToken(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -442,58 +445,63 @@ export interface JonesStakingRewards extends BaseContract {
 
     rewardsDuration(overrides?: CallOverrides): Promise<BigNumber>;
 
-    rewardsJONES(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    rewardsJONES(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     rewardsTokenJONES(overrides?: CallOverrides): Promise<string>;
 
-    stake(_amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    stake(_amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     stakingToken(overrides?: CallOverrides): Promise<string>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    userJONESRewardPerTokenPaid(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    userJONESRewardPerTokenPaid(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    whitelistedContracts(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    whitelistedContracts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-    withdraw(_amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    withdraw(_amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    withdrawRewardTokens(_amountJONES: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    withdrawRewardTokens(_amountJONES: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   filters: {
-    'AddToContractWhitelist(address)'(_contract?: string | null): AddToContractWhitelistEventFilter;
-    AddToContractWhitelist(_contract?: string | null): AddToContractWhitelistEventFilter;
+    'AddToContractWhitelist(address)'(_contract?: PromiseOrValue<string> | null): AddToContractWhitelistEventFilter;
+    AddToContractWhitelist(_contract?: PromiseOrValue<string> | null): AddToContractWhitelistEventFilter;
 
-    'RemoveFromContractWhitelist(address)'(_contract?: string | null): RemoveFromContractWhitelistEventFilter;
-    RemoveFromContractWhitelist(_contract?: string | null): RemoveFromContractWhitelistEventFilter;
+    'RemoveFromContractWhitelist(address)'(
+      _contract?: PromiseOrValue<string> | null,
+    ): RemoveFromContractWhitelistEventFilter;
+    RemoveFromContractWhitelist(_contract?: PromiseOrValue<string> | null): RemoveFromContractWhitelistEventFilter;
 
     'RewardAdded(uint256)'(rewardJONES?: null): RewardAddedEventFilter;
     RewardAdded(rewardJONES?: null): RewardAddedEventFilter;
 
-    'RewardCompounded(address,uint256)'(user?: string | null, rewardJONES?: null): RewardCompoundedEventFilter;
-    RewardCompounded(user?: string | null, rewardJONES?: null): RewardCompoundedEventFilter;
+    'RewardCompounded(address,uint256)'(
+      user?: PromiseOrValue<string> | null,
+      rewardJONES?: null,
+    ): RewardCompoundedEventFilter;
+    RewardCompounded(user?: PromiseOrValue<string> | null, rewardJONES?: null): RewardCompoundedEventFilter;
 
-    'RewardPaid(address,uint256)'(user?: string | null, reward?: null): RewardPaidEventFilter;
-    RewardPaid(user?: string | null, reward?: null): RewardPaidEventFilter;
+    'RewardPaid(address,uint256)'(user?: PromiseOrValue<string> | null, reward?: null): RewardPaidEventFilter;
+    RewardPaid(user?: PromiseOrValue<string> | null, reward?: null): RewardPaidEventFilter;
 
     'RewardUpdated(uint256)'(rewardJONES?: null): RewardUpdatedEventFilter;
     RewardUpdated(rewardJONES?: null): RewardUpdatedEventFilter;
 
-    'Staked(address,uint256)'(user?: string | null, amount?: null): StakedEventFilter;
-    Staked(user?: string | null, amount?: null): StakedEventFilter;
+    'Staked(address,uint256)'(user?: PromiseOrValue<string> | null, amount?: null): StakedEventFilter;
+    Staked(user?: PromiseOrValue<string> | null, amount?: null): StakedEventFilter;
 
-    'Withdrawn(address,uint256)'(user?: string | null, amount?: null): WithdrawnEventFilter;
-    Withdrawn(user?: string | null, amount?: null): WithdrawnEventFilter;
+    'Withdrawn(address,uint256)'(user?: PromiseOrValue<string> | null, amount?: null): WithdrawnEventFilter;
+    Withdrawn(user?: PromiseOrValue<string> | null, amount?: null): WithdrawnEventFilter;
   };
 
   estimateGas: {
     addToContractWhitelist(
-      _contract: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _contract: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    balanceOf(_account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     boost(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -501,32 +509,32 @@ export interface JonesStakingRewards extends BaseContract {
 
     boostedTimePeriod(overrides?: CallOverrides): Promise<BigNumber>;
 
-    compound(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    compound(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    earned(_account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    earned(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    exit(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    exit(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    getReward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    getReward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     id(overrides?: CallOverrides): Promise<BigNumber>;
 
-    isContract(_addr: string, overrides?: CallOverrides): Promise<BigNumber>;
+    isContract(_addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     lastTimeRewardApplicable(overrides?: CallOverrides): Promise<BigNumber>;
 
     lastUpdateTime(overrides?: CallOverrides): Promise<BigNumber>;
 
     notifyRewardAmount(
-      _rewardJONES: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardJONES: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     periodFinish(overrides?: CallOverrides): Promise<BigNumber>;
 
     removeFromContractWhitelist(
-      _contract: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _contract: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     rewardPerToken(overrides?: CallOverrides): Promise<BigNumber>;
@@ -537,38 +545,41 @@ export interface JonesStakingRewards extends BaseContract {
 
     rewardsDuration(overrides?: CallOverrides): Promise<BigNumber>;
 
-    rewardsJONES(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    rewardsJONES(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     rewardsTokenJONES(overrides?: CallOverrides): Promise<BigNumber>;
 
     stake(
-      _amount: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     stakingToken(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    userJONESRewardPerTokenPaid(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    userJONESRewardPerTokenPaid(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    whitelistedContracts(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    whitelistedContracts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    withdraw(_amount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    withdraw(
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     withdrawRewardTokens(
-      _amountJONES: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amountJONES: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     addToContractWhitelist(
-      _contract: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _contract: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    balanceOf(_account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    balanceOf(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     boost(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -576,32 +587,32 @@ export interface JonesStakingRewards extends BaseContract {
 
     boostedTimePeriod(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    compound(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    compound(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    earned(_account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    earned(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    exit(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    exit(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    getReward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    getReward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     id(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    isContract(_addr: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    isContract(_addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     lastTimeRewardApplicable(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     lastUpdateTime(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     notifyRewardAmount(
-      _rewardJONES: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardJONES: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     periodFinish(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     removeFromContractWhitelist(
-      _contract: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _contract: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     rewardPerToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -612,31 +623,31 @@ export interface JonesStakingRewards extends BaseContract {
 
     rewardsDuration(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    rewardsJONES(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    rewardsJONES(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     rewardsTokenJONES(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     stake(
-      _amount: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     stakingToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    userJONESRewardPerTokenPaid(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    userJONESRewardPerTokenPaid(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    whitelistedContracts(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    whitelistedContracts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     withdraw(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     withdrawRewardTokens(
-      _amountJONES: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amountJONES: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }
