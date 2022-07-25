@@ -70,7 +70,6 @@ export class GoodGhostingBalanceFetcherHelper {
           pooltotalEarningsConverted,
         } = playerGameBalances[contractPosition.address];
 
-        const { gameName } = gameConfig;
         const stakedTokenPrecision = 10 ** stakedToken.decimals;
 
         const paidAmountRaw = paidAmount * stakedTokenPrecision;
@@ -115,7 +114,7 @@ export class GoodGhostingBalanceFetcherHelper {
           balanceUSD,
           dataProps: {},
           displayProps: {
-            label: gameName,
+            label: gameConfig.gameName,
             images: [getAppImg(appId)],
             statsItems,
           },
