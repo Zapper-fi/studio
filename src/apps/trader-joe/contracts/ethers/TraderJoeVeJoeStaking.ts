@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface TraderJoeVeJoeStakingInterface extends utils.Interface {
   functions: {
@@ -81,31 +81,39 @@ export interface TraderJoeVeJoeStakingInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'VEJOE_PER_SHARE_PER_SEC_PRECISION', values?: undefined): string;
   encodeFunctionData(functionFragment: 'accVeJoePerShare', values?: undefined): string;
   encodeFunctionData(functionFragment: 'claim', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'deposit', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'getPendingVeJoe', values: [string]): string;
+  encodeFunctionData(functionFragment: 'deposit', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'getPendingVeJoe', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
     functionFragment: 'initialize',
-    values: [string, string, BigNumberish, BigNumberish, BigNumberish, BigNumberish, BigNumberish],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'joe', values?: undefined): string;
   encodeFunctionData(functionFragment: 'lastRewardTimestamp', values?: undefined): string;
   encodeFunctionData(functionFragment: 'maxCapPct', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'setMaxCapPct', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setSpeedUpThreshold', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setVeJoePerSharePerSec', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'setMaxCapPct', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setSpeedUpThreshold', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setVeJoePerSharePerSec', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'speedUpDuration', values?: undefined): string;
   encodeFunctionData(functionFragment: 'speedUpThreshold', values?: undefined): string;
   encodeFunctionData(functionFragment: 'speedUpVeJoePerSharePerSec', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'updateRewardVars', values?: undefined): string;
   encodeFunctionData(functionFragment: 'upperLimitMaxCapPct', values?: undefined): string;
   encodeFunctionData(functionFragment: 'upperLimitVeJoePerSharePerSec', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'userInfos', values: [string]): string;
+  encodeFunctionData(functionFragment: 'userInfos', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'veJoe', values?: undefined): string;
   encodeFunctionData(functionFragment: 'veJoePerSharePerSec', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'withdraw', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'withdraw', values: [PromiseOrValue<BigNumberish>]): string;
 
   decodeFunctionResult(functionFragment: 'ACC_VEJOE_PER_SHARE_PRECISION', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'VEJOE_PER_SHARE_PER_SEC_PRECISION', data: BytesLike): Result;
@@ -249,24 +257,24 @@ export interface TraderJoeVeJoeStaking extends BaseContract {
 
     accVeJoePerShare(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    claim(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    claim(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     deposit(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    getPendingVeJoe(_user: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getPendingVeJoe(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     initialize(
-      _joe: string,
-      _veJoe: string,
-      _veJoePerSharePerSec: BigNumberish,
-      _speedUpVeJoePerSharePerSec: BigNumberish,
-      _speedUpThreshold: BigNumberish,
-      _speedUpDuration: BigNumberish,
-      _maxCapPct: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _joe: PromiseOrValue<string>,
+      _veJoe: PromiseOrValue<string>,
+      _veJoePerSharePerSec: PromiseOrValue<BigNumberish>,
+      _speedUpVeJoePerSharePerSec: PromiseOrValue<BigNumberish>,
+      _speedUpThreshold: PromiseOrValue<BigNumberish>,
+      _speedUpDuration: PromiseOrValue<BigNumberish>,
+      _maxCapPct: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     joe(overrides?: CallOverrides): Promise<[string]>;
@@ -277,21 +285,21 @@ export interface TraderJoeVeJoeStaking extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     setMaxCapPct(
-      _maxCapPct: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _maxCapPct: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setSpeedUpThreshold(
-      _speedUpThreshold: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _speedUpThreshold: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setVeJoePerSharePerSec(
-      _veJoePerSharePerSec: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _veJoePerSharePerSec: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     speedUpDuration(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -301,18 +309,18 @@ export interface TraderJoeVeJoeStaking extends BaseContract {
     speedUpVeJoePerSharePerSec(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    updateRewardVars(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    updateRewardVars(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     upperLimitMaxCapPct(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     upperLimitVeJoePerSharePerSec(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     userInfos(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -328,8 +336,8 @@ export interface TraderJoeVeJoeStaking extends BaseContract {
     veJoePerSharePerSec(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     withdraw(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
@@ -339,24 +347,24 @@ export interface TraderJoeVeJoeStaking extends BaseContract {
 
   accVeJoePerShare(overrides?: CallOverrides): Promise<BigNumber>;
 
-  claim(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  claim(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   deposit(
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  getPendingVeJoe(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getPendingVeJoe(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   initialize(
-    _joe: string,
-    _veJoe: string,
-    _veJoePerSharePerSec: BigNumberish,
-    _speedUpVeJoePerSharePerSec: BigNumberish,
-    _speedUpThreshold: BigNumberish,
-    _speedUpDuration: BigNumberish,
-    _maxCapPct: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _joe: PromiseOrValue<string>,
+    _veJoe: PromiseOrValue<string>,
+    _veJoePerSharePerSec: PromiseOrValue<BigNumberish>,
+    _speedUpVeJoePerSharePerSec: PromiseOrValue<BigNumberish>,
+    _speedUpThreshold: PromiseOrValue<BigNumberish>,
+    _speedUpDuration: PromiseOrValue<BigNumberish>,
+    _maxCapPct: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   joe(overrides?: CallOverrides): Promise<string>;
@@ -367,21 +375,21 @@ export interface TraderJoeVeJoeStaking extends BaseContract {
 
   owner(overrides?: CallOverrides): Promise<string>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   setMaxCapPct(
-    _maxCapPct: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _maxCapPct: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setSpeedUpThreshold(
-    _speedUpThreshold: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _speedUpThreshold: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setVeJoePerSharePerSec(
-    _veJoePerSharePerSec: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _veJoePerSharePerSec: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   speedUpDuration(overrides?: CallOverrides): Promise<BigNumber>;
@@ -391,18 +399,18 @@ export interface TraderJoeVeJoeStaking extends BaseContract {
   speedUpVeJoePerSharePerSec(overrides?: CallOverrides): Promise<BigNumber>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  updateRewardVars(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  updateRewardVars(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   upperLimitMaxCapPct(overrides?: CallOverrides): Promise<BigNumber>;
 
   upperLimitVeJoePerSharePerSec(overrides?: CallOverrides): Promise<BigNumber>;
 
   userInfos(
-    arg0: string,
+    arg0: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -418,8 +426,8 @@ export interface TraderJoeVeJoeStaking extends BaseContract {
   veJoePerSharePerSec(overrides?: CallOverrides): Promise<BigNumber>;
 
   withdraw(
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
@@ -431,18 +439,18 @@ export interface TraderJoeVeJoeStaking extends BaseContract {
 
     claim(overrides?: CallOverrides): Promise<void>;
 
-    deposit(_amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    deposit(_amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    getPendingVeJoe(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getPendingVeJoe(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     initialize(
-      _joe: string,
-      _veJoe: string,
-      _veJoePerSharePerSec: BigNumberish,
-      _speedUpVeJoePerSharePerSec: BigNumberish,
-      _speedUpThreshold: BigNumberish,
-      _speedUpDuration: BigNumberish,
-      _maxCapPct: BigNumberish,
+      _joe: PromiseOrValue<string>,
+      _veJoe: PromiseOrValue<string>,
+      _veJoePerSharePerSec: PromiseOrValue<BigNumberish>,
+      _speedUpVeJoePerSharePerSec: PromiseOrValue<BigNumberish>,
+      _speedUpThreshold: PromiseOrValue<BigNumberish>,
+      _speedUpDuration: PromiseOrValue<BigNumberish>,
+      _maxCapPct: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -456,11 +464,14 @@ export interface TraderJoeVeJoeStaking extends BaseContract {
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
-    setMaxCapPct(_maxCapPct: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setMaxCapPct(_maxCapPct: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setSpeedUpThreshold(_speedUpThreshold: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setSpeedUpThreshold(_speedUpThreshold: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setVeJoePerSharePerSec(_veJoePerSharePerSec: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setVeJoePerSharePerSec(
+      _veJoePerSharePerSec: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     speedUpDuration(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -468,7 +479,7 @@ export interface TraderJoeVeJoeStaking extends BaseContract {
 
     speedUpVeJoePerSharePerSec(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     updateRewardVars(overrides?: CallOverrides): Promise<void>;
 
@@ -477,7 +488,7 @@ export interface TraderJoeVeJoeStaking extends BaseContract {
     upperLimitVeJoePerSharePerSec(overrides?: CallOverrides): Promise<BigNumber>;
 
     userInfos(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -492,24 +503,30 @@ export interface TraderJoeVeJoeStaking extends BaseContract {
 
     veJoePerSharePerSec(overrides?: CallOverrides): Promise<BigNumber>;
 
-    withdraw(_amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    withdraw(_amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
-    'Claim(address,uint256)'(user?: string | null, amount?: null): ClaimEventFilter;
-    Claim(user?: string | null, amount?: null): ClaimEventFilter;
+    'Claim(address,uint256)'(user?: PromiseOrValue<string> | null, amount?: null): ClaimEventFilter;
+    Claim(user?: PromiseOrValue<string> | null, amount?: null): ClaimEventFilter;
 
-    'Deposit(address,uint256)'(user?: string | null, amount?: null): DepositEventFilter;
-    Deposit(user?: string | null, amount?: null): DepositEventFilter;
+    'Deposit(address,uint256)'(user?: PromiseOrValue<string> | null, amount?: null): DepositEventFilter;
+    Deposit(user?: PromiseOrValue<string> | null, amount?: null): DepositEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
 
-    'UpdateMaxCapPct(address,uint256)'(user?: string | null, maxCapPct?: null): UpdateMaxCapPctEventFilter;
-    UpdateMaxCapPct(user?: string | null, maxCapPct?: null): UpdateMaxCapPctEventFilter;
+    'UpdateMaxCapPct(address,uint256)'(
+      user?: PromiseOrValue<string> | null,
+      maxCapPct?: null,
+    ): UpdateMaxCapPctEventFilter;
+    UpdateMaxCapPct(user?: PromiseOrValue<string> | null, maxCapPct?: null): UpdateMaxCapPctEventFilter;
 
     'UpdateRewardVars(uint256,uint256)'(
       lastRewardTimestamp?: null,
@@ -518,23 +535,29 @@ export interface TraderJoeVeJoeStaking extends BaseContract {
     UpdateRewardVars(lastRewardTimestamp?: null, accVeJoePerShare?: null): UpdateRewardVarsEventFilter;
 
     'UpdateSpeedUpThreshold(address,uint256)'(
-      user?: string | null,
+      user?: PromiseOrValue<string> | null,
       speedUpThreshold?: null,
     ): UpdateSpeedUpThresholdEventFilter;
-    UpdateSpeedUpThreshold(user?: string | null, speedUpThreshold?: null): UpdateSpeedUpThresholdEventFilter;
+    UpdateSpeedUpThreshold(
+      user?: PromiseOrValue<string> | null,
+      speedUpThreshold?: null,
+    ): UpdateSpeedUpThresholdEventFilter;
 
     'UpdateVeJoePerSharePerSec(address,uint256)'(
-      user?: string | null,
+      user?: PromiseOrValue<string> | null,
       veJoePerSharePerSec?: null,
     ): UpdateVeJoePerSharePerSecEventFilter;
-    UpdateVeJoePerSharePerSec(user?: string | null, veJoePerSharePerSec?: null): UpdateVeJoePerSharePerSecEventFilter;
+    UpdateVeJoePerSharePerSec(
+      user?: PromiseOrValue<string> | null,
+      veJoePerSharePerSec?: null,
+    ): UpdateVeJoePerSharePerSecEventFilter;
 
     'Withdraw(address,uint256,uint256)'(
-      user?: string | null,
+      user?: PromiseOrValue<string> | null,
       withdrawAmount?: null,
       burnAmount?: null,
     ): WithdrawEventFilter;
-    Withdraw(user?: string | null, withdrawAmount?: null, burnAmount?: null): WithdrawEventFilter;
+    Withdraw(user?: PromiseOrValue<string> | null, withdrawAmount?: null, burnAmount?: null): WithdrawEventFilter;
   };
 
   estimateGas: {
@@ -544,21 +567,24 @@ export interface TraderJoeVeJoeStaking extends BaseContract {
 
     accVeJoePerShare(overrides?: CallOverrides): Promise<BigNumber>;
 
-    claim(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    claim(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    deposit(_amount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    deposit(
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    getPendingVeJoe(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getPendingVeJoe(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     initialize(
-      _joe: string,
-      _veJoe: string,
-      _veJoePerSharePerSec: BigNumberish,
-      _speedUpVeJoePerSharePerSec: BigNumberish,
-      _speedUpThreshold: BigNumberish,
-      _speedUpDuration: BigNumberish,
-      _maxCapPct: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _joe: PromiseOrValue<string>,
+      _veJoe: PromiseOrValue<string>,
+      _veJoePerSharePerSec: PromiseOrValue<BigNumberish>,
+      _speedUpVeJoePerSharePerSec: PromiseOrValue<BigNumberish>,
+      _speedUpThreshold: PromiseOrValue<BigNumberish>,
+      _speedUpDuration: PromiseOrValue<BigNumberish>,
+      _maxCapPct: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     joe(overrides?: CallOverrides): Promise<BigNumber>;
@@ -569,21 +595,21 @@ export interface TraderJoeVeJoeStaking extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     setMaxCapPct(
-      _maxCapPct: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _maxCapPct: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setSpeedUpThreshold(
-      _speedUpThreshold: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _speedUpThreshold: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setVeJoePerSharePerSec(
-      _veJoePerSharePerSec: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _veJoePerSharePerSec: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     speedUpDuration(overrides?: CallOverrides): Promise<BigNumber>;
@@ -593,23 +619,26 @@ export interface TraderJoeVeJoeStaking extends BaseContract {
     speedUpVeJoePerSharePerSec(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    updateRewardVars(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    updateRewardVars(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     upperLimitMaxCapPct(overrides?: CallOverrides): Promise<BigNumber>;
 
     upperLimitVeJoePerSharePerSec(overrides?: CallOverrides): Promise<BigNumber>;
 
-    userInfos(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    userInfos(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     veJoe(overrides?: CallOverrides): Promise<BigNumber>;
 
     veJoePerSharePerSec(overrides?: CallOverrides): Promise<BigNumber>;
 
-    withdraw(_amount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    withdraw(
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -619,24 +648,24 @@ export interface TraderJoeVeJoeStaking extends BaseContract {
 
     accVeJoePerShare(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    claim(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    claim(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     deposit(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    getPendingVeJoe(_user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getPendingVeJoe(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     initialize(
-      _joe: string,
-      _veJoe: string,
-      _veJoePerSharePerSec: BigNumberish,
-      _speedUpVeJoePerSharePerSec: BigNumberish,
-      _speedUpThreshold: BigNumberish,
-      _speedUpDuration: BigNumberish,
-      _maxCapPct: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _joe: PromiseOrValue<string>,
+      _veJoe: PromiseOrValue<string>,
+      _veJoePerSharePerSec: PromiseOrValue<BigNumberish>,
+      _speedUpVeJoePerSharePerSec: PromiseOrValue<BigNumberish>,
+      _speedUpThreshold: PromiseOrValue<BigNumberish>,
+      _speedUpDuration: PromiseOrValue<BigNumberish>,
+      _maxCapPct: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     joe(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -647,21 +676,21 @@ export interface TraderJoeVeJoeStaking extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     setMaxCapPct(
-      _maxCapPct: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _maxCapPct: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setSpeedUpThreshold(
-      _speedUpThreshold: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _speedUpThreshold: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setVeJoePerSharePerSec(
-      _veJoePerSharePerSec: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _veJoePerSharePerSec: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     speedUpDuration(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -671,25 +700,25 @@ export interface TraderJoeVeJoeStaking extends BaseContract {
     speedUpVeJoePerSharePerSec(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    updateRewardVars(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    updateRewardVars(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     upperLimitMaxCapPct(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     upperLimitVeJoePerSharePerSec(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    userInfos(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    userInfos(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     veJoe(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     veJoePerSharePerSec(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     withdraw(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

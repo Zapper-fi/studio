@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface VvsRewarderInterface extends utils.Interface {
   functions: {
@@ -73,30 +73,45 @@ export interface VvsRewarderInterface extends utils.Interface {
       | 'userInfo',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'add', values: [BigNumberish, BigNumberish, boolean]): string;
+  encodeFunctionData(
+    functionFragment: 'add',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>, PromiseOrValue<boolean>],
+  ): string;
   encodeFunctionData(functionFragment: 'craftsman', values?: undefined): string;
   encodeFunctionData(functionFragment: 'craftsmanV2', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'emergencyRewardWithdraw', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'emergencyRewardWithdraw', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'massUpdatePools', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'onVVSReward', values: [BigNumberish, string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'onVVSReward',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'pendingToken', values: [BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'poolIds', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'poolInfo', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'pendingToken',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'poolIds', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'poolInfo', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'poolLength', values?: undefined): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
   encodeFunctionData(functionFragment: 'rewardEndTimestamp', values?: undefined): string;
   encodeFunctionData(functionFragment: 'rewardPerSecond', values?: undefined): string;
   encodeFunctionData(functionFragment: 'rewardStartTimestamp', values?: undefined): string;
   encodeFunctionData(functionFragment: 'rewardToken', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'set', values: [BigNumberish, BigNumberish, boolean]): string;
-  encodeFunctionData(functionFragment: 'setRewardEndTimestamp', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setRewardPerSecond', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setRewardStartTimestamp', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'set',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(functionFragment: 'setRewardEndTimestamp', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setRewardPerSecond', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setRewardStartTimestamp', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'totalAllocPoint', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
-  encodeFunctionData(functionFragment: 'updatePool', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'userInfo', values: [BigNumberish, string]): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'updatePool', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'userInfo',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
 
   decodeFunctionResult(functionFragment: 'add', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'craftsman', data: BytesLike): Result;
@@ -231,10 +246,10 @@ export interface VvsRewarder extends BaseContract {
 
   functions: {
     add(
-      _allocPoint: BigNumberish,
-      _pid: BigNumberish,
-      _withUpdate: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _pid: PromiseOrValue<BigNumberish>,
+      _withUpdate: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     craftsman(overrides?: CallOverrides): Promise<[string]>;
@@ -242,27 +257,31 @@ export interface VvsRewarder extends BaseContract {
     craftsmanV2(overrides?: CallOverrides): Promise<[string]>;
 
     emergencyRewardWithdraw(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    massUpdatePools(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    massUpdatePools(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     onVVSReward(
-      _pid: BigNumberish,
-      _user: string,
-      _currentAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      _currentAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
-    pendingToken(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<[string, BigNumber]>;
+    pendingToken(
+      _pid: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[string, BigNumber]>;
 
-    poolIds(arg0: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    poolIds(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     poolInfo(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber] & {
@@ -274,7 +293,7 @@ export interface VvsRewarder extends BaseContract {
 
     poolLength(overrides?: CallOverrides): Promise<[BigNumber] & { pools: BigNumber }>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     rewardEndTimestamp(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -285,51 +304,51 @@ export interface VvsRewarder extends BaseContract {
     rewardToken(overrides?: CallOverrides): Promise<[string]>;
 
     set(
-      _pid: BigNumberish,
-      _allocPoint: BigNumberish,
-      _withUpdate: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _withUpdate: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setRewardEndTimestamp(
-      _rewardEndTimestamp: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardEndTimestamp: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setRewardPerSecond(
-      _rewardPerSecond: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardPerSecond: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setRewardStartTimestamp(
-      _rewardStartTimestamp: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardStartTimestamp: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     totalAllocPoint(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updatePool(
-      _pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     userInfo(
-      arg0: BigNumberish,
-      arg1: string,
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber] & { rewardDebt: BigNumber }>;
   };
 
   add(
-    _allocPoint: BigNumberish,
-    _pid: BigNumberish,
-    _withUpdate: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _allocPoint: PromiseOrValue<BigNumberish>,
+    _pid: PromiseOrValue<BigNumberish>,
+    _withUpdate: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   craftsman(overrides?: CallOverrides): Promise<string>;
@@ -337,27 +356,31 @@ export interface VvsRewarder extends BaseContract {
   craftsmanV2(overrides?: CallOverrides): Promise<string>;
 
   emergencyRewardWithdraw(
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  massUpdatePools(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  massUpdatePools(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   onVVSReward(
-    _pid: BigNumberish,
-    _user: string,
-    _currentAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pid: PromiseOrValue<BigNumberish>,
+    _user: PromiseOrValue<string>,
+    _currentAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
-  pendingToken(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<[string, BigNumber]>;
+  pendingToken(
+    _pid: PromiseOrValue<BigNumberish>,
+    _user: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<[string, BigNumber]>;
 
-  poolIds(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  poolIds(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   poolInfo(
-    arg0: BigNumberish,
+    arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber, BigNumber] & {
@@ -369,7 +392,7 @@ export interface VvsRewarder extends BaseContract {
 
   poolLength(overrides?: CallOverrides): Promise<BigNumber>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   rewardEndTimestamp(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -380,67 +403,80 @@ export interface VvsRewarder extends BaseContract {
   rewardToken(overrides?: CallOverrides): Promise<string>;
 
   set(
-    _pid: BigNumberish,
-    _allocPoint: BigNumberish,
-    _withUpdate: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pid: PromiseOrValue<BigNumberish>,
+    _allocPoint: PromiseOrValue<BigNumberish>,
+    _withUpdate: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setRewardEndTimestamp(
-    _rewardEndTimestamp: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _rewardEndTimestamp: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setRewardPerSecond(
-    _rewardPerSecond: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _rewardPerSecond: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setRewardStartTimestamp(
-    _rewardStartTimestamp: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _rewardStartTimestamp: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   totalAllocPoint(overrides?: CallOverrides): Promise<BigNumber>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updatePool(
-    _pid: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pid: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  userInfo(arg0: BigNumberish, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+  userInfo(
+    arg0: PromiseOrValue<BigNumberish>,
+    arg1: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   callStatic: {
-    add(_allocPoint: BigNumberish, _pid: BigNumberish, _withUpdate: boolean, overrides?: CallOverrides): Promise<void>;
+    add(
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _pid: PromiseOrValue<BigNumberish>,
+      _withUpdate: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     craftsman(overrides?: CallOverrides): Promise<string>;
 
     craftsmanV2(overrides?: CallOverrides): Promise<string>;
 
-    emergencyRewardWithdraw(_amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    emergencyRewardWithdraw(_amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     massUpdatePools(overrides?: CallOverrides): Promise<void>;
 
     onVVSReward(
-      _pid: BigNumberish,
-      _user: string,
-      _currentAmount: BigNumberish,
+      _pid: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      _currentAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    pendingToken(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<[string, BigNumber]>;
+    pendingToken(
+      _pid: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[string, BigNumber]>;
 
-    poolIds(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    poolIds(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     poolInfo(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber] & {
@@ -462,46 +498,69 @@ export interface VvsRewarder extends BaseContract {
 
     rewardToken(overrides?: CallOverrides): Promise<string>;
 
-    set(_pid: BigNumberish, _allocPoint: BigNumberish, _withUpdate: boolean, overrides?: CallOverrides): Promise<void>;
+    set(
+      _pid: PromiseOrValue<BigNumberish>,
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _withUpdate: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setRewardEndTimestamp(_rewardEndTimestamp: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setRewardEndTimestamp(_rewardEndTimestamp: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setRewardPerSecond(_rewardPerSecond: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setRewardPerSecond(_rewardPerSecond: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setRewardStartTimestamp(_rewardStartTimestamp: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setRewardStartTimestamp(
+      _rewardStartTimestamp: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     totalAllocPoint(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    updatePool(_pid: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    updatePool(_pid: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    userInfo(arg0: BigNumberish, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    userInfo(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
   };
 
   filters: {
-    'AddPool(uint256,uint256)'(pid?: BigNumberish | null, allocPoint?: null): AddPoolEventFilter;
-    AddPool(pid?: BigNumberish | null, allocPoint?: null): AddPoolEventFilter;
+    'AddPool(uint256,uint256)'(pid?: PromiseOrValue<BigNumberish> | null, allocPoint?: null): AddPoolEventFilter;
+    AddPool(pid?: PromiseOrValue<BigNumberish> | null, allocPoint?: null): AddPoolEventFilter;
 
-    'EmergencyRewardWithdraw(address,uint256)'(user?: string | null, amount?: null): EmergencyRewardWithdrawEventFilter;
-    EmergencyRewardWithdraw(user?: string | null, amount?: null): EmergencyRewardWithdrawEventFilter;
+    'EmergencyRewardWithdraw(address,uint256)'(
+      user?: PromiseOrValue<string> | null,
+      amount?: null,
+    ): EmergencyRewardWithdrawEventFilter;
+    EmergencyRewardWithdraw(user?: PromiseOrValue<string> | null, amount?: null): EmergencyRewardWithdrawEventFilter;
 
     'OnVVSReward(uint256,address,uint256,uint256)'(
-      pid?: BigNumberish | null,
-      user?: string | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
+      user?: PromiseOrValue<string> | null,
       amount?: null,
       pending?: null,
     ): OnVVSRewardEventFilter;
-    OnVVSReward(pid?: BigNumberish | null, user?: string | null, amount?: null, pending?: null): OnVVSRewardEventFilter;
+    OnVVSReward(
+      pid?: PromiseOrValue<BigNumberish> | null,
+      user?: PromiseOrValue<string> | null,
+      amount?: null,
+      pending?: null,
+    ): OnVVSRewardEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
 
-    'SetPool(uint256,uint256)'(pid?: BigNumberish | null, allocPoint?: null): SetPoolEventFilter;
-    SetPool(pid?: BigNumberish | null, allocPoint?: null): SetPoolEventFilter;
+    'SetPool(uint256,uint256)'(pid?: PromiseOrValue<BigNumberish> | null, allocPoint?: null): SetPoolEventFilter;
+    SetPool(pid?: PromiseOrValue<BigNumberish> | null, allocPoint?: null): SetPoolEventFilter;
 
     'SetRewardEndTimestamp(uint256)'(rewardEndTimestamp?: null): SetRewardEndTimestampEventFilter;
     SetRewardEndTimestamp(rewardEndTimestamp?: null): SetRewardEndTimestampEventFilter;
@@ -515,10 +574,10 @@ export interface VvsRewarder extends BaseContract {
 
   estimateGas: {
     add(
-      _allocPoint: BigNumberish,
-      _pid: BigNumberish,
-      _withUpdate: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _pid: PromiseOrValue<BigNumberish>,
+      _withUpdate: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     craftsman(overrides?: CallOverrides): Promise<BigNumber>;
@@ -526,30 +585,34 @@ export interface VvsRewarder extends BaseContract {
     craftsmanV2(overrides?: CallOverrides): Promise<BigNumber>;
 
     emergencyRewardWithdraw(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    massUpdatePools(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    massUpdatePools(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     onVVSReward(
-      _pid: BigNumberish,
-      _user: string,
-      _currentAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      _currentAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    pendingToken(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingToken(
+      _pid: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    poolIds(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    poolIds(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    poolInfo(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    poolInfo(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     poolLength(overrides?: CallOverrides): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     rewardEndTimestamp(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -560,45 +623,52 @@ export interface VvsRewarder extends BaseContract {
     rewardToken(overrides?: CallOverrides): Promise<BigNumber>;
 
     set(
-      _pid: BigNumberish,
-      _allocPoint: BigNumberish,
-      _withUpdate: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _withUpdate: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setRewardEndTimestamp(
-      _rewardEndTimestamp: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardEndTimestamp: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setRewardPerSecond(
-      _rewardPerSecond: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardPerSecond: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setRewardStartTimestamp(
-      _rewardStartTimestamp: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardStartTimestamp: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     totalAllocPoint(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    updatePool(_pid: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    updatePool(
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    userInfo(arg0: BigNumberish, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    userInfo(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     add(
-      _allocPoint: BigNumberish,
-      _pid: BigNumberish,
-      _withUpdate: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _pid: PromiseOrValue<BigNumberish>,
+      _withUpdate: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     craftsman(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -606,30 +676,34 @@ export interface VvsRewarder extends BaseContract {
     craftsmanV2(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     emergencyRewardWithdraw(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    massUpdatePools(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    massUpdatePools(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     onVVSReward(
-      _pid: BigNumberish,
-      _user: string,
-      _currentAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      _currentAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    pendingToken(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    pendingToken(
+      _pid: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    poolIds(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    poolIds(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    poolInfo(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    poolInfo(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     poolLength(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     rewardEndTimestamp(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -640,39 +714,43 @@ export interface VvsRewarder extends BaseContract {
     rewardToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     set(
-      _pid: BigNumberish,
-      _allocPoint: BigNumberish,
-      _withUpdate: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _withUpdate: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setRewardEndTimestamp(
-      _rewardEndTimestamp: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardEndTimestamp: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setRewardPerSecond(
-      _rewardPerSecond: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardPerSecond: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setRewardStartTimestamp(
-      _rewardStartTimestamp: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardStartTimestamp: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     totalAllocPoint(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updatePool(
-      _pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    userInfo(arg0: BigNumberish, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    userInfo(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
   };
 }

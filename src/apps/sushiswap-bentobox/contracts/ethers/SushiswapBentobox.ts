@@ -16,7 +16,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface SushiswapBentoboxInterface extends utils.Interface {
   functions: {
@@ -89,47 +89,123 @@ export interface SushiswapBentoboxInterface extends utils.Interface {
   ): FunctionFragment;
 
   encodeFunctionData(functionFragment: 'DOMAIN_SEPARATOR', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'batch', values: [BytesLike[], boolean]): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'batch', values: [PromiseOrValue<BytesLike>[], PromiseOrValue<boolean>]): string;
   encodeFunctionData(
     functionFragment: 'batchFlashLoan',
-    values: [string, string[], string[], BigNumberish[], BytesLike],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>[],
+      PromiseOrValue<string>[],
+      PromiseOrValue<BigNumberish>[],
+      PromiseOrValue<BytesLike>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'claimOwnership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'deploy', values: [string, BytesLike, boolean]): string;
-  encodeFunctionData(functionFragment: 'deposit', values: [string, string, string, BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'flashLoan', values: [string, string, string, BigNumberish, BytesLike]): string;
-  encodeFunctionData(functionFragment: 'harvest', values: [string, boolean, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'masterContractApproved', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'masterContractOf', values: [string]): string;
-  encodeFunctionData(functionFragment: 'nonces', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'deploy',
+    values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'deposit',
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'flashLoan',
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+    ],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'harvest',
+    values: [PromiseOrValue<string>, PromiseOrValue<boolean>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'masterContractApproved',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'masterContractOf', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'nonces', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'pendingOwner', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'pendingStrategy', values: [string]): string;
+  encodeFunctionData(functionFragment: 'pendingStrategy', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
     functionFragment: 'permitToken',
-    values: [string, string, string, BigNumberish, BigNumberish, BigNumberish, BytesLike, BytesLike],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'registerProtocol', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'setMasterContractApproval',
-    values: [string, string, boolean, BigNumberish, BytesLike, BytesLike],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<boolean>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'setStrategy', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'setStrategyTargetPercentage', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'strategy', values: [string]): string;
-  encodeFunctionData(functionFragment: 'strategyData', values: [string]): string;
-  encodeFunctionData(functionFragment: 'toAmount', values: [string, BigNumberish, boolean]): string;
-  encodeFunctionData(functionFragment: 'toShare', values: [string, BigNumberish, boolean]): string;
-  encodeFunctionData(functionFragment: 'totals', values: [string]): string;
-  encodeFunctionData(functionFragment: 'transfer', values: [string, string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferMultiple', values: [string, string, string[], BigNumberish[]]): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string, boolean, boolean]): string;
-  encodeFunctionData(functionFragment: 'whitelistMasterContract', values: [string, boolean]): string;
-  encodeFunctionData(functionFragment: 'whitelistedMasterContracts', values: [string]): string;
+  encodeFunctionData(functionFragment: 'setStrategy', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'setStrategyTargetPercentage',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'strategy', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'strategyData', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'toAmount',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'toShare',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(functionFragment: 'totals', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'transfer',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'transferMultiple',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>[], PromiseOrValue<BigNumberish>[]],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'transferOwnership',
+    values: [PromiseOrValue<string>, PromiseOrValue<boolean>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'whitelistMasterContract',
+    values: [PromiseOrValue<string>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(functionFragment: 'whitelistedMasterContracts', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
     functionFragment: 'withdraw',
-    values: [string, string, string, BigNumberish, BigNumberish],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
 
   decodeFunctionResult(functionFragment: 'DOMAIN_SEPARATOR', data: BytesLike): Result;
@@ -369,109 +445,117 @@ export interface SushiswapBentobox extends BaseContract {
   functions: {
     DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<[string]>;
 
-    balanceOf(arg0: string, arg1: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOf(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     batch(
-      calls: BytesLike[],
-      revertOnFail: boolean,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      calls: PromiseOrValue<BytesLike>[],
+      revertOnFail: PromiseOrValue<boolean>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     batchFlashLoan(
-      borrower: string,
-      receivers: string[],
-      tokens: string[],
-      amounts: BigNumberish[],
-      data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      borrower: PromiseOrValue<string>,
+      receivers: PromiseOrValue<string>[],
+      tokens: PromiseOrValue<string>[],
+      amounts: PromiseOrValue<BigNumberish>[],
+      data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    claimOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    claimOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     deploy(
-      masterContract: string,
-      data: BytesLike,
-      useCreate2: boolean,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      masterContract: PromiseOrValue<string>,
+      data: PromiseOrValue<BytesLike>,
+      useCreate2: PromiseOrValue<boolean>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     deposit(
-      token_: string,
-      from: string,
-      to: string,
-      amount: BigNumberish,
-      share: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      token_: PromiseOrValue<string>,
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      share: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     flashLoan(
-      borrower: string,
-      receiver: string,
-      token: string,
-      amount: BigNumberish,
-      data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      borrower: PromiseOrValue<string>,
+      receiver: PromiseOrValue<string>,
+      token: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     harvest(
-      token: string,
-      balance: boolean,
-      maxChangeAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      balance: PromiseOrValue<boolean>,
+      maxChangeAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    masterContractApproved(arg0: string, arg1: string, overrides?: CallOverrides): Promise<[boolean]>;
+    masterContractApproved(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[boolean]>;
 
-    masterContractOf(arg0: string, overrides?: CallOverrides): Promise<[string]>;
+    masterContractOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[string]>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     pendingOwner(overrides?: CallOverrides): Promise<[string]>;
 
-    pendingStrategy(arg0: string, overrides?: CallOverrides): Promise<[string]>;
+    pendingStrategy(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[string]>;
 
     permitToken(
-      token: string,
-      from: string,
-      to: string,
-      amount: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    registerProtocol(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    registerProtocol(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     setMasterContractApproval(
-      user: string,
-      masterContract: string,
-      approved: boolean,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      user: PromiseOrValue<string>,
+      masterContract: PromiseOrValue<string>,
+      approved: PromiseOrValue<boolean>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setStrategy(
-      token: string,
-      newStrategy: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      newStrategy: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setStrategyTargetPercentage(
-      token: string,
-      targetPercentage_: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      targetPercentage_: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    strategy(arg0: string, overrides?: CallOverrides): Promise<[string]>;
+    strategy(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[string]>;
 
     strategyData(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber] & {
@@ -482,170 +566,174 @@ export interface SushiswapBentobox extends BaseContract {
     >;
 
     toAmount(
-      token: string,
-      share: BigNumberish,
-      roundUp: boolean,
+      token: PromiseOrValue<string>,
+      share: PromiseOrValue<BigNumberish>,
+      roundUp: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber] & { amount: BigNumber }>;
 
     toShare(
-      token: string,
-      amount: BigNumberish,
-      roundUp: boolean,
+      token: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      roundUp: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber] & { share: BigNumber }>;
 
     totals(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { elastic: BigNumber; base: BigNumber }>;
 
     transfer(
-      token: string,
-      from: string,
-      to: string,
-      share: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      share: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferMultiple(
-      token: string,
-      from: string,
-      tos: string[],
-      shares: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      from: PromiseOrValue<string>,
+      tos: PromiseOrValue<string>[],
+      shares: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      direct: boolean,
-      renounce: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      direct: PromiseOrValue<boolean>,
+      renounce: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     whitelistMasterContract(
-      masterContract: string,
-      approved: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      masterContract: PromiseOrValue<string>,
+      approved: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    whitelistedMasterContracts(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    whitelistedMasterContracts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     withdraw(
-      token_: string,
-      from: string,
-      to: string,
-      amount: BigNumberish,
-      share: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token_: PromiseOrValue<string>,
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      share: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
   DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<string>;
 
-  balanceOf(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(arg0: PromiseOrValue<string>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   batch(
-    calls: BytesLike[],
-    revertOnFail: boolean,
-    overrides?: PayableOverrides & { from?: string | Promise<string> },
+    calls: PromiseOrValue<BytesLike>[],
+    revertOnFail: PromiseOrValue<boolean>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   batchFlashLoan(
-    borrower: string,
-    receivers: string[],
-    tokens: string[],
-    amounts: BigNumberish[],
-    data: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    borrower: PromiseOrValue<string>,
+    receivers: PromiseOrValue<string>[],
+    tokens: PromiseOrValue<string>[],
+    amounts: PromiseOrValue<BigNumberish>[],
+    data: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  claimOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  claimOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   deploy(
-    masterContract: string,
-    data: BytesLike,
-    useCreate2: boolean,
-    overrides?: PayableOverrides & { from?: string | Promise<string> },
+    masterContract: PromiseOrValue<string>,
+    data: PromiseOrValue<BytesLike>,
+    useCreate2: PromiseOrValue<boolean>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   deposit(
-    token_: string,
-    from: string,
-    to: string,
-    amount: BigNumberish,
-    share: BigNumberish,
-    overrides?: PayableOverrides & { from?: string | Promise<string> },
+    token_: PromiseOrValue<string>,
+    from: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    share: PromiseOrValue<BigNumberish>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   flashLoan(
-    borrower: string,
-    receiver: string,
-    token: string,
-    amount: BigNumberish,
-    data: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    borrower: PromiseOrValue<string>,
+    receiver: PromiseOrValue<string>,
+    token: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    data: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   harvest(
-    token: string,
-    balance: boolean,
-    maxChangeAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    token: PromiseOrValue<string>,
+    balance: PromiseOrValue<boolean>,
+    maxChangeAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  masterContractApproved(arg0: string, arg1: string, overrides?: CallOverrides): Promise<boolean>;
+  masterContractApproved(
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<boolean>;
 
-  masterContractOf(arg0: string, overrides?: CallOverrides): Promise<string>;
+  masterContractOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
-  nonces(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
   pendingOwner(overrides?: CallOverrides): Promise<string>;
 
-  pendingStrategy(arg0: string, overrides?: CallOverrides): Promise<string>;
+  pendingStrategy(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
   permitToken(
-    token: string,
-    from: string,
-    to: string,
-    amount: BigNumberish,
-    deadline: BigNumberish,
-    v: BigNumberish,
-    r: BytesLike,
-    s: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    token: PromiseOrValue<string>,
+    from: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    deadline: PromiseOrValue<BigNumberish>,
+    v: PromiseOrValue<BigNumberish>,
+    r: PromiseOrValue<BytesLike>,
+    s: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  registerProtocol(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  registerProtocol(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   setMasterContractApproval(
-    user: string,
-    masterContract: string,
-    approved: boolean,
-    v: BigNumberish,
-    r: BytesLike,
-    s: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    user: PromiseOrValue<string>,
+    masterContract: PromiseOrValue<string>,
+    approved: PromiseOrValue<boolean>,
+    v: PromiseOrValue<BigNumberish>,
+    r: PromiseOrValue<BytesLike>,
+    s: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setStrategy(
-    token: string,
-    newStrategy: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    token: PromiseOrValue<string>,
+    newStrategy: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setStrategyTargetPercentage(
-    token: string,
-    targetPercentage_: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    token: PromiseOrValue<string>,
+    targetPercentage_: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  strategy(arg0: string, overrides?: CallOverrides): Promise<string>;
+  strategy(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
   strategyData(
-    arg0: string,
+    arg0: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber, BigNumber] & {
@@ -655,147 +743,179 @@ export interface SushiswapBentobox extends BaseContract {
     }
   >;
 
-  toAmount(token: string, share: BigNumberish, roundUp: boolean, overrides?: CallOverrides): Promise<BigNumber>;
+  toAmount(
+    token: PromiseOrValue<string>,
+    share: PromiseOrValue<BigNumberish>,
+    roundUp: PromiseOrValue<boolean>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
-  toShare(token: string, amount: BigNumberish, roundUp: boolean, overrides?: CallOverrides): Promise<BigNumber>;
+  toShare(
+    token: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    roundUp: PromiseOrValue<boolean>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   totals(
-    arg0: string,
+    arg0: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber, BigNumber] & { elastic: BigNumber; base: BigNumber }>;
 
   transfer(
-    token: string,
-    from: string,
-    to: string,
-    share: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    token: PromiseOrValue<string>,
+    from: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    share: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferMultiple(
-    token: string,
-    from: string,
-    tos: string[],
-    shares: BigNumberish[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    token: PromiseOrValue<string>,
+    from: PromiseOrValue<string>,
+    tos: PromiseOrValue<string>[],
+    shares: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferOwnership(
-    newOwner: string,
-    direct: boolean,
-    renounce: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    direct: PromiseOrValue<boolean>,
+    renounce: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   whitelistMasterContract(
-    masterContract: string,
-    approved: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    masterContract: PromiseOrValue<string>,
+    approved: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  whitelistedMasterContracts(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  whitelistedMasterContracts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   withdraw(
-    token_: string,
-    from: string,
-    to: string,
-    amount: BigNumberish,
-    share: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    token_: PromiseOrValue<string>,
+    from: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    share: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
     DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<string>;
 
-    balanceOf(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     batch(
-      calls: BytesLike[],
-      revertOnFail: boolean,
+      calls: PromiseOrValue<BytesLike>[],
+      revertOnFail: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<[boolean[], string[]] & { successes: boolean[]; results: string[] }>;
 
     batchFlashLoan(
-      borrower: string,
-      receivers: string[],
-      tokens: string[],
-      amounts: BigNumberish[],
-      data: BytesLike,
+      borrower: PromiseOrValue<string>,
+      receivers: PromiseOrValue<string>[],
+      tokens: PromiseOrValue<string>[],
+      amounts: PromiseOrValue<BigNumberish>[],
+      data: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     claimOwnership(overrides?: CallOverrides): Promise<void>;
 
-    deploy(masterContract: string, data: BytesLike, useCreate2: boolean, overrides?: CallOverrides): Promise<string>;
+    deploy(
+      masterContract: PromiseOrValue<string>,
+      data: PromiseOrValue<BytesLike>,
+      useCreate2: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<string>;
 
     deposit(
-      token_: string,
-      from: string,
-      to: string,
-      amount: BigNumberish,
-      share: BigNumberish,
+      token_: PromiseOrValue<string>,
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      share: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { amountOut: BigNumber; shareOut: BigNumber }>;
 
     flashLoan(
-      borrower: string,
-      receiver: string,
-      token: string,
-      amount: BigNumberish,
-      data: BytesLike,
+      borrower: PromiseOrValue<string>,
+      receiver: PromiseOrValue<string>,
+      token: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      data: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    harvest(token: string, balance: boolean, maxChangeAmount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    harvest(
+      token: PromiseOrValue<string>,
+      balance: PromiseOrValue<boolean>,
+      maxChangeAmount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    masterContractApproved(arg0: string, arg1: string, overrides?: CallOverrides): Promise<boolean>;
+    masterContractApproved(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    masterContractOf(arg0: string, overrides?: CallOverrides): Promise<string>;
+    masterContractOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
     pendingOwner(overrides?: CallOverrides): Promise<string>;
 
-    pendingStrategy(arg0: string, overrides?: CallOverrides): Promise<string>;
+    pendingStrategy(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
     permitToken(
-      token: string,
-      from: string,
-      to: string,
-      amount: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
+      token: PromiseOrValue<string>,
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     registerProtocol(overrides?: CallOverrides): Promise<void>;
 
     setMasterContractApproval(
-      user: string,
-      masterContract: string,
-      approved: boolean,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
+      user: PromiseOrValue<string>,
+      masterContract: PromiseOrValue<string>,
+      approved: PromiseOrValue<boolean>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    setStrategy(token: string, newStrategy: string, overrides?: CallOverrides): Promise<void>;
+    setStrategy(
+      token: PromiseOrValue<string>,
+      newStrategy: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     setStrategyTargetPercentage(
-      token: string,
-      targetPercentage_: BigNumberish,
+      token: PromiseOrValue<string>,
+      targetPercentage_: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    strategy(arg0: string, overrides?: CallOverrides): Promise<string>;
+    strategy(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
     strategyData(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber] & {
@@ -805,466 +925,559 @@ export interface SushiswapBentobox extends BaseContract {
       }
     >;
 
-    toAmount(token: string, share: BigNumberish, roundUp: boolean, overrides?: CallOverrides): Promise<BigNumber>;
+    toAmount(
+      token: PromiseOrValue<string>,
+      share: PromiseOrValue<BigNumberish>,
+      roundUp: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    toShare(token: string, amount: BigNumberish, roundUp: boolean, overrides?: CallOverrides): Promise<BigNumber>;
+    toShare(
+      token: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      roundUp: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     totals(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { elastic: BigNumber; base: BigNumber }>;
 
-    transfer(token: string, from: string, to: string, share: BigNumberish, overrides?: CallOverrides): Promise<void>;
-
-    transferMultiple(
-      token: string,
-      from: string,
-      tos: string[],
-      shares: BigNumberish[],
+    transfer(
+      token: PromiseOrValue<string>,
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      share: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    transferOwnership(newOwner: string, direct: boolean, renounce: boolean, overrides?: CallOverrides): Promise<void>;
+    transferMultiple(
+      token: PromiseOrValue<string>,
+      from: PromiseOrValue<string>,
+      tos: PromiseOrValue<string>[],
+      shares: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    whitelistMasterContract(masterContract: string, approved: boolean, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(
+      newOwner: PromiseOrValue<string>,
+      direct: PromiseOrValue<boolean>,
+      renounce: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    whitelistedMasterContracts(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    whitelistMasterContract(
+      masterContract: PromiseOrValue<string>,
+      approved: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    whitelistedMasterContracts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     withdraw(
-      token_: string,
-      from: string,
-      to: string,
-      amount: BigNumberish,
-      share: BigNumberish,
+      token_: PromiseOrValue<string>,
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      share: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { amountOut: BigNumber; shareOut: BigNumber }>;
   };
 
   filters: {
     'LogDeploy(address,bytes,address)'(
-      masterContract?: string | null,
+      masterContract?: PromiseOrValue<string> | null,
       data?: null,
-      cloneAddress?: string | null,
+      cloneAddress?: PromiseOrValue<string> | null,
     ): LogDeployEventFilter;
-    LogDeploy(masterContract?: string | null, data?: null, cloneAddress?: string | null): LogDeployEventFilter;
+    LogDeploy(
+      masterContract?: PromiseOrValue<string> | null,
+      data?: null,
+      cloneAddress?: PromiseOrValue<string> | null,
+    ): LogDeployEventFilter;
 
     'LogDeposit(address,address,address,uint256,uint256)'(
-      token?: string | null,
-      from?: string | null,
-      to?: string | null,
+      token?: PromiseOrValue<string> | null,
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
       amount?: null,
       share?: null,
     ): LogDepositEventFilter;
     LogDeposit(
-      token?: string | null,
-      from?: string | null,
-      to?: string | null,
+      token?: PromiseOrValue<string> | null,
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
       amount?: null,
       share?: null,
     ): LogDepositEventFilter;
 
     'LogFlashLoan(address,address,uint256,uint256,address)'(
-      borrower?: string | null,
-      token?: string | null,
+      borrower?: PromiseOrValue<string> | null,
+      token?: PromiseOrValue<string> | null,
       amount?: null,
       feeAmount?: null,
-      receiver?: string | null,
+      receiver?: PromiseOrValue<string> | null,
     ): LogFlashLoanEventFilter;
     LogFlashLoan(
-      borrower?: string | null,
-      token?: string | null,
+      borrower?: PromiseOrValue<string> | null,
+      token?: PromiseOrValue<string> | null,
       amount?: null,
       feeAmount?: null,
-      receiver?: string | null,
+      receiver?: PromiseOrValue<string> | null,
     ): LogFlashLoanEventFilter;
 
-    'LogRegisterProtocol(address)'(protocol?: string | null): LogRegisterProtocolEventFilter;
-    LogRegisterProtocol(protocol?: string | null): LogRegisterProtocolEventFilter;
+    'LogRegisterProtocol(address)'(protocol?: PromiseOrValue<string> | null): LogRegisterProtocolEventFilter;
+    LogRegisterProtocol(protocol?: PromiseOrValue<string> | null): LogRegisterProtocolEventFilter;
 
     'LogSetMasterContractApproval(address,address,bool)'(
-      masterContract?: string | null,
-      user?: string | null,
+      masterContract?: PromiseOrValue<string> | null,
+      user?: PromiseOrValue<string> | null,
       approved?: null,
     ): LogSetMasterContractApprovalEventFilter;
     LogSetMasterContractApproval(
-      masterContract?: string | null,
-      user?: string | null,
+      masterContract?: PromiseOrValue<string> | null,
+      user?: PromiseOrValue<string> | null,
       approved?: null,
     ): LogSetMasterContractApprovalEventFilter;
 
-    'LogStrategyDivest(address,uint256)'(token?: string | null, amount?: null): LogStrategyDivestEventFilter;
-    LogStrategyDivest(token?: string | null, amount?: null): LogStrategyDivestEventFilter;
+    'LogStrategyDivest(address,uint256)'(
+      token?: PromiseOrValue<string> | null,
+      amount?: null,
+    ): LogStrategyDivestEventFilter;
+    LogStrategyDivest(token?: PromiseOrValue<string> | null, amount?: null): LogStrategyDivestEventFilter;
 
-    'LogStrategyInvest(address,uint256)'(token?: string | null, amount?: null): LogStrategyInvestEventFilter;
-    LogStrategyInvest(token?: string | null, amount?: null): LogStrategyInvestEventFilter;
+    'LogStrategyInvest(address,uint256)'(
+      token?: PromiseOrValue<string> | null,
+      amount?: null,
+    ): LogStrategyInvestEventFilter;
+    LogStrategyInvest(token?: PromiseOrValue<string> | null, amount?: null): LogStrategyInvestEventFilter;
 
-    'LogStrategyLoss(address,uint256)'(token?: string | null, amount?: null): LogStrategyLossEventFilter;
-    LogStrategyLoss(token?: string | null, amount?: null): LogStrategyLossEventFilter;
+    'LogStrategyLoss(address,uint256)'(
+      token?: PromiseOrValue<string> | null,
+      amount?: null,
+    ): LogStrategyLossEventFilter;
+    LogStrategyLoss(token?: PromiseOrValue<string> | null, amount?: null): LogStrategyLossEventFilter;
 
-    'LogStrategyProfit(address,uint256)'(token?: string | null, amount?: null): LogStrategyProfitEventFilter;
-    LogStrategyProfit(token?: string | null, amount?: null): LogStrategyProfitEventFilter;
+    'LogStrategyProfit(address,uint256)'(
+      token?: PromiseOrValue<string> | null,
+      amount?: null,
+    ): LogStrategyProfitEventFilter;
+    LogStrategyProfit(token?: PromiseOrValue<string> | null, amount?: null): LogStrategyProfitEventFilter;
 
-    'LogStrategyQueued(address,address)'(token?: string | null, strategy?: string | null): LogStrategyQueuedEventFilter;
-    LogStrategyQueued(token?: string | null, strategy?: string | null): LogStrategyQueuedEventFilter;
+    'LogStrategyQueued(address,address)'(
+      token?: PromiseOrValue<string> | null,
+      strategy?: PromiseOrValue<string> | null,
+    ): LogStrategyQueuedEventFilter;
+    LogStrategyQueued(
+      token?: PromiseOrValue<string> | null,
+      strategy?: PromiseOrValue<string> | null,
+    ): LogStrategyQueuedEventFilter;
 
-    'LogStrategySet(address,address)'(token?: string | null, strategy?: string | null): LogStrategySetEventFilter;
-    LogStrategySet(token?: string | null, strategy?: string | null): LogStrategySetEventFilter;
+    'LogStrategySet(address,address)'(
+      token?: PromiseOrValue<string> | null,
+      strategy?: PromiseOrValue<string> | null,
+    ): LogStrategySetEventFilter;
+    LogStrategySet(
+      token?: PromiseOrValue<string> | null,
+      strategy?: PromiseOrValue<string> | null,
+    ): LogStrategySetEventFilter;
 
     'LogStrategyTargetPercentage(address,uint256)'(
-      token?: string | null,
+      token?: PromiseOrValue<string> | null,
       targetPercentage?: null,
     ): LogStrategyTargetPercentageEventFilter;
-    LogStrategyTargetPercentage(token?: string | null, targetPercentage?: null): LogStrategyTargetPercentageEventFilter;
+    LogStrategyTargetPercentage(
+      token?: PromiseOrValue<string> | null,
+      targetPercentage?: null,
+    ): LogStrategyTargetPercentageEventFilter;
 
     'LogTransfer(address,address,address,uint256)'(
-      token?: string | null,
-      from?: string | null,
-      to?: string | null,
+      token?: PromiseOrValue<string> | null,
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
       share?: null,
     ): LogTransferEventFilter;
-    LogTransfer(token?: string | null, from?: string | null, to?: string | null, share?: null): LogTransferEventFilter;
+    LogTransfer(
+      token?: PromiseOrValue<string> | null,
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      share?: null,
+    ): LogTransferEventFilter;
 
     'LogWhiteListMasterContract(address,bool)'(
-      masterContract?: string | null,
+      masterContract?: PromiseOrValue<string> | null,
       approved?: null,
     ): LogWhiteListMasterContractEventFilter;
-    LogWhiteListMasterContract(masterContract?: string | null, approved?: null): LogWhiteListMasterContractEventFilter;
+    LogWhiteListMasterContract(
+      masterContract?: PromiseOrValue<string> | null,
+      approved?: null,
+    ): LogWhiteListMasterContractEventFilter;
 
     'LogWithdraw(address,address,address,uint256,uint256)'(
-      token?: string | null,
-      from?: string | null,
-      to?: string | null,
+      token?: PromiseOrValue<string> | null,
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
       amount?: null,
       share?: null,
     ): LogWithdrawEventFilter;
     LogWithdraw(
-      token?: string | null,
-      from?: string | null,
-      to?: string | null,
+      token?: PromiseOrValue<string> | null,
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
       amount?: null,
       share?: null,
     ): LogWithdrawEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
   };
 
   estimateGas: {
     DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<BigNumber>;
 
-    balanceOf(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     batch(
-      calls: BytesLike[],
-      revertOnFail: boolean,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      calls: PromiseOrValue<BytesLike>[],
+      revertOnFail: PromiseOrValue<boolean>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     batchFlashLoan(
-      borrower: string,
-      receivers: string[],
-      tokens: string[],
-      amounts: BigNumberish[],
-      data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      borrower: PromiseOrValue<string>,
+      receivers: PromiseOrValue<string>[],
+      tokens: PromiseOrValue<string>[],
+      amounts: PromiseOrValue<BigNumberish>[],
+      data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    claimOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    claimOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     deploy(
-      masterContract: string,
-      data: BytesLike,
-      useCreate2: boolean,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      masterContract: PromiseOrValue<string>,
+      data: PromiseOrValue<BytesLike>,
+      useCreate2: PromiseOrValue<boolean>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     deposit(
-      token_: string,
-      from: string,
-      to: string,
-      amount: BigNumberish,
-      share: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      token_: PromiseOrValue<string>,
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      share: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     flashLoan(
-      borrower: string,
-      receiver: string,
-      token: string,
-      amount: BigNumberish,
-      data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      borrower: PromiseOrValue<string>,
+      receiver: PromiseOrValue<string>,
+      token: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     harvest(
-      token: string,
-      balance: boolean,
-      maxChangeAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      balance: PromiseOrValue<boolean>,
+      maxChangeAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    masterContractApproved(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    masterContractApproved(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    masterContractOf(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    masterContractOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     pendingOwner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    pendingStrategy(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingStrategy(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     permitToken(
-      token: string,
-      from: string,
-      to: string,
-      amount: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    registerProtocol(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    registerProtocol(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     setMasterContractApproval(
-      user: string,
-      masterContract: string,
-      approved: boolean,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      user: PromiseOrValue<string>,
+      masterContract: PromiseOrValue<string>,
+      approved: PromiseOrValue<boolean>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setStrategy(
-      token: string,
-      newStrategy: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      newStrategy: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setStrategyTargetPercentage(
-      token: string,
-      targetPercentage_: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      targetPercentage_: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    strategy(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    strategy(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    strategyData(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    strategyData(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    toAmount(token: string, share: BigNumberish, roundUp: boolean, overrides?: CallOverrides): Promise<BigNumber>;
+    toAmount(
+      token: PromiseOrValue<string>,
+      share: PromiseOrValue<BigNumberish>,
+      roundUp: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    toShare(token: string, amount: BigNumberish, roundUp: boolean, overrides?: CallOverrides): Promise<BigNumber>;
+    toShare(
+      token: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      roundUp: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    totals(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    totals(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
-      token: string,
-      from: string,
-      to: string,
-      share: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      share: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferMultiple(
-      token: string,
-      from: string,
-      tos: string[],
-      shares: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      from: PromiseOrValue<string>,
+      tos: PromiseOrValue<string>[],
+      shares: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      direct: boolean,
-      renounce: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      direct: PromiseOrValue<boolean>,
+      renounce: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     whitelistMasterContract(
-      masterContract: string,
-      approved: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      masterContract: PromiseOrValue<string>,
+      approved: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    whitelistedMasterContracts(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    whitelistedMasterContracts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     withdraw(
-      token_: string,
-      from: string,
-      to: string,
-      amount: BigNumberish,
-      share: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token_: PromiseOrValue<string>,
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      share: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    balanceOf(arg0: string, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    balanceOf(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     batch(
-      calls: BytesLike[],
-      revertOnFail: boolean,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      calls: PromiseOrValue<BytesLike>[],
+      revertOnFail: PromiseOrValue<boolean>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     batchFlashLoan(
-      borrower: string,
-      receivers: string[],
-      tokens: string[],
-      amounts: BigNumberish[],
-      data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      borrower: PromiseOrValue<string>,
+      receivers: PromiseOrValue<string>[],
+      tokens: PromiseOrValue<string>[],
+      amounts: PromiseOrValue<BigNumberish>[],
+      data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    claimOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    claimOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     deploy(
-      masterContract: string,
-      data: BytesLike,
-      useCreate2: boolean,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      masterContract: PromiseOrValue<string>,
+      data: PromiseOrValue<BytesLike>,
+      useCreate2: PromiseOrValue<boolean>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     deposit(
-      token_: string,
-      from: string,
-      to: string,
-      amount: BigNumberish,
-      share: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      token_: PromiseOrValue<string>,
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      share: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     flashLoan(
-      borrower: string,
-      receiver: string,
-      token: string,
-      amount: BigNumberish,
-      data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      borrower: PromiseOrValue<string>,
+      receiver: PromiseOrValue<string>,
+      token: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     harvest(
-      token: string,
-      balance: boolean,
-      maxChangeAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      balance: PromiseOrValue<boolean>,
+      maxChangeAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    masterContractApproved(arg0: string, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    masterContractApproved(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    masterContractOf(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    masterContractOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     pendingOwner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    pendingStrategy(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    pendingStrategy(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     permitToken(
-      token: string,
-      from: string,
-      to: string,
-      amount: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    registerProtocol(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    registerProtocol(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     setMasterContractApproval(
-      user: string,
-      masterContract: string,
-      approved: boolean,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      user: PromiseOrValue<string>,
+      masterContract: PromiseOrValue<string>,
+      approved: PromiseOrValue<boolean>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setStrategy(
-      token: string,
-      newStrategy: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      newStrategy: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setStrategyTargetPercentage(
-      token: string,
-      targetPercentage_: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      targetPercentage_: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    strategy(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    strategy(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    strategyData(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    strategyData(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     toAmount(
-      token: string,
-      share: BigNumberish,
-      roundUp: boolean,
+      token: PromiseOrValue<string>,
+      share: PromiseOrValue<BigNumberish>,
+      roundUp: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     toShare(
-      token: string,
-      amount: BigNumberish,
-      roundUp: boolean,
+      token: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      roundUp: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    totals(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    totals(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transfer(
-      token: string,
-      from: string,
-      to: string,
-      share: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      share: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferMultiple(
-      token: string,
-      from: string,
-      tos: string[],
-      shares: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      from: PromiseOrValue<string>,
+      tos: PromiseOrValue<string>[],
+      shares: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      direct: boolean,
-      renounce: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      direct: PromiseOrValue<boolean>,
+      renounce: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     whitelistMasterContract(
-      masterContract: string,
-      approved: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      masterContract: PromiseOrValue<string>,
+      approved: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    whitelistedMasterContracts(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    whitelistedMasterContracts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     withdraw(
-      token_: string,
-      from: string,
-      to: string,
-      amount: BigNumberish,
-      share: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token_: PromiseOrValue<string>,
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      share: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

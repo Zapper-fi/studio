@@ -7,7 +7,7 @@ import { Network } from '~types/network.interface';
 type ContractOpts = { address: string; network: Network };
 
 @Injectable()
-export class TenderizeContractFactory extends ContractFactory {
+export class TeddyCashContractFactory extends ContractFactory {
   constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) {
     super((network: Network) => appToolkit.getNetworkProvider(network));
   }

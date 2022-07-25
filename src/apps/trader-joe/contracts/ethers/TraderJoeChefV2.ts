@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface TraderJoeChefV2Interface extends utils.Interface {
   functions: {
@@ -89,38 +89,61 @@ export interface TraderJoeChefV2Interface extends utils.Interface {
       | 'withdraw',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'add', values: [BigNumberish, string, string]): string;
-  encodeFunctionData(functionFragment: 'deposit', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'dev', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'add',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'deposit',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'dev', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'devAddr', values?: undefined): string;
   encodeFunctionData(functionFragment: 'devPercent', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'emergencyWithdraw', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'emergencyWithdraw', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'investorAddr', values?: undefined): string;
   encodeFunctionData(functionFragment: 'investorPercent', values?: undefined): string;
   encodeFunctionData(functionFragment: 'joe', values?: undefined): string;
   encodeFunctionData(functionFragment: 'joePerSec', values?: undefined): string;
   encodeFunctionData(functionFragment: 'massUpdatePools', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'pendingTokens', values: [BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'poolInfo', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'pendingTokens',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'poolInfo', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'poolLength', values?: undefined): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'rewarderBonusTokenInfo', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'set', values: [BigNumberish, BigNumberish, string, boolean]): string;
-  encodeFunctionData(functionFragment: 'setDevPercent', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setInvestorAddr', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setInvestorPercent', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setTreasuryAddr', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setTreasuryPercent', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'rewarderBonusTokenInfo', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'set',
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<boolean>,
+    ],
+  ): string;
+  encodeFunctionData(functionFragment: 'setDevPercent', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setInvestorAddr', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setInvestorPercent', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setTreasuryAddr', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setTreasuryPercent', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'startTimestamp', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalAllocPoint', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'treasuryAddr', values?: undefined): string;
   encodeFunctionData(functionFragment: 'treasuryPercent', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'updateEmissionRate', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'updatePool', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'userInfo', values: [BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'withdraw', values: [BigNumberish, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'updateEmissionRate', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'updatePool', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'userInfo',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'withdraw',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
 
   decodeFunctionResult(functionFragment: 'add', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'deposit', data: BytesLike): Result;
@@ -294,27 +317,30 @@ export interface TraderJoeChefV2 extends BaseContract {
 
   functions: {
     add(
-      _allocPoint: BigNumberish,
-      _lpToken: string,
-      _rewarder: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _lpToken: PromiseOrValue<string>,
+      _rewarder: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     deposit(
-      _pid: BigNumberish,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    dev(_devAddr: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    dev(
+      _devAddr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     devAddr(overrides?: CallOverrides): Promise<[string]>;
 
     devPercent(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     emergencyWithdraw(
-      _pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     investorAddr(overrides?: CallOverrides): Promise<[string]>;
@@ -325,13 +351,13 @@ export interface TraderJoeChefV2 extends BaseContract {
 
     joePerSec(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    massUpdatePools(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    massUpdatePools(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     pendingTokens(
-      _pid: BigNumberish,
-      _user: string,
+      _pid: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, string, string, BigNumber] & {
@@ -343,7 +369,7 @@ export interface TraderJoeChefV2 extends BaseContract {
     >;
 
     poolInfo(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [string, BigNumber, BigNumber, BigNumber, string] & {
@@ -357,44 +383,44 @@ export interface TraderJoeChefV2 extends BaseContract {
 
     poolLength(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     rewarderBonusTokenInfo(
-      _pid: BigNumberish,
+      _pid: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[string, string] & { bonusTokenAddress: string; bonusTokenSymbol: string }>;
 
     set(
-      _pid: BigNumberish,
-      _allocPoint: BigNumberish,
-      _rewarder: string,
-      overwrite: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _rewarder: PromiseOrValue<string>,
+      overwrite: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setDevPercent(
-      _newDevPercent: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newDevPercent: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setInvestorAddr(
-      _investorAddr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _investorAddr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setInvestorPercent(
-      _newInvestorPercent: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newInvestorPercent: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setTreasuryAddr(
-      _treasuryAddr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _treasuryAddr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setTreasuryPercent(
-      _newTreasuryPercent: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newTreasuryPercent: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     startTimestamp(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -402,8 +428,8 @@ export interface TraderJoeChefV2 extends BaseContract {
     totalAllocPoint(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     treasuryAddr(overrides?: CallOverrides): Promise<[string]>;
@@ -411,50 +437,53 @@ export interface TraderJoeChefV2 extends BaseContract {
     treasuryPercent(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     updateEmissionRate(
-      _joePerSec: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _joePerSec: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updatePool(
-      _pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     userInfo(
-      arg0: BigNumberish,
-      arg1: string,
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; rewardDebt: BigNumber }>;
 
     withdraw(
-      _pid: BigNumberish,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
   add(
-    _allocPoint: BigNumberish,
-    _lpToken: string,
-    _rewarder: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _allocPoint: PromiseOrValue<BigNumberish>,
+    _lpToken: PromiseOrValue<string>,
+    _rewarder: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   deposit(
-    _pid: BigNumberish,
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pid: PromiseOrValue<BigNumberish>,
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  dev(_devAddr: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  dev(
+    _devAddr: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   devAddr(overrides?: CallOverrides): Promise<string>;
 
   devPercent(overrides?: CallOverrides): Promise<BigNumber>;
 
   emergencyWithdraw(
-    _pid: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pid: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   investorAddr(overrides?: CallOverrides): Promise<string>;
@@ -465,13 +494,13 @@ export interface TraderJoeChefV2 extends BaseContract {
 
   joePerSec(overrides?: CallOverrides): Promise<BigNumber>;
 
-  massUpdatePools(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  massUpdatePools(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
   pendingTokens(
-    _pid: BigNumberish,
-    _user: string,
+    _pid: PromiseOrValue<BigNumberish>,
+    _user: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, string, string, BigNumber] & {
@@ -483,7 +512,7 @@ export interface TraderJoeChefV2 extends BaseContract {
   >;
 
   poolInfo(
-    arg0: BigNumberish,
+    arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<
     [string, BigNumber, BigNumber, BigNumber, string] & {
@@ -497,44 +526,44 @@ export interface TraderJoeChefV2 extends BaseContract {
 
   poolLength(overrides?: CallOverrides): Promise<BigNumber>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   rewarderBonusTokenInfo(
-    _pid: BigNumberish,
+    _pid: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<[string, string] & { bonusTokenAddress: string; bonusTokenSymbol: string }>;
 
   set(
-    _pid: BigNumberish,
-    _allocPoint: BigNumberish,
-    _rewarder: string,
-    overwrite: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pid: PromiseOrValue<BigNumberish>,
+    _allocPoint: PromiseOrValue<BigNumberish>,
+    _rewarder: PromiseOrValue<string>,
+    overwrite: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setDevPercent(
-    _newDevPercent: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _newDevPercent: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setInvestorAddr(
-    _investorAddr: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _investorAddr: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setInvestorPercent(
-    _newInvestorPercent: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _newInvestorPercent: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setTreasuryAddr(
-    _treasuryAddr: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _treasuryAddr: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setTreasuryPercent(
-    _newTreasuryPercent: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _newTreasuryPercent: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   startTimestamp(overrides?: CallOverrides): Promise<BigNumber>;
@@ -542,8 +571,8 @@ export interface TraderJoeChefV2 extends BaseContract {
   totalAllocPoint(overrides?: CallOverrides): Promise<BigNumber>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   treasuryAddr(overrides?: CallOverrides): Promise<string>;
@@ -551,39 +580,48 @@ export interface TraderJoeChefV2 extends BaseContract {
   treasuryPercent(overrides?: CallOverrides): Promise<BigNumber>;
 
   updateEmissionRate(
-    _joePerSec: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _joePerSec: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updatePool(
-    _pid: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pid: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   userInfo(
-    arg0: BigNumberish,
-    arg1: string,
+    arg0: PromiseOrValue<BigNumberish>,
+    arg1: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; rewardDebt: BigNumber }>;
 
   withdraw(
-    _pid: BigNumberish,
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pid: PromiseOrValue<BigNumberish>,
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    add(_allocPoint: BigNumberish, _lpToken: string, _rewarder: string, overrides?: CallOverrides): Promise<void>;
+    add(
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _lpToken: PromiseOrValue<string>,
+      _rewarder: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    deposit(_pid: BigNumberish, _amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    deposit(
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    dev(_devAddr: string, overrides?: CallOverrides): Promise<void>;
+    dev(_devAddr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     devAddr(overrides?: CallOverrides): Promise<string>;
 
     devPercent(overrides?: CallOverrides): Promise<BigNumber>;
 
-    emergencyWithdraw(_pid: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    emergencyWithdraw(_pid: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     investorAddr(overrides?: CallOverrides): Promise<string>;
 
@@ -598,8 +636,8 @@ export interface TraderJoeChefV2 extends BaseContract {
     owner(overrides?: CallOverrides): Promise<string>;
 
     pendingTokens(
-      _pid: BigNumberish,
-      _user: string,
+      _pid: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, string, string, BigNumber] & {
@@ -611,7 +649,7 @@ export interface TraderJoeChefV2 extends BaseContract {
     >;
 
     poolInfo(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [string, BigNumber, BigNumber, BigNumber, string] & {
@@ -628,150 +666,190 @@ export interface TraderJoeChefV2 extends BaseContract {
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
     rewarderBonusTokenInfo(
-      _pid: BigNumberish,
+      _pid: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[string, string] & { bonusTokenAddress: string; bonusTokenSymbol: string }>;
 
     set(
-      _pid: BigNumberish,
-      _allocPoint: BigNumberish,
-      _rewarder: string,
-      overwrite: boolean,
+      _pid: PromiseOrValue<BigNumberish>,
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _rewarder: PromiseOrValue<string>,
+      overwrite: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    setDevPercent(_newDevPercent: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setDevPercent(_newDevPercent: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setInvestorAddr(_investorAddr: string, overrides?: CallOverrides): Promise<void>;
+    setInvestorAddr(_investorAddr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setInvestorPercent(_newInvestorPercent: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setInvestorPercent(_newInvestorPercent: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setTreasuryAddr(_treasuryAddr: string, overrides?: CallOverrides): Promise<void>;
+    setTreasuryAddr(_treasuryAddr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setTreasuryPercent(_newTreasuryPercent: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setTreasuryPercent(_newTreasuryPercent: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     startTimestamp(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalAllocPoint(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     treasuryAddr(overrides?: CallOverrides): Promise<string>;
 
     treasuryPercent(overrides?: CallOverrides): Promise<BigNumber>;
 
-    updateEmissionRate(_joePerSec: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    updateEmissionRate(_joePerSec: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    updatePool(_pid: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    updatePool(_pid: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     userInfo(
-      arg0: BigNumberish,
-      arg1: string,
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; rewardDebt: BigNumber }>;
 
-    withdraw(_pid: BigNumberish, _amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    withdraw(
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
   };
 
   filters: {
     'Add(uint256,uint256,address,address)'(
-      pid?: BigNumberish | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
       allocPoint?: null,
-      lpToken?: string | null,
-      rewarder?: string | null,
+      lpToken?: PromiseOrValue<string> | null,
+      rewarder?: PromiseOrValue<string> | null,
     ): AddEventFilter;
     Add(
-      pid?: BigNumberish | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
       allocPoint?: null,
-      lpToken?: string | null,
-      rewarder?: string | null,
+      lpToken?: PromiseOrValue<string> | null,
+      rewarder?: PromiseOrValue<string> | null,
     ): AddEventFilter;
 
     'Deposit(address,uint256,uint256)'(
-      user?: string | null,
-      pid?: BigNumberish | null,
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
       amount?: null,
     ): DepositEventFilter;
-    Deposit(user?: string | null, pid?: BigNumberish | null, amount?: null): DepositEventFilter;
+    Deposit(
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
+      amount?: null,
+    ): DepositEventFilter;
 
     'EmergencyWithdraw(address,uint256,uint256)'(
-      user?: string | null,
-      pid?: BigNumberish | null,
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
       amount?: null,
     ): EmergencyWithdrawEventFilter;
-    EmergencyWithdraw(user?: string | null, pid?: BigNumberish | null, amount?: null): EmergencyWithdrawEventFilter;
+    EmergencyWithdraw(
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
+      amount?: null,
+    ): EmergencyWithdrawEventFilter;
 
     'Harvest(address,uint256,uint256)'(
-      user?: string | null,
-      pid?: BigNumberish | null,
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
       amount?: null,
     ): HarvestEventFilter;
-    Harvest(user?: string | null, pid?: BigNumberish | null, amount?: null): HarvestEventFilter;
+    Harvest(
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
+      amount?: null,
+    ): HarvestEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
 
     'Set(uint256,uint256,address,bool)'(
-      pid?: BigNumberish | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
       allocPoint?: null,
-      rewarder?: string | null,
+      rewarder?: PromiseOrValue<string> | null,
       overwrite?: null,
     ): SetEventFilter;
-    Set(pid?: BigNumberish | null, allocPoint?: null, rewarder?: string | null, overwrite?: null): SetEventFilter;
+    Set(
+      pid?: PromiseOrValue<BigNumberish> | null,
+      allocPoint?: null,
+      rewarder?: PromiseOrValue<string> | null,
+      overwrite?: null,
+    ): SetEventFilter;
 
-    'SetDevAddress(address,address)'(oldAddress?: string | null, newAddress?: string | null): SetDevAddressEventFilter;
-    SetDevAddress(oldAddress?: string | null, newAddress?: string | null): SetDevAddressEventFilter;
+    'SetDevAddress(address,address)'(
+      oldAddress?: PromiseOrValue<string> | null,
+      newAddress?: PromiseOrValue<string> | null,
+    ): SetDevAddressEventFilter;
+    SetDevAddress(
+      oldAddress?: PromiseOrValue<string> | null,
+      newAddress?: PromiseOrValue<string> | null,
+    ): SetDevAddressEventFilter;
 
-    'UpdateEmissionRate(address,uint256)'(user?: string | null, _joePerSec?: null): UpdateEmissionRateEventFilter;
-    UpdateEmissionRate(user?: string | null, _joePerSec?: null): UpdateEmissionRateEventFilter;
+    'UpdateEmissionRate(address,uint256)'(
+      user?: PromiseOrValue<string> | null,
+      _joePerSec?: null,
+    ): UpdateEmissionRateEventFilter;
+    UpdateEmissionRate(user?: PromiseOrValue<string> | null, _joePerSec?: null): UpdateEmissionRateEventFilter;
 
     'UpdatePool(uint256,uint256,uint256,uint256)'(
-      pid?: BigNumberish | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
       lastRewardTimestamp?: null,
       lpSupply?: null,
       accJoePerShare?: null,
     ): UpdatePoolEventFilter;
     UpdatePool(
-      pid?: BigNumberish | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
       lastRewardTimestamp?: null,
       lpSupply?: null,
       accJoePerShare?: null,
     ): UpdatePoolEventFilter;
 
     'Withdraw(address,uint256,uint256)'(
-      user?: string | null,
-      pid?: BigNumberish | null,
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
       amount?: null,
     ): WithdrawEventFilter;
-    Withdraw(user?: string | null, pid?: BigNumberish | null, amount?: null): WithdrawEventFilter;
+    Withdraw(
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
+      amount?: null,
+    ): WithdrawEventFilter;
   };
 
   estimateGas: {
     add(
-      _allocPoint: BigNumberish,
-      _lpToken: string,
-      _rewarder: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _lpToken: PromiseOrValue<string>,
+      _rewarder: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     deposit(
-      _pid: BigNumberish,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    dev(_devAddr: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    dev(
+      _devAddr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     devAddr(overrides?: CallOverrides): Promise<BigNumber>;
 
     devPercent(overrides?: CallOverrides): Promise<BigNumber>;
 
     emergencyWithdraw(
-      _pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     investorAddr(overrides?: CallOverrides): Promise<BigNumber>;
@@ -782,51 +860,55 @@ export interface TraderJoeChefV2 extends BaseContract {
 
     joePerSec(overrides?: CallOverrides): Promise<BigNumber>;
 
-    massUpdatePools(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    massUpdatePools(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    pendingTokens(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingTokens(
+      _pid: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    poolInfo(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    poolInfo(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     poolLength(overrides?: CallOverrides): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    rewarderBonusTokenInfo(_pid: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    rewarderBonusTokenInfo(_pid: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     set(
-      _pid: BigNumberish,
-      _allocPoint: BigNumberish,
-      _rewarder: string,
-      overwrite: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _rewarder: PromiseOrValue<string>,
+      overwrite: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setDevPercent(
-      _newDevPercent: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newDevPercent: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setInvestorAddr(
-      _investorAddr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _investorAddr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setInvestorPercent(
-      _newInvestorPercent: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newInvestorPercent: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setTreasuryAddr(
-      _treasuryAddr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _treasuryAddr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setTreasuryPercent(
-      _newTreasuryPercent: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newTreasuryPercent: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     startTimestamp(overrides?: CallOverrides): Promise<BigNumber>;
@@ -834,8 +916,8 @@ export interface TraderJoeChefV2 extends BaseContract {
     totalAllocPoint(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     treasuryAddr(overrides?: CallOverrides): Promise<BigNumber>;
@@ -843,44 +925,54 @@ export interface TraderJoeChefV2 extends BaseContract {
     treasuryPercent(overrides?: CallOverrides): Promise<BigNumber>;
 
     updateEmissionRate(
-      _joePerSec: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _joePerSec: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    updatePool(_pid: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    updatePool(
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    userInfo(arg0: BigNumberish, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    userInfo(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     withdraw(
-      _pid: BigNumberish,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     add(
-      _allocPoint: BigNumberish,
-      _lpToken: string,
-      _rewarder: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _lpToken: PromiseOrValue<string>,
+      _rewarder: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     deposit(
-      _pid: BigNumberish,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    dev(_devAddr: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    dev(
+      _devAddr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
     devAddr(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     devPercent(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     emergencyWithdraw(
-      _pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     investorAddr(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -891,51 +983,58 @@ export interface TraderJoeChefV2 extends BaseContract {
 
     joePerSec(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    massUpdatePools(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    massUpdatePools(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    pendingTokens(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    pendingTokens(
+      _pid: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    poolInfo(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    poolInfo(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     poolLength(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    rewarderBonusTokenInfo(_pid: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    rewarderBonusTokenInfo(
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     set(
-      _pid: BigNumberish,
-      _allocPoint: BigNumberish,
-      _rewarder: string,
-      overwrite: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _rewarder: PromiseOrValue<string>,
+      overwrite: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setDevPercent(
-      _newDevPercent: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newDevPercent: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setInvestorAddr(
-      _investorAddr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _investorAddr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setInvestorPercent(
-      _newInvestorPercent: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newInvestorPercent: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setTreasuryAddr(
-      _treasuryAddr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _treasuryAddr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setTreasuryPercent(
-      _newTreasuryPercent: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newTreasuryPercent: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     startTimestamp(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -943,8 +1042,8 @@ export interface TraderJoeChefV2 extends BaseContract {
     totalAllocPoint(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     treasuryAddr(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -952,21 +1051,25 @@ export interface TraderJoeChefV2 extends BaseContract {
     treasuryPercent(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     updateEmissionRate(
-      _joePerSec: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _joePerSec: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updatePool(
-      _pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    userInfo(arg0: BigNumberish, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    userInfo(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     withdraw(
-      _pid: BigNumberish,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

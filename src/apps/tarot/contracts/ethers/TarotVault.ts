@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface TarotVaultInterface extends utils.Interface {
   functions: {
@@ -108,33 +108,50 @@ export interface TarotVaultInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'WETH', values?: undefined): string;
   encodeFunctionData(
     functionFragment: '_initialize',
-    values: [string, string, string, BigNumberish, BigNumberish],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: '_setFactory', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'allowance', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'approve', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
+  encodeFunctionData(functionFragment: 'allowance', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'approve',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'decimals', values?: undefined): string;
   encodeFunctionData(functionFragment: 'exchangeRate', values?: undefined): string;
   encodeFunctionData(functionFragment: 'factory', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getReserves', values?: undefined): string;
   encodeFunctionData(functionFragment: 'isVaultToken', values?: undefined): string;
   encodeFunctionData(functionFragment: 'masterChef', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'mint', values: [string]): string;
+  encodeFunctionData(functionFragment: 'mint', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'nonces', values: [string]): string;
+  encodeFunctionData(functionFragment: 'nonces', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
     functionFragment: 'permit',
-    values: [string, string, BigNumberish, BigNumberish, BigNumberish, BytesLike, BytesLike],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'pid', values?: undefined): string;
   encodeFunctionData(functionFragment: 'price0CumulativeLast', values?: undefined): string;
   encodeFunctionData(functionFragment: 'price1CumulativeLast', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'redeem', values: [string]): string;
+  encodeFunctionData(functionFragment: 'redeem', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'reinvest', values?: undefined): string;
   encodeFunctionData(functionFragment: 'rewardsToken', values?: undefined): string;
   encodeFunctionData(functionFragment: 'router', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'skim', values: [string]): string;
+  encodeFunctionData(functionFragment: 'skim', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'swapFeeFactor', values?: undefined): string;
   encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
   encodeFunctionData(functionFragment: 'sync', values?: undefined): string;
@@ -142,8 +159,14 @@ export interface TarotVaultInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'token1', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalBalance', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transfer', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferFrom', values: [string, string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'transfer',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'transferFrom',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'underlying', values?: undefined): string;
 
   decodeFunctionResult(functionFragment: 'DOMAIN_SEPARATOR', data: BytesLike): Result;
@@ -290,25 +313,29 @@ export interface TarotVault extends BaseContract {
     WETH(overrides?: CallOverrides): Promise<[string]>;
 
     _initialize(
-      _router: string,
-      _masterChef: string,
-      _rewardsToken: string,
-      _swapFeeFactor: BigNumberish,
-      _pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _router: PromiseOrValue<string>,
+      _masterChef: PromiseOrValue<string>,
+      _rewardsToken: PromiseOrValue<string>,
+      _swapFeeFactor: PromiseOrValue<BigNumberish>,
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    _setFactory(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    _setFactory(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    allowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    allowance(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     approve(
-      spender: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    balanceOf(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     decimals(overrides?: CallOverrides): Promise<[number]>;
 
@@ -328,21 +355,24 @@ export interface TarotVault extends BaseContract {
 
     masterChef(overrides?: CallOverrides): Promise<[string]>;
 
-    mint(minter: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    mint(
+      minter: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     permit(
-      owner: string,
-      spender: string,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     pid(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -351,21 +381,27 @@ export interface TarotVault extends BaseContract {
 
     price1CumulativeLast(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    redeem(redeemer: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    redeem(
+      redeemer: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
-    reinvest(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    reinvest(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     rewardsToken(overrides?: CallOverrides): Promise<[string]>;
 
     router(overrides?: CallOverrides): Promise<[string]>;
 
-    skim(to: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    skim(
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     swapFeeFactor(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
 
-    sync(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    sync(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     token0(overrides?: CallOverrides): Promise<[string]>;
 
@@ -376,16 +412,16 @@ export interface TarotVault extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transfer(
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferFrom(
-      from: string,
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     underlying(overrides?: CallOverrides): Promise<[string]>;
@@ -402,25 +438,25 @@ export interface TarotVault extends BaseContract {
   WETH(overrides?: CallOverrides): Promise<string>;
 
   _initialize(
-    _router: string,
-    _masterChef: string,
-    _rewardsToken: string,
-    _swapFeeFactor: BigNumberish,
-    _pid: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _router: PromiseOrValue<string>,
+    _masterChef: PromiseOrValue<string>,
+    _rewardsToken: PromiseOrValue<string>,
+    _swapFeeFactor: PromiseOrValue<BigNumberish>,
+    _pid: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  _setFactory(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  _setFactory(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  allowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+  allowance(arg0: PromiseOrValue<string>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   approve(
-    spender: string,
-    value: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    value: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  balanceOf(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   decimals(overrides?: CallOverrides): Promise<number>;
 
@@ -440,21 +476,24 @@ export interface TarotVault extends BaseContract {
 
   masterChef(overrides?: CallOverrides): Promise<string>;
 
-  mint(minter: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  mint(
+    minter: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   name(overrides?: CallOverrides): Promise<string>;
 
-  nonces(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   permit(
-    owner: string,
-    spender: string,
-    value: BigNumberish,
-    deadline: BigNumberish,
-    v: BigNumberish,
-    r: BytesLike,
-    s: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    owner: PromiseOrValue<string>,
+    spender: PromiseOrValue<string>,
+    value: PromiseOrValue<BigNumberish>,
+    deadline: PromiseOrValue<BigNumberish>,
+    v: PromiseOrValue<BigNumberish>,
+    r: PromiseOrValue<BytesLike>,
+    s: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   pid(overrides?: CallOverrides): Promise<BigNumber>;
@@ -463,21 +502,27 @@ export interface TarotVault extends BaseContract {
 
   price1CumulativeLast(overrides?: CallOverrides): Promise<BigNumber>;
 
-  redeem(redeemer: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  redeem(
+    redeemer: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
-  reinvest(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  reinvest(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   rewardsToken(overrides?: CallOverrides): Promise<string>;
 
   router(overrides?: CallOverrides): Promise<string>;
 
-  skim(to: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  skim(
+    to: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   swapFeeFactor(overrides?: CallOverrides): Promise<BigNumber>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
 
-  sync(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  sync(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   token0(overrides?: CallOverrides): Promise<string>;
 
@@ -488,16 +533,16 @@ export interface TarotVault extends BaseContract {
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   transfer(
-    to: string,
-    value: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    to: PromiseOrValue<string>,
+    value: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferFrom(
-    from: string,
-    to: string,
-    value: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    from: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    value: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   underlying(overrides?: CallOverrides): Promise<string>;
@@ -514,21 +559,29 @@ export interface TarotVault extends BaseContract {
     WETH(overrides?: CallOverrides): Promise<string>;
 
     _initialize(
-      _router: string,
-      _masterChef: string,
-      _rewardsToken: string,
-      _swapFeeFactor: BigNumberish,
-      _pid: BigNumberish,
+      _router: PromiseOrValue<string>,
+      _masterChef: PromiseOrValue<string>,
+      _rewardsToken: PromiseOrValue<string>,
+      _swapFeeFactor: PromiseOrValue<BigNumberish>,
+      _pid: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     _setFactory(overrides?: CallOverrides): Promise<void>;
 
-    allowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    approve(spender: string, value: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    approve(
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    balanceOf(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<number>;
 
@@ -548,20 +601,20 @@ export interface TarotVault extends BaseContract {
 
     masterChef(overrides?: CallOverrides): Promise<string>;
 
-    mint(minter: string, overrides?: CallOverrides): Promise<BigNumber>;
+    mint(minter: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     permit(
-      owner: string,
-      spender: string,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -571,7 +624,7 @@ export interface TarotVault extends BaseContract {
 
     price1CumulativeLast(overrides?: CallOverrides): Promise<BigNumber>;
 
-    redeem(redeemer: string, overrides?: CallOverrides): Promise<BigNumber>;
+    redeem(redeemer: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     reinvest(overrides?: CallOverrides): Promise<void>;
 
@@ -579,7 +632,7 @@ export interface TarotVault extends BaseContract {
 
     router(overrides?: CallOverrides): Promise<string>;
 
-    skim(to: string, overrides?: CallOverrides): Promise<void>;
+    skim(to: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     swapFeeFactor(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -595,50 +648,80 @@ export interface TarotVault extends BaseContract {
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transfer(to: string, value: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transfer(
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    transferFrom(from: string, to: string, value: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transferFrom(
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     underlying(overrides?: CallOverrides): Promise<string>;
   };
 
   filters: {
     'Approval(address,address,uint256)'(
-      owner?: string | null,
-      spender?: string | null,
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
       value?: null,
     ): ApprovalEventFilter;
-    Approval(owner?: string | null, spender?: string | null, value?: null): ApprovalEventFilter;
+    Approval(
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
+      value?: null,
+    ): ApprovalEventFilter;
 
     'Mint(address,address,uint256,uint256)'(
-      sender?: string | null,
-      minter?: string | null,
+      sender?: PromiseOrValue<string> | null,
+      minter?: PromiseOrValue<string> | null,
       mintAmount?: null,
       mintTokens?: null,
     ): MintEventFilter;
-    Mint(sender?: string | null, minter?: string | null, mintAmount?: null, mintTokens?: null): MintEventFilter;
+    Mint(
+      sender?: PromiseOrValue<string> | null,
+      minter?: PromiseOrValue<string> | null,
+      mintAmount?: null,
+      mintTokens?: null,
+    ): MintEventFilter;
 
     'Redeem(address,address,uint256,uint256)'(
-      sender?: string | null,
-      redeemer?: string | null,
+      sender?: PromiseOrValue<string> | null,
+      redeemer?: PromiseOrValue<string> | null,
       redeemAmount?: null,
       redeemTokens?: null,
     ): RedeemEventFilter;
     Redeem(
-      sender?: string | null,
-      redeemer?: string | null,
+      sender?: PromiseOrValue<string> | null,
+      redeemer?: PromiseOrValue<string> | null,
       redeemAmount?: null,
       redeemTokens?: null,
     ): RedeemEventFilter;
 
-    'Reinvest(address,uint256,uint256)'(caller?: string | null, reward?: null, bounty?: null): ReinvestEventFilter;
-    Reinvest(caller?: string | null, reward?: null, bounty?: null): ReinvestEventFilter;
+    'Reinvest(address,uint256,uint256)'(
+      caller?: PromiseOrValue<string> | null,
+      reward?: null,
+      bounty?: null,
+    ): ReinvestEventFilter;
+    Reinvest(caller?: PromiseOrValue<string> | null, reward?: null, bounty?: null): ReinvestEventFilter;
 
     'Sync(uint256)'(totalBalance?: null): SyncEventFilter;
     Sync(totalBalance?: null): SyncEventFilter;
 
-    'Transfer(address,address,uint256)'(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
-    Transfer(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
+    'Transfer(address,address,uint256)'(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
+    Transfer(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
   };
 
   estimateGas: {
@@ -653,25 +736,29 @@ export interface TarotVault extends BaseContract {
     WETH(overrides?: CallOverrides): Promise<BigNumber>;
 
     _initialize(
-      _router: string,
-      _masterChef: string,
-      _rewardsToken: string,
-      _swapFeeFactor: BigNumberish,
-      _pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _router: PromiseOrValue<string>,
+      _masterChef: PromiseOrValue<string>,
+      _rewardsToken: PromiseOrValue<string>,
+      _swapFeeFactor: PromiseOrValue<BigNumberish>,
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    _setFactory(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    _setFactory(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    allowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     approve(
-      spender: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    balanceOf(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -685,21 +772,21 @@ export interface TarotVault extends BaseContract {
 
     masterChef(overrides?: CallOverrides): Promise<BigNumber>;
 
-    mint(minter: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    mint(minter: PromiseOrValue<string>, overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     permit(
-      owner: string,
-      spender: string,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     pid(overrides?: CallOverrides): Promise<BigNumber>;
@@ -708,21 +795,24 @@ export interface TarotVault extends BaseContract {
 
     price1CumulativeLast(overrides?: CallOverrides): Promise<BigNumber>;
 
-    redeem(redeemer: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    redeem(
+      redeemer: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    reinvest(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    reinvest(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     rewardsToken(overrides?: CallOverrides): Promise<BigNumber>;
 
     router(overrides?: CallOverrides): Promise<BigNumber>;
 
-    skim(to: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    skim(to: PromiseOrValue<string>, overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     swapFeeFactor(overrides?: CallOverrides): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
-    sync(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    sync(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     token0(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -733,16 +823,16 @@ export interface TarotVault extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferFrom(
-      from: string,
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     underlying(overrides?: CallOverrides): Promise<BigNumber>;
@@ -760,25 +850,29 @@ export interface TarotVault extends BaseContract {
     WETH(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     _initialize(
-      _router: string,
-      _masterChef: string,
-      _rewardsToken: string,
-      _swapFeeFactor: BigNumberish,
-      _pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _router: PromiseOrValue<string>,
+      _masterChef: PromiseOrValue<string>,
+      _rewardsToken: PromiseOrValue<string>,
+      _swapFeeFactor: PromiseOrValue<BigNumberish>,
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    _setFactory(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    _setFactory(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    allowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    allowance(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     approve(
-      spender: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    balanceOf(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    balanceOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -792,21 +886,24 @@ export interface TarotVault extends BaseContract {
 
     masterChef(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    mint(minter: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    mint(
+      minter: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     permit(
-      owner: string,
-      spender: string,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     pid(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -816,23 +913,26 @@ export interface TarotVault extends BaseContract {
     price1CumulativeLast(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     redeem(
-      redeemer: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      redeemer: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    reinvest(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    reinvest(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     rewardsToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     router(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    skim(to: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    skim(
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
     swapFeeFactor(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    sync(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    sync(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     token0(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -843,16 +943,16 @@ export interface TarotVault extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transfer(
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferFrom(
-      from: string,
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     underlying(overrides?: CallOverrides): Promise<PopulatedTransaction>;

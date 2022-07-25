@@ -9,6 +9,7 @@ import { SynthetixNetworkToken__factory } from './ethers';
 import { SynthetixRewards__factory } from './ethers';
 import { SynthetixSummaryUtil__factory } from './ethers';
 
+// eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
 
 @Injectable()

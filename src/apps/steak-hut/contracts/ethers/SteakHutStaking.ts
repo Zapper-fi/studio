@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface SteakHutStakingInterface extends utils.Interface {
   functions: {
@@ -58,20 +58,20 @@ export interface SteakHutStakingInterface extends utils.Interface {
   ): FunctionFragment;
 
   encodeFunctionData(functionFragment: 'balance', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'deposit', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'deposit', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'emergencyWithdraw', values?: undefined): string;
   encodeFunctionData(functionFragment: 'inputToken', values?: undefined): string;
   encodeFunctionData(functionFragment: 'isRewarderEnabled', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'pendingTokens', values: [string]): string;
+  encodeFunctionData(functionFragment: 'pendingTokens', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'poolInfo', values?: undefined): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
   encodeFunctionData(functionFragment: 'rewardToken', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'setRewardRate', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setRewarderEnabled', values: [boolean]): string;
+  encodeFunctionData(functionFragment: 'setRewardRate', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setRewarderEnabled', values: [PromiseOrValue<boolean>]): string;
   encodeFunctionData(functionFragment: 'tokenPerSec', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
-  encodeFunctionData(functionFragment: 'userInfo', values: [string]): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'userInfo', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'withdraw', values?: undefined): string;
 
   decodeFunctionResult(functionFragment: 'balance', data: BytesLike): Result;
@@ -171,11 +171,11 @@ export interface SteakHutStaking extends BaseContract {
     balance(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     deposit(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    emergencyWithdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    emergencyWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     inputToken(overrides?: CallOverrides): Promise<[string]>;
 
@@ -183,7 +183,10 @@ export interface SteakHutStaking extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
-    pendingTokens(_user: string, overrides?: CallOverrides): Promise<[BigNumber] & { pending: BigNumber }>;
+    pendingTokens(
+      _user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber] & { pending: BigNumber }>;
 
     poolInfo(overrides?: CallOverrides): Promise<
       [BigNumber, BigNumber] & {
@@ -192,29 +195,29 @@ export interface SteakHutStaking extends BaseContract {
       }
     >;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     rewardToken(overrides?: CallOverrides): Promise<[string]>;
 
     setRewardRate(
-      _tokenPerSec: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokenPerSec: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setRewarderEnabled(
-      _isEnabled: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _isEnabled: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     tokenPerSec(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     userInfo(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber] & {
@@ -224,17 +227,17 @@ export interface SteakHutStaking extends BaseContract {
       }
     >;
 
-    withdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    withdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
   };
 
   balance(overrides?: CallOverrides): Promise<BigNumber>;
 
   deposit(
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  emergencyWithdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  emergencyWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   inputToken(overrides?: CallOverrides): Promise<string>;
 
@@ -242,7 +245,7 @@ export interface SteakHutStaking extends BaseContract {
 
   owner(overrides?: CallOverrides): Promise<string>;
 
-  pendingTokens(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
+  pendingTokens(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   poolInfo(overrides?: CallOverrides): Promise<
     [BigNumber, BigNumber] & {
@@ -251,29 +254,29 @@ export interface SteakHutStaking extends BaseContract {
     }
   >;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   rewardToken(overrides?: CallOverrides): Promise<string>;
 
   setRewardRate(
-    _tokenPerSec: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _tokenPerSec: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setRewarderEnabled(
-    _isEnabled: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _isEnabled: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   tokenPerSec(overrides?: CallOverrides): Promise<BigNumber>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   userInfo(
-    arg0: string,
+    arg0: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber, BigNumber] & {
@@ -283,12 +286,12 @@ export interface SteakHutStaking extends BaseContract {
     }
   >;
 
-  withdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  withdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   callStatic: {
     balance(overrides?: CallOverrides): Promise<BigNumber>;
 
-    deposit(_amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    deposit(_amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     emergencyWithdraw(overrides?: CallOverrides): Promise<void>;
 
@@ -298,7 +301,7 @@ export interface SteakHutStaking extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    pendingTokens(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingTokens(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     poolInfo(overrides?: CallOverrides): Promise<
       [BigNumber, BigNumber] & {
@@ -311,16 +314,16 @@ export interface SteakHutStaking extends BaseContract {
 
     rewardToken(overrides?: CallOverrides): Promise<string>;
 
-    setRewardRate(_tokenPerSec: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setRewardRate(_tokenPerSec: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setRewarderEnabled(_isEnabled: boolean, overrides?: CallOverrides): Promise<void>;
+    setRewarderEnabled(_isEnabled: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
 
     tokenPerSec(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     userInfo(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber] & {
@@ -341,10 +344,13 @@ export interface SteakHutStaking extends BaseContract {
     IsRewarderEnabled(isEnabled?: null): IsRewarderEnabledEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
 
     'RewardRateUpdated(uint256,uint256)'(oldRate?: null, newRate?: null): RewardRateUpdatedEventFilter;
     RewardRateUpdated(oldRate?: null, newRate?: null): RewardRateUpdatedEventFilter;
@@ -356,9 +362,12 @@ export interface SteakHutStaking extends BaseContract {
   estimateGas: {
     balance(overrides?: CallOverrides): Promise<BigNumber>;
 
-    deposit(_amount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    deposit(
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    emergencyWithdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    emergencyWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     inputToken(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -366,45 +375,45 @@ export interface SteakHutStaking extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    pendingTokens(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingTokens(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     poolInfo(overrides?: CallOverrides): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     rewardToken(overrides?: CallOverrides): Promise<BigNumber>;
 
     setRewardRate(
-      _tokenPerSec: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokenPerSec: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setRewarderEnabled(
-      _isEnabled: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _isEnabled: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     tokenPerSec(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    userInfo(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    userInfo(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    withdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    withdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
   };
 
   populateTransaction: {
     balance(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     deposit(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    emergencyWithdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    emergencyWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     inputToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -412,33 +421,33 @@ export interface SteakHutStaking extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    pendingTokens(_user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    pendingTokens(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     poolInfo(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     rewardToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setRewardRate(
-      _tokenPerSec: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokenPerSec: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setRewarderEnabled(
-      _isEnabled: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _isEnabled: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     tokenPerSec(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    userInfo(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    userInfo(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    withdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    withdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
   };
 }
