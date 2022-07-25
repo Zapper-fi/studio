@@ -1,4 +1,5 @@
 import { Inject } from '@nestjs/common';
+import moment from 'moment';
 import { ethers } from 'ethers';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
@@ -80,12 +81,13 @@ export class EthereumOriginDollarVeogvTokenFetcher implements PositionFetcher<Ap
 
     // Amount we'll use to calculate APY (1000 OGV)
     const stakeAmount = ethers.BigNumber.from('1000000000000000000000');
+    const fourYears = ethers.BigNumber.from(moment.duration(4, 'years').asSeconds());
 
     // Get contract data
     const [supplyRaw, [expectedVeOGV], ogvBalance] = await Promise.all([
       multicall.wrap(contract).totalSupply(),
       // 1000e18 @ 4 year stake (1461 days)
-      multicall.wrap(contract).previewPoints(stakeAmount, ethers.BigNumber.from('126230400')),
+      multicall.wrap(contract).previewPoints(stakeAmount, fourYears),
       multicall
         .wrap(this.appToolkit.globalContracts.erc20({ network, address: ogv.address }))
         .balanceOf(contract.address),
