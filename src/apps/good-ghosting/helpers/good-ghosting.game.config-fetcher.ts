@@ -3,6 +3,7 @@ import axios from 'axios';
 
 import { SingleStakingFarmDefinition } from '~app-toolkit';
 import { CacheOnInterval } from '~cache/cache-on-interval.decorator';
+import { NetworkId } from '../helpers/constants';
 
 import GOOD_GHOSTING_DEFINITION from '../good-ghosting.definition';
 
@@ -44,13 +45,21 @@ export class GoodGhostingGameConfigFetcherHelper {
         gameName,
       } = gameConfigs[gameContractAddress];
 
-      if (rewardTokenAddress) {
+      const isPolygonGame = NetworkId.PolygonMainnet === networkId;
+      const isCeloGame = NetworkId.CeloMainnet === networkId;
+
+      if (isPolygonGame && rewardTokenAddress) {
         rewardTokenAddresses.push(rewardTokenAddress);
         rewardTokenAddresses.push(depositTokenAddress);
       }
 
-      if (rewardTokenAddress && incentiveTokenAddress) {
+      if (isPolygonGame && rewardTokenAddress && incentiveTokenAddress) {
         rewardTokenAddresses.push(incentiveTokenAddress);
+      }
+
+      if (isCeloGame && incentiveTokenAddress) {
+        rewardTokenAddresses.push(incentiveTokenAddress);
+        rewardTokenAddresses.push(depositTokenAddress);
       }
 
       if (depositTokenAddress && contractVersion && id && networkId && networkId === networkIdParam) {
