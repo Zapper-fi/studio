@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.128.0](https://github.com/Zapper-fi/studio/compare/v0.127.0...v0.128.0) (2022-07-25)
+
+
+### Features
+
+* **origin-dollar:** Adds Wrapped OUSD (wOUSD) and Vote Escrowed OGV (veOGV) ([#944](https://github.com/Zapper-fi/studio/issues/944)) ([d9743c0](https://github.com/Zapper-fi/studio/commit/d9743c079806d9bf4775e37940d164859d57e786))
+
+
+### Bug Fixes
+
+* **stargate:** Fix Stargate wrapped ETH price ([#951](https://github.com/Zapper-fi/studio/issues/951)) ([0668cf0](https://github.com/Zapper-fi/studio/commit/0668cf024b520fd915e31f14b0743961a2558eb4))
+
 ## [0.127.0](https://github.com/Zapper-fi/studio/compare/v0.126.0...v0.127.0) (2022-07-25)
 
 
