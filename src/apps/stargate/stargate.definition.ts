@@ -21,6 +21,18 @@ export const STARGATE_DEFINITION = appDefinition({
       type: GroupType.POSITION,
       label: 'Farms',
     },
+
+    ve: {
+      id: 've',
+      type: GroupType.TOKEN,
+      label: 'VotedEscrow',
+    },
+
+    eth: {
+      id: 'eth',
+      type: GroupType.TOKEN,
+      label: 'Wrapper',
+    },
   },
 
   tags: [AppTag.INFRASTRUCTURE],
