@@ -6,9 +6,9 @@ import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
 import { CURVE_DEFINITION } from '../curve.definition';
-import { CurveV1PoolTokenHelper } from '../helpers/curve.v1-pool.token-helper';
+import { CurveStablePoolTokenHelper } from '../helpers/curve.stable-pool.token-helper';
 
-import { CURVE_V1_POOL_DEFINITIONS } from './curve.pool.definitions';
+import { CURVE_STABLE_POOL_DEFINITIONS } from './curve.pool.definitions';
 
 const appId = CURVE_DEFINITION.id;
 const groupId = CURVE_DEFINITION.groups.pool.id;
@@ -17,21 +17,21 @@ const network = Network.GNOSIS_MAINNET;
 @Register.TokenPositionFetcher({ appId, groupId, network })
 export class GnosisCurvePoolTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
-    @Inject(CurveV1PoolTokenHelper)
-    private readonly curveV1PoolTokenHelper: CurveV1PoolTokenHelper,
+    @Inject(CurveStablePoolTokenHelper)
+    private readonly curveStablePoolTokenHelper: CurveStablePoolTokenHelper,
   ) {}
 
   async getPositions() {
-    const [v1Pools] = await Promise.all([
-      this.curveV1PoolTokenHelper.getTokens({
+    const [stableBasePools] = await Promise.all([
+      this.curveStablePoolTokenHelper.getTokens({
         network,
         appId,
         groupId,
-        poolDefinitions: CURVE_V1_POOL_DEFINITIONS,
+        poolDefinitions: CURVE_STABLE_POOL_DEFINITIONS,
         statsUrl: 'https://stats.curve.fi/raw-stats-xdai/apys.json',
       }),
     ]);
 
-    return [v1Pools].flat();
+    return [stableBasePools].flat();
   }
 }

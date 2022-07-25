@@ -1,6 +1,6 @@
 import { CurvePoolDefinition } from '../curve.types';
 
-export const CURVE_V1_POOL_DEFINITIONS: CurvePoolDefinition[] = [
+export const CURVE_STABLE_POOL_DEFINITIONS: CurvePoolDefinition[] = [
   {
     queryKey: '3pool',
     label: '3Pool',

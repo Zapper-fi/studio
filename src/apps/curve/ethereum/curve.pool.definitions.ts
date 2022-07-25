@@ -1,6 +1,6 @@
 import { CurvePoolDefinition } from '../curve.types';
 
-export const CURVE_V1_POOL_DEFINITIONS: CurvePoolDefinition[] = [
+export const CURVE_STABLE_POOL_DEFINITIONS: CurvePoolDefinition[] = [
   {
     queryKey: 'y',
     swapAddress: '0x45f783cce6b7ff23b2ab2d70e416cdb7d6055f51',
@@ -113,7 +113,7 @@ export const CURVE_V1_POOL_DEFINITIONS: CurvePoolDefinition[] = [
   },
 ];
 
-export const CURVE_V1_METAPOOL_DEFINITIONS: CurvePoolDefinition[] = [
+export const CURVE_STABLE_METAPOOL_DEFINITIONS: CurvePoolDefinition[] = [
   {
     queryKey: 'gusd',
     swapAddress: '0x4f062658eaaf2c1ccf8c8e36d6824cdf41167956',
@@ -206,7 +206,7 @@ export const CURVE_V1_METAPOOL_DEFINITIONS: CurvePoolDefinition[] = [
   },
 ];
 
-export const CURVE_V2_POOL_DEFINITIONS: CurvePoolDefinition[] = [
+export const CURVE_CRYPTO_POOL_DEFINITIONS: CurvePoolDefinition[] = [
   {
     queryKey: 'tricrypto',
     label: 'TriCrypto',

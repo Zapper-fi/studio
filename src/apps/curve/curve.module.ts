@@ -29,6 +29,7 @@ import { CurveChildLiquidityGaugeRewardTokenStrategy } from './helpers/curve.chi
 import { CurveChildLiquidityGaugeRoiStrategy } from './helpers/curve.child-liquidity-gauge.roi-strategy';
 import { CurveCryptoFactoryPoolTokenHelper } from './helpers/curve.crypto-factory-pool.token-helper';
 import { CurveCryptoFactoryPoolDefinitionStrategy } from './helpers/curve.crypto-factory.pool-definition-strategy';
+import { CurveCryptoPoolTokenHelper } from './helpers/curve.crypto-pool.token-helper';
 import { CurveFactoryGaugeAddressHelper } from './helpers/curve.factory-gauge.address-helper';
 import { CurveFactoryPoolTokenHelper } from './helpers/curve.factory-pool.token-helper';
 import { CurveFactoryPoolDefinitionStrategy } from './helpers/curve.factory.pool-definition-strategy';
@@ -42,8 +43,7 @@ import { CurveOnChainVolumeStrategy } from './helpers/curve.on-chain.volume-stra
 import { CurvePoolTokenHelper } from './helpers/curve.pool.token-helper';
 import { CurveRewardsOnlyGaugeRewardTokenStrategy } from './helpers/curve.rewards-only-gauge.reward-token-strategy';
 import { CurveRewardsOnlyGaugeRoiStrategy } from './helpers/curve.rewards-only-gauge.roi-strategy';
-import { CurveV1PoolTokenHelper } from './helpers/curve.v1-pool.token-helper';
-import { CurveV2PoolTokenHelper } from './helpers/curve.v2-pool.token-helper';
+import { CurveStablePoolTokenHelper } from './helpers/curve.stable-pool.token-helper';
 import { CurveVestingEscrowContractPositionBalanceHelper } from './helpers/curve.vesting-escrow.contract-position-balance-helper';
 import { CurveVestingEscrowContractPositionHelper } from './helpers/curve.vesting-escrow.contract-position-helper';
 import { CurveVirtualPriceStrategy } from './helpers/curve.virtual.price-strategy';
@@ -97,8 +97,8 @@ import { PolygonCurvePoolTokenFetcher } from './polygon/curve.pool.token-fetcher
     PolygonCurveFarmContractPositionFetcher,
     // Token Helpers
     CurvePoolTokenHelper,
-    CurveV1PoolTokenHelper,
-    CurveV2PoolTokenHelper,
+    CurveStablePoolTokenHelper,
+    CurveCryptoPoolTokenHelper,
     CurveFactoryPoolTokenHelper,
     CurveCryptoFactoryPoolTokenHelper,
     // Token Helper Strategies
@@ -132,8 +132,8 @@ import { PolygonCurvePoolTokenFetcher } from './polygon/curve.pool.token-fetcher
     CurveContractFactory,
     // Token Helpers
     CurvePoolTokenHelper,
-    CurveV1PoolTokenHelper,
-    CurveV2PoolTokenHelper,
+    CurveStablePoolTokenHelper,
+    CurveCryptoPoolTokenHelper,
     CurveFactoryPoolTokenHelper,
     CurveCryptoFactoryPoolTokenHelper,
     // Token Helper Strategies

@@ -18,8 +18,8 @@ export { CurveOnChainCoinStrategy } from './helpers/curve.on-chain.coin-strategy
 export { CurveOnChainReserveStrategy } from './helpers/curve.on-chain.reserve-strategy';
 export { CurveOnChainVolumeStrategy } from './helpers/curve.on-chain.volume-strategy';
 export { CurvePoolTokenHelper } from './helpers/curve.pool.token-helper';
-export { CurveV1PoolTokenHelper } from './helpers/curve.v1-pool.token-helper';
-export { CurveV2PoolTokenHelper } from './helpers/curve.v2-pool.token-helper';
+export { CurveStablePoolTokenHelper } from './helpers/curve.stable-pool.token-helper';
+export { CurveCryptoPoolTokenHelper } from './helpers/curve.crypto-pool.token-helper';
 export { CurveVestingEscrowContractPositionBalanceHelper } from './helpers/curve.vesting-escrow.contract-position-balance-helper';
 export { CurveVestingEscrowContractPositionHelper } from './helpers/curve.vesting-escrow.contract-position-helper';
 export { CurveVirtualPriceStrategy } from './helpers/curve.virtual.price-strategy';

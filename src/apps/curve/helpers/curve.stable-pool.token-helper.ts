@@ -13,7 +13,7 @@ import { CurveOnChainReserveStrategy } from './curve.on-chain.reserve-strategy';
 import { CurvePoolTokenHelper } from './curve.pool.token-helper';
 import { CurveVirtualPriceStrategy } from './curve.virtual.price-strategy';
 
-type CurveV1PoolTokenHelperParams = {
+type CurveStablePoolTokenHelperParams = {
   poolDefinitions: CurvePoolDefinition[];
   network: Network;
   appId: string;
@@ -24,7 +24,7 @@ type CurveV1PoolTokenHelperParams = {
 };
 
 @Injectable()
-export class CurveV1PoolTokenHelper {
+export class CurveStablePoolTokenHelper {
   constructor(
     @Inject(CurvePoolTokenHelper)
     private readonly curvePoolTokenHelper: CurvePoolTokenHelper,
@@ -48,7 +48,7 @@ export class CurveV1PoolTokenHelper {
     statsUrl = '',
     appTokenDependencies = [],
     baseCurveTokens = [],
-  }: CurveV1PoolTokenHelperParams) {
+  }: CurveStablePoolTokenHelperParams) {
     return this.curvePoolTokenHelper.getTokens<CurveV1Pool | CurveV1PoolLegacy>({
       network: network,
       appId: appId,

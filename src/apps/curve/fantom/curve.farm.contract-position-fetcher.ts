@@ -15,9 +15,9 @@ import { CurveRewardsOnlyGaugeRewardTokenStrategy } from '../helpers/curve.rewar
 import { CurveRewardsOnlyGaugeRoiStrategy } from '../helpers/curve.rewards-only-gauge.roi-strategy';
 
 import {
-  CURVE_V1_METAPOOL_DEFINITIONS,
-  CURVE_V1_POOL_DEFINITIONS,
-  CURVE_V2_POOL_DEFINITIONS,
+  CURVE_STABLE_METAPOOL_DEFINITIONS,
+  CURVE_STABLE_POOL_DEFINITIONS,
+  CURVE_CRYPTO_POOL_DEFINITIONS,
 } from './curve.pool.definitions';
 
 const appId = CURVE_DEFINITION.id;
@@ -43,7 +43,11 @@ export class FantomCurveFarmContractPositionFetcher implements PositionFetcher<C
   ) {}
 
   async getRewardsOnlyGaugePositions() {
-    const definitions = [CURVE_V1_POOL_DEFINITIONS, CURVE_V1_METAPOOL_DEFINITIONS, CURVE_V2_POOL_DEFINITIONS]
+    const definitions = [
+      CURVE_STABLE_POOL_DEFINITIONS,
+      CURVE_STABLE_METAPOOL_DEFINITIONS,
+      CURVE_CRYPTO_POOL_DEFINITIONS,
+    ]
       .flat()
       .filter(v => !!v.gaugeAddress);
 

@@ -1,6 +1,6 @@
 import { CurvePoolDefinition } from '../curve.types';
 
-export const CURVE_V1_POOL_DEFINITIONS: CurvePoolDefinition[] = [
+export const CURVE_STABLE_POOL_DEFINITIONS: CurvePoolDefinition[] = [
   {
     queryKey: 'aave',
     label: 'Aave 3Pool',
@@ -18,7 +18,7 @@ export const CURVE_V1_POOL_DEFINITIONS: CurvePoolDefinition[] = [
   },
 ];
 
-export const CURVE_V2_POOL_DEFINITIONS: CurvePoolDefinition[] = [
+export const CURVE_CRYPTO_POOL_DEFINITIONS: CurvePoolDefinition[] = [
   {
     queryKey: 'eurtusd',
     swapAddress: '0xb446bf7b8d6d4276d0c75ec0e3ee8dd7fe15783a',

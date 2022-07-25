@@ -14,7 +14,7 @@ import { CurveChildLiquidityGaugeRoiStrategy } from '../helpers/curve.child-liqu
 import { CurveRewardsOnlyGaugeRewardTokenStrategy } from '../helpers/curve.rewards-only-gauge.reward-token-strategy';
 import { CurveRewardsOnlyGaugeRoiStrategy } from '../helpers/curve.rewards-only-gauge.roi-strategy';
 
-import { CURVE_V1_POOL_DEFINITIONS } from './curve.pool.definitions';
+import { CURVE_STABLE_POOL_DEFINITIONS } from './curve.pool.definitions';
 
 const appId = CURVE_DEFINITION.id;
 const groupId = CURVE_DEFINITION.groups.farm.id;
@@ -39,7 +39,7 @@ export class OptimismCurveFarmContractPositionFetcher implements PositionFetcher
   ) {}
 
   async getRewardsOnlyGaugePositions() {
-    const definitions = [CURVE_V1_POOL_DEFINITIONS].flat().filter(v => !!v.gaugeAddress);
+    const definitions = [CURVE_STABLE_POOL_DEFINITIONS].flat().filter(v => !!v.gaugeAddress);
 
     return this.appToolkit.helpers.singleStakingFarmContractPositionHelper.getContractPositions<CurveRewardsOnlyGauge>({
       network,
