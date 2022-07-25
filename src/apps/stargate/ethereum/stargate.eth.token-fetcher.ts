@@ -32,7 +32,7 @@ export class EthereumStargateEthTokenFetcher implements PositionFetcher<AppToken
       resolveContract: ({ address, network }) => this.contractFactory.stargateEth({ address, network }),
       resolveUnderlyingTokenAddress: () => ZERO_ADDRESS,
       resolveReserve: ({ multicall, contract }) => multicall.wrap(contract).totalSupply().then(Number),
-      resolvePricePerShare: ({ underlyingToken }) => underlyingToken.price,
+      resolvePricePerShare: () => 1,
     });
   }
 }
