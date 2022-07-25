@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { PoolLens, PoolLensInterface } from '../PoolLens';
+import type { MarketXyzPoolLens, MarketXyzPoolLensInterface } from '../MarketXyzPoolLens';
 
 const _abi = [
   {
@@ -1216,12 +1216,12 @@ const _abi = [
   },
 ];
 
-export class PoolLens__factory {
+export class MarketXyzPoolLens__factory {
   static readonly abi = _abi;
-  static createInterface(): PoolLensInterface {
-    return new utils.Interface(_abi) as PoolLensInterface;
+  static createInterface(): MarketXyzPoolLensInterface {
+    return new utils.Interface(_abi) as MarketXyzPoolLensInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): PoolLens {
-    return new Contract(address, _abi, signerOrProvider) as PoolLens;
+  static connect(address: string, signerOrProvider: Signer | Provider): MarketXyzPoolLens {
+    return new Contract(address, _abi, signerOrProvider) as MarketXyzPoolLens;
   }
 }

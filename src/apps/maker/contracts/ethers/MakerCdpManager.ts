@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface MakerCdpManagerInterface extends utils.Interface {
   functions: {
@@ -69,33 +69,56 @@ export interface MakerCdpManagerInterface extends utils.Interface {
       | 'vat',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'cdpAllow', values: [BigNumberish, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'cdpCan', values: [string, BigNumberish, string]): string;
+  encodeFunctionData(
+    functionFragment: 'cdpAllow',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'cdpCan',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'cdpi', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'count', values: [string]): string;
-  encodeFunctionData(functionFragment: 'enter', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'first', values: [string]): string;
+  encodeFunctionData(functionFragment: 'count', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'enter', values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'first', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
     functionFragment: 'flux(bytes32,uint256,address,uint256)',
-    values: [BytesLike, BigNumberish, string, BigNumberish],
+    values: [
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
   encodeFunctionData(
     functionFragment: 'flux(uint256,address,uint256)',
-    values: [BigNumberish, string, BigNumberish],
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
-  encodeFunctionData(functionFragment: 'frob', values: [BigNumberish, BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'give', values: [BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'ilks', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'last', values: [string]): string;
-  encodeFunctionData(functionFragment: 'list', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'move', values: [BigNumberish, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'open', values: [BytesLike, string]): string;
-  encodeFunctionData(functionFragment: 'owns', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'quit', values: [BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'shift', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'urnAllow', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'urnCan', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'urns', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'frob',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'give', values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'ilks', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'last', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'list', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'move',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'open', values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'owns', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'quit', values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'shift',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'urnAllow',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'urnCan', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'urns', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'vat', values?: undefined): string;
 
   decodeFunctionResult(functionFragment: 'cdpAllow', data: BytesLike): Result;
@@ -174,468 +197,524 @@ export interface MakerCdpManager extends BaseContract {
 
   functions: {
     cdpAllow(
-      cdp: BigNumberish,
-      usr: string,
-      ok: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      cdp: PromiseOrValue<BigNumberish>,
+      usr: PromiseOrValue<string>,
+      ok: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    cdpCan(arg0: string, arg1: BigNumberish, arg2: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    cdpCan(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      arg2: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     cdpi(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    count(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    count(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     enter(
-      src: string,
-      cdp: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      src: PromiseOrValue<string>,
+      cdp: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    first(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    first(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     'flux(bytes32,uint256,address,uint256)'(
-      ilk: BytesLike,
-      cdp: BigNumberish,
-      dst: string,
-      wad: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      ilk: PromiseOrValue<BytesLike>,
+      cdp: PromiseOrValue<BigNumberish>,
+      dst: PromiseOrValue<string>,
+      wad: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     'flux(uint256,address,uint256)'(
-      cdp: BigNumberish,
-      dst: string,
-      wad: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      cdp: PromiseOrValue<BigNumberish>,
+      dst: PromiseOrValue<string>,
+      wad: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     frob(
-      cdp: BigNumberish,
-      dink: BigNumberish,
-      dart: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      cdp: PromiseOrValue<BigNumberish>,
+      dink: PromiseOrValue<BigNumberish>,
+      dart: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     give(
-      cdp: BigNumberish,
-      dst: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      cdp: PromiseOrValue<BigNumberish>,
+      dst: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    ilks(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    ilks(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
-    last(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    last(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     list(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { prev: BigNumber; next: BigNumber }>;
 
     move(
-      cdp: BigNumberish,
-      dst: string,
-      rad: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      cdp: PromiseOrValue<BigNumberish>,
+      dst: PromiseOrValue<string>,
+      rad: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     open(
-      ilk: BytesLike,
-      usr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      ilk: PromiseOrValue<BytesLike>,
+      usr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    owns(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    owns(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
     quit(
-      cdp: BigNumberish,
-      dst: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      cdp: PromiseOrValue<BigNumberish>,
+      dst: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     shift(
-      cdpSrc: BigNumberish,
-      cdpDst: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      cdpSrc: PromiseOrValue<BigNumberish>,
+      cdpDst: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     urnAllow(
-      usr: string,
-      ok: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      usr: PromiseOrValue<string>,
+      ok: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    urnCan(arg0: string, arg1: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    urnCan(arg0: PromiseOrValue<string>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    urns(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    urns(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
     vat(overrides?: CallOverrides): Promise<[string]>;
   };
 
   cdpAllow(
-    cdp: BigNumberish,
-    usr: string,
-    ok: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    cdp: PromiseOrValue<BigNumberish>,
+    usr: PromiseOrValue<string>,
+    ok: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  cdpCan(arg0: string, arg1: BigNumberish, arg2: string, overrides?: CallOverrides): Promise<BigNumber>;
+  cdpCan(
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<BigNumberish>,
+    arg2: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   cdpi(overrides?: CallOverrides): Promise<BigNumber>;
 
-  count(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  count(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   enter(
-    src: string,
-    cdp: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    src: PromiseOrValue<string>,
+    cdp: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  first(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  first(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   'flux(bytes32,uint256,address,uint256)'(
-    ilk: BytesLike,
-    cdp: BigNumberish,
-    dst: string,
-    wad: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    ilk: PromiseOrValue<BytesLike>,
+    cdp: PromiseOrValue<BigNumberish>,
+    dst: PromiseOrValue<string>,
+    wad: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   'flux(uint256,address,uint256)'(
-    cdp: BigNumberish,
-    dst: string,
-    wad: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    cdp: PromiseOrValue<BigNumberish>,
+    dst: PromiseOrValue<string>,
+    wad: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   frob(
-    cdp: BigNumberish,
-    dink: BigNumberish,
-    dart: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    cdp: PromiseOrValue<BigNumberish>,
+    dink: PromiseOrValue<BigNumberish>,
+    dart: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   give(
-    cdp: BigNumberish,
-    dst: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    cdp: PromiseOrValue<BigNumberish>,
+    dst: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  ilks(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  ilks(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
-  last(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  last(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   list(
-    arg0: BigNumberish,
+    arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber, BigNumber] & { prev: BigNumber; next: BigNumber }>;
 
   move(
-    cdp: BigNumberish,
-    dst: string,
-    rad: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    cdp: PromiseOrValue<BigNumberish>,
+    dst: PromiseOrValue<string>,
+    rad: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   open(
-    ilk: BytesLike,
-    usr: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    ilk: PromiseOrValue<BytesLike>,
+    usr: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  owns(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  owns(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   quit(
-    cdp: BigNumberish,
-    dst: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    cdp: PromiseOrValue<BigNumberish>,
+    dst: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   shift(
-    cdpSrc: BigNumberish,
-    cdpDst: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    cdpSrc: PromiseOrValue<BigNumberish>,
+    cdpDst: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   urnAllow(
-    usr: string,
-    ok: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    usr: PromiseOrValue<string>,
+    ok: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  urnCan(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+  urnCan(arg0: PromiseOrValue<string>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  urns(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  urns(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   vat(overrides?: CallOverrides): Promise<string>;
 
   callStatic: {
-    cdpAllow(cdp: BigNumberish, usr: string, ok: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    cdpAllow(
+      cdp: PromiseOrValue<BigNumberish>,
+      usr: PromiseOrValue<string>,
+      ok: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    cdpCan(arg0: string, arg1: BigNumberish, arg2: string, overrides?: CallOverrides): Promise<BigNumber>;
+    cdpCan(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      arg2: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     cdpi(overrides?: CallOverrides): Promise<BigNumber>;
 
-    count(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    count(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    enter(src: string, cdp: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    enter(src: PromiseOrValue<string>, cdp: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    first(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    first(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     'flux(bytes32,uint256,address,uint256)'(
-      ilk: BytesLike,
-      cdp: BigNumberish,
-      dst: string,
-      wad: BigNumberish,
+      ilk: PromiseOrValue<BytesLike>,
+      cdp: PromiseOrValue<BigNumberish>,
+      dst: PromiseOrValue<string>,
+      wad: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     'flux(uint256,address,uint256)'(
-      cdp: BigNumberish,
-      dst: string,
-      wad: BigNumberish,
+      cdp: PromiseOrValue<BigNumberish>,
+      dst: PromiseOrValue<string>,
+      wad: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    frob(cdp: BigNumberish, dink: BigNumberish, dart: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    frob(
+      cdp: PromiseOrValue<BigNumberish>,
+      dink: PromiseOrValue<BigNumberish>,
+      dart: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    give(cdp: BigNumberish, dst: string, overrides?: CallOverrides): Promise<void>;
+    give(cdp: PromiseOrValue<BigNumberish>, dst: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    ilks(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    ilks(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
-    last(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    last(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     list(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { prev: BigNumber; next: BigNumber }>;
 
-    move(cdp: BigNumberish, dst: string, rad: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    move(
+      cdp: PromiseOrValue<BigNumberish>,
+      dst: PromiseOrValue<string>,
+      rad: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    open(ilk: BytesLike, usr: string, overrides?: CallOverrides): Promise<BigNumber>;
+    open(ilk: PromiseOrValue<BytesLike>, usr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    owns(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    owns(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
-    quit(cdp: BigNumberish, dst: string, overrides?: CallOverrides): Promise<void>;
+    quit(cdp: PromiseOrValue<BigNumberish>, dst: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    shift(cdpSrc: BigNumberish, cdpDst: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    shift(
+      cdpSrc: PromiseOrValue<BigNumberish>,
+      cdpDst: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    urnAllow(usr: string, ok: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    urnAllow(usr: PromiseOrValue<string>, ok: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    urnCan(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    urnCan(arg0: PromiseOrValue<string>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    urns(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    urns(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
     vat(overrides?: CallOverrides): Promise<string>;
   };
 
   filters: {
     'LogNote(bytes4,address,bytes32,bytes32,bytes)'(
-      sig?: BytesLike | null,
-      usr?: string | null,
-      arg1?: BytesLike | null,
-      arg2?: BytesLike | null,
+      sig?: PromiseOrValue<BytesLike> | null,
+      usr?: PromiseOrValue<string> | null,
+      arg1?: PromiseOrValue<BytesLike> | null,
+      arg2?: PromiseOrValue<BytesLike> | null,
       data?: null,
     ): LogNoteEventFilter;
     LogNote(
-      sig?: BytesLike | null,
-      usr?: string | null,
-      arg1?: BytesLike | null,
-      arg2?: BytesLike | null,
+      sig?: PromiseOrValue<BytesLike> | null,
+      usr?: PromiseOrValue<string> | null,
+      arg1?: PromiseOrValue<BytesLike> | null,
+      arg2?: PromiseOrValue<BytesLike> | null,
       data?: null,
     ): LogNoteEventFilter;
 
     'NewCdp(address,address,uint256)'(
-      usr?: string | null,
-      own?: string | null,
-      cdp?: BigNumberish | null,
+      usr?: PromiseOrValue<string> | null,
+      own?: PromiseOrValue<string> | null,
+      cdp?: PromiseOrValue<BigNumberish> | null,
     ): NewCdpEventFilter;
-    NewCdp(usr?: string | null, own?: string | null, cdp?: BigNumberish | null): NewCdpEventFilter;
+    NewCdp(
+      usr?: PromiseOrValue<string> | null,
+      own?: PromiseOrValue<string> | null,
+      cdp?: PromiseOrValue<BigNumberish> | null,
+    ): NewCdpEventFilter;
   };
 
   estimateGas: {
     cdpAllow(
-      cdp: BigNumberish,
-      usr: string,
-      ok: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      cdp: PromiseOrValue<BigNumberish>,
+      usr: PromiseOrValue<string>,
+      ok: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    cdpCan(arg0: string, arg1: BigNumberish, arg2: string, overrides?: CallOverrides): Promise<BigNumber>;
+    cdpCan(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      arg2: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     cdpi(overrides?: CallOverrides): Promise<BigNumber>;
 
-    count(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    count(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     enter(
-      src: string,
-      cdp: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      src: PromiseOrValue<string>,
+      cdp: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    first(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    first(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     'flux(bytes32,uint256,address,uint256)'(
-      ilk: BytesLike,
-      cdp: BigNumberish,
-      dst: string,
-      wad: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      ilk: PromiseOrValue<BytesLike>,
+      cdp: PromiseOrValue<BigNumberish>,
+      dst: PromiseOrValue<string>,
+      wad: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     'flux(uint256,address,uint256)'(
-      cdp: BigNumberish,
-      dst: string,
-      wad: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      cdp: PromiseOrValue<BigNumberish>,
+      dst: PromiseOrValue<string>,
+      wad: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     frob(
-      cdp: BigNumberish,
-      dink: BigNumberish,
-      dart: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      cdp: PromiseOrValue<BigNumberish>,
+      dink: PromiseOrValue<BigNumberish>,
+      dart: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     give(
-      cdp: BigNumberish,
-      dst: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      cdp: PromiseOrValue<BigNumberish>,
+      dst: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    ilks(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    ilks(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    last(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    last(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    list(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    list(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     move(
-      cdp: BigNumberish,
-      dst: string,
-      rad: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      cdp: PromiseOrValue<BigNumberish>,
+      dst: PromiseOrValue<string>,
+      rad: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    open(ilk: BytesLike, usr: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    open(
+      ilk: PromiseOrValue<BytesLike>,
+      usr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    owns(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    owns(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     quit(
-      cdp: BigNumberish,
-      dst: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      cdp: PromiseOrValue<BigNumberish>,
+      dst: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     shift(
-      cdpSrc: BigNumberish,
-      cdpDst: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      cdpSrc: PromiseOrValue<BigNumberish>,
+      cdpDst: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     urnAllow(
-      usr: string,
-      ok: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      usr: PromiseOrValue<string>,
+      ok: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    urnCan(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    urnCan(arg0: PromiseOrValue<string>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    urns(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    urns(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     vat(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
     cdpAllow(
-      cdp: BigNumberish,
-      usr: string,
-      ok: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      cdp: PromiseOrValue<BigNumberish>,
+      usr: PromiseOrValue<string>,
+      ok: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    cdpCan(arg0: string, arg1: BigNumberish, arg2: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    cdpCan(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      arg2: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     cdpi(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    count(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    count(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     enter(
-      src: string,
-      cdp: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      src: PromiseOrValue<string>,
+      cdp: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    first(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    first(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     'flux(bytes32,uint256,address,uint256)'(
-      ilk: BytesLike,
-      cdp: BigNumberish,
-      dst: string,
-      wad: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      ilk: PromiseOrValue<BytesLike>,
+      cdp: PromiseOrValue<BigNumberish>,
+      dst: PromiseOrValue<string>,
+      wad: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     'flux(uint256,address,uint256)'(
-      cdp: BigNumberish,
-      dst: string,
-      wad: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      cdp: PromiseOrValue<BigNumberish>,
+      dst: PromiseOrValue<string>,
+      wad: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     frob(
-      cdp: BigNumberish,
-      dink: BigNumberish,
-      dart: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      cdp: PromiseOrValue<BigNumberish>,
+      dink: PromiseOrValue<BigNumberish>,
+      dart: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     give(
-      cdp: BigNumberish,
-      dst: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      cdp: PromiseOrValue<BigNumberish>,
+      dst: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    ilks(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    ilks(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    last(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    last(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    list(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    list(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     move(
-      cdp: BigNumberish,
-      dst: string,
-      rad: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      cdp: PromiseOrValue<BigNumberish>,
+      dst: PromiseOrValue<string>,
+      rad: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     open(
-      ilk: BytesLike,
-      usr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      ilk: PromiseOrValue<BytesLike>,
+      usr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    owns(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    owns(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     quit(
-      cdp: BigNumberish,
-      dst: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      cdp: PromiseOrValue<BigNumberish>,
+      dst: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     shift(
-      cdpSrc: BigNumberish,
-      cdpDst: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      cdpSrc: PromiseOrValue<BigNumberish>,
+      cdpDst: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     urnAllow(
-      usr: string,
-      ok: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      usr: PromiseOrValue<string>,
+      ok: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    urnCan(arg0: string, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    urnCan(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    urns(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    urns(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     vat(overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };

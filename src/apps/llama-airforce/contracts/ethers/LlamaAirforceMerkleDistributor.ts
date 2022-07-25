@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface LlamaAirforceMerkleDistributorInterface extends utils.Interface {
   functions: {
@@ -101,27 +101,51 @@ export interface LlamaAirforceMerkleDistributorInterface extends utils.Interface
   encodeFunctionData(functionFragment: 'CVXETH_ETH_INDEX', values?: undefined): string;
   encodeFunctionData(functionFragment: 'CVX_TOKEN', values?: undefined): string;
   encodeFunctionData(functionFragment: 'admin', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'claim', values: [BigNumberish, string, BigNumberish, BytesLike[]]): string;
+  encodeFunctionData(
+    functionFragment: 'claim',
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>[],
+    ],
+  ): string;
   encodeFunctionData(
     functionFragment: 'claimAs(uint256,address,uint256,bytes32[],uint8)',
-    values: [BigNumberish, string, BigNumberish, BytesLike[], BigNumberish],
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>[],
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
   encodeFunctionData(
     functionFragment: 'claimAs(uint256,address,uint256,bytes32[],uint8,uint256)',
-    values: [BigNumberish, string, BigNumberish, BytesLike[], BigNumberish, BigNumberish],
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>[],
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'depositor', values?: undefined): string;
   encodeFunctionData(functionFragment: 'freeze', values?: undefined): string;
   encodeFunctionData(functionFragment: 'frozen', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'isClaimed', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'isClaimed', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'merkleRoot', values?: undefined): string;
   encodeFunctionData(functionFragment: 'setApprovals', values?: undefined): string;
   encodeFunctionData(functionFragment: 'stake', values?: undefined): string;
   encodeFunctionData(functionFragment: 'unfreeze', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'updateAdmin', values: [string]): string;
-  encodeFunctionData(functionFragment: 'updateDepositor', values: [string]): string;
-  encodeFunctionData(functionFragment: 'updateMerkleRoot', values: [BytesLike, boolean]): string;
-  encodeFunctionData(functionFragment: 'updateVault', values: [string]): string;
+  encodeFunctionData(functionFragment: 'updateAdmin', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'updateDepositor', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'updateMerkleRoot',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(functionFragment: 'updateVault', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'vault', values?: undefined): string;
   encodeFunctionData(functionFragment: 'week', values?: undefined): string;
 
@@ -269,67 +293,67 @@ export interface LlamaAirforceMerkleDistributor extends BaseContract {
     admin(overrides?: CallOverrides): Promise<[string]>;
 
     claim(
-      index: BigNumberish,
-      account: string,
-      amount: BigNumberish,
-      merkleProof: BytesLike[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      index: PromiseOrValue<BigNumberish>,
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      merkleProof: PromiseOrValue<BytesLike>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     'claimAs(uint256,address,uint256,bytes32[],uint8)'(
-      index: BigNumberish,
-      account: string,
-      amount: BigNumberish,
-      merkleProof: BytesLike[],
-      option: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      index: PromiseOrValue<BigNumberish>,
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      merkleProof: PromiseOrValue<BytesLike>[],
+      option: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     'claimAs(uint256,address,uint256,bytes32[],uint8,uint256)'(
-      index: BigNumberish,
-      account: string,
-      amount: BigNumberish,
-      merkleProof: BytesLike[],
-      option: BigNumberish,
-      minAmountOut: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      index: PromiseOrValue<BigNumberish>,
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      merkleProof: PromiseOrValue<BytesLike>[],
+      option: PromiseOrValue<BigNumberish>,
+      minAmountOut: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     depositor(overrides?: CallOverrides): Promise<[string]>;
 
-    freeze(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    freeze(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     frozen(overrides?: CallOverrides): Promise<[boolean]>;
 
-    isClaimed(index: BigNumberish, overrides?: CallOverrides): Promise<[boolean]>;
+    isClaimed(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[boolean]>;
 
     merkleRoot(overrides?: CallOverrides): Promise<[string]>;
 
-    setApprovals(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    setApprovals(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    stake(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    stake(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    unfreeze(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    unfreeze(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     updateAdmin(
-      newAdmin: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newAdmin: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateDepositor(
-      newDepositor: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newDepositor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateMerkleRoot(
-      _merkleRoot: BytesLike,
-      _unfreeze: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _merkleRoot: PromiseOrValue<BytesLike>,
+      _unfreeze: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateVault(
-      newVault: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newVault: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     vault(overrides?: CallOverrides): Promise<[string]>;
@@ -366,67 +390,67 @@ export interface LlamaAirforceMerkleDistributor extends BaseContract {
   admin(overrides?: CallOverrides): Promise<string>;
 
   claim(
-    index: BigNumberish,
-    account: string,
-    amount: BigNumberish,
-    merkleProof: BytesLike[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    index: PromiseOrValue<BigNumberish>,
+    account: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    merkleProof: PromiseOrValue<BytesLike>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   'claimAs(uint256,address,uint256,bytes32[],uint8)'(
-    index: BigNumberish,
-    account: string,
-    amount: BigNumberish,
-    merkleProof: BytesLike[],
-    option: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    index: PromiseOrValue<BigNumberish>,
+    account: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    merkleProof: PromiseOrValue<BytesLike>[],
+    option: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   'claimAs(uint256,address,uint256,bytes32[],uint8,uint256)'(
-    index: BigNumberish,
-    account: string,
-    amount: BigNumberish,
-    merkleProof: BytesLike[],
-    option: BigNumberish,
-    minAmountOut: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    index: PromiseOrValue<BigNumberish>,
+    account: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    merkleProof: PromiseOrValue<BytesLike>[],
+    option: PromiseOrValue<BigNumberish>,
+    minAmountOut: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   depositor(overrides?: CallOverrides): Promise<string>;
 
-  freeze(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  freeze(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   frozen(overrides?: CallOverrides): Promise<boolean>;
 
-  isClaimed(index: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+  isClaimed(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<boolean>;
 
   merkleRoot(overrides?: CallOverrides): Promise<string>;
 
-  setApprovals(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  setApprovals(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  stake(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  stake(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  unfreeze(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  unfreeze(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   updateAdmin(
-    newAdmin: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newAdmin: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateDepositor(
-    newDepositor: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newDepositor: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateMerkleRoot(
-    _merkleRoot: BytesLike,
-    _unfreeze: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _merkleRoot: PromiseOrValue<BytesLike>,
+    _unfreeze: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateVault(
-    newVault: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newVault: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   vault(overrides?: CallOverrides): Promise<string>;
@@ -463,29 +487,29 @@ export interface LlamaAirforceMerkleDistributor extends BaseContract {
     admin(overrides?: CallOverrides): Promise<string>;
 
     claim(
-      index: BigNumberish,
-      account: string,
-      amount: BigNumberish,
-      merkleProof: BytesLike[],
+      index: PromiseOrValue<BigNumberish>,
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      merkleProof: PromiseOrValue<BytesLike>[],
       overrides?: CallOverrides,
     ): Promise<void>;
 
     'claimAs(uint256,address,uint256,bytes32[],uint8)'(
-      index: BigNumberish,
-      account: string,
-      amount: BigNumberish,
-      merkleProof: BytesLike[],
-      option: BigNumberish,
+      index: PromiseOrValue<BigNumberish>,
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      merkleProof: PromiseOrValue<BytesLike>[],
+      option: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     'claimAs(uint256,address,uint256,bytes32[],uint8,uint256)'(
-      index: BigNumberish,
-      account: string,
-      amount: BigNumberish,
-      merkleProof: BytesLike[],
-      option: BigNumberish,
-      minAmountOut: BigNumberish,
+      index: PromiseOrValue<BigNumberish>,
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      merkleProof: PromiseOrValue<BytesLike>[],
+      option: PromiseOrValue<BigNumberish>,
+      minAmountOut: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -495,7 +519,7 @@ export interface LlamaAirforceMerkleDistributor extends BaseContract {
 
     frozen(overrides?: CallOverrides): Promise<boolean>;
 
-    isClaimed(index: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    isClaimed(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<boolean>;
 
     merkleRoot(overrides?: CallOverrides): Promise<string>;
 
@@ -505,13 +529,17 @@ export interface LlamaAirforceMerkleDistributor extends BaseContract {
 
     unfreeze(overrides?: CallOverrides): Promise<void>;
 
-    updateAdmin(newAdmin: string, overrides?: CallOverrides): Promise<void>;
+    updateAdmin(newAdmin: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    updateDepositor(newDepositor: string, overrides?: CallOverrides): Promise<void>;
+    updateDepositor(newDepositor: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    updateMerkleRoot(_merkleRoot: BytesLike, _unfreeze: boolean, overrides?: CallOverrides): Promise<void>;
+    updateMerkleRoot(
+      _merkleRoot: PromiseOrValue<BytesLike>,
+      _unfreeze: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    updateVault(newVault: string, overrides?: CallOverrides): Promise<void>;
+    updateVault(newVault: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     vault(overrides?: CallOverrides): Promise<string>;
 
@@ -519,31 +547,54 @@ export interface LlamaAirforceMerkleDistributor extends BaseContract {
   };
 
   filters: {
-    'AdminUpdated(address,address)'(oldAdmin?: string | null, newAdmin?: string | null): AdminUpdatedEventFilter;
-    AdminUpdated(oldAdmin?: string | null, newAdmin?: string | null): AdminUpdatedEventFilter;
+    'AdminUpdated(address,address)'(
+      oldAdmin?: PromiseOrValue<string> | null,
+      newAdmin?: PromiseOrValue<string> | null,
+    ): AdminUpdatedEventFilter;
+    AdminUpdated(
+      oldAdmin?: PromiseOrValue<string> | null,
+      newAdmin?: PromiseOrValue<string> | null,
+    ): AdminUpdatedEventFilter;
 
     'Claimed(uint256,uint256,address,uint256)'(
       index?: null,
-      amount?: BigNumberish | null,
-      account?: string | null,
+      amount?: PromiseOrValue<BigNumberish> | null,
+      account?: PromiseOrValue<string> | null,
       week?: null,
     ): ClaimedEventFilter;
-    Claimed(index?: null, amount?: BigNumberish | null, account?: string | null, week?: null): ClaimedEventFilter;
+    Claimed(
+      index?: null,
+      amount?: PromiseOrValue<BigNumberish> | null,
+      account?: PromiseOrValue<string> | null,
+      week?: null,
+    ): ClaimedEventFilter;
 
     'DepositorUpdated(address,address)'(
-      oldDepositor?: string | null,
-      newDepositor?: string | null,
+      oldDepositor?: PromiseOrValue<string> | null,
+      newDepositor?: PromiseOrValue<string> | null,
     ): DepositorUpdatedEventFilter;
-    DepositorUpdated(oldDepositor?: string | null, newDepositor?: string | null): DepositorUpdatedEventFilter;
+    DepositorUpdated(
+      oldDepositor?: PromiseOrValue<string> | null,
+      newDepositor?: PromiseOrValue<string> | null,
+    ): DepositorUpdatedEventFilter;
 
     'MerkleRootUpdated(bytes32,uint32)'(
-      merkleRoot?: BytesLike | null,
-      week?: BigNumberish | null,
+      merkleRoot?: PromiseOrValue<BytesLike> | null,
+      week?: PromiseOrValue<BigNumberish> | null,
     ): MerkleRootUpdatedEventFilter;
-    MerkleRootUpdated(merkleRoot?: BytesLike | null, week?: BigNumberish | null): MerkleRootUpdatedEventFilter;
+    MerkleRootUpdated(
+      merkleRoot?: PromiseOrValue<BytesLike> | null,
+      week?: PromiseOrValue<BigNumberish> | null,
+    ): MerkleRootUpdatedEventFilter;
 
-    'VaultUpdated(address,address)'(oldVault?: string | null, newVault?: string | null): VaultUpdatedEventFilter;
-    VaultUpdated(oldVault?: string | null, newVault?: string | null): VaultUpdatedEventFilter;
+    'VaultUpdated(address,address)'(
+      oldVault?: PromiseOrValue<string> | null,
+      newVault?: PromiseOrValue<string> | null,
+    ): VaultUpdatedEventFilter;
+    VaultUpdated(
+      oldVault?: PromiseOrValue<string> | null,
+      newVault?: PromiseOrValue<string> | null,
+    ): VaultUpdatedEventFilter;
   };
 
   estimateGas: {
@@ -576,62 +627,68 @@ export interface LlamaAirforceMerkleDistributor extends BaseContract {
     admin(overrides?: CallOverrides): Promise<BigNumber>;
 
     claim(
-      index: BigNumberish,
-      account: string,
-      amount: BigNumberish,
-      merkleProof: BytesLike[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      index: PromiseOrValue<BigNumberish>,
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      merkleProof: PromiseOrValue<BytesLike>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     'claimAs(uint256,address,uint256,bytes32[],uint8)'(
-      index: BigNumberish,
-      account: string,
-      amount: BigNumberish,
-      merkleProof: BytesLike[],
-      option: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      index: PromiseOrValue<BigNumberish>,
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      merkleProof: PromiseOrValue<BytesLike>[],
+      option: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     'claimAs(uint256,address,uint256,bytes32[],uint8,uint256)'(
-      index: BigNumberish,
-      account: string,
-      amount: BigNumberish,
-      merkleProof: BytesLike[],
-      option: BigNumberish,
-      minAmountOut: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      index: PromiseOrValue<BigNumberish>,
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      merkleProof: PromiseOrValue<BytesLike>[],
+      option: PromiseOrValue<BigNumberish>,
+      minAmountOut: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     depositor(overrides?: CallOverrides): Promise<BigNumber>;
 
-    freeze(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    freeze(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     frozen(overrides?: CallOverrides): Promise<BigNumber>;
 
-    isClaimed(index: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    isClaimed(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     merkleRoot(overrides?: CallOverrides): Promise<BigNumber>;
 
-    setApprovals(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setApprovals(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    stake(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    stake(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    unfreeze(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    unfreeze(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    updateAdmin(newAdmin: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    updateAdmin(
+      newAdmin: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     updateDepositor(
-      newDepositor: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newDepositor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     updateMerkleRoot(
-      _merkleRoot: BytesLike,
-      _unfreeze: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _merkleRoot: PromiseOrValue<BytesLike>,
+      _unfreeze: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    updateVault(newVault: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    updateVault(
+      newVault: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     vault(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -668,67 +725,67 @@ export interface LlamaAirforceMerkleDistributor extends BaseContract {
     admin(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     claim(
-      index: BigNumberish,
-      account: string,
-      amount: BigNumberish,
-      merkleProof: BytesLike[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      index: PromiseOrValue<BigNumberish>,
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      merkleProof: PromiseOrValue<BytesLike>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     'claimAs(uint256,address,uint256,bytes32[],uint8)'(
-      index: BigNumberish,
-      account: string,
-      amount: BigNumberish,
-      merkleProof: BytesLike[],
-      option: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      index: PromiseOrValue<BigNumberish>,
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      merkleProof: PromiseOrValue<BytesLike>[],
+      option: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     'claimAs(uint256,address,uint256,bytes32[],uint8,uint256)'(
-      index: BigNumberish,
-      account: string,
-      amount: BigNumberish,
-      merkleProof: BytesLike[],
-      option: BigNumberish,
-      minAmountOut: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      index: PromiseOrValue<BigNumberish>,
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      merkleProof: PromiseOrValue<BytesLike>[],
+      option: PromiseOrValue<BigNumberish>,
+      minAmountOut: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     depositor(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    freeze(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    freeze(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     frozen(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    isClaimed(index: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    isClaimed(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     merkleRoot(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    setApprovals(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    setApprovals(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    stake(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    stake(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    unfreeze(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    unfreeze(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     updateAdmin(
-      newAdmin: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newAdmin: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateDepositor(
-      newDepositor: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newDepositor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateMerkleRoot(
-      _merkleRoot: BytesLike,
-      _unfreeze: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _merkleRoot: PromiseOrValue<BytesLike>,
+      _unfreeze: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateVault(
-      newVault: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newVault: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     vault(overrides?: CallOverrides): Promise<PopulatedTransaction>;

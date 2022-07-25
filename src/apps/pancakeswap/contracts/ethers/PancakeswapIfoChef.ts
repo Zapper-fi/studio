@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface PancakeswapIfoChefInterface extends utils.Interface {
   functions: {
@@ -127,14 +127,14 @@ export interface PancakeswapIfoChefInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'calculateHarvestCakeRewards', values?: undefined): string;
   encodeFunctionData(functionFragment: 'calculateTotalPendingCakeRewards', values?: undefined): string;
   encodeFunctionData(functionFragment: 'callFee', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'deposit', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'deposit', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'emergencyWithdraw', values?: undefined): string;
   encodeFunctionData(functionFragment: 'emergencyWithdrawAll', values?: undefined): string;
   encodeFunctionData(functionFragment: 'endBlock', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getPricePerFullShare', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getUserCredit', values: [string]): string;
+  encodeFunctionData(functionFragment: 'getUserCredit', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'harvest', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'inCaseTokensGetStuck', values: [string]): string;
+  encodeFunctionData(functionFragment: 'inCaseTokensGetStuck', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'lastHarvestedTime', values?: undefined): string;
   encodeFunctionData(functionFragment: 'masterchef', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
@@ -143,23 +143,26 @@ export interface PancakeswapIfoChefInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'performanceFee', values?: undefined): string;
   encodeFunctionData(functionFragment: 'receiptToken', values?: undefined): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'setAdmin', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setCallFee', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setPerformanceFee', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setTreasury', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setWithdrawFee', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setWithdrawFeePeriod', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'setAdmin', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setCallFee', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setPerformanceFee', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setTreasury', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setWithdrawFee', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setWithdrawFeePeriod', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'startBlock', values?: undefined): string;
   encodeFunctionData(functionFragment: 'token', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalShares', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'treasury', values?: undefined): string;
   encodeFunctionData(functionFragment: 'unpause', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'updateEndBlock', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'updateStartAndEndBlocks', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'userIFOInfo', values: [string]): string;
-  encodeFunctionData(functionFragment: 'userInfo', values: [string]): string;
-  encodeFunctionData(functionFragment: 'withdraw', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'updateEndBlock', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'updateStartAndEndBlocks',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'userIFOInfo', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'userInfo', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'withdraw', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'withdrawAll', values?: undefined): string;
   encodeFunctionData(functionFragment: 'withdrawFee', values?: undefined): string;
   encodeFunctionData(functionFragment: 'withdrawFeePeriod', values?: undefined): string;
@@ -382,25 +385,28 @@ export interface PancakeswapIfoChef extends BaseContract {
     callFee(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     deposit(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    emergencyWithdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    emergencyWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    emergencyWithdrawAll(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    emergencyWithdrawAll(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     endBlock(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     getPricePerFullShare(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getUserCredit(_user: string, overrides?: CallOverrides): Promise<[BigNumber] & { avgBalance: BigNumber }>;
+    getUserCredit(
+      _user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber] & { avgBalance: BigNumber }>;
 
-    harvest(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    harvest(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     inCaseTokensGetStuck(
-      _token: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     lastHarvestedTime(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -409,7 +415,7 @@ export interface PancakeswapIfoChef extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
-    pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     paused(overrides?: CallOverrides): Promise<[boolean]>;
 
@@ -417,33 +423,36 @@ export interface PancakeswapIfoChef extends BaseContract {
 
     receiptToken(overrides?: CallOverrides): Promise<[string]>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    setAdmin(_admin: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    setAdmin(
+      _admin: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     setCallFee(
-      _callFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _callFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setPerformanceFee(
-      _performanceFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _performanceFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setTreasury(
-      _treasury: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _treasury: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setWithdrawFee(
-      _withdrawFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _withdrawFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setWithdrawFeePeriod(
-      _withdrawFeePeriod: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _withdrawFeePeriod: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     startBlock(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -453,27 +462,27 @@ export interface PancakeswapIfoChef extends BaseContract {
     totalShares(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     treasury(overrides?: CallOverrides): Promise<[string]>;
 
-    unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     updateEndBlock(
-      _endBlock: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _endBlock: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateStartAndEndBlocks(
-      _startBlock: BigNumberish,
-      _endBlock: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _startBlock: PromiseOrValue<BigNumberish>,
+      _endBlock: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     userIFOInfo(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -486,7 +495,7 @@ export interface PancakeswapIfoChef extends BaseContract {
     >;
 
     userInfo(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -498,11 +507,11 @@ export interface PancakeswapIfoChef extends BaseContract {
     >;
 
     withdraw(
-      _shares: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _shares: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    withdrawAll(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    withdrawAll(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     withdrawFee(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -530,25 +539,25 @@ export interface PancakeswapIfoChef extends BaseContract {
   callFee(overrides?: CallOverrides): Promise<BigNumber>;
 
   deposit(
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  emergencyWithdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  emergencyWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  emergencyWithdrawAll(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  emergencyWithdrawAll(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   endBlock(overrides?: CallOverrides): Promise<BigNumber>;
 
   getPricePerFullShare(overrides?: CallOverrides): Promise<BigNumber>;
 
-  getUserCredit(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getUserCredit(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  harvest(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  harvest(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   inCaseTokensGetStuck(
-    _token: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _token: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   lastHarvestedTime(overrides?: CallOverrides): Promise<BigNumber>;
@@ -557,7 +566,7 @@ export interface PancakeswapIfoChef extends BaseContract {
 
   owner(overrides?: CallOverrides): Promise<string>;
 
-  pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   paused(overrides?: CallOverrides): Promise<boolean>;
 
@@ -565,33 +574,36 @@ export interface PancakeswapIfoChef extends BaseContract {
 
   receiptToken(overrides?: CallOverrides): Promise<string>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  setAdmin(_admin: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  setAdmin(
+    _admin: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   setCallFee(
-    _callFee: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _callFee: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setPerformanceFee(
-    _performanceFee: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _performanceFee: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setTreasury(
-    _treasury: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _treasury: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setWithdrawFee(
-    _withdrawFee: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _withdrawFee: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setWithdrawFeePeriod(
-    _withdrawFeePeriod: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _withdrawFeePeriod: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   startBlock(overrides?: CallOverrides): Promise<BigNumber>;
@@ -601,27 +613,27 @@ export interface PancakeswapIfoChef extends BaseContract {
   totalShares(overrides?: CallOverrides): Promise<BigNumber>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   treasury(overrides?: CallOverrides): Promise<string>;
 
-  unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   updateEndBlock(
-    _endBlock: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _endBlock: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateStartAndEndBlocks(
-    _startBlock: BigNumberish,
-    _endBlock: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _startBlock: PromiseOrValue<BigNumberish>,
+    _endBlock: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   userIFOInfo(
-    arg0: string,
+    arg0: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -634,7 +646,7 @@ export interface PancakeswapIfoChef extends BaseContract {
   >;
 
   userInfo(
-    arg0: string,
+    arg0: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -646,11 +658,11 @@ export interface PancakeswapIfoChef extends BaseContract {
   >;
 
   withdraw(
-    _shares: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _shares: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  withdrawAll(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  withdrawAll(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   withdrawFee(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -677,7 +689,7 @@ export interface PancakeswapIfoChef extends BaseContract {
 
     callFee(overrides?: CallOverrides): Promise<BigNumber>;
 
-    deposit(_amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    deposit(_amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     emergencyWithdraw(overrides?: CallOverrides): Promise<void>;
 
@@ -687,11 +699,11 @@ export interface PancakeswapIfoChef extends BaseContract {
 
     getPricePerFullShare(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getUserCredit(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getUserCredit(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     harvest(overrides?: CallOverrides): Promise<void>;
 
-    inCaseTokensGetStuck(_token: string, overrides?: CallOverrides): Promise<void>;
+    inCaseTokensGetStuck(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     lastHarvestedTime(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -709,17 +721,17 @@ export interface PancakeswapIfoChef extends BaseContract {
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
-    setAdmin(_admin: string, overrides?: CallOverrides): Promise<void>;
+    setAdmin(_admin: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setCallFee(_callFee: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setCallFee(_callFee: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setPerformanceFee(_performanceFee: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setPerformanceFee(_performanceFee: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setTreasury(_treasury: string, overrides?: CallOverrides): Promise<void>;
+    setTreasury(_treasury: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setWithdrawFee(_withdrawFee: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setWithdrawFee(_withdrawFee: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setWithdrawFeePeriod(_withdrawFeePeriod: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setWithdrawFeePeriod(_withdrawFeePeriod: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     startBlock(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -727,22 +739,22 @@ export interface PancakeswapIfoChef extends BaseContract {
 
     totalShares(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     treasury(overrides?: CallOverrides): Promise<string>;
 
     unpause(overrides?: CallOverrides): Promise<void>;
 
-    updateEndBlock(_endBlock: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    updateEndBlock(_endBlock: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     updateStartAndEndBlocks(
-      _startBlock: BigNumberish,
-      _endBlock: BigNumberish,
+      _startBlock: PromiseOrValue<BigNumberish>,
+      _endBlock: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     userIFOInfo(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -755,7 +767,7 @@ export interface PancakeswapIfoChef extends BaseContract {
     >;
 
     userInfo(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -766,7 +778,7 @@ export interface PancakeswapIfoChef extends BaseContract {
       }
     >;
 
-    withdraw(_shares: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    withdraw(_shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     withdrawAll(overrides?: CallOverrides): Promise<void>;
 
@@ -777,25 +789,33 @@ export interface PancakeswapIfoChef extends BaseContract {
 
   filters: {
     'Deposit(address,uint256,uint256,uint256)'(
-      sender?: string | null,
+      sender?: PromiseOrValue<string> | null,
       amount?: null,
       shares?: null,
       lastDepositedTime?: null,
     ): DepositEventFilter;
-    Deposit(sender?: string | null, amount?: null, shares?: null, lastDepositedTime?: null): DepositEventFilter;
+    Deposit(
+      sender?: PromiseOrValue<string> | null,
+      amount?: null,
+      shares?: null,
+      lastDepositedTime?: null,
+    ): DepositEventFilter;
 
     'Harvest(address,uint256,uint256)'(
-      sender?: string | null,
+      sender?: PromiseOrValue<string> | null,
       performanceFee?: null,
       callFee?: null,
     ): HarvestEventFilter;
-    Harvest(sender?: string | null, performanceFee?: null, callFee?: null): HarvestEventFilter;
+    Harvest(sender?: PromiseOrValue<string> | null, performanceFee?: null, callFee?: null): HarvestEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
 
     'Pause()'(): PauseEventFilter;
     Pause(): PauseEventFilter;
@@ -816,7 +836,7 @@ export interface PancakeswapIfoChef extends BaseContract {
     UpdateStartAndEndBlocks(startBlock?: null, endBlock?: null): UpdateStartAndEndBlocksEventFilter;
 
     'UpdateUserIFO(address,uint256,uint256,uint256,uint256,uint256)'(
-      sender?: string | null,
+      sender?: PromiseOrValue<string> | null,
       lastAvgBalance?: null,
       lastActionBalance?: null,
       lastValidActionBalance?: null,
@@ -824,7 +844,7 @@ export interface PancakeswapIfoChef extends BaseContract {
       lastValidActionBlock?: null,
     ): UpdateUserIFOEventFilter;
     UpdateUserIFO(
-      sender?: string | null,
+      sender?: PromiseOrValue<string> | null,
       lastAvgBalance?: null,
       lastActionBalance?: null,
       lastValidActionBalance?: null,
@@ -832,11 +852,15 @@ export interface PancakeswapIfoChef extends BaseContract {
       lastValidActionBlock?: null,
     ): UpdateUserIFOEventFilter;
 
-    'Withdraw(address,uint256,uint256)'(sender?: string | null, amount?: null, shares?: null): WithdrawEventFilter;
-    Withdraw(sender?: string | null, amount?: null, shares?: null): WithdrawEventFilter;
+    'Withdraw(address,uint256,uint256)'(
+      sender?: PromiseOrValue<string> | null,
+      amount?: null,
+      shares?: null,
+    ): WithdrawEventFilter;
+    Withdraw(sender?: PromiseOrValue<string> | null, amount?: null, shares?: null): WithdrawEventFilter;
 
-    'ZeroFreeIFO(address,uint256)'(sender?: string | null, currentBlock?: null): ZeroFreeIFOEventFilter;
-    ZeroFreeIFO(sender?: string | null, currentBlock?: null): ZeroFreeIFOEventFilter;
+    'ZeroFreeIFO(address,uint256)'(sender?: PromiseOrValue<string> | null, currentBlock?: null): ZeroFreeIFOEventFilter;
+    ZeroFreeIFO(sender?: PromiseOrValue<string> | null, currentBlock?: null): ZeroFreeIFOEventFilter;
   };
 
   estimateGas: {
@@ -860,23 +884,26 @@ export interface PancakeswapIfoChef extends BaseContract {
 
     callFee(overrides?: CallOverrides): Promise<BigNumber>;
 
-    deposit(_amount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    deposit(
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    emergencyWithdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    emergencyWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    emergencyWithdrawAll(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    emergencyWithdrawAll(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     endBlock(overrides?: CallOverrides): Promise<BigNumber>;
 
     getPricePerFullShare(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getUserCredit(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getUserCredit(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    harvest(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    harvest(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     inCaseTokensGetStuck(
-      _token: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     lastHarvestedTime(overrides?: CallOverrides): Promise<BigNumber>;
@@ -885,7 +912,7 @@ export interface PancakeswapIfoChef extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     paused(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -893,27 +920,36 @@ export interface PancakeswapIfoChef extends BaseContract {
 
     receiptToken(overrides?: CallOverrides): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    setAdmin(_admin: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
-
-    setCallFee(_callFee: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
-
-    setPerformanceFee(
-      _performanceFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    setAdmin(
+      _admin: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setTreasury(_treasury: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setCallFee(
+      _callFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    setPerformanceFee(
+      _performanceFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    setTreasury(
+      _treasury: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setWithdrawFee(
-      _withdrawFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _withdrawFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setWithdrawFeePeriod(
-      _withdrawFeePeriod: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _withdrawFeePeriod: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     startBlock(overrides?: CallOverrides): Promise<BigNumber>;
@@ -923,32 +959,35 @@ export interface PancakeswapIfoChef extends BaseContract {
     totalShares(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     treasury(overrides?: CallOverrides): Promise<BigNumber>;
 
-    unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     updateEndBlock(
-      _endBlock: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _endBlock: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     updateStartAndEndBlocks(
-      _startBlock: BigNumberish,
-      _endBlock: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _startBlock: PromiseOrValue<BigNumberish>,
+      _endBlock: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    userIFOInfo(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    userIFOInfo(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    userInfo(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    userInfo(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    withdraw(_shares: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    withdraw(
+      _shares: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    withdrawAll(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    withdrawAll(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     withdrawFee(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -977,25 +1016,25 @@ export interface PancakeswapIfoChef extends BaseContract {
     callFee(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     deposit(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    emergencyWithdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    emergencyWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    emergencyWithdrawAll(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    emergencyWithdrawAll(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     endBlock(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getPricePerFullShare(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getUserCredit(_user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getUserCredit(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    harvest(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    harvest(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     inCaseTokensGetStuck(
-      _token: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     lastHarvestedTime(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1004,7 +1043,7 @@ export interface PancakeswapIfoChef extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     paused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1012,36 +1051,36 @@ export interface PancakeswapIfoChef extends BaseContract {
 
     receiptToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     setAdmin(
-      _admin: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _admin: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setCallFee(
-      _callFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _callFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setPerformanceFee(
-      _performanceFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _performanceFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setTreasury(
-      _treasury: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _treasury: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setWithdrawFee(
-      _withdrawFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _withdrawFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setWithdrawFeePeriod(
-      _withdrawFeePeriod: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _withdrawFeePeriod: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     startBlock(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1051,35 +1090,35 @@ export interface PancakeswapIfoChef extends BaseContract {
     totalShares(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     treasury(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     updateEndBlock(
-      _endBlock: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _endBlock: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateStartAndEndBlocks(
-      _startBlock: BigNumberish,
-      _endBlock: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _startBlock: PromiseOrValue<BigNumberish>,
+      _endBlock: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    userIFOInfo(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    userIFOInfo(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    userInfo(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    userInfo(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     withdraw(
-      _shares: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _shares: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    withdrawAll(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    withdrawAll(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     withdrawFee(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
