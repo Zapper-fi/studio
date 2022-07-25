@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface CurveVotingEscrowRewardInterface extends utils.Interface {
   functions: {
@@ -82,28 +82,31 @@ export interface CurveVotingEscrowRewardInterface extends utils.Interface {
   ): FunctionFragment;
 
   encodeFunctionData(functionFragment: 'checkpoint_token', values?: undefined): string;
-  encodeFunctionData(functionFragment: 've_for_at', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 've_for_at',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'checkpoint_total_supply', values?: undefined): string;
   encodeFunctionData(functionFragment: 'claim()', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'claim(address)', values: [string]): string;
-  encodeFunctionData(functionFragment: 'claim_many', values: [string[]]): string;
-  encodeFunctionData(functionFragment: 'burn', values: [string]): string;
-  encodeFunctionData(functionFragment: 'commit_admin', values: [string]): string;
+  encodeFunctionData(functionFragment: 'claim(address)', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'claim_many', values: [PromiseOrValue<string>[]]): string;
+  encodeFunctionData(functionFragment: 'burn', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'commit_admin', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'apply_admin', values?: undefined): string;
   encodeFunctionData(functionFragment: 'toggle_allow_checkpoint_token', values?: undefined): string;
   encodeFunctionData(functionFragment: 'kill_me', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'recover_balance', values: [string]): string;
+  encodeFunctionData(functionFragment: 'recover_balance', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'start_time', values?: undefined): string;
   encodeFunctionData(functionFragment: 'time_cursor', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'time_cursor_of', values: [string]): string;
-  encodeFunctionData(functionFragment: 'user_epoch_of', values: [string]): string;
+  encodeFunctionData(functionFragment: 'time_cursor_of', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'user_epoch_of', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'last_token_time', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'tokens_per_week', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'tokens_per_week', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'voting_escrow', values?: undefined): string;
   encodeFunctionData(functionFragment: 'token', values?: undefined): string;
   encodeFunctionData(functionFragment: 'total_received', values?: undefined): string;
   encodeFunctionData(functionFragment: 'token_last_balance', values?: undefined): string;
-  encodeFunctionData(functionFragment: 've_supply', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 've_supply', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'admin', values?: undefined): string;
   encodeFunctionData(functionFragment: 'future_admin', values?: undefined): string;
   encodeFunctionData(functionFragment: 'can_checkpoint_token', values?: undefined): string;
@@ -216,55 +219,62 @@ export interface CurveVotingEscrowReward extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    checkpoint_token(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    checkpoint_token(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    ve_for_at(_user: string, _timestamp: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    ve_for_at(
+      _user: PromiseOrValue<string>,
+      _timestamp: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
-    checkpoint_total_supply(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    checkpoint_total_supply(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    'claim()'(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    'claim()'(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     'claim(address)'(
-      _addr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _addr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     claim_many(
-      _receivers: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _receivers: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    burn(_coin: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    burn(
+      _coin: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     commit_admin(
-      _addr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _addr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    apply_admin(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    apply_admin(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     toggle_allow_checkpoint_token(
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    kill_me(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    kill_me(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     recover_balance(
-      _coin: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _coin: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     start_time(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     time_cursor(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    time_cursor_of(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    time_cursor_of(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    user_epoch_of(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    user_epoch_of(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     last_token_time(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    tokens_per_week(arg0: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    tokens_per_week(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     voting_escrow(overrides?: CallOverrides): Promise<[string]>;
 
@@ -274,7 +284,7 @@ export interface CurveVotingEscrowReward extends BaseContract {
 
     token_last_balance(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    ve_supply(arg0: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    ve_supply(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     admin(overrides?: CallOverrides): Promise<[string]>;
 
@@ -287,55 +297,62 @@ export interface CurveVotingEscrowReward extends BaseContract {
     is_killed(overrides?: CallOverrides): Promise<[boolean]>;
   };
 
-  checkpoint_token(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  checkpoint_token(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  ve_for_at(_user: string, _timestamp: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  ve_for_at(
+    _user: PromiseOrValue<string>,
+    _timestamp: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
-  checkpoint_total_supply(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  checkpoint_total_supply(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  'claim()'(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  'claim()'(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   'claim(address)'(
-    _addr: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _addr: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   claim_many(
-    _receivers: string[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _receivers: PromiseOrValue<string>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  burn(_coin: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  burn(
+    _coin: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   commit_admin(
-    _addr: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _addr: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  apply_admin(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  apply_admin(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   toggle_allow_checkpoint_token(
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  kill_me(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  kill_me(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   recover_balance(
-    _coin: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _coin: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   start_time(overrides?: CallOverrides): Promise<BigNumber>;
 
   time_cursor(overrides?: CallOverrides): Promise<BigNumber>;
 
-  time_cursor_of(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  time_cursor_of(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  user_epoch_of(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  user_epoch_of(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   last_token_time(overrides?: CallOverrides): Promise<BigNumber>;
 
-  tokens_per_week(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  tokens_per_week(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   voting_escrow(overrides?: CallOverrides): Promise<string>;
 
@@ -345,7 +362,7 @@ export interface CurveVotingEscrowReward extends BaseContract {
 
   token_last_balance(overrides?: CallOverrides): Promise<BigNumber>;
 
-  ve_supply(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  ve_supply(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   admin(overrides?: CallOverrides): Promise<string>;
 
@@ -360,19 +377,23 @@ export interface CurveVotingEscrowReward extends BaseContract {
   callStatic: {
     checkpoint_token(overrides?: CallOverrides): Promise<void>;
 
-    ve_for_at(_user: string, _timestamp: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    ve_for_at(
+      _user: PromiseOrValue<string>,
+      _timestamp: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     checkpoint_total_supply(overrides?: CallOverrides): Promise<void>;
 
     'claim()'(overrides?: CallOverrides): Promise<BigNumber>;
 
-    'claim(address)'(_addr: string, overrides?: CallOverrides): Promise<BigNumber>;
+    'claim(address)'(_addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    claim_many(_receivers: string[], overrides?: CallOverrides): Promise<boolean>;
+    claim_many(_receivers: PromiseOrValue<string>[], overrides?: CallOverrides): Promise<boolean>;
 
-    burn(_coin: string, overrides?: CallOverrides): Promise<boolean>;
+    burn(_coin: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-    commit_admin(_addr: string, overrides?: CallOverrides): Promise<void>;
+    commit_admin(_addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     apply_admin(overrides?: CallOverrides): Promise<void>;
 
@@ -380,19 +401,19 @@ export interface CurveVotingEscrowReward extends BaseContract {
 
     kill_me(overrides?: CallOverrides): Promise<void>;
 
-    recover_balance(_coin: string, overrides?: CallOverrides): Promise<boolean>;
+    recover_balance(_coin: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     start_time(overrides?: CallOverrides): Promise<BigNumber>;
 
     time_cursor(overrides?: CallOverrides): Promise<BigNumber>;
 
-    time_cursor_of(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    time_cursor_of(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    user_epoch_of(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    user_epoch_of(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     last_token_time(overrides?: CallOverrides): Promise<BigNumber>;
 
-    tokens_per_week(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    tokens_per_week(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     voting_escrow(overrides?: CallOverrides): Promise<string>;
 
@@ -402,7 +423,7 @@ export interface CurveVotingEscrowReward extends BaseContract {
 
     token_last_balance(overrides?: CallOverrides): Promise<BigNumber>;
 
-    ve_supply(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    ve_supply(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     admin(overrides?: CallOverrides): Promise<string>;
 
@@ -429,50 +450,71 @@ export interface CurveVotingEscrowReward extends BaseContract {
     CheckpointToken(time?: null, tokens?: null): CheckpointTokenEventFilter;
 
     'Claimed(address,uint256,uint256,uint256)'(
-      recipient?: string | null,
+      recipient?: PromiseOrValue<string> | null,
       amount?: null,
       claim_epoch?: null,
       max_epoch?: null,
     ): ClaimedEventFilter;
-    Claimed(recipient?: string | null, amount?: null, claim_epoch?: null, max_epoch?: null): ClaimedEventFilter;
+    Claimed(
+      recipient?: PromiseOrValue<string> | null,
+      amount?: null,
+      claim_epoch?: null,
+      max_epoch?: null,
+    ): ClaimedEventFilter;
   };
 
   estimateGas: {
-    checkpoint_token(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    checkpoint_token(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    ve_for_at(_user: string, _timestamp: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    ve_for_at(
+      _user: PromiseOrValue<string>,
+      _timestamp: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    checkpoint_total_supply(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    checkpoint_total_supply(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    'claim()'(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    'claim()'(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    'claim(address)'(_addr: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    'claim(address)'(
+      _addr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    claim_many(_receivers: string[], overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    claim_many(
+      _receivers: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    burn(_coin: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    burn(_coin: PromiseOrValue<string>, overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    commit_admin(_addr: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    commit_admin(
+      _addr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    apply_admin(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    apply_admin(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    toggle_allow_checkpoint_token(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    toggle_allow_checkpoint_token(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    kill_me(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    kill_me(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    recover_balance(_coin: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    recover_balance(
+      _coin: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     start_time(overrides?: CallOverrides): Promise<BigNumber>;
 
     time_cursor(overrides?: CallOverrides): Promise<BigNumber>;
 
-    time_cursor_of(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    time_cursor_of(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    user_epoch_of(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    user_epoch_of(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     last_token_time(overrides?: CallOverrides): Promise<BigNumber>;
 
-    tokens_per_week(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    tokens_per_week(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     voting_escrow(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -482,7 +524,7 @@ export interface CurveVotingEscrowReward extends BaseContract {
 
     token_last_balance(overrides?: CallOverrides): Promise<BigNumber>;
 
-    ve_supply(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    ve_supply(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     admin(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -496,55 +538,62 @@ export interface CurveVotingEscrowReward extends BaseContract {
   };
 
   populateTransaction: {
-    checkpoint_token(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    checkpoint_token(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    ve_for_at(_user: string, _timestamp: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    ve_for_at(
+      _user: PromiseOrValue<string>,
+      _timestamp: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    checkpoint_total_supply(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    checkpoint_total_supply(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    'claim()'(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    'claim()'(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     'claim(address)'(
-      _addr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _addr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     claim_many(
-      _receivers: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _receivers: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    burn(_coin: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    burn(
+      _coin: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
     commit_admin(
-      _addr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _addr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    apply_admin(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    apply_admin(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     toggle_allow_checkpoint_token(
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    kill_me(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    kill_me(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     recover_balance(
-      _coin: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _coin: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     start_time(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     time_cursor(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    time_cursor_of(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    time_cursor_of(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    user_epoch_of(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    user_epoch_of(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     last_token_time(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    tokens_per_week(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    tokens_per_week(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     voting_escrow(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -554,7 +603,7 @@ export interface CurveVotingEscrowReward extends BaseContract {
 
     token_last_balance(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    ve_supply(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    ve_supply(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     admin(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 

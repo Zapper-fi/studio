@@ -14,7 +14,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface CurveMinterInterface extends utils.Interface {
   functions: {
@@ -40,14 +40,17 @@ export interface CurveMinterInterface extends utils.Interface {
       | 'allowed_to_mint_for',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'mint', values: [string]): string;
-  encodeFunctionData(functionFragment: 'mint_many', values: [string[]]): string;
-  encodeFunctionData(functionFragment: 'mint_for', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'toggle_approve_mint', values: [string]): string;
+  encodeFunctionData(functionFragment: 'mint', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'mint_many', values: [PromiseOrValue<string>[]]): string;
+  encodeFunctionData(functionFragment: 'mint_for', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'toggle_approve_mint', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'token', values?: undefined): string;
   encodeFunctionData(functionFragment: 'controller', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'minted', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'allowed_to_mint_for', values: [string, string]): string;
+  encodeFunctionData(functionFragment: 'minted', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'allowed_to_mint_for',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
 
   decodeFunctionResult(functionFragment: 'mint', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'mint_many', data: BytesLike): Result;
@@ -97,135 +100,179 @@ export interface CurveMinter extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    mint(gauge_addr: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    mint(
+      gauge_addr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     mint_many(
-      gauge_addrs: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      gauge_addrs: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     mint_for(
-      gauge_addr: string,
-      _for: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      gauge_addr: PromiseOrValue<string>,
+      _for: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     toggle_approve_mint(
-      minting_user: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      minting_user: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     token(overrides?: CallOverrides): Promise<[string]>;
 
     controller(overrides?: CallOverrides): Promise<[string]>;
 
-    minted(arg0: string, arg1: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    minted(arg0: PromiseOrValue<string>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    allowed_to_mint_for(arg0: string, arg1: string, overrides?: CallOverrides): Promise<[boolean]>;
+    allowed_to_mint_for(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[boolean]>;
   };
 
-  mint(gauge_addr: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  mint(
+    gauge_addr: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   mint_many(
-    gauge_addrs: string[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    gauge_addrs: PromiseOrValue<string>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   mint_for(
-    gauge_addr: string,
-    _for: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    gauge_addr: PromiseOrValue<string>,
+    _for: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   toggle_approve_mint(
-    minting_user: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    minting_user: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   token(overrides?: CallOverrides): Promise<string>;
 
   controller(overrides?: CallOverrides): Promise<string>;
 
-  minted(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+  minted(arg0: PromiseOrValue<string>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  allowed_to_mint_for(arg0: string, arg1: string, overrides?: CallOverrides): Promise<boolean>;
+  allowed_to_mint_for(
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<boolean>;
 
   callStatic: {
-    mint(gauge_addr: string, overrides?: CallOverrides): Promise<void>;
+    mint(gauge_addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    mint_many(gauge_addrs: string[], overrides?: CallOverrides): Promise<void>;
+    mint_many(gauge_addrs: PromiseOrValue<string>[], overrides?: CallOverrides): Promise<void>;
 
-    mint_for(gauge_addr: string, _for: string, overrides?: CallOverrides): Promise<void>;
+    mint_for(
+      gauge_addr: PromiseOrValue<string>,
+      _for: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    toggle_approve_mint(minting_user: string, overrides?: CallOverrides): Promise<void>;
+    toggle_approve_mint(minting_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     token(overrides?: CallOverrides): Promise<string>;
 
     controller(overrides?: CallOverrides): Promise<string>;
 
-    minted(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    minted(arg0: PromiseOrValue<string>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    allowed_to_mint_for(arg0: string, arg1: string, overrides?: CallOverrides): Promise<boolean>;
+    allowed_to_mint_for(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
   };
 
   filters: {
-    'Minted(address,address,uint256)'(recipient?: string | null, gauge?: null, minted?: null): MintedEventFilter;
-    Minted(recipient?: string | null, gauge?: null, minted?: null): MintedEventFilter;
+    'Minted(address,address,uint256)'(
+      recipient?: PromiseOrValue<string> | null,
+      gauge?: null,
+      minted?: null,
+    ): MintedEventFilter;
+    Minted(recipient?: PromiseOrValue<string> | null, gauge?: null, minted?: null): MintedEventFilter;
   };
 
   estimateGas: {
-    mint(gauge_addr: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    mint(
+      gauge_addr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    mint_many(gauge_addrs: string[], overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    mint_many(
+      gauge_addrs: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     mint_for(
-      gauge_addr: string,
-      _for: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      gauge_addr: PromiseOrValue<string>,
+      _for: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     toggle_approve_mint(
-      minting_user: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      minting_user: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     token(overrides?: CallOverrides): Promise<BigNumber>;
 
     controller(overrides?: CallOverrides): Promise<BigNumber>;
 
-    minted(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    minted(arg0: PromiseOrValue<string>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    allowed_to_mint_for(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowed_to_mint_for(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     mint(
-      gauge_addr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      gauge_addr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     mint_many(
-      gauge_addrs: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      gauge_addrs: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     mint_for(
-      gauge_addr: string,
-      _for: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      gauge_addr: PromiseOrValue<string>,
+      _for: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     toggle_approve_mint(
-      minting_user: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      minting_user: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     token(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     controller(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    minted(arg0: string, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    minted(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    allowed_to_mint_for(arg0: string, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    allowed_to_mint_for(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
   };
 }

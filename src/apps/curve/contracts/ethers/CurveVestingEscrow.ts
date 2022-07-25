@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface CurveVestingEscrowInterface extends utils.Interface {
   functions: {
@@ -79,33 +79,36 @@ export interface CurveVestingEscrowInterface extends utils.Interface {
       | 'fund_admins',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'add_tokens', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'fund', values: [string[], BigNumberish[]]): string;
-  encodeFunctionData(functionFragment: 'toggle_disable', values: [string]): string;
+  encodeFunctionData(functionFragment: 'add_tokens', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'fund',
+    values: [PromiseOrValue<string>[], PromiseOrValue<BigNumberish>[]],
+  ): string;
+  encodeFunctionData(functionFragment: 'toggle_disable', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'disable_can_disable', values?: undefined): string;
   encodeFunctionData(functionFragment: 'disable_fund_admins', values?: undefined): string;
   encodeFunctionData(functionFragment: 'vestedSupply', values?: undefined): string;
   encodeFunctionData(functionFragment: 'lockedSupply', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'vestedOf', values: [string]): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
-  encodeFunctionData(functionFragment: 'lockedOf', values: [string]): string;
+  encodeFunctionData(functionFragment: 'vestedOf', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'lockedOf', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'claim()', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'claim(address)', values: [string]): string;
-  encodeFunctionData(functionFragment: 'commit_transfer_ownership', values: [string]): string;
+  encodeFunctionData(functionFragment: 'claim(address)', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'commit_transfer_ownership', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'apply_transfer_ownership', values?: undefined): string;
   encodeFunctionData(functionFragment: 'token', values?: undefined): string;
   encodeFunctionData(functionFragment: 'start_time', values?: undefined): string;
   encodeFunctionData(functionFragment: 'end_time', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'initial_locked', values: [string]): string;
-  encodeFunctionData(functionFragment: 'total_claimed', values: [string]): string;
+  encodeFunctionData(functionFragment: 'initial_locked', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'total_claimed', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'initial_locked_supply', values?: undefined): string;
   encodeFunctionData(functionFragment: 'unallocated_supply', values?: undefined): string;
   encodeFunctionData(functionFragment: 'can_disable', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'disabled_at', values: [string]): string;
+  encodeFunctionData(functionFragment: 'disabled_at', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'admin', values?: undefined): string;
   encodeFunctionData(functionFragment: 'future_admin', values?: undefined): string;
   encodeFunctionData(functionFragment: 'fund_admins_enabled', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'fund_admins', values: [string]): string;
+  encodeFunctionData(functionFragment: 'fund_admins', values: [PromiseOrValue<string>]): string;
 
   decodeFunctionResult(functionFragment: 'add_tokens', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'fund', data: BytesLike): Result;
@@ -212,48 +215,48 @@ export interface CurveVestingEscrow extends BaseContract {
 
   functions: {
     add_tokens(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     fund(
-      _recipients: string[],
-      _amounts: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _recipients: PromiseOrValue<string>[],
+      _amounts: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     toggle_disable(
-      _recipient: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _recipient: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    disable_can_disable(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    disable_can_disable(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    disable_fund_admins(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    disable_fund_admins(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     vestedSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     lockedSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    vestedOf(_recipient: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    vestedOf(_recipient: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    balanceOf(_recipient: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOf(_recipient: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    lockedOf(_recipient: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    lockedOf(_recipient: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    'claim()'(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    'claim()'(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     'claim(address)'(
-      addr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      addr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     commit_transfer_ownership(
-      addr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      addr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    apply_transfer_ownership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    apply_transfer_ownership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     token(overrides?: CallOverrides): Promise<[string]>;
 
@@ -261,9 +264,9 @@ export interface CurveVestingEscrow extends BaseContract {
 
     end_time(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    initial_locked(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    initial_locked(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    total_claimed(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    total_claimed(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     initial_locked_supply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -271,7 +274,7 @@ export interface CurveVestingEscrow extends BaseContract {
 
     can_disable(overrides?: CallOverrides): Promise<[boolean]>;
 
-    disabled_at(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    disabled_at(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     admin(overrides?: CallOverrides): Promise<[string]>;
 
@@ -279,52 +282,52 @@ export interface CurveVestingEscrow extends BaseContract {
 
     fund_admins_enabled(overrides?: CallOverrides): Promise<[boolean]>;
 
-    fund_admins(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    fund_admins(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
   };
 
   add_tokens(
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   fund(
-    _recipients: string[],
-    _amounts: BigNumberish[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _recipients: PromiseOrValue<string>[],
+    _amounts: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   toggle_disable(
-    _recipient: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _recipient: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  disable_can_disable(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  disable_can_disable(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  disable_fund_admins(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  disable_fund_admins(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   vestedSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   lockedSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-  vestedOf(_recipient: string, overrides?: CallOverrides): Promise<BigNumber>;
+  vestedOf(_recipient: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  balanceOf(_recipient: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(_recipient: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  lockedOf(_recipient: string, overrides?: CallOverrides): Promise<BigNumber>;
+  lockedOf(_recipient: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  'claim()'(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  'claim()'(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   'claim(address)'(
-    addr: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    addr: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   commit_transfer_ownership(
-    addr: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    addr: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  apply_transfer_ownership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  apply_transfer_ownership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   token(overrides?: CallOverrides): Promise<string>;
 
@@ -332,9 +335,9 @@ export interface CurveVestingEscrow extends BaseContract {
 
   end_time(overrides?: CallOverrides): Promise<BigNumber>;
 
-  initial_locked(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  initial_locked(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  total_claimed(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  total_claimed(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   initial_locked_supply(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -342,7 +345,7 @@ export interface CurveVestingEscrow extends BaseContract {
 
   can_disable(overrides?: CallOverrides): Promise<boolean>;
 
-  disabled_at(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  disabled_at(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   admin(overrides?: CallOverrides): Promise<string>;
 
@@ -350,14 +353,18 @@ export interface CurveVestingEscrow extends BaseContract {
 
   fund_admins_enabled(overrides?: CallOverrides): Promise<boolean>;
 
-  fund_admins(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  fund_admins(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   callStatic: {
-    add_tokens(_amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    add_tokens(_amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    fund(_recipients: string[], _amounts: BigNumberish[], overrides?: CallOverrides): Promise<void>;
+    fund(
+      _recipients: PromiseOrValue<string>[],
+      _amounts: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    toggle_disable(_recipient: string, overrides?: CallOverrides): Promise<void>;
+    toggle_disable(_recipient: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     disable_can_disable(overrides?: CallOverrides): Promise<void>;
 
@@ -367,17 +374,17 @@ export interface CurveVestingEscrow extends BaseContract {
 
     lockedSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    vestedOf(_recipient: string, overrides?: CallOverrides): Promise<BigNumber>;
+    vestedOf(_recipient: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    balanceOf(_recipient: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(_recipient: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    lockedOf(_recipient: string, overrides?: CallOverrides): Promise<BigNumber>;
+    lockedOf(_recipient: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     'claim()'(overrides?: CallOverrides): Promise<void>;
 
-    'claim(address)'(addr: string, overrides?: CallOverrides): Promise<void>;
+    'claim(address)'(addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    commit_transfer_ownership(addr: string, overrides?: CallOverrides): Promise<boolean>;
+    commit_transfer_ownership(addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     apply_transfer_ownership(overrides?: CallOverrides): Promise<boolean>;
 
@@ -387,9 +394,9 @@ export interface CurveVestingEscrow extends BaseContract {
 
     end_time(overrides?: CallOverrides): Promise<BigNumber>;
 
-    initial_locked(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    initial_locked(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    total_claimed(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    total_claimed(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     initial_locked_supply(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -397,7 +404,7 @@ export interface CurveVestingEscrow extends BaseContract {
 
     can_disable(overrides?: CallOverrides): Promise<boolean>;
 
-    disabled_at(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    disabled_at(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     admin(overrides?: CallOverrides): Promise<string>;
 
@@ -405,15 +412,15 @@ export interface CurveVestingEscrow extends BaseContract {
 
     fund_admins_enabled(overrides?: CallOverrides): Promise<boolean>;
 
-    fund_admins(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    fund_admins(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
   };
 
   filters: {
-    'Fund(address,uint256)'(recipient?: string | null, amount?: null): FundEventFilter;
-    Fund(recipient?: string | null, amount?: null): FundEventFilter;
+    'Fund(address,uint256)'(recipient?: PromiseOrValue<string> | null, amount?: null): FundEventFilter;
+    Fund(recipient?: PromiseOrValue<string> | null, amount?: null): FundEventFilter;
 
-    'Claim(address,uint256)'(recipient?: string | null, claimed?: null): ClaimEventFilter;
-    Claim(recipient?: string | null, claimed?: null): ClaimEventFilter;
+    'Claim(address,uint256)'(recipient?: PromiseOrValue<string> | null, claimed?: null): ClaimEventFilter;
+    Claim(recipient?: PromiseOrValue<string> | null, claimed?: null): ClaimEventFilter;
 
     'ToggleDisable(address,bool)'(recipient?: null, disabled?: null): ToggleDisableEventFilter;
     ToggleDisable(recipient?: null, disabled?: null): ToggleDisableEventFilter;
@@ -426,40 +433,49 @@ export interface CurveVestingEscrow extends BaseContract {
   };
 
   estimateGas: {
-    add_tokens(_amount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
-
-    fund(
-      _recipients: string[],
-      _amounts: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+    add_tokens(
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    toggle_disable(_recipient: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    fund(
+      _recipients: PromiseOrValue<string>[],
+      _amounts: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    disable_can_disable(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    toggle_disable(
+      _recipient: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    disable_fund_admins(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    disable_can_disable(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
+
+    disable_fund_admins(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     vestedSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     lockedSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    vestedOf(_recipient: string, overrides?: CallOverrides): Promise<BigNumber>;
+    vestedOf(_recipient: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    balanceOf(_recipient: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(_recipient: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    lockedOf(_recipient: string, overrides?: CallOverrides): Promise<BigNumber>;
+    lockedOf(_recipient: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    'claim()'(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    'claim()'(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    'claim(address)'(addr: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
-
-    commit_transfer_ownership(
-      addr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    'claim(address)'(
+      addr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    apply_transfer_ownership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    commit_transfer_ownership(
+      addr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    apply_transfer_ownership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     token(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -467,9 +483,9 @@ export interface CurveVestingEscrow extends BaseContract {
 
     end_time(overrides?: CallOverrides): Promise<BigNumber>;
 
-    initial_locked(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    initial_locked(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    total_claimed(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    total_claimed(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     initial_locked_supply(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -477,7 +493,7 @@ export interface CurveVestingEscrow extends BaseContract {
 
     can_disable(overrides?: CallOverrides): Promise<BigNumber>;
 
-    disabled_at(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    disabled_at(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     admin(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -485,55 +501,53 @@ export interface CurveVestingEscrow extends BaseContract {
 
     fund_admins_enabled(overrides?: CallOverrides): Promise<BigNumber>;
 
-    fund_admins(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    fund_admins(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
     add_tokens(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     fund(
-      _recipients: string[],
-      _amounts: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _recipients: PromiseOrValue<string>[],
+      _amounts: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     toggle_disable(
-      _recipient: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _recipient: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    disable_can_disable(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    disable_can_disable(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    disable_fund_admins(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    disable_fund_admins(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     vestedSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     lockedSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    vestedOf(_recipient: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    vestedOf(_recipient: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    balanceOf(_recipient: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    balanceOf(_recipient: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    lockedOf(_recipient: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    lockedOf(_recipient: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    'claim()'(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    'claim()'(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     'claim(address)'(
-      addr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      addr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     commit_transfer_ownership(
-      addr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      addr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    apply_transfer_ownership(
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<PopulatedTransaction>;
+    apply_transfer_ownership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     token(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -541,9 +555,9 @@ export interface CurveVestingEscrow extends BaseContract {
 
     end_time(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    initial_locked(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    initial_locked(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    total_claimed(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    total_claimed(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     initial_locked_supply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -551,7 +565,7 @@ export interface CurveVestingEscrow extends BaseContract {
 
     can_disable(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    disabled_at(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    disabled_at(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     admin(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -559,6 +573,6 @@ export interface CurveVestingEscrow extends BaseContract {
 
     fund_admins_enabled(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    fund_admins(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    fund_admins(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }

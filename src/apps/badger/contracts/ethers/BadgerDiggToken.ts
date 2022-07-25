@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface BadgerDiggTokenInterface extends utils.Interface {
   functions: {
@@ -84,37 +84,55 @@ export interface BadgerDiggTokenInterface extends utils.Interface {
   ): FunctionFragment;
 
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'approve', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'fragmentsToShares', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'approve',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'fragmentsToShares', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(
     functionFragment: 'initialize(string,string,uint8)',
-    values: [string, string, BigNumberish],
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
-  encodeFunctionData(functionFragment: 'initialize(address)', values: [string]): string;
+  encodeFunctionData(functionFragment: 'initialize(address)', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transferFrom', values: [string, string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'transferFrom',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'decimals', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'increaseAllowance', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'increaseAllowance',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'totalShares', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'sharesToFragments', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'sharesToFragments', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: '_sharesPerFragment', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'sharesToScaledShares', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
+  encodeFunctionData(functionFragment: 'sharesToScaledShares', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'rebase', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setMonetaryPolicy', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'rebase',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'setMonetaryPolicy', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'monetaryPolicy', values?: undefined): string;
   encodeFunctionData(functionFragment: 'isOwner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'decreaseAllowance', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transfer', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'decreaseAllowance',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'transfer',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'rebaseStartTime', values?: undefined): string;
   encodeFunctionData(functionFragment: '_initialSharesPerFragment', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'allowance', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
-  encodeFunctionData(functionFragment: 'sharesOf', values: [string]): string;
-  encodeFunctionData(functionFragment: 'scaledSharesToShares', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'allowance', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'sharesOf', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'scaledSharesToShares', values: [PromiseOrValue<BigNumberish>]): string;
 
   decodeFunctionResult(functionFragment: 'name', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'approve', data: BytesLike): Result;
@@ -237,63 +255,63 @@ export interface BadgerDiggToken extends BaseContract {
     name(overrides?: CallOverrides): Promise<[string]>;
 
     approve(
-      spender: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    fragmentsToShares(fragments: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    fragmentsToShares(fragments: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     'initialize(string,string,uint8)'(
-      name: string,
-      symbol: string,
-      decimals: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      name: PromiseOrValue<string>,
+      symbol: PromiseOrValue<string>,
+      decimals: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     'initialize(address)'(
-      owner_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      owner_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transferFrom(
-      from: string,
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<[number]>;
 
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     totalShares(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    sharesToFragments(shares: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    sharesToFragments(shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     _sharesPerFragment(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    sharesToScaledShares(shares: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    sharesToScaledShares(shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    balanceOf(who: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOf(who: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     rebase(
-      epoch: BigNumberish,
-      supplyDelta: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      epoch: PromiseOrValue<BigNumberish>,
+      supplyDelta: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setMonetaryPolicy(
-      monetaryPolicy_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      monetaryPolicy_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
@@ -305,93 +323,97 @@ export interface BadgerDiggToken extends BaseContract {
     symbol(overrides?: CallOverrides): Promise<[string]>;
 
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transfer(
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     rebaseStartTime(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     _initialSharesPerFragment(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    allowance(owner_: string, spender: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    allowance(
+      owner_: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    sharesOf(who: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    sharesOf(who: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    scaledSharesToShares(fragments: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    scaledSharesToShares(fragments: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
   };
 
   name(overrides?: CallOverrides): Promise<string>;
 
   approve(
-    spender: string,
-    value: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    value: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  fragmentsToShares(fragments: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  fragmentsToShares(fragments: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   'initialize(string,string,uint8)'(
-    name: string,
-    symbol: string,
-    decimals: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    name: PromiseOrValue<string>,
+    symbol: PromiseOrValue<string>,
+    decimals: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   'initialize(address)'(
-    owner_: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    owner_: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   transferFrom(
-    from: string,
-    to: string,
-    value: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    from: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    value: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   decimals(overrides?: CallOverrides): Promise<number>;
 
   increaseAllowance(
-    spender: string,
-    addedValue: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    addedValue: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   totalShares(overrides?: CallOverrides): Promise<BigNumber>;
 
-  sharesToFragments(shares: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  sharesToFragments(shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   _sharesPerFragment(overrides?: CallOverrides): Promise<BigNumber>;
 
-  sharesToScaledShares(shares: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  sharesToScaledShares(shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  balanceOf(who: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(who: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   rebase(
-    epoch: BigNumberish,
-    supplyDelta: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    epoch: PromiseOrValue<BigNumberish>,
+    supplyDelta: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setMonetaryPolicy(
-    monetaryPolicy_: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    monetaryPolicy_: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   owner(overrides?: CallOverrides): Promise<string>;
@@ -403,71 +425,92 @@ export interface BadgerDiggToken extends BaseContract {
   symbol(overrides?: CallOverrides): Promise<string>;
 
   decreaseAllowance(
-    spender: string,
-    subtractedValue: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    subtractedValue: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transfer(
-    to: string,
-    value: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    to: PromiseOrValue<string>,
+    value: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   rebaseStartTime(overrides?: CallOverrides): Promise<BigNumber>;
 
   _initialSharesPerFragment(overrides?: CallOverrides): Promise<BigNumber>;
 
-  allowance(owner_: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+  allowance(
+    owner_: PromiseOrValue<string>,
+    spender: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  sharesOf(who: string, overrides?: CallOverrides): Promise<BigNumber>;
+  sharesOf(who: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  scaledSharesToShares(fragments: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  scaledSharesToShares(fragments: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   callStatic: {
     name(overrides?: CallOverrides): Promise<string>;
 
-    approve(spender: string, value: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    approve(
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    fragmentsToShares(fragments: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    fragmentsToShares(fragments: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     'initialize(string,string,uint8)'(
-      name: string,
-      symbol: string,
-      decimals: BigNumberish,
+      name: PromiseOrValue<string>,
+      symbol: PromiseOrValue<string>,
+      decimals: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    'initialize(address)'(owner_: string, overrides?: CallOverrides): Promise<void>;
+    'initialize(address)'(owner_: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transferFrom(from: string, to: string, value: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transferFrom(
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     decimals(overrides?: CallOverrides): Promise<number>;
 
-    increaseAllowance(spender: string, addedValue: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    increaseAllowance(
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     totalShares(overrides?: CallOverrides): Promise<BigNumber>;
 
-    sharesToFragments(shares: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    sharesToFragments(shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     _sharesPerFragment(overrides?: CallOverrides): Promise<BigNumber>;
 
-    sharesToScaledShares(shares: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    sharesToScaledShares(shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    balanceOf(who: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(who: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
-    rebase(epoch: BigNumberish, supplyDelta: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    rebase(
+      epoch: PromiseOrValue<BigNumberish>,
+      supplyDelta: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    setMonetaryPolicy(monetaryPolicy_: string, overrides?: CallOverrides): Promise<void>;
+    setMonetaryPolicy(monetaryPolicy_: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
@@ -477,111 +520,138 @@ export interface BadgerDiggToken extends BaseContract {
 
     symbol(overrides?: CallOverrides): Promise<string>;
 
-    decreaseAllowance(spender: string, subtractedValue: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    decreaseAllowance(
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    transfer(to: string, value: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transfer(
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     rebaseStartTime(overrides?: CallOverrides): Promise<BigNumber>;
 
     _initialSharesPerFragment(overrides?: CallOverrides): Promise<BigNumber>;
 
-    allowance(owner_: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      owner_: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    sharesOf(who: string, overrides?: CallOverrides): Promise<BigNumber>;
+    sharesOf(who: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    scaledSharesToShares(fragments: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    scaledSharesToShares(fragments: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   filters: {
-    'LogRebase(uint256,uint256)'(epoch?: BigNumberish | null, totalSupply?: null): LogRebaseEventFilter;
-    LogRebase(epoch?: BigNumberish | null, totalSupply?: null): LogRebaseEventFilter;
+    'LogRebase(uint256,uint256)'(epoch?: PromiseOrValue<BigNumberish> | null, totalSupply?: null): LogRebaseEventFilter;
+    LogRebase(epoch?: PromiseOrValue<BigNumberish> | null, totalSupply?: null): LogRebaseEventFilter;
 
     'LogMonetaryPolicyUpdated(address)'(monetaryPolicy?: null): LogMonetaryPolicyUpdatedEventFilter;
     LogMonetaryPolicyUpdated(monetaryPolicy?: null): LogMonetaryPolicyUpdatedEventFilter;
 
-    'OwnershipRenounced(address)'(previousOwner?: string | null): OwnershipRenouncedEventFilter;
-    OwnershipRenounced(previousOwner?: string | null): OwnershipRenouncedEventFilter;
+    'OwnershipRenounced(address)'(previousOwner?: PromiseOrValue<string> | null): OwnershipRenouncedEventFilter;
+    OwnershipRenounced(previousOwner?: PromiseOrValue<string> | null): OwnershipRenouncedEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
 
-    'Transfer(address,address,uint256)'(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
-    Transfer(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
+    'Transfer(address,address,uint256)'(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
+    Transfer(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
 
     'Approval(address,address,uint256)'(
-      owner?: string | null,
-      spender?: string | null,
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
       value?: null,
     ): ApprovalEventFilter;
-    Approval(owner?: string | null, spender?: string | null, value?: null): ApprovalEventFilter;
+    Approval(
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
+      value?: null,
+    ): ApprovalEventFilter;
   };
 
   estimateGas: {
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
     approve(
-      spender: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    fragmentsToShares(fragments: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    fragmentsToShares(fragments: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     'initialize(string,string,uint8)'(
-      name: string,
-      symbol: string,
-      decimals: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      name: PromiseOrValue<string>,
+      symbol: PromiseOrValue<string>,
+      decimals: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     'initialize(address)'(
-      owner_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      owner_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferFrom(
-      from: string,
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     totalShares(overrides?: CallOverrides): Promise<BigNumber>;
 
-    sharesToFragments(shares: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    sharesToFragments(shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     _sharesPerFragment(overrides?: CallOverrides): Promise<BigNumber>;
 
-    sharesToScaledShares(shares: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    sharesToScaledShares(shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    balanceOf(who: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(who: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     rebase(
-      epoch: BigNumberish,
-      supplyDelta: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      epoch: PromiseOrValue<BigNumberish>,
+      supplyDelta: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setMonetaryPolicy(
-      monetaryPolicy_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      monetaryPolicy_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
@@ -593,94 +663,104 @@ export interface BadgerDiggToken extends BaseContract {
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transfer(
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     rebaseStartTime(overrides?: CallOverrides): Promise<BigNumber>;
 
     _initialSharesPerFragment(overrides?: CallOverrides): Promise<BigNumber>;
 
-    allowance(owner_: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-    transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    allowance(
+      owner_: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    sharesOf(who: string, overrides?: CallOverrides): Promise<BigNumber>;
+    transferOwnership(
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    scaledSharesToShares(fragments: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    sharesOf(who: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    scaledSharesToShares(fragments: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     approve(
-      spender: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    fragmentsToShares(fragments: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    fragmentsToShares(
+      fragments: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     'initialize(string,string,uint8)'(
-      name: string,
-      symbol: string,
-      decimals: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      name: PromiseOrValue<string>,
+      symbol: PromiseOrValue<string>,
+      decimals: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     'initialize(address)'(
-      owner_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      owner_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferFrom(
-      from: string,
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     totalShares(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    sharesToFragments(shares: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    sharesToFragments(shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     _sharesPerFragment(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    sharesToScaledShares(shares: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    sharesToScaledShares(
+      shares: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    balanceOf(who: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    balanceOf(who: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     rebase(
-      epoch: BigNumberish,
-      supplyDelta: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      epoch: PromiseOrValue<BigNumberish>,
+      supplyDelta: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setMonetaryPolicy(
-      monetaryPolicy_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      monetaryPolicy_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -692,30 +772,37 @@ export interface BadgerDiggToken extends BaseContract {
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transfer(
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     rebaseStartTime(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     _initialSharesPerFragment(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    allowance(owner_: string, spender: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    allowance(
+      owner_: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    sharesOf(who: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    transferOwnership(
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
-    scaledSharesToShares(fragments: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    sharesOf(who: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    scaledSharesToShares(
+      fragments: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
   };
 }

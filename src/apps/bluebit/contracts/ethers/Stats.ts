@@ -13,15 +13,15 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export declare namespace IStats {
   export type PoolStruct = {
-    vault: string;
-    balance: BigNumberish;
-    deposits: BigNumberish;
-    price: BigNumberish;
-    allocPoint: BigNumberish;
+    vault: PromiseOrValue<string>;
+    balance: PromiseOrValue<BigNumberish>;
+    deposits: PromiseOrValue<BigNumberish>;
+    price: PromiseOrValue<BigNumberish>;
+    allocPoint: PromiseOrValue<BigNumberish>;
   };
 
   export type PoolStructOutput = [string, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -33,24 +33,24 @@ export declare namespace IStats {
   };
 
   export type VaultStruct = {
-    vault: string;
-    token: string;
-    apr: BigNumberish;
-    balance: BigNumberish;
-    totalDeposits: BigNumberish;
-    accountDeposits: BigNumberish;
-    totalRewards: BigNumberish;
-    accountRewards: BigNumberish;
-    depositTokenPrice: BigNumberish;
-    rewardTokenPrice: BigNumberish;
-    withdrawInterval: BigNumberish;
-    withdrawFee: BigNumberish;
-    accountWeights: BigNumberish;
-    totalWeights: BigNumberish;
-    lastDepositedTime: BigNumberish;
-    lastDepositedAmount: BigNumberish;
-    allocPoint: BigNumberish;
-    rewards: BigNumberish;
+    vault: PromiseOrValue<string>;
+    token: PromiseOrValue<string>;
+    apr: PromiseOrValue<BigNumberish>;
+    balance: PromiseOrValue<BigNumberish>;
+    totalDeposits: PromiseOrValue<BigNumberish>;
+    accountDeposits: PromiseOrValue<BigNumberish>;
+    totalRewards: PromiseOrValue<BigNumberish>;
+    accountRewards: PromiseOrValue<BigNumberish>;
+    depositTokenPrice: PromiseOrValue<BigNumberish>;
+    rewardTokenPrice: PromiseOrValue<BigNumberish>;
+    withdrawInterval: PromiseOrValue<BigNumberish>;
+    withdrawFee: PromiseOrValue<BigNumberish>;
+    accountWeights: PromiseOrValue<BigNumberish>;
+    totalWeights: PromiseOrValue<BigNumberish>;
+    lastDepositedTime: PromiseOrValue<BigNumberish>;
+    lastDepositedAmount: PromiseOrValue<BigNumberish>;
+    allocPoint: PromiseOrValue<BigNumberish>;
+    rewards: PromiseOrValue<BigNumberish>;
   };
 
   export type VaultStructOutput = [
@@ -94,14 +94,14 @@ export declare namespace IStats {
   };
 
   export type StakeStruct = {
-    token: string;
-    unlockTime: BigNumberish;
-    accountLocked: BigNumberish;
-    totalLocked: BigNumberish;
-    totalSupply: BigNumberish;
-    veBalance: BigNumberish;
-    veTotalSupply: BigNumberish;
-    tokenPrice: BigNumberish;
+    token: PromiseOrValue<string>;
+    unlockTime: PromiseOrValue<BigNumberish>;
+    accountLocked: PromiseOrValue<BigNumberish>;
+    totalLocked: PromiseOrValue<BigNumberish>;
+    totalSupply: PromiseOrValue<BigNumberish>;
+    veBalance: PromiseOrValue<BigNumberish>;
+    veTotalSupply: PromiseOrValue<BigNumberish>;
+    tokenPrice: PromiseOrValue<BigNumberish>;
   };
 
   export type StakeStructOutput = [
@@ -125,19 +125,19 @@ export declare namespace IStats {
   };
 
   export type RebateStruct = {
-    totalLocked: BigNumberish;
-    weekToken0Amount: BigNumberish;
-    weekToken1Amount: BigNumberish;
-    lastToken0Amount: BigNumberish;
-    lastToken1Amount: BigNumberish;
-    claimableToken0Amount: BigNumberish;
-    claimableToken1Amount: BigNumberish;
-    claimableRate: BigNumberish;
-    tokenPrice: BigNumberish;
-    token0Price: BigNumberish;
-    token1Price: BigNumberish;
-    token0Name: string;
-    token1Name: string;
+    totalLocked: PromiseOrValue<BigNumberish>;
+    weekToken0Amount: PromiseOrValue<BigNumberish>;
+    weekToken1Amount: PromiseOrValue<BigNumberish>;
+    lastToken0Amount: PromiseOrValue<BigNumberish>;
+    lastToken1Amount: PromiseOrValue<BigNumberish>;
+    claimableToken0Amount: PromiseOrValue<BigNumberish>;
+    claimableToken1Amount: PromiseOrValue<BigNumberish>;
+    claimableRate: PromiseOrValue<BigNumberish>;
+    tokenPrice: PromiseOrValue<BigNumberish>;
+    token0Price: PromiseOrValue<BigNumberish>;
+    token1Price: PromiseOrValue<BigNumberish>;
+    token0Name: PromiseOrValue<string>;
+    token1Name: PromiseOrValue<string>;
   };
 
   export type RebateStructOutput = [
@@ -199,16 +199,19 @@ export interface StatsInterface extends utils.Interface {
       | 'getTotalBalance',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'pools', values: [string]): string;
-  encodeFunctionData(functionFragment: 'vaults', values: [string]): string;
-  encodeFunctionData(functionFragment: 'summary', values: [string]): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
-  encodeFunctionData(functionFragment: 'pendingRewards', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getBoostFactor', values: [BigNumberish, BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'stakeInfo', values: [string]): string;
-  encodeFunctionData(functionFragment: 'rebateInfo', values: [string]): string;
+  encodeFunctionData(functionFragment: 'pools', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'vaults', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'summary', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'pendingRewards', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'getBoostFactor',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'stakeInfo', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'rebateInfo', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'performanceFees', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getTotalBalance', values: [string[]]): string;
+  encodeFunctionData(functionFragment: 'getTotalBalance', values: [PromiseOrValue<string>[]]): string;
 
   decodeFunctionResult(functionFragment: 'pools', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'vaults', data: BytesLike): Result;
@@ -247,35 +250,35 @@ export interface Stats extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    pools(account: string, overrides?: CallOverrides): Promise<[IStats.PoolStructOutput[]]>;
+    pools(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[IStats.PoolStructOutput[]]>;
 
-    vaults(account: string, overrides?: CallOverrides): Promise<[IStats.VaultStructOutput[]]>;
+    vaults(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[IStats.VaultStructOutput[]]>;
 
     summary(
-      account: string,
+      account: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { tvl: BigNumber; deposites: BigNumber }>;
 
     balanceOf(
-      account: string,
+      account: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { bbtBalance: BigNumber; veBalance: BigNumber }>;
 
     pendingRewards(
-      account: string,
+      account: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; price: BigNumber }>;
 
     getBoostFactor(
-      pid: BigNumberish,
-      bbt: BigNumberish,
-      ve: BigNumberish,
+      pid: PromiseOrValue<BigNumberish>,
+      bbt: PromiseOrValue<BigNumberish>,
+      ve: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { boost: BigNumber; toMaxBoost: BigNumber }>;
 
-    stakeInfo(account: string, overrides?: CallOverrides): Promise<[IStats.StakeStructOutput]>;
+    stakeInfo(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[IStats.StakeStructOutput]>;
 
-    rebateInfo(account: string, overrides?: CallOverrides): Promise<[IStats.RebateStructOutput]>;
+    rebateInfo(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[IStats.RebateStructOutput]>;
 
     performanceFees(overrides?: CallOverrides): Promise<
       [BigNumber, BigNumber, BigNumber] & {
@@ -285,38 +288,38 @@ export interface Stats extends BaseContract {
       }
     >;
 
-    getTotalBalance(arg0: string[], overrides?: CallOverrides): Promise<[BigNumber]>;
+    getTotalBalance(arg0: PromiseOrValue<string>[], overrides?: CallOverrides): Promise<[BigNumber]>;
   };
 
-  pools(account: string, overrides?: CallOverrides): Promise<IStats.PoolStructOutput[]>;
+  pools(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<IStats.PoolStructOutput[]>;
 
-  vaults(account: string, overrides?: CallOverrides): Promise<IStats.VaultStructOutput[]>;
+  vaults(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<IStats.VaultStructOutput[]>;
 
   summary(
-    account: string,
+    account: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber, BigNumber] & { tvl: BigNumber; deposites: BigNumber }>;
 
   balanceOf(
-    account: string,
+    account: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber, BigNumber] & { bbtBalance: BigNumber; veBalance: BigNumber }>;
 
   pendingRewards(
-    account: string,
+    account: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; price: BigNumber }>;
 
   getBoostFactor(
-    pid: BigNumberish,
-    bbt: BigNumberish,
-    ve: BigNumberish,
+    pid: PromiseOrValue<BigNumberish>,
+    bbt: PromiseOrValue<BigNumberish>,
+    ve: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber, BigNumber] & { boost: BigNumber; toMaxBoost: BigNumber }>;
 
-  stakeInfo(account: string, overrides?: CallOverrides): Promise<IStats.StakeStructOutput>;
+  stakeInfo(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<IStats.StakeStructOutput>;
 
-  rebateInfo(account: string, overrides?: CallOverrides): Promise<IStats.RebateStructOutput>;
+  rebateInfo(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<IStats.RebateStructOutput>;
 
   performanceFees(overrides?: CallOverrides): Promise<
     [BigNumber, BigNumber, BigNumber] & {
@@ -326,38 +329,38 @@ export interface Stats extends BaseContract {
     }
   >;
 
-  getTotalBalance(arg0: string[], overrides?: CallOverrides): Promise<BigNumber>;
+  getTotalBalance(arg0: PromiseOrValue<string>[], overrides?: CallOverrides): Promise<BigNumber>;
 
   callStatic: {
-    pools(account: string, overrides?: CallOverrides): Promise<IStats.PoolStructOutput[]>;
+    pools(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<IStats.PoolStructOutput[]>;
 
-    vaults(account: string, overrides?: CallOverrides): Promise<IStats.VaultStructOutput[]>;
+    vaults(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<IStats.VaultStructOutput[]>;
 
     summary(
-      account: string,
+      account: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { tvl: BigNumber; deposites: BigNumber }>;
 
     balanceOf(
-      account: string,
+      account: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { bbtBalance: BigNumber; veBalance: BigNumber }>;
 
     pendingRewards(
-      account: string,
+      account: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; price: BigNumber }>;
 
     getBoostFactor(
-      pid: BigNumberish,
-      bbt: BigNumberish,
-      ve: BigNumberish,
+      pid: PromiseOrValue<BigNumberish>,
+      bbt: PromiseOrValue<BigNumberish>,
+      ve: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { boost: BigNumber; toMaxBoost: BigNumber }>;
 
-    stakeInfo(account: string, overrides?: CallOverrides): Promise<IStats.StakeStructOutput>;
+    stakeInfo(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<IStats.StakeStructOutput>;
 
-    rebateInfo(account: string, overrides?: CallOverrides): Promise<IStats.RebateStructOutput>;
+    rebateInfo(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<IStats.RebateStructOutput>;
 
     performanceFees(overrides?: CallOverrides): Promise<
       [BigNumber, BigNumber, BigNumber] & {
@@ -367,62 +370,62 @@ export interface Stats extends BaseContract {
       }
     >;
 
-    getTotalBalance(arg0: string[], overrides?: CallOverrides): Promise<BigNumber>;
+    getTotalBalance(arg0: PromiseOrValue<string>[], overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   filters: {};
 
   estimateGas: {
-    pools(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    pools(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    vaults(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    vaults(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    summary(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    summary(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    pendingRewards(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingRewards(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getBoostFactor(
-      pid: BigNumberish,
-      bbt: BigNumberish,
-      ve: BigNumberish,
+      pid: PromiseOrValue<BigNumberish>,
+      bbt: PromiseOrValue<BigNumberish>,
+      ve: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    stakeInfo(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    stakeInfo(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    rebateInfo(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    rebateInfo(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     performanceFees(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getTotalBalance(arg0: string[], overrides?: CallOverrides): Promise<BigNumber>;
+    getTotalBalance(arg0: PromiseOrValue<string>[], overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    pools(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    pools(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    vaults(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    vaults(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    summary(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    summary(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    pendingRewards(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    pendingRewards(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getBoostFactor(
-      pid: BigNumberish,
-      bbt: BigNumberish,
-      ve: BigNumberish,
+      pid: PromiseOrValue<BigNumberish>,
+      bbt: PromiseOrValue<BigNumberish>,
+      ve: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    stakeInfo(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    stakeInfo(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    rebateInfo(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    rebateInfo(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     performanceFees(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getTotalBalance(arg0: string[], overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getTotalBalance(arg0: PromiseOrValue<string>[], overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }

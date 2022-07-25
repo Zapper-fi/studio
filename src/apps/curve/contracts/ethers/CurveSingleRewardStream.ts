@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface CurveSingleRewardStreamInterface extends utils.Interface {
   functions: {
@@ -63,13 +63,13 @@ export interface CurveSingleRewardStreamInterface extends utils.Interface {
       | 'reward_receivers',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'add_receiver', values: [string]): string;
-  encodeFunctionData(functionFragment: 'remove_receiver', values: [string]): string;
+  encodeFunctionData(functionFragment: 'add_receiver', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'remove_receiver', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'get_reward', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'notify_reward_amount', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'set_reward_duration', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'set_reward_distributor', values: [string]): string;
-  encodeFunctionData(functionFragment: 'commit_transfer_ownership', values: [string]): string;
+  encodeFunctionData(functionFragment: 'notify_reward_amount', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'set_reward_duration', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'set_reward_distributor', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'commit_transfer_ownership', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'accept_transfer_ownership', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'future_owner', values?: undefined): string;
@@ -81,7 +81,7 @@ export interface CurveSingleRewardStreamInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'last_update_time', values?: undefined): string;
   encodeFunctionData(functionFragment: 'reward_per_receiver_total', values?: undefined): string;
   encodeFunctionData(functionFragment: 'receiver_count', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'reward_receivers', values: [string]): string;
+  encodeFunctionData(functionFragment: 'reward_receivers', values: [PromiseOrValue<string>]): string;
 
   decodeFunctionResult(functionFragment: 'add_receiver', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'remove_receiver', data: BytesLike): Result;
@@ -130,40 +130,38 @@ export interface CurveSingleRewardStream extends BaseContract {
 
   functions: {
     add_receiver(
-      _receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     remove_receiver(
-      _receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    get_reward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    get_reward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     notify_reward_amount(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     set_reward_duration(
-      _duration: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _duration: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     set_reward_distributor(
-      _distributor: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _distributor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     commit_transfer_ownership(
-      _owner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    accept_transfer_ownership(
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
+    accept_transfer_ownership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
@@ -185,42 +183,42 @@ export interface CurveSingleRewardStream extends BaseContract {
 
     receiver_count(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    reward_receivers(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    reward_receivers(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
   };
 
   add_receiver(
-    _receiver: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _receiver: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   remove_receiver(
-    _receiver: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _receiver: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  get_reward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  get_reward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   notify_reward_amount(
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   set_reward_duration(
-    _duration: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _duration: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   set_reward_distributor(
-    _distributor: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _distributor: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   commit_transfer_ownership(
-    _owner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _owner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  accept_transfer_ownership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  accept_transfer_ownership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
@@ -242,22 +240,22 @@ export interface CurveSingleRewardStream extends BaseContract {
 
   receiver_count(overrides?: CallOverrides): Promise<BigNumber>;
 
-  reward_receivers(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  reward_receivers(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   callStatic: {
-    add_receiver(_receiver: string, overrides?: CallOverrides): Promise<void>;
+    add_receiver(_receiver: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    remove_receiver(_receiver: string, overrides?: CallOverrides): Promise<void>;
+    remove_receiver(_receiver: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     get_reward(overrides?: CallOverrides): Promise<void>;
 
-    notify_reward_amount(_amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    notify_reward_amount(_amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    set_reward_duration(_duration: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    set_reward_duration(_duration: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    set_reward_distributor(_distributor: string, overrides?: CallOverrides): Promise<void>;
+    set_reward_distributor(_distributor: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    commit_transfer_ownership(_owner: string, overrides?: CallOverrides): Promise<void>;
+    commit_transfer_ownership(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     accept_transfer_ownership(overrides?: CallOverrides): Promise<void>;
 
@@ -281,39 +279,45 @@ export interface CurveSingleRewardStream extends BaseContract {
 
     receiver_count(overrides?: CallOverrides): Promise<BigNumber>;
 
-    reward_receivers(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    reward_receivers(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
   };
 
   filters: {};
 
   estimateGas: {
-    add_receiver(_receiver: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    add_receiver(
+      _receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    remove_receiver(_receiver: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    remove_receiver(
+      _receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    get_reward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    get_reward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     notify_reward_amount(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     set_reward_duration(
-      _duration: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _duration: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     set_reward_distributor(
-      _distributor: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _distributor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     commit_transfer_ownership(
-      _owner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    accept_transfer_ownership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    accept_transfer_ownership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -335,45 +339,43 @@ export interface CurveSingleRewardStream extends BaseContract {
 
     receiver_count(overrides?: CallOverrides): Promise<BigNumber>;
 
-    reward_receivers(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    reward_receivers(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
     add_receiver(
-      _receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     remove_receiver(
-      _receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    get_reward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    get_reward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     notify_reward_amount(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     set_reward_duration(
-      _duration: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _duration: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     set_reward_distributor(
-      _distributor: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _distributor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     commit_transfer_ownership(
-      _owner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    accept_transfer_ownership(
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<PopulatedTransaction>;
+    accept_transfer_ownership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -395,6 +397,6 @@ export interface CurveSingleRewardStream extends BaseContract {
 
     receiver_count(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    reward_receivers(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    reward_receivers(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }

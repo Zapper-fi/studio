@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface CurveV1PoolLegacyInterface extends utils.Interface {
   functions: {
@@ -94,47 +94,101 @@ export interface CurveV1PoolLegacyInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'get_virtual_price', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'calc_token_amount',
-    values: [[BigNumberish, BigNumberish, BigNumberish, BigNumberish], boolean],
+    values: [
+      [
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+      ],
+      PromiseOrValue<boolean>,
+    ],
   ): string;
   encodeFunctionData(
     functionFragment: 'add_liquidity',
-    values: [[BigNumberish, BigNumberish, BigNumberish, BigNumberish], BigNumberish],
+    values: [
+      [
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+      ],
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'get_dy', values: [BigNumberish, BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'get_dx', values: [BigNumberish, BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'get_dy_underlying', values: [BigNumberish, BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'get_dx_underlying', values: [BigNumberish, BigNumberish, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'get_dy',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'get_dx',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'get_dy_underlying',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'get_dx_underlying',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(
     functionFragment: 'exchange',
-    values: [BigNumberish, BigNumberish, BigNumberish, BigNumberish],
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
   encodeFunctionData(
     functionFragment: 'exchange_underlying',
-    values: [BigNumberish, BigNumberish, BigNumberish, BigNumberish],
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
   encodeFunctionData(
     functionFragment: 'remove_liquidity',
-    values: [BigNumberish, [BigNumberish, BigNumberish, BigNumberish, BigNumberish]],
+    values: [
+      PromiseOrValue<BigNumberish>,
+      [
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+      ],
+    ],
   ): string;
   encodeFunctionData(
     functionFragment: 'remove_liquidity_imbalance',
-    values: [[BigNumberish, BigNumberish, BigNumberish, BigNumberish], BigNumberish],
+    values: [
+      [
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+      ],
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
   encodeFunctionData(
     functionFragment: 'commit_new_parameters',
-    values: [BigNumberish, BigNumberish, BigNumberish],
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(functionFragment: 'apply_new_parameters', values?: undefined): string;
   encodeFunctionData(functionFragment: 'revert_new_parameters', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'commit_transfer_ownership', values: [string]): string;
+  encodeFunctionData(functionFragment: 'commit_transfer_ownership', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'apply_transfer_ownership', values?: undefined): string;
   encodeFunctionData(functionFragment: 'revert_transfer_ownership', values?: undefined): string;
   encodeFunctionData(functionFragment: 'withdraw_admin_fees', values?: undefined): string;
   encodeFunctionData(functionFragment: 'kill_me', values?: undefined): string;
   encodeFunctionData(functionFragment: 'unkill_me', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'coins', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'underlying_coins', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'balances', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'coins', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'underlying_coins', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'balances', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'A', values?: undefined): string;
   encodeFunctionData(functionFragment: 'fee', values?: undefined): string;
   encodeFunctionData(functionFragment: 'admin_fee', values?: undefined): string;
@@ -347,106 +401,127 @@ export interface CurveV1PoolLegacy extends BaseContract {
     get_virtual_price(overrides?: CallOverrides): Promise<[BigNumber] & { out: BigNumber }>;
 
     calc_token_amount(
-      amounts: [BigNumberish, BigNumberish, BigNumberish, BigNumberish],
-      deposit: boolean,
+      amounts: [
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+      ],
+      deposit: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber] & { out: BigNumber }>;
 
     add_liquidity(
-      amounts: [BigNumberish, BigNumberish, BigNumberish, BigNumberish],
-      min_mint_amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amounts: [
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+      ],
+      min_mint_amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     get_dy(
-      i: BigNumberish,
-      j: BigNumberish,
-      dx: BigNumberish,
+      i: PromiseOrValue<BigNumberish>,
+      j: PromiseOrValue<BigNumberish>,
+      dx: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber] & { out: BigNumber }>;
 
     get_dx(
-      i: BigNumberish,
-      j: BigNumberish,
-      dy: BigNumberish,
+      i: PromiseOrValue<BigNumberish>,
+      j: PromiseOrValue<BigNumberish>,
+      dy: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber] & { out: BigNumber }>;
 
     get_dy_underlying(
-      i: BigNumberish,
-      j: BigNumberish,
-      dx: BigNumberish,
+      i: PromiseOrValue<BigNumberish>,
+      j: PromiseOrValue<BigNumberish>,
+      dx: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber] & { out: BigNumber }>;
 
     get_dx_underlying(
-      i: BigNumberish,
-      j: BigNumberish,
-      dy: BigNumberish,
+      i: PromiseOrValue<BigNumberish>,
+      j: PromiseOrValue<BigNumberish>,
+      dy: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber] & { out: BigNumber }>;
 
     exchange(
-      i: BigNumberish,
-      j: BigNumberish,
-      dx: BigNumberish,
-      min_dy: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      i: PromiseOrValue<BigNumberish>,
+      j: PromiseOrValue<BigNumberish>,
+      dx: PromiseOrValue<BigNumberish>,
+      min_dy: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     exchange_underlying(
-      i: BigNumberish,
-      j: BigNumberish,
-      dx: BigNumberish,
-      min_dy: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      i: PromiseOrValue<BigNumberish>,
+      j: PromiseOrValue<BigNumberish>,
+      dx: PromiseOrValue<BigNumberish>,
+      min_dy: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     remove_liquidity(
-      _amount: BigNumberish,
-      min_amounts: [BigNumberish, BigNumberish, BigNumberish, BigNumberish],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      min_amounts: [
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+      ],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     remove_liquidity_imbalance(
-      amounts: [BigNumberish, BigNumberish, BigNumberish, BigNumberish],
-      max_burn_amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amounts: [
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+      ],
+      max_burn_amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     commit_new_parameters(
-      amplification: BigNumberish,
-      new_fee: BigNumberish,
-      new_admin_fee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amplification: PromiseOrValue<BigNumberish>,
+      new_fee: PromiseOrValue<BigNumberish>,
+      new_admin_fee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    apply_new_parameters(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    apply_new_parameters(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    revert_new_parameters(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    revert_new_parameters(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     commit_transfer_ownership(
-      _owner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    apply_transfer_ownership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    apply_transfer_ownership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    revert_transfer_ownership(
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
+    revert_transfer_ownership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    withdraw_admin_fees(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    withdraw_admin_fees(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    kill_me(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    kill_me(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    unkill_me(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    unkill_me(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    coins(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string] & { out: string }>;
+    coins(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string] & { out: string }>;
 
-    underlying_coins(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string] & { out: string }>;
+    underlying_coins(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[string] & { out: string }>;
 
-    balances(arg0: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber] & { out: BigNumber }>;
+    balances(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber] & { out: BigNumber }>;
 
     A(overrides?: CallOverrides): Promise<[BigNumber] & { out: BigNumber }>;
 
@@ -472,84 +547,124 @@ export interface CurveV1PoolLegacy extends BaseContract {
   get_virtual_price(overrides?: CallOverrides): Promise<BigNumber>;
 
   calc_token_amount(
-    amounts: [BigNumberish, BigNumberish, BigNumberish, BigNumberish],
-    deposit: boolean,
+    amounts: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
+    deposit: PromiseOrValue<boolean>,
     overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
   add_liquidity(
-    amounts: [BigNumberish, BigNumberish, BigNumberish, BigNumberish],
-    min_mint_amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    amounts: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
+    min_mint_amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  get_dy(i: BigNumberish, j: BigNumberish, dx: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  get_dy(
+    i: PromiseOrValue<BigNumberish>,
+    j: PromiseOrValue<BigNumberish>,
+    dx: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
-  get_dx(i: BigNumberish, j: BigNumberish, dy: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  get_dx(
+    i: PromiseOrValue<BigNumberish>,
+    j: PromiseOrValue<BigNumberish>,
+    dy: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
-  get_dy_underlying(i: BigNumberish, j: BigNumberish, dx: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  get_dy_underlying(
+    i: PromiseOrValue<BigNumberish>,
+    j: PromiseOrValue<BigNumberish>,
+    dx: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
-  get_dx_underlying(i: BigNumberish, j: BigNumberish, dy: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  get_dx_underlying(
+    i: PromiseOrValue<BigNumberish>,
+    j: PromiseOrValue<BigNumberish>,
+    dy: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   exchange(
-    i: BigNumberish,
-    j: BigNumberish,
-    dx: BigNumberish,
-    min_dy: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    i: PromiseOrValue<BigNumberish>,
+    j: PromiseOrValue<BigNumberish>,
+    dx: PromiseOrValue<BigNumberish>,
+    min_dy: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   exchange_underlying(
-    i: BigNumberish,
-    j: BigNumberish,
-    dx: BigNumberish,
-    min_dy: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    i: PromiseOrValue<BigNumberish>,
+    j: PromiseOrValue<BigNumberish>,
+    dx: PromiseOrValue<BigNumberish>,
+    min_dy: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   remove_liquidity(
-    _amount: BigNumberish,
-    min_amounts: [BigNumberish, BigNumberish, BigNumberish, BigNumberish],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _amount: PromiseOrValue<BigNumberish>,
+    min_amounts: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   remove_liquidity_imbalance(
-    amounts: [BigNumberish, BigNumberish, BigNumberish, BigNumberish],
-    max_burn_amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    amounts: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
+    max_burn_amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   commit_new_parameters(
-    amplification: BigNumberish,
-    new_fee: BigNumberish,
-    new_admin_fee: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    amplification: PromiseOrValue<BigNumberish>,
+    new_fee: PromiseOrValue<BigNumberish>,
+    new_admin_fee: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  apply_new_parameters(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  apply_new_parameters(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  revert_new_parameters(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  revert_new_parameters(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   commit_transfer_ownership(
-    _owner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _owner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  apply_transfer_ownership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  apply_transfer_ownership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  revert_transfer_ownership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  revert_transfer_ownership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  withdraw_admin_fees(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  withdraw_admin_fees(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  kill_me(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  kill_me(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  unkill_me(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  unkill_me(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  coins(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  coins(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
-  underlying_coins(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  underlying_coins(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
-  balances(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  balances(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   A(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -575,67 +690,97 @@ export interface CurveV1PoolLegacy extends BaseContract {
     get_virtual_price(overrides?: CallOverrides): Promise<BigNumber>;
 
     calc_token_amount(
-      amounts: [BigNumberish, BigNumberish, BigNumberish, BigNumberish],
-      deposit: boolean,
+      amounts: [
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+      ],
+      deposit: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     add_liquidity(
-      amounts: [BigNumberish, BigNumberish, BigNumberish, BigNumberish],
-      min_mint_amount: BigNumberish,
+      amounts: [
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+      ],
+      min_mint_amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    get_dy(i: BigNumberish, j: BigNumberish, dx: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    get_dy(
+      i: PromiseOrValue<BigNumberish>,
+      j: PromiseOrValue<BigNumberish>,
+      dx: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    get_dx(i: BigNumberish, j: BigNumberish, dy: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    get_dx(
+      i: PromiseOrValue<BigNumberish>,
+      j: PromiseOrValue<BigNumberish>,
+      dy: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     get_dy_underlying(
-      i: BigNumberish,
-      j: BigNumberish,
-      dx: BigNumberish,
+      i: PromiseOrValue<BigNumberish>,
+      j: PromiseOrValue<BigNumberish>,
+      dx: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     get_dx_underlying(
-      i: BigNumberish,
-      j: BigNumberish,
-      dy: BigNumberish,
+      i: PromiseOrValue<BigNumberish>,
+      j: PromiseOrValue<BigNumberish>,
+      dy: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     exchange(
-      i: BigNumberish,
-      j: BigNumberish,
-      dx: BigNumberish,
-      min_dy: BigNumberish,
+      i: PromiseOrValue<BigNumberish>,
+      j: PromiseOrValue<BigNumberish>,
+      dx: PromiseOrValue<BigNumberish>,
+      min_dy: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     exchange_underlying(
-      i: BigNumberish,
-      j: BigNumberish,
-      dx: BigNumberish,
-      min_dy: BigNumberish,
+      i: PromiseOrValue<BigNumberish>,
+      j: PromiseOrValue<BigNumberish>,
+      dx: PromiseOrValue<BigNumberish>,
+      min_dy: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     remove_liquidity(
-      _amount: BigNumberish,
-      min_amounts: [BigNumberish, BigNumberish, BigNumberish, BigNumberish],
+      _amount: PromiseOrValue<BigNumberish>,
+      min_amounts: [
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+      ],
       overrides?: CallOverrides,
     ): Promise<void>;
 
     remove_liquidity_imbalance(
-      amounts: [BigNumberish, BigNumberish, BigNumberish, BigNumberish],
-      max_burn_amount: BigNumberish,
+      amounts: [
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+      ],
+      max_burn_amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     commit_new_parameters(
-      amplification: BigNumberish,
-      new_fee: BigNumberish,
-      new_admin_fee: BigNumberish,
+      amplification: PromiseOrValue<BigNumberish>,
+      new_fee: PromiseOrValue<BigNumberish>,
+      new_admin_fee: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -643,7 +788,7 @@ export interface CurveV1PoolLegacy extends BaseContract {
 
     revert_new_parameters(overrides?: CallOverrides): Promise<void>;
 
-    commit_transfer_ownership(_owner: string, overrides?: CallOverrides): Promise<void>;
+    commit_transfer_ownership(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     apply_transfer_ownership(overrides?: CallOverrides): Promise<void>;
 
@@ -655,11 +800,11 @@ export interface CurveV1PoolLegacy extends BaseContract {
 
     unkill_me(overrides?: CallOverrides): Promise<void>;
 
-    coins(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    coins(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
-    underlying_coins(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    underlying_coins(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
-    balances(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    balances(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     A(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -684,14 +829,14 @@ export interface CurveV1PoolLegacy extends BaseContract {
 
   filters: {
     'TokenExchange(address,int128,uint256,int128,uint256)'(
-      buyer?: string | null,
+      buyer?: PromiseOrValue<string> | null,
       sold_id?: null,
       tokens_sold?: null,
       bought_id?: null,
       tokens_bought?: null,
     ): TokenExchangeEventFilter;
     TokenExchange(
-      buyer?: string | null,
+      buyer?: PromiseOrValue<string> | null,
       sold_id?: null,
       tokens_sold?: null,
       bought_id?: null,
@@ -699,14 +844,14 @@ export interface CurveV1PoolLegacy extends BaseContract {
     ): TokenExchangeEventFilter;
 
     'TokenExchangeUnderlying(address,int128,uint256,int128,uint256)'(
-      buyer?: string | null,
+      buyer?: PromiseOrValue<string> | null,
       sold_id?: null,
       tokens_sold?: null,
       bought_id?: null,
       tokens_bought?: null,
     ): TokenExchangeUnderlyingEventFilter;
     TokenExchangeUnderlying(
-      buyer?: string | null,
+      buyer?: PromiseOrValue<string> | null,
       sold_id?: null,
       tokens_sold?: null,
       bought_id?: null,
@@ -714,14 +859,14 @@ export interface CurveV1PoolLegacy extends BaseContract {
     ): TokenExchangeUnderlyingEventFilter;
 
     'AddLiquidity(address,uint256[4],uint256[4],uint256,uint256)'(
-      provider?: string | null,
+      provider?: PromiseOrValue<string> | null,
       token_amounts?: null,
       fees?: null,
       invariant?: null,
       token_supply?: null,
     ): AddLiquidityEventFilter;
     AddLiquidity(
-      provider?: string | null,
+      provider?: PromiseOrValue<string> | null,
       token_amounts?: null,
       fees?: null,
       invariant?: null,
@@ -729,47 +874,53 @@ export interface CurveV1PoolLegacy extends BaseContract {
     ): AddLiquidityEventFilter;
 
     'RemoveLiquidity(address,uint256[4],uint256[4],uint256)'(
-      provider?: string | null,
+      provider?: PromiseOrValue<string> | null,
       token_amounts?: null,
       fees?: null,
       token_supply?: null,
     ): RemoveLiquidityEventFilter;
     RemoveLiquidity(
-      provider?: string | null,
+      provider?: PromiseOrValue<string> | null,
       token_amounts?: null,
       fees?: null,
       token_supply?: null,
     ): RemoveLiquidityEventFilter;
 
     'RemoveLiquidityImbalance(address,uint256[4],uint256[4],uint256,uint256)'(
-      provider?: string | null,
+      provider?: PromiseOrValue<string> | null,
       token_amounts?: null,
       fees?: null,
       invariant?: null,
       token_supply?: null,
     ): RemoveLiquidityImbalanceEventFilter;
     RemoveLiquidityImbalance(
-      provider?: string | null,
+      provider?: PromiseOrValue<string> | null,
       token_amounts?: null,
       fees?: null,
       invariant?: null,
       token_supply?: null,
     ): RemoveLiquidityImbalanceEventFilter;
 
-    'CommitNewAdmin(uint256,address)'(deadline?: BigNumberish | null, admin?: string | null): CommitNewAdminEventFilter;
-    CommitNewAdmin(deadline?: BigNumberish | null, admin?: string | null): CommitNewAdminEventFilter;
+    'CommitNewAdmin(uint256,address)'(
+      deadline?: PromiseOrValue<BigNumberish> | null,
+      admin?: PromiseOrValue<string> | null,
+    ): CommitNewAdminEventFilter;
+    CommitNewAdmin(
+      deadline?: PromiseOrValue<BigNumberish> | null,
+      admin?: PromiseOrValue<string> | null,
+    ): CommitNewAdminEventFilter;
 
-    'NewAdmin(address)'(admin?: string | null): NewAdminEventFilter;
-    NewAdmin(admin?: string | null): NewAdminEventFilter;
+    'NewAdmin(address)'(admin?: PromiseOrValue<string> | null): NewAdminEventFilter;
+    NewAdmin(admin?: PromiseOrValue<string> | null): NewAdminEventFilter;
 
     'CommitNewParameters(uint256,uint256,uint256,uint256)'(
-      deadline?: BigNumberish | null,
+      deadline?: PromiseOrValue<BigNumberish> | null,
       A?: null,
       fee?: null,
       admin_fee?: null,
     ): CommitNewParametersEventFilter;
     CommitNewParameters(
-      deadline?: BigNumberish | null,
+      deadline?: PromiseOrValue<BigNumberish> | null,
       A?: null,
       fee?: null,
       admin_fee?: null,
@@ -783,94 +934,124 @@ export interface CurveV1PoolLegacy extends BaseContract {
     get_virtual_price(overrides?: CallOverrides): Promise<BigNumber>;
 
     calc_token_amount(
-      amounts: [BigNumberish, BigNumberish, BigNumberish, BigNumberish],
-      deposit: boolean,
+      amounts: [
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+      ],
+      deposit: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     add_liquidity(
-      amounts: [BigNumberish, BigNumberish, BigNumberish, BigNumberish],
-      min_mint_amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amounts: [
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+      ],
+      min_mint_amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    get_dy(i: BigNumberish, j: BigNumberish, dx: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    get_dy(
+      i: PromiseOrValue<BigNumberish>,
+      j: PromiseOrValue<BigNumberish>,
+      dx: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    get_dx(i: BigNumberish, j: BigNumberish, dy: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    get_dx(
+      i: PromiseOrValue<BigNumberish>,
+      j: PromiseOrValue<BigNumberish>,
+      dy: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     get_dy_underlying(
-      i: BigNumberish,
-      j: BigNumberish,
-      dx: BigNumberish,
+      i: PromiseOrValue<BigNumberish>,
+      j: PromiseOrValue<BigNumberish>,
+      dx: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     get_dx_underlying(
-      i: BigNumberish,
-      j: BigNumberish,
-      dy: BigNumberish,
+      i: PromiseOrValue<BigNumberish>,
+      j: PromiseOrValue<BigNumberish>,
+      dy: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     exchange(
-      i: BigNumberish,
-      j: BigNumberish,
-      dx: BigNumberish,
-      min_dy: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      i: PromiseOrValue<BigNumberish>,
+      j: PromiseOrValue<BigNumberish>,
+      dx: PromiseOrValue<BigNumberish>,
+      min_dy: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     exchange_underlying(
-      i: BigNumberish,
-      j: BigNumberish,
-      dx: BigNumberish,
-      min_dy: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      i: PromiseOrValue<BigNumberish>,
+      j: PromiseOrValue<BigNumberish>,
+      dx: PromiseOrValue<BigNumberish>,
+      min_dy: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     remove_liquidity(
-      _amount: BigNumberish,
-      min_amounts: [BigNumberish, BigNumberish, BigNumberish, BigNumberish],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      min_amounts: [
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+      ],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     remove_liquidity_imbalance(
-      amounts: [BigNumberish, BigNumberish, BigNumberish, BigNumberish],
-      max_burn_amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amounts: [
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+      ],
+      max_burn_amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     commit_new_parameters(
-      amplification: BigNumberish,
-      new_fee: BigNumberish,
-      new_admin_fee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amplification: PromiseOrValue<BigNumberish>,
+      new_fee: PromiseOrValue<BigNumberish>,
+      new_admin_fee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    apply_new_parameters(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    apply_new_parameters(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    revert_new_parameters(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    revert_new_parameters(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     commit_transfer_ownership(
-      _owner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    apply_transfer_ownership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    apply_transfer_ownership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    revert_transfer_ownership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    revert_transfer_ownership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    withdraw_admin_fees(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    withdraw_admin_fees(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    kill_me(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    kill_me(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    unkill_me(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    unkill_me(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    coins(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    coins(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    underlying_coins(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    underlying_coins(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    balances(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    balances(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     A(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -897,108 +1078,124 @@ export interface CurveV1PoolLegacy extends BaseContract {
     get_virtual_price(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     calc_token_amount(
-      amounts: [BigNumberish, BigNumberish, BigNumberish, BigNumberish],
-      deposit: boolean,
+      amounts: [
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+      ],
+      deposit: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     add_liquidity(
-      amounts: [BigNumberish, BigNumberish, BigNumberish, BigNumberish],
-      min_mint_amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amounts: [
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+      ],
+      min_mint_amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     get_dy(
-      i: BigNumberish,
-      j: BigNumberish,
-      dx: BigNumberish,
+      i: PromiseOrValue<BigNumberish>,
+      j: PromiseOrValue<BigNumberish>,
+      dx: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     get_dx(
-      i: BigNumberish,
-      j: BigNumberish,
-      dy: BigNumberish,
+      i: PromiseOrValue<BigNumberish>,
+      j: PromiseOrValue<BigNumberish>,
+      dy: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     get_dy_underlying(
-      i: BigNumberish,
-      j: BigNumberish,
-      dx: BigNumberish,
+      i: PromiseOrValue<BigNumberish>,
+      j: PromiseOrValue<BigNumberish>,
+      dx: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     get_dx_underlying(
-      i: BigNumberish,
-      j: BigNumberish,
-      dy: BigNumberish,
+      i: PromiseOrValue<BigNumberish>,
+      j: PromiseOrValue<BigNumberish>,
+      dy: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     exchange(
-      i: BigNumberish,
-      j: BigNumberish,
-      dx: BigNumberish,
-      min_dy: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      i: PromiseOrValue<BigNumberish>,
+      j: PromiseOrValue<BigNumberish>,
+      dx: PromiseOrValue<BigNumberish>,
+      min_dy: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     exchange_underlying(
-      i: BigNumberish,
-      j: BigNumberish,
-      dx: BigNumberish,
-      min_dy: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      i: PromiseOrValue<BigNumberish>,
+      j: PromiseOrValue<BigNumberish>,
+      dx: PromiseOrValue<BigNumberish>,
+      min_dy: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     remove_liquidity(
-      _amount: BigNumberish,
-      min_amounts: [BigNumberish, BigNumberish, BigNumberish, BigNumberish],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      min_amounts: [
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+      ],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     remove_liquidity_imbalance(
-      amounts: [BigNumberish, BigNumberish, BigNumberish, BigNumberish],
-      max_burn_amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amounts: [
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+        PromiseOrValue<BigNumberish>,
+      ],
+      max_burn_amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     commit_new_parameters(
-      amplification: BigNumberish,
-      new_fee: BigNumberish,
-      new_admin_fee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amplification: PromiseOrValue<BigNumberish>,
+      new_fee: PromiseOrValue<BigNumberish>,
+      new_admin_fee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    apply_new_parameters(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    apply_new_parameters(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    revert_new_parameters(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    revert_new_parameters(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     commit_transfer_ownership(
-      _owner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    apply_transfer_ownership(
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<PopulatedTransaction>;
+    apply_transfer_ownership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    revert_transfer_ownership(
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<PopulatedTransaction>;
+    revert_transfer_ownership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    withdraw_admin_fees(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    withdraw_admin_fees(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    kill_me(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    kill_me(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    unkill_me(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    unkill_me(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    coins(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    coins(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    underlying_coins(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    underlying_coins(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    balances(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    balances(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     A(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
