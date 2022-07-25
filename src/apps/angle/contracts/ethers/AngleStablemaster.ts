@@ -15,17 +15,17 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export type SLPDataStruct = {
-  lastBlockUpdated: BigNumberish;
-  lockedInterests: BigNumberish;
-  maxInterestsDistributed: BigNumberish;
-  feesAside: BigNumberish;
-  slippageFee: BigNumberish;
-  feesForSLPs: BigNumberish;
-  slippage: BigNumberish;
-  interestsForSLPs: BigNumberish;
+  lastBlockUpdated: PromiseOrValue<BigNumberish>;
+  lockedInterests: PromiseOrValue<BigNumberish>;
+  maxInterestsDistributed: PromiseOrValue<BigNumberish>;
+  feesAside: PromiseOrValue<BigNumberish>;
+  slippageFee: PromiseOrValue<BigNumberish>;
+  feesForSLPs: PromiseOrValue<BigNumberish>;
+  slippage: PromiseOrValue<BigNumberish>;
+  interestsForSLPs: PromiseOrValue<BigNumberish>;
 };
 
 export type SLPDataStructOutput = [
@@ -49,14 +49,14 @@ export type SLPDataStructOutput = [
 };
 
 export type MintBurnDataStruct = {
-  xFeeMint: BigNumberish[];
-  yFeeMint: BigNumberish[];
-  xFeeBurn: BigNumberish[];
-  yFeeBurn: BigNumberish[];
-  targetHAHedge: BigNumberish;
-  bonusMalusMint: BigNumberish;
-  bonusMalusBurn: BigNumberish;
-  capOnStableMinted: BigNumberish;
+  xFeeMint: PromiseOrValue<BigNumberish>[];
+  yFeeMint: PromiseOrValue<BigNumberish>[];
+  xFeeBurn: PromiseOrValue<BigNumberish>[];
+  yFeeBurn: PromiseOrValue<BigNumberish>[];
+  targetHAHedge: PromiseOrValue<BigNumberish>;
+  bonusMalusMint: PromiseOrValue<BigNumberish>;
+  bonusMalusBurn: PromiseOrValue<BigNumberish>;
+  capOnStableMinted: PromiseOrValue<BigNumberish>;
 };
 
 export type MintBurnDataStructOutput = [
@@ -185,52 +185,124 @@ export interface AngleStablemasterInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'GUARDIAN_ROLE', values?: undefined): string;
   encodeFunctionData(functionFragment: 'SLP', values?: undefined): string;
   encodeFunctionData(functionFragment: 'STABLE', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'accumulateInterest', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'addGovernor', values: [string]): string;
+  encodeFunctionData(functionFragment: 'accumulateInterest', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'addGovernor', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'agToken', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'burn', values: [BigNumberish, string, string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'collateralMap', values: [string]): string;
-  encodeFunctionData(functionFragment: 'convertToSLP', values: [BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'deploy', values: [string[], string, string]): string;
-  encodeFunctionData(functionFragment: 'deployCollateral', values: [string, string, string, string, string]): string;
-  encodeFunctionData(functionFragment: 'deposit', values: [BigNumberish, string, string]): string;
+  encodeFunctionData(
+    functionFragment: 'burn',
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+    ],
+  ): string;
+  encodeFunctionData(functionFragment: 'collateralMap', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'convertToSLP',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'deploy',
+    values: [PromiseOrValue<string>[], PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'deployCollateral',
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+    ],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'deposit',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'getCollateralRatio', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getRoleAdmin', values: [BytesLike]): string;
+  encodeFunctionData(functionFragment: 'getRoleAdmin', values: [PromiseOrValue<BytesLike>]): string;
   encodeFunctionData(functionFragment: 'getStocksUsers', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'grantRole', values: [BytesLike, string]): string;
-  encodeFunctionData(functionFragment: 'hasRole', values: [BytesLike, string]): string;
-  encodeFunctionData(functionFragment: 'initialize', values: [string]): string;
-  encodeFunctionData(functionFragment: 'mint', values: [BigNumberish, string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'pause', values: [BytesLike, string]): string;
-  encodeFunctionData(functionFragment: 'paused', values: [BytesLike]): string;
-  encodeFunctionData(functionFragment: 'rebalanceStocksUsers', values: [BigNumberish, string, string]): string;
-  encodeFunctionData(functionFragment: 'removeGovernor', values: [string]): string;
-  encodeFunctionData(functionFragment: 'renounceRole', values: [BytesLike, string]): string;
-  encodeFunctionData(functionFragment: 'revokeCollateral', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'revokeGuardian', values: [string]): string;
-  encodeFunctionData(functionFragment: 'revokeRole', values: [BytesLike, string]): string;
+  encodeFunctionData(
+    functionFragment: 'grantRole',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'hasRole', values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'initialize', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'mint',
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+    ],
+  ): string;
+  encodeFunctionData(functionFragment: 'pause', values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'paused', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(
+    functionFragment: 'rebalanceStocksUsers',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'removeGovernor', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'renounceRole',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'revokeCollateral',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'revokeGuardian', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'revokeRole',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(
     functionFragment: 'setCapOnStableAndMaxInterests',
-    values: [BigNumberish, BigNumberish, string],
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
   ): string;
-  encodeFunctionData(functionFragment: 'setCore', values: [string]): string;
+  encodeFunctionData(functionFragment: 'setCore', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
     functionFragment: 'setFeeKeeper',
-    values: [BigNumberish, BigNumberish, BigNumberish, BigNumberish],
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'setFeeManager', values: [string, string, string]): string;
-  encodeFunctionData(functionFragment: 'setGuardian', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'setIncentivesForSLPs', values: [BigNumberish, BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'setOracle', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'setTargetHAHedge', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'setFeeManager',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'setGuardian', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'setIncentivesForSLPs',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'setOracle', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setTargetHAHedge', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(
     functionFragment: 'setUserFees',
-    values: [string, BigNumberish[], BigNumberish[], BigNumberish],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>[],
+      PromiseOrValue<BigNumberish>[],
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'signalLoss', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'unpause', values: [BytesLike, string]): string;
-  encodeFunctionData(functionFragment: 'updateStocksUsers', values: [BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'withdraw', values: [BigNumberish, string, string, string]): string;
+  encodeFunctionData(functionFragment: 'signalLoss', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'unpause', values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'updateStocksUsers',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'withdraw',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
 
   decodeFunctionResult(functionFragment: 'BASE_PARAMS', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'BASE_TOKENS', data: BytesLike): Result;
@@ -494,28 +566,28 @@ export interface AngleStablemaster extends BaseContract {
     STABLE(overrides?: CallOverrides): Promise<[string]>;
 
     accumulateInterest(
-      gain: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      gain: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     addGovernor(
-      governor: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      governor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     agToken(overrides?: CallOverrides): Promise<[string]>;
 
     burn(
-      amount: BigNumberish,
-      burner: string,
-      dest: string,
-      poolManager: string,
-      minCollatAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      burner: PromiseOrValue<string>,
+      dest: PromiseOrValue<string>,
+      poolManager: PromiseOrValue<string>,
+      minCollatAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     collateralMap(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [
@@ -542,183 +614,190 @@ export interface AngleStablemaster extends BaseContract {
     >;
 
     convertToSLP(
-      amount: BigNumberish,
-      user: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      user: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     deploy(
-      governorList: string[],
-      guardian: string,
-      _agToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      governorList: PromiseOrValue<string>[],
+      guardian: PromiseOrValue<string>,
+      _agToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     deployCollateral(
-      poolManager: string,
-      perpetualManager: string,
-      feeManager: string,
-      oracle: string,
-      sanToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      poolManager: PromiseOrValue<string>,
+      perpetualManager: PromiseOrValue<string>,
+      feeManager: PromiseOrValue<string>,
+      oracle: PromiseOrValue<string>,
+      sanToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     deposit(
-      amount: BigNumberish,
-      user: string,
-      poolManager: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      user: PromiseOrValue<string>,
+      poolManager: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     getCollateralRatio(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<[string]>;
+    getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[string]>;
 
     getStocksUsers(overrides?: CallOverrides): Promise<[BigNumber] & { _stocksUsers: BigNumber }>;
 
     grantRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    hasRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<[boolean]>;
+    hasRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[boolean]>;
 
     initialize(
-      core_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      core_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     mint(
-      amount: BigNumberish,
-      user: string,
-      poolManager: string,
-      minStableAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      user: PromiseOrValue<string>,
+      poolManager: PromiseOrValue<string>,
+      minStableAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     pause(
-      agent: BytesLike,
-      poolManager: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      agent: PromiseOrValue<BytesLike>,
+      poolManager: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    paused(arg0: BytesLike, overrides?: CallOverrides): Promise<[boolean]>;
+    paused(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[boolean]>;
 
     rebalanceStocksUsers(
-      amount: BigNumberish,
-      poolManagerUp: string,
-      poolManagerDown: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      poolManagerUp: PromiseOrValue<string>,
+      poolManagerDown: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     removeGovernor(
-      governor: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      governor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     renounceRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     revokeCollateral(
-      poolManager: string,
-      settlementContract: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      poolManager: PromiseOrValue<string>,
+      settlementContract: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     revokeGuardian(
-      oldGuardian: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      oldGuardian: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     revokeRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setCapOnStableAndMaxInterests(
-      _capOnStableMinted: BigNumberish,
-      _maxInterestsDistributed: BigNumberish,
-      poolManager: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _capOnStableMinted: PromiseOrValue<BigNumberish>,
+      _maxInterestsDistributed: PromiseOrValue<BigNumberish>,
+      poolManager: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    setCore(newCore: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    setCore(
+      newCore: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     setFeeKeeper(
-      _bonusMalusMint: BigNumberish,
-      _bonusMalusBurn: BigNumberish,
-      _slippage: BigNumberish,
-      _slippageFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _bonusMalusMint: PromiseOrValue<BigNumberish>,
+      _bonusMalusBurn: PromiseOrValue<BigNumberish>,
+      _slippage: PromiseOrValue<BigNumberish>,
+      _slippageFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setFeeManager(
-      newFeeManager: string,
-      oldFeeManager: string,
-      poolManager: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newFeeManager: PromiseOrValue<string>,
+      oldFeeManager: PromiseOrValue<string>,
+      poolManager: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setGuardian(
-      newGuardian: string,
-      oldGuardian: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newGuardian: PromiseOrValue<string>,
+      oldGuardian: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setIncentivesForSLPs(
-      _feesForSLPs: BigNumberish,
-      _interestsForSLPs: BigNumberish,
-      poolManager: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _feesForSLPs: PromiseOrValue<BigNumberish>,
+      _interestsForSLPs: PromiseOrValue<BigNumberish>,
+      poolManager: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setOracle(
-      _oracle: string,
-      poolManager: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _oracle: PromiseOrValue<string>,
+      poolManager: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setTargetHAHedge(
-      _targetHAHedge: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _targetHAHedge: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setUserFees(
-      poolManager: string,
-      _xFee: BigNumberish[],
-      _yFee: BigNumberish[],
-      _mint: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      poolManager: PromiseOrValue<string>,
+      _xFee: PromiseOrValue<BigNumberish>[],
+      _yFee: PromiseOrValue<BigNumberish>[],
+      _mint: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     signalLoss(
-      loss: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      loss: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     unpause(
-      agent: BytesLike,
-      poolManager: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      agent: PromiseOrValue<BytesLike>,
+      poolManager: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateStocksUsers(
-      amount: BigNumberish,
-      poolManager: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      poolManager: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     withdraw(
-      amount: BigNumberish,
-      burner: string,
-      dest: string,
-      poolManager: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      burner: PromiseOrValue<string>,
+      dest: PromiseOrValue<string>,
+      poolManager: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
@@ -739,28 +818,28 @@ export interface AngleStablemaster extends BaseContract {
   STABLE(overrides?: CallOverrides): Promise<string>;
 
   accumulateInterest(
-    gain: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    gain: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   addGovernor(
-    governor: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    governor: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   agToken(overrides?: CallOverrides): Promise<string>;
 
   burn(
-    amount: BigNumberish,
-    burner: string,
-    dest: string,
-    poolManager: string,
-    minCollatAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    amount: PromiseOrValue<BigNumberish>,
+    burner: PromiseOrValue<string>,
+    dest: PromiseOrValue<string>,
+    poolManager: PromiseOrValue<string>,
+    minCollatAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   collateralMap(
-    arg0: string,
+    arg0: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<
     [string, string, string, string, BigNumber, BigNumber, BigNumber, SLPDataStructOutput, MintBurnDataStructOutput] & {
@@ -777,180 +856,190 @@ export interface AngleStablemaster extends BaseContract {
   >;
 
   convertToSLP(
-    amount: BigNumberish,
-    user: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    amount: PromiseOrValue<BigNumberish>,
+    user: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   deploy(
-    governorList: string[],
-    guardian: string,
-    _agToken: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    governorList: PromiseOrValue<string>[],
+    guardian: PromiseOrValue<string>,
+    _agToken: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   deployCollateral(
-    poolManager: string,
-    perpetualManager: string,
-    feeManager: string,
-    oracle: string,
-    sanToken: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    poolManager: PromiseOrValue<string>,
+    perpetualManager: PromiseOrValue<string>,
+    feeManager: PromiseOrValue<string>,
+    oracle: PromiseOrValue<string>,
+    sanToken: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   deposit(
-    amount: BigNumberish,
-    user: string,
-    poolManager: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    amount: PromiseOrValue<BigNumberish>,
+    user: PromiseOrValue<string>,
+    poolManager: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   getCollateralRatio(overrides?: CallOverrides): Promise<BigNumber>;
 
-  getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<string>;
+  getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
   getStocksUsers(overrides?: CallOverrides): Promise<BigNumber>;
 
   grantRole(
-    role: BytesLike,
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    role: PromiseOrValue<BytesLike>,
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  hasRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<boolean>;
+  hasRole(
+    role: PromiseOrValue<BytesLike>,
+    account: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<boolean>;
 
-  initialize(core_: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  initialize(
+    core_: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   mint(
-    amount: BigNumberish,
-    user: string,
-    poolManager: string,
-    minStableAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    amount: PromiseOrValue<BigNumberish>,
+    user: PromiseOrValue<string>,
+    poolManager: PromiseOrValue<string>,
+    minStableAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   pause(
-    agent: BytesLike,
-    poolManager: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    agent: PromiseOrValue<BytesLike>,
+    poolManager: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  paused(arg0: BytesLike, overrides?: CallOverrides): Promise<boolean>;
+  paused(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<boolean>;
 
   rebalanceStocksUsers(
-    amount: BigNumberish,
-    poolManagerUp: string,
-    poolManagerDown: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    amount: PromiseOrValue<BigNumberish>,
+    poolManagerUp: PromiseOrValue<string>,
+    poolManagerDown: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   removeGovernor(
-    governor: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    governor: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   renounceRole(
-    role: BytesLike,
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    role: PromiseOrValue<BytesLike>,
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   revokeCollateral(
-    poolManager: string,
-    settlementContract: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    poolManager: PromiseOrValue<string>,
+    settlementContract: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   revokeGuardian(
-    oldGuardian: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    oldGuardian: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   revokeRole(
-    role: BytesLike,
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    role: PromiseOrValue<BytesLike>,
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setCapOnStableAndMaxInterests(
-    _capOnStableMinted: BigNumberish,
-    _maxInterestsDistributed: BigNumberish,
-    poolManager: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _capOnStableMinted: PromiseOrValue<BigNumberish>,
+    _maxInterestsDistributed: PromiseOrValue<BigNumberish>,
+    poolManager: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  setCore(newCore: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  setCore(
+    newCore: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   setFeeKeeper(
-    _bonusMalusMint: BigNumberish,
-    _bonusMalusBurn: BigNumberish,
-    _slippage: BigNumberish,
-    _slippageFee: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _bonusMalusMint: PromiseOrValue<BigNumberish>,
+    _bonusMalusBurn: PromiseOrValue<BigNumberish>,
+    _slippage: PromiseOrValue<BigNumberish>,
+    _slippageFee: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setFeeManager(
-    newFeeManager: string,
-    oldFeeManager: string,
-    poolManager: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newFeeManager: PromiseOrValue<string>,
+    oldFeeManager: PromiseOrValue<string>,
+    poolManager: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setGuardian(
-    newGuardian: string,
-    oldGuardian: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newGuardian: PromiseOrValue<string>,
+    oldGuardian: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setIncentivesForSLPs(
-    _feesForSLPs: BigNumberish,
-    _interestsForSLPs: BigNumberish,
-    poolManager: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _feesForSLPs: PromiseOrValue<BigNumberish>,
+    _interestsForSLPs: PromiseOrValue<BigNumberish>,
+    poolManager: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setOracle(
-    _oracle: string,
-    poolManager: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _oracle: PromiseOrValue<string>,
+    poolManager: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setTargetHAHedge(
-    _targetHAHedge: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _targetHAHedge: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setUserFees(
-    poolManager: string,
-    _xFee: BigNumberish[],
-    _yFee: BigNumberish[],
-    _mint: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    poolManager: PromiseOrValue<string>,
+    _xFee: PromiseOrValue<BigNumberish>[],
+    _yFee: PromiseOrValue<BigNumberish>[],
+    _mint: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   signalLoss(
-    loss: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    loss: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   unpause(
-    agent: BytesLike,
-    poolManager: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    agent: PromiseOrValue<BytesLike>,
+    poolManager: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateStocksUsers(
-    amount: BigNumberish,
-    poolManager: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    amount: PromiseOrValue<BigNumberish>,
+    poolManager: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   withdraw(
-    amount: BigNumberish,
-    burner: string,
-    dest: string,
-    poolManager: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    amount: PromiseOrValue<BigNumberish>,
+    burner: PromiseOrValue<string>,
+    dest: PromiseOrValue<string>,
+    poolManager: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
@@ -970,23 +1059,23 @@ export interface AngleStablemaster extends BaseContract {
 
     STABLE(overrides?: CallOverrides): Promise<string>;
 
-    accumulateInterest(gain: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    accumulateInterest(gain: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    addGovernor(governor: string, overrides?: CallOverrides): Promise<void>;
+    addGovernor(governor: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     agToken(overrides?: CallOverrides): Promise<string>;
 
     burn(
-      amount: BigNumberish,
-      burner: string,
-      dest: string,
-      poolManager: string,
-      minCollatAmount: BigNumberish,
+      amount: PromiseOrValue<BigNumberish>,
+      burner: PromiseOrValue<string>,
+      dest: PromiseOrValue<string>,
+      poolManager: PromiseOrValue<string>,
+      minCollatAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     collateralMap(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [
@@ -1012,232 +1101,318 @@ export interface AngleStablemaster extends BaseContract {
       }
     >;
 
-    convertToSLP(amount: BigNumberish, user: string, overrides?: CallOverrides): Promise<void>;
-
-    deploy(governorList: string[], guardian: string, _agToken: string, overrides?: CallOverrides): Promise<void>;
-
-    deployCollateral(
-      poolManager: string,
-      perpetualManager: string,
-      feeManager: string,
-      oracle: string,
-      sanToken: string,
+    convertToSLP(
+      amount: PromiseOrValue<BigNumberish>,
+      user: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    deposit(amount: BigNumberish, user: string, poolManager: string, overrides?: CallOverrides): Promise<void>;
+    deploy(
+      governorList: PromiseOrValue<string>[],
+      guardian: PromiseOrValue<string>,
+      _agToken: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    deployCollateral(
+      poolManager: PromiseOrValue<string>,
+      perpetualManager: PromiseOrValue<string>,
+      feeManager: PromiseOrValue<string>,
+      oracle: PromiseOrValue<string>,
+      sanToken: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    deposit(
+      amount: PromiseOrValue<BigNumberish>,
+      user: PromiseOrValue<string>,
+      poolManager: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     getCollateralRatio(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<string>;
+    getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
     getStocksUsers(overrides?: CallOverrides): Promise<BigNumber>;
 
-    grantRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<void>;
+    grantRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    hasRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<boolean>;
+    hasRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    initialize(core_: string, overrides?: CallOverrides): Promise<void>;
+    initialize(core_: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     mint(
-      amount: BigNumberish,
-      user: string,
-      poolManager: string,
-      minStableAmount: BigNumberish,
+      amount: PromiseOrValue<BigNumberish>,
+      user: PromiseOrValue<string>,
+      poolManager: PromiseOrValue<string>,
+      minStableAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    pause(agent: BytesLike, poolManager: string, overrides?: CallOverrides): Promise<void>;
+    pause(
+      agent: PromiseOrValue<BytesLike>,
+      poolManager: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    paused(arg0: BytesLike, overrides?: CallOverrides): Promise<boolean>;
+    paused(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<boolean>;
 
     rebalanceStocksUsers(
-      amount: BigNumberish,
-      poolManagerUp: string,
-      poolManagerDown: string,
+      amount: PromiseOrValue<BigNumberish>,
+      poolManagerUp: PromiseOrValue<string>,
+      poolManagerDown: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    removeGovernor(governor: string, overrides?: CallOverrides): Promise<void>;
+    removeGovernor(governor: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    renounceRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<void>;
+    renounceRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    revokeCollateral(poolManager: string, settlementContract: string, overrides?: CallOverrides): Promise<void>;
+    revokeCollateral(
+      poolManager: PromiseOrValue<string>,
+      settlementContract: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    revokeGuardian(oldGuardian: string, overrides?: CallOverrides): Promise<void>;
+    revokeGuardian(oldGuardian: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    revokeRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<void>;
+    revokeRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     setCapOnStableAndMaxInterests(
-      _capOnStableMinted: BigNumberish,
-      _maxInterestsDistributed: BigNumberish,
-      poolManager: string,
+      _capOnStableMinted: PromiseOrValue<BigNumberish>,
+      _maxInterestsDistributed: PromiseOrValue<BigNumberish>,
+      poolManager: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    setCore(newCore: string, overrides?: CallOverrides): Promise<void>;
+    setCore(newCore: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     setFeeKeeper(
-      _bonusMalusMint: BigNumberish,
-      _bonusMalusBurn: BigNumberish,
-      _slippage: BigNumberish,
-      _slippageFee: BigNumberish,
+      _bonusMalusMint: PromiseOrValue<BigNumberish>,
+      _bonusMalusBurn: PromiseOrValue<BigNumberish>,
+      _slippage: PromiseOrValue<BigNumberish>,
+      _slippageFee: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     setFeeManager(
-      newFeeManager: string,
-      oldFeeManager: string,
-      poolManager: string,
+      newFeeManager: PromiseOrValue<string>,
+      oldFeeManager: PromiseOrValue<string>,
+      poolManager: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    setGuardian(newGuardian: string, oldGuardian: string, overrides?: CallOverrides): Promise<void>;
+    setGuardian(
+      newGuardian: PromiseOrValue<string>,
+      oldGuardian: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     setIncentivesForSLPs(
-      _feesForSLPs: BigNumberish,
-      _interestsForSLPs: BigNumberish,
-      poolManager: string,
+      _feesForSLPs: PromiseOrValue<BigNumberish>,
+      _interestsForSLPs: PromiseOrValue<BigNumberish>,
+      poolManager: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    setOracle(_oracle: string, poolManager: string, overrides?: CallOverrides): Promise<void>;
+    setOracle(
+      _oracle: PromiseOrValue<string>,
+      poolManager: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setTargetHAHedge(_targetHAHedge: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setTargetHAHedge(_targetHAHedge: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     setUserFees(
-      poolManager: string,
-      _xFee: BigNumberish[],
-      _yFee: BigNumberish[],
-      _mint: BigNumberish,
+      poolManager: PromiseOrValue<string>,
+      _xFee: PromiseOrValue<BigNumberish>[],
+      _yFee: PromiseOrValue<BigNumberish>[],
+      _mint: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    signalLoss(loss: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    signalLoss(loss: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    unpause(agent: BytesLike, poolManager: string, overrides?: CallOverrides): Promise<void>;
+    unpause(
+      agent: PromiseOrValue<BytesLike>,
+      poolManager: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    updateStocksUsers(amount: BigNumberish, poolManager: string, overrides?: CallOverrides): Promise<void>;
+    updateStocksUsers(
+      amount: PromiseOrValue<BigNumberish>,
+      poolManager: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     withdraw(
-      amount: BigNumberish,
-      burner: string,
-      dest: string,
-      poolManager: string,
+      amount: PromiseOrValue<BigNumberish>,
+      burner: PromiseOrValue<string>,
+      dest: PromiseOrValue<string>,
+      poolManager: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
   };
 
   filters: {
     'BurntStablecoins(address,uint256,uint256)'(
-      _poolManager?: string | null,
+      _poolManager?: PromiseOrValue<string> | null,
       amount?: null,
       redeemInC?: null,
     ): BurntStablecoinsEventFilter;
-    BurntStablecoins(_poolManager?: string | null, amount?: null, redeemInC?: null): BurntStablecoinsEventFilter;
+    BurntStablecoins(
+      _poolManager?: PromiseOrValue<string> | null,
+      amount?: null,
+      redeemInC?: null,
+    ): BurntStablecoinsEventFilter;
 
     'CapOnStableAndMaxInterestsUpdated(address,uint256,uint256)'(
-      _poolManager?: string | null,
+      _poolManager?: PromiseOrValue<string> | null,
       _capOnStableMinted?: null,
       _maxInterestsDistributed?: null,
     ): CapOnStableAndMaxInterestsUpdatedEventFilter;
     CapOnStableAndMaxInterestsUpdated(
-      _poolManager?: string | null,
+      _poolManager?: PromiseOrValue<string> | null,
       _capOnStableMinted?: null,
       _maxInterestsDistributed?: null,
     ): CapOnStableAndMaxInterestsUpdatedEventFilter;
 
     'CollateralDeployed(address,address,address,address)'(
-      _poolManager?: string | null,
-      _perpetualManager?: string | null,
-      _sanToken?: string | null,
+      _poolManager?: PromiseOrValue<string> | null,
+      _perpetualManager?: PromiseOrValue<string> | null,
+      _sanToken?: PromiseOrValue<string> | null,
       _oracle?: null,
     ): CollateralDeployedEventFilter;
     CollateralDeployed(
-      _poolManager?: string | null,
-      _perpetualManager?: string | null,
-      _sanToken?: string | null,
+      _poolManager?: PromiseOrValue<string> | null,
+      _perpetualManager?: PromiseOrValue<string> | null,
+      _sanToken?: PromiseOrValue<string> | null,
       _oracle?: null,
     ): CollateralDeployedEventFilter;
 
-    'CollateralRevoked(address)'(_poolManager?: string | null): CollateralRevokedEventFilter;
-    CollateralRevoked(_poolManager?: string | null): CollateralRevokedEventFilter;
+    'CollateralRevoked(address)'(_poolManager?: PromiseOrValue<string> | null): CollateralRevokedEventFilter;
+    CollateralRevoked(_poolManager?: PromiseOrValue<string> | null): CollateralRevokedEventFilter;
 
     'FeeArrayUpdated(address,uint64[],uint64[],uint8)'(
-      _poolManager?: string | null,
+      _poolManager?: PromiseOrValue<string> | null,
       _xFee?: null,
       _yFee?: null,
       _type?: null,
     ): FeeArrayUpdatedEventFilter;
-    FeeArrayUpdated(_poolManager?: string | null, _xFee?: null, _yFee?: null, _type?: null): FeeArrayUpdatedEventFilter;
+    FeeArrayUpdated(
+      _poolManager?: PromiseOrValue<string> | null,
+      _xFee?: null,
+      _yFee?: null,
+      _type?: null,
+    ): FeeArrayUpdatedEventFilter;
 
     'FeeManagerUpdated(address,address)'(
-      _poolManager?: string | null,
-      newFeeManager?: string | null,
+      _poolManager?: PromiseOrValue<string> | null,
+      newFeeManager?: PromiseOrValue<string> | null,
     ): FeeManagerUpdatedEventFilter;
-    FeeManagerUpdated(_poolManager?: string | null, newFeeManager?: string | null): FeeManagerUpdatedEventFilter;
+    FeeManagerUpdated(
+      _poolManager?: PromiseOrValue<string> | null,
+      newFeeManager?: PromiseOrValue<string> | null,
+    ): FeeManagerUpdatedEventFilter;
 
     'MintedStablecoins(address,uint256,uint256)'(
-      _poolManager?: string | null,
+      _poolManager?: PromiseOrValue<string> | null,
       amount?: null,
       amountForUserInStable?: null,
     ): MintedStablecoinsEventFilter;
     MintedStablecoins(
-      _poolManager?: string | null,
+      _poolManager?: PromiseOrValue<string> | null,
       amount?: null,
       amountForUserInStable?: null,
     ): MintedStablecoinsEventFilter;
 
-    'OracleUpdated(address,address)'(_poolManager?: string | null, _oracle?: string | null): OracleUpdatedEventFilter;
-    OracleUpdated(_poolManager?: string | null, _oracle?: string | null): OracleUpdatedEventFilter;
+    'OracleUpdated(address,address)'(
+      _poolManager?: PromiseOrValue<string> | null,
+      _oracle?: PromiseOrValue<string> | null,
+    ): OracleUpdatedEventFilter;
+    OracleUpdated(
+      _poolManager?: PromiseOrValue<string> | null,
+      _oracle?: PromiseOrValue<string> | null,
+    ): OracleUpdatedEventFilter;
 
     'Paused(bytes32)'(name?: null): PausedEventFilter;
     Paused(name?: null): PausedEventFilter;
 
     'RoleAdminChanged(bytes32,bytes32,bytes32)'(
-      role?: BytesLike | null,
-      previousAdminRole?: BytesLike | null,
-      newAdminRole?: BytesLike | null,
+      role?: PromiseOrValue<BytesLike> | null,
+      previousAdminRole?: PromiseOrValue<BytesLike> | null,
+      newAdminRole?: PromiseOrValue<BytesLike> | null,
     ): RoleAdminChangedEventFilter;
     RoleAdminChanged(
-      role?: BytesLike | null,
-      previousAdminRole?: BytesLike | null,
-      newAdminRole?: BytesLike | null,
+      role?: PromiseOrValue<BytesLike> | null,
+      previousAdminRole?: PromiseOrValue<BytesLike> | null,
+      newAdminRole?: PromiseOrValue<BytesLike> | null,
     ): RoleAdminChangedEventFilter;
 
     'RoleGranted(bytes32,address,address)'(
-      role?: BytesLike | null,
-      account?: string | null,
-      sender?: string | null,
+      role?: PromiseOrValue<BytesLike> | null,
+      account?: PromiseOrValue<string> | null,
+      sender?: PromiseOrValue<string> | null,
     ): RoleGrantedEventFilter;
-    RoleGranted(role?: BytesLike | null, account?: string | null, sender?: string | null): RoleGrantedEventFilter;
+    RoleGranted(
+      role?: PromiseOrValue<BytesLike> | null,
+      account?: PromiseOrValue<string> | null,
+      sender?: PromiseOrValue<string> | null,
+    ): RoleGrantedEventFilter;
 
     'RoleRevoked(bytes32,address,address)'(
-      role?: BytesLike | null,
-      account?: string | null,
-      sender?: string | null,
+      role?: PromiseOrValue<BytesLike> | null,
+      account?: PromiseOrValue<string> | null,
+      sender?: PromiseOrValue<string> | null,
     ): RoleRevokedEventFilter;
-    RoleRevoked(role?: BytesLike | null, account?: string | null, sender?: string | null): RoleRevokedEventFilter;
+    RoleRevoked(
+      role?: PromiseOrValue<BytesLike> | null,
+      account?: PromiseOrValue<string> | null,
+      sender?: PromiseOrValue<string> | null,
+    ): RoleRevokedEventFilter;
 
     'SLPsIncentivesUpdated(address,uint64,uint64)'(
-      _poolManager?: string | null,
+      _poolManager?: PromiseOrValue<string> | null,
       _feesForSLPs?: null,
       _interestsForSLPs?: null,
     ): SLPsIncentivesUpdatedEventFilter;
     SLPsIncentivesUpdated(
-      _poolManager?: string | null,
+      _poolManager?: PromiseOrValue<string> | null,
       _feesForSLPs?: null,
       _interestsForSLPs?: null,
     ): SLPsIncentivesUpdatedEventFilter;
 
-    'SanRateUpdated(address,uint256)'(_token?: string | null, _newSanRate?: null): SanRateUpdatedEventFilter;
-    SanRateUpdated(_token?: string | null, _newSanRate?: null): SanRateUpdatedEventFilter;
+    'SanRateUpdated(address,uint256)'(
+      _token?: PromiseOrValue<string> | null,
+      _newSanRate?: null,
+    ): SanRateUpdatedEventFilter;
+    SanRateUpdated(_token?: PromiseOrValue<string> | null, _newSanRate?: null): SanRateUpdatedEventFilter;
 
     'StocksUsersUpdated(address,uint256)'(
-      _poolManager?: string | null,
+      _poolManager?: PromiseOrValue<string> | null,
       _stocksUsers?: null,
     ): StocksUsersUpdatedEventFilter;
-    StocksUsersUpdated(_poolManager?: string | null, _stocksUsers?: null): StocksUsersUpdatedEventFilter;
+    StocksUsersUpdated(
+      _poolManager?: PromiseOrValue<string> | null,
+      _stocksUsers?: null,
+    ): StocksUsersUpdatedEventFilter;
 
     'Unpaused(bytes32)'(name?: null): UnpausedEventFilter;
     Unpaused(name?: null): UnpausedEventFilter;
@@ -1261,194 +1436,213 @@ export interface AngleStablemaster extends BaseContract {
     STABLE(overrides?: CallOverrides): Promise<BigNumber>;
 
     accumulateInterest(
-      gain: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      gain: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    addGovernor(governor: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    addGovernor(
+      governor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     agToken(overrides?: CallOverrides): Promise<BigNumber>;
 
     burn(
-      amount: BigNumberish,
-      burner: string,
-      dest: string,
-      poolManager: string,
-      minCollatAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      burner: PromiseOrValue<string>,
+      dest: PromiseOrValue<string>,
+      poolManager: PromiseOrValue<string>,
+      minCollatAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    collateralMap(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    collateralMap(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     convertToSLP(
-      amount: BigNumberish,
-      user: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      user: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     deploy(
-      governorList: string[],
-      guardian: string,
-      _agToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      governorList: PromiseOrValue<string>[],
+      guardian: PromiseOrValue<string>,
+      _agToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     deployCollateral(
-      poolManager: string,
-      perpetualManager: string,
-      feeManager: string,
-      oracle: string,
-      sanToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      poolManager: PromiseOrValue<string>,
+      perpetualManager: PromiseOrValue<string>,
+      feeManager: PromiseOrValue<string>,
+      oracle: PromiseOrValue<string>,
+      sanToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     deposit(
-      amount: BigNumberish,
-      user: string,
-      poolManager: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      user: PromiseOrValue<string>,
+      poolManager: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     getCollateralRatio(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getStocksUsers(overrides?: CallOverrides): Promise<BigNumber>;
 
     grantRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    hasRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    hasRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    initialize(core_: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    initialize(
+      core_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     mint(
-      amount: BigNumberish,
-      user: string,
-      poolManager: string,
-      minStableAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      user: PromiseOrValue<string>,
+      poolManager: PromiseOrValue<string>,
+      minStableAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     pause(
-      agent: BytesLike,
-      poolManager: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      agent: PromiseOrValue<BytesLike>,
+      poolManager: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    paused(arg0: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    paused(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     rebalanceStocksUsers(
-      amount: BigNumberish,
-      poolManagerUp: string,
-      poolManagerDown: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      poolManagerUp: PromiseOrValue<string>,
+      poolManagerDown: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    removeGovernor(governor: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    removeGovernor(
+      governor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     renounceRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     revokeCollateral(
-      poolManager: string,
-      settlementContract: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      poolManager: PromiseOrValue<string>,
+      settlementContract: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     revokeGuardian(
-      oldGuardian: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      oldGuardian: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     revokeRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setCapOnStableAndMaxInterests(
-      _capOnStableMinted: BigNumberish,
-      _maxInterestsDistributed: BigNumberish,
-      poolManager: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _capOnStableMinted: PromiseOrValue<BigNumberish>,
+      _maxInterestsDistributed: PromiseOrValue<BigNumberish>,
+      poolManager: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setCore(newCore: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setCore(
+      newCore: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setFeeKeeper(
-      _bonusMalusMint: BigNumberish,
-      _bonusMalusBurn: BigNumberish,
-      _slippage: BigNumberish,
-      _slippageFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _bonusMalusMint: PromiseOrValue<BigNumberish>,
+      _bonusMalusBurn: PromiseOrValue<BigNumberish>,
+      _slippage: PromiseOrValue<BigNumberish>,
+      _slippageFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setFeeManager(
-      newFeeManager: string,
-      oldFeeManager: string,
-      poolManager: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newFeeManager: PromiseOrValue<string>,
+      oldFeeManager: PromiseOrValue<string>,
+      poolManager: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setGuardian(
-      newGuardian: string,
-      oldGuardian: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newGuardian: PromiseOrValue<string>,
+      oldGuardian: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setIncentivesForSLPs(
-      _feesForSLPs: BigNumberish,
-      _interestsForSLPs: BigNumberish,
-      poolManager: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _feesForSLPs: PromiseOrValue<BigNumberish>,
+      _interestsForSLPs: PromiseOrValue<BigNumberish>,
+      poolManager: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setOracle(
-      _oracle: string,
-      poolManager: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _oracle: PromiseOrValue<string>,
+      poolManager: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setTargetHAHedge(
-      _targetHAHedge: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _targetHAHedge: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setUserFees(
-      poolManager: string,
-      _xFee: BigNumberish[],
-      _yFee: BigNumberish[],
-      _mint: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      poolManager: PromiseOrValue<string>,
+      _xFee: PromiseOrValue<BigNumberish>[],
+      _yFee: PromiseOrValue<BigNumberish>[],
+      _mint: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    signalLoss(loss: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    signalLoss(
+      loss: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     unpause(
-      agent: BytesLike,
-      poolManager: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      agent: PromiseOrValue<BytesLike>,
+      poolManager: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     updateStocksUsers(
-      amount: BigNumberish,
-      poolManager: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      poolManager: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     withdraw(
-      amount: BigNumberish,
-      burner: string,
-      dest: string,
-      poolManager: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      burner: PromiseOrValue<string>,
+      dest: PromiseOrValue<string>,
+      poolManager: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
@@ -1470,209 +1664,213 @@ export interface AngleStablemaster extends BaseContract {
     STABLE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     accumulateInterest(
-      gain: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      gain: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     addGovernor(
-      governor: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      governor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     agToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     burn(
-      amount: BigNumberish,
-      burner: string,
-      dest: string,
-      poolManager: string,
-      minCollatAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      burner: PromiseOrValue<string>,
+      dest: PromiseOrValue<string>,
+      poolManager: PromiseOrValue<string>,
+      minCollatAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    collateralMap(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    collateralMap(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     convertToSLP(
-      amount: BigNumberish,
-      user: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      user: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     deploy(
-      governorList: string[],
-      guardian: string,
-      _agToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      governorList: PromiseOrValue<string>[],
+      guardian: PromiseOrValue<string>,
+      _agToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     deployCollateral(
-      poolManager: string,
-      perpetualManager: string,
-      feeManager: string,
-      oracle: string,
-      sanToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      poolManager: PromiseOrValue<string>,
+      perpetualManager: PromiseOrValue<string>,
+      feeManager: PromiseOrValue<string>,
+      oracle: PromiseOrValue<string>,
+      sanToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     deposit(
-      amount: BigNumberish,
-      user: string,
-      poolManager: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      user: PromiseOrValue<string>,
+      poolManager: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     getCollateralRatio(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getStocksUsers(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     grantRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    hasRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    hasRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     initialize(
-      core_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      core_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     mint(
-      amount: BigNumberish,
-      user: string,
-      poolManager: string,
-      minStableAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      user: PromiseOrValue<string>,
+      poolManager: PromiseOrValue<string>,
+      minStableAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     pause(
-      agent: BytesLike,
-      poolManager: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      agent: PromiseOrValue<BytesLike>,
+      poolManager: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    paused(arg0: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    paused(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     rebalanceStocksUsers(
-      amount: BigNumberish,
-      poolManagerUp: string,
-      poolManagerDown: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      poolManagerUp: PromiseOrValue<string>,
+      poolManagerDown: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     removeGovernor(
-      governor: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      governor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     renounceRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     revokeCollateral(
-      poolManager: string,
-      settlementContract: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      poolManager: PromiseOrValue<string>,
+      settlementContract: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     revokeGuardian(
-      oldGuardian: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      oldGuardian: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     revokeRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setCapOnStableAndMaxInterests(
-      _capOnStableMinted: BigNumberish,
-      _maxInterestsDistributed: BigNumberish,
-      poolManager: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _capOnStableMinted: PromiseOrValue<BigNumberish>,
+      _maxInterestsDistributed: PromiseOrValue<BigNumberish>,
+      poolManager: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setCore(
-      newCore: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newCore: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setFeeKeeper(
-      _bonusMalusMint: BigNumberish,
-      _bonusMalusBurn: BigNumberish,
-      _slippage: BigNumberish,
-      _slippageFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _bonusMalusMint: PromiseOrValue<BigNumberish>,
+      _bonusMalusBurn: PromiseOrValue<BigNumberish>,
+      _slippage: PromiseOrValue<BigNumberish>,
+      _slippageFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setFeeManager(
-      newFeeManager: string,
-      oldFeeManager: string,
-      poolManager: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newFeeManager: PromiseOrValue<string>,
+      oldFeeManager: PromiseOrValue<string>,
+      poolManager: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setGuardian(
-      newGuardian: string,
-      oldGuardian: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newGuardian: PromiseOrValue<string>,
+      oldGuardian: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setIncentivesForSLPs(
-      _feesForSLPs: BigNumberish,
-      _interestsForSLPs: BigNumberish,
-      poolManager: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _feesForSLPs: PromiseOrValue<BigNumberish>,
+      _interestsForSLPs: PromiseOrValue<BigNumberish>,
+      poolManager: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setOracle(
-      _oracle: string,
-      poolManager: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _oracle: PromiseOrValue<string>,
+      poolManager: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setTargetHAHedge(
-      _targetHAHedge: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _targetHAHedge: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setUserFees(
-      poolManager: string,
-      _xFee: BigNumberish[],
-      _yFee: BigNumberish[],
-      _mint: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      poolManager: PromiseOrValue<string>,
+      _xFee: PromiseOrValue<BigNumberish>[],
+      _yFee: PromiseOrValue<BigNumberish>[],
+      _mint: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     signalLoss(
-      loss: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      loss: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     unpause(
-      agent: BytesLike,
-      poolManager: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      agent: PromiseOrValue<BytesLike>,
+      poolManager: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateStocksUsers(
-      amount: BigNumberish,
-      poolManager: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      poolManager: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     withdraw(
-      amount: BigNumberish,
-      burner: string,
-      dest: string,
-      poolManager: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      burner: PromiseOrValue<string>,
+      dest: PromiseOrValue<string>,
+      poolManager: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

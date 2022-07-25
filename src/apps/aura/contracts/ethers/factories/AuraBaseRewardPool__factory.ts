@@ -3,6 +3,7 @@
 /* eslint-disable */
 import { Signer, utils, Contract, ContractFactory, BigNumberish, Overrides } from 'ethers';
 import type { Provider, TransactionRequest } from '@ethersproject/providers';
+import type { PromiseOrValue } from '../common';
 import type { AuraBaseRewardPool, AuraBaseRewardPoolInterface } from '../AuraBaseRewardPool';
 
 const _abi = [
@@ -694,12 +695,12 @@ export class AuraBaseRewardPool__factory extends ContractFactory {
   }
 
   override deploy(
-    pid_: BigNumberish,
-    stakingToken_: string,
-    rewardToken_: string,
-    operator_: string,
-    rewardManager_: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    pid_: PromiseOrValue<BigNumberish>,
+    stakingToken_: PromiseOrValue<string>,
+    rewardToken_: PromiseOrValue<string>,
+    operator_: PromiseOrValue<string>,
+    rewardManager_: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<AuraBaseRewardPool> {
     return super.deploy(
       pid_,
@@ -711,12 +712,12 @@ export class AuraBaseRewardPool__factory extends ContractFactory {
     ) as Promise<AuraBaseRewardPool>;
   }
   override getDeployTransaction(
-    pid_: BigNumberish,
-    stakingToken_: string,
-    rewardToken_: string,
-    operator_: string,
-    rewardManager_: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    pid_: PromiseOrValue<BigNumberish>,
+    stakingToken_: PromiseOrValue<string>,
+    rewardToken_: PromiseOrValue<string>,
+    operator_: PromiseOrValue<string>,
+    rewardManager_: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): TransactionRequest {
     return super.getDeployTransaction(pid_, stakingToken_, rewardToken_, operator_, rewardManager_, overrides || {});
   }

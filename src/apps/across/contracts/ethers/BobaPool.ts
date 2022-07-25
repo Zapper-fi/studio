@@ -16,18 +16,18 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export declare namespace BridgePool {
   export type DepositDataStruct = {
-    chainId: BigNumberish;
-    depositId: BigNumberish;
-    l1Recipient: string;
-    l2Sender: string;
-    amount: BigNumberish;
-    slowRelayFeePct: BigNumberish;
-    instantRelayFeePct: BigNumberish;
-    quoteTimestamp: BigNumberish;
+    chainId: PromiseOrValue<BigNumberish>;
+    depositId: PromiseOrValue<BigNumberish>;
+    l1Recipient: PromiseOrValue<string>;
+    l2Sender: PromiseOrValue<string>;
+    amount: PromiseOrValue<BigNumberish>;
+    slowRelayFeePct: PromiseOrValue<BigNumberish>;
+    instantRelayFeePct: PromiseOrValue<BigNumberish>;
+    quoteTimestamp: PromiseOrValue<BigNumberish>;
   };
 
   export type DepositDataStructOutput = [
@@ -51,13 +51,13 @@ export declare namespace BridgePool {
   };
 
   export type RelayDataStruct = {
-    relayState: BigNumberish;
-    slowRelayer: string;
-    relayId: BigNumberish;
-    realizedLpFeePct: BigNumberish;
-    priceRequestTime: BigNumberish;
-    proposerBond: BigNumberish;
-    finalFee: BigNumberish;
+    relayState: PromiseOrValue<BigNumberish>;
+    slowRelayer: PromiseOrValue<string>;
+    relayId: PromiseOrValue<BigNumberish>;
+    realizedLpFeePct: PromiseOrValue<BigNumberish>;
+    priceRequestTime: PromiseOrValue<BigNumberish>;
+    proposerBond: PromiseOrValue<BigNumberish>;
+    finalFee: PromiseOrValue<BigNumberish>;
   };
 
   export type RelayDataStructOutput = [number, string, number, BigNumber, number, BigNumber, BigNumber] & {
@@ -185,15 +185,21 @@ export interface BobaPoolInterface extends utils.Interface {
       | 'utilizedReserves',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'addLiquidity', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'allowance', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'approve', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
+  encodeFunctionData(functionFragment: 'addLiquidity', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'allowance', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'approve',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'bonds', values?: undefined): string;
   encodeFunctionData(functionFragment: 'bridgeAdmin', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'changeAdmin', values: [string]): string;
+  encodeFunctionData(functionFragment: 'changeAdmin', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'decimals', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'decreaseAllowance', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'decreaseAllowance',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(
     functionFragment: 'disputeRelay',
     values: [BridgePool.DepositDataStruct, BridgePool.RelayDataStruct],
@@ -201,36 +207,48 @@ export interface BobaPoolInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'exchangeRateCurrent', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getAccumulatedFees', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getCurrentTime', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getLiquidityUtilization', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'getLiquidityUtilization', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(
     functionFragment: 'getRelayAncillaryData',
     values: [BridgePool.DepositDataStruct, BridgePool.RelayDataStruct],
   ): string;
   encodeFunctionData(functionFragment: 'identifier', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'increaseAllowance', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'instantRelays', values: [BytesLike]): string;
+  encodeFunctionData(
+    functionFragment: 'increaseAllowance',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'instantRelays', values: [PromiseOrValue<BytesLike>]): string;
   encodeFunctionData(functionFragment: 'isWethPool', values?: undefined): string;
   encodeFunctionData(functionFragment: 'l1Token', values?: undefined): string;
   encodeFunctionData(functionFragment: 'lastLpFeeUpdate', values?: undefined): string;
   encodeFunctionData(functionFragment: 'liquidReserves', values?: undefined): string;
   encodeFunctionData(functionFragment: 'liquidityUtilizationCurrent', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'liquidityUtilizationPostRelay', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'liquidityUtilizationPostRelay', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'lpFeeRatePerSecond', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'multicall', values: [BytesLike[]]): string;
+  encodeFunctionData(functionFragment: 'multicall', values: [PromiseOrValue<BytesLike>[]]): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
   encodeFunctionData(functionFragment: 'numberOfRelays', values?: undefined): string;
   encodeFunctionData(functionFragment: 'optimisticOracle', values?: undefined): string;
   encodeFunctionData(functionFragment: 'optimisticOracleLiveness', values?: undefined): string;
   encodeFunctionData(functionFragment: 'pendingReserves', values?: undefined): string;
   encodeFunctionData(functionFragment: 'proposerBondPct', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'relayAndSpeedUp', values: [BridgePool.DepositDataStruct, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'relayDeposit', values: [BridgePool.DepositDataStruct, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'relays', values: [BytesLike]): string;
+  encodeFunctionData(
+    functionFragment: 'relayAndSpeedUp',
+    values: [BridgePool.DepositDataStruct, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'relayDeposit',
+    values: [BridgePool.DepositDataStruct, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'relays', values: [PromiseOrValue<BytesLike>]): string;
   encodeFunctionData(functionFragment: 'relaysEnabled', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'removeLiquidity', values: [BigNumberish, boolean]): string;
-  encodeFunctionData(functionFragment: 'setCurrentTime', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setLpFeeRatePerSecond', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setRelaysEnabled', values: [boolean]): string;
+  encodeFunctionData(
+    functionFragment: 'removeLiquidity',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(functionFragment: 'setCurrentTime', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setLpFeeRatePerSecond', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setRelaysEnabled', values: [PromiseOrValue<boolean>]): string;
   encodeFunctionData(
     functionFragment: 'settleRelay',
     values: [BridgePool.DepositDataStruct, BridgePool.RelayDataStruct],
@@ -246,8 +264,14 @@ export interface BobaPoolInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'syncWithBridgeAdminParams', values?: undefined): string;
   encodeFunctionData(functionFragment: 'timerAddress', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transfer', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferFrom', values: [string, string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'transfer',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'transferFrom',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'undistributedLpFees', values?: undefined): string;
   encodeFunctionData(functionFragment: 'utilizedReserves', values?: undefined): string;
 
@@ -465,52 +489,56 @@ export interface BobaPool extends BaseContract {
 
   functions: {
     addLiquidity(
-      l1TokenAmount: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      l1TokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     bonds(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     bridgeAdmin(overrides?: CallOverrides): Promise<[string]>;
 
     changeAdmin(
-      _newAdmin: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newAdmin: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<[number]>;
 
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     disputeRelay(
       depositData: BridgePool.DepositDataStruct,
       relayData: BridgePool.RelayDataStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    exchangeRateCurrent(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    exchangeRateCurrent(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     getAccumulatedFees(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     getCurrentTime(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     getLiquidityUtilization(
-      relayedAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      relayedAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     getRelayAncillaryData(
@@ -522,12 +550,12 @@ export interface BobaPool extends BaseContract {
     identifier(overrides?: CallOverrides): Promise<[string]>;
 
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    instantRelays(arg0: BytesLike, overrides?: CallOverrides): Promise<[string]>;
+    instantRelays(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[string]>;
 
     isWethPool(overrides?: CallOverrides): Promise<[boolean]>;
 
@@ -538,19 +566,19 @@ export interface BobaPool extends BaseContract {
     liquidReserves(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     liquidityUtilizationCurrent(
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     liquidityUtilizationPostRelay(
-      relayedAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      relayedAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     lpFeeRatePerSecond(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     multicall(
-      data: BytesLike[],
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      data: PromiseOrValue<BytesLike>[],
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
@@ -567,80 +595,78 @@ export interface BobaPool extends BaseContract {
 
     relayAndSpeedUp(
       depositData: BridgePool.DepositDataStruct,
-      realizedLpFeePct: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      realizedLpFeePct: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     relayDeposit(
       depositData: BridgePool.DepositDataStruct,
-      realizedLpFeePct: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      realizedLpFeePct: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    relays(arg0: BytesLike, overrides?: CallOverrides): Promise<[string]>;
+    relays(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[string]>;
 
     relaysEnabled(overrides?: CallOverrides): Promise<[boolean]>;
 
     removeLiquidity(
-      lpTokenAmount: BigNumberish,
-      sendEth: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      lpTokenAmount: PromiseOrValue<BigNumberish>,
+      sendEth: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setCurrentTime(
-      time: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      time: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setLpFeeRatePerSecond(
-      _newLpFeeRatePerSecond: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newLpFeeRatePerSecond: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setRelaysEnabled(
-      _relaysEnabled: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _relaysEnabled: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     settleRelay(
       depositData: BridgePool.DepositDataStruct,
       relayData: BridgePool.RelayDataStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     speedUpRelay(
       depositData: BridgePool.DepositDataStruct,
       relayData: BridgePool.RelayDataStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     store(overrides?: CallOverrides): Promise<[string]>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
 
-    sync(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    sync(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    syncUmaEcosystemParams(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    syncUmaEcosystemParams(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    syncWithBridgeAdminParams(
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
+    syncWithBridgeAdminParams(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     timerAddress(overrides?: CallOverrides): Promise<[string]>;
 
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transfer(
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferFrom(
-      sender: string,
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     undistributedLpFees(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -649,52 +675,56 @@ export interface BobaPool extends BaseContract {
   };
 
   addLiquidity(
-    l1TokenAmount: BigNumberish,
-    overrides?: PayableOverrides & { from?: string | Promise<string> },
+    l1TokenAmount: PromiseOrValue<BigNumberish>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+  allowance(
+    owner: PromiseOrValue<string>,
+    spender: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   approve(
-    spender: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   bonds(overrides?: CallOverrides): Promise<BigNumber>;
 
   bridgeAdmin(overrides?: CallOverrides): Promise<string>;
 
   changeAdmin(
-    _newAdmin: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _newAdmin: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   decimals(overrides?: CallOverrides): Promise<number>;
 
   decreaseAllowance(
-    spender: string,
-    subtractedValue: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    subtractedValue: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   disputeRelay(
     depositData: BridgePool.DepositDataStruct,
     relayData: BridgePool.RelayDataStruct,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  exchangeRateCurrent(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  exchangeRateCurrent(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   getAccumulatedFees(overrides?: CallOverrides): Promise<BigNumber>;
 
   getCurrentTime(overrides?: CallOverrides): Promise<BigNumber>;
 
   getLiquidityUtilization(
-    relayedAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    relayedAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   getRelayAncillaryData(
@@ -706,12 +736,12 @@ export interface BobaPool extends BaseContract {
   identifier(overrides?: CallOverrides): Promise<string>;
 
   increaseAllowance(
-    spender: string,
-    addedValue: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    addedValue: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  instantRelays(arg0: BytesLike, overrides?: CallOverrides): Promise<string>;
+  instantRelays(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
   isWethPool(overrides?: CallOverrides): Promise<boolean>;
 
@@ -721,20 +751,18 @@ export interface BobaPool extends BaseContract {
 
   liquidReserves(overrides?: CallOverrides): Promise<BigNumber>;
 
-  liquidityUtilizationCurrent(
-    overrides?: Overrides & { from?: string | Promise<string> },
-  ): Promise<ContractTransaction>;
+  liquidityUtilizationCurrent(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   liquidityUtilizationPostRelay(
-    relayedAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    relayedAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   lpFeeRatePerSecond(overrides?: CallOverrides): Promise<BigNumber>;
 
   multicall(
-    data: BytesLike[],
-    overrides?: PayableOverrides & { from?: string | Promise<string> },
+    data: PromiseOrValue<BytesLike>[],
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   name(overrides?: CallOverrides): Promise<string>;
@@ -751,78 +779,78 @@ export interface BobaPool extends BaseContract {
 
   relayAndSpeedUp(
     depositData: BridgePool.DepositDataStruct,
-    realizedLpFeePct: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    realizedLpFeePct: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   relayDeposit(
     depositData: BridgePool.DepositDataStruct,
-    realizedLpFeePct: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    realizedLpFeePct: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  relays(arg0: BytesLike, overrides?: CallOverrides): Promise<string>;
+  relays(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
   relaysEnabled(overrides?: CallOverrides): Promise<boolean>;
 
   removeLiquidity(
-    lpTokenAmount: BigNumberish,
-    sendEth: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    lpTokenAmount: PromiseOrValue<BigNumberish>,
+    sendEth: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setCurrentTime(
-    time: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    time: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setLpFeeRatePerSecond(
-    _newLpFeeRatePerSecond: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _newLpFeeRatePerSecond: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setRelaysEnabled(
-    _relaysEnabled: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _relaysEnabled: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   settleRelay(
     depositData: BridgePool.DepositDataStruct,
     relayData: BridgePool.RelayDataStruct,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   speedUpRelay(
     depositData: BridgePool.DepositDataStruct,
     relayData: BridgePool.RelayDataStruct,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   store(overrides?: CallOverrides): Promise<string>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
 
-  sync(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  sync(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  syncUmaEcosystemParams(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  syncUmaEcosystemParams(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  syncWithBridgeAdminParams(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  syncWithBridgeAdminParams(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   timerAddress(overrides?: CallOverrides): Promise<string>;
 
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   transfer(
-    recipient: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    recipient: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferFrom(
-    sender: string,
-    recipient: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    sender: PromiseOrValue<string>,
+    recipient: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   undistributedLpFees(overrides?: CallOverrides): Promise<BigNumber>;
@@ -830,23 +858,35 @@ export interface BobaPool extends BaseContract {
   utilizedReserves(overrides?: CallOverrides): Promise<BigNumber>;
 
   callStatic: {
-    addLiquidity(l1TokenAmount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    addLiquidity(l1TokenAmount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    approve(spender: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    approve(
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     bonds(overrides?: CallOverrides): Promise<BigNumber>;
 
     bridgeAdmin(overrides?: CallOverrides): Promise<string>;
 
-    changeAdmin(_newAdmin: string, overrides?: CallOverrides): Promise<void>;
+    changeAdmin(_newAdmin: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     decimals(overrides?: CallOverrides): Promise<number>;
 
-    decreaseAllowance(spender: string, subtractedValue: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    decreaseAllowance(
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     disputeRelay(
       depositData: BridgePool.DepositDataStruct,
@@ -861,7 +901,7 @@ export interface BobaPool extends BaseContract {
     getCurrentTime(overrides?: CallOverrides): Promise<BigNumber>;
 
     getLiquidityUtilization(
-      relayedAmount: BigNumberish,
+      relayedAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber] & {
@@ -878,9 +918,13 @@ export interface BobaPool extends BaseContract {
 
     identifier(overrides?: CallOverrides): Promise<string>;
 
-    increaseAllowance(spender: string, addedValue: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    increaseAllowance(
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    instantRelays(arg0: BytesLike, overrides?: CallOverrides): Promise<string>;
+    instantRelays(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
     isWethPool(overrides?: CallOverrides): Promise<boolean>;
 
@@ -892,11 +936,14 @@ export interface BobaPool extends BaseContract {
 
     liquidityUtilizationCurrent(overrides?: CallOverrides): Promise<BigNumber>;
 
-    liquidityUtilizationPostRelay(relayedAmount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    liquidityUtilizationPostRelay(
+      relayedAmount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     lpFeeRatePerSecond(overrides?: CallOverrides): Promise<BigNumber>;
 
-    multicall(data: BytesLike[], overrides?: CallOverrides): Promise<string[]>;
+    multicall(data: PromiseOrValue<BytesLike>[], overrides?: CallOverrides): Promise<string[]>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
@@ -912,27 +959,34 @@ export interface BobaPool extends BaseContract {
 
     relayAndSpeedUp(
       depositData: BridgePool.DepositDataStruct,
-      realizedLpFeePct: BigNumberish,
+      realizedLpFeePct: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     relayDeposit(
       depositData: BridgePool.DepositDataStruct,
-      realizedLpFeePct: BigNumberish,
+      realizedLpFeePct: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    relays(arg0: BytesLike, overrides?: CallOverrides): Promise<string>;
+    relays(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
     relaysEnabled(overrides?: CallOverrides): Promise<boolean>;
 
-    removeLiquidity(lpTokenAmount: BigNumberish, sendEth: boolean, overrides?: CallOverrides): Promise<void>;
+    removeLiquidity(
+      lpTokenAmount: PromiseOrValue<BigNumberish>,
+      sendEth: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setCurrentTime(time: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setCurrentTime(time: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setLpFeeRatePerSecond(_newLpFeeRatePerSecond: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setLpFeeRatePerSecond(
+      _newLpFeeRatePerSecond: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setRelaysEnabled(_relaysEnabled: boolean, overrides?: CallOverrides): Promise<void>;
+    setRelaysEnabled(_relaysEnabled: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
 
     settleRelay(
       depositData: BridgePool.DepositDataStruct,
@@ -960,9 +1014,18 @@ export interface BobaPool extends BaseContract {
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transfer(recipient: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transfer(
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    transferFrom(sender: string, recipient: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transferFrom(
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     undistributedLpFees(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -971,11 +1034,15 @@ export interface BobaPool extends BaseContract {
 
   filters: {
     'Approval(address,address,uint256)'(
-      owner?: string | null,
-      spender?: string | null,
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
       value?: null,
     ): ApprovalEventFilter;
-    Approval(owner?: string | null, spender?: string | null, value?: null): ApprovalEventFilter;
+    Approval(
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
+      value?: null,
+    ): ApprovalEventFilter;
 
     'BridgePoolAdminTransferred(address,address)'(
       oldAdmin?: null,
@@ -984,13 +1051,13 @@ export interface BobaPool extends BaseContract {
     BridgePoolAdminTransferred(oldAdmin?: null, newAdmin?: null): BridgePoolAdminTransferredEventFilter;
 
     'DepositRelayed(bytes32,tuple,tuple,bytes32)'(
-      depositHash?: BytesLike | null,
+      depositHash?: PromiseOrValue<BytesLike> | null,
       depositData?: null,
       relay?: null,
       relayAncillaryDataHash?: null,
     ): DepositRelayedEventFilter;
     DepositRelayed(
-      depositHash?: BytesLike | null,
+      depositHash?: PromiseOrValue<BytesLike> | null,
       depositData?: null,
       relay?: null,
       relayAncillaryDataHash?: null,
@@ -999,112 +1066,139 @@ export interface BobaPool extends BaseContract {
     'LiquidityAdded(uint256,uint256,address)'(
       amount?: null,
       lpTokensMinted?: null,
-      liquidityProvider?: string | null,
+      liquidityProvider?: PromiseOrValue<string> | null,
     ): LiquidityAddedEventFilter;
-    LiquidityAdded(amount?: null, lpTokensMinted?: null, liquidityProvider?: string | null): LiquidityAddedEventFilter;
+    LiquidityAdded(
+      amount?: null,
+      lpTokensMinted?: null,
+      liquidityProvider?: PromiseOrValue<string> | null,
+    ): LiquidityAddedEventFilter;
 
     'LiquidityRemoved(uint256,uint256,address)'(
       amount?: null,
       lpTokensBurnt?: null,
-      liquidityProvider?: string | null,
+      liquidityProvider?: PromiseOrValue<string> | null,
     ): LiquidityRemovedEventFilter;
     LiquidityRemoved(
       amount?: null,
       lpTokensBurnt?: null,
-      liquidityProvider?: string | null,
+      liquidityProvider?: PromiseOrValue<string> | null,
     ): LiquidityRemovedEventFilter;
 
     'LpFeeRateSet(uint64)'(newLpFeeRatePerSecond?: null): LpFeeRateSetEventFilter;
     LpFeeRateSet(newLpFeeRatePerSecond?: null): LpFeeRateSetEventFilter;
 
     'RelayCanceled(bytes32,bytes32,address)'(
-      depositHash?: BytesLike | null,
-      relayHash?: BytesLike | null,
-      disputer?: string | null,
+      depositHash?: PromiseOrValue<BytesLike> | null,
+      relayHash?: PromiseOrValue<BytesLike> | null,
+      disputer?: PromiseOrValue<string> | null,
     ): RelayCanceledEventFilter;
     RelayCanceled(
-      depositHash?: BytesLike | null,
-      relayHash?: BytesLike | null,
-      disputer?: string | null,
+      depositHash?: PromiseOrValue<BytesLike> | null,
+      relayHash?: PromiseOrValue<BytesLike> | null,
+      disputer?: PromiseOrValue<string> | null,
     ): RelayCanceledEventFilter;
 
     'RelayDisputed(bytes32,bytes32,address)'(
-      depositHash?: BytesLike | null,
-      relayHash?: BytesLike | null,
-      disputer?: string | null,
+      depositHash?: PromiseOrValue<BytesLike> | null,
+      relayHash?: PromiseOrValue<BytesLike> | null,
+      disputer?: PromiseOrValue<string> | null,
     ): RelayDisputedEventFilter;
     RelayDisputed(
-      depositHash?: BytesLike | null,
-      relayHash?: BytesLike | null,
-      disputer?: string | null,
+      depositHash?: PromiseOrValue<BytesLike> | null,
+      relayHash?: PromiseOrValue<BytesLike> | null,
+      disputer?: PromiseOrValue<string> | null,
     ): RelayDisputedEventFilter;
 
     'RelaySettled(bytes32,address,tuple)'(
-      depositHash?: BytesLike | null,
-      caller?: string | null,
+      depositHash?: PromiseOrValue<BytesLike> | null,
+      caller?: PromiseOrValue<string> | null,
       relay?: null,
     ): RelaySettledEventFilter;
-    RelaySettled(depositHash?: BytesLike | null, caller?: string | null, relay?: null): RelaySettledEventFilter;
+    RelaySettled(
+      depositHash?: PromiseOrValue<BytesLike> | null,
+      caller?: PromiseOrValue<string> | null,
+      relay?: null,
+    ): RelaySettledEventFilter;
 
     'RelaySpedUp(bytes32,address,tuple)'(
-      depositHash?: BytesLike | null,
-      instantRelayer?: string | null,
+      depositHash?: PromiseOrValue<BytesLike> | null,
+      instantRelayer?: PromiseOrValue<string> | null,
       relay?: null,
     ): RelaySpedUpEventFilter;
-    RelaySpedUp(depositHash?: BytesLike | null, instantRelayer?: string | null, relay?: null): RelaySpedUpEventFilter;
+    RelaySpedUp(
+      depositHash?: PromiseOrValue<BytesLike> | null,
+      instantRelayer?: PromiseOrValue<string> | null,
+      relay?: null,
+    ): RelaySpedUpEventFilter;
 
     'RelaysEnabledSet(bool)'(newRelaysEnabled?: null): RelaysEnabledSetEventFilter;
     RelaysEnabledSet(newRelaysEnabled?: null): RelaysEnabledSetEventFilter;
 
-    'Transfer(address,address,uint256)'(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
-    Transfer(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
+    'Transfer(address,address,uint256)'(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
+    Transfer(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
   };
 
   estimateGas: {
     addLiquidity(
-      l1TokenAmount: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      l1TokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     bonds(overrides?: CallOverrides): Promise<BigNumber>;
 
     bridgeAdmin(overrides?: CallOverrides): Promise<BigNumber>;
 
-    changeAdmin(_newAdmin: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    changeAdmin(
+      _newAdmin: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     disputeRelay(
       depositData: BridgePool.DepositDataStruct,
       relayData: BridgePool.RelayDataStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    exchangeRateCurrent(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    exchangeRateCurrent(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     getAccumulatedFees(overrides?: CallOverrides): Promise<BigNumber>;
 
     getCurrentTime(overrides?: CallOverrides): Promise<BigNumber>;
 
     getLiquidityUtilization(
-      relayedAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      relayedAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     getRelayAncillaryData(
@@ -1116,12 +1210,12 @@ export interface BobaPool extends BaseContract {
     identifier(overrides?: CallOverrides): Promise<BigNumber>;
 
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    instantRelays(arg0: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    instantRelays(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     isWethPool(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1131,18 +1225,18 @@ export interface BobaPool extends BaseContract {
 
     liquidReserves(overrides?: CallOverrides): Promise<BigNumber>;
 
-    liquidityUtilizationCurrent(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    liquidityUtilizationCurrent(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     liquidityUtilizationPostRelay(
-      relayedAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      relayedAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     lpFeeRatePerSecond(overrides?: CallOverrides): Promise<BigNumber>;
 
     multicall(
-      data: BytesLike[],
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      data: PromiseOrValue<BytesLike>[],
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1159,75 +1253,78 @@ export interface BobaPool extends BaseContract {
 
     relayAndSpeedUp(
       depositData: BridgePool.DepositDataStruct,
-      realizedLpFeePct: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      realizedLpFeePct: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     relayDeposit(
       depositData: BridgePool.DepositDataStruct,
-      realizedLpFeePct: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      realizedLpFeePct: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    relays(arg0: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    relays(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     relaysEnabled(overrides?: CallOverrides): Promise<BigNumber>;
 
     removeLiquidity(
-      lpTokenAmount: BigNumberish,
-      sendEth: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      lpTokenAmount: PromiseOrValue<BigNumberish>,
+      sendEth: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setCurrentTime(time: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setCurrentTime(
+      time: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setLpFeeRatePerSecond(
-      _newLpFeeRatePerSecond: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newLpFeeRatePerSecond: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setRelaysEnabled(
-      _relaysEnabled: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _relaysEnabled: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     settleRelay(
       depositData: BridgePool.DepositDataStruct,
       relayData: BridgePool.RelayDataStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     speedUpRelay(
       depositData: BridgePool.DepositDataStruct,
       relayData: BridgePool.RelayDataStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     store(overrides?: CallOverrides): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
-    sync(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    sync(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    syncUmaEcosystemParams(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    syncUmaEcosystemParams(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    syncWithBridgeAdminParams(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    syncWithBridgeAdminParams(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     timerAddress(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferFrom(
-      sender: string,
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     undistributedLpFees(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1237,52 +1334,56 @@ export interface BobaPool extends BaseContract {
 
   populateTransaction: {
     addLiquidity(
-      l1TokenAmount: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      l1TokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     bonds(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     bridgeAdmin(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     changeAdmin(
-      _newAdmin: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newAdmin: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     disputeRelay(
       depositData: BridgePool.DepositDataStruct,
       relayData: BridgePool.RelayDataStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    exchangeRateCurrent(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    exchangeRateCurrent(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     getAccumulatedFees(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getCurrentTime(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getLiquidityUtilization(
-      relayedAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      relayedAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     getRelayAncillaryData(
@@ -1294,12 +1395,12 @@ export interface BobaPool extends BaseContract {
     identifier(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    instantRelays(arg0: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    instantRelays(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     isWethPool(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1310,19 +1411,19 @@ export interface BobaPool extends BaseContract {
     liquidReserves(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     liquidityUtilizationCurrent(
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     liquidityUtilizationPostRelay(
-      relayedAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      relayedAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     lpFeeRatePerSecond(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     multicall(
-      data: BytesLike[],
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      data: PromiseOrValue<BytesLike>[],
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1339,80 +1440,78 @@ export interface BobaPool extends BaseContract {
 
     relayAndSpeedUp(
       depositData: BridgePool.DepositDataStruct,
-      realizedLpFeePct: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      realizedLpFeePct: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     relayDeposit(
       depositData: BridgePool.DepositDataStruct,
-      realizedLpFeePct: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      realizedLpFeePct: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    relays(arg0: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    relays(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     relaysEnabled(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     removeLiquidity(
-      lpTokenAmount: BigNumberish,
-      sendEth: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      lpTokenAmount: PromiseOrValue<BigNumberish>,
+      sendEth: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setCurrentTime(
-      time: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      time: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setLpFeeRatePerSecond(
-      _newLpFeeRatePerSecond: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newLpFeeRatePerSecond: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setRelaysEnabled(
-      _relaysEnabled: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _relaysEnabled: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     settleRelay(
       depositData: BridgePool.DepositDataStruct,
       relayData: BridgePool.RelayDataStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     speedUpRelay(
       depositData: BridgePool.DepositDataStruct,
       relayData: BridgePool.RelayDataStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     store(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    sync(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    sync(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    syncUmaEcosystemParams(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    syncUmaEcosystemParams(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    syncWithBridgeAdminParams(
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<PopulatedTransaction>;
+    syncWithBridgeAdminParams(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     timerAddress(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transfer(
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferFrom(
-      sender: string,
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     undistributedLpFees(overrides?: CallOverrides): Promise<PopulatedTransaction>;

@@ -15,14 +15,14 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export declare namespace IVault {
   export type ExitPoolRequestStruct = {
-    assets: string[];
-    minAmountsOut: BigNumberish[];
-    userData: BytesLike;
-    toInternalBalance: boolean;
+    assets: PromiseOrValue<string>[];
+    minAmountsOut: PromiseOrValue<BigNumberish>[];
+    userData: PromiseOrValue<BytesLike>;
+    toInternalBalance: PromiseOrValue<boolean>;
   };
 
   export type ExitPoolRequestStructOutput = [string[], BigNumber[], string, boolean] & {
@@ -33,10 +33,10 @@ export declare namespace IVault {
   };
 
   export type JoinPoolRequestStruct = {
-    assets: string[];
-    maxAmountsIn: BigNumberish[];
-    userData: BytesLike;
-    fromInternalBalance: boolean;
+    assets: PromiseOrValue<string>[];
+    maxAmountsIn: PromiseOrValue<BigNumberish>[];
+    userData: PromiseOrValue<BytesLike>;
+    fromInternalBalance: PromiseOrValue<boolean>;
   };
 
   export type JoinPoolRequestStructOutput = [string[], BigNumber[], string, boolean] & {
@@ -58,11 +58,11 @@ export interface AuraBalancerHelpersInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: 'queryExit',
-    values: [BytesLike, string, string, IVault.ExitPoolRequestStruct],
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>, PromiseOrValue<string>, IVault.ExitPoolRequestStruct],
   ): string;
   encodeFunctionData(
     functionFragment: 'queryJoin',
-    values: [BytesLike, string, string, IVault.JoinPoolRequestStruct],
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>, PromiseOrValue<string>, IVault.JoinPoolRequestStruct],
   ): string;
   encodeFunctionData(functionFragment: 'vault', values?: undefined): string;
 
@@ -97,55 +97,55 @@ export interface AuraBalancerHelpers extends BaseContract {
 
   functions: {
     queryExit(
-      poolId: BytesLike,
-      sender: string,
-      recipient: string,
+      poolId: PromiseOrValue<BytesLike>,
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
       request: IVault.ExitPoolRequestStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     queryJoin(
-      poolId: BytesLike,
-      sender: string,
-      recipient: string,
+      poolId: PromiseOrValue<BytesLike>,
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
       request: IVault.JoinPoolRequestStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     vault(overrides?: CallOverrides): Promise<[string]>;
   };
 
   queryExit(
-    poolId: BytesLike,
-    sender: string,
-    recipient: string,
+    poolId: PromiseOrValue<BytesLike>,
+    sender: PromiseOrValue<string>,
+    recipient: PromiseOrValue<string>,
     request: IVault.ExitPoolRequestStruct,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   queryJoin(
-    poolId: BytesLike,
-    sender: string,
-    recipient: string,
+    poolId: PromiseOrValue<BytesLike>,
+    sender: PromiseOrValue<string>,
+    recipient: PromiseOrValue<string>,
     request: IVault.JoinPoolRequestStruct,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   vault(overrides?: CallOverrides): Promise<string>;
 
   callStatic: {
     queryExit(
-      poolId: BytesLike,
-      sender: string,
-      recipient: string,
+      poolId: PromiseOrValue<BytesLike>,
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
       request: IVault.ExitPoolRequestStruct,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber[]] & { bptIn: BigNumber; amountsOut: BigNumber[] }>;
 
     queryJoin(
-      poolId: BytesLike,
-      sender: string,
-      recipient: string,
+      poolId: PromiseOrValue<BytesLike>,
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
       request: IVault.JoinPoolRequestStruct,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber[]] & { bptOut: BigNumber; amountsIn: BigNumber[] }>;
@@ -157,19 +157,19 @@ export interface AuraBalancerHelpers extends BaseContract {
 
   estimateGas: {
     queryExit(
-      poolId: BytesLike,
-      sender: string,
-      recipient: string,
+      poolId: PromiseOrValue<BytesLike>,
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
       request: IVault.ExitPoolRequestStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     queryJoin(
-      poolId: BytesLike,
-      sender: string,
-      recipient: string,
+      poolId: PromiseOrValue<BytesLike>,
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
       request: IVault.JoinPoolRequestStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     vault(overrides?: CallOverrides): Promise<BigNumber>;
@@ -177,19 +177,19 @@ export interface AuraBalancerHelpers extends BaseContract {
 
   populateTransaction: {
     queryExit(
-      poolId: BytesLike,
-      sender: string,
-      recipient: string,
+      poolId: PromiseOrValue<BytesLike>,
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
       request: IVault.ExitPoolRequestStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     queryJoin(
-      poolId: BytesLike,
-      sender: string,
-      recipient: string,
+      poolId: PromiseOrValue<BytesLike>,
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
       request: IVault.JoinPoolRequestStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     vault(overrides?: CallOverrides): Promise<PopulatedTransaction>;
