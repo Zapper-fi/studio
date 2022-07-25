@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface GoodghostingAbiV003Interface extends utils.Interface {
   functions: {
@@ -145,14 +145,14 @@ export interface GoodghostingAbiV003Interface extends utils.Interface {
   encodeFunctionData(functionFragment: 'impermanentLossShare', values?: undefined): string;
   encodeFunctionData(functionFragment: 'inboundTokenIndex', values?: undefined): string;
   encodeFunctionData(functionFragment: 'incentiveToken', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'iterablePlayers', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'iterablePlayers', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'lastSegment', values?: undefined): string;
   encodeFunctionData(functionFragment: 'lpToken', values?: undefined): string;
   encodeFunctionData(functionFragment: 'matic', values?: undefined): string;
   encodeFunctionData(functionFragment: 'maxPlayersCount', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'paused', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'players', values: [string]): string;
+  encodeFunctionData(functionFragment: 'players', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'pool', values?: undefined): string;
   encodeFunctionData(functionFragment: 'poolType', values?: undefined): string;
   encodeFunctionData(functionFragment: 'redeemed', values?: undefined): string;
@@ -162,20 +162,20 @@ export interface GoodghostingAbiV003Interface extends utils.Interface {
   encodeFunctionData(functionFragment: 'totalGameInterest', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalGamePrincipal', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalIncentiveAmount', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'winnerCount', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'winners', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'winners', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'pause', values?: undefined): string;
   encodeFunctionData(functionFragment: 'unpause', values?: undefined): string;
   encodeFunctionData(functionFragment: 'adminFeeWithdraw', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'joinGame', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'earlyWithdraw', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'withdraw', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'makeDeposit', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'joinGame', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'earlyWithdraw', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'withdraw', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'makeDeposit', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'unlockRenounceOwnership', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getNumberOfPlayers', values?: undefined): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'redeemFromExternalPool', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'redeemFromExternalPool', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'getCurrentSegment', values?: undefined): string;
   encodeFunctionData(functionFragment: 'isGameCompleted', values?: undefined): string;
 
@@ -406,7 +406,7 @@ export interface GoodghostingAbiV003 extends BaseContract {
 
     incentiveToken(overrides?: CallOverrides): Promise<[string]>;
 
-    iterablePlayers(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    iterablePlayers(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
     lastSegment(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -421,7 +421,7 @@ export interface GoodghostingAbiV003 extends BaseContract {
     paused(overrides?: CallOverrides): Promise<[boolean]>;
 
     players(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [boolean, boolean, boolean, string, BigNumber, BigNumber, BigNumber] & {
@@ -454,49 +454,49 @@ export interface GoodghostingAbiV003 extends BaseContract {
     totalIncentiveAmount(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     winnerCount(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    winners(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    winners(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
-    pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    adminFeeWithdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    adminFeeWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     joinGame(
-      _minAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _minAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     earlyWithdraw(
-      _minAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _minAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     withdraw(
-      _minAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _minAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     makeDeposit(
-      _minAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _minAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    unlockRenounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    unlockRenounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     getNumberOfPlayers(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     redeemFromExternalPool(
-      _minAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _minAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     getCurrentSegment(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -540,7 +540,7 @@ export interface GoodghostingAbiV003 extends BaseContract {
 
   incentiveToken(overrides?: CallOverrides): Promise<string>;
 
-  iterablePlayers(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  iterablePlayers(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   lastSegment(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -555,7 +555,7 @@ export interface GoodghostingAbiV003 extends BaseContract {
   paused(overrides?: CallOverrides): Promise<boolean>;
 
   players(
-    arg0: string,
+    arg0: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<
     [boolean, boolean, boolean, string, BigNumber, BigNumber, BigNumber] & {
@@ -588,49 +588,49 @@ export interface GoodghostingAbiV003 extends BaseContract {
   totalIncentiveAmount(overrides?: CallOverrides): Promise<BigNumber>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   winnerCount(overrides?: CallOverrides): Promise<BigNumber>;
 
-  winners(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  winners(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
-  pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  adminFeeWithdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  adminFeeWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   joinGame(
-    _minAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _minAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   earlyWithdraw(
-    _minAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _minAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   withdraw(
-    _minAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _minAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   makeDeposit(
-    _minAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _minAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  unlockRenounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  unlockRenounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   getNumberOfPlayers(overrides?: CallOverrides): Promise<BigNumber>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   redeemFromExternalPool(
-    _minAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _minAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   getCurrentSegment(overrides?: CallOverrides): Promise<BigNumber>;
@@ -674,7 +674,7 @@ export interface GoodghostingAbiV003 extends BaseContract {
 
     incentiveToken(overrides?: CallOverrides): Promise<string>;
 
-    iterablePlayers(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    iterablePlayers(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
     lastSegment(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -689,7 +689,7 @@ export interface GoodghostingAbiV003 extends BaseContract {
     paused(overrides?: CallOverrides): Promise<boolean>;
 
     players(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [boolean, boolean, boolean, string, BigNumber, BigNumber, BigNumber] & {
@@ -721,11 +721,11 @@ export interface GoodghostingAbiV003 extends BaseContract {
 
     totalIncentiveAmount(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     winnerCount(overrides?: CallOverrides): Promise<BigNumber>;
 
-    winners(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    winners(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
     pause(overrides?: CallOverrides): Promise<void>;
 
@@ -733,13 +733,13 @@ export interface GoodghostingAbiV003 extends BaseContract {
 
     adminFeeWithdraw(overrides?: CallOverrides): Promise<void>;
 
-    joinGame(_minAmount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    joinGame(_minAmount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    earlyWithdraw(_minAmount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    earlyWithdraw(_minAmount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    withdraw(_minAmount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    withdraw(_minAmount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    makeDeposit(_minAmount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    makeDeposit(_minAmount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     unlockRenounceOwnership(overrides?: CallOverrides): Promise<void>;
 
@@ -747,7 +747,7 @@ export interface GoodghostingAbiV003 extends BaseContract {
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
-    redeemFromExternalPool(_minAmount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    redeemFromExternalPool(_minAmount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     getCurrentSegment(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -756,31 +756,39 @@ export interface GoodghostingAbiV003 extends BaseContract {
 
   filters: {
     'AdminWithdrawal(address,uint256,uint256,uint256)'(
-      admin?: string | null,
+      admin?: PromiseOrValue<string> | null,
       totalGameInterest?: null,
       adminFeeAmount?: null,
       adminIncentiveAmount?: null,
     ): AdminWithdrawalEventFilter;
     AdminWithdrawal(
-      admin?: string | null,
+      admin?: PromiseOrValue<string> | null,
       totalGameInterest?: null,
       adminFeeAmount?: null,
       adminIncentiveAmount?: null,
     ): AdminWithdrawalEventFilter;
 
     'Deposit(address,uint256,uint256)'(
-      player?: string | null,
-      segment?: BigNumberish | null,
+      player?: PromiseOrValue<string> | null,
+      segment?: PromiseOrValue<BigNumberish> | null,
       amount?: null,
     ): DepositEventFilter;
-    Deposit(player?: string | null, segment?: BigNumberish | null, amount?: null): DepositEventFilter;
+    Deposit(
+      player?: PromiseOrValue<string> | null,
+      segment?: PromiseOrValue<BigNumberish> | null,
+      amount?: null,
+    ): DepositEventFilter;
 
     'EarlyWithdrawal(address,uint256,uint256)'(
-      player?: string | null,
+      player?: PromiseOrValue<string> | null,
       amount?: null,
       totalGamePrincipal?: null,
     ): EarlyWithdrawalEventFilter;
-    EarlyWithdrawal(player?: string | null, amount?: null, totalGamePrincipal?: null): EarlyWithdrawalEventFilter;
+    EarlyWithdrawal(
+      player?: PromiseOrValue<string> | null,
+      amount?: null,
+      totalGamePrincipal?: null,
+    ): EarlyWithdrawalEventFilter;
 
     'FundsRedeemedFromExternalPool(uint256,uint256,uint256,uint256,uint256,uint256)'(
       totalAmount?: null,
@@ -799,14 +807,17 @@ export interface GoodghostingAbiV003 extends BaseContract {
       totalIncentiveAmount?: null,
     ): FundsRedeemedFromExternalPoolEventFilter;
 
-    'JoinedGame(address,uint256)'(player?: string | null, amount?: null): JoinedGameEventFilter;
-    JoinedGame(player?: string | null, amount?: null): JoinedGameEventFilter;
+    'JoinedGame(address,uint256)'(player?: PromiseOrValue<string> | null, amount?: null): JoinedGameEventFilter;
+    JoinedGame(player?: PromiseOrValue<string> | null, amount?: null): JoinedGameEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
 
     'Paused(address)'(account?: null): PausedEventFilter;
     Paused(account?: null): PausedEventFilter;
@@ -818,14 +829,14 @@ export interface GoodghostingAbiV003 extends BaseContract {
     WinnersAnnouncement(winners?: null): WinnersAnnouncementEventFilter;
 
     'Withdrawal(address,uint256,uint256,uint256,uint256)'(
-      player?: string | null,
+      player?: PromiseOrValue<string> | null,
       amount?: null,
       playerReward?: null,
       playerCurveReward?: null,
       playerIncentive?: null,
     ): WithdrawalEventFilter;
     Withdrawal(
-      player?: string | null,
+      player?: PromiseOrValue<string> | null,
       amount?: null,
       playerReward?: null,
       playerCurveReward?: null,
@@ -870,7 +881,7 @@ export interface GoodghostingAbiV003 extends BaseContract {
 
     incentiveToken(overrides?: CallOverrides): Promise<BigNumber>;
 
-    iterablePlayers(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    iterablePlayers(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     lastSegment(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -884,7 +895,7 @@ export interface GoodghostingAbiV003 extends BaseContract {
 
     paused(overrides?: CallOverrides): Promise<BigNumber>;
 
-    players(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    players(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     pool(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -905,43 +916,49 @@ export interface GoodghostingAbiV003 extends BaseContract {
     totalIncentiveAmount(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     winnerCount(overrides?: CallOverrides): Promise<BigNumber>;
 
-    winners(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    winners(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    adminFeeWithdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    adminFeeWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    joinGame(_minAmount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    joinGame(
+      _minAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     earlyWithdraw(
-      _minAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _minAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    withdraw(_minAmount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    withdraw(
+      _minAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     makeDeposit(
-      _minAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _minAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    unlockRenounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    unlockRenounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     getNumberOfPlayers(overrides?: CallOverrides): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     redeemFromExternalPool(
-      _minAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _minAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     getCurrentSegment(overrides?: CallOverrides): Promise<BigNumber>;
@@ -986,7 +1003,7 @@ export interface GoodghostingAbiV003 extends BaseContract {
 
     incentiveToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    iterablePlayers(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    iterablePlayers(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     lastSegment(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1000,7 +1017,7 @@ export interface GoodghostingAbiV003 extends BaseContract {
 
     paused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    players(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    players(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     pool(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1021,49 +1038,49 @@ export interface GoodghostingAbiV003 extends BaseContract {
     totalIncentiveAmount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     winnerCount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    winners(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    winners(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    adminFeeWithdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    adminFeeWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     joinGame(
-      _minAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _minAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     earlyWithdraw(
-      _minAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _minAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     withdraw(
-      _minAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _minAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     makeDeposit(
-      _minAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _minAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    unlockRenounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    unlockRenounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     getNumberOfPlayers(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     redeemFromExternalPool(
-      _minAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _minAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     getCurrentSegment(overrides?: CallOverrides): Promise<PopulatedTransaction>;

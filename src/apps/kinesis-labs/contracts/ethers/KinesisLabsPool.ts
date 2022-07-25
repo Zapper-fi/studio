@@ -9,207 +9,184 @@ import type {
   CallOverrides,
   ContractTransaction,
   Overrides,
-  PayableOverrides,
   PopulatedTransaction,
   Signer,
   utils,
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface KinesisLabsPoolInterface extends utils.Interface {
   functions: {
-    'MAX_BPS()': FunctionFragment;
     'addLiquidity(uint256[],uint256,uint256)': FunctionFragment;
-    'calculateRemoveLiquidity(uint256)': FunctionFragment;
-    'calculateRemoveLiquidityOneToken(uint256,uint8)': FunctionFragment;
+    'calculateCurrentWithdrawFee(address)': FunctionFragment;
+    'calculateRemoveLiquidity(address,uint256)': FunctionFragment;
+    'calculateRemoveLiquidityOneToken(address,uint256,uint8)': FunctionFragment;
     'calculateSwap(uint8,uint8,uint256)': FunctionFragment;
-    'calculateTokenAmount(uint256[],bool)': FunctionFragment;
-    'flashLoan(address,address,uint256,bytes)': FunctionFragment;
-    'flashLoanFeeBPS()': FunctionFragment;
+    'calculateTokenAmount(address,uint256[],bool)': FunctionFragment;
     'getA()': FunctionFragment;
     'getAPrecise()': FunctionFragment;
     'getAdminBalance(uint256)': FunctionFragment;
+    'getDepositTimestamp(address)': FunctionFragment;
     'getToken(uint8)': FunctionFragment;
     'getTokenBalance(uint8)': FunctionFragment;
     'getTokenIndex(address)': FunctionFragment;
     'getVirtualPrice()': FunctionFragment;
-    'initialize(address[],uint8[],string,string,uint256,uint256,uint256,address)': FunctionFragment;
-    'owner()': FunctionFragment;
-    'pause()': FunctionFragment;
-    'paused()': FunctionFragment;
-    'protocolFeeShareBPS()': FunctionFragment;
-    'rampA(uint256,uint256)': FunctionFragment;
+    'initialize(address[],uint8[],string,string,uint256,uint256,uint256,uint256)': FunctionFragment;
     'removeLiquidity(uint256,uint256[],uint256)': FunctionFragment;
     'removeLiquidityImbalance(uint256[],uint256,uint256)': FunctionFragment;
     'removeLiquidityOneToken(uint256,uint8,uint256,uint256)': FunctionFragment;
-    'renounceOwnership()': FunctionFragment;
-    'setAdminFee(uint256)': FunctionFragment;
-    'setFlashLoanFees(uint256,uint256)': FunctionFragment;
-    'setSwapFee(uint256)': FunctionFragment;
-    'stopRampA()': FunctionFragment;
     'swap(uint8,uint8,uint256,uint256,uint256)': FunctionFragment;
     'swapStorage()': FunctionFragment;
-    'transferOwnership(address)': FunctionFragment;
-    'unpause()': FunctionFragment;
-    'withdrawAdminFees()': FunctionFragment;
+    'updateUserWithdrawFee(address,uint256)': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | 'MAX_BPS'
       | 'addLiquidity'
+      | 'calculateCurrentWithdrawFee'
       | 'calculateRemoveLiquidity'
       | 'calculateRemoveLiquidityOneToken'
       | 'calculateSwap'
       | 'calculateTokenAmount'
-      | 'flashLoan'
-      | 'flashLoanFeeBPS'
       | 'getA'
       | 'getAPrecise'
       | 'getAdminBalance'
+      | 'getDepositTimestamp'
       | 'getToken'
       | 'getTokenBalance'
       | 'getTokenIndex'
       | 'getVirtualPrice'
       | 'initialize'
-      | 'owner'
-      | 'pause'
-      | 'paused'
-      | 'protocolFeeShareBPS'
-      | 'rampA'
       | 'removeLiquidity'
       | 'removeLiquidityImbalance'
       | 'removeLiquidityOneToken'
-      | 'renounceOwnership'
-      | 'setAdminFee'
-      | 'setFlashLoanFees'
-      | 'setSwapFee'
-      | 'stopRampA'
       | 'swap'
       | 'swapStorage'
-      | 'transferOwnership'
-      | 'unpause'
-      | 'withdrawAdminFees',
+      | 'updateUserWithdrawFee',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'MAX_BPS', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'addLiquidity', values: [BigNumberish[], BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'calculateRemoveLiquidity', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'addLiquidity',
+    values: [PromiseOrValue<BigNumberish>[], PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'calculateCurrentWithdrawFee', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'calculateRemoveLiquidity',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(
     functionFragment: 'calculateRemoveLiquidityOneToken',
-    values: [BigNumberish, BigNumberish],
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
   ): string;
-  encodeFunctionData(functionFragment: 'calculateSwap', values: [BigNumberish, BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'calculateTokenAmount', values: [BigNumberish[], boolean]): string;
-  encodeFunctionData(functionFragment: 'flashLoan', values: [string, string, BigNumberish, BytesLike]): string;
-  encodeFunctionData(functionFragment: 'flashLoanFeeBPS', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'calculateSwap',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'calculateTokenAmount',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>[], PromiseOrValue<boolean>],
+  ): string;
   encodeFunctionData(functionFragment: 'getA', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getAPrecise', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getAdminBalance', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'getToken', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'getTokenBalance', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'getTokenIndex', values: [string]): string;
+  encodeFunctionData(functionFragment: 'getAdminBalance', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'getDepositTimestamp', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getToken', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'getTokenBalance', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'getTokenIndex', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'getVirtualPrice', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'initialize',
-    values: [string[], BigNumberish[], string, string, BigNumberish, BigNumberish, BigNumberish, string],
+    values: [
+      PromiseOrValue<string>[],
+      PromiseOrValue<BigNumberish>[],
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'pause', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'paused', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'protocolFeeShareBPS', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'rampA', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'removeLiquidity', values: [BigNumberish, BigNumberish[], BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'removeLiquidity',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>[], PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(
     functionFragment: 'removeLiquidityImbalance',
-    values: [BigNumberish[], BigNumberish, BigNumberish],
+    values: [PromiseOrValue<BigNumberish>[], PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(
     functionFragment: 'removeLiquidityOneToken',
-    values: [BigNumberish, BigNumberish, BigNumberish, BigNumberish],
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'setAdminFee', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setFlashLoanFees', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setSwapFee', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'stopRampA', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'swap',
-    values: [BigNumberish, BigNumberish, BigNumberish, BigNumberish, BigNumberish],
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'swapStorage', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
-  encodeFunctionData(functionFragment: 'unpause', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'withdrawAdminFees', values?: undefined): string;
+  encodeFunctionData(
+    functionFragment: 'updateUserWithdrawFee',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
 
-  decodeFunctionResult(functionFragment: 'MAX_BPS', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'addLiquidity', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'calculateCurrentWithdrawFee', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'calculateRemoveLiquidity', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'calculateRemoveLiquidityOneToken', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'calculateSwap', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'calculateTokenAmount', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'flashLoan', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'flashLoanFeeBPS', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getA', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getAPrecise', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getAdminBalance', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getDepositTimestamp', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getToken', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getTokenBalance', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getTokenIndex', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getVirtualPrice', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'initialize', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'pause', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'paused', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'protocolFeeShareBPS', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'rampA', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'removeLiquidity', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'removeLiquidityImbalance', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'removeLiquidityOneToken', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'renounceOwnership', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'setAdminFee', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'setFlashLoanFees', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'setSwapFee', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'stopRampA', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'swap', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'swapStorage', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'transferOwnership', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'unpause', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'withdrawAdminFees', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'updateUserWithdrawFee', data: BytesLike): Result;
 
   events: {
     'AddLiquidity(address,uint256[],uint256[],uint256,uint256)': EventFragment;
-    'FlashLoan(address,uint8,uint256,uint256,uint256)': EventFragment;
     'NewAdminFee(uint256)': EventFragment;
     'NewSwapFee(uint256)': EventFragment;
     'NewWithdrawFee(uint256)': EventFragment;
-    'OwnershipTransferred(address,address)': EventFragment;
-    'Paused(address)': EventFragment;
     'RampA(uint256,uint256,uint256,uint256)': EventFragment;
     'RemoveLiquidity(address,uint256[],uint256)': EventFragment;
     'RemoveLiquidityImbalance(address,uint256[],uint256[],uint256,uint256)': EventFragment;
     'RemoveLiquidityOne(address,uint256,uint256,uint256,uint256)': EventFragment;
     'StopRampA(uint256,uint256)': EventFragment;
     'TokenSwap(address,uint256,uint256,uint128,uint128)': EventFragment;
-    'Unpaused(address)': EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: 'AddLiquidity'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'FlashLoan'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'NewAdminFee'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'NewSwapFee'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'NewWithdrawFee'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'OwnershipTransferred'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'Paused'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'RampA'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'RemoveLiquidity'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'RemoveLiquidityImbalance'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'RemoveLiquidityOne'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'StopRampA'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'TokenSwap'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'Unpaused'): EventFragment;
 }
 
 export interface AddLiquidityEventObject {
@@ -225,17 +202,6 @@ export type AddLiquidityEvent = TypedEvent<
 >;
 
 export type AddLiquidityEventFilter = TypedEventFilter<AddLiquidityEvent>;
-
-export interface FlashLoanEventObject {
-  receiver: string;
-  tokenIndex: number;
-  amount: BigNumber;
-  amountFee: BigNumber;
-  protocolFee: BigNumber;
-}
-export type FlashLoanEvent = TypedEvent<[string, number, BigNumber, BigNumber, BigNumber], FlashLoanEventObject>;
-
-export type FlashLoanEventFilter = TypedEventFilter<FlashLoanEvent>;
 
 export interface NewAdminFeeEventObject {
   newAdminFee: BigNumber;
@@ -257,21 +223,6 @@ export interface NewWithdrawFeeEventObject {
 export type NewWithdrawFeeEvent = TypedEvent<[BigNumber], NewWithdrawFeeEventObject>;
 
 export type NewWithdrawFeeEventFilter = TypedEventFilter<NewWithdrawFeeEvent>;
-
-export interface OwnershipTransferredEventObject {
-  previousOwner: string;
-  newOwner: string;
-}
-export type OwnershipTransferredEvent = TypedEvent<[string, string], OwnershipTransferredEventObject>;
-
-export type OwnershipTransferredEventFilter = TypedEventFilter<OwnershipTransferredEvent>;
-
-export interface PausedEventObject {
-  account: string;
-}
-export type PausedEvent = TypedEvent<[string], PausedEventObject>;
-
-export type PausedEventFilter = TypedEventFilter<PausedEvent>;
 
 export interface RampAEventObject {
   oldA: BigNumber;
@@ -339,13 +290,6 @@ export type TokenSwapEvent = TypedEvent<[string, BigNumber, BigNumber, BigNumber
 
 export type TokenSwapEventFilter = TypedEventFilter<TokenSwapEvent>;
 
-export interface UnpausedEventObject {
-  account: string;
-}
-export type UnpausedEvent = TypedEvent<[string], UnpausedEventObject>;
-
-export type UnpausedEventFilter = TypedEventFilter<UnpausedEvent>;
-
 export interface KinesisLabsPool extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
@@ -369,470 +313,366 @@ export interface KinesisLabsPool extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    MAX_BPS(overrides?: CallOverrides): Promise<[BigNumber]>;
-
     addLiquidity(
-      amounts: BigNumberish[],
-      minToMint: BigNumberish,
-      deadline: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      amounts: PromiseOrValue<BigNumberish>[],
+      minToMint: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    calculateRemoveLiquidity(amount: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber[]]>;
+    calculateCurrentWithdrawFee(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    calculateRemoveLiquidity(
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber[]]>;
 
     calculateRemoveLiquidityOneToken(
-      tokenAmount: BigNumberish,
-      tokenIndex: BigNumberish,
+      account: PromiseOrValue<string>,
+      tokenAmount: PromiseOrValue<BigNumberish>,
+      tokenIndex: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber] & { availableTokenAmount: BigNumber }>;
 
     calculateSwap(
-      tokenIndexFrom: BigNumberish,
-      tokenIndexTo: BigNumberish,
-      dx: BigNumberish,
+      tokenIndexFrom: PromiseOrValue<BigNumberish>,
+      tokenIndexTo: PromiseOrValue<BigNumberish>,
+      dx: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
-    calculateTokenAmount(amounts: BigNumberish[], deposit: boolean, overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    flashLoan(
-      receiver: string,
-      token: string,
-      amount: BigNumberish,
-      params: BytesLike,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
-
-    flashLoanFeeBPS(overrides?: CallOverrides): Promise<[BigNumber]>;
+    calculateTokenAmount(
+      account: PromiseOrValue<string>,
+      amounts: PromiseOrValue<BigNumberish>[],
+      deposit: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     getA(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     getAPrecise(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getAdminBalance(index: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getAdminBalance(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getToken(index: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    getDepositTimestamp(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getTokenBalance(index: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getToken(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
-    getTokenIndex(tokenAddress: string, overrides?: CallOverrides): Promise<[number]>;
+    getTokenBalance(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    getTokenIndex(tokenAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[number]>;
 
     getVirtualPrice(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     initialize(
-      _pooledTokens: string[],
-      decimals: BigNumberish[],
-      lpTokenName: string,
-      lpTokenSymbol: string,
-      _a: BigNumberish,
-      _fee: BigNumberish,
-      _adminFee: BigNumberish,
-      lpTokenTargetAddress: string,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
-
-    owner(overrides?: CallOverrides): Promise<[string]>;
-
-    pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
-
-    paused(overrides?: CallOverrides): Promise<[boolean]>;
-
-    protocolFeeShareBPS(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    rampA(
-      futureA: BigNumberish,
-      futureTime: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      _pooledTokens: PromiseOrValue<string>[],
+      decimals: PromiseOrValue<BigNumberish>[],
+      lpTokenName: PromiseOrValue<string>,
+      lpTokenSymbol: PromiseOrValue<string>,
+      _a: PromiseOrValue<BigNumberish>,
+      _fee: PromiseOrValue<BigNumberish>,
+      _adminFee: PromiseOrValue<BigNumberish>,
+      _withdrawFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     removeLiquidity(
-      amount: BigNumberish,
-      minAmounts: BigNumberish[],
-      deadline: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      minAmounts: PromiseOrValue<BigNumberish>[],
+      deadline: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     removeLiquidityImbalance(
-      amounts: BigNumberish[],
-      maxBurnAmount: BigNumberish,
-      deadline: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      amounts: PromiseOrValue<BigNumberish>[],
+      maxBurnAmount: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     removeLiquidityOneToken(
-      tokenAmount: BigNumberish,
-      tokenIndex: BigNumberish,
-      minAmount: BigNumberish,
-      deadline: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      tokenAmount: PromiseOrValue<BigNumberish>,
+      tokenIndex: PromiseOrValue<BigNumberish>,
+      minAmount: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
-
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
-
-    setAdminFee(
-      newAdminFee: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
-
-    setFlashLoanFees(
-      newFlashLoanFeeBPS: BigNumberish,
-      newProtocolFeeShareBPS: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
-
-    setSwapFee(
-      newSwapFee: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
-
-    stopRampA(overrides?: PayableOverrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
 
     swap(
-      tokenIndexFrom: BigNumberish,
-      tokenIndexTo: BigNumberish,
-      dx: BigNumberish,
-      minDy: BigNumberish,
-      deadline: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      tokenIndexFrom: PromiseOrValue<BigNumberish>,
+      tokenIndexTo: PromiseOrValue<BigNumberish>,
+      dx: PromiseOrValue<BigNumberish>,
+      minDy: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     swapStorage(overrides?: CallOverrides): Promise<
-      [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, string] & {
+      [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, string] & {
         initialA: BigNumber;
         futureA: BigNumber;
         initialATime: BigNumber;
         futureATime: BigNumber;
         swapFee: BigNumber;
         adminFee: BigNumber;
+        defaultWithdrawFee: BigNumber;
         lpToken: string;
       }
     >;
 
-    transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    updateUserWithdrawFee(
+      recipient: PromiseOrValue<string>,
+      transferAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
-
-    unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
-
-    withdrawAdminFees(overrides?: PayableOverrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
   };
 
-  MAX_BPS(overrides?: CallOverrides): Promise<BigNumber>;
-
   addLiquidity(
-    amounts: BigNumberish[],
-    minToMint: BigNumberish,
-    deadline: BigNumberish,
-    overrides?: PayableOverrides & { from?: string | Promise<string> },
+    amounts: PromiseOrValue<BigNumberish>[],
+    minToMint: PromiseOrValue<BigNumberish>,
+    deadline: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  calculateRemoveLiquidity(amount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber[]>;
+  calculateCurrentWithdrawFee(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+  calculateRemoveLiquidity(
+    account: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber[]>;
 
   calculateRemoveLiquidityOneToken(
-    tokenAmount: BigNumberish,
-    tokenIndex: BigNumberish,
+    account: PromiseOrValue<string>,
+    tokenAmount: PromiseOrValue<BigNumberish>,
+    tokenIndex: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
   calculateSwap(
-    tokenIndexFrom: BigNumberish,
-    tokenIndexTo: BigNumberish,
-    dx: BigNumberish,
+    tokenIndexFrom: PromiseOrValue<BigNumberish>,
+    tokenIndexTo: PromiseOrValue<BigNumberish>,
+    dx: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
-  calculateTokenAmount(amounts: BigNumberish[], deposit: boolean, overrides?: CallOverrides): Promise<BigNumber>;
-
-  flashLoan(
-    receiver: string,
-    token: string,
-    amount: BigNumberish,
-    params: BytesLike,
-    overrides?: PayableOverrides & { from?: string | Promise<string> },
-  ): Promise<ContractTransaction>;
-
-  flashLoanFeeBPS(overrides?: CallOverrides): Promise<BigNumber>;
+  calculateTokenAmount(
+    account: PromiseOrValue<string>,
+    amounts: PromiseOrValue<BigNumberish>[],
+    deposit: PromiseOrValue<boolean>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   getA(overrides?: CallOverrides): Promise<BigNumber>;
 
   getAPrecise(overrides?: CallOverrides): Promise<BigNumber>;
 
-  getAdminBalance(index: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  getAdminBalance(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  getToken(index: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  getDepositTimestamp(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  getTokenBalance(index: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  getToken(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
-  getTokenIndex(tokenAddress: string, overrides?: CallOverrides): Promise<number>;
+  getTokenBalance(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
+
+  getTokenIndex(tokenAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<number>;
 
   getVirtualPrice(overrides?: CallOverrides): Promise<BigNumber>;
 
   initialize(
-    _pooledTokens: string[],
-    decimals: BigNumberish[],
-    lpTokenName: string,
-    lpTokenSymbol: string,
-    _a: BigNumberish,
-    _fee: BigNumberish,
-    _adminFee: BigNumberish,
-    lpTokenTargetAddress: string,
-    overrides?: PayableOverrides & { from?: string | Promise<string> },
-  ): Promise<ContractTransaction>;
-
-  owner(overrides?: CallOverrides): Promise<string>;
-
-  pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
-
-  paused(overrides?: CallOverrides): Promise<boolean>;
-
-  protocolFeeShareBPS(overrides?: CallOverrides): Promise<BigNumber>;
-
-  rampA(
-    futureA: BigNumberish,
-    futureTime: BigNumberish,
-    overrides?: PayableOverrides & { from?: string | Promise<string> },
+    _pooledTokens: PromiseOrValue<string>[],
+    decimals: PromiseOrValue<BigNumberish>[],
+    lpTokenName: PromiseOrValue<string>,
+    lpTokenSymbol: PromiseOrValue<string>,
+    _a: PromiseOrValue<BigNumberish>,
+    _fee: PromiseOrValue<BigNumberish>,
+    _adminFee: PromiseOrValue<BigNumberish>,
+    _withdrawFee: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   removeLiquidity(
-    amount: BigNumberish,
-    minAmounts: BigNumberish[],
-    deadline: BigNumberish,
-    overrides?: PayableOverrides & { from?: string | Promise<string> },
+    amount: PromiseOrValue<BigNumberish>,
+    minAmounts: PromiseOrValue<BigNumberish>[],
+    deadline: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   removeLiquidityImbalance(
-    amounts: BigNumberish[],
-    maxBurnAmount: BigNumberish,
-    deadline: BigNumberish,
-    overrides?: PayableOverrides & { from?: string | Promise<string> },
+    amounts: PromiseOrValue<BigNumberish>[],
+    maxBurnAmount: PromiseOrValue<BigNumberish>,
+    deadline: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   removeLiquidityOneToken(
-    tokenAmount: BigNumberish,
-    tokenIndex: BigNumberish,
-    minAmount: BigNumberish,
-    deadline: BigNumberish,
-    overrides?: PayableOverrides & { from?: string | Promise<string> },
+    tokenAmount: PromiseOrValue<BigNumberish>,
+    tokenIndex: PromiseOrValue<BigNumberish>,
+    minAmount: PromiseOrValue<BigNumberish>,
+    deadline: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
-
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
-
-  setAdminFee(
-    newAdminFee: BigNumberish,
-    overrides?: PayableOverrides & { from?: string | Promise<string> },
-  ): Promise<ContractTransaction>;
-
-  setFlashLoanFees(
-    newFlashLoanFeeBPS: BigNumberish,
-    newProtocolFeeShareBPS: BigNumberish,
-    overrides?: PayableOverrides & { from?: string | Promise<string> },
-  ): Promise<ContractTransaction>;
-
-  setSwapFee(
-    newSwapFee: BigNumberish,
-    overrides?: PayableOverrides & { from?: string | Promise<string> },
-  ): Promise<ContractTransaction>;
-
-  stopRampA(overrides?: PayableOverrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
 
   swap(
-    tokenIndexFrom: BigNumberish,
-    tokenIndexTo: BigNumberish,
-    dx: BigNumberish,
-    minDy: BigNumberish,
-    deadline: BigNumberish,
-    overrides?: PayableOverrides & { from?: string | Promise<string> },
+    tokenIndexFrom: PromiseOrValue<BigNumberish>,
+    tokenIndexTo: PromiseOrValue<BigNumberish>,
+    dx: PromiseOrValue<BigNumberish>,
+    minDy: PromiseOrValue<BigNumberish>,
+    deadline: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   swapStorage(overrides?: CallOverrides): Promise<
-    [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, string] & {
+    [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, string] & {
       initialA: BigNumber;
       futureA: BigNumber;
       initialATime: BigNumber;
       futureATime: BigNumber;
       swapFee: BigNumber;
       adminFee: BigNumber;
+      defaultWithdrawFee: BigNumber;
       lpToken: string;
     }
   >;
 
-  transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+  updateUserWithdrawFee(
+    recipient: PromiseOrValue<string>,
+    transferAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
-
-  withdrawAdminFees(overrides?: PayableOverrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
-
   callStatic: {
-    MAX_BPS(overrides?: CallOverrides): Promise<BigNumber>;
-
     addLiquidity(
-      amounts: BigNumberish[],
-      minToMint: BigNumberish,
-      deadline: BigNumberish,
+      amounts: PromiseOrValue<BigNumberish>[],
+      minToMint: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    calculateRemoveLiquidity(amount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber[]>;
+    calculateCurrentWithdrawFee(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    calculateRemoveLiquidity(
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber[]>;
 
     calculateRemoveLiquidityOneToken(
-      tokenAmount: BigNumberish,
-      tokenIndex: BigNumberish,
+      account: PromiseOrValue<string>,
+      tokenAmount: PromiseOrValue<BigNumberish>,
+      tokenIndex: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     calculateSwap(
-      tokenIndexFrom: BigNumberish,
-      tokenIndexTo: BigNumberish,
-      dx: BigNumberish,
+      tokenIndexFrom: PromiseOrValue<BigNumberish>,
+      tokenIndexTo: PromiseOrValue<BigNumberish>,
+      dx: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    calculateTokenAmount(amounts: BigNumberish[], deposit: boolean, overrides?: CallOverrides): Promise<BigNumber>;
-
-    flashLoan(
-      receiver: string,
-      token: string,
-      amount: BigNumberish,
-      params: BytesLike,
+    calculateTokenAmount(
+      account: PromiseOrValue<string>,
+      amounts: PromiseOrValue<BigNumberish>[],
+      deposit: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
-    ): Promise<void>;
-
-    flashLoanFeeBPS(overrides?: CallOverrides): Promise<BigNumber>;
+    ): Promise<BigNumber>;
 
     getA(overrides?: CallOverrides): Promise<BigNumber>;
 
     getAPrecise(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getAdminBalance(index: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getAdminBalance(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getToken(index: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    getDepositTimestamp(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getTokenBalance(index: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getToken(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
-    getTokenIndex(tokenAddress: string, overrides?: CallOverrides): Promise<number>;
+    getTokenBalance(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    getTokenIndex(tokenAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<number>;
 
     getVirtualPrice(overrides?: CallOverrides): Promise<BigNumber>;
 
     initialize(
-      _pooledTokens: string[],
-      decimals: BigNumberish[],
-      lpTokenName: string,
-      lpTokenSymbol: string,
-      _a: BigNumberish,
-      _fee: BigNumberish,
-      _adminFee: BigNumberish,
-      lpTokenTargetAddress: string,
+      _pooledTokens: PromiseOrValue<string>[],
+      decimals: PromiseOrValue<BigNumberish>[],
+      lpTokenName: PromiseOrValue<string>,
+      lpTokenSymbol: PromiseOrValue<string>,
+      _a: PromiseOrValue<BigNumberish>,
+      _fee: PromiseOrValue<BigNumberish>,
+      _adminFee: PromiseOrValue<BigNumberish>,
+      _withdrawFee: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    owner(overrides?: CallOverrides): Promise<string>;
-
-    pause(overrides?: CallOverrides): Promise<void>;
-
-    paused(overrides?: CallOverrides): Promise<boolean>;
-
-    protocolFeeShareBPS(overrides?: CallOverrides): Promise<BigNumber>;
-
-    rampA(futureA: BigNumberish, futureTime: BigNumberish, overrides?: CallOverrides): Promise<void>;
-
     removeLiquidity(
-      amount: BigNumberish,
-      minAmounts: BigNumberish[],
-      deadline: BigNumberish,
+      amount: PromiseOrValue<BigNumberish>,
+      minAmounts: PromiseOrValue<BigNumberish>[],
+      deadline: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber[]>;
 
     removeLiquidityImbalance(
-      amounts: BigNumberish[],
-      maxBurnAmount: BigNumberish,
-      deadline: BigNumberish,
+      amounts: PromiseOrValue<BigNumberish>[],
+      maxBurnAmount: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     removeLiquidityOneToken(
-      tokenAmount: BigNumberish,
-      tokenIndex: BigNumberish,
-      minAmount: BigNumberish,
-      deadline: BigNumberish,
+      tokenAmount: PromiseOrValue<BigNumberish>,
+      tokenIndex: PromiseOrValue<BigNumberish>,
+      minAmount: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: CallOverrides): Promise<void>;
-
-    setAdminFee(newAdminFee: BigNumberish, overrides?: CallOverrides): Promise<void>;
-
-    setFlashLoanFees(
-      newFlashLoanFeeBPS: BigNumberish,
-      newProtocolFeeShareBPS: BigNumberish,
-      overrides?: CallOverrides,
-    ): Promise<void>;
-
-    setSwapFee(newSwapFee: BigNumberish, overrides?: CallOverrides): Promise<void>;
-
-    stopRampA(overrides?: CallOverrides): Promise<void>;
-
     swap(
-      tokenIndexFrom: BigNumberish,
-      tokenIndexTo: BigNumberish,
-      dx: BigNumberish,
-      minDy: BigNumberish,
-      deadline: BigNumberish,
+      tokenIndexFrom: PromiseOrValue<BigNumberish>,
+      tokenIndexTo: PromiseOrValue<BigNumberish>,
+      dx: PromiseOrValue<BigNumberish>,
+      minDy: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     swapStorage(overrides?: CallOverrides): Promise<
-      [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, string] & {
+      [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, string] & {
         initialA: BigNumber;
         futureA: BigNumber;
         initialATime: BigNumber;
         futureATime: BigNumber;
         swapFee: BigNumber;
         adminFee: BigNumber;
+        defaultWithdrawFee: BigNumber;
         lpToken: string;
       }
     >;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
-
-    unpause(overrides?: CallOverrides): Promise<void>;
-
-    withdrawAdminFees(overrides?: CallOverrides): Promise<void>;
+    updateUserWithdrawFee(
+      recipient: PromiseOrValue<string>,
+      transferAmount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
   };
 
   filters: {
     'AddLiquidity(address,uint256[],uint256[],uint256,uint256)'(
-      provider?: string | null,
+      provider?: PromiseOrValue<string> | null,
       tokenAmounts?: null,
       fees?: null,
       invariant?: null,
       lpTokenSupply?: null,
     ): AddLiquidityEventFilter;
     AddLiquidity(
-      provider?: string | null,
+      provider?: PromiseOrValue<string> | null,
       tokenAmounts?: null,
       fees?: null,
       invariant?: null,
       lpTokenSupply?: null,
     ): AddLiquidityEventFilter;
-
-    'FlashLoan(address,uint8,uint256,uint256,uint256)'(
-      receiver?: string | null,
-      tokenIndex?: null,
-      amount?: null,
-      amountFee?: null,
-      protocolFee?: null,
-    ): FlashLoanEventFilter;
-    FlashLoan(
-      receiver?: string | null,
-      tokenIndex?: null,
-      amount?: null,
-      amountFee?: null,
-      protocolFee?: null,
-    ): FlashLoanEventFilter;
 
     'NewAdminFee(uint256)'(newAdminFee?: null): NewAdminFeeEventFilter;
     NewAdminFee(newAdminFee?: null): NewAdminFeeEventFilter;
@@ -843,15 +683,6 @@ export interface KinesisLabsPool extends BaseContract {
     'NewWithdrawFee(uint256)'(newWithdrawFee?: null): NewWithdrawFeeEventFilter;
     NewWithdrawFee(newWithdrawFee?: null): NewWithdrawFeeEventFilter;
 
-    'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
-    ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
-
-    'Paused(address)'(account?: null): PausedEventFilter;
-    Paused(account?: null): PausedEventFilter;
-
     'RampA(uint256,uint256,uint256,uint256)'(
       oldA?: null,
       newA?: null,
@@ -861,21 +692,25 @@ export interface KinesisLabsPool extends BaseContract {
     RampA(oldA?: null, newA?: null, initialTime?: null, futureTime?: null): RampAEventFilter;
 
     'RemoveLiquidity(address,uint256[],uint256)'(
-      provider?: string | null,
+      provider?: PromiseOrValue<string> | null,
       tokenAmounts?: null,
       lpTokenSupply?: null,
     ): RemoveLiquidityEventFilter;
-    RemoveLiquidity(provider?: string | null, tokenAmounts?: null, lpTokenSupply?: null): RemoveLiquidityEventFilter;
+    RemoveLiquidity(
+      provider?: PromiseOrValue<string> | null,
+      tokenAmounts?: null,
+      lpTokenSupply?: null,
+    ): RemoveLiquidityEventFilter;
 
     'RemoveLiquidityImbalance(address,uint256[],uint256[],uint256,uint256)'(
-      provider?: string | null,
+      provider?: PromiseOrValue<string> | null,
       tokenAmounts?: null,
       fees?: null,
       invariant?: null,
       lpTokenSupply?: null,
     ): RemoveLiquidityImbalanceEventFilter;
     RemoveLiquidityImbalance(
-      provider?: string | null,
+      provider?: PromiseOrValue<string> | null,
       tokenAmounts?: null,
       fees?: null,
       invariant?: null,
@@ -883,14 +718,14 @@ export interface KinesisLabsPool extends BaseContract {
     ): RemoveLiquidityImbalanceEventFilter;
 
     'RemoveLiquidityOne(address,uint256,uint256,uint256,uint256)'(
-      provider?: string | null,
+      provider?: PromiseOrValue<string> | null,
       lpTokenAmount?: null,
       lpTokenSupply?: null,
       boughtId?: null,
       tokensBought?: null,
     ): RemoveLiquidityOneEventFilter;
     RemoveLiquidityOne(
-      provider?: string | null,
+      provider?: PromiseOrValue<string> | null,
       lpTokenAmount?: null,
       lpTokenSupply?: null,
       boughtId?: null,
@@ -901,307 +736,228 @@ export interface KinesisLabsPool extends BaseContract {
     StopRampA(currentA?: null, time?: null): StopRampAEventFilter;
 
     'TokenSwap(address,uint256,uint256,uint128,uint128)'(
-      buyer?: string | null,
+      buyer?: PromiseOrValue<string> | null,
       tokensSold?: null,
       tokensBought?: null,
       soldId?: null,
       boughtId?: null,
     ): TokenSwapEventFilter;
     TokenSwap(
-      buyer?: string | null,
+      buyer?: PromiseOrValue<string> | null,
       tokensSold?: null,
       tokensBought?: null,
       soldId?: null,
       boughtId?: null,
     ): TokenSwapEventFilter;
-
-    'Unpaused(address)'(account?: null): UnpausedEventFilter;
-    Unpaused(account?: null): UnpausedEventFilter;
   };
 
   estimateGas: {
-    MAX_BPS(overrides?: CallOverrides): Promise<BigNumber>;
-
     addLiquidity(
-      amounts: BigNumberish[],
-      minToMint: BigNumberish,
-      deadline: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      amounts: PromiseOrValue<BigNumberish>[],
+      minToMint: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    calculateRemoveLiquidity(amount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    calculateCurrentWithdrawFee(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    calculateRemoveLiquidity(
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     calculateRemoveLiquidityOneToken(
-      tokenAmount: BigNumberish,
-      tokenIndex: BigNumberish,
+      account: PromiseOrValue<string>,
+      tokenAmount: PromiseOrValue<BigNumberish>,
+      tokenIndex: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     calculateSwap(
-      tokenIndexFrom: BigNumberish,
-      tokenIndexTo: BigNumberish,
-      dx: BigNumberish,
+      tokenIndexFrom: PromiseOrValue<BigNumberish>,
+      tokenIndexTo: PromiseOrValue<BigNumberish>,
+      dx: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    calculateTokenAmount(amounts: BigNumberish[], deposit: boolean, overrides?: CallOverrides): Promise<BigNumber>;
-
-    flashLoan(
-      receiver: string,
-      token: string,
-      amount: BigNumberish,
-      params: BytesLike,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+    calculateTokenAmount(
+      account: PromiseOrValue<string>,
+      amounts: PromiseOrValue<BigNumberish>[],
+      deposit: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
-
-    flashLoanFeeBPS(overrides?: CallOverrides): Promise<BigNumber>;
 
     getA(overrides?: CallOverrides): Promise<BigNumber>;
 
     getAPrecise(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getAdminBalance(index: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getAdminBalance(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getToken(index: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getDepositTimestamp(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getTokenBalance(index: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getToken(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getTokenIndex(tokenAddress: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getTokenBalance(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    getTokenIndex(tokenAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getVirtualPrice(overrides?: CallOverrides): Promise<BigNumber>;
 
     initialize(
-      _pooledTokens: string[],
-      decimals: BigNumberish[],
-      lpTokenName: string,
-      lpTokenSymbol: string,
-      _a: BigNumberish,
-      _fee: BigNumberish,
-      _adminFee: BigNumberish,
-      lpTokenTargetAddress: string,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
-    ): Promise<BigNumber>;
-
-    owner(overrides?: CallOverrides): Promise<BigNumber>;
-
-    pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
-
-    paused(overrides?: CallOverrides): Promise<BigNumber>;
-
-    protocolFeeShareBPS(overrides?: CallOverrides): Promise<BigNumber>;
-
-    rampA(
-      futureA: BigNumberish,
-      futureTime: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      _pooledTokens: PromiseOrValue<string>[],
+      decimals: PromiseOrValue<BigNumberish>[],
+      lpTokenName: PromiseOrValue<string>,
+      lpTokenSymbol: PromiseOrValue<string>,
+      _a: PromiseOrValue<BigNumberish>,
+      _fee: PromiseOrValue<BigNumberish>,
+      _adminFee: PromiseOrValue<BigNumberish>,
+      _withdrawFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     removeLiquidity(
-      amount: BigNumberish,
-      minAmounts: BigNumberish[],
-      deadline: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      minAmounts: PromiseOrValue<BigNumberish>[],
+      deadline: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     removeLiquidityImbalance(
-      amounts: BigNumberish[],
-      maxBurnAmount: BigNumberish,
-      deadline: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      amounts: PromiseOrValue<BigNumberish>[],
+      maxBurnAmount: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     removeLiquidityOneToken(
-      tokenAmount: BigNumberish,
-      tokenIndex: BigNumberish,
-      minAmount: BigNumberish,
-      deadline: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      tokenAmount: PromiseOrValue<BigNumberish>,
+      tokenIndex: PromiseOrValue<BigNumberish>,
+      minAmount: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
-
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
-
-    setAdminFee(
-      newAdminFee: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
-    ): Promise<BigNumber>;
-
-    setFlashLoanFees(
-      newFlashLoanFeeBPS: BigNumberish,
-      newProtocolFeeShareBPS: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
-    ): Promise<BigNumber>;
-
-    setSwapFee(
-      newSwapFee: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
-    ): Promise<BigNumber>;
-
-    stopRampA(overrides?: PayableOverrides & { from?: string | Promise<string> }): Promise<BigNumber>;
 
     swap(
-      tokenIndexFrom: BigNumberish,
-      tokenIndexTo: BigNumberish,
-      dx: BigNumberish,
-      minDy: BigNumberish,
-      deadline: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      tokenIndexFrom: PromiseOrValue<BigNumberish>,
+      tokenIndexTo: PromiseOrValue<BigNumberish>,
+      dx: PromiseOrValue<BigNumberish>,
+      minDy: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     swapStorage(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    updateUserWithdrawFee(
+      recipient: PromiseOrValue<string>,
+      transferAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
-
-    unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
-
-    withdrawAdminFees(overrides?: PayableOverrides & { from?: string | Promise<string> }): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    MAX_BPS(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
     addLiquidity(
-      amounts: BigNumberish[],
-      minToMint: BigNumberish,
-      deadline: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      amounts: PromiseOrValue<BigNumberish>[],
+      minToMint: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    calculateRemoveLiquidity(amount: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    calculateCurrentWithdrawFee(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    calculateRemoveLiquidity(
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     calculateRemoveLiquidityOneToken(
-      tokenAmount: BigNumberish,
-      tokenIndex: BigNumberish,
+      account: PromiseOrValue<string>,
+      tokenAmount: PromiseOrValue<BigNumberish>,
+      tokenIndex: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     calculateSwap(
-      tokenIndexFrom: BigNumberish,
-      tokenIndexTo: BigNumberish,
-      dx: BigNumberish,
+      tokenIndexFrom: PromiseOrValue<BigNumberish>,
+      tokenIndexTo: PromiseOrValue<BigNumberish>,
+      dx: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     calculateTokenAmount(
-      amounts: BigNumberish[],
-      deposit: boolean,
+      account: PromiseOrValue<string>,
+      amounts: PromiseOrValue<BigNumberish>[],
+      deposit: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
-
-    flashLoan(
-      receiver: string,
-      token: string,
-      amount: BigNumberish,
-      params: BytesLike,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
-    ): Promise<PopulatedTransaction>;
-
-    flashLoanFeeBPS(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getA(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getAPrecise(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getAdminBalance(index: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getAdminBalance(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getToken(index: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getDepositTimestamp(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getTokenBalance(index: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getToken(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getTokenIndex(tokenAddress: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getTokenBalance(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    getTokenIndex(tokenAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getVirtualPrice(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     initialize(
-      _pooledTokens: string[],
-      decimals: BigNumberish[],
-      lpTokenName: string,
-      lpTokenSymbol: string,
-      _a: BigNumberish,
-      _fee: BigNumberish,
-      _adminFee: BigNumberish,
-      lpTokenTargetAddress: string,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
-    ): Promise<PopulatedTransaction>;
-
-    owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
-
-    paused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    protocolFeeShareBPS(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    rampA(
-      futureA: BigNumberish,
-      futureTime: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      _pooledTokens: PromiseOrValue<string>[],
+      decimals: PromiseOrValue<BigNumberish>[],
+      lpTokenName: PromiseOrValue<string>,
+      lpTokenSymbol: PromiseOrValue<string>,
+      _a: PromiseOrValue<BigNumberish>,
+      _fee: PromiseOrValue<BigNumberish>,
+      _adminFee: PromiseOrValue<BigNumberish>,
+      _withdrawFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     removeLiquidity(
-      amount: BigNumberish,
-      minAmounts: BigNumberish[],
-      deadline: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      minAmounts: PromiseOrValue<BigNumberish>[],
+      deadline: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     removeLiquidityImbalance(
-      amounts: BigNumberish[],
-      maxBurnAmount: BigNumberish,
-      deadline: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      amounts: PromiseOrValue<BigNumberish>[],
+      maxBurnAmount: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     removeLiquidityOneToken(
-      tokenAmount: BigNumberish,
-      tokenIndex: BigNumberish,
-      minAmount: BigNumberish,
-      deadline: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      tokenAmount: PromiseOrValue<BigNumberish>,
+      tokenIndex: PromiseOrValue<BigNumberish>,
+      minAmount: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
-
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
-
-    setAdminFee(
-      newAdminFee: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
-    ): Promise<PopulatedTransaction>;
-
-    setFlashLoanFees(
-      newFlashLoanFeeBPS: BigNumberish,
-      newProtocolFeeShareBPS: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
-    ): Promise<PopulatedTransaction>;
-
-    setSwapFee(
-      newSwapFee: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
-    ): Promise<PopulatedTransaction>;
-
-    stopRampA(overrides?: PayableOverrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
 
     swap(
-      tokenIndexFrom: BigNumberish,
-      tokenIndexTo: BigNumberish,
-      dx: BigNumberish,
-      minDy: BigNumberish,
-      deadline: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      tokenIndexFrom: PromiseOrValue<BigNumberish>,
+      tokenIndexTo: PromiseOrValue<BigNumberish>,
+      dx: PromiseOrValue<BigNumberish>,
+      minDy: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     swapStorage(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<PopulatedTransaction>;
-
-    unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
-
-    withdrawAdminFees(
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+    updateUserWithdrawFee(
+      recipient: PromiseOrValue<string>,
+      transferAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

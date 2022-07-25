@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface StargateVeInterface extends utils.Interface {
   functions: {
@@ -111,46 +111,70 @@ export interface StargateVeInterface extends utils.Interface {
 
   encodeFunctionData(functionFragment: 'MAXTIME', values?: undefined): string;
   encodeFunctionData(functionFragment: 'MINTIME', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'add_to_whitelist', values: [string]): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
-  encodeFunctionData(functionFragment: 'balanceOfAt', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'balanceOfAtT', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'changeController', values: [string]): string;
+  encodeFunctionData(functionFragment: 'add_to_whitelist', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'balanceOfAt',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'balanceOfAtT',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'changeController', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'checkpoint', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'contracts_whitelist', values: [string]): string;
+  encodeFunctionData(functionFragment: 'contracts_whitelist', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'controller', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'create_lock', values: [BigNumberish, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'create_lock',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'decimals', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'deposit_for', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'deposit_for',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'epoch', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'get_last_user_slope', values: [string]): string;
-  encodeFunctionData(functionFragment: 'increase_amount', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'increase_amount_and_time', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'increase_unlock_time', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'locked', values: [string]): string;
-  encodeFunctionData(functionFragment: 'locked__end', values: [string]): string;
+  encodeFunctionData(functionFragment: 'get_last_user_slope', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'increase_amount', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'increase_amount_and_time',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'increase_unlock_time', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'locked', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'locked__end', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'point_history', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'remove_from_whitelist', values: [string]): string;
+  encodeFunctionData(functionFragment: 'point_history', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'remove_from_whitelist', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'slope_changes', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'slope_changes', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'supply', values?: undefined): string;
   encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
   encodeFunctionData(functionFragment: 'token', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'totalSupplyAt', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'totalSupplyAtT', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
+  encodeFunctionData(functionFragment: 'totalSupplyAt', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'totalSupplyAtT', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'transfersEnabled', values?: undefined): string;
   encodeFunctionData(functionFragment: 'unlock', values?: undefined): string;
   encodeFunctionData(functionFragment: 'unlocked', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'user_point_epoch', values: [string]): string;
-  encodeFunctionData(functionFragment: 'user_point_history', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'user_point_history__ts', values: [string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'user_point_epoch', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'user_point_history',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'user_point_history__ts',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'version', values?: undefined): string;
   encodeFunctionData(functionFragment: 'withdraw', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'withdraw_and_create_lock', values: [BigNumberish, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'withdraw_and_create_lock',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
 
   decodeFunctionResult(functionFragment: 'MAXTIME', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'MINTIME', data: BytesLike): Result;
@@ -272,74 +296,82 @@ export interface StargateVe extends BaseContract {
     MINTIME(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     add_to_whitelist(
-      addr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      addr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    balanceOf(addr: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOf(addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    balanceOfAt(addr: string, _block: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOfAt(
+      addr: PromiseOrValue<string>,
+      _block: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
-    balanceOfAtT(addr: string, _t: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOfAtT(
+      addr: PromiseOrValue<string>,
+      _t: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     changeController(
-      _newController: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newController: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    checkpoint(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    checkpoint(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    contracts_whitelist(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    contracts_whitelist(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     controller(overrides?: CallOverrides): Promise<[string]>;
 
     create_lock(
-      _value: BigNumberish,
-      _unlock_time: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _value: PromiseOrValue<BigNumberish>,
+      _unlock_time: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<[number]>;
 
     deposit_for(
-      _addr: string,
-      _value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _addr: PromiseOrValue<string>,
+      _value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     epoch(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    get_last_user_slope(addr: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    get_last_user_slope(addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     increase_amount(
-      _value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     increase_amount_and_time(
-      _value: BigNumberish,
-      _unlock_time: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _value: PromiseOrValue<BigNumberish>,
+      _unlock_time: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     increase_unlock_time(
-      _unlock_time: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _unlock_time: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     locked(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; end: BigNumber }>;
 
-    locked__end(_addr: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    locked__end(_addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     point_history(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -351,13 +383,13 @@ export interface StargateVe extends BaseContract {
     >;
 
     remove_from_whitelist(
-      addr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      addr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    slope_changes(arg0: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    slope_changes(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     supply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -367,26 +399,26 @@ export interface StargateVe extends BaseContract {
 
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    totalSupplyAt(_block: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    totalSupplyAt(_block: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    totalSupplyAtT(t: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    totalSupplyAtT(t: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transfersEnabled(overrides?: CallOverrides): Promise<[boolean]>;
 
-    unlock(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    unlock(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     unlocked(overrides?: CallOverrides): Promise<[boolean]>;
 
-    user_point_epoch(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    user_point_epoch(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     user_point_history(
-      arg0: string,
-      arg1: BigNumberish,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -397,16 +429,20 @@ export interface StargateVe extends BaseContract {
       }
     >;
 
-    user_point_history__ts(_addr: string, _idx: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    user_point_history__ts(
+      _addr: PromiseOrValue<string>,
+      _idx: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     version(overrides?: CallOverrides): Promise<[string]>;
 
-    withdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    withdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     withdraw_and_create_lock(
-      _value: BigNumberish,
-      _unlock_time: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _value: PromiseOrValue<BigNumberish>,
+      _unlock_time: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
@@ -415,74 +451,82 @@ export interface StargateVe extends BaseContract {
   MINTIME(overrides?: CallOverrides): Promise<BigNumber>;
 
   add_to_whitelist(
-    addr: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    addr: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  balanceOf(addr: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  balanceOfAt(addr: string, _block: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOfAt(
+    addr: PromiseOrValue<string>,
+    _block: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
-  balanceOfAtT(addr: string, _t: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOfAtT(
+    addr: PromiseOrValue<string>,
+    _t: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   changeController(
-    _newController: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _newController: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  checkpoint(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  checkpoint(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  contracts_whitelist(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  contracts_whitelist(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   controller(overrides?: CallOverrides): Promise<string>;
 
   create_lock(
-    _value: BigNumberish,
-    _unlock_time: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _value: PromiseOrValue<BigNumberish>,
+    _unlock_time: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   decimals(overrides?: CallOverrides): Promise<number>;
 
   deposit_for(
-    _addr: string,
-    _value: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _addr: PromiseOrValue<string>,
+    _value: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   epoch(overrides?: CallOverrides): Promise<BigNumber>;
 
-  get_last_user_slope(addr: string, overrides?: CallOverrides): Promise<BigNumber>;
+  get_last_user_slope(addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   increase_amount(
-    _value: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _value: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   increase_amount_and_time(
-    _value: BigNumberish,
-    _unlock_time: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _value: PromiseOrValue<BigNumberish>,
+    _unlock_time: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   increase_unlock_time(
-    _unlock_time: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _unlock_time: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   locked(
-    arg0: string,
+    arg0: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; end: BigNumber }>;
 
-  locked__end(_addr: string, overrides?: CallOverrides): Promise<BigNumber>;
+  locked__end(_addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   name(overrides?: CallOverrides): Promise<string>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
   point_history(
-    arg0: BigNumberish,
+    arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -494,13 +538,13 @@ export interface StargateVe extends BaseContract {
   >;
 
   remove_from_whitelist(
-    addr: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    addr: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  slope_changes(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  slope_changes(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   supply(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -510,26 +554,26 @@ export interface StargateVe extends BaseContract {
 
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-  totalSupplyAt(_block: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  totalSupplyAt(_block: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  totalSupplyAtT(t: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  totalSupplyAtT(t: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transfersEnabled(overrides?: CallOverrides): Promise<boolean>;
 
-  unlock(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  unlock(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   unlocked(overrides?: CallOverrides): Promise<boolean>;
 
-  user_point_epoch(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  user_point_epoch(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   user_point_history(
-    arg0: string,
-    arg1: BigNumberish,
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -540,16 +584,20 @@ export interface StargateVe extends BaseContract {
     }
   >;
 
-  user_point_history__ts(_addr: string, _idx: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  user_point_history__ts(
+    _addr: PromiseOrValue<string>,
+    _idx: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   version(overrides?: CallOverrides): Promise<string>;
 
-  withdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  withdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   withdraw_and_create_lock(
-    _value: BigNumberish,
-    _unlock_time: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _value: PromiseOrValue<BigNumberish>,
+    _unlock_time: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
@@ -557,55 +605,71 @@ export interface StargateVe extends BaseContract {
 
     MINTIME(overrides?: CallOverrides): Promise<BigNumber>;
 
-    add_to_whitelist(addr: string, overrides?: CallOverrides): Promise<void>;
+    add_to_whitelist(addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    balanceOf(addr: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    balanceOfAt(addr: string, _block: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOfAt(
+      addr: PromiseOrValue<string>,
+      _block: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    balanceOfAtT(addr: string, _t: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOfAtT(
+      addr: PromiseOrValue<string>,
+      _t: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    changeController(_newController: string, overrides?: CallOverrides): Promise<void>;
+    changeController(_newController: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     checkpoint(overrides?: CallOverrides): Promise<void>;
 
-    contracts_whitelist(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    contracts_whitelist(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     controller(overrides?: CallOverrides): Promise<string>;
 
-    create_lock(_value: BigNumberish, _unlock_time: BigNumberish, overrides?: CallOverrides): Promise<void>;
-
-    decimals(overrides?: CallOverrides): Promise<number>;
-
-    deposit_for(_addr: string, _value: BigNumberish, overrides?: CallOverrides): Promise<void>;
-
-    epoch(overrides?: CallOverrides): Promise<BigNumber>;
-
-    get_last_user_slope(addr: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-    increase_amount(_value: BigNumberish, overrides?: CallOverrides): Promise<void>;
-
-    increase_amount_and_time(
-      _value: BigNumberish,
-      _unlock_time: BigNumberish,
+    create_lock(
+      _value: PromiseOrValue<BigNumberish>,
+      _unlock_time: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    increase_unlock_time(_unlock_time: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    decimals(overrides?: CallOverrides): Promise<number>;
+
+    deposit_for(
+      _addr: PromiseOrValue<string>,
+      _value: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    epoch(overrides?: CallOverrides): Promise<BigNumber>;
+
+    get_last_user_slope(addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    increase_amount(_value: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
+
+    increase_amount_and_time(
+      _value: PromiseOrValue<BigNumberish>,
+      _unlock_time: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    increase_unlock_time(_unlock_time: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     locked(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; end: BigNumber }>;
 
-    locked__end(_addr: string, overrides?: CallOverrides): Promise<BigNumber>;
+    locked__end(_addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
     point_history(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -616,11 +680,11 @@ export interface StargateVe extends BaseContract {
       }
     >;
 
-    remove_from_whitelist(addr: string, overrides?: CallOverrides): Promise<void>;
+    remove_from_whitelist(addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
-    slope_changes(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    slope_changes(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     supply(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -630,11 +694,11 @@ export interface StargateVe extends BaseContract {
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    totalSupplyAt(_block: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    totalSupplyAt(_block: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    totalSupplyAtT(t: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    totalSupplyAtT(t: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     transfersEnabled(overrides?: CallOverrides): Promise<boolean>;
 
@@ -642,11 +706,11 @@ export interface StargateVe extends BaseContract {
 
     unlocked(overrides?: CallOverrides): Promise<boolean>;
 
-    user_point_epoch(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    user_point_epoch(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     user_point_history(
-      arg0: string,
-      arg1: BigNumberish,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -657,46 +721,57 @@ export interface StargateVe extends BaseContract {
       }
     >;
 
-    user_point_history__ts(_addr: string, _idx: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    user_point_history__ts(
+      _addr: PromiseOrValue<string>,
+      _idx: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     version(overrides?: CallOverrides): Promise<string>;
 
     withdraw(overrides?: CallOverrides): Promise<void>;
 
     withdraw_and_create_lock(
-      _value: BigNumberish,
-      _unlock_time: BigNumberish,
+      _value: PromiseOrValue<BigNumberish>,
+      _unlock_time: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
   };
 
   filters: {
     'Deposit(address,uint256,uint256,uint8,uint256)'(
-      provider?: string | null,
+      provider?: PromiseOrValue<string> | null,
       value?: null,
-      locktime?: BigNumberish | null,
+      locktime?: PromiseOrValue<BigNumberish> | null,
       deposit_type?: null,
       ts?: null,
     ): DepositEventFilter;
     Deposit(
-      provider?: string | null,
+      provider?: PromiseOrValue<string> | null,
       value?: null,
-      locktime?: BigNumberish | null,
+      locktime?: PromiseOrValue<BigNumberish> | null,
       deposit_type?: null,
       ts?: null,
     ): DepositEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
 
     'Supply(uint256,uint256)'(prevSupply?: null, supply?: null): SupplyEventFilter;
     Supply(prevSupply?: null, supply?: null): SupplyEventFilter;
 
-    'Withdraw(address,uint256,uint256)'(provider?: string | null, value?: null, ts?: null): WithdrawEventFilter;
-    Withdraw(provider?: string | null, value?: null, ts?: null): WithdrawEventFilter;
+    'Withdraw(address,uint256,uint256)'(
+      provider?: PromiseOrValue<string> | null,
+      value?: null,
+      ts?: null,
+    ): WithdrawEventFilter;
+    Withdraw(provider?: PromiseOrValue<string> | null, value?: null, ts?: null): WithdrawEventFilter;
   };
 
   estimateGas: {
@@ -704,77 +779,88 @@ export interface StargateVe extends BaseContract {
 
     MINTIME(overrides?: CallOverrides): Promise<BigNumber>;
 
-    add_to_whitelist(addr: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
-
-    balanceOf(addr: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-    balanceOfAt(addr: string, _block: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
-
-    balanceOfAtT(addr: string, _t: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
-
-    changeController(
-      _newController: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    add_to_whitelist(
+      addr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    checkpoint(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    balanceOf(addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    contracts_whitelist(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOfAt(
+      addr: PromiseOrValue<string>,
+      _block: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
+    balanceOfAtT(
+      addr: PromiseOrValue<string>,
+      _t: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
+    changeController(
+      _newController: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    checkpoint(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
+
+    contracts_whitelist(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     controller(overrides?: CallOverrides): Promise<BigNumber>;
 
     create_lock(
-      _value: BigNumberish,
-      _unlock_time: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _value: PromiseOrValue<BigNumberish>,
+      _unlock_time: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
     deposit_for(
-      _addr: string,
-      _value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _addr: PromiseOrValue<string>,
+      _value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     epoch(overrides?: CallOverrides): Promise<BigNumber>;
 
-    get_last_user_slope(addr: string, overrides?: CallOverrides): Promise<BigNumber>;
+    get_last_user_slope(addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     increase_amount(
-      _value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     increase_amount_and_time(
-      _value: BigNumberish,
-      _unlock_time: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _value: PromiseOrValue<BigNumberish>,
+      _unlock_time: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     increase_unlock_time(
-      _unlock_time: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _unlock_time: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    locked(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    locked(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    locked__end(_addr: string, overrides?: CallOverrides): Promise<BigNumber>;
+    locked__end(_addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    point_history(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    point_history(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     remove_from_whitelist(
-      addr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      addr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    slope_changes(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    slope_changes(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     supply(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -784,35 +870,43 @@ export interface StargateVe extends BaseContract {
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    totalSupplyAt(_block: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    totalSupplyAt(_block: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    totalSupplyAtT(t: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    totalSupplyAtT(t: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transfersEnabled(overrides?: CallOverrides): Promise<BigNumber>;
 
-    unlock(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    unlock(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     unlocked(overrides?: CallOverrides): Promise<BigNumber>;
 
-    user_point_epoch(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    user_point_epoch(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    user_point_history(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    user_point_history(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    user_point_history__ts(_addr: string, _idx: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    user_point_history__ts(
+      _addr: PromiseOrValue<string>,
+      _idx: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     version(overrides?: CallOverrides): Promise<BigNumber>;
 
-    withdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    withdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     withdraw_and_create_lock(
-      _value: BigNumberish,
-      _unlock_time: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _value: PromiseOrValue<BigNumberish>,
+      _unlock_time: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
@@ -822,79 +916,87 @@ export interface StargateVe extends BaseContract {
     MINTIME(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     add_to_whitelist(
-      addr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      addr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    balanceOf(addr: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    balanceOf(addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    balanceOfAt(addr: string, _block: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    balanceOfAt(
+      addr: PromiseOrValue<string>,
+      _block: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    balanceOfAtT(addr: string, _t: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    balanceOfAtT(
+      addr: PromiseOrValue<string>,
+      _t: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     changeController(
-      _newController: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newController: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    checkpoint(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    checkpoint(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    contracts_whitelist(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    contracts_whitelist(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     controller(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     create_lock(
-      _value: BigNumberish,
-      _unlock_time: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _value: PromiseOrValue<BigNumberish>,
+      _unlock_time: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     deposit_for(
-      _addr: string,
-      _value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _addr: PromiseOrValue<string>,
+      _value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     epoch(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    get_last_user_slope(addr: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    get_last_user_slope(addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     increase_amount(
-      _value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     increase_amount_and_time(
-      _value: BigNumberish,
-      _unlock_time: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _value: PromiseOrValue<BigNumberish>,
+      _unlock_time: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     increase_unlock_time(
-      _unlock_time: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _unlock_time: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    locked(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    locked(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    locked__end(_addr: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    locked__end(_addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    point_history(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    point_history(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     remove_from_whitelist(
-      addr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      addr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    slope_changes(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    slope_changes(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     supply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -904,35 +1006,43 @@ export interface StargateVe extends BaseContract {
 
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    totalSupplyAt(_block: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    totalSupplyAt(_block: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    totalSupplyAtT(t: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    totalSupplyAtT(t: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transfersEnabled(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    unlock(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    unlock(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     unlocked(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    user_point_epoch(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    user_point_epoch(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    user_point_history(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    user_point_history(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    user_point_history__ts(_addr: string, _idx: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    user_point_history__ts(
+      _addr: PromiseOrValue<string>,
+      _idx: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     version(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    withdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    withdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     withdraw_and_create_lock(
-      _value: BigNumberish,
-      _unlock_time: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _value: PromiseOrValue<BigNumberish>,
+      _unlock_time: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

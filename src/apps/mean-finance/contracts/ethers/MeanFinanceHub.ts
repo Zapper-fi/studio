@@ -15,12 +15,12 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export declare namespace IDCAPermissionManager {
   export type PermissionSetStruct = {
-    operator: string;
-    permissions: BigNumberish[];
+    operator: PromiseOrValue<string>;
+    permissions: PromiseOrValue<BigNumberish>[];
   };
 
   export type PermissionSetStructOutput = [string, number[]] & {
@@ -31,10 +31,10 @@ export declare namespace IDCAPermissionManager {
 
 export declare namespace IDCAHubSwapHandler {
   export type TokenInSwapStruct = {
-    token: string;
-    reward: BigNumberish;
-    toProvide: BigNumberish;
-    platformFee: BigNumberish;
+    token: PromiseOrValue<string>;
+    reward: PromiseOrValue<BigNumberish>;
+    toProvide: PromiseOrValue<BigNumberish>;
+    platformFee: PromiseOrValue<BigNumberish>;
   };
 
   export type TokenInSwapStructOutput = [string, BigNumber, BigNumber, BigNumber] & {
@@ -45,11 +45,11 @@ export declare namespace IDCAHubSwapHandler {
   };
 
   export type PairInSwapStruct = {
-    tokenA: string;
-    tokenB: string;
-    ratioAToB: BigNumberish;
-    ratioBToA: BigNumberish;
-    intervalsInSwap: BytesLike;
+    tokenA: PromiseOrValue<string>;
+    tokenB: PromiseOrValue<string>;
+    ratioAToB: PromiseOrValue<BigNumberish>;
+    ratioBToA: PromiseOrValue<BigNumberish>;
+    intervalsInSwap: PromiseOrValue<BytesLike>;
   };
 
   export type PairInSwapStructOutput = [string, string, BigNumber, BigNumber, string] & {
@@ -74,8 +74,8 @@ export declare namespace IDCAHubSwapHandler {
   };
 
   export type PairIndexesStruct = {
-    indexTokenA: BigNumberish;
-    indexTokenB: BigNumberish;
+    indexTokenA: PromiseOrValue<BigNumberish>;
+    indexTokenB: PromiseOrValue<BigNumberish>;
   };
 
   export type PairIndexesStructOutput = [number, number] & {
@@ -85,7 +85,10 @@ export declare namespace IDCAHubSwapHandler {
 }
 
 export declare namespace IDCAHub {
-  export type AmountOfTokenStruct = { token: string; amount: BigNumberish };
+  export type AmountOfTokenStruct = {
+    token: PromiseOrValue<string>;
+    amount: PromiseOrValue<BigNumberish>;
+  };
 
   export type AmountOfTokenStructOutput = [string, BigNumber] & {
     token: string;
@@ -95,8 +98,8 @@ export declare namespace IDCAHub {
 
 export declare namespace IDCAHubPositionHandler {
   export type PositionSetStruct = {
-    token: string;
-    positionIds: BigNumberish[];
+    token: PromiseOrValue<string>;
+    positionIds: PromiseOrValue<BigNumberish>[];
   };
 
   export type PositionSetStructOutput = [string, BigNumber[]] & {
@@ -105,14 +108,14 @@ export declare namespace IDCAHubPositionHandler {
   };
 
   export type UserPositionStruct = {
-    from: string;
-    to: string;
-    swapInterval: BigNumberish;
-    swapsExecuted: BigNumberish;
-    swapped: BigNumberish;
-    swapsLeft: BigNumberish;
-    remaining: BigNumberish;
-    rate: BigNumberish;
+    from: PromiseOrValue<string>;
+    to: PromiseOrValue<string>;
+    swapInterval: PromiseOrValue<BigNumberish>;
+    swapsExecuted: PromiseOrValue<BigNumberish>;
+    swapped: PromiseOrValue<BigNumberish>;
+    swapsLeft: PromiseOrValue<BigNumberish>;
+    remaining: PromiseOrValue<BigNumberish>;
+    rate: PromiseOrValue<BigNumberish>;
   };
 
   export type UserPositionStructOutput = [string, string, number, number, BigNumber, number, BigNumber, BigNumber] & {
@@ -129,8 +132,8 @@ export declare namespace IDCAHubPositionHandler {
 
 export declare namespace IDCAHubParameters {
   export type AccumRatioStruct = {
-    accumRatioAToB: BigNumberish;
-    accumRatioBToA: BigNumberish;
+    accumRatioAToB: PromiseOrValue<BigNumberish>;
+    accumRatioBToA: PromiseOrValue<BigNumberish>;
   };
 
   export type AccumRatioStructOutput = [BigNumber, BigNumber] & {
@@ -139,8 +142,8 @@ export declare namespace IDCAHubParameters {
   };
 
   export type SwapDeltaStruct = {
-    swapDeltaAToB: BigNumberish;
-    swapDeltaBToA: BigNumberish;
+    swapDeltaAToB: PromiseOrValue<BigNumberish>;
+    swapDeltaBToA: PromiseOrValue<BigNumberish>;
   };
 
   export type SwapDeltaStructOutput = [BigNumber, BigNumber] & {
@@ -149,10 +152,10 @@ export declare namespace IDCAHubParameters {
   };
 
   export type SwapDataStruct = {
-    performedSwaps: BigNumberish;
-    nextAmountToSwapAToB: BigNumberish;
-    lastSwappedAt: BigNumberish;
-    nextAmountToSwapBToA: BigNumberish;
+    performedSwaps: PromiseOrValue<BigNumberish>;
+    nextAmountToSwapAToB: PromiseOrValue<BigNumberish>;
+    lastSwappedAt: PromiseOrValue<BigNumberish>;
+    nextAmountToSwapBToA: PromiseOrValue<BigNumberish>;
   };
 
   export type SwapDataStructOutput = [number, BigNumber, number, BigNumber] & {
@@ -163,7 +166,7 @@ export declare namespace IDCAHubParameters {
   };
 }
 
-export interface HubInterface extends utils.Interface {
+export interface MeanFinanceHubInterface extends utils.Interface {
   functions: {
     'DEFAULT_ADMIN_ROLE()': FunctionFragment;
     'IMMEDIATE_ROLE()': FunctionFragment;
@@ -267,82 +270,133 @@ export interface HubInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'MAX_PLATFORM_FEE_RATIO', values?: undefined): string;
   encodeFunctionData(functionFragment: 'PLATFORM_WITHDRAW_ROLE', values?: undefined): string;
   encodeFunctionData(functionFragment: 'TIME_LOCKED_ROLE', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'accumRatio', values: [string, string, BytesLike, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'activeSwapIntervals', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'addSwapIntervalsToAllowedList', values: [BigNumberish[]]): string;
+  encodeFunctionData(
+    functionFragment: 'accumRatio',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'activeSwapIntervals',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'addSwapIntervalsToAllowedList',
+    values: [PromiseOrValue<BigNumberish>[]],
+  ): string;
   encodeFunctionData(functionFragment: 'allowedSwapIntervals', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'allowedTokens', values: [string]): string;
+  encodeFunctionData(functionFragment: 'allowedTokens', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
     functionFragment: 'deposit(address,address,uint256,uint32,uint32,address,(address,uint8[])[])',
     values: [
-      string,
-      string,
-      BigNumberish,
-      BigNumberish,
-      BigNumberish,
-      string,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
       IDCAPermissionManager.PermissionSetStruct[],
     ],
   ): string;
   encodeFunctionData(
     functionFragment: 'deposit(address,address,uint256,uint32,uint32,address,(address,uint8[])[],bytes)',
     values: [
-      string,
-      string,
-      BigNumberish,
-      BigNumberish,
-      BigNumberish,
-      string,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
       IDCAPermissionManager.PermissionSetStruct[],
-      BytesLike,
+      PromiseOrValue<BytesLike>,
     ],
   ): string;
   encodeFunctionData(
     functionFragment: 'getNextSwapInfo',
-    values: [string[], IDCAHubSwapHandler.PairIndexesStruct[]],
+    values: [PromiseOrValue<string>[], IDCAHubSwapHandler.PairIndexesStruct[]],
   ): string;
-  encodeFunctionData(functionFragment: 'getRoleAdmin', values: [BytesLike]): string;
-  encodeFunctionData(functionFragment: 'grantRole', values: [BytesLike, string]): string;
-  encodeFunctionData(functionFragment: 'hasRole', values: [BytesLike, string]): string;
-  encodeFunctionData(functionFragment: 'increasePosition', values: [BigNumberish, BigNumberish, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'getRoleAdmin', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(
+    functionFragment: 'grantRole',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'hasRole', values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'increasePosition',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'oracle', values?: undefined): string;
   encodeFunctionData(functionFragment: 'pause', values?: undefined): string;
   encodeFunctionData(functionFragment: 'paused', values?: undefined): string;
   encodeFunctionData(functionFragment: 'permissionManager', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'platformBalance', values: [string]): string;
+  encodeFunctionData(functionFragment: 'platformBalance', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'platformFeeRatio', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'reducePosition',
-    values: [BigNumberish, BigNumberish, BigNumberish, string],
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'removeSwapIntervalsFromAllowedList', values: [BigNumberish[]]): string;
-  encodeFunctionData(functionFragment: 'renounceRole', values: [BytesLike, string]): string;
-  encodeFunctionData(functionFragment: 'revokeRole', values: [BytesLike, string]): string;
-  encodeFunctionData(functionFragment: 'setAllowedTokens', values: [string[], boolean[]]): string;
-  encodeFunctionData(functionFragment: 'setOracle', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setPlatformFeeRatio', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setSwapFee', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'supportsInterface', values: [BytesLike]): string;
+  encodeFunctionData(
+    functionFragment: 'removeSwapIntervalsFromAllowedList',
+    values: [PromiseOrValue<BigNumberish>[]],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'renounceRole',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'revokeRole',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'setAllowedTokens',
+    values: [PromiseOrValue<string>[], PromiseOrValue<boolean>[]],
+  ): string;
+  encodeFunctionData(functionFragment: 'setOracle', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setPlatformFeeRatio', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setSwapFee', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'supportsInterface', values: [PromiseOrValue<BytesLike>]): string;
   encodeFunctionData(
     functionFragment: 'swap',
-    values: [string[], IDCAHubSwapHandler.PairIndexesStruct[], string, string, BigNumberish[], BytesLike],
+    values: [
+      PromiseOrValue<string>[],
+      IDCAHubSwapHandler.PairIndexesStruct[],
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>[],
+      PromiseOrValue<BytesLike>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'swapAmountDelta', values: [string, string, BytesLike, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'swapData', values: [string, string, BytesLike]): string;
+  encodeFunctionData(
+    functionFragment: 'swapAmountDelta',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'swapData',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BytesLike>],
+  ): string;
   encodeFunctionData(functionFragment: 'swapFee', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'terminate', values: [BigNumberish, string, string]): string;
-  encodeFunctionData(functionFragment: 'tokenMagnitude', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'terminate',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'tokenMagnitude', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'totalCreatedPositions', values?: undefined): string;
   encodeFunctionData(functionFragment: 'unpause', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'userPosition', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'userPosition', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(
     functionFragment: 'withdrawFromPlatformBalance',
-    values: [IDCAHub.AmountOfTokenStruct[], string],
+    values: [IDCAHub.AmountOfTokenStruct[], PromiseOrValue<string>],
   ): string;
-  encodeFunctionData(functionFragment: 'withdrawSwapped', values: [BigNumberish, string]): string;
+  encodeFunctionData(
+    functionFragment: 'withdrawSwapped',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(
     functionFragment: 'withdrawSwappedMany',
-    values: [IDCAHubPositionHandler.PositionSetStruct[], string],
+    values: [IDCAHubPositionHandler.PositionSetStruct[], PromiseOrValue<string>],
   ): string;
 
   decodeFunctionResult(functionFragment: 'DEFAULT_ADMIN_ROLE', data: BytesLike): Result;
@@ -639,12 +693,12 @@ export type WithdrewManyEvent = TypedEvent<
 
 export type WithdrewManyEventFilter = TypedEventFilter<WithdrewManyEvent>;
 
-export interface Hub extends BaseContract {
+export interface MeanFinanceHub extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: HubInterface;
+  interface: MeanFinanceHubInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -675,49 +729,53 @@ export interface Hub extends BaseContract {
     TIME_LOCKED_ROLE(overrides?: CallOverrides): Promise<[string]>;
 
     accumRatio(
-      _tokenA: string,
-      _tokenB: string,
-      _swapIntervalMask: BytesLike,
-      _swapNumber: BigNumberish,
+      _tokenA: PromiseOrValue<string>,
+      _tokenB: PromiseOrValue<string>,
+      _swapIntervalMask: PromiseOrValue<BytesLike>,
+      _swapNumber: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[IDCAHubParameters.AccumRatioStructOutput]>;
 
-    activeSwapIntervals(arg0: string, arg1: string, overrides?: CallOverrides): Promise<[string]>;
+    activeSwapIntervals(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[string]>;
 
     addSwapIntervalsToAllowedList(
-      _swapIntervals: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _swapIntervals: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     allowedSwapIntervals(overrides?: CallOverrides): Promise<[string]>;
 
-    allowedTokens(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    allowedTokens(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     'deposit(address,address,uint256,uint32,uint32,address,(address,uint8[])[])'(
-      _from: string,
-      _to: string,
-      _amount: BigNumberish,
-      _amountOfSwaps: BigNumberish,
-      _swapInterval: BigNumberish,
-      _owner: string,
+      _from: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      _amountOfSwaps: PromiseOrValue<BigNumberish>,
+      _swapInterval: PromiseOrValue<BigNumberish>,
+      _owner: PromiseOrValue<string>,
       _permissions: IDCAPermissionManager.PermissionSetStruct[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     'deposit(address,address,uint256,uint32,uint32,address,(address,uint8[])[],bytes)'(
-      _from: string,
-      _to: string,
-      _amount: BigNumberish,
-      _amountOfSwaps: BigNumberish,
-      _swapInterval: BigNumberish,
-      _owner: string,
+      _from: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      _amountOfSwaps: PromiseOrValue<BigNumberish>,
+      _swapInterval: PromiseOrValue<BigNumberish>,
+      _owner: PromiseOrValue<string>,
       _permissions: IDCAPermissionManager.PermissionSetStruct[],
-      _miscellaneous: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _miscellaneous: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     getNextSwapInfo(
-      _tokens: string[],
+      _tokens: PromiseOrValue<string>[],
       _pairs: IDCAHubSwapHandler.PairIndexesStruct[],
       overrides?: CallOverrides,
     ): Promise<
@@ -726,125 +784,129 @@ export interface Hub extends BaseContract {
       }
     >;
 
-    getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<[string]>;
+    getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[string]>;
 
     grantRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    hasRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<[boolean]>;
+    hasRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[boolean]>;
 
     increasePosition(
-      _positionId: BigNumberish,
-      _amount: BigNumberish,
-      _newAmountOfSwaps: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _positionId: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      _newAmountOfSwaps: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     oracle(overrides?: CallOverrides): Promise<[string]>;
 
-    pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     paused(overrides?: CallOverrides): Promise<[boolean]>;
 
     permissionManager(overrides?: CallOverrides): Promise<[string]>;
 
-    platformBalance(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    platformBalance(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     platformFeeRatio(overrides?: CallOverrides): Promise<[number]>;
 
     reducePosition(
-      _positionId: BigNumberish,
-      _amount: BigNumberish,
-      _newAmountOfSwaps: BigNumberish,
-      _recipient: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _positionId: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      _newAmountOfSwaps: PromiseOrValue<BigNumberish>,
+      _recipient: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     removeSwapIntervalsFromAllowedList(
-      _swapIntervals: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _swapIntervals: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     renounceRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     revokeRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setAllowedTokens(
-      _tokens: string[],
-      _allowed: boolean[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokens: PromiseOrValue<string>[],
+      _allowed: PromiseOrValue<boolean>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setOracle(
-      _oracle: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _oracle: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setPlatformFeeRatio(
-      _platformFeeRatio: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _platformFeeRatio: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setSwapFee(
-      _swapFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _swapFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<[boolean]>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[boolean]>;
 
     swap(
-      _tokens: string[],
+      _tokens: PromiseOrValue<string>[],
       _pairsToSwap: IDCAHubSwapHandler.PairIndexesStruct[],
-      _rewardRecipient: string,
-      _callbackHandler: string,
-      _borrow: BigNumberish[],
-      _data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardRecipient: PromiseOrValue<string>,
+      _callbackHandler: PromiseOrValue<string>,
+      _borrow: PromiseOrValue<BigNumberish>[],
+      _data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     swapAmountDelta(
-      _tokenA: string,
-      _tokenB: string,
-      _swapIntervalMask: BytesLike,
-      _swapNumber: BigNumberish,
+      _tokenA: PromiseOrValue<string>,
+      _tokenB: PromiseOrValue<string>,
+      _swapIntervalMask: PromiseOrValue<BytesLike>,
+      _swapNumber: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[IDCAHubParameters.SwapDeltaStructOutput]>;
 
     swapData(
-      _tokenA: string,
-      _tokenB: string,
-      _swapIntervalMask: BytesLike,
+      _tokenA: PromiseOrValue<string>,
+      _tokenB: PromiseOrValue<string>,
+      _swapIntervalMask: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<[IDCAHubParameters.SwapDataStructOutput]>;
 
     swapFee(overrides?: CallOverrides): Promise<[number]>;
 
     terminate(
-      _positionId: BigNumberish,
-      _recipientUnswapped: string,
-      _recipientSwapped: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _positionId: PromiseOrValue<BigNumberish>,
+      _recipientUnswapped: PromiseOrValue<string>,
+      _recipientSwapped: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    tokenMagnitude(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    tokenMagnitude(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     totalCreatedPositions(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     userPosition(
-      _positionId: BigNumberish,
+      _positionId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [IDCAHubPositionHandler.UserPositionStructOutput] & {
@@ -854,20 +916,20 @@ export interface Hub extends BaseContract {
 
     withdrawFromPlatformBalance(
       _amounts: IDCAHub.AmountOfTokenStruct[],
-      _recipient: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _recipient: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     withdrawSwapped(
-      _positionId: BigNumberish,
-      _recipient: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _positionId: PromiseOrValue<BigNumberish>,
+      _recipient: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     withdrawSwappedMany(
       _positions: IDCAHubPositionHandler.PositionSetStruct[],
-      _recipient: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _recipient: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
@@ -884,188 +946,199 @@ export interface Hub extends BaseContract {
   TIME_LOCKED_ROLE(overrides?: CallOverrides): Promise<string>;
 
   accumRatio(
-    _tokenA: string,
-    _tokenB: string,
-    _swapIntervalMask: BytesLike,
-    _swapNumber: BigNumberish,
+    _tokenA: PromiseOrValue<string>,
+    _tokenB: PromiseOrValue<string>,
+    _swapIntervalMask: PromiseOrValue<BytesLike>,
+    _swapNumber: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<IDCAHubParameters.AccumRatioStructOutput>;
 
-  activeSwapIntervals(arg0: string, arg1: string, overrides?: CallOverrides): Promise<string>;
+  activeSwapIntervals(
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<string>;
 
   addSwapIntervalsToAllowedList(
-    _swapIntervals: BigNumberish[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _swapIntervals: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   allowedSwapIntervals(overrides?: CallOverrides): Promise<string>;
 
-  allowedTokens(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  allowedTokens(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   'deposit(address,address,uint256,uint32,uint32,address,(address,uint8[])[])'(
-    _from: string,
-    _to: string,
-    _amount: BigNumberish,
-    _amountOfSwaps: BigNumberish,
-    _swapInterval: BigNumberish,
-    _owner: string,
+    _from: PromiseOrValue<string>,
+    _to: PromiseOrValue<string>,
+    _amount: PromiseOrValue<BigNumberish>,
+    _amountOfSwaps: PromiseOrValue<BigNumberish>,
+    _swapInterval: PromiseOrValue<BigNumberish>,
+    _owner: PromiseOrValue<string>,
     _permissions: IDCAPermissionManager.PermissionSetStruct[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   'deposit(address,address,uint256,uint32,uint32,address,(address,uint8[])[],bytes)'(
-    _from: string,
-    _to: string,
-    _amount: BigNumberish,
-    _amountOfSwaps: BigNumberish,
-    _swapInterval: BigNumberish,
-    _owner: string,
+    _from: PromiseOrValue<string>,
+    _to: PromiseOrValue<string>,
+    _amount: PromiseOrValue<BigNumberish>,
+    _amountOfSwaps: PromiseOrValue<BigNumberish>,
+    _swapInterval: PromiseOrValue<BigNumberish>,
+    _owner: PromiseOrValue<string>,
     _permissions: IDCAPermissionManager.PermissionSetStruct[],
-    _miscellaneous: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _miscellaneous: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   getNextSwapInfo(
-    _tokens: string[],
+    _tokens: PromiseOrValue<string>[],
     _pairs: IDCAHubSwapHandler.PairIndexesStruct[],
     overrides?: CallOverrides,
   ): Promise<IDCAHubSwapHandler.SwapInfoStructOutput>;
 
-  getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<string>;
+  getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
   grantRole(
-    role: BytesLike,
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    role: PromiseOrValue<BytesLike>,
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  hasRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<boolean>;
+  hasRole(
+    role: PromiseOrValue<BytesLike>,
+    account: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<boolean>;
 
   increasePosition(
-    _positionId: BigNumberish,
-    _amount: BigNumberish,
-    _newAmountOfSwaps: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _positionId: PromiseOrValue<BigNumberish>,
+    _amount: PromiseOrValue<BigNumberish>,
+    _newAmountOfSwaps: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   oracle(overrides?: CallOverrides): Promise<string>;
 
-  pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   paused(overrides?: CallOverrides): Promise<boolean>;
 
   permissionManager(overrides?: CallOverrides): Promise<string>;
 
-  platformBalance(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  platformBalance(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   platformFeeRatio(overrides?: CallOverrides): Promise<number>;
 
   reducePosition(
-    _positionId: BigNumberish,
-    _amount: BigNumberish,
-    _newAmountOfSwaps: BigNumberish,
-    _recipient: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _positionId: PromiseOrValue<BigNumberish>,
+    _amount: PromiseOrValue<BigNumberish>,
+    _newAmountOfSwaps: PromiseOrValue<BigNumberish>,
+    _recipient: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   removeSwapIntervalsFromAllowedList(
-    _swapIntervals: BigNumberish[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _swapIntervals: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   renounceRole(
-    role: BytesLike,
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    role: PromiseOrValue<BytesLike>,
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   revokeRole(
-    role: BytesLike,
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    role: PromiseOrValue<BytesLike>,
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setAllowedTokens(
-    _tokens: string[],
-    _allowed: boolean[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _tokens: PromiseOrValue<string>[],
+    _allowed: PromiseOrValue<boolean>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  setOracle(_oracle: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  setOracle(
+    _oracle: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   setPlatformFeeRatio(
-    _platformFeeRatio: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _platformFeeRatio: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setSwapFee(
-    _swapFee: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _swapFee: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<boolean>;
+  supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<boolean>;
 
   swap(
-    _tokens: string[],
+    _tokens: PromiseOrValue<string>[],
     _pairsToSwap: IDCAHubSwapHandler.PairIndexesStruct[],
-    _rewardRecipient: string,
-    _callbackHandler: string,
-    _borrow: BigNumberish[],
-    _data: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _rewardRecipient: PromiseOrValue<string>,
+    _callbackHandler: PromiseOrValue<string>,
+    _borrow: PromiseOrValue<BigNumberish>[],
+    _data: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   swapAmountDelta(
-    _tokenA: string,
-    _tokenB: string,
-    _swapIntervalMask: BytesLike,
-    _swapNumber: BigNumberish,
+    _tokenA: PromiseOrValue<string>,
+    _tokenB: PromiseOrValue<string>,
+    _swapIntervalMask: PromiseOrValue<BytesLike>,
+    _swapNumber: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<IDCAHubParameters.SwapDeltaStructOutput>;
 
   swapData(
-    _tokenA: string,
-    _tokenB: string,
-    _swapIntervalMask: BytesLike,
+    _tokenA: PromiseOrValue<string>,
+    _tokenB: PromiseOrValue<string>,
+    _swapIntervalMask: PromiseOrValue<BytesLike>,
     overrides?: CallOverrides,
   ): Promise<IDCAHubParameters.SwapDataStructOutput>;
 
   swapFee(overrides?: CallOverrides): Promise<number>;
 
   terminate(
-    _positionId: BigNumberish,
-    _recipientUnswapped: string,
-    _recipientSwapped: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _positionId: PromiseOrValue<BigNumberish>,
+    _recipientUnswapped: PromiseOrValue<string>,
+    _recipientSwapped: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  tokenMagnitude(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  tokenMagnitude(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   totalCreatedPositions(overrides?: CallOverrides): Promise<BigNumber>;
 
-  unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   userPosition(
-    _positionId: BigNumberish,
+    _positionId: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<IDCAHubPositionHandler.UserPositionStructOutput>;
 
   withdrawFromPlatformBalance(
     _amounts: IDCAHub.AmountOfTokenStruct[],
-    _recipient: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _recipient: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   withdrawSwapped(
-    _positionId: BigNumberish,
-    _recipient: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _positionId: PromiseOrValue<BigNumberish>,
+    _recipient: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   withdrawSwappedMany(
     _positions: IDCAHubPositionHandler.PositionSetStruct[],
-    _recipient: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _recipient: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
@@ -1082,60 +1155,75 @@ export interface Hub extends BaseContract {
     TIME_LOCKED_ROLE(overrides?: CallOverrides): Promise<string>;
 
     accumRatio(
-      _tokenA: string,
-      _tokenB: string,
-      _swapIntervalMask: BytesLike,
-      _swapNumber: BigNumberish,
+      _tokenA: PromiseOrValue<string>,
+      _tokenB: PromiseOrValue<string>,
+      _swapIntervalMask: PromiseOrValue<BytesLike>,
+      _swapNumber: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<IDCAHubParameters.AccumRatioStructOutput>;
 
-    activeSwapIntervals(arg0: string, arg1: string, overrides?: CallOverrides): Promise<string>;
+    activeSwapIntervals(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<string>;
 
-    addSwapIntervalsToAllowedList(_swapIntervals: BigNumberish[], overrides?: CallOverrides): Promise<void>;
+    addSwapIntervalsToAllowedList(
+      _swapIntervals: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     allowedSwapIntervals(overrides?: CallOverrides): Promise<string>;
 
-    allowedTokens(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    allowedTokens(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     'deposit(address,address,uint256,uint32,uint32,address,(address,uint8[])[])'(
-      _from: string,
-      _to: string,
-      _amount: BigNumberish,
-      _amountOfSwaps: BigNumberish,
-      _swapInterval: BigNumberish,
-      _owner: string,
+      _from: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      _amountOfSwaps: PromiseOrValue<BigNumberish>,
+      _swapInterval: PromiseOrValue<BigNumberish>,
+      _owner: PromiseOrValue<string>,
       _permissions: IDCAPermissionManager.PermissionSetStruct[],
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     'deposit(address,address,uint256,uint32,uint32,address,(address,uint8[])[],bytes)'(
-      _from: string,
-      _to: string,
-      _amount: BigNumberish,
-      _amountOfSwaps: BigNumberish,
-      _swapInterval: BigNumberish,
-      _owner: string,
+      _from: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      _amountOfSwaps: PromiseOrValue<BigNumberish>,
+      _swapInterval: PromiseOrValue<BigNumberish>,
+      _owner: PromiseOrValue<string>,
       _permissions: IDCAPermissionManager.PermissionSetStruct[],
-      _miscellaneous: BytesLike,
+      _miscellaneous: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     getNextSwapInfo(
-      _tokens: string[],
+      _tokens: PromiseOrValue<string>[],
       _pairs: IDCAHubSwapHandler.PairIndexesStruct[],
       overrides?: CallOverrides,
     ): Promise<IDCAHubSwapHandler.SwapInfoStructOutput>;
 
-    getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<string>;
+    getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
-    grantRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<void>;
+    grantRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    hasRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<boolean>;
+    hasRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     increasePosition(
-      _positionId: BigNumberish,
-      _amount: BigNumberish,
-      _newAmountOfSwaps: BigNumberish,
+      _positionId: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      _newAmountOfSwaps: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -1147,98 +1235,117 @@ export interface Hub extends BaseContract {
 
     permissionManager(overrides?: CallOverrides): Promise<string>;
 
-    platformBalance(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    platformBalance(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     platformFeeRatio(overrides?: CallOverrides): Promise<number>;
 
     reducePosition(
-      _positionId: BigNumberish,
-      _amount: BigNumberish,
-      _newAmountOfSwaps: BigNumberish,
-      _recipient: string,
+      _positionId: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      _newAmountOfSwaps: PromiseOrValue<BigNumberish>,
+      _recipient: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    removeSwapIntervalsFromAllowedList(_swapIntervals: BigNumberish[], overrides?: CallOverrides): Promise<void>;
+    removeSwapIntervalsFromAllowedList(
+      _swapIntervals: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    renounceRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<void>;
+    renounceRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    revokeRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<void>;
+    revokeRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setAllowedTokens(_tokens: string[], _allowed: boolean[], overrides?: CallOverrides): Promise<void>;
+    setAllowedTokens(
+      _tokens: PromiseOrValue<string>[],
+      _allowed: PromiseOrValue<boolean>[],
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setOracle(_oracle: string, overrides?: CallOverrides): Promise<void>;
+    setOracle(_oracle: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setPlatformFeeRatio(_platformFeeRatio: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setPlatformFeeRatio(_platformFeeRatio: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setSwapFee(_swapFee: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setSwapFee(_swapFee: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<boolean>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<boolean>;
 
     swap(
-      _tokens: string[],
+      _tokens: PromiseOrValue<string>[],
       _pairsToSwap: IDCAHubSwapHandler.PairIndexesStruct[],
-      _rewardRecipient: string,
-      _callbackHandler: string,
-      _borrow: BigNumberish[],
-      _data: BytesLike,
+      _rewardRecipient: PromiseOrValue<string>,
+      _callbackHandler: PromiseOrValue<string>,
+      _borrow: PromiseOrValue<BigNumberish>[],
+      _data: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<IDCAHubSwapHandler.SwapInfoStructOutput>;
 
     swapAmountDelta(
-      _tokenA: string,
-      _tokenB: string,
-      _swapIntervalMask: BytesLike,
-      _swapNumber: BigNumberish,
+      _tokenA: PromiseOrValue<string>,
+      _tokenB: PromiseOrValue<string>,
+      _swapIntervalMask: PromiseOrValue<BytesLike>,
+      _swapNumber: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<IDCAHubParameters.SwapDeltaStructOutput>;
 
     swapData(
-      _tokenA: string,
-      _tokenB: string,
-      _swapIntervalMask: BytesLike,
+      _tokenA: PromiseOrValue<string>,
+      _tokenB: PromiseOrValue<string>,
+      _swapIntervalMask: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<IDCAHubParameters.SwapDataStructOutput>;
 
     swapFee(overrides?: CallOverrides): Promise<number>;
 
     terminate(
-      _positionId: BigNumberish,
-      _recipientUnswapped: string,
-      _recipientSwapped: string,
+      _positionId: PromiseOrValue<BigNumberish>,
+      _recipientUnswapped: PromiseOrValue<string>,
+      _recipientSwapped: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { _unswapped: BigNumber; _swapped: BigNumber }>;
 
-    tokenMagnitude(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    tokenMagnitude(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     totalCreatedPositions(overrides?: CallOverrides): Promise<BigNumber>;
 
     unpause(overrides?: CallOverrides): Promise<void>;
 
     userPosition(
-      _positionId: BigNumberish,
+      _positionId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<IDCAHubPositionHandler.UserPositionStructOutput>;
 
     withdrawFromPlatformBalance(
       _amounts: IDCAHub.AmountOfTokenStruct[],
-      _recipient: string,
+      _recipient: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    withdrawSwapped(_positionId: BigNumberish, _recipient: string, overrides?: CallOverrides): Promise<BigNumber>;
+    withdrawSwapped(
+      _positionId: PromiseOrValue<BigNumberish>,
+      _recipient: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     withdrawSwappedMany(
       _positions: IDCAHubPositionHandler.PositionSetStruct[],
-      _recipient: string,
+      _recipient: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<BigNumber[]>;
   };
 
   filters: {
     'Deposited(address,address,uint256,address,address,uint32,uint120,uint32,uint32,tuple[])'(
-      depositor?: string | null,
-      owner?: string | null,
+      depositor?: PromiseOrValue<string> | null,
+      owner?: PromiseOrValue<string> | null,
       positionId?: null,
       fromToken?: null,
       toToken?: null,
@@ -1249,8 +1356,8 @@ export interface Hub extends BaseContract {
       permissions?: null,
     ): DepositedEventFilter;
     Deposited(
-      depositor?: string | null,
-      owner?: string | null,
+      depositor?: PromiseOrValue<string> | null,
+      owner?: PromiseOrValue<string> | null,
       positionId?: null,
       fromToken?: null,
       toToken?: null,
@@ -1265,14 +1372,14 @@ export interface Hub extends BaseContract {
     Miscellaneous(positionId?: null, data?: null): MiscellaneousEventFilter;
 
     'Modified(address,uint256,uint120,uint32,uint32)'(
-      user?: string | null,
+      user?: PromiseOrValue<string> | null,
       positionId?: null,
       rate?: null,
       startingSwap?: null,
       lastSwap?: null,
     ): ModifiedEventFilter;
     Modified(
-      user?: string | null,
+      user?: PromiseOrValue<string> | null,
       positionId?: null,
       rate?: null,
       startingSwap?: null,
@@ -1289,29 +1396,37 @@ export interface Hub extends BaseContract {
     PlatformFeeRatioSet(_platformFeeRatio?: null): PlatformFeeRatioSetEventFilter;
 
     'RoleAdminChanged(bytes32,bytes32,bytes32)'(
-      role?: BytesLike | null,
-      previousAdminRole?: BytesLike | null,
-      newAdminRole?: BytesLike | null,
+      role?: PromiseOrValue<BytesLike> | null,
+      previousAdminRole?: PromiseOrValue<BytesLike> | null,
+      newAdminRole?: PromiseOrValue<BytesLike> | null,
     ): RoleAdminChangedEventFilter;
     RoleAdminChanged(
-      role?: BytesLike | null,
-      previousAdminRole?: BytesLike | null,
-      newAdminRole?: BytesLike | null,
+      role?: PromiseOrValue<BytesLike> | null,
+      previousAdminRole?: PromiseOrValue<BytesLike> | null,
+      newAdminRole?: PromiseOrValue<BytesLike> | null,
     ): RoleAdminChangedEventFilter;
 
     'RoleGranted(bytes32,address,address)'(
-      role?: BytesLike | null,
-      account?: string | null,
-      sender?: string | null,
+      role?: PromiseOrValue<BytesLike> | null,
+      account?: PromiseOrValue<string> | null,
+      sender?: PromiseOrValue<string> | null,
     ): RoleGrantedEventFilter;
-    RoleGranted(role?: BytesLike | null, account?: string | null, sender?: string | null): RoleGrantedEventFilter;
+    RoleGranted(
+      role?: PromiseOrValue<BytesLike> | null,
+      account?: PromiseOrValue<string> | null,
+      sender?: PromiseOrValue<string> | null,
+    ): RoleGrantedEventFilter;
 
     'RoleRevoked(bytes32,address,address)'(
-      role?: BytesLike | null,
-      account?: string | null,
-      sender?: string | null,
+      role?: PromiseOrValue<BytesLike> | null,
+      account?: PromiseOrValue<string> | null,
+      sender?: PromiseOrValue<string> | null,
     ): RoleRevokedEventFilter;
-    RoleRevoked(role?: BytesLike | null, account?: string | null, sender?: string | null): RoleRevokedEventFilter;
+    RoleRevoked(
+      role?: PromiseOrValue<BytesLike> | null,
+      account?: PromiseOrValue<string> | null,
+      sender?: PromiseOrValue<string> | null,
+    ): RoleRevokedEventFilter;
 
     'SwapFeeSet(uint32)'(_feeSet?: null): SwapFeeSetEventFilter;
     SwapFeeSet(_feeSet?: null): SwapFeeSetEventFilter;
@@ -1323,34 +1438,34 @@ export interface Hub extends BaseContract {
     SwapIntervalsForbidden(_swapIntervals?: null): SwapIntervalsForbiddenEventFilter;
 
     'Swapped(address,address,address,tuple,uint256[],uint32)'(
-      sender?: string | null,
-      rewardRecipient?: string | null,
-      callbackHandler?: string | null,
+      sender?: PromiseOrValue<string> | null,
+      rewardRecipient?: PromiseOrValue<string> | null,
+      callbackHandler?: PromiseOrValue<string> | null,
       swapInformation?: null,
       borrowed?: null,
       fee?: null,
     ): SwappedEventFilter;
     Swapped(
-      sender?: string | null,
-      rewardRecipient?: string | null,
-      callbackHandler?: string | null,
+      sender?: PromiseOrValue<string> | null,
+      rewardRecipient?: PromiseOrValue<string> | null,
+      callbackHandler?: PromiseOrValue<string> | null,
       swapInformation?: null,
       borrowed?: null,
       fee?: null,
     ): SwappedEventFilter;
 
     'Terminated(address,address,address,uint256,uint256,uint256)'(
-      user?: string | null,
-      recipientUnswapped?: string | null,
-      recipientSwapped?: string | null,
+      user?: PromiseOrValue<string> | null,
+      recipientUnswapped?: PromiseOrValue<string> | null,
+      recipientSwapped?: PromiseOrValue<string> | null,
       positionId?: null,
       returnedUnswapped?: null,
       returnedSwapped?: null,
     ): TerminatedEventFilter;
     Terminated(
-      user?: string | null,
-      recipientUnswapped?: string | null,
-      recipientSwapped?: string | null,
+      user?: PromiseOrValue<string> | null,
+      recipientUnswapped?: PromiseOrValue<string> | null,
+      recipientSwapped?: PromiseOrValue<string> | null,
       positionId?: null,
       returnedUnswapped?: null,
       returnedSwapped?: null,
@@ -1363,40 +1478,40 @@ export interface Hub extends BaseContract {
     Unpaused(account?: null): UnpausedEventFilter;
 
     'Withdrew(address,address,uint256,address,uint256)'(
-      withdrawer?: string | null,
-      recipient?: string | null,
+      withdrawer?: PromiseOrValue<string> | null,
+      recipient?: PromiseOrValue<string> | null,
       positionId?: null,
       token?: null,
       amount?: null,
     ): WithdrewEventFilter;
     Withdrew(
-      withdrawer?: string | null,
-      recipient?: string | null,
+      withdrawer?: PromiseOrValue<string> | null,
+      recipient?: PromiseOrValue<string> | null,
       positionId?: null,
       token?: null,
       amount?: null,
     ): WithdrewEventFilter;
 
     'WithdrewFromPlatform(address,address,tuple[])'(
-      sender?: string | null,
-      recipient?: string | null,
+      sender?: PromiseOrValue<string> | null,
+      recipient?: PromiseOrValue<string> | null,
       amounts?: null,
     ): WithdrewFromPlatformEventFilter;
     WithdrewFromPlatform(
-      sender?: string | null,
-      recipient?: string | null,
+      sender?: PromiseOrValue<string> | null,
+      recipient?: PromiseOrValue<string> | null,
       amounts?: null,
     ): WithdrewFromPlatformEventFilter;
 
     'WithdrewMany(address,address,tuple[],uint256[])'(
-      withdrawer?: string | null,
-      recipient?: string | null,
+      withdrawer?: PromiseOrValue<string> | null,
+      recipient?: PromiseOrValue<string> | null,
       positions?: null,
       withdrew?: null,
     ): WithdrewManyEventFilter;
     WithdrewMany(
-      withdrawer?: string | null,
-      recipient?: string | null,
+      withdrawer?: PromiseOrValue<string> | null,
+      recipient?: PromiseOrValue<string> | null,
       positions?: null,
       withdrew?: null,
     ): WithdrewManyEventFilter;
@@ -1416,182 +1531,196 @@ export interface Hub extends BaseContract {
     TIME_LOCKED_ROLE(overrides?: CallOverrides): Promise<BigNumber>;
 
     accumRatio(
-      _tokenA: string,
-      _tokenB: string,
-      _swapIntervalMask: BytesLike,
-      _swapNumber: BigNumberish,
+      _tokenA: PromiseOrValue<string>,
+      _tokenB: PromiseOrValue<string>,
+      _swapIntervalMask: PromiseOrValue<BytesLike>,
+      _swapNumber: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    activeSwapIntervals(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    activeSwapIntervals(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     addSwapIntervalsToAllowedList(
-      _swapIntervals: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _swapIntervals: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     allowedSwapIntervals(overrides?: CallOverrides): Promise<BigNumber>;
 
-    allowedTokens(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowedTokens(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     'deposit(address,address,uint256,uint32,uint32,address,(address,uint8[])[])'(
-      _from: string,
-      _to: string,
-      _amount: BigNumberish,
-      _amountOfSwaps: BigNumberish,
-      _swapInterval: BigNumberish,
-      _owner: string,
+      _from: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      _amountOfSwaps: PromiseOrValue<BigNumberish>,
+      _swapInterval: PromiseOrValue<BigNumberish>,
+      _owner: PromiseOrValue<string>,
       _permissions: IDCAPermissionManager.PermissionSetStruct[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     'deposit(address,address,uint256,uint32,uint32,address,(address,uint8[])[],bytes)'(
-      _from: string,
-      _to: string,
-      _amount: BigNumberish,
-      _amountOfSwaps: BigNumberish,
-      _swapInterval: BigNumberish,
-      _owner: string,
+      _from: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      _amountOfSwaps: PromiseOrValue<BigNumberish>,
+      _swapInterval: PromiseOrValue<BigNumberish>,
+      _owner: PromiseOrValue<string>,
       _permissions: IDCAPermissionManager.PermissionSetStruct[],
-      _miscellaneous: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _miscellaneous: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     getNextSwapInfo(
-      _tokens: string[],
+      _tokens: PromiseOrValue<string>[],
       _pairs: IDCAHubSwapHandler.PairIndexesStruct[],
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     grantRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    hasRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    hasRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     increasePosition(
-      _positionId: BigNumberish,
-      _amount: BigNumberish,
-      _newAmountOfSwaps: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _positionId: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      _newAmountOfSwaps: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     oracle(overrides?: CallOverrides): Promise<BigNumber>;
 
-    pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     paused(overrides?: CallOverrides): Promise<BigNumber>;
 
     permissionManager(overrides?: CallOverrides): Promise<BigNumber>;
 
-    platformBalance(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    platformBalance(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     platformFeeRatio(overrides?: CallOverrides): Promise<BigNumber>;
 
     reducePosition(
-      _positionId: BigNumberish,
-      _amount: BigNumberish,
-      _newAmountOfSwaps: BigNumberish,
-      _recipient: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _positionId: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      _newAmountOfSwaps: PromiseOrValue<BigNumberish>,
+      _recipient: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     removeSwapIntervalsFromAllowedList(
-      _swapIntervals: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _swapIntervals: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     renounceRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     revokeRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setAllowedTokens(
-      _tokens: string[],
-      _allowed: boolean[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokens: PromiseOrValue<string>[],
+      _allowed: PromiseOrValue<boolean>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setOracle(_oracle: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setOracle(
+      _oracle: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setPlatformFeeRatio(
-      _platformFeeRatio: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _platformFeeRatio: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setSwapFee(_swapFee: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setSwapFee(
+      _swapFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     swap(
-      _tokens: string[],
+      _tokens: PromiseOrValue<string>[],
       _pairsToSwap: IDCAHubSwapHandler.PairIndexesStruct[],
-      _rewardRecipient: string,
-      _callbackHandler: string,
-      _borrow: BigNumberish[],
-      _data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardRecipient: PromiseOrValue<string>,
+      _callbackHandler: PromiseOrValue<string>,
+      _borrow: PromiseOrValue<BigNumberish>[],
+      _data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     swapAmountDelta(
-      _tokenA: string,
-      _tokenB: string,
-      _swapIntervalMask: BytesLike,
-      _swapNumber: BigNumberish,
+      _tokenA: PromiseOrValue<string>,
+      _tokenB: PromiseOrValue<string>,
+      _swapIntervalMask: PromiseOrValue<BytesLike>,
+      _swapNumber: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     swapData(
-      _tokenA: string,
-      _tokenB: string,
-      _swapIntervalMask: BytesLike,
+      _tokenA: PromiseOrValue<string>,
+      _tokenB: PromiseOrValue<string>,
+      _swapIntervalMask: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     swapFee(overrides?: CallOverrides): Promise<BigNumber>;
 
     terminate(
-      _positionId: BigNumberish,
-      _recipientUnswapped: string,
-      _recipientSwapped: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _positionId: PromiseOrValue<BigNumberish>,
+      _recipientUnswapped: PromiseOrValue<string>,
+      _recipientSwapped: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    tokenMagnitude(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    tokenMagnitude(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     totalCreatedPositions(overrides?: CallOverrides): Promise<BigNumber>;
 
-    unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    userPosition(_positionId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    userPosition(_positionId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     withdrawFromPlatformBalance(
       _amounts: IDCAHub.AmountOfTokenStruct[],
-      _recipient: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _recipient: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     withdrawSwapped(
-      _positionId: BigNumberish,
-      _recipient: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _positionId: PromiseOrValue<BigNumberish>,
+      _recipient: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     withdrawSwappedMany(
       _positions: IDCAHubPositionHandler.PositionSetStruct[],
-      _recipient: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _recipient: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
@@ -1609,188 +1738,196 @@ export interface Hub extends BaseContract {
     TIME_LOCKED_ROLE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     accumRatio(
-      _tokenA: string,
-      _tokenB: string,
-      _swapIntervalMask: BytesLike,
-      _swapNumber: BigNumberish,
+      _tokenA: PromiseOrValue<string>,
+      _tokenB: PromiseOrValue<string>,
+      _swapIntervalMask: PromiseOrValue<BytesLike>,
+      _swapNumber: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    activeSwapIntervals(arg0: string, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    activeSwapIntervals(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     addSwapIntervalsToAllowedList(
-      _swapIntervals: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _swapIntervals: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     allowedSwapIntervals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    allowedTokens(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    allowedTokens(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     'deposit(address,address,uint256,uint32,uint32,address,(address,uint8[])[])'(
-      _from: string,
-      _to: string,
-      _amount: BigNumberish,
-      _amountOfSwaps: BigNumberish,
-      _swapInterval: BigNumberish,
-      _owner: string,
+      _from: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      _amountOfSwaps: PromiseOrValue<BigNumberish>,
+      _swapInterval: PromiseOrValue<BigNumberish>,
+      _owner: PromiseOrValue<string>,
       _permissions: IDCAPermissionManager.PermissionSetStruct[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     'deposit(address,address,uint256,uint32,uint32,address,(address,uint8[])[],bytes)'(
-      _from: string,
-      _to: string,
-      _amount: BigNumberish,
-      _amountOfSwaps: BigNumberish,
-      _swapInterval: BigNumberish,
-      _owner: string,
+      _from: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      _amountOfSwaps: PromiseOrValue<BigNumberish>,
+      _swapInterval: PromiseOrValue<BigNumberish>,
+      _owner: PromiseOrValue<string>,
       _permissions: IDCAPermissionManager.PermissionSetStruct[],
-      _miscellaneous: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _miscellaneous: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     getNextSwapInfo(
-      _tokens: string[],
+      _tokens: PromiseOrValue<string>[],
       _pairs: IDCAHubSwapHandler.PairIndexesStruct[],
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     grantRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    hasRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    hasRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     increasePosition(
-      _positionId: BigNumberish,
-      _amount: BigNumberish,
-      _newAmountOfSwaps: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _positionId: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      _newAmountOfSwaps: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     oracle(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     paused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     permissionManager(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    platformBalance(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    platformBalance(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     platformFeeRatio(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     reducePosition(
-      _positionId: BigNumberish,
-      _amount: BigNumberish,
-      _newAmountOfSwaps: BigNumberish,
-      _recipient: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _positionId: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      _newAmountOfSwaps: PromiseOrValue<BigNumberish>,
+      _recipient: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     removeSwapIntervalsFromAllowedList(
-      _swapIntervals: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _swapIntervals: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     renounceRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     revokeRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setAllowedTokens(
-      _tokens: string[],
-      _allowed: boolean[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokens: PromiseOrValue<string>[],
+      _allowed: PromiseOrValue<boolean>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setOracle(
-      _oracle: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _oracle: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setPlatformFeeRatio(
-      _platformFeeRatio: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _platformFeeRatio: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setSwapFee(
-      _swapFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _swapFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     swap(
-      _tokens: string[],
+      _tokens: PromiseOrValue<string>[],
       _pairsToSwap: IDCAHubSwapHandler.PairIndexesStruct[],
-      _rewardRecipient: string,
-      _callbackHandler: string,
-      _borrow: BigNumberish[],
-      _data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardRecipient: PromiseOrValue<string>,
+      _callbackHandler: PromiseOrValue<string>,
+      _borrow: PromiseOrValue<BigNumberish>[],
+      _data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     swapAmountDelta(
-      _tokenA: string,
-      _tokenB: string,
-      _swapIntervalMask: BytesLike,
-      _swapNumber: BigNumberish,
+      _tokenA: PromiseOrValue<string>,
+      _tokenB: PromiseOrValue<string>,
+      _swapIntervalMask: PromiseOrValue<BytesLike>,
+      _swapNumber: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     swapData(
-      _tokenA: string,
-      _tokenB: string,
-      _swapIntervalMask: BytesLike,
+      _tokenA: PromiseOrValue<string>,
+      _tokenB: PromiseOrValue<string>,
+      _swapIntervalMask: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     swapFee(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     terminate(
-      _positionId: BigNumberish,
-      _recipientUnswapped: string,
-      _recipientSwapped: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _positionId: PromiseOrValue<BigNumberish>,
+      _recipientUnswapped: PromiseOrValue<string>,
+      _recipientSwapped: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    tokenMagnitude(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    tokenMagnitude(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalCreatedPositions(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    userPosition(_positionId: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    userPosition(_positionId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     withdrawFromPlatformBalance(
       _amounts: IDCAHub.AmountOfTokenStruct[],
-      _recipient: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _recipient: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     withdrawSwapped(
-      _positionId: BigNumberish,
-      _recipient: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _positionId: PromiseOrValue<BigNumberish>,
+      _recipient: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     withdrawSwappedMany(
       _positions: IDCAHubPositionHandler.PositionSetStruct[],
-      _recipient: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _recipient: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

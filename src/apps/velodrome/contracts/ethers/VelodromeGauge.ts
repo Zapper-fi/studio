@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface VelodromeGaugeInterface extends utils.Interface {
   functions: {
@@ -120,52 +120,85 @@ export interface VelodromeGaugeInterface extends utils.Interface {
   ): FunctionFragment;
 
   encodeFunctionData(functionFragment: '_ve', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
-  encodeFunctionData(functionFragment: 'batchRewardPerToken', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'batchUpdateRewardPerToken', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'checkpoints', values: [string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'batchRewardPerToken',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'batchUpdateRewardPerToken',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'checkpoints',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'claimFees', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'deposit', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'depositAll', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'derivedBalance', values: [string]): string;
-  encodeFunctionData(functionFragment: 'derivedBalances', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'deposit',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'depositAll', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'derivedBalance', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'derivedBalances', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'derivedSupply', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'earned', values: [string, string]): string;
+  encodeFunctionData(functionFragment: 'earned', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'external_bribe', values?: undefined): string;
   encodeFunctionData(functionFragment: 'fees0', values?: undefined): string;
   encodeFunctionData(functionFragment: 'fees1', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getPriorBalanceIndex', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'getPriorRewardPerToken', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'getPriorSupplyIndex', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'getReward', values: [string, string[]]): string;
+  encodeFunctionData(
+    functionFragment: 'getPriorBalanceIndex',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'getPriorRewardPerToken',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'getPriorSupplyIndex', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'getReward', values: [PromiseOrValue<string>, PromiseOrValue<string>[]]): string;
   encodeFunctionData(functionFragment: 'internal_bribe', values?: undefined): string;
   encodeFunctionData(functionFragment: 'isForPair', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'isReward', values: [string]): string;
-  encodeFunctionData(functionFragment: 'lastEarn', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'lastTimeRewardApplicable', values: [string]): string;
-  encodeFunctionData(functionFragment: 'lastUpdateTime', values: [string]): string;
-  encodeFunctionData(functionFragment: 'left', values: [string]): string;
-  encodeFunctionData(functionFragment: 'notifyRewardAmount', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'numCheckpoints', values: [string]): string;
-  encodeFunctionData(functionFragment: 'periodFinish', values: [string]): string;
-  encodeFunctionData(functionFragment: 'rewardPerToken', values: [string]): string;
-  encodeFunctionData(functionFragment: 'rewardPerTokenCheckpoints', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'rewardPerTokenNumCheckpoints', values: [string]): string;
-  encodeFunctionData(functionFragment: 'rewardPerTokenStored', values: [string]): string;
-  encodeFunctionData(functionFragment: 'rewardRate', values: [string]): string;
-  encodeFunctionData(functionFragment: 'rewards', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'isReward', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'lastEarn', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'lastTimeRewardApplicable', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'lastUpdateTime', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'left', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'notifyRewardAmount',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'numCheckpoints', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'periodFinish', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'rewardPerToken', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'rewardPerTokenCheckpoints',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'rewardPerTokenNumCheckpoints', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'rewardPerTokenStored', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'rewardRate', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'rewards', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'rewardsListLength', values?: undefined): string;
   encodeFunctionData(functionFragment: 'stake', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'supplyCheckpoints', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'supplyCheckpoints', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'supplyNumCheckpoints', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'swapOutRewardToken', values: [BigNumberish, string, string]): string;
-  encodeFunctionData(functionFragment: 'tokenIds', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'swapOutRewardToken',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'tokenIds', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'userRewardPerTokenStored', values: [string, string]): string;
+  encodeFunctionData(
+    functionFragment: 'userRewardPerTokenStored',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'voter', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'withdraw', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'withdraw', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'withdrawAll', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'withdrawToken', values: [BigNumberish, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'withdrawToken',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
 
   decodeFunctionResult(functionFragment: '_ve', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result;
@@ -300,46 +333,50 @@ export interface VelodromeGauge extends BaseContract {
   functions: {
     _ve(overrides?: CallOverrides): Promise<[string]>;
 
-    balanceOf(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     batchRewardPerToken(
-      token: string,
-      maxRuns: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      maxRuns: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     batchUpdateRewardPerToken(
-      token: string,
-      maxRuns: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      maxRuns: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     checkpoints(
-      arg0: string,
-      arg1: BigNumberish,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { timestamp: BigNumber; balanceOf: BigNumber }>;
 
-    claimFees(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    claimFees(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     deposit(
-      amount: BigNumberish,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     depositAll(
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    derivedBalance(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    derivedBalance(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    derivedBalances(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    derivedBalances(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     derivedSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    earned(token: string, account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    earned(
+      token: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     external_bribe(overrides?: CallOverrides): Promise<[string]>;
 
@@ -347,51 +384,59 @@ export interface VelodromeGauge extends BaseContract {
 
     fees1(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getPriorBalanceIndex(account: string, timestamp: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getPriorBalanceIndex(
+      account: PromiseOrValue<string>,
+      timestamp: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     getPriorRewardPerToken(
-      token: string,
-      timestamp: BigNumberish,
+      token: PromiseOrValue<string>,
+      timestamp: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber]>;
 
-    getPriorSupplyIndex(timestamp: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getPriorSupplyIndex(timestamp: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     getReward(
-      account: string,
-      tokens: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      tokens: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     internal_bribe(overrides?: CallOverrides): Promise<[string]>;
 
     isForPair(overrides?: CallOverrides): Promise<[boolean]>;
 
-    isReward(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    isReward(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
-    lastEarn(arg0: string, arg1: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    lastEarn(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
-    lastTimeRewardApplicable(token: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    lastTimeRewardApplicable(token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    lastUpdateTime(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    lastUpdateTime(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    left(token: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    left(token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     notifyRewardAmount(
-      token: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    numCheckpoints(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    numCheckpoints(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    periodFinish(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    periodFinish(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    rewardPerToken(token: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    rewardPerToken(token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     rewardPerTokenCheckpoints(
-      arg0: string,
-      arg1: BigNumberish,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber] & {
@@ -400,96 +445,100 @@ export interface VelodromeGauge extends BaseContract {
       }
     >;
 
-    rewardPerTokenNumCheckpoints(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    rewardPerTokenNumCheckpoints(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    rewardPerTokenStored(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    rewardPerTokenStored(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    rewardRate(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    rewardRate(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    rewards(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    rewards(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
     rewardsListLength(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     stake(overrides?: CallOverrides): Promise<[string]>;
 
     supplyCheckpoints(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { timestamp: BigNumber; supply: BigNumber }>;
 
     supplyNumCheckpoints(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     swapOutRewardToken(
-      i: BigNumberish,
-      oldToken: string,
-      newToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      i: PromiseOrValue<BigNumberish>,
+      oldToken: PromiseOrValue<string>,
+      newToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    tokenIds(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    tokenIds(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    userRewardPerTokenStored(arg0: string, arg1: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    userRewardPerTokenStored(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     voter(overrides?: CallOverrides): Promise<[string]>;
 
     withdraw(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    withdrawAll(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    withdrawAll(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     withdrawToken(
-      amount: BigNumberish,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
   _ve(overrides?: CallOverrides): Promise<string>;
 
-  balanceOf(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   batchRewardPerToken(
-    token: string,
-    maxRuns: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    token: PromiseOrValue<string>,
+    maxRuns: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   batchUpdateRewardPerToken(
-    token: string,
-    maxRuns: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    token: PromiseOrValue<string>,
+    maxRuns: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   checkpoints(
-    arg0: string,
-    arg1: BigNumberish,
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber, BigNumber] & { timestamp: BigNumber; balanceOf: BigNumber }>;
 
-  claimFees(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  claimFees(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   deposit(
-    amount: BigNumberish,
-    tokenId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    amount: PromiseOrValue<BigNumberish>,
+    tokenId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   depositAll(
-    tokenId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    tokenId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  derivedBalance(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  derivedBalance(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  derivedBalances(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  derivedBalances(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   derivedSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-  earned(token: string, account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  earned(token: PromiseOrValue<string>, account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   external_bribe(overrides?: CallOverrides): Promise<string>;
 
@@ -497,113 +546,129 @@ export interface VelodromeGauge extends BaseContract {
 
   fees1(overrides?: CallOverrides): Promise<BigNumber>;
 
-  getPriorBalanceIndex(account: string, timestamp: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  getPriorBalanceIndex(
+    account: PromiseOrValue<string>,
+    timestamp: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   getPriorRewardPerToken(
-    token: string,
-    timestamp: BigNumberish,
+    token: PromiseOrValue<string>,
+    timestamp: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber, BigNumber]>;
 
-  getPriorSupplyIndex(timestamp: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  getPriorSupplyIndex(timestamp: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   getReward(
-    account: string,
-    tokens: string[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    account: PromiseOrValue<string>,
+    tokens: PromiseOrValue<string>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   internal_bribe(overrides?: CallOverrides): Promise<string>;
 
   isForPair(overrides?: CallOverrides): Promise<boolean>;
 
-  isReward(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  isReward(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-  lastEarn(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+  lastEarn(arg0: PromiseOrValue<string>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  lastTimeRewardApplicable(token: string, overrides?: CallOverrides): Promise<BigNumber>;
+  lastTimeRewardApplicable(token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  lastUpdateTime(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  lastUpdateTime(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  left(token: string, overrides?: CallOverrides): Promise<BigNumber>;
+  left(token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   notifyRewardAmount(
-    token: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    token: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  numCheckpoints(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  numCheckpoints(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  periodFinish(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  periodFinish(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  rewardPerToken(token: string, overrides?: CallOverrides): Promise<BigNumber>;
+  rewardPerToken(token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   rewardPerTokenCheckpoints(
-    arg0: string,
-    arg1: BigNumberish,
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber, BigNumber] & { timestamp: BigNumber; rewardPerToken: BigNumber }>;
 
-  rewardPerTokenNumCheckpoints(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  rewardPerTokenNumCheckpoints(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  rewardPerTokenStored(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  rewardPerTokenStored(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  rewardRate(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  rewardRate(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  rewards(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  rewards(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   rewardsListLength(overrides?: CallOverrides): Promise<BigNumber>;
 
   stake(overrides?: CallOverrides): Promise<string>;
 
   supplyCheckpoints(
-    arg0: BigNumberish,
+    arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber, BigNumber] & { timestamp: BigNumber; supply: BigNumber }>;
 
   supplyNumCheckpoints(overrides?: CallOverrides): Promise<BigNumber>;
 
   swapOutRewardToken(
-    i: BigNumberish,
-    oldToken: string,
-    newToken: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    i: PromiseOrValue<BigNumberish>,
+    oldToken: PromiseOrValue<string>,
+    newToken: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  tokenIds(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  tokenIds(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-  userRewardPerTokenStored(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+  userRewardPerTokenStored(
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   voter(overrides?: CallOverrides): Promise<string>;
 
   withdraw(
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  withdrawAll(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  withdrawAll(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   withdrawToken(
-    amount: BigNumberish,
-    tokenId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    amount: PromiseOrValue<BigNumberish>,
+    tokenId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
     _ve(overrides?: CallOverrides): Promise<string>;
 
-    balanceOf(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    batchRewardPerToken(token: string, maxRuns: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    batchRewardPerToken(
+      token: PromiseOrValue<string>,
+      maxRuns: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    batchUpdateRewardPerToken(token: string, maxRuns: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    batchUpdateRewardPerToken(
+      token: PromiseOrValue<string>,
+      maxRuns: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     checkpoints(
-      arg0: string,
-      arg1: BigNumberish,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { timestamp: BigNumber; balanceOf: BigNumber }>;
 
@@ -611,17 +676,25 @@ export interface VelodromeGauge extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { claimed0: BigNumber; claimed1: BigNumber }>;
 
-    deposit(amount: BigNumberish, tokenId: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    deposit(
+      amount: PromiseOrValue<BigNumberish>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    depositAll(tokenId: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    depositAll(tokenId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    derivedBalance(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    derivedBalance(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    derivedBalances(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    derivedBalances(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     derivedSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    earned(token: string, account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    earned(
+      token: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     external_bribe(overrides?: CallOverrides): Promise<string>;
 
@@ -629,43 +702,55 @@ export interface VelodromeGauge extends BaseContract {
 
     fees1(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getPriorBalanceIndex(account: string, timestamp: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getPriorBalanceIndex(
+      account: PromiseOrValue<string>,
+      timestamp: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     getPriorRewardPerToken(
-      token: string,
-      timestamp: BigNumberish,
+      token: PromiseOrValue<string>,
+      timestamp: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber]>;
 
-    getPriorSupplyIndex(timestamp: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getPriorSupplyIndex(timestamp: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getReward(account: string, tokens: string[], overrides?: CallOverrides): Promise<void>;
+    getReward(
+      account: PromiseOrValue<string>,
+      tokens: PromiseOrValue<string>[],
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     internal_bribe(overrides?: CallOverrides): Promise<string>;
 
     isForPair(overrides?: CallOverrides): Promise<boolean>;
 
-    isReward(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    isReward(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-    lastEarn(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    lastEarn(arg0: PromiseOrValue<string>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    lastTimeRewardApplicable(token: string, overrides?: CallOverrides): Promise<BigNumber>;
+    lastTimeRewardApplicable(token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    lastUpdateTime(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    lastUpdateTime(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    left(token: string, overrides?: CallOverrides): Promise<BigNumber>;
+    left(token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    notifyRewardAmount(token: string, amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    notifyRewardAmount(
+      token: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    numCheckpoints(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    numCheckpoints(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    periodFinish(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    periodFinish(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    rewardPerToken(token: string, overrides?: CallOverrides): Promise<BigNumber>;
+    rewardPerToken(token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     rewardPerTokenCheckpoints(
-      arg0: string,
-      arg1: BigNumberish,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber] & {
@@ -674,103 +759,147 @@ export interface VelodromeGauge extends BaseContract {
       }
     >;
 
-    rewardPerTokenNumCheckpoints(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    rewardPerTokenNumCheckpoints(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    rewardPerTokenStored(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    rewardPerTokenStored(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    rewardRate(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    rewardRate(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    rewards(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    rewards(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
     rewardsListLength(overrides?: CallOverrides): Promise<BigNumber>;
 
     stake(overrides?: CallOverrides): Promise<string>;
 
     supplyCheckpoints(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { timestamp: BigNumber; supply: BigNumber }>;
 
     supplyNumCheckpoints(overrides?: CallOverrides): Promise<BigNumber>;
 
-    swapOutRewardToken(i: BigNumberish, oldToken: string, newToken: string, overrides?: CallOverrides): Promise<void>;
+    swapOutRewardToken(
+      i: PromiseOrValue<BigNumberish>,
+      oldToken: PromiseOrValue<string>,
+      newToken: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    tokenIds(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    tokenIds(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    userRewardPerTokenStored(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    userRewardPerTokenStored(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     voter(overrides?: CallOverrides): Promise<string>;
 
-    withdraw(amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    withdraw(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     withdrawAll(overrides?: CallOverrides): Promise<void>;
 
-    withdrawToken(amount: BigNumberish, tokenId: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    withdrawToken(
+      amount: PromiseOrValue<BigNumberish>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
   };
 
   filters: {
-    'ClaimFees(address,uint256,uint256)'(from?: string | null, claimed0?: null, claimed1?: null): ClaimFeesEventFilter;
-    ClaimFees(from?: string | null, claimed0?: null, claimed1?: null): ClaimFeesEventFilter;
+    'ClaimFees(address,uint256,uint256)'(
+      from?: PromiseOrValue<string> | null,
+      claimed0?: null,
+      claimed1?: null,
+    ): ClaimFeesEventFilter;
+    ClaimFees(from?: PromiseOrValue<string> | null, claimed0?: null, claimed1?: null): ClaimFeesEventFilter;
 
     'ClaimRewards(address,address,uint256)'(
-      from?: string | null,
-      reward?: string | null,
+      from?: PromiseOrValue<string> | null,
+      reward?: PromiseOrValue<string> | null,
       amount?: null,
     ): ClaimRewardsEventFilter;
-    ClaimRewards(from?: string | null, reward?: string | null, amount?: null): ClaimRewardsEventFilter;
+    ClaimRewards(
+      from?: PromiseOrValue<string> | null,
+      reward?: PromiseOrValue<string> | null,
+      amount?: null,
+    ): ClaimRewardsEventFilter;
 
-    'Deposit(address,uint256,uint256)'(from?: string | null, tokenId?: null, amount?: null): DepositEventFilter;
-    Deposit(from?: string | null, tokenId?: null, amount?: null): DepositEventFilter;
+    'Deposit(address,uint256,uint256)'(
+      from?: PromiseOrValue<string> | null,
+      tokenId?: null,
+      amount?: null,
+    ): DepositEventFilter;
+    Deposit(from?: PromiseOrValue<string> | null, tokenId?: null, amount?: null): DepositEventFilter;
 
     'NotifyReward(address,address,uint256)'(
-      from?: string | null,
-      reward?: string | null,
+      from?: PromiseOrValue<string> | null,
+      reward?: PromiseOrValue<string> | null,
       amount?: null,
     ): NotifyRewardEventFilter;
-    NotifyReward(from?: string | null, reward?: string | null, amount?: null): NotifyRewardEventFilter;
+    NotifyReward(
+      from?: PromiseOrValue<string> | null,
+      reward?: PromiseOrValue<string> | null,
+      amount?: null,
+    ): NotifyRewardEventFilter;
 
-    'Withdraw(address,uint256,uint256)'(from?: string | null, tokenId?: null, amount?: null): WithdrawEventFilter;
-    Withdraw(from?: string | null, tokenId?: null, amount?: null): WithdrawEventFilter;
+    'Withdraw(address,uint256,uint256)'(
+      from?: PromiseOrValue<string> | null,
+      tokenId?: null,
+      amount?: null,
+    ): WithdrawEventFilter;
+    Withdraw(from?: PromiseOrValue<string> | null, tokenId?: null, amount?: null): WithdrawEventFilter;
   };
 
   estimateGas: {
     _ve(overrides?: CallOverrides): Promise<BigNumber>;
 
-    balanceOf(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     batchRewardPerToken(
-      token: string,
-      maxRuns: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      maxRuns: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     batchUpdateRewardPerToken(
-      token: string,
-      maxRuns: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      maxRuns: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    checkpoints(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    checkpoints(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    claimFees(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    claimFees(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     deposit(
-      amount: BigNumberish,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    depositAll(tokenId: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    depositAll(
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    derivedBalance(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    derivedBalance(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    derivedBalances(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    derivedBalances(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     derivedSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    earned(token: string, account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    earned(
+      token: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     external_bribe(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -778,127 +907,154 @@ export interface VelodromeGauge extends BaseContract {
 
     fees1(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getPriorBalanceIndex(account: string, timestamp: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getPriorBalanceIndex(
+      account: PromiseOrValue<string>,
+      timestamp: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    getPriorRewardPerToken(token: string, timestamp: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getPriorRewardPerToken(
+      token: PromiseOrValue<string>,
+      timestamp: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    getPriorSupplyIndex(timestamp: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getPriorSupplyIndex(timestamp: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getReward(
-      account: string,
-      tokens: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      tokens: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     internal_bribe(overrides?: CallOverrides): Promise<BigNumber>;
 
     isForPair(overrides?: CallOverrides): Promise<BigNumber>;
 
-    isReward(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    isReward(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    lastEarn(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    lastEarn(arg0: PromiseOrValue<string>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    lastTimeRewardApplicable(token: string, overrides?: CallOverrides): Promise<BigNumber>;
+    lastTimeRewardApplicable(token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    lastUpdateTime(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    lastUpdateTime(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    left(token: string, overrides?: CallOverrides): Promise<BigNumber>;
+    left(token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     notifyRewardAmount(
-      token: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    numCheckpoints(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    numCheckpoints(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    periodFinish(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    periodFinish(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    rewardPerToken(token: string, overrides?: CallOverrides): Promise<BigNumber>;
+    rewardPerToken(token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    rewardPerTokenCheckpoints(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    rewardPerTokenCheckpoints(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    rewardPerTokenNumCheckpoints(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    rewardPerTokenNumCheckpoints(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    rewardPerTokenStored(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    rewardPerTokenStored(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    rewardRate(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    rewardRate(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    rewards(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    rewards(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     rewardsListLength(overrides?: CallOverrides): Promise<BigNumber>;
 
     stake(overrides?: CallOverrides): Promise<BigNumber>;
 
-    supplyCheckpoints(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    supplyCheckpoints(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     supplyNumCheckpoints(overrides?: CallOverrides): Promise<BigNumber>;
 
     swapOutRewardToken(
-      i: BigNumberish,
-      oldToken: string,
-      newToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      i: PromiseOrValue<BigNumberish>,
+      oldToken: PromiseOrValue<string>,
+      newToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    tokenIds(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    tokenIds(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    userRewardPerTokenStored(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    userRewardPerTokenStored(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     voter(overrides?: CallOverrides): Promise<BigNumber>;
 
-    withdraw(amount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    withdraw(
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    withdrawAll(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    withdrawAll(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     withdrawToken(
-      amount: BigNumberish,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     _ve(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    balanceOf(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    balanceOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     batchRewardPerToken(
-      token: string,
-      maxRuns: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      maxRuns: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     batchUpdateRewardPerToken(
-      token: string,
-      maxRuns: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      maxRuns: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    checkpoints(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    checkpoints(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    claimFees(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    claimFees(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     deposit(
-      amount: BigNumberish,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     depositAll(
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    derivedBalance(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    derivedBalance(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    derivedBalances(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    derivedBalances(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     derivedSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    earned(token: string, account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    earned(
+      token: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     external_bribe(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -907,99 +1063,113 @@ export interface VelodromeGauge extends BaseContract {
     fees1(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getPriorBalanceIndex(
-      account: string,
-      timestamp: BigNumberish,
+      account: PromiseOrValue<string>,
+      timestamp: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     getPriorRewardPerToken(
-      token: string,
-      timestamp: BigNumberish,
+      token: PromiseOrValue<string>,
+      timestamp: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    getPriorSupplyIndex(timestamp: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getPriorSupplyIndex(
+      timestamp: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     getReward(
-      account: string,
-      tokens: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      tokens: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     internal_bribe(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     isForPair(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    isReward(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    isReward(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    lastEarn(arg0: string, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    lastTimeRewardApplicable(token: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    lastUpdateTime(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    left(token: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    notifyRewardAmount(
-      token: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<PopulatedTransaction>;
-
-    numCheckpoints(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    periodFinish(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    rewardPerToken(token: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    rewardPerTokenCheckpoints(
-      arg0: string,
-      arg1: BigNumberish,
+    lastEarn(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    rewardPerTokenNumCheckpoints(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    lastTimeRewardApplicable(token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    rewardPerTokenStored(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    lastUpdateTime(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    rewardRate(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    left(token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    rewards(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    notifyRewardAmount(
+      token: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    numCheckpoints(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    periodFinish(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    rewardPerToken(token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    rewardPerTokenCheckpoints(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
+    rewardPerTokenNumCheckpoints(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
+    rewardPerTokenStored(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    rewardRate(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    rewards(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     rewardsListLength(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     stake(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    supplyCheckpoints(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    supplyCheckpoints(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     supplyNumCheckpoints(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     swapOutRewardToken(
-      i: BigNumberish,
-      oldToken: string,
-      newToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      i: PromiseOrValue<BigNumberish>,
+      oldToken: PromiseOrValue<string>,
+      newToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    tokenIds(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    tokenIds(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    userRewardPerTokenStored(arg0: string, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    userRewardPerTokenStored(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     voter(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     withdraw(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    withdrawAll(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    withdrawAll(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     withdrawToken(
-      amount: BigNumberish,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

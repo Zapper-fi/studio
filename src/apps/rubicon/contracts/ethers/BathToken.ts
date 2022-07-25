@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface BathTokenInterface extends utils.Interface {
   functions: {
@@ -140,64 +140,109 @@ export interface BathTokenInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'DOMAIN_SEPARATOR', values?: undefined): string;
   encodeFunctionData(functionFragment: 'PERMIT_TYPEHASH', values?: undefined): string;
   encodeFunctionData(functionFragment: 'RubiconMarketAddress', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'allowance', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'approve', values: [string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'allowance', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'approve',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'approveMarket', values?: undefined): string;
   encodeFunctionData(functionFragment: 'asset', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'bathBuddy', values?: undefined): string;
   encodeFunctionData(functionFragment: 'bathHouse', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'bonusTokens', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'cancel', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'convertToAssets', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'convertToShares', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'bonusTokens', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'cancel',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'convertToAssets', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'convertToShares', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'decimals', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'deposit(uint256,address)', values: [BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'deposit(uint256)', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'deposit(uint256,address)',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'deposit(uint256)', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'feeBPS', values?: undefined): string;
   encodeFunctionData(functionFragment: 'feeTo', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getAllBonusTokenReward', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getBonusTokenReward', values: [string]): string;
-  encodeFunctionData(functionFragment: 'initialize', values: [string, string, string]): string;
+  encodeFunctionData(functionFragment: 'getBonusTokenReward', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'initialize',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'initialized', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'maxDeposit', values: [string]): string;
-  encodeFunctionData(functionFragment: 'maxMint', values: [string]): string;
-  encodeFunctionData(functionFragment: 'maxRedeem', values: [string]): string;
-  encodeFunctionData(functionFragment: 'maxWithdraw', values: [string]): string;
-  encodeFunctionData(functionFragment: 'mint', values: [BigNumberish, string]): string;
+  encodeFunctionData(functionFragment: 'maxDeposit', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'maxMint', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'maxRedeem', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'maxWithdraw', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'mint', values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'nonces', values: [string]): string;
+  encodeFunctionData(functionFragment: 'nonces', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'outstandingAmount', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'permit',
-    values: [string, string, BigNumberish, BigNumberish, BigNumberish, BytesLike, BytesLike],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'placeOffer', values: [BigNumberish, string, BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'previewDeposit', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'previewMint', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'previewRedeem', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'previewWithdraw', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'rebalance', values: [string, string, BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'redeem', values: [BigNumberish, string, string]): string;
-  encodeFunctionData(functionFragment: 'removeFilledTradeAmount', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setBathBuddy', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setBathHouse', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setBonusToken', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setFeeBPS', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setFeeTo', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setMarket', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'placeOffer',
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+    ],
+  ): string;
+  encodeFunctionData(functionFragment: 'previewDeposit', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'previewMint', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'previewRedeem', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'previewWithdraw', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'rebalance',
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'redeem',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'removeFilledTradeAmount', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setBathBuddy', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setBathHouse', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setBonusToken', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setFeeBPS', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setFeeTo', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setMarket', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalAssets', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transfer', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferFrom', values: [string, string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'transfer',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'transferFrom',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'underlyingBalance', values?: undefined): string;
   encodeFunctionData(functionFragment: 'underlyingERC20', values?: undefined): string;
   encodeFunctionData(functionFragment: 'underlyingToken', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'withdraw(uint256)', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'withdraw(uint256)', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(
     functionFragment: 'withdraw(uint256,address,address)',
-    values: [BigNumberish, string, string],
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>, PromiseOrValue<string>],
   ): string;
 
   decodeFunctionResult(functionFragment: 'DOMAIN_SEPARATOR', data: BytesLike): Result;
@@ -470,161 +515,198 @@ export interface BathToken extends BaseContract {
 
     RubiconMarketAddress(overrides?: CallOverrides): Promise<[string]>;
 
-    allowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    allowance(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     approve(
-      spender: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    approveMarket(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    approveMarket(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     asset(overrides?: CallOverrides): Promise<[string] & { assetTokenAddress: string }>;
 
-    balanceOf(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     bathBuddy(overrides?: CallOverrides): Promise<[string]>;
 
     bathHouse(overrides?: CallOverrides): Promise<[string]>;
 
-    bonusTokens(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    bonusTokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
     cancel(
-      id: BigNumberish,
-      amt: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      id: PromiseOrValue<BigNumberish>,
+      amt: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    convertToAssets(shares: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber] & { assets: BigNumber }>;
+    convertToAssets(
+      shares: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber] & { assets: BigNumber }>;
 
-    convertToShares(assets: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber] & { shares: BigNumber }>;
+    convertToShares(
+      assets: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber] & { shares: BigNumber }>;
 
     decimals(overrides?: CallOverrides): Promise<[number]>;
 
     'deposit(uint256,address)'(
-      assets: BigNumberish,
-      receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      assets: PromiseOrValue<BigNumberish>,
+      receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     'deposit(uint256)'(
-      assets: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      assets: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     feeBPS(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     feeTo(overrides?: CallOverrides): Promise<[string]>;
 
-    getAllBonusTokenReward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    getAllBonusTokenReward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     getBonusTokenReward(
-      rewardToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      rewardToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     initialize(
-      token: string,
-      market: string,
-      _feeTo: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      market: PromiseOrValue<string>,
+      _feeTo: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     initialized(overrides?: CallOverrides): Promise<[boolean]>;
 
-    maxDeposit(receiver: string, overrides?: CallOverrides): Promise<[BigNumber] & { maxAssets: BigNumber }>;
+    maxDeposit(
+      receiver: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber] & { maxAssets: BigNumber }>;
 
-    maxMint(receiver: string, overrides?: CallOverrides): Promise<[BigNumber] & { maxShares: BigNumber }>;
+    maxMint(
+      receiver: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber] & { maxShares: BigNumber }>;
 
-    maxRedeem(owner: string, overrides?: CallOverrides): Promise<[BigNumber] & { maxShares: BigNumber }>;
+    maxRedeem(
+      owner: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber] & { maxShares: BigNumber }>;
 
-    maxWithdraw(owner: string, overrides?: CallOverrides): Promise<[BigNumber] & { maxAssets: BigNumber }>;
+    maxWithdraw(
+      owner: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber] & { maxAssets: BigNumber }>;
 
     mint(
-      shares: BigNumberish,
-      receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      shares: PromiseOrValue<BigNumberish>,
+      receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     outstandingAmount(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     permit(
-      owner: string,
-      spender: string,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     placeOffer(
-      pay_amt: BigNumberish,
-      pay_gem: string,
-      buy_amt: BigNumberish,
-      buy_gem: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pay_amt: PromiseOrValue<BigNumberish>,
+      pay_gem: PromiseOrValue<string>,
+      buy_amt: PromiseOrValue<BigNumberish>,
+      buy_gem: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    previewDeposit(assets: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber] & { shares: BigNumber }>;
+    previewDeposit(
+      assets: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber] & { shares: BigNumber }>;
 
-    previewMint(shares: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber] & { assets: BigNumber }>;
+    previewMint(
+      shares: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber] & { assets: BigNumber }>;
 
-    previewRedeem(shares: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber] & { assets: BigNumber }>;
+    previewRedeem(
+      shares: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber] & { assets: BigNumber }>;
 
-    previewWithdraw(assets: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber] & { shares: BigNumber }>;
+    previewWithdraw(
+      assets: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber] & { shares: BigNumber }>;
 
     rebalance(
-      destination: string,
-      filledAssetToRebalance: string,
-      stratProportion: BigNumberish,
-      rebalAmt: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      destination: PromiseOrValue<string>,
+      filledAssetToRebalance: PromiseOrValue<string>,
+      stratProportion: PromiseOrValue<BigNumberish>,
+      rebalAmt: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     redeem(
-      shares: BigNumberish,
-      receiver: string,
-      owner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      shares: PromiseOrValue<BigNumberish>,
+      receiver: PromiseOrValue<string>,
+      owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     removeFilledTradeAmount(
-      amt: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amt: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setBathBuddy(
-      newBuddy: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newBuddy: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setBathHouse(
-      newBathHouse: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newBathHouse: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setBonusToken(
-      newBonusERC20: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newBonusERC20: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setFeeBPS(
-      _feeBPS: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _feeBPS: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    setFeeTo(_feeTo: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    setFeeTo(
+      _feeTo: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     setMarket(
-      newRubiconMarket: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newRubiconMarket: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
@@ -634,16 +716,16 @@ export interface BathToken extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transfer(
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferFrom(
-      from: string,
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     underlyingBalance(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -653,15 +735,15 @@ export interface BathToken extends BaseContract {
     underlyingToken(overrides?: CallOverrides): Promise<[string]>;
 
     'withdraw(uint256)'(
-      _shares: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _shares: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     'withdraw(uint256,address,address)'(
-      assets: BigNumberish,
-      receiver: string,
-      owner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      assets: PromiseOrValue<BigNumberish>,
+      receiver: PromiseOrValue<string>,
+      owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
@@ -671,161 +753,164 @@ export interface BathToken extends BaseContract {
 
   RubiconMarketAddress(overrides?: CallOverrides): Promise<string>;
 
-  allowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+  allowance(arg0: PromiseOrValue<string>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   approve(
-    spender: string,
-    value: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    value: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  approveMarket(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  approveMarket(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   asset(overrides?: CallOverrides): Promise<string>;
 
-  balanceOf(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   bathBuddy(overrides?: CallOverrides): Promise<string>;
 
   bathHouse(overrides?: CallOverrides): Promise<string>;
 
-  bonusTokens(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  bonusTokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   cancel(
-    id: BigNumberish,
-    amt: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    id: PromiseOrValue<BigNumberish>,
+    amt: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  convertToAssets(shares: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  convertToAssets(shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  convertToShares(assets: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  convertToShares(assets: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   decimals(overrides?: CallOverrides): Promise<number>;
 
   'deposit(uint256,address)'(
-    assets: BigNumberish,
-    receiver: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    assets: PromiseOrValue<BigNumberish>,
+    receiver: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   'deposit(uint256)'(
-    assets: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    assets: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   feeBPS(overrides?: CallOverrides): Promise<BigNumber>;
 
   feeTo(overrides?: CallOverrides): Promise<string>;
 
-  getAllBonusTokenReward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  getAllBonusTokenReward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   getBonusTokenReward(
-    rewardToken: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    rewardToken: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   initialize(
-    token: string,
-    market: string,
-    _feeTo: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    token: PromiseOrValue<string>,
+    market: PromiseOrValue<string>,
+    _feeTo: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   initialized(overrides?: CallOverrides): Promise<boolean>;
 
-  maxDeposit(receiver: string, overrides?: CallOverrides): Promise<BigNumber>;
+  maxDeposit(receiver: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  maxMint(receiver: string, overrides?: CallOverrides): Promise<BigNumber>;
+  maxMint(receiver: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  maxRedeem(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+  maxRedeem(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  maxWithdraw(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+  maxWithdraw(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   mint(
-    shares: BigNumberish,
-    receiver: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    shares: PromiseOrValue<BigNumberish>,
+    receiver: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   name(overrides?: CallOverrides): Promise<string>;
 
-  nonces(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   outstandingAmount(overrides?: CallOverrides): Promise<BigNumber>;
 
   permit(
-    owner: string,
-    spender: string,
-    value: BigNumberish,
-    deadline: BigNumberish,
-    v: BigNumberish,
-    r: BytesLike,
-    s: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    owner: PromiseOrValue<string>,
+    spender: PromiseOrValue<string>,
+    value: PromiseOrValue<BigNumberish>,
+    deadline: PromiseOrValue<BigNumberish>,
+    v: PromiseOrValue<BigNumberish>,
+    r: PromiseOrValue<BytesLike>,
+    s: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   placeOffer(
-    pay_amt: BigNumberish,
-    pay_gem: string,
-    buy_amt: BigNumberish,
-    buy_gem: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    pay_amt: PromiseOrValue<BigNumberish>,
+    pay_gem: PromiseOrValue<string>,
+    buy_amt: PromiseOrValue<BigNumberish>,
+    buy_gem: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  previewDeposit(assets: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  previewDeposit(assets: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  previewMint(shares: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  previewMint(shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  previewRedeem(shares: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  previewRedeem(shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  previewWithdraw(assets: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  previewWithdraw(assets: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   rebalance(
-    destination: string,
-    filledAssetToRebalance: string,
-    stratProportion: BigNumberish,
-    rebalAmt: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    destination: PromiseOrValue<string>,
+    filledAssetToRebalance: PromiseOrValue<string>,
+    stratProportion: PromiseOrValue<BigNumberish>,
+    rebalAmt: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   redeem(
-    shares: BigNumberish,
-    receiver: string,
-    owner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    shares: PromiseOrValue<BigNumberish>,
+    receiver: PromiseOrValue<string>,
+    owner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   removeFilledTradeAmount(
-    amt: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    amt: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setBathBuddy(
-    newBuddy: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newBuddy: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setBathHouse(
-    newBathHouse: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newBathHouse: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setBonusToken(
-    newBonusERC20: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newBonusERC20: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setFeeBPS(
-    _feeBPS: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _feeBPS: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  setFeeTo(_feeTo: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  setFeeTo(
+    _feeTo: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   setMarket(
-    newRubiconMarket: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newRubiconMarket: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
@@ -835,16 +920,16 @@ export interface BathToken extends BaseContract {
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   transfer(
-    to: string,
-    value: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    to: PromiseOrValue<string>,
+    value: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferFrom(
-    from: string,
-    to: string,
-    value: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    from: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    value: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   underlyingBalance(overrides?: CallOverrides): Promise<BigNumber>;
@@ -854,15 +939,15 @@ export interface BathToken extends BaseContract {
   underlyingToken(overrides?: CallOverrides): Promise<string>;
 
   'withdraw(uint256)'(
-    _shares: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _shares: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   'withdraw(uint256,address,address)'(
-    assets: BigNumberish,
-    receiver: string,
-    owner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    assets: PromiseOrValue<BigNumberish>,
+    receiver: PromiseOrValue<string>,
+    owner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
@@ -872,33 +957,49 @@ export interface BathToken extends BaseContract {
 
     RubiconMarketAddress(overrides?: CallOverrides): Promise<string>;
 
-    allowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    approve(spender: string, value: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    approve(
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     approveMarket(overrides?: CallOverrides): Promise<void>;
 
     asset(overrides?: CallOverrides): Promise<string>;
 
-    balanceOf(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     bathBuddy(overrides?: CallOverrides): Promise<string>;
 
     bathHouse(overrides?: CallOverrides): Promise<string>;
 
-    bonusTokens(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    bonusTokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
-    cancel(id: BigNumberish, amt: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    cancel(
+      id: PromiseOrValue<BigNumberish>,
+      amt: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    convertToAssets(shares: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    convertToAssets(shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    convertToShares(assets: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    convertToShares(assets: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<number>;
 
-    'deposit(uint256,address)'(assets: BigNumberish, receiver: string, overrides?: CallOverrides): Promise<BigNumber>;
+    'deposit(uint256,address)'(
+      assets: PromiseOrValue<BigNumberish>,
+      receiver: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    'deposit(uint256)'(assets: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    'deposit(uint256)'(assets: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     feeBPS(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -906,78 +1007,92 @@ export interface BathToken extends BaseContract {
 
     getAllBonusTokenReward(overrides?: CallOverrides): Promise<void>;
 
-    getBonusTokenReward(rewardToken: string, overrides?: CallOverrides): Promise<void>;
+    getBonusTokenReward(rewardToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    initialize(token: string, market: string, _feeTo: string, overrides?: CallOverrides): Promise<void>;
+    initialize(
+      token: PromiseOrValue<string>,
+      market: PromiseOrValue<string>,
+      _feeTo: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     initialized(overrides?: CallOverrides): Promise<boolean>;
 
-    maxDeposit(receiver: string, overrides?: CallOverrides): Promise<BigNumber>;
+    maxDeposit(receiver: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    maxMint(receiver: string, overrides?: CallOverrides): Promise<BigNumber>;
+    maxMint(receiver: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    maxRedeem(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    maxRedeem(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    maxWithdraw(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    maxWithdraw(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    mint(shares: BigNumberish, receiver: string, overrides?: CallOverrides): Promise<BigNumber>;
+    mint(
+      shares: PromiseOrValue<BigNumberish>,
+      receiver: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     outstandingAmount(overrides?: CallOverrides): Promise<BigNumber>;
 
     permit(
-      owner: string,
-      spender: string,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     placeOffer(
-      pay_amt: BigNumberish,
-      pay_gem: string,
-      buy_amt: BigNumberish,
-      buy_gem: string,
+      pay_amt: PromiseOrValue<BigNumberish>,
+      pay_gem: PromiseOrValue<string>,
+      buy_amt: PromiseOrValue<BigNumberish>,
+      buy_gem: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    previewDeposit(assets: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    previewDeposit(assets: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    previewMint(shares: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    previewMint(shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    previewRedeem(shares: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    previewRedeem(shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    previewWithdraw(assets: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    previewWithdraw(assets: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     rebalance(
-      destination: string,
-      filledAssetToRebalance: string,
-      stratProportion: BigNumberish,
-      rebalAmt: BigNumberish,
+      destination: PromiseOrValue<string>,
+      filledAssetToRebalance: PromiseOrValue<string>,
+      stratProportion: PromiseOrValue<BigNumberish>,
+      rebalAmt: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    redeem(shares: BigNumberish, receiver: string, owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    redeem(
+      shares: PromiseOrValue<BigNumberish>,
+      receiver: PromiseOrValue<string>,
+      owner: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    removeFilledTradeAmount(amt: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    removeFilledTradeAmount(amt: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setBathBuddy(newBuddy: string, overrides?: CallOverrides): Promise<void>;
+    setBathBuddy(newBuddy: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setBathHouse(newBathHouse: string, overrides?: CallOverrides): Promise<void>;
+    setBathHouse(newBathHouse: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setBonusToken(newBonusERC20: string, overrides?: CallOverrides): Promise<void>;
+    setBonusToken(newBonusERC20: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setFeeBPS(_feeBPS: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setFeeBPS(_feeBPS: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setFeeTo(_feeTo: string, overrides?: CallOverrides): Promise<void>;
+    setFeeTo(_feeTo: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setMarket(newRubiconMarket: string, overrides?: CallOverrides): Promise<void>;
+    setMarket(newRubiconMarket: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     symbol(overrides?: CallOverrides): Promise<string>;
 
@@ -985,9 +1100,18 @@ export interface BathToken extends BaseContract {
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transfer(to: string, value: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transfer(
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    transferFrom(from: string, to: string, value: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transferFrom(
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     underlyingBalance(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -995,44 +1119,53 @@ export interface BathToken extends BaseContract {
 
     underlyingToken(overrides?: CallOverrides): Promise<string>;
 
-    'withdraw(uint256)'(_shares: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    'withdraw(uint256)'(_shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     'withdraw(uint256,address,address)'(
-      assets: BigNumberish,
-      receiver: string,
-      owner: string,
+      assets: PromiseOrValue<BigNumberish>,
+      receiver: PromiseOrValue<string>,
+      owner: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
   };
 
   filters: {
     'Approval(address,address,uint256)'(
-      owner?: string | null,
-      spender?: string | null,
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
       value?: null,
     ): ApprovalEventFilter;
-    Approval(owner?: string | null, spender?: string | null, value?: null): ApprovalEventFilter;
+    Approval(
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
+      value?: null,
+    ): ApprovalEventFilter;
 
     'Deposit(address,address,uint256,uint256)'(
-      caller?: string | null,
-      owner?: string | null,
+      caller?: PromiseOrValue<string> | null,
+      owner?: PromiseOrValue<string> | null,
       assets?: null,
       shares?: null,
     ): DepositEventFilter;
-    Deposit(caller?: string | null, owner?: string | null, assets?: null, shares?: null): DepositEventFilter;
+    Deposit(
+      caller?: PromiseOrValue<string> | null,
+      owner?: PromiseOrValue<string> | null,
+      assets?: null,
+      shares?: null,
+    ): DepositEventFilter;
 
     'LogClaimBonusTokn(address,address,address,uint256,uint256,address)'(
-      caller?: string | null,
-      receiver?: string | null,
-      owner?: string | null,
+      caller?: PromiseOrValue<string> | null,
+      receiver?: PromiseOrValue<string> | null,
+      owner?: PromiseOrValue<string> | null,
       assets?: null,
       shares?: null,
       bonusToken?: null,
     ): LogClaimBonusToknEventFilter;
     LogClaimBonusTokn(
-      caller?: string | null,
-      receiver?: string | null,
-      owner?: string | null,
+      caller?: PromiseOrValue<string> | null,
+      receiver?: PromiseOrValue<string> | null,
+      owner?: PromiseOrValue<string> | null,
       assets?: null,
       shares?: null,
       bonusToken?: null,
@@ -1151,20 +1284,28 @@ export interface BathToken extends BaseContract {
       totalSupply?: null,
     ): LogWithdrawEventFilter;
 
-    'Transfer(address,address,uint256)'(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
-    Transfer(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
+    'Transfer(address,address,uint256)'(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
+    Transfer(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
 
     'Withdraw(address,address,address,uint256,uint256)'(
-      caller?: string | null,
-      receiver?: string | null,
-      owner?: string | null,
+      caller?: PromiseOrValue<string> | null,
+      receiver?: PromiseOrValue<string> | null,
+      owner?: PromiseOrValue<string> | null,
       assets?: null,
       shares?: null,
     ): WithdrawEventFilter;
     Withdraw(
-      caller?: string | null,
-      receiver?: string | null,
-      owner?: string | null,
+      caller?: PromiseOrValue<string> | null,
+      receiver?: PromiseOrValue<string> | null,
+      owner?: PromiseOrValue<string> | null,
       assets?: null,
       shares?: null,
     ): WithdrawEventFilter;
@@ -1177,152 +1318,168 @@ export interface BathToken extends BaseContract {
 
     RubiconMarketAddress(overrides?: CallOverrides): Promise<BigNumber>;
 
-    allowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-    approve(
-      spender: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    allowance(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    approveMarket(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    approve(
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    approveMarket(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     asset(overrides?: CallOverrides): Promise<BigNumber>;
 
-    balanceOf(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     bathBuddy(overrides?: CallOverrides): Promise<BigNumber>;
 
     bathHouse(overrides?: CallOverrides): Promise<BigNumber>;
 
-    bonusTokens(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    bonusTokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     cancel(
-      id: BigNumberish,
-      amt: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      id: PromiseOrValue<BigNumberish>,
+      amt: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    convertToAssets(shares: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    convertToAssets(shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    convertToShares(assets: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    convertToShares(assets: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
     'deposit(uint256,address)'(
-      assets: BigNumberish,
-      receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      assets: PromiseOrValue<BigNumberish>,
+      receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     'deposit(uint256)'(
-      assets: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      assets: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     feeBPS(overrides?: CallOverrides): Promise<BigNumber>;
 
     feeTo(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getAllBonusTokenReward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    getAllBonusTokenReward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     getBonusTokenReward(
-      rewardToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      rewardToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     initialize(
-      token: string,
-      market: string,
-      _feeTo: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      market: PromiseOrValue<string>,
+      _feeTo: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     initialized(overrides?: CallOverrides): Promise<BigNumber>;
 
-    maxDeposit(receiver: string, overrides?: CallOverrides): Promise<BigNumber>;
+    maxDeposit(receiver: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    maxMint(receiver: string, overrides?: CallOverrides): Promise<BigNumber>;
+    maxMint(receiver: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    maxRedeem(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    maxRedeem(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    maxWithdraw(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    maxWithdraw(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     mint(
-      shares: BigNumberish,
-      receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      shares: PromiseOrValue<BigNumberish>,
+      receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     outstandingAmount(overrides?: CallOverrides): Promise<BigNumber>;
 
     permit(
-      owner: string,
-      spender: string,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     placeOffer(
-      pay_amt: BigNumberish,
-      pay_gem: string,
-      buy_amt: BigNumberish,
-      buy_gem: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pay_amt: PromiseOrValue<BigNumberish>,
+      pay_gem: PromiseOrValue<string>,
+      buy_amt: PromiseOrValue<BigNumberish>,
+      buy_gem: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    previewDeposit(assets: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    previewDeposit(assets: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    previewMint(shares: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    previewMint(shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    previewRedeem(shares: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    previewRedeem(shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    previewWithdraw(assets: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    previewWithdraw(assets: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     rebalance(
-      destination: string,
-      filledAssetToRebalance: string,
-      stratProportion: BigNumberish,
-      rebalAmt: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      destination: PromiseOrValue<string>,
+      filledAssetToRebalance: PromiseOrValue<string>,
+      stratProportion: PromiseOrValue<BigNumberish>,
+      rebalAmt: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     redeem(
-      shares: BigNumberish,
-      receiver: string,
-      owner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      shares: PromiseOrValue<BigNumberish>,
+      receiver: PromiseOrValue<string>,
+      owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     removeFilledTradeAmount(
-      amt: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amt: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setBathBuddy(newBuddy: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setBathBuddy(
+      newBuddy: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    setBathHouse(newBathHouse: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setBathHouse(
+      newBathHouse: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setBonusToken(
-      newBonusERC20: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newBonusERC20: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setFeeBPS(_feeBPS: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setFeeBPS(
+      _feeBPS: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    setFeeTo(_feeTo: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setFeeTo(
+      _feeTo: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setMarket(
-      newRubiconMarket: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newRubiconMarket: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1332,16 +1489,16 @@ export interface BathToken extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferFrom(
-      from: string,
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     underlyingBalance(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1351,15 +1508,15 @@ export interface BathToken extends BaseContract {
     underlyingToken(overrides?: CallOverrides): Promise<BigNumber>;
 
     'withdraw(uint256)'(
-      _shares: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _shares: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     'withdraw(uint256,address,address)'(
-      assets: BigNumberish,
-      receiver: string,
-      owner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      assets: PromiseOrValue<BigNumberish>,
+      receiver: PromiseOrValue<string>,
+      owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
@@ -1370,164 +1527,168 @@ export interface BathToken extends BaseContract {
 
     RubiconMarketAddress(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    allowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    approve(
-      spender: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    allowance(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    approveMarket(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    approve(
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    approveMarket(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     asset(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    balanceOf(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    balanceOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     bathBuddy(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     bathHouse(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    bonusTokens(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    bonusTokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     cancel(
-      id: BigNumberish,
-      amt: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      id: PromiseOrValue<BigNumberish>,
+      amt: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    convertToAssets(shares: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    convertToAssets(shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    convertToShares(assets: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    convertToShares(assets: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     'deposit(uint256,address)'(
-      assets: BigNumberish,
-      receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      assets: PromiseOrValue<BigNumberish>,
+      receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     'deposit(uint256)'(
-      assets: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      assets: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     feeBPS(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     feeTo(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getAllBonusTokenReward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    getAllBonusTokenReward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     getBonusTokenReward(
-      rewardToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      rewardToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     initialize(
-      token: string,
-      market: string,
-      _feeTo: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      market: PromiseOrValue<string>,
+      _feeTo: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     initialized(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    maxDeposit(receiver: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    maxDeposit(receiver: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    maxMint(receiver: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    maxMint(receiver: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    maxRedeem(owner: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    maxRedeem(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    maxWithdraw(owner: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    maxWithdraw(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     mint(
-      shares: BigNumberish,
-      receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      shares: PromiseOrValue<BigNumberish>,
+      receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     outstandingAmount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     permit(
-      owner: string,
-      spender: string,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     placeOffer(
-      pay_amt: BigNumberish,
-      pay_gem: string,
-      buy_amt: BigNumberish,
-      buy_gem: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pay_amt: PromiseOrValue<BigNumberish>,
+      pay_gem: PromiseOrValue<string>,
+      buy_amt: PromiseOrValue<BigNumberish>,
+      buy_gem: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    previewDeposit(assets: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    previewDeposit(assets: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    previewMint(shares: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    previewMint(shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    previewRedeem(shares: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    previewRedeem(shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    previewWithdraw(assets: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    previewWithdraw(assets: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     rebalance(
-      destination: string,
-      filledAssetToRebalance: string,
-      stratProportion: BigNumberish,
-      rebalAmt: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      destination: PromiseOrValue<string>,
+      filledAssetToRebalance: PromiseOrValue<string>,
+      stratProportion: PromiseOrValue<BigNumberish>,
+      rebalAmt: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     redeem(
-      shares: BigNumberish,
-      receiver: string,
-      owner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      shares: PromiseOrValue<BigNumberish>,
+      receiver: PromiseOrValue<string>,
+      owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     removeFilledTradeAmount(
-      amt: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amt: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setBathBuddy(
-      newBuddy: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newBuddy: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setBathHouse(
-      newBathHouse: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newBathHouse: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setBonusToken(
-      newBonusERC20: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newBonusERC20: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setFeeBPS(
-      _feeBPS: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _feeBPS: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setFeeTo(
-      _feeTo: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _feeTo: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setMarket(
-      newRubiconMarket: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newRubiconMarket: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1537,16 +1698,16 @@ export interface BathToken extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transfer(
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferFrom(
-      from: string,
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     underlyingBalance(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1556,15 +1717,15 @@ export interface BathToken extends BaseContract {
     underlyingToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     'withdraw(uint256)'(
-      _shares: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _shares: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     'withdraw(uint256,address,address)'(
-      assets: BigNumberish,
-      receiver: string,
-      owner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      assets: PromiseOrValue<BigNumberish>,
+      receiver: PromiseOrValue<string>,
+      owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface AbracadabraMspellInterface extends utils.Interface {
   functions: {
@@ -62,20 +62,23 @@ export interface AbracadabraMspellInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'ACC_REWARD_PER_SHARE_PRECISION', values?: undefined): string;
   encodeFunctionData(functionFragment: 'accRewardPerShare', values?: undefined): string;
   encodeFunctionData(functionFragment: 'claimOwnership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'deposit', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'deposit', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'emergencyWithdraw', values?: undefined): string;
   encodeFunctionData(functionFragment: 'lastRewardBalance', values?: undefined): string;
   encodeFunctionData(functionFragment: 'mim', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'pendingOwner', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'pendingReward', values: [string]): string;
+  encodeFunctionData(functionFragment: 'pendingReward', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'spell', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'toggleLockUp', values: [boolean]): string;
+  encodeFunctionData(functionFragment: 'toggleLockUp', values: [PromiseOrValue<boolean>]): string;
   encodeFunctionData(functionFragment: 'toggleLockup', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string, boolean, boolean]): string;
+  encodeFunctionData(
+    functionFragment: 'transferOwnership',
+    values: [PromiseOrValue<string>, PromiseOrValue<boolean>, PromiseOrValue<boolean>],
+  ): string;
   encodeFunctionData(functionFragment: 'updateReward', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'userInfo', values: [string]): string;
-  encodeFunctionData(functionFragment: 'withdraw', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'userInfo', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'withdraw', values: [PromiseOrValue<BigNumberish>]): string;
 
   decodeFunctionResult(functionFragment: 'ACC_REWARD_PER_SHARE_PRECISION', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'accRewardPerShare', data: BytesLike): Result;
@@ -177,14 +180,14 @@ export interface AbracadabraMspell extends BaseContract {
 
     accRewardPerShare(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    claimOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    claimOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     deposit(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    emergencyWithdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    emergencyWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     lastRewardBalance(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -194,28 +197,28 @@ export interface AbracadabraMspell extends BaseContract {
 
     pendingOwner(overrides?: CallOverrides): Promise<[string]>;
 
-    pendingReward(_user: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    pendingReward(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     spell(overrides?: CallOverrides): Promise<[string]>;
 
     toggleLockUp(
-      status: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      status: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     toggleLockup(overrides?: CallOverrides): Promise<[boolean]>;
 
     transferOwnership(
-      newOwner: string,
-      direct: boolean,
-      renounce: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      direct: PromiseOrValue<boolean>,
+      renounce: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    updateReward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    updateReward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     userInfo(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber] & {
@@ -226,8 +229,8 @@ export interface AbracadabraMspell extends BaseContract {
     >;
 
     withdraw(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
@@ -235,14 +238,14 @@ export interface AbracadabraMspell extends BaseContract {
 
   accRewardPerShare(overrides?: CallOverrides): Promise<BigNumber>;
 
-  claimOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  claimOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   deposit(
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  emergencyWithdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  emergencyWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   lastRewardBalance(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -252,28 +255,28 @@ export interface AbracadabraMspell extends BaseContract {
 
   pendingOwner(overrides?: CallOverrides): Promise<string>;
 
-  pendingReward(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
+  pendingReward(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   spell(overrides?: CallOverrides): Promise<string>;
 
   toggleLockUp(
-    status: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    status: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   toggleLockup(overrides?: CallOverrides): Promise<boolean>;
 
   transferOwnership(
-    newOwner: string,
-    direct: boolean,
-    renounce: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    direct: PromiseOrValue<boolean>,
+    renounce: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  updateReward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  updateReward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   userInfo(
-    arg0: string,
+    arg0: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber, BigNumber] & {
@@ -284,8 +287,8 @@ export interface AbracadabraMspell extends BaseContract {
   >;
 
   withdraw(
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
@@ -295,7 +298,7 @@ export interface AbracadabraMspell extends BaseContract {
 
     claimOwnership(overrides?: CallOverrides): Promise<void>;
 
-    deposit(_amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    deposit(_amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     emergencyWithdraw(overrides?: CallOverrides): Promise<void>;
 
@@ -307,20 +310,25 @@ export interface AbracadabraMspell extends BaseContract {
 
     pendingOwner(overrides?: CallOverrides): Promise<string>;
 
-    pendingReward(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingReward(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     spell(overrides?: CallOverrides): Promise<string>;
 
-    toggleLockUp(status: boolean, overrides?: CallOverrides): Promise<void>;
+    toggleLockUp(status: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
 
     toggleLockup(overrides?: CallOverrides): Promise<boolean>;
 
-    transferOwnership(newOwner: string, direct: boolean, renounce: boolean, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(
+      newOwner: PromiseOrValue<string>,
+      direct: PromiseOrValue<boolean>,
+      renounce: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     updateReward(overrides?: CallOverrides): Promise<void>;
 
     userInfo(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber] & {
@@ -330,27 +338,33 @@ export interface AbracadabraMspell extends BaseContract {
       }
     >;
 
-    withdraw(_amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    withdraw(_amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
-    'ClaimReward(address,uint256)'(user?: string | null, amount?: null): ClaimRewardEventFilter;
-    ClaimReward(user?: string | null, amount?: null): ClaimRewardEventFilter;
+    'ClaimReward(address,uint256)'(user?: PromiseOrValue<string> | null, amount?: null): ClaimRewardEventFilter;
+    ClaimReward(user?: PromiseOrValue<string> | null, amount?: null): ClaimRewardEventFilter;
 
-    'Deposit(address,uint256)'(user?: string | null, amount?: null): DepositEventFilter;
-    Deposit(user?: string | null, amount?: null): DepositEventFilter;
+    'Deposit(address,uint256)'(user?: PromiseOrValue<string> | null, amount?: null): DepositEventFilter;
+    Deposit(user?: PromiseOrValue<string> | null, amount?: null): DepositEventFilter;
 
-    'EmergencyWithdraw(address,uint256)'(user?: string | null, amount?: null): EmergencyWithdrawEventFilter;
-    EmergencyWithdraw(user?: string | null, amount?: null): EmergencyWithdrawEventFilter;
+    'EmergencyWithdraw(address,uint256)'(
+      user?: PromiseOrValue<string> | null,
+      amount?: null,
+    ): EmergencyWithdrawEventFilter;
+    EmergencyWithdraw(user?: PromiseOrValue<string> | null, amount?: null): EmergencyWithdrawEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
 
-    'Withdraw(address,uint256)'(user?: string | null, amount?: null): WithdrawEventFilter;
-    Withdraw(user?: string | null, amount?: null): WithdrawEventFilter;
+    'Withdraw(address,uint256)'(user?: PromiseOrValue<string> | null, amount?: null): WithdrawEventFilter;
+    Withdraw(user?: PromiseOrValue<string> | null, amount?: null): WithdrawEventFilter;
   };
 
   estimateGas: {
@@ -358,11 +372,14 @@ export interface AbracadabraMspell extends BaseContract {
 
     accRewardPerShare(overrides?: CallOverrides): Promise<BigNumber>;
 
-    claimOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    claimOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    deposit(_amount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    deposit(
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    emergencyWithdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    emergencyWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     lastRewardBalance(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -372,26 +389,32 @@ export interface AbracadabraMspell extends BaseContract {
 
     pendingOwner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    pendingReward(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingReward(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     spell(overrides?: CallOverrides): Promise<BigNumber>;
 
-    toggleLockUp(status: boolean, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    toggleLockUp(
+      status: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     toggleLockup(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      direct: boolean,
-      renounce: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      direct: PromiseOrValue<boolean>,
+      renounce: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    updateReward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    updateReward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    userInfo(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    userInfo(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    withdraw(_amount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    withdraw(
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -399,14 +422,14 @@ export interface AbracadabraMspell extends BaseContract {
 
     accRewardPerShare(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    claimOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    claimOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     deposit(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    emergencyWithdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    emergencyWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     lastRewardBalance(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -416,31 +439,31 @@ export interface AbracadabraMspell extends BaseContract {
 
     pendingOwner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    pendingReward(_user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    pendingReward(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     spell(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     toggleLockUp(
-      status: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      status: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     toggleLockup(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      direct: boolean,
-      renounce: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      direct: PromiseOrValue<boolean>,
+      renounce: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    updateReward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    updateReward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    userInfo(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    userInfo(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     withdraw(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

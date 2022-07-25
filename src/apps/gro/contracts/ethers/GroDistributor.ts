@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface GroDistributorInterface extends utils.Interface {
   functions: {
@@ -65,11 +65,14 @@ export interface GroDistributorInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'INVESTOR_VESTER', values?: undefined): string;
   encodeFunctionData(functionFragment: 'TEAM_QUOTA', values?: undefined): string;
   encodeFunctionData(functionFragment: 'TEAM_VESTER', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'burn', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'burn', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'govToken', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'mint', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'mintDao', values: [string, BigNumberish, boolean]): string;
-  encodeFunctionData(functionFragment: 'mintingPools', values: [string]): string;
+  encodeFunctionData(functionFragment: 'mint', values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'mintDao',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(functionFragment: 'mintingPools', values: [PromiseOrValue<string>]): string;
 
   decodeFunctionResult(functionFragment: 'BURNER', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'COMMUNITY_QUOTA', data: BytesLike): Result;
@@ -134,26 +137,26 @@ export interface GroDistributor extends BaseContract {
     TEAM_VESTER(overrides?: CallOverrides): Promise<[string]>;
 
     burn(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     govToken(overrides?: CallOverrides): Promise<[string]>;
 
     mint(
-      account: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     mintDao(
-      account: string,
-      amount: BigNumberish,
-      community: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      community: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    mintingPools(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    mintingPools(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
   };
 
   BURNER(overrides?: CallOverrides): Promise<string>;
@@ -176,24 +179,27 @@ export interface GroDistributor extends BaseContract {
 
   TEAM_VESTER(overrides?: CallOverrides): Promise<string>;
 
-  burn(amount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  burn(
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   govToken(overrides?: CallOverrides): Promise<string>;
 
   mint(
-    account: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    account: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   mintDao(
-    account: string,
-    amount: BigNumberish,
-    community: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    account: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    community: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  mintingPools(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  mintingPools(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   callStatic: {
     BURNER(overrides?: CallOverrides): Promise<string>;
@@ -216,15 +222,24 @@ export interface GroDistributor extends BaseContract {
 
     TEAM_VESTER(overrides?: CallOverrides): Promise<string>;
 
-    burn(amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    burn(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     govToken(overrides?: CallOverrides): Promise<string>;
 
-    mint(account: string, amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    mint(
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    mintDao(account: string, amount: BigNumberish, community: boolean, overrides?: CallOverrides): Promise<void>;
+    mintDao(
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      community: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    mintingPools(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    mintingPools(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   filters: {};
@@ -250,24 +265,27 @@ export interface GroDistributor extends BaseContract {
 
     TEAM_VESTER(overrides?: CallOverrides): Promise<BigNumber>;
 
-    burn(amount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    burn(
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     govToken(overrides?: CallOverrides): Promise<BigNumber>;
 
     mint(
-      account: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     mintDao(
-      account: string,
-      amount: BigNumberish,
-      community: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      community: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    mintingPools(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    mintingPools(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -292,25 +310,25 @@ export interface GroDistributor extends BaseContract {
     TEAM_VESTER(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     burn(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     govToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     mint(
-      account: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     mintDao(
-      account: string,
-      amount: BigNumberish,
-      community: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      community: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    mintingPools(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    mintingPools(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }

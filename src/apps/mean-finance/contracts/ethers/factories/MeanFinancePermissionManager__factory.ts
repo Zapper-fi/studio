@@ -4,7 +4,10 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { PermissionManager, PermissionManagerInterface } from '../PermissionManager';
+import type {
+  MeanFinancePermissionManager,
+  MeanFinancePermissionManagerInterface,
+} from '../MeanFinancePermissionManager';
 
 const _abi = [
   {
@@ -940,12 +943,12 @@ const _abi = [
   },
 ];
 
-export class PermissionManager__factory {
+export class MeanFinancePermissionManager__factory {
   static readonly abi = _abi;
-  static createInterface(): PermissionManagerInterface {
-    return new utils.Interface(_abi) as PermissionManagerInterface;
+  static createInterface(): MeanFinancePermissionManagerInterface {
+    return new utils.Interface(_abi) as MeanFinancePermissionManagerInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): PermissionManager {
-    return new Contract(address, _abi, signerOrProvider) as PermissionManager;
+  static connect(address: string, signerOrProvider: Signer | Provider): MeanFinancePermissionManager {
+    return new Contract(address, _abi, signerOrProvider) as MeanFinancePermissionManager;
   }
 }

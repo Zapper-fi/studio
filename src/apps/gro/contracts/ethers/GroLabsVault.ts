@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface GroLabsVaultInterface extends utils.Interface {
   functions: {
@@ -163,75 +163,122 @@ export interface GroLabsVaultInterface extends utils.Interface {
 
   encodeFunctionData(functionFragment: 'BASE_ALLOWANCE', values?: undefined): string;
   encodeFunctionData(functionFragment: 'MAXIMUM_STRATEGIES', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'activateAllowance', values: [boolean]): string;
+  encodeFunctionData(functionFragment: 'activateAllowance', values: [PromiseOrValue<boolean>]): string;
   encodeFunctionData(functionFragment: 'activation', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'addStrategy',
-    values: [string, BigNumberish, BigNumberish, BigNumberish],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'addStrategyToQueue', values: [string]): string;
-  encodeFunctionData(functionFragment: 'addToWhitelist', values: [string]): string;
-  encodeFunctionData(functionFragment: 'allowance(address,address)', values: [string, string]): string;
+  encodeFunctionData(functionFragment: 'addStrategyToQueue', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'addToWhitelist', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'allowance(address,address)',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'allowance()', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'approve', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'approve',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'bouncer', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'claimed', values: [string]): string;
+  encodeFunctionData(functionFragment: 'claimed', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'creditAvailable()', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'creditAvailable(address)', values: [string]): string;
-  encodeFunctionData(functionFragment: 'debtOutstanding(address)', values: [string]): string;
+  encodeFunctionData(functionFragment: 'creditAvailable(address)', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'debtOutstanding(address)', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'debtOutstanding()', values?: undefined): string;
   encodeFunctionData(functionFragment: 'debtRatio', values?: undefined): string;
   encodeFunctionData(functionFragment: 'decimals', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'decreaseAllowance', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'deposit', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'decreaseAllowance',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'deposit', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'depositLimit', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getPricePerShare', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getStrategiesLength', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getStrategyAssets', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'increaseAllowance', values: [string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'getStrategyAssets', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'increaseAllowance',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'lastReport', values?: undefined): string;
   encodeFunctionData(functionFragment: 'lockedProfit', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'migrateStrategy', values: [string, string]): string;
+  encodeFunctionData(
+    functionFragment: 'migrateStrategy',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'releaseFactor', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'removeFromWhitelist', values: [string]): string;
-  encodeFunctionData(functionFragment: 'removeStrategyFromQueue', values: [string]): string;
+  encodeFunctionData(functionFragment: 'removeFromWhitelist', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'removeStrategyFromQueue', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'report', values: [BigNumberish, BigNumberish, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'report',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'revokeStrategy', values?: undefined): string;
   encodeFunctionData(functionFragment: 'rewards', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'setBouncer', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setDebtRatio', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setDebtRatios', values: [BigNumberish[]]): string;
-  encodeFunctionData(functionFragment: 'setDepositLimit', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setProfitRelease', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setRewards', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setUserAllowance', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setVaultFee', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setWithdrawalQueue', values: [string[]]): string;
-  encodeFunctionData(functionFragment: 'strategies', values: [string]): string;
+  encodeFunctionData(functionFragment: 'setBouncer', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'setDebtRatio',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'setDebtRatios', values: [PromiseOrValue<BigNumberish>[]]): string;
+  encodeFunctionData(functionFragment: 'setDepositLimit', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setProfitRelease', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setRewards', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'setUserAllowance',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'setVaultFee', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setWithdrawalQueue', values: [PromiseOrValue<string>[]]): string;
+  encodeFunctionData(functionFragment: 'strategies', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'strategyDebt', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'strategyHarvest', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'strategyHarvestTrigger', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'sweep', values: [string, string]): string;
+  encodeFunctionData(functionFragment: 'strategyHarvest', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'strategyHarvestTrigger',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'sweep', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
   encodeFunctionData(functionFragment: 'token', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalAssets', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalDebt', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalEstimatedAssets', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transfer', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferFrom', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
-  encodeFunctionData(functionFragment: 'updateStrategyMaxDebtPerHarvest', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'updateStrategyMinDebtPerHarvest', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'userAllowance', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'transfer',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'transferFrom',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'updateStrategyMaxDebtPerHarvest',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'updateStrategyMinDebtPerHarvest',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'userAllowance', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'vaultFee', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'whitelist', values: [string]): string;
-  encodeFunctionData(functionFragment: 'withdraw', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'withdrawalQueue', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'whitelist', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'withdraw',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'withdrawalQueue', values: [PromiseOrValue<BigNumberish>]): string;
 
   decodeFunctionResult(functionFragment: 'BASE_ALLOWANCE', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'MAXIMUM_STRATEGIES', data: BytesLike): Result;
@@ -631,51 +678,55 @@ export interface GroLabsVault extends BaseContract {
     MAXIMUM_STRATEGIES(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     activateAllowance(
-      _status: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _status: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     activation(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     addStrategy(
-      _strategy: string,
-      _debtRatio: BigNumberish,
-      _minDebtPerHarvest: BigNumberish,
-      _maxDebtPerHarvest: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _strategy: PromiseOrValue<string>,
+      _debtRatio: PromiseOrValue<BigNumberish>,
+      _minDebtPerHarvest: PromiseOrValue<BigNumberish>,
+      _maxDebtPerHarvest: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     addStrategyToQueue(
-      _strategy: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _strategy: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     addToWhitelist(
-      user: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      user: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    'allowance(address,address)'(owner: string, spender: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    'allowance(address,address)'(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     'allowance()'(overrides?: CallOverrides): Promise<[boolean]>;
 
     approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     bouncer(overrides?: CallOverrides): Promise<[string]>;
 
-    claimed(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    claimed(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     'creditAvailable()'(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    'creditAvailable(address)'(_strategy: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    'creditAvailable(address)'(_strategy: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    'debtOutstanding(address)'(_strategy: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    'debtOutstanding(address)'(_strategy: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     'debtOutstanding()'(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -684,14 +735,14 @@ export interface GroLabsVault extends BaseContract {
     decimals(overrides?: CallOverrides): Promise<[number]>;
 
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     deposit(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     depositLimit(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -700,12 +751,15 @@ export interface GroLabsVault extends BaseContract {
 
     getStrategiesLength(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getStrategyAssets(_index: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber] & { amount: BigNumber }>;
+    getStrategyAssets(
+      _index: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber] & { amount: BigNumber }>;
 
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     lastReport(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -713,9 +767,9 @@ export interface GroLabsVault extends BaseContract {
     lockedProfit(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     migrateStrategy(
-      _oldVersion: string,
-      _newVersion: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _oldVersion: PromiseOrValue<string>,
+      _newVersion: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
@@ -725,77 +779,77 @@ export interface GroLabsVault extends BaseContract {
     releaseFactor(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     removeFromWhitelist(
-      user: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      user: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     removeStrategyFromQueue(
-      _strategy: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _strategy: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     report(
-      _gain: BigNumberish,
-      _loss: BigNumberish,
-      _debtPayment: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _gain: PromiseOrValue<BigNumberish>,
+      _loss: PromiseOrValue<BigNumberish>,
+      _debtPayment: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    revokeStrategy(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    revokeStrategy(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     rewards(overrides?: CallOverrides): Promise<[string]>;
 
     setBouncer(
-      _bouncer: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _bouncer: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setDebtRatio(
-      _strategy: string,
-      _debtRatio: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _strategy: PromiseOrValue<string>,
+      _debtRatio: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setDebtRatios(
-      _strategyDebtRatios: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _strategyDebtRatios: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setDepositLimit(
-      _newLimit: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newLimit: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setProfitRelease(
-      _factor: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _factor: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setRewards(
-      _rewards: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewards: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setUserAllowance(
-      _user: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _user: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setVaultFee(
-      _fee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _fee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setWithdrawalQueue(
-      _queue: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _queue: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     strategies(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, boolean, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -814,20 +868,20 @@ export interface GroLabsVault extends BaseContract {
     strategyDebt(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     strategyHarvest(
-      _index: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _index: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     strategyHarvestTrigger(
-      _index: BigNumberish,
-      _callCost: BigNumberish,
+      _index: PromiseOrValue<BigNumberish>,
+      _callCost: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[boolean]>;
 
     sweep(
-      _token: string,
-      _recipient: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      _recipient: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
@@ -843,48 +897,48 @@ export interface GroLabsVault extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transfer(
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferFrom(
-      sender: string,
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateStrategyMaxDebtPerHarvest(
-      _strategy: string,
-      _maxDebtPerHarvest: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _strategy: PromiseOrValue<string>,
+      _maxDebtPerHarvest: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateStrategyMinDebtPerHarvest(
-      _strategy: string,
-      _minDebtPerHarvest: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _strategy: PromiseOrValue<string>,
+      _minDebtPerHarvest: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    userAllowance(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    userAllowance(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     vaultFee(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    whitelist(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    whitelist(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     withdraw(
-      _shares: BigNumberish,
-      _maxLoss: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _shares: PromiseOrValue<BigNumberish>,
+      _maxLoss: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    withdrawalQueue(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    withdrawalQueue(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
   };
 
   BASE_ALLOWANCE(overrides?: CallOverrides): Promise<BigNumber>;
@@ -892,51 +946,55 @@ export interface GroLabsVault extends BaseContract {
   MAXIMUM_STRATEGIES(overrides?: CallOverrides): Promise<BigNumber>;
 
   activateAllowance(
-    _status: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _status: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   activation(overrides?: CallOverrides): Promise<BigNumber>;
 
   addStrategy(
-    _strategy: string,
-    _debtRatio: BigNumberish,
-    _minDebtPerHarvest: BigNumberish,
-    _maxDebtPerHarvest: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _strategy: PromiseOrValue<string>,
+    _debtRatio: PromiseOrValue<BigNumberish>,
+    _minDebtPerHarvest: PromiseOrValue<BigNumberish>,
+    _maxDebtPerHarvest: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   addStrategyToQueue(
-    _strategy: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _strategy: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   addToWhitelist(
-    user: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    user: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  'allowance(address,address)'(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+  'allowance(address,address)'(
+    owner: PromiseOrValue<string>,
+    spender: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   'allowance()'(overrides?: CallOverrides): Promise<boolean>;
 
   approve(
-    spender: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   bouncer(overrides?: CallOverrides): Promise<string>;
 
-  claimed(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  claimed(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   'creditAvailable()'(overrides?: CallOverrides): Promise<BigNumber>;
 
-  'creditAvailable(address)'(_strategy: string, overrides?: CallOverrides): Promise<BigNumber>;
+  'creditAvailable(address)'(_strategy: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  'debtOutstanding(address)'(_strategy: string, overrides?: CallOverrides): Promise<BigNumber>;
+  'debtOutstanding(address)'(_strategy: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   'debtOutstanding()'(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -945,14 +1003,14 @@ export interface GroLabsVault extends BaseContract {
   decimals(overrides?: CallOverrides): Promise<number>;
 
   decreaseAllowance(
-    spender: string,
-    subtractedValue: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    subtractedValue: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   deposit(
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   depositLimit(overrides?: CallOverrides): Promise<BigNumber>;
@@ -961,12 +1019,12 @@ export interface GroLabsVault extends BaseContract {
 
   getStrategiesLength(overrides?: CallOverrides): Promise<BigNumber>;
 
-  getStrategyAssets(_index: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  getStrategyAssets(_index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   increaseAllowance(
-    spender: string,
-    addedValue: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    addedValue: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   lastReport(overrides?: CallOverrides): Promise<BigNumber>;
@@ -974,9 +1032,9 @@ export interface GroLabsVault extends BaseContract {
   lockedProfit(overrides?: CallOverrides): Promise<BigNumber>;
 
   migrateStrategy(
-    _oldVersion: string,
-    _newVersion: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _oldVersion: PromiseOrValue<string>,
+    _newVersion: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   name(overrides?: CallOverrides): Promise<string>;
@@ -986,77 +1044,77 @@ export interface GroLabsVault extends BaseContract {
   releaseFactor(overrides?: CallOverrides): Promise<BigNumber>;
 
   removeFromWhitelist(
-    user: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    user: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   removeStrategyFromQueue(
-    _strategy: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _strategy: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   report(
-    _gain: BigNumberish,
-    _loss: BigNumberish,
-    _debtPayment: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _gain: PromiseOrValue<BigNumberish>,
+    _loss: PromiseOrValue<BigNumberish>,
+    _debtPayment: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  revokeStrategy(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  revokeStrategy(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   rewards(overrides?: CallOverrides): Promise<string>;
 
   setBouncer(
-    _bouncer: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _bouncer: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setDebtRatio(
-    _strategy: string,
-    _debtRatio: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _strategy: PromiseOrValue<string>,
+    _debtRatio: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setDebtRatios(
-    _strategyDebtRatios: BigNumberish[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _strategyDebtRatios: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setDepositLimit(
-    _newLimit: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _newLimit: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setProfitRelease(
-    _factor: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _factor: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setRewards(
-    _rewards: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _rewards: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setUserAllowance(
-    _user: string,
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _user: PromiseOrValue<string>,
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setVaultFee(
-    _fee: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _fee: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setWithdrawalQueue(
-    _queue: string[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _queue: PromiseOrValue<string>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   strategies(
-    arg0: string,
+    arg0: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, boolean, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -1075,16 +1133,20 @@ export interface GroLabsVault extends BaseContract {
   strategyDebt(overrides?: CallOverrides): Promise<BigNumber>;
 
   strategyHarvest(
-    _index: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _index: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  strategyHarvestTrigger(_index: BigNumberish, _callCost: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+  strategyHarvestTrigger(
+    _index: PromiseOrValue<BigNumberish>,
+    _callCost: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<boolean>;
 
   sweep(
-    _token: string,
-    _recipient: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _token: PromiseOrValue<string>,
+    _recipient: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
@@ -1100,87 +1162,95 @@ export interface GroLabsVault extends BaseContract {
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   transfer(
-    recipient: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    recipient: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferFrom(
-    sender: string,
-    recipient: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    sender: PromiseOrValue<string>,
+    recipient: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateStrategyMaxDebtPerHarvest(
-    _strategy: string,
-    _maxDebtPerHarvest: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _strategy: PromiseOrValue<string>,
+    _maxDebtPerHarvest: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateStrategyMinDebtPerHarvest(
-    _strategy: string,
-    _minDebtPerHarvest: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _strategy: PromiseOrValue<string>,
+    _minDebtPerHarvest: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  userAllowance(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  userAllowance(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   vaultFee(overrides?: CallOverrides): Promise<BigNumber>;
 
-  whitelist(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  whitelist(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   withdraw(
-    _shares: BigNumberish,
-    _maxLoss: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _shares: PromiseOrValue<BigNumberish>,
+    _maxLoss: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  withdrawalQueue(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  withdrawalQueue(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   callStatic: {
     BASE_ALLOWANCE(overrides?: CallOverrides): Promise<BigNumber>;
 
     MAXIMUM_STRATEGIES(overrides?: CallOverrides): Promise<BigNumber>;
 
-    activateAllowance(_status: boolean, overrides?: CallOverrides): Promise<void>;
+    activateAllowance(_status: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
 
     activation(overrides?: CallOverrides): Promise<BigNumber>;
 
     addStrategy(
-      _strategy: string,
-      _debtRatio: BigNumberish,
-      _minDebtPerHarvest: BigNumberish,
-      _maxDebtPerHarvest: BigNumberish,
+      _strategy: PromiseOrValue<string>,
+      _debtRatio: PromiseOrValue<BigNumberish>,
+      _minDebtPerHarvest: PromiseOrValue<BigNumberish>,
+      _maxDebtPerHarvest: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    addStrategyToQueue(_strategy: string, overrides?: CallOverrides): Promise<void>;
+    addStrategyToQueue(_strategy: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    addToWhitelist(user: string, overrides?: CallOverrides): Promise<void>;
+    addToWhitelist(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    'allowance(address,address)'(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+    'allowance(address,address)'(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     'allowance()'(overrides?: CallOverrides): Promise<boolean>;
 
-    approve(spender: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    approve(
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     bouncer(overrides?: CallOverrides): Promise<string>;
 
-    claimed(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    claimed(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     'creditAvailable()'(overrides?: CallOverrides): Promise<BigNumber>;
 
-    'creditAvailable(address)'(_strategy: string, overrides?: CallOverrides): Promise<BigNumber>;
+    'creditAvailable(address)'(_strategy: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    'debtOutstanding(address)'(_strategy: string, overrides?: CallOverrides): Promise<BigNumber>;
+    'debtOutstanding(address)'(_strategy: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     'debtOutstanding()'(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1188,9 +1258,13 @@ export interface GroLabsVault extends BaseContract {
 
     decimals(overrides?: CallOverrides): Promise<number>;
 
-    decreaseAllowance(spender: string, subtractedValue: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    decreaseAllowance(
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    deposit(_amount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    deposit(_amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     depositLimit(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1198,15 +1272,23 @@ export interface GroLabsVault extends BaseContract {
 
     getStrategiesLength(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getStrategyAssets(_index: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getStrategyAssets(_index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    increaseAllowance(spender: string, addedValue: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    increaseAllowance(
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     lastReport(overrides?: CallOverrides): Promise<BigNumber>;
 
     lockedProfit(overrides?: CallOverrides): Promise<BigNumber>;
 
-    migrateStrategy(_oldVersion: string, _newVersion: string, overrides?: CallOverrides): Promise<void>;
+    migrateStrategy(
+      _oldVersion: PromiseOrValue<string>,
+      _newVersion: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
@@ -1214,16 +1296,16 @@ export interface GroLabsVault extends BaseContract {
 
     releaseFactor(overrides?: CallOverrides): Promise<BigNumber>;
 
-    removeFromWhitelist(user: string, overrides?: CallOverrides): Promise<void>;
+    removeFromWhitelist(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    removeStrategyFromQueue(_strategy: string, overrides?: CallOverrides): Promise<void>;
+    removeStrategyFromQueue(_strategy: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
     report(
-      _gain: BigNumberish,
-      _loss: BigNumberish,
-      _debtPayment: BigNumberish,
+      _gain: PromiseOrValue<BigNumberish>,
+      _loss: PromiseOrValue<BigNumberish>,
+      _debtPayment: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
@@ -1231,26 +1313,34 @@ export interface GroLabsVault extends BaseContract {
 
     rewards(overrides?: CallOverrides): Promise<string>;
 
-    setBouncer(_bouncer: string, overrides?: CallOverrides): Promise<void>;
+    setBouncer(_bouncer: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setDebtRatio(_strategy: string, _debtRatio: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setDebtRatio(
+      _strategy: PromiseOrValue<string>,
+      _debtRatio: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setDebtRatios(_strategyDebtRatios: BigNumberish[], overrides?: CallOverrides): Promise<void>;
+    setDebtRatios(_strategyDebtRatios: PromiseOrValue<BigNumberish>[], overrides?: CallOverrides): Promise<void>;
 
-    setDepositLimit(_newLimit: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setDepositLimit(_newLimit: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setProfitRelease(_factor: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setProfitRelease(_factor: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setRewards(_rewards: string, overrides?: CallOverrides): Promise<void>;
+    setRewards(_rewards: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setUserAllowance(_user: string, _amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setUserAllowance(
+      _user: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setVaultFee(_fee: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setVaultFee(_fee: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setWithdrawalQueue(_queue: string[], overrides?: CallOverrides): Promise<void>;
+    setWithdrawalQueue(_queue: PromiseOrValue<string>[], overrides?: CallOverrides): Promise<void>;
 
     strategies(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, boolean, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -1268,11 +1358,15 @@ export interface GroLabsVault extends BaseContract {
 
     strategyDebt(overrides?: CallOverrides): Promise<BigNumber>;
 
-    strategyHarvest(_index: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    strategyHarvest(_index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    strategyHarvestTrigger(_index: BigNumberish, _callCost: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    strategyHarvestTrigger(
+      _index: PromiseOrValue<BigNumberish>,
+      _callCost: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    sweep(_token: string, _recipient: string, overrides?: CallOverrides): Promise<void>;
+    sweep(_token: PromiseOrValue<string>, _recipient: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     symbol(overrides?: CallOverrides): Promise<string>;
 
@@ -1286,45 +1380,62 @@ export interface GroLabsVault extends BaseContract {
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transfer(recipient: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transfer(
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    transferFrom(sender: string, recipient: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transferFrom(
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     updateStrategyMaxDebtPerHarvest(
-      _strategy: string,
-      _maxDebtPerHarvest: BigNumberish,
+      _strategy: PromiseOrValue<string>,
+      _maxDebtPerHarvest: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     updateStrategyMinDebtPerHarvest(
-      _strategy: string,
-      _minDebtPerHarvest: BigNumberish,
+      _strategy: PromiseOrValue<string>,
+      _minDebtPerHarvest: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    userAllowance(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    userAllowance(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     vaultFee(overrides?: CallOverrides): Promise<BigNumber>;
 
-    whitelist(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    whitelist(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-    withdraw(_shares: BigNumberish, _maxLoss: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    withdraw(
+      _shares: PromiseOrValue<BigNumberish>,
+      _maxLoss: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    withdrawalQueue(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    withdrawalQueue(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
   };
 
   filters: {
     'Approval(address,address,uint256)'(
-      owner?: string | null,
-      spender?: string | null,
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
       value?: null,
     ): ApprovalEventFilter;
-    Approval(owner?: string | null, spender?: string | null, value?: null): ApprovalEventFilter;
+    Approval(
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
+      value?: null,
+    ): ApprovalEventFilter;
 
-    'LogAddToWhitelist(address)'(user?: string | null): LogAddToWhitelistEventFilter;
-    LogAddToWhitelist(user?: string | null): LogAddToWhitelistEventFilter;
+    'LogAddToWhitelist(address)'(user?: PromiseOrValue<string> | null): LogAddToWhitelistEventFilter;
+    LogAddToWhitelist(user?: PromiseOrValue<string> | null): LogAddToWhitelistEventFilter;
 
     'LogAllowanceStatus(bool)'(status?: null): LogAllowanceStatusEventFilter;
     LogAllowanceStatus(status?: null): LogAllowanceStatusEventFilter;
@@ -1333,12 +1444,17 @@ export interface GroLabsVault extends BaseContract {
     LogDebtRatios(strategyRetios?: null): LogDebtRatiosEventFilter;
 
     'LogDeposit(address,uint256,uint256,uint256)'(
-      from?: string | null,
+      from?: PromiseOrValue<string> | null,
       _amount?: null,
       shares?: null,
       allowance?: null,
     ): LogDepositEventFilter;
-    LogDeposit(from?: string | null, _amount?: null, shares?: null, allowance?: null): LogDepositEventFilter;
+    LogDeposit(
+      from?: PromiseOrValue<string> | null,
+      _amount?: null,
+      shares?: null,
+      allowance?: null,
+    ): LogDepositEventFilter;
 
     'LogDepositLimit(uint256)'(newLimit?: null): LogDepositLimitEventFilter;
     LogDepositLimit(newLimit?: null): LogDepositLimitEventFilter;
@@ -1352,8 +1468,11 @@ export interface GroLabsVault extends BaseContract {
     'LogNewBouncer(address)'(bouncer?: null): LogNewBouncerEventFilter;
     LogNewBouncer(bouncer?: null): LogNewBouncerEventFilter;
 
-    'LogNewDebtRatio(address,uint256)'(strategy?: string | null, debtRatio?: null): LogNewDebtRatioEventFilter;
-    LogNewDebtRatio(strategy?: string | null, debtRatio?: null): LogNewDebtRatioEventFilter;
+    'LogNewDebtRatio(address,uint256)'(
+      strategy?: PromiseOrValue<string> | null,
+      debtRatio?: null,
+    ): LogNewDebtRatioEventFilter;
+    LogNewDebtRatio(strategy?: PromiseOrValue<string> | null, debtRatio?: null): LogNewDebtRatioEventFilter;
 
     'LogNewReleaseFactor(uint256)'(factor?: null): LogNewReleaseFactorEventFilter;
     LogNewReleaseFactor(factor?: null): LogNewReleaseFactorEventFilter;
@@ -1367,36 +1486,41 @@ export interface GroLabsVault extends BaseContract {
     'LogNewVaultFee(uint256)'(vaultFee?: null): LogNewVaultFeeEventFilter;
     LogNewVaultFee(vaultFee?: null): LogNewVaultFeeEventFilter;
 
-    'LogRemoveFromWhitelist(address)'(user?: string | null): LogRemoveFromWhitelistEventFilter;
-    LogRemoveFromWhitelist(user?: string | null): LogRemoveFromWhitelistEventFilter;
+    'LogRemoveFromWhitelist(address)'(user?: PromiseOrValue<string> | null): LogRemoveFromWhitelistEventFilter;
+    LogRemoveFromWhitelist(user?: PromiseOrValue<string> | null): LogRemoveFromWhitelistEventFilter;
 
     'LogStrategyAdded(address,uint256,uint256,uint256)'(
-      strategy?: string | null,
+      strategy?: PromiseOrValue<string> | null,
       debtRatio?: null,
       minDebtPerHarvest?: null,
       maxDebtPerHarvest?: null,
     ): LogStrategyAddedEventFilter;
     LogStrategyAdded(
-      strategy?: string | null,
+      strategy?: PromiseOrValue<string> | null,
       debtRatio?: null,
       minDebtPerHarvest?: null,
       maxDebtPerHarvest?: null,
     ): LogStrategyAddedEventFilter;
 
-    'LogStrategyAddedToQueue(address)'(strategy?: string | null): LogStrategyAddedToQueueEventFilter;
-    LogStrategyAddedToQueue(strategy?: string | null): LogStrategyAddedToQueueEventFilter;
+    'LogStrategyAddedToQueue(address)'(strategy?: PromiseOrValue<string> | null): LogStrategyAddedToQueueEventFilter;
+    LogStrategyAddedToQueue(strategy?: PromiseOrValue<string> | null): LogStrategyAddedToQueueEventFilter;
 
     'LogStrategyMigrated(address,address)'(
-      newStrategy?: string | null,
-      oldStrategy?: string | null,
+      newStrategy?: PromiseOrValue<string> | null,
+      oldStrategy?: PromiseOrValue<string> | null,
     ): LogStrategyMigratedEventFilter;
-    LogStrategyMigrated(newStrategy?: string | null, oldStrategy?: string | null): LogStrategyMigratedEventFilter;
+    LogStrategyMigrated(
+      newStrategy?: PromiseOrValue<string> | null,
+      oldStrategy?: PromiseOrValue<string> | null,
+    ): LogStrategyMigratedEventFilter;
 
-    'LogStrategyRemovedFromQueue(address)'(strategy?: string | null): LogStrategyRemovedFromQueueEventFilter;
-    LogStrategyRemovedFromQueue(strategy?: string | null): LogStrategyRemovedFromQueueEventFilter;
+    'LogStrategyRemovedFromQueue(address)'(
+      strategy?: PromiseOrValue<string> | null,
+    ): LogStrategyRemovedFromQueueEventFilter;
+    LogStrategyRemovedFromQueue(strategy?: PromiseOrValue<string> | null): LogStrategyRemovedFromQueueEventFilter;
 
     'LogStrategyReported(address,uint256,uint256,uint256,uint256,uint256,uint256,uint256,uint256)'(
-      strategy?: string | null,
+      strategy?: PromiseOrValue<string> | null,
       gain?: null,
       loss?: null,
       debtPaid?: null,
@@ -1407,7 +1531,7 @@ export interface GroLabsVault extends BaseContract {
       debtRatio?: null,
     ): LogStrategyReportedEventFilter;
     LogStrategyReported(
-      strategy?: string | null,
+      strategy?: PromiseOrValue<string> | null,
       gain?: null,
       loss?: null,
       debtPaid?: null,
@@ -1418,30 +1542,33 @@ export interface GroLabsVault extends BaseContract {
       debtRatio?: null,
     ): LogStrategyReportedEventFilter;
 
-    'LogStrategyRevoked(address)'(strategy?: string | null): LogStrategyRevokedEventFilter;
-    LogStrategyRevoked(strategy?: string | null): LogStrategyRevokedEventFilter;
+    'LogStrategyRevoked(address)'(strategy?: PromiseOrValue<string> | null): LogStrategyRevokedEventFilter;
+    LogStrategyRevoked(strategy?: PromiseOrValue<string> | null): LogStrategyRevokedEventFilter;
 
     'LogStrategyStatusUpdate(address,bool)'(
-      strategy?: string | null,
+      strategy?: PromiseOrValue<string> | null,
       status?: null,
     ): LogStrategyStatusUpdateEventFilter;
-    LogStrategyStatusUpdate(strategy?: string | null, status?: null): LogStrategyStatusUpdateEventFilter;
+    LogStrategyStatusUpdate(
+      strategy?: PromiseOrValue<string> | null,
+      status?: null,
+    ): LogStrategyStatusUpdateEventFilter;
 
     'LogStrategyUpdateMaxDebtPerHarvest(address,uint256)'(
-      strategy?: string | null,
+      strategy?: PromiseOrValue<string> | null,
       maxDebtPerHarvest?: null,
     ): LogStrategyUpdateMaxDebtPerHarvestEventFilter;
     LogStrategyUpdateMaxDebtPerHarvest(
-      strategy?: string | null,
+      strategy?: PromiseOrValue<string> | null,
       maxDebtPerHarvest?: null,
     ): LogStrategyUpdateMaxDebtPerHarvestEventFilter;
 
     'LogStrategyUpdateMinDebtPerHarvest(address,uint256)'(
-      strategy?: string | null,
+      strategy?: PromiseOrValue<string> | null,
       minDebtPerHarvest?: null,
     ): LogStrategyUpdateMinDebtPerHarvestEventFilter;
     LogStrategyUpdateMinDebtPerHarvest(
-      strategy?: string | null,
+      strategy?: PromiseOrValue<string> | null,
       minDebtPerHarvest?: null,
     ): LogStrategyUpdateMinDebtPerHarvestEventFilter;
 
@@ -1449,14 +1576,14 @@ export interface GroLabsVault extends BaseContract {
     LogUpdateWithdrawalQueue(queue?: null): LogUpdateWithdrawalQueueEventFilter;
 
     'LogWithdrawal(address,uint256,uint256,uint256,uint256)'(
-      from?: string | null,
+      from?: PromiseOrValue<string> | null,
       value?: null,
       shares?: null,
       totalLoss?: null,
       allowance?: null,
     ): LogWithdrawalEventFilter;
     LogWithdrawal(
-      from?: string | null,
+      from?: PromiseOrValue<string> | null,
       value?: null,
       shares?: null,
       totalLoss?: null,
@@ -1464,13 +1591,24 @@ export interface GroLabsVault extends BaseContract {
     ): LogWithdrawalEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
 
-    'Transfer(address,address,uint256)'(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
-    Transfer(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
+    'Transfer(address,address,uint256)'(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
+    Transfer(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
   };
 
   estimateGas: {
@@ -1479,48 +1617,55 @@ export interface GroLabsVault extends BaseContract {
     MAXIMUM_STRATEGIES(overrides?: CallOverrides): Promise<BigNumber>;
 
     activateAllowance(
-      _status: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _status: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     activation(overrides?: CallOverrides): Promise<BigNumber>;
 
     addStrategy(
-      _strategy: string,
-      _debtRatio: BigNumberish,
-      _minDebtPerHarvest: BigNumberish,
-      _maxDebtPerHarvest: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _strategy: PromiseOrValue<string>,
+      _debtRatio: PromiseOrValue<BigNumberish>,
+      _minDebtPerHarvest: PromiseOrValue<BigNumberish>,
+      _maxDebtPerHarvest: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     addStrategyToQueue(
-      _strategy: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _strategy: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    addToWhitelist(user: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    addToWhitelist(
+      user: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    'allowance(address,address)'(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+    'allowance(address,address)'(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     'allowance()'(overrides?: CallOverrides): Promise<BigNumber>;
 
     approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     bouncer(overrides?: CallOverrides): Promise<BigNumber>;
 
-    claimed(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    claimed(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     'creditAvailable()'(overrides?: CallOverrides): Promise<BigNumber>;
 
-    'creditAvailable(address)'(_strategy: string, overrides?: CallOverrides): Promise<BigNumber>;
+    'creditAvailable(address)'(_strategy: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    'debtOutstanding(address)'(_strategy: string, overrides?: CallOverrides): Promise<BigNumber>;
+    'debtOutstanding(address)'(_strategy: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     'debtOutstanding()'(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1529,12 +1674,15 @@ export interface GroLabsVault extends BaseContract {
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    deposit(_amount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    deposit(
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     depositLimit(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1542,12 +1690,12 @@ export interface GroLabsVault extends BaseContract {
 
     getStrategiesLength(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getStrategyAssets(_index: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getStrategyAssets(_index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     lastReport(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1555,9 +1703,9 @@ export interface GroLabsVault extends BaseContract {
     lockedProfit(overrides?: CallOverrides): Promise<BigNumber>;
 
     migrateStrategy(
-      _oldVersion: string,
-      _newVersion: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _oldVersion: PromiseOrValue<string>,
+      _newVersion: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1566,83 +1714,95 @@ export interface GroLabsVault extends BaseContract {
 
     releaseFactor(overrides?: CallOverrides): Promise<BigNumber>;
 
-    removeFromWhitelist(user: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    removeFromWhitelist(
+      user: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     removeStrategyFromQueue(
-      _strategy: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _strategy: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     report(
-      _gain: BigNumberish,
-      _loss: BigNumberish,
-      _debtPayment: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _gain: PromiseOrValue<BigNumberish>,
+      _loss: PromiseOrValue<BigNumberish>,
+      _debtPayment: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    revokeStrategy(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    revokeStrategy(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     rewards(overrides?: CallOverrides): Promise<BigNumber>;
 
-    setBouncer(_bouncer: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setBouncer(
+      _bouncer: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setDebtRatio(
-      _strategy: string,
-      _debtRatio: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _strategy: PromiseOrValue<string>,
+      _debtRatio: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setDebtRatios(
-      _strategyDebtRatios: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _strategyDebtRatios: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setDepositLimit(
-      _newLimit: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newLimit: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setProfitRelease(
-      _factor: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _factor: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setRewards(_rewards: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setRewards(
+      _rewards: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setUserAllowance(
-      _user: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _user: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setVaultFee(_fee: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setVaultFee(
+      _fee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setWithdrawalQueue(
-      _queue: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _queue: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    strategies(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    strategies(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     strategyDebt(overrides?: CallOverrides): Promise<BigNumber>;
 
     strategyHarvest(
-      _index: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _index: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     strategyHarvestTrigger(
-      _index: BigNumberish,
-      _callCost: BigNumberish,
+      _index: PromiseOrValue<BigNumberish>,
+      _callCost: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     sweep(
-      _token: string,
-      _recipient: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      _recipient: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1658,48 +1818,48 @@ export interface GroLabsVault extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferFrom(
-      sender: string,
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     updateStrategyMaxDebtPerHarvest(
-      _strategy: string,
-      _maxDebtPerHarvest: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _strategy: PromiseOrValue<string>,
+      _maxDebtPerHarvest: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     updateStrategyMinDebtPerHarvest(
-      _strategy: string,
-      _minDebtPerHarvest: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _strategy: PromiseOrValue<string>,
+      _minDebtPerHarvest: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    userAllowance(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    userAllowance(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     vaultFee(overrides?: CallOverrides): Promise<BigNumber>;
 
-    whitelist(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    whitelist(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     withdraw(
-      _shares: BigNumberish,
-      _maxLoss: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _shares: PromiseOrValue<BigNumberish>,
+      _maxLoss: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    withdrawalQueue(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    withdrawalQueue(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -1708,55 +1868,61 @@ export interface GroLabsVault extends BaseContract {
     MAXIMUM_STRATEGIES(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     activateAllowance(
-      _status: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _status: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     activation(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     addStrategy(
-      _strategy: string,
-      _debtRatio: BigNumberish,
-      _minDebtPerHarvest: BigNumberish,
-      _maxDebtPerHarvest: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _strategy: PromiseOrValue<string>,
+      _debtRatio: PromiseOrValue<BigNumberish>,
+      _minDebtPerHarvest: PromiseOrValue<BigNumberish>,
+      _maxDebtPerHarvest: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     addStrategyToQueue(
-      _strategy: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _strategy: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     addToWhitelist(
-      user: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      user: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     'allowance(address,address)'(
-      owner: string,
-      spender: string,
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     'allowance()'(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     bouncer(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    claimed(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    claimed(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     'creditAvailable()'(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    'creditAvailable(address)'(_strategy: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    'creditAvailable(address)'(
+      _strategy: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    'debtOutstanding(address)'(_strategy: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    'debtOutstanding(address)'(
+      _strategy: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     'debtOutstanding()'(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1765,14 +1931,14 @@ export interface GroLabsVault extends BaseContract {
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     deposit(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     depositLimit(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1781,12 +1947,12 @@ export interface GroLabsVault extends BaseContract {
 
     getStrategiesLength(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getStrategyAssets(_index: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getStrategyAssets(_index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     lastReport(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1794,9 +1960,9 @@ export interface GroLabsVault extends BaseContract {
     lockedProfit(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     migrateStrategy(
-      _oldVersion: string,
-      _newVersion: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _oldVersion: PromiseOrValue<string>,
+      _newVersion: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1806,94 +1972,94 @@ export interface GroLabsVault extends BaseContract {
     releaseFactor(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     removeFromWhitelist(
-      user: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      user: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     removeStrategyFromQueue(
-      _strategy: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _strategy: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     report(
-      _gain: BigNumberish,
-      _loss: BigNumberish,
-      _debtPayment: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _gain: PromiseOrValue<BigNumberish>,
+      _loss: PromiseOrValue<BigNumberish>,
+      _debtPayment: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    revokeStrategy(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    revokeStrategy(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     rewards(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setBouncer(
-      _bouncer: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _bouncer: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setDebtRatio(
-      _strategy: string,
-      _debtRatio: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _strategy: PromiseOrValue<string>,
+      _debtRatio: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setDebtRatios(
-      _strategyDebtRatios: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _strategyDebtRatios: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setDepositLimit(
-      _newLimit: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newLimit: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setProfitRelease(
-      _factor: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _factor: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setRewards(
-      _rewards: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewards: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setUserAllowance(
-      _user: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _user: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setVaultFee(
-      _fee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _fee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setWithdrawalQueue(
-      _queue: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _queue: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    strategies(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    strategies(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     strategyDebt(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     strategyHarvest(
-      _index: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _index: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     strategyHarvestTrigger(
-      _index: BigNumberish,
-      _callCost: BigNumberish,
+      _index: PromiseOrValue<BigNumberish>,
+      _callCost: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     sweep(
-      _token: string,
-      _recipient: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      _recipient: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1909,47 +2075,47 @@ export interface GroLabsVault extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transfer(
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferFrom(
-      sender: string,
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateStrategyMaxDebtPerHarvest(
-      _strategy: string,
-      _maxDebtPerHarvest: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _strategy: PromiseOrValue<string>,
+      _maxDebtPerHarvest: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateStrategyMinDebtPerHarvest(
-      _strategy: string,
-      _minDebtPerHarvest: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _strategy: PromiseOrValue<string>,
+      _minDebtPerHarvest: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    userAllowance(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    userAllowance(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     vaultFee(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    whitelist(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    whitelist(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     withdraw(
-      _shares: BigNumberish,
-      _maxLoss: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _shares: PromiseOrValue<BigNumberish>,
+      _maxLoss: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    withdrawalQueue(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    withdrawalQueue(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }

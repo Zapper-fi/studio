@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface StargateFactoryInterface extends utils.Interface {
   functions: {
@@ -45,19 +45,26 @@ export interface StargateFactoryInterface extends utils.Interface {
       | 'transferOwnership',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'allPools', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'allPools', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'allPoolsLength', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'createPool',
-    values: [BigNumberish, string, BigNumberish, BigNumberish, string, string],
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'defaultFeeLibrary', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getPool', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'getPool', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
   encodeFunctionData(functionFragment: 'router', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'setDefaultFeeLibrary', values: [string]): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
+  encodeFunctionData(functionFragment: 'setDefaultFeeLibrary', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
 
   decodeFunctionResult(functionFragment: 'allPools', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'allPoolsLength', data: BytesLike): Result;
@@ -108,93 +115,93 @@ export interface StargateFactory extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    allPools(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    allPools(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
     allPoolsLength(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     createPool(
-      _poolId: BigNumberish,
-      _token: string,
-      _sharedDecimals: BigNumberish,
-      _localDecimals: BigNumberish,
-      _name: string,
-      _symbol: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _poolId: PromiseOrValue<BigNumberish>,
+      _token: PromiseOrValue<string>,
+      _sharedDecimals: PromiseOrValue<BigNumberish>,
+      _localDecimals: PromiseOrValue<BigNumberish>,
+      _name: PromiseOrValue<string>,
+      _symbol: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     defaultFeeLibrary(overrides?: CallOverrides): Promise<[string]>;
 
-    getPool(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    getPool(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     router(overrides?: CallOverrides): Promise<[string]>;
 
     setDefaultFeeLibrary(
-      _defaultFeeLibrary: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _defaultFeeLibrary: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
-  allPools(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  allPools(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   allPoolsLength(overrides?: CallOverrides): Promise<BigNumber>;
 
   createPool(
-    _poolId: BigNumberish,
-    _token: string,
-    _sharedDecimals: BigNumberish,
-    _localDecimals: BigNumberish,
-    _name: string,
-    _symbol: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _poolId: PromiseOrValue<BigNumberish>,
+    _token: PromiseOrValue<string>,
+    _sharedDecimals: PromiseOrValue<BigNumberish>,
+    _localDecimals: PromiseOrValue<BigNumberish>,
+    _name: PromiseOrValue<string>,
+    _symbol: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   defaultFeeLibrary(overrides?: CallOverrides): Promise<string>;
 
-  getPool(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  getPool(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   router(overrides?: CallOverrides): Promise<string>;
 
   setDefaultFeeLibrary(
-    _defaultFeeLibrary: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _defaultFeeLibrary: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    allPools(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    allPools(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
     allPoolsLength(overrides?: CallOverrides): Promise<BigNumber>;
 
     createPool(
-      _poolId: BigNumberish,
-      _token: string,
-      _sharedDecimals: BigNumberish,
-      _localDecimals: BigNumberish,
-      _name: string,
-      _symbol: string,
+      _poolId: PromiseOrValue<BigNumberish>,
+      _token: PromiseOrValue<string>,
+      _sharedDecimals: PromiseOrValue<BigNumberish>,
+      _localDecimals: PromiseOrValue<BigNumberish>,
+      _name: PromiseOrValue<string>,
+      _symbol: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<string>;
 
     defaultFeeLibrary(overrides?: CallOverrides): Promise<string>;
 
-    getPool(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    getPool(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
@@ -202,88 +209,91 @@ export interface StargateFactory extends BaseContract {
 
     router(overrides?: CallOverrides): Promise<string>;
 
-    setDefaultFeeLibrary(_defaultFeeLibrary: string, overrides?: CallOverrides): Promise<void>;
+    setDefaultFeeLibrary(_defaultFeeLibrary: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
   };
 
   estimateGas: {
-    allPools(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    allPools(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     allPoolsLength(overrides?: CallOverrides): Promise<BigNumber>;
 
     createPool(
-      _poolId: BigNumberish,
-      _token: string,
-      _sharedDecimals: BigNumberish,
-      _localDecimals: BigNumberish,
-      _name: string,
-      _symbol: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _poolId: PromiseOrValue<BigNumberish>,
+      _token: PromiseOrValue<string>,
+      _sharedDecimals: PromiseOrValue<BigNumberish>,
+      _localDecimals: PromiseOrValue<BigNumberish>,
+      _name: PromiseOrValue<string>,
+      _symbol: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     defaultFeeLibrary(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getPool(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getPool(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     router(overrides?: CallOverrides): Promise<BigNumber>;
 
     setDefaultFeeLibrary(
-      _defaultFeeLibrary: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _defaultFeeLibrary: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    allPools(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    allPools(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     allPoolsLength(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     createPool(
-      _poolId: BigNumberish,
-      _token: string,
-      _sharedDecimals: BigNumberish,
-      _localDecimals: BigNumberish,
-      _name: string,
-      _symbol: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _poolId: PromiseOrValue<BigNumberish>,
+      _token: PromiseOrValue<string>,
+      _sharedDecimals: PromiseOrValue<BigNumberish>,
+      _localDecimals: PromiseOrValue<BigNumberish>,
+      _name: PromiseOrValue<string>,
+      _symbol: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     defaultFeeLibrary(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getPool(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getPool(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     router(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setDefaultFeeLibrary(
-      _defaultFeeLibrary: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _defaultFeeLibrary: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

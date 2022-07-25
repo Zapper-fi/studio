@@ -15,16 +15,16 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export declare namespace CompoundLens {
   export type CTokenBalancesStruct = {
-    cToken: string;
-    balanceOf: BigNumberish;
-    borrowBalanceCurrent: BigNumberish;
-    balanceOfUnderlying: BigNumberish;
-    tokenBalance: BigNumberish;
-    tokenAllowance: BigNumberish;
+    cToken: PromiseOrValue<string>;
+    balanceOf: PromiseOrValue<BigNumberish>;
+    borrowBalanceCurrent: PromiseOrValue<BigNumberish>;
+    balanceOfUnderlying: PromiseOrValue<BigNumberish>;
+    tokenBalance: PromiseOrValue<BigNumberish>;
+    tokenAllowance: PromiseOrValue<BigNumberish>;
   };
 
   export type CTokenBalancesStructOutput = [string, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -37,20 +37,20 @@ export declare namespace CompoundLens {
   };
 
   export type CTokenMetadataStruct = {
-    cToken: string;
-    exchangeRateCurrent: BigNumberish;
-    supplyRatePerBlock: BigNumberish;
-    borrowRatePerBlock: BigNumberish;
-    reserveFactorMantissa: BigNumberish;
-    totalBorrows: BigNumberish;
-    totalReserves: BigNumberish;
-    totalSupply: BigNumberish;
-    totalCash: BigNumberish;
-    isListed: boolean;
-    collateralFactorMantissa: BigNumberish;
-    underlyingAssetAddress: string;
-    cTokenDecimals: BigNumberish;
-    underlyingDecimals: BigNumberish;
+    cToken: PromiseOrValue<string>;
+    exchangeRateCurrent: PromiseOrValue<BigNumberish>;
+    supplyRatePerBlock: PromiseOrValue<BigNumberish>;
+    borrowRatePerBlock: PromiseOrValue<BigNumberish>;
+    reserveFactorMantissa: PromiseOrValue<BigNumberish>;
+    totalBorrows: PromiseOrValue<BigNumberish>;
+    totalReserves: PromiseOrValue<BigNumberish>;
+    totalSupply: PromiseOrValue<BigNumberish>;
+    totalCash: PromiseOrValue<BigNumberish>;
+    isListed: PromiseOrValue<boolean>;
+    collateralFactorMantissa: PromiseOrValue<BigNumberish>;
+    underlyingAssetAddress: PromiseOrValue<string>;
+    cTokenDecimals: PromiseOrValue<BigNumberish>;
+    underlyingDecimals: PromiseOrValue<BigNumberish>;
   };
 
   export type CTokenMetadataStructOutput = [
@@ -86,8 +86,8 @@ export declare namespace CompoundLens {
   };
 
   export type CTokenUnderlyingPriceStruct = {
-    cToken: string;
-    underlyingPrice: BigNumberish;
+    cToken: PromiseOrValue<string>;
+    underlyingPrice: PromiseOrValue<BigNumberish>;
   };
 
   export type CTokenUnderlyingPriceStructOutput = [string, BigNumber] & {
@@ -96,9 +96,9 @@ export declare namespace CompoundLens {
   };
 
   export type AccountLimitsStruct = {
-    markets: string[];
-    liquidity: BigNumberish;
-    shortfall: BigNumberish;
+    markets: PromiseOrValue<string>[];
+    liquidity: PromiseOrValue<BigNumberish>;
+    shortfall: PromiseOrValue<BigNumberish>;
   };
 
   export type AccountLimitsStructOutput = [string[], BigNumber, BigNumber] & {
@@ -108,9 +108,9 @@ export declare namespace CompoundLens {
   };
 
   export type CompBalanceMetadataStruct = {
-    balance: BigNumberish;
-    votes: BigNumberish;
-    delegate: string;
+    balance: PromiseOrValue<BigNumberish>;
+    votes: PromiseOrValue<BigNumberish>;
+    delegate: PromiseOrValue<string>;
   };
 
   export type CompBalanceMetadataStructOutput = [BigNumber, BigNumber, string] & {
@@ -120,10 +120,10 @@ export declare namespace CompoundLens {
   };
 
   export type CompBalanceMetadataExtStruct = {
-    balance: BigNumberish;
-    votes: BigNumberish;
-    delegate: string;
-    allocated: BigNumberish;
+    balance: PromiseOrValue<BigNumberish>;
+    votes: PromiseOrValue<BigNumberish>;
+    delegate: PromiseOrValue<string>;
+    allocated: PromiseOrValue<BigNumberish>;
   };
 
   export type CompBalanceMetadataExtStructOutput = [BigNumber, BigNumber, string, BigNumber] & {
@@ -134,8 +134,8 @@ export declare namespace CompoundLens {
   };
 
   export type CompVotesStruct = {
-    blockNumber: BigNumberish;
-    votes: BigNumberish;
+    blockNumber: PromiseOrValue<BigNumberish>;
+    votes: PromiseOrValue<BigNumberish>;
   };
 
   export type CompVotesStructOutput = [BigNumber, BigNumber] & {
@@ -144,19 +144,19 @@ export declare namespace CompoundLens {
   };
 
   export type GovProposalStruct = {
-    proposalId: BigNumberish;
-    proposer: string;
-    eta: BigNumberish;
-    targets: string[];
-    values: BigNumberish[];
-    signatures: string[];
-    calldatas: BytesLike[];
-    startBlock: BigNumberish;
-    endBlock: BigNumberish;
-    forVotes: BigNumberish;
-    againstVotes: BigNumberish;
-    canceled: boolean;
-    executed: boolean;
+    proposalId: PromiseOrValue<BigNumberish>;
+    proposer: PromiseOrValue<string>;
+    eta: PromiseOrValue<BigNumberish>;
+    targets: PromiseOrValue<string>[];
+    values: PromiseOrValue<BigNumberish>[];
+    signatures: PromiseOrValue<string>[];
+    calldatas: PromiseOrValue<BytesLike>[];
+    startBlock: PromiseOrValue<BigNumberish>;
+    endBlock: PromiseOrValue<BigNumberish>;
+    forVotes: PromiseOrValue<BigNumberish>;
+    againstVotes: PromiseOrValue<BigNumberish>;
+    canceled: PromiseOrValue<boolean>;
+    executed: PromiseOrValue<boolean>;
   };
 
   export type GovProposalStructOutput = [
@@ -190,10 +190,10 @@ export declare namespace CompoundLens {
   };
 
   export type GovReceiptStruct = {
-    proposalId: BigNumberish;
-    hasVoted: boolean;
-    support: boolean;
-    votes: BigNumberish;
+    proposalId: PromiseOrValue<BigNumberish>;
+    hasVoted: PromiseOrValue<boolean>;
+    support: PromiseOrValue<boolean>;
+    votes: PromiseOrValue<BigNumberish>;
   };
 
   export type GovReceiptStructOutput = [BigNumber, boolean, boolean, BigNumber] & {
@@ -236,18 +236,42 @@ export interface CompoundLensInterface extends utils.Interface {
       | 'getGovReceipts',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'cTokenBalances', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'cTokenBalancesAll', values: [string[], string]): string;
-  encodeFunctionData(functionFragment: 'cTokenMetadata', values: [string]): string;
-  encodeFunctionData(functionFragment: 'cTokenMetadataAll', values: [string[]]): string;
-  encodeFunctionData(functionFragment: 'cTokenUnderlyingPrice', values: [string]): string;
-  encodeFunctionData(functionFragment: 'cTokenUnderlyingPriceAll', values: [string[]]): string;
-  encodeFunctionData(functionFragment: 'getAccountLimits', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'getCompBalanceMetadata', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'getCompBalanceMetadataExt', values: [string, string, string]): string;
-  encodeFunctionData(functionFragment: 'getCompVotes', values: [string, string, BigNumberish[]]): string;
-  encodeFunctionData(functionFragment: 'getGovProposals', values: [string, BigNumberish[]]): string;
-  encodeFunctionData(functionFragment: 'getGovReceipts', values: [string, string, BigNumberish[]]): string;
+  encodeFunctionData(
+    functionFragment: 'cTokenBalances',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'cTokenBalancesAll',
+    values: [PromiseOrValue<string>[], PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'cTokenMetadata', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'cTokenMetadataAll', values: [PromiseOrValue<string>[]]): string;
+  encodeFunctionData(functionFragment: 'cTokenUnderlyingPrice', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'cTokenUnderlyingPriceAll', values: [PromiseOrValue<string>[]]): string;
+  encodeFunctionData(
+    functionFragment: 'getAccountLimits',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'getCompBalanceMetadata',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'getCompBalanceMetadataExt',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'getCompVotes',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>[]],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'getGovProposals',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>[]],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'getGovReceipts',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>[]],
+  ): string;
 
   decodeFunctionResult(functionFragment: 'cTokenBalances', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'cTokenBalancesAll', data: BytesLike): Result;
@@ -289,211 +313,217 @@ export interface CompoundLens extends BaseContract {
 
   functions: {
     cTokenBalances(
-      cToken: string,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      cToken: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     cTokenBalancesAll(
-      cTokens: string[],
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      cTokens: PromiseOrValue<string>[],
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     cTokenMetadata(
-      cToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      cToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     cTokenMetadataAll(
-      cTokens: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      cTokens: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     cTokenUnderlyingPrice(
-      cToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      cToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     cTokenUnderlyingPriceAll(
-      cTokens: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      cTokens: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     getAccountLimits(
-      comptroller: string,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      comptroller: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     getCompBalanceMetadata(
-      comp: string,
-      account: string,
+      comp: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[CompoundLens.CompBalanceMetadataStructOutput]>;
 
     getCompBalanceMetadataExt(
-      comp: string,
-      comptroller: string,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      comp: PromiseOrValue<string>,
+      comptroller: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     getCompVotes(
-      comp: string,
-      account: string,
-      blockNumbers: BigNumberish[],
+      comp: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
+      blockNumbers: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides,
     ): Promise<[CompoundLens.CompVotesStructOutput[]]>;
 
     getGovProposals(
-      governor: string,
-      proposalIds: BigNumberish[],
+      governor: PromiseOrValue<string>,
+      proposalIds: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides,
     ): Promise<[CompoundLens.GovProposalStructOutput[]]>;
 
     getGovReceipts(
-      governor: string,
-      voter: string,
-      proposalIds: BigNumberish[],
+      governor: PromiseOrValue<string>,
+      voter: PromiseOrValue<string>,
+      proposalIds: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides,
     ): Promise<[CompoundLens.GovReceiptStructOutput[]]>;
   };
 
   cTokenBalances(
-    cToken: string,
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    cToken: PromiseOrValue<string>,
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   cTokenBalancesAll(
-    cTokens: string[],
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    cTokens: PromiseOrValue<string>[],
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   cTokenMetadata(
-    cToken: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    cToken: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   cTokenMetadataAll(
-    cTokens: string[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    cTokens: PromiseOrValue<string>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   cTokenUnderlyingPrice(
-    cToken: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    cToken: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   cTokenUnderlyingPriceAll(
-    cTokens: string[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    cTokens: PromiseOrValue<string>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   getAccountLimits(
-    comptroller: string,
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    comptroller: PromiseOrValue<string>,
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   getCompBalanceMetadata(
-    comp: string,
-    account: string,
+    comp: PromiseOrValue<string>,
+    account: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<CompoundLens.CompBalanceMetadataStructOutput>;
 
   getCompBalanceMetadataExt(
-    comp: string,
-    comptroller: string,
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    comp: PromiseOrValue<string>,
+    comptroller: PromiseOrValue<string>,
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   getCompVotes(
-    comp: string,
-    account: string,
-    blockNumbers: BigNumberish[],
+    comp: PromiseOrValue<string>,
+    account: PromiseOrValue<string>,
+    blockNumbers: PromiseOrValue<BigNumberish>[],
     overrides?: CallOverrides,
   ): Promise<CompoundLens.CompVotesStructOutput[]>;
 
   getGovProposals(
-    governor: string,
-    proposalIds: BigNumberish[],
+    governor: PromiseOrValue<string>,
+    proposalIds: PromiseOrValue<BigNumberish>[],
     overrides?: CallOverrides,
   ): Promise<CompoundLens.GovProposalStructOutput[]>;
 
   getGovReceipts(
-    governor: string,
-    voter: string,
-    proposalIds: BigNumberish[],
+    governor: PromiseOrValue<string>,
+    voter: PromiseOrValue<string>,
+    proposalIds: PromiseOrValue<BigNumberish>[],
     overrides?: CallOverrides,
   ): Promise<CompoundLens.GovReceiptStructOutput[]>;
 
   callStatic: {
     cTokenBalances(
-      cToken: string,
-      account: string,
+      cToken: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<CompoundLens.CTokenBalancesStructOutput>;
 
     cTokenBalancesAll(
-      cTokens: string[],
-      account: string,
+      cTokens: PromiseOrValue<string>[],
+      account: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<CompoundLens.CTokenBalancesStructOutput[]>;
 
-    cTokenMetadata(cToken: string, overrides?: CallOverrides): Promise<CompoundLens.CTokenMetadataStructOutput>;
+    cTokenMetadata(
+      cToken: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<CompoundLens.CTokenMetadataStructOutput>;
 
-    cTokenMetadataAll(cTokens: string[], overrides?: CallOverrides): Promise<CompoundLens.CTokenMetadataStructOutput[]>;
+    cTokenMetadataAll(
+      cTokens: PromiseOrValue<string>[],
+      overrides?: CallOverrides,
+    ): Promise<CompoundLens.CTokenMetadataStructOutput[]>;
 
     cTokenUnderlyingPrice(
-      cToken: string,
+      cToken: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<CompoundLens.CTokenUnderlyingPriceStructOutput>;
 
     cTokenUnderlyingPriceAll(
-      cTokens: string[],
+      cTokens: PromiseOrValue<string>[],
       overrides?: CallOverrides,
     ): Promise<CompoundLens.CTokenUnderlyingPriceStructOutput[]>;
 
     getAccountLimits(
-      comptroller: string,
-      account: string,
+      comptroller: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<CompoundLens.AccountLimitsStructOutput>;
 
     getCompBalanceMetadata(
-      comp: string,
-      account: string,
+      comp: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<CompoundLens.CompBalanceMetadataStructOutput>;
 
     getCompBalanceMetadataExt(
-      comp: string,
-      comptroller: string,
-      account: string,
+      comp: PromiseOrValue<string>,
+      comptroller: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<CompoundLens.CompBalanceMetadataExtStructOutput>;
 
     getCompVotes(
-      comp: string,
-      account: string,
-      blockNumbers: BigNumberish[],
+      comp: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
+      blockNumbers: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides,
     ): Promise<CompoundLens.CompVotesStructOutput[]>;
 
     getGovProposals(
-      governor: string,
-      proposalIds: BigNumberish[],
+      governor: PromiseOrValue<string>,
+      proposalIds: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides,
     ): Promise<CompoundLens.GovProposalStructOutput[]>;
 
     getGovReceipts(
-      governor: string,
-      voter: string,
-      proposalIds: BigNumberish[],
+      governor: PromiseOrValue<string>,
+      voter: PromiseOrValue<string>,
+      proposalIds: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides,
     ): Promise<CompoundLens.GovReceiptStructOutput[]>;
   };
@@ -502,131 +532,146 @@ export interface CompoundLens extends BaseContract {
 
   estimateGas: {
     cTokenBalances(
-      cToken: string,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      cToken: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     cTokenBalancesAll(
-      cTokens: string[],
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      cTokens: PromiseOrValue<string>[],
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    cTokenMetadata(cToken: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    cTokenMetadata(
+      cToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     cTokenMetadataAll(
-      cTokens: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      cTokens: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     cTokenUnderlyingPrice(
-      cToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      cToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     cTokenUnderlyingPriceAll(
-      cTokens: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      cTokens: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     getAccountLimits(
-      comptroller: string,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      comptroller: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    getCompBalanceMetadata(comp: string, account: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-    getCompBalanceMetadataExt(
-      comp: string,
-      comptroller: string,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<BigNumber>;
-
-    getCompVotes(
-      comp: string,
-      account: string,
-      blockNumbers: BigNumberish[],
+    getCompBalanceMetadata(
+      comp: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    getGovProposals(governor: string, proposalIds: BigNumberish[], overrides?: CallOverrides): Promise<BigNumber>;
+    getCompBalanceMetadataExt(
+      comp: PromiseOrValue<string>,
+      comptroller: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    getCompVotes(
+      comp: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
+      blockNumbers: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
+    getGovProposals(
+      governor: PromiseOrValue<string>,
+      proposalIds: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     getGovReceipts(
-      governor: string,
-      voter: string,
-      proposalIds: BigNumberish[],
+      governor: PromiseOrValue<string>,
+      voter: PromiseOrValue<string>,
+      proposalIds: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     cTokenBalances(
-      cToken: string,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      cToken: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     cTokenBalancesAll(
-      cTokens: string[],
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      cTokens: PromiseOrValue<string>[],
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     cTokenMetadata(
-      cToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      cToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     cTokenMetadataAll(
-      cTokens: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      cTokens: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     cTokenUnderlyingPrice(
-      cToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      cToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     cTokenUnderlyingPriceAll(
-      cTokens: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      cTokens: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     getAccountLimits(
-      comptroller: string,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      comptroller: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    getCompBalanceMetadata(comp: string, account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getCompBalanceMetadata(
+      comp: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     getCompBalanceMetadataExt(
-      comp: string,
-      comptroller: string,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      comp: PromiseOrValue<string>,
+      comptroller: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     getCompVotes(
-      comp: string,
-      account: string,
-      blockNumbers: BigNumberish[],
+      comp: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
+      blockNumbers: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     getGovProposals(
-      governor: string,
-      proposalIds: BigNumberish[],
+      governor: PromiseOrValue<string>,
+      proposalIds: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     getGovReceipts(
-      governor: string,
-      voter: string,
-      proposalIds: BigNumberish[],
+      governor: PromiseOrValue<string>,
+      voter: PromiseOrValue<string>,
+      proposalIds: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
   };

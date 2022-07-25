@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface PoolTogetherV4PrizePoolInterface extends utils.Interface {
   functions: {
@@ -90,36 +90,60 @@ export interface PoolTogetherV4PrizePoolInterface extends utils.Interface {
   ): FunctionFragment;
 
   encodeFunctionData(functionFragment: 'VERSION', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'award', values: [string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'award', values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'awardBalance', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'awardExternalERC20', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'awardExternalERC721', values: [string, string, BigNumberish[]]): string;
+  encodeFunctionData(
+    functionFragment: 'awardExternalERC20',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'awardExternalERC721',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>[]],
+  ): string;
   encodeFunctionData(functionFragment: 'balance', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'canAwardExternal', values: [string]): string;
+  encodeFunctionData(functionFragment: 'canAwardExternal', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'captureAwardBalance', values?: undefined): string;
   encodeFunctionData(functionFragment: 'claimOwnership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'compLikeDelegate', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'depositTo', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'depositToAndDelegate', values: [string, BigNumberish, string]): string;
+  encodeFunctionData(
+    functionFragment: 'compLikeDelegate',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'depositTo',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'depositToAndDelegate',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'getAccountedBalance', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getBalanceCap', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getLiquidityCap', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getPrizeStrategy', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getTicket', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getToken', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'isControlled', values: [string]): string;
-  encodeFunctionData(functionFragment: 'onERC721Received', values: [string, string, BigNumberish, BytesLike]): string;
+  encodeFunctionData(functionFragment: 'isControlled', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'onERC721Received',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<BytesLike>],
+  ): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'pendingOwner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'setBalanceCap', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setLiquidityCap', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setPrizeStrategy', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setTicket', values: [string]): string;
+  encodeFunctionData(functionFragment: 'setBalanceCap', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setLiquidityCap', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setPrizeStrategy', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setTicket', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'sweep', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transferExternalERC20', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
-  encodeFunctionData(functionFragment: 'withdrawFrom', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'transferExternalERC20',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'withdrawFrom',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'yieldSource', values?: undefined): string;
 
   decodeFunctionResult(functionFragment: 'VERSION', data: BytesLike): Result;
@@ -358,52 +382,52 @@ export interface PoolTogetherV4PrizePool extends BaseContract {
     VERSION(overrides?: CallOverrides): Promise<[string]>;
 
     award(
-      _to: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _to: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     awardBalance(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     awardExternalERC20(
-      _to: string,
-      _externalToken: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _to: PromiseOrValue<string>,
+      _externalToken: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     awardExternalERC721(
-      _to: string,
-      _externalToken: string,
-      _tokenIds: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _to: PromiseOrValue<string>,
+      _externalToken: PromiseOrValue<string>,
+      _tokenIds: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    balance(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    balance(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    canAwardExternal(_externalToken: string, overrides?: CallOverrides): Promise<[boolean]>;
+    canAwardExternal(_externalToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
-    captureAwardBalance(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    captureAwardBalance(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    claimOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    claimOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     compLikeDelegate(
-      _compLike: string,
-      _to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _compLike: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     depositTo(
-      _to: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _to: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     depositToAndDelegate(
-      _to: string,
-      _amount: BigNumberish,
-      _delegate: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _to: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      _delegate: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     getAccountedBalance(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -418,13 +442,13 @@ export interface PoolTogetherV4PrizePool extends BaseContract {
 
     getToken(overrides?: CallOverrides): Promise<[string]>;
 
-    isControlled(_controlledToken: string, overrides?: CallOverrides): Promise<[boolean]>;
+    isControlled(_controlledToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     onERC721Received(
-      arg0: string,
-      arg1: string,
-      arg2: BigNumberish,
-      arg3: BytesLike,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      arg2: PromiseOrValue<BigNumberish>,
+      arg3: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<[string]>;
 
@@ -432,46 +456,46 @@ export interface PoolTogetherV4PrizePool extends BaseContract {
 
     pendingOwner(overrides?: CallOverrides): Promise<[string]>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     setBalanceCap(
-      _balanceCap: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _balanceCap: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setLiquidityCap(
-      _liquidityCap: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _liquidityCap: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setPrizeStrategy(
-      _prizeStrategy: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _prizeStrategy: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setTicket(
-      _ticket: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _ticket: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    sweep(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    sweep(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     transferExternalERC20(
-      _to: string,
-      _externalToken: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _to: PromiseOrValue<string>,
+      _externalToken: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferOwnership(
-      _newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     withdrawFrom(
-      _from: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _from: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     yieldSource(overrides?: CallOverrides): Promise<[string]>;
@@ -480,52 +504,52 @@ export interface PoolTogetherV4PrizePool extends BaseContract {
   VERSION(overrides?: CallOverrides): Promise<string>;
 
   award(
-    _to: string,
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _to: PromiseOrValue<string>,
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   awardBalance(overrides?: CallOverrides): Promise<BigNumber>;
 
   awardExternalERC20(
-    _to: string,
-    _externalToken: string,
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _to: PromiseOrValue<string>,
+    _externalToken: PromiseOrValue<string>,
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   awardExternalERC721(
-    _to: string,
-    _externalToken: string,
-    _tokenIds: BigNumberish[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _to: PromiseOrValue<string>,
+    _externalToken: PromiseOrValue<string>,
+    _tokenIds: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  balance(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  balance(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  canAwardExternal(_externalToken: string, overrides?: CallOverrides): Promise<boolean>;
+  canAwardExternal(_externalToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-  captureAwardBalance(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  captureAwardBalance(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  claimOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  claimOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   compLikeDelegate(
-    _compLike: string,
-    _to: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _compLike: PromiseOrValue<string>,
+    _to: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   depositTo(
-    _to: string,
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _to: PromiseOrValue<string>,
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   depositToAndDelegate(
-    _to: string,
-    _amount: BigNumberish,
-    _delegate: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _to: PromiseOrValue<string>,
+    _amount: PromiseOrValue<BigNumberish>,
+    _delegate: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   getAccountedBalance(overrides?: CallOverrides): Promise<BigNumber>;
@@ -540,13 +564,13 @@ export interface PoolTogetherV4PrizePool extends BaseContract {
 
   getToken(overrides?: CallOverrides): Promise<string>;
 
-  isControlled(_controlledToken: string, overrides?: CallOverrides): Promise<boolean>;
+  isControlled(_controlledToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   onERC721Received(
-    arg0: string,
-    arg1: string,
-    arg2: BigNumberish,
-    arg3: BytesLike,
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<string>,
+    arg2: PromiseOrValue<BigNumberish>,
+    arg3: PromiseOrValue<BytesLike>,
     overrides?: CallOverrides,
   ): Promise<string>;
 
@@ -554,43 +578,46 @@ export interface PoolTogetherV4PrizePool extends BaseContract {
 
   pendingOwner(overrides?: CallOverrides): Promise<string>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   setBalanceCap(
-    _balanceCap: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _balanceCap: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setLiquidityCap(
-    _liquidityCap: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _liquidityCap: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setPrizeStrategy(
-    _prizeStrategy: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _prizeStrategy: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  setTicket(_ticket: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  setTicket(
+    _ticket: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
-  sweep(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  sweep(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   transferExternalERC20(
-    _to: string,
-    _externalToken: string,
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _to: PromiseOrValue<string>,
+    _externalToken: PromiseOrValue<string>,
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferOwnership(
-    _newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   withdrawFrom(
-    _from: string,
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _from: PromiseOrValue<string>,
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   yieldSource(overrides?: CallOverrides): Promise<string>;
@@ -598,40 +625,48 @@ export interface PoolTogetherV4PrizePool extends BaseContract {
   callStatic: {
     VERSION(overrides?: CallOverrides): Promise<string>;
 
-    award(_to: string, _amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    award(_to: PromiseOrValue<string>, _amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     awardBalance(overrides?: CallOverrides): Promise<BigNumber>;
 
     awardExternalERC20(
-      _to: string,
-      _externalToken: string,
-      _amount: BigNumberish,
+      _to: PromiseOrValue<string>,
+      _externalToken: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     awardExternalERC721(
-      _to: string,
-      _externalToken: string,
-      _tokenIds: BigNumberish[],
+      _to: PromiseOrValue<string>,
+      _externalToken: PromiseOrValue<string>,
+      _tokenIds: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides,
     ): Promise<void>;
 
     balance(overrides?: CallOverrides): Promise<BigNumber>;
 
-    canAwardExternal(_externalToken: string, overrides?: CallOverrides): Promise<boolean>;
+    canAwardExternal(_externalToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     captureAwardBalance(overrides?: CallOverrides): Promise<BigNumber>;
 
     claimOwnership(overrides?: CallOverrides): Promise<void>;
 
-    compLikeDelegate(_compLike: string, _to: string, overrides?: CallOverrides): Promise<void>;
+    compLikeDelegate(
+      _compLike: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    depositTo(_to: string, _amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    depositTo(
+      _to: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     depositToAndDelegate(
-      _to: string,
-      _amount: BigNumberish,
-      _delegate: string,
+      _to: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      _delegate: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -647,13 +682,13 @@ export interface PoolTogetherV4PrizePool extends BaseContract {
 
     getToken(overrides?: CallOverrides): Promise<string>;
 
-    isControlled(_controlledToken: string, overrides?: CallOverrides): Promise<boolean>;
+    isControlled(_controlledToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     onERC721Received(
-      arg0: string,
-      arg1: string,
-      arg2: BigNumberish,
-      arg3: BytesLike,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      arg2: PromiseOrValue<BigNumberish>,
+      arg3: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<string>;
 
@@ -663,26 +698,30 @@ export interface PoolTogetherV4PrizePool extends BaseContract {
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
-    setBalanceCap(_balanceCap: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    setBalanceCap(_balanceCap: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<boolean>;
 
-    setLiquidityCap(_liquidityCap: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setLiquidityCap(_liquidityCap: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setPrizeStrategy(_prizeStrategy: string, overrides?: CallOverrides): Promise<void>;
+    setPrizeStrategy(_prizeStrategy: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setTicket(_ticket: string, overrides?: CallOverrides): Promise<boolean>;
+    setTicket(_ticket: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     sweep(overrides?: CallOverrides): Promise<void>;
 
     transferExternalERC20(
-      _to: string,
-      _externalToken: string,
-      _amount: BigNumberish,
+      _to: PromiseOrValue<string>,
+      _externalToken: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    transferOwnership(_newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(_newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    withdrawFrom(_from: string, _amount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    withdrawFrom(
+      _from: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     yieldSource(overrides?: CallOverrides): Promise<string>;
   };
@@ -692,46 +731,59 @@ export interface PoolTogetherV4PrizePool extends BaseContract {
     AwardCaptured(amount?: null): AwardCapturedEventFilter;
 
     'Awarded(address,address,uint256)'(
-      winner?: string | null,
-      token?: string | null,
+      winner?: PromiseOrValue<string> | null,
+      token?: PromiseOrValue<string> | null,
       amount?: null,
     ): AwardedEventFilter;
-    Awarded(winner?: string | null, token?: string | null, amount?: null): AwardedEventFilter;
+    Awarded(
+      winner?: PromiseOrValue<string> | null,
+      token?: PromiseOrValue<string> | null,
+      amount?: null,
+    ): AwardedEventFilter;
 
     'AwardedExternalERC20(address,address,uint256)'(
-      winner?: string | null,
-      token?: string | null,
+      winner?: PromiseOrValue<string> | null,
+      token?: PromiseOrValue<string> | null,
       amount?: null,
     ): AwardedExternalERC20EventFilter;
-    AwardedExternalERC20(winner?: string | null, token?: string | null, amount?: null): AwardedExternalERC20EventFilter;
+    AwardedExternalERC20(
+      winner?: PromiseOrValue<string> | null,
+      token?: PromiseOrValue<string> | null,
+      amount?: null,
+    ): AwardedExternalERC20EventFilter;
 
     'AwardedExternalERC721(address,address,uint256[])'(
-      winner?: string | null,
-      token?: string | null,
+      winner?: PromiseOrValue<string> | null,
+      token?: PromiseOrValue<string> | null,
       tokenIds?: null,
     ): AwardedExternalERC721EventFilter;
     AwardedExternalERC721(
-      winner?: string | null,
-      token?: string | null,
+      winner?: PromiseOrValue<string> | null,
+      token?: PromiseOrValue<string> | null,
       tokenIds?: null,
     ): AwardedExternalERC721EventFilter;
 
     'BalanceCapSet(uint256)'(balanceCap?: null): BalanceCapSetEventFilter;
     BalanceCapSet(balanceCap?: null): BalanceCapSetEventFilter;
 
-    'ControlledTokenAdded(address)'(token?: string | null): ControlledTokenAddedEventFilter;
-    ControlledTokenAdded(token?: string | null): ControlledTokenAddedEventFilter;
+    'ControlledTokenAdded(address)'(token?: PromiseOrValue<string> | null): ControlledTokenAddedEventFilter;
+    ControlledTokenAdded(token?: PromiseOrValue<string> | null): ControlledTokenAddedEventFilter;
 
-    'Deployed(address)'(yieldSource?: string | null): DeployedEventFilter;
-    Deployed(yieldSource?: string | null): DeployedEventFilter;
+    'Deployed(address)'(yieldSource?: PromiseOrValue<string> | null): DeployedEventFilter;
+    Deployed(yieldSource?: PromiseOrValue<string> | null): DeployedEventFilter;
 
     'Deposited(address,address,address,uint256)'(
-      operator?: string | null,
-      to?: string | null,
-      token?: string | null,
+      operator?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      token?: PromiseOrValue<string> | null,
       amount?: null,
     ): DepositedEventFilter;
-    Deposited(operator?: string | null, to?: string | null, token?: string | null, amount?: null): DepositedEventFilter;
+    Deposited(
+      operator?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      token?: PromiseOrValue<string> | null,
+      amount?: null,
+    ): DepositedEventFilter;
 
     'ErrorAwardingExternalERC721(bytes)'(error?: null): ErrorAwardingExternalERC721EventFilter;
     ErrorAwardingExternalERC721(error?: null): ErrorAwardingExternalERC721EventFilter;
@@ -739,46 +791,49 @@ export interface PoolTogetherV4PrizePool extends BaseContract {
     'LiquidityCapSet(uint256)'(liquidityCap?: null): LiquidityCapSetEventFilter;
     LiquidityCapSet(liquidityCap?: null): LiquidityCapSetEventFilter;
 
-    'OwnershipOffered(address)'(pendingOwner?: string | null): OwnershipOfferedEventFilter;
-    OwnershipOffered(pendingOwner?: string | null): OwnershipOfferedEventFilter;
+    'OwnershipOffered(address)'(pendingOwner?: PromiseOrValue<string> | null): OwnershipOfferedEventFilter;
+    OwnershipOffered(pendingOwner?: PromiseOrValue<string> | null): OwnershipOfferedEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
 
-    'PrizeStrategySet(address)'(prizeStrategy?: string | null): PrizeStrategySetEventFilter;
-    PrizeStrategySet(prizeStrategy?: string | null): PrizeStrategySetEventFilter;
+    'PrizeStrategySet(address)'(prizeStrategy?: PromiseOrValue<string> | null): PrizeStrategySetEventFilter;
+    PrizeStrategySet(prizeStrategy?: PromiseOrValue<string> | null): PrizeStrategySetEventFilter;
 
     'Swept(uint256)'(amount?: null): SweptEventFilter;
     Swept(amount?: null): SweptEventFilter;
 
-    'TicketSet(address)'(ticket?: string | null): TicketSetEventFilter;
-    TicketSet(ticket?: string | null): TicketSetEventFilter;
+    'TicketSet(address)'(ticket?: PromiseOrValue<string> | null): TicketSetEventFilter;
+    TicketSet(ticket?: PromiseOrValue<string> | null): TicketSetEventFilter;
 
     'TransferredExternalERC20(address,address,uint256)'(
-      to?: string | null,
-      token?: string | null,
+      to?: PromiseOrValue<string> | null,
+      token?: PromiseOrValue<string> | null,
       amount?: null,
     ): TransferredExternalERC20EventFilter;
     TransferredExternalERC20(
-      to?: string | null,
-      token?: string | null,
+      to?: PromiseOrValue<string> | null,
+      token?: PromiseOrValue<string> | null,
       amount?: null,
     ): TransferredExternalERC20EventFilter;
 
     'Withdrawal(address,address,address,uint256,uint256)'(
-      operator?: string | null,
-      from?: string | null,
-      token?: string | null,
+      operator?: PromiseOrValue<string> | null,
+      from?: PromiseOrValue<string> | null,
+      token?: PromiseOrValue<string> | null,
       amount?: null,
       redeemed?: null,
     ): WithdrawalEventFilter;
     Withdrawal(
-      operator?: string | null,
-      from?: string | null,
-      token?: string | null,
+      operator?: PromiseOrValue<string> | null,
+      from?: PromiseOrValue<string> | null,
+      token?: PromiseOrValue<string> | null,
       amount?: null,
       redeemed?: null,
     ): WithdrawalEventFilter;
@@ -788,52 +843,52 @@ export interface PoolTogetherV4PrizePool extends BaseContract {
     VERSION(overrides?: CallOverrides): Promise<BigNumber>;
 
     award(
-      _to: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _to: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     awardBalance(overrides?: CallOverrides): Promise<BigNumber>;
 
     awardExternalERC20(
-      _to: string,
-      _externalToken: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _to: PromiseOrValue<string>,
+      _externalToken: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     awardExternalERC721(
-      _to: string,
-      _externalToken: string,
-      _tokenIds: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _to: PromiseOrValue<string>,
+      _externalToken: PromiseOrValue<string>,
+      _tokenIds: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    balance(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    balance(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    canAwardExternal(_externalToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+    canAwardExternal(_externalToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    captureAwardBalance(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    captureAwardBalance(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    claimOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    claimOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     compLikeDelegate(
-      _compLike: string,
-      _to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _compLike: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     depositTo(
-      _to: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _to: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     depositToAndDelegate(
-      _to: string,
-      _amount: BigNumberish,
-      _delegate: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _to: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      _delegate: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     getAccountedBalance(overrides?: CallOverrides): Promise<BigNumber>;
@@ -848,13 +903,13 @@ export interface PoolTogetherV4PrizePool extends BaseContract {
 
     getToken(overrides?: CallOverrides): Promise<BigNumber>;
 
-    isControlled(_controlledToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+    isControlled(_controlledToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     onERC721Received(
-      arg0: string,
-      arg1: string,
-      arg2: BigNumberish,
-      arg3: BytesLike,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      arg2: PromiseOrValue<BigNumberish>,
+      arg3: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
@@ -862,43 +917,46 @@ export interface PoolTogetherV4PrizePool extends BaseContract {
 
     pendingOwner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     setBalanceCap(
-      _balanceCap: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _balanceCap: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setLiquidityCap(
-      _liquidityCap: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _liquidityCap: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setPrizeStrategy(
-      _prizeStrategy: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _prizeStrategy: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setTicket(_ticket: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setTicket(
+      _ticket: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    sweep(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    sweep(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     transferExternalERC20(
-      _to: string,
-      _externalToken: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _to: PromiseOrValue<string>,
+      _externalToken: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferOwnership(
-      _newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     withdrawFrom(
-      _from: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _from: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     yieldSource(overrides?: CallOverrides): Promise<BigNumber>;
@@ -908,52 +966,52 @@ export interface PoolTogetherV4PrizePool extends BaseContract {
     VERSION(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     award(
-      _to: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _to: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     awardBalance(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     awardExternalERC20(
-      _to: string,
-      _externalToken: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _to: PromiseOrValue<string>,
+      _externalToken: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     awardExternalERC721(
-      _to: string,
-      _externalToken: string,
-      _tokenIds: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _to: PromiseOrValue<string>,
+      _externalToken: PromiseOrValue<string>,
+      _tokenIds: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    balance(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    balance(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    canAwardExternal(_externalToken: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    canAwardExternal(_externalToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    captureAwardBalance(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    captureAwardBalance(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    claimOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    claimOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     compLikeDelegate(
-      _compLike: string,
-      _to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _compLike: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     depositTo(
-      _to: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _to: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     depositToAndDelegate(
-      _to: string,
-      _amount: BigNumberish,
-      _delegate: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _to: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      _delegate: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     getAccountedBalance(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -968,13 +1026,13 @@ export interface PoolTogetherV4PrizePool extends BaseContract {
 
     getToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    isControlled(_controlledToken: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    isControlled(_controlledToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     onERC721Received(
-      arg0: string,
-      arg1: string,
-      arg2: BigNumberish,
-      arg3: BytesLike,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      arg2: PromiseOrValue<BigNumberish>,
+      arg3: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
@@ -982,46 +1040,46 @@ export interface PoolTogetherV4PrizePool extends BaseContract {
 
     pendingOwner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     setBalanceCap(
-      _balanceCap: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _balanceCap: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setLiquidityCap(
-      _liquidityCap: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _liquidityCap: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setPrizeStrategy(
-      _prizeStrategy: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _prizeStrategy: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setTicket(
-      _ticket: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _ticket: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    sweep(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    sweep(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     transferExternalERC20(
-      _to: string,
-      _externalToken: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _to: PromiseOrValue<string>,
+      _externalToken: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      _newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     withdrawFrom(
-      _from: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _from: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     yieldSource(overrides?: CallOverrides): Promise<PopulatedTransaction>;

@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface PoolTogetherV3TokenFaucetInterface extends utils.Interface {
   functions: {
@@ -62,23 +62,32 @@ export interface PoolTogetherV3TokenFaucetInterface extends utils.Interface {
   ): FunctionFragment;
 
   encodeFunctionData(functionFragment: 'asset', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'beforeTokenMint', values: [string, BigNumberish, string, string]): string;
-  encodeFunctionData(functionFragment: 'beforeTokenTransfer', values: [string, string, BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'claim', values: [string]): string;
-  encodeFunctionData(functionFragment: 'deposit', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'beforeTokenMint',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'beforeTokenTransfer',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'claim', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'deposit', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'drip', values?: undefined): string;
   encodeFunctionData(functionFragment: 'dripRatePerSecond', values?: undefined): string;
   encodeFunctionData(functionFragment: 'exchangeRateMantissa', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'initialize', values: [string, string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'initialize',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'lastDripTimestamp', values?: undefined): string;
   encodeFunctionData(functionFragment: 'measure', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'setDripRatePerSecond', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'supportsInterface', values: [BytesLike]): string;
+  encodeFunctionData(functionFragment: 'setDripRatePerSecond', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'supportsInterface', values: [PromiseOrValue<BytesLike>]): string;
   encodeFunctionData(functionFragment: 'totalUnclaimed', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
-  encodeFunctionData(functionFragment: 'userStates', values: [string]): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'userStates', values: [PromiseOrValue<string>]): string;
 
   decodeFunctionResult(functionFragment: 'asset', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'beforeTokenMint', data: BytesLike): Result;
@@ -189,39 +198,42 @@ export interface PoolTogetherV3TokenFaucet extends BaseContract {
     asset(overrides?: CallOverrides): Promise<[string]>;
 
     beforeTokenMint(
-      to: string,
-      amount: BigNumberish,
-      token: string,
-      referrer: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      token: PromiseOrValue<string>,
+      referrer: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     beforeTokenTransfer(
-      from: string,
-      to: string,
-      arg2: BigNumberish,
-      token: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      arg2: PromiseOrValue<BigNumberish>,
+      token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    claim(user: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    claim(
+      user: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     deposit(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    drip(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    drip(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     dripRatePerSecond(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     exchangeRateMantissa(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     initialize(
-      _asset: string,
-      _measure: string,
-      _dripRatePerSecond: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _asset: PromiseOrValue<string>,
+      _measure: PromiseOrValue<string>,
+      _dripRatePerSecond: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     lastDripTimestamp(overrides?: CallOverrides): Promise<[number]>;
@@ -230,24 +242,24 @@ export interface PoolTogetherV3TokenFaucet extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     setDripRatePerSecond(
-      _dripRatePerSecond: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _dripRatePerSecond: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<[boolean]>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[boolean]>;
 
     totalUnclaimed(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     userStates(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber] & {
@@ -260,39 +272,42 @@ export interface PoolTogetherV3TokenFaucet extends BaseContract {
   asset(overrides?: CallOverrides): Promise<string>;
 
   beforeTokenMint(
-    to: string,
-    amount: BigNumberish,
-    token: string,
-    referrer: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    to: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    token: PromiseOrValue<string>,
+    referrer: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   beforeTokenTransfer(
-    from: string,
-    to: string,
-    arg2: BigNumberish,
-    token: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    from: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    arg2: PromiseOrValue<BigNumberish>,
+    token: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  claim(user: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  claim(
+    user: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   deposit(
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  drip(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  drip(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   dripRatePerSecond(overrides?: CallOverrides): Promise<BigNumber>;
 
   exchangeRateMantissa(overrides?: CallOverrides): Promise<BigNumber>;
 
   initialize(
-    _asset: string,
-    _measure: string,
-    _dripRatePerSecond: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _asset: PromiseOrValue<string>,
+    _measure: PromiseOrValue<string>,
+    _dripRatePerSecond: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   lastDripTimestamp(overrides?: CallOverrides): Promise<number>;
@@ -301,24 +316,24 @@ export interface PoolTogetherV3TokenFaucet extends BaseContract {
 
   owner(overrides?: CallOverrides): Promise<string>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   setDripRatePerSecond(
-    _dripRatePerSecond: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _dripRatePerSecond: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<boolean>;
+  supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<boolean>;
 
   totalUnclaimed(overrides?: CallOverrides): Promise<BigNumber>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   userStates(
-    arg0: string,
+    arg0: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber] & {
@@ -331,24 +346,24 @@ export interface PoolTogetherV3TokenFaucet extends BaseContract {
     asset(overrides?: CallOverrides): Promise<string>;
 
     beforeTokenMint(
-      to: string,
-      amount: BigNumberish,
-      token: string,
-      referrer: string,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      token: PromiseOrValue<string>,
+      referrer: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     beforeTokenTransfer(
-      from: string,
-      to: string,
-      arg2: BigNumberish,
-      token: string,
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      arg2: PromiseOrValue<BigNumberish>,
+      token: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    claim(user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    claim(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    deposit(amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    deposit(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     drip(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -357,9 +372,9 @@ export interface PoolTogetherV3TokenFaucet extends BaseContract {
     exchangeRateMantissa(overrides?: CallOverrides): Promise<BigNumber>;
 
     initialize(
-      _asset: string,
-      _measure: string,
-      _dripRatePerSecond: BigNumberish,
+      _asset: PromiseOrValue<string>,
+      _measure: PromiseOrValue<string>,
+      _dripRatePerSecond: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -371,16 +386,16 @@ export interface PoolTogetherV3TokenFaucet extends BaseContract {
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
-    setDripRatePerSecond(_dripRatePerSecond: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setDripRatePerSecond(_dripRatePerSecond: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<boolean>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<boolean>;
 
     totalUnclaimed(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     userStates(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber] & {
@@ -391,11 +406,11 @@ export interface PoolTogetherV3TokenFaucet extends BaseContract {
   };
 
   filters: {
-    'Claimed(address,uint256)'(user?: string | null, newTokens?: null): ClaimedEventFilter;
-    Claimed(user?: string | null, newTokens?: null): ClaimedEventFilter;
+    'Claimed(address,uint256)'(user?: PromiseOrValue<string> | null, newTokens?: null): ClaimedEventFilter;
+    Claimed(user?: PromiseOrValue<string> | null, newTokens?: null): ClaimedEventFilter;
 
-    'Deposited(address,uint256)'(user?: string | null, amount?: null): DepositedEventFilter;
-    Deposited(user?: string | null, amount?: null): DepositedEventFilter;
+    'Deposited(address,uint256)'(user?: PromiseOrValue<string> | null, amount?: null): DepositedEventFilter;
+    Deposited(user?: PromiseOrValue<string> | null, amount?: null): DepositedEventFilter;
 
     'DripRateChanged(uint256)'(dripRatePerSecond?: null): DripRateChangedEventFilter;
     DripRateChanged(dripRatePerSecond?: null): DripRateChangedEventFilter;
@@ -404,53 +419,63 @@ export interface PoolTogetherV3TokenFaucet extends BaseContract {
     Dripped(newTokens?: null): DrippedEventFilter;
 
     'Initialized(address,address,uint256)'(
-      asset?: string | null,
-      measure?: string | null,
+      asset?: PromiseOrValue<string> | null,
+      measure?: PromiseOrValue<string> | null,
       dripRatePerSecond?: null,
     ): InitializedEventFilter;
-    Initialized(asset?: string | null, measure?: string | null, dripRatePerSecond?: null): InitializedEventFilter;
+    Initialized(
+      asset?: PromiseOrValue<string> | null,
+      measure?: PromiseOrValue<string> | null,
+      dripRatePerSecond?: null,
+    ): InitializedEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
   };
 
   estimateGas: {
     asset(overrides?: CallOverrides): Promise<BigNumber>;
 
     beforeTokenMint(
-      to: string,
-      amount: BigNumberish,
-      token: string,
-      referrer: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      token: PromiseOrValue<string>,
+      referrer: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     beforeTokenTransfer(
-      from: string,
-      to: string,
-      arg2: BigNumberish,
-      token: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      arg2: PromiseOrValue<BigNumberish>,
+      token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    claim(user: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    claim(user: PromiseOrValue<string>, overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    deposit(amount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    deposit(
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    drip(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    drip(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     dripRatePerSecond(overrides?: CallOverrides): Promise<BigNumber>;
 
     exchangeRateMantissa(overrides?: CallOverrides): Promise<BigNumber>;
 
     initialize(
-      _asset: string,
-      _measure: string,
-      _dripRatePerSecond: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _asset: PromiseOrValue<string>,
+      _measure: PromiseOrValue<string>,
+      _dripRatePerSecond: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     lastDripTimestamp(overrides?: CallOverrides): Promise<BigNumber>;
@@ -459,62 +484,65 @@ export interface PoolTogetherV3TokenFaucet extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     setDripRatePerSecond(
-      _dripRatePerSecond: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _dripRatePerSecond: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     totalUnclaimed(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    userStates(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    userStates(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
     asset(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     beforeTokenMint(
-      to: string,
-      amount: BigNumberish,
-      token: string,
-      referrer: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      token: PromiseOrValue<string>,
+      referrer: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     beforeTokenTransfer(
-      from: string,
-      to: string,
-      arg2: BigNumberish,
-      token: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      arg2: PromiseOrValue<BigNumberish>,
+      token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    claim(user: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    claim(
+      user: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
     deposit(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    drip(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    drip(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     dripRatePerSecond(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     exchangeRateMantissa(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     initialize(
-      _asset: string,
-      _measure: string,
-      _dripRatePerSecond: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _asset: PromiseOrValue<string>,
+      _measure: PromiseOrValue<string>,
+      _dripRatePerSecond: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     lastDripTimestamp(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -523,22 +551,22 @@ export interface PoolTogetherV3TokenFaucet extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     setDripRatePerSecond(
-      _dripRatePerSecond: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _dripRatePerSecond: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalUnclaimed(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    userStates(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    userStates(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }

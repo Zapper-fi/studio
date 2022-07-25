@@ -4,7 +4,7 @@
 import type { BaseContract, BigNumber, BytesLike, CallOverrides, PopulatedTransaction, Signer, utils } from 'ethers';
 import type { FunctionFragment, Result } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface SynthetixSummaryUtilInterface extends utils.Interface {
   functions: {
@@ -28,10 +28,13 @@ export interface SynthetixSummaryUtilInterface extends utils.Interface {
 
   encodeFunctionData(functionFragment: 'addressResolverProxy', values?: undefined): string;
   encodeFunctionData(functionFragment: 'frozenSynths', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'synthsBalances', values: [string]): string;
+  encodeFunctionData(functionFragment: 'synthsBalances', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'synthsRates', values?: undefined): string;
   encodeFunctionData(functionFragment: 'synthsTotalSupplies', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'totalSynthsInKey', values: [string, BytesLike]): string;
+  encodeFunctionData(
+    functionFragment: 'totalSynthsInKey',
+    values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>],
+  ): string;
 
   decodeFunctionResult(functionFragment: 'addressResolverProxy', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'frozenSynths', data: BytesLike): Result;
@@ -70,15 +73,18 @@ export interface SynthetixSummaryUtil extends BaseContract {
 
     frozenSynths(overrides?: CallOverrides): Promise<[string[]]>;
 
-    synthsBalances(account: string, overrides?: CallOverrides): Promise<[string[], BigNumber[], BigNumber[]]>;
+    synthsBalances(
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[string[], BigNumber[], BigNumber[]]>;
 
     synthsRates(overrides?: CallOverrides): Promise<[string[], BigNumber[]]>;
 
     synthsTotalSupplies(overrides?: CallOverrides): Promise<[string[], BigNumber[], BigNumber[]]>;
 
     totalSynthsInKey(
-      account: string,
-      currencyKey: BytesLike,
+      account: PromiseOrValue<string>,
+      currencyKey: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber] & { total: BigNumber }>;
   };
@@ -87,26 +93,40 @@ export interface SynthetixSummaryUtil extends BaseContract {
 
   frozenSynths(overrides?: CallOverrides): Promise<string[]>;
 
-  synthsBalances(account: string, overrides?: CallOverrides): Promise<[string[], BigNumber[], BigNumber[]]>;
+  synthsBalances(
+    account: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<[string[], BigNumber[], BigNumber[]]>;
 
   synthsRates(overrides?: CallOverrides): Promise<[string[], BigNumber[]]>;
 
   synthsTotalSupplies(overrides?: CallOverrides): Promise<[string[], BigNumber[], BigNumber[]]>;
 
-  totalSynthsInKey(account: string, currencyKey: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+  totalSynthsInKey(
+    account: PromiseOrValue<string>,
+    currencyKey: PromiseOrValue<BytesLike>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   callStatic: {
     addressResolverProxy(overrides?: CallOverrides): Promise<string>;
 
     frozenSynths(overrides?: CallOverrides): Promise<string[]>;
 
-    synthsBalances(account: string, overrides?: CallOverrides): Promise<[string[], BigNumber[], BigNumber[]]>;
+    synthsBalances(
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[string[], BigNumber[], BigNumber[]]>;
 
     synthsRates(overrides?: CallOverrides): Promise<[string[], BigNumber[]]>;
 
     synthsTotalSupplies(overrides?: CallOverrides): Promise<[string[], BigNumber[], BigNumber[]]>;
 
-    totalSynthsInKey(account: string, currencyKey: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    totalSynthsInKey(
+      account: PromiseOrValue<string>,
+      currencyKey: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
   };
 
   filters: {};
@@ -116,13 +136,17 @@ export interface SynthetixSummaryUtil extends BaseContract {
 
     frozenSynths(overrides?: CallOverrides): Promise<BigNumber>;
 
-    synthsBalances(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    synthsBalances(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     synthsRates(overrides?: CallOverrides): Promise<BigNumber>;
 
     synthsTotalSupplies(overrides?: CallOverrides): Promise<BigNumber>;
 
-    totalSynthsInKey(account: string, currencyKey: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    totalSynthsInKey(
+      account: PromiseOrValue<string>,
+      currencyKey: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -130,12 +154,16 @@ export interface SynthetixSummaryUtil extends BaseContract {
 
     frozenSynths(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    synthsBalances(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    synthsBalances(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     synthsRates(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     synthsTotalSupplies(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    totalSynthsInKey(account: string, currencyKey: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    totalSynthsInKey(
+      account: PromiseOrValue<string>,
+      currencyKey: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
   };
 }

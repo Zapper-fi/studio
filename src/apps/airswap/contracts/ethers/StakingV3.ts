@@ -15,13 +15,13 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export declare namespace IStaking {
   export type StakeStruct = {
-    duration: BigNumberish;
-    balance: BigNumberish;
-    timestamp: BigNumberish;
+    duration: PromiseOrValue<BigNumberish>;
+    balance: PromiseOrValue<BigNumberish>;
+    timestamp: PromiseOrValue<BigNumberish>;
   };
 
   export type StakeStructOutput = [BigNumber, BigNumber, BigNumber] & {
@@ -89,31 +89,34 @@ export interface StakingV3Interface extends utils.Interface {
       | 'unstake',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'accountDelegates', values: [string]): string;
-  encodeFunctionData(functionFragment: 'available', values: [string]): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
+  encodeFunctionData(functionFragment: 'accountDelegates', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'available', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'cancelDurationChange', values?: undefined): string;
   encodeFunctionData(functionFragment: 'decimals', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'delegateAccounts', values: [string]): string;
+  encodeFunctionData(functionFragment: 'delegateAccounts', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'duration', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getStakes', values: [string]): string;
+  encodeFunctionData(functionFragment: 'getStakes', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'proposeDelegate', values: [string]): string;
-  encodeFunctionData(functionFragment: 'proposedDelegates', values: [string]): string;
+  encodeFunctionData(functionFragment: 'proposeDelegate', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'proposedDelegates', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'scheduleDurationChange', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setDelegate', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setDuration', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setMetaData', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'stake', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'stakeFor', values: [string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'scheduleDurationChange', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setDelegate', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setDuration', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setMetaData', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'stake', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'stakeFor',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
   encodeFunctionData(functionFragment: 'token', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
-  encodeFunctionData(functionFragment: 'unsetDelegate', values: [string]): string;
-  encodeFunctionData(functionFragment: 'unstake', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'unsetDelegate', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'unstake', values: [PromiseOrValue<BigNumberish>]): string;
 
   decodeFunctionResult(functionFragment: 'accountDelegates', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'available', data: BytesLike): Result;
@@ -235,22 +238,22 @@ export interface StakingV3 extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    accountDelegates(arg0: string, overrides?: CallOverrides): Promise<[string]>;
+    accountDelegates(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[string]>;
 
-    available(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    available(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<[BigNumber] & { total: BigNumber }>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber] & { total: BigNumber }>;
 
-    cancelDurationChange(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    cancelDurationChange(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<[number]>;
 
-    delegateAccounts(arg0: string, overrides?: CallOverrides): Promise<[string]>;
+    delegateAccounts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[string]>;
 
     duration(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     getStakes(
-      account: string,
+      account: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [IStaking.StakeStructOutput] & {
@@ -263,44 +266,44 @@ export interface StakingV3 extends BaseContract {
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     proposeDelegate(
-      delegate: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      delegate: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    proposedDelegates(arg0: string, overrides?: CallOverrides): Promise<[string]>;
+    proposedDelegates(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[string]>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     scheduleDurationChange(
-      delay: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      delay: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setDelegate(
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setDuration(
-      _duration: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _duration: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setMetaData(
-      _name: string,
-      _symbol: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _name: PromiseOrValue<string>,
+      _symbol: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     stake(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     stakeFor(
-      account: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
@@ -310,80 +313,80 @@ export interface StakingV3 extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     unsetDelegate(
-      delegate: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      delegate: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     unstake(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
-  accountDelegates(arg0: string, overrides?: CallOverrides): Promise<string>;
+  accountDelegates(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
-  available(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  available(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  cancelDurationChange(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  cancelDurationChange(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   decimals(overrides?: CallOverrides): Promise<number>;
 
-  delegateAccounts(arg0: string, overrides?: CallOverrides): Promise<string>;
+  delegateAccounts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
   duration(overrides?: CallOverrides): Promise<BigNumber>;
 
-  getStakes(account: string, overrides?: CallOverrides): Promise<IStaking.StakeStructOutput>;
+  getStakes(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<IStaking.StakeStructOutput>;
 
   name(overrides?: CallOverrides): Promise<string>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
   proposeDelegate(
-    delegate: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    delegate: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  proposedDelegates(arg0: string, overrides?: CallOverrides): Promise<string>;
+  proposedDelegates(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   scheduleDurationChange(
-    delay: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    delay: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setDelegate(
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setDuration(
-    _duration: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _duration: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setMetaData(
-    _name: string,
-    _symbol: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _name: PromiseOrValue<string>,
+    _symbol: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   stake(
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   stakeFor(
-    account: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    account: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
@@ -393,58 +396,66 @@ export interface StakingV3 extends BaseContract {
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   unsetDelegate(
-    delegate: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    delegate: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   unstake(
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    accountDelegates(arg0: string, overrides?: CallOverrides): Promise<string>;
+    accountDelegates(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
-    available(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    available(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     cancelDurationChange(overrides?: CallOverrides): Promise<void>;
 
     decimals(overrides?: CallOverrides): Promise<number>;
 
-    delegateAccounts(arg0: string, overrides?: CallOverrides): Promise<string>;
+    delegateAccounts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
     duration(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getStakes(account: string, overrides?: CallOverrides): Promise<IStaking.StakeStructOutput>;
+    getStakes(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<IStaking.StakeStructOutput>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    proposeDelegate(delegate: string, overrides?: CallOverrides): Promise<void>;
+    proposeDelegate(delegate: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    proposedDelegates(arg0: string, overrides?: CallOverrides): Promise<string>;
+    proposedDelegates(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
-    scheduleDurationChange(delay: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    scheduleDurationChange(delay: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setDelegate(account: string, overrides?: CallOverrides): Promise<void>;
+    setDelegate(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setDuration(_duration: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setDuration(_duration: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setMetaData(_name: string, _symbol: string, overrides?: CallOverrides): Promise<void>;
+    setMetaData(
+      _name: PromiseOrValue<string>,
+      _symbol: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    stake(amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    stake(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    stakeFor(account: string, amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    stakeFor(
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     symbol(overrides?: CallOverrides): Promise<string>;
 
@@ -452,90 +463,126 @@ export interface StakingV3 extends BaseContract {
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    unsetDelegate(delegate: string, overrides?: CallOverrides): Promise<void>;
+    unsetDelegate(delegate: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    unstake(amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    unstake(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
     'CancelDurationChange()'(): CancelDurationChangeEventFilter;
     CancelDurationChange(): CancelDurationChangeEventFilter;
 
-    'CompleteDurationChange(uint256)'(newDuration?: BigNumberish | null): CompleteDurationChangeEventFilter;
-    CompleteDurationChange(newDuration?: BigNumberish | null): CompleteDurationChangeEventFilter;
+    'CompleteDurationChange(uint256)'(
+      newDuration?: PromiseOrValue<BigNumberish> | null,
+    ): CompleteDurationChangeEventFilter;
+    CompleteDurationChange(newDuration?: PromiseOrValue<BigNumberish> | null): CompleteDurationChangeEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
 
-    'ProposeDelegate(address,address)'(delegate?: string | null, account?: string | null): ProposeDelegateEventFilter;
-    ProposeDelegate(delegate?: string | null, account?: string | null): ProposeDelegateEventFilter;
+    'ProposeDelegate(address,address)'(
+      delegate?: PromiseOrValue<string> | null,
+      account?: PromiseOrValue<string> | null,
+    ): ProposeDelegateEventFilter;
+    ProposeDelegate(
+      delegate?: PromiseOrValue<string> | null,
+      account?: PromiseOrValue<string> | null,
+    ): ProposeDelegateEventFilter;
 
-    'ScheduleDurationChange(uint256)'(unlockTimestamp?: BigNumberish | null): ScheduleDurationChangeEventFilter;
-    ScheduleDurationChange(unlockTimestamp?: BigNumberish | null): ScheduleDurationChangeEventFilter;
+    'ScheduleDurationChange(uint256)'(
+      unlockTimestamp?: PromiseOrValue<BigNumberish> | null,
+    ): ScheduleDurationChangeEventFilter;
+    ScheduleDurationChange(unlockTimestamp?: PromiseOrValue<BigNumberish> | null): ScheduleDurationChangeEventFilter;
 
-    'SetDelegate(address,address)'(delegate?: string | null, account?: string | null): SetDelegateEventFilter;
-    SetDelegate(delegate?: string | null, account?: string | null): SetDelegateEventFilter;
+    'SetDelegate(address,address)'(
+      delegate?: PromiseOrValue<string> | null,
+      account?: PromiseOrValue<string> | null,
+    ): SetDelegateEventFilter;
+    SetDelegate(
+      delegate?: PromiseOrValue<string> | null,
+      account?: PromiseOrValue<string> | null,
+    ): SetDelegateEventFilter;
 
-    'Transfer(address,address,uint256)'(from?: string | null, to?: string | null, tokens?: null): TransferEventFilter;
-    Transfer(from?: string | null, to?: string | null, tokens?: null): TransferEventFilter;
+    'Transfer(address,address,uint256)'(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      tokens?: null,
+    ): TransferEventFilter;
+    Transfer(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      tokens?: null,
+    ): TransferEventFilter;
   };
 
   estimateGas: {
-    accountDelegates(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    accountDelegates(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    available(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    available(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    cancelDurationChange(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    cancelDurationChange(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
-    delegateAccounts(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    delegateAccounts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     duration(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getStakes(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getStakes(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    proposeDelegate(delegate: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
-
-    proposedDelegates(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
-
-    scheduleDurationChange(
-      delay: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    proposeDelegate(
+      delegate: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setDelegate(account: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    proposedDelegates(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
+
+    scheduleDurationChange(
+      delay: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    setDelegate(
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setDuration(
-      _duration: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _duration: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setMetaData(
-      _name: string,
-      _symbol: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _name: PromiseOrValue<string>,
+      _symbol: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    stake(amount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    stake(
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     stakeFor(
-      account: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
@@ -545,75 +592,81 @@ export interface StakingV3 extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    unsetDelegate(delegate: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    unsetDelegate(
+      delegate: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    unstake(amount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    unstake(
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    accountDelegates(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    accountDelegates(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    available(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    available(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    cancelDurationChange(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    cancelDurationChange(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    delegateAccounts(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    delegateAccounts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     duration(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getStakes(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getStakes(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     proposeDelegate(
-      delegate: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      delegate: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    proposedDelegates(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    proposedDelegates(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     scheduleDurationChange(
-      delay: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      delay: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setDelegate(
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setDuration(
-      _duration: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _duration: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setMetaData(
-      _name: string,
-      _symbol: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _name: PromiseOrValue<string>,
+      _symbol: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     stake(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     stakeFor(
-      account: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -623,18 +676,18 @@ export interface StakingV3 extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     unsetDelegate(
-      delegate: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      delegate: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     unstake(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

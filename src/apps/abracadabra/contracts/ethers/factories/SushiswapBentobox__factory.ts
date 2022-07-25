@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { AbracadabraDegenbox, AbracadabraDegenboxInterface } from '../AbracadabraDegenbox';
+import type { SushiswapBentobox, SushiswapBentoboxInterface } from '../SushiswapBentobox';
 
 const _abi = [
   {
@@ -1161,12 +1161,12 @@ const _abi = [
   },
 ];
 
-export class AbracadabraDegenbox__factory {
+export class SushiswapBentobox__factory {
   static readonly abi = _abi;
-  static createInterface(): AbracadabraDegenboxInterface {
-    return new utils.Interface(_abi) as AbracadabraDegenboxInterface;
+  static createInterface(): SushiswapBentoboxInterface {
+    return new utils.Interface(_abi) as SushiswapBentoboxInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): AbracadabraDegenbox {
-    return new Contract(address, _abi, signerOrProvider) as AbracadabraDegenbox;
+  static connect(address: string, signerOrProvider: Signer | Provider): SushiswapBentobox {
+    return new Contract(address, _abi, signerOrProvider) as SushiswapBentobox;
   }
 }

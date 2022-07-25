@@ -15,15 +15,15 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export declare namespace FusePoolDirectory {
   export type FusePoolStruct = {
-    name: string;
-    creator: string;
-    comptroller: string;
-    blockPosted: BigNumberish;
-    timestampPosted: BigNumberish;
+    name: PromiseOrValue<string>;
+    creator: PromiseOrValue<string>;
+    comptroller: PromiseOrValue<string>;
+    blockPosted: PromiseOrValue<BigNumberish>;
+    timestampPosted: PromiseOrValue<BigNumberish>;
   };
 
   export type FusePoolStructOutput = [string, string, string, BigNumber, BigNumber] & {
@@ -35,7 +35,7 @@ export declare namespace FusePoolDirectory {
   };
 }
 
-export interface PoolDirectoryInterface extends utils.Interface {
+export interface MarketXyzPoolDirectoryInterface extends utils.Interface {
   functions: {
     '_editAdminWhitelist(address[],bool)': FunctionFragment;
     '_editDeployerWhitelist(address[],bool)': FunctionFragment;
@@ -85,30 +85,49 @@ export interface PoolDirectoryInterface extends utils.Interface {
       | 'transferOwnership',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: '_editAdminWhitelist', values: [string[], boolean]): string;
-  encodeFunctionData(functionFragment: '_editDeployerWhitelist', values: [string[], boolean]): string;
-  encodeFunctionData(functionFragment: '_setDeployerWhitelistEnforcement', values: [boolean]): string;
+  encodeFunctionData(
+    functionFragment: '_editAdminWhitelist',
+    values: [PromiseOrValue<string>[], PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: '_editDeployerWhitelist',
+    values: [PromiseOrValue<string>[], PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(functionFragment: '_setDeployerWhitelistEnforcement', values: [PromiseOrValue<boolean>]): string;
   encodeFunctionData(functionFragment: 'adminDeployer', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'adminWhitelist', values: [string]): string;
+  encodeFunctionData(functionFragment: 'adminWhitelist', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
     functionFragment: 'deployPool',
-    values: [string, string, boolean, BigNumberish, BigNumberish, string],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<boolean>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'deployerWhitelist', values: [string]): string;
+  encodeFunctionData(functionFragment: 'deployerWhitelist', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'enforceDeployerWhitelist', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getAllPools', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getAllPoolsLength', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getPoolsByAccount', values: [string]): string;
+  encodeFunctionData(functionFragment: 'getPoolsByAccount', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'getPublicPools', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getPublicPoolsByVerification', values: [boolean]): string;
-  encodeFunctionData(functionFragment: 'initialize', values: [boolean, string[]]): string;
+  encodeFunctionData(functionFragment: 'getPublicPoolsByVerification', values: [PromiseOrValue<boolean>]): string;
+  encodeFunctionData(
+    functionFragment: 'initialize',
+    values: [PromiseOrValue<boolean>, PromiseOrValue<string>[]],
+  ): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'poolExists', values: [string]): string;
-  encodeFunctionData(functionFragment: 'pools', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'poolExists', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'pools', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'setAdminDeployer', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setPoolName', values: [BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
+  encodeFunctionData(functionFragment: 'setAdminDeployer', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'setPoolName',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
 
   decodeFunctionResult(functionFragment: '_editAdminWhitelist', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: '_editDeployerWhitelist', data: BytesLike): Result;
@@ -180,12 +199,12 @@ export type PoolRegisteredEvent = TypedEvent<
 
 export type PoolRegisteredEventFilter = TypedEventFilter<PoolRegisteredEvent>;
 
-export interface PoolDirectory extends BaseContract {
+export interface MarketXyzPoolDirectory extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: PoolDirectoryInterface;
+  interface: MarketXyzPoolDirectoryInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -204,37 +223,37 @@ export interface PoolDirectory extends BaseContract {
 
   functions: {
     _editAdminWhitelist(
-      admins: string[],
-      status: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      admins: PromiseOrValue<string>[],
+      status: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _editDeployerWhitelist(
-      deployers: string[],
-      status: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      deployers: PromiseOrValue<string>[],
+      status: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _setDeployerWhitelistEnforcement(
-      enforce: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      enforce: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     adminDeployer(overrides?: CallOverrides): Promise<[string]>;
 
-    adminWhitelist(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    adminWhitelist(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     deployPool(
-      name: string,
-      implementation: string,
-      enforceWhitelist: boolean,
-      closeFactor: BigNumberish,
-      liquidationIncentive: BigNumberish,
-      priceOracle: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      name: PromiseOrValue<string>,
+      implementation: PromiseOrValue<string>,
+      enforceWhitelist: PromiseOrValue<boolean>,
+      closeFactor: PromiseOrValue<BigNumberish>,
+      liquidationIncentive: PromiseOrValue<BigNumberish>,
+      priceOracle: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    deployerWhitelist(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    deployerWhitelist(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     enforceDeployerWhitelist(overrides?: CallOverrides): Promise<[boolean]>;
 
@@ -243,29 +262,29 @@ export interface PoolDirectory extends BaseContract {
     getAllPoolsLength(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     getPoolsByAccount(
-      account: string,
+      account: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber[], FusePoolDirectory.FusePoolStructOutput[]]>;
 
     getPublicPools(overrides?: CallOverrides): Promise<[BigNumber[], FusePoolDirectory.FusePoolStructOutput[]]>;
 
     getPublicPoolsByVerification(
-      whitelistedAdmin: boolean,
+      whitelistedAdmin: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber[], FusePoolDirectory.FusePoolStructOutput[]]>;
 
     initialize(
-      _enforceDeployerWhitelist: boolean,
-      _deployerWhitelist: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _enforceDeployerWhitelist: PromiseOrValue<boolean>,
+      _deployerWhitelist: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
-    poolExists(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    poolExists(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     pools(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [string, string, string, BigNumber, BigNumber] & {
@@ -277,57 +296,57 @@ export interface PoolDirectory extends BaseContract {
       }
     >;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     setAdminDeployer(
-      newAdminDeployer: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newAdminDeployer: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setPoolName(
-      index: BigNumberish,
-      name: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      index: PromiseOrValue<BigNumberish>,
+      name: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
   _editAdminWhitelist(
-    admins: string[],
-    status: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    admins: PromiseOrValue<string>[],
+    status: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _editDeployerWhitelist(
-    deployers: string[],
-    status: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    deployers: PromiseOrValue<string>[],
+    status: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _setDeployerWhitelistEnforcement(
-    enforce: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    enforce: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   adminDeployer(overrides?: CallOverrides): Promise<string>;
 
-  adminWhitelist(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  adminWhitelist(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   deployPool(
-    name: string,
-    implementation: string,
-    enforceWhitelist: boolean,
-    closeFactor: BigNumberish,
-    liquidationIncentive: BigNumberish,
-    priceOracle: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    name: PromiseOrValue<string>,
+    implementation: PromiseOrValue<string>,
+    enforceWhitelist: PromiseOrValue<boolean>,
+    closeFactor: PromiseOrValue<BigNumberish>,
+    liquidationIncentive: PromiseOrValue<BigNumberish>,
+    priceOracle: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  deployerWhitelist(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  deployerWhitelist(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   enforceDeployerWhitelist(overrides?: CallOverrides): Promise<boolean>;
 
@@ -336,29 +355,29 @@ export interface PoolDirectory extends BaseContract {
   getAllPoolsLength(overrides?: CallOverrides): Promise<BigNumber>;
 
   getPoolsByAccount(
-    account: string,
+    account: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber[], FusePoolDirectory.FusePoolStructOutput[]]>;
 
   getPublicPools(overrides?: CallOverrides): Promise<[BigNumber[], FusePoolDirectory.FusePoolStructOutput[]]>;
 
   getPublicPoolsByVerification(
-    whitelistedAdmin: boolean,
+    whitelistedAdmin: PromiseOrValue<boolean>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber[], FusePoolDirectory.FusePoolStructOutput[]]>;
 
   initialize(
-    _enforceDeployerWhitelist: boolean,
-    _deployerWhitelist: string[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _enforceDeployerWhitelist: PromiseOrValue<boolean>,
+    _deployerWhitelist: PromiseOrValue<string>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
-  poolExists(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  poolExists(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   pools(
-    arg0: BigNumberish,
+    arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<
     [string, string, string, BigNumber, BigNumber] & {
@@ -370,46 +389,54 @@ export interface PoolDirectory extends BaseContract {
     }
   >;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   setAdminDeployer(
-    newAdminDeployer: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newAdminDeployer: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setPoolName(
-    index: BigNumberish,
-    name: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    index: PromiseOrValue<BigNumberish>,
+    name: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    _editAdminWhitelist(admins: string[], status: boolean, overrides?: CallOverrides): Promise<void>;
+    _editAdminWhitelist(
+      admins: PromiseOrValue<string>[],
+      status: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    _editDeployerWhitelist(deployers: string[], status: boolean, overrides?: CallOverrides): Promise<void>;
+    _editDeployerWhitelist(
+      deployers: PromiseOrValue<string>[],
+      status: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    _setDeployerWhitelistEnforcement(enforce: boolean, overrides?: CallOverrides): Promise<void>;
+    _setDeployerWhitelistEnforcement(enforce: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
 
     adminDeployer(overrides?: CallOverrides): Promise<string>;
 
-    adminWhitelist(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    adminWhitelist(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     deployPool(
-      name: string,
-      implementation: string,
-      enforceWhitelist: boolean,
-      closeFactor: BigNumberish,
-      liquidationIncentive: BigNumberish,
-      priceOracle: string,
+      name: PromiseOrValue<string>,
+      implementation: PromiseOrValue<string>,
+      enforceWhitelist: PromiseOrValue<boolean>,
+      closeFactor: PromiseOrValue<BigNumberish>,
+      liquidationIncentive: PromiseOrValue<BigNumberish>,
+      priceOracle: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, string]>;
 
-    deployerWhitelist(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    deployerWhitelist(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     enforceDeployerWhitelist(overrides?: CallOverrides): Promise<boolean>;
 
@@ -418,29 +445,29 @@ export interface PoolDirectory extends BaseContract {
     getAllPoolsLength(overrides?: CallOverrides): Promise<BigNumber>;
 
     getPoolsByAccount(
-      account: string,
+      account: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber[], FusePoolDirectory.FusePoolStructOutput[]]>;
 
     getPublicPools(overrides?: CallOverrides): Promise<[BigNumber[], FusePoolDirectory.FusePoolStructOutput[]]>;
 
     getPublicPoolsByVerification(
-      whitelistedAdmin: boolean,
+      whitelistedAdmin: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber[], FusePoolDirectory.FusePoolStructOutput[]]>;
 
     initialize(
-      _enforceDeployerWhitelist: boolean,
-      _deployerWhitelist: string[],
+      _enforceDeployerWhitelist: PromiseOrValue<boolean>,
+      _deployerWhitelist: PromiseOrValue<string>[],
       overrides?: CallOverrides,
     ): Promise<void>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    poolExists(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    poolExists(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     pools(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [string, string, string, BigNumber, BigNumber] & {
@@ -454,11 +481,15 @@ export interface PoolDirectory extends BaseContract {
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
-    setAdminDeployer(newAdminDeployer: string, overrides?: CallOverrides): Promise<void>;
+    setAdminDeployer(newAdminDeployer: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setPoolName(index: BigNumberish, name: string, overrides?: CallOverrides): Promise<void>;
+    setPoolName(
+      index: PromiseOrValue<BigNumberish>,
+      name: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
@@ -472,10 +503,13 @@ export interface PoolDirectory extends BaseContract {
     AdminWhitelistUpdated(admins?: null, status?: null): AdminWhitelistUpdatedEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
 
     'PoolRegistered(uint256,tuple)'(index?: null, pool?: null): PoolRegisteredEventFilter;
     PoolRegistered(index?: null, pool?: null): PoolRegisteredEventFilter;
@@ -483,37 +517,37 @@ export interface PoolDirectory extends BaseContract {
 
   estimateGas: {
     _editAdminWhitelist(
-      admins: string[],
-      status: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      admins: PromiseOrValue<string>[],
+      status: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     _editDeployerWhitelist(
-      deployers: string[],
-      status: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      deployers: PromiseOrValue<string>[],
+      status: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     _setDeployerWhitelistEnforcement(
-      enforce: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      enforce: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     adminDeployer(overrides?: CallOverrides): Promise<BigNumber>;
 
-    adminWhitelist(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    adminWhitelist(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     deployPool(
-      name: string,
-      implementation: string,
-      enforceWhitelist: boolean,
-      closeFactor: BigNumberish,
-      liquidationIncentive: BigNumberish,
-      priceOracle: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      name: PromiseOrValue<string>,
+      implementation: PromiseOrValue<string>,
+      enforceWhitelist: PromiseOrValue<boolean>,
+      closeFactor: PromiseOrValue<BigNumberish>,
+      liquidationIncentive: PromiseOrValue<BigNumberish>,
+      priceOracle: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    deployerWhitelist(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    deployerWhitelist(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     enforceDeployerWhitelist(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -521,76 +555,79 @@ export interface PoolDirectory extends BaseContract {
 
     getAllPoolsLength(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getPoolsByAccount(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getPoolsByAccount(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getPublicPools(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getPublicPoolsByVerification(whitelistedAdmin: boolean, overrides?: CallOverrides): Promise<BigNumber>;
+    getPublicPoolsByVerification(
+      whitelistedAdmin: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     initialize(
-      _enforceDeployerWhitelist: boolean,
-      _deployerWhitelist: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _enforceDeployerWhitelist: PromiseOrValue<boolean>,
+      _deployerWhitelist: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    poolExists(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    poolExists(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    pools(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    pools(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     setAdminDeployer(
-      newAdminDeployer: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newAdminDeployer: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setPoolName(
-      index: BigNumberish,
-      name: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      index: PromiseOrValue<BigNumberish>,
+      name: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     _editAdminWhitelist(
-      admins: string[],
-      status: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      admins: PromiseOrValue<string>[],
+      status: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _editDeployerWhitelist(
-      deployers: string[],
-      status: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      deployers: PromiseOrValue<string>[],
+      status: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _setDeployerWhitelistEnforcement(
-      enforce: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      enforce: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     adminDeployer(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    adminWhitelist(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    adminWhitelist(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     deployPool(
-      name: string,
-      implementation: string,
-      enforceWhitelist: boolean,
-      closeFactor: BigNumberish,
-      liquidationIncentive: BigNumberish,
-      priceOracle: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      name: PromiseOrValue<string>,
+      implementation: PromiseOrValue<string>,
+      enforceWhitelist: PromiseOrValue<boolean>,
+      closeFactor: PromiseOrValue<BigNumberish>,
+      liquidationIncentive: PromiseOrValue<BigNumberish>,
+      priceOracle: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    deployerWhitelist(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    deployerWhitelist(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     enforceDeployerWhitelist(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -598,40 +635,43 @@ export interface PoolDirectory extends BaseContract {
 
     getAllPoolsLength(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getPoolsByAccount(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getPoolsByAccount(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getPublicPools(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getPublicPoolsByVerification(whitelistedAdmin: boolean, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getPublicPoolsByVerification(
+      whitelistedAdmin: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     initialize(
-      _enforceDeployerWhitelist: boolean,
-      _deployerWhitelist: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _enforceDeployerWhitelist: PromiseOrValue<boolean>,
+      _deployerWhitelist: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    poolExists(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    poolExists(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    pools(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    pools(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     setAdminDeployer(
-      newAdminDeployer: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newAdminDeployer: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setPoolName(
-      index: BigNumberish,
-      name: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      index: PromiseOrValue<BigNumberish>,
+      name: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

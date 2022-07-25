@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface GoodghostingAbiV002Interface extends utils.Interface {
   functions: {
@@ -123,7 +123,15 @@ export interface GoodghostingAbiV002Interface extends utils.Interface {
   encodeFunctionData(functionFragment: 'adminFeeWithdraw', values?: undefined): string;
   encodeFunctionData(functionFragment: 'adminWithdraw', values?: undefined): string;
   encodeFunctionData(functionFragment: 'allowRenouncingOwnership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'claim', values: [BigNumberish, string, boolean, BytesLike[]]): string;
+  encodeFunctionData(
+    functionFragment: 'claim',
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<boolean>,
+      PromiseOrValue<BytesLike>[],
+    ],
+  ): string;
   encodeFunctionData(functionFragment: 'customFee', values?: undefined): string;
   encodeFunctionData(functionFragment: 'daiToken', values?: undefined): string;
   encodeFunctionData(functionFragment: 'earlyWithdraw', values?: undefined): string;
@@ -134,7 +142,7 @@ export interface GoodghostingAbiV002Interface extends utils.Interface {
   encodeFunctionData(functionFragment: 'incentiveController', values?: undefined): string;
   encodeFunctionData(functionFragment: 'incentiveToken', values?: undefined): string;
   encodeFunctionData(functionFragment: 'isGameCompleted', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'iterablePlayers', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'iterablePlayers', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'lastSegment', values?: undefined): string;
   encodeFunctionData(functionFragment: 'lendingPool', values?: undefined): string;
   encodeFunctionData(functionFragment: 'lendingPoolAddressProvider', values?: undefined): string;
@@ -145,7 +153,7 @@ export interface GoodghostingAbiV002Interface extends utils.Interface {
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'pause', values?: undefined): string;
   encodeFunctionData(functionFragment: 'paused', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'players', values: [string]): string;
+  encodeFunctionData(functionFragment: 'players', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'redeemFromExternalPool', values?: undefined): string;
   encodeFunctionData(functionFragment: 'redeemed', values?: undefined): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
@@ -155,14 +163,17 @@ export interface GoodghostingAbiV002Interface extends utils.Interface {
   encodeFunctionData(functionFragment: 'totalGameInterest', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalGamePrincipal', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalIncentiveAmount', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'unlockRenounceOwnership', values?: undefined): string;
   encodeFunctionData(functionFragment: 'unpause', values?: undefined): string;
   encodeFunctionData(functionFragment: 'winnerCount', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'winners', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'winners', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'withdraw', values?: undefined): string;
   encodeFunctionData(functionFragment: 'joinGame', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'joinWhitelistedGame', values: [BigNumberish, BytesLike[]]): string;
+  encodeFunctionData(
+    functionFragment: 'joinWhitelistedGame',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BytesLike>[]],
+  ): string;
 
   decodeFunctionResult(functionFragment: 'activePlayersCount', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'adaiToken', data: BytesLike): Result;
@@ -354,17 +365,17 @@ export interface GoodghostingAbiV002 extends BaseContract {
 
     adminFeeAmount(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    adminFeeWithdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    adminFeeWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     adminWithdraw(overrides?: CallOverrides): Promise<[boolean]>;
 
     allowRenouncingOwnership(overrides?: CallOverrides): Promise<[boolean]>;
 
     claim(
-      index: BigNumberish,
-      account: string,
-      isValid: boolean,
-      merkleProof: BytesLike[],
+      index: PromiseOrValue<BigNumberish>,
+      account: PromiseOrValue<string>,
+      isValid: PromiseOrValue<boolean>,
+      merkleProof: PromiseOrValue<BytesLike>[],
       overrides?: CallOverrides,
     ): Promise<[void]>;
 
@@ -372,7 +383,7 @@ export interface GoodghostingAbiV002 extends BaseContract {
 
     daiToken(overrides?: CallOverrides): Promise<[string]>;
 
-    earlyWithdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    earlyWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     earlyWithdrawalFee(overrides?: CallOverrides): Promise<[number]>;
 
@@ -388,7 +399,7 @@ export interface GoodghostingAbiV002 extends BaseContract {
 
     isGameCompleted(overrides?: CallOverrides): Promise<[boolean]>;
 
-    iterablePlayers(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    iterablePlayers(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
     lastSegment(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -396,7 +407,7 @@ export interface GoodghostingAbiV002 extends BaseContract {
 
     lendingPoolAddressProvider(overrides?: CallOverrides): Promise<[string]>;
 
-    makeDeposit(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    makeDeposit(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     matic(overrides?: CallOverrides): Promise<[string]>;
 
@@ -406,12 +417,12 @@ export interface GoodghostingAbiV002 extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
-    pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     paused(overrides?: CallOverrides): Promise<[boolean]>;
 
     players(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [boolean, boolean, boolean, string, BigNumber, BigNumber, BigNumber] & {
@@ -425,11 +436,11 @@ export interface GoodghostingAbiV002 extends BaseContract {
       }
     >;
 
-    redeemFromExternalPool(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    redeemFromExternalPool(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     redeemed(overrides?: CallOverrides): Promise<[boolean]>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     rewardsPerPlayer(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -444,26 +455,26 @@ export interface GoodghostingAbiV002 extends BaseContract {
     totalIncentiveAmount(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    unlockRenounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    unlockRenounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     winnerCount(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    winners(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    winners(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
-    withdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    withdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    joinGame(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    joinGame(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     joinWhitelistedGame(
-      index: BigNumberish,
-      merkleProof: BytesLike[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      index: PromiseOrValue<BigNumberish>,
+      merkleProof: PromiseOrValue<BytesLike>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
@@ -473,17 +484,17 @@ export interface GoodghostingAbiV002 extends BaseContract {
 
   adminFeeAmount(overrides?: CallOverrides): Promise<BigNumber>;
 
-  adminFeeWithdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  adminFeeWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   adminWithdraw(overrides?: CallOverrides): Promise<boolean>;
 
   allowRenouncingOwnership(overrides?: CallOverrides): Promise<boolean>;
 
   claim(
-    index: BigNumberish,
-    account: string,
-    isValid: boolean,
-    merkleProof: BytesLike[],
+    index: PromiseOrValue<BigNumberish>,
+    account: PromiseOrValue<string>,
+    isValid: PromiseOrValue<boolean>,
+    merkleProof: PromiseOrValue<BytesLike>[],
     overrides?: CallOverrides,
   ): Promise<void>;
 
@@ -491,7 +502,7 @@ export interface GoodghostingAbiV002 extends BaseContract {
 
   daiToken(overrides?: CallOverrides): Promise<string>;
 
-  earlyWithdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  earlyWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   earlyWithdrawalFee(overrides?: CallOverrides): Promise<number>;
 
@@ -507,7 +518,7 @@ export interface GoodghostingAbiV002 extends BaseContract {
 
   isGameCompleted(overrides?: CallOverrides): Promise<boolean>;
 
-  iterablePlayers(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  iterablePlayers(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   lastSegment(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -515,7 +526,7 @@ export interface GoodghostingAbiV002 extends BaseContract {
 
   lendingPoolAddressProvider(overrides?: CallOverrides): Promise<string>;
 
-  makeDeposit(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  makeDeposit(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   matic(overrides?: CallOverrides): Promise<string>;
 
@@ -525,12 +536,12 @@ export interface GoodghostingAbiV002 extends BaseContract {
 
   owner(overrides?: CallOverrides): Promise<string>;
 
-  pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   paused(overrides?: CallOverrides): Promise<boolean>;
 
   players(
-    arg0: string,
+    arg0: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<
     [boolean, boolean, boolean, string, BigNumber, BigNumber, BigNumber] & {
@@ -544,11 +555,11 @@ export interface GoodghostingAbiV002 extends BaseContract {
     }
   >;
 
-  redeemFromExternalPool(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  redeemFromExternalPool(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   redeemed(overrides?: CallOverrides): Promise<boolean>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   rewardsPerPlayer(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -563,26 +574,26 @@ export interface GoodghostingAbiV002 extends BaseContract {
   totalIncentiveAmount(overrides?: CallOverrides): Promise<BigNumber>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  unlockRenounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  unlockRenounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   winnerCount(overrides?: CallOverrides): Promise<BigNumber>;
 
-  winners(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  winners(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
-  withdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  withdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  joinGame(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  joinGame(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   joinWhitelistedGame(
-    index: BigNumberish,
-    merkleProof: BytesLike[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    index: PromiseOrValue<BigNumberish>,
+    merkleProof: PromiseOrValue<BytesLike>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
@@ -599,10 +610,10 @@ export interface GoodghostingAbiV002 extends BaseContract {
     allowRenouncingOwnership(overrides?: CallOverrides): Promise<boolean>;
 
     claim(
-      index: BigNumberish,
-      account: string,
-      isValid: boolean,
-      merkleProof: BytesLike[],
+      index: PromiseOrValue<BigNumberish>,
+      account: PromiseOrValue<string>,
+      isValid: PromiseOrValue<boolean>,
+      merkleProof: PromiseOrValue<BytesLike>[],
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -626,7 +637,7 @@ export interface GoodghostingAbiV002 extends BaseContract {
 
     isGameCompleted(overrides?: CallOverrides): Promise<boolean>;
 
-    iterablePlayers(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    iterablePlayers(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
     lastSegment(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -649,7 +660,7 @@ export interface GoodghostingAbiV002 extends BaseContract {
     paused(overrides?: CallOverrides): Promise<boolean>;
 
     players(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [boolean, boolean, boolean, string, BigNumber, BigNumber, BigNumber] & {
@@ -681,7 +692,7 @@ export interface GoodghostingAbiV002 extends BaseContract {
 
     totalIncentiveAmount(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     unlockRenounceOwnership(overrides?: CallOverrides): Promise<void>;
 
@@ -689,42 +700,54 @@ export interface GoodghostingAbiV002 extends BaseContract {
 
     winnerCount(overrides?: CallOverrides): Promise<BigNumber>;
 
-    winners(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    winners(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
     withdraw(overrides?: CallOverrides): Promise<void>;
 
     joinGame(overrides?: CallOverrides): Promise<void>;
 
-    joinWhitelistedGame(index: BigNumberish, merkleProof: BytesLike[], overrides?: CallOverrides): Promise<void>;
+    joinWhitelistedGame(
+      index: PromiseOrValue<BigNumberish>,
+      merkleProof: PromiseOrValue<BytesLike>[],
+      overrides?: CallOverrides,
+    ): Promise<void>;
   };
 
   filters: {
     'AdminWithdrawal(address,uint256,uint256,uint256)'(
-      admin?: string | null,
+      admin?: PromiseOrValue<string> | null,
       totalGameInterest?: null,
       adminFeeAmount?: null,
       adminIncentiveAmount?: null,
     ): AdminWithdrawalEventFilter;
     AdminWithdrawal(
-      admin?: string | null,
+      admin?: PromiseOrValue<string> | null,
       totalGameInterest?: null,
       adminFeeAmount?: null,
       adminIncentiveAmount?: null,
     ): AdminWithdrawalEventFilter;
 
     'Deposit(address,uint256,uint256)'(
-      player?: string | null,
-      segment?: BigNumberish | null,
+      player?: PromiseOrValue<string> | null,
+      segment?: PromiseOrValue<BigNumberish> | null,
       amount?: null,
     ): DepositEventFilter;
-    Deposit(player?: string | null, segment?: BigNumberish | null, amount?: null): DepositEventFilter;
+    Deposit(
+      player?: PromiseOrValue<string> | null,
+      segment?: PromiseOrValue<BigNumberish> | null,
+      amount?: null,
+    ): DepositEventFilter;
 
     'EarlyWithdrawal(address,uint256,uint256)'(
-      player?: string | null,
+      player?: PromiseOrValue<string> | null,
       amount?: null,
       totalGamePrincipal?: null,
     ): EarlyWithdrawalEventFilter;
-    EarlyWithdrawal(player?: string | null, amount?: null, totalGamePrincipal?: null): EarlyWithdrawalEventFilter;
+    EarlyWithdrawal(
+      player?: PromiseOrValue<string> | null,
+      amount?: null,
+      totalGamePrincipal?: null,
+    ): EarlyWithdrawalEventFilter;
 
     'FundsRedeemedFromExternalPool(uint256,uint256,uint256,uint256,uint256)'(
       totalAmount?: null,
@@ -741,14 +764,17 @@ export interface GoodghostingAbiV002 extends BaseContract {
       totalIncentiveAmount?: null,
     ): FundsRedeemedFromExternalPoolEventFilter;
 
-    'JoinedGame(address,uint256)'(player?: string | null, amount?: null): JoinedGameEventFilter;
-    JoinedGame(player?: string | null, amount?: null): JoinedGameEventFilter;
+    'JoinedGame(address,uint256)'(player?: PromiseOrValue<string> | null, amount?: null): JoinedGameEventFilter;
+    JoinedGame(player?: PromiseOrValue<string> | null, amount?: null): JoinedGameEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
 
     'Paused(address)'(account?: null): PausedEventFilter;
     Paused(account?: null): PausedEventFilter;
@@ -760,13 +786,13 @@ export interface GoodghostingAbiV002 extends BaseContract {
     WinnersAnnouncement(winners?: null): WinnersAnnouncementEventFilter;
 
     'Withdrawal(address,uint256,uint256,uint256)'(
-      player?: string | null,
+      player?: PromiseOrValue<string> | null,
       amount?: null,
       playerReward?: null,
       playerIncentive?: null,
     ): WithdrawalEventFilter;
     Withdrawal(
-      player?: string | null,
+      player?: PromiseOrValue<string> | null,
       amount?: null,
       playerReward?: null,
       playerIncentive?: null,
@@ -780,17 +806,17 @@ export interface GoodghostingAbiV002 extends BaseContract {
 
     adminFeeAmount(overrides?: CallOverrides): Promise<BigNumber>;
 
-    adminFeeWithdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    adminFeeWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     adminWithdraw(overrides?: CallOverrides): Promise<BigNumber>;
 
     allowRenouncingOwnership(overrides?: CallOverrides): Promise<BigNumber>;
 
     claim(
-      index: BigNumberish,
-      account: string,
-      isValid: boolean,
-      merkleProof: BytesLike[],
+      index: PromiseOrValue<BigNumberish>,
+      account: PromiseOrValue<string>,
+      isValid: PromiseOrValue<boolean>,
+      merkleProof: PromiseOrValue<BytesLike>[],
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
@@ -798,7 +824,7 @@ export interface GoodghostingAbiV002 extends BaseContract {
 
     daiToken(overrides?: CallOverrides): Promise<BigNumber>;
 
-    earlyWithdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    earlyWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     earlyWithdrawalFee(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -814,7 +840,7 @@ export interface GoodghostingAbiV002 extends BaseContract {
 
     isGameCompleted(overrides?: CallOverrides): Promise<BigNumber>;
 
-    iterablePlayers(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    iterablePlayers(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     lastSegment(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -822,7 +848,7 @@ export interface GoodghostingAbiV002 extends BaseContract {
 
     lendingPoolAddressProvider(overrides?: CallOverrides): Promise<BigNumber>;
 
-    makeDeposit(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    makeDeposit(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     matic(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -832,17 +858,17 @@ export interface GoodghostingAbiV002 extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     paused(overrides?: CallOverrides): Promise<BigNumber>;
 
-    players(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    players(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    redeemFromExternalPool(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    redeemFromExternalPool(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     redeemed(overrides?: CallOverrides): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     rewardsPerPlayer(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -857,26 +883,26 @@ export interface GoodghostingAbiV002 extends BaseContract {
     totalIncentiveAmount(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    unlockRenounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    unlockRenounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     winnerCount(overrides?: CallOverrides): Promise<BigNumber>;
 
-    winners(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    winners(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    withdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    withdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    joinGame(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    joinGame(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     joinWhitelistedGame(
-      index: BigNumberish,
-      merkleProof: BytesLike[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      index: PromiseOrValue<BigNumberish>,
+      merkleProof: PromiseOrValue<BytesLike>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
@@ -887,17 +913,17 @@ export interface GoodghostingAbiV002 extends BaseContract {
 
     adminFeeAmount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    adminFeeWithdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    adminFeeWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     adminWithdraw(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     allowRenouncingOwnership(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     claim(
-      index: BigNumberish,
-      account: string,
-      isValid: boolean,
-      merkleProof: BytesLike[],
+      index: PromiseOrValue<BigNumberish>,
+      account: PromiseOrValue<string>,
+      isValid: PromiseOrValue<boolean>,
+      merkleProof: PromiseOrValue<BytesLike>[],
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
@@ -905,7 +931,7 @@ export interface GoodghostingAbiV002 extends BaseContract {
 
     daiToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    earlyWithdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    earlyWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     earlyWithdrawalFee(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -921,7 +947,7 @@ export interface GoodghostingAbiV002 extends BaseContract {
 
     isGameCompleted(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    iterablePlayers(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    iterablePlayers(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     lastSegment(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -929,7 +955,7 @@ export interface GoodghostingAbiV002 extends BaseContract {
 
     lendingPoolAddressProvider(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    makeDeposit(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    makeDeposit(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     matic(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -939,17 +965,17 @@ export interface GoodghostingAbiV002 extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     paused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    players(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    players(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    redeemFromExternalPool(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    redeemFromExternalPool(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     redeemed(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     rewardsPerPlayer(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -964,26 +990,26 @@ export interface GoodghostingAbiV002 extends BaseContract {
     totalIncentiveAmount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    unlockRenounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    unlockRenounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     winnerCount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    winners(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    winners(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    withdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    withdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    joinGame(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    joinGame(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     joinWhitelistedGame(
-      index: BigNumberish,
-      merkleProof: BytesLike[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      index: PromiseOrValue<BigNumberish>,
+      merkleProof: PromiseOrValue<BytesLike>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

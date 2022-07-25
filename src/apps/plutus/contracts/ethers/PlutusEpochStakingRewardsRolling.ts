@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface PlutusEpochStakingRewardsRollingInterface extends utils.Interface {
   functions: {
@@ -59,23 +59,40 @@ export interface PlutusEpochStakingRewardsRollingInterface extends utils.Interfa
       | 'transferOwnership',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'calculateShare', values: [string, BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'claimDetails', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'claimRewardsFor', values: [BigNumberish, BigNumberish, string, string]): string;
-  encodeFunctionData(functionFragment: 'depositRewards', values: [BigNumberish, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'calculateShare',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'claimDetails',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'claimRewardsFor',
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+    ],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'depositRewards',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'epoch', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'epochRewards', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'epochRewards', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'pendingRewards', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'pendingRewardsFor', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'pendingRewardsFor', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'plsDPX', values?: undefined): string;
   encodeFunctionData(functionFragment: 'plsJONES', values?: undefined): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'retrieve', values: [string]): string;
+  encodeFunctionData(functionFragment: 'retrieve', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'staking', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalPlsDpxRewards', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalPlsJonesRewards', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
 
   decodeFunctionResult(functionFragment: 'calculateShare', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'claimDetails', data: BytesLike): Result;
@@ -152,15 +169,15 @@ export interface PlutusEpochStakingRewardsRolling extends BaseContract {
 
   functions: {
     calculateShare(
-      _addr: string,
-      _epoch: BigNumberish,
-      _rewardAmt: BigNumberish,
+      _addr: PromiseOrValue<string>,
+      _epoch: PromiseOrValue<BigNumberish>,
+      _rewardAmt: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
     claimDetails(
-      arg0: string,
-      arg1: BigNumberish,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [boolean, number, BigNumber, BigNumber] & {
@@ -172,23 +189,23 @@ export interface PlutusEpochStakingRewardsRolling extends BaseContract {
     >;
 
     claimRewardsFor(
-      _epoch: BigNumberish,
-      _currentEpoch: BigNumberish,
-      _user: string,
-      _to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _epoch: PromiseOrValue<BigNumberish>,
+      _currentEpoch: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     depositRewards(
-      _plsDpx: BigNumberish,
-      _plsJones: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _plsDpx: PromiseOrValue<BigNumberish>,
+      _plsJones: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     epoch(overrides?: CallOverrides): Promise<[number]>;
 
     epochRewards(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [number, BigNumber, BigNumber] & {
@@ -208,7 +225,7 @@ export interface PlutusEpochStakingRewardsRolling extends BaseContract {
     >;
 
     pendingRewardsFor(
-      _epoch: BigNumberish,
+      _epoch: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { _plsDpx: BigNumber; _plsJones: BigNumber }>;
 
@@ -216,9 +233,12 @@ export interface PlutusEpochStakingRewardsRolling extends BaseContract {
 
     plsJONES(overrides?: CallOverrides): Promise<[string]>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    retrieve(token: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    retrieve(
+      token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     staking(overrides?: CallOverrides): Promise<[string]>;
 
@@ -227,21 +247,21 @@ export interface PlutusEpochStakingRewardsRolling extends BaseContract {
     totalPlsJonesRewards(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
   calculateShare(
-    _addr: string,
-    _epoch: BigNumberish,
-    _rewardAmt: BigNumberish,
+    _addr: PromiseOrValue<string>,
+    _epoch: PromiseOrValue<BigNumberish>,
+    _rewardAmt: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
   claimDetails(
-    arg0: string,
-    arg1: BigNumberish,
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<
     [boolean, number, BigNumber, BigNumber] & {
@@ -253,23 +273,23 @@ export interface PlutusEpochStakingRewardsRolling extends BaseContract {
   >;
 
   claimRewardsFor(
-    _epoch: BigNumberish,
-    _currentEpoch: BigNumberish,
-    _user: string,
-    _to: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _epoch: PromiseOrValue<BigNumberish>,
+    _currentEpoch: PromiseOrValue<BigNumberish>,
+    _user: PromiseOrValue<string>,
+    _to: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   depositRewards(
-    _plsDpx: BigNumberish,
-    _plsJones: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _plsDpx: PromiseOrValue<BigNumberish>,
+    _plsJones: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   epoch(overrides?: CallOverrides): Promise<number>;
 
   epochRewards(
-    arg0: BigNumberish,
+    arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<
     [number, BigNumber, BigNumber] & {
@@ -289,7 +309,7 @@ export interface PlutusEpochStakingRewardsRolling extends BaseContract {
   >;
 
   pendingRewardsFor(
-    _epoch: BigNumberish,
+    _epoch: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber, BigNumber] & { _plsDpx: BigNumber; _plsJones: BigNumber }>;
 
@@ -297,9 +317,12 @@ export interface PlutusEpochStakingRewardsRolling extends BaseContract {
 
   plsJONES(overrides?: CallOverrides): Promise<string>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  retrieve(token: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  retrieve(
+    token: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   staking(overrides?: CallOverrides): Promise<string>;
 
@@ -308,21 +331,21 @@ export interface PlutusEpochStakingRewardsRolling extends BaseContract {
   totalPlsJonesRewards(overrides?: CallOverrides): Promise<BigNumber>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
     calculateShare(
-      _addr: string,
-      _epoch: BigNumberish,
-      _rewardAmt: BigNumberish,
+      _addr: PromiseOrValue<string>,
+      _epoch: PromiseOrValue<BigNumberish>,
+      _rewardAmt: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     claimDetails(
-      arg0: string,
-      arg1: BigNumberish,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [boolean, number, BigNumber, BigNumber] & {
@@ -334,19 +357,23 @@ export interface PlutusEpochStakingRewardsRolling extends BaseContract {
     >;
 
     claimRewardsFor(
-      _epoch: BigNumberish,
-      _currentEpoch: BigNumberish,
-      _user: string,
-      _to: string,
+      _epoch: PromiseOrValue<BigNumberish>,
+      _currentEpoch: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    depositRewards(_plsDpx: BigNumberish, _plsJones: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    depositRewards(
+      _plsDpx: PromiseOrValue<BigNumberish>,
+      _plsJones: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     epoch(overrides?: CallOverrides): Promise<number>;
 
     epochRewards(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [number, BigNumber, BigNumber] & {
@@ -366,7 +393,7 @@ export interface PlutusEpochStakingRewardsRolling extends BaseContract {
     >;
 
     pendingRewardsFor(
-      _epoch: BigNumberish,
+      _epoch: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { _plsDpx: BigNumber; _plsJones: BigNumber }>;
 
@@ -376,7 +403,7 @@ export interface PlutusEpochStakingRewardsRolling extends BaseContract {
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
-    retrieve(token: string, overrides?: CallOverrides): Promise<void>;
+    retrieve(token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     staking(overrides?: CallOverrides): Promise<string>;
 
@@ -384,64 +411,74 @@ export interface PlutusEpochStakingRewardsRolling extends BaseContract {
 
     totalPlsJonesRewards(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
-    'ClaimRewards(address)'(_recipient?: string | null): ClaimRewardsEventFilter;
-    ClaimRewards(_recipient?: string | null): ClaimRewardsEventFilter;
+    'ClaimRewards(address)'(_recipient?: PromiseOrValue<string> | null): ClaimRewardsEventFilter;
+    ClaimRewards(_recipient?: PromiseOrValue<string> | null): ClaimRewardsEventFilter;
 
     'DepositRewards(uint32)'(epoch?: null): DepositRewardsEventFilter;
     DepositRewards(epoch?: null): DepositRewardsEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
   };
 
   estimateGas: {
     calculateShare(
-      _addr: string,
-      _epoch: BigNumberish,
-      _rewardAmt: BigNumberish,
+      _addr: PromiseOrValue<string>,
+      _epoch: PromiseOrValue<BigNumberish>,
+      _rewardAmt: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    claimDetails(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    claimDetails(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     claimRewardsFor(
-      _epoch: BigNumberish,
-      _currentEpoch: BigNumberish,
-      _user: string,
-      _to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _epoch: PromiseOrValue<BigNumberish>,
+      _currentEpoch: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     depositRewards(
-      _plsDpx: BigNumberish,
-      _plsJones: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _plsDpx: PromiseOrValue<BigNumberish>,
+      _plsJones: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     epoch(overrides?: CallOverrides): Promise<BigNumber>;
 
-    epochRewards(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    epochRewards(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     pendingRewards(overrides?: CallOverrides): Promise<BigNumber>;
 
-    pendingRewardsFor(_epoch: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingRewardsFor(_epoch: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     plsDPX(overrides?: CallOverrides): Promise<BigNumber>;
 
     plsJONES(overrides?: CallOverrides): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    retrieve(token: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    retrieve(
+      token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     staking(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -450,52 +487,59 @@ export interface PlutusEpochStakingRewardsRolling extends BaseContract {
     totalPlsJonesRewards(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     calculateShare(
-      _addr: string,
-      _epoch: BigNumberish,
-      _rewardAmt: BigNumberish,
+      _addr: PromiseOrValue<string>,
+      _epoch: PromiseOrValue<BigNumberish>,
+      _rewardAmt: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    claimDetails(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    claimDetails(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     claimRewardsFor(
-      _epoch: BigNumberish,
-      _currentEpoch: BigNumberish,
-      _user: string,
-      _to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _epoch: PromiseOrValue<BigNumberish>,
+      _currentEpoch: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     depositRewards(
-      _plsDpx: BigNumberish,
-      _plsJones: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _plsDpx: PromiseOrValue<BigNumberish>,
+      _plsJones: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     epoch(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    epochRewards(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    epochRewards(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     pendingRewards(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    pendingRewardsFor(_epoch: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    pendingRewardsFor(_epoch: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     plsDPX(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     plsJONES(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    retrieve(token: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    retrieve(
+      token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
     staking(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -504,8 +548,8 @@ export interface PlutusEpochStakingRewardsRolling extends BaseContract {
     totalPlsJonesRewards(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

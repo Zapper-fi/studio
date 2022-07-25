@@ -14,7 +14,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface PoolTogetherV3PodRegistryInterface extends utils.Interface {
   functions: {
@@ -48,18 +48,21 @@ export interface PoolTogetherV3PodRegistryInterface extends utils.Interface {
       | 'transferOwnership',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'addAddresses', values: [string[]]): string;
+  encodeFunctionData(functionFragment: 'addAddresses', values: [PromiseOrValue<string>[]]): string;
   encodeFunctionData(functionFragment: 'addressType', values?: undefined): string;
   encodeFunctionData(functionFragment: 'clearAll', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'contains', values: [string]): string;
+  encodeFunctionData(functionFragment: 'contains', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'end', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getAddresses', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'next', values: [string]): string;
+  encodeFunctionData(functionFragment: 'next', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'removeAddress', values: [string, string]): string;
+  encodeFunctionData(
+    functionFragment: 'removeAddress',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
   encodeFunctionData(functionFragment: 'start', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
 
   decodeFunctionResult(functionFragment: 'addAddresses', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'addressType', data: BytesLike): Result;
@@ -138,183 +141,205 @@ export interface PoolTogetherV3PodRegistry extends BaseContract {
 
   functions: {
     addAddresses(
-      _addresses: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _addresses: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     addressType(overrides?: CallOverrides): Promise<[string]>;
 
-    clearAll(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    clearAll(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    contains(_addr: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    contains(
+      _addr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     end(overrides?: CallOverrides): Promise<[string]>;
 
     getAddresses(overrides?: CallOverrides): Promise<[string[]]>;
 
-    next(current: string, overrides?: CallOverrides): Promise<[string]>;
+    next(current: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[string]>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     removeAddress(
-      _previousContract: string,
-      _address: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _previousContract: PromiseOrValue<string>,
+      _address: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     start(overrides?: CallOverrides): Promise<[string]>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
   addAddresses(
-    _addresses: string[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _addresses: PromiseOrValue<string>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   addressType(overrides?: CallOverrides): Promise<string>;
 
-  clearAll(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  clearAll(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  contains(_addr: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  contains(
+    _addr: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   end(overrides?: CallOverrides): Promise<string>;
 
   getAddresses(overrides?: CallOverrides): Promise<string[]>;
 
-  next(current: string, overrides?: CallOverrides): Promise<string>;
+  next(current: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
   removeAddress(
-    _previousContract: string,
-    _address: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _previousContract: PromiseOrValue<string>,
+    _address: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   start(overrides?: CallOverrides): Promise<string>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    addAddresses(_addresses: string[], overrides?: CallOverrides): Promise<void>;
+    addAddresses(_addresses: PromiseOrValue<string>[], overrides?: CallOverrides): Promise<void>;
 
     addressType(overrides?: CallOverrides): Promise<string>;
 
     clearAll(overrides?: CallOverrides): Promise<void>;
 
-    contains(_addr: string, overrides?: CallOverrides): Promise<boolean>;
+    contains(_addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     end(overrides?: CallOverrides): Promise<string>;
 
     getAddresses(overrides?: CallOverrides): Promise<string[]>;
 
-    next(current: string, overrides?: CallOverrides): Promise<string>;
+    next(current: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    removeAddress(_previousContract: string, _address: string, overrides?: CallOverrides): Promise<void>;
+    removeAddress(
+      _previousContract: PromiseOrValue<string>,
+      _address: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
     start(overrides?: CallOverrides): Promise<string>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
-    'AddressAdded(address)'(_address?: string | null): AddressAddedEventFilter;
-    AddressAdded(_address?: string | null): AddressAddedEventFilter;
+    'AddressAdded(address)'(_address?: PromiseOrValue<string> | null): AddressAddedEventFilter;
+    AddressAdded(_address?: PromiseOrValue<string> | null): AddressAddedEventFilter;
 
-    'AddressRemoved(address)'(_address?: string | null): AddressRemovedEventFilter;
-    AddressRemoved(_address?: string | null): AddressRemovedEventFilter;
+    'AddressRemoved(address)'(_address?: PromiseOrValue<string> | null): AddressRemovedEventFilter;
+    AddressRemoved(_address?: PromiseOrValue<string> | null): AddressRemovedEventFilter;
 
     'AllAddressesCleared()'(): AllAddressesClearedEventFilter;
     AllAddressesCleared(): AllAddressesClearedEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
   };
 
   estimateGas: {
-    addAddresses(_addresses: string[], overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    addAddresses(
+      _addresses: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     addressType(overrides?: CallOverrides): Promise<BigNumber>;
 
-    clearAll(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    clearAll(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    contains(_addr: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    contains(
+      _addr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     end(overrides?: CallOverrides): Promise<BigNumber>;
 
     getAddresses(overrides?: CallOverrides): Promise<BigNumber>;
 
-    next(current: string, overrides?: CallOverrides): Promise<BigNumber>;
+    next(current: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     removeAddress(
-      _previousContract: string,
-      _address: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _previousContract: PromiseOrValue<string>,
+      _address: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     start(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     addAddresses(
-      _addresses: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _addresses: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     addressType(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    clearAll(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    clearAll(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    contains(_addr: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    contains(
+      _addr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
     end(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getAddresses(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    next(current: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    next(current: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     removeAddress(
-      _previousContract: string,
-      _address: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _previousContract: PromiseOrValue<string>,
+      _address: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     start(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

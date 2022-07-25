@@ -15,12 +15,12 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export declare namespace ComplexRewarder {
   export type PoolInfoStruct = {
-    accTokenPerShare: BigNumberish;
-    lastRewardBlock: BigNumberish;
+    accTokenPerShare: PromiseOrValue<BigNumberish>;
+    lastRewardBlock: PromiseOrValue<BigNumberish>;
   };
 
   export type PoolInfoStructOutput = [BigNumber, BigNumber] & {
@@ -69,19 +69,31 @@ export interface TrisolarisRewarderInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'lpToken', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'onTriReward',
-    values: [BigNumberish, string, string, BigNumberish, BigNumberish],
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'pendingTokens', values: [BigNumberish, string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'pendingTokens',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'poolInfo', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'reclaimTokens', values: [string, BigNumberish, string]): string;
+  encodeFunctionData(
+    functionFragment: 'reclaimTokens',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
   encodeFunctionData(functionFragment: 'rewardToken', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'setRewardRate', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'setRewardRate', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'tokenPerBlock', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'updatePool', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'userInfo', values: [string]): string;
+  encodeFunctionData(functionFragment: 'userInfo', values: [PromiseOrValue<string>]): string;
 
   decodeFunctionResult(functionFragment: 'MCV2', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'lpToken', data: BytesLike): Result;
@@ -171,20 +183,20 @@ export interface TrisolarisRewarder extends BaseContract {
     lpToken(overrides?: CallOverrides): Promise<[string]>;
 
     onTriReward(
-      arg0: BigNumberish,
-      _user: string,
-      arg2: string,
-      arg3: BigNumberish,
-      _lpAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      arg0: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      arg2: PromiseOrValue<string>,
+      arg3: PromiseOrValue<BigNumberish>,
+      _lpAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     pendingTokens(
-      arg0: BigNumberish,
-      _user: string,
-      arg2: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      arg2: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [string[], BigNumber[]] & {
@@ -201,32 +213,32 @@ export interface TrisolarisRewarder extends BaseContract {
     >;
 
     reclaimTokens(
-      token: string,
-      amount: BigNumberish,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     rewardToken(overrides?: CallOverrides): Promise<[string]>;
 
     setRewardRate(
-      _tokenPerBlock: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokenPerBlock: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     tokenPerBlock(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    updatePool(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    updatePool(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     userInfo(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; rewardDebt: BigNumber }>;
   };
@@ -236,20 +248,20 @@ export interface TrisolarisRewarder extends BaseContract {
   lpToken(overrides?: CallOverrides): Promise<string>;
 
   onTriReward(
-    arg0: BigNumberish,
-    _user: string,
-    arg2: string,
-    arg3: BigNumberish,
-    _lpAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    arg0: PromiseOrValue<BigNumberish>,
+    _user: PromiseOrValue<string>,
+    arg2: PromiseOrValue<string>,
+    arg3: PromiseOrValue<BigNumberish>,
+    _lpAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
   pendingTokens(
-    arg0: BigNumberish,
-    _user: string,
-    arg2: BigNumberish,
+    arg0: PromiseOrValue<BigNumberish>,
+    _user: PromiseOrValue<string>,
+    arg2: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<
     [string[], BigNumber[]] & {
@@ -266,32 +278,32 @@ export interface TrisolarisRewarder extends BaseContract {
   >;
 
   reclaimTokens(
-    token: string,
-    amount: BigNumberish,
-    to: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    token: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    to: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   rewardToken(overrides?: CallOverrides): Promise<string>;
 
   setRewardRate(
-    _tokenPerBlock: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _tokenPerBlock: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   tokenPerBlock(overrides?: CallOverrides): Promise<BigNumber>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  updatePool(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  updatePool(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   userInfo(
-    arg0: string,
+    arg0: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; rewardDebt: BigNumber }>;
 
@@ -301,20 +313,20 @@ export interface TrisolarisRewarder extends BaseContract {
     lpToken(overrides?: CallOverrides): Promise<string>;
 
     onTriReward(
-      arg0: BigNumberish,
-      _user: string,
-      arg2: string,
-      arg3: BigNumberish,
-      _lpAmount: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      arg2: PromiseOrValue<string>,
+      arg3: PromiseOrValue<BigNumberish>,
+      _lpAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
     pendingTokens(
-      arg0: BigNumberish,
-      _user: string,
-      arg2: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      arg2: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [string[], BigNumber[]] & {
@@ -330,22 +342,27 @@ export interface TrisolarisRewarder extends BaseContract {
       }
     >;
 
-    reclaimTokens(token: string, amount: BigNumberish, to: string, overrides?: CallOverrides): Promise<void>;
+    reclaimTokens(
+      token: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
     rewardToken(overrides?: CallOverrides): Promise<string>;
 
-    setRewardRate(_tokenPerBlock: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setRewardRate(_tokenPerBlock: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     tokenPerBlock(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     updatePool(overrides?: CallOverrides): Promise<ComplexRewarder.PoolInfoStructOutput>;
 
     userInfo(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; rewardDebt: BigNumber }>;
   };
@@ -354,14 +371,17 @@ export interface TrisolarisRewarder extends BaseContract {
     'AllocPointUpdated(uint256,uint256)'(oldAllocPoint?: null, newAllocPoint?: null): AllocPointUpdatedEventFilter;
     AllocPointUpdated(oldAllocPoint?: null, newAllocPoint?: null): AllocPointUpdatedEventFilter;
 
-    'OnReward(address,uint256)'(user?: string | null, amount?: null): OnRewardEventFilter;
-    OnReward(user?: string | null, amount?: null): OnRewardEventFilter;
+    'OnReward(address,uint256)'(user?: PromiseOrValue<string> | null, amount?: null): OnRewardEventFilter;
+    OnReward(user?: PromiseOrValue<string> | null, amount?: null): OnRewardEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
 
     'RewardRateUpdated(uint256,uint256)'(oldRate?: null, newRate?: null): RewardRateUpdatedEventFilter;
     RewardRateUpdated(oldRate?: null, newRate?: null): RewardRateUpdatedEventFilter;
@@ -373,46 +393,51 @@ export interface TrisolarisRewarder extends BaseContract {
     lpToken(overrides?: CallOverrides): Promise<BigNumber>;
 
     onTriReward(
-      arg0: BigNumberish,
-      _user: string,
-      arg2: string,
-      arg3: BigNumberish,
-      _lpAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      arg0: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      arg2: PromiseOrValue<string>,
+      arg3: PromiseOrValue<BigNumberish>,
+      _lpAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    pendingTokens(arg0: BigNumberish, _user: string, arg2: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingTokens(
+      arg0: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      arg2: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     poolInfo(overrides?: CallOverrides): Promise<BigNumber>;
 
     reclaimTokens(
-      token: string,
-      amount: BigNumberish,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     rewardToken(overrides?: CallOverrides): Promise<BigNumber>;
 
     setRewardRate(
-      _tokenPerBlock: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokenPerBlock: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     tokenPerBlock(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    updatePool(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    updatePool(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    userInfo(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    userInfo(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -421,50 +446,50 @@ export interface TrisolarisRewarder extends BaseContract {
     lpToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     onTriReward(
-      arg0: BigNumberish,
-      _user: string,
-      arg2: string,
-      arg3: BigNumberish,
-      _lpAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      arg0: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      arg2: PromiseOrValue<string>,
+      arg3: PromiseOrValue<BigNumberish>,
+      _lpAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     pendingTokens(
-      arg0: BigNumberish,
-      _user: string,
-      arg2: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      arg2: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     poolInfo(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     reclaimTokens(
-      token: string,
-      amount: BigNumberish,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     rewardToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setRewardRate(
-      _tokenPerBlock: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokenPerBlock: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     tokenPerBlock(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    updatePool(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    updatePool(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    userInfo(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    userInfo(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }

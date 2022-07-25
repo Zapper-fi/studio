@@ -4,8 +4,8 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
-import { PoolDirectory__factory } from './ethers';
-import { PoolLens__factory } from './ethers';
+import { MarketXyzPoolDirectory__factory } from './ethers';
+import { MarketXyzPoolLens__factory } from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
@@ -16,13 +16,13 @@ export class MarketXyzContractFactory extends ContractFactory {
     super((network: Network) => appToolkit.getNetworkProvider(network));
   }
 
-  poolDirectory({ address, network }: ContractOpts) {
-    return PoolDirectory__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  marketXyzPoolDirectory({ address, network }: ContractOpts) {
+    return MarketXyzPoolDirectory__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
-  poolLens({ address, network }: ContractOpts) {
-    return PoolLens__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  marketXyzPoolLens({ address, network }: ContractOpts) {
+    return MarketXyzPoolLens__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
 }
 
-export type { PoolDirectory } from './ethers';
-export type { PoolLens } from './ethers';
+export type { MarketXyzPoolDirectory } from './ethers';
+export type { MarketXyzPoolLens } from './ethers';

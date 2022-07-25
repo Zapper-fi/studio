@@ -8,6 +8,7 @@ import { AelinPool__factory } from './ethers';
 import { AelinStaking__factory } from './ethers';
 import { AelinVAelin__factory } from './ethers';
 
+// eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
 
 @Injectable()

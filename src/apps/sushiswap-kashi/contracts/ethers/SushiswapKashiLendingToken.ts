@@ -16,7 +16,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface SushiswapKashiLendingTokenInterface extends utils.Interface {
   functions: {
@@ -119,53 +119,100 @@ export interface SushiswapKashiLendingTokenInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'DOMAIN_SEPARATOR', values?: undefined): string;
   encodeFunctionData(functionFragment: 'accrue', values?: undefined): string;
   encodeFunctionData(functionFragment: 'accrueInfo', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'addAsset', values: [string, boolean, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'addCollateral', values: [string, boolean, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'allowance', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'approve', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'addAsset',
+    values: [PromiseOrValue<string>, PromiseOrValue<boolean>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'addCollateral',
+    values: [PromiseOrValue<string>, PromiseOrValue<boolean>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'allowance', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'approve',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'asset', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'bentoBox', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'borrow', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'borrow',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'claimOwnership', values?: undefined): string;
   encodeFunctionData(functionFragment: 'collateral', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'cook', values: [BigNumberish[], BigNumberish[], BytesLike[]]): string;
+  encodeFunctionData(
+    functionFragment: 'cook',
+    values: [PromiseOrValue<BigNumberish>[], PromiseOrValue<BigNumberish>[], PromiseOrValue<BytesLike>[]],
+  ): string;
   encodeFunctionData(functionFragment: 'decimals', values?: undefined): string;
   encodeFunctionData(functionFragment: 'exchangeRate', values?: undefined): string;
   encodeFunctionData(functionFragment: 'feeTo', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'init', values: [BytesLike]): string;
+  encodeFunctionData(functionFragment: 'init', values: [PromiseOrValue<BytesLike>]): string;
   encodeFunctionData(
     functionFragment: 'liquidate',
-    values: [string[], BigNumberish[], string, string, boolean],
+    values: [
+      PromiseOrValue<string>[],
+      PromiseOrValue<BigNumberish>[],
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<boolean>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'masterContract', values?: undefined): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'nonces', values: [string]): string;
+  encodeFunctionData(functionFragment: 'nonces', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'oracle', values?: undefined): string;
   encodeFunctionData(functionFragment: 'oracleData', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'pendingOwner', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'permit',
-    values: [string, string, BigNumberish, BigNumberish, BigNumberish, BytesLike, BytesLike],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'removeAsset', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'removeCollateral', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'repay', values: [string, boolean, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setFeeTo', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setSwapper', values: [string, boolean]): string;
-  encodeFunctionData(functionFragment: 'swappers', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'removeAsset',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'removeCollateral',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'repay',
+    values: [PromiseOrValue<string>, PromiseOrValue<boolean>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'setFeeTo', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setSwapper', values: [PromiseOrValue<string>, PromiseOrValue<boolean>]): string;
+  encodeFunctionData(functionFragment: 'swappers', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalAsset', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalBorrow', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalCollateralShare', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transfer', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferFrom', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string, boolean, boolean]): string;
+  encodeFunctionData(
+    functionFragment: 'transfer',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'transferFrom',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'transferOwnership',
+    values: [PromiseOrValue<string>, PromiseOrValue<boolean>, PromiseOrValue<boolean>],
+  ): string;
   encodeFunctionData(functionFragment: 'updateExchangeRate', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'userBorrowPart', values: [string]): string;
-  encodeFunctionData(functionFragment: 'userCollateralShare', values: [string]): string;
+  encodeFunctionData(functionFragment: 'userBorrowPart', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'userCollateralShare', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'withdrawFees', values?: undefined): string;
 
   decodeFunctionResult(functionFragment: 'DOMAIN_SEPARATOR', data: BytesLike): Result;
@@ -387,7 +434,7 @@ export interface SushiswapKashiLendingToken extends BaseContract {
   functions: {
     DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<[string]>;
 
-    accrue(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    accrue(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     accrueInfo(overrides?: CallOverrides): Promise<
       [BigNumber, BigNumber, BigNumber] & {
@@ -398,48 +445,52 @@ export interface SushiswapKashiLendingToken extends BaseContract {
     >;
 
     addAsset(
-      to: string,
-      skim: boolean,
-      share: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      skim: PromiseOrValue<boolean>,
+      share: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     addCollateral(
-      to: string,
-      skim: boolean,
-      share: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      skim: PromiseOrValue<boolean>,
+      share: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    allowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    allowance(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     asset(overrides?: CallOverrides): Promise<[string]>;
 
-    balanceOf(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     bentoBox(overrides?: CallOverrides): Promise<[string]>;
 
     borrow(
-      to: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    claimOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    claimOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     collateral(overrides?: CallOverrides): Promise<[string]>;
 
     cook(
-      actions: BigNumberish[],
-      values: BigNumberish[],
-      datas: BytesLike[],
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      actions: PromiseOrValue<BigNumberish>[],
+      values: PromiseOrValue<BigNumberish>[],
+      datas: PromiseOrValue<BytesLike>[],
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<[number]>;
@@ -449,24 +500,24 @@ export interface SushiswapKashiLendingToken extends BaseContract {
     feeTo(overrides?: CallOverrides): Promise<[string]>;
 
     init(
-      data: BytesLike,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      data: PromiseOrValue<BytesLike>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     liquidate(
-      users: string[],
-      maxBorrowParts: BigNumberish[],
-      to: string,
-      swapper: string,
-      open: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      users: PromiseOrValue<string>[],
+      maxBorrowParts: PromiseOrValue<BigNumberish>[],
+      to: PromiseOrValue<string>,
+      swapper: PromiseOrValue<string>,
+      open: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     masterContract(overrides?: CallOverrides): Promise<[string]>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     oracle(overrides?: CallOverrides): Promise<[string]>;
 
@@ -477,47 +528,47 @@ export interface SushiswapKashiLendingToken extends BaseContract {
     pendingOwner(overrides?: CallOverrides): Promise<[string]>;
 
     permit(
-      owner_: string,
-      spender: string,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      owner_: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     removeAsset(
-      to: string,
-      fraction: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      fraction: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     removeCollateral(
-      to: string,
-      share: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      share: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     repay(
-      to: string,
-      skim: boolean,
-      part: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      skim: PromiseOrValue<boolean>,
+      part: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setFeeTo(
-      newFeeTo: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newFeeTo: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setSwapper(
-      swapper: string,
-      enable: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      swapper: PromiseOrValue<string>,
+      enable: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    swappers(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    swappers(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
 
@@ -530,37 +581,37 @@ export interface SushiswapKashiLendingToken extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transfer(
-      to: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferFrom(
-      from: string,
-      to: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      direct: boolean,
-      renounce: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      direct: PromiseOrValue<boolean>,
+      renounce: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    updateExchangeRate(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    updateExchangeRate(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    userBorrowPart(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    userBorrowPart(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    userCollateralShare(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    userCollateralShare(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    withdrawFees(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    withdrawFees(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
   };
 
   DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<string>;
 
-  accrue(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  accrue(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   accrueInfo(overrides?: CallOverrides): Promise<
     [BigNumber, BigNumber, BigNumber] & {
@@ -571,48 +622,48 @@ export interface SushiswapKashiLendingToken extends BaseContract {
   >;
 
   addAsset(
-    to: string,
-    skim: boolean,
-    share: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    to: PromiseOrValue<string>,
+    skim: PromiseOrValue<boolean>,
+    share: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   addCollateral(
-    to: string,
-    skim: boolean,
-    share: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    to: PromiseOrValue<string>,
+    skim: PromiseOrValue<boolean>,
+    share: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  allowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+  allowance(arg0: PromiseOrValue<string>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   approve(
-    spender: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   asset(overrides?: CallOverrides): Promise<string>;
 
-  balanceOf(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   bentoBox(overrides?: CallOverrides): Promise<string>;
 
   borrow(
-    to: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    to: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  claimOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  claimOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   collateral(overrides?: CallOverrides): Promise<string>;
 
   cook(
-    actions: BigNumberish[],
-    values: BigNumberish[],
-    datas: BytesLike[],
-    overrides?: PayableOverrides & { from?: string | Promise<string> },
+    actions: PromiseOrValue<BigNumberish>[],
+    values: PromiseOrValue<BigNumberish>[],
+    datas: PromiseOrValue<BytesLike>[],
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   decimals(overrides?: CallOverrides): Promise<number>;
@@ -622,24 +673,24 @@ export interface SushiswapKashiLendingToken extends BaseContract {
   feeTo(overrides?: CallOverrides): Promise<string>;
 
   init(
-    data: BytesLike,
-    overrides?: PayableOverrides & { from?: string | Promise<string> },
+    data: PromiseOrValue<BytesLike>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   liquidate(
-    users: string[],
-    maxBorrowParts: BigNumberish[],
-    to: string,
-    swapper: string,
-    open: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    users: PromiseOrValue<string>[],
+    maxBorrowParts: PromiseOrValue<BigNumberish>[],
+    to: PromiseOrValue<string>,
+    swapper: PromiseOrValue<string>,
+    open: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   masterContract(overrides?: CallOverrides): Promise<string>;
 
   name(overrides?: CallOverrides): Promise<string>;
 
-  nonces(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   oracle(overrides?: CallOverrides): Promise<string>;
 
@@ -650,44 +701,47 @@ export interface SushiswapKashiLendingToken extends BaseContract {
   pendingOwner(overrides?: CallOverrides): Promise<string>;
 
   permit(
-    owner_: string,
-    spender: string,
-    value: BigNumberish,
-    deadline: BigNumberish,
-    v: BigNumberish,
-    r: BytesLike,
-    s: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    owner_: PromiseOrValue<string>,
+    spender: PromiseOrValue<string>,
+    value: PromiseOrValue<BigNumberish>,
+    deadline: PromiseOrValue<BigNumberish>,
+    v: PromiseOrValue<BigNumberish>,
+    r: PromiseOrValue<BytesLike>,
+    s: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   removeAsset(
-    to: string,
-    fraction: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    to: PromiseOrValue<string>,
+    fraction: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   removeCollateral(
-    to: string,
-    share: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    to: PromiseOrValue<string>,
+    share: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   repay(
-    to: string,
-    skim: boolean,
-    part: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    to: PromiseOrValue<string>,
+    skim: PromiseOrValue<boolean>,
+    part: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  setFeeTo(newFeeTo: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  setFeeTo(
+    newFeeTo: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   setSwapper(
-    swapper: string,
-    enable: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    swapper: PromiseOrValue<string>,
+    enable: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  swappers(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  swappers(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
 
@@ -700,32 +754,32 @@ export interface SushiswapKashiLendingToken extends BaseContract {
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   transfer(
-    to: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    to: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferFrom(
-    from: string,
-    to: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    from: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferOwnership(
-    newOwner: string,
-    direct: boolean,
-    renounce: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    direct: PromiseOrValue<boolean>,
+    renounce: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  updateExchangeRate(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  updateExchangeRate(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  userBorrowPart(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  userBorrowPart(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  userCollateralShare(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  userCollateralShare(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  withdrawFees(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  withdrawFees(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   callStatic: {
     DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<string>;
@@ -740,23 +794,41 @@ export interface SushiswapKashiLendingToken extends BaseContract {
       }
     >;
 
-    addAsset(to: string, skim: boolean, share: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    addAsset(
+      to: PromiseOrValue<string>,
+      skim: PromiseOrValue<boolean>,
+      share: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    addCollateral(to: string, skim: boolean, share: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    addCollateral(
+      to: PromiseOrValue<string>,
+      skim: PromiseOrValue<boolean>,
+      share: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    allowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    approve(spender: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    approve(
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     asset(overrides?: CallOverrides): Promise<string>;
 
-    balanceOf(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     bentoBox(overrides?: CallOverrides): Promise<string>;
 
     borrow(
-      to: string,
-      amount: BigNumberish,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { part: BigNumber; share: BigNumber }>;
 
@@ -765,9 +837,9 @@ export interface SushiswapKashiLendingToken extends BaseContract {
     collateral(overrides?: CallOverrides): Promise<string>;
 
     cook(
-      actions: BigNumberish[],
-      values: BigNumberish[],
-      datas: BytesLike[],
+      actions: PromiseOrValue<BigNumberish>[],
+      values: PromiseOrValue<BigNumberish>[],
+      datas: PromiseOrValue<BytesLike>[],
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { value1: BigNumber; value2: BigNumber }>;
 
@@ -777,14 +849,14 @@ export interface SushiswapKashiLendingToken extends BaseContract {
 
     feeTo(overrides?: CallOverrides): Promise<string>;
 
-    init(data: BytesLike, overrides?: CallOverrides): Promise<void>;
+    init(data: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<void>;
 
     liquidate(
-      users: string[],
-      maxBorrowParts: BigNumberish[],
-      to: string,
-      swapper: string,
-      open: boolean,
+      users: PromiseOrValue<string>[],
+      maxBorrowParts: PromiseOrValue<BigNumberish>[],
+      to: PromiseOrValue<string>,
+      swapper: PromiseOrValue<string>,
+      open: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -792,7 +864,7 @@ export interface SushiswapKashiLendingToken extends BaseContract {
 
     name(overrides?: CallOverrides): Promise<string>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     oracle(overrides?: CallOverrides): Promise<string>;
 
@@ -803,27 +875,44 @@ export interface SushiswapKashiLendingToken extends BaseContract {
     pendingOwner(overrides?: CallOverrides): Promise<string>;
 
     permit(
-      owner_: string,
-      spender: string,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
+      owner_: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    removeAsset(to: string, fraction: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    removeAsset(
+      to: PromiseOrValue<string>,
+      fraction: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    removeCollateral(to: string, share: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    removeCollateral(
+      to: PromiseOrValue<string>,
+      share: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    repay(to: string, skim: boolean, part: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    repay(
+      to: PromiseOrValue<string>,
+      skim: PromiseOrValue<boolean>,
+      part: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    setFeeTo(newFeeTo: string, overrides?: CallOverrides): Promise<void>;
+    setFeeTo(newFeeTo: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setSwapper(swapper: string, enable: boolean, overrides?: CallOverrides): Promise<void>;
+    setSwapper(
+      swapper: PromiseOrValue<string>,
+      enable: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    swappers(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    swappers(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     symbol(overrides?: CallOverrides): Promise<string>;
 
@@ -835,30 +924,48 @@ export interface SushiswapKashiLendingToken extends BaseContract {
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transfer(to: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transfer(
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    transferFrom(from: string, to: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transferFrom(
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    transferOwnership(newOwner: string, direct: boolean, renounce: boolean, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(
+      newOwner: PromiseOrValue<string>,
+      direct: PromiseOrValue<boolean>,
+      renounce: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     updateExchangeRate(
       overrides?: CallOverrides,
     ): Promise<[boolean, BigNumber] & { updated: boolean; rate: BigNumber }>;
 
-    userBorrowPart(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    userBorrowPart(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    userCollateralShare(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    userCollateralShare(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     withdrawFees(overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
     'Approval(address,address,uint256)'(
-      _owner?: string | null,
-      _spender?: string | null,
+      _owner?: PromiseOrValue<string> | null,
+      _spender?: PromiseOrValue<string> | null,
       _value?: null,
     ): ApprovalEventFilter;
-    Approval(_owner?: string | null, _spender?: string | null, _value?: null): ApprovalEventFilter;
+    Approval(
+      _owner?: PromiseOrValue<string> | null,
+      _spender?: PromiseOrValue<string> | null,
+      _value?: null,
+    ): ApprovalEventFilter;
 
     'LogAccrue(uint256,uint256,uint64,uint256)'(
       accruedAmount?: null,
@@ -869,30 +976,39 @@ export interface SushiswapKashiLendingToken extends BaseContract {
     LogAccrue(accruedAmount?: null, feeFraction?: null, rate?: null, utilization?: null): LogAccrueEventFilter;
 
     'LogAddAsset(address,address,uint256,uint256)'(
-      from?: string | null,
-      to?: string | null,
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
       share?: null,
       fraction?: null,
     ): LogAddAssetEventFilter;
-    LogAddAsset(from?: string | null, to?: string | null, share?: null, fraction?: null): LogAddAssetEventFilter;
+    LogAddAsset(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      share?: null,
+      fraction?: null,
+    ): LogAddAssetEventFilter;
 
     'LogAddCollateral(address,address,uint256)'(
-      from?: string | null,
-      to?: string | null,
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
       share?: null,
     ): LogAddCollateralEventFilter;
-    LogAddCollateral(from?: string | null, to?: string | null, share?: null): LogAddCollateralEventFilter;
+    LogAddCollateral(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      share?: null,
+    ): LogAddCollateralEventFilter;
 
     'LogBorrow(address,address,uint256,uint256,uint256)'(
-      from?: string | null,
-      to?: string | null,
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
       amount?: null,
       feeAmount?: null,
       part?: null,
     ): LogBorrowEventFilter;
     LogBorrow(
-      from?: string | null,
-      to?: string | null,
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
       amount?: null,
       feeAmount?: null,
       part?: null,
@@ -901,95 +1017,127 @@ export interface SushiswapKashiLendingToken extends BaseContract {
     'LogExchangeRate(uint256)'(rate?: null): LogExchangeRateEventFilter;
     LogExchangeRate(rate?: null): LogExchangeRateEventFilter;
 
-    'LogFeeTo(address)'(newFeeTo?: string | null): LogFeeToEventFilter;
-    LogFeeTo(newFeeTo?: string | null): LogFeeToEventFilter;
+    'LogFeeTo(address)'(newFeeTo?: PromiseOrValue<string> | null): LogFeeToEventFilter;
+    LogFeeTo(newFeeTo?: PromiseOrValue<string> | null): LogFeeToEventFilter;
 
     'LogRemoveAsset(address,address,uint256,uint256)'(
-      from?: string | null,
-      to?: string | null,
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
       share?: null,
       fraction?: null,
     ): LogRemoveAssetEventFilter;
-    LogRemoveAsset(from?: string | null, to?: string | null, share?: null, fraction?: null): LogRemoveAssetEventFilter;
+    LogRemoveAsset(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      share?: null,
+      fraction?: null,
+    ): LogRemoveAssetEventFilter;
 
     'LogRemoveCollateral(address,address,uint256)'(
-      from?: string | null,
-      to?: string | null,
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
       share?: null,
     ): LogRemoveCollateralEventFilter;
-    LogRemoveCollateral(from?: string | null, to?: string | null, share?: null): LogRemoveCollateralEventFilter;
+    LogRemoveCollateral(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      share?: null,
+    ): LogRemoveCollateralEventFilter;
 
     'LogRepay(address,address,uint256,uint256)'(
-      from?: string | null,
-      to?: string | null,
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
       amount?: null,
       part?: null,
     ): LogRepayEventFilter;
-    LogRepay(from?: string | null, to?: string | null, amount?: null, part?: null): LogRepayEventFilter;
+    LogRepay(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      amount?: null,
+      part?: null,
+    ): LogRepayEventFilter;
 
-    'LogWithdrawFees(address,uint256)'(feeTo?: string | null, feesEarnedFraction?: null): LogWithdrawFeesEventFilter;
-    LogWithdrawFees(feeTo?: string | null, feesEarnedFraction?: null): LogWithdrawFeesEventFilter;
+    'LogWithdrawFees(address,uint256)'(
+      feeTo?: PromiseOrValue<string> | null,
+      feesEarnedFraction?: null,
+    ): LogWithdrawFeesEventFilter;
+    LogWithdrawFees(feeTo?: PromiseOrValue<string> | null, feesEarnedFraction?: null): LogWithdrawFeesEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
 
-    'Transfer(address,address,uint256)'(_from?: string | null, _to?: string | null, _value?: null): TransferEventFilter;
-    Transfer(_from?: string | null, _to?: string | null, _value?: null): TransferEventFilter;
+    'Transfer(address,address,uint256)'(
+      _from?: PromiseOrValue<string> | null,
+      _to?: PromiseOrValue<string> | null,
+      _value?: null,
+    ): TransferEventFilter;
+    Transfer(
+      _from?: PromiseOrValue<string> | null,
+      _to?: PromiseOrValue<string> | null,
+      _value?: null,
+    ): TransferEventFilter;
   };
 
   estimateGas: {
     DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<BigNumber>;
 
-    accrue(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    accrue(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     accrueInfo(overrides?: CallOverrides): Promise<BigNumber>;
 
     addAsset(
-      to: string,
-      skim: boolean,
-      share: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      skim: PromiseOrValue<boolean>,
+      share: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     addCollateral(
-      to: string,
-      skim: boolean,
-      share: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      skim: PromiseOrValue<boolean>,
+      share: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    allowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     asset(overrides?: CallOverrides): Promise<BigNumber>;
 
-    balanceOf(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     bentoBox(overrides?: CallOverrides): Promise<BigNumber>;
 
     borrow(
-      to: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    claimOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    claimOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     collateral(overrides?: CallOverrides): Promise<BigNumber>;
 
     cook(
-      actions: BigNumberish[],
-      values: BigNumberish[],
-      datas: BytesLike[],
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      actions: PromiseOrValue<BigNumberish>[],
+      values: PromiseOrValue<BigNumberish>[],
+      datas: PromiseOrValue<BytesLike>[],
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
@@ -998,22 +1146,25 @@ export interface SushiswapKashiLendingToken extends BaseContract {
 
     feeTo(overrides?: CallOverrides): Promise<BigNumber>;
 
-    init(data: BytesLike, overrides?: PayableOverrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    init(
+      data: PromiseOrValue<BytesLike>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     liquidate(
-      users: string[],
-      maxBorrowParts: BigNumberish[],
-      to: string,
-      swapper: string,
-      open: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      users: PromiseOrValue<string>[],
+      maxBorrowParts: PromiseOrValue<BigNumberish>[],
+      to: PromiseOrValue<string>,
+      swapper: PromiseOrValue<string>,
+      open: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     masterContract(overrides?: CallOverrides): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     oracle(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1024,44 +1175,47 @@ export interface SushiswapKashiLendingToken extends BaseContract {
     pendingOwner(overrides?: CallOverrides): Promise<BigNumber>;
 
     permit(
-      owner_: string,
-      spender: string,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      owner_: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     removeAsset(
-      to: string,
-      fraction: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      fraction: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     removeCollateral(
-      to: string,
-      share: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      share: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     repay(
-      to: string,
-      skim: boolean,
-      part: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      skim: PromiseOrValue<boolean>,
+      part: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setFeeTo(newFeeTo: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setFeeTo(
+      newFeeTo: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setSwapper(
-      swapper: string,
-      enable: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      swapper: PromiseOrValue<string>,
+      enable: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    swappers(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    swappers(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1074,84 +1228,88 @@ export interface SushiswapKashiLendingToken extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
-      to: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferFrom(
-      from: string,
-      to: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      direct: boolean,
-      renounce: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      direct: PromiseOrValue<boolean>,
+      renounce: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    updateExchangeRate(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    updateExchangeRate(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    userBorrowPart(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    userBorrowPart(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    userCollateralShare(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    userCollateralShare(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    withdrawFees(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    withdrawFees(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
   };
 
   populateTransaction: {
     DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    accrue(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    accrue(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     accrueInfo(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     addAsset(
-      to: string,
-      skim: boolean,
-      share: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      skim: PromiseOrValue<boolean>,
+      share: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     addCollateral(
-      to: string,
-      skim: boolean,
-      share: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      skim: PromiseOrValue<boolean>,
+      share: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    allowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    allowance(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     asset(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    balanceOf(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    balanceOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     bentoBox(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     borrow(
-      to: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    claimOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    claimOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     collateral(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     cook(
-      actions: BigNumberish[],
-      values: BigNumberish[],
-      datas: BytesLike[],
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      actions: PromiseOrValue<BigNumberish>[],
+      values: PromiseOrValue<BigNumberish>[],
+      datas: PromiseOrValue<BytesLike>[],
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1161,24 +1319,24 @@ export interface SushiswapKashiLendingToken extends BaseContract {
     feeTo(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     init(
-      data: BytesLike,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      data: PromiseOrValue<BytesLike>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     liquidate(
-      users: string[],
-      maxBorrowParts: BigNumberish[],
-      to: string,
-      swapper: string,
-      open: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      users: PromiseOrValue<string>[],
+      maxBorrowParts: PromiseOrValue<BigNumberish>[],
+      to: PromiseOrValue<string>,
+      swapper: PromiseOrValue<string>,
+      open: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     masterContract(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     oracle(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1189,47 +1347,47 @@ export interface SushiswapKashiLendingToken extends BaseContract {
     pendingOwner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     permit(
-      owner_: string,
-      spender: string,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      owner_: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     removeAsset(
-      to: string,
-      fraction: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      fraction: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     removeCollateral(
-      to: string,
-      share: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      share: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     repay(
-      to: string,
-      skim: boolean,
-      part: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      skim: PromiseOrValue<boolean>,
+      part: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setFeeTo(
-      newFeeTo: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newFeeTo: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setSwapper(
-      swapper: string,
-      enable: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      swapper: PromiseOrValue<string>,
+      enable: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    swappers(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    swappers(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1242,31 +1400,31 @@ export interface SushiswapKashiLendingToken extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transfer(
-      to: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferFrom(
-      from: string,
-      to: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      direct: boolean,
-      renounce: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      direct: PromiseOrValue<boolean>,
+      renounce: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    updateExchangeRate(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    updateExchangeRate(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    userBorrowPart(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    userBorrowPart(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    userCollateralShare(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    userCollateralShare(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    withdrawFees(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    withdrawFees(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
   };
 }

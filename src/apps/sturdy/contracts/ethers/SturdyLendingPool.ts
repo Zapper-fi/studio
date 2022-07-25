@@ -16,10 +16,12 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export declare namespace DataTypes {
-  export type ReserveConfigurationMapStruct = { data: BigNumberish };
+  export type ReserveConfigurationMapStruct = {
+    data: PromiseOrValue<BigNumberish>;
+  };
 
   export type ReserveConfigurationMapStructOutput = [BigNumber] & {
     data: BigNumber;
@@ -27,18 +29,18 @@ export declare namespace DataTypes {
 
   export type ReserveDataStruct = {
     configuration: DataTypes.ReserveConfigurationMapStruct;
-    liquidityIndex: BigNumberish;
-    variableBorrowIndex: BigNumberish;
-    currentLiquidityRate: BigNumberish;
-    currentVariableBorrowRate: BigNumberish;
-    currentStableBorrowRate: BigNumberish;
-    lastUpdateTimestamp: BigNumberish;
-    aTokenAddress: string;
-    stableDebtTokenAddress: string;
-    variableDebtTokenAddress: string;
-    interestRateStrategyAddress: string;
-    yieldAddress: string;
-    id: BigNumberish;
+    liquidityIndex: PromiseOrValue<BigNumberish>;
+    variableBorrowIndex: PromiseOrValue<BigNumberish>;
+    currentLiquidityRate: PromiseOrValue<BigNumberish>;
+    currentVariableBorrowRate: PromiseOrValue<BigNumberish>;
+    currentStableBorrowRate: PromiseOrValue<BigNumberish>;
+    lastUpdateTimestamp: PromiseOrValue<BigNumberish>;
+    aTokenAddress: PromiseOrValue<string>;
+    stableDebtTokenAddress: PromiseOrValue<string>;
+    variableDebtTokenAddress: PromiseOrValue<string>;
+    interestRateStrategyAddress: PromiseOrValue<string>;
+    yieldAddress: PromiseOrValue<string>;
+    id: PromiseOrValue<BigNumberish>;
   };
 
   export type ReserveDataStructOutput = [
@@ -71,7 +73,9 @@ export declare namespace DataTypes {
     id: number;
   };
 
-  export type UserConfigurationMapStruct = { data: BigNumberish };
+  export type UserConfigurationMapStruct = {
+    data: PromiseOrValue<BigNumberish>;
+  };
 
   export type UserConfigurationMapStructOutput = [BigNumber] & {
     data: BigNumber;
@@ -151,40 +155,106 @@ export interface SturdyLendingPoolInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'MAX_STABLE_RATE_BORROW_SIZE_PERCENT', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'borrow',
-    values: [string, BigNumberish, BigNumberish, BigNumberish, string],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'deposit', values: [string, BigNumberish, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'depositYield', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'deposit',
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+    ],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'depositYield',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(
     functionFragment: 'finalizeTransfer',
-    values: [string, string, string, BigNumberish, BigNumberish, BigNumberish],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'getAddressesProvider', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getBorrowingAssetAndVolumes', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getConfiguration', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getReserveData', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getReserveNormalizedIncome', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getReserveNormalizedVariableDebt', values: [string]): string;
+  encodeFunctionData(functionFragment: 'getConfiguration', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getReserveData', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getReserveNormalizedIncome', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getReserveNormalizedVariableDebt', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'getReservesList', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getTotalBalanceOfAssetPair', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getUserAccountData', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getUserConfiguration', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getYield', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'initReserve', values: [string, string, string, string, string, string]): string;
-  encodeFunctionData(functionFragment: 'initialize', values: [string]): string;
+  encodeFunctionData(functionFragment: 'getTotalBalanceOfAssetPair', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getUserAccountData', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getUserConfiguration', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'getYield',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'initReserve',
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+    ],
+  ): string;
+  encodeFunctionData(functionFragment: 'initialize', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
     functionFragment: 'liquidationCall',
-    values: [string, string, string, BigNumberish, boolean],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<boolean>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'paused', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'registerVault', values: [string]): string;
-  encodeFunctionData(functionFragment: 'repay', values: [string, BigNumberish, BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'setConfiguration', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setPause', values: [boolean]): string;
-  encodeFunctionData(functionFragment: 'setReserveInterestRateStrategyAddress', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'setUserUseReserveAsCollateral', values: [string, boolean]): string;
-  encodeFunctionData(functionFragment: 'withdraw', values: [string, BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'withdrawFrom', values: [string, BigNumberish, string, string]): string;
+  encodeFunctionData(functionFragment: 'registerVault', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'repay',
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+    ],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'setConfiguration',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'setPause', values: [PromiseOrValue<boolean>]): string;
+  encodeFunctionData(
+    functionFragment: 'setReserveInterestRateStrategyAddress',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'setUserUseReserveAsCollateral',
+    values: [PromiseOrValue<string>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'withdraw',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'withdrawFrom',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
 
   decodeFunctionResult(functionFragment: 'FLASHLOAN_PREMIUM_TOTAL', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'MAX_NUMBER_RESERVES', data: BytesLike): Result;
@@ -396,36 +466,36 @@ export interface SturdyLendingPool extends BaseContract {
     MAX_STABLE_RATE_BORROW_SIZE_PERCENT(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     borrow(
-      asset: string,
-      amount: BigNumberish,
-      interestRateMode: BigNumberish,
-      referralCode: BigNumberish,
-      onBehalfOf: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      asset: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      interestRateMode: PromiseOrValue<BigNumberish>,
+      referralCode: PromiseOrValue<BigNumberish>,
+      onBehalfOf: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     deposit(
-      asset: string,
-      amount: BigNumberish,
-      onBehalfOf: string,
-      referralCode: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      asset: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      onBehalfOf: PromiseOrValue<string>,
+      referralCode: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     depositYield(
-      asset: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      asset: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     finalizeTransfer(
-      asset: string,
-      from: string,
-      to: string,
-      amount: BigNumberish,
-      balanceFromBefore: BigNumberish,
-      balanceToBefore: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      asset: PromiseOrValue<string>,
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      balanceFromBefore: PromiseOrValue<BigNumberish>,
+      balanceToBefore: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     getAddressesProvider(overrides?: CallOverrides): Promise<[string]>;
@@ -433,22 +503,28 @@ export interface SturdyLendingPool extends BaseContract {
     getBorrowingAssetAndVolumes(overrides?: CallOverrides): Promise<[BigNumber, BigNumber[], string[], BigNumber]>;
 
     getConfiguration(
-      asset: string,
+      asset: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[DataTypes.ReserveConfigurationMapStructOutput]>;
 
-    getReserveData(asset: string, overrides?: CallOverrides): Promise<[DataTypes.ReserveDataStructOutput]>;
+    getReserveData(
+      asset: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[DataTypes.ReserveDataStructOutput]>;
 
-    getReserveNormalizedIncome(asset: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getReserveNormalizedIncome(asset: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getReserveNormalizedVariableDebt(asset: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getReserveNormalizedVariableDebt(asset: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     getReservesList(overrides?: CallOverrides): Promise<[string[]]>;
 
-    getTotalBalanceOfAssetPair(asset: string, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+    getTotalBalanceOfAssetPair(
+      asset: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber, BigNumber]>;
 
     getUserAccountData(
-      user: string,
+      user: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -462,91 +538,91 @@ export interface SturdyLendingPool extends BaseContract {
     >;
 
     getUserConfiguration(
-      user: string,
+      user: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[DataTypes.UserConfigurationMapStructOutput]>;
 
     getYield(
-      asset: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      asset: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     initReserve(
-      asset: string,
-      yieldAddress: string,
-      aTokenAddress: string,
-      stableDebtAddress: string,
-      variableDebtAddress: string,
-      interestRateStrategyAddress: string,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      asset: PromiseOrValue<string>,
+      yieldAddress: PromiseOrValue<string>,
+      aTokenAddress: PromiseOrValue<string>,
+      stableDebtAddress: PromiseOrValue<string>,
+      variableDebtAddress: PromiseOrValue<string>,
+      interestRateStrategyAddress: PromiseOrValue<string>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     initialize(
-      provider: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      provider: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     liquidationCall(
-      collateralAsset: string,
-      debtAsset: string,
-      user: string,
-      debtToCover: BigNumberish,
-      receiveAToken: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      collateralAsset: PromiseOrValue<string>,
+      debtAsset: PromiseOrValue<string>,
+      user: PromiseOrValue<string>,
+      debtToCover: PromiseOrValue<BigNumberish>,
+      receiveAToken: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     paused(overrides?: CallOverrides): Promise<[boolean]>;
 
     registerVault(
-      _vaultAddress: string,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      _vaultAddress: PromiseOrValue<string>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     repay(
-      asset: string,
-      amount: BigNumberish,
-      rateMode: BigNumberish,
-      onBehalfOf: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      asset: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      rateMode: PromiseOrValue<BigNumberish>,
+      onBehalfOf: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setConfiguration(
-      asset: string,
-      configuration: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      asset: PromiseOrValue<string>,
+      configuration: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setPause(
-      val: boolean,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      val: PromiseOrValue<boolean>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setReserveInterestRateStrategyAddress(
-      asset: string,
-      rateStrategyAddress: string,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      asset: PromiseOrValue<string>,
+      rateStrategyAddress: PromiseOrValue<string>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setUserUseReserveAsCollateral(
-      asset: string,
-      useAsCollateral: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      asset: PromiseOrValue<string>,
+      useAsCollateral: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     withdraw(
-      asset: string,
-      amount: BigNumberish,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      asset: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     withdrawFrom(
-      asset: string,
-      amount: BigNumberish,
-      from: string,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      asset: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
@@ -557,56 +633,59 @@ export interface SturdyLendingPool extends BaseContract {
   MAX_STABLE_RATE_BORROW_SIZE_PERCENT(overrides?: CallOverrides): Promise<BigNumber>;
 
   borrow(
-    asset: string,
-    amount: BigNumberish,
-    interestRateMode: BigNumberish,
-    referralCode: BigNumberish,
-    onBehalfOf: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    asset: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    interestRateMode: PromiseOrValue<BigNumberish>,
+    referralCode: PromiseOrValue<BigNumberish>,
+    onBehalfOf: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   deposit(
-    asset: string,
-    amount: BigNumberish,
-    onBehalfOf: string,
-    referralCode: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    asset: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    onBehalfOf: PromiseOrValue<string>,
+    referralCode: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   depositYield(
-    asset: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    asset: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   finalizeTransfer(
-    asset: string,
-    from: string,
-    to: string,
-    amount: BigNumberish,
-    balanceFromBefore: BigNumberish,
-    balanceToBefore: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    asset: PromiseOrValue<string>,
+    from: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    balanceFromBefore: PromiseOrValue<BigNumberish>,
+    balanceToBefore: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   getAddressesProvider(overrides?: CallOverrides): Promise<string>;
 
   getBorrowingAssetAndVolumes(overrides?: CallOverrides): Promise<[BigNumber, BigNumber[], string[], BigNumber]>;
 
-  getConfiguration(asset: string, overrides?: CallOverrides): Promise<DataTypes.ReserveConfigurationMapStructOutput>;
+  getConfiguration(
+    asset: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<DataTypes.ReserveConfigurationMapStructOutput>;
 
-  getReserveData(asset: string, overrides?: CallOverrides): Promise<DataTypes.ReserveDataStructOutput>;
+  getReserveData(asset: PromiseOrValue<string>, overrides?: CallOverrides): Promise<DataTypes.ReserveDataStructOutput>;
 
-  getReserveNormalizedIncome(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getReserveNormalizedIncome(asset: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  getReserveNormalizedVariableDebt(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getReserveNormalizedVariableDebt(asset: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   getReservesList(overrides?: CallOverrides): Promise<string[]>;
 
-  getTotalBalanceOfAssetPair(asset: string, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+  getTotalBalanceOfAssetPair(asset: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
 
   getUserAccountData(
-    user: string,
+    user: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -619,89 +698,92 @@ export interface SturdyLendingPool extends BaseContract {
     }
   >;
 
-  getUserConfiguration(user: string, overrides?: CallOverrides): Promise<DataTypes.UserConfigurationMapStructOutput>;
+  getUserConfiguration(
+    user: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<DataTypes.UserConfigurationMapStructOutput>;
 
   getYield(
-    asset: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    asset: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   initReserve(
-    asset: string,
-    yieldAddress: string,
-    aTokenAddress: string,
-    stableDebtAddress: string,
-    variableDebtAddress: string,
-    interestRateStrategyAddress: string,
-    overrides?: PayableOverrides & { from?: string | Promise<string> },
+    asset: PromiseOrValue<string>,
+    yieldAddress: PromiseOrValue<string>,
+    aTokenAddress: PromiseOrValue<string>,
+    stableDebtAddress: PromiseOrValue<string>,
+    variableDebtAddress: PromiseOrValue<string>,
+    interestRateStrategyAddress: PromiseOrValue<string>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   initialize(
-    provider: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    provider: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   liquidationCall(
-    collateralAsset: string,
-    debtAsset: string,
-    user: string,
-    debtToCover: BigNumberish,
-    receiveAToken: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    collateralAsset: PromiseOrValue<string>,
+    debtAsset: PromiseOrValue<string>,
+    user: PromiseOrValue<string>,
+    debtToCover: PromiseOrValue<BigNumberish>,
+    receiveAToken: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   paused(overrides?: CallOverrides): Promise<boolean>;
 
   registerVault(
-    _vaultAddress: string,
-    overrides?: PayableOverrides & { from?: string | Promise<string> },
+    _vaultAddress: PromiseOrValue<string>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   repay(
-    asset: string,
-    amount: BigNumberish,
-    rateMode: BigNumberish,
-    onBehalfOf: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    asset: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    rateMode: PromiseOrValue<BigNumberish>,
+    onBehalfOf: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setConfiguration(
-    asset: string,
-    configuration: BigNumberish,
-    overrides?: PayableOverrides & { from?: string | Promise<string> },
+    asset: PromiseOrValue<string>,
+    configuration: PromiseOrValue<BigNumberish>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setPause(
-    val: boolean,
-    overrides?: PayableOverrides & { from?: string | Promise<string> },
+    val: PromiseOrValue<boolean>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setReserveInterestRateStrategyAddress(
-    asset: string,
-    rateStrategyAddress: string,
-    overrides?: PayableOverrides & { from?: string | Promise<string> },
+    asset: PromiseOrValue<string>,
+    rateStrategyAddress: PromiseOrValue<string>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setUserUseReserveAsCollateral(
-    asset: string,
-    useAsCollateral: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    asset: PromiseOrValue<string>,
+    useAsCollateral: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   withdraw(
-    asset: string,
-    amount: BigNumberish,
-    to: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    asset: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    to: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   withdrawFrom(
-    asset: string,
-    amount: BigNumberish,
-    from: string,
-    to: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    asset: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    from: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
@@ -712,31 +794,35 @@ export interface SturdyLendingPool extends BaseContract {
     MAX_STABLE_RATE_BORROW_SIZE_PERCENT(overrides?: CallOverrides): Promise<BigNumber>;
 
     borrow(
-      asset: string,
-      amount: BigNumberish,
-      interestRateMode: BigNumberish,
-      referralCode: BigNumberish,
-      onBehalfOf: string,
+      asset: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      interestRateMode: PromiseOrValue<BigNumberish>,
+      referralCode: PromiseOrValue<BigNumberish>,
+      onBehalfOf: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     deposit(
-      asset: string,
-      amount: BigNumberish,
-      onBehalfOf: string,
-      referralCode: BigNumberish,
+      asset: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      onBehalfOf: PromiseOrValue<string>,
+      referralCode: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    depositYield(asset: string, amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    depositYield(
+      asset: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     finalizeTransfer(
-      asset: string,
-      from: string,
-      to: string,
-      amount: BigNumberish,
-      balanceFromBefore: BigNumberish,
-      balanceToBefore: BigNumberish,
+      asset: PromiseOrValue<string>,
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      balanceFromBefore: PromiseOrValue<BigNumberish>,
+      balanceToBefore: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -744,20 +830,29 @@ export interface SturdyLendingPool extends BaseContract {
 
     getBorrowingAssetAndVolumes(overrides?: CallOverrides): Promise<[BigNumber, BigNumber[], string[], BigNumber]>;
 
-    getConfiguration(asset: string, overrides?: CallOverrides): Promise<DataTypes.ReserveConfigurationMapStructOutput>;
+    getConfiguration(
+      asset: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<DataTypes.ReserveConfigurationMapStructOutput>;
 
-    getReserveData(asset: string, overrides?: CallOverrides): Promise<DataTypes.ReserveDataStructOutput>;
+    getReserveData(
+      asset: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<DataTypes.ReserveDataStructOutput>;
 
-    getReserveNormalizedIncome(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getReserveNormalizedIncome(asset: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getReserveNormalizedVariableDebt(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getReserveNormalizedVariableDebt(asset: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getReservesList(overrides?: CallOverrides): Promise<string[]>;
 
-    getTotalBalanceOfAssetPair(asset: string, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+    getTotalBalanceOfAssetPair(
+      asset: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber, BigNumber]>;
 
     getUserAccountData(
-      user: string,
+      user: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -770,131 +865,151 @@ export interface SturdyLendingPool extends BaseContract {
       }
     >;
 
-    getUserConfiguration(user: string, overrides?: CallOverrides): Promise<DataTypes.UserConfigurationMapStructOutput>;
+    getUserConfiguration(
+      user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<DataTypes.UserConfigurationMapStructOutput>;
 
-    getYield(asset: string, amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
-
-    initReserve(
-      asset: string,
-      yieldAddress: string,
-      aTokenAddress: string,
-      stableDebtAddress: string,
-      variableDebtAddress: string,
-      interestRateStrategyAddress: string,
+    getYield(
+      asset: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    initialize(provider: string, overrides?: CallOverrides): Promise<void>;
+    initReserve(
+      asset: PromiseOrValue<string>,
+      yieldAddress: PromiseOrValue<string>,
+      aTokenAddress: PromiseOrValue<string>,
+      stableDebtAddress: PromiseOrValue<string>,
+      variableDebtAddress: PromiseOrValue<string>,
+      interestRateStrategyAddress: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    initialize(provider: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     liquidationCall(
-      collateralAsset: string,
-      debtAsset: string,
-      user: string,
-      debtToCover: BigNumberish,
-      receiveAToken: boolean,
+      collateralAsset: PromiseOrValue<string>,
+      debtAsset: PromiseOrValue<string>,
+      user: PromiseOrValue<string>,
+      debtToCover: PromiseOrValue<BigNumberish>,
+      receiveAToken: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     paused(overrides?: CallOverrides): Promise<boolean>;
 
-    registerVault(_vaultAddress: string, overrides?: CallOverrides): Promise<void>;
+    registerVault(_vaultAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     repay(
-      asset: string,
-      amount: BigNumberish,
-      rateMode: BigNumberish,
-      onBehalfOf: string,
+      asset: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      rateMode: PromiseOrValue<BigNumberish>,
+      onBehalfOf: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    setConfiguration(asset: string, configuration: BigNumberish, overrides?: CallOverrides): Promise<void>;
-
-    setPause(val: boolean, overrides?: CallOverrides): Promise<void>;
-
-    setReserveInterestRateStrategyAddress(
-      asset: string,
-      rateStrategyAddress: string,
+    setConfiguration(
+      asset: PromiseOrValue<string>,
+      configuration: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    setUserUseReserveAsCollateral(asset: string, useAsCollateral: boolean, overrides?: CallOverrides): Promise<void>;
+    setPause(val: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
 
-    withdraw(asset: string, amount: BigNumberish, to: string, overrides?: CallOverrides): Promise<BigNumber>;
+    setReserveInterestRateStrategyAddress(
+      asset: PromiseOrValue<string>,
+      rateStrategyAddress: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    setUserUseReserveAsCollateral(
+      asset: PromiseOrValue<string>,
+      useAsCollateral: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    withdraw(
+      asset: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     withdrawFrom(
-      asset: string,
-      amount: BigNumberish,
-      from: string,
-      to: string,
+      asset: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
   };
 
   filters: {
     'Borrow(address,address,address,uint256,uint256,uint256,uint16)'(
-      reserve?: string | null,
+      reserve?: PromiseOrValue<string> | null,
       user?: null,
-      onBehalfOf?: string | null,
+      onBehalfOf?: PromiseOrValue<string> | null,
       amount?: null,
       borrowRateMode?: null,
       borrowRate?: null,
-      referral?: BigNumberish | null,
+      referral?: PromiseOrValue<BigNumberish> | null,
     ): BorrowEventFilter;
     Borrow(
-      reserve?: string | null,
+      reserve?: PromiseOrValue<string> | null,
       user?: null,
-      onBehalfOf?: string | null,
+      onBehalfOf?: PromiseOrValue<string> | null,
       amount?: null,
       borrowRateMode?: null,
       borrowRate?: null,
-      referral?: BigNumberish | null,
+      referral?: PromiseOrValue<BigNumberish> | null,
     ): BorrowEventFilter;
 
     'Deposit(address,address,address,uint256,uint16)'(
-      reserve?: string | null,
+      reserve?: PromiseOrValue<string> | null,
       user?: null,
-      onBehalfOf?: string | null,
+      onBehalfOf?: PromiseOrValue<string> | null,
       amount?: null,
-      referral?: BigNumberish | null,
+      referral?: PromiseOrValue<BigNumberish> | null,
     ): DepositEventFilter;
     Deposit(
-      reserve?: string | null,
+      reserve?: PromiseOrValue<string> | null,
       user?: null,
-      onBehalfOf?: string | null,
+      onBehalfOf?: PromiseOrValue<string> | null,
       amount?: null,
-      referral?: BigNumberish | null,
+      referral?: PromiseOrValue<BigNumberish> | null,
     ): DepositEventFilter;
 
     'FlashLoan(address,address,address,uint256,uint256,uint16)'(
-      target?: string | null,
-      initiator?: string | null,
-      asset?: string | null,
+      target?: PromiseOrValue<string> | null,
+      initiator?: PromiseOrValue<string> | null,
+      asset?: PromiseOrValue<string> | null,
       amount?: null,
       premium?: null,
       referralCode?: null,
     ): FlashLoanEventFilter;
     FlashLoan(
-      target?: string | null,
-      initiator?: string | null,
-      asset?: string | null,
+      target?: PromiseOrValue<string> | null,
+      initiator?: PromiseOrValue<string> | null,
+      asset?: PromiseOrValue<string> | null,
       amount?: null,
       premium?: null,
       referralCode?: null,
     ): FlashLoanEventFilter;
 
     'LiquidationCall(address,address,address,uint256,uint256,address,bool)'(
-      collateralAsset?: string | null,
-      debtAsset?: string | null,
-      user?: string | null,
+      collateralAsset?: PromiseOrValue<string> | null,
+      debtAsset?: PromiseOrValue<string> | null,
+      user?: PromiseOrValue<string> | null,
       debtToCover?: null,
       liquidatedCollateralAmount?: null,
       liquidator?: null,
       receiveAToken?: null,
     ): LiquidationCallEventFilter;
     LiquidationCall(
-      collateralAsset?: string | null,
-      debtAsset?: string | null,
-      user?: string | null,
+      collateralAsset?: PromiseOrValue<string> | null,
+      debtAsset?: PromiseOrValue<string> | null,
+      user?: PromiseOrValue<string> | null,
       debtToCover?: null,
       liquidatedCollateralAmount?: null,
       liquidator?: null,
@@ -905,15 +1020,20 @@ export interface SturdyLendingPool extends BaseContract {
     Paused(): PausedEventFilter;
 
     'Repay(address,address,address,uint256)'(
-      reserve?: string | null,
-      user?: string | null,
-      repayer?: string | null,
+      reserve?: PromiseOrValue<string> | null,
+      user?: PromiseOrValue<string> | null,
+      repayer?: PromiseOrValue<string> | null,
       amount?: null,
     ): RepayEventFilter;
-    Repay(reserve?: string | null, user?: string | null, repayer?: string | null, amount?: null): RepayEventFilter;
+    Repay(
+      reserve?: PromiseOrValue<string> | null,
+      user?: PromiseOrValue<string> | null,
+      repayer?: PromiseOrValue<string> | null,
+      amount?: null,
+    ): RepayEventFilter;
 
     'ReserveDataUpdated(address,uint256,uint256,uint256,uint256,uint256)'(
-      reserve?: string | null,
+      reserve?: PromiseOrValue<string> | null,
       liquidityRate?: null,
       stableBorrowRate?: null,
       variableBorrowRate?: null,
@@ -921,7 +1041,7 @@ export interface SturdyLendingPool extends BaseContract {
       variableBorrowIndex?: null,
     ): ReserveDataUpdatedEventFilter;
     ReserveDataUpdated(
-      reserve?: string | null,
+      reserve?: PromiseOrValue<string> | null,
       liquidityRate?: null,
       stableBorrowRate?: null,
       variableBorrowRate?: null,
@@ -930,33 +1050,38 @@ export interface SturdyLendingPool extends BaseContract {
     ): ReserveDataUpdatedEventFilter;
 
     'ReserveUsedAsCollateralDisabled(address,address)'(
-      reserve?: string | null,
-      user?: string | null,
+      reserve?: PromiseOrValue<string> | null,
+      user?: PromiseOrValue<string> | null,
     ): ReserveUsedAsCollateralDisabledEventFilter;
     ReserveUsedAsCollateralDisabled(
-      reserve?: string | null,
-      user?: string | null,
+      reserve?: PromiseOrValue<string> | null,
+      user?: PromiseOrValue<string> | null,
     ): ReserveUsedAsCollateralDisabledEventFilter;
 
     'ReserveUsedAsCollateralEnabled(address,address)'(
-      reserve?: string | null,
-      user?: string | null,
+      reserve?: PromiseOrValue<string> | null,
+      user?: PromiseOrValue<string> | null,
     ): ReserveUsedAsCollateralEnabledEventFilter;
     ReserveUsedAsCollateralEnabled(
-      reserve?: string | null,
-      user?: string | null,
+      reserve?: PromiseOrValue<string> | null,
+      user?: PromiseOrValue<string> | null,
     ): ReserveUsedAsCollateralEnabledEventFilter;
 
     'Unpaused()'(): UnpausedEventFilter;
     Unpaused(): UnpausedEventFilter;
 
     'Withdraw(address,address,address,uint256)'(
-      reserve?: string | null,
-      user?: string | null,
-      to?: string | null,
+      reserve?: PromiseOrValue<string> | null,
+      user?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
       amount?: null,
     ): WithdrawEventFilter;
-    Withdraw(reserve?: string | null, user?: string | null, to?: string | null, amount?: null): WithdrawEventFilter;
+    Withdraw(
+      reserve?: PromiseOrValue<string> | null,
+      user?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      amount?: null,
+    ): WithdrawEventFilter;
   };
 
   estimateGas: {
@@ -967,133 +1092,139 @@ export interface SturdyLendingPool extends BaseContract {
     MAX_STABLE_RATE_BORROW_SIZE_PERCENT(overrides?: CallOverrides): Promise<BigNumber>;
 
     borrow(
-      asset: string,
-      amount: BigNumberish,
-      interestRateMode: BigNumberish,
-      referralCode: BigNumberish,
-      onBehalfOf: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      asset: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      interestRateMode: PromiseOrValue<BigNumberish>,
+      referralCode: PromiseOrValue<BigNumberish>,
+      onBehalfOf: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     deposit(
-      asset: string,
-      amount: BigNumberish,
-      onBehalfOf: string,
-      referralCode: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      asset: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      onBehalfOf: PromiseOrValue<string>,
+      referralCode: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     depositYield(
-      asset: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      asset: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     finalizeTransfer(
-      asset: string,
-      from: string,
-      to: string,
-      amount: BigNumberish,
-      balanceFromBefore: BigNumberish,
-      balanceToBefore: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      asset: PromiseOrValue<string>,
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      balanceFromBefore: PromiseOrValue<BigNumberish>,
+      balanceToBefore: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     getAddressesProvider(overrides?: CallOverrides): Promise<BigNumber>;
 
     getBorrowingAssetAndVolumes(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getConfiguration(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getConfiguration(asset: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getReserveData(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getReserveData(asset: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getReserveNormalizedIncome(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getReserveNormalizedIncome(asset: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getReserveNormalizedVariableDebt(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getReserveNormalizedVariableDebt(asset: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getReservesList(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getTotalBalanceOfAssetPair(asset: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getTotalBalanceOfAssetPair(asset: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getUserAccountData(user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getUserAccountData(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getUserConfiguration(user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getUserConfiguration(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getYield(
-      asset: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      asset: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     initReserve(
-      asset: string,
-      yieldAddress: string,
-      aTokenAddress: string,
-      stableDebtAddress: string,
-      variableDebtAddress: string,
-      interestRateStrategyAddress: string,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      asset: PromiseOrValue<string>,
+      yieldAddress: PromiseOrValue<string>,
+      aTokenAddress: PromiseOrValue<string>,
+      stableDebtAddress: PromiseOrValue<string>,
+      variableDebtAddress: PromiseOrValue<string>,
+      interestRateStrategyAddress: PromiseOrValue<string>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    initialize(provider: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    initialize(
+      provider: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     liquidationCall(
-      collateralAsset: string,
-      debtAsset: string,
-      user: string,
-      debtToCover: BigNumberish,
-      receiveAToken: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      collateralAsset: PromiseOrValue<string>,
+      debtAsset: PromiseOrValue<string>,
+      user: PromiseOrValue<string>,
+      debtToCover: PromiseOrValue<BigNumberish>,
+      receiveAToken: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     paused(overrides?: CallOverrides): Promise<BigNumber>;
 
     registerVault(
-      _vaultAddress: string,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      _vaultAddress: PromiseOrValue<string>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     repay(
-      asset: string,
-      amount: BigNumberish,
-      rateMode: BigNumberish,
-      onBehalfOf: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      asset: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      rateMode: PromiseOrValue<BigNumberish>,
+      onBehalfOf: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setConfiguration(
-      asset: string,
-      configuration: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      asset: PromiseOrValue<string>,
+      configuration: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setPause(val: boolean, overrides?: PayableOverrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setPause(
+      val: PromiseOrValue<boolean>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setReserveInterestRateStrategyAddress(
-      asset: string,
-      rateStrategyAddress: string,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      asset: PromiseOrValue<string>,
+      rateStrategyAddress: PromiseOrValue<string>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setUserUseReserveAsCollateral(
-      asset: string,
-      useAsCollateral: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      asset: PromiseOrValue<string>,
+      useAsCollateral: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     withdraw(
-      asset: string,
-      amount: BigNumberish,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      asset: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     withdrawFrom(
-      asset: string,
-      amount: BigNumberish,
-      from: string,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      asset: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
@@ -1105,139 +1236,142 @@ export interface SturdyLendingPool extends BaseContract {
     MAX_STABLE_RATE_BORROW_SIZE_PERCENT(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     borrow(
-      asset: string,
-      amount: BigNumberish,
-      interestRateMode: BigNumberish,
-      referralCode: BigNumberish,
-      onBehalfOf: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      asset: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      interestRateMode: PromiseOrValue<BigNumberish>,
+      referralCode: PromiseOrValue<BigNumberish>,
+      onBehalfOf: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     deposit(
-      asset: string,
-      amount: BigNumberish,
-      onBehalfOf: string,
-      referralCode: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      asset: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      onBehalfOf: PromiseOrValue<string>,
+      referralCode: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     depositYield(
-      asset: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      asset: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     finalizeTransfer(
-      asset: string,
-      from: string,
-      to: string,
-      amount: BigNumberish,
-      balanceFromBefore: BigNumberish,
-      balanceToBefore: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      asset: PromiseOrValue<string>,
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      balanceFromBefore: PromiseOrValue<BigNumberish>,
+      balanceToBefore: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     getAddressesProvider(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getBorrowingAssetAndVolumes(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getConfiguration(asset: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getConfiguration(asset: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getReserveData(asset: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getReserveData(asset: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getReserveNormalizedIncome(asset: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getReserveNormalizedIncome(asset: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getReserveNormalizedVariableDebt(asset: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getReserveNormalizedVariableDebt(
+      asset: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     getReservesList(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getTotalBalanceOfAssetPair(asset: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getTotalBalanceOfAssetPair(asset: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getUserAccountData(user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getUserAccountData(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getUserConfiguration(user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getUserConfiguration(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getYield(
-      asset: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      asset: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     initReserve(
-      asset: string,
-      yieldAddress: string,
-      aTokenAddress: string,
-      stableDebtAddress: string,
-      variableDebtAddress: string,
-      interestRateStrategyAddress: string,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      asset: PromiseOrValue<string>,
+      yieldAddress: PromiseOrValue<string>,
+      aTokenAddress: PromiseOrValue<string>,
+      stableDebtAddress: PromiseOrValue<string>,
+      variableDebtAddress: PromiseOrValue<string>,
+      interestRateStrategyAddress: PromiseOrValue<string>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     initialize(
-      provider: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      provider: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     liquidationCall(
-      collateralAsset: string,
-      debtAsset: string,
-      user: string,
-      debtToCover: BigNumberish,
-      receiveAToken: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      collateralAsset: PromiseOrValue<string>,
+      debtAsset: PromiseOrValue<string>,
+      user: PromiseOrValue<string>,
+      debtToCover: PromiseOrValue<BigNumberish>,
+      receiveAToken: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     paused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     registerVault(
-      _vaultAddress: string,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      _vaultAddress: PromiseOrValue<string>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     repay(
-      asset: string,
-      amount: BigNumberish,
-      rateMode: BigNumberish,
-      onBehalfOf: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      asset: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      rateMode: PromiseOrValue<BigNumberish>,
+      onBehalfOf: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setConfiguration(
-      asset: string,
-      configuration: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      asset: PromiseOrValue<string>,
+      configuration: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setPause(
-      val: boolean,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      val: PromiseOrValue<boolean>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setReserveInterestRateStrategyAddress(
-      asset: string,
-      rateStrategyAddress: string,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      asset: PromiseOrValue<string>,
+      rateStrategyAddress: PromiseOrValue<string>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setUserUseReserveAsCollateral(
-      asset: string,
-      useAsCollateral: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      asset: PromiseOrValue<string>,
+      useAsCollateral: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     withdraw(
-      asset: string,
-      amount: BigNumberish,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      asset: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     withdrawFrom(
-      asset: string,
-      amount: BigNumberish,
-      from: string,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      asset: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

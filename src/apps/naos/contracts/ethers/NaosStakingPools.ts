@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface NaosStakingPoolsInterface extends utils.Interface {
   functions: {
@@ -70,27 +70,39 @@ export interface NaosStakingPoolsInterface extends utils.Interface {
   ): FunctionFragment;
 
   encodeFunctionData(functionFragment: 'acceptGovernance', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'claim', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'createPool', values: [string]): string;
-  encodeFunctionData(functionFragment: 'deposit', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'exit', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'getPoolRewardRate', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'getPoolRewardWeight', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'getPoolToken', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'getPoolTotalDeposited', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'getStakeTotalDeposited', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'getStakeTotalUnclaimed', values: [string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'claim', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'createPool', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'deposit',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'exit', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'getPoolRewardRate', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'getPoolRewardWeight', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'getPoolToken', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'getPoolTotalDeposited', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'getStakeTotalDeposited',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'getStakeTotalUnclaimed',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'governance', values?: undefined): string;
   encodeFunctionData(functionFragment: 'pendingGovernance', values?: undefined): string;
   encodeFunctionData(functionFragment: 'poolCount', values?: undefined): string;
   encodeFunctionData(functionFragment: 'reward', values?: undefined): string;
   encodeFunctionData(functionFragment: 'rewardRate', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'setPendingGovernance', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setRewardRate', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setRewardWeights', values: [BigNumberish[]]): string;
-  encodeFunctionData(functionFragment: 'tokenPoolIds', values: [string]): string;
+  encodeFunctionData(functionFragment: 'setPendingGovernance', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setRewardRate', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setRewardWeights', values: [PromiseOrValue<BigNumberish>[]]): string;
+  encodeFunctionData(functionFragment: 'tokenPoolIds', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'totalRewardWeight', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'withdraw', values: [BigNumberish, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'withdraw',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
 
   decodeFunctionResult(functionFragment: 'acceptGovernance', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'claim', data: BytesLike): Result;
@@ -223,40 +235,48 @@ export interface NaosStakingPools extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    acceptGovernance(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    acceptGovernance(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     claim(
-      _poolId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _poolId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     createPool(
-      _token: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     deposit(
-      _poolId: BigNumberish,
-      _depositAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _poolId: PromiseOrValue<BigNumberish>,
+      _depositAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     exit(
-      _poolId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _poolId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    getPoolRewardRate(_poolId: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getPoolRewardRate(_poolId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getPoolRewardWeight(_poolId: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getPoolRewardWeight(_poolId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getPoolToken(_poolId: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    getPoolToken(_poolId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
-    getPoolTotalDeposited(_poolId: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getPoolTotalDeposited(_poolId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getStakeTotalDeposited(_account: string, _poolId: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getStakeTotalDeposited(
+      _account: PromiseOrValue<string>,
+      _poolId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
-    getStakeTotalUnclaimed(_account: string, _poolId: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getStakeTotalUnclaimed(
+      _account: PromiseOrValue<string>,
+      _poolId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     governance(overrides?: CallOverrides): Promise<[string]>;
 
@@ -269,62 +289,73 @@ export interface NaosStakingPools extends BaseContract {
     rewardRate(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     setPendingGovernance(
-      _pendingGovernance: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pendingGovernance: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setRewardRate(
-      _rewardRate: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardRate: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setRewardWeights(
-      _rewardWeights: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardWeights: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    tokenPoolIds(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    tokenPoolIds(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     totalRewardWeight(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     withdraw(
-      _poolId: BigNumberish,
-      _withdrawAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _poolId: PromiseOrValue<BigNumberish>,
+      _withdrawAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
-  acceptGovernance(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  acceptGovernance(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   claim(
-    _poolId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _poolId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  createPool(_token: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  createPool(
+    _token: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   deposit(
-    _poolId: BigNumberish,
-    _depositAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _poolId: PromiseOrValue<BigNumberish>,
+    _depositAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   exit(
-    _poolId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _poolId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  getPoolRewardRate(_poolId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  getPoolRewardRate(_poolId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  getPoolRewardWeight(_poolId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  getPoolRewardWeight(_poolId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  getPoolToken(_poolId: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  getPoolToken(_poolId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
-  getPoolTotalDeposited(_poolId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  getPoolTotalDeposited(_poolId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  getStakeTotalDeposited(_account: string, _poolId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  getStakeTotalDeposited(
+    _account: PromiseOrValue<string>,
+    _poolId: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
-  getStakeTotalUnclaimed(_account: string, _poolId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  getStakeTotalUnclaimed(
+    _account: PromiseOrValue<string>,
+    _poolId: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   governance(overrides?: CallOverrides): Promise<string>;
 
@@ -337,52 +368,64 @@ export interface NaosStakingPools extends BaseContract {
   rewardRate(overrides?: CallOverrides): Promise<BigNumber>;
 
   setPendingGovernance(
-    _pendingGovernance: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pendingGovernance: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setRewardRate(
-    _rewardRate: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _rewardRate: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setRewardWeights(
-    _rewardWeights: BigNumberish[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _rewardWeights: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  tokenPoolIds(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  tokenPoolIds(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   totalRewardWeight(overrides?: CallOverrides): Promise<BigNumber>;
 
   withdraw(
-    _poolId: BigNumberish,
-    _withdrawAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _poolId: PromiseOrValue<BigNumberish>,
+    _withdrawAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
     acceptGovernance(overrides?: CallOverrides): Promise<void>;
 
-    claim(_poolId: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    claim(_poolId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    createPool(_token: string, overrides?: CallOverrides): Promise<BigNumber>;
+    createPool(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    deposit(_poolId: BigNumberish, _depositAmount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    deposit(
+      _poolId: PromiseOrValue<BigNumberish>,
+      _depositAmount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    exit(_poolId: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    exit(_poolId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    getPoolRewardRate(_poolId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getPoolRewardRate(_poolId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getPoolRewardWeight(_poolId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getPoolRewardWeight(_poolId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getPoolToken(_poolId: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    getPoolToken(_poolId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
-    getPoolTotalDeposited(_poolId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getPoolTotalDeposited(_poolId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getStakeTotalDeposited(_account: string, _poolId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getStakeTotalDeposited(
+      _account: PromiseOrValue<string>,
+      _poolId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    getStakeTotalUnclaimed(_account: string, _poolId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getStakeTotalUnclaimed(
+      _account: PromiseOrValue<string>,
+      _poolId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     governance(overrides?: CallOverrides): Promise<string>;
 
@@ -394,17 +437,21 @@ export interface NaosStakingPools extends BaseContract {
 
     rewardRate(overrides?: CallOverrides): Promise<BigNumber>;
 
-    setPendingGovernance(_pendingGovernance: string, overrides?: CallOverrides): Promise<void>;
+    setPendingGovernance(_pendingGovernance: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setRewardRate(_rewardRate: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setRewardRate(_rewardRate: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setRewardWeights(_rewardWeights: BigNumberish[], overrides?: CallOverrides): Promise<void>;
+    setRewardWeights(_rewardWeights: PromiseOrValue<BigNumberish>[], overrides?: CallOverrides): Promise<void>;
 
-    tokenPoolIds(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    tokenPoolIds(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     totalRewardWeight(overrides?: CallOverrides): Promise<BigNumber>;
 
-    withdraw(_poolId: BigNumberish, _withdrawAmount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    withdraw(
+      _poolId: PromiseOrValue<BigNumberish>,
+      _withdrawAmount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
   };
 
   filters: {
@@ -414,66 +461,104 @@ export interface NaosStakingPools extends BaseContract {
     'PendingGovernanceUpdated(address)'(pendingGovernance?: null): PendingGovernanceUpdatedEventFilter;
     PendingGovernanceUpdated(pendingGovernance?: null): PendingGovernanceUpdatedEventFilter;
 
-    'PoolCreated(uint256,address)'(poolId?: BigNumberish | null, token?: string | null): PoolCreatedEventFilter;
-    PoolCreated(poolId?: BigNumberish | null, token?: string | null): PoolCreatedEventFilter;
+    'PoolCreated(uint256,address)'(
+      poolId?: PromiseOrValue<BigNumberish> | null,
+      token?: PromiseOrValue<string> | null,
+    ): PoolCreatedEventFilter;
+    PoolCreated(
+      poolId?: PromiseOrValue<BigNumberish> | null,
+      token?: PromiseOrValue<string> | null,
+    ): PoolCreatedEventFilter;
 
     'PoolRewardWeightUpdated(uint256,uint256)'(
-      poolId?: BigNumberish | null,
+      poolId?: PromiseOrValue<BigNumberish> | null,
       rewardWeight?: null,
     ): PoolRewardWeightUpdatedEventFilter;
-    PoolRewardWeightUpdated(poolId?: BigNumberish | null, rewardWeight?: null): PoolRewardWeightUpdatedEventFilter;
+    PoolRewardWeightUpdated(
+      poolId?: PromiseOrValue<BigNumberish> | null,
+      rewardWeight?: null,
+    ): PoolRewardWeightUpdatedEventFilter;
 
     'RewardRateUpdated(uint256)'(rewardRate?: null): RewardRateUpdatedEventFilter;
     RewardRateUpdated(rewardRate?: null): RewardRateUpdatedEventFilter;
 
     'TokensClaimed(address,uint256,uint256)'(
-      user?: string | null,
-      poolId?: BigNumberish | null,
+      user?: PromiseOrValue<string> | null,
+      poolId?: PromiseOrValue<BigNumberish> | null,
       amount?: null,
     ): TokensClaimedEventFilter;
-    TokensClaimed(user?: string | null, poolId?: BigNumberish | null, amount?: null): TokensClaimedEventFilter;
+    TokensClaimed(
+      user?: PromiseOrValue<string> | null,
+      poolId?: PromiseOrValue<BigNumberish> | null,
+      amount?: null,
+    ): TokensClaimedEventFilter;
 
     'TokensDeposited(address,uint256,uint256)'(
-      user?: string | null,
-      poolId?: BigNumberish | null,
+      user?: PromiseOrValue<string> | null,
+      poolId?: PromiseOrValue<BigNumberish> | null,
       amount?: null,
     ): TokensDepositedEventFilter;
-    TokensDeposited(user?: string | null, poolId?: BigNumberish | null, amount?: null): TokensDepositedEventFilter;
+    TokensDeposited(
+      user?: PromiseOrValue<string> | null,
+      poolId?: PromiseOrValue<BigNumberish> | null,
+      amount?: null,
+    ): TokensDepositedEventFilter;
 
     'TokensWithdrawn(address,uint256,uint256)'(
-      user?: string | null,
-      poolId?: BigNumberish | null,
+      user?: PromiseOrValue<string> | null,
+      poolId?: PromiseOrValue<BigNumberish> | null,
       amount?: null,
     ): TokensWithdrawnEventFilter;
-    TokensWithdrawn(user?: string | null, poolId?: BigNumberish | null, amount?: null): TokensWithdrawnEventFilter;
+    TokensWithdrawn(
+      user?: PromiseOrValue<string> | null,
+      poolId?: PromiseOrValue<BigNumberish> | null,
+      amount?: null,
+    ): TokensWithdrawnEventFilter;
   };
 
   estimateGas: {
-    acceptGovernance(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    acceptGovernance(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    claim(_poolId: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
-
-    createPool(_token: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
-
-    deposit(
-      _poolId: BigNumberish,
-      _depositAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    claim(
+      _poolId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    exit(_poolId: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    createPool(
+      _token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    getPoolRewardRate(_poolId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    deposit(
+      _poolId: PromiseOrValue<BigNumberish>,
+      _depositAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    getPoolRewardWeight(_poolId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    exit(
+      _poolId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    getPoolToken(_poolId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getPoolRewardRate(_poolId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getPoolTotalDeposited(_poolId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getPoolRewardWeight(_poolId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getStakeTotalDeposited(_account: string, _poolId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getPoolToken(_poolId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getStakeTotalUnclaimed(_account: string, _poolId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getPoolTotalDeposited(_poolId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    getStakeTotalDeposited(
+      _account: PromiseOrValue<string>,
+      _poolId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
+    getStakeTotalUnclaimed(
+      _account: PromiseOrValue<string>,
+      _poolId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     governance(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -486,72 +571,78 @@ export interface NaosStakingPools extends BaseContract {
     rewardRate(overrides?: CallOverrides): Promise<BigNumber>;
 
     setPendingGovernance(
-      _pendingGovernance: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pendingGovernance: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setRewardRate(
-      _rewardRate: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardRate: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setRewardWeights(
-      _rewardWeights: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardWeights: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    tokenPoolIds(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    tokenPoolIds(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     totalRewardWeight(overrides?: CallOverrides): Promise<BigNumber>;
 
     withdraw(
-      _poolId: BigNumberish,
-      _withdrawAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _poolId: PromiseOrValue<BigNumberish>,
+      _withdrawAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    acceptGovernance(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    acceptGovernance(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     claim(
-      _poolId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _poolId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     createPool(
-      _token: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     deposit(
-      _poolId: BigNumberish,
-      _depositAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _poolId: PromiseOrValue<BigNumberish>,
+      _depositAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     exit(
-      _poolId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _poolId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    getPoolRewardRate(_poolId: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getPoolRewardRate(_poolId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getPoolRewardWeight(_poolId: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getPoolRewardWeight(
+      _poolId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    getPoolToken(_poolId: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getPoolToken(_poolId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getPoolTotalDeposited(_poolId: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getPoolTotalDeposited(
+      _poolId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     getStakeTotalDeposited(
-      _account: string,
-      _poolId: BigNumberish,
+      _account: PromiseOrValue<string>,
+      _poolId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     getStakeTotalUnclaimed(
-      _account: string,
-      _poolId: BigNumberish,
+      _account: PromiseOrValue<string>,
+      _poolId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
@@ -566,28 +657,28 @@ export interface NaosStakingPools extends BaseContract {
     rewardRate(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setPendingGovernance(
-      _pendingGovernance: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pendingGovernance: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setRewardRate(
-      _rewardRate: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardRate: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setRewardWeights(
-      _rewardWeights: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardWeights: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    tokenPoolIds(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    tokenPoolIds(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalRewardWeight(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     withdraw(
-      _poolId: BigNumberish,
-      _withdrawAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _poolId: PromiseOrValue<BigNumberish>,
+      _withdrawAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

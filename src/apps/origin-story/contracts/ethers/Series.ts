@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface SeriesInterface extends utils.Interface {
   functions: {
@@ -73,8 +73,11 @@ export interface SeriesInterface extends utils.Interface {
       | 'vault',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
-  encodeFunctionData(functionFragment: 'bootstrapSeason', values: [BigNumberish, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'bootstrapSeason',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'claim', values?: undefined): string;
   encodeFunctionData(functionFragment: 'claimGovernance', values?: undefined): string;
   encodeFunctionData(functionFragment: 'currentClaimingIndex', values?: undefined): string;
@@ -82,19 +85,19 @@ export interface SeriesInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'expectedClaimingSeason', values?: undefined): string;
   encodeFunctionData(functionFragment: 'expectedStakingSeason', values?: undefined): string;
   encodeFunctionData(functionFragment: 'governor', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'initialize', values: [string, string]): string;
+  encodeFunctionData(functionFragment: 'initialize', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'isGovernor', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'latestStakeTime', values: [string]): string;
+  encodeFunctionData(functionFragment: 'latestStakeTime', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'liveSeason', values?: undefined): string;
   encodeFunctionData(functionFragment: 'ogn', values?: undefined): string;
   encodeFunctionData(functionFragment: 'popSeason', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'pushSeason', values: [string]): string;
-  encodeFunctionData(functionFragment: 'seasons', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setOGN', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setVault', values: [string]): string;
-  encodeFunctionData(functionFragment: 'stake', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'pushSeason', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'seasons', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setOGN', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setVault', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'stake', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transferGovernance', values: [string]): string;
+  encodeFunctionData(functionFragment: 'transferGovernance', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'unstake', values?: undefined): string;
   encodeFunctionData(functionFragment: 'vault', values?: undefined): string;
 
@@ -200,17 +203,17 @@ export interface Series extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    balanceOf(userAddress: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOf(userAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     bootstrapSeason(
-      seasonIndex: BigNumberish,
-      totalStaked: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      seasonIndex: PromiseOrValue<BigNumberish>,
+      totalStaked: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    claim(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    claim(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    claimGovernance(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    claimGovernance(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     currentClaimingIndex(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -223,60 +226,66 @@ export interface Series extends BaseContract {
     governor(overrides?: CallOverrides): Promise<[string]>;
 
     initialize(
-      ogn_: string,
-      vault_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      ogn_: PromiseOrValue<string>,
+      vault_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     isGovernor(overrides?: CallOverrides): Promise<[boolean]>;
 
-    latestStakeTime(userAddress: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    latestStakeTime(userAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     liveSeason(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     ogn(overrides?: CallOverrides): Promise<[string]>;
 
-    popSeason(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    popSeason(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     pushSeason(
-      season: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      season: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    seasons(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    seasons(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
-    setOGN(ogn_: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    setOGN(
+      ogn_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
-    setVault(vault_: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    setVault(
+      vault_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     stake(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transferGovernance(
-      _newGovernor: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newGovernor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    unstake(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    unstake(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     vault(overrides?: CallOverrides): Promise<[string]>;
   };
 
-  balanceOf(userAddress: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(userAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   bootstrapSeason(
-    seasonIndex: BigNumberish,
-    totalStaked: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    seasonIndex: PromiseOrValue<BigNumberish>,
+    totalStaked: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  claim(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  claim(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  claimGovernance(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  claimGovernance(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   currentClaimingIndex(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -289,49 +298,62 @@ export interface Series extends BaseContract {
   governor(overrides?: CallOverrides): Promise<string>;
 
   initialize(
-    ogn_: string,
-    vault_: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    ogn_: PromiseOrValue<string>,
+    vault_: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   isGovernor(overrides?: CallOverrides): Promise<boolean>;
 
-  latestStakeTime(userAddress: string, overrides?: CallOverrides): Promise<BigNumber>;
+  latestStakeTime(userAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   liveSeason(overrides?: CallOverrides): Promise<BigNumber>;
 
   ogn(overrides?: CallOverrides): Promise<string>;
 
-  popSeason(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  popSeason(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  pushSeason(season: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  pushSeason(
+    season: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
-  seasons(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  seasons(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
-  setOGN(ogn_: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  setOGN(
+    ogn_: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
-  setVault(vault_: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  setVault(
+    vault_: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   stake(
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   transferGovernance(
-    _newGovernor: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _newGovernor: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  unstake(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  unstake(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   vault(overrides?: CallOverrides): Promise<string>;
 
   callStatic: {
-    balanceOf(userAddress: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(userAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    bootstrapSeason(seasonIndex: BigNumberish, totalStaked: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    bootstrapSeason(
+      seasonIndex: PromiseOrValue<BigNumberish>,
+      totalStaked: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     claim(overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
 
@@ -347,11 +369,11 @@ export interface Series extends BaseContract {
 
     governor(overrides?: CallOverrides): Promise<string>;
 
-    initialize(ogn_: string, vault_: string, overrides?: CallOverrides): Promise<void>;
+    initialize(ogn_: PromiseOrValue<string>, vault_: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     isGovernor(overrides?: CallOverrides): Promise<boolean>;
 
-    latestStakeTime(userAddress: string, overrides?: CallOverrides): Promise<BigNumber>;
+    latestStakeTime(userAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     liveSeason(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -359,19 +381,19 @@ export interface Series extends BaseContract {
 
     popSeason(overrides?: CallOverrides): Promise<void>;
 
-    pushSeason(season: string, overrides?: CallOverrides): Promise<void>;
+    pushSeason(season: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    seasons(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    seasons(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
-    setOGN(ogn_: string, overrides?: CallOverrides): Promise<void>;
+    setOGN(ogn_: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setVault(vault_: string, overrides?: CallOverrides): Promise<void>;
+    setVault(vault_: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    stake(amount: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+    stake(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transferGovernance(_newGovernor: string, overrides?: CallOverrides): Promise<void>;
+    transferGovernance(_newGovernor: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     unstake(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -380,45 +402,57 @@ export interface Series extends BaseContract {
 
   filters: {
     'GovernorshipTransferred(address,address)'(
-      previousGovernor?: string | null,
-      newGovernor?: string | null,
+      previousGovernor?: PromiseOrValue<string> | null,
+      newGovernor?: PromiseOrValue<string> | null,
     ): GovernorshipTransferredEventFilter;
     GovernorshipTransferred(
-      previousGovernor?: string | null,
-      newGovernor?: string | null,
+      previousGovernor?: PromiseOrValue<string> | null,
+      newGovernor?: PromiseOrValue<string> | null,
     ): GovernorshipTransferredEventFilter;
 
-    'NewSeason(uint256,address)'(number?: BigNumberish | null, season?: string | null): NewSeasonEventFilter;
-    NewSeason(number?: BigNumberish | null, season?: string | null): NewSeasonEventFilter;
+    'NewSeason(uint256,address)'(
+      number?: PromiseOrValue<BigNumberish> | null,
+      season?: PromiseOrValue<string> | null,
+    ): NewSeasonEventFilter;
+    NewSeason(
+      number?: PromiseOrValue<BigNumberish> | null,
+      season?: PromiseOrValue<string> | null,
+    ): NewSeasonEventFilter;
 
     'PendingGovernorshipTransfer(address,address)'(
-      previousGovernor?: string | null,
-      newGovernor?: string | null,
+      previousGovernor?: PromiseOrValue<string> | null,
+      newGovernor?: PromiseOrValue<string> | null,
     ): PendingGovernorshipTransferEventFilter;
     PendingGovernorshipTransfer(
-      previousGovernor?: string | null,
-      newGovernor?: string | null,
+      previousGovernor?: PromiseOrValue<string> | null,
+      newGovernor?: PromiseOrValue<string> | null,
     ): PendingGovernorshipTransferEventFilter;
 
-    'SeasonCancelled(address)'(season?: string | null): SeasonCancelledEventFilter;
-    SeasonCancelled(season?: string | null): SeasonCancelledEventFilter;
+    'SeasonCancelled(address)'(season?: PromiseOrValue<string> | null): SeasonCancelledEventFilter;
+    SeasonCancelled(season?: PromiseOrValue<string> | null): SeasonCancelledEventFilter;
 
-    'SeasonStart(uint256,address)'(number?: BigNumberish | null, season?: string | null): SeasonStartEventFilter;
-    SeasonStart(number?: BigNumberish | null, season?: string | null): SeasonStartEventFilter;
+    'SeasonStart(uint256,address)'(
+      number?: PromiseOrValue<BigNumberish> | null,
+      season?: PromiseOrValue<string> | null,
+    ): SeasonStartEventFilter;
+    SeasonStart(
+      number?: PromiseOrValue<BigNumberish> | null,
+      season?: PromiseOrValue<string> | null,
+    ): SeasonStartEventFilter;
   };
 
   estimateGas: {
-    balanceOf(userAddress: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(userAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     bootstrapSeason(
-      seasonIndex: BigNumberish,
-      totalStaked: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      seasonIndex: PromiseOrValue<BigNumberish>,
+      totalStaked: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    claim(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    claim(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    claimGovernance(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    claimGovernance(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     currentClaimingIndex(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -431,55 +465,64 @@ export interface Series extends BaseContract {
     governor(overrides?: CallOverrides): Promise<BigNumber>;
 
     initialize(
-      ogn_: string,
-      vault_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      ogn_: PromiseOrValue<string>,
+      vault_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     isGovernor(overrides?: CallOverrides): Promise<BigNumber>;
 
-    latestStakeTime(userAddress: string, overrides?: CallOverrides): Promise<BigNumber>;
+    latestStakeTime(userAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     liveSeason(overrides?: CallOverrides): Promise<BigNumber>;
 
     ogn(overrides?: CallOverrides): Promise<BigNumber>;
 
-    popSeason(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    popSeason(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    pushSeason(season: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    pushSeason(
+      season: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    seasons(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    seasons(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    setOGN(ogn_: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setOGN(ogn_: PromiseOrValue<string>, overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    setVault(vault_: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setVault(
+      vault_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    stake(amount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    stake(
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferGovernance(
-      _newGovernor: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newGovernor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    unstake(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    unstake(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     vault(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    balanceOf(userAddress: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    balanceOf(userAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     bootstrapSeason(
-      seasonIndex: BigNumberish,
-      totalStaked: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      seasonIndex: PromiseOrValue<BigNumberish>,
+      totalStaked: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    claim(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    claim(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    claimGovernance(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    claimGovernance(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     currentClaimingIndex(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -492,48 +535,51 @@ export interface Series extends BaseContract {
     governor(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     initialize(
-      ogn_: string,
-      vault_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      ogn_: PromiseOrValue<string>,
+      vault_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     isGovernor(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    latestStakeTime(userAddress: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    latestStakeTime(userAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     liveSeason(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     ogn(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    popSeason(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    popSeason(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     pushSeason(
-      season: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      season: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    seasons(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    seasons(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    setOGN(ogn_: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    setOGN(
+      ogn_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
     setVault(
-      vault_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vault_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     stake(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferGovernance(
-      _newGovernor: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newGovernor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    unstake(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    unstake(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     vault(overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };

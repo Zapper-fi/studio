@@ -15,13 +15,13 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export declare namespace TectonicLens {
   export type AccountLimitsStruct = {
-    markets: string[];
-    liquidity: BigNumberish;
-    shortfall: BigNumberish;
+    markets: PromiseOrValue<string>[];
+    liquidity: PromiseOrValue<BigNumberish>;
+    shortfall: PromiseOrValue<BigNumberish>;
   };
 
   export type AccountLimitsStructOutput = [string[], BigNumber, BigNumber] & {
@@ -31,20 +31,20 @@ export declare namespace TectonicLens {
   };
 
   export type GovBravoProposalStruct = {
-    proposalId: BigNumberish;
-    proposer: string;
-    eta: BigNumberish;
-    targets: string[];
-    values: BigNumberish[];
-    signatures: string[];
-    calldatas: BytesLike[];
-    startBlock: BigNumberish;
-    endBlock: BigNumberish;
-    forVotes: BigNumberish;
-    againstVotes: BigNumberish;
-    abstainVotes: BigNumberish;
-    canceled: boolean;
-    executed: boolean;
+    proposalId: PromiseOrValue<BigNumberish>;
+    proposer: PromiseOrValue<string>;
+    eta: PromiseOrValue<BigNumberish>;
+    targets: PromiseOrValue<string>[];
+    values: PromiseOrValue<BigNumberish>[];
+    signatures: PromiseOrValue<string>[];
+    calldatas: PromiseOrValue<BytesLike>[];
+    startBlock: PromiseOrValue<BigNumberish>;
+    endBlock: PromiseOrValue<BigNumberish>;
+    forVotes: PromiseOrValue<BigNumberish>;
+    againstVotes: PromiseOrValue<BigNumberish>;
+    abstainVotes: PromiseOrValue<BigNumberish>;
+    canceled: PromiseOrValue<boolean>;
+    executed: PromiseOrValue<boolean>;
   };
 
   export type GovBravoProposalStructOutput = [
@@ -80,10 +80,10 @@ export declare namespace TectonicLens {
   };
 
   export type GovBravoReceiptStruct = {
-    proposalId: BigNumberish;
-    hasVoted: boolean;
-    support: BigNumberish;
-    votes: BigNumberish;
+    proposalId: PromiseOrValue<BigNumberish>;
+    hasVoted: PromiseOrValue<boolean>;
+    support: PromiseOrValue<BigNumberish>;
+    votes: PromiseOrValue<BigNumberish>;
   };
 
   export type GovBravoReceiptStructOutput = [BigNumber, boolean, number, BigNumber] & {
@@ -94,19 +94,19 @@ export declare namespace TectonicLens {
   };
 
   export type GovProposalStruct = {
-    proposalId: BigNumberish;
-    proposer: string;
-    eta: BigNumberish;
-    targets: string[];
-    values: BigNumberish[];
-    signatures: string[];
-    calldatas: BytesLike[];
-    startBlock: BigNumberish;
-    endBlock: BigNumberish;
-    forVotes: BigNumberish;
-    againstVotes: BigNumberish;
-    canceled: boolean;
-    executed: boolean;
+    proposalId: PromiseOrValue<BigNumberish>;
+    proposer: PromiseOrValue<string>;
+    eta: PromiseOrValue<BigNumberish>;
+    targets: PromiseOrValue<string>[];
+    values: PromiseOrValue<BigNumberish>[];
+    signatures: PromiseOrValue<string>[];
+    calldatas: PromiseOrValue<BytesLike>[];
+    startBlock: PromiseOrValue<BigNumberish>;
+    endBlock: PromiseOrValue<BigNumberish>;
+    forVotes: PromiseOrValue<BigNumberish>;
+    againstVotes: PromiseOrValue<BigNumberish>;
+    canceled: PromiseOrValue<boolean>;
+    executed: PromiseOrValue<boolean>;
   };
 
   export type GovProposalStructOutput = [
@@ -140,10 +140,10 @@ export declare namespace TectonicLens {
   };
 
   export type GovReceiptStruct = {
-    proposalId: BigNumberish;
-    hasVoted: boolean;
-    support: boolean;
-    votes: BigNumberish;
+    proposalId: PromiseOrValue<BigNumberish>;
+    hasVoted: PromiseOrValue<boolean>;
+    support: PromiseOrValue<boolean>;
+    votes: PromiseOrValue<BigNumberish>;
   };
 
   export type GovReceiptStructOutput = [BigNumber, boolean, boolean, BigNumber] & {
@@ -154,9 +154,9 @@ export declare namespace TectonicLens {
   };
 
   export type TonicBalanceMetadataStruct = {
-    balance: BigNumberish;
-    votes: BigNumberish;
-    delegate: string;
+    balance: PromiseOrValue<BigNumberish>;
+    votes: PromiseOrValue<BigNumberish>;
+    delegate: PromiseOrValue<string>;
   };
 
   export type TonicBalanceMetadataStructOutput = [BigNumber, BigNumber, string] & {
@@ -166,10 +166,10 @@ export declare namespace TectonicLens {
   };
 
   export type TonicBalanceMetadataExtStruct = {
-    balance: BigNumberish;
-    votes: BigNumberish;
-    delegate: string;
-    allocated: BigNumberish;
+    balance: PromiseOrValue<BigNumberish>;
+    votes: PromiseOrValue<BigNumberish>;
+    delegate: PromiseOrValue<string>;
+    allocated: PromiseOrValue<BigNumberish>;
   };
 
   export type TonicBalanceMetadataExtStructOutput = [BigNumber, BigNumber, string, BigNumber] & {
@@ -180,8 +180,8 @@ export declare namespace TectonicLens {
   };
 
   export type TonicVotesStruct = {
-    blockNumber: BigNumberish;
-    votes: BigNumberish;
+    blockNumber: PromiseOrValue<BigNumberish>;
+    votes: PromiseOrValue<BigNumberish>;
   };
 
   export type TonicVotesStructOutput = [BigNumber, BigNumber] & {
@@ -190,12 +190,12 @@ export declare namespace TectonicLens {
   };
 
   export type TTokenBalancesStruct = {
-    tToken: string;
-    balanceOf: BigNumberish;
-    borrowBalanceCurrent: BigNumberish;
-    balanceOfUnderlying: BigNumberish;
-    tokenBalance: BigNumberish;
-    tokenAllowance: BigNumberish;
+    tToken: PromiseOrValue<string>;
+    balanceOf: PromiseOrValue<BigNumberish>;
+    borrowBalanceCurrent: PromiseOrValue<BigNumberish>;
+    balanceOfUnderlying: PromiseOrValue<BigNumberish>;
+    tokenBalance: PromiseOrValue<BigNumberish>;
+    tokenAllowance: PromiseOrValue<BigNumberish>;
   };
 
   export type TTokenBalancesStructOutput = [string, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -208,20 +208,20 @@ export declare namespace TectonicLens {
   };
 
   export type TTokenMetadataStruct = {
-    tToken: string;
-    exchangeRateCurrent: BigNumberish;
-    supplyRatePerBlock: BigNumberish;
-    borrowRatePerBlock: BigNumberish;
-    reserveFactorMantissa: BigNumberish;
-    totalBorrows: BigNumberish;
-    totalReserves: BigNumberish;
-    totalSupply: BigNumberish;
-    totalCash: BigNumberish;
-    isListed: boolean;
-    collateralFactorMantissa: BigNumberish;
-    underlyingAssetAddress: string;
-    tTokenDecimals: BigNumberish;
-    underlyingDecimals: BigNumberish;
+    tToken: PromiseOrValue<string>;
+    exchangeRateCurrent: PromiseOrValue<BigNumberish>;
+    supplyRatePerBlock: PromiseOrValue<BigNumberish>;
+    borrowRatePerBlock: PromiseOrValue<BigNumberish>;
+    reserveFactorMantissa: PromiseOrValue<BigNumberish>;
+    totalBorrows: PromiseOrValue<BigNumberish>;
+    totalReserves: PromiseOrValue<BigNumberish>;
+    totalSupply: PromiseOrValue<BigNumberish>;
+    totalCash: PromiseOrValue<BigNumberish>;
+    isListed: PromiseOrValue<boolean>;
+    collateralFactorMantissa: PromiseOrValue<BigNumberish>;
+    underlyingAssetAddress: PromiseOrValue<string>;
+    tTokenDecimals: PromiseOrValue<BigNumberish>;
+    underlyingDecimals: PromiseOrValue<BigNumberish>;
   };
 
   export type TTokenMetadataStructOutput = [
@@ -257,8 +257,8 @@ export declare namespace TectonicLens {
   };
 
   export type TTokenUnderlyingPriceStruct = {
-    tToken: string;
-    underlyingPrice: BigNumberish;
+    tToken: PromiseOrValue<string>;
+    underlyingPrice: PromiseOrValue<BigNumberish>;
   };
 
   export type TTokenUnderlyingPriceStructOutput = [string, BigNumber] & {
@@ -303,20 +303,50 @@ export interface TectonicLensInterface extends utils.Interface {
       | 'tTokenUnderlyingPriceAll',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'getAccountLimits', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'getGovBravoProposals', values: [string, BigNumberish[]]): string;
-  encodeFunctionData(functionFragment: 'getGovBravoReceipts', values: [string, string, BigNumberish[]]): string;
-  encodeFunctionData(functionFragment: 'getGovProposals', values: [string, BigNumberish[]]): string;
-  encodeFunctionData(functionFragment: 'getGovReceipts', values: [string, string, BigNumberish[]]): string;
-  encodeFunctionData(functionFragment: 'getTonicBalanceMetadata', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'getTonicBalanceMetadataExt', values: [string, string, string]): string;
-  encodeFunctionData(functionFragment: 'getTonicVotes', values: [string, string, BigNumberish[]]): string;
-  encodeFunctionData(functionFragment: 'tTokenBalances', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'tTokenBalancesAll', values: [string[], string]): string;
-  encodeFunctionData(functionFragment: 'tTokenMetadata', values: [string]): string;
-  encodeFunctionData(functionFragment: 'tTokenMetadataAll', values: [string[]]): string;
-  encodeFunctionData(functionFragment: 'tTokenUnderlyingPrice', values: [string]): string;
-  encodeFunctionData(functionFragment: 'tTokenUnderlyingPriceAll', values: [string[]]): string;
+  encodeFunctionData(
+    functionFragment: 'getAccountLimits',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'getGovBravoProposals',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>[]],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'getGovBravoReceipts',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>[]],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'getGovProposals',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>[]],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'getGovReceipts',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>[]],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'getTonicBalanceMetadata',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'getTonicBalanceMetadataExt',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'getTonicVotes',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>[]],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'tTokenBalances',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'tTokenBalancesAll',
+    values: [PromiseOrValue<string>[], PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'tTokenMetadata', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'tTokenMetadataAll', values: [PromiseOrValue<string>[]]): string;
+  encodeFunctionData(functionFragment: 'tTokenUnderlyingPrice', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'tTokenUnderlyingPriceAll', values: [PromiseOrValue<string>[]]): string;
 
   decodeFunctionResult(functionFragment: 'getAccountLimits', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getGovBravoProposals', data: BytesLike): Result;
@@ -360,250 +390,256 @@ export interface TectonicLens extends BaseContract {
 
   functions: {
     getAccountLimits(
-      tectonicCore: string,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tectonicCore: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     getGovBravoProposals(
-      governor: string,
-      proposalIds: BigNumberish[],
+      governor: PromiseOrValue<string>,
+      proposalIds: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides,
     ): Promise<[TectonicLens.GovBravoProposalStructOutput[]]>;
 
     getGovBravoReceipts(
-      governor: string,
-      voter: string,
-      proposalIds: BigNumberish[],
+      governor: PromiseOrValue<string>,
+      voter: PromiseOrValue<string>,
+      proposalIds: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides,
     ): Promise<[TectonicLens.GovBravoReceiptStructOutput[]]>;
 
     getGovProposals(
-      governor: string,
-      proposalIds: BigNumberish[],
+      governor: PromiseOrValue<string>,
+      proposalIds: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides,
     ): Promise<[TectonicLens.GovProposalStructOutput[]]>;
 
     getGovReceipts(
-      governor: string,
-      voter: string,
-      proposalIds: BigNumberish[],
+      governor: PromiseOrValue<string>,
+      voter: PromiseOrValue<string>,
+      proposalIds: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides,
     ): Promise<[TectonicLens.GovReceiptStructOutput[]]>;
 
     getTonicBalanceMetadata(
-      tonic: string,
-      account: string,
+      tonic: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[TectonicLens.TonicBalanceMetadataStructOutput]>;
 
     getTonicBalanceMetadataExt(
-      tonic: string,
-      tectonicCore: string,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tonic: PromiseOrValue<string>,
+      tectonicCore: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     getTonicVotes(
-      tonic: string,
-      account: string,
-      blockNumbers: BigNumberish[],
+      tonic: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
+      blockNumbers: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides,
     ): Promise<[TectonicLens.TonicVotesStructOutput[]]>;
 
     tTokenBalances(
-      tToken: string,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tToken: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     tTokenBalancesAll(
-      tTokens: string[],
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tTokens: PromiseOrValue<string>[],
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     tTokenMetadata(
-      tToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     tTokenMetadataAll(
-      tTokens: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tTokens: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     tTokenUnderlyingPrice(
-      tToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     tTokenUnderlyingPriceAll(
-      tTokens: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tTokens: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
   getAccountLimits(
-    tectonicCore: string,
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    tectonicCore: PromiseOrValue<string>,
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   getGovBravoProposals(
-    governor: string,
-    proposalIds: BigNumberish[],
+    governor: PromiseOrValue<string>,
+    proposalIds: PromiseOrValue<BigNumberish>[],
     overrides?: CallOverrides,
   ): Promise<TectonicLens.GovBravoProposalStructOutput[]>;
 
   getGovBravoReceipts(
-    governor: string,
-    voter: string,
-    proposalIds: BigNumberish[],
+    governor: PromiseOrValue<string>,
+    voter: PromiseOrValue<string>,
+    proposalIds: PromiseOrValue<BigNumberish>[],
     overrides?: CallOverrides,
   ): Promise<TectonicLens.GovBravoReceiptStructOutput[]>;
 
   getGovProposals(
-    governor: string,
-    proposalIds: BigNumberish[],
+    governor: PromiseOrValue<string>,
+    proposalIds: PromiseOrValue<BigNumberish>[],
     overrides?: CallOverrides,
   ): Promise<TectonicLens.GovProposalStructOutput[]>;
 
   getGovReceipts(
-    governor: string,
-    voter: string,
-    proposalIds: BigNumberish[],
+    governor: PromiseOrValue<string>,
+    voter: PromiseOrValue<string>,
+    proposalIds: PromiseOrValue<BigNumberish>[],
     overrides?: CallOverrides,
   ): Promise<TectonicLens.GovReceiptStructOutput[]>;
 
   getTonicBalanceMetadata(
-    tonic: string,
-    account: string,
+    tonic: PromiseOrValue<string>,
+    account: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<TectonicLens.TonicBalanceMetadataStructOutput>;
 
   getTonicBalanceMetadataExt(
-    tonic: string,
-    tectonicCore: string,
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    tonic: PromiseOrValue<string>,
+    tectonicCore: PromiseOrValue<string>,
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   getTonicVotes(
-    tonic: string,
-    account: string,
-    blockNumbers: BigNumberish[],
+    tonic: PromiseOrValue<string>,
+    account: PromiseOrValue<string>,
+    blockNumbers: PromiseOrValue<BigNumberish>[],
     overrides?: CallOverrides,
   ): Promise<TectonicLens.TonicVotesStructOutput[]>;
 
   tTokenBalances(
-    tToken: string,
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    tToken: PromiseOrValue<string>,
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   tTokenBalancesAll(
-    tTokens: string[],
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    tTokens: PromiseOrValue<string>[],
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   tTokenMetadata(
-    tToken: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    tToken: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   tTokenMetadataAll(
-    tTokens: string[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    tTokens: PromiseOrValue<string>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   tTokenUnderlyingPrice(
-    tToken: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    tToken: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   tTokenUnderlyingPriceAll(
-    tTokens: string[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    tTokens: PromiseOrValue<string>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
     getAccountLimits(
-      tectonicCore: string,
-      account: string,
+      tectonicCore: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<TectonicLens.AccountLimitsStructOutput>;
 
     getGovBravoProposals(
-      governor: string,
-      proposalIds: BigNumberish[],
+      governor: PromiseOrValue<string>,
+      proposalIds: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides,
     ): Promise<TectonicLens.GovBravoProposalStructOutput[]>;
 
     getGovBravoReceipts(
-      governor: string,
-      voter: string,
-      proposalIds: BigNumberish[],
+      governor: PromiseOrValue<string>,
+      voter: PromiseOrValue<string>,
+      proposalIds: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides,
     ): Promise<TectonicLens.GovBravoReceiptStructOutput[]>;
 
     getGovProposals(
-      governor: string,
-      proposalIds: BigNumberish[],
+      governor: PromiseOrValue<string>,
+      proposalIds: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides,
     ): Promise<TectonicLens.GovProposalStructOutput[]>;
 
     getGovReceipts(
-      governor: string,
-      voter: string,
-      proposalIds: BigNumberish[],
+      governor: PromiseOrValue<string>,
+      voter: PromiseOrValue<string>,
+      proposalIds: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides,
     ): Promise<TectonicLens.GovReceiptStructOutput[]>;
 
     getTonicBalanceMetadata(
-      tonic: string,
-      account: string,
+      tonic: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<TectonicLens.TonicBalanceMetadataStructOutput>;
 
     getTonicBalanceMetadataExt(
-      tonic: string,
-      tectonicCore: string,
-      account: string,
+      tonic: PromiseOrValue<string>,
+      tectonicCore: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<TectonicLens.TonicBalanceMetadataExtStructOutput>;
 
     getTonicVotes(
-      tonic: string,
-      account: string,
-      blockNumbers: BigNumberish[],
+      tonic: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
+      blockNumbers: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides,
     ): Promise<TectonicLens.TonicVotesStructOutput[]>;
 
     tTokenBalances(
-      tToken: string,
-      account: string,
+      tToken: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<TectonicLens.TTokenBalancesStructOutput>;
 
     tTokenBalancesAll(
-      tTokens: string[],
-      account: string,
+      tTokens: PromiseOrValue<string>[],
+      account: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<TectonicLens.TTokenBalancesStructOutput[]>;
 
-    tTokenMetadata(tToken: string, overrides?: CallOverrides): Promise<TectonicLens.TTokenMetadataStructOutput>;
+    tTokenMetadata(
+      tToken: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<TectonicLens.TTokenMetadataStructOutput>;
 
-    tTokenMetadataAll(tTokens: string[], overrides?: CallOverrides): Promise<TectonicLens.TTokenMetadataStructOutput[]>;
+    tTokenMetadataAll(
+      tTokens: PromiseOrValue<string>[],
+      overrides?: CallOverrides,
+    ): Promise<TectonicLens.TTokenMetadataStructOutput[]>;
 
     tTokenUnderlyingPrice(
-      tToken: string,
+      tToken: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<TectonicLens.TTokenUnderlyingPriceStructOutput>;
 
     tTokenUnderlyingPriceAll(
-      tTokens: string[],
+      tTokens: PromiseOrValue<string>[],
       overrides?: CallOverrides,
     ): Promise<TectonicLens.TTokenUnderlyingPriceStructOutput[]>;
   };
@@ -612,154 +648,173 @@ export interface TectonicLens extends BaseContract {
 
   estimateGas: {
     getAccountLimits(
-      tectonicCore: string,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tectonicCore: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    getGovBravoProposals(governor: string, proposalIds: BigNumberish[], overrides?: CallOverrides): Promise<BigNumber>;
+    getGovBravoProposals(
+      governor: PromiseOrValue<string>,
+      proposalIds: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     getGovBravoReceipts(
-      governor: string,
-      voter: string,
-      proposalIds: BigNumberish[],
+      governor: PromiseOrValue<string>,
+      voter: PromiseOrValue<string>,
+      proposalIds: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    getGovProposals(governor: string, proposalIds: BigNumberish[], overrides?: CallOverrides): Promise<BigNumber>;
+    getGovProposals(
+      governor: PromiseOrValue<string>,
+      proposalIds: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     getGovReceipts(
-      governor: string,
-      voter: string,
-      proposalIds: BigNumberish[],
+      governor: PromiseOrValue<string>,
+      voter: PromiseOrValue<string>,
+      proposalIds: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    getTonicBalanceMetadata(tonic: string, account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getTonicBalanceMetadata(
+      tonic: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     getTonicBalanceMetadataExt(
-      tonic: string,
-      tectonicCore: string,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tonic: PromiseOrValue<string>,
+      tectonicCore: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     getTonicVotes(
-      tonic: string,
-      account: string,
-      blockNumbers: BigNumberish[],
+      tonic: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
+      blockNumbers: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     tTokenBalances(
-      tToken: string,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tToken: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     tTokenBalancesAll(
-      tTokens: string[],
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tTokens: PromiseOrValue<string>[],
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    tTokenMetadata(tToken: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    tTokenMetadata(
+      tToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     tTokenMetadataAll(
-      tTokens: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tTokens: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     tTokenUnderlyingPrice(
-      tToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     tTokenUnderlyingPriceAll(
-      tTokens: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tTokens: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     getAccountLimits(
-      tectonicCore: string,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tectonicCore: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     getGovBravoProposals(
-      governor: string,
-      proposalIds: BigNumberish[],
+      governor: PromiseOrValue<string>,
+      proposalIds: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     getGovBravoReceipts(
-      governor: string,
-      voter: string,
-      proposalIds: BigNumberish[],
+      governor: PromiseOrValue<string>,
+      voter: PromiseOrValue<string>,
+      proposalIds: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     getGovProposals(
-      governor: string,
-      proposalIds: BigNumberish[],
+      governor: PromiseOrValue<string>,
+      proposalIds: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     getGovReceipts(
-      governor: string,
-      voter: string,
-      proposalIds: BigNumberish[],
+      governor: PromiseOrValue<string>,
+      voter: PromiseOrValue<string>,
+      proposalIds: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    getTonicBalanceMetadata(tonic: string, account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getTonicBalanceMetadata(
+      tonic: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     getTonicBalanceMetadataExt(
-      tonic: string,
-      tectonicCore: string,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tonic: PromiseOrValue<string>,
+      tectonicCore: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     getTonicVotes(
-      tonic: string,
-      account: string,
-      blockNumbers: BigNumberish[],
+      tonic: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
+      blockNumbers: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     tTokenBalances(
-      tToken: string,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tToken: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     tTokenBalancesAll(
-      tTokens: string[],
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tTokens: PromiseOrValue<string>[],
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     tTokenMetadata(
-      tToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     tTokenMetadataAll(
-      tTokens: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tTokens: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     tTokenUnderlyingPrice(
-      tToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     tTokenUnderlyingPriceAll(
-      tTokens: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tTokens: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

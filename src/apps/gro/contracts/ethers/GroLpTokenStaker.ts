@@ -15,14 +15,14 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export declare namespace StakerStructs {
   export type PoolInfoStruct = {
-    accGroPerShare: BigNumberish;
-    allocPoint: BigNumberish;
-    lastRewardBlock: BigNumberish;
-    lpToken: string;
+    accGroPerShare: PromiseOrValue<BigNumberish>;
+    allocPoint: PromiseOrValue<BigNumberish>;
+    lastRewardBlock: PromiseOrValue<BigNumberish>;
+    lpToken: PromiseOrValue<string>;
   };
 
   export type PoolInfoStructOutput = [BigNumber, BigNumber, BigNumber, string] & {
@@ -139,55 +139,88 @@ export interface GroLpTokenStakerInterface extends utils.Interface {
 
   encodeFunctionData(functionFragment: 'PWRD', values?: undefined): string;
   encodeFunctionData(functionFragment: 'TIME_LOCK', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'activeLpTokens', values: [string]): string;
-  encodeFunctionData(functionFragment: 'add', values: [BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'claim', values: [boolean, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'claimable', values: [BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'deposit', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'emergencyWithdraw', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'getUserPwrd', values: [string]): string;
+  encodeFunctionData(functionFragment: 'activeLpTokens', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'add', values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'claim',
+    values: [PromiseOrValue<boolean>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'claimable',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'deposit',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'emergencyWithdraw', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'getUserPwrd', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'groPerBlock', values?: undefined): string;
   encodeFunctionData(functionFragment: 'initialize', values?: undefined): string;
   encodeFunctionData(functionFragment: 'initialized', values?: undefined): string;
   encodeFunctionData(functionFragment: 'manager', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'massUpdatePools', values: [BigNumberish[]]): string;
+  encodeFunctionData(functionFragment: 'massUpdatePools', values: [PromiseOrValue<BigNumberish>[]]): string;
   encodeFunctionData(functionFragment: 'maxGroPerBlock', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'migrate', values: [BigNumberish[]]): string;
-  encodeFunctionData(functionFragment: 'migrateFrom', values: [BigNumberish[]]): string;
+  encodeFunctionData(functionFragment: 'migrate', values: [PromiseOrValue<BigNumberish>[]]): string;
+  encodeFunctionData(functionFragment: 'migrateFrom', values: [PromiseOrValue<BigNumberish>[]]): string;
   encodeFunctionData(functionFragment: 'migrateFromV1', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'migrateUser', values: [string, BigNumberish[]]): string;
+  encodeFunctionData(
+    functionFragment: 'migrateUser',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>[]],
+  ): string;
   encodeFunctionData(functionFragment: 'migratedFromV1', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'multiClaim', values: [boolean, BigNumberish[]]): string;
-  encodeFunctionData(functionFragment: 'multiWithdraw', values: [BigNumberish[], BigNumberish[]]): string;
+  encodeFunctionData(
+    functionFragment: 'multiClaim',
+    values: [PromiseOrValue<boolean>, PromiseOrValue<BigNumberish>[]],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'multiWithdraw',
+    values: [PromiseOrValue<BigNumberish>[], PromiseOrValue<BigNumberish>[]],
+  ): string;
   encodeFunctionData(
     functionFragment: 'multiWithdrawAndClaim',
-    values: [boolean, BigNumberish[], BigNumberish[]],
+    values: [PromiseOrValue<boolean>, PromiseOrValue<BigNumberish>[], PromiseOrValue<BigNumberish>[]],
   ): string;
   encodeFunctionData(functionFragment: 'newStaker', values?: undefined): string;
   encodeFunctionData(functionFragment: 'oldStaker', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'pPid', values?: undefined): string;
   encodeFunctionData(functionFragment: 'paused', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'poolInfo', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'poolInfo', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'poolLength', values?: undefined): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'set', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setGroPerBlock', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setManager', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setMaxGroPerBlock', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setNewStaker', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setOldStaker', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setPwrdPid', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setStatus', values: [boolean]): string;
-  encodeFunctionData(functionFragment: 'setVesting', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'set',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'setGroPerBlock', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setManager', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setMaxGroPerBlock', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setNewStaker', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setOldStaker', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setPwrdPid', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setStatus', values: [PromiseOrValue<boolean>]): string;
+  encodeFunctionData(functionFragment: 'setVesting', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'totalAllocPoint', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
-  encodeFunctionData(functionFragment: 'updatePool', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'userInfo', values: [BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'userMigrated', values: [string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'updatePool', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'userInfo',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'userMigrated',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'vesting', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'withdraw', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'withdrawAndClaim', values: [boolean, BigNumberish, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'withdraw',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'withdrawAndClaim',
+    values: [PromiseOrValue<boolean>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
 
   decodeFunctionResult(functionFragment: 'PWRD', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'TIME_LOCK', data: BytesLike): Result;
@@ -518,87 +551,91 @@ export interface GroLpTokenStaker extends BaseContract {
 
     TIME_LOCK(overrides?: CallOverrides): Promise<[string]>;
 
-    activeLpTokens(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    activeLpTokens(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     add(
-      allocPoint: BigNumberish,
-      _lpToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      allocPoint: PromiseOrValue<BigNumberish>,
+      _lpToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     claim(
-      vest: boolean,
-      pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vest: PromiseOrValue<boolean>,
+      pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    claimable(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    claimable(
+      _pid: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     deposit(
-      pid: BigNumberish,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     emergencyWithdraw(
-      pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    getUserPwrd(user: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getUserPwrd(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     groPerBlock(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    initialize(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    initialize(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     initialized(overrides?: CallOverrides): Promise<[boolean]>;
 
     manager(overrides?: CallOverrides): Promise<[string]>;
 
     massUpdatePools(
-      pids: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pids: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     maxGroPerBlock(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     migrate(
-      pids: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pids: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     migrateFrom(
-      pids: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pids: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    migrateFromV1(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    migrateFromV1(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     migrateUser(
-      account: string,
-      pids: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      pids: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     migratedFromV1(overrides?: CallOverrides): Promise<[boolean]>;
 
     multiClaim(
-      vest: boolean,
-      pids: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vest: PromiseOrValue<boolean>,
+      pids: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     multiWithdraw(
-      pids: BigNumberish[],
-      amounts: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pids: PromiseOrValue<BigNumberish>[],
+      amounts: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     multiWithdrawAndClaim(
-      vest: boolean,
-      pids: BigNumberish[],
-      amounts: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vest: PromiseOrValue<boolean>,
+      pids: PromiseOrValue<BigNumberish>[],
+      amounts: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     newStaker(overrides?: CallOverrides): Promise<[string]>;
@@ -612,7 +649,7 @@ export interface GroLpTokenStaker extends BaseContract {
     paused(overrides?: CallOverrides): Promise<[boolean]>;
 
     poolInfo(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, string] & {
@@ -625,87 +662,91 @@ export interface GroLpTokenStaker extends BaseContract {
 
     poolLength(overrides?: CallOverrides): Promise<[BigNumber] & { pools: BigNumber }>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     set(
-      _pid: BigNumberish,
-      _allocPoint: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setGroPerBlock(
-      _groPerBlock: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _groPerBlock: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setManager(
-      _manager: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _manager: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setMaxGroPerBlock(
-      _maxGroPerBlock: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _maxGroPerBlock: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setNewStaker(
-      staker: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      staker: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setOldStaker(
-      staker: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      staker: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setPwrdPid(
-      _pPid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pPid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setStatus(
-      pause: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pause: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setVesting(
-      _vesting: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _vesting: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     totalAllocPoint(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updatePool(
-      pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     userInfo(
-      arg0: BigNumberish,
-      arg1: string,
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; rewardDebt: BigNumber }>;
 
-    userMigrated(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<[boolean]>;
+    userMigrated(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[boolean]>;
 
     vesting(overrides?: CallOverrides): Promise<[string]>;
 
     withdraw(
-      pid: BigNumberish,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     withdrawAndClaim(
-      vest: boolean,
-      pid: BigNumberish,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vest: PromiseOrValue<boolean>,
+      pid: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
@@ -713,87 +754,91 @@ export interface GroLpTokenStaker extends BaseContract {
 
   TIME_LOCK(overrides?: CallOverrides): Promise<string>;
 
-  activeLpTokens(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  activeLpTokens(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   add(
-    allocPoint: BigNumberish,
-    _lpToken: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    allocPoint: PromiseOrValue<BigNumberish>,
+    _lpToken: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   claim(
-    vest: boolean,
-    pid: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    vest: PromiseOrValue<boolean>,
+    pid: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  claimable(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<BigNumber>;
+  claimable(
+    _pid: PromiseOrValue<BigNumberish>,
+    _user: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   deposit(
-    pid: BigNumberish,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    pid: PromiseOrValue<BigNumberish>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   emergencyWithdraw(
-    pid: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    pid: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  getUserPwrd(user: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getUserPwrd(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   groPerBlock(overrides?: CallOverrides): Promise<BigNumber>;
 
-  initialize(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  initialize(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   initialized(overrides?: CallOverrides): Promise<boolean>;
 
   manager(overrides?: CallOverrides): Promise<string>;
 
   massUpdatePools(
-    pids: BigNumberish[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    pids: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   maxGroPerBlock(overrides?: CallOverrides): Promise<BigNumber>;
 
   migrate(
-    pids: BigNumberish[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    pids: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   migrateFrom(
-    pids: BigNumberish[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    pids: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  migrateFromV1(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  migrateFromV1(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   migrateUser(
-    account: string,
-    pids: BigNumberish[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    account: PromiseOrValue<string>,
+    pids: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   migratedFromV1(overrides?: CallOverrides): Promise<boolean>;
 
   multiClaim(
-    vest: boolean,
-    pids: BigNumberish[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    vest: PromiseOrValue<boolean>,
+    pids: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   multiWithdraw(
-    pids: BigNumberish[],
-    amounts: BigNumberish[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    pids: PromiseOrValue<BigNumberish>[],
+    amounts: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   multiWithdrawAndClaim(
-    vest: boolean,
-    pids: BigNumberish[],
-    amounts: BigNumberish[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    vest: PromiseOrValue<boolean>,
+    pids: PromiseOrValue<BigNumberish>[],
+    amounts: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   newStaker(overrides?: CallOverrides): Promise<string>;
@@ -807,7 +852,7 @@ export interface GroLpTokenStaker extends BaseContract {
   paused(overrides?: CallOverrides): Promise<boolean>;
 
   poolInfo(
-    arg0: BigNumberish,
+    arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber, BigNumber, string] & {
@@ -820,84 +865,91 @@ export interface GroLpTokenStaker extends BaseContract {
 
   poolLength(overrides?: CallOverrides): Promise<BigNumber>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   set(
-    _pid: BigNumberish,
-    _allocPoint: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pid: PromiseOrValue<BigNumberish>,
+    _allocPoint: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setGroPerBlock(
-    _groPerBlock: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _groPerBlock: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setManager(
-    _manager: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _manager: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setMaxGroPerBlock(
-    _maxGroPerBlock: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _maxGroPerBlock: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setNewStaker(
-    staker: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    staker: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setOldStaker(
-    staker: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    staker: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setPwrdPid(
-    _pPid: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pPid: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  setStatus(pause: boolean, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  setStatus(
+    pause: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   setVesting(
-    _vesting: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _vesting: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   totalAllocPoint(overrides?: CallOverrides): Promise<BigNumber>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updatePool(
-    pid: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    pid: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   userInfo(
-    arg0: BigNumberish,
-    arg1: string,
+    arg0: PromiseOrValue<BigNumberish>,
+    arg1: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; rewardDebt: BigNumber }>;
 
-  userMigrated(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+  userMigrated(
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<boolean>;
 
   vesting(overrides?: CallOverrides): Promise<string>;
 
   withdraw(
-    pid: BigNumberish,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    pid: PromiseOrValue<BigNumberish>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   withdrawAndClaim(
-    vest: boolean,
-    pid: BigNumberish,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    vest: PromiseOrValue<boolean>,
+    pid: PromiseOrValue<BigNumberish>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
@@ -905,19 +957,31 @@ export interface GroLpTokenStaker extends BaseContract {
 
     TIME_LOCK(overrides?: CallOverrides): Promise<string>;
 
-    activeLpTokens(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    activeLpTokens(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-    add(allocPoint: BigNumberish, _lpToken: string, overrides?: CallOverrides): Promise<void>;
+    add(
+      allocPoint: PromiseOrValue<BigNumberish>,
+      _lpToken: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    claim(vest: boolean, pid: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    claim(vest: PromiseOrValue<boolean>, pid: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    claimable(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    claimable(
+      _pid: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    deposit(pid: BigNumberish, amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    deposit(
+      pid: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    emergencyWithdraw(pid: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    emergencyWithdraw(pid: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    getUserPwrd(user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getUserPwrd(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     groPerBlock(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -927,28 +991,40 @@ export interface GroLpTokenStaker extends BaseContract {
 
     manager(overrides?: CallOverrides): Promise<string>;
 
-    massUpdatePools(pids: BigNumberish[], overrides?: CallOverrides): Promise<void>;
+    massUpdatePools(pids: PromiseOrValue<BigNumberish>[], overrides?: CallOverrides): Promise<void>;
 
     maxGroPerBlock(overrides?: CallOverrides): Promise<BigNumber>;
 
-    migrate(pids: BigNumberish[], overrides?: CallOverrides): Promise<void>;
+    migrate(pids: PromiseOrValue<BigNumberish>[], overrides?: CallOverrides): Promise<void>;
 
-    migrateFrom(pids: BigNumberish[], overrides?: CallOverrides): Promise<void>;
+    migrateFrom(pids: PromiseOrValue<BigNumberish>[], overrides?: CallOverrides): Promise<void>;
 
     migrateFromV1(overrides?: CallOverrides): Promise<void>;
 
-    migrateUser(account: string, pids: BigNumberish[], overrides?: CallOverrides): Promise<void>;
+    migrateUser(
+      account: PromiseOrValue<string>,
+      pids: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     migratedFromV1(overrides?: CallOverrides): Promise<boolean>;
 
-    multiClaim(vest: boolean, pids: BigNumberish[], overrides?: CallOverrides): Promise<void>;
+    multiClaim(
+      vest: PromiseOrValue<boolean>,
+      pids: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    multiWithdraw(pids: BigNumberish[], amounts: BigNumberish[], overrides?: CallOverrides): Promise<void>;
+    multiWithdraw(
+      pids: PromiseOrValue<BigNumberish>[],
+      amounts: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     multiWithdrawAndClaim(
-      vest: boolean,
-      pids: BigNumberish[],
-      amounts: BigNumberish[],
+      vest: PromiseOrValue<boolean>,
+      pids: PromiseOrValue<BigNumberish>[],
+      amounts: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -963,7 +1039,7 @@ export interface GroLpTokenStaker extends BaseContract {
     paused(overrides?: CallOverrides): Promise<boolean>;
 
     poolInfo(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, string] & {
@@ -978,76 +1054,109 @@ export interface GroLpTokenStaker extends BaseContract {
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
-    set(_pid: BigNumberish, _allocPoint: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    set(
+      _pid: PromiseOrValue<BigNumberish>,
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setGroPerBlock(_groPerBlock: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setGroPerBlock(_groPerBlock: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setManager(_manager: string, overrides?: CallOverrides): Promise<void>;
+    setManager(_manager: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setMaxGroPerBlock(_maxGroPerBlock: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setMaxGroPerBlock(_maxGroPerBlock: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setNewStaker(staker: string, overrides?: CallOverrides): Promise<void>;
+    setNewStaker(staker: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setOldStaker(staker: string, overrides?: CallOverrides): Promise<void>;
+    setOldStaker(staker: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setPwrdPid(_pPid: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setPwrdPid(_pPid: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setStatus(pause: boolean, overrides?: CallOverrides): Promise<void>;
+    setStatus(pause: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
 
-    setVesting(_vesting: string, overrides?: CallOverrides): Promise<void>;
+    setVesting(_vesting: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     totalAllocPoint(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    updatePool(pid: BigNumberish, overrides?: CallOverrides): Promise<StakerStructs.PoolInfoStructOutput>;
+    updatePool(
+      pid: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<StakerStructs.PoolInfoStructOutput>;
 
     userInfo(
-      arg0: BigNumberish,
-      arg1: string,
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; rewardDebt: BigNumber }>;
 
-    userMigrated(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    userMigrated(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     vesting(overrides?: CallOverrides): Promise<string>;
 
-    withdraw(pid: BigNumberish, amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    withdraw(
+      pid: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    withdrawAndClaim(vest: boolean, pid: BigNumberish, amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    withdrawAndClaim(
+      vest: PromiseOrValue<boolean>,
+      pid: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
   };
 
   filters: {
     'LogAddPool(uint256,uint256,address)'(
-      pid?: BigNumberish | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
       allocPoint?: null,
-      lpToken?: string | null,
+      lpToken?: PromiseOrValue<string> | null,
     ): LogAddPoolEventFilter;
-    LogAddPool(pid?: BigNumberish | null, allocPoint?: null, lpToken?: string | null): LogAddPoolEventFilter;
+    LogAddPool(
+      pid?: PromiseOrValue<BigNumberish> | null,
+      allocPoint?: null,
+      lpToken?: PromiseOrValue<string> | null,
+    ): LogAddPoolEventFilter;
 
     'LogClaim(address,bool,uint256,uint256)'(
-      user?: string | null,
+      user?: PromiseOrValue<string> | null,
       vest?: null,
-      pid?: BigNumberish | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
       amount?: null,
     ): LogClaimEventFilter;
-    LogClaim(user?: string | null, vest?: null, pid?: BigNumberish | null, amount?: null): LogClaimEventFilter;
+    LogClaim(
+      user?: PromiseOrValue<string> | null,
+      vest?: null,
+      pid?: PromiseOrValue<BigNumberish> | null,
+      amount?: null,
+    ): LogClaimEventFilter;
 
     'LogDeposit(address,uint256,uint256)'(
-      user?: string | null,
-      pid?: BigNumberish | null,
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
       amount?: null,
     ): LogDepositEventFilter;
-    LogDeposit(user?: string | null, pid?: BigNumberish | null, amount?: null): LogDepositEventFilter;
+    LogDeposit(
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
+      amount?: null,
+    ): LogDepositEventFilter;
 
     'LogEmergencyWithdraw(address,uint256,uint256)'(
-      user?: string | null,
-      pid?: BigNumberish | null,
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
       amount?: null,
     ): LogEmergencyWithdrawEventFilter;
     LogEmergencyWithdraw(
-      user?: string | null,
-      pid?: BigNumberish | null,
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
       amount?: null,
     ): LogEmergencyWithdrawEventFilter;
 
@@ -1069,23 +1178,31 @@ export interface GroLpTokenStaker extends BaseContract {
     'LogMigrateFromV1(address)'(staker?: null): LogMigrateFromV1EventFilter;
     LogMigrateFromV1(staker?: null): LogMigrateFromV1EventFilter;
 
-    'LogMigrateUser(address,uint256[])'(account?: string | null, pids?: null): LogMigrateUserEventFilter;
-    LogMigrateUser(account?: string | null, pids?: null): LogMigrateUserEventFilter;
+    'LogMigrateUser(address,uint256[])'(
+      account?: PromiseOrValue<string> | null,
+      pids?: null,
+    ): LogMigrateUserEventFilter;
+    LogMigrateUser(account?: PromiseOrValue<string> | null, pids?: null): LogMigrateUserEventFilter;
 
     'LogMultiClaim(address,bool,uint256[],uint256)'(
-      user?: string | null,
+      user?: PromiseOrValue<string> | null,
       vest?: null,
       pids?: null,
       amount?: null,
     ): LogMultiClaimEventFilter;
-    LogMultiClaim(user?: string | null, vest?: null, pids?: null, amount?: null): LogMultiClaimEventFilter;
+    LogMultiClaim(
+      user?: PromiseOrValue<string> | null,
+      vest?: null,
+      pids?: null,
+      amount?: null,
+    ): LogMultiClaimEventFilter;
 
     'LogMultiWithdraw(address,uint256[],uint256[])'(
-      user?: string | null,
+      user?: PromiseOrValue<string> | null,
       pids?: null,
       amounts?: null,
     ): LogMultiWithdrawEventFilter;
-    LogMultiWithdraw(user?: string | null, pids?: null, amounts?: null): LogMultiWithdrawEventFilter;
+    LogMultiWithdraw(user?: PromiseOrValue<string> | null, pids?: null, amounts?: null): LogMultiWithdrawEventFilter;
 
     'LogNewManagment(address)'(newManager?: null): LogNewManagmentEventFilter;
     LogNewManagment(newManager?: null): LogNewManagmentEventFilter;
@@ -1102,8 +1219,8 @@ export interface GroLpTokenStaker extends BaseContract {
     'LogOldStaker(address)'(staker?: null): LogOldStakerEventFilter;
     LogOldStaker(staker?: null): LogOldStakerEventFilter;
 
-    'LogSetPool(uint256,uint256)'(pid?: BigNumberish | null, allocPoint?: null): LogSetPoolEventFilter;
-    LogSetPool(pid?: BigNumberish | null, allocPoint?: null): LogSetPoolEventFilter;
+    'LogSetPool(uint256,uint256)'(pid?: PromiseOrValue<BigNumberish> | null, allocPoint?: null): LogSetPoolEventFilter;
+    LogSetPool(pid?: PromiseOrValue<BigNumberish> | null, allocPoint?: null): LogSetPoolEventFilter;
 
     'LogSetStatus(bool)'(pause?: null): LogSetStatusEventFilter;
     LogSetStatus(pause?: null): LogSetStatusEventFilter;
@@ -1112,33 +1229,43 @@ export interface GroLpTokenStaker extends BaseContract {
     LogSetTimelock(timelock?: null): LogSetTimelockEventFilter;
 
     'LogUpdatePool(uint256,uint256,uint256,uint256)'(
-      pid?: BigNumberish | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
       lastRewardBlock?: null,
       lpSupply?: null,
       accGroPerShare?: null,
     ): LogUpdatePoolEventFilter;
     LogUpdatePool(
-      pid?: BigNumberish | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
       lastRewardBlock?: null,
       lpSupply?: null,
       accGroPerShare?: null,
     ): LogUpdatePoolEventFilter;
 
-    'LogUserMigrateFromV1(address,address)'(account?: string | null, staker?: null): LogUserMigrateFromV1EventFilter;
-    LogUserMigrateFromV1(account?: string | null, staker?: null): LogUserMigrateFromV1EventFilter;
+    'LogUserMigrateFromV1(address,address)'(
+      account?: PromiseOrValue<string> | null,
+      staker?: null,
+    ): LogUserMigrateFromV1EventFilter;
+    LogUserMigrateFromV1(account?: PromiseOrValue<string> | null, staker?: null): LogUserMigrateFromV1EventFilter;
 
     'LogWithdraw(address,uint256,uint256)'(
-      user?: string | null,
-      pid?: BigNumberish | null,
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
       amount?: null,
     ): LogWithdrawEventFilter;
-    LogWithdraw(user?: string | null, pid?: BigNumberish | null, amount?: null): LogWithdrawEventFilter;
+    LogWithdraw(
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
+      amount?: null,
+    ): LogWithdrawEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
   };
 
   estimateGas: {
@@ -1146,81 +1273,91 @@ export interface GroLpTokenStaker extends BaseContract {
 
     TIME_LOCK(overrides?: CallOverrides): Promise<BigNumber>;
 
-    activeLpTokens(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    activeLpTokens(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     add(
-      allocPoint: BigNumberish,
-      _lpToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      allocPoint: PromiseOrValue<BigNumberish>,
+      _lpToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     claim(
-      vest: boolean,
-      pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vest: PromiseOrValue<boolean>,
+      pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    claimable(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    claimable(
+      _pid: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     deposit(
-      pid: BigNumberish,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     emergencyWithdraw(
-      pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    getUserPwrd(user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getUserPwrd(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     groPerBlock(overrides?: CallOverrides): Promise<BigNumber>;
 
-    initialize(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    initialize(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     initialized(overrides?: CallOverrides): Promise<BigNumber>;
 
     manager(overrides?: CallOverrides): Promise<BigNumber>;
 
     massUpdatePools(
-      pids: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pids: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     maxGroPerBlock(overrides?: CallOverrides): Promise<BigNumber>;
 
-    migrate(pids: BigNumberish[], overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    migrate(
+      pids: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    migrateFrom(pids: BigNumberish[], overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    migrateFrom(
+      pids: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    migrateFromV1(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    migrateFromV1(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     migrateUser(
-      account: string,
-      pids: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      pids: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     migratedFromV1(overrides?: CallOverrides): Promise<BigNumber>;
 
     multiClaim(
-      vest: boolean,
-      pids: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vest: PromiseOrValue<boolean>,
+      pids: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     multiWithdraw(
-      pids: BigNumberish[],
-      amounts: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pids: PromiseOrValue<BigNumberish>[],
+      amounts: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     multiWithdrawAndClaim(
-      vest: boolean,
-      pids: BigNumberish[],
-      amounts: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vest: PromiseOrValue<boolean>,
+      pids: PromiseOrValue<BigNumberish>[],
+      amounts: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     newStaker(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1233,66 +1370,95 @@ export interface GroLpTokenStaker extends BaseContract {
 
     paused(overrides?: CallOverrides): Promise<BigNumber>;
 
-    poolInfo(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    poolInfo(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     poolLength(overrides?: CallOverrides): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     set(
-      _pid: BigNumberish,
-      _allocPoint: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setGroPerBlock(
-      _groPerBlock: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _groPerBlock: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setManager(_manager: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setManager(
+      _manager: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setMaxGroPerBlock(
-      _maxGroPerBlock: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _maxGroPerBlock: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setNewStaker(staker: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setNewStaker(
+      staker: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    setOldStaker(staker: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setOldStaker(
+      staker: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    setPwrdPid(_pPid: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setPwrdPid(
+      _pPid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    setStatus(pause: boolean, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setStatus(
+      pause: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    setVesting(_vesting: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setVesting(
+      _vesting: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     totalAllocPoint(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    updatePool(pid: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    updatePool(
+      pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    userInfo(arg0: BigNumberish, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    userInfo(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    userMigrated(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    userMigrated(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     vesting(overrides?: CallOverrides): Promise<BigNumber>;
 
     withdraw(
-      pid: BigNumberish,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     withdrawAndClaim(
-      vest: boolean,
-      pid: BigNumberish,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vest: PromiseOrValue<boolean>,
+      pid: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
@@ -1301,87 +1467,91 @@ export interface GroLpTokenStaker extends BaseContract {
 
     TIME_LOCK(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    activeLpTokens(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    activeLpTokens(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     add(
-      allocPoint: BigNumberish,
-      _lpToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      allocPoint: PromiseOrValue<BigNumberish>,
+      _lpToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     claim(
-      vest: boolean,
-      pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vest: PromiseOrValue<boolean>,
+      pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    claimable(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    claimable(
+      _pid: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     deposit(
-      pid: BigNumberish,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     emergencyWithdraw(
-      pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    getUserPwrd(user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getUserPwrd(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     groPerBlock(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    initialize(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    initialize(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     initialized(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     manager(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     massUpdatePools(
-      pids: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pids: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     maxGroPerBlock(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     migrate(
-      pids: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pids: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     migrateFrom(
-      pids: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pids: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    migrateFromV1(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    migrateFromV1(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     migrateUser(
-      account: string,
-      pids: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      pids: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     migratedFromV1(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     multiClaim(
-      vest: boolean,
-      pids: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vest: PromiseOrValue<boolean>,
+      pids: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     multiWithdraw(
-      pids: BigNumberish[],
-      amounts: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pids: PromiseOrValue<BigNumberish>[],
+      amounts: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     multiWithdrawAndClaim(
-      vest: boolean,
-      pids: BigNumberish[],
-      amounts: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vest: PromiseOrValue<boolean>,
+      pids: PromiseOrValue<BigNumberish>[],
+      amounts: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     newStaker(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1394,87 +1564,95 @@ export interface GroLpTokenStaker extends BaseContract {
 
     paused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    poolInfo(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    poolInfo(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     poolLength(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     set(
-      _pid: BigNumberish,
-      _allocPoint: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setGroPerBlock(
-      _groPerBlock: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _groPerBlock: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setManager(
-      _manager: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _manager: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setMaxGroPerBlock(
-      _maxGroPerBlock: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _maxGroPerBlock: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setNewStaker(
-      staker: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      staker: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setOldStaker(
-      staker: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      staker: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setPwrdPid(
-      _pPid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pPid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setStatus(
-      pause: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pause: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setVesting(
-      _vesting: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _vesting: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     totalAllocPoint(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updatePool(
-      pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    userInfo(arg0: BigNumberish, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    userInfo(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    userMigrated(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    userMigrated(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     vesting(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     withdraw(
-      pid: BigNumberish,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     withdrawAndClaim(
-      vest: boolean,
-      pid: BigNumberish,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vest: PromiseOrValue<boolean>,
+      pid: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

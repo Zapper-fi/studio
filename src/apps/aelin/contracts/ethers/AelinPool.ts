@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface AelinPoolInterface extends utils.Interface {
   functions: {
@@ -121,69 +121,98 @@ export interface AelinPoolInterface extends utils.Interface {
       | 'withdrawMaxFromPool',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'acceptDealTokens', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'acceptDealTokens', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'acceptMaxDealTokens', values?: undefined): string;
   encodeFunctionData(functionFragment: 'acceptSponsor', values?: undefined): string;
   encodeFunctionData(functionFragment: 'aelinDeal', values?: undefined): string;
   encodeFunctionData(functionFragment: 'aelinDealLogicAddress', values?: undefined): string;
   encodeFunctionData(functionFragment: 'aelinRewardsAddress', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'allowList', values: [string]): string;
-  encodeFunctionData(functionFragment: 'allowance', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'amountAccepted', values: [string]): string;
-  encodeFunctionData(functionFragment: 'amountWithdrawn', values: [string]): string;
-  encodeFunctionData(functionFragment: 'approve', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
+  encodeFunctionData(functionFragment: 'allowList', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'allowance', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'amountAccepted', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'amountWithdrawn', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'approve',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'calledInitialize', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'createDeal',
     values: [
-      string,
-      BigNumberish,
-      BigNumberish,
-      BigNumberish,
-      BigNumberish,
-      BigNumberish,
-      BigNumberish,
-      string,
-      BigNumberish,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
     ],
   ): string;
   encodeFunctionData(functionFragment: 'decimals', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'decreaseAllowance', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'decreaseAllowance',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'futureSponsor', values?: undefined): string;
   encodeFunctionData(functionFragment: 'hasAllowList', values?: undefined): string;
   encodeFunctionData(functionFragment: 'holder', values?: undefined): string;
   encodeFunctionData(functionFragment: 'holderFundingExpiry', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'increaseAllowance', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'increaseAllowance',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(
     functionFragment: 'initialize',
-    values: [string, string, BigNumberish, string, BigNumberish, BigNumberish, string, BigNumberish, string, string],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'maxDealAccept', values: [string]): string;
-  encodeFunctionData(functionFragment: 'maxProRataAmount', values: [string]): string;
+  encodeFunctionData(functionFragment: 'maxDealAccept', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'maxProRataAmount', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
   encodeFunctionData(functionFragment: 'numberOfDeals', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'openPeriodEligible', values: [string]): string;
+  encodeFunctionData(functionFragment: 'openPeriodEligible', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'poolExpiry', values?: undefined): string;
   encodeFunctionData(functionFragment: 'poolFactory', values?: undefined): string;
   encodeFunctionData(functionFragment: 'proRataConversion', values?: undefined): string;
   encodeFunctionData(functionFragment: 'purchaseExpiry', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'purchasePoolTokens', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'purchasePoolTokens', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'purchaseToken', values?: undefined): string;
   encodeFunctionData(functionFragment: 'purchaseTokenCap', values?: undefined): string;
   encodeFunctionData(functionFragment: 'purchaseTokenDecimals', values?: undefined): string;
   encodeFunctionData(functionFragment: 'purchaseTokenTotalForDeal', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'setSponsor', values: [string]): string;
+  encodeFunctionData(functionFragment: 'setSponsor', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'sponsor', values?: undefined): string;
   encodeFunctionData(functionFragment: 'sponsorFee', values?: undefined): string;
   encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalAmountAccepted', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalAmountWithdrawn', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transfer', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferFrom', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'updateAllowList', values: [string[], BigNumberish[]]): string;
-  encodeFunctionData(functionFragment: 'withdrawFromPool', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'transfer',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'transferFrom',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'updateAllowList',
+    values: [PromiseOrValue<string>[], PromiseOrValue<BigNumberish>[]],
+  ): string;
+  encodeFunctionData(functionFragment: 'withdrawFromPool', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'withdrawMaxFromPool', values?: undefined): string;
 
   decodeFunctionResult(functionFragment: 'acceptDealTokens', data: BytesLike): Result;
@@ -372,13 +401,13 @@ export interface AelinPool extends BaseContract {
 
   functions: {
     acceptDealTokens(
-      poolTokenAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      poolTokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    acceptMaxDealTokens(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    acceptMaxDealTokens(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    acceptSponsor(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    acceptSponsor(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     aelinDeal(overrides?: CallOverrides): Promise<[string]>;
 
@@ -386,43 +415,47 @@ export interface AelinPool extends BaseContract {
 
     aelinRewardsAddress(overrides?: CallOverrides): Promise<[string]>;
 
-    allowList(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    allowList(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
-    amountAccepted(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    amountAccepted(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    amountWithdrawn(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    amountWithdrawn(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     calledInitialize(overrides?: CallOverrides): Promise<[boolean]>;
 
     createDeal(
-      _underlyingDealToken: string,
-      _purchaseTokenTotalForDeal: BigNumberish,
-      _underlyingDealTokenTotal: BigNumberish,
-      _vestingPeriod: BigNumberish,
-      _vestingCliff: BigNumberish,
-      _proRataRedemptionPeriod: BigNumberish,
-      _openRedemptionPeriod: BigNumberish,
-      _holder: string,
-      _holderFundingDuration: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _underlyingDealToken: PromiseOrValue<string>,
+      _purchaseTokenTotalForDeal: PromiseOrValue<BigNumberish>,
+      _underlyingDealTokenTotal: PromiseOrValue<BigNumberish>,
+      _vestingPeriod: PromiseOrValue<BigNumberish>,
+      _vestingCliff: PromiseOrValue<BigNumberish>,
+      _proRataRedemptionPeriod: PromiseOrValue<BigNumberish>,
+      _openRedemptionPeriod: PromiseOrValue<BigNumberish>,
+      _holder: PromiseOrValue<string>,
+      _holderFundingDuration: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<[number]>;
 
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     futureSponsor(overrides?: CallOverrides): Promise<[string]>;
@@ -434,34 +467,34 @@ export interface AelinPool extends BaseContract {
     holderFundingExpiry(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     initialize(
-      _name: string,
-      _symbol: string,
-      _purchaseTokenCap: BigNumberish,
-      _purchaseToken: string,
-      _duration: BigNumberish,
-      _sponsorFee: BigNumberish,
-      _sponsor: string,
-      _purchaseDuration: BigNumberish,
-      _aelinDealLogicAddress: string,
-      _aelinRewardsAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _name: PromiseOrValue<string>,
+      _symbol: PromiseOrValue<string>,
+      _purchaseTokenCap: PromiseOrValue<BigNumberish>,
+      _purchaseToken: PromiseOrValue<string>,
+      _duration: PromiseOrValue<BigNumberish>,
+      _sponsorFee: PromiseOrValue<BigNumberish>,
+      _sponsor: PromiseOrValue<string>,
+      _purchaseDuration: PromiseOrValue<BigNumberish>,
+      _aelinDealLogicAddress: PromiseOrValue<string>,
+      _aelinRewardsAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    maxDealAccept(purchaser: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    maxDealAccept(purchaser: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    maxProRataAmount(purchaser: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    maxProRataAmount(purchaser: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
 
     numberOfDeals(overrides?: CallOverrides): Promise<[number]>;
 
-    openPeriodEligible(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    openPeriodEligible(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     poolExpiry(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -472,8 +505,8 @@ export interface AelinPool extends BaseContract {
     purchaseExpiry(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     purchasePoolTokens(
-      _purchaseTokenAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _purchaseTokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     purchaseToken(overrides?: CallOverrides): Promise<[string]>;
@@ -485,8 +518,8 @@ export interface AelinPool extends BaseContract {
     purchaseTokenTotalForDeal(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     setSponsor(
-      _sponsor: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _sponsor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     sponsor(overrides?: CallOverrides): Promise<[string]>;
@@ -502,40 +535,40 @@ export interface AelinPool extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transfer(
-      dst: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      dst: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferFrom(
-      src: string,
-      dst: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      src: PromiseOrValue<string>,
+      dst: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateAllowList(
-      _allowList: string[],
-      _allowListAmounts: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _allowList: PromiseOrValue<string>[],
+      _allowListAmounts: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     withdrawFromPool(
-      purchaseTokenAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      purchaseTokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    withdrawMaxFromPool(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    withdrawMaxFromPool(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
   };
 
   acceptDealTokens(
-    poolTokenAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    poolTokenAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  acceptMaxDealTokens(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  acceptMaxDealTokens(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  acceptSponsor(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  acceptSponsor(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   aelinDeal(overrides?: CallOverrides): Promise<string>;
 
@@ -543,43 +576,47 @@ export interface AelinPool extends BaseContract {
 
   aelinRewardsAddress(overrides?: CallOverrides): Promise<string>;
 
-  allowList(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  allowList(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+  allowance(
+    owner: PromiseOrValue<string>,
+    spender: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
-  amountAccepted(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  amountAccepted(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  amountWithdrawn(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  amountWithdrawn(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   approve(
-    spender: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   calledInitialize(overrides?: CallOverrides): Promise<boolean>;
 
   createDeal(
-    _underlyingDealToken: string,
-    _purchaseTokenTotalForDeal: BigNumberish,
-    _underlyingDealTokenTotal: BigNumberish,
-    _vestingPeriod: BigNumberish,
-    _vestingCliff: BigNumberish,
-    _proRataRedemptionPeriod: BigNumberish,
-    _openRedemptionPeriod: BigNumberish,
-    _holder: string,
-    _holderFundingDuration: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _underlyingDealToken: PromiseOrValue<string>,
+    _purchaseTokenTotalForDeal: PromiseOrValue<BigNumberish>,
+    _underlyingDealTokenTotal: PromiseOrValue<BigNumberish>,
+    _vestingPeriod: PromiseOrValue<BigNumberish>,
+    _vestingCliff: PromiseOrValue<BigNumberish>,
+    _proRataRedemptionPeriod: PromiseOrValue<BigNumberish>,
+    _openRedemptionPeriod: PromiseOrValue<BigNumberish>,
+    _holder: PromiseOrValue<string>,
+    _holderFundingDuration: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   decimals(overrides?: CallOverrides): Promise<number>;
 
   decreaseAllowance(
-    spender: string,
-    subtractedValue: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    subtractedValue: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   futureSponsor(overrides?: CallOverrides): Promise<string>;
@@ -591,34 +628,34 @@ export interface AelinPool extends BaseContract {
   holderFundingExpiry(overrides?: CallOverrides): Promise<BigNumber>;
 
   increaseAllowance(
-    spender: string,
-    addedValue: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    addedValue: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   initialize(
-    _name: string,
-    _symbol: string,
-    _purchaseTokenCap: BigNumberish,
-    _purchaseToken: string,
-    _duration: BigNumberish,
-    _sponsorFee: BigNumberish,
-    _sponsor: string,
-    _purchaseDuration: BigNumberish,
-    _aelinDealLogicAddress: string,
-    _aelinRewardsAddress: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _name: PromiseOrValue<string>,
+    _symbol: PromiseOrValue<string>,
+    _purchaseTokenCap: PromiseOrValue<BigNumberish>,
+    _purchaseToken: PromiseOrValue<string>,
+    _duration: PromiseOrValue<BigNumberish>,
+    _sponsorFee: PromiseOrValue<BigNumberish>,
+    _sponsor: PromiseOrValue<string>,
+    _purchaseDuration: PromiseOrValue<BigNumberish>,
+    _aelinDealLogicAddress: PromiseOrValue<string>,
+    _aelinRewardsAddress: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  maxDealAccept(purchaser: string, overrides?: CallOverrides): Promise<BigNumber>;
+  maxDealAccept(purchaser: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  maxProRataAmount(purchaser: string, overrides?: CallOverrides): Promise<BigNumber>;
+  maxProRataAmount(purchaser: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   name(overrides?: CallOverrides): Promise<string>;
 
   numberOfDeals(overrides?: CallOverrides): Promise<number>;
 
-  openPeriodEligible(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  openPeriodEligible(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   poolExpiry(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -629,8 +666,8 @@ export interface AelinPool extends BaseContract {
   purchaseExpiry(overrides?: CallOverrides): Promise<BigNumber>;
 
   purchasePoolTokens(
-    _purchaseTokenAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _purchaseTokenAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   purchaseToken(overrides?: CallOverrides): Promise<string>;
@@ -642,8 +679,8 @@ export interface AelinPool extends BaseContract {
   purchaseTokenTotalForDeal(overrides?: CallOverrides): Promise<BigNumber>;
 
   setSponsor(
-    _sponsor: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _sponsor: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   sponsor(overrides?: CallOverrides): Promise<string>;
@@ -659,33 +696,33 @@ export interface AelinPool extends BaseContract {
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   transfer(
-    dst: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    dst: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferFrom(
-    src: string,
-    dst: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    src: PromiseOrValue<string>,
+    dst: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateAllowList(
-    _allowList: string[],
-    _allowListAmounts: BigNumberish[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _allowList: PromiseOrValue<string>[],
+    _allowListAmounts: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   withdrawFromPool(
-    purchaseTokenAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    purchaseTokenAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  withdrawMaxFromPool(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  withdrawMaxFromPool(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   callStatic: {
-    acceptDealTokens(poolTokenAmount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    acceptDealTokens(poolTokenAmount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     acceptMaxDealTokens(overrides?: CallOverrides): Promise<void>;
 
@@ -697,36 +734,48 @@ export interface AelinPool extends BaseContract {
 
     aelinRewardsAddress(overrides?: CallOverrides): Promise<string>;
 
-    allowList(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowList(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    amountAccepted(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    amountAccepted(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    amountWithdrawn(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    amountWithdrawn(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    approve(spender: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    approve(
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     calledInitialize(overrides?: CallOverrides): Promise<boolean>;
 
     createDeal(
-      _underlyingDealToken: string,
-      _purchaseTokenTotalForDeal: BigNumberish,
-      _underlyingDealTokenTotal: BigNumberish,
-      _vestingPeriod: BigNumberish,
-      _vestingCliff: BigNumberish,
-      _proRataRedemptionPeriod: BigNumberish,
-      _openRedemptionPeriod: BigNumberish,
-      _holder: string,
-      _holderFundingDuration: BigNumberish,
+      _underlyingDealToken: PromiseOrValue<string>,
+      _purchaseTokenTotalForDeal: PromiseOrValue<BigNumberish>,
+      _underlyingDealTokenTotal: PromiseOrValue<BigNumberish>,
+      _vestingPeriod: PromiseOrValue<BigNumberish>,
+      _vestingCliff: PromiseOrValue<BigNumberish>,
+      _proRataRedemptionPeriod: PromiseOrValue<BigNumberish>,
+      _openRedemptionPeriod: PromiseOrValue<BigNumberish>,
+      _holder: PromiseOrValue<string>,
+      _holderFundingDuration: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<string>;
 
     decimals(overrides?: CallOverrides): Promise<number>;
 
-    decreaseAllowance(spender: string, subtractedValue: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    decreaseAllowance(
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     futureSponsor(overrides?: CallOverrides): Promise<string>;
 
@@ -736,31 +785,35 @@ export interface AelinPool extends BaseContract {
 
     holderFundingExpiry(overrides?: CallOverrides): Promise<BigNumber>;
 
-    increaseAllowance(spender: string, addedValue: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    increaseAllowance(
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     initialize(
-      _name: string,
-      _symbol: string,
-      _purchaseTokenCap: BigNumberish,
-      _purchaseToken: string,
-      _duration: BigNumberish,
-      _sponsorFee: BigNumberish,
-      _sponsor: string,
-      _purchaseDuration: BigNumberish,
-      _aelinDealLogicAddress: string,
-      _aelinRewardsAddress: string,
+      _name: PromiseOrValue<string>,
+      _symbol: PromiseOrValue<string>,
+      _purchaseTokenCap: PromiseOrValue<BigNumberish>,
+      _purchaseToken: PromiseOrValue<string>,
+      _duration: PromiseOrValue<BigNumberish>,
+      _sponsorFee: PromiseOrValue<BigNumberish>,
+      _sponsor: PromiseOrValue<string>,
+      _purchaseDuration: PromiseOrValue<BigNumberish>,
+      _aelinDealLogicAddress: PromiseOrValue<string>,
+      _aelinRewardsAddress: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    maxDealAccept(purchaser: string, overrides?: CallOverrides): Promise<BigNumber>;
+    maxDealAccept(purchaser: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    maxProRataAmount(purchaser: string, overrides?: CallOverrides): Promise<BigNumber>;
+    maxProRataAmount(purchaser: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
     numberOfDeals(overrides?: CallOverrides): Promise<number>;
 
-    openPeriodEligible(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    openPeriodEligible(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     poolExpiry(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -770,7 +823,7 @@ export interface AelinPool extends BaseContract {
 
     purchaseExpiry(overrides?: CallOverrides): Promise<BigNumber>;
 
-    purchasePoolTokens(_purchaseTokenAmount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    purchasePoolTokens(_purchaseTokenAmount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     purchaseToken(overrides?: CallOverrides): Promise<string>;
 
@@ -780,7 +833,7 @@ export interface AelinPool extends BaseContract {
 
     purchaseTokenTotalForDeal(overrides?: CallOverrides): Promise<BigNumber>;
 
-    setSponsor(_sponsor: string, overrides?: CallOverrides): Promise<void>;
+    setSponsor(_sponsor: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     sponsor(overrides?: CallOverrides): Promise<string>;
 
@@ -794,28 +847,41 @@ export interface AelinPool extends BaseContract {
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transfer(dst: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transfer(
+      dst: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    transferFrom(src: string, dst: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transferFrom(
+      src: PromiseOrValue<string>,
+      dst: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    updateAllowList(_allowList: string[], _allowListAmounts: BigNumberish[], overrides?: CallOverrides): Promise<void>;
+    updateAllowList(
+      _allowList: PromiseOrValue<string>[],
+      _allowListAmounts: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    withdrawFromPool(purchaseTokenAmount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    withdrawFromPool(purchaseTokenAmount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     withdrawMaxFromPool(overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
     'AcceptDeal(address,address,uint256,uint256,uint256)'(
-      purchaser?: string | null,
-      dealAddress?: string | null,
+      purchaser?: PromiseOrValue<string> | null,
+      dealAddress?: PromiseOrValue<string> | null,
       poolTokenAmount?: null,
       sponsorFee?: null,
       aelinFee?: null,
     ): AcceptDealEventFilter;
     AcceptDeal(
-      purchaser?: string | null,
-      dealAddress?: string | null,
+      purchaser?: PromiseOrValue<string> | null,
+      dealAddress?: PromiseOrValue<string> | null,
       poolTokenAmount?: null,
       sponsorFee?: null,
       aelinFee?: null,
@@ -825,78 +891,96 @@ export interface AelinPool extends BaseContract {
     AelinToken(name?: null, symbol?: null, decimals?: null): AelinTokenEventFilter;
 
     'Approval(address,address,uint256)'(
-      owner?: string | null,
-      spender?: string | null,
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
       value?: null,
     ): ApprovalEventFilter;
-    Approval(owner?: string | null, spender?: string | null, value?: null): ApprovalEventFilter;
+    Approval(
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
+      value?: null,
+    ): ApprovalEventFilter;
 
     'CreateDeal(string,string,address,address)'(
       name?: null,
       symbol?: null,
-      sponsor?: string | null,
-      dealContract?: string | null,
+      sponsor?: PromiseOrValue<string> | null,
+      dealContract?: PromiseOrValue<string> | null,
     ): CreateDealEventFilter;
     CreateDeal(
       name?: null,
       symbol?: null,
-      sponsor?: string | null,
-      dealContract?: string | null,
+      sponsor?: PromiseOrValue<string> | null,
+      dealContract?: PromiseOrValue<string> | null,
     ): CreateDealEventFilter;
 
     'DealDetail(address,address,uint256,uint256,uint256,uint256,uint256,uint256,address,uint256)'(
-      dealContract?: string | null,
-      underlyingDealToken?: string | null,
+      dealContract?: PromiseOrValue<string> | null,
+      underlyingDealToken?: PromiseOrValue<string> | null,
       purchaseTokenTotalForDeal?: null,
       underlyingDealTokenTotal?: null,
       vestingPeriod?: null,
       vestingCliff?: null,
       proRataRedemptionPeriod?: null,
       openRedemptionPeriod?: null,
-      holder?: string | null,
+      holder?: PromiseOrValue<string> | null,
       holderFundingDuration?: null,
     ): DealDetailEventFilter;
     DealDetail(
-      dealContract?: string | null,
-      underlyingDealToken?: string | null,
+      dealContract?: PromiseOrValue<string> | null,
+      underlyingDealToken?: PromiseOrValue<string> | null,
       purchaseTokenTotalForDeal?: null,
       underlyingDealTokenTotal?: null,
       vestingPeriod?: null,
       vestingCliff?: null,
       proRataRedemptionPeriod?: null,
       openRedemptionPeriod?: null,
-      holder?: string | null,
+      holder?: PromiseOrValue<string> | null,
       holderFundingDuration?: null,
     ): DealDetailEventFilter;
 
     'PurchasePoolToken(address,uint256)'(
-      purchaser?: string | null,
+      purchaser?: PromiseOrValue<string> | null,
       purchaseTokenAmount?: null,
     ): PurchasePoolTokenEventFilter;
-    PurchasePoolToken(purchaser?: string | null, purchaseTokenAmount?: null): PurchasePoolTokenEventFilter;
+    PurchasePoolToken(
+      purchaser?: PromiseOrValue<string> | null,
+      purchaseTokenAmount?: null,
+    ): PurchasePoolTokenEventFilter;
 
-    'SetSponsor(address)'(sponsor?: string | null): SetSponsorEventFilter;
-    SetSponsor(sponsor?: string | null): SetSponsorEventFilter;
+    'SetSponsor(address)'(sponsor?: PromiseOrValue<string> | null): SetSponsorEventFilter;
+    SetSponsor(sponsor?: PromiseOrValue<string> | null): SetSponsorEventFilter;
 
-    'Transfer(address,address,uint256)'(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
-    Transfer(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
+    'Transfer(address,address,uint256)'(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
+    Transfer(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
 
     'WithdrawFromPool(address,uint256)'(
-      purchaser?: string | null,
+      purchaser?: PromiseOrValue<string> | null,
       purchaseTokenAmount?: null,
     ): WithdrawFromPoolEventFilter;
-    WithdrawFromPool(purchaser?: string | null, purchaseTokenAmount?: null): WithdrawFromPoolEventFilter;
+    WithdrawFromPool(
+      purchaser?: PromiseOrValue<string> | null,
+      purchaseTokenAmount?: null,
+    ): WithdrawFromPoolEventFilter;
   };
 
   estimateGas: {
     acceptDealTokens(
-      poolTokenAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      poolTokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    acceptMaxDealTokens(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    acceptMaxDealTokens(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    acceptSponsor(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    acceptSponsor(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     aelinDeal(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -904,43 +988,47 @@ export interface AelinPool extends BaseContract {
 
     aelinRewardsAddress(overrides?: CallOverrides): Promise<BigNumber>;
 
-    allowList(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowList(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-    amountAccepted(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-    amountWithdrawn(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-    approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    amountAccepted(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    amountWithdrawn(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    approve(
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     calledInitialize(overrides?: CallOverrides): Promise<BigNumber>;
 
     createDeal(
-      _underlyingDealToken: string,
-      _purchaseTokenTotalForDeal: BigNumberish,
-      _underlyingDealTokenTotal: BigNumberish,
-      _vestingPeriod: BigNumberish,
-      _vestingCliff: BigNumberish,
-      _proRataRedemptionPeriod: BigNumberish,
-      _openRedemptionPeriod: BigNumberish,
-      _holder: string,
-      _holderFundingDuration: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _underlyingDealToken: PromiseOrValue<string>,
+      _purchaseTokenTotalForDeal: PromiseOrValue<BigNumberish>,
+      _underlyingDealTokenTotal: PromiseOrValue<BigNumberish>,
+      _vestingPeriod: PromiseOrValue<BigNumberish>,
+      _vestingCliff: PromiseOrValue<BigNumberish>,
+      _proRataRedemptionPeriod: PromiseOrValue<BigNumberish>,
+      _openRedemptionPeriod: PromiseOrValue<BigNumberish>,
+      _holder: PromiseOrValue<string>,
+      _holderFundingDuration: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     futureSponsor(overrides?: CallOverrides): Promise<BigNumber>;
@@ -952,34 +1040,34 @@ export interface AelinPool extends BaseContract {
     holderFundingExpiry(overrides?: CallOverrides): Promise<BigNumber>;
 
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     initialize(
-      _name: string,
-      _symbol: string,
-      _purchaseTokenCap: BigNumberish,
-      _purchaseToken: string,
-      _duration: BigNumberish,
-      _sponsorFee: BigNumberish,
-      _sponsor: string,
-      _purchaseDuration: BigNumberish,
-      _aelinDealLogicAddress: string,
-      _aelinRewardsAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _name: PromiseOrValue<string>,
+      _symbol: PromiseOrValue<string>,
+      _purchaseTokenCap: PromiseOrValue<BigNumberish>,
+      _purchaseToken: PromiseOrValue<string>,
+      _duration: PromiseOrValue<BigNumberish>,
+      _sponsorFee: PromiseOrValue<BigNumberish>,
+      _sponsor: PromiseOrValue<string>,
+      _purchaseDuration: PromiseOrValue<BigNumberish>,
+      _aelinDealLogicAddress: PromiseOrValue<string>,
+      _aelinRewardsAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    maxDealAccept(purchaser: string, overrides?: CallOverrides): Promise<BigNumber>;
+    maxDealAccept(purchaser: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    maxProRataAmount(purchaser: string, overrides?: CallOverrides): Promise<BigNumber>;
+    maxProRataAmount(purchaser: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
     numberOfDeals(overrides?: CallOverrides): Promise<BigNumber>;
 
-    openPeriodEligible(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    openPeriodEligible(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     poolExpiry(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -990,8 +1078,8 @@ export interface AelinPool extends BaseContract {
     purchaseExpiry(overrides?: CallOverrides): Promise<BigNumber>;
 
     purchasePoolTokens(
-      _purchaseTokenAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _purchaseTokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     purchaseToken(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1002,7 +1090,10 @@ export interface AelinPool extends BaseContract {
 
     purchaseTokenTotalForDeal(overrides?: CallOverrides): Promise<BigNumber>;
 
-    setSponsor(_sponsor: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setSponsor(
+      _sponsor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     sponsor(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1017,41 +1108,41 @@ export interface AelinPool extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
-      dst: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      dst: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferFrom(
-      src: string,
-      dst: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      src: PromiseOrValue<string>,
+      dst: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     updateAllowList(
-      _allowList: string[],
-      _allowListAmounts: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _allowList: PromiseOrValue<string>[],
+      _allowListAmounts: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     withdrawFromPool(
-      purchaseTokenAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      purchaseTokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    withdrawMaxFromPool(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    withdrawMaxFromPool(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
   };
 
   populateTransaction: {
     acceptDealTokens(
-      poolTokenAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      poolTokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    acceptMaxDealTokens(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    acceptMaxDealTokens(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    acceptSponsor(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    acceptSponsor(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     aelinDeal(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1059,43 +1150,47 @@ export interface AelinPool extends BaseContract {
 
     aelinRewardsAddress(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    allowList(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    allowList(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    amountAccepted(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    amountWithdrawn(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    amountAccepted(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    amountWithdrawn(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    approve(
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     calledInitialize(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     createDeal(
-      _underlyingDealToken: string,
-      _purchaseTokenTotalForDeal: BigNumberish,
-      _underlyingDealTokenTotal: BigNumberish,
-      _vestingPeriod: BigNumberish,
-      _vestingCliff: BigNumberish,
-      _proRataRedemptionPeriod: BigNumberish,
-      _openRedemptionPeriod: BigNumberish,
-      _holder: string,
-      _holderFundingDuration: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _underlyingDealToken: PromiseOrValue<string>,
+      _purchaseTokenTotalForDeal: PromiseOrValue<BigNumberish>,
+      _underlyingDealTokenTotal: PromiseOrValue<BigNumberish>,
+      _vestingPeriod: PromiseOrValue<BigNumberish>,
+      _vestingCliff: PromiseOrValue<BigNumberish>,
+      _proRataRedemptionPeriod: PromiseOrValue<BigNumberish>,
+      _openRedemptionPeriod: PromiseOrValue<BigNumberish>,
+      _holder: PromiseOrValue<string>,
+      _holderFundingDuration: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     futureSponsor(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1107,34 +1202,34 @@ export interface AelinPool extends BaseContract {
     holderFundingExpiry(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     initialize(
-      _name: string,
-      _symbol: string,
-      _purchaseTokenCap: BigNumberish,
-      _purchaseToken: string,
-      _duration: BigNumberish,
-      _sponsorFee: BigNumberish,
-      _sponsor: string,
-      _purchaseDuration: BigNumberish,
-      _aelinDealLogicAddress: string,
-      _aelinRewardsAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _name: PromiseOrValue<string>,
+      _symbol: PromiseOrValue<string>,
+      _purchaseTokenCap: PromiseOrValue<BigNumberish>,
+      _purchaseToken: PromiseOrValue<string>,
+      _duration: PromiseOrValue<BigNumberish>,
+      _sponsorFee: PromiseOrValue<BigNumberish>,
+      _sponsor: PromiseOrValue<string>,
+      _purchaseDuration: PromiseOrValue<BigNumberish>,
+      _aelinDealLogicAddress: PromiseOrValue<string>,
+      _aelinRewardsAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    maxDealAccept(purchaser: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    maxDealAccept(purchaser: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    maxProRataAmount(purchaser: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    maxProRataAmount(purchaser: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     numberOfDeals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    openPeriodEligible(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    openPeriodEligible(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     poolExpiry(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1145,8 +1240,8 @@ export interface AelinPool extends BaseContract {
     purchaseExpiry(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     purchasePoolTokens(
-      _purchaseTokenAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _purchaseTokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     purchaseToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1158,8 +1253,8 @@ export interface AelinPool extends BaseContract {
     purchaseTokenTotalForDeal(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setSponsor(
-      _sponsor: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _sponsor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     sponsor(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1175,29 +1270,29 @@ export interface AelinPool extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transfer(
-      dst: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      dst: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferFrom(
-      src: string,
-      dst: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      src: PromiseOrValue<string>,
+      dst: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateAllowList(
-      _allowList: string[],
-      _allowListAmounts: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _allowList: PromiseOrValue<string>[],
+      _allowListAmounts: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     withdrawFromPool(
-      purchaseTokenAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      purchaseTokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    withdrawMaxFromPool(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    withdrawMaxFromPool(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
   };
 }
