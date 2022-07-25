@@ -3,6 +3,7 @@ import { ethers } from 'ethers';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
+import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
@@ -18,7 +19,7 @@ const network = Network.ETHEREUM_MAINNET;
 
 export type VeOGVTokenDataProps = {
   apy: number;
-  totalValueLocked: number;
+  liquidity: number;
 };
 const oneEther = ethers.constants.WeiPerEther;
 // Daily emissions in format: start_timestamp, end_timestamp, daily emissions
@@ -92,7 +93,7 @@ export class EthereumOriginDollarVeogvTokenFetcher implements PositionFetcher<Ap
 
     // Calculate TVL in USD
     const supply = parseFloat(format(supplyRaw));
-    const totalValueLocked = parseFloat(
+    const liquidity = parseFloat(
       format(supplyRaw.mul(ethers.utils.parseUnits(ogv.price.toString(), 18)).div(oneEther)),
     );
     const apy = getRewardsApy(stakeAmount, expectedVeOGV, supplyRaw);
@@ -111,16 +112,17 @@ export class EthereumOriginDollarVeogvTokenFetcher implements PositionFetcher<Ap
       decimals: 18,
       supply,
       tokens: [ogv],
-      pricePerShare: [price],
+      pricePerShare: 1 / ratio,
       price,
       dataProps: {
         apy,
-        totalValueLocked,
+        liquidity,
       },
       displayProps: {
         label: `Vote Escrowed ${getLabelFromToken(ogv)}`,
         secondaryLabel: `Up to ${(apy * 100).toFixed(3)}% APY`,
         images: ['https://governance.ousd.com/veogv.svg'],
+        statsItems: [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }],
       },
     };
 

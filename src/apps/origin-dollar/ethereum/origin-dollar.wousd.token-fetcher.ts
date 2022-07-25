@@ -67,7 +67,7 @@ export class EthereumOriginDollarWousdTokenFetcher implements PositionFetcher<Ap
       decimals: 18,
       supply,
       tokens: [ousd],
-      pricePerShare: [price],
+      pricePerShare: 1 / ratio,
       price,
       dataProps: {
         totalValueLocked,
