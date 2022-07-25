@@ -22,13 +22,14 @@ export class AuroraKoyoPoolTokenFetcher implements PositionFetcher<AppTokenPosit
   ) {}
 
   getPositions() {
-    return this.poolTokensHelper.getTokenMarketData({
+    return this.poolTokensHelper.getPositions({
       network,
       appId,
       groupId,
       vaultAddress: '0x0613adbd846cb73e65aa474b785f52697af04c0b',
       resolvePoolTokenAddresses: this.theGraphPoolTokenDataStrategy.build({
         subgraphUrl: 'https://api.thegraph.com/subgraphs/name/koyo-finance/exchange-subgraph-aurora',
+        skipVolume: true,
       }),
     });
   }

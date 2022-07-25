@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { range } from 'lodash';
 
-import { EthersMulticall as Multicall } from '~multicall/multicall.ethers';
+import { IMulticallWrapper } from '~multicall/multicall.interface';
 import { Network } from '~types/network.interface';
 
 import { CurveContractFactory } from '../contracts';
@@ -11,7 +11,7 @@ export class CurveFactoryPoolDefinitionStrategy {
   constructor(@Inject(CurveContractFactory) private readonly curveContractFactory: CurveContractFactory) {}
 
   build({ address }: { address: string }) {
-    return async ({ network, multicall }: { network: Network; multicall: Multicall }) => {
+    return async ({ network, multicall }: { network: Network; multicall: IMulticallWrapper }) => {
       const factoryContract = this.curveContractFactory.curveFactory({ address, network }); // Supports V1 and V2 factory
       const numPoolsRaw = await factoryContract.pool_count();
       const numPools = Number(numPoolsRaw);

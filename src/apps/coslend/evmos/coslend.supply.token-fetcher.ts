@@ -25,7 +25,7 @@ export class EvmosCoslendSupplyTokenFetcher implements PositionFetcher<AppTokenP
       network,
       appId,
       groupId,
-      comptrollerAddress: '0x2c8b48dc777c26dc857e1040d8ef3bdd3b1ef499',
+      comptrollerAddress: '0x5b32b588af5f99f4e5c4038dde6bdd991024f650',
       getComptrollerContract: ({ address, network }) =>
         this.coslendContractFactory.coslendComptroller({ address, network }),
       getTokenContract: ({ address, network }) => this.coslendContractFactory.coslendCToken({ address, network }),

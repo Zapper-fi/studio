@@ -10,7 +10,7 @@ import {
   buildPercentageDisplayItem,
 } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { EthersMulticall as Multicall } from '~multicall/multicall.ethers';
+import { IMulticallWrapper } from '~multicall/multicall.interface';
 import { ContractType } from '~position/contract.interface';
 import { AppTokenPosition, Token } from '~position/position.interface';
 import { AppGroupsDefinition } from '~position/position.service';
@@ -59,8 +59,11 @@ export type UniswapV2PoolTokenHelperParams<T = UniswapFactory, V = UniswapPair> 
     baseTokensByAddress: Record<string, BaseToken>;
     resolveFactoryContract(opts: { address: string; network: Network }): T;
     resolvePoolContract(opts: { address: string; network: Network }): V;
-    resolvePoolUnderlyingTokenAddresses(opts: { multicall: Multicall; poolContract: V }): Promise<[string, string]>;
-    resolvePoolReserves(opts: { multicall: Multicall; poolContract: V }): Promise<[BigNumberish, BigNumberish]>;
+    resolvePoolUnderlyingTokenAddresses(opts: {
+      multicall: IMulticallWrapper;
+      poolContract: V;
+    }): Promise<[string, string]>;
+    resolvePoolReserves(opts: { multicall: IMulticallWrapper; poolContract: V }): Promise<[BigNumberish, BigNumberish]>;
   }): Promise<BaseToken | null>;
   resolvePoolVolumes?: (opts: {
     appId: string;
@@ -68,10 +71,13 @@ export type UniswapV2PoolTokenHelperParams<T = UniswapFactory, V = UniswapPair> 
     resolveFactoryContract(opts: { address: string; network: Network }): T;
     resolvePoolContract(opts: { address: string; network: Network }): V;
   }) => Promise<ResolvePoolVolumesResponse>;
-  resolvePoolTokenSymbol(opts: { multicall: Multicall; poolContract: V }): Promise<string>;
-  resolvePoolTokenSupply(opts: { multicall: Multicall; poolContract: V }): Promise<BigNumberish>;
-  resolvePoolUnderlyingTokenAddresses(opts: { multicall: Multicall; poolContract: V }): Promise<[string, string]>;
-  resolvePoolReserves(opts: { multicall: Multicall; poolContract: V }): Promise<[BigNumberish, BigNumberish]>;
+  resolvePoolTokenSymbol(opts: { multicall: IMulticallWrapper; poolContract: V }): Promise<string>;
+  resolvePoolTokenSupply(opts: { multicall: IMulticallWrapper; poolContract: V }): Promise<BigNumberish>;
+  resolvePoolUnderlyingTokenAddresses(opts: {
+    multicall: IMulticallWrapper;
+    poolContract: V;
+  }): Promise<[string, string]>;
+  resolvePoolReserves(opts: { multicall: IMulticallWrapper; poolContract: V }): Promise<[BigNumberish, BigNumberish]>;
   resolveTokenDisplayPrefix?: (symbol: string) => string;
   resolveTokenDisplaySymbol?: (token: Token) => string;
 };

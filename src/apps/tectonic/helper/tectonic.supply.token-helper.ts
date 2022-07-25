@@ -10,7 +10,7 @@ import {
   buildNumberDisplayItem,
 } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
-import { EthersMulticall as Multicall } from '~multicall/multicall.ethers';
+import { IMulticallWrapper } from '~multicall/multicall.interface';
 import { ContractType } from '~position/contract.interface';
 import { BalanceDisplayMode } from '~position/display.interface';
 import { AppTokenPosition, Token } from '~position/position.interface';
@@ -58,16 +58,16 @@ type TectonicSupplyTokenHelperParams<T = TectonicCore, V = TectonicTToken> = {
   marketName?: string;
   getTectonicCoreContract: (opts: { address: string; network: Network }) => T;
   getTokenContract: (opts: { address: string; network: Network }) => V;
-  getAllMarkets: (opts: { contract: T; multicall: Multicall }) => string[] | Promise<string[]>;
+  getAllMarkets: (opts: { contract: T; multicall: IMulticallWrapper }) => string[] | Promise<string[]>;
   getTokenSymbol: (opts: { contract: V }) => Promise<string>;
   getTokenDecimals: (opts: { contract: V }) => Promise<number>;
-  getExchangeRate: (opts: { contract: V; multicall: Multicall }) => Promise<BigNumber>;
-  getSupplyRate: (opts: { contract: V; multicall: Multicall }) => Promise<BigNumber>;
-  getBorrowRate: (opts: { contract: V; multicall: Multicall }) => Promise<BigNumber>;
+  getExchangeRate: (opts: { contract: V; multicall: IMulticallWrapper }) => Promise<BigNumber>;
+  getSupplyRate: (opts: { contract: V; multicall: IMulticallWrapper }) => Promise<BigNumber>;
+  getBorrowRate: (opts: { contract: V; multicall: IMulticallWrapper }) => Promise<BigNumber>;
   getTotalSupply: (opts: { contract: V }) => Promise<BigNumber>;
-  getUnderlyingAddress: (opts: { contract: V; multicall: Multicall }) => Promise<string>;
+  getUnderlyingAddress: (opts: { contract: V; multicall: IMulticallWrapper }) => Promise<string>;
   getExchangeRateMantissa: (opts: { tokenDecimals: number; underlyingTokenDecimals: number }) => number;
-  getDisplayLabel?: (opts: { contract: V; multicall: Multicall; underlyingToken: Token }) => Promise<string>;
+  getDisplayLabel?: (opts: { contract: V; multicall: IMulticallWrapper; underlyingToken: Token }) => Promise<string>;
 };
 
 @Injectable()

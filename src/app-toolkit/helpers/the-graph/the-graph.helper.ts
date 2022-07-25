@@ -21,7 +21,7 @@ interface gqlFetchAllParams<T> {
   endpoint: string;
   variables?: Variables;
   dataToSearch: string;
-  offset?: number;
+  lastId?: string;
   first?: number;
   prevResults?: T;
 }
@@ -46,8 +46,8 @@ export class TheGraphHelper {
     endpoint,
     variables = {},
     dataToSearch,
-    offset = 0,
     first = 1000,
+    lastId = '',
     prevResults,
   }: gqlFetchAllParams<T>): Promise<T> {
     const results = await this.requestGraph<T>({
@@ -56,7 +56,7 @@ export class TheGraphHelper {
       variables: {
         ...variables,
         first: first,
-        skip: offset,
+        lastId,
       },
     });
 
@@ -76,7 +76,7 @@ export class TheGraphHelper {
         variables,
         dataToSearch,
         first: first,
-        offset: offset + first,
+        lastId: results[dataToSearch][results[dataToSearch].length - 1].id,
         prevResults: newPrevResults,
       });
     }

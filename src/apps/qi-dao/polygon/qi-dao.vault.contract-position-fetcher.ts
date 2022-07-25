@@ -95,6 +95,38 @@ export class PolygonQiDaoVaultPositionFetcher
           nftAddress: '0xd2fe44055b5c874fee029119f70336447c8e8827', // camDAI
           vaultInfoAddress: '0xd2fe44055b5c874fee029119f70336447c8e8827',
         },
+        {
+          nftAddress: '0xff2c44fb819757225a176e825255a01b3b8bb051', // FXS
+          vaultInfoAddress: '0xff2c44fb819757225a176e825255a01b3b8bb051',
+        },
+        {
+          nftAddress: '0x7cbf49e4214c7200af986bc4aacf7bc79dd9c19a', // Celsius X Doge (cxDoge)
+          vaultInfoAddress: '0x7cbf49e4214c7200af986bc4aacf7bc79dd9c19a',
+        },
+        {
+          nftAddress: '0x506533b9c16ee2472a6bf37cc320ae45a0a24f11', // Celsius X ADA (cxADA)
+          vaultInfoAddress: '0x506533b9c16ee2472a6bf37cc320ae45a0a24f11',
+        },
+        {
+          nftAddress: '0x7d36999a69f2b99bf3fb98866cbbe47af43696c8', // Celsius X WETH (cxWETH)
+          vaultInfoAddress: '0x7d36999a69f2b99bf3fb98866cbbe47af43696c8',
+        },
+        {
+          nftAddress: '0x1f0aa72b980d65518e88841ba1da075bd43fa933', // vGHST
+          vaultInfoAddress: '0x1f0aa72b980d65518e88841ba1da075bd43fa933',
+        },
+        {
+          nftAddress: '0x178f1c95c85fe7221c7a6a3d6f12b7da3253eeae', // CEL
+          vaultInfoAddress: '0x178f1c95c85fe7221c7a6a3d6f12b7da3253eeae',
+        },
+        {
+          nftAddress: '0x305f113ff78255d4f8524c8f50c7300b91b10f6a', // WMATIC
+          vaultInfoAddress: '0x305f113ff78255d4f8524c8f50c7300b91b10f6a',
+        },
+        {
+          nftAddress: '0x1dcc1f864a4bd0b8f4ad33594b758b68e9fa872c', // SAND
+          vaultInfoAddress: '0x1dcc1f864a4bd0b8f4ad33594b758b68e9fa872c',
+        },
       ],
     });
 

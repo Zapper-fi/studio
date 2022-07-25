@@ -1,5 +1,5 @@
 import { TheGraphHelper } from '~app-toolkit/helpers/the-graph/the-graph.helper';
-import { GET_PAIRS } from '../graphql/getPairs';
+
 import { GET_POSITIONS } from '../graphql/getPositions';
 import { GET_USER_POSITIONS } from '../graphql/getUserPositions';
 
@@ -50,32 +50,5 @@ export const getPositions = (network: string, graphHelper: TheGraphHelper) => {
     query: GET_POSITIONS,
     variables: {},
     dataToSearch: 'positions',
-  });
-};
-
-type MeanFinancePair = {
-  pairs: {
-    id: string;
-    tokenA: {
-      address: string;
-      decimals: string;
-      name: string;
-      symbol: string;
-    };
-    tokenB: {
-      address: string;
-      decimals: string;
-      name: string;
-      symbol: string;
-    };
-  }[];
-};
-
-export const getPairs = (network: string, graphHelper: TheGraphHelper) => {
-  return graphHelper.gqlFetchAll<MeanFinancePair>({
-    endpoint: `https://api.thegraph.com/subgraphs/name/mean-finance/dca-v2-${network}`,
-    query: GET_PAIRS,
-    variables: {},
-    dataToSearch: 'pairs',
   });
 };

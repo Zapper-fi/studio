@@ -1,6 +1,7 @@
 import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
-import { CurveAppModule } from '~apps/curve';
+import { CurveVotingEscrowContractPositionBalanceHelper } from '~apps/curve/helpers/curve.voting-escrow.contract-position-balance-helper';
+import { CurveVotingEscrowContractPositionHelper } from '~apps/curve/helpers/curve.voting-escrow.contract-position-helper';
 
 import { ArbitrumBalancerV2BalanceFetcher } from './arbitrum/balancer-v2.balance-fetcher';
 import { ArbitrumBalancerV2PoolTokenFetcher } from './arbitrum/balancer-v2.pool.token-fetcher';
@@ -9,8 +10,9 @@ import BALANCER_V2_DEFINITION, { BalancerV2AppDefinition } from './balancer-v2.d
 import { BalancerV2ContractFactory } from './contracts';
 import { EthereumBalancerV2BalanceFetcher } from './ethereum/balancer-v2.balance-fetcher';
 import { EthereumBalancerV2PoolTokenFetcher } from './ethereum/balancer-v2.pool.token-fetcher';
-import { EthereumBalancerV2StakedfContractPositionFetcher } from './ethereum/balancer-v2.staked.contract-position-fetcher';
+import { EthereumBalancerV2StakedContractPositionFetcher } from './ethereum/balancer-v2.staked.contract-position-fetcher';
 import { EthereumBalancerV2VotingEscrowContractPositionFetcher } from './ethereum/balancer-v2.voting-escrow.contract-position-fetcher';
+import { EthereumBalancerV2WrappedAaveTokenFetcher } from './ethereum/balancer-v2.wrapped-aave.token-fetcher';
 import { BalancerV2CacheManager } from './helpers/balancer-v2.cache-manager';
 import { BalancerV2ClaimableContractPositionBalanceHelper } from './helpers/balancer-v2.claimable.contract-position-balance-helper';
 import { BalancerV2EventsPoolTokenDataStrategy } from './helpers/balancer-v2.events.pool-token-address-strategy';
@@ -25,10 +27,12 @@ import { PolygonBalancerV2StakedfContractPositionFetcher } from './polygon/balan
 
 @Register.AppModule({
   appId: BALANCER_V2_DEFINITION.id,
-  imports: [CurveAppModule],
   providers: [
     BalancerV2AppDefinition,
     BalancerV2ContractFactory,
+    // Helpers
+    CurveVotingEscrowContractPositionHelper,
+    CurveVotingEscrowContractPositionBalanceHelper,
     // Arbitrum
     ArbitrumBalancerV2BalanceFetcher,
     ArbitrumBalancerV2PoolTokenFetcher,
@@ -37,7 +41,8 @@ import { PolygonBalancerV2StakedfContractPositionFetcher } from './polygon/balan
     EthereumBalancerV2BalanceFetcher,
     EthereumBalancerV2PoolTokenFetcher,
     EthereumBalancerV2VotingEscrowContractPositionFetcher,
-    EthereumBalancerV2StakedfContractPositionFetcher,
+    EthereumBalancerV2StakedContractPositionFetcher,
+    EthereumBalancerV2WrappedAaveTokenFetcher,
     // Polygon
     PolygonBalancerV2BalanceFetcher,
     PolygonBalancerV2PoolTokenFetcher,
