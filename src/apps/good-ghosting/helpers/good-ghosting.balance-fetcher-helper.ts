@@ -12,6 +12,7 @@ import { ContractType } from '~position/contract.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { isClaimable, isSupplied } from '~position/position.utils';
 import { Network } from '~types/network.interface';
+import { NetworkId } from '../helpers/constants';
 
 import { GoodGhostingGameConfigFetcherHelper } from '../helpers/good-ghosting.game.config-fetcher';
 
@@ -76,10 +77,11 @@ export class GoodGhostingBalanceFetcherHelper {
 
         const stakedTokenBalance = drillBalance(stakedToken, paidAmountRaw.toString());
         const playerTokens = [stakedTokenBalance];
+        const rewardTokenOrIncentiveAmount = NetworkId.CeloMainnet === networkId ? incentiveAmount : rewardAmount;
 
         if (rewardToken && isWinner) {
           const rewardTokenPrecision = 10 ** rewardToken.decimals;
-          const rewardAmountRaw = rewardAmount * rewardTokenPrecision;
+          const rewardAmountRaw = rewardTokenOrIncentiveAmount * rewardTokenPrecision;
           const claimableTokenBalance = drillBalance(rewardToken, rewardAmountRaw.toString());
           playerTokens.push(claimableTokenBalance);
         }
