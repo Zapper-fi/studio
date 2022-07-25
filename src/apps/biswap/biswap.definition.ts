@@ -9,6 +9,7 @@ export const BISWAP_DEFINITION = appDefinition({
   description: `Enjoy the lowest exchange fee, profitable features & Multi-type Referral program`,
   groups: {
     pool: { id: 'pool', type: GroupType.TOKEN, label: 'Pools' },
+    farm: { id: 'farm', type: GroupType.POSITION, label: 'Farms' },
   },
   url: 'https://app.beets.fi/',
   links: {

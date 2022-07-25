@@ -5,6 +5,7 @@ import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
 import { BiswapFactory__factory } from './ethers';
+import { BiswapMasterchef__factory } from './ethers';
 import { BiswapPool__factory } from './ethers';
 
 // eslint-disable-next-line
@@ -19,10 +20,14 @@ export class BiswapContractFactory extends ContractFactory {
   biswapFactory({ address, network }: ContractOpts) {
     return BiswapFactory__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  biswapMasterchef({ address, network }: ContractOpts) {
+    return BiswapMasterchef__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   biswapPool({ address, network }: ContractOpts) {
     return BiswapPool__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
 }
 
 export type { BiswapFactory } from './ethers';
+export type { BiswapMasterchef } from './ethers';
 export type { BiswapPool } from './ethers';
