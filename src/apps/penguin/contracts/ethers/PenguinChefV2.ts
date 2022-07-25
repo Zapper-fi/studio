@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface PenguinChefV2Interface extends utils.Interface {
   functions: {
@@ -166,30 +166,66 @@ export interface PenguinChefV2Interface extends utils.Interface {
   ): FunctionFragment;
 
   encodeFunctionData(functionFragment: 'PEFI_MAX_SUPPLY', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'accountAddedLP', values: [BigNumberish, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'accountAddedLP',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(
     functionFragment: 'add',
-    values: [BigNumberish, BigNumberish, string, boolean, string, string],
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<boolean>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'approvedContracts', values: [string]): string;
+  encodeFunctionData(functionFragment: 'approvedContracts', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'defaultIpefiDistributionBips', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'deposit', values: [BigNumberish, BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'deposits', values: [BigNumberish, string]): string;
+  encodeFunctionData(
+    functionFragment: 'deposit',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'deposits',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'dev', values?: undefined): string;
   encodeFunctionData(functionFragment: 'devMintBips', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'emergencyWithdraw', values: [BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'harvest', values: [BigNumberish, string]): string;
+  encodeFunctionData(
+    functionFragment: 'emergencyWithdraw',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'harvest',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(
     functionFragment: 'inCaseTokensGetStuck',
-    values: [BigNumberish, string, string, BigNumberish],
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'ipefiDistributionBips', values: [string]): string;
-  encodeFunctionData(functionFragment: 'ipefiDistributionBipsByUser', values: [string]): string;
-  encodeFunctionData(functionFragment: 'ipefiDistributionBipsSet', values: [string]): string;
-  encodeFunctionData(functionFragment: 'manualMint', values: [string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'ipefiDistributionBips', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'ipefiDistributionBipsByUser', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'ipefiDistributionBipsSet', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'manualMint',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'massUpdatePools', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'migrateStrategy', values: [BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'modifyApprovedContracts', values: [string[], boolean[]]): string;
+  encodeFunctionData(
+    functionFragment: 'migrateStrategy',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'modifyApprovedContracts',
+    values: [PromiseOrValue<string>[], PromiseOrValue<boolean>[]],
+  ): string;
   encodeFunctionData(functionFragment: 'nest', values?: undefined): string;
   encodeFunctionData(functionFragment: 'nestAPY', values?: undefined): string;
   encodeFunctionData(functionFragment: 'nestAllocatorAddress', values?: undefined): string;
@@ -200,50 +236,108 @@ export interface PenguinChefV2Interface extends utils.Interface {
   encodeFunctionData(functionFragment: 'pefi', values?: undefined): string;
   encodeFunctionData(functionFragment: 'pefiEmissionPerSecond', values?: undefined): string;
   encodeFunctionData(functionFragment: 'pefiPerYear', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'pefiPerYearToIgloo', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'pefiPerYearToIgloo', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'pefiPerYearToNest', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'pendingIPEFI', values: [BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'pendingPEFI', values: [BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'pendingRewards', values: [BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'pendingTokens', values: [BigNumberish, string]): string;
+  encodeFunctionData(
+    functionFragment: 'pendingIPEFI',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'pendingPEFI',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'pendingRewards',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'pendingTokens',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'performanceFeeAddress', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'poolInfo', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'poolInfo', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'poolLength', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'profitInLP', values: [BigNumberish, string]): string;
+  encodeFunctionData(
+    functionFragment: 'profitInLP',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'revokeAllowance', values: [BigNumberish, string, string]): string;
-  encodeFunctionData(functionFragment: 'reward', values: [BigNumberish, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'revokeAllowance',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'reward',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(
     functionFragment: 'set',
-    values: [BigNumberish, BigNumberish, BigNumberish, string, boolean, boolean],
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<boolean>,
+      PromiseOrValue<boolean>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'setAllowances', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setDefaultIpefiDistributionBips', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setDev', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setDevMintBips', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setIpefiDistributionBips', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setNest', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setNestAllocatorAddress', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setNestMintBips', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setNestSplitBips', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setOnlyApprovedContractOrEOAStatus', values: [boolean]): string;
-  encodeFunctionData(functionFragment: 'setPefiEmission', values: [BigNumberish, boolean]): string;
-  encodeFunctionData(functionFragment: 'setPerfomanceFeeAddress', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setPerformanceFeeBips', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setStrategy', values: [BigNumberish, string, boolean, string]): string;
+  encodeFunctionData(functionFragment: 'setAllowances', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'setDefaultIpefiDistributionBips',
+    values: [PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'setDev', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setDevMintBips', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setIpefiDistributionBips', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setNest', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setNestAllocatorAddress', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setNestMintBips', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setNestSplitBips', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setOnlyApprovedContractOrEOAStatus', values: [PromiseOrValue<boolean>]): string;
+  encodeFunctionData(
+    functionFragment: 'setPefiEmission',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(functionFragment: 'setPerfomanceFeeAddress', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'setPerformanceFeeBips',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'setStrategy',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>, PromiseOrValue<boolean>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'startTime', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalAllocPoint', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'totalLP', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'totalPendingPEFI', values: [BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'totalShares', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferMinter', values: [string]): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
-  encodeFunctionData(functionFragment: 'updatePool', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'userInfo', values: [BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'userShares', values: [BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'withdraw', values: [BigNumberish, BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'withdrawAndHarvest', values: [BigNumberish, BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'withdrawals', values: [BigNumberish, string]): string;
+  encodeFunctionData(functionFragment: 'totalLP', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'totalPendingPEFI',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'totalShares', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'transferMinter', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'updatePool', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'userInfo',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'userShares',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'withdraw',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'withdrawAndHarvest',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'withdrawals',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
 
   decodeFunctionResult(functionFragment: 'PEFI_MAX_SUPPLY', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'accountAddedLP', data: BytesLike): Result;
@@ -445,82 +539,86 @@ export interface PenguinChefV2 extends BaseContract {
     PEFI_MAX_SUPPLY(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     accountAddedLP(
-      pid: BigNumberish,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     add(
-      _allocPoint: BigNumberish,
-      _withdrawFeeBP: BigNumberish,
-      _poolToken: string,
-      _withUpdate: boolean,
-      _rewarder: string,
-      _strategy: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _withdrawFeeBP: PromiseOrValue<BigNumberish>,
+      _poolToken: PromiseOrValue<string>,
+      _withUpdate: PromiseOrValue<boolean>,
+      _rewarder: PromiseOrValue<string>,
+      _strategy: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    approvedContracts(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    approvedContracts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     defaultIpefiDistributionBips(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     deposit(
-      pid: BigNumberish,
-      amount: BigNumberish,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    deposits(arg0: BigNumberish, arg1: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    deposits(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     dev(overrides?: CallOverrides): Promise<[string]>;
 
     devMintBips(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     emergencyWithdraw(
-      pid: BigNumberish,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     harvest(
-      pid: BigNumberish,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     inCaseTokensGetStuck(
-      pid: BigNumberish,
-      token: string,
-      to: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      token: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    ipefiDistributionBips(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    ipefiDistributionBips(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    ipefiDistributionBipsByUser(user: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    ipefiDistributionBipsByUser(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    ipefiDistributionBipsSet(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    ipefiDistributionBipsSet(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     manualMint(
-      dest: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      dest: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    massUpdatePools(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    massUpdatePools(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     migrateStrategy(
-      pid: BigNumberish,
-      newStrategy: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      newStrategy: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     modifyApprovedContracts(
-      contracts: string[],
-      statuses: boolean[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      contracts: PromiseOrValue<string>[],
+      statuses: PromiseOrValue<boolean>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     nest(overrides?: CallOverrides): Promise<[string]>;
@@ -543,22 +641,38 @@ export interface PenguinChefV2 extends BaseContract {
 
     pefiPerYear(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    pefiPerYearToIgloo(pid: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    pefiPerYearToIgloo(pid: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     pefiPerYearToNest(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    pendingIPEFI(pid: BigNumberish, user: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    pendingIPEFI(
+      pid: PromiseOrValue<BigNumberish>,
+      user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
-    pendingPEFI(pid: BigNumberish, user: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    pendingPEFI(
+      pid: PromiseOrValue<BigNumberish>,
+      user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
-    pendingRewards(pid: BigNumberish, user: string, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+    pendingRewards(
+      pid: PromiseOrValue<BigNumberish>,
+      user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber, BigNumber]>;
 
-    pendingTokens(pid: BigNumberish, user: string, overrides?: CallOverrides): Promise<[string[], BigNumber[]]>;
+    pendingTokens(
+      pid: PromiseOrValue<BigNumberish>,
+      user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[string[], BigNumber[]]>;
 
     performanceFeeAddress(overrides?: CallOverrides): Promise<[string]>;
 
     poolInfo(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [string, string, string, BigNumber, BigNumber, BigNumber, number, BigNumber, BigNumber] & {
@@ -576,227 +690,257 @@ export interface PenguinChefV2 extends BaseContract {
 
     poolLength(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    profitInLP(pid: BigNumberish, userAddress: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    profitInLP(
+      pid: PromiseOrValue<BigNumberish>,
+      userAddress: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     revokeAllowance(
-      pid: BigNumberish,
-      token: string,
-      spender: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      token: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    reward(_lastRewardTime: BigNumberish, _currentTime: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    reward(
+      _lastRewardTime: PromiseOrValue<BigNumberish>,
+      _currentTime: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     set(
-      _pid: BigNumberish,
-      _allocPoint: BigNumberish,
-      _withdrawFeeBP: BigNumberish,
-      _rewarder: string,
-      _withUpdate: boolean,
-      overwrite: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _withdrawFeeBP: PromiseOrValue<BigNumberish>,
+      _rewarder: PromiseOrValue<string>,
+      _withUpdate: PromiseOrValue<boolean>,
+      overwrite: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setAllowances(
-      pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setDefaultIpefiDistributionBips(
-      _defaultIpefiDistributionBips: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _defaultIpefiDistributionBips: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    setDev(_dev: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    setDev(
+      _dev: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     setDevMintBips(
-      _devMintBips: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _devMintBips: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setIpefiDistributionBips(
-      _ipefiDistributionBips: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _ipefiDistributionBips: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    setNest(_nest: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    setNest(
+      _nest: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     setNestAllocatorAddress(
-      _nestAllocatorAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _nestAllocatorAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setNestMintBips(
-      _nestMintBips: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _nestMintBips: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setNestSplitBips(
-      _nestSplitBips: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _nestSplitBips: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setOnlyApprovedContractOrEOAStatus(
-      newStatus: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newStatus: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setPefiEmission(
-      newPefiEmissionPerSecond: BigNumberish,
-      withUpdate: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newPefiEmissionPerSecond: PromiseOrValue<BigNumberish>,
+      withUpdate: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setPerfomanceFeeAddress(
-      _performanceFeeAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _performanceFeeAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setPerformanceFeeBips(
-      pid: BigNumberish,
-      newPerformanceFeeBips: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      newPerformanceFeeBips: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setStrategy(
-      pid: BigNumberish,
-      newStrategy: string,
-      transferOwnership: boolean,
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      newStrategy: PromiseOrValue<string>,
+      transferOwnership: PromiseOrValue<boolean>,
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     startTime(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     totalAllocPoint(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    totalLP(pid: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    totalLP(pid: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    totalPendingPEFI(pid: BigNumberish, penguin: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    totalPendingPEFI(
+      pid: PromiseOrValue<BigNumberish>,
+      penguin: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
-    totalShares(pid: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    totalShares(pid: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transferMinter(
-      newMinter: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newMinter: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updatePool(
-      pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     userInfo(
-      arg0: BigNumberish,
-      arg1: string,
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; rewardDebt: BigNumber }>;
 
-    userShares(pid: BigNumberish, user: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    userShares(
+      pid: PromiseOrValue<BigNumberish>,
+      user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     withdraw(
-      pid: BigNumberish,
-      amountShares: BigNumberish,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      amountShares: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     withdrawAndHarvest(
-      pid: BigNumberish,
-      amountShares: BigNumberish,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      amountShares: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    withdrawals(arg0: BigNumberish, arg1: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    withdrawals(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
   };
 
   PEFI_MAX_SUPPLY(overrides?: CallOverrides): Promise<BigNumber>;
 
   accountAddedLP(
-    pid: BigNumberish,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    pid: PromiseOrValue<BigNumberish>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   add(
-    _allocPoint: BigNumberish,
-    _withdrawFeeBP: BigNumberish,
-    _poolToken: string,
-    _withUpdate: boolean,
-    _rewarder: string,
-    _strategy: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _allocPoint: PromiseOrValue<BigNumberish>,
+    _withdrawFeeBP: PromiseOrValue<BigNumberish>,
+    _poolToken: PromiseOrValue<string>,
+    _withUpdate: PromiseOrValue<boolean>,
+    _rewarder: PromiseOrValue<string>,
+    _strategy: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  approvedContracts(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  approvedContracts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   defaultIpefiDistributionBips(overrides?: CallOverrides): Promise<BigNumber>;
 
   deposit(
-    pid: BigNumberish,
-    amount: BigNumberish,
-    to: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    pid: PromiseOrValue<BigNumberish>,
+    amount: PromiseOrValue<BigNumberish>,
+    to: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  deposits(arg0: BigNumberish, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+  deposits(
+    arg0: PromiseOrValue<BigNumberish>,
+    arg1: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   dev(overrides?: CallOverrides): Promise<string>;
 
   devMintBips(overrides?: CallOverrides): Promise<BigNumber>;
 
   emergencyWithdraw(
-    pid: BigNumberish,
-    to: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    pid: PromiseOrValue<BigNumberish>,
+    to: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   harvest(
-    pid: BigNumberish,
-    to: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    pid: PromiseOrValue<BigNumberish>,
+    to: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   inCaseTokensGetStuck(
-    pid: BigNumberish,
-    token: string,
-    to: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    pid: PromiseOrValue<BigNumberish>,
+    token: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  ipefiDistributionBips(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  ipefiDistributionBips(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  ipefiDistributionBipsByUser(user: string, overrides?: CallOverrides): Promise<BigNumber>;
+  ipefiDistributionBipsByUser(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  ipefiDistributionBipsSet(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  ipefiDistributionBipsSet(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   manualMint(
-    dest: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    dest: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  massUpdatePools(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  massUpdatePools(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   migrateStrategy(
-    pid: BigNumberish,
-    newStrategy: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    pid: PromiseOrValue<BigNumberish>,
+    newStrategy: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   modifyApprovedContracts(
-    contracts: string[],
-    statuses: boolean[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    contracts: PromiseOrValue<string>[],
+    statuses: PromiseOrValue<boolean>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   nest(overrides?: CallOverrides): Promise<string>;
@@ -819,22 +963,38 @@ export interface PenguinChefV2 extends BaseContract {
 
   pefiPerYear(overrides?: CallOverrides): Promise<BigNumber>;
 
-  pefiPerYearToIgloo(pid: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  pefiPerYearToIgloo(pid: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   pefiPerYearToNest(overrides?: CallOverrides): Promise<BigNumber>;
 
-  pendingIPEFI(pid: BigNumberish, user: string, overrides?: CallOverrides): Promise<BigNumber>;
+  pendingIPEFI(
+    pid: PromiseOrValue<BigNumberish>,
+    user: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
-  pendingPEFI(pid: BigNumberish, user: string, overrides?: CallOverrides): Promise<BigNumber>;
+  pendingPEFI(
+    pid: PromiseOrValue<BigNumberish>,
+    user: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
-  pendingRewards(pid: BigNumberish, user: string, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+  pendingRewards(
+    pid: PromiseOrValue<BigNumberish>,
+    user: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<[BigNumber, BigNumber]>;
 
-  pendingTokens(pid: BigNumberish, user: string, overrides?: CallOverrides): Promise<[string[], BigNumber[]]>;
+  pendingTokens(
+    pid: PromiseOrValue<BigNumberish>,
+    user: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<[string[], BigNumber[]]>;
 
   performanceFeeAddress(overrides?: CallOverrides): Promise<string>;
 
   poolInfo(
-    arg0: BigNumberish,
+    arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<
     [string, string, string, BigNumber, BigNumber, BigNumber, number, BigNumber, BigNumber] & {
@@ -852,199 +1012,254 @@ export interface PenguinChefV2 extends BaseContract {
 
   poolLength(overrides?: CallOverrides): Promise<BigNumber>;
 
-  profitInLP(pid: BigNumberish, userAddress: string, overrides?: CallOverrides): Promise<BigNumber>;
+  profitInLP(
+    pid: PromiseOrValue<BigNumberish>,
+    userAddress: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   revokeAllowance(
-    pid: BigNumberish,
-    token: string,
-    spender: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    pid: PromiseOrValue<BigNumberish>,
+    token: PromiseOrValue<string>,
+    spender: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  reward(_lastRewardTime: BigNumberish, _currentTime: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  reward(
+    _lastRewardTime: PromiseOrValue<BigNumberish>,
+    _currentTime: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   set(
-    _pid: BigNumberish,
-    _allocPoint: BigNumberish,
-    _withdrawFeeBP: BigNumberish,
-    _rewarder: string,
-    _withUpdate: boolean,
-    overwrite: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pid: PromiseOrValue<BigNumberish>,
+    _allocPoint: PromiseOrValue<BigNumberish>,
+    _withdrawFeeBP: PromiseOrValue<BigNumberish>,
+    _rewarder: PromiseOrValue<string>,
+    _withUpdate: PromiseOrValue<boolean>,
+    overwrite: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setAllowances(
-    pid: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    pid: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setDefaultIpefiDistributionBips(
-    _defaultIpefiDistributionBips: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _defaultIpefiDistributionBips: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  setDev(_dev: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  setDev(
+    _dev: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   setDevMintBips(
-    _devMintBips: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _devMintBips: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setIpefiDistributionBips(
-    _ipefiDistributionBips: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _ipefiDistributionBips: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  setNest(_nest: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  setNest(
+    _nest: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   setNestAllocatorAddress(
-    _nestAllocatorAddress: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _nestAllocatorAddress: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setNestMintBips(
-    _nestMintBips: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _nestMintBips: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setNestSplitBips(
-    _nestSplitBips: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _nestSplitBips: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setOnlyApprovedContractOrEOAStatus(
-    newStatus: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newStatus: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setPefiEmission(
-    newPefiEmissionPerSecond: BigNumberish,
-    withUpdate: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newPefiEmissionPerSecond: PromiseOrValue<BigNumberish>,
+    withUpdate: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setPerfomanceFeeAddress(
-    _performanceFeeAddress: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _performanceFeeAddress: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setPerformanceFeeBips(
-    pid: BigNumberish,
-    newPerformanceFeeBips: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    pid: PromiseOrValue<BigNumberish>,
+    newPerformanceFeeBips: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setStrategy(
-    pid: BigNumberish,
-    newStrategy: string,
-    transferOwnership: boolean,
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    pid: PromiseOrValue<BigNumberish>,
+    newStrategy: PromiseOrValue<string>,
+    transferOwnership: PromiseOrValue<boolean>,
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   startTime(overrides?: CallOverrides): Promise<BigNumber>;
 
   totalAllocPoint(overrides?: CallOverrides): Promise<BigNumber>;
 
-  totalLP(pid: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  totalLP(pid: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  totalPendingPEFI(pid: BigNumberish, penguin: string, overrides?: CallOverrides): Promise<BigNumber>;
+  totalPendingPEFI(
+    pid: PromiseOrValue<BigNumberish>,
+    penguin: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
-  totalShares(pid: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  totalShares(pid: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   transferMinter(
-    newMinter: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newMinter: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updatePool(
-    pid: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    pid: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   userInfo(
-    arg0: BigNumberish,
-    arg1: string,
+    arg0: PromiseOrValue<BigNumberish>,
+    arg1: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; rewardDebt: BigNumber }>;
 
-  userShares(pid: BigNumberish, user: string, overrides?: CallOverrides): Promise<BigNumber>;
+  userShares(
+    pid: PromiseOrValue<BigNumberish>,
+    user: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   withdraw(
-    pid: BigNumberish,
-    amountShares: BigNumberish,
-    to: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    pid: PromiseOrValue<BigNumberish>,
+    amountShares: PromiseOrValue<BigNumberish>,
+    to: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   withdrawAndHarvest(
-    pid: BigNumberish,
-    amountShares: BigNumberish,
-    to: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    pid: PromiseOrValue<BigNumberish>,
+    amountShares: PromiseOrValue<BigNumberish>,
+    to: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  withdrawals(arg0: BigNumberish, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+  withdrawals(
+    arg0: PromiseOrValue<BigNumberish>,
+    arg1: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   callStatic: {
     PEFI_MAX_SUPPLY(overrides?: CallOverrides): Promise<BigNumber>;
 
-    accountAddedLP(pid: BigNumberish, amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
-
-    add(
-      _allocPoint: BigNumberish,
-      _withdrawFeeBP: BigNumberish,
-      _poolToken: string,
-      _withUpdate: boolean,
-      _rewarder: string,
-      _strategy: string,
+    accountAddedLP(
+      pid: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    approvedContracts(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    add(
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _withdrawFeeBP: PromiseOrValue<BigNumberish>,
+      _poolToken: PromiseOrValue<string>,
+      _withUpdate: PromiseOrValue<boolean>,
+      _rewarder: PromiseOrValue<string>,
+      _strategy: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    approvedContracts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     defaultIpefiDistributionBips(overrides?: CallOverrides): Promise<BigNumber>;
 
-    deposit(pid: BigNumberish, amount: BigNumberish, to: string, overrides?: CallOverrides): Promise<void>;
+    deposit(
+      pid: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    deposits(arg0: BigNumberish, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    deposits(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     dev(overrides?: CallOverrides): Promise<string>;
 
     devMintBips(overrides?: CallOverrides): Promise<BigNumber>;
 
-    emergencyWithdraw(pid: BigNumberish, to: string, overrides?: CallOverrides): Promise<void>;
-
-    harvest(pid: BigNumberish, to: string, overrides?: CallOverrides): Promise<void>;
-
-    inCaseTokensGetStuck(
-      pid: BigNumberish,
-      token: string,
-      to: string,
-      amount: BigNumberish,
+    emergencyWithdraw(
+      pid: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    ipefiDistributionBips(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    harvest(pid: PromiseOrValue<BigNumberish>, to: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    ipefiDistributionBipsByUser(user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    inCaseTokensGetStuck(
+      pid: PromiseOrValue<BigNumberish>,
+      token: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    ipefiDistributionBipsSet(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    ipefiDistributionBips(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    manualMint(dest: string, amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    ipefiDistributionBipsByUser(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    ipefiDistributionBipsSet(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
+
+    manualMint(
+      dest: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     massUpdatePools(overrides?: CallOverrides): Promise<void>;
 
-    migrateStrategy(pid: BigNumberish, newStrategy: string, overrides?: CallOverrides): Promise<void>;
+    migrateStrategy(
+      pid: PromiseOrValue<BigNumberish>,
+      newStrategy: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    modifyApprovedContracts(contracts: string[], statuses: boolean[], overrides?: CallOverrides): Promise<void>;
+    modifyApprovedContracts(
+      contracts: PromiseOrValue<string>[],
+      statuses: PromiseOrValue<boolean>[],
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     nest(overrides?: CallOverrides): Promise<string>;
 
@@ -1066,22 +1281,38 @@ export interface PenguinChefV2 extends BaseContract {
 
     pefiPerYear(overrides?: CallOverrides): Promise<BigNumber>;
 
-    pefiPerYearToIgloo(pid: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    pefiPerYearToIgloo(pid: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     pefiPerYearToNest(overrides?: CallOverrides): Promise<BigNumber>;
 
-    pendingIPEFI(pid: BigNumberish, user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingIPEFI(
+      pid: PromiseOrValue<BigNumberish>,
+      user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    pendingPEFI(pid: BigNumberish, user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingPEFI(
+      pid: PromiseOrValue<BigNumberish>,
+      user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    pendingRewards(pid: BigNumberish, user: string, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+    pendingRewards(
+      pid: PromiseOrValue<BigNumberish>,
+      user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber, BigNumber]>;
 
-    pendingTokens(pid: BigNumberish, user: string, overrides?: CallOverrides): Promise<[string[], BigNumber[]]>;
+    pendingTokens(
+      pid: PromiseOrValue<BigNumberish>,
+      user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[string[], BigNumber[]]>;
 
     performanceFeeAddress(overrides?: CallOverrides): Promise<string>;
 
     poolInfo(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [string, string, string, BigNumber, BigNumber, BigNumber, number, BigNumber, BigNumber] & {
@@ -1099,66 +1330,82 @@ export interface PenguinChefV2 extends BaseContract {
 
     poolLength(overrides?: CallOverrides): Promise<BigNumber>;
 
-    profitInLP(pid: BigNumberish, userAddress: string, overrides?: CallOverrides): Promise<BigNumber>;
+    profitInLP(
+      pid: PromiseOrValue<BigNumberish>,
+      userAddress: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
-    revokeAllowance(pid: BigNumberish, token: string, spender: string, overrides?: CallOverrides): Promise<void>;
+    revokeAllowance(
+      pid: PromiseOrValue<BigNumberish>,
+      token: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    reward(_lastRewardTime: BigNumberish, _currentTime: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    reward(
+      _lastRewardTime: PromiseOrValue<BigNumberish>,
+      _currentTime: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     set(
-      _pid: BigNumberish,
-      _allocPoint: BigNumberish,
-      _withdrawFeeBP: BigNumberish,
-      _rewarder: string,
-      _withUpdate: boolean,
-      overwrite: boolean,
+      _pid: PromiseOrValue<BigNumberish>,
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _withdrawFeeBP: PromiseOrValue<BigNumberish>,
+      _rewarder: PromiseOrValue<string>,
+      _withUpdate: PromiseOrValue<boolean>,
+      overwrite: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    setAllowances(pid: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setAllowances(pid: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     setDefaultIpefiDistributionBips(
-      _defaultIpefiDistributionBips: BigNumberish,
+      _defaultIpefiDistributionBips: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    setDev(_dev: string, overrides?: CallOverrides): Promise<void>;
+    setDev(_dev: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setDevMintBips(_devMintBips: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setDevMintBips(_devMintBips: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setIpefiDistributionBips(_ipefiDistributionBips: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setIpefiDistributionBips(
+      _ipefiDistributionBips: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setNest(_nest: string, overrides?: CallOverrides): Promise<void>;
+    setNest(_nest: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setNestAllocatorAddress(_nestAllocatorAddress: string, overrides?: CallOverrides): Promise<void>;
+    setNestAllocatorAddress(_nestAllocatorAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setNestMintBips(_nestMintBips: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setNestMintBips(_nestMintBips: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setNestSplitBips(_nestSplitBips: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setNestSplitBips(_nestSplitBips: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setOnlyApprovedContractOrEOAStatus(newStatus: boolean, overrides?: CallOverrides): Promise<void>;
+    setOnlyApprovedContractOrEOAStatus(newStatus: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
 
     setPefiEmission(
-      newPefiEmissionPerSecond: BigNumberish,
-      withUpdate: boolean,
+      newPefiEmissionPerSecond: PromiseOrValue<BigNumberish>,
+      withUpdate: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    setPerfomanceFeeAddress(_performanceFeeAddress: string, overrides?: CallOverrides): Promise<void>;
+    setPerfomanceFeeAddress(_performanceFeeAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     setPerformanceFeeBips(
-      pid: BigNumberish,
-      newPerformanceFeeBips: BigNumberish,
+      pid: PromiseOrValue<BigNumberish>,
+      newPerformanceFeeBips: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     setStrategy(
-      pid: BigNumberish,
-      newStrategy: string,
-      transferOwnership: boolean,
-      newOwner: string,
+      pid: PromiseOrValue<BigNumberish>,
+      newStrategy: PromiseOrValue<string>,
+      transferOwnership: PromiseOrValue<boolean>,
+      newOwner: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -1166,184 +1413,232 @@ export interface PenguinChefV2 extends BaseContract {
 
     totalAllocPoint(overrides?: CallOverrides): Promise<BigNumber>;
 
-    totalLP(pid: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    totalLP(pid: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    totalPendingPEFI(pid: BigNumberish, penguin: string, overrides?: CallOverrides): Promise<BigNumber>;
+    totalPendingPEFI(
+      pid: PromiseOrValue<BigNumberish>,
+      penguin: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    totalShares(pid: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    totalShares(pid: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    transferMinter(newMinter: string, overrides?: CallOverrides): Promise<void>;
+    transferMinter(newMinter: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    updatePool(pid: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    updatePool(pid: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     userInfo(
-      arg0: BigNumberish,
-      arg1: string,
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; rewardDebt: BigNumber }>;
 
-    userShares(pid: BigNumberish, user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    userShares(
+      pid: PromiseOrValue<BigNumberish>,
+      user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    withdraw(pid: BigNumberish, amountShares: BigNumberish, to: string, overrides?: CallOverrides): Promise<void>;
-
-    withdrawAndHarvest(
-      pid: BigNumberish,
-      amountShares: BigNumberish,
-      to: string,
+    withdraw(
+      pid: PromiseOrValue<BigNumberish>,
+      amountShares: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    withdrawals(arg0: BigNumberish, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    withdrawAndHarvest(
+      pid: PromiseOrValue<BigNumberish>,
+      amountShares: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    withdrawals(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
   };
 
   filters: {
     'Deposit(address,uint256,uint256,address)'(
-      user?: string | null,
-      pid?: BigNumberish | null,
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
       amount?: null,
-      to?: string | null,
+      to?: PromiseOrValue<string> | null,
     ): DepositEventFilter;
-    Deposit(user?: string | null, pid?: BigNumberish | null, amount?: null, to?: string | null): DepositEventFilter;
+    Deposit(
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
+      amount?: null,
+      to?: PromiseOrValue<string> | null,
+    ): DepositEventFilter;
 
-    'DevSet(address,address)'(oldAddress?: string | null, newAddress?: string | null): DevSetEventFilter;
-    DevSet(oldAddress?: string | null, newAddress?: string | null): DevSetEventFilter;
+    'DevSet(address,address)'(
+      oldAddress?: PromiseOrValue<string> | null,
+      newAddress?: PromiseOrValue<string> | null,
+    ): DevSetEventFilter;
+    DevSet(oldAddress?: PromiseOrValue<string> | null, newAddress?: PromiseOrValue<string> | null): DevSetEventFilter;
 
     'EmergencyWithdraw(address,uint256,uint256,address)'(
-      user?: string | null,
-      pid?: BigNumberish | null,
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
       amount?: null,
-      to?: string | null,
+      to?: PromiseOrValue<string> | null,
     ): EmergencyWithdrawEventFilter;
     EmergencyWithdraw(
-      user?: string | null,
-      pid?: BigNumberish | null,
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
       amount?: null,
-      to?: string | null,
+      to?: PromiseOrValue<string> | null,
     ): EmergencyWithdrawEventFilter;
 
     'Harvest(address,uint256,uint256,uint256)'(
-      user?: string | null,
-      pid?: BigNumberish | null,
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
       amountIPEFI?: null,
       amountPEFI?: null,
     ): HarvestEventFilter;
-    Harvest(user?: string | null, pid?: BigNumberish | null, amountIPEFI?: null, amountPEFI?: null): HarvestEventFilter;
+    Harvest(
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
+      amountIPEFI?: null,
+      amountPEFI?: null,
+    ): HarvestEventFilter;
 
     'NestAllocatorAddressSet(address,address)'(
-      oldAddress?: string | null,
-      newAddress?: string | null,
+      oldAddress?: PromiseOrValue<string> | null,
+      newAddress?: PromiseOrValue<string> | null,
     ): NestAllocatorAddressSetEventFilter;
-    NestAllocatorAddressSet(oldAddress?: string | null, newAddress?: string | null): NestAllocatorAddressSetEventFilter;
+    NestAllocatorAddressSet(
+      oldAddress?: PromiseOrValue<string> | null,
+      newAddress?: PromiseOrValue<string> | null,
+    ): NestAllocatorAddressSetEventFilter;
 
-    'NestSet(address,address)'(oldAddress?: string | null, newAddress?: string | null): NestSetEventFilter;
-    NestSet(oldAddress?: string | null, newAddress?: string | null): NestSetEventFilter;
+    'NestSet(address,address)'(
+      oldAddress?: PromiseOrValue<string> | null,
+      newAddress?: PromiseOrValue<string> | null,
+    ): NestSetEventFilter;
+    NestSet(oldAddress?: PromiseOrValue<string> | null, newAddress?: PromiseOrValue<string> | null): NestSetEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
 
     'PerformanceFeeAddressSet(address,address)'(
-      oldAddress?: string | null,
-      newAddress?: string | null,
+      oldAddress?: PromiseOrValue<string> | null,
+      newAddress?: PromiseOrValue<string> | null,
     ): PerformanceFeeAddressSetEventFilter;
     PerformanceFeeAddressSet(
-      oldAddress?: string | null,
-      newAddress?: string | null,
+      oldAddress?: PromiseOrValue<string> | null,
+      newAddress?: PromiseOrValue<string> | null,
     ): PerformanceFeeAddressSetEventFilter;
 
     'Withdraw(address,uint256,uint256,address)'(
-      user?: string | null,
-      pid?: BigNumberish | null,
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
       amount?: null,
-      to?: string | null,
+      to?: PromiseOrValue<string> | null,
     ): WithdrawEventFilter;
-    Withdraw(user?: string | null, pid?: BigNumberish | null, amount?: null, to?: string | null): WithdrawEventFilter;
+    Withdraw(
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
+      amount?: null,
+      to?: PromiseOrValue<string> | null,
+    ): WithdrawEventFilter;
   };
 
   estimateGas: {
     PEFI_MAX_SUPPLY(overrides?: CallOverrides): Promise<BigNumber>;
 
     accountAddedLP(
-      pid: BigNumberish,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     add(
-      _allocPoint: BigNumberish,
-      _withdrawFeeBP: BigNumberish,
-      _poolToken: string,
-      _withUpdate: boolean,
-      _rewarder: string,
-      _strategy: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _withdrawFeeBP: PromiseOrValue<BigNumberish>,
+      _poolToken: PromiseOrValue<string>,
+      _withUpdate: PromiseOrValue<boolean>,
+      _rewarder: PromiseOrValue<string>,
+      _strategy: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    approvedContracts(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    approvedContracts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     defaultIpefiDistributionBips(overrides?: CallOverrides): Promise<BigNumber>;
 
     deposit(
-      pid: BigNumberish,
-      amount: BigNumberish,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    deposits(arg0: BigNumberish, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    deposits(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     dev(overrides?: CallOverrides): Promise<BigNumber>;
 
     devMintBips(overrides?: CallOverrides): Promise<BigNumber>;
 
     emergencyWithdraw(
-      pid: BigNumberish,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     harvest(
-      pid: BigNumberish,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     inCaseTokensGetStuck(
-      pid: BigNumberish,
-      token: string,
-      to: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      token: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    ipefiDistributionBips(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    ipefiDistributionBips(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    ipefiDistributionBipsByUser(user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    ipefiDistributionBipsByUser(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    ipefiDistributionBipsSet(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    ipefiDistributionBipsSet(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     manualMint(
-      dest: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      dest: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    massUpdatePools(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    massUpdatePools(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     migrateStrategy(
-      pid: BigNumberish,
-      newStrategy: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      newStrategy: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     modifyApprovedContracts(
-      contracts: string[],
-      statuses: boolean[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      contracts: PromiseOrValue<string>[],
+      statuses: PromiseOrValue<boolean>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     nest(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1366,233 +1661,289 @@ export interface PenguinChefV2 extends BaseContract {
 
     pefiPerYear(overrides?: CallOverrides): Promise<BigNumber>;
 
-    pefiPerYearToIgloo(pid: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    pefiPerYearToIgloo(pid: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     pefiPerYearToNest(overrides?: CallOverrides): Promise<BigNumber>;
 
-    pendingIPEFI(pid: BigNumberish, user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingIPEFI(
+      pid: PromiseOrValue<BigNumberish>,
+      user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    pendingPEFI(pid: BigNumberish, user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingPEFI(
+      pid: PromiseOrValue<BigNumberish>,
+      user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    pendingRewards(pid: BigNumberish, user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingRewards(
+      pid: PromiseOrValue<BigNumberish>,
+      user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    pendingTokens(pid: BigNumberish, user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingTokens(
+      pid: PromiseOrValue<BigNumberish>,
+      user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     performanceFeeAddress(overrides?: CallOverrides): Promise<BigNumber>;
 
-    poolInfo(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    poolInfo(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     poolLength(overrides?: CallOverrides): Promise<BigNumber>;
 
-    profitInLP(pid: BigNumberish, userAddress: string, overrides?: CallOverrides): Promise<BigNumber>;
+    profitInLP(
+      pid: PromiseOrValue<BigNumberish>,
+      userAddress: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     revokeAllowance(
-      pid: BigNumberish,
-      token: string,
-      spender: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      token: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    reward(_lastRewardTime: BigNumberish, _currentTime: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    reward(
+      _lastRewardTime: PromiseOrValue<BigNumberish>,
+      _currentTime: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     set(
-      _pid: BigNumberish,
-      _allocPoint: BigNumberish,
-      _withdrawFeeBP: BigNumberish,
-      _rewarder: string,
-      _withUpdate: boolean,
-      overwrite: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _withdrawFeeBP: PromiseOrValue<BigNumberish>,
+      _rewarder: PromiseOrValue<string>,
+      _withUpdate: PromiseOrValue<boolean>,
+      overwrite: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setAllowances(pid: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setAllowances(
+      pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setDefaultIpefiDistributionBips(
-      _defaultIpefiDistributionBips: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _defaultIpefiDistributionBips: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setDev(_dev: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setDev(_dev: PromiseOrValue<string>, overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     setDevMintBips(
-      _devMintBips: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _devMintBips: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setIpefiDistributionBips(
-      _ipefiDistributionBips: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _ipefiDistributionBips: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setNest(_nest: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setNest(
+      _nest: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setNestAllocatorAddress(
-      _nestAllocatorAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _nestAllocatorAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setNestMintBips(
-      _nestMintBips: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _nestMintBips: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setNestSplitBips(
-      _nestSplitBips: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _nestSplitBips: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setOnlyApprovedContractOrEOAStatus(
-      newStatus: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newStatus: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setPefiEmission(
-      newPefiEmissionPerSecond: BigNumberish,
-      withUpdate: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newPefiEmissionPerSecond: PromiseOrValue<BigNumberish>,
+      withUpdate: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setPerfomanceFeeAddress(
-      _performanceFeeAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _performanceFeeAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setPerformanceFeeBips(
-      pid: BigNumberish,
-      newPerformanceFeeBips: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      newPerformanceFeeBips: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setStrategy(
-      pid: BigNumberish,
-      newStrategy: string,
-      transferOwnership: boolean,
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      newStrategy: PromiseOrValue<string>,
+      transferOwnership: PromiseOrValue<boolean>,
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     startTime(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalAllocPoint(overrides?: CallOverrides): Promise<BigNumber>;
 
-    totalLP(pid: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    totalLP(pid: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    totalPendingPEFI(pid: BigNumberish, penguin: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-    totalShares(pid: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
-
-    transferMinter(newMinter: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
-
-    transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    totalPendingPEFI(
+      pid: PromiseOrValue<BigNumberish>,
+      penguin: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    updatePool(pid: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    totalShares(pid: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    userInfo(arg0: BigNumberish, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    transferMinter(
+      newMinter: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    userShares(pid: BigNumberish, user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    transferOwnership(
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    updatePool(
+      pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    userInfo(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
+    userShares(
+      pid: PromiseOrValue<BigNumberish>,
+      user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     withdraw(
-      pid: BigNumberish,
-      amountShares: BigNumberish,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      amountShares: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     withdrawAndHarvest(
-      pid: BigNumberish,
-      amountShares: BigNumberish,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      amountShares: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    withdrawals(arg0: BigNumberish, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    withdrawals(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     PEFI_MAX_SUPPLY(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     accountAddedLP(
-      pid: BigNumberish,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     add(
-      _allocPoint: BigNumberish,
-      _withdrawFeeBP: BigNumberish,
-      _poolToken: string,
-      _withUpdate: boolean,
-      _rewarder: string,
-      _strategy: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _withdrawFeeBP: PromiseOrValue<BigNumberish>,
+      _poolToken: PromiseOrValue<string>,
+      _withUpdate: PromiseOrValue<boolean>,
+      _rewarder: PromiseOrValue<string>,
+      _strategy: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    approvedContracts(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    approvedContracts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     defaultIpefiDistributionBips(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     deposit(
-      pid: BigNumberish,
-      amount: BigNumberish,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    deposits(arg0: BigNumberish, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    deposits(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     dev(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     devMintBips(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     emergencyWithdraw(
-      pid: BigNumberish,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     harvest(
-      pid: BigNumberish,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     inCaseTokensGetStuck(
-      pid: BigNumberish,
-      token: string,
-      to: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      token: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    ipefiDistributionBips(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    ipefiDistributionBips(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    ipefiDistributionBipsByUser(user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    ipefiDistributionBipsByUser(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    ipefiDistributionBipsSet(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    ipefiDistributionBipsSet(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     manualMint(
-      dest: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      dest: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    massUpdatePools(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    massUpdatePools(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     migrateStrategy(
-      pid: BigNumberish,
-      newStrategy: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      newStrategy: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     modifyApprovedContracts(
-      contracts: string[],
-      statuses: boolean[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      contracts: PromiseOrValue<string>[],
+      statuses: PromiseOrValue<boolean>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     nest(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1615,163 +1966,205 @@ export interface PenguinChefV2 extends BaseContract {
 
     pefiPerYear(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    pefiPerYearToIgloo(pid: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    pefiPerYearToIgloo(pid: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     pefiPerYearToNest(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    pendingIPEFI(pid: BigNumberish, user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    pendingIPEFI(
+      pid: PromiseOrValue<BigNumberish>,
+      user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    pendingPEFI(pid: BigNumberish, user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    pendingPEFI(
+      pid: PromiseOrValue<BigNumberish>,
+      user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    pendingRewards(pid: BigNumberish, user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    pendingRewards(
+      pid: PromiseOrValue<BigNumberish>,
+      user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    pendingTokens(pid: BigNumberish, user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    pendingTokens(
+      pid: PromiseOrValue<BigNumberish>,
+      user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     performanceFeeAddress(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    poolInfo(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    poolInfo(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     poolLength(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    profitInLP(pid: BigNumberish, userAddress: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    profitInLP(
+      pid: PromiseOrValue<BigNumberish>,
+      userAddress: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     revokeAllowance(
-      pid: BigNumberish,
-      token: string,
-      spender: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      token: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     reward(
-      _lastRewardTime: BigNumberish,
-      _currentTime: BigNumberish,
+      _lastRewardTime: PromiseOrValue<BigNumberish>,
+      _currentTime: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     set(
-      _pid: BigNumberish,
-      _allocPoint: BigNumberish,
-      _withdrawFeeBP: BigNumberish,
-      _rewarder: string,
-      _withUpdate: boolean,
-      overwrite: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _withdrawFeeBP: PromiseOrValue<BigNumberish>,
+      _rewarder: PromiseOrValue<string>,
+      _withUpdate: PromiseOrValue<boolean>,
+      overwrite: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setAllowances(
-      pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setDefaultIpefiDistributionBips(
-      _defaultIpefiDistributionBips: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _defaultIpefiDistributionBips: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    setDev(_dev: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    setDev(
+      _dev: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
     setDevMintBips(
-      _devMintBips: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _devMintBips: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setIpefiDistributionBips(
-      _ipefiDistributionBips: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _ipefiDistributionBips: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    setNest(_nest: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    setNest(
+      _nest: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
     setNestAllocatorAddress(
-      _nestAllocatorAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _nestAllocatorAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setNestMintBips(
-      _nestMintBips: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _nestMintBips: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setNestSplitBips(
-      _nestSplitBips: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _nestSplitBips: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setOnlyApprovedContractOrEOAStatus(
-      newStatus: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newStatus: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setPefiEmission(
-      newPefiEmissionPerSecond: BigNumberish,
-      withUpdate: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newPefiEmissionPerSecond: PromiseOrValue<BigNumberish>,
+      withUpdate: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setPerfomanceFeeAddress(
-      _performanceFeeAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _performanceFeeAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setPerformanceFeeBips(
-      pid: BigNumberish,
-      newPerformanceFeeBips: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      newPerformanceFeeBips: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setStrategy(
-      pid: BigNumberish,
-      newStrategy: string,
-      transferOwnership: boolean,
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      newStrategy: PromiseOrValue<string>,
+      transferOwnership: PromiseOrValue<boolean>,
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     startTime(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalAllocPoint(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    totalLP(pid: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    totalLP(pid: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    totalPendingPEFI(pid: BigNumberish, penguin: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    totalPendingPEFI(
+      pid: PromiseOrValue<BigNumberish>,
+      penguin: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    totalShares(pid: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    totalShares(pid: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferMinter(
-      newMinter: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newMinter: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updatePool(
-      pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    userInfo(arg0: BigNumberish, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    userInfo(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    userShares(pid: BigNumberish, user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    userShares(
+      pid: PromiseOrValue<BigNumberish>,
+      user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     withdraw(
-      pid: BigNumberish,
-      amountShares: BigNumberish,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      amountShares: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     withdrawAndHarvest(
-      pid: BigNumberish,
-      amountShares: BigNumberish,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      amountShares: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    withdrawals(arg0: BigNumberish, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    withdrawals(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
   };
 }

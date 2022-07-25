@@ -16,13 +16,13 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export declare namespace MiniChefV2 {
   export type PoolInfoStruct = {
-    accPicklePerShare: BigNumberish;
-    lastRewardTime: BigNumberish;
-    allocPoint: BigNumberish;
+    accPicklePerShare: PromiseOrValue<BigNumberish>;
+    lastRewardTime: PromiseOrValue<BigNumberish>;
+    allocPoint: PromiseOrValue<BigNumberish>;
   };
 
   export type PoolInfoStructOutput = [BigNumber, BigNumber, BigNumber] & {
@@ -97,36 +97,80 @@ export interface PickleMiniChefV2Interface extends utils.Interface {
   ): FunctionFragment;
 
   encodeFunctionData(functionFragment: 'PICKLE', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'add', values: [BigNumberish, string, string]): string;
-  encodeFunctionData(functionFragment: 'batch', values: [BytesLike[], boolean]): string;
+  encodeFunctionData(
+    functionFragment: 'add',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'batch', values: [PromiseOrValue<BytesLike>[], PromiseOrValue<boolean>]): string;
   encodeFunctionData(functionFragment: 'claimOwnership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'deposit', values: [BigNumberish, BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'emergencyWithdraw', values: [BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'harvest', values: [BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'lpToken', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'massUpdatePools', values: [BigNumberish[]]): string;
-  encodeFunctionData(functionFragment: 'migrate', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'deposit',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'emergencyWithdraw',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'harvest',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'lpToken', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'massUpdatePools', values: [PromiseOrValue<BigNumberish>[]]): string;
+  encodeFunctionData(functionFragment: 'migrate', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'migrator', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'pendingOwner', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'pendingPickle', values: [BigNumberish, string]): string;
+  encodeFunctionData(
+    functionFragment: 'pendingPickle',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(
     functionFragment: 'permitToken',
-    values: [string, string, string, BigNumberish, BigNumberish, BigNumberish, BytesLike, BytesLike],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'picklePerSecond', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'poolInfo', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'poolInfo', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'poolLength', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'rewarder', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'set', values: [BigNumberish, BigNumberish, string, boolean]): string;
-  encodeFunctionData(functionFragment: 'setMigrator', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setPicklePerSecond', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'rewarder', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'set',
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<boolean>,
+    ],
+  ): string;
+  encodeFunctionData(functionFragment: 'setMigrator', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setPicklePerSecond', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'totalAllocPoint', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string, boolean, boolean]): string;
-  encodeFunctionData(functionFragment: 'updatePool', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'userInfo', values: [BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'withdraw', values: [BigNumberish, BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'withdrawAndHarvest', values: [BigNumberish, BigNumberish, string]): string;
+  encodeFunctionData(
+    functionFragment: 'transferOwnership',
+    values: [PromiseOrValue<string>, PromiseOrValue<boolean>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(functionFragment: 'updatePool', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'userInfo',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'withdraw',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'withdrawAndHarvest',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
 
   decodeFunctionResult(functionFragment: 'PICKLE', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'add', data: BytesLike): Result;
@@ -290,49 +334,49 @@ export interface PickleMiniChefV2 extends BaseContract {
     PICKLE(overrides?: CallOverrides): Promise<[string]>;
 
     add(
-      allocPoint: BigNumberish,
-      _lpToken: string,
-      _rewarder: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      allocPoint: PromiseOrValue<BigNumberish>,
+      _lpToken: PromiseOrValue<string>,
+      _rewarder: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     batch(
-      calls: BytesLike[],
-      revertOnFail: boolean,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      calls: PromiseOrValue<BytesLike>[],
+      revertOnFail: PromiseOrValue<boolean>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    claimOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    claimOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     deposit(
-      pid: BigNumberish,
-      amount: BigNumberish,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     emergencyWithdraw(
-      pid: BigNumberish,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     harvest(
-      pid: BigNumberish,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    lpToken(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    lpToken(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
     massUpdatePools(
-      pids: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pids: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     migrate(
-      _pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     migrator(overrides?: CallOverrides): Promise<[string]>;
@@ -342,27 +386,27 @@ export interface PickleMiniChefV2 extends BaseContract {
     pendingOwner(overrides?: CallOverrides): Promise<[string]>;
 
     pendingPickle(
-      _pid: BigNumberish,
-      _user: string,
+      _pid: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber] & { pending: BigNumber }>;
 
     permitToken(
-      token: string,
-      from: string,
-      to: string,
-      amount: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     picklePerSecond(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     poolInfo(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber] & {
@@ -374,107 +418,107 @@ export interface PickleMiniChefV2 extends BaseContract {
 
     poolLength(overrides?: CallOverrides): Promise<[BigNumber] & { pools: BigNumber }>;
 
-    rewarder(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    rewarder(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
     set(
-      _pid: BigNumberish,
-      _allocPoint: BigNumberish,
-      _rewarder: string,
-      overwrite: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _rewarder: PromiseOrValue<string>,
+      overwrite: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setMigrator(
-      _migrator: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _migrator: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setPicklePerSecond(
-      _picklePerSecond: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _picklePerSecond: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     totalAllocPoint(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transferOwnership(
-      newOwner: string,
-      direct: boolean,
-      renounce: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      direct: PromiseOrValue<boolean>,
+      renounce: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updatePool(
-      pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     userInfo(
-      arg0: BigNumberish,
-      arg1: string,
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; rewardDebt: BigNumber }>;
 
     withdraw(
-      pid: BigNumberish,
-      amount: BigNumberish,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     withdrawAndHarvest(
-      pid: BigNumberish,
-      amount: BigNumberish,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
   PICKLE(overrides?: CallOverrides): Promise<string>;
 
   add(
-    allocPoint: BigNumberish,
-    _lpToken: string,
-    _rewarder: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    allocPoint: PromiseOrValue<BigNumberish>,
+    _lpToken: PromiseOrValue<string>,
+    _rewarder: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   batch(
-    calls: BytesLike[],
-    revertOnFail: boolean,
-    overrides?: PayableOverrides & { from?: string | Promise<string> },
+    calls: PromiseOrValue<BytesLike>[],
+    revertOnFail: PromiseOrValue<boolean>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  claimOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  claimOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   deposit(
-    pid: BigNumberish,
-    amount: BigNumberish,
-    to: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    pid: PromiseOrValue<BigNumberish>,
+    amount: PromiseOrValue<BigNumberish>,
+    to: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   emergencyWithdraw(
-    pid: BigNumberish,
-    to: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    pid: PromiseOrValue<BigNumberish>,
+    to: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   harvest(
-    pid: BigNumberish,
-    to: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    pid: PromiseOrValue<BigNumberish>,
+    to: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  lpToken(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  lpToken(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   massUpdatePools(
-    pids: BigNumberish[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    pids: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   migrate(
-    _pid: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pid: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   migrator(overrides?: CallOverrides): Promise<string>;
@@ -483,24 +527,28 @@ export interface PickleMiniChefV2 extends BaseContract {
 
   pendingOwner(overrides?: CallOverrides): Promise<string>;
 
-  pendingPickle(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<BigNumber>;
+  pendingPickle(
+    _pid: PromiseOrValue<BigNumberish>,
+    _user: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   permitToken(
-    token: string,
-    from: string,
-    to: string,
-    amount: BigNumberish,
-    deadline: BigNumberish,
-    v: BigNumberish,
-    r: BytesLike,
-    s: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    token: PromiseOrValue<string>,
+    from: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    deadline: PromiseOrValue<BigNumberish>,
+    v: PromiseOrValue<BigNumberish>,
+    r: PromiseOrValue<BytesLike>,
+    s: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   picklePerSecond(overrides?: CallOverrides): Promise<BigNumber>;
 
   poolInfo(
-    arg0: BigNumberish,
+    arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber, BigNumber] & {
@@ -512,84 +560,98 @@ export interface PickleMiniChefV2 extends BaseContract {
 
   poolLength(overrides?: CallOverrides): Promise<BigNumber>;
 
-  rewarder(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  rewarder(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   set(
-    _pid: BigNumberish,
-    _allocPoint: BigNumberish,
-    _rewarder: string,
-    overwrite: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pid: PromiseOrValue<BigNumberish>,
+    _allocPoint: PromiseOrValue<BigNumberish>,
+    _rewarder: PromiseOrValue<string>,
+    overwrite: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setMigrator(
-    _migrator: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _migrator: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setPicklePerSecond(
-    _picklePerSecond: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _picklePerSecond: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   totalAllocPoint(overrides?: CallOverrides): Promise<BigNumber>;
 
   transferOwnership(
-    newOwner: string,
-    direct: boolean,
-    renounce: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    direct: PromiseOrValue<boolean>,
+    renounce: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updatePool(
-    pid: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    pid: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   userInfo(
-    arg0: BigNumberish,
-    arg1: string,
+    arg0: PromiseOrValue<BigNumberish>,
+    arg1: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; rewardDebt: BigNumber }>;
 
   withdraw(
-    pid: BigNumberish,
-    amount: BigNumberish,
-    to: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    pid: PromiseOrValue<BigNumberish>,
+    amount: PromiseOrValue<BigNumberish>,
+    to: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   withdrawAndHarvest(
-    pid: BigNumberish,
-    amount: BigNumberish,
-    to: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    pid: PromiseOrValue<BigNumberish>,
+    amount: PromiseOrValue<BigNumberish>,
+    to: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
     PICKLE(overrides?: CallOverrides): Promise<string>;
 
-    add(allocPoint: BigNumberish, _lpToken: string, _rewarder: string, overrides?: CallOverrides): Promise<void>;
+    add(
+      allocPoint: PromiseOrValue<BigNumberish>,
+      _lpToken: PromiseOrValue<string>,
+      _rewarder: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     batch(
-      calls: BytesLike[],
-      revertOnFail: boolean,
+      calls: PromiseOrValue<BytesLike>[],
+      revertOnFail: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<[boolean[], string[]] & { successes: boolean[]; results: string[] }>;
 
     claimOwnership(overrides?: CallOverrides): Promise<void>;
 
-    deposit(pid: BigNumberish, amount: BigNumberish, to: string, overrides?: CallOverrides): Promise<void>;
+    deposit(
+      pid: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    emergencyWithdraw(pid: BigNumberish, to: string, overrides?: CallOverrides): Promise<void>;
+    emergencyWithdraw(
+      pid: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    harvest(pid: BigNumberish, to: string, overrides?: CallOverrides): Promise<void>;
+    harvest(pid: PromiseOrValue<BigNumberish>, to: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    lpToken(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    lpToken(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
-    massUpdatePools(pids: BigNumberish[], overrides?: CallOverrides): Promise<void>;
+    massUpdatePools(pids: PromiseOrValue<BigNumberish>[], overrides?: CallOverrides): Promise<void>;
 
-    migrate(_pid: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    migrate(_pid: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     migrator(overrides?: CallOverrides): Promise<string>;
 
@@ -597,24 +659,28 @@ export interface PickleMiniChefV2 extends BaseContract {
 
     pendingOwner(overrides?: CallOverrides): Promise<string>;
 
-    pendingPickle(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingPickle(
+      _pid: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     permitToken(
-      token: string,
-      from: string,
-      to: string,
-      amount: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
+      token: PromiseOrValue<string>,
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     picklePerSecond(overrides?: CallOverrides): Promise<BigNumber>;
 
     poolInfo(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber] & {
@@ -626,168 +692,203 @@ export interface PickleMiniChefV2 extends BaseContract {
 
     poolLength(overrides?: CallOverrides): Promise<BigNumber>;
 
-    rewarder(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    rewarder(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
     set(
-      _pid: BigNumberish,
-      _allocPoint: BigNumberish,
-      _rewarder: string,
-      overwrite: boolean,
+      _pid: PromiseOrValue<BigNumberish>,
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _rewarder: PromiseOrValue<string>,
+      overwrite: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    setMigrator(_migrator: string, overrides?: CallOverrides): Promise<void>;
+    setMigrator(_migrator: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setPicklePerSecond(_picklePerSecond: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setPicklePerSecond(_picklePerSecond: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     totalAllocPoint(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transferOwnership(newOwner: string, direct: boolean, renounce: boolean, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(
+      newOwner: PromiseOrValue<string>,
+      direct: PromiseOrValue<boolean>,
+      renounce: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    updatePool(pid: BigNumberish, overrides?: CallOverrides): Promise<MiniChefV2.PoolInfoStructOutput>;
+    updatePool(pid: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<MiniChefV2.PoolInfoStructOutput>;
 
     userInfo(
-      arg0: BigNumberish,
-      arg1: string,
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; rewardDebt: BigNumber }>;
 
-    withdraw(pid: BigNumberish, amount: BigNumberish, to: string, overrides?: CallOverrides): Promise<void>;
+    withdraw(
+      pid: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    withdrawAndHarvest(pid: BigNumberish, amount: BigNumberish, to: string, overrides?: CallOverrides): Promise<void>;
+    withdrawAndHarvest(
+      pid: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
   };
 
   filters: {
     'Deposit(address,uint256,uint256,address)'(
-      user?: string | null,
-      pid?: BigNumberish | null,
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
       amount?: null,
-      to?: string | null,
+      to?: PromiseOrValue<string> | null,
     ): DepositEventFilter;
-    Deposit(user?: string | null, pid?: BigNumberish | null, amount?: null, to?: string | null): DepositEventFilter;
+    Deposit(
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
+      amount?: null,
+      to?: PromiseOrValue<string> | null,
+    ): DepositEventFilter;
 
     'EmergencyWithdraw(address,uint256,uint256,address)'(
-      user?: string | null,
-      pid?: BigNumberish | null,
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
       amount?: null,
-      to?: string | null,
+      to?: PromiseOrValue<string> | null,
     ): EmergencyWithdrawEventFilter;
     EmergencyWithdraw(
-      user?: string | null,
-      pid?: BigNumberish | null,
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
       amount?: null,
-      to?: string | null,
+      to?: PromiseOrValue<string> | null,
     ): EmergencyWithdrawEventFilter;
 
     'Harvest(address,uint256,uint256)'(
-      user?: string | null,
-      pid?: BigNumberish | null,
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
       amount?: null,
     ): HarvestEventFilter;
-    Harvest(user?: string | null, pid?: BigNumberish | null, amount?: null): HarvestEventFilter;
+    Harvest(
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
+      amount?: null,
+    ): HarvestEventFilter;
 
     'LogPicklePerSecond(uint256)'(picklePerSecond?: null): LogPicklePerSecondEventFilter;
     LogPicklePerSecond(picklePerSecond?: null): LogPicklePerSecondEventFilter;
 
     'LogPoolAddition(uint256,uint256,address,address)'(
-      pid?: BigNumberish | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
       allocPoint?: null,
-      lpToken?: string | null,
-      rewarder?: string | null,
+      lpToken?: PromiseOrValue<string> | null,
+      rewarder?: PromiseOrValue<string> | null,
     ): LogPoolAdditionEventFilter;
     LogPoolAddition(
-      pid?: BigNumberish | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
       allocPoint?: null,
-      lpToken?: string | null,
-      rewarder?: string | null,
+      lpToken?: PromiseOrValue<string> | null,
+      rewarder?: PromiseOrValue<string> | null,
     ): LogPoolAdditionEventFilter;
 
     'LogSetPool(uint256,uint256,address,bool)'(
-      pid?: BigNumberish | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
       allocPoint?: null,
-      rewarder?: string | null,
+      rewarder?: PromiseOrValue<string> | null,
       overwrite?: null,
     ): LogSetPoolEventFilter;
     LogSetPool(
-      pid?: BigNumberish | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
       allocPoint?: null,
-      rewarder?: string | null,
+      rewarder?: PromiseOrValue<string> | null,
       overwrite?: null,
     ): LogSetPoolEventFilter;
 
     'LogUpdatePool(uint256,uint64,uint256,uint256)'(
-      pid?: BigNumberish | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
       lastRewardTime?: null,
       lpSupply?: null,
       accPicklePerShare?: null,
     ): LogUpdatePoolEventFilter;
     LogUpdatePool(
-      pid?: BigNumberish | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
       lastRewardTime?: null,
       lpSupply?: null,
       accPicklePerShare?: null,
     ): LogUpdatePoolEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
 
     'Withdraw(address,uint256,uint256,address)'(
-      user?: string | null,
-      pid?: BigNumberish | null,
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
       amount?: null,
-      to?: string | null,
+      to?: PromiseOrValue<string> | null,
     ): WithdrawEventFilter;
-    Withdraw(user?: string | null, pid?: BigNumberish | null, amount?: null, to?: string | null): WithdrawEventFilter;
+    Withdraw(
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
+      amount?: null,
+      to?: PromiseOrValue<string> | null,
+    ): WithdrawEventFilter;
   };
 
   estimateGas: {
     PICKLE(overrides?: CallOverrides): Promise<BigNumber>;
 
     add(
-      allocPoint: BigNumberish,
-      _lpToken: string,
-      _rewarder: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      allocPoint: PromiseOrValue<BigNumberish>,
+      _lpToken: PromiseOrValue<string>,
+      _rewarder: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     batch(
-      calls: BytesLike[],
-      revertOnFail: boolean,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      calls: PromiseOrValue<BytesLike>[],
+      revertOnFail: PromiseOrValue<boolean>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    claimOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    claimOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     deposit(
-      pid: BigNumberish,
-      amount: BigNumberish,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     emergencyWithdraw(
-      pid: BigNumberish,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     harvest(
-      pid: BigNumberish,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    lpToken(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    lpToken(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     massUpdatePools(
-      pids: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pids: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    migrate(_pid: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    migrate(
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     migrator(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -795,68 +896,82 @@ export interface PickleMiniChefV2 extends BaseContract {
 
     pendingOwner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    pendingPickle(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingPickle(
+      _pid: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     permitToken(
-      token: string,
-      from: string,
-      to: string,
-      amount: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     picklePerSecond(overrides?: CallOverrides): Promise<BigNumber>;
 
-    poolInfo(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    poolInfo(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     poolLength(overrides?: CallOverrides): Promise<BigNumber>;
 
-    rewarder(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    rewarder(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     set(
-      _pid: BigNumberish,
-      _allocPoint: BigNumberish,
-      _rewarder: string,
-      overwrite: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _rewarder: PromiseOrValue<string>,
+      overwrite: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setMigrator(_migrator: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setMigrator(
+      _migrator: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setPicklePerSecond(
-      _picklePerSecond: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _picklePerSecond: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     totalAllocPoint(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      direct: boolean,
-      renounce: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      direct: PromiseOrValue<boolean>,
+      renounce: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    updatePool(pid: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    updatePool(
+      pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    userInfo(arg0: BigNumberish, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    userInfo(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     withdraw(
-      pid: BigNumberish,
-      amount: BigNumberish,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     withdrawAndHarvest(
-      pid: BigNumberish,
-      amount: BigNumberish,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
@@ -864,49 +979,49 @@ export interface PickleMiniChefV2 extends BaseContract {
     PICKLE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     add(
-      allocPoint: BigNumberish,
-      _lpToken: string,
-      _rewarder: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      allocPoint: PromiseOrValue<BigNumberish>,
+      _lpToken: PromiseOrValue<string>,
+      _rewarder: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     batch(
-      calls: BytesLike[],
-      revertOnFail: boolean,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      calls: PromiseOrValue<BytesLike>[],
+      revertOnFail: PromiseOrValue<boolean>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    claimOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    claimOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     deposit(
-      pid: BigNumberish,
-      amount: BigNumberish,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     emergencyWithdraw(
-      pid: BigNumberish,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     harvest(
-      pid: BigNumberish,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    lpToken(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    lpToken(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     massUpdatePools(
-      pids: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pids: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     migrate(
-      _pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     migrator(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -915,74 +1030,82 @@ export interface PickleMiniChefV2 extends BaseContract {
 
     pendingOwner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    pendingPickle(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    pendingPickle(
+      _pid: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     permitToken(
-      token: string,
-      from: string,
-      to: string,
-      amount: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     picklePerSecond(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    poolInfo(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    poolInfo(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     poolLength(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    rewarder(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    rewarder(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     set(
-      _pid: BigNumberish,
-      _allocPoint: BigNumberish,
-      _rewarder: string,
-      overwrite: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _rewarder: PromiseOrValue<string>,
+      overwrite: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setMigrator(
-      _migrator: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _migrator: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setPicklePerSecond(
-      _picklePerSecond: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _picklePerSecond: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     totalAllocPoint(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      direct: boolean,
-      renounce: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      direct: PromiseOrValue<boolean>,
+      renounce: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updatePool(
-      pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    userInfo(arg0: BigNumberish, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    userInfo(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     withdraw(
-      pid: BigNumberish,
-      amount: BigNumberish,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     withdrawAndHarvest(
-      pid: BigNumberish,
-      amount: BigNumberish,
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pid: PromiseOrValue<BigNumberish>,
+      amount: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

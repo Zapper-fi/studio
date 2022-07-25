@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface PolygonValidatorShareInterface extends utils.Interface {
   functions: {
@@ -128,50 +128,92 @@ export interface PolygonValidatorShareInterface extends utils.Interface {
   ): FunctionFragment;
 
   encodeFunctionData(functionFragment: 'activeAmount', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'allowance', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'approve', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
-  encodeFunctionData(functionFragment: 'buyVoucher', values: [BigNumberish, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'allowance', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'approve',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'buyVoucher',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'commissionRate_deprecated', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'decreaseAllowance', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'decreaseAllowance',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'delegation', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'drain', values: [string, string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'drain',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'eventsHub', values?: undefined): string;
   encodeFunctionData(functionFragment: 'exchangeRate', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getLiquidRewards', values: [string]): string;
+  encodeFunctionData(functionFragment: 'getLiquidRewards', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'getRewardPerShare', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getTotalStake', values: [string]): string;
-  encodeFunctionData(functionFragment: 'increaseAllowance', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'initalRewardPerShare', values: [string]): string;
-  encodeFunctionData(functionFragment: 'initialize', values: [BigNumberish, string, string]): string;
+  encodeFunctionData(functionFragment: 'getTotalStake', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'increaseAllowance',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'initalRewardPerShare', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'initialize',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'isOwner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'lastCommissionUpdate_deprecated', values?: undefined): string;
   encodeFunctionData(functionFragment: 'lock', values?: undefined): string;
   encodeFunctionData(functionFragment: 'locked', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'migrateIn', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'migrateOut', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'migrateIn',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'migrateOut',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'minAmount', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
   encodeFunctionData(functionFragment: 'restake', values?: undefined): string;
   encodeFunctionData(functionFragment: 'rewardPerShare', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'sellVoucher', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'sellVoucher_new', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'slash', values: [BigNumberish, BigNumberish, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'sellVoucher',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'sellVoucher_new',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'slash',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'stakeManager', values?: undefined): string;
   encodeFunctionData(functionFragment: 'stakingLogger', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalStake_deprecated', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transfer', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferFrom', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
-  encodeFunctionData(functionFragment: 'unbondNonces', values: [string]): string;
-  encodeFunctionData(functionFragment: 'unbonds', values: [string]): string;
-  encodeFunctionData(functionFragment: 'unbonds_new', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'transfer',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'transferFrom',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'unbondNonces', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'unbonds', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'unbonds_new',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'unlock', values?: undefined): string;
   encodeFunctionData(functionFragment: 'unstakeClaimTokens', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'unstakeClaimTokens_new', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'updateDelegation', values: [boolean]): string;
+  encodeFunctionData(functionFragment: 'unstakeClaimTokens_new', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'updateDelegation', values: [PromiseOrValue<boolean>]): string;
   encodeFunctionData(functionFragment: 'validatorId', values?: undefined): string;
   encodeFunctionData(functionFragment: 'validatorRewards_deprecated', values?: undefined): string;
   encodeFunctionData(functionFragment: 'withdrawExchangeRate', values?: undefined): string;
@@ -293,111 +335,115 @@ export interface PolygonValidatorShare extends BaseContract {
   functions: {
     activeAmount(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     approve(
-      spender: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    balanceOf(owner: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOf(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     buyVoucher(
-      _amount: BigNumberish,
-      _minSharesToMint: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      _minSharesToMint: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     commissionRate_deprecated(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     delegation(overrides?: CallOverrides): Promise<[boolean]>;
 
     drain(
-      token: string,
-      destination: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      destination: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     eventsHub(overrides?: CallOverrides): Promise<[string]>;
 
     exchangeRate(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getLiquidRewards(user: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getLiquidRewards(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     getRewardPerShare(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getTotalStake(user: string, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+    getTotalStake(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
 
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    initalRewardPerShare(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    initalRewardPerShare(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     initialize(
-      _validatorId: BigNumberish,
-      _stakingLogger: string,
-      _stakeManager: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _validatorId: PromiseOrValue<BigNumberish>,
+      _stakingLogger: PromiseOrValue<string>,
+      _stakeManager: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     isOwner(overrides?: CallOverrides): Promise<[boolean]>;
 
     lastCommissionUpdate_deprecated(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    lock(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    lock(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     locked(overrides?: CallOverrides): Promise<[boolean]>;
 
     migrateIn(
-      user: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      user: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     migrateOut(
-      user: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      user: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     minAmount(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    restake(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    restake(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     rewardPerShare(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     sellVoucher(
-      claimAmount: BigNumberish,
-      maximumSharesToBurn: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      claimAmount: PromiseOrValue<BigNumberish>,
+      maximumSharesToBurn: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     sellVoucher_new(
-      claimAmount: BigNumberish,
-      maximumSharesToBurn: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      claimAmount: PromiseOrValue<BigNumberish>,
+      maximumSharesToBurn: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     slash(
-      validatorStake: BigNumberish,
-      delegatedAmount: BigNumberish,
-      totalAmountToSlash: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      validatorStake: PromiseOrValue<BigNumberish>,
+      delegatedAmount: PromiseOrValue<BigNumberish>,
+      totalAmountToSlash: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     stakeManager(overrides?: CallOverrides): Promise<[string]>;
@@ -409,48 +455,48 @@ export interface PolygonValidatorShare extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transfer(
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferFrom(
-      from: string,
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    unbondNonces(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    unbondNonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     unbonds(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { shares: BigNumber; withdrawEpoch: BigNumber }>;
 
     unbonds_new(
-      arg0: string,
-      arg1: BigNumberish,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { shares: BigNumber; withdrawEpoch: BigNumber }>;
 
-    unlock(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    unlock(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    unstakeClaimTokens(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    unstakeClaimTokens(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     unstakeClaimTokens_new(
-      unbondNonce: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      unbondNonce: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateDelegation(
-      _delegation: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _delegation: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     validatorId(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -461,118 +507,122 @@ export interface PolygonValidatorShare extends BaseContract {
 
     withdrawPool(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    withdrawRewards(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    withdrawRewards(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     withdrawShares(overrides?: CallOverrides): Promise<[BigNumber]>;
   };
 
   activeAmount(overrides?: CallOverrides): Promise<BigNumber>;
 
-  allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+  allowance(
+    owner: PromiseOrValue<string>,
+    spender: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   approve(
-    spender: string,
-    value: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    value: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   buyVoucher(
-    _amount: BigNumberish,
-    _minSharesToMint: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _amount: PromiseOrValue<BigNumberish>,
+    _minSharesToMint: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   commissionRate_deprecated(overrides?: CallOverrides): Promise<BigNumber>;
 
   decreaseAllowance(
-    spender: string,
-    subtractedValue: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    subtractedValue: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   delegation(overrides?: CallOverrides): Promise<boolean>;
 
   drain(
-    token: string,
-    destination: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    token: PromiseOrValue<string>,
+    destination: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   eventsHub(overrides?: CallOverrides): Promise<string>;
 
   exchangeRate(overrides?: CallOverrides): Promise<BigNumber>;
 
-  getLiquidRewards(user: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getLiquidRewards(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   getRewardPerShare(overrides?: CallOverrides): Promise<BigNumber>;
 
-  getTotalStake(user: string, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+  getTotalStake(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
 
   increaseAllowance(
-    spender: string,
-    addedValue: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    addedValue: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  initalRewardPerShare(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  initalRewardPerShare(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   initialize(
-    _validatorId: BigNumberish,
-    _stakingLogger: string,
-    _stakeManager: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _validatorId: PromiseOrValue<BigNumberish>,
+    _stakingLogger: PromiseOrValue<string>,
+    _stakeManager: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   isOwner(overrides?: CallOverrides): Promise<boolean>;
 
   lastCommissionUpdate_deprecated(overrides?: CallOverrides): Promise<BigNumber>;
 
-  lock(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  lock(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   locked(overrides?: CallOverrides): Promise<boolean>;
 
   migrateIn(
-    user: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    user: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   migrateOut(
-    user: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    user: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   minAmount(overrides?: CallOverrides): Promise<BigNumber>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  restake(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  restake(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   rewardPerShare(overrides?: CallOverrides): Promise<BigNumber>;
 
   sellVoucher(
-    claimAmount: BigNumberish,
-    maximumSharesToBurn: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    claimAmount: PromiseOrValue<BigNumberish>,
+    maximumSharesToBurn: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   sellVoucher_new(
-    claimAmount: BigNumberish,
-    maximumSharesToBurn: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    claimAmount: PromiseOrValue<BigNumberish>,
+    maximumSharesToBurn: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   slash(
-    validatorStake: BigNumberish,
-    delegatedAmount: BigNumberish,
-    totalAmountToSlash: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    validatorStake: PromiseOrValue<BigNumberish>,
+    delegatedAmount: PromiseOrValue<BigNumberish>,
+    totalAmountToSlash: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   stakeManager(overrides?: CallOverrides): Promise<string>;
@@ -584,48 +634,48 @@ export interface PolygonValidatorShare extends BaseContract {
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   transfer(
-    to: string,
-    value: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    to: PromiseOrValue<string>,
+    value: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferFrom(
-    from: string,
-    to: string,
-    value: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    from: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    value: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  unbondNonces(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  unbondNonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   unbonds(
-    arg0: string,
+    arg0: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber, BigNumber] & { shares: BigNumber; withdrawEpoch: BigNumber }>;
 
   unbonds_new(
-    arg0: string,
-    arg1: BigNumberish,
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber, BigNumber] & { shares: BigNumber; withdrawEpoch: BigNumber }>;
 
-  unlock(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  unlock(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  unstakeClaimTokens(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  unstakeClaimTokens(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   unstakeClaimTokens_new(
-    unbondNonce: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    unbondNonce: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateDelegation(
-    _delegation: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _delegation: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   validatorId(overrides?: CallOverrides): Promise<BigNumber>;
@@ -636,47 +686,72 @@ export interface PolygonValidatorShare extends BaseContract {
 
   withdrawPool(overrides?: CallOverrides): Promise<BigNumber>;
 
-  withdrawRewards(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  withdrawRewards(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   withdrawShares(overrides?: CallOverrides): Promise<BigNumber>;
 
   callStatic: {
     activeAmount(overrides?: CallOverrides): Promise<BigNumber>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    approve(spender: string, value: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    approve(
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    buyVoucher(_amount: BigNumberish, _minSharesToMint: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    buyVoucher(
+      _amount: PromiseOrValue<BigNumberish>,
+      _minSharesToMint: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     commissionRate_deprecated(overrides?: CallOverrides): Promise<BigNumber>;
 
-    decreaseAllowance(spender: string, subtractedValue: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    decreaseAllowance(
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     delegation(overrides?: CallOverrides): Promise<boolean>;
 
-    drain(token: string, destination: string, amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    drain(
+      token: PromiseOrValue<string>,
+      destination: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     eventsHub(overrides?: CallOverrides): Promise<string>;
 
     exchangeRate(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getLiquidRewards(user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getLiquidRewards(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getRewardPerShare(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getTotalStake(user: string, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+    getTotalStake(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
 
-    increaseAllowance(spender: string, addedValue: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    increaseAllowance(
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    initalRewardPerShare(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    initalRewardPerShare(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     initialize(
-      _validatorId: BigNumberish,
-      _stakingLogger: string,
-      _stakeManager: string,
+      _validatorId: PromiseOrValue<BigNumberish>,
+      _stakingLogger: PromiseOrValue<string>,
+      _stakeManager: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -688,9 +763,17 @@ export interface PolygonValidatorShare extends BaseContract {
 
     locked(overrides?: CallOverrides): Promise<boolean>;
 
-    migrateIn(user: string, amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    migrateIn(
+      user: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    migrateOut(user: string, amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    migrateOut(
+      user: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     minAmount(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -702,18 +785,22 @@ export interface PolygonValidatorShare extends BaseContract {
 
     rewardPerShare(overrides?: CallOverrides): Promise<BigNumber>;
 
-    sellVoucher(claimAmount: BigNumberish, maximumSharesToBurn: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    sellVoucher(
+      claimAmount: PromiseOrValue<BigNumberish>,
+      maximumSharesToBurn: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     sellVoucher_new(
-      claimAmount: BigNumberish,
-      maximumSharesToBurn: BigNumberish,
+      claimAmount: PromiseOrValue<BigNumberish>,
+      maximumSharesToBurn: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     slash(
-      validatorStake: BigNumberish,
-      delegatedAmount: BigNumberish,
-      totalAmountToSlash: BigNumberish,
+      validatorStake: PromiseOrValue<BigNumberish>,
+      delegatedAmount: PromiseOrValue<BigNumberish>,
+      totalAmountToSlash: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
@@ -725,22 +812,31 @@ export interface PolygonValidatorShare extends BaseContract {
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transfer(to: string, value: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transfer(
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    transferFrom(from: string, to: string, value: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transferFrom(
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    unbondNonces(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    unbondNonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     unbonds(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { shares: BigNumber; withdrawEpoch: BigNumber }>;
 
     unbonds_new(
-      arg0: string,
-      arg1: BigNumberish,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { shares: BigNumber; withdrawEpoch: BigNumber }>;
 
@@ -748,9 +844,9 @@ export interface PolygonValidatorShare extends BaseContract {
 
     unstakeClaimTokens(overrides?: CallOverrides): Promise<void>;
 
-    unstakeClaimTokens_new(unbondNonce: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    unstakeClaimTokens_new(unbondNonce: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    updateDelegation(_delegation: boolean, overrides?: CallOverrides): Promise<void>;
+    updateDelegation(_delegation: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
 
     validatorId(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -767,130 +863,149 @@ export interface PolygonValidatorShare extends BaseContract {
 
   filters: {
     'Approval(address,address,uint256)'(
-      owner?: string | null,
-      spender?: string | null,
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
       value?: null,
     ): ApprovalEventFilter;
-    Approval(owner?: string | null, spender?: string | null, value?: null): ApprovalEventFilter;
+    Approval(
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
+      value?: null,
+    ): ApprovalEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
 
-    'Transfer(address,address,uint256)'(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
-    Transfer(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
+    'Transfer(address,address,uint256)'(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
+    Transfer(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
   };
 
   estimateGas: {
     activeAmount(overrides?: CallOverrides): Promise<BigNumber>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-    approve(
-      spender: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    approve(
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    balanceOf(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     buyVoucher(
-      _amount: BigNumberish,
-      _minSharesToMint: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      _minSharesToMint: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     commissionRate_deprecated(overrides?: CallOverrides): Promise<BigNumber>;
 
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     delegation(overrides?: CallOverrides): Promise<BigNumber>;
 
     drain(
-      token: string,
-      destination: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      destination: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     eventsHub(overrides?: CallOverrides): Promise<BigNumber>;
 
     exchangeRate(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getLiquidRewards(user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getLiquidRewards(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getRewardPerShare(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getTotalStake(user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getTotalStake(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    initalRewardPerShare(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    initalRewardPerShare(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     initialize(
-      _validatorId: BigNumberish,
-      _stakingLogger: string,
-      _stakeManager: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _validatorId: PromiseOrValue<BigNumberish>,
+      _stakingLogger: PromiseOrValue<string>,
+      _stakeManager: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     isOwner(overrides?: CallOverrides): Promise<BigNumber>;
 
     lastCommissionUpdate_deprecated(overrides?: CallOverrides): Promise<BigNumber>;
 
-    lock(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    lock(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     locked(overrides?: CallOverrides): Promise<BigNumber>;
 
     migrateIn(
-      user: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      user: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     migrateOut(
-      user: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      user: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     minAmount(overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    restake(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    restake(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     rewardPerShare(overrides?: CallOverrides): Promise<BigNumber>;
 
     sellVoucher(
-      claimAmount: BigNumberish,
-      maximumSharesToBurn: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      claimAmount: PromiseOrValue<BigNumberish>,
+      maximumSharesToBurn: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     sellVoucher_new(
-      claimAmount: BigNumberish,
-      maximumSharesToBurn: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      claimAmount: PromiseOrValue<BigNumberish>,
+      maximumSharesToBurn: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     slash(
-      validatorStake: BigNumberish,
-      delegatedAmount: BigNumberish,
-      totalAmountToSlash: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      validatorStake: PromiseOrValue<BigNumberish>,
+      delegatedAmount: PromiseOrValue<BigNumberish>,
+      totalAmountToSlash: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     stakeManager(overrides?: CallOverrides): Promise<BigNumber>;
@@ -902,41 +1017,45 @@ export interface PolygonValidatorShare extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferFrom(
-      from: string,
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    unbondNonces(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    unbondNonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    unbonds(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    unbonds(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    unbonds_new(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    unbonds_new(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    unlock(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    unlock(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    unstakeClaimTokens(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    unstakeClaimTokens(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     unstakeClaimTokens_new(
-      unbondNonce: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      unbondNonce: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     updateDelegation(
-      _delegation: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _delegation: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     validatorId(overrides?: CallOverrides): Promise<BigNumber>;
@@ -947,7 +1066,7 @@ export interface PolygonValidatorShare extends BaseContract {
 
     withdrawPool(overrides?: CallOverrides): Promise<BigNumber>;
 
-    withdrawRewards(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    withdrawRewards(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     withdrawShares(overrides?: CallOverrides): Promise<BigNumber>;
   };
@@ -955,111 +1074,115 @@ export interface PolygonValidatorShare extends BaseContract {
   populateTransaction: {
     activeAmount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    approve(
-      spender: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    balanceOf(owner: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    approve(
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    balanceOf(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     buyVoucher(
-      _amount: BigNumberish,
-      _minSharesToMint: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      _minSharesToMint: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     commissionRate_deprecated(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     delegation(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     drain(
-      token: string,
-      destination: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      destination: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     eventsHub(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     exchangeRate(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getLiquidRewards(user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getLiquidRewards(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getRewardPerShare(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getTotalStake(user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getTotalStake(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    initalRewardPerShare(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    initalRewardPerShare(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     initialize(
-      _validatorId: BigNumberish,
-      _stakingLogger: string,
-      _stakeManager: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _validatorId: PromiseOrValue<BigNumberish>,
+      _stakingLogger: PromiseOrValue<string>,
+      _stakeManager: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     isOwner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     lastCommissionUpdate_deprecated(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    lock(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    lock(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     locked(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     migrateIn(
-      user: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      user: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     migrateOut(
-      user: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      user: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     minAmount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    restake(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    restake(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     rewardPerShare(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     sellVoucher(
-      claimAmount: BigNumberish,
-      maximumSharesToBurn: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      claimAmount: PromiseOrValue<BigNumberish>,
+      maximumSharesToBurn: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     sellVoucher_new(
-      claimAmount: BigNumberish,
-      maximumSharesToBurn: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      claimAmount: PromiseOrValue<BigNumberish>,
+      maximumSharesToBurn: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     slash(
-      validatorStake: BigNumberish,
-      delegatedAmount: BigNumberish,
-      totalAmountToSlash: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      validatorStake: PromiseOrValue<BigNumberish>,
+      delegatedAmount: PromiseOrValue<BigNumberish>,
+      totalAmountToSlash: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     stakeManager(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1071,41 +1194,45 @@ export interface PolygonValidatorShare extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transfer(
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferFrom(
-      from: string,
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    unbondNonces(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    unbondNonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    unbonds(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    unbonds(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    unbonds_new(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    unbonds_new(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    unlock(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    unlock(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    unstakeClaimTokens(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    unstakeClaimTokens(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     unstakeClaimTokens_new(
-      unbondNonce: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      unbondNonce: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateDelegation(
-      _delegation: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _delegation: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     validatorId(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1116,7 +1243,7 @@ export interface PolygonValidatorShare extends BaseContract {
 
     withdrawPool(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    withdrawRewards(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    withdrawRewards(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     withdrawShares(overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };

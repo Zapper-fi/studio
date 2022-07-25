@@ -15,12 +15,12 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export declare namespace ObservationLib {
   export type ObservationStruct = {
-    amount: BigNumberish;
-    timestamp: BigNumberish;
+    amount: PromiseOrValue<BigNumberish>;
+    timestamp: PromiseOrValue<BigNumberish>;
   };
 
   export type ObservationStructOutput = [BigNumber, number] & {
@@ -31,9 +31,9 @@ export declare namespace ObservationLib {
 
 export declare namespace TwabLib {
   export type AccountDetailsStruct = {
-    balance: BigNumberish;
-    nextTwabIndex: BigNumberish;
-    cardinality: BigNumberish;
+    balance: PromiseOrValue<BigNumberish>;
+    nextTwabIndex: PromiseOrValue<BigNumberish>;
+    cardinality: PromiseOrValue<BigNumberish>;
   };
 
   export type AccountDetailsStructOutput = [BigNumber, number, number] & {
@@ -114,51 +114,102 @@ export interface PoolTogetherV4TicketInterface extends utils.Interface {
   ): FunctionFragment;
 
   encodeFunctionData(functionFragment: 'DOMAIN_SEPARATOR', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'allowance', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'approve', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
+  encodeFunctionData(functionFragment: 'allowance', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'approve',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'controller', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'controllerBurn', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'controllerBurnFrom', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'controllerDelegateFor', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'controllerMint', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'controllerBurn',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'controllerBurnFrom',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'controllerDelegateFor',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'controllerMint',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'decimals', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'decreaseAllowance', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'delegate', values: [string]): string;
-  encodeFunctionData(functionFragment: 'delegateOf', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'decreaseAllowance',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'delegate', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'delegateOf', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
     functionFragment: 'delegateWithSignature',
-    values: [string, string, BigNumberish, BigNumberish, BytesLike, BytesLike],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'getAccountDetails', values: [string]): string;
+  encodeFunctionData(functionFragment: 'getAccountDetails', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
     functionFragment: 'getAverageBalanceBetween',
-    values: [string, BigNumberish, BigNumberish],
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(
     functionFragment: 'getAverageBalancesBetween',
-    values: [string, BigNumberish[], BigNumberish[]],
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>[], PromiseOrValue<BigNumberish>[]],
   ): string;
   encodeFunctionData(
     functionFragment: 'getAverageTotalSuppliesBetween',
-    values: [BigNumberish[], BigNumberish[]],
+    values: [PromiseOrValue<BigNumberish>[], PromiseOrValue<BigNumberish>[]],
   ): string;
-  encodeFunctionData(functionFragment: 'getBalanceAt', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'getBalancesAt', values: [string, BigNumberish[]]): string;
-  encodeFunctionData(functionFragment: 'getTotalSuppliesAt', values: [BigNumberish[]]): string;
-  encodeFunctionData(functionFragment: 'getTotalSupplyAt', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'getTwab', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'increaseAllowance', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'getBalanceAt',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'getBalancesAt',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>[]],
+  ): string;
+  encodeFunctionData(functionFragment: 'getTotalSuppliesAt', values: [PromiseOrValue<BigNumberish>[]]): string;
+  encodeFunctionData(functionFragment: 'getTotalSupplyAt', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'getTwab',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'increaseAllowance',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'nonces', values: [string]): string;
+  encodeFunctionData(functionFragment: 'nonces', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
     functionFragment: 'permit',
-    values: [string, string, BigNumberish, BigNumberish, BigNumberish, BytesLike, BytesLike],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transfer', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferFrom', values: [string, string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'transfer',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'transferFrom',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
 
   decodeFunctionResult(functionFragment: 'DOMAIN_SEPARATOR', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'allowance', data: BytesLike): Result;
@@ -300,120 +351,138 @@ export interface PoolTogetherV4Ticket extends BaseContract {
   functions: {
     DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<[string]>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     controller(overrides?: CallOverrides): Promise<[string]>;
 
     controllerBurn(
-      _user: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _user: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     controllerBurnFrom(
-      _operator: string,
-      _user: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _operator: PromiseOrValue<string>,
+      _user: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     controllerDelegateFor(
-      _user: string,
-      _to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _user: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     controllerMint(
-      _user: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _user: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<[number]>;
 
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    delegate(_to: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    delegate(
+      _to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
-    delegateOf(_user: string, overrides?: CallOverrides): Promise<[string]>;
+    delegateOf(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[string]>;
 
     delegateWithSignature(
-      _user: string,
-      _newDelegate: string,
-      _deadline: BigNumberish,
-      _v: BigNumberish,
-      _r: BytesLike,
-      _s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _user: PromiseOrValue<string>,
+      _newDelegate: PromiseOrValue<string>,
+      _deadline: PromiseOrValue<BigNumberish>,
+      _v: PromiseOrValue<BigNumberish>,
+      _r: PromiseOrValue<BytesLike>,
+      _s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    getAccountDetails(_user: string, overrides?: CallOverrides): Promise<[TwabLib.AccountDetailsStructOutput]>;
+    getAccountDetails(
+      _user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[TwabLib.AccountDetailsStructOutput]>;
 
     getAverageBalanceBetween(
-      _user: string,
-      _startTime: BigNumberish,
-      _endTime: BigNumberish,
+      _user: PromiseOrValue<string>,
+      _startTime: PromiseOrValue<BigNumberish>,
+      _endTime: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
     getAverageBalancesBetween(
-      _user: string,
-      _startTimes: BigNumberish[],
-      _endTimes: BigNumberish[],
+      _user: PromiseOrValue<string>,
+      _startTimes: PromiseOrValue<BigNumberish>[],
+      _endTimes: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides,
     ): Promise<[BigNumber[]]>;
 
     getAverageTotalSuppliesBetween(
-      _startTimes: BigNumberish[],
-      _endTimes: BigNumberish[],
+      _startTimes: PromiseOrValue<BigNumberish>[],
+      _endTimes: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides,
     ): Promise<[BigNumber[]]>;
 
-    getBalanceAt(_user: string, _target: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getBalanceAt(
+      _user: PromiseOrValue<string>,
+      _target: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
-    getBalancesAt(_user: string, _targets: BigNumberish[], overrides?: CallOverrides): Promise<[BigNumber[]]>;
+    getBalancesAt(
+      _user: PromiseOrValue<string>,
+      _targets: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber[]]>;
 
-    getTotalSuppliesAt(_targets: BigNumberish[], overrides?: CallOverrides): Promise<[BigNumber[]]>;
+    getTotalSuppliesAt(_targets: PromiseOrValue<BigNumberish>[], overrides?: CallOverrides): Promise<[BigNumber[]]>;
 
-    getTotalSupplyAt(_target: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getTotalSupplyAt(_target: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     getTwab(
-      _user: string,
-      _index: BigNumberish,
+      _user: PromiseOrValue<string>,
+      _index: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[ObservationLib.ObservationStructOutput]>;
 
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
 
-    nonces(owner: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    nonces(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     permit(
-      owner: string,
-      spender: string,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
@@ -421,135 +490,153 @@ export interface PoolTogetherV4Ticket extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transfer(
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferFrom(
-      sender: string,
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
   DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<string>;
 
-  allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+  allowance(
+    owner: PromiseOrValue<string>,
+    spender: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   approve(
-    spender: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   controller(overrides?: CallOverrides): Promise<string>;
 
   controllerBurn(
-    _user: string,
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _user: PromiseOrValue<string>,
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   controllerBurnFrom(
-    _operator: string,
-    _user: string,
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _operator: PromiseOrValue<string>,
+    _user: PromiseOrValue<string>,
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   controllerDelegateFor(
-    _user: string,
-    _to: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _user: PromiseOrValue<string>,
+    _to: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   controllerMint(
-    _user: string,
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _user: PromiseOrValue<string>,
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   decimals(overrides?: CallOverrides): Promise<number>;
 
   decreaseAllowance(
-    spender: string,
-    subtractedValue: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    subtractedValue: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  delegate(_to: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  delegate(
+    _to: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
-  delegateOf(_user: string, overrides?: CallOverrides): Promise<string>;
+  delegateOf(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
   delegateWithSignature(
-    _user: string,
-    _newDelegate: string,
-    _deadline: BigNumberish,
-    _v: BigNumberish,
-    _r: BytesLike,
-    _s: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _user: PromiseOrValue<string>,
+    _newDelegate: PromiseOrValue<string>,
+    _deadline: PromiseOrValue<BigNumberish>,
+    _v: PromiseOrValue<BigNumberish>,
+    _r: PromiseOrValue<BytesLike>,
+    _s: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  getAccountDetails(_user: string, overrides?: CallOverrides): Promise<TwabLib.AccountDetailsStructOutput>;
+  getAccountDetails(
+    _user: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<TwabLib.AccountDetailsStructOutput>;
 
   getAverageBalanceBetween(
-    _user: string,
-    _startTime: BigNumberish,
-    _endTime: BigNumberish,
+    _user: PromiseOrValue<string>,
+    _startTime: PromiseOrValue<BigNumberish>,
+    _endTime: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
   getAverageBalancesBetween(
-    _user: string,
-    _startTimes: BigNumberish[],
-    _endTimes: BigNumberish[],
+    _user: PromiseOrValue<string>,
+    _startTimes: PromiseOrValue<BigNumberish>[],
+    _endTimes: PromiseOrValue<BigNumberish>[],
     overrides?: CallOverrides,
   ): Promise<BigNumber[]>;
 
   getAverageTotalSuppliesBetween(
-    _startTimes: BigNumberish[],
-    _endTimes: BigNumberish[],
+    _startTimes: PromiseOrValue<BigNumberish>[],
+    _endTimes: PromiseOrValue<BigNumberish>[],
     overrides?: CallOverrides,
   ): Promise<BigNumber[]>;
 
-  getBalanceAt(_user: string, _target: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  getBalanceAt(
+    _user: PromiseOrValue<string>,
+    _target: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
-  getBalancesAt(_user: string, _targets: BigNumberish[], overrides?: CallOverrides): Promise<BigNumber[]>;
+  getBalancesAt(
+    _user: PromiseOrValue<string>,
+    _targets: PromiseOrValue<BigNumberish>[],
+    overrides?: CallOverrides,
+  ): Promise<BigNumber[]>;
 
-  getTotalSuppliesAt(_targets: BigNumberish[], overrides?: CallOverrides): Promise<BigNumber[]>;
+  getTotalSuppliesAt(_targets: PromiseOrValue<BigNumberish>[], overrides?: CallOverrides): Promise<BigNumber[]>;
 
-  getTotalSupplyAt(_target: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  getTotalSupplyAt(_target: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   getTwab(
-    _user: string,
-    _index: BigNumberish,
+    _user: PromiseOrValue<string>,
+    _index: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<ObservationLib.ObservationStructOutput>;
 
   increaseAllowance(
-    spender: string,
-    addedValue: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    addedValue: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   name(overrides?: CallOverrides): Promise<string>;
 
-  nonces(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+  nonces(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   permit(
-    owner: string,
-    spender: string,
-    value: BigNumberish,
-    deadline: BigNumberish,
-    v: BigNumberish,
-    r: BytesLike,
-    s: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    owner: PromiseOrValue<string>,
+    spender: PromiseOrValue<string>,
+    value: PromiseOrValue<BigNumberish>,
+    deadline: PromiseOrValue<BigNumberish>,
+    v: PromiseOrValue<BigNumberish>,
+    r: PromiseOrValue<BytesLike>,
+    s: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
@@ -557,110 +644,149 @@ export interface PoolTogetherV4Ticket extends BaseContract {
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   transfer(
-    recipient: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    recipient: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferFrom(
-    sender: string,
-    recipient: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    sender: PromiseOrValue<string>,
+    recipient: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
     DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<string>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    approve(spender: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    approve(
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     controller(overrides?: CallOverrides): Promise<string>;
 
-    controllerBurn(_user: string, _amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
-
-    controllerBurnFrom(
-      _operator: string,
-      _user: string,
-      _amount: BigNumberish,
+    controllerBurn(
+      _user: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    controllerDelegateFor(_user: string, _to: string, overrides?: CallOverrides): Promise<void>;
+    controllerBurnFrom(
+      _operator: PromiseOrValue<string>,
+      _user: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    controllerMint(_user: string, _amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    controllerDelegateFor(
+      _user: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    controllerMint(
+      _user: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     decimals(overrides?: CallOverrides): Promise<number>;
 
-    decreaseAllowance(spender: string, subtractedValue: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    decreaseAllowance(
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    delegate(_to: string, overrides?: CallOverrides): Promise<void>;
+    delegate(_to: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    delegateOf(_user: string, overrides?: CallOverrides): Promise<string>;
+    delegateOf(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
     delegateWithSignature(
-      _user: string,
-      _newDelegate: string,
-      _deadline: BigNumberish,
-      _v: BigNumberish,
-      _r: BytesLike,
-      _s: BytesLike,
+      _user: PromiseOrValue<string>,
+      _newDelegate: PromiseOrValue<string>,
+      _deadline: PromiseOrValue<BigNumberish>,
+      _v: PromiseOrValue<BigNumberish>,
+      _r: PromiseOrValue<BytesLike>,
+      _s: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    getAccountDetails(_user: string, overrides?: CallOverrides): Promise<TwabLib.AccountDetailsStructOutput>;
+    getAccountDetails(
+      _user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<TwabLib.AccountDetailsStructOutput>;
 
     getAverageBalanceBetween(
-      _user: string,
-      _startTime: BigNumberish,
-      _endTime: BigNumberish,
+      _user: PromiseOrValue<string>,
+      _startTime: PromiseOrValue<BigNumberish>,
+      _endTime: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     getAverageBalancesBetween(
-      _user: string,
-      _startTimes: BigNumberish[],
-      _endTimes: BigNumberish[],
+      _user: PromiseOrValue<string>,
+      _startTimes: PromiseOrValue<BigNumberish>[],
+      _endTimes: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides,
     ): Promise<BigNumber[]>;
 
     getAverageTotalSuppliesBetween(
-      _startTimes: BigNumberish[],
-      _endTimes: BigNumberish[],
+      _startTimes: PromiseOrValue<BigNumberish>[],
+      _endTimes: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides,
     ): Promise<BigNumber[]>;
 
-    getBalanceAt(_user: string, _target: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getBalanceAt(
+      _user: PromiseOrValue<string>,
+      _target: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    getBalancesAt(_user: string, _targets: BigNumberish[], overrides?: CallOverrides): Promise<BigNumber[]>;
+    getBalancesAt(
+      _user: PromiseOrValue<string>,
+      _targets: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides,
+    ): Promise<BigNumber[]>;
 
-    getTotalSuppliesAt(_targets: BigNumberish[], overrides?: CallOverrides): Promise<BigNumber[]>;
+    getTotalSuppliesAt(_targets: PromiseOrValue<BigNumberish>[], overrides?: CallOverrides): Promise<BigNumber[]>;
 
-    getTotalSupplyAt(_target: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getTotalSupplyAt(_target: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getTwab(
-      _user: string,
-      _index: BigNumberish,
+      _user: PromiseOrValue<string>,
+      _index: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<ObservationLib.ObservationStructOutput>;
 
-    increaseAllowance(spender: string, addedValue: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    increaseAllowance(
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
-    nonces(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    nonces(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     permit(
-      owner: string,
-      spender: string,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -668,166 +794,217 @@ export interface PoolTogetherV4Ticket extends BaseContract {
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transfer(recipient: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transfer(
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    transferFrom(sender: string, recipient: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transferFrom(
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
   };
 
   filters: {
     'Approval(address,address,uint256)'(
-      owner?: string | null,
-      spender?: string | null,
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
       value?: null,
     ): ApprovalEventFilter;
-    Approval(owner?: string | null, spender?: string | null, value?: null): ApprovalEventFilter;
+    Approval(
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
+      value?: null,
+    ): ApprovalEventFilter;
 
-    'Delegated(address,address)'(delegator?: string | null, delegate?: string | null): DelegatedEventFilter;
-    Delegated(delegator?: string | null, delegate?: string | null): DelegatedEventFilter;
+    'Delegated(address,address)'(
+      delegator?: PromiseOrValue<string> | null,
+      delegate?: PromiseOrValue<string> | null,
+    ): DelegatedEventFilter;
+    Delegated(
+      delegator?: PromiseOrValue<string> | null,
+      delegate?: PromiseOrValue<string> | null,
+    ): DelegatedEventFilter;
 
     'Deployed(string,string,uint8,address)'(
       name?: null,
       symbol?: null,
       decimals?: null,
-      controller?: string | null,
+      controller?: PromiseOrValue<string> | null,
     ): DeployedEventFilter;
-    Deployed(name?: null, symbol?: null, decimals?: null, controller?: string | null): DeployedEventFilter;
+    Deployed(
+      name?: null,
+      symbol?: null,
+      decimals?: null,
+      controller?: PromiseOrValue<string> | null,
+    ): DeployedEventFilter;
 
     'NewTotalSupplyTwab(tuple)'(newTotalSupplyTwab?: null): NewTotalSupplyTwabEventFilter;
     NewTotalSupplyTwab(newTotalSupplyTwab?: null): NewTotalSupplyTwabEventFilter;
 
-    'NewUserTwab(address,tuple)'(delegate?: string | null, newTwab?: null): NewUserTwabEventFilter;
-    NewUserTwab(delegate?: string | null, newTwab?: null): NewUserTwabEventFilter;
+    'NewUserTwab(address,tuple)'(delegate?: PromiseOrValue<string> | null, newTwab?: null): NewUserTwabEventFilter;
+    NewUserTwab(delegate?: PromiseOrValue<string> | null, newTwab?: null): NewUserTwabEventFilter;
 
     'TicketInitialized(string,string,uint8,address)'(
       name?: null,
       symbol?: null,
       decimals?: null,
-      controller?: string | null,
+      controller?: PromiseOrValue<string> | null,
     ): TicketInitializedEventFilter;
     TicketInitialized(
       name?: null,
       symbol?: null,
       decimals?: null,
-      controller?: string | null,
+      controller?: PromiseOrValue<string> | null,
     ): TicketInitializedEventFilter;
 
-    'Transfer(address,address,uint256)'(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
-    Transfer(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
+    'Transfer(address,address,uint256)'(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
+    Transfer(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
   };
 
   estimateGas: {
     DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<BigNumber>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-    approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    approve(
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     controller(overrides?: CallOverrides): Promise<BigNumber>;
 
     controllerBurn(
-      _user: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _user: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     controllerBurnFrom(
-      _operator: string,
-      _user: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _operator: PromiseOrValue<string>,
+      _user: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     controllerDelegateFor(
-      _user: string,
-      _to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _user: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     controllerMint(
-      _user: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _user: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    delegate(_to: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    delegate(
+      _to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    delegateOf(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    delegateOf(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     delegateWithSignature(
-      _user: string,
-      _newDelegate: string,
-      _deadline: BigNumberish,
-      _v: BigNumberish,
-      _r: BytesLike,
-      _s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _user: PromiseOrValue<string>,
+      _newDelegate: PromiseOrValue<string>,
+      _deadline: PromiseOrValue<BigNumberish>,
+      _v: PromiseOrValue<BigNumberish>,
+      _r: PromiseOrValue<BytesLike>,
+      _s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    getAccountDetails(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getAccountDetails(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getAverageBalanceBetween(
-      _user: string,
-      _startTime: BigNumberish,
-      _endTime: BigNumberish,
+      _user: PromiseOrValue<string>,
+      _startTime: PromiseOrValue<BigNumberish>,
+      _endTime: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     getAverageBalancesBetween(
-      _user: string,
-      _startTimes: BigNumberish[],
-      _endTimes: BigNumberish[],
+      _user: PromiseOrValue<string>,
+      _startTimes: PromiseOrValue<BigNumberish>[],
+      _endTimes: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     getAverageTotalSuppliesBetween(
-      _startTimes: BigNumberish[],
-      _endTimes: BigNumberish[],
+      _startTimes: PromiseOrValue<BigNumberish>[],
+      _endTimes: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    getBalanceAt(_user: string, _target: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getBalanceAt(
+      _user: PromiseOrValue<string>,
+      _target: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    getBalancesAt(_user: string, _targets: BigNumberish[], overrides?: CallOverrides): Promise<BigNumber>;
+    getBalancesAt(
+      _user: PromiseOrValue<string>,
+      _targets: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    getTotalSuppliesAt(_targets: BigNumberish[], overrides?: CallOverrides): Promise<BigNumber>;
+    getTotalSuppliesAt(_targets: PromiseOrValue<BigNumberish>[], overrides?: CallOverrides): Promise<BigNumber>;
 
-    getTotalSupplyAt(_target: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getTotalSupplyAt(_target: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getTwab(_user: string, _index: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getTwab(
+      _user: PromiseOrValue<string>,
+      _index: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
-    nonces(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    nonces(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     permit(
-      owner: string,
-      spender: string,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
@@ -835,132 +1012,154 @@ export interface PoolTogetherV4Ticket extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferFrom(
-      sender: string,
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    approve(
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     controller(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     controllerBurn(
-      _user: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _user: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     controllerBurnFrom(
-      _operator: string,
-      _user: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _operator: PromiseOrValue<string>,
+      _user: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     controllerDelegateFor(
-      _user: string,
-      _to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _user: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     controllerMint(
-      _user: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _user: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    delegate(_to: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    delegate(
+      _to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
-    delegateOf(_user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    delegateOf(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     delegateWithSignature(
-      _user: string,
-      _newDelegate: string,
-      _deadline: BigNumberish,
-      _v: BigNumberish,
-      _r: BytesLike,
-      _s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _user: PromiseOrValue<string>,
+      _newDelegate: PromiseOrValue<string>,
+      _deadline: PromiseOrValue<BigNumberish>,
+      _v: PromiseOrValue<BigNumberish>,
+      _r: PromiseOrValue<BytesLike>,
+      _s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    getAccountDetails(_user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getAccountDetails(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getAverageBalanceBetween(
-      _user: string,
-      _startTime: BigNumberish,
-      _endTime: BigNumberish,
+      _user: PromiseOrValue<string>,
+      _startTime: PromiseOrValue<BigNumberish>,
+      _endTime: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     getAverageBalancesBetween(
-      _user: string,
-      _startTimes: BigNumberish[],
-      _endTimes: BigNumberish[],
+      _user: PromiseOrValue<string>,
+      _startTimes: PromiseOrValue<BigNumberish>[],
+      _endTimes: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     getAverageTotalSuppliesBetween(
-      _startTimes: BigNumberish[],
-      _endTimes: BigNumberish[],
+      _startTimes: PromiseOrValue<BigNumberish>[],
+      _endTimes: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    getBalanceAt(_user: string, _target: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getBalanceAt(
+      _user: PromiseOrValue<string>,
+      _target: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    getBalancesAt(_user: string, _targets: BigNumberish[], overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getBalancesAt(
+      _user: PromiseOrValue<string>,
+      _targets: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    getTotalSuppliesAt(_targets: BigNumberish[], overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getTotalSuppliesAt(
+      _targets: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    getTotalSupplyAt(_target: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getTotalSupplyAt(_target: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getTwab(_user: string, _index: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getTwab(
+      _user: PromiseOrValue<string>,
+      _index: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    nonces(owner: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    nonces(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     permit(
-      owner: string,
-      spender: string,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -968,16 +1167,16 @@ export interface PoolTogetherV4Ticket extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transfer(
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferFrom(
-      sender: string,
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

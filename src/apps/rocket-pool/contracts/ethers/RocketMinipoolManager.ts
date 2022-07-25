@@ -4,7 +4,7 @@
 import type { BaseContract, BigNumber, BytesLike, CallOverrides, PopulatedTransaction, Signer, utils } from 'ethers';
 import type { FunctionFragment, Result } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface RocketMinipoolManagerInterface extends utils.Interface {
   functions: {
@@ -13,7 +13,7 @@ export interface RocketMinipoolManagerInterface extends utils.Interface {
 
   getFunction(nameOrSignatureOrTopic: 'getNodeActiveMinipoolCount'): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'getNodeActiveMinipoolCount', values: [string]): string;
+  encodeFunctionData(functionFragment: 'getNodeActiveMinipoolCount', values: [PromiseOrValue<string>]): string;
 
   decodeFunctionResult(functionFragment: 'getNodeActiveMinipoolCount', data: BytesLike): Result;
 
@@ -43,22 +43,25 @@ export interface RocketMinipoolManager extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    getNodeActiveMinipoolCount(_nodeAddress: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getNodeActiveMinipoolCount(_nodeAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
   };
 
-  getNodeActiveMinipoolCount(_nodeAddress: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getNodeActiveMinipoolCount(_nodeAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   callStatic: {
-    getNodeActiveMinipoolCount(_nodeAddress: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getNodeActiveMinipoolCount(_nodeAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   filters: {};
 
   estimateGas: {
-    getNodeActiveMinipoolCount(_nodeAddress: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getNodeActiveMinipoolCount(_nodeAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    getNodeActiveMinipoolCount(_nodeAddress: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getNodeActiveMinipoolCount(
+      _nodeAddress: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
   };
 }

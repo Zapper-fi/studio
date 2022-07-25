@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface PickleJarSingleRewardStakingInterface extends utils.Interface {
   functions: {
@@ -91,29 +91,32 @@ export interface PickleJarSingleRewardStakingInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'PICKLE', values?: undefined): string;
   encodeFunctionData(functionFragment: 'TOKEN', values?: undefined): string;
   encodeFunctionData(functionFragment: 'TREASURY', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
-  encodeFunctionData(functionFragment: 'deposit', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'deposit', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'depositAll', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'depositFor', values: [BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'derivedBalance', values: [string]): string;
-  encodeFunctionData(functionFragment: 'derivedBalances', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'depositFor',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'derivedBalance', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'derivedBalances', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'derivedSupply', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'earned', values: [string]): string;
+  encodeFunctionData(functionFragment: 'earned', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'exit', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getReward', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getRewardForDuration', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'kick', values: [string]): string;
+  encodeFunctionData(functionFragment: 'kick', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'lastTimeRewardApplicable', values?: undefined): string;
   encodeFunctionData(functionFragment: 'lastUpdateTime', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'notifyRewardAmount', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'notifyRewardAmount', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'periodFinish', values?: undefined): string;
   encodeFunctionData(functionFragment: 'rewardPerToken', values?: undefined): string;
   encodeFunctionData(functionFragment: 'rewardPerTokenStored', values?: undefined): string;
   encodeFunctionData(functionFragment: 'rewardRate', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'rewards', values: [string]): string;
+  encodeFunctionData(functionFragment: 'rewards', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'userRewardPerTokenPaid', values: [string]): string;
-  encodeFunctionData(functionFragment: 'withdraw', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'userRewardPerTokenPaid', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'withdraw', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'withdrawAll', values?: undefined): string;
 
   decodeFunctionResult(functionFragment: 'DILL', data: BytesLike): Result;
@@ -226,44 +229,47 @@ export interface PickleJarSingleRewardStaking extends BaseContract {
 
     TREASURY(overrides?: CallOverrides): Promise<[string]>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     deposit(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    depositAll(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    depositAll(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     depositFor(
-      amount: BigNumberish,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    derivedBalance(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    derivedBalance(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    derivedBalances(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    derivedBalances(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     derivedSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    earned(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    earned(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    exit(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    exit(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    getReward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    getReward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     getRewardForDuration(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    kick(account: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    kick(
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     lastTimeRewardApplicable(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     lastUpdateTime(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     notifyRewardAmount(
-      reward: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      reward: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     periodFinish(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -274,18 +280,18 @@ export interface PickleJarSingleRewardStaking extends BaseContract {
 
     rewardRate(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    rewards(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    rewards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    userRewardPerTokenPaid(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    userRewardPerTokenPaid(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     withdraw(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    withdrawAll(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    withdrawAll(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
   };
 
   DILL(overrides?: CallOverrides): Promise<string>;
@@ -300,44 +306,47 @@ export interface PickleJarSingleRewardStaking extends BaseContract {
 
   TREASURY(overrides?: CallOverrides): Promise<string>;
 
-  balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   deposit(
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  depositAll(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  depositAll(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   depositFor(
-    amount: BigNumberish,
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    amount: PromiseOrValue<BigNumberish>,
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  derivedBalance(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  derivedBalance(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  derivedBalances(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  derivedBalances(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   derivedSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-  earned(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  earned(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  exit(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  exit(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  getReward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  getReward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   getRewardForDuration(overrides?: CallOverrides): Promise<BigNumber>;
 
-  kick(account: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  kick(
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   lastTimeRewardApplicable(overrides?: CallOverrides): Promise<BigNumber>;
 
   lastUpdateTime(overrides?: CallOverrides): Promise<BigNumber>;
 
   notifyRewardAmount(
-    reward: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    reward: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   periodFinish(overrides?: CallOverrides): Promise<BigNumber>;
@@ -348,18 +357,18 @@ export interface PickleJarSingleRewardStaking extends BaseContract {
 
   rewardRate(overrides?: CallOverrides): Promise<BigNumber>;
 
-  rewards(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  rewards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-  userRewardPerTokenPaid(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  userRewardPerTokenPaid(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   withdraw(
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  withdrawAll(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  withdrawAll(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   callStatic: {
     DILL(overrides?: CallOverrides): Promise<string>;
@@ -374,21 +383,25 @@ export interface PickleJarSingleRewardStaking extends BaseContract {
 
     TREASURY(overrides?: CallOverrides): Promise<string>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    deposit(amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    deposit(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     depositAll(overrides?: CallOverrides): Promise<void>;
 
-    depositFor(amount: BigNumberish, account: string, overrides?: CallOverrides): Promise<void>;
+    depositFor(
+      amount: PromiseOrValue<BigNumberish>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    derivedBalance(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    derivedBalance(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    derivedBalances(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    derivedBalances(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     derivedSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    earned(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    earned(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     exit(overrides?: CallOverrides): Promise<void>;
 
@@ -396,13 +409,13 @@ export interface PickleJarSingleRewardStaking extends BaseContract {
 
     getRewardForDuration(overrides?: CallOverrides): Promise<BigNumber>;
 
-    kick(account: string, overrides?: CallOverrides): Promise<void>;
+    kick(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     lastTimeRewardApplicable(overrides?: CallOverrides): Promise<BigNumber>;
 
     lastUpdateTime(overrides?: CallOverrides): Promise<BigNumber>;
 
-    notifyRewardAmount(reward: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    notifyRewardAmount(reward: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     periodFinish(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -412,13 +425,13 @@ export interface PickleJarSingleRewardStaking extends BaseContract {
 
     rewardRate(overrides?: CallOverrides): Promise<BigNumber>;
 
-    rewards(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    rewards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    userRewardPerTokenPaid(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    userRewardPerTokenPaid(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    withdraw(amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    withdraw(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     withdrawAll(overrides?: CallOverrides): Promise<void>;
   };
@@ -427,14 +440,14 @@ export interface PickleJarSingleRewardStaking extends BaseContract {
     'RewardAdded(uint256)'(reward?: null): RewardAddedEventFilter;
     RewardAdded(reward?: null): RewardAddedEventFilter;
 
-    'RewardPaid(address,uint256)'(user?: string | null, reward?: null): RewardPaidEventFilter;
-    RewardPaid(user?: string | null, reward?: null): RewardPaidEventFilter;
+    'RewardPaid(address,uint256)'(user?: PromiseOrValue<string> | null, reward?: null): RewardPaidEventFilter;
+    RewardPaid(user?: PromiseOrValue<string> | null, reward?: null): RewardPaidEventFilter;
 
-    'Staked(address,uint256)'(user?: string | null, amount?: null): StakedEventFilter;
-    Staked(user?: string | null, amount?: null): StakedEventFilter;
+    'Staked(address,uint256)'(user?: PromiseOrValue<string> | null, amount?: null): StakedEventFilter;
+    Staked(user?: PromiseOrValue<string> | null, amount?: null): StakedEventFilter;
 
-    'Withdrawn(address,uint256)'(user?: string | null, amount?: null): WithdrawnEventFilter;
-    Withdrawn(user?: string | null, amount?: null): WithdrawnEventFilter;
+    'Withdrawn(address,uint256)'(user?: PromiseOrValue<string> | null, amount?: null): WithdrawnEventFilter;
+    Withdrawn(user?: PromiseOrValue<string> | null, amount?: null): WithdrawnEventFilter;
   };
 
   estimateGas: {
@@ -450,41 +463,47 @@ export interface PickleJarSingleRewardStaking extends BaseContract {
 
     TREASURY(overrides?: CallOverrides): Promise<BigNumber>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    deposit(amount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
-
-    depositAll(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
-
-    depositFor(
-      amount: BigNumberish,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    deposit(
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    derivedBalance(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    depositAll(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    derivedBalances(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    depositFor(
+      amount: PromiseOrValue<BigNumberish>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    derivedBalance(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    derivedBalances(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     derivedSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    earned(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    earned(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    exit(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    exit(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    getReward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    getReward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     getRewardForDuration(overrides?: CallOverrides): Promise<BigNumber>;
 
-    kick(account: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    kick(
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     lastTimeRewardApplicable(overrides?: CallOverrides): Promise<BigNumber>;
 
     lastUpdateTime(overrides?: CallOverrides): Promise<BigNumber>;
 
     notifyRewardAmount(
-      reward: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      reward: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     periodFinish(overrides?: CallOverrides): Promise<BigNumber>;
@@ -495,15 +514,18 @@ export interface PickleJarSingleRewardStaking extends BaseContract {
 
     rewardRate(overrides?: CallOverrides): Promise<BigNumber>;
 
-    rewards(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    rewards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    userRewardPerTokenPaid(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    userRewardPerTokenPaid(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    withdraw(amount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    withdraw(
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    withdrawAll(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    withdrawAll(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -519,44 +541,47 @@ export interface PickleJarSingleRewardStaking extends BaseContract {
 
     TREASURY(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     deposit(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    depositAll(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    depositAll(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     depositFor(
-      amount: BigNumberish,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    derivedBalance(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    derivedBalance(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    derivedBalances(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    derivedBalances(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     derivedSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    earned(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    earned(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    exit(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    exit(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    getReward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    getReward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     getRewardForDuration(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    kick(account: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    kick(
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
     lastTimeRewardApplicable(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     lastUpdateTime(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     notifyRewardAmount(
-      reward: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      reward: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     periodFinish(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -567,17 +592,17 @@ export interface PickleJarSingleRewardStaking extends BaseContract {
 
     rewardRate(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    rewards(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    rewards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    userRewardPerTokenPaid(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    userRewardPerTokenPaid(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     withdraw(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    withdrawAll(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    withdrawAll(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
   };
 }
