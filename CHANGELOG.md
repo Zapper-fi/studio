@@ -4,6 +4,20 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.127.0](https://github.com/Zapper-fi/studio/compare/v0.126.0...v0.127.0) (2022-07-25)
+
+
+### Features
+
+* **biswap:** Added Biswap on BSC (pools and farms) ([#945](https://github.com/Zapper-fi/studio/issues/945)) ([b91d797](https://github.com/Zapper-fi/studio/commit/b91d797502611ccc00bb5c1662c297b3bc1cafcf))
+* **polygon:** Add claimable rewards for Polygon MATIC staking ([#948](https://github.com/Zapper-fi/studio/issues/948)) ([78e3d83](https://github.com/Zapper-fi/studio/commit/78e3d832319431511181654679e3ff03bbe25a82))
+* **stargate:** Add wrapped ETH and Voting Escrow positions ([#947](https://github.com/Zapper-fi/studio/issues/947)) ([50f83d5](https://github.com/Zapper-fi/studio/commit/50f83d536c2f758759f6a96e22c62297ebfde01a))
+
+
+### Bug Fixes
+
+* **good-ghosting:** Resolved the issue of Celo games not showing claimable tokens ([#946](https://github.com/Zapper-fi/studio/issues/946)) ([c547bef](https://github.com/Zapper-fi/studio/commit/c547bef55f8bf64adaba08a80478f628423874c3))
+
 ## [0.126.0](https://github.com/Zapper-fi/studio/compare/v0.125.0...v0.126.0) (2022-07-24)
 
 
