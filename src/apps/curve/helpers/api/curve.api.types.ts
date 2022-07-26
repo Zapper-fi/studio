@@ -1,3 +1,8 @@
+export enum GaugeType {
+  MAIN = 'main',
+  FACTORY = 'factory',
+}
+
 export type GaugeData = {
   swap: string;
   swap_token: string;
@@ -33,6 +38,7 @@ export type FactoryGaugeData = {
   symbol: string;
   hasCrv: boolean;
   side_chain: boolean;
+  is_killed?: boolean;
   type: string;
   gauge_data: {
     working_supply: string;

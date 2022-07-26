@@ -40,7 +40,8 @@ export class CurveRewardsOnlyGaugeRoiStrategy {
       const balanceUSD = balance * stakedToken.price;
 
       // Find the reward stream for the gauge (these are defined statically because Curve doesn't always allow for dynamic retrieval)
-      const tokenDefinition = tokenDefinitions.find(v => v.gaugeAddress === address);
+      const gaugeAddress = this.curveContractFactory.curveRewardsOnlyGauge({ address, network });
+
       const rewardStreamAddress = tokenDefinition?.streamAddress;
       if (!rewardStreamAddress || tokenDefinition.streamEol) return { yearlyROI: 0, weeklyROI: 0, dailyROI: 0 };
 

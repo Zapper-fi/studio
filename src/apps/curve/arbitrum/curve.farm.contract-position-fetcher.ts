@@ -1,20 +1,17 @@
 import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { Register } from '~app-toolkit/decorators';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
-import { CurveChildLiquidityGauge, CurveContractFactory, CurveRewardsOnlyGauge } from '../contracts';
+import { CurveChildLiquidityGauge, CurveContractFactory } from '../contracts';
 import { CURVE_DEFINITION } from '../curve.definition';
-import { CurveChildLiquidityGaugeFactoryAddressHelper } from '../helpers/curve.child-liquidity-gauge-factory.address-helper';
 import { CurveChildLiquidityGaugeRewardTokenStrategy } from '../helpers/curve.child-liquidity-gauge.reward-token-strategy';
 import { CurveChildLiquidityGaugeRoiStrategy } from '../helpers/curve.child-liquidity-gauge.roi-strategy';
-import { CurveRewardsOnlyGaugeRewardTokenStrategy } from '../helpers/curve.rewards-only-gauge.reward-token-strategy';
-import { CurveRewardsOnlyGaugeRoiStrategy } from '../helpers/curve.rewards-only-gauge.roi-strategy';
-
-import { CURVE_STABLE_POOL_DEFINITIONS, CURVE_CRYPTO_POOL_DEFINITIONS } from './curve.pool.definitions';
+import { CurvePoolTokenDataProps } from '../helpers/curve.pool.token-helper';
 
 const appId = CURVE_DEFINITION.id;
 const groupId = CURVE_DEFINITION.groups.farm.id;
@@ -23,45 +20,23 @@ const network = Network.ARBITRUM_MAINNET;
 @Register.ContractPositionFetcher({ appId, groupId, network })
 export class ArbitrumCurveFarmContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
+    @Inject(APP_TOOLKIT)
+    private readonly appToolkit: IAppToolkit,
     @Inject(CurveContractFactory)
     private readonly curveContractFactory: CurveContractFactory,
-    @Inject(CurveRewardsOnlyGaugeRoiStrategy)
-    private readonly curveRewardsOnlyGaugeRoiStrategy: CurveRewardsOnlyGaugeRoiStrategy,
-    @Inject(CurveRewardsOnlyGaugeRewardTokenStrategy)
-    private readonly curveRewardsOnlyGaugeRewardTokenStrategy: CurveRewardsOnlyGaugeRewardTokenStrategy,
-    @Inject(CurveChildLiquidityGaugeFactoryAddressHelper)
-    private readonly childGaugeAddressHelper: CurveChildLiquidityGaugeFactoryAddressHelper,
     @Inject(CurveChildLiquidityGaugeRoiStrategy)
     private readonly childGaugeRoiStrategy: CurveChildLiquidityGaugeRoiStrategy,
     @Inject(CurveChildLiquidityGaugeRewardTokenStrategy)
     private readonly childGaugeRewardTokenStrategy: CurveChildLiquidityGaugeRewardTokenStrategy,
   ) {}
 
-  async getRewardsOnlyGaugePositions() {
-    const definitions = [CURVE_STABLE_POOL_DEFINITIONS, CURVE_CRYPTO_POOL_DEFINITIONS]
-      .flat()
-      .filter(v => !!v.gaugeAddress);
-
-    return this.appToolkit.helpers.singleStakingFarmContractPositionHelper.getContractPositions<CurveRewardsOnlyGauge>({
+  async getPositions() {
+    const poolTokens = await this.appToolkit.getAppTokenPositions<CurvePoolTokenDataProps>({
+      appId: CURVE_DEFINITION.id,
+      groupIds: [CURVE_DEFINITION.groups.pool.id],
       network,
-      appId,
-      groupId,
-      dependencies: [{ appId: CURVE_DEFINITION.id, groupIds: [CURVE_DEFINITION.groups.pool.id], network }],
-      resolveImplementation: () => 'rewards-only-gauge',
-      resolveFarmAddresses: () => definitions.map(v => v.gaugeAddress ?? null),
-      resolveFarmContract: ({ address, network }) =>
-        this.curveContractFactory.curveRewardsOnlyGauge({ address, network }),
-      resolveStakedTokenAddress: ({ contract, multicall }) => multicall.wrap(contract).lp_token(),
-      resolveRewardTokenAddresses: this.curveRewardsOnlyGaugeRewardTokenStrategy.build(),
-      resolveIsActive: () => true,
-      resolveRois: this.curveRewardsOnlyGaugeRoiStrategy.build({
-        tokenDefinitions: definitions,
-      }),
     });
-  }
 
-  async getChildLiquidityGaugePositions() {
     return this.appToolkit.helpers.singleStakingFarmContractPositionHelper.getContractPositions<CurveChildLiquidityGauge>(
       {
         network,
@@ -69,29 +44,16 @@ export class ArbitrumCurveFarmContractPositionFetcher implements PositionFetcher
         groupId,
         dependencies: [{ appId: CURVE_DEFINITION.id, groupIds: [CURVE_DEFINITION.groups.pool.id], network }],
         resolveImplementation: () => 'child-liquidity-gauge',
-        resolveFarmAddresses: () =>
-          this.childGaugeAddressHelper.getGaugeAddresses({
-            factoryAddress: '0xabc000d88f23bb45525e447528dbf656a9d55bf5',
-            network,
-          }),
+        resolveFarmAddresses: () => poolTokens.map(v => v.dataProps.gaugeAddress).filter(v => v !== ZERO_ADDRESS),
         resolveFarmContract: ({ address, network }) =>
           this.curveContractFactory.curveChildLiquidityGauge({ address, network }),
         resolveStakedTokenAddress: ({ contract, multicall }) => multicall.wrap(contract).lp_token(),
         resolveRewardTokenAddresses: this.childGaugeRewardTokenStrategy.build({
           crvTokenAddress: '0x11cdb42b0eb46d95f990bedd4695a6e3fa034978',
         }),
-        resolveRois: this.childGaugeRoiStrategy.build(),
         resolveIsActive: () => true,
+        resolveRois: this.childGaugeRoiStrategy.build(),
       },
     );
-  }
-
-  async getPositions() {
-    const [rewardOnlyGaugePositions, childLiquidityGaugePositions] = await Promise.all([
-      this.getRewardsOnlyGaugePositions(),
-      this.getChildLiquidityGaugePositions(),
-    ]);
-
-    return [...rewardOnlyGaugePositions, ...childLiquidityGaugePositions];
   }
 }

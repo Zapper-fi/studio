@@ -2,9 +2,11 @@ import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { ArbitrumCurveBalanceFetcher } from './arbitrum/curve.balance-fetcher';
+import { ArbitrumCurveFarmContractPositionFetcher } from './arbitrum/curve.farm.contract-position-fetcher';
 import { ArbitrumCurvePoolTokenFetcher } from './arbitrum/curve.pool.token-fetcher';
 import { CurveContractFactory } from './contracts';
 import { CurveAppDefinition, CURVE_DEFINITION } from './curve.definition';
+import { CurveApiClient } from './helpers/api/curve.api.client';
 import { CurveApiVolumeStrategy } from './helpers/curve.api.volume-strategy';
 import { CurveChildLiquidityGaugeFactoryAddressHelper } from './helpers/curve.child-liquidity-gauge-factory.address-helper';
 import { CurveChildLiquidityGaugeRewardTokenStrategy } from './helpers/curve.child-liquidity-gauge.reward-token-strategy';
@@ -41,7 +43,7 @@ import { CurveOnChainRegistry } from './helpers/registry/curve.on-chain.registry
     // Arbitrum
     ArbitrumCurveBalanceFetcher,
     ArbitrumCurvePoolTokenFetcher,
-    // ArbitrumCurveFarmContractPositionFetcher,
+    ArbitrumCurveFarmContractPositionFetcher,
     // // Avalanche
     // AvalancheCurveBalanceFetcher,
     // AvalancheCurvePoolTokenFetcher,
@@ -73,6 +75,7 @@ import { CurveOnChainRegistry } from './helpers/registry/curve.on-chain.registry
     // PolygonCurvePoolTokenFetcher,
     // PolygonCurveFarmContractPositionFetcher,
     // Token Helpers
+    CurveApiClient,
     CurveOnChainRegistry,
     CurvePoolTokenHelper,
     CurveStablePoolTokenHelper,

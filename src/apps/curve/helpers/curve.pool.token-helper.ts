@@ -19,10 +19,13 @@ import { Network } from '~types/network.interface';
 
 import { CurveToken } from '../contracts';
 import { CURVE_DEFINITION } from '../curve.definition';
-import { CurvePoolDefinition } from '../curve.types';
+
+import { GaugeType } from './api/curve.api.types';
+import { CurvePoolDefinition } from './registry/curve.on-chain.registry';
 
 export type CurvePoolTokenDataProps = {
-  gaugeAddress?: string;
+  gaugeAddress: string;
+  gaugeType: GaugeType;
   swapAddress: string;
   liquidity: number;
   volume: number;
@@ -107,7 +110,7 @@ export class CurvePoolTokenHelper {
 
     const curvePoolTokens = await Promise.all(
       poolDefinitions.map(async definition => {
-        const { gaugeAddress, tokenAddress, swapAddress } = definition;
+        const { gaugeAddress, gaugeType, tokenAddress, swapAddress } = definition;
         const poolContract = resolvePoolContract({ network, definition });
         const poolTokenContract = resolvePoolTokenContract({ network, definition });
         const rawTokenAddresses = await resolvePoolCoinAddresses({ multicall, poolContract });
@@ -174,6 +177,7 @@ export class CurvePoolTokenHelper {
 
           dataProps: {
             gaugeAddress,
+            gaugeType,
             swapAddress,
             liquidity,
             volume,

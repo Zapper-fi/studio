@@ -5,13 +5,13 @@ import { AppGroupsDefinition } from '~position/position.service';
 import { Network } from '~types/network.interface';
 
 import { CurveContractFactory, CurveV2Pool } from '../contracts';
-import { CurvePoolDefinition } from '../curve.types';
 
 import { CurveApiVolumeStrategy } from './curve.api.volume-strategy';
 import { CurveLiquidityAndVirtualPriceStrategy } from './curve.liquidity-and-virtual.price-strategy';
 import { CurveOnChainCoinStrategy } from './curve.on-chain.coin-strategy';
 import { CurveOnChainReserveStrategy } from './curve.on-chain.reserve-strategy';
 import { CurvePoolTokenHelper } from './curve.pool.token-helper';
+import { CurvePoolDefinition } from './registry/curve.on-chain.registry';
 
 type CurveCryptoPoolTokenHelperParams = {
   network: Network;

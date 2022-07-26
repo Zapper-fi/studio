@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { range, toLower, uniqBy } from 'lodash';
+import { range, toLower } from 'lodash';
 import moment from 'moment';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
@@ -10,8 +10,17 @@ import { Cache } from '~cache/cache.decorator';
 import { Network } from '~types/network.interface';
 
 import { CurveApiClient } from '../api/curve.api.client';
+import { GaugeType } from '../api/curve.api.types';
 
 const ADDRESS_RESOVLER_ADDRESS = '0x0000000022d53366457f9d5e68ec105046fc4383';
+
+export type CurvePoolDefinition = {
+  swapAddress: string;
+  tokenAddress: string;
+  gaugeAddress: string;
+  gaugeType: GaugeType;
+  isMetaPool: boolean;
+};
 
 @Injectable()
 export class CurveOnChainRegistry {
@@ -31,7 +40,7 @@ export class CurveOnChainRegistry {
     return definitions.filter(v => v.isMetaPool);
   }
 
-  async getCryptoSwapRegistryMetaPoolDefinitions(network: Network) {
+  async getCryptoSwapRegistryPoolDefinitions(network: Network) {
     const definitions = await this.getCryptoSwapRegistryDefinitions(network);
     return definitions;
   }
@@ -50,9 +59,11 @@ export class CurveOnChainRegistry {
       range(0, Number(poolCount)).map(async i => {
         const swapAddress = await multicall.wrap(registry).pool_list(i).then(toLower);
         const tokenAddress = await multicall.wrap(registry).get_lp_token(swapAddress).then(toLower);
-        const gaugeAddress = gauges.find(v => v.swapAddress === swapAddress)?.gaugeAddress ?? ZERO_ADDRESS;
+        const gauge = gauges.find(v => v.swapAddress === swapAddress);
+        const gaugeAddress = gauge?.gaugeAddress ?? ZERO_ADDRESS;
+        const gaugeType = gauge?.type ?? GaugeType.MAIN;
         const isMetaPool = await multicall.wrap(registry).is_meta(swapAddress);
-        return { swapAddress, tokenAddress, gaugeAddress, isMetaPool };
+        return { swapAddress, tokenAddress, gaugeAddress, gaugeType, isMetaPool };
       }),
     );
 
@@ -73,8 +84,10 @@ export class CurveOnChainRegistry {
       range(0, Number(poolCount)).map(async i => {
         const swapAddress = await multicall.wrap(registry).pool_list(i).then(toLower);
         const tokenAddress = await multicall.wrap(registry).get_lp_token(swapAddress).then(toLower);
-        const gaugeAddress = gauges.find(v => v.swapAddress === swapAddress)?.gaugeAddress ?? ZERO_ADDRESS;
-        return { swapAddress, tokenAddress, gaugeAddress, isMetaPool: false };
+        const gauge = gauges.find(v => v.swapAddress === swapAddress);
+        const gaugeAddress = gauge?.gaugeAddress ?? ZERO_ADDRESS;
+        const gaugeType = gauge?.type ?? GaugeType.MAIN;
+        return { swapAddress, tokenAddress, gaugeAddress, gaugeType, isMetaPool: false };
       }),
     );
 
@@ -83,13 +96,10 @@ export class CurveOnChainRegistry {
 
   @Cache({
     instance: 'business',
-    key: (network: Network) => `studio:${CURVE_DEFINITION.id}:${network}:gauges`,
+    key: (network: Network) => `studio:${CURVE_DEFINITION.id}:${network}:gauges:2`,
     ttl: moment.duration(15, 'minutes').asSeconds(),
   })
   private async getGauges(network: Network) {
-    const mainGauges = await this.curveApiClient.getMainGauges(network);
-    const factoryGauges = await this.curveApiClient.getFactoryGauges(network);
-    const gauges = uniqBy([...mainGauges, ...factoryGauges], v => v.swapAddress);
-    return gauges;
+    return this.curveApiClient.getGauges(network);
   }
 }

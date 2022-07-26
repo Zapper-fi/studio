@@ -1,4 +1,5 @@
 import { Inject } from '@nestjs/common';
+import _ from 'lodash';
 
 import { Register } from '~app-toolkit/decorators';
 import { PositionFetcher } from '~position/position-fetcher.interface';
@@ -29,7 +30,7 @@ export class ArbitrumCurvePoolTokenFetcher implements PositionFetcher<AppTokenPo
   ) {}
 
   async getPositions() {
-    const [v1Pools] = await Promise.all([
+    const [stableBasePools] = await Promise.all([
       this.curveStablePoolTokenHelper.getTokens({
         network,
         appId,
@@ -39,25 +40,36 @@ export class ArbitrumCurvePoolTokenFetcher implements PositionFetcher<AppTokenPo
       }),
     ]);
 
-    const [cryptoPools, factoryPools] = await Promise.all([
+    const [stableMetaPools, cryptoPools, factoryPools] = await Promise.all([
+      this.curveStablePoolTokenHelper.getTokens({
+        network,
+        appId,
+        groupId,
+        poolDefinitions: await this.curveOnChainRegistry.getStableSwapRegistryMetaPoolDefinitions(network),
+        statsUrl: 'https://stats.curve.fi/raw-stats-arbitrum/apys.json',
+        baseCurveTokens: stableBasePools,
+      }),
       this.curveCryptoPoolTokenHelper.getTokens({
         network,
         appId,
         groupId,
-        poolDefinitions: await this.curveOnChainRegistry.getCryptoSwapRegistryMetaPoolDefinitions(network),
+        poolDefinitions: await this.curveOnChainRegistry.getCryptoSwapRegistryPoolDefinitions(network),
         statsUrl: 'https://stats.curve.fi/raw-stats-arbitrum/apys.json',
-        baseCurveTokens: v1Pools,
+        baseCurveTokens: stableBasePools,
       }),
       this.curveFactoryPoolTokenHelper.getTokens({
         factoryAddress: '0xb17b674d9c5cb2e441f8e196a2f048a81355d031',
         network,
         appId,
         groupId,
-        baseCurveTokens: v1Pools,
-        skipVolume: true, // Arbitrum public RPC can't handle this
+        baseCurveTokens: stableBasePools,
+        skipVolume: true,
       }),
     ]);
 
-    return [v1Pools, cryptoPools, factoryPools].flat();
+    return _([stableBasePools, stableMetaPools, cryptoPools, factoryPools])
+      .flatten()
+      .uniqBy(v => v.address)
+      .value();
   }
 }
