@@ -47,6 +47,11 @@ export class CurveOnChainRegistry {
     return definitions;
   }
 
+  async getStableSwapFactoryPoolDefinitions(network: Network) {
+    const definitions = await this.getStableSwapFactoryDefinitions(network);
+    return definitions;
+  }
+
   private async getStableSwapRegistryDefinitions(network: Network) {
     const multicall = this.appToolkit.getMulticall(network);
     const allGauges = await this.getGauges(network);
@@ -95,6 +100,38 @@ export class CurveOnChainRegistry {
         const swapAddress = await multicall.wrap(registry).pool_list(i).then(toLower);
         const tokenAddress = await multicall.wrap(registry).get_lp_token(swapAddress).then(toLower);
         const isMetaPool = false;
+
+        const gauge = gauges.find(v => v.swapAddress === swapAddress);
+        const gaugeAddress = gauge?.gaugeAddress ?? ZERO_ADDRESS;
+        const gaugeType = gauge?.type ?? GaugeType.MAIN;
+
+        const poolApyData = allPoolApyData.find(v => v.swapAddress === swapAddress);
+        const apy = poolApyData?.apy ?? 0;
+        const volume = poolApyData?.volume ?? 0;
+
+        return { swapAddress, tokenAddress, isMetaPool, gaugeAddress, gaugeType, apy, volume };
+      }),
+    );
+
+    return poolDefinitions;
+  }
+
+  private async getStableSwapFactoryDefinitions(network: Network) {
+    const multicall = this.appToolkit.getMulticall(network);
+    const gauges = await this.getGauges(network);
+    const allPoolApyData = await this.getPoolApyData(network);
+
+    const resolver = this.curveContractFactory.curveAddressResolver({ address: ADDRESS_RESOLVER_ADDRESS, network });
+    const stableSwapFactoryInfo = await resolver.get_id_info(3);
+
+    const factory = this.curveContractFactory.curveFactoryV2({ address: stableSwapFactoryInfo.addr, network });
+    const poolCount = await factory.pool_count();
+
+    const poolDefinitions = await Promise.all(
+      range(0, Number(poolCount)).map(async i => {
+        const swapAddress = await multicall.wrap(factory).pool_list(i).then(toLower);
+        const tokenAddress = swapAddress; // Factory pools have the same swap and token address
+        const isMetaPool = await multicall.wrap(factory).is_meta(swapAddress);
 
         const gauge = gauges.find(v => v.swapAddress === swapAddress);
         const gaugeAddress = gauge?.gaugeAddress ?? ZERO_ADDRESS;
