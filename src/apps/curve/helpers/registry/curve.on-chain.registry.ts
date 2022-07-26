@@ -52,8 +52,8 @@ export class CurveOnChainRegistry {
 
   private async getStableSwapRegistryDefinitions(network: Network) {
     const multicall = this.appToolkit.getMulticall(network);
-    const allGauges = await this.getGauges(network);
-    const allPoolApyData = await this.getPoolApyData(network);
+    const allGauges = await this.getCachedGauges(network);
+    const allPoolApyData = await this.getCachedPoolApyData(network);
 
     const resolver = this.curveContractFactory.curveAddressResolver({ address: ADDRESS_RESOLVER_ADDRESS, network });
     const mainRegistryInfo = await resolver.get_id_info(0);
@@ -83,8 +83,8 @@ export class CurveOnChainRegistry {
 
   private async getCryptoSwapRegistryDefinitions(network: Network) {
     const multicall = this.appToolkit.getMulticall(network);
-    const gauges = await this.getGauges(network);
-    const allPoolApyData = await this.getPoolApyData(network);
+    const gauges = await this.getCachedGauges(network);
+    const allPoolApyData = await this.getCachedPoolApyData(network);
 
     const resolver = this.curveContractFactory.curveAddressResolver({ address: ADDRESS_RESOLVER_ADDRESS, network });
     const cryptoRegistryInfo = await resolver.get_id_info(5);
@@ -114,8 +114,8 @@ export class CurveOnChainRegistry {
 
   private async getStableSwapFactoryDefinitions(network: Network) {
     const multicall = this.appToolkit.getMulticall(network);
-    const gauges = await this.getGauges(network);
-    const allPoolApyData = await this.getPoolApyData(network);
+    const gauges = await this.getCachedGauges(network);
+    const allPoolApyData = await this.getCachedPoolApyData(network);
 
     const resolver = this.curveContractFactory.curveAddressResolver({ address: ADDRESS_RESOLVER_ADDRESS, network });
     const stableSwapFactoryInfo = await resolver.get_id_info(3);
@@ -143,12 +143,16 @@ export class CurveOnChainRegistry {
     return poolDefinitions;
   }
 
+  async getGaugeAddresses(network: Network) {
+    return this.curveApiClient.getGauges(network).then(gauges => gauges.map(v => v.gaugeAddress));
+  }
+
   @Cache({
     instance: 'business',
     key: (network: Network) => `studio:${CURVE_DEFINITION.id}:${network}:gauge-data`,
     ttl: moment.duration(15, 'minutes').asSeconds(),
   })
-  private async getGauges(network: Network) {
+  private async getCachedGauges(network: Network) {
     return this.curveApiClient.getGauges(network);
   }
 
@@ -157,7 +161,7 @@ export class CurveOnChainRegistry {
     key: (network: Network) => `studio:${CURVE_DEFINITION.id}:${network}:pool-apy-data:2`,
     ttl: moment.duration(15, 'minutes').asSeconds(),
   })
-  private async getPoolApyData(network: Network) {
+  private async getCachedPoolApyData(network: Network) {
     return this.curveApiClient.getPoolApyData(network);
   }
 }
