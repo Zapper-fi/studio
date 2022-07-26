@@ -10,7 +10,6 @@ import { Cache } from '~cache/cache.decorator';
 import { Network } from '~types/network.interface';
 
 import { CurveApiClient } from '../api/curve.api.client';
-import { GaugeType } from '../api/curve.api.types';
 
 const ADDRESS_RESOLVER_ADDRESS = '0x0000000022d53366457f9d5e68ec105046fc4383';
 
@@ -19,7 +18,6 @@ export type CurvePoolDefinition = {
   tokenAddress: string;
   isMetaPool: boolean;
   gaugeAddress: string;
-  gaugeType: GaugeType;
   volume: number;
   apy: number;
 };
@@ -71,13 +69,12 @@ export class CurveOnChainRegistry {
 
         const gauge = allGauges.find(v => v.swapAddress === swapAddress);
         const gaugeAddress = gauge?.gaugeAddress ?? ZERO_ADDRESS;
-        const gaugeType = gauge?.type ?? GaugeType.MAIN;
 
         const poolApyData = allPoolApyData.find(v => v.swapAddress === swapAddress);
         const apy = poolApyData?.apy ?? 0;
         const volume = poolApyData?.volume ?? 0;
 
-        return { swapAddress, tokenAddress, isMetaPool, gaugeAddress, gaugeType, apy, volume };
+        return { swapAddress, tokenAddress, isMetaPool, gaugeAddress, apy, volume };
       }),
     );
 
@@ -103,13 +100,12 @@ export class CurveOnChainRegistry {
 
         const gauge = gauges.find(v => v.swapAddress === swapAddress);
         const gaugeAddress = gauge?.gaugeAddress ?? ZERO_ADDRESS;
-        const gaugeType = gauge?.type ?? GaugeType.MAIN;
 
         const poolApyData = allPoolApyData.find(v => v.swapAddress === swapAddress);
         const apy = poolApyData?.apy ?? 0;
         const volume = poolApyData?.volume ?? 0;
 
-        return { swapAddress, tokenAddress, isMetaPool, gaugeAddress, gaugeType, apy, volume };
+        return { swapAddress, tokenAddress, isMetaPool, gaugeAddress, apy, volume };
       }),
     );
 
@@ -135,13 +131,12 @@ export class CurveOnChainRegistry {
 
         const gauge = gauges.find(v => v.swapAddress === swapAddress);
         const gaugeAddress = gauge?.gaugeAddress ?? ZERO_ADDRESS;
-        const gaugeType = gauge?.type ?? GaugeType.MAIN;
 
         const poolApyData = allPoolApyData.find(v => v.swapAddress === swapAddress);
         const apy = poolApyData?.apy ?? 0;
         const volume = poolApyData?.volume ?? 0;
 
-        return { swapAddress, tokenAddress, isMetaPool, gaugeAddress, gaugeType, apy, volume };
+        return { swapAddress, tokenAddress, isMetaPool, gaugeAddress, apy, volume };
       }),
     );
 

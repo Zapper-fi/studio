@@ -3,7 +3,7 @@ import axios, { Axios } from 'axios';
 
 import { Network } from '~types/network.interface';
 
-import { GaugeType, GetFactoryGaugesResponse, GetPoolApyDataResponse } from './curve.api.types';
+import { GetFactoryGaugesResponse, GetPoolApyDataResponse } from './curve.api.types';
 
 @Injectable()
 export class CurveApiClient {
@@ -19,7 +19,6 @@ export class CurveApiClient {
         .filter(([id]) => id.startsWith(network))
         .filter(([_, v]) => !v.is_killed)
         .map(([_, v]) => ({
-          type: GaugeType.MAIN,
           swapAddress: v.swap.toLowerCase(),
           gaugeAddress: v.gauge.toLowerCase(),
         })),

@@ -1,8 +1,3 @@
-export enum GaugeType {
-  MAIN = 'main',
-  FACTORY = 'factory',
-}
-
 export type GaugeData = {
   swap: string;
   swap_token: string;
