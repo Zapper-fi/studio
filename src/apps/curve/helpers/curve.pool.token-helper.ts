@@ -28,6 +28,7 @@ export type CurvePoolTokenDataProps = {
   gaugeType: GaugeType;
   swapAddress: string;
   liquidity: number;
+  apy: number;
   volume: number;
   fee: number;
 };
@@ -92,7 +93,6 @@ export class CurvePoolTokenHelper {
     appTokenDependencies = [],
     baseCurveTokens = [],
     resolvePoolDefinitions,
-    resolvePoolVolume,
     resolvePoolContract,
     resolvePoolTokenContract,
     resolvePoolCoinAddresses,
@@ -149,7 +149,8 @@ export class CurvePoolTokenHelper {
           multicall,
           supply,
         });
-        const volume = resolvePoolVolume ? await resolvePoolVolume({ definition, poolContract, tokens, price }) : 0;
+        const volume = definition.volume;
+        const apy = definition.apy;
 
         const pricePerShare = reserves.map(r => r / supply);
         const reservesUSD = tokens.map((t, i) => reserves[i] * t.price);
@@ -181,6 +182,7 @@ export class CurvePoolTokenHelper {
             swapAddress,
             liquidity,
             volume,
+            apy,
             fee,
           },
 
@@ -200,6 +202,10 @@ export class CurvePoolTokenHelper {
               {
                 label: 'Volume',
                 value: buildDollarDisplayItem(volume),
+              },
+              {
+                label: 'APY',
+                value: buildPercentageDisplayItem(apy),
               },
               {
                 label: 'Fee',

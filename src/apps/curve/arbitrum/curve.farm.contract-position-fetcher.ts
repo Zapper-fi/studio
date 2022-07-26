@@ -31,11 +31,13 @@ export class ArbitrumCurveFarmContractPositionFetcher implements PositionFetcher
   ) {}
 
   async getPositions() {
-    const poolTokens = await this.appToolkit.getAppTokenPositions<CurvePoolTokenDataProps>({
-      appId: CURVE_DEFINITION.id,
-      groupIds: [CURVE_DEFINITION.groups.pool.id],
-      network,
-    });
+    const gaugeAddresses = this.appToolkit
+      .getAppTokenPositions<CurvePoolTokenDataProps>({
+        appId: CURVE_DEFINITION.id,
+        groupIds: [CURVE_DEFINITION.groups.pool.id],
+        network,
+      })
+      .then(tokens => tokens.map(v => v.dataProps.gaugeAddress).filter(v => v !== ZERO_ADDRESS));
 
     return this.appToolkit.helpers.singleStakingFarmContractPositionHelper.getContractPositions<CurveChildLiquidityGauge>(
       {
@@ -43,8 +45,7 @@ export class ArbitrumCurveFarmContractPositionFetcher implements PositionFetcher
         appId,
         groupId,
         dependencies: [{ appId: CURVE_DEFINITION.id, groupIds: [CURVE_DEFINITION.groups.pool.id], network }],
-        resolveImplementation: () => 'child-liquidity-gauge',
-        resolveFarmAddresses: () => poolTokens.map(v => v.dataProps.gaugeAddress).filter(v => v !== ZERO_ADDRESS),
+        resolveFarmAddresses: () => gaugeAddresses,
         resolveFarmContract: ({ address, network }) =>
           this.curveContractFactory.curveChildLiquidityGauge({ address, network }),
         resolveStakedTokenAddress: ({ contract, multicall }) => multicall.wrap(contract).lp_token(),

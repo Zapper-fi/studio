@@ -70,9 +70,30 @@ export type FactoryGaugeData = {
 };
 
 export type GetFactoryGaugesResponse = {
-  success: true;
+  success: boolean;
   data: {
     gauges: FactoryGaugeData[];
+    generatedTimeMs: number;
+  };
+};
+
+export type PoolApyData = {
+  type: string;
+  address: string;
+  volumeUSD: number;
+  rawVolume: number;
+  latestDailyApy: number;
+  latestWeeklyApy: number;
+  virtualPrice: number;
+};
+
+export type GetPoolApyDataResponse = {
+  success: boolean;
+  data: {
+    poolList: PoolApyData[];
+    totalVolume: number;
+    cryptoVolume: number;
+    cryptoShare: number;
     generatedTimeMs: number;
   };
 };

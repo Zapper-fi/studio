@@ -36,7 +36,6 @@ export class ArbitrumCurvePoolTokenFetcher implements PositionFetcher<AppTokenPo
         appId,
         groupId,
         poolDefinitions: await this.curveOnChainRegistry.getStableSwapRegistryBasePoolDefinitions(network),
-        statsUrl: 'https://stats.curve.fi/raw-stats-arbitrum/apys.json',
       }),
     ]);
 
@@ -46,7 +45,6 @@ export class ArbitrumCurvePoolTokenFetcher implements PositionFetcher<AppTokenPo
         appId,
         groupId,
         poolDefinitions: await this.curveOnChainRegistry.getStableSwapRegistryMetaPoolDefinitions(network),
-        statsUrl: 'https://stats.curve.fi/raw-stats-arbitrum/apys.json',
         baseCurveTokens: stableBasePools,
       }),
       this.curveCryptoPoolTokenHelper.getTokens({
@@ -54,7 +52,6 @@ export class ArbitrumCurvePoolTokenFetcher implements PositionFetcher<AppTokenPo
         appId,
         groupId,
         poolDefinitions: await this.curveOnChainRegistry.getCryptoSwapRegistryPoolDefinitions(network),
-        statsUrl: 'https://stats.curve.fi/raw-stats-arbitrum/apys.json',
         baseCurveTokens: stableBasePools,
       }),
       this.curveFactoryPoolTokenHelper.getTokens({

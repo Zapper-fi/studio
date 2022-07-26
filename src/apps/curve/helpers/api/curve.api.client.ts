@@ -3,7 +3,7 @@ import axios, { Axios } from 'axios';
 
 import { Network } from '~types/network.interface';
 
-import { GaugeType, GetFactoryGaugesResponse } from './curve.api.types';
+import { GaugeType, GetFactoryGaugesResponse, GetPoolApyDataResponse } from './curve.api.types';
 
 @Injectable()
 export class CurveApiClient {
@@ -23,6 +23,16 @@ export class CurveApiClient {
           swapAddress: v.swap.toLowerCase(),
           gaugeAddress: v.gauge.toLowerCase(),
         })),
+    );
+  }
+
+  async getPoolApyData(network: Network) {
+    return this.axiosInstance.get<GetPoolApyDataResponse>(`/getSubgraphData/${network}`).then(res =>
+      res.data.data.poolList.map(v => ({
+        swapAddress: v.address.toLowerCase(),
+        apy: v.latestDailyApy,
+        volume: v.volumeUSD,
+      })),
     );
   }
 }

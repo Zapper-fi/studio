@@ -17,9 +17,11 @@ const ADDRESS_RESOVLER_ADDRESS = '0x0000000022d53366457f9d5e68ec105046fc4383';
 export type CurvePoolDefinition = {
   swapAddress: string;
   tokenAddress: string;
+  isMetaPool: boolean;
   gaugeAddress: string;
   gaugeType: GaugeType;
-  isMetaPool: boolean;
+  volume: number;
+  apy: number;
 };
 
 @Injectable()
@@ -47,7 +49,8 @@ export class CurveOnChainRegistry {
 
   private async getStableSwapRegistryDefinitions(network: Network) {
     const multicall = this.appToolkit.getMulticall(network);
-    const gauges = await this.getGauges(network);
+    const allGauges = await this.getGauges(network);
+    const allPoolApyData = await this.getPoolApyData(network);
 
     const resolver = this.curveContractFactory.curveAddressResolver({ address: ADDRESS_RESOVLER_ADDRESS, network });
     const mainRegistryInfo = await resolver.get_id_info(0);
@@ -59,11 +62,17 @@ export class CurveOnChainRegistry {
       range(0, Number(poolCount)).map(async i => {
         const swapAddress = await multicall.wrap(registry).pool_list(i).then(toLower);
         const tokenAddress = await multicall.wrap(registry).get_lp_token(swapAddress).then(toLower);
-        const gauge = gauges.find(v => v.swapAddress === swapAddress);
+        const isMetaPool = await multicall.wrap(registry).is_meta(swapAddress);
+
+        const gauge = allGauges.find(v => v.swapAddress === swapAddress);
         const gaugeAddress = gauge?.gaugeAddress ?? ZERO_ADDRESS;
         const gaugeType = gauge?.type ?? GaugeType.MAIN;
-        const isMetaPool = await multicall.wrap(registry).is_meta(swapAddress);
-        return { swapAddress, tokenAddress, gaugeAddress, gaugeType, isMetaPool };
+
+        const poolApyData = allPoolApyData.find(v => v.swapAddress === swapAddress);
+        const apy = poolApyData?.apy ?? 0;
+        const volume = poolApyData?.volume ?? 0;
+
+        return { swapAddress, tokenAddress, isMetaPool, gaugeAddress, gaugeType, apy, volume };
       }),
     );
 
@@ -73,6 +82,7 @@ export class CurveOnChainRegistry {
   private async getCryptoSwapRegistryDefinitions(network: Network) {
     const multicall = this.appToolkit.getMulticall(network);
     const gauges = await this.getGauges(network);
+    const allPoolApyData = await this.getPoolApyData(network);
 
     const resolver = this.curveContractFactory.curveAddressResolver({ address: ADDRESS_RESOVLER_ADDRESS, network });
     const cryptoRegistryInfo = await resolver.get_id_info(5);
@@ -84,10 +94,17 @@ export class CurveOnChainRegistry {
       range(0, Number(poolCount)).map(async i => {
         const swapAddress = await multicall.wrap(registry).pool_list(i).then(toLower);
         const tokenAddress = await multicall.wrap(registry).get_lp_token(swapAddress).then(toLower);
+        const isMetaPool = false;
+
         const gauge = gauges.find(v => v.swapAddress === swapAddress);
         const gaugeAddress = gauge?.gaugeAddress ?? ZERO_ADDRESS;
         const gaugeType = gauge?.type ?? GaugeType.MAIN;
-        return { swapAddress, tokenAddress, gaugeAddress, gaugeType, isMetaPool: false };
+
+        const poolApyData = allPoolApyData.find(v => v.swapAddress === swapAddress);
+        const apy = poolApyData?.apy ?? 0;
+        const volume = poolApyData?.volume ?? 0;
+
+        return { swapAddress, tokenAddress, isMetaPool, gaugeAddress, gaugeType, apy, volume };
       }),
     );
 
@@ -96,10 +113,19 @@ export class CurveOnChainRegistry {
 
   @Cache({
     instance: 'business',
-    key: (network: Network) => `studio:${CURVE_DEFINITION.id}:${network}:gauges:2`,
+    key: (network: Network) => `studio:${CURVE_DEFINITION.id}:${network}:gauge-data`,
     ttl: moment.duration(15, 'minutes').asSeconds(),
   })
   private async getGauges(network: Network) {
     return this.curveApiClient.getGauges(network);
+  }
+
+  @Cache({
+    instance: 'business',
+    key: (network: Network) => `studio:${CURVE_DEFINITION.id}:${network}:pool-apy-data-2`,
+    ttl: moment.duration(15, 'minutes').asSeconds(),
+  })
+  private async getPoolApyData(network: Network) {
+    return this.curveApiClient.getPoolApyData(network);
   }
 }

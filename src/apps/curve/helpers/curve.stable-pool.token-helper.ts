@@ -5,20 +5,19 @@ import { AppGroupsDefinition } from '~position/position.service';
 import { Network } from '~types/network.interface';
 
 import { CurveContractFactory, CurveV1Pool, CurveV1PoolLegacy } from '../contracts';
-import { CurvePoolDefinition } from '../curve.types';
 
 import { CurveApiVolumeStrategy } from './curve.api.volume-strategy';
 import { CurveOnChainCoinStrategy } from './curve.on-chain.coin-strategy';
 import { CurveOnChainReserveStrategy } from './curve.on-chain.reserve-strategy';
 import { CurvePoolTokenHelper } from './curve.pool.token-helper';
 import { CurveVirtualPriceStrategy } from './curve.virtual.price-strategy';
+import { CurvePoolDefinition } from './registry/curve.on-chain.registry';
 
 type CurveStablePoolTokenHelperParams = {
   poolDefinitions: CurvePoolDefinition[];
   network: Network;
   appId: string;
   groupId: string;
-  statsUrl?: string;
   appTokenDependencies?: AppGroupsDefinition[];
   baseCurveTokens?: AppTokenPosition[];
 };
@@ -45,7 +44,6 @@ export class CurveStablePoolTokenHelper {
     appId,
     groupId,
     poolDefinitions,
-    statsUrl = '',
     appTokenDependencies = [],
     baseCurveTokens = [],
   }: CurveStablePoolTokenHelperParams) {
@@ -64,7 +62,6 @@ export class CurveStablePoolTokenHelper {
         this.curveContractFactory.erc20({ network, address: definition.tokenAddress }),
       resolvePoolCoinAddresses: this.curveOnChainCoinStrategy.build(),
       resolvePoolReserves: this.curveOnChainReserveStrategy.build(),
-      resolvePoolVolume: this.curveApiVolumeStrategy.build({ statsUrl }),
       resolvePoolFee: ({ multicall, poolContract }) => multicall.wrap(poolContract).fee(),
       resolvePoolTokenSymbol: ({ multicall, poolTokenContract }) => multicall.wrap(poolTokenContract).symbol(),
       resolvePoolTokenSupply: ({ multicall, poolTokenContract }) => multicall.wrap(poolTokenContract).totalSupply(),
