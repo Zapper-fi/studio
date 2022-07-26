@@ -9,8 +9,7 @@ import { CURVE_DEFINITION } from '../curve.definition';
 import { CurveCryptoPoolTokenHelper } from '../helpers/curve.crypto-pool.token-helper';
 import { CurveFactoryPoolTokenHelper } from '../helpers/curve.factory-pool.token-helper';
 import { CurveStablePoolTokenHelper } from '../helpers/curve.stable-pool.token-helper';
-
-import { CURVE_STABLE_POOL_DEFINITIONS, CURVE_CRYPTO_POOL_DEFINITIONS } from './curve.pool.definitions';
+import { CurveOnChainRegistry } from '../helpers/registry/curve.on-chain.registry';
 
 const appId = CURVE_DEFINITION.id;
 const groupId = CURVE_DEFINITION.groups.pool.id;
@@ -25,6 +24,8 @@ export class ArbitrumCurvePoolTokenFetcher implements PositionFetcher<AppTokenPo
     private readonly curveCryptoPoolTokenHelper: CurveCryptoPoolTokenHelper,
     @Inject(CurveFactoryPoolTokenHelper)
     private readonly curveFactoryPoolTokenHelper: CurveFactoryPoolTokenHelper,
+    @Inject(CurveOnChainRegistry)
+    private readonly curveOnChainRegistry: CurveOnChainRegistry,
   ) {}
 
   async getPositions() {
@@ -33,7 +34,7 @@ export class ArbitrumCurvePoolTokenFetcher implements PositionFetcher<AppTokenPo
         network,
         appId,
         groupId,
-        poolDefinitions: CURVE_STABLE_POOL_DEFINITIONS,
+        poolDefinitions: await this.curveOnChainRegistry.getStableSwapRegistryBasePoolDefinitions(network),
         statsUrl: 'https://stats.curve.fi/raw-stats-arbitrum/apys.json',
       }),
     ]);
@@ -43,7 +44,7 @@ export class ArbitrumCurvePoolTokenFetcher implements PositionFetcher<AppTokenPo
         network,
         appId,
         groupId,
-        poolDefinitions: CURVE_CRYPTO_POOL_DEFINITIONS,
+        poolDefinitions: await this.curveOnChainRegistry.getCryptoSwapRegistryMetaPoolDefinitions(network),
         statsUrl: 'https://stats.curve.fi/raw-stats-arbitrum/apys.json',
         baseCurveTokens: v1Pools,
       }),

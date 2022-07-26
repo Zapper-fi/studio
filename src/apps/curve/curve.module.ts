@@ -2,27 +2,9 @@ import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
 
 import { ArbitrumCurveBalanceFetcher } from './arbitrum/curve.balance-fetcher';
-import { ArbitrumCurveFarmContractPositionFetcher } from './arbitrum/curve.farm.contract-position-fetcher';
 import { ArbitrumCurvePoolTokenFetcher } from './arbitrum/curve.pool.token-fetcher';
-import { AvalancheCurveBalanceFetcher } from './avalanche/curve.balance-fetcher';
-import { AvalancheCurveFarmContractPositionFetcher } from './avalanche/curve.farm.contract-position-fetcher';
-import { AvalancheCurvePoolTokenFetcher } from './avalanche/curve.pool.token-fetcher';
 import { CurveContractFactory } from './contracts';
 import { CurveAppDefinition, CURVE_DEFINITION } from './curve.definition';
-import { EthereumCurveBalanceFetcher } from './ethereum/curve.balance-fetcher';
-import { EthereumCurveFarmContractPositionFetcher } from './ethereum/curve.farm.contract-position-fetcher';
-import { EthereumCurvePoolTokenFetcher } from './ethereum/curve.pool.token-fetcher';
-import { EthereumCurveVestingEscrowContractPositionFetcher } from './ethereum/curve.vesting-escrow.contract-position-fetcher';
-import { EthereumCurveVotingEscrowContractPositionFetcher } from './ethereum/curve.voting-escrow.contract-position-fetcher';
-import { FantomCurveBalanceFetcher } from './fantom/curve.balance-fetcher';
-import { FantomCurveFarmContractPositionFetcher } from './fantom/curve.farm.contract-position-fetcher';
-import { FantomCurvePoolTokenFetcher } from './fantom/curve.pool.token-fetcher';
-import { GnosisCurveBalanceFetcher } from './gnosis/curve.balance-fetcher';
-import { GnosisCurveFarmContractPositionFetcher } from './gnosis/curve.farm.contract-position-fetcher';
-import { GnosisCurvePoolTokenFetcher } from './gnosis/curve.pool.token-fetcher';
-import { HarmonyCurveBalanceFetcher } from './harmony/curve.balance-fetcher';
-import { HarmonyCurveFarmContractPositionFetcher } from './harmony/curve.farm.contract-position-fetcher';
-import { HarmonyCurvePoolTokenFetcher } from './harmony/curve.pool.token-fetcher';
 import { CurveApiVolumeStrategy } from './helpers/curve.api.volume-strategy';
 import { CurveChildLiquidityGaugeFactoryAddressHelper } from './helpers/curve.child-liquidity-gauge-factory.address-helper';
 import { CurveChildLiquidityGaugeRewardTokenStrategy } from './helpers/curve.child-liquidity-gauge.reward-token-strategy';
@@ -49,12 +31,7 @@ import { CurveVestingEscrowContractPositionHelper } from './helpers/curve.vestin
 import { CurveVirtualPriceStrategy } from './helpers/curve.virtual.price-strategy';
 import { CurveVotingEscrowContractPositionBalanceHelper } from './helpers/curve.voting-escrow.contract-position-balance-helper';
 import { CurveVotingEscrowContractPositionHelper } from './helpers/curve.voting-escrow.contract-position-helper';
-import { OptimismCurveBalanceFetcher } from './optimism/curve.balance-fetcher';
-import { OptimismCurveFarmContractPositionFetcher } from './optimism/curve.farm.contract-position-fetcher';
-import { OptimismCurvePoolTokenFetcher } from './optimism/curve.pool.token-fetcher';
-import { PolygonCurveBalanceFetcher } from './polygon/curve.balance-fetcher';
-import { PolygonCurveFarmContractPositionFetcher } from './polygon/curve.farm.contract-position-fetcher';
-import { PolygonCurvePoolTokenFetcher } from './polygon/curve.pool.token-fetcher';
+import { CurveOnChainRegistry } from './helpers/registry/curve.on-chain.registry';
 
 @Register.AppModule({
   appId: CURVE_DEFINITION.id,
@@ -64,38 +41,39 @@ import { PolygonCurvePoolTokenFetcher } from './polygon/curve.pool.token-fetcher
     // Arbitrum
     ArbitrumCurveBalanceFetcher,
     ArbitrumCurvePoolTokenFetcher,
-    ArbitrumCurveFarmContractPositionFetcher,
-    // Avalanche
-    AvalancheCurveBalanceFetcher,
-    AvalancheCurvePoolTokenFetcher,
-    AvalancheCurveFarmContractPositionFetcher,
-    // Ethereum
-    EthereumCurveBalanceFetcher,
-    EthereumCurvePoolTokenFetcher,
-    EthereumCurveFarmContractPositionFetcher,
-    EthereumCurveVotingEscrowContractPositionFetcher,
-    EthereumCurveVestingEscrowContractPositionFetcher,
-    // Fantom
-    FantomCurveBalanceFetcher,
-    FantomCurvePoolTokenFetcher,
-    FantomCurveFarmContractPositionFetcher,
-    // Gnosis
-    GnosisCurveBalanceFetcher,
-    GnosisCurvePoolTokenFetcher,
-    GnosisCurveFarmContractPositionFetcher,
-    // Harmony
-    HarmonyCurveBalanceFetcher,
-    HarmonyCurvePoolTokenFetcher,
-    HarmonyCurveFarmContractPositionFetcher,
-    // Optimism
-    OptimismCurveBalanceFetcher,
-    OptimismCurvePoolTokenFetcher,
-    OptimismCurveFarmContractPositionFetcher,
-    // Polygon
-    PolygonCurveBalanceFetcher,
-    PolygonCurvePoolTokenFetcher,
-    PolygonCurveFarmContractPositionFetcher,
+    // ArbitrumCurveFarmContractPositionFetcher,
+    // // Avalanche
+    // AvalancheCurveBalanceFetcher,
+    // AvalancheCurvePoolTokenFetcher,
+    // AvalancheCurveFarmContractPositionFetcher,
+    // // Ethereum
+    // EthereumCurveBalanceFetcher,
+    // EthereumCurvePoolTokenFetcher,
+    // EthereumCurveFarmContractPositionFetcher,
+    // EthereumCurveVotingEscrowContractPositionFetcher,
+    // EthereumCurveVestingEscrowContractPositionFetcher,
+    // // Fantom
+    // FantomCurveBalanceFetcher,
+    // FantomCurvePoolTokenFetcher,
+    // FantomCurveFarmContractPositionFetcher,
+    // // Gnosis
+    // GnosisCurveBalanceFetcher,
+    // GnosisCurvePoolTokenFetcher,
+    // GnosisCurveFarmContractPositionFetcher,
+    // // Harmony
+    // HarmonyCurveBalanceFetcher,
+    // HarmonyCurvePoolTokenFetcher,
+    // HarmonyCurveFarmContractPositionFetcher,
+    // // Optimism
+    // OptimismCurveBalanceFetcher,
+    // OptimismCurvePoolTokenFetcher,
+    // OptimismCurveFarmContractPositionFetcher,
+    // // Polygon
+    // PolygonCurveBalanceFetcher,
+    // PolygonCurvePoolTokenFetcher,
+    // PolygonCurveFarmContractPositionFetcher,
     // Token Helpers
+    CurveOnChainRegistry,
     CurvePoolTokenHelper,
     CurveStablePoolTokenHelper,
     CurveCryptoPoolTokenHelper,
