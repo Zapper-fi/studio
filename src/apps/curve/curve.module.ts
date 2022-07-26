@@ -1,11 +1,11 @@
 import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
 
-import { AvalancheCurveBalanceFetcher } from './avalanche/curve.balance-fetcher';
-import { AvalancheCurveFarmContractPositionFetcher } from './avalanche/curve.farm.contract-position-fetcher';
-import { AvalancheCurvePoolTokenFetcher } from './avalanche/curve.pool.token-fetcher';
 import { CurveContractFactory } from './contracts';
 import { CurveAppDefinition, CURVE_DEFINITION } from './curve.definition';
+import { FantomCurveBalanceFetcher } from './fantom/curve.balance-fetcher';
+import { FantomCurveFarmContractPositionFetcher } from './fantom/curve.farm.contract-position-fetcher';
+import { FantomCurvePoolTokenFetcher } from './fantom/curve.pool.token-fetcher';
 import { CurveApiClient } from './helpers/api/curve.api.client';
 import { CurveApiVolumeStrategy } from './helpers/curve.api.volume-strategy';
 import { CurveChildLiquidityGaugeFactoryAddressHelper } from './helpers/curve.child-liquidity-gauge-factory.address-helper';
@@ -45,9 +45,9 @@ import { CurveOnChainRegistry } from './helpers/registry/curve.on-chain.registry
     // ArbitrumCurvePoolTokenFetcher,
     // ArbitrumCurveFarmContractPositionFetcher,
     // // Avalanche
-    AvalancheCurveBalanceFetcher,
-    AvalancheCurvePoolTokenFetcher,
-    AvalancheCurveFarmContractPositionFetcher,
+    // AvalancheCurveBalanceFetcher,
+    // AvalancheCurvePoolTokenFetcher,
+    // AvalancheCurveFarmContractPositionFetcher,
     // // Ethereum
     // EthereumCurveBalanceFetcher,
     // EthereumCurvePoolTokenFetcher,
@@ -55,9 +55,9 @@ import { CurveOnChainRegistry } from './helpers/registry/curve.on-chain.registry
     // EthereumCurveVotingEscrowContractPositionFetcher,
     // EthereumCurveVestingEscrowContractPositionFetcher,
     // // Fantom
-    // FantomCurveBalanceFetcher,
-    // FantomCurvePoolTokenFetcher,
-    // FantomCurveFarmContractPositionFetcher,
+    FantomCurveBalanceFetcher,
+    FantomCurvePoolTokenFetcher,
+    FantomCurveFarmContractPositionFetcher,
     // // Gnosis
     // GnosisCurveBalanceFetcher,
     // GnosisCurvePoolTokenFetcher,
