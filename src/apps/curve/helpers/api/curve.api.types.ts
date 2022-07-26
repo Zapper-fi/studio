@@ -82,8 +82,8 @@ export type PoolApyData = {
   address: string;
   volumeUSD: number;
   rawVolume: number;
-  latestDailyApy: number;
-  latestWeeklyApy: number;
+  latestDailyApy: number | string;
+  latestWeeklyApy: number | string;
   virtualPrice: number;
 };
 

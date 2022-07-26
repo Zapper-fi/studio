@@ -45,24 +45,21 @@
     "outputs": [{ "type": "address", "name": "" }],
     "inputs": [],
     "stateMutability": "view",
-    "type": "function",
-    "gas": 1061
+    "type": "function"
   },
   {
     "name": "max_id",
     "outputs": [{ "type": "uint256", "name": "" }],
     "inputs": [],
     "stateMutability": "view",
-    "type": "function",
-    "gas": 1258
+    "type": "function"
   },
   {
     "name": "get_address",
     "outputs": [{ "type": "address", "name": "" }],
     "inputs": [{ "type": "uint256", "name": "_id" }],
     "stateMutability": "view",
-    "type": "function",
-    "gas": 1308
+    "type": "function"
   },
   {
     "name": "add_new_id",
@@ -72,8 +69,7 @@
       { "type": "string", "name": "_description" }
     ],
     "stateMutability": "nonpayable",
-    "type": "function",
-    "gas": 291275
+    "type": "function"
   },
   {
     "name": "set_address",
@@ -83,64 +79,56 @@
       { "type": "address", "name": "_address" }
     ],
     "stateMutability": "nonpayable",
-    "type": "function",
-    "gas": 182430
+    "type": "function"
   },
   {
     "name": "unset_address",
     "outputs": [{ "type": "bool", "name": "" }],
     "inputs": [{ "type": "uint256", "name": "_id" }],
     "stateMutability": "nonpayable",
-    "type": "function",
-    "gas": 101348
+    "type": "function"
   },
   {
     "name": "commit_transfer_ownership",
     "outputs": [{ "type": "bool", "name": "" }],
     "inputs": [{ "type": "address", "name": "_new_admin" }],
     "stateMutability": "nonpayable",
-    "type": "function",
-    "gas": 74048
+    "type": "function"
   },
   {
     "name": "apply_transfer_ownership",
     "outputs": [{ "type": "bool", "name": "" }],
     "inputs": [],
     "stateMutability": "nonpayable",
-    "type": "function",
-    "gas": 60125
+    "type": "function"
   },
   {
     "name": "revert_transfer_ownership",
     "outputs": [{ "type": "bool", "name": "" }],
     "inputs": [],
     "stateMutability": "nonpayable",
-    "type": "function",
-    "gas": 21400
+    "type": "function"
   },
   {
     "name": "admin",
     "outputs": [{ "type": "address", "name": "" }],
     "inputs": [],
     "stateMutability": "view",
-    "type": "function",
-    "gas": 1331
+    "type": "function"
   },
   {
     "name": "transfer_ownership_deadline",
     "outputs": [{ "type": "uint256", "name": "" }],
     "inputs": [],
     "stateMutability": "view",
-    "type": "function",
-    "gas": 1361
+    "type": "function"
   },
   {
     "name": "future_admin",
     "outputs": [{ "type": "address", "name": "" }],
     "inputs": [],
     "stateMutability": "view",
-    "type": "function",
-    "gas": 1391
+    "type": "function"
   },
   {
     "name": "get_id_info",
@@ -153,7 +141,6 @@
     ],
     "inputs": [{ "type": "uint256", "name": "arg0" }],
     "stateMutability": "view",
-    "type": "function",
-    "gas": 12168
+    "type": "function"
   }
 ]

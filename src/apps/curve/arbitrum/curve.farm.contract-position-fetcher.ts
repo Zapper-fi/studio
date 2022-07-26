@@ -25,9 +25,9 @@ export class ArbitrumCurveFarmContractPositionFetcher implements PositionFetcher
     @Inject(CurveContractFactory)
     private readonly curveContractFactory: CurveContractFactory,
     @Inject(CurveChildLiquidityGaugeRoiStrategy)
-    private readonly childGaugeRoiStrategy: CurveChildLiquidityGaugeRoiStrategy,
+    private readonly childLiquidityGaugeRoiStrategy: CurveChildLiquidityGaugeRoiStrategy,
     @Inject(CurveChildLiquidityGaugeRewardTokenStrategy)
-    private readonly childGaugeRewardTokenStrategy: CurveChildLiquidityGaugeRewardTokenStrategy,
+    private readonly childLiquidityGaugeRewardTokenStrategy: CurveChildLiquidityGaugeRewardTokenStrategy,
   ) {}
 
   async getPositions() {
@@ -49,11 +49,11 @@ export class ArbitrumCurveFarmContractPositionFetcher implements PositionFetcher
         resolveFarmContract: ({ address, network }) =>
           this.curveContractFactory.curveChildLiquidityGauge({ address, network }),
         resolveStakedTokenAddress: ({ contract, multicall }) => multicall.wrap(contract).lp_token(),
-        resolveRewardTokenAddresses: this.childGaugeRewardTokenStrategy.build({
+        resolveRewardTokenAddresses: this.childLiquidityGaugeRewardTokenStrategy.build({
           crvTokenAddress: '0x11cdb42b0eb46d95f990bedd4695a6e3fa034978',
         }),
+        resolveRois: this.childLiquidityGaugeRoiStrategy.build(),
         resolveIsActive: () => true,
-        resolveRois: this.childGaugeRoiStrategy.build(),
       },
     );
   }

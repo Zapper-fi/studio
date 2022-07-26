@@ -102,7 +102,6 @@ const _abi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: 1061,
   },
   {
     name: 'max_id',
@@ -115,7 +114,6 @@ const _abi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: 1258,
   },
   {
     name: 'get_address',
@@ -133,7 +131,6 @@ const _abi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    gas: 1308,
   },
   {
     name: 'add_new_id',
@@ -155,7 +152,6 @@ const _abi = [
     ],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: 291275,
   },
   {
     name: 'set_address',
@@ -177,7 +173,6 @@ const _abi = [
     ],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: 182430,
   },
   {
     name: 'unset_address',
@@ -195,7 +190,6 @@ const _abi = [
     ],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: 101348,
   },
   {
     name: 'commit_transfer_ownership',
@@ -213,7 +207,6 @@ const _abi = [
     ],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: 74048,
   },
   {
     name: 'apply_transfer_ownership',
@@ -226,7 +219,6 @@ const _abi = [
     inputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: 60125,
   },
   {
     name: 'revert_transfer_ownership',
@@ -239,7 +231,6 @@ const _abi = [
     inputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
-    gas: 21400,
   },
   {
     name: 'admin',
@@ -252,7 +243,6 @@ const _abi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: 1331,
   },
   {
     name: 'transfer_ownership_deadline',
@@ -265,7 +255,6 @@ const _abi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: 1361,
   },
   {
     name: 'future_admin',
@@ -278,7 +267,6 @@ const _abi = [
     inputs: [],
     stateMutability: 'view',
     type: 'function',
-    gas: 1391,
   },
   {
     name: 'get_id_info',
@@ -312,7 +300,6 @@ const _abi = [
     ],
     stateMutability: 'view',
     type: 'function',
-    gas: 12168,
   },
 ];
 

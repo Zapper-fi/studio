@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { BigNumber, BigNumberish } from 'ethers';
-import { compact, uniq } from 'lodash';
+import { compact } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ETH_ADDR_ALIAS, ZERO_ADDRESS } from '~app-toolkit/constants/address';
@@ -13,19 +13,16 @@ import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/pres
 import { Erc20 } from '~contract/contracts';
 import { IMulticallWrapper } from '~multicall/multicall.interface';
 import { ContractType } from '~position/contract.interface';
-import { AppTokenPosition, isAppToken, Token } from '~position/position.interface';
+import { AppTokenPosition, Token } from '~position/position.interface';
 import { AppGroupsDefinition } from '~position/position.service';
 import { Network } from '~types/network.interface';
 
 import { CurveToken } from '../contracts';
-import { CURVE_DEFINITION } from '../curve.definition';
 
-import { GaugeType } from './api/curve.api.types';
 import { CurvePoolDefinition } from './registry/curve.on-chain.registry';
 
 export type CurvePoolTokenDataProps = {
   gaugeAddress: string;
-  gaugeType: GaugeType;
   swapAddress: string;
   liquidity: number;
   apy: number;
@@ -68,23 +65,6 @@ type CurvePoolTokenHelperParams<T = CurveToken, V = Erc20> = {
 export class CurvePoolTokenHelper {
   constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
-  private async resolvePoolLabel(tokens: Token[]) {
-    // Determine source app prefix from underlying tokens (Aave V2, Yearn, etc.)
-    const appTokens = tokens.filter(isAppToken);
-    const appSourcesAll = appTokens.map(v => v.appId);
-    const appSources = uniq(appSourcesAll).filter(v => v !== CURVE_DEFINITION.id);
-
-    const hasSingleAppSource = appTokens.length === tokens.length && appSources.length === 1;
-    const appSource = hasSingleAppSource ? await this.appToolkit.getApp(appSources[0]) : null;
-    const appSourcePrefix = appSource?.name.replace(/V\d$/, '').trim();
-
-    // Determine the pool label from the underlying labels
-    const labels = tokens.map(v => getLabelFromToken(v));
-    const poolLabel = labels.join(' / ');
-
-    return compact([appSourcePrefix, poolLabel]).join(' ');
-  }
-
   async getTokens<T = CurveToken, V = Erc20>({
     network,
     appId,
@@ -110,7 +90,7 @@ export class CurvePoolTokenHelper {
 
     const curvePoolTokens = await Promise.all(
       poolDefinitions.map(async definition => {
-        const { gaugeAddress, gaugeType, tokenAddress, swapAddress } = definition;
+        const { gaugeAddress, tokenAddress, swapAddress } = definition;
         const poolContract = resolvePoolContract({ network, definition });
         const poolTokenContract = resolvePoolTokenContract({ network, definition });
         const rawTokenAddresses = await resolvePoolCoinAddresses({ multicall, poolContract });
@@ -159,7 +139,7 @@ export class CurvePoolTokenHelper {
         const ratio = reservePercentages.map(p => `${Math.floor(p * 100)}%`).join(' / ');
 
         // Display Properties
-        const label = await this.resolvePoolLabel(tokens);
+        const label = tokens.map(v => getLabelFromToken(v)).join(' / ');
         const secondaryLabel = ratio;
         const images = underlyingTokens.map(t => getImagesFromToken(t)).flat();
 
@@ -178,7 +158,6 @@ export class CurvePoolTokenHelper {
 
           dataProps: {
             gaugeAddress,
-            gaugeType,
             swapAddress,
             liquidity,
             volume,

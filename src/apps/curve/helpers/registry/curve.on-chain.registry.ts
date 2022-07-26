@@ -12,7 +12,7 @@ import { Network } from '~types/network.interface';
 import { CurveApiClient } from '../api/curve.api.client';
 import { GaugeType } from '../api/curve.api.types';
 
-const ADDRESS_RESOVLER_ADDRESS = '0x0000000022d53366457f9d5e68ec105046fc4383';
+const ADDRESS_RESOLVER_ADDRESS = '0x0000000022d53366457f9d5e68ec105046fc4383';
 
 export type CurvePoolDefinition = {
   swapAddress: string;
@@ -52,7 +52,7 @@ export class CurveOnChainRegistry {
     const allGauges = await this.getGauges(network);
     const allPoolApyData = await this.getPoolApyData(network);
 
-    const resolver = this.curveContractFactory.curveAddressResolver({ address: ADDRESS_RESOVLER_ADDRESS, network });
+    const resolver = this.curveContractFactory.curveAddressResolver({ address: ADDRESS_RESOLVER_ADDRESS, network });
     const mainRegistryInfo = await resolver.get_id_info(0);
 
     const registry = this.curveContractFactory.curveStableRegistry({ address: mainRegistryInfo.addr, network });
@@ -84,7 +84,7 @@ export class CurveOnChainRegistry {
     const gauges = await this.getGauges(network);
     const allPoolApyData = await this.getPoolApyData(network);
 
-    const resolver = this.curveContractFactory.curveAddressResolver({ address: ADDRESS_RESOVLER_ADDRESS, network });
+    const resolver = this.curveContractFactory.curveAddressResolver({ address: ADDRESS_RESOLVER_ADDRESS, network });
     const cryptoRegistryInfo = await resolver.get_id_info(5);
 
     const registry = this.curveContractFactory.curveCryptoRegistry({ address: cryptoRegistryInfo.addr, network });
@@ -122,7 +122,7 @@ export class CurveOnChainRegistry {
 
   @Cache({
     instance: 'business',
-    key: (network: Network) => `studio:${CURVE_DEFINITION.id}:${network}:pool-apy-data-2`,
+    key: (network: Network) => `studio:${CURVE_DEFINITION.id}:${network}:pool-apy-data:2`,
     ttl: moment.duration(15, 'minutes').asSeconds(),
   })
   private async getPoolApyData(network: Network) {

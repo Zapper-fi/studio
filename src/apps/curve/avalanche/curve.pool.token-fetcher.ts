@@ -1,7 +1,8 @@
 import { Inject } from '@nestjs/common';
+import _ from 'lodash';
 
 import { Register } from '~app-toolkit/decorators';
-import { AAVE_V2_DEFINITION } from '~apps/aave-v2';
+import { AAVE_V2_DEFINITION } from '~apps/aave-v2/aave-v2.definition';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
@@ -10,8 +11,7 @@ import { CURVE_DEFINITION } from '../curve.definition';
 import { CurveCryptoPoolTokenHelper } from '../helpers/curve.crypto-pool.token-helper';
 import { CurveFactoryPoolTokenHelper } from '../helpers/curve.factory-pool.token-helper';
 import { CurveStablePoolTokenHelper } from '../helpers/curve.stable-pool.token-helper';
-
-import { CURVE_STABLE_POOL_DEFINITIONS, CURVE_CRYPTO_POOL_DEFINITIONS } from './curve.pool.definitions';
+import { CurveOnChainRegistry } from '../helpers/registry/curve.on-chain.registry';
 
 const appId = CURVE_DEFINITION.id;
 const groupId = CURVE_DEFINITION.groups.pool.id;
@@ -26,44 +26,54 @@ export class AvalancheCurvePoolTokenFetcher implements PositionFetcher<AppTokenP
     private readonly curveCryptoPoolTokenHelper: CurveCryptoPoolTokenHelper,
     @Inject(CurveFactoryPoolTokenHelper)
     private readonly curveFactoryPoolTokenHelper: CurveFactoryPoolTokenHelper,
+    @Inject(CurveOnChainRegistry)
+    private readonly curveOnChainRegistry: CurveOnChainRegistry,
   ) {}
 
   async getPositions() {
-    const [v1Pools] = await Promise.all([
+    const [stableBasePools] = await Promise.all([
       this.curveStablePoolTokenHelper.getTokens({
         network,
         appId,
         groupId,
-        poolDefinitions: CURVE_STABLE_POOL_DEFINITIONS,
-        statsUrl: 'https://stats.curve.fi/raw-stats-avalanche/apys.json',
         appTokenDependencies: [
           { appId: AAVE_V2_DEFINITION.id, groupIds: [AAVE_V2_DEFINITION.groups.supply.id], network },
         ],
+        poolDefinitions: await this.curveOnChainRegistry.getStableSwapRegistryBasePoolDefinitions(network),
       }),
     ]);
 
-    const [cryptoPools, factoryPools] = await Promise.all([
+    const [stableMetaPools, cryptoPools, factoryPools] = await Promise.all([
+      this.curveStablePoolTokenHelper.getTokens({
+        network,
+        appId,
+        groupId,
+        poolDefinitions: await this.curveOnChainRegistry.getStableSwapRegistryMetaPoolDefinitions(network),
+        baseCurveTokens: stableBasePools,
+      }),
       this.curveCryptoPoolTokenHelper.getTokens({
         network,
         appId,
         groupId,
-        poolDefinitions: CURVE_CRYPTO_POOL_DEFINITIONS,
-        baseCurveTokens: v1Pools,
-        statsUrl: 'https://stats.curve.fi/raw-stats-avalanche/apys.json',
         appTokenDependencies: [
           { appId: AAVE_V2_DEFINITION.id, groupIds: [AAVE_V2_DEFINITION.groups.supply.id], network },
         ],
+        poolDefinitions: await this.curveOnChainRegistry.getCryptoSwapRegistryPoolDefinitions(network),
+        baseCurveTokens: stableBasePools,
       }),
       this.curveFactoryPoolTokenHelper.getTokens({
         factoryAddress: '0xb17b674d9c5cb2e441f8e196a2f048a81355d031',
         network,
         appId,
         groupId,
-        baseCurveTokens: v1Pools,
-        skipVolume: true, // BlockService is only supported on ETHEREUM_MAINNET.
+        baseCurveTokens: stableBasePools,
+        skipVolume: true,
       }),
     ]);
 
-    return [v1Pools, cryptoPools, factoryPools].flat();
+    return _([stableBasePools, stableMetaPools, cryptoPools, factoryPools])
+      .flatten()
+      .uniqBy(v => v.address)
+      .value();
   }
 }

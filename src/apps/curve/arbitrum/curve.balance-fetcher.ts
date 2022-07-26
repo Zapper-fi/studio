@@ -28,7 +28,7 @@ export class ArbitrumCurveBalanceFetcher implements BalanceFetcher {
     });
   }
 
-  private async getChildLiquidityGaugeStakedBalances(address: string) {
+  private async getStakedBalances(address: string) {
     return this.appToolkit.helpers.singleStakingContractPositionBalanceHelper.getBalances<CurveChildLiquidityGauge>({
       address,
       appId: CURVE_DEFINITION.id,
@@ -50,9 +50,9 @@ export class ArbitrumCurveBalanceFetcher implements BalanceFetcher {
   }
 
   async getBalances(address: string) {
-    const [poolTokenBalances, childLiquidityGaugeStakedBalances] = await Promise.all([
+    const [poolTokenBalances, stakedBalances] = await Promise.all([
       this.getPoolTokenBalances(address),
-      this.getChildLiquidityGaugeStakedBalances(address),
+      this.getStakedBalances(address),
     ]);
 
     return presentBalanceFetcherResponse([
@@ -62,7 +62,7 @@ export class ArbitrumCurveBalanceFetcher implements BalanceFetcher {
       },
       {
         label: 'Staked',
-        assets: [...childLiquidityGaugeStakedBalances],
+        assets: stakedBalances,
       },
     ]);
   }

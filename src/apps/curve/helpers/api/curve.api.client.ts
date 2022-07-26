@@ -30,7 +30,7 @@ export class CurveApiClient {
     return this.axiosInstance.get<GetPoolApyDataResponse>(`/getSubgraphData/${network}`).then(res =>
       res.data.data.poolList.map(v => ({
         swapAddress: v.address.toLowerCase(),
-        apy: v.latestDailyApy,
+        apy: Number(v.latestDailyApy),
         volume: v.volumeUSD,
       })),
     );
