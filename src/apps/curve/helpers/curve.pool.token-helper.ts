@@ -3,7 +3,6 @@ import { BigNumber, BigNumberish } from 'ethers';
 import { compact } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { ETH_ADDR_ALIAS, ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import {
   buildDollarDisplayItem,
   buildNumberDisplayItem,
@@ -39,15 +38,8 @@ type CurvePoolTokenHelperParams<T = CurveToken, V = Erc20> = {
   appTokenDependencies?: AppGroupsDefinition[];
   baseCurveTokens?: AppTokenPosition[];
   resolvePoolDefinitions: (opts: { network: Network; multicall: IMulticallWrapper }) => Promise<CurvePoolDefinition[]>;
-  resolvePoolVolume?: (opts: {
-    poolContract: T;
-    tokens: Token[];
-    definition: CurvePoolDefinition;
-    price: number;
-  }) => Promise<number>;
   resolvePoolContract: (opts: { network: Network; definition: CurvePoolDefinition }) => T;
   resolvePoolTokenContract: (opts: { network: Network; definition: CurvePoolDefinition }) => V;
-  resolvePoolCoinAddresses: (opts: { multicall: IMulticallWrapper; poolContract: T }) => Promise<string[]>;
   resolvePoolReserves: (opts: { multicall: IMulticallWrapper; poolContract: T }) => Promise<string[]>;
   resolvePoolFee: (opts: { multicall: IMulticallWrapper; poolContract: T }) => Promise<BigNumberish>;
   resolvePoolTokenSymbol: (opts: { multicall: IMulticallWrapper; poolTokenContract: V }) => Promise<string>;
@@ -75,7 +67,6 @@ export class CurvePoolTokenHelper {
     resolvePoolDefinitions,
     resolvePoolContract,
     resolvePoolTokenContract,
-    resolvePoolCoinAddresses,
     resolvePoolFee,
     resolvePoolReserves,
     resolvePoolTokenSymbol,
@@ -93,11 +84,9 @@ export class CurvePoolTokenHelper {
         const { gaugeAddress, tokenAddress, swapAddress } = definition;
         const poolContract = resolvePoolContract({ network, definition });
         const poolTokenContract = resolvePoolTokenContract({ network, definition });
-        const rawTokenAddresses = await resolvePoolCoinAddresses({ multicall, poolContract });
-        const tokenAddresses = rawTokenAddresses.map(v => (v === ETH_ADDR_ALIAS ? ZERO_ADDRESS : v.toLowerCase()));
         const reservesRaw = await resolvePoolReserves({ multicall, poolContract });
 
-        const maybeTokens = tokenAddresses.map(tokenAddress => {
+        const maybeTokens = definition.coinAddresses.map(tokenAddress => {
           const baseToken = baseTokens.find(price => price.address === tokenAddress);
           const appToken = appTokens.find(p => p.address === tokenAddress);
           const curveToken = baseCurveTokens.find(p => p.address === tokenAddress);

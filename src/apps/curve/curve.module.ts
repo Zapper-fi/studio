@@ -3,9 +3,7 @@ import { AbstractApp } from '~app/app.dynamic-module';
 
 import { CurveContractFactory } from './contracts';
 import { CurveAppDefinition, CURVE_DEFINITION } from './curve.definition';
-import { FantomCurveBalanceFetcher } from './fantom/curve.balance-fetcher';
-import { FantomCurveFarmContractPositionFetcher } from './fantom/curve.farm.contract-position-fetcher';
-import { FantomCurvePoolTokenFetcher } from './fantom/curve.pool.token-fetcher';
+import { EthereumCurvePoolTokenFetcher } from './ethereum/curve.pool.token-fetcher';
 import { CurveApiClient } from './helpers/api/curve.api.client';
 import { CurveApiVolumeStrategy } from './helpers/curve.api.volume-strategy';
 import { CurveChildLiquidityGaugeFactoryAddressHelper } from './helpers/curve.child-liquidity-gauge-factory.address-helper';
@@ -50,14 +48,14 @@ import { CurveOnChainRegistry } from './helpers/registry/curve.on-chain.registry
     // AvalancheCurveFarmContractPositionFetcher,
     // // Ethereum
     // EthereumCurveBalanceFetcher,
-    // EthereumCurvePoolTokenFetcher,
+    EthereumCurvePoolTokenFetcher,
     // EthereumCurveFarmContractPositionFetcher,
     // EthereumCurveVotingEscrowContractPositionFetcher,
     // EthereumCurveVestingEscrowContractPositionFetcher,
     // // Fantom
-    FantomCurveBalanceFetcher,
-    FantomCurvePoolTokenFetcher,
-    FantomCurveFarmContractPositionFetcher,
+    // FantomCurveBalanceFetcher,
+    // FantomCurvePoolTokenFetcher,
+    // FantomCurveFarmContractPositionFetcher,
     // // Gnosis
     // GnosisCurveBalanceFetcher,
     // GnosisCurvePoolTokenFetcher,

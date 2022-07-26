@@ -6,9 +6,7 @@ import { Network } from '~types/network.interface';
 
 import { CurveContractFactory, CurveV2Pool } from '../contracts';
 
-import { CurveApiVolumeStrategy } from './curve.api.volume-strategy';
 import { CurveLiquidityAndVirtualPriceStrategy } from './curve.liquidity-and-virtual.price-strategy';
-import { CurveOnChainCoinStrategy } from './curve.on-chain.coin-strategy';
 import { CurveOnChainReserveStrategy } from './curve.on-chain.reserve-strategy';
 import { CurvePoolTokenHelper } from './curve.pool.token-helper';
 import { CurvePoolDefinition } from './registry/curve.on-chain.registry';
@@ -17,7 +15,6 @@ type CurveCryptoPoolTokenHelperParams = {
   network: Network;
   appId: string;
   groupId: string;
-  statsUrl?: string;
   appTokenDependencies?: AppGroupsDefinition[];
   poolDefinitions: CurvePoolDefinition[];
   baseCurveTokens?: AppTokenPosition[];
@@ -28,12 +25,8 @@ export class CurveCryptoPoolTokenHelper {
   constructor(
     @Inject(CurvePoolTokenHelper)
     private readonly curvePoolTokenHelper: CurvePoolTokenHelper,
-    @Inject(CurveOnChainCoinStrategy)
-    private readonly curveOnChainCoinStrategy: CurveOnChainCoinStrategy,
     @Inject(CurveOnChainReserveStrategy)
     private readonly curveOnChainReserveStrategy: CurveOnChainReserveStrategy,
-    @Inject(CurveApiVolumeStrategy)
-    private readonly curveApiVolumeStrategy: CurveApiVolumeStrategy,
     @Inject(CurveLiquidityAndVirtualPriceStrategy)
     private readonly curveLiquidityAndVirtualPriceStrategy: CurveLiquidityAndVirtualPriceStrategy,
     @Inject(CurveContractFactory)
@@ -45,7 +38,6 @@ export class CurveCryptoPoolTokenHelper {
     appId,
     groupId,
     poolDefinitions,
-    statsUrl = '',
     baseCurveTokens = [],
     appTokenDependencies = [],
   }: CurveCryptoPoolTokenHelperParams) {
@@ -60,16 +52,10 @@ export class CurveCryptoPoolTokenHelper {
         this.curveContractFactory.curveV2Pool({ network, address: definition.swapAddress }),
       resolvePoolTokenContract: ({ network, definition }) =>
         this.curveContractFactory.erc20({ network, address: definition.tokenAddress }),
-      resolvePoolCoinAddresses: this.curveOnChainCoinStrategy.build(),
       resolvePoolReserves: this.curveOnChainReserveStrategy.build(),
-      resolvePoolVolume: this.curveApiVolumeStrategy.build({ statsUrl }),
       resolvePoolFee: ({ multicall, poolContract }) => multicall.wrap(poolContract).fee(),
       resolvePoolTokenPrice: this.curveLiquidityAndVirtualPriceStrategy.build({
-        resolveVirtualPrice: ({ multicall, poolContract }) =>
-          multicall
-            .wrap(poolContract)
-            .get_virtual_price()
-            .catch(() => 0),
+        resolveVirtualPrice: ({ multicall, poolContract }) => multicall.wrap(poolContract).get_virtual_price(),
       }),
       resolvePoolTokenSymbol: ({ multicall, poolTokenContract }) => multicall.wrap(poolTokenContract).symbol(),
       resolvePoolTokenSupply: ({ multicall, poolTokenContract }) => multicall.wrap(poolTokenContract).totalSupply(),

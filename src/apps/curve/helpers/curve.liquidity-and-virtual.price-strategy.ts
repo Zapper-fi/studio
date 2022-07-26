@@ -24,7 +24,12 @@ export class CurveLiquidityAndVirtualPriceStrategy {
       multicall: IMulticallWrapper;
       poolContract: T;
     }) => {
-      const virtualPriceRaw = await resolveVirtualPrice({ multicall, poolContract });
+      const virtualPriceRaw = await resolveVirtualPrice({ multicall, poolContract }).catch(err => {
+        // @TODO Create better error handling in Multicall. Throw either a MulticallWeb3CallError, MulticallUnderlyingCallError, MulticallDecodeError
+        if (err.message.includes('Multicall call failed')) return '0'; // underlying call failure, virtual price 0
+        throw err;
+      });
+
       const virtualPrice = Number(virtualPriceRaw) / 10 ** 18;
       const reservesUSD = tokens.map((t, i) => reserves[i] * t.price);
       const liquidity = reservesUSD.reduce((total, r) => total + r, 0);

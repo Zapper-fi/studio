@@ -16,6 +16,7 @@ const ADDRESS_RESOLVER_ADDRESS = '0x0000000022d53366457f9d5e68ec105046fc4383';
 export type CurvePoolDefinition = {
   swapAddress: string;
   tokenAddress: string;
+  coinAddresses: string[];
   isMetaPool: boolean;
   gaugeAddress: string;
   volume: number;
@@ -67,6 +68,9 @@ export class CurveOnChainRegistry {
         const tokenAddress = await multicall.wrap(registry).get_lp_token(swapAddress).then(toLower);
         const isMetaPool = await multicall.wrap(registry).is_meta(swapAddress);
 
+        const coinAddressesRaw = await multicall.wrap(registry).get_coins(swapAddress);
+        const coinAddresses = coinAddressesRaw.filter(v => v !== ZERO_ADDRESS).map(toLower);
+
         const gauge = allGauges.find(v => v.swapAddress === swapAddress);
         const gaugeAddress = gauge?.gaugeAddress ?? ZERO_ADDRESS;
 
@@ -74,7 +78,7 @@ export class CurveOnChainRegistry {
         const apy = poolApyData?.apy ?? 0;
         const volume = poolApyData?.volume ?? 0;
 
-        return { swapAddress, tokenAddress, isMetaPool, gaugeAddress, apy, volume };
+        return { swapAddress, tokenAddress, coinAddresses, isMetaPool, gaugeAddress, apy, volume };
       }),
     );
 
@@ -98,6 +102,9 @@ export class CurveOnChainRegistry {
         const tokenAddress = await multicall.wrap(registry).get_lp_token(swapAddress).then(toLower);
         const isMetaPool = false;
 
+        const coinAddressesRaw = await multicall.wrap(registry).get_coins(swapAddress);
+        const coinAddresses = coinAddressesRaw.filter(v => v !== ZERO_ADDRESS).map(toLower);
+
         const gauge = gauges.find(v => v.swapAddress === swapAddress);
         const gaugeAddress = gauge?.gaugeAddress ?? ZERO_ADDRESS;
 
@@ -105,7 +112,7 @@ export class CurveOnChainRegistry {
         const apy = poolApyData?.apy ?? 0;
         const volume = poolApyData?.volume ?? 0;
 
-        return { swapAddress, tokenAddress, isMetaPool, gaugeAddress, apy, volume };
+        return { swapAddress, tokenAddress, coinAddresses, isMetaPool, gaugeAddress, apy, volume };
       }),
     );
 
@@ -129,6 +136,9 @@ export class CurveOnChainRegistry {
         const tokenAddress = swapAddress; // Factory pools have the same swap and token address
         const isMetaPool = await multicall.wrap(factory).is_meta(swapAddress);
 
+        const coinAddressesRaw = await multicall.wrap(factory).get_coins(swapAddress);
+        const coinAddresses = coinAddressesRaw.filter(v => v !== ZERO_ADDRESS).map(toLower);
+
         const gauge = gauges.find(v => v.swapAddress === swapAddress);
         const gaugeAddress = gauge?.gaugeAddress ?? ZERO_ADDRESS;
 
@@ -136,7 +146,7 @@ export class CurveOnChainRegistry {
         const apy = poolApyData?.apy ?? 0;
         const volume = poolApyData?.volume ?? 0;
 
-        return { swapAddress, tokenAddress, isMetaPool, gaugeAddress, apy, volume };
+        return { swapAddress, tokenAddress, coinAddresses, isMetaPool, gaugeAddress, apy, volume };
       }),
     );
 

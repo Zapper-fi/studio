@@ -1,3 +1,15 @@
+import { Network } from '~types/network.interface';
+
+export const TO_CURVE_NETWORK = {
+  [Network.ETHEREUM_MAINNET]: 'ethereum',
+  [Network.ARBITRUM_MAINNET]: 'arbitrum',
+  [Network.AVALANCHE_MAINNET]: 'avalanche',
+  [Network.FANTOM_OPERA_MAINNET]: 'fantom',
+  [Network.GNOSIS_MAINNET]: 'xdai',
+  [Network.OPTIMISM_MAINNET]: 'optimism',
+  [Network.POLYGON_MAINNET]: 'polygon',
+};
+
 export type GaugeData = {
   swap: string;
   swap_token: string;

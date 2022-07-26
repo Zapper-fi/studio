@@ -3,7 +3,7 @@ import axios, { Axios } from 'axios';
 
 import { Network } from '~types/network.interface';
 
-import { GetFactoryGaugesResponse, GetPoolApyDataResponse } from './curve.api.types';
+import { GetFactoryGaugesResponse, GetPoolApyDataResponse, TO_CURVE_NETWORK } from './curve.api.types';
 
 @Injectable()
 export class CurveApiClient {
@@ -16,7 +16,12 @@ export class CurveApiClient {
   async getGauges(network: Network) {
     return this.axiosInstance.get<GetFactoryGaugesResponse>(`/getGauges`).then(res =>
       Object.entries(res.data.data.gauges)
-        .filter(([id]) => id.startsWith(network))
+        .filter(([id]) => {
+          const curveNetwork = this.toCurveNetwork(network);
+          if (network !== Network.ETHEREUM_MAINNET) return id.startsWith(curveNetwork);
+          const otherNetworks = Object.values(TO_CURVE_NETWORK).filter(v => v !== curveNetwork);
+          return !otherNetworks.some(v => id.startsWith(v));
+        })
         .filter(([_, v]) => !v.is_killed)
         .map(([_, v]) => ({
           swapAddress: v.swap.toLowerCase(),
@@ -26,12 +31,18 @@ export class CurveApiClient {
   }
 
   async getPoolApyData(network: Network) {
-    return this.axiosInstance.get<GetPoolApyDataResponse>(`/getSubgraphData/${network}`).then(res =>
-      res.data.data.poolList.map(v => ({
-        swapAddress: v.address.toLowerCase(),
-        apy: Number(v.latestDailyApy),
-        volume: v.volumeUSD,
-      })),
-    );
+    return this.axiosInstance
+      .get<GetPoolApyDataResponse>(`/getSubgraphData/${this.toCurveNetwork(network)}`)
+      .then(res =>
+        res.data.data.poolList.map(v => ({
+          swapAddress: v.address.toLowerCase(),
+          apy: Number(v.latestDailyApy),
+          volume: v.volumeUSD,
+        })),
+      );
+  }
+
+  private toCurveNetwork(network: Network) {
+    return TO_CURVE_NETWORK[network];
   }
 }
