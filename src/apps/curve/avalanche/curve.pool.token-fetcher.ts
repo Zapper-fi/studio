@@ -28,7 +28,7 @@ export class AvalancheCurvePoolTokenFetcher implements PositionFetcher<AppTokenP
   ) {}
 
   async getPositions() {
-    const [stableBasePools] = await Promise.all([
+    const [stableRegistryBasePools] = await Promise.all([
       this.curveStablePoolTokenHelper.getTokens({
         network,
         appId,
@@ -40,13 +40,13 @@ export class AvalancheCurvePoolTokenFetcher implements PositionFetcher<AppTokenP
       }),
     ]);
 
-    const [stableMetaPools, cryptoPools, factoryPools] = await Promise.all([
+    const [stableRegistryMetaPools, cryptoRegistryPools, stableFactoryPools] = await Promise.all([
       this.curveStablePoolTokenHelper.getTokens({
         network,
         appId,
         groupId,
         poolDefinitions: await this.curveOnChainRegistry.getStableSwapRegistryMetaPoolDefinitions(network),
-        baseCurveTokens: stableBasePools,
+        baseCurveTokens: stableRegistryBasePools,
       }),
       this.curveCryptoPoolTokenHelper.getTokens({
         network,
@@ -56,18 +56,18 @@ export class AvalancheCurvePoolTokenFetcher implements PositionFetcher<AppTokenP
           { appId: AAVE_V2_DEFINITION.id, groupIds: [AAVE_V2_DEFINITION.groups.supply.id], network },
         ],
         poolDefinitions: await this.curveOnChainRegistry.getCryptoSwapRegistryPoolDefinitions(network),
-        baseCurveTokens: stableBasePools,
+        baseCurveTokens: stableRegistryBasePools,
       }),
       this.curveStablePoolTokenHelper.getTokens({
         network,
         appId,
         groupId,
         poolDefinitions: await this.curveOnChainRegistry.getStableSwapFactoryPoolDefinitions(network),
-        baseCurveTokens: stableBasePools,
+        baseCurveTokens: stableRegistryBasePools,
       }),
     ]);
 
-    return _([stableBasePools, stableMetaPools, cryptoPools, factoryPools])
+    return _([stableRegistryBasePools, stableRegistryMetaPools, cryptoRegistryPools, stableFactoryPools])
       .flatten()
       .uniqBy(v => v.address)
       .value();
