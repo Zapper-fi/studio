@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.128.1](https://github.com/Zapper-fi/studio/compare/v0.128.0...v0.128.1) (2022-07-26)
+
+
+### Bug Fixes
+
+* **origin-dollar:** updating logo name ([aec6f39](https://github.com/Zapper-fi/studio/commit/aec6f399a9a07ce021f6aecea1deba0c9c0f1237))
+
 ## [0.128.0](https://github.com/Zapper-fi/studio/compare/v0.127.0...v0.128.0) (2022-07-25)
 
 
