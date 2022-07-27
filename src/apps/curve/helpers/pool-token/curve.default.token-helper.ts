@@ -3,12 +3,12 @@ import { Inject, Injectable } from '@nestjs/common';
 import { AppGroupsDefinition } from '~position/position.service';
 import { Network } from '~types/network.interface';
 
-import { CurveContractFactory, CurveV1Pool } from '../contracts';
-import { CURVE_DEFINITION } from '../curve.definition';
+import { CurveContractFactory, CurveV1Pool } from '../../contracts';
+import { CURVE_DEFINITION } from '../../curve.definition';
+import { CurveOnChainReserveStrategy } from '../curve.on-chain.reserve-strategy';
 
-import { CurveOnChainReserveStrategy } from './curve.on-chain.reserve-strategy';
+import { CurvePoolDefinition } from './curve.pool-token.registry';
 import { CurvePoolTokenHelper } from './curve.pool.token-helper';
-import { CurvePoolDefinition } from './pool-token/curve.pool-token.registry';
 
 type CurveDefaultPoolTokenHelperParams = {
   poolDefinitions: CurvePoolDefinition[];

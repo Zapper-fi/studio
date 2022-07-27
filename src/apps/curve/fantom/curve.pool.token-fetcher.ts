@@ -7,7 +7,7 @@ import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
 import { CURVE_DEFINITION } from '../curve.definition';
-import { CurveDefaultPoolTokenHelper } from '../helpers/curve.default.token-helper';
+import { CurveDefaultPoolTokenHelper } from '../helpers/pool-token/curve.default.token-helper';
 import { CurvePoolTokenRegistry } from '../helpers/pool-token/curve.pool-token.registry';
 
 const appId = CURVE_DEFINITION.id;
@@ -20,11 +20,11 @@ export class FantomCurvePoolTokenFetcher implements PositionFetcher<AppTokenPosi
     @Inject(CurvePoolTokenRegistry)
     private readonly curveOnChainRegistry: CurvePoolTokenRegistry,
     @Inject(CurveDefaultPoolTokenHelper)
-    private readonly curveDefaultPoolTokenHelper: CurveDefaultPoolTokenHelper,
+    private readonly curvePoolTokenRegistry: CurveDefaultPoolTokenHelper,
   ) {}
 
   async getPositions() {
-    return this.curveDefaultPoolTokenHelper.getTokens({
+    return this.curvePoolTokenRegistry.getTokens({
       network,
       poolDefinitions: await this.curveOnChainRegistry.getPoolDefinitions(network),
       dependencies: [

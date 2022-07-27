@@ -16,9 +16,9 @@ import { AppTokenPosition } from '~position/position.interface';
 import { AppGroupsDefinition } from '~position/position.service';
 import { Network } from '~types/network.interface';
 
-import { CurveToken } from '../contracts';
+import { CurveToken } from '../../contracts';
 
-import { CurvePoolDefinition, CurvePoolType } from './pool-token/curve.pool-token.registry';
+import { CurvePoolDefinition, CurvePoolType } from './curve.pool-token.registry';
 
 export type CurvePoolTokenDataProps = {
   poolType: CurvePoolType;

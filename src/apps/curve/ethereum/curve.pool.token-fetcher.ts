@@ -12,7 +12,7 @@ import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
 import { CURVE_DEFINITION } from '../curve.definition';
-import { CurveDefaultPoolTokenHelper } from '../helpers/curve.default.token-helper';
+import { CurveDefaultPoolTokenHelper } from '../helpers/pool-token/curve.default.token-helper';
 import { CurvePoolTokenRegistry } from '../helpers/pool-token/curve.pool-token.registry';
 
 const appId = CURVE_DEFINITION.id;
@@ -25,13 +25,13 @@ export class EthereumCurvePoolTokenFetcher implements PositionFetcher<AppTokenPo
     @Inject(CurveDefaultPoolTokenHelper)
     private readonly curveDefaultPoolTokenHelper: CurveDefaultPoolTokenHelper,
     @Inject(CurvePoolTokenRegistry)
-    private readonly curveOnChainRegistry: CurvePoolTokenRegistry,
+    private readonly curvePoolTokenRegistry: CurvePoolTokenRegistry,
   ) {}
 
   async getPositions() {
     return this.curveDefaultPoolTokenHelper.getTokens({
       network,
-      poolDefinitions: await this.curveOnChainRegistry.getPoolDefinitions(network),
+      poolDefinitions: await this.curvePoolTokenRegistry.getPoolDefinitions(network),
       dependencies: [
         { appId: AAVE_V2_DEFINITION.id, groupIds: [AAVE_V2_DEFINITION.groups.supply.id], network },
         { appId: COMPOUND_DEFINITION.id, groupIds: [COMPOUND_DEFINITION.groups.supply.id], network },
