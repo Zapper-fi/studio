@@ -16,8 +16,6 @@ import { AppTokenPosition } from '~position/position.interface';
 import { AppGroupsDefinition } from '~position/position.service';
 import { Network } from '~types/network.interface';
 
-import { CurveToken } from '../../contracts';
-
 import { CurvePoolDefinition, CurvePoolType } from './curve.pool-token.registry';
 
 export type CurvePoolTokenDataProps = {
@@ -30,7 +28,7 @@ export type CurvePoolTokenDataProps = {
   fee: number;
 };
 
-type CurvePoolTokenHelperParams<T = CurveToken> = {
+type CurvePoolTokenHelperParams<T> = {
   network: Network;
   appId: string;
   groupId: string;
@@ -48,7 +46,7 @@ type CurvePoolTokenHelperParams<T = CurveToken> = {
 export class CurvePoolTokenHelper {
   constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
-  private async _getTokens<T = CurveToken>({
+  private async _getTokens<T>({
     network,
     appId,
     groupId,
@@ -192,7 +190,7 @@ export class CurvePoolTokenHelper {
     return compact(curvePoolTokens).filter(v => !!v && v.price > 0 && v.dataProps.liquidity >= minLiquidity);
   }
 
-  async getTokens<T = CurveToken>(params: CurvePoolTokenHelperParams<T>) {
+  async getTokens<T>(params: CurvePoolTokenHelperParams<T>) {
     const [basePoolDefinitions, metaPoolDefinitions] = partition(params.poolDefinitions, v => !v.isMetaPool);
     const baseCurveTokens = await this._getTokens({ ...params, poolDefinitions: basePoolDefinitions });
     const metaCurveTokens = await this._getTokens({ ...params, poolDefinitions: metaPoolDefinitions, baseCurveTokens });

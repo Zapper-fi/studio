@@ -3,18 +3,12 @@ import { compact } from 'lodash';
 
 import { IMulticallWrapper } from '~multicall/multicall.interface';
 
-import { CurveFactoryPool, CurveV1Pool, CurveV1PoolLegacy, CurveV2Pool } from '../contracts';
+import { CurveV1Pool } from '../contracts';
 
 @Injectable()
 export class CurveOnChainReserveStrategy {
   build() {
-    return async ({
-      poolContract,
-      multicall,
-    }: {
-      poolContract: CurveV1Pool | CurveV1PoolLegacy | CurveV2Pool | CurveFactoryPool;
-      multicall: IMulticallWrapper;
-    }) => {
+    return async ({ poolContract, multicall }: { poolContract: CurveV1Pool; multicall: IMulticallWrapper }) => {
       const tokenAddresses = await Promise.all([
         multicall
           .wrap(poolContract)
