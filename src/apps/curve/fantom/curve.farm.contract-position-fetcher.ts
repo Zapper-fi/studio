@@ -1,4 +1,5 @@
 import { Inject } from '@nestjs/common';
+import { compact } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
@@ -19,7 +20,8 @@ const network = Network.FANTOM_OPERA_MAINNET;
 @Register.ContractPositionFetcher({ appId, groupId, network })
 export class FantomCurveFarmContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
+    @Inject(APP_TOOLKIT)
+    private readonly appToolkit: IAppToolkit,
     @Inject(CurveContractFactory)
     private readonly curveContractFactory: CurveContractFactory,
     @Inject(CurveChildLiquidityGaugeRoiStrategy)
@@ -27,17 +29,20 @@ export class FantomCurveFarmContractPositionFetcher implements PositionFetcher<C
     @Inject(CurveChildLiquidityGaugeRewardTokenStrategy)
     private readonly childLiquidityGaugeRewardTokenStrategy: CurveChildLiquidityGaugeRewardTokenStrategy,
     @Inject(CurvePoolTokenRegistry)
-    private readonly curveOnChainRegistry: CurvePoolTokenRegistry,
+    private readonly curvePoolTokenRegistry: CurvePoolTokenRegistry,
   ) {}
 
   async getPositions() {
+    const poolDefinitions = await this.curvePoolTokenRegistry.getPoolDefinitions(network);
+    const gauges = compact(poolDefinitions.map(v => v.gaugeAddress));
+
     return this.appToolkit.helpers.singleStakingFarmContractPositionHelper.getContractPositions<CurveChildLiquidityGauge>(
       {
         network,
         appId,
         groupId,
         dependencies: [{ appId: CURVE_DEFINITION.id, groupIds: [CURVE_DEFINITION.groups.pool.id], network }],
-        resolveFarmAddresses: () => this.curveOnChainRegistry.getGaugeAddresses(network),
+        resolveFarmAddresses: () => gauges,
         resolveFarmContract: ({ address, network }) =>
           this.curveContractFactory.curveChildLiquidityGauge({ address, network }),
         resolveStakedTokenAddress: ({ contract, multicall }) => multicall.wrap(contract).lp_token(),

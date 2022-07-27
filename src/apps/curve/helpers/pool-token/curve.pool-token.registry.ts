@@ -55,7 +55,7 @@ export class CurvePoolTokenRegistry {
 
   @Cache({
     instance: 'business',
-    key: (network: Network) => `studio:${CURVE_DEFINITION.id}:${network}:pool-definitions-2`,
+    key: (network: Network) => `studio:${CURVE_DEFINITION.id}:${network}:pool-definitions`,
     ttl: moment.duration(60, 'minutes').asSeconds(),
   })
   async getPoolDefinitions(network: Network) {
