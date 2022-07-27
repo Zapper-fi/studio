@@ -9,7 +9,7 @@ export { CurveRewardsOnlyGaugeRoiStrategy } from './helpers/curve.rewards-only-g
 export { CurveGaugeIsActiveStrategy } from './helpers/curve.gauge.is-active-strategy';
 export { CurveGaugeRoiStrategy } from './helpers/curve.gauge.roi-strategy';
 export { CurveOnChainReserveStrategy } from './helpers/curve.on-chain.reserve-strategy';
-export { CurvePoolTokenHelper } from './helpers/pool-token/curve.pool.token-helper';
+export { CurvePoolTokenHelper } from './helpers/pool/curve.pool.token-helper';
 export { CurveVestingEscrowContractPositionBalanceHelper } from './helpers/curve.vesting-escrow.contract-position-balance-helper';
 export { CurveVestingEscrowContractPositionHelper } from './helpers/curve.vesting-escrow.contract-position-helper';
 export { CurveVotingEscrowContractPositionBalanceHelper } from './helpers/curve.voting-escrow.contract-position-balance-helper';

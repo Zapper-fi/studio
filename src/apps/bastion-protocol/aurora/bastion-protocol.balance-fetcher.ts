@@ -5,7 +5,7 @@ import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
-import { CurvePoolTokenDataProps } from '~apps/curve/helpers/pool-token/curve.pool.token-helper';
+import { CurvePoolTokenDataProps } from '~apps/curve/helpers/pool/curve.pool.token-helper';
 import { BalanceFetcher, MetadataItemWithLabel } from '~balance/balance-fetcher.interface';
 import { ContractPositionBalance, TokenBalance } from '~position/position-balance.interface';
 import { Network } from '~types/network.interface';

@@ -6,8 +6,8 @@ import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
 import { CURVE_DEFINITION } from '../curve.definition';
-import { CurveDefaultPoolTokenHelper } from '../helpers/pool-token/curve.default.token-helper';
-import { CurvePoolTokenRegistry } from '../helpers/pool-token/curve.pool-token.registry';
+import { CurveDefaultPoolTokenHelper } from '../helpers/pool/curve.default.token-helper';
+import { CurvePoolTokenRegistry } from '../helpers/pool/curve.pool-token.registry';
 
 const appId = CURVE_DEFINITION.id;
 const groupId = CURVE_DEFINITION.groups.pool.id;

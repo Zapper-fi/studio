@@ -8,7 +8,7 @@ import { Network } from '~types/network.interface';
 import { CurveContractFactory } from '../contracts';
 import { CURVE_DEFINITION } from '../curve.definition';
 
-import { CurvePoolTokenDataProps } from './pool-token/curve.pool.token-helper';
+import { CurvePoolTokenDataProps } from './pool/curve.pool.token-helper';
 
 type CurveFactoryGaugeAddressHelperParams = {
   factoryAddress: string;

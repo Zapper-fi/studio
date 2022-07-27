@@ -15,6 +15,8 @@ export type ContractCall = {
 
 type TargetContract = Pick<Contract, 'functions' | 'interface' | 'callStatic' | 'address'>;
 
+export const isMulticallUnderlyingError = (err: Error) => err.message.includes('Multicall call failed for');
+
 export class EthersMulticall implements IMulticallWrapper {
   private multicall: Multicall;
   private dataLoader: DataLoader<ContractCall, any>;

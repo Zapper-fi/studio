@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { BigNumberish, Contract } from 'ethers';
+import { BigNumberish, Contract, ethers } from 'ethers';
 import _, { range, toLower } from 'lodash';
 import moment from 'moment';
 
@@ -52,6 +52,28 @@ export class CurvePoolTokenRegistry {
     @Inject(CurveContractFactory) private readonly curveContractFactory: CurveContractFactory,
     @Inject(CurveApiClient) private readonly curveApiClient: CurveApiClient,
   ) {}
+
+  async getGaugesWithType(network: Network) {
+    const provider = this.appToolkit.getNetworkProvider(network);
+    const gauges = await this.getCachedGauges(network);
+
+    const gaugesWithVersions = await Promise.all(
+      gauges.map(async gauge => {
+        let bytecode = await provider.getCode(gauge.gaugeAddress);
+        const minimalProxyMatch = /0x363d3d373d3d3d363d73(.*)5af43d82803e903d91602b57fd5bf3/.exec(bytecode);
+        if (minimalProxyMatch) bytecode = await provider.getCode(`0x${minimalProxyMatch[1]}`);
+
+        const doubleGaugeMethod = ethers.utils.id('rewarded_token()').slice(2, 10);
+        const nGaugeMethod = ethers.utils.id('reward_tokens(uint256)').slice(2, 10);
+
+        if (bytecode.includes(doubleGaugeMethod)) return { ...gauge, version: 'double' };
+        if (bytecode.includes(nGaugeMethod)) return { ...gauge, version: 'n-gauge' };
+        return { ...gauge, version: 'single' };
+      }),
+    );
+
+    return gaugesWithVersions;
+  }
 
   @Cache({
     instance: 'business',

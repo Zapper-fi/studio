@@ -1,9 +1,9 @@
 import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
 
-import { ArbitrumCurvePoolTokenFetcher } from './arbitrum/curve.pool.token-fetcher';
 import { CurveContractFactory } from './contracts';
 import { CurveAppDefinition, CURVE_DEFINITION } from './curve.definition';
+import { EthereumCurveFarmContractPositionFetcher } from './ethereum/curve.farm.contract-position-fetcher';
 import { CurveApiClient } from './helpers/api/curve.api.client';
 import { CurveChildLiquidityGaugeFactoryAddressHelper } from './helpers/curve.child-liquidity-gauge-factory.address-helper';
 import { CurveChildLiquidityGaugeRewardTokenStrategy } from './helpers/curve.child-liquidity-gauge.reward-token-strategy';
@@ -18,9 +18,9 @@ import { CurveVestingEscrowContractPositionBalanceHelper } from './helpers/curve
 import { CurveVestingEscrowContractPositionHelper } from './helpers/curve.vesting-escrow.contract-position-helper';
 import { CurveVotingEscrowContractPositionBalanceHelper } from './helpers/curve.voting-escrow.contract-position-balance-helper';
 import { CurveVotingEscrowContractPositionHelper } from './helpers/curve.voting-escrow.contract-position-helper';
-import { CurveDefaultPoolTokenHelper } from './helpers/pool-token/curve.default.token-helper';
-import { CurvePoolTokenRegistry } from './helpers/pool-token/curve.pool-token.registry';
-import { CurvePoolTokenHelper } from './helpers/pool-token/curve.pool.token-helper';
+import { CurveDefaultPoolTokenHelper } from './helpers/pool/curve.default.token-helper';
+import { CurvePoolTokenRegistry } from './helpers/pool/curve.pool-token.registry';
+import { CurvePoolTokenHelper } from './helpers/pool/curve.pool.token-helper';
 
 @Register.AppModule({
   appId: CURVE_DEFINITION.id,
@@ -29,7 +29,7 @@ import { CurvePoolTokenHelper } from './helpers/pool-token/curve.pool.token-help
     CurveContractFactory,
     // Arbitrum
     // ArbitrumCurveBalanceFetcher,
-    ArbitrumCurvePoolTokenFetcher,
+    // ArbitrumCurvePoolTokenFetcher,
     // ArbitrumCurveFarmContractPositionFetcher,
     // // Avalanche
     // AvalancheCurveBalanceFetcher,
@@ -38,7 +38,7 @@ import { CurvePoolTokenHelper } from './helpers/pool-token/curve.pool.token-help
     // // Ethereum
     // EthereumCurveBalanceFetcher,
     // EthereumCurvePoolTokenFetcher,
-    // EthereumCurveFarmContractPositionFetcher,
+    EthereumCurveFarmContractPositionFetcher,
     // EthereumCurveVotingEscrowContractPositionFetcher,
     // EthereumCurveVestingEscrowContractPositionFetcher,
     // // Fantom

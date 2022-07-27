@@ -3,7 +3,7 @@ import { range, sum } from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
-import { CurvePoolTokenDataProps } from '~apps/curve/helpers/pool-token/curve.pool.token-helper';
+import { CurvePoolTokenDataProps } from '~apps/curve/helpers/pool/curve.pool.token-helper';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';

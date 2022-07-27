@@ -11,7 +11,7 @@ import { CurveChildLiquidityGauge, CurveContractFactory } from '../contracts';
 import { CURVE_DEFINITION } from '../curve.definition';
 import { CurveChildLiquidityGaugeRewardTokenStrategy } from '../helpers/curve.child-liquidity-gauge.reward-token-strategy';
 import { CurveChildLiquidityGaugeRoiStrategy } from '../helpers/curve.child-liquidity-gauge.roi-strategy';
-import { CurvePoolTokenRegistry } from '../helpers/pool-token/curve.pool-token.registry';
+import { CurvePoolTokenRegistry } from '../helpers/pool/curve.pool-token.registry';
 
 const appId = CURVE_DEFINITION.id;
 const groupId = CURVE_DEFINITION.groups.farm.id;
