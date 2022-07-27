@@ -13,7 +13,6 @@ import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
 import { CURVE_DEFINITION } from '../curve.definition';
-import { CurveCryptoFactoryPoolTokenHelper } from '../helpers/curve.crypto-factory-pool.token-helper';
 import { CurveCryptoPoolTokenHelper } from '../helpers/curve.crypto-pool.token-helper';
 import { CurveStablePoolTokenHelper } from '../helpers/curve.stable-pool.token-helper';
 import { CurveOnChainRegistry } from '../helpers/registry/curve.on-chain.registry';
@@ -29,8 +28,6 @@ export class EthereumCurvePoolTokenFetcher implements PositionFetcher<AppTokenPo
     private readonly curveStablePoolTokenHelper: CurveStablePoolTokenHelper,
     @Inject(CurveCryptoPoolTokenHelper)
     private readonly curveCryptoPoolTokenHelper: CurveCryptoPoolTokenHelper,
-    @Inject(CurveCryptoFactoryPoolTokenHelper)
-    private readonly curveCryptoFactoryPoolTokenHelper: CurveCryptoFactoryPoolTokenHelper,
     @Inject(CurveOnChainRegistry)
     private readonly curveOnChainRegistry: CurveOnChainRegistry,
   ) {}
@@ -54,7 +51,7 @@ export class EthereumCurvePoolTokenFetcher implements PositionFetcher<AppTokenPo
       }),
     ]);
 
-    const [stableRegistryMetaPools, cryptoRegistryPools, stableFactoryPools] = await Promise.all([
+    const [stableRegistryMetaPools, cryptoRegistryPools, stableFactoryPools, cryptoFactoryPools] = await Promise.all([
       this.curveStablePoolTokenHelper.getTokens({
         network,
         appId,
@@ -69,7 +66,7 @@ export class EthereumCurvePoolTokenFetcher implements PositionFetcher<AppTokenPo
         poolDefinitions: await this.curveOnChainRegistry.getCryptoSwapRegistryPoolDefinitions(network),
         baseCurveTokens: stableRegistryBasePools,
       }),
-      this.curveCryptoPoolTokenHelper.getTokens({
+      this.curveStablePoolTokenHelper.getTokens({
         network,
         appId,
         groupId,
@@ -86,16 +83,22 @@ export class EthereumCurvePoolTokenFetcher implements PositionFetcher<AppTokenPo
           { appId: 'fixed-forex', groupIds: ['forex'], network },
         ],
       }),
-      //   this.curveCryptoFactoryPoolTokenHelper.getTokens({
-      //     factoryAddress: '0xf18056bbd320e96a48e3fbf8bc061322531aac99',
-      //     network,
-      //     appId: CURVE_DEFINITION.id,
-      //     groupId: CURVE_DEFINITION.groups.pool.id,
-      //     baseCurveTokens: stableRegistryBasePools,
-      //   }),
+      this.curveCryptoPoolTokenHelper.getTokens({
+        network,
+        appId,
+        groupId,
+        poolDefinitions: await this.curveOnChainRegistry.getCryptoSwapFactoryPoolDefinitions(network),
+        baseCurveTokens: stableRegistryBasePools,
+      }),
     ]);
 
-    return _([stableRegistryBasePools, stableRegistryMetaPools, cryptoRegistryPools, stableFactoryPools])
+    return _([
+      stableRegistryBasePools,
+      stableRegistryMetaPools,
+      cryptoRegistryPools,
+      stableFactoryPools,
+      cryptoFactoryPools,
+    ])
       .flatten()
       .uniqBy(v => v.address)
       .value();

@@ -8,6 +8,7 @@ import { CurveAddressResolver__factory } from './ethers';
 import { CurveChildLiquidityGauge__factory } from './ethers';
 import { CurveChildLiquidityGaugeFactory__factory } from './ethers';
 import { CurveController__factory } from './ethers';
+import { CurveCryptoFactory__factory } from './ethers';
 import { CurveCryptoPool__factory } from './ethers';
 import { CurveCryptoRegistry__factory } from './ethers';
 import { CurveDoubleGauge__factory } from './ethers';
@@ -53,6 +54,9 @@ export class CurveContractFactory extends ContractFactory {
   }
   curveController({ address, network }: ContractOpts) {
     return CurveController__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
+  curveCryptoFactory({ address, network }: ContractOpts) {
+    return CurveCryptoFactory__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
   curveCryptoPool({ address, network }: ContractOpts) {
     return CurveCryptoPool__factory.connect(address, this.appToolkit.getNetworkProvider(network));
@@ -132,6 +136,7 @@ export type { CurveAddressResolver } from './ethers';
 export type { CurveChildLiquidityGauge } from './ethers';
 export type { CurveChildLiquidityGaugeFactory } from './ethers';
 export type { CurveController } from './ethers';
+export type { CurveCryptoFactory } from './ethers';
 export type { CurveCryptoPool } from './ethers';
 export type { CurveCryptoRegistry } from './ethers';
 export type { CurveDoubleGauge } from './ethers';

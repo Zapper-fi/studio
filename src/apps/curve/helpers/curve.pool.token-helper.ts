@@ -101,7 +101,7 @@ export class CurvePoolTokenHelper {
         const [symbol, supplyRaw, feeRaw] = await Promise.all([
           resolvePoolTokenSymbol({ multicall, poolTokenContract }),
           resolvePoolTokenSupply({ multicall, poolTokenContract }),
-          resolvePoolFee({ multicall, poolContract }),
+          resolvePoolFee({ multicall, poolContract }).catch(() => '0'), // @TODO
         ]);
 
         const decimals = 18;

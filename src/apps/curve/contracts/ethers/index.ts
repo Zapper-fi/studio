@@ -5,6 +5,7 @@ export type { CurveAddressResolver } from './CurveAddressResolver';
 export type { CurveChildLiquidityGauge } from './CurveChildLiquidityGauge';
 export type { CurveChildLiquidityGaugeFactory } from './CurveChildLiquidityGaugeFactory';
 export type { CurveController } from './CurveController';
+export type { CurveCryptoFactory } from './CurveCryptoFactory';
 export type { CurveCryptoPool } from './CurveCryptoPool';
 export type { CurveCryptoRegistry } from './CurveCryptoRegistry';
 export type { CurveDoubleGauge } from './CurveDoubleGauge';
@@ -34,6 +35,7 @@ export { CurveAddressResolver__factory } from './factories/CurveAddressResolver_
 export { CurveChildLiquidityGaugeFactory__factory } from './factories/CurveChildLiquidityGaugeFactory__factory';
 export { CurveChildLiquidityGauge__factory } from './factories/CurveChildLiquidityGauge__factory';
 export { CurveController__factory } from './factories/CurveController__factory';
+export { CurveCryptoFactory__factory } from './factories/CurveCryptoFactory__factory';
 export { CurveCryptoPool__factory } from './factories/CurveCryptoPool__factory';
 export { CurveCryptoRegistry__factory } from './factories/CurveCryptoRegistry__factory';
 export { CurveDoubleGauge__factory } from './factories/CurveDoubleGauge__factory';

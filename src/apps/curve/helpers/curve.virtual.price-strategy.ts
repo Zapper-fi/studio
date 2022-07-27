@@ -27,8 +27,8 @@ export class CurveVirtualPriceStrategy {
       });
 
       const virtualPrice = Number(virtualPriceRaw) / 10 ** 18;
-      const underlyingTokens = tokens.flatMap(v => (v.type === ContractType.APP_TOKEN ? v.tokens : v));
-      const lowestPricedToken = minBy(underlyingTokens, t => t.price)!;
+      const underlying = tokens.flatMap(v => (v.type === ContractType.APP_TOKEN && v.tokens.length ? v.tokens : v));
+      const lowestPricedToken = minBy(underlying, t => t.price)!;
       const price = virtualPrice * lowestPricedToken.price;
       return price;
     };

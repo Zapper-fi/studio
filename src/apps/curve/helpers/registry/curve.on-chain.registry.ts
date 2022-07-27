@@ -51,6 +51,11 @@ export class CurveOnChainRegistry {
     return definitions;
   }
 
+  async getCryptoSwapFactoryPoolDefinitions(network: Network) {
+    const definitions = await this.getCryptoSwapFactoryDefinitions(network);
+    return definitions;
+  }
+
   private async getStableSwapRegistryDefinitions(network: Network) {
     const multicall = this.appToolkit.getMulticall(network);
     const allGauges = await this.getCachedGauges(network);
@@ -135,6 +140,40 @@ export class CurveOnChainRegistry {
         const swapAddress = await multicall.wrap(factory).pool_list(i).then(toLower);
         const tokenAddress = swapAddress; // Factory pools have the same swap and token address
         const isMetaPool = await multicall.wrap(factory).is_meta(swapAddress);
+
+        const coinAddressesRaw = await multicall.wrap(factory).get_coins(swapAddress);
+        const coinAddresses = coinAddressesRaw.filter(v => v !== ZERO_ADDRESS).map(toLower);
+
+        const gauge = gauges.find(v => v.swapAddress === swapAddress);
+        const gaugeAddress = gauge?.gaugeAddress ?? ZERO_ADDRESS;
+
+        const poolApyData = allPoolApyData.find(v => v.swapAddress === swapAddress);
+        const apy = poolApyData?.apy ?? 0;
+        const volume = poolApyData?.volume ?? 0;
+
+        return { swapAddress, tokenAddress, coinAddresses, isMetaPool, gaugeAddress, apy, volume };
+      }),
+    );
+
+    return poolDefinitions;
+  }
+
+  private async getCryptoSwapFactoryDefinitions(network: Network) {
+    const multicall = this.appToolkit.getMulticall(network);
+    const gauges = await this.getCachedGauges(network);
+    const allPoolApyData = await this.getCachedPoolApyData(network);
+
+    const resolver = this.curveContractFactory.curveAddressResolver({ address: ADDRESS_RESOLVER_ADDRESS, network });
+    const cryptoSwapFactoryInfo = await resolver.get_id_info(6);
+
+    const factory = this.curveContractFactory.curveCryptoFactory({ address: cryptoSwapFactoryInfo.addr, network });
+    const poolCount = await factory.pool_count();
+
+    const poolDefinitions = await Promise.all(
+      range(0, Number(poolCount)).map(async i => {
+        const swapAddress = await multicall.wrap(factory).pool_list(i).then(toLower);
+        const tokenAddress = await multicall.wrap(factory).get_token(swapAddress).then(toLower);
+        const isMetaPool = false;
 
         const coinAddressesRaw = await multicall.wrap(factory).get_coins(swapAddress);
         const coinAddresses = coinAddressesRaw.filter(v => v !== ZERO_ADDRESS).map(toLower);
