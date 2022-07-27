@@ -1,9 +1,9 @@
 import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
 
+import { ArbitrumCurvePoolTokenFetcher } from './arbitrum/curve.pool.token-fetcher';
 import { CurveContractFactory } from './contracts';
 import { CurveAppDefinition, CURVE_DEFINITION } from './curve.definition';
-import { EthereumCurvePoolTokenFetcher } from './ethereum/curve.pool.token-fetcher';
 import { CurveApiClient } from './helpers/api/curve.api.client';
 import { CurveApiVolumeStrategy } from './helpers/curve.api.volume-strategy';
 import { CurveChildLiquidityGaugeFactoryAddressHelper } from './helpers/curve.child-liquidity-gauge-factory.address-helper';
@@ -11,7 +11,6 @@ import { CurveChildLiquidityGaugeRewardTokenStrategy } from './helpers/curve.chi
 import { CurveChildLiquidityGaugeRoiStrategy } from './helpers/curve.child-liquidity-gauge.roi-strategy';
 import { CurveCryptoFactoryPoolTokenHelper } from './helpers/curve.crypto-factory-pool.token-helper';
 import { CurveCryptoFactoryPoolDefinitionStrategy } from './helpers/curve.crypto-factory.pool-definition-strategy';
-import { CurveCryptoPoolTokenHelper } from './helpers/curve.crypto-pool.token-helper';
 import { CurveFactoryGaugeAddressHelper } from './helpers/curve.factory-gauge.address-helper';
 import { CurveFactoryPoolTokenHelper } from './helpers/curve.factory-pool.token-helper';
 import { CurveFactoryPoolDefinitionStrategy } from './helpers/curve.factory.pool-definition-strategy';
@@ -25,7 +24,7 @@ import { CurveOnChainVolumeStrategy } from './helpers/curve.on-chain.volume-stra
 import { CurvePoolTokenHelper } from './helpers/curve.pool.token-helper';
 import { CurveRewardsOnlyGaugeRewardTokenStrategy } from './helpers/curve.rewards-only-gauge.reward-token-strategy';
 import { CurveRewardsOnlyGaugeRoiStrategy } from './helpers/curve.rewards-only-gauge.roi-strategy';
-import { CurveStablePoolTokenHelper } from './helpers/curve.stable-pool.token-helper';
+import { CurveDefaultPoolTokenHelper } from './helpers/curve.stable-pool.token-helper';
 import { CurveVestingEscrowContractPositionBalanceHelper } from './helpers/curve.vesting-escrow.contract-position-balance-helper';
 import { CurveVestingEscrowContractPositionHelper } from './helpers/curve.vesting-escrow.contract-position-helper';
 import { CurveVirtualPriceStrategy } from './helpers/curve.virtual.price-strategy';
@@ -40,7 +39,7 @@ import { CurveOnChainRegistry } from './helpers/registry/curve.on-chain.registry
     CurveContractFactory,
     // Arbitrum
     // ArbitrumCurveBalanceFetcher,
-    // ArbitrumCurvePoolTokenFetcher,
+    ArbitrumCurvePoolTokenFetcher,
     // ArbitrumCurveFarmContractPositionFetcher,
     // // Avalanche
     // AvalancheCurveBalanceFetcher,
@@ -48,7 +47,7 @@ import { CurveOnChainRegistry } from './helpers/registry/curve.on-chain.registry
     // AvalancheCurveFarmContractPositionFetcher,
     // // Ethereum
     // EthereumCurveBalanceFetcher,
-    EthereumCurvePoolTokenFetcher,
+    // EthereumCurvePoolTokenFetcher,
     // EthereumCurveFarmContractPositionFetcher,
     // EthereumCurveVotingEscrowContractPositionFetcher,
     // EthereumCurveVestingEscrowContractPositionFetcher,
@@ -76,8 +75,7 @@ import { CurveOnChainRegistry } from './helpers/registry/curve.on-chain.registry
     CurveApiClient,
     CurveOnChainRegistry,
     CurvePoolTokenHelper,
-    CurveStablePoolTokenHelper,
-    CurveCryptoPoolTokenHelper,
+    CurveDefaultPoolTokenHelper,
     CurveFactoryPoolTokenHelper,
     CurveCryptoFactoryPoolTokenHelper,
     // Token Helper Strategies
@@ -111,8 +109,7 @@ import { CurveOnChainRegistry } from './helpers/registry/curve.on-chain.registry
     CurveContractFactory,
     // Token Helpers
     CurvePoolTokenHelper,
-    CurveStablePoolTokenHelper,
-    CurveCryptoPoolTokenHelper,
+    CurveDefaultPoolTokenHelper,
     CurveFactoryPoolTokenHelper,
     CurveCryptoFactoryPoolTokenHelper,
     // Token Helper Strategies

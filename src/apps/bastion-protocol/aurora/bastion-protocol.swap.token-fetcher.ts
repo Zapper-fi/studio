@@ -74,7 +74,6 @@ export class AuroraBastionProtocolSwapTokenFetcher implements PositionFetcher<Ap
             .getTokenBalance(1)
             .then(v => v.toString()),
         ]),
-      resolvePoolVolume: undefined,
       resolvePoolFee: ({ multicall, poolContract }) =>
         multicall
           .wrap(poolContract)

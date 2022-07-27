@@ -1,26 +1,27 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { BigNumber, BigNumberish } from 'ethers';
-import { compact } from 'lodash';
+import { BigNumberish } from 'ethers';
+import { compact, minBy } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import {
   buildDollarDisplayItem,
   buildNumberDisplayItem,
   buildPercentageDisplayItem,
 } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { Erc20 } from '~contract/contracts';
 import { IMulticallWrapper } from '~multicall/multicall.interface';
 import { ContractType } from '~position/contract.interface';
-import { AppTokenPosition, Token } from '~position/position.interface';
+import { AppTokenPosition } from '~position/position.interface';
 import { AppGroupsDefinition } from '~position/position.service';
 import { Network } from '~types/network.interface';
 
 import { CurveToken } from '../contracts';
 
-import { CurvePoolDefinition } from './registry/curve.on-chain.registry';
+import { CurvePoolDefinition, CurvePoolType } from './registry/curve.on-chain.registry';
 
 export type CurvePoolTokenDataProps = {
+  poolType: CurvePoolType;
   gaugeAddress: string;
   swapAddress: string;
   liquidity: number;
@@ -29,61 +30,48 @@ export type CurvePoolTokenDataProps = {
   fee: number;
 };
 
-type CurvePoolTokenHelperParams<T = CurveToken, V = Erc20> = {
+type CurvePoolTokenHelperParams<T = CurveToken> = {
   network: Network;
   appId: string;
   groupId: string;
-  statsUrl?: string;
   minLiquidity?: number;
-  appTokenDependencies?: AppGroupsDefinition[];
+  dependencies?: AppGroupsDefinition[];
   baseCurveTokens?: AppTokenPosition[];
   resolvePoolDefinitions: (opts: { network: Network; multicall: IMulticallWrapper }) => Promise<CurvePoolDefinition[]>;
   resolvePoolContract: (opts: { network: Network; definition: CurvePoolDefinition }) => T;
-  resolvePoolTokenContract: (opts: { network: Network; definition: CurvePoolDefinition }) => V;
   resolvePoolReserves: (opts: { multicall: IMulticallWrapper; poolContract: T }) => Promise<string[]>;
+  resolvePoolVirtualPrice: (opts: { multicall: IMulticallWrapper; poolContract: T }) => Promise<BigNumberish>;
   resolvePoolFee: (opts: { multicall: IMulticallWrapper; poolContract: T }) => Promise<BigNumberish>;
-  resolvePoolTokenSymbol: (opts: { multicall: IMulticallWrapper; poolTokenContract: V }) => Promise<string>;
-  resolvePoolTokenSupply: (opts: { multicall: IMulticallWrapper; poolTokenContract: V }) => Promise<BigNumber>;
-  resolvePoolTokenPrice: (opts: {
-    multicall: IMulticallWrapper;
-    poolContract: T;
-    tokens: Token[];
-    reserves: number[];
-    supply: number;
-  }) => Promise<number>;
 };
 
 @Injectable()
 export class CurvePoolTokenHelper {
   constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
-  async getTokens<T = CurveToken, V = Erc20>({
+  async getTokens<T = CurveToken>({
     network,
     appId,
     groupId,
     minLiquidity = 0,
-    appTokenDependencies = [],
+    dependencies = [],
     baseCurveTokens = [],
     resolvePoolDefinitions,
     resolvePoolContract,
-    resolvePoolTokenContract,
-    resolvePoolFee,
     resolvePoolReserves,
-    resolvePoolTokenSymbol,
-    resolvePoolTokenSupply,
-    resolvePoolTokenPrice,
-  }: CurvePoolTokenHelperParams<T, V>) {
+    resolvePoolVirtualPrice,
+    resolvePoolFee,
+  }: CurvePoolTokenHelperParams<T>) {
     const multicall = this.appToolkit.getMulticall(network);
 
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
-    const appTokens = await this.appToolkit.getAppTokenPositions(...appTokenDependencies);
+    const appTokens = await this.appToolkit.getAppTokenPositions(...dependencies);
     const poolDefinitions = await resolvePoolDefinitions({ network, multicall });
 
     const curvePoolTokens = await Promise.all(
       poolDefinitions.map(async definition => {
-        const { gaugeAddress, tokenAddress, swapAddress } = definition;
+        const { swapAddress, tokenAddress } = definition;
         const poolContract = resolvePoolContract({ network, definition });
-        const poolTokenContract = resolvePoolTokenContract({ network, definition });
+        const tokenContract = this.appToolkit.globalContracts.erc20({ network, address: definition.tokenAddress });
         const reservesRaw = await resolvePoolReserves({ multicall, poolContract });
 
         const maybeTokens = definition.coinAddresses.map(tokenAddress => {
@@ -98,28 +86,39 @@ export class CurvePoolTokenHelper {
         const isMissingUnderlyingTokens = tokens.length !== maybeTokens.length;
         if (isMissingUnderlyingTokens) return null;
 
-        const [symbol, supplyRaw, feeRaw] = await Promise.all([
-          resolvePoolTokenSymbol({ multicall, poolTokenContract }),
-          resolvePoolTokenSupply({ multicall, poolTokenContract }),
-          resolvePoolFee({ multicall, poolContract }).catch(() => '0'), // @TODO
-        ]);
+        const symbol = await multicall.wrap(tokenContract).symbol();
+        const supplyRaw = await multicall.wrap(tokenContract).totalSupply();
+        const feeRaw = await resolvePoolFee({ multicall, poolContract }).catch(() => '0'); // @TODO
 
         const decimals = 18;
         const supply = Number(supplyRaw) / 10 ** decimals;
         const fee = Number(feeRaw) / 10 ** 10;
         if (supply === 0) return null;
 
+        const poolType = definition.poolType ?? CurvePoolType.STABLE;
+        const volume = definition.volume ?? 0;
+        const apy = definition.apy ?? 0;
+        const gaugeAddress = definition.gaugeAddress ?? ZERO_ADDRESS;
+
         const reserves = reservesRaw.map((r, i) => Number(r) / 10 ** tokens[i].decimals);
-        const underlyingTokens = tokens.flatMap(v => (v.type === ContractType.BASE_TOKEN ? v : v.tokens));
-        const price = await resolvePoolTokenPrice({
-          tokens,
-          reserves,
-          poolContract,
-          multicall,
-          supply,
+        const underlying = tokens.flatMap(v => (v.type === ContractType.APP_TOKEN && v.tokens.length ? v.tokens : v));
+        const virtualPriceRaw = await resolvePoolVirtualPrice({ multicall, poolContract }).catch(err => {
+          // @TODO Create better error handling in Multicall. Throw either a MulticallWeb3CallError, MulticallUnderlyingCallError, MulticallDecodeError
+          if (err.message.includes('Multicall call failed')) return '0'; // underlying call failure, virtual price 0
+          throw err;
         });
-        const volume = definition.volume;
-        const apy = definition.apy;
+
+        let price: number;
+        if (poolType === CurvePoolType.STABLE || poolType === CurvePoolType.FACTORY_STABLE) {
+          const virtualPrice = Number(virtualPriceRaw) / 10 ** 18;
+          const lowestPricedToken = minBy(underlying, t => t.price)!;
+          price = virtualPrice * lowestPricedToken.price;
+        } else {
+          const virtualPrice = Number(virtualPriceRaw) / 10 ** 18;
+          const reservesUSD = tokens.map((t, i) => reserves[i] * t.price);
+          const liquidity = reservesUSD.reduce((total, r) => total + r, 0);
+          price = virtualPrice > 0 ? virtualPrice * (liquidity / supply) : liquidity / supply;
+        }
 
         const pricePerShare = reserves.map(r => r / supply);
         const reservesUSD = tokens.map((t, i) => reserves[i] * t.price);
@@ -130,7 +129,7 @@ export class CurvePoolTokenHelper {
         // Display Properties
         const label = tokens.map(v => getLabelFromToken(v)).join(' / ');
         const secondaryLabel = ratio;
-        const images = underlyingTokens.map(t => getImagesFromToken(t)).flat();
+        const images = underlying.map(t => getImagesFromToken(t)).flat();
 
         const curvePoolToken: AppTokenPosition<CurvePoolTokenDataProps> = {
           type: ContractType.APP_TOKEN,
@@ -146,6 +145,7 @@ export class CurvePoolTokenHelper {
           tokens,
 
           dataProps: {
+            poolType,
             gaugeAddress,
             swapAddress,
             liquidity,
