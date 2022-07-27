@@ -46,7 +46,7 @@ export type CurvePoolDefinition = {
 };
 
 @Injectable()
-export class CurveOnChainRegistry {
+export class CurvePoolTokenRegistry {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(CurveContractFactory) private readonly curveContractFactory: CurveContractFactory,

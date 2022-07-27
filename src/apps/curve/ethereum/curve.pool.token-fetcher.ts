@@ -12,8 +12,8 @@ import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
 import { CURVE_DEFINITION } from '../curve.definition';
-import { CurveStablePoolTokenHelper } from '../helpers/curve.stable-pool.token-helper';
-import { CurveOnChainRegistry } from '../helpers/registry/curve.on-chain.registry';
+import { CurveDefaultPoolTokenHelper } from '../helpers/curve.default.token-helper';
+import { CurvePoolTokenRegistry } from '../helpers/pool-token/curve.pool-token.registry';
 
 const appId = CURVE_DEFINITION.id;
 const groupId = CURVE_DEFINITION.groups.pool.id;
@@ -22,20 +22,17 @@ const network = Network.ETHEREUM_MAINNET;
 @Register.TokenPositionFetcher({ appId, groupId, network })
 export class EthereumCurvePoolTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
-    @Inject(CurveStablePoolTokenHelper)
-    private readonly curveStablePoolTokenHelper: CurveStablePoolTokenHelper,
-    @Inject(CurveOnChainRegistry)
-    private readonly curveOnChainRegistry: CurveOnChainRegistry,
+    @Inject(CurveDefaultPoolTokenHelper)
+    private readonly curveDefaultPoolTokenHelper: CurveDefaultPoolTokenHelper,
+    @Inject(CurvePoolTokenRegistry)
+    private readonly curveOnChainRegistry: CurvePoolTokenRegistry,
   ) {}
 
   async getPositions() {
-    // @TODO: Take into account crypto pool price calculation, take into account metapool partitioning
-    return this.curveStablePoolTokenHelper.getTokens({
+    return this.curveDefaultPoolTokenHelper.getTokens({
       network,
-      appId,
-      groupId,
       poolDefinitions: await this.curveOnChainRegistry.getPoolDefinitions(network),
-      appTokenDependencies: [
+      dependencies: [
         { appId: AAVE_V2_DEFINITION.id, groupIds: [AAVE_V2_DEFINITION.groups.supply.id], network },
         { appId: COMPOUND_DEFINITION.id, groupIds: [COMPOUND_DEFINITION.groups.supply.id], network },
         { appId: SYNTHETIX_DEFINITION.id, groupIds: [SYNTHETIX_DEFINITION.groups.synth.id], network },

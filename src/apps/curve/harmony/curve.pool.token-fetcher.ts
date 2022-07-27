@@ -7,7 +7,7 @@ import { Network } from '~types/network.interface';
 
 import { CURVE_DEFINITION } from '../curve.definition';
 import { CurveCryptoPoolTokenHelper } from '../helpers/curve.crypto-pool.token-helper';
-import { CurveStablePoolTokenHelper } from '../helpers/curve.stable-pool.token-helper';
+import { CurveStablePoolTokenHelper } from '../helpers/curve.default.token-helper';
 
 import { CURVE_STABLE_POOL_DEFINITIONS, CURVE_CRYPTO_POOL_DEFINITIONS } from './curve.pool.definitions';
 

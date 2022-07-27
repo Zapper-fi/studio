@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { BigNumberish } from 'ethers';
-import { compact, minBy } from 'lodash';
+import { compact, minBy, partition } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
@@ -18,7 +18,7 @@ import { Network } from '~types/network.interface';
 
 import { CurveToken } from '../contracts';
 
-import { CurvePoolDefinition, CurvePoolType } from './registry/curve.on-chain.registry';
+import { CurvePoolDefinition, CurvePoolType } from './pool-token/curve.pool-token.registry';
 
 export type CurvePoolTokenDataProps = {
   poolType: CurvePoolType;
@@ -34,10 +34,10 @@ type CurvePoolTokenHelperParams<T = CurveToken> = {
   network: Network;
   appId: string;
   groupId: string;
+  poolDefinitions: CurvePoolDefinition[];
   minLiquidity?: number;
   dependencies?: AppGroupsDefinition[];
   baseCurveTokens?: AppTokenPosition[];
-  resolvePoolDefinitions: (opts: { network: Network; multicall: IMulticallWrapper }) => Promise<CurvePoolDefinition[]>;
   resolvePoolContract: (opts: { network: Network; definition: CurvePoolDefinition }) => T;
   resolvePoolReserves: (opts: { multicall: IMulticallWrapper; poolContract: T }) => Promise<string[]>;
   resolvePoolVirtualPrice: (opts: { multicall: IMulticallWrapper; poolContract: T }) => Promise<BigNumberish>;
@@ -48,24 +48,22 @@ type CurvePoolTokenHelperParams<T = CurveToken> = {
 export class CurvePoolTokenHelper {
   constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
-  async getTokens<T = CurveToken>({
+  private async _getTokens<T = CurveToken>({
     network,
     appId,
     groupId,
+    poolDefinitions,
     minLiquidity = 0,
     dependencies = [],
     baseCurveTokens = [],
-    resolvePoolDefinitions,
     resolvePoolContract,
     resolvePoolReserves,
     resolvePoolVirtualPrice,
     resolvePoolFee,
   }: CurvePoolTokenHelperParams<T>) {
     const multicall = this.appToolkit.getMulticall(network);
-
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
     const appTokens = await this.appToolkit.getAppTokenPositions(...dependencies);
-    const poolDefinitions = await resolvePoolDefinitions({ network, multicall });
 
     const curvePoolTokens = await Promise.all(
       poolDefinitions.map(async definition => {
@@ -192,5 +190,12 @@ export class CurvePoolTokenHelper {
     );
 
     return compact(curvePoolTokens).filter(v => !!v && v.price > 0 && v.dataProps.liquidity >= minLiquidity);
+  }
+
+  async getTokens<T = CurveToken>(params: CurvePoolTokenHelperParams<T>) {
+    const [basePoolDefinitions, metaPoolDefinitions] = partition(params.poolDefinitions, v => !v.isMetaPool);
+    const baseCurveTokens = await this._getTokens({ ...params, poolDefinitions: basePoolDefinitions });
+    const metaCurveTokens = await this._getTokens({ ...params, poolDefinitions: metaPoolDefinitions, baseCurveTokens });
+    return [...baseCurveTokens, ...metaCurveTokens];
   }
 }

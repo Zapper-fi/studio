@@ -6,8 +6,8 @@ import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
 import { CURVE_DEFINITION } from '../curve.definition';
+import { CurveStablePoolTokenHelper } from '../helpers/curve.default.token-helper';
 import { CurveFactoryPoolTokenHelper } from '../helpers/curve.factory-pool.token-helper';
-import { CurveStablePoolTokenHelper } from '../helpers/curve.stable-pool.token-helper';
 
 import { CURVE_STABLE_POOL_DEFINITIONS } from './curve.pool.definitions';
 

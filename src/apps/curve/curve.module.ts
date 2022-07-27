@@ -11,6 +11,7 @@ import { CurveChildLiquidityGaugeRewardTokenStrategy } from './helpers/curve.chi
 import { CurveChildLiquidityGaugeRoiStrategy } from './helpers/curve.child-liquidity-gauge.roi-strategy';
 import { CurveCryptoFactoryPoolTokenHelper } from './helpers/curve.crypto-factory-pool.token-helper';
 import { CurveCryptoFactoryPoolDefinitionStrategy } from './helpers/curve.crypto-factory.pool-definition-strategy';
+import { CurveDefaultPoolTokenHelper } from './helpers/curve.default.token-helper';
 import { CurveFactoryGaugeAddressHelper } from './helpers/curve.factory-gauge.address-helper';
 import { CurveFactoryPoolTokenHelper } from './helpers/curve.factory-pool.token-helper';
 import { CurveFactoryPoolDefinitionStrategy } from './helpers/curve.factory.pool-definition-strategy';
@@ -24,13 +25,12 @@ import { CurveOnChainVolumeStrategy } from './helpers/curve.on-chain.volume-stra
 import { CurvePoolTokenHelper } from './helpers/curve.pool.token-helper';
 import { CurveRewardsOnlyGaugeRewardTokenStrategy } from './helpers/curve.rewards-only-gauge.reward-token-strategy';
 import { CurveRewardsOnlyGaugeRoiStrategy } from './helpers/curve.rewards-only-gauge.roi-strategy';
-import { CurveDefaultPoolTokenHelper } from './helpers/curve.stable-pool.token-helper';
 import { CurveVestingEscrowContractPositionBalanceHelper } from './helpers/curve.vesting-escrow.contract-position-balance-helper';
 import { CurveVestingEscrowContractPositionHelper } from './helpers/curve.vesting-escrow.contract-position-helper';
 import { CurveVirtualPriceStrategy } from './helpers/curve.virtual.price-strategy';
 import { CurveVotingEscrowContractPositionBalanceHelper } from './helpers/curve.voting-escrow.contract-position-balance-helper';
 import { CurveVotingEscrowContractPositionHelper } from './helpers/curve.voting-escrow.contract-position-helper';
-import { CurveOnChainRegistry } from './helpers/registry/curve.on-chain.registry';
+import { CurvePoolTokenRegistry } from './helpers/pool-token/curve.pool-token.registry';
 
 @Register.AppModule({
   appId: CURVE_DEFINITION.id,
@@ -73,7 +73,7 @@ import { CurveOnChainRegistry } from './helpers/registry/curve.on-chain.registry
     // PolygonCurveFarmContractPositionFetcher,
     // Token Helpers
     CurveApiClient,
-    CurveOnChainRegistry,
+    CurvePoolTokenRegistry,
     CurvePoolTokenHelper,
     CurveDefaultPoolTokenHelper,
     CurveFactoryPoolTokenHelper,
