@@ -38,7 +38,7 @@ export class PriceSelectorService implements PriceSelectorFactory {
       string,
       BaseTokenPrice
     >;
-    if (!tokenMap) throw new Error(`Could not retrieve "${network}" tokens from in-memory cache`);
+    if (!tokenMap) throw new Error(`Could not retrieve "${network}" tokens from cache`);
     return tokenMap;
   }
 

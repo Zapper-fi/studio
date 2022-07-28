@@ -18,7 +18,7 @@ export class CacheService implements OnModuleInit {
     @Inject(Reflector) private readonly reflector: Reflector,
   ) {}
 
-  async onModuleInit() {
+  onModuleInit() {
     const instanceWrappers = this.discoveryService.getProviders();
     instanceWrappers
       .filter(wrapper => wrapper.isDependencyTreeStatic() && !!wrapper.instance)
