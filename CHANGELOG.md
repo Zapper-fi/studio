@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.129.0](https://github.com/Zapper-fi/studio/compare/v0.128.3...v0.129.0) (2022-07-28)
+
+
+### Features
+
+* **idle:** moved idle finance to studio ([#961](https://github.com/Zapper-fi/studio/issues/961)) ([0b0b3cb](https://github.com/Zapper-fi/studio/commit/0b0b3cba52322b06a753d34ea26c91cd826b3eca))
+
 ## [0.128.3](https://github.com/Zapper-fi/studio/compare/v0.128.2...v0.128.3) (2022-07-28)
 
 
