@@ -57,14 +57,8 @@ export class OptimismVelodromePoolsTokenFetcher implements PositionFetcher<AppTo
       resolvePoolReserves: async ({ multicall, poolContract }) =>
         Promise.all([multicall.wrap(poolContract).reserve0(), multicall.wrap(poolContract).reserve1()]),
       resolvePoolFee: async () => BigNumber.from(0), // TODO: get actual value
-      resolvePoolTokenSymbol: ({ multicall, poolTokenContract }) => multicall.wrap(poolTokenContract).symbol(),
-      resolvePoolTokenSupply: ({ multicall, poolTokenContract }) => multicall.wrap(poolTokenContract).totalSupply(),
-      resolvePoolTokenPrice: async ({ tokens, reserves, supply }) => {
-        const [token0, token1] = tokens;
-        const [reserve0, reserve1] = reserves;
-        const price = (token0.price * reserve0 + token1.price * reserve1) / supply;
-        return price;
-      },
+      resolvePoolTokenPrice: async ({ tokens, reserves, supply }) =>
+        (tokens[0].price * reserves[0] + tokens[1].price * reserves[1]) / supply,
     });
     return tokens;
   }
