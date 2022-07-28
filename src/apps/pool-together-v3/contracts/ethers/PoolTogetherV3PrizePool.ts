@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface PoolTogetherV3PrizePoolInterface extends utils.Interface {
   functions: {
@@ -118,35 +118,72 @@ export interface PoolTogetherV3PrizePoolInterface extends utils.Interface {
   ): FunctionFragment;
 
   encodeFunctionData(functionFragment: 'accountedBalance', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'addControlledToken', values: [string]): string;
-  encodeFunctionData(functionFragment: 'award', values: [string, BigNumberish, string]): string;
+  encodeFunctionData(functionFragment: 'addControlledToken', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'award',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'awardBalance', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'awardExternalERC20', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'awardExternalERC721', values: [string, string, BigNumberish[]]): string;
+  encodeFunctionData(
+    functionFragment: 'awardExternalERC20',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'awardExternalERC721',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>[]],
+  ): string;
   encodeFunctionData(functionFragment: 'balance', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'balanceOfCredit', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'beforeTokenTransfer', values: [string, string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'balanceOfCredit',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'beforeTokenTransfer',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'cToken', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'calculateEarlyExitFee', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'calculateReserveFee', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'calculateTimelockDuration', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'canAwardExternal', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'calculateEarlyExitFee',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'calculateReserveFee', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'calculateTimelockDuration',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'canAwardExternal', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'captureAwardBalance', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'creditPlanOf', values: [string]): string;
-  encodeFunctionData(functionFragment: 'depositTo', values: [string, BigNumberish, string, string]): string;
+  encodeFunctionData(functionFragment: 'creditPlanOf', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'depositTo',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(
     functionFragment: 'estimateCreditAccrualTime',
-    values: [string, BigNumberish, BigNumberish],
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
   ): string;
   encodeFunctionData(
     functionFragment: 'initialize(address,address,address[],uint256,uint256)',
-    values: [string, string, string[], BigNumberish, BigNumberish],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>[],
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
   encodeFunctionData(
     functionFragment: 'initialize(address,address,address[],uint256,uint256,address)',
-    values: [string, string, string[], BigNumberish, BigNumberish, string],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>[],
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'isTrustedForwarder', values: [string]): string;
+  encodeFunctionData(functionFragment: 'isTrustedForwarder', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'liquidityCap', values?: undefined): string;
   encodeFunctionData(functionFragment: 'maxExitFeeMantissa', values?: undefined): string;
   encodeFunctionData(functionFragment: 'maxTimelockDuration', values?: undefined): string;
@@ -155,26 +192,43 @@ export interface PoolTogetherV3PrizePoolInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
   encodeFunctionData(functionFragment: 'reserveRegistry', values?: undefined): string;
   encodeFunctionData(functionFragment: 'reserveTotalSupply', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'setCreditPlanOf', values: [string, BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setLiquidityCap', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setPrizeStrategy', values: [string]): string;
-  encodeFunctionData(functionFragment: 'sweepTimelockBalances', values: [string[]]): string;
-  encodeFunctionData(functionFragment: 'timelockBalanceAvailableAt', values: [string]): string;
-  encodeFunctionData(functionFragment: 'timelockBalanceOf', values: [string]): string;
-  encodeFunctionData(functionFragment: 'timelockDepositTo', values: [string, BigNumberish, string]): string;
+  encodeFunctionData(
+    functionFragment: 'setCreditPlanOf',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'setLiquidityCap', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setPrizeStrategy', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'sweepTimelockBalances', values: [PromiseOrValue<string>[]]): string;
+  encodeFunctionData(functionFragment: 'timelockBalanceAvailableAt', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'timelockBalanceOf', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'timelockDepositTo',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'timelockTotalSupply', values?: undefined): string;
   encodeFunctionData(functionFragment: 'token', values?: undefined): string;
   encodeFunctionData(functionFragment: 'tokens', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transferExternalERC20', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'transferExternalERC20',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'trustedForwarder', values?: undefined): string;
   encodeFunctionData(functionFragment: 'versionRecipient', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'withdrawInstantlyFrom',
-    values: [string, BigNumberish, string, BigNumberish],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'withdrawReserve', values: [string]): string;
-  encodeFunctionData(functionFragment: 'withdrawWithTimelockFrom', values: [string, BigNumberish, string]): string;
+  encodeFunctionData(functionFragment: 'withdrawReserve', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'withdrawWithTimelockFrom',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
 
   decodeFunctionResult(functionFragment: 'accountedBalance', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'addControlledToken', data: BytesLike): Result;
@@ -499,72 +553,72 @@ export interface PoolTogetherV3PrizePool extends BaseContract {
     accountedBalance(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     addControlledToken(
-      _controlledToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _controlledToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     award(
-      to: string,
-      amount: BigNumberish,
-      controlledToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      controlledToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     awardBalance(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     awardExternalERC20(
-      to: string,
-      externalToken: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      externalToken: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     awardExternalERC721(
-      to: string,
-      externalToken: string,
-      tokenIds: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      externalToken: PromiseOrValue<string>,
+      tokenIds: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    balance(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    balance(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     balanceOfCredit(
-      user: string,
-      controlledToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      user: PromiseOrValue<string>,
+      controlledToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     beforeTokenTransfer(
-      from: string,
-      to: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     cToken(overrides?: CallOverrides): Promise<[string]>;
 
     calculateEarlyExitFee(
-      from: string,
-      controlledToken: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      controlledToken: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    calculateReserveFee(amount: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    calculateReserveFee(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     calculateTimelockDuration(
-      from: string,
-      controlledToken: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      controlledToken: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    canAwardExternal(_externalToken: string, overrides?: CallOverrides): Promise<[boolean]>;
+    canAwardExternal(_externalToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
-    captureAwardBalance(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    captureAwardBalance(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     creditPlanOf(
-      controlledToken: string,
+      controlledToken: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber] & {
@@ -574,40 +628,40 @@ export interface PoolTogetherV3PrizePool extends BaseContract {
     >;
 
     depositTo(
-      to: string,
-      amount: BigNumberish,
-      controlledToken: string,
-      referrer: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      controlledToken: PromiseOrValue<string>,
+      referrer: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     estimateCreditAccrualTime(
-      _controlledToken: string,
-      _principal: BigNumberish,
-      _interest: BigNumberish,
+      _controlledToken: PromiseOrValue<string>,
+      _principal: PromiseOrValue<BigNumberish>,
+      _interest: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber] & { durationSeconds: BigNumber }>;
 
     'initialize(address,address,address[],uint256,uint256)'(
-      _trustedForwarder: string,
-      _reserveRegistry: string,
-      _controlledTokens: string[],
-      _maxExitFeeMantissa: BigNumberish,
-      _maxTimelockDuration: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _trustedForwarder: PromiseOrValue<string>,
+      _reserveRegistry: PromiseOrValue<string>,
+      _controlledTokens: PromiseOrValue<string>[],
+      _maxExitFeeMantissa: PromiseOrValue<BigNumberish>,
+      _maxTimelockDuration: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     'initialize(address,address,address[],uint256,uint256,address)'(
-      _trustedForwarder: string,
-      _reserveRegistry: string,
-      _controlledTokens: string[],
-      _maxExitFeeMantissa: BigNumberish,
-      _maxTimelockDuration: BigNumberish,
-      _cToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _trustedForwarder: PromiseOrValue<string>,
+      _reserveRegistry: PromiseOrValue<string>,
+      _controlledTokens: PromiseOrValue<string>[],
+      _maxExitFeeMantissa: PromiseOrValue<BigNumberish>,
+      _maxTimelockDuration: PromiseOrValue<BigNumberish>,
+      _cToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    isTrustedForwarder(forwarder: string, overrides?: CallOverrides): Promise<[boolean]>;
+    isTrustedForwarder(forwarder: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     liquidityCap(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -619,43 +673,43 @@ export interface PoolTogetherV3PrizePool extends BaseContract {
 
     prizeStrategy(overrides?: CallOverrides): Promise<[string]>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     reserveRegistry(overrides?: CallOverrides): Promise<[string]>;
 
     reserveTotalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     setCreditPlanOf(
-      _controlledToken: string,
-      _creditRateMantissa: BigNumberish,
-      _creditLimitMantissa: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _controlledToken: PromiseOrValue<string>,
+      _creditRateMantissa: PromiseOrValue<BigNumberish>,
+      _creditLimitMantissa: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setLiquidityCap(
-      _liquidityCap: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _liquidityCap: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setPrizeStrategy(
-      _prizeStrategy: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _prizeStrategy: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     sweepTimelockBalances(
-      users: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      users: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    timelockBalanceAvailableAt(user: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    timelockBalanceAvailableAt(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    timelockBalanceOf(user: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    timelockBalanceOf(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     timelockDepositTo(
-      to: string,
-      amount: BigNumberish,
-      controlledToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      controlledToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     timelockTotalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -665,15 +719,15 @@ export interface PoolTogetherV3PrizePool extends BaseContract {
     tokens(overrides?: CallOverrides): Promise<[string[]]>;
 
     transferExternalERC20(
-      to: string,
-      externalToken: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      externalToken: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     trustedForwarder(overrides?: CallOverrides): Promise<[string]>;
@@ -681,95 +735,95 @@ export interface PoolTogetherV3PrizePool extends BaseContract {
     versionRecipient(overrides?: CallOverrides): Promise<[string]>;
 
     withdrawInstantlyFrom(
-      from: string,
-      amount: BigNumberish,
-      controlledToken: string,
-      maximumExitFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      controlledToken: PromiseOrValue<string>,
+      maximumExitFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     withdrawReserve(
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     withdrawWithTimelockFrom(
-      from: string,
-      amount: BigNumberish,
-      controlledToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      controlledToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
   accountedBalance(overrides?: CallOverrides): Promise<BigNumber>;
 
   addControlledToken(
-    _controlledToken: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _controlledToken: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   award(
-    to: string,
-    amount: BigNumberish,
-    controlledToken: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    to: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    controlledToken: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   awardBalance(overrides?: CallOverrides): Promise<BigNumber>;
 
   awardExternalERC20(
-    to: string,
-    externalToken: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    to: PromiseOrValue<string>,
+    externalToken: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   awardExternalERC721(
-    to: string,
-    externalToken: string,
-    tokenIds: BigNumberish[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    to: PromiseOrValue<string>,
+    externalToken: PromiseOrValue<string>,
+    tokenIds: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  balance(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  balance(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   balanceOfCredit(
-    user: string,
-    controlledToken: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    user: PromiseOrValue<string>,
+    controlledToken: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   beforeTokenTransfer(
-    from: string,
-    to: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    from: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   cToken(overrides?: CallOverrides): Promise<string>;
 
   calculateEarlyExitFee(
-    from: string,
-    controlledToken: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    from: PromiseOrValue<string>,
+    controlledToken: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  calculateReserveFee(amount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  calculateReserveFee(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   calculateTimelockDuration(
-    from: string,
-    controlledToken: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    from: PromiseOrValue<string>,
+    controlledToken: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  canAwardExternal(_externalToken: string, overrides?: CallOverrides): Promise<boolean>;
+  canAwardExternal(_externalToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-  captureAwardBalance(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  captureAwardBalance(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   creditPlanOf(
-    controlledToken: string,
+    controlledToken: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber] & {
@@ -779,40 +833,40 @@ export interface PoolTogetherV3PrizePool extends BaseContract {
   >;
 
   depositTo(
-    to: string,
-    amount: BigNumberish,
-    controlledToken: string,
-    referrer: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    to: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    controlledToken: PromiseOrValue<string>,
+    referrer: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   estimateCreditAccrualTime(
-    _controlledToken: string,
-    _principal: BigNumberish,
-    _interest: BigNumberish,
+    _controlledToken: PromiseOrValue<string>,
+    _principal: PromiseOrValue<BigNumberish>,
+    _interest: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
   'initialize(address,address,address[],uint256,uint256)'(
-    _trustedForwarder: string,
-    _reserveRegistry: string,
-    _controlledTokens: string[],
-    _maxExitFeeMantissa: BigNumberish,
-    _maxTimelockDuration: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _trustedForwarder: PromiseOrValue<string>,
+    _reserveRegistry: PromiseOrValue<string>,
+    _controlledTokens: PromiseOrValue<string>[],
+    _maxExitFeeMantissa: PromiseOrValue<BigNumberish>,
+    _maxTimelockDuration: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   'initialize(address,address,address[],uint256,uint256,address)'(
-    _trustedForwarder: string,
-    _reserveRegistry: string,
-    _controlledTokens: string[],
-    _maxExitFeeMantissa: BigNumberish,
-    _maxTimelockDuration: BigNumberish,
-    _cToken: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _trustedForwarder: PromiseOrValue<string>,
+    _reserveRegistry: PromiseOrValue<string>,
+    _controlledTokens: PromiseOrValue<string>[],
+    _maxExitFeeMantissa: PromiseOrValue<BigNumberish>,
+    _maxTimelockDuration: PromiseOrValue<BigNumberish>,
+    _cToken: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  isTrustedForwarder(forwarder: string, overrides?: CallOverrides): Promise<boolean>;
+  isTrustedForwarder(forwarder: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   liquidityCap(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -824,43 +878,43 @@ export interface PoolTogetherV3PrizePool extends BaseContract {
 
   prizeStrategy(overrides?: CallOverrides): Promise<string>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   reserveRegistry(overrides?: CallOverrides): Promise<string>;
 
   reserveTotalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   setCreditPlanOf(
-    _controlledToken: string,
-    _creditRateMantissa: BigNumberish,
-    _creditLimitMantissa: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _controlledToken: PromiseOrValue<string>,
+    _creditRateMantissa: PromiseOrValue<BigNumberish>,
+    _creditLimitMantissa: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setLiquidityCap(
-    _liquidityCap: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _liquidityCap: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setPrizeStrategy(
-    _prizeStrategy: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _prizeStrategy: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   sweepTimelockBalances(
-    users: string[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    users: PromiseOrValue<string>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  timelockBalanceAvailableAt(user: string, overrides?: CallOverrides): Promise<BigNumber>;
+  timelockBalanceAvailableAt(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  timelockBalanceOf(user: string, overrides?: CallOverrides): Promise<BigNumber>;
+  timelockBalanceOf(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   timelockDepositTo(
-    to: string,
-    amount: BigNumberish,
-    controlledToken: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    to: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    controlledToken: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   timelockTotalSupply(overrides?: CallOverrides): Promise<BigNumber>;
@@ -870,15 +924,15 @@ export interface PoolTogetherV3PrizePool extends BaseContract {
   tokens(overrides?: CallOverrides): Promise<string[]>;
 
   transferExternalERC20(
-    to: string,
-    externalToken: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    to: PromiseOrValue<string>,
+    externalToken: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   trustedForwarder(overrides?: CallOverrides): Promise<string>;
@@ -886,69 +940,83 @@ export interface PoolTogetherV3PrizePool extends BaseContract {
   versionRecipient(overrides?: CallOverrides): Promise<string>;
 
   withdrawInstantlyFrom(
-    from: string,
-    amount: BigNumberish,
-    controlledToken: string,
-    maximumExitFee: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    from: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    controlledToken: PromiseOrValue<string>,
+    maximumExitFee: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   withdrawReserve(
-    to: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    to: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   withdrawWithTimelockFrom(
-    from: string,
-    amount: BigNumberish,
-    controlledToken: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    from: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    controlledToken: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
     accountedBalance(overrides?: CallOverrides): Promise<BigNumber>;
 
-    addControlledToken(_controlledToken: string, overrides?: CallOverrides): Promise<void>;
+    addControlledToken(_controlledToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    award(to: string, amount: BigNumberish, controlledToken: string, overrides?: CallOverrides): Promise<void>;
+    award(
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      controlledToken: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     awardBalance(overrides?: CallOverrides): Promise<BigNumber>;
 
     awardExternalERC20(
-      to: string,
-      externalToken: string,
-      amount: BigNumberish,
+      to: PromiseOrValue<string>,
+      externalToken: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     awardExternalERC721(
-      to: string,
-      externalToken: string,
-      tokenIds: BigNumberish[],
+      to: PromiseOrValue<string>,
+      externalToken: PromiseOrValue<string>,
+      tokenIds: PromiseOrValue<BigNumberish>[],
       overrides?: CallOverrides,
     ): Promise<void>;
 
     balance(overrides?: CallOverrides): Promise<BigNumber>;
 
-    balanceOfCredit(user: string, controlledToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOfCredit(
+      user: PromiseOrValue<string>,
+      controlledToken: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    beforeTokenTransfer(from: string, to: string, amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    beforeTokenTransfer(
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     cToken(overrides?: CallOverrides): Promise<string>;
 
     calculateEarlyExitFee(
-      from: string,
-      controlledToken: string,
-      amount: BigNumberish,
+      from: PromiseOrValue<string>,
+      controlledToken: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { exitFee: BigNumber; burnedCredit: BigNumber }>;
 
-    calculateReserveFee(amount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    calculateReserveFee(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     calculateTimelockDuration(
-      from: string,
-      controlledToken: string,
-      amount: BigNumberish,
+      from: PromiseOrValue<string>,
+      controlledToken: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber] & {
@@ -957,12 +1025,12 @@ export interface PoolTogetherV3PrizePool extends BaseContract {
       }
     >;
 
-    canAwardExternal(_externalToken: string, overrides?: CallOverrides): Promise<boolean>;
+    canAwardExternal(_externalToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     captureAwardBalance(overrides?: CallOverrides): Promise<BigNumber>;
 
     creditPlanOf(
-      controlledToken: string,
+      controlledToken: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber] & {
@@ -972,40 +1040,40 @@ export interface PoolTogetherV3PrizePool extends BaseContract {
     >;
 
     depositTo(
-      to: string,
-      amount: BigNumberish,
-      controlledToken: string,
-      referrer: string,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      controlledToken: PromiseOrValue<string>,
+      referrer: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     estimateCreditAccrualTime(
-      _controlledToken: string,
-      _principal: BigNumberish,
-      _interest: BigNumberish,
+      _controlledToken: PromiseOrValue<string>,
+      _principal: PromiseOrValue<BigNumberish>,
+      _interest: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     'initialize(address,address,address[],uint256,uint256)'(
-      _trustedForwarder: string,
-      _reserveRegistry: string,
-      _controlledTokens: string[],
-      _maxExitFeeMantissa: BigNumberish,
-      _maxTimelockDuration: BigNumberish,
+      _trustedForwarder: PromiseOrValue<string>,
+      _reserveRegistry: PromiseOrValue<string>,
+      _controlledTokens: PromiseOrValue<string>[],
+      _maxExitFeeMantissa: PromiseOrValue<BigNumberish>,
+      _maxTimelockDuration: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     'initialize(address,address,address[],uint256,uint256,address)'(
-      _trustedForwarder: string,
-      _reserveRegistry: string,
-      _controlledTokens: string[],
-      _maxExitFeeMantissa: BigNumberish,
-      _maxTimelockDuration: BigNumberish,
-      _cToken: string,
+      _trustedForwarder: PromiseOrValue<string>,
+      _reserveRegistry: PromiseOrValue<string>,
+      _controlledTokens: PromiseOrValue<string>[],
+      _maxExitFeeMantissa: PromiseOrValue<BigNumberish>,
+      _maxTimelockDuration: PromiseOrValue<BigNumberish>,
+      _cToken: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    isTrustedForwarder(forwarder: string, overrides?: CallOverrides): Promise<boolean>;
+    isTrustedForwarder(forwarder: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     liquidityCap(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1024,26 +1092,26 @@ export interface PoolTogetherV3PrizePool extends BaseContract {
     reserveTotalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     setCreditPlanOf(
-      _controlledToken: string,
-      _creditRateMantissa: BigNumberish,
-      _creditLimitMantissa: BigNumberish,
+      _controlledToken: PromiseOrValue<string>,
+      _creditRateMantissa: PromiseOrValue<BigNumberish>,
+      _creditLimitMantissa: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    setLiquidityCap(_liquidityCap: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setLiquidityCap(_liquidityCap: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setPrizeStrategy(_prizeStrategy: string, overrides?: CallOverrides): Promise<void>;
+    setPrizeStrategy(_prizeStrategy: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    sweepTimelockBalances(users: string[], overrides?: CallOverrides): Promise<BigNumber>;
+    sweepTimelockBalances(users: PromiseOrValue<string>[], overrides?: CallOverrides): Promise<BigNumber>;
 
-    timelockBalanceAvailableAt(user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    timelockBalanceAvailableAt(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    timelockBalanceOf(user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    timelockBalanceOf(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     timelockDepositTo(
-      to: string,
-      amount: BigNumberish,
-      controlledToken: string,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      controlledToken: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -1054,32 +1122,32 @@ export interface PoolTogetherV3PrizePool extends BaseContract {
     tokens(overrides?: CallOverrides): Promise<string[]>;
 
     transferExternalERC20(
-      to: string,
-      externalToken: string,
-      amount: BigNumberish,
+      to: PromiseOrValue<string>,
+      externalToken: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     trustedForwarder(overrides?: CallOverrides): Promise<string>;
 
     versionRecipient(overrides?: CallOverrides): Promise<string>;
 
     withdrawInstantlyFrom(
-      from: string,
-      amount: BigNumberish,
-      controlledToken: string,
-      maximumExitFee: BigNumberish,
+      from: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      controlledToken: PromiseOrValue<string>,
+      maximumExitFee: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    withdrawReserve(to: string, overrides?: CallOverrides): Promise<BigNumber>;
+    withdrawReserve(to: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     withdrawWithTimelockFrom(
-      from: string,
-      amount: BigNumberish,
-      controlledToken: string,
+      from: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      controlledToken: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
   };
@@ -1089,49 +1157,67 @@ export interface PoolTogetherV3PrizePool extends BaseContract {
     AwardCaptured(amount?: null): AwardCapturedEventFilter;
 
     'Awarded(address,address,uint256)'(
-      winner?: string | null,
-      token?: string | null,
+      winner?: PromiseOrValue<string> | null,
+      token?: PromiseOrValue<string> | null,
       amount?: null,
     ): AwardedEventFilter;
-    Awarded(winner?: string | null, token?: string | null, amount?: null): AwardedEventFilter;
+    Awarded(
+      winner?: PromiseOrValue<string> | null,
+      token?: PromiseOrValue<string> | null,
+      amount?: null,
+    ): AwardedEventFilter;
 
     'AwardedExternalERC20(address,address,uint256)'(
-      winner?: string | null,
-      token?: string | null,
+      winner?: PromiseOrValue<string> | null,
+      token?: PromiseOrValue<string> | null,
       amount?: null,
     ): AwardedExternalERC20EventFilter;
-    AwardedExternalERC20(winner?: string | null, token?: string | null, amount?: null): AwardedExternalERC20EventFilter;
+    AwardedExternalERC20(
+      winner?: PromiseOrValue<string> | null,
+      token?: PromiseOrValue<string> | null,
+      amount?: null,
+    ): AwardedExternalERC20EventFilter;
 
     'AwardedExternalERC721(address,address,uint256[])'(
-      winner?: string | null,
-      token?: string | null,
+      winner?: PromiseOrValue<string> | null,
+      token?: PromiseOrValue<string> | null,
       tokenIds?: null,
     ): AwardedExternalERC721EventFilter;
     AwardedExternalERC721(
-      winner?: string | null,
-      token?: string | null,
+      winner?: PromiseOrValue<string> | null,
+      token?: PromiseOrValue<string> | null,
       tokenIds?: null,
     ): AwardedExternalERC721EventFilter;
 
-    'CompoundPrizePoolInitialized(address)'(cToken?: string | null): CompoundPrizePoolInitializedEventFilter;
-    CompoundPrizePoolInitialized(cToken?: string | null): CompoundPrizePoolInitializedEventFilter;
+    'CompoundPrizePoolInitialized(address)'(
+      cToken?: PromiseOrValue<string> | null,
+    ): CompoundPrizePoolInitializedEventFilter;
+    CompoundPrizePoolInitialized(cToken?: PromiseOrValue<string> | null): CompoundPrizePoolInitializedEventFilter;
 
-    'ControlledTokenAdded(address)'(token?: string | null): ControlledTokenAddedEventFilter;
-    ControlledTokenAdded(token?: string | null): ControlledTokenAddedEventFilter;
+    'ControlledTokenAdded(address)'(token?: PromiseOrValue<string> | null): ControlledTokenAddedEventFilter;
+    ControlledTokenAdded(token?: PromiseOrValue<string> | null): ControlledTokenAddedEventFilter;
 
     'CreditBurned(address,address,uint256)'(
-      user?: string | null,
-      token?: string | null,
+      user?: PromiseOrValue<string> | null,
+      token?: PromiseOrValue<string> | null,
       amount?: null,
     ): CreditBurnedEventFilter;
-    CreditBurned(user?: string | null, token?: string | null, amount?: null): CreditBurnedEventFilter;
+    CreditBurned(
+      user?: PromiseOrValue<string> | null,
+      token?: PromiseOrValue<string> | null,
+      amount?: null,
+    ): CreditBurnedEventFilter;
 
     'CreditMinted(address,address,uint256)'(
-      user?: string | null,
-      token?: string | null,
+      user?: PromiseOrValue<string> | null,
+      token?: PromiseOrValue<string> | null,
       amount?: null,
     ): CreditMintedEventFilter;
-    CreditMinted(user?: string | null, token?: string | null, amount?: null): CreditMintedEventFilter;
+    CreditMinted(
+      user?: PromiseOrValue<string> | null,
+      token?: PromiseOrValue<string> | null,
+      amount?: null,
+    ): CreditMintedEventFilter;
 
     'CreditPlanSet(address,uint128,uint128)'(
       token?: null,
@@ -1141,16 +1227,16 @@ export interface PoolTogetherV3PrizePool extends BaseContract {
     CreditPlanSet(token?: null, creditLimitMantissa?: null, creditRateMantissa?: null): CreditPlanSetEventFilter;
 
     'Deposited(address,address,address,uint256,address)'(
-      operator?: string | null,
-      to?: string | null,
-      token?: string | null,
+      operator?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      token?: PromiseOrValue<string> | null,
       amount?: null,
       referrer?: null,
     ): DepositedEventFilter;
     Deposited(
-      operator?: string | null,
-      to?: string | null,
-      token?: string | null,
+      operator?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      token?: PromiseOrValue<string> | null,
       amount?: null,
       referrer?: null,
     ): DepositedEventFilter;
@@ -1169,17 +1255,17 @@ export interface PoolTogetherV3PrizePool extends BaseContract {
     ): InitializedEventFilter;
 
     'InstantWithdrawal(address,address,address,uint256,uint256,uint256)'(
-      operator?: string | null,
-      from?: string | null,
-      token?: string | null,
+      operator?: PromiseOrValue<string> | null,
+      from?: PromiseOrValue<string> | null,
+      token?: PromiseOrValue<string> | null,
       amount?: null,
       redeemed?: null,
       exitFee?: null,
     ): InstantWithdrawalEventFilter;
     InstantWithdrawal(
-      operator?: string | null,
-      from?: string | null,
-      token?: string | null,
+      operator?: PromiseOrValue<string> | null,
+      from?: PromiseOrValue<string> | null,
+      token?: PromiseOrValue<string> | null,
       amount?: null,
       redeemed?: null,
       exitFee?: null,
@@ -1189,69 +1275,75 @@ export interface PoolTogetherV3PrizePool extends BaseContract {
     LiquidityCapSet(liquidityCap?: null): LiquidityCapSetEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
 
-    'PrizeStrategySet(address)'(prizeStrategy?: string | null): PrizeStrategySetEventFilter;
-    PrizeStrategySet(prizeStrategy?: string | null): PrizeStrategySetEventFilter;
+    'PrizeStrategySet(address)'(prizeStrategy?: PromiseOrValue<string> | null): PrizeStrategySetEventFilter;
+    PrizeStrategySet(prizeStrategy?: PromiseOrValue<string> | null): PrizeStrategySetEventFilter;
 
     'ReserveFeeCaptured(uint256)'(amount?: null): ReserveFeeCapturedEventFilter;
     ReserveFeeCaptured(amount?: null): ReserveFeeCapturedEventFilter;
 
-    'ReserveWithdrawal(address,uint256)'(to?: string | null, amount?: null): ReserveWithdrawalEventFilter;
-    ReserveWithdrawal(to?: string | null, amount?: null): ReserveWithdrawalEventFilter;
+    'ReserveWithdrawal(address,uint256)'(
+      to?: PromiseOrValue<string> | null,
+      amount?: null,
+    ): ReserveWithdrawalEventFilter;
+    ReserveWithdrawal(to?: PromiseOrValue<string> | null, amount?: null): ReserveWithdrawalEventFilter;
 
     'TimelockDeposited(address,address,address,uint256)'(
-      operator?: string | null,
-      to?: string | null,
-      token?: string | null,
+      operator?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      token?: PromiseOrValue<string> | null,
       amount?: null,
     ): TimelockDepositedEventFilter;
     TimelockDeposited(
-      operator?: string | null,
-      to?: string | null,
-      token?: string | null,
+      operator?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      token?: PromiseOrValue<string> | null,
       amount?: null,
     ): TimelockDepositedEventFilter;
 
     'TimelockedWithdrawal(address,address,address,uint256,uint256)'(
-      operator?: string | null,
-      from?: string | null,
-      token?: string | null,
+      operator?: PromiseOrValue<string> | null,
+      from?: PromiseOrValue<string> | null,
+      token?: PromiseOrValue<string> | null,
       amount?: null,
       unlockTimestamp?: null,
     ): TimelockedWithdrawalEventFilter;
     TimelockedWithdrawal(
-      operator?: string | null,
-      from?: string | null,
-      token?: string | null,
+      operator?: PromiseOrValue<string> | null,
+      from?: PromiseOrValue<string> | null,
+      token?: PromiseOrValue<string> | null,
       amount?: null,
       unlockTimestamp?: null,
     ): TimelockedWithdrawalEventFilter;
 
     'TimelockedWithdrawalSwept(address,address,uint256,uint256)'(
-      operator?: string | null,
-      from?: string | null,
+      operator?: PromiseOrValue<string> | null,
+      from?: PromiseOrValue<string> | null,
       amount?: null,
       redeemed?: null,
     ): TimelockedWithdrawalSweptEventFilter;
     TimelockedWithdrawalSwept(
-      operator?: string | null,
-      from?: string | null,
+      operator?: PromiseOrValue<string> | null,
+      from?: PromiseOrValue<string> | null,
       amount?: null,
       redeemed?: null,
     ): TimelockedWithdrawalSweptEventFilter;
 
     'TransferredExternalERC20(address,address,uint256)'(
-      to?: string | null,
-      token?: string | null,
+      to?: PromiseOrValue<string> | null,
+      token?: PromiseOrValue<string> | null,
       amount?: null,
     ): TransferredExternalERC20EventFilter;
     TransferredExternalERC20(
-      to?: string | null,
-      token?: string | null,
+      to?: PromiseOrValue<string> | null,
+      token?: PromiseOrValue<string> | null,
       amount?: null,
     ): TransferredExternalERC20EventFilter;
   };
@@ -1260,107 +1352,107 @@ export interface PoolTogetherV3PrizePool extends BaseContract {
     accountedBalance(overrides?: CallOverrides): Promise<BigNumber>;
 
     addControlledToken(
-      _controlledToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _controlledToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     award(
-      to: string,
-      amount: BigNumberish,
-      controlledToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      controlledToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     awardBalance(overrides?: CallOverrides): Promise<BigNumber>;
 
     awardExternalERC20(
-      to: string,
-      externalToken: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      externalToken: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     awardExternalERC721(
-      to: string,
-      externalToken: string,
-      tokenIds: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      externalToken: PromiseOrValue<string>,
+      tokenIds: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    balance(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    balance(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     balanceOfCredit(
-      user: string,
-      controlledToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      user: PromiseOrValue<string>,
+      controlledToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     beforeTokenTransfer(
-      from: string,
-      to: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     cToken(overrides?: CallOverrides): Promise<BigNumber>;
 
     calculateEarlyExitFee(
-      from: string,
-      controlledToken: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      controlledToken: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    calculateReserveFee(amount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    calculateReserveFee(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     calculateTimelockDuration(
-      from: string,
-      controlledToken: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      controlledToken: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    canAwardExternal(_externalToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+    canAwardExternal(_externalToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    captureAwardBalance(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    captureAwardBalance(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    creditPlanOf(controlledToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+    creditPlanOf(controlledToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     depositTo(
-      to: string,
-      amount: BigNumberish,
-      controlledToken: string,
-      referrer: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      controlledToken: PromiseOrValue<string>,
+      referrer: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     estimateCreditAccrualTime(
-      _controlledToken: string,
-      _principal: BigNumberish,
-      _interest: BigNumberish,
+      _controlledToken: PromiseOrValue<string>,
+      _principal: PromiseOrValue<BigNumberish>,
+      _interest: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     'initialize(address,address,address[],uint256,uint256)'(
-      _trustedForwarder: string,
-      _reserveRegistry: string,
-      _controlledTokens: string[],
-      _maxExitFeeMantissa: BigNumberish,
-      _maxTimelockDuration: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _trustedForwarder: PromiseOrValue<string>,
+      _reserveRegistry: PromiseOrValue<string>,
+      _controlledTokens: PromiseOrValue<string>[],
+      _maxExitFeeMantissa: PromiseOrValue<BigNumberish>,
+      _maxTimelockDuration: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     'initialize(address,address,address[],uint256,uint256,address)'(
-      _trustedForwarder: string,
-      _reserveRegistry: string,
-      _controlledTokens: string[],
-      _maxExitFeeMantissa: BigNumberish,
-      _maxTimelockDuration: BigNumberish,
-      _cToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _trustedForwarder: PromiseOrValue<string>,
+      _reserveRegistry: PromiseOrValue<string>,
+      _controlledTokens: PromiseOrValue<string>[],
+      _maxExitFeeMantissa: PromiseOrValue<BigNumberish>,
+      _maxTimelockDuration: PromiseOrValue<BigNumberish>,
+      _cToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    isTrustedForwarder(forwarder: string, overrides?: CallOverrides): Promise<BigNumber>;
+    isTrustedForwarder(forwarder: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     liquidityCap(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1372,43 +1464,43 @@ export interface PoolTogetherV3PrizePool extends BaseContract {
 
     prizeStrategy(overrides?: CallOverrides): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     reserveRegistry(overrides?: CallOverrides): Promise<BigNumber>;
 
     reserveTotalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     setCreditPlanOf(
-      _controlledToken: string,
-      _creditRateMantissa: BigNumberish,
-      _creditLimitMantissa: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _controlledToken: PromiseOrValue<string>,
+      _creditRateMantissa: PromiseOrValue<BigNumberish>,
+      _creditLimitMantissa: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setLiquidityCap(
-      _liquidityCap: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _liquidityCap: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setPrizeStrategy(
-      _prizeStrategy: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _prizeStrategy: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     sweepTimelockBalances(
-      users: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      users: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    timelockBalanceAvailableAt(user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    timelockBalanceAvailableAt(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    timelockBalanceOf(user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    timelockBalanceOf(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     timelockDepositTo(
-      to: string,
-      amount: BigNumberish,
-      controlledToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      controlledToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     timelockTotalSupply(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1418,15 +1510,15 @@ export interface PoolTogetherV3PrizePool extends BaseContract {
     tokens(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferExternalERC20(
-      to: string,
-      externalToken: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      externalToken: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     trustedForwarder(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1434,20 +1526,23 @@ export interface PoolTogetherV3PrizePool extends BaseContract {
     versionRecipient(overrides?: CallOverrides): Promise<BigNumber>;
 
     withdrawInstantlyFrom(
-      from: string,
-      amount: BigNumberish,
-      controlledToken: string,
-      maximumExitFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      controlledToken: PromiseOrValue<string>,
+      maximumExitFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    withdrawReserve(to: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    withdrawReserve(
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     withdrawWithTimelockFrom(
-      from: string,
-      amount: BigNumberish,
-      controlledToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      controlledToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
@@ -1455,107 +1550,107 @@ export interface PoolTogetherV3PrizePool extends BaseContract {
     accountedBalance(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     addControlledToken(
-      _controlledToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _controlledToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     award(
-      to: string,
-      amount: BigNumberish,
-      controlledToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      controlledToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     awardBalance(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     awardExternalERC20(
-      to: string,
-      externalToken: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      externalToken: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     awardExternalERC721(
-      to: string,
-      externalToken: string,
-      tokenIds: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      externalToken: PromiseOrValue<string>,
+      tokenIds: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    balance(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    balance(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     balanceOfCredit(
-      user: string,
-      controlledToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      user: PromiseOrValue<string>,
+      controlledToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     beforeTokenTransfer(
-      from: string,
-      to: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     cToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     calculateEarlyExitFee(
-      from: string,
-      controlledToken: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      controlledToken: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    calculateReserveFee(amount: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    calculateReserveFee(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     calculateTimelockDuration(
-      from: string,
-      controlledToken: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      controlledToken: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    canAwardExternal(_externalToken: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    canAwardExternal(_externalToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    captureAwardBalance(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    captureAwardBalance(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    creditPlanOf(controlledToken: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    creditPlanOf(controlledToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     depositTo(
-      to: string,
-      amount: BigNumberish,
-      controlledToken: string,
-      referrer: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      controlledToken: PromiseOrValue<string>,
+      referrer: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     estimateCreditAccrualTime(
-      _controlledToken: string,
-      _principal: BigNumberish,
-      _interest: BigNumberish,
+      _controlledToken: PromiseOrValue<string>,
+      _principal: PromiseOrValue<BigNumberish>,
+      _interest: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     'initialize(address,address,address[],uint256,uint256)'(
-      _trustedForwarder: string,
-      _reserveRegistry: string,
-      _controlledTokens: string[],
-      _maxExitFeeMantissa: BigNumberish,
-      _maxTimelockDuration: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _trustedForwarder: PromiseOrValue<string>,
+      _reserveRegistry: PromiseOrValue<string>,
+      _controlledTokens: PromiseOrValue<string>[],
+      _maxExitFeeMantissa: PromiseOrValue<BigNumberish>,
+      _maxTimelockDuration: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     'initialize(address,address,address[],uint256,uint256,address)'(
-      _trustedForwarder: string,
-      _reserveRegistry: string,
-      _controlledTokens: string[],
-      _maxExitFeeMantissa: BigNumberish,
-      _maxTimelockDuration: BigNumberish,
-      _cToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _trustedForwarder: PromiseOrValue<string>,
+      _reserveRegistry: PromiseOrValue<string>,
+      _controlledTokens: PromiseOrValue<string>[],
+      _maxExitFeeMantissa: PromiseOrValue<BigNumberish>,
+      _maxTimelockDuration: PromiseOrValue<BigNumberish>,
+      _cToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    isTrustedForwarder(forwarder: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    isTrustedForwarder(forwarder: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     liquidityCap(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1567,43 +1662,43 @@ export interface PoolTogetherV3PrizePool extends BaseContract {
 
     prizeStrategy(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     reserveRegistry(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     reserveTotalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setCreditPlanOf(
-      _controlledToken: string,
-      _creditRateMantissa: BigNumberish,
-      _creditLimitMantissa: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _controlledToken: PromiseOrValue<string>,
+      _creditRateMantissa: PromiseOrValue<BigNumberish>,
+      _creditLimitMantissa: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setLiquidityCap(
-      _liquidityCap: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _liquidityCap: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setPrizeStrategy(
-      _prizeStrategy: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _prizeStrategy: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     sweepTimelockBalances(
-      users: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      users: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    timelockBalanceAvailableAt(user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    timelockBalanceAvailableAt(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    timelockBalanceOf(user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    timelockBalanceOf(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     timelockDepositTo(
-      to: string,
-      amount: BigNumberish,
-      controlledToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      controlledToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     timelockTotalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1613,15 +1708,15 @@ export interface PoolTogetherV3PrizePool extends BaseContract {
     tokens(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferExternalERC20(
-      to: string,
-      externalToken: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      externalToken: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     trustedForwarder(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1629,23 +1724,23 @@ export interface PoolTogetherV3PrizePool extends BaseContract {
     versionRecipient(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     withdrawInstantlyFrom(
-      from: string,
-      amount: BigNumberish,
-      controlledToken: string,
-      maximumExitFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      controlledToken: PromiseOrValue<string>,
+      maximumExitFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     withdrawReserve(
-      to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     withdrawWithTimelockFrom(
-      from: string,
-      amount: BigNumberish,
-      controlledToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      controlledToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

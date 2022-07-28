@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface LiquityStakingInterface extends utils.Interface {
   functions: {
@@ -73,21 +73,30 @@ export interface LiquityStakingInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'NAME', values?: undefined): string;
   encodeFunctionData(functionFragment: 'activePoolAddress', values?: undefined): string;
   encodeFunctionData(functionFragment: 'borrowerOperationsAddress', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getPendingETHGain', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getPendingLUSDGain', values: [string]): string;
-  encodeFunctionData(functionFragment: 'increaseF_ETH', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'increaseF_LUSD', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'getPendingETHGain', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getPendingLUSDGain', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'increaseF_ETH', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'increaseF_LUSD', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'isOwner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'lqtyToken', values?: undefined): string;
   encodeFunctionData(functionFragment: 'lusdToken', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'setAddresses', values: [string, string, string, string, string]): string;
-  encodeFunctionData(functionFragment: 'snapshots', values: [string]): string;
-  encodeFunctionData(functionFragment: 'stake', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'stakes', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'setAddresses',
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+    ],
+  ): string;
+  encodeFunctionData(functionFragment: 'snapshots', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'stake', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'stakes', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'totalLQTYStaked', values?: undefined): string;
   encodeFunctionData(functionFragment: 'troveManagerAddress', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'unstake', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'unstake', values: [PromiseOrValue<BigNumberish>]): string;
 
   decodeFunctionResult(functionFragment: 'DECIMAL_PRECISION', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'F_ETH', data: BytesLike): Result;
@@ -275,18 +284,18 @@ export interface LiquityStaking extends BaseContract {
 
     borrowerOperationsAddress(overrides?: CallOverrides): Promise<[string]>;
 
-    getPendingETHGain(_user: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getPendingETHGain(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getPendingLUSDGain(_user: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getPendingLUSDGain(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     increaseF_ETH(
-      _ETHFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _ETHFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     increaseF_LUSD(
-      _LUSDFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _LUSDFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     isOwner(overrides?: CallOverrides): Promise<[boolean]>;
@@ -298,16 +307,16 @@ export interface LiquityStaking extends BaseContract {
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     setAddresses(
-      _lqtyTokenAddress: string,
-      _lusdTokenAddress: string,
-      _troveManagerAddress: string,
-      _borrowerOperationsAddress: string,
-      _activePoolAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _lqtyTokenAddress: PromiseOrValue<string>,
+      _lusdTokenAddress: PromiseOrValue<string>,
+      _troveManagerAddress: PromiseOrValue<string>,
+      _borrowerOperationsAddress: PromiseOrValue<string>,
+      _activePoolAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     snapshots(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber] & {
@@ -317,19 +326,19 @@ export interface LiquityStaking extends BaseContract {
     >;
 
     stake(
-      _LQTYamount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _LQTYamount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    stakes(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    stakes(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     totalLQTYStaked(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     troveManagerAddress(overrides?: CallOverrides): Promise<[string]>;
 
     unstake(
-      _LQTYamount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _LQTYamount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
@@ -345,18 +354,18 @@ export interface LiquityStaking extends BaseContract {
 
   borrowerOperationsAddress(overrides?: CallOverrides): Promise<string>;
 
-  getPendingETHGain(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getPendingETHGain(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  getPendingLUSDGain(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getPendingLUSDGain(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   increaseF_ETH(
-    _ETHFee: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _ETHFee: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   increaseF_LUSD(
-    _LUSDFee: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _LUSDFee: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   isOwner(overrides?: CallOverrides): Promise<boolean>;
@@ -368,16 +377,16 @@ export interface LiquityStaking extends BaseContract {
   owner(overrides?: CallOverrides): Promise<string>;
 
   setAddresses(
-    _lqtyTokenAddress: string,
-    _lusdTokenAddress: string,
-    _troveManagerAddress: string,
-    _borrowerOperationsAddress: string,
-    _activePoolAddress: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _lqtyTokenAddress: PromiseOrValue<string>,
+    _lusdTokenAddress: PromiseOrValue<string>,
+    _troveManagerAddress: PromiseOrValue<string>,
+    _borrowerOperationsAddress: PromiseOrValue<string>,
+    _activePoolAddress: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   snapshots(
-    arg0: string,
+    arg0: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber] & {
@@ -387,19 +396,19 @@ export interface LiquityStaking extends BaseContract {
   >;
 
   stake(
-    _LQTYamount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _LQTYamount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  stakes(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  stakes(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   totalLQTYStaked(overrides?: CallOverrides): Promise<BigNumber>;
 
   troveManagerAddress(overrides?: CallOverrides): Promise<string>;
 
   unstake(
-    _LQTYamount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _LQTYamount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
@@ -415,13 +424,13 @@ export interface LiquityStaking extends BaseContract {
 
     borrowerOperationsAddress(overrides?: CallOverrides): Promise<string>;
 
-    getPendingETHGain(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getPendingETHGain(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getPendingLUSDGain(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getPendingLUSDGain(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    increaseF_ETH(_ETHFee: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    increaseF_ETH(_ETHFee: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    increaseF_LUSD(_LUSDFee: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    increaseF_LUSD(_LUSDFee: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     isOwner(overrides?: CallOverrides): Promise<boolean>;
 
@@ -432,16 +441,16 @@ export interface LiquityStaking extends BaseContract {
     owner(overrides?: CallOverrides): Promise<string>;
 
     setAddresses(
-      _lqtyTokenAddress: string,
-      _lusdTokenAddress: string,
-      _troveManagerAddress: string,
-      _borrowerOperationsAddress: string,
-      _activePoolAddress: string,
+      _lqtyTokenAddress: PromiseOrValue<string>,
+      _lusdTokenAddress: PromiseOrValue<string>,
+      _troveManagerAddress: PromiseOrValue<string>,
+      _borrowerOperationsAddress: PromiseOrValue<string>,
+      _activePoolAddress: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     snapshots(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber] & {
@@ -450,15 +459,15 @@ export interface LiquityStaking extends BaseContract {
       }
     >;
 
-    stake(_LQTYamount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    stake(_LQTYamount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    stakes(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    stakes(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     totalLQTYStaked(overrides?: CallOverrides): Promise<BigNumber>;
 
     troveManagerAddress(overrides?: CallOverrides): Promise<string>;
 
-    unstake(_LQTYamount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    unstake(_LQTYamount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
@@ -484,13 +493,16 @@ export interface LiquityStaking extends BaseContract {
     LUSDTokenAddressSet(_lusdTokenAddress?: null): LUSDTokenAddressSetEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
 
-    'StakeChanged(address,uint256)'(staker?: string | null, newStake?: null): StakeChangedEventFilter;
-    StakeChanged(staker?: string | null, newStake?: null): StakeChangedEventFilter;
+    'StakeChanged(address,uint256)'(staker?: PromiseOrValue<string> | null, newStake?: null): StakeChangedEventFilter;
+    StakeChanged(staker?: PromiseOrValue<string> | null, newStake?: null): StakeChangedEventFilter;
 
     'StakerSnapshotsUpdated(address,uint256,uint256)'(
       _staker?: null,
@@ -500,11 +512,15 @@ export interface LiquityStaking extends BaseContract {
     StakerSnapshotsUpdated(_staker?: null, _F_ETH?: null, _F_LUSD?: null): StakerSnapshotsUpdatedEventFilter;
 
     'StakingGainsWithdrawn(address,uint256,uint256)'(
-      staker?: string | null,
+      staker?: PromiseOrValue<string> | null,
       LUSDGain?: null,
       ETHGain?: null,
     ): StakingGainsWithdrawnEventFilter;
-    StakingGainsWithdrawn(staker?: string | null, LUSDGain?: null, ETHGain?: null): StakingGainsWithdrawnEventFilter;
+    StakingGainsWithdrawn(
+      staker?: PromiseOrValue<string> | null,
+      LUSDGain?: null,
+      ETHGain?: null,
+    ): StakingGainsWithdrawnEventFilter;
 
     'TotalLQTYStakedUpdated(uint256)'(_totalLQTYStaked?: null): TotalLQTYStakedUpdatedEventFilter;
     TotalLQTYStakedUpdated(_totalLQTYStaked?: null): TotalLQTYStakedUpdatedEventFilter;
@@ -526,18 +542,18 @@ export interface LiquityStaking extends BaseContract {
 
     borrowerOperationsAddress(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getPendingETHGain(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getPendingETHGain(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getPendingLUSDGain(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getPendingLUSDGain(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     increaseF_ETH(
-      _ETHFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _ETHFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     increaseF_LUSD(
-      _LUSDFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _LUSDFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     isOwner(overrides?: CallOverrides): Promise<BigNumber>;
@@ -549,25 +565,31 @@ export interface LiquityStaking extends BaseContract {
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     setAddresses(
-      _lqtyTokenAddress: string,
-      _lusdTokenAddress: string,
-      _troveManagerAddress: string,
-      _borrowerOperationsAddress: string,
-      _activePoolAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _lqtyTokenAddress: PromiseOrValue<string>,
+      _lusdTokenAddress: PromiseOrValue<string>,
+      _troveManagerAddress: PromiseOrValue<string>,
+      _borrowerOperationsAddress: PromiseOrValue<string>,
+      _activePoolAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    snapshots(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    snapshots(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    stake(_LQTYamount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    stake(
+      _LQTYamount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    stakes(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    stakes(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     totalLQTYStaked(overrides?: CallOverrides): Promise<BigNumber>;
 
     troveManagerAddress(overrides?: CallOverrides): Promise<BigNumber>;
 
-    unstake(_LQTYamount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    unstake(
+      _LQTYamount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -583,18 +605,18 @@ export interface LiquityStaking extends BaseContract {
 
     borrowerOperationsAddress(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getPendingETHGain(_user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getPendingETHGain(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getPendingLUSDGain(_user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getPendingLUSDGain(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     increaseF_ETH(
-      _ETHFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _ETHFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     increaseF_LUSD(
-      _LUSDFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _LUSDFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     isOwner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -606,30 +628,30 @@ export interface LiquityStaking extends BaseContract {
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setAddresses(
-      _lqtyTokenAddress: string,
-      _lusdTokenAddress: string,
-      _troveManagerAddress: string,
-      _borrowerOperationsAddress: string,
-      _activePoolAddress: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _lqtyTokenAddress: PromiseOrValue<string>,
+      _lusdTokenAddress: PromiseOrValue<string>,
+      _troveManagerAddress: PromiseOrValue<string>,
+      _borrowerOperationsAddress: PromiseOrValue<string>,
+      _activePoolAddress: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    snapshots(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    snapshots(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     stake(
-      _LQTYamount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _LQTYamount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    stakes(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    stakes(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalLQTYStaked(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     troveManagerAddress(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     unstake(
-      _LQTYamount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _LQTYamount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

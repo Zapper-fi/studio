@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface CoslendCTokenInterface extends utils.Interface {
   functions: {
@@ -115,53 +115,78 @@ export interface CoslendCTokenInterface extends utils.Interface {
       | 'underlying',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: '_addReserves', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: '_reduceReserves', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: '_setComptroller', values: [string]): string;
-  encodeFunctionData(functionFragment: '_setInterestRateModel', values: [string]): string;
-  encodeFunctionData(functionFragment: '_setReserveFactor', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: '_addReserves', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: '_reduceReserves', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: '_setComptroller', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: '_setInterestRateModel', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: '_setReserveFactor', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'accrualBlockTime', values?: undefined): string;
   encodeFunctionData(functionFragment: 'accrueInterest', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'allowance', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'approve', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
-  encodeFunctionData(functionFragment: 'balanceOfUnderlying', values: [string]): string;
-  encodeFunctionData(functionFragment: 'borrow', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'borrowBalanceCurrent', values: [string]): string;
-  encodeFunctionData(functionFragment: 'borrowBalanceStored', values: [string]): string;
+  encodeFunctionData(functionFragment: 'allowance', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'approve',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'balanceOfUnderlying', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'borrow', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'borrowBalanceCurrent', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'borrowBalanceStored', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'borrowIndex', values?: undefined): string;
   encodeFunctionData(functionFragment: 'borrowRatePerSecond', values?: undefined): string;
   encodeFunctionData(functionFragment: 'comptroller', values?: undefined): string;
   encodeFunctionData(functionFragment: 'decimals', values?: undefined): string;
   encodeFunctionData(functionFragment: 'exchangeRateCurrent', values?: undefined): string;
   encodeFunctionData(functionFragment: 'exchangeRateStored', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getAccountSnapshot', values: [string]): string;
+  encodeFunctionData(functionFragment: 'getAccountSnapshot', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'getCash', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'init',
-    values: [string, string, BigNumberish, string, string, BigNumberish],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'interestRateModel', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'liquidateBorrow', values: [string, BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'mint', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'liquidateBorrow',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'mint', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'redeem', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'redeemUnderlying', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'redeem', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'redeemUnderlying', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'repayBorrow', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'repayBorrowBehalf', values: [string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'repayBorrow', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'repayBorrowBehalf',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'reserveFactorMantissa', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'seize', values: [string, string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'seize',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'supplyRatePerSecond', values?: undefined): string;
   encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalBorrows', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalBorrowsCurrent', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalReserves', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transfer', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferFrom', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'transfer',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'transferFrom',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'underlying', values?: undefined): string;
 
   decodeFunctionResult(functionFragment: '_addReserves', data: BytesLike): Result;
@@ -409,57 +434,61 @@ export interface CoslendCToken extends BaseContract {
 
   functions: {
     _addReserves(
-      addAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      addAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _reduceReserves(
-      reduceAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      reduceAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _setComptroller(
-      newComptroller: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newComptroller: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _setInterestRateModel(
-      newInterestRateModel: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newInterestRateModel: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _setReserveFactor(
-      newReserveFactorMantissa: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newReserveFactorMantissa: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     accrualBlockTime(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    accrueInterest(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    accrueInterest(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    balanceOf(owner: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOf(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     balanceOfUnderlying(
-      owner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     borrow(
-      borrowAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      borrowAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    borrowBalanceCurrent(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    borrowBalanceCurrent(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    borrowBalanceStored(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    borrowBalanceStored(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     borrowIndex(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -474,34 +503,34 @@ export interface CoslendCToken extends BaseContract {
     exchangeRateStored(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     getAccountSnapshot(
-      account: string,
+      account: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber, BigNumber, BigNumber]>;
 
     getCash(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     init(
-      comptroller_: string,
-      interestRateModel_: string,
-      initialExchangeRateMantissa_: BigNumberish,
-      name_: string,
-      symbol_: string,
-      decimals_: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      comptroller_: PromiseOrValue<string>,
+      interestRateModel_: PromiseOrValue<string>,
+      initialExchangeRateMantissa_: PromiseOrValue<BigNumberish>,
+      name_: PromiseOrValue<string>,
+      symbol_: PromiseOrValue<string>,
+      decimals_: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     interestRateModel(overrides?: CallOverrides): Promise<[string]>;
 
     liquidateBorrow(
-      borrower: string,
-      repayAmount: BigNumberish,
-      marketTokenCollateral: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      borrower: PromiseOrValue<string>,
+      repayAmount: PromiseOrValue<BigNumberish>,
+      marketTokenCollateral: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     mint(
-      mintAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      mintAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
@@ -509,35 +538,35 @@ export interface CoslendCToken extends BaseContract {
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     redeem(
-      redeemTokens: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      redeemTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     redeemUnderlying(
-      redeemAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      redeemAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     repayBorrow(
-      repayAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      repayAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     repayBorrowBehalf(
-      borrower: string,
-      repayAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      borrower: PromiseOrValue<string>,
+      repayAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     reserveFactorMantissa(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     seize(
-      liquidator: string,
-      borrower: string,
-      seizeTokens: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      liquidator: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      seizeTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     supplyRatePerSecond(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -546,85 +575,89 @@ export interface CoslendCToken extends BaseContract {
 
     totalBorrows(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    totalBorrowsCurrent(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    totalBorrowsCurrent(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     totalReserves(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transfer(
-      dst: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      dst: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferFrom(
-      src: string,
-      dst: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      src: PromiseOrValue<string>,
+      dst: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     underlying(overrides?: CallOverrides): Promise<[string]>;
   };
 
   _addReserves(
-    addAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    addAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _reduceReserves(
-    reduceAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    reduceAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _setComptroller(
-    newComptroller: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newComptroller: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _setInterestRateModel(
-    newInterestRateModel: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newInterestRateModel: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _setReserveFactor(
-    newReserveFactorMantissa: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newReserveFactorMantissa: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   accrualBlockTime(overrides?: CallOverrides): Promise<BigNumber>;
 
-  accrueInterest(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  accrueInterest(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+  allowance(
+    owner: PromiseOrValue<string>,
+    spender: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   approve(
-    spender: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   balanceOfUnderlying(
-    owner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    owner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   borrow(
-    borrowAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    borrowAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  borrowBalanceCurrent(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  borrowBalanceCurrent(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  borrowBalanceStored(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  borrowBalanceStored(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   borrowIndex(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -638,32 +671,35 @@ export interface CoslendCToken extends BaseContract {
 
   exchangeRateStored(overrides?: CallOverrides): Promise<BigNumber>;
 
-  getAccountSnapshot(account: string, overrides?: CallOverrides): Promise<[BigNumber, BigNumber, BigNumber, BigNumber]>;
+  getAccountSnapshot(
+    account: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<[BigNumber, BigNumber, BigNumber, BigNumber]>;
 
   getCash(overrides?: CallOverrides): Promise<BigNumber>;
 
   init(
-    comptroller_: string,
-    interestRateModel_: string,
-    initialExchangeRateMantissa_: BigNumberish,
-    name_: string,
-    symbol_: string,
-    decimals_: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    comptroller_: PromiseOrValue<string>,
+    interestRateModel_: PromiseOrValue<string>,
+    initialExchangeRateMantissa_: PromiseOrValue<BigNumberish>,
+    name_: PromiseOrValue<string>,
+    symbol_: PromiseOrValue<string>,
+    decimals_: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   interestRateModel(overrides?: CallOverrides): Promise<string>;
 
   liquidateBorrow(
-    borrower: string,
-    repayAmount: BigNumberish,
-    marketTokenCollateral: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    borrower: PromiseOrValue<string>,
+    repayAmount: PromiseOrValue<BigNumberish>,
+    marketTokenCollateral: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   mint(
-    mintAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    mintAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   name(overrides?: CallOverrides): Promise<string>;
@@ -671,35 +707,35 @@ export interface CoslendCToken extends BaseContract {
   owner(overrides?: CallOverrides): Promise<string>;
 
   redeem(
-    redeemTokens: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    redeemTokens: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   redeemUnderlying(
-    redeemAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    redeemAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   repayBorrow(
-    repayAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    repayAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   repayBorrowBehalf(
-    borrower: string,
-    repayAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    borrower: PromiseOrValue<string>,
+    repayAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   reserveFactorMantissa(overrides?: CallOverrides): Promise<BigNumber>;
 
   seize(
-    liquidator: string,
-    borrower: string,
-    seizeTokens: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    liquidator: PromiseOrValue<string>,
+    borrower: PromiseOrValue<string>,
+    seizeTokens: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   supplyRatePerSecond(overrides?: CallOverrides): Promise<BigNumber>;
@@ -708,60 +744,71 @@ export interface CoslendCToken extends BaseContract {
 
   totalBorrows(overrides?: CallOverrides): Promise<BigNumber>;
 
-  totalBorrowsCurrent(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  totalBorrowsCurrent(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   totalReserves(overrides?: CallOverrides): Promise<BigNumber>;
 
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   transfer(
-    dst: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    dst: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferFrom(
-    src: string,
-    dst: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    src: PromiseOrValue<string>,
+    dst: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   underlying(overrides?: CallOverrides): Promise<string>;
 
   callStatic: {
-    _addReserves(addAmount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    _addReserves(addAmount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    _reduceReserves(reduceAmount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    _reduceReserves(reduceAmount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    _setComptroller(newComptroller: string, overrides?: CallOverrides): Promise<BigNumber>;
+    _setComptroller(newComptroller: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    _setInterestRateModel(newInterestRateModel: string, overrides?: CallOverrides): Promise<BigNumber>;
+    _setInterestRateModel(newInterestRateModel: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    _setReserveFactor(newReserveFactorMantissa: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    _setReserveFactor(
+      newReserveFactorMantissa: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     accrualBlockTime(overrides?: CallOverrides): Promise<BigNumber>;
 
     accrueInterest(overrides?: CallOverrides): Promise<BigNumber>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    approve(spender: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    approve(
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    balanceOfUnderlying(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOfUnderlying(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    borrow(borrowAmount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    borrow(borrowAmount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    borrowBalanceCurrent(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    borrowBalanceCurrent(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    borrowBalanceStored(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    borrowBalanceStored(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     borrowIndex(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -776,53 +823,57 @@ export interface CoslendCToken extends BaseContract {
     exchangeRateStored(overrides?: CallOverrides): Promise<BigNumber>;
 
     getAccountSnapshot(
-      account: string,
+      account: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber, BigNumber, BigNumber]>;
 
     getCash(overrides?: CallOverrides): Promise<BigNumber>;
 
     init(
-      comptroller_: string,
-      interestRateModel_: string,
-      initialExchangeRateMantissa_: BigNumberish,
-      name_: string,
-      symbol_: string,
-      decimals_: BigNumberish,
+      comptroller_: PromiseOrValue<string>,
+      interestRateModel_: PromiseOrValue<string>,
+      initialExchangeRateMantissa_: PromiseOrValue<BigNumberish>,
+      name_: PromiseOrValue<string>,
+      symbol_: PromiseOrValue<string>,
+      decimals_: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     interestRateModel(overrides?: CallOverrides): Promise<string>;
 
     liquidateBorrow(
-      borrower: string,
-      repayAmount: BigNumberish,
-      marketTokenCollateral: string,
+      borrower: PromiseOrValue<string>,
+      repayAmount: PromiseOrValue<BigNumberish>,
+      marketTokenCollateral: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    mint(mintAmount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    mint(mintAmount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    redeem(redeemTokens: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    redeem(redeemTokens: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    redeemUnderlying(redeemAmount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    redeemUnderlying(redeemAmount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
-    repayBorrow(repayAmount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    repayBorrow(repayAmount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    repayBorrowBehalf(borrower: string, repayAmount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    repayBorrowBehalf(
+      borrower: PromiseOrValue<string>,
+      repayAmount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     reserveFactorMantissa(overrides?: CallOverrides): Promise<BigNumber>;
 
     seize(
-      liquidator: string,
-      borrower: string,
-      seizeTokens: BigNumberish,
+      liquidator: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      seizeTokens: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
@@ -838,11 +889,20 @@ export interface CoslendCToken extends BaseContract {
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transfer(dst: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transfer(
+      dst: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    transferFrom(src: string, dst: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transferFrom(
+      src: PromiseOrValue<string>,
+      dst: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     underlying(overrides?: CallOverrides): Promise<string>;
   };
@@ -862,11 +922,15 @@ export interface CoslendCToken extends BaseContract {
     ): AccrueInterestEventFilter;
 
     'Approval(address,address,uint256)'(
-      owner?: string | null,
-      spender?: string | null,
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
       amount?: null,
     ): ApprovalEventFilter;
-    Approval(owner?: string | null, spender?: string | null, amount?: null): ApprovalEventFilter;
+    Approval(
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
+      amount?: null,
+    ): ApprovalEventFilter;
 
     'Borrow(address,uint256,uint256,uint256)'(
       borrower?: null,
@@ -916,10 +980,13 @@ export interface CoslendCToken extends BaseContract {
     NewReserveFactor(oldReserveFactorMantissa?: null, newReserveFactorMantissa?: null): NewReserveFactorEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
 
     'Redeem(address,uint256,uint256)'(redeemer?: null, redeemAmount?: null, redeemTokens?: null): RedeemEventFilter;
     Redeem(redeemer?: null, redeemAmount?: null, redeemTokens?: null): RedeemEventFilter;
@@ -953,57 +1020,75 @@ export interface CoslendCToken extends BaseContract {
     ): ReservesReducedEventFilter;
     ReservesReduced(admin?: null, reduceAmount?: null, newTotalReserves?: null): ReservesReducedEventFilter;
 
-    'Transfer(address,address,uint256)'(from?: string | null, to?: string | null, amount?: null): TransferEventFilter;
-    Transfer(from?: string | null, to?: string | null, amount?: null): TransferEventFilter;
+    'Transfer(address,address,uint256)'(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      amount?: null,
+    ): TransferEventFilter;
+    Transfer(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      amount?: null,
+    ): TransferEventFilter;
   };
 
   estimateGas: {
     _addReserves(
-      addAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      addAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     _reduceReserves(
-      reduceAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      reduceAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     _setComptroller(
-      newComptroller: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newComptroller: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     _setInterestRateModel(
-      newInterestRateModel: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newInterestRateModel: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     _setReserveFactor(
-      newReserveFactorMantissa: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newReserveFactorMantissa: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     accrualBlockTime(overrides?: CallOverrides): Promise<BigNumber>;
 
-    accrueInterest(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    accrueInterest(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-    approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    balanceOf(owner: string, overrides?: CallOverrides): Promise<BigNumber>;
+    approve(
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    balanceOfUnderlying(owner: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    balanceOf(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    borrow(borrowAmount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    balanceOfUnderlying(
+      owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    borrowBalanceCurrent(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    borrow(
+      borrowAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    borrowBalanceStored(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    borrowBalanceCurrent(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    borrowBalanceStored(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     borrowIndex(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1017,62 +1102,68 @@ export interface CoslendCToken extends BaseContract {
 
     exchangeRateStored(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getAccountSnapshot(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getAccountSnapshot(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getCash(overrides?: CallOverrides): Promise<BigNumber>;
 
     init(
-      comptroller_: string,
-      interestRateModel_: string,
-      initialExchangeRateMantissa_: BigNumberish,
-      name_: string,
-      symbol_: string,
-      decimals_: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      comptroller_: PromiseOrValue<string>,
+      interestRateModel_: PromiseOrValue<string>,
+      initialExchangeRateMantissa_: PromiseOrValue<BigNumberish>,
+      name_: PromiseOrValue<string>,
+      symbol_: PromiseOrValue<string>,
+      decimals_: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     interestRateModel(overrides?: CallOverrides): Promise<BigNumber>;
 
     liquidateBorrow(
-      borrower: string,
-      repayAmount: BigNumberish,
-      marketTokenCollateral: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      borrower: PromiseOrValue<string>,
+      repayAmount: PromiseOrValue<BigNumberish>,
+      marketTokenCollateral: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    mint(mintAmount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    mint(
+      mintAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    redeem(redeemTokens: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
-
-    redeemUnderlying(
-      redeemAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    redeem(
+      redeemTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    redeemUnderlying(
+      redeemAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     repayBorrow(
-      repayAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      repayAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     repayBorrowBehalf(
-      borrower: string,
-      repayAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      borrower: PromiseOrValue<string>,
+      repayAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     reserveFactorMantissa(overrides?: CallOverrides): Promise<BigNumber>;
 
     seize(
-      liquidator: string,
-      borrower: string,
-      seizeTokens: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      liquidator: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      seizeTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     supplyRatePerSecond(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1081,28 +1172,28 @@ export interface CoslendCToken extends BaseContract {
 
     totalBorrows(overrides?: CallOverrides): Promise<BigNumber>;
 
-    totalBorrowsCurrent(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    totalBorrowsCurrent(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     totalReserves(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
-      dst: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      dst: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferFrom(
-      src: string,
-      dst: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      src: PromiseOrValue<string>,
+      dst: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     underlying(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1110,57 +1201,61 @@ export interface CoslendCToken extends BaseContract {
 
   populateTransaction: {
     _addReserves(
-      addAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      addAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _reduceReserves(
-      reduceAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      reduceAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _setComptroller(
-      newComptroller: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newComptroller: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _setInterestRateModel(
-      newInterestRateModel: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newInterestRateModel: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _setReserveFactor(
-      newReserveFactorMantissa: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newReserveFactorMantissa: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     accrualBlockTime(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    accrueInterest(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    accrueInterest(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    balanceOf(owner: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    approve(
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    balanceOf(owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     balanceOfUnderlying(
-      owner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     borrow(
-      borrowAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      borrowAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    borrowBalanceCurrent(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    borrowBalanceCurrent(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    borrowBalanceStored(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    borrowBalanceStored(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     borrowIndex(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1174,32 +1269,32 @@ export interface CoslendCToken extends BaseContract {
 
     exchangeRateStored(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getAccountSnapshot(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getAccountSnapshot(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getCash(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     init(
-      comptroller_: string,
-      interestRateModel_: string,
-      initialExchangeRateMantissa_: BigNumberish,
-      name_: string,
-      symbol_: string,
-      decimals_: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      comptroller_: PromiseOrValue<string>,
+      interestRateModel_: PromiseOrValue<string>,
+      initialExchangeRateMantissa_: PromiseOrValue<BigNumberish>,
+      name_: PromiseOrValue<string>,
+      symbol_: PromiseOrValue<string>,
+      decimals_: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     interestRateModel(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     liquidateBorrow(
-      borrower: string,
-      repayAmount: BigNumberish,
-      marketTokenCollateral: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      borrower: PromiseOrValue<string>,
+      repayAmount: PromiseOrValue<BigNumberish>,
+      marketTokenCollateral: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     mint(
-      mintAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      mintAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1207,35 +1302,35 @@ export interface CoslendCToken extends BaseContract {
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     redeem(
-      redeemTokens: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      redeemTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     redeemUnderlying(
-      redeemAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      redeemAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     repayBorrow(
-      repayAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      repayAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     repayBorrowBehalf(
-      borrower: string,
-      repayAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      borrower: PromiseOrValue<string>,
+      repayAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     reserveFactorMantissa(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     seize(
-      liquidator: string,
-      borrower: string,
-      seizeTokens: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      liquidator: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      seizeTokens: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     supplyRatePerSecond(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1244,28 +1339,28 @@ export interface CoslendCToken extends BaseContract {
 
     totalBorrows(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    totalBorrowsCurrent(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    totalBorrowsCurrent(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     totalReserves(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transfer(
-      dst: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      dst: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferFrom(
-      src: string,
-      dst: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      src: PromiseOrValue<string>,
+      dst: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     underlying(overrides?: CallOverrides): Promise<PopulatedTransaction>;

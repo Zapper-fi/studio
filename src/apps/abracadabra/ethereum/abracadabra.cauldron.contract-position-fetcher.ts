@@ -3,6 +3,7 @@ import { Inject } from '@nestjs/common';
 import { Register } from '~app-toolkit/decorators';
 import { CURVE_DEFINITION } from '~apps/curve';
 import { OLYMPUS_DEFINITION } from '~apps/olympus';
+import { STARGATE_DEFINITION } from '~apps/stargate/stargate.definition';
 import { YEARN_DEFINITION } from '~apps/yearn/yearn.definition';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
@@ -72,10 +73,10 @@ export class EthereumAbracadabraCauldronContractPositionFetcher implements Posit
           groupIds: [YEARN_DEFINITION.groups.v1Vault.id, YEARN_DEFINITION.groups.v2Vault.id],
           network,
         },
+        { appId: STARGATE_DEFINITION.id, groupIds: [STARGATE_DEFINITION.groups.pool.id], network },
         // @TODO: Migrate these over
         { appId: 'convex', groupIds: ['deposit'], network },
         { appId: 'sushiswap', groupIds: ['pool'], network },
-        { appId: 'stargate', groupIds: ['pool'], network },
       ],
     });
   }

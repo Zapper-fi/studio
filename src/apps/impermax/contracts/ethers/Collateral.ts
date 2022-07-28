@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface CollateralInterface extends utils.Interface {
   functions: {
@@ -116,43 +116,84 @@ export interface CollateralInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'PERMIT_TYPEHASH', values?: undefined): string;
   encodeFunctionData(functionFragment: 'SAFETY_MARGIN_SQRT_MAX', values?: undefined): string;
   encodeFunctionData(functionFragment: 'SAFETY_MARGIN_SQRT_MIN', values?: undefined): string;
-  encodeFunctionData(functionFragment: '_initialize', values: [string, string, string, string, string]): string;
+  encodeFunctionData(
+    functionFragment: '_initialize',
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+    ],
+  ): string;
   encodeFunctionData(functionFragment: '_setFactory', values?: undefined): string;
-  encodeFunctionData(functionFragment: '_setLiquidationIncentive', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: '_setSafetyMarginSqrt', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'accountLiquidity', values: [string]): string;
-  encodeFunctionData(functionFragment: 'accountLiquidityAmounts', values: [string, BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'allowance', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'approve', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
+  encodeFunctionData(functionFragment: '_setLiquidationIncentive', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: '_setSafetyMarginSqrt', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'accountLiquidity', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'accountLiquidityAmounts',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'allowance', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'approve',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'borrowable0', values?: undefined): string;
   encodeFunctionData(functionFragment: 'borrowable1', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'canBorrow', values: [string, string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'canBorrow',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'decimals', values?: undefined): string;
   encodeFunctionData(functionFragment: 'exchangeRate', values?: undefined): string;
   encodeFunctionData(functionFragment: 'factory', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'flashRedeem', values: [string, BigNumberish, BytesLike]): string;
+  encodeFunctionData(
+    functionFragment: 'flashRedeem',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<BytesLike>],
+  ): string;
   encodeFunctionData(functionFragment: 'getPrices', values?: undefined): string;
   encodeFunctionData(functionFragment: 'liquidationIncentive', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'mint', values: [string]): string;
+  encodeFunctionData(functionFragment: 'mint', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'nonces', values: [string]): string;
+  encodeFunctionData(functionFragment: 'nonces', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
     functionFragment: 'permit',
-    values: [string, string, BigNumberish, BigNumberish, BigNumberish, BytesLike, BytesLike],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'redeem', values: [string]): string;
+  encodeFunctionData(functionFragment: 'redeem', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'safetyMarginSqrt', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'seize', values: [string, string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'seize',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'simpleUniswapOracle', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'skim', values: [string]): string;
+  encodeFunctionData(functionFragment: 'skim', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
   encodeFunctionData(functionFragment: 'sync', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'tokensUnlocked', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'tokensUnlocked',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'totalBalance', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transfer', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferFrom', values: [string, string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'transfer',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'transferFrom',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'underlying', values?: undefined): string;
 
   decodeFunctionResult(functionFragment: 'DOMAIN_SEPARATOR', data: BytesLike): Result;
@@ -314,116 +355,129 @@ export interface Collateral extends BaseContract {
     SAFETY_MARGIN_SQRT_MIN(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     _initialize(
-      _name: string,
-      _symbol: string,
-      _underlying: string,
-      _borrowable0: string,
-      _borrowable1: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _name: PromiseOrValue<string>,
+      _symbol: PromiseOrValue<string>,
+      _underlying: PromiseOrValue<string>,
+      _borrowable0: PromiseOrValue<string>,
+      _borrowable1: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    _setFactory(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    _setFactory(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     _setLiquidationIncentive(
-      newLiquidationIncentive: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newLiquidationIncentive: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _setSafetyMarginSqrt(
-      newSafetyMarginSqrt: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newSafetyMarginSqrt: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     accountLiquidity(
-      borrower: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      borrower: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     accountLiquidityAmounts(
-      borrower: string,
-      amount0: BigNumberish,
-      amount1: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      borrower: PromiseOrValue<string>,
+      amount0: PromiseOrValue<BigNumberish>,
+      amount1: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    allowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    allowance(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     approve(
-      spender: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    balanceOf(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     borrowable0(overrides?: CallOverrides): Promise<[string]>;
 
     borrowable1(overrides?: CallOverrides): Promise<[string]>;
 
     canBorrow(
-      borrower: string,
-      borrowable: string,
-      accountBorrows: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      borrower: PromiseOrValue<string>,
+      borrowable: PromiseOrValue<string>,
+      accountBorrows: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<[number]>;
 
-    exchangeRate(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    exchangeRate(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     factory(overrides?: CallOverrides): Promise<[string]>;
 
     flashRedeem(
-      redeemer: string,
-      redeemAmount: BigNumberish,
-      data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      redeemer: PromiseOrValue<string>,
+      redeemAmount: PromiseOrValue<BigNumberish>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    getPrices(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    getPrices(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     liquidationIncentive(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    mint(minter: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    mint(
+      minter: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     permit(
-      owner: string,
-      spender: string,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    redeem(redeemer: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    redeem(
+      redeemer: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     safetyMarginSqrt(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     seize(
-      liquidator: string,
-      borrower: string,
-      repayAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      liquidator: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      repayAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     simpleUniswapOracle(overrides?: CallOverrides): Promise<[string]>;
 
-    skim(to: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    skim(
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
 
-    sync(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    sync(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     tokensUnlocked(
-      from: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     totalBalance(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -431,16 +485,16 @@ export interface Collateral extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transfer(
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferFrom(
-      from: string,
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     underlying(overrides?: CallOverrides): Promise<[string]>;
@@ -461,116 +515,125 @@ export interface Collateral extends BaseContract {
   SAFETY_MARGIN_SQRT_MIN(overrides?: CallOverrides): Promise<BigNumber>;
 
   _initialize(
-    _name: string,
-    _symbol: string,
-    _underlying: string,
-    _borrowable0: string,
-    _borrowable1: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _name: PromiseOrValue<string>,
+    _symbol: PromiseOrValue<string>,
+    _underlying: PromiseOrValue<string>,
+    _borrowable0: PromiseOrValue<string>,
+    _borrowable1: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  _setFactory(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  _setFactory(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   _setLiquidationIncentive(
-    newLiquidationIncentive: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newLiquidationIncentive: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _setSafetyMarginSqrt(
-    newSafetyMarginSqrt: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newSafetyMarginSqrt: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   accountLiquidity(
-    borrower: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    borrower: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   accountLiquidityAmounts(
-    borrower: string,
-    amount0: BigNumberish,
-    amount1: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    borrower: PromiseOrValue<string>,
+    amount0: PromiseOrValue<BigNumberish>,
+    amount1: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  allowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+  allowance(arg0: PromiseOrValue<string>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   approve(
-    spender: string,
-    value: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    value: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  balanceOf(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   borrowable0(overrides?: CallOverrides): Promise<string>;
 
   borrowable1(overrides?: CallOverrides): Promise<string>;
 
   canBorrow(
-    borrower: string,
-    borrowable: string,
-    accountBorrows: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    borrower: PromiseOrValue<string>,
+    borrowable: PromiseOrValue<string>,
+    accountBorrows: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   decimals(overrides?: CallOverrides): Promise<number>;
 
-  exchangeRate(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  exchangeRate(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   factory(overrides?: CallOverrides): Promise<string>;
 
   flashRedeem(
-    redeemer: string,
-    redeemAmount: BigNumberish,
-    data: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    redeemer: PromiseOrValue<string>,
+    redeemAmount: PromiseOrValue<BigNumberish>,
+    data: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  getPrices(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  getPrices(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   liquidationIncentive(overrides?: CallOverrides): Promise<BigNumber>;
 
-  mint(minter: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  mint(
+    minter: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   name(overrides?: CallOverrides): Promise<string>;
 
-  nonces(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   permit(
-    owner: string,
-    spender: string,
-    value: BigNumberish,
-    deadline: BigNumberish,
-    v: BigNumberish,
-    r: BytesLike,
-    s: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    owner: PromiseOrValue<string>,
+    spender: PromiseOrValue<string>,
+    value: PromiseOrValue<BigNumberish>,
+    deadline: PromiseOrValue<BigNumberish>,
+    v: PromiseOrValue<BigNumberish>,
+    r: PromiseOrValue<BytesLike>,
+    s: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  redeem(redeemer: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  redeem(
+    redeemer: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   safetyMarginSqrt(overrides?: CallOverrides): Promise<BigNumber>;
 
   seize(
-    liquidator: string,
-    borrower: string,
-    repayAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    liquidator: PromiseOrValue<string>,
+    borrower: PromiseOrValue<string>,
+    repayAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   simpleUniswapOracle(overrides?: CallOverrides): Promise<string>;
 
-  skim(to: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  skim(
+    to: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
 
-  sync(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  sync(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   tokensUnlocked(
-    from: string,
-    value: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    from: PromiseOrValue<string>,
+    value: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   totalBalance(overrides?: CallOverrides): Promise<BigNumber>;
@@ -578,16 +641,16 @@ export interface Collateral extends BaseContract {
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   transfer(
-    to: string,
-    value: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    to: PromiseOrValue<string>,
+    value: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferFrom(
-    from: string,
-    to: string,
-    value: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    from: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    value: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   underlying(overrides?: CallOverrides): Promise<string>;
@@ -608,46 +671,57 @@ export interface Collateral extends BaseContract {
     SAFETY_MARGIN_SQRT_MIN(overrides?: CallOverrides): Promise<BigNumber>;
 
     _initialize(
-      _name: string,
-      _symbol: string,
-      _underlying: string,
-      _borrowable0: string,
-      _borrowable1: string,
+      _name: PromiseOrValue<string>,
+      _symbol: PromiseOrValue<string>,
+      _underlying: PromiseOrValue<string>,
+      _borrowable0: PromiseOrValue<string>,
+      _borrowable1: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     _setFactory(overrides?: CallOverrides): Promise<void>;
 
-    _setLiquidationIncentive(newLiquidationIncentive: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    _setLiquidationIncentive(
+      newLiquidationIncentive: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    _setSafetyMarginSqrt(newSafetyMarginSqrt: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    _setSafetyMarginSqrt(newSafetyMarginSqrt: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     accountLiquidity(
-      borrower: string,
+      borrower: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { liquidity: BigNumber; shortfall: BigNumber }>;
 
     accountLiquidityAmounts(
-      borrower: string,
-      amount0: BigNumberish,
-      amount1: BigNumberish,
+      borrower: PromiseOrValue<string>,
+      amount0: PromiseOrValue<BigNumberish>,
+      amount1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { liquidity: BigNumber; shortfall: BigNumber }>;
 
-    allowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    approve(spender: string, value: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    approve(
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    balanceOf(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     borrowable0(overrides?: CallOverrides): Promise<string>;
 
     borrowable1(overrides?: CallOverrides): Promise<string>;
 
     canBorrow(
-      borrower: string,
-      borrowable: string,
-      accountBorrows: BigNumberish,
+      borrower: PromiseOrValue<string>,
+      borrowable: PromiseOrValue<string>,
+      accountBorrows: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<boolean>;
 
@@ -658,9 +732,9 @@ export interface Collateral extends BaseContract {
     factory(overrides?: CallOverrides): Promise<string>;
 
     flashRedeem(
-      redeemer: string,
-      redeemAmount: BigNumberish,
-      data: BytesLike,
+      redeemer: PromiseOrValue<string>,
+      redeemAmount: PromiseOrValue<BigNumberish>,
+      data: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -668,70 +742,92 @@ export interface Collateral extends BaseContract {
 
     liquidationIncentive(overrides?: CallOverrides): Promise<BigNumber>;
 
-    mint(minter: string, overrides?: CallOverrides): Promise<BigNumber>;
+    mint(minter: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     permit(
-      owner: string,
-      spender: string,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    redeem(redeemer: string, overrides?: CallOverrides): Promise<BigNumber>;
+    redeem(redeemer: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     safetyMarginSqrt(overrides?: CallOverrides): Promise<BigNumber>;
 
     seize(
-      liquidator: string,
-      borrower: string,
-      repayAmount: BigNumberish,
+      liquidator: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      repayAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     simpleUniswapOracle(overrides?: CallOverrides): Promise<string>;
 
-    skim(to: string, overrides?: CallOverrides): Promise<void>;
+    skim(to: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     symbol(overrides?: CallOverrides): Promise<string>;
 
     sync(overrides?: CallOverrides): Promise<void>;
 
-    tokensUnlocked(from: string, value: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    tokensUnlocked(
+      from: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     totalBalance(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transfer(to: string, value: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transfer(
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    transferFrom(from: string, to: string, value: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transferFrom(
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     underlying(overrides?: CallOverrides): Promise<string>;
   };
 
   filters: {
     'Approval(address,address,uint256)'(
-      owner?: string | null,
-      spender?: string | null,
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
       value?: null,
     ): ApprovalEventFilter;
-    Approval(owner?: string | null, spender?: string | null, value?: null): ApprovalEventFilter;
+    Approval(
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
+      value?: null,
+    ): ApprovalEventFilter;
 
     'Mint(address,address,uint256,uint256)'(
-      sender?: string | null,
-      minter?: string | null,
+      sender?: PromiseOrValue<string> | null,
+      minter?: PromiseOrValue<string> | null,
       mintAmount?: null,
       mintTokens?: null,
     ): MintEventFilter;
-    Mint(sender?: string | null, minter?: string | null, mintAmount?: null, mintTokens?: null): MintEventFilter;
+    Mint(
+      sender?: PromiseOrValue<string> | null,
+      minter?: PromiseOrValue<string> | null,
+      mintAmount?: null,
+      mintTokens?: null,
+    ): MintEventFilter;
 
     'NewLiquidationIncentive(uint256)'(newLiquidationIncentive?: null): NewLiquidationIncentiveEventFilter;
     NewLiquidationIncentive(newLiquidationIncentive?: null): NewLiquidationIncentiveEventFilter;
@@ -740,14 +836,14 @@ export interface Collateral extends BaseContract {
     NewSafetyMargin(newSafetyMarginSqrt?: null): NewSafetyMarginEventFilter;
 
     'Redeem(address,address,uint256,uint256)'(
-      sender?: string | null,
-      redeemer?: string | null,
+      sender?: PromiseOrValue<string> | null,
+      redeemer?: PromiseOrValue<string> | null,
       redeemAmount?: null,
       redeemTokens?: null,
     ): RedeemEventFilter;
     Redeem(
-      sender?: string | null,
-      redeemer?: string | null,
+      sender?: PromiseOrValue<string> | null,
+      redeemer?: PromiseOrValue<string> | null,
       redeemAmount?: null,
       redeemTokens?: null,
     ): RedeemEventFilter;
@@ -755,8 +851,16 @@ export interface Collateral extends BaseContract {
     'Sync(uint256)'(totalBalance?: null): SyncEventFilter;
     Sync(totalBalance?: null): SyncEventFilter;
 
-    'Transfer(address,address,uint256)'(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
-    Transfer(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
+    'Transfer(address,address,uint256)'(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
+    Transfer(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
   };
 
   estimateGas: {
@@ -775,113 +879,123 @@ export interface Collateral extends BaseContract {
     SAFETY_MARGIN_SQRT_MIN(overrides?: CallOverrides): Promise<BigNumber>;
 
     _initialize(
-      _name: string,
-      _symbol: string,
-      _underlying: string,
-      _borrowable0: string,
-      _borrowable1: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _name: PromiseOrValue<string>,
+      _symbol: PromiseOrValue<string>,
+      _underlying: PromiseOrValue<string>,
+      _borrowable0: PromiseOrValue<string>,
+      _borrowable1: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    _setFactory(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    _setFactory(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     _setLiquidationIncentive(
-      newLiquidationIncentive: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newLiquidationIncentive: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     _setSafetyMarginSqrt(
-      newSafetyMarginSqrt: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newSafetyMarginSqrt: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    accountLiquidity(borrower: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    accountLiquidity(
+      borrower: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     accountLiquidityAmounts(
-      borrower: string,
-      amount0: BigNumberish,
-      amount1: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      borrower: PromiseOrValue<string>,
+      amount0: PromiseOrValue<BigNumberish>,
+      amount1: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    allowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     approve(
-      spender: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    balanceOf(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     borrowable0(overrides?: CallOverrides): Promise<BigNumber>;
 
     borrowable1(overrides?: CallOverrides): Promise<BigNumber>;
 
     canBorrow(
-      borrower: string,
-      borrowable: string,
-      accountBorrows: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      borrower: PromiseOrValue<string>,
+      borrowable: PromiseOrValue<string>,
+      accountBorrows: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
-    exchangeRate(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    exchangeRate(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     factory(overrides?: CallOverrides): Promise<BigNumber>;
 
     flashRedeem(
-      redeemer: string,
-      redeemAmount: BigNumberish,
-      data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      redeemer: PromiseOrValue<string>,
+      redeemAmount: PromiseOrValue<BigNumberish>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    getPrices(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    getPrices(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     liquidationIncentive(overrides?: CallOverrides): Promise<BigNumber>;
 
-    mint(minter: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    mint(minter: PromiseOrValue<string>, overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     permit(
-      owner: string,
-      spender: string,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    redeem(redeemer: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    redeem(
+      redeemer: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     safetyMarginSqrt(overrides?: CallOverrides): Promise<BigNumber>;
 
     seize(
-      liquidator: string,
-      borrower: string,
-      repayAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      liquidator: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      repayAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     simpleUniswapOracle(overrides?: CallOverrides): Promise<BigNumber>;
 
-    skim(to: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    skim(to: PromiseOrValue<string>, overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
-    sync(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    sync(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     tokensUnlocked(
-      from: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     totalBalance(overrides?: CallOverrides): Promise<BigNumber>;
@@ -889,16 +1003,16 @@ export interface Collateral extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferFrom(
-      from: string,
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     underlying(overrides?: CallOverrides): Promise<BigNumber>;
@@ -920,119 +1034,129 @@ export interface Collateral extends BaseContract {
     SAFETY_MARGIN_SQRT_MIN(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     _initialize(
-      _name: string,
-      _symbol: string,
-      _underlying: string,
-      _borrowable0: string,
-      _borrowable1: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _name: PromiseOrValue<string>,
+      _symbol: PromiseOrValue<string>,
+      _underlying: PromiseOrValue<string>,
+      _borrowable0: PromiseOrValue<string>,
+      _borrowable1: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    _setFactory(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    _setFactory(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     _setLiquidationIncentive(
-      newLiquidationIncentive: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newLiquidationIncentive: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _setSafetyMarginSqrt(
-      newSafetyMarginSqrt: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newSafetyMarginSqrt: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     accountLiquidity(
-      borrower: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      borrower: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     accountLiquidityAmounts(
-      borrower: string,
-      amount0: BigNumberish,
-      amount1: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      borrower: PromiseOrValue<string>,
+      amount0: PromiseOrValue<BigNumberish>,
+      amount1: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    allowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    allowance(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     approve(
-      spender: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    balanceOf(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    balanceOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     borrowable0(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     borrowable1(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     canBorrow(
-      borrower: string,
-      borrowable: string,
-      accountBorrows: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      borrower: PromiseOrValue<string>,
+      borrowable: PromiseOrValue<string>,
+      accountBorrows: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    exchangeRate(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    exchangeRate(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     factory(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     flashRedeem(
-      redeemer: string,
-      redeemAmount: BigNumberish,
-      data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      redeemer: PromiseOrValue<string>,
+      redeemAmount: PromiseOrValue<BigNumberish>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    getPrices(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    getPrices(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     liquidationIncentive(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    mint(minter: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    mint(
+      minter: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     permit(
-      owner: string,
-      spender: string,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     redeem(
-      redeemer: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      redeemer: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     safetyMarginSqrt(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     seize(
-      liquidator: string,
-      borrower: string,
-      repayAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      liquidator: PromiseOrValue<string>,
+      borrower: PromiseOrValue<string>,
+      repayAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     simpleUniswapOracle(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    skim(to: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    skim(
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    sync(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    sync(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     tokensUnlocked(
-      from: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     totalBalance(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1040,16 +1164,16 @@ export interface Collateral extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transfer(
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferFrom(
-      from: string,
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     underlying(overrides?: CallOverrides): Promise<PopulatedTransaction>;

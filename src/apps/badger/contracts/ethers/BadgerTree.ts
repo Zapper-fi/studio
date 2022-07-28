@@ -15,14 +15,14 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export declare namespace BadgerTree {
   export type MerkleDataStruct = {
-    root: BytesLike;
-    contentHash: BytesLike;
-    timestamp: BigNumberish;
-    blockNumber: BigNumberish;
+    root: PromiseOrValue<BytesLike>;
+    contentHash: PromiseOrValue<BytesLike>;
+    timestamp: PromiseOrValue<BigNumberish>;
+    blockNumber: PromiseOrValue<BigNumberish>;
   };
 
   export type MerkleDataStructOutput = [string, string, BigNumber, BigNumber] & {
@@ -112,27 +112,53 @@ export interface BadgerTreeInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'DEFAULT_ADMIN_ROLE', values?: undefined): string;
   encodeFunctionData(functionFragment: 'GUARDIAN_ROLE', values?: undefined): string;
   encodeFunctionData(functionFragment: 'ROOT_UPDATER_ROLE', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'approveRoot', values: [BytesLike, BytesLike, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'approveRoot',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(
     functionFragment: 'claim',
-    values: [string[], BigNumberish[], BigNumberish, BigNumberish, BytesLike[]],
+    values: [
+      PromiseOrValue<string>[],
+      PromiseOrValue<BigNumberish>[],
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>[],
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'claimed', values: [string, string]): string;
+  encodeFunctionData(functionFragment: 'claimed', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'currentCycle', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'encodeClaim',
-    values: [string[], BigNumberish[], BigNumberish, BigNumberish],
+    values: [
+      PromiseOrValue<string>[],
+      PromiseOrValue<BigNumberish>[],
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'getClaimedFor', values: [string, string[]]): string;
+  encodeFunctionData(
+    functionFragment: 'getClaimedFor',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>[]],
+  ): string;
   encodeFunctionData(functionFragment: 'getCurrentMerkleData', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getPendingMerkleData', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getRoleAdmin', values: [BytesLike]): string;
-  encodeFunctionData(functionFragment: 'getRoleMember', values: [BytesLike, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'getRoleMemberCount', values: [BytesLike]): string;
-  encodeFunctionData(functionFragment: 'grantRole', values: [BytesLike, string]): string;
+  encodeFunctionData(functionFragment: 'getRoleAdmin', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(
+    functionFragment: 'getRoleMember',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'getRoleMemberCount', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(
+    functionFragment: 'grantRole',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'hasPendingRoot', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'hasRole', values: [BytesLike, string]): string;
-  encodeFunctionData(functionFragment: 'initialize', values: [string, string, string]): string;
+  encodeFunctionData(functionFragment: 'hasRole', values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'initialize',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'lastProposeBlockNumber', values?: undefined): string;
   encodeFunctionData(functionFragment: 'lastProposeTimestamp', values?: undefined): string;
   encodeFunctionData(functionFragment: 'lastPublishBlockNumber', values?: undefined): string;
@@ -144,10 +170,19 @@ export interface BadgerTreeInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'pendingCycle', values?: undefined): string;
   encodeFunctionData(functionFragment: 'pendingMerkleContentHash', values?: undefined): string;
   encodeFunctionData(functionFragment: 'pendingMerkleRoot', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'proposeRoot', values: [BytesLike, BytesLike, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'renounceRole', values: [BytesLike, string]): string;
-  encodeFunctionData(functionFragment: 'revokeRole', values: [BytesLike, string]): string;
-  encodeFunctionData(functionFragment: 'totalClaimed', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'proposeRoot',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'renounceRole',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'revokeRole',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'totalClaimed', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'unpause', values?: undefined): string;
 
   decodeFunctionResult(functionFragment: 'DEFAULT_ADMIN_ROLE', data: BytesLike): Result;
@@ -320,60 +355,76 @@ export interface BadgerTree extends BaseContract {
     ROOT_UPDATER_ROLE(overrides?: CallOverrides): Promise<[string]>;
 
     approveRoot(
-      root: BytesLike,
-      contentHash: BytesLike,
-      cycle: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      root: PromiseOrValue<BytesLike>,
+      contentHash: PromiseOrValue<BytesLike>,
+      cycle: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     claim(
-      tokens: string[],
-      cumulativeAmounts: BigNumberish[],
-      index: BigNumberish,
-      cycle: BigNumberish,
-      merkleProof: BytesLike[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tokens: PromiseOrValue<string>[],
+      cumulativeAmounts: PromiseOrValue<BigNumberish>[],
+      index: PromiseOrValue<BigNumberish>,
+      cycle: PromiseOrValue<BigNumberish>,
+      merkleProof: PromiseOrValue<BytesLike>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    claimed(arg0: string, arg1: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    claimed(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     currentCycle(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     encodeClaim(
-      tokens: string[],
-      cumulativeAmounts: BigNumberish[],
-      index: BigNumberish,
-      cycle: BigNumberish,
+      tokens: PromiseOrValue<string>[],
+      cumulativeAmounts: PromiseOrValue<BigNumberish>[],
+      index: PromiseOrValue<BigNumberish>,
+      cycle: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[string, string] & { encoded: string; hash: string }>;
 
-    getClaimedFor(user: string, tokens: string[], overrides?: CallOverrides): Promise<[string[], BigNumber[]]>;
+    getClaimedFor(
+      user: PromiseOrValue<string>,
+      tokens: PromiseOrValue<string>[],
+      overrides?: CallOverrides,
+    ): Promise<[string[], BigNumber[]]>;
 
     getCurrentMerkleData(overrides?: CallOverrides): Promise<[BadgerTree.MerkleDataStructOutput]>;
 
     getPendingMerkleData(overrides?: CallOverrides): Promise<[BadgerTree.MerkleDataStructOutput]>;
 
-    getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<[string]>;
+    getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[string]>;
 
-    getRoleMember(role: BytesLike, index: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    getRoleMember(
+      role: PromiseOrValue<BytesLike>,
+      index: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[string]>;
 
-    getRoleMemberCount(role: BytesLike, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getRoleMemberCount(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     grantRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     hasPendingRoot(overrides?: CallOverrides): Promise<[boolean]>;
 
-    hasRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<[boolean]>;
+    hasRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[boolean]>;
 
     initialize(
-      admin: string,
-      initialUpdater: string,
-      initialGuardian: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      admin: PromiseOrValue<string>,
+      initialUpdater: PromiseOrValue<string>,
+      initialGuardian: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     lastProposeBlockNumber(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -388,7 +439,7 @@ export interface BadgerTree extends BaseContract {
 
     merkleRoot(overrides?: CallOverrides): Promise<[string]>;
 
-    pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     paused(overrides?: CallOverrides): Promise<[boolean]>;
 
@@ -399,27 +450,27 @@ export interface BadgerTree extends BaseContract {
     pendingMerkleRoot(overrides?: CallOverrides): Promise<[string]>;
 
     proposeRoot(
-      root: BytesLike,
-      contentHash: BytesLike,
-      cycle: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      root: PromiseOrValue<BytesLike>,
+      contentHash: PromiseOrValue<BytesLike>,
+      cycle: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     renounceRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     revokeRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    totalClaimed(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    totalClaimed(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
   };
 
   DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<string>;
@@ -429,60 +480,72 @@ export interface BadgerTree extends BaseContract {
   ROOT_UPDATER_ROLE(overrides?: CallOverrides): Promise<string>;
 
   approveRoot(
-    root: BytesLike,
-    contentHash: BytesLike,
-    cycle: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    root: PromiseOrValue<BytesLike>,
+    contentHash: PromiseOrValue<BytesLike>,
+    cycle: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   claim(
-    tokens: string[],
-    cumulativeAmounts: BigNumberish[],
-    index: BigNumberish,
-    cycle: BigNumberish,
-    merkleProof: BytesLike[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    tokens: PromiseOrValue<string>[],
+    cumulativeAmounts: PromiseOrValue<BigNumberish>[],
+    index: PromiseOrValue<BigNumberish>,
+    cycle: PromiseOrValue<BigNumberish>,
+    merkleProof: PromiseOrValue<BytesLike>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  claimed(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+  claimed(arg0: PromiseOrValue<string>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   currentCycle(overrides?: CallOverrides): Promise<BigNumber>;
 
   encodeClaim(
-    tokens: string[],
-    cumulativeAmounts: BigNumberish[],
-    index: BigNumberish,
-    cycle: BigNumberish,
+    tokens: PromiseOrValue<string>[],
+    cumulativeAmounts: PromiseOrValue<BigNumberish>[],
+    index: PromiseOrValue<BigNumberish>,
+    cycle: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<[string, string] & { encoded: string; hash: string }>;
 
-  getClaimedFor(user: string, tokens: string[], overrides?: CallOverrides): Promise<[string[], BigNumber[]]>;
+  getClaimedFor(
+    user: PromiseOrValue<string>,
+    tokens: PromiseOrValue<string>[],
+    overrides?: CallOverrides,
+  ): Promise<[string[], BigNumber[]]>;
 
   getCurrentMerkleData(overrides?: CallOverrides): Promise<BadgerTree.MerkleDataStructOutput>;
 
   getPendingMerkleData(overrides?: CallOverrides): Promise<BadgerTree.MerkleDataStructOutput>;
 
-  getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<string>;
+  getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
-  getRoleMember(role: BytesLike, index: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  getRoleMember(
+    role: PromiseOrValue<BytesLike>,
+    index: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<string>;
 
-  getRoleMemberCount(role: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+  getRoleMemberCount(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
   grantRole(
-    role: BytesLike,
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    role: PromiseOrValue<BytesLike>,
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   hasPendingRoot(overrides?: CallOverrides): Promise<boolean>;
 
-  hasRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<boolean>;
+  hasRole(
+    role: PromiseOrValue<BytesLike>,
+    account: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<boolean>;
 
   initialize(
-    admin: string,
-    initialUpdater: string,
-    initialGuardian: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    admin: PromiseOrValue<string>,
+    initialUpdater: PromiseOrValue<string>,
+    initialGuardian: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   lastProposeBlockNumber(overrides?: CallOverrides): Promise<BigNumber>;
@@ -497,7 +560,7 @@ export interface BadgerTree extends BaseContract {
 
   merkleRoot(overrides?: CallOverrides): Promise<string>;
 
-  pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   paused(overrides?: CallOverrides): Promise<boolean>;
 
@@ -508,27 +571,27 @@ export interface BadgerTree extends BaseContract {
   pendingMerkleRoot(overrides?: CallOverrides): Promise<string>;
 
   proposeRoot(
-    root: BytesLike,
-    contentHash: BytesLike,
-    cycle: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    root: PromiseOrValue<BytesLike>,
+    contentHash: PromiseOrValue<BytesLike>,
+    cycle: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   renounceRole(
-    role: BytesLike,
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    role: PromiseOrValue<BytesLike>,
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   revokeRole(
-    role: BytesLike,
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    role: PromiseOrValue<BytesLike>,
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  totalClaimed(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  totalClaimed(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   callStatic: {
     DEFAULT_ADMIN_ROLE(overrides?: CallOverrides): Promise<string>;
@@ -537,51 +600,72 @@ export interface BadgerTree extends BaseContract {
 
     ROOT_UPDATER_ROLE(overrides?: CallOverrides): Promise<string>;
 
-    approveRoot(root: BytesLike, contentHash: BytesLike, cycle: BigNumberish, overrides?: CallOverrides): Promise<void>;
-
-    claim(
-      tokens: string[],
-      cumulativeAmounts: BigNumberish[],
-      index: BigNumberish,
-      cycle: BigNumberish,
-      merkleProof: BytesLike[],
+    approveRoot(
+      root: PromiseOrValue<BytesLike>,
+      contentHash: PromiseOrValue<BytesLike>,
+      cycle: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    claimed(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    claim(
+      tokens: PromiseOrValue<string>[],
+      cumulativeAmounts: PromiseOrValue<BigNumberish>[],
+      index: PromiseOrValue<BigNumberish>,
+      cycle: PromiseOrValue<BigNumberish>,
+      merkleProof: PromiseOrValue<BytesLike>[],
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    claimed(arg0: PromiseOrValue<string>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     currentCycle(overrides?: CallOverrides): Promise<BigNumber>;
 
     encodeClaim(
-      tokens: string[],
-      cumulativeAmounts: BigNumberish[],
-      index: BigNumberish,
-      cycle: BigNumberish,
+      tokens: PromiseOrValue<string>[],
+      cumulativeAmounts: PromiseOrValue<BigNumberish>[],
+      index: PromiseOrValue<BigNumberish>,
+      cycle: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[string, string] & { encoded: string; hash: string }>;
 
-    getClaimedFor(user: string, tokens: string[], overrides?: CallOverrides): Promise<[string[], BigNumber[]]>;
+    getClaimedFor(
+      user: PromiseOrValue<string>,
+      tokens: PromiseOrValue<string>[],
+      overrides?: CallOverrides,
+    ): Promise<[string[], BigNumber[]]>;
 
     getCurrentMerkleData(overrides?: CallOverrides): Promise<BadgerTree.MerkleDataStructOutput>;
 
     getPendingMerkleData(overrides?: CallOverrides): Promise<BadgerTree.MerkleDataStructOutput>;
 
-    getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<string>;
+    getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
-    getRoleMember(role: BytesLike, index: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    getRoleMember(
+      role: PromiseOrValue<BytesLike>,
+      index: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<string>;
 
-    getRoleMemberCount(role: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    getRoleMemberCount(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    grantRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<void>;
+    grantRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     hasPendingRoot(overrides?: CallOverrides): Promise<boolean>;
 
-    hasRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<boolean>;
+    hasRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     initialize(
-      admin: string,
-      initialUpdater: string,
-      initialGuardian: string,
+      admin: PromiseOrValue<string>,
+      initialUpdater: PromiseOrValue<string>,
+      initialGuardian: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -607,92 +691,113 @@ export interface BadgerTree extends BaseContract {
 
     pendingMerkleRoot(overrides?: CallOverrides): Promise<string>;
 
-    proposeRoot(root: BytesLike, contentHash: BytesLike, cycle: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    proposeRoot(
+      root: PromiseOrValue<BytesLike>,
+      contentHash: PromiseOrValue<BytesLike>,
+      cycle: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    renounceRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<void>;
+    renounceRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    revokeRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<void>;
+    revokeRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    totalClaimed(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    totalClaimed(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     unpause(overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
     'Claimed(address,address,uint256,uint256,uint256,uint256)'(
-      user?: string | null,
-      token?: string | null,
+      user?: PromiseOrValue<string> | null,
+      token?: PromiseOrValue<string> | null,
       amount?: null,
-      cycle?: BigNumberish | null,
+      cycle?: PromiseOrValue<BigNumberish> | null,
       timestamp?: null,
       blockNumber?: null,
     ): ClaimedEventFilter;
     Claimed(
-      user?: string | null,
-      token?: string | null,
+      user?: PromiseOrValue<string> | null,
+      token?: PromiseOrValue<string> | null,
       amount?: null,
-      cycle?: BigNumberish | null,
+      cycle?: PromiseOrValue<BigNumberish> | null,
       timestamp?: null,
       blockNumber?: null,
     ): ClaimedEventFilter;
 
-    'InsufficientFundsForRoot(bytes32)'(root?: BytesLike | null): InsufficientFundsForRootEventFilter;
-    InsufficientFundsForRoot(root?: BytesLike | null): InsufficientFundsForRootEventFilter;
+    'InsufficientFundsForRoot(bytes32)'(root?: PromiseOrValue<BytesLike> | null): InsufficientFundsForRootEventFilter;
+    InsufficientFundsForRoot(root?: PromiseOrValue<BytesLike> | null): InsufficientFundsForRootEventFilter;
 
     'Paused(address)'(account?: null): PausedEventFilter;
     Paused(account?: null): PausedEventFilter;
 
     'RoleAdminChanged(bytes32,bytes32,bytes32)'(
-      role?: BytesLike | null,
-      previousAdminRole?: BytesLike | null,
-      newAdminRole?: BytesLike | null,
+      role?: PromiseOrValue<BytesLike> | null,
+      previousAdminRole?: PromiseOrValue<BytesLike> | null,
+      newAdminRole?: PromiseOrValue<BytesLike> | null,
     ): RoleAdminChangedEventFilter;
     RoleAdminChanged(
-      role?: BytesLike | null,
-      previousAdminRole?: BytesLike | null,
-      newAdminRole?: BytesLike | null,
+      role?: PromiseOrValue<BytesLike> | null,
+      previousAdminRole?: PromiseOrValue<BytesLike> | null,
+      newAdminRole?: PromiseOrValue<BytesLike> | null,
     ): RoleAdminChangedEventFilter;
 
     'RoleGranted(bytes32,address,address)'(
-      role?: BytesLike | null,
-      account?: string | null,
-      sender?: string | null,
+      role?: PromiseOrValue<BytesLike> | null,
+      account?: PromiseOrValue<string> | null,
+      sender?: PromiseOrValue<string> | null,
     ): RoleGrantedEventFilter;
-    RoleGranted(role?: BytesLike | null, account?: string | null, sender?: string | null): RoleGrantedEventFilter;
+    RoleGranted(
+      role?: PromiseOrValue<BytesLike> | null,
+      account?: PromiseOrValue<string> | null,
+      sender?: PromiseOrValue<string> | null,
+    ): RoleGrantedEventFilter;
 
     'RoleRevoked(bytes32,address,address)'(
-      role?: BytesLike | null,
-      account?: string | null,
-      sender?: string | null,
+      role?: PromiseOrValue<BytesLike> | null,
+      account?: PromiseOrValue<string> | null,
+      sender?: PromiseOrValue<string> | null,
     ): RoleRevokedEventFilter;
-    RoleRevoked(role?: BytesLike | null, account?: string | null, sender?: string | null): RoleRevokedEventFilter;
+    RoleRevoked(
+      role?: PromiseOrValue<BytesLike> | null,
+      account?: PromiseOrValue<string> | null,
+      sender?: PromiseOrValue<string> | null,
+    ): RoleRevokedEventFilter;
 
     'RootProposed(uint256,bytes32,bytes32,uint256,uint256)'(
-      cycle?: BigNumberish | null,
-      root?: BytesLike | null,
-      contentHash?: BytesLike | null,
+      cycle?: PromiseOrValue<BigNumberish> | null,
+      root?: PromiseOrValue<BytesLike> | null,
+      contentHash?: PromiseOrValue<BytesLike> | null,
       timestamp?: null,
       blockNumber?: null,
     ): RootProposedEventFilter;
     RootProposed(
-      cycle?: BigNumberish | null,
-      root?: BytesLike | null,
-      contentHash?: BytesLike | null,
+      cycle?: PromiseOrValue<BigNumberish> | null,
+      root?: PromiseOrValue<BytesLike> | null,
+      contentHash?: PromiseOrValue<BytesLike> | null,
       timestamp?: null,
       blockNumber?: null,
     ): RootProposedEventFilter;
 
     'RootUpdated(uint256,bytes32,bytes32,uint256,uint256)'(
-      cycle?: BigNumberish | null,
-      root?: BytesLike | null,
-      contentHash?: BytesLike | null,
+      cycle?: PromiseOrValue<BigNumberish> | null,
+      root?: PromiseOrValue<BytesLike> | null,
+      contentHash?: PromiseOrValue<BytesLike> | null,
       timestamp?: null,
       blockNumber?: null,
     ): RootUpdatedEventFilter;
     RootUpdated(
-      cycle?: BigNumberish | null,
-      root?: BytesLike | null,
-      contentHash?: BytesLike | null,
+      cycle?: PromiseOrValue<BigNumberish> | null,
+      root?: PromiseOrValue<BytesLike> | null,
+      contentHash?: PromiseOrValue<BytesLike> | null,
       timestamp?: null,
       blockNumber?: null,
     ): RootUpdatedEventFilter;
@@ -709,60 +814,72 @@ export interface BadgerTree extends BaseContract {
     ROOT_UPDATER_ROLE(overrides?: CallOverrides): Promise<BigNumber>;
 
     approveRoot(
-      root: BytesLike,
-      contentHash: BytesLike,
-      cycle: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      root: PromiseOrValue<BytesLike>,
+      contentHash: PromiseOrValue<BytesLike>,
+      cycle: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     claim(
-      tokens: string[],
-      cumulativeAmounts: BigNumberish[],
-      index: BigNumberish,
-      cycle: BigNumberish,
-      merkleProof: BytesLike[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tokens: PromiseOrValue<string>[],
+      cumulativeAmounts: PromiseOrValue<BigNumberish>[],
+      index: PromiseOrValue<BigNumberish>,
+      cycle: PromiseOrValue<BigNumberish>,
+      merkleProof: PromiseOrValue<BytesLike>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    claimed(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    claimed(arg0: PromiseOrValue<string>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     currentCycle(overrides?: CallOverrides): Promise<BigNumber>;
 
     encodeClaim(
-      tokens: string[],
-      cumulativeAmounts: BigNumberish[],
-      index: BigNumberish,
-      cycle: BigNumberish,
+      tokens: PromiseOrValue<string>[],
+      cumulativeAmounts: PromiseOrValue<BigNumberish>[],
+      index: PromiseOrValue<BigNumberish>,
+      cycle: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    getClaimedFor(user: string, tokens: string[], overrides?: CallOverrides): Promise<BigNumber>;
+    getClaimedFor(
+      user: PromiseOrValue<string>,
+      tokens: PromiseOrValue<string>[],
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     getCurrentMerkleData(overrides?: CallOverrides): Promise<BigNumber>;
 
     getPendingMerkleData(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getRoleMember(role: BytesLike, index: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getRoleMember(
+      role: PromiseOrValue<BytesLike>,
+      index: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    getRoleMemberCount(role: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    getRoleMemberCount(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     grantRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     hasPendingRoot(overrides?: CallOverrides): Promise<BigNumber>;
 
-    hasRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    hasRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     initialize(
-      admin: string,
-      initialUpdater: string,
-      initialGuardian: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      admin: PromiseOrValue<string>,
+      initialUpdater: PromiseOrValue<string>,
+      initialGuardian: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     lastProposeBlockNumber(overrides?: CallOverrides): Promise<BigNumber>;
@@ -777,7 +894,7 @@ export interface BadgerTree extends BaseContract {
 
     merkleRoot(overrides?: CallOverrides): Promise<BigNumber>;
 
-    pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     paused(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -788,27 +905,27 @@ export interface BadgerTree extends BaseContract {
     pendingMerkleRoot(overrides?: CallOverrides): Promise<BigNumber>;
 
     proposeRoot(
-      root: BytesLike,
-      contentHash: BytesLike,
-      cycle: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      root: PromiseOrValue<BytesLike>,
+      contentHash: PromiseOrValue<BytesLike>,
+      cycle: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     renounceRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     revokeRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    totalClaimed(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    totalClaimed(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -819,60 +936,76 @@ export interface BadgerTree extends BaseContract {
     ROOT_UPDATER_ROLE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     approveRoot(
-      root: BytesLike,
-      contentHash: BytesLike,
-      cycle: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      root: PromiseOrValue<BytesLike>,
+      contentHash: PromiseOrValue<BytesLike>,
+      cycle: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     claim(
-      tokens: string[],
-      cumulativeAmounts: BigNumberish[],
-      index: BigNumberish,
-      cycle: BigNumberish,
-      merkleProof: BytesLike[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tokens: PromiseOrValue<string>[],
+      cumulativeAmounts: PromiseOrValue<BigNumberish>[],
+      index: PromiseOrValue<BigNumberish>,
+      cycle: PromiseOrValue<BigNumberish>,
+      merkleProof: PromiseOrValue<BytesLike>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    claimed(arg0: string, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    claimed(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     currentCycle(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     encodeClaim(
-      tokens: string[],
-      cumulativeAmounts: BigNumberish[],
-      index: BigNumberish,
-      cycle: BigNumberish,
+      tokens: PromiseOrValue<string>[],
+      cumulativeAmounts: PromiseOrValue<BigNumberish>[],
+      index: PromiseOrValue<BigNumberish>,
+      cycle: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    getClaimedFor(user: string, tokens: string[], overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getClaimedFor(
+      user: PromiseOrValue<string>,
+      tokens: PromiseOrValue<string>[],
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     getCurrentMerkleData(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getPendingMerkleData(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getRoleMember(role: BytesLike, index: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getRoleMember(
+      role: PromiseOrValue<BytesLike>,
+      index: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    getRoleMemberCount(role: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getRoleMemberCount(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     grantRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     hasPendingRoot(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    hasRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    hasRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     initialize(
-      admin: string,
-      initialUpdater: string,
-      initialGuardian: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      admin: PromiseOrValue<string>,
+      initialUpdater: PromiseOrValue<string>,
+      initialGuardian: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     lastProposeBlockNumber(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -887,7 +1020,7 @@ export interface BadgerTree extends BaseContract {
 
     merkleRoot(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     paused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -898,26 +1031,26 @@ export interface BadgerTree extends BaseContract {
     pendingMerkleRoot(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     proposeRoot(
-      root: BytesLike,
-      contentHash: BytesLike,
-      cycle: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      root: PromiseOrValue<BytesLike>,
+      contentHash: PromiseOrValue<BytesLike>,
+      cycle: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     renounceRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     revokeRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    totalClaimed(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    totalClaimed(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
   };
 }

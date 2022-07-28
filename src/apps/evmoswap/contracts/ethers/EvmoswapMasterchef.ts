@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface EvmoswapMasterchefInterface extends utils.Interface {
   functions: {
@@ -134,27 +134,46 @@ export interface EvmoswapMasterchefInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'TOKENLESS_PRODUCTION', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'add',
-    values: [BigNumberish, BigNumberish, string, string, boolean, boolean],
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<boolean>,
+      PromiseOrValue<boolean>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'daoAddr', values?: undefined): string;
   encodeFunctionData(functionFragment: 'daoPercent', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'deposit', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'depositFor', values: [string, BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'emergencyWithdraw', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'deposit',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'depositFor',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'emergencyWithdraw', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'emo', values?: undefined): string;
   encodeFunctionData(functionFragment: 'emoPerSecond', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'enterStaking', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'enterStaking', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'feeAddr', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getMultiplier', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'harvestAllRewards', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'getMultiplier',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'harvestAllRewards', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'lastTimeDaoWithdraw', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'leaveStaking', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'leaveStaking', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'massUpdatePools', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'pendingTokens', values: [BigNumberish, string]): string;
+  encodeFunctionData(
+    functionFragment: 'pendingTokens',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'percentDec', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'poolExistence', values: [string]): string;
-  encodeFunctionData(functionFragment: 'poolInfo', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'poolExistence', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'poolInfo', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'poolLength', values?: undefined): string;
   encodeFunctionData(functionFragment: 'refAddr', values?: undefined): string;
   encodeFunctionData(functionFragment: 'refPercent', values?: undefined): string;
@@ -164,28 +183,46 @@ export interface EvmoswapMasterchefInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'safuPercent', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'set',
-    values: [BigNumberish, BigNumberish, BigNumberish, string, boolean],
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<boolean>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'setDaoAddress', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setEmoPerSecond', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setFeeAddress', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setPool0Staker', values: [string[], boolean]): string;
-  encodeFunctionData(functionFragment: 'setRefAddress', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setSafuAddress', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setStartTime', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setWhitelist', values: [string[], boolean]): string;
+  encodeFunctionData(functionFragment: 'setDaoAddress', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setEmoPerSecond', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setFeeAddress', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'setPool0Staker',
+    values: [PromiseOrValue<string>[], PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(functionFragment: 'setRefAddress', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setSafuAddress', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setStartTime', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'setWhitelist',
+    values: [PromiseOrValue<string>[], PromiseOrValue<boolean>],
+  ): string;
   encodeFunctionData(functionFragment: 'stakingPercent', values?: undefined): string;
   encodeFunctionData(functionFragment: 'startTime', values?: undefined): string;
   encodeFunctionData(functionFragment: 'toggleWhitelistable', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalAllocPoint', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
-  encodeFunctionData(functionFragment: 'updateMultiplier', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'updatePool', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'userInfo', values: [BigNumberish, string]): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'updateMultiplier', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'updatePool', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'userInfo',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'votingEscrow', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'whitelist', values: [string]): string;
+  encodeFunctionData(functionFragment: 'whitelist', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'whitelistable', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'withdraw', values: [BigNumberish, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'withdraw',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'withdrawDevAndRefFee', values?: undefined): string;
 
   decodeFunctionResult(functionFragment: 'BONUS_MULTIPLIER', data: BytesLike): Result;
@@ -353,13 +390,13 @@ export interface EvmoswapMasterchef extends BaseContract {
     TOKENLESS_PRODUCTION(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     add(
-      _allocPoint: BigNumberish,
-      _depositFeePercent: BigNumberish,
-      _lpToken: string,
-      _incentivesController: string,
-      _boost: boolean,
-      _withUpdate: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _depositFeePercent: PromiseOrValue<BigNumberish>,
+      _lpToken: PromiseOrValue<string>,
+      _incentivesController: PromiseOrValue<string>,
+      _boost: PromiseOrValue<boolean>,
+      _withUpdate: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     daoAddr(overrides?: CallOverrides): Promise<[string]>;
@@ -367,21 +404,21 @@ export interface EvmoswapMasterchef extends BaseContract {
     daoPercent(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     deposit(
-      _pid: BigNumberish,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     depositFor(
-      _user: string,
-      _pid: BigNumberish,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _user: PromiseOrValue<string>,
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     emergencyWithdraw(
-      _pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     emo(overrides?: CallOverrides): Promise<[string]>;
@@ -389,42 +426,46 @@ export interface EvmoswapMasterchef extends BaseContract {
     emoPerSecond(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     enterStaking(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     feeAddr(overrides?: CallOverrides): Promise<[string]>;
 
-    getMultiplier(_from: BigNumberish, _to: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getMultiplier(
+      _from: PromiseOrValue<BigNumberish>,
+      _to: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     harvestAllRewards(
-      _user: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _user: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     lastTimeDaoWithdraw(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     leaveStaking(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    massUpdatePools(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    massUpdatePools(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     pendingTokens(
-      _pid: BigNumberish,
-      _user: string,
+      _pid: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[string[], BigNumber[]] & { tokens: string[]; amounts: BigNumber[] }>;
 
     percentDec(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    poolExistence(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    poolExistence(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     poolInfo(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [string, BigNumber, boolean, BigNumber, BigNumber, BigNumber, BigNumber, string] & {
@@ -445,7 +486,7 @@ export interface EvmoswapMasterchef extends BaseContract {
 
     refPercent(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     rewardMinter(overrides?: CallOverrides): Promise<[string]>;
 
@@ -454,82 +495,82 @@ export interface EvmoswapMasterchef extends BaseContract {
     safuPercent(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     set(
-      _pid: BigNumberish,
-      _allocPoint: BigNumberish,
-      _depositFeePercent: BigNumberish,
-      _incentivesController: string,
-      _withUpdate: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _depositFeePercent: PromiseOrValue<BigNumberish>,
+      _incentivesController: PromiseOrValue<string>,
+      _withUpdate: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setDaoAddress(
-      _daoAddr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _daoAddr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setEmoPerSecond(
-      _emoPerSecond: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _emoPerSecond: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setFeeAddress(
-      _feeAddr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _feeAddr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setPool0Staker(
-      _users: string[],
-      _flag: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _users: PromiseOrValue<string>[],
+      _flag: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setRefAddress(
-      _refAddr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _refAddr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setSafuAddress(
-      _safuAddr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _safuAddr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setStartTime(
-      _startTime: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _startTime: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setWhitelist(
-      _users: string[],
-      _flag: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _users: PromiseOrValue<string>[],
+      _flag: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     stakingPercent(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     startTime(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    toggleWhitelistable(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    toggleWhitelistable(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     totalAllocPoint(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateMultiplier(
-      multiplierNumber: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      multiplierNumber: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updatePool(
-      _pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     userInfo(
-      arg0: BigNumberish,
-      arg1: string,
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber] & {
@@ -541,17 +582,17 @@ export interface EvmoswapMasterchef extends BaseContract {
 
     votingEscrow(overrides?: CallOverrides): Promise<[string]>;
 
-    whitelist(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    whitelist(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     whitelistable(overrides?: CallOverrides): Promise<[boolean]>;
 
     withdraw(
-      _pid: BigNumberish,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    withdrawDevAndRefFee(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    withdrawDevAndRefFee(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
   };
 
   BONUS_MULTIPLIER(overrides?: CallOverrides): Promise<BigNumber>;
@@ -561,13 +602,13 @@ export interface EvmoswapMasterchef extends BaseContract {
   TOKENLESS_PRODUCTION(overrides?: CallOverrides): Promise<BigNumber>;
 
   add(
-    _allocPoint: BigNumberish,
-    _depositFeePercent: BigNumberish,
-    _lpToken: string,
-    _incentivesController: string,
-    _boost: boolean,
-    _withUpdate: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _allocPoint: PromiseOrValue<BigNumberish>,
+    _depositFeePercent: PromiseOrValue<BigNumberish>,
+    _lpToken: PromiseOrValue<string>,
+    _incentivesController: PromiseOrValue<string>,
+    _boost: PromiseOrValue<boolean>,
+    _withUpdate: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   daoAddr(overrides?: CallOverrides): Promise<string>;
@@ -575,21 +616,21 @@ export interface EvmoswapMasterchef extends BaseContract {
   daoPercent(overrides?: CallOverrides): Promise<BigNumber>;
 
   deposit(
-    _pid: BigNumberish,
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pid: PromiseOrValue<BigNumberish>,
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   depositFor(
-    _user: string,
-    _pid: BigNumberish,
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _user: PromiseOrValue<string>,
+    _pid: PromiseOrValue<BigNumberish>,
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   emergencyWithdraw(
-    _pid: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pid: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   emo(overrides?: CallOverrides): Promise<string>;
@@ -597,42 +638,46 @@ export interface EvmoswapMasterchef extends BaseContract {
   emoPerSecond(overrides?: CallOverrides): Promise<BigNumber>;
 
   enterStaking(
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   feeAddr(overrides?: CallOverrides): Promise<string>;
 
-  getMultiplier(_from: BigNumberish, _to: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  getMultiplier(
+    _from: PromiseOrValue<BigNumberish>,
+    _to: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   harvestAllRewards(
-    _user: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _user: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   lastTimeDaoWithdraw(overrides?: CallOverrides): Promise<BigNumber>;
 
   leaveStaking(
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  massUpdatePools(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  massUpdatePools(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
   pendingTokens(
-    _pid: BigNumberish,
-    _user: string,
+    _pid: PromiseOrValue<BigNumberish>,
+    _user: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<[string[], BigNumber[]] & { tokens: string[]; amounts: BigNumber[] }>;
 
   percentDec(overrides?: CallOverrides): Promise<BigNumber>;
 
-  poolExistence(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  poolExistence(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   poolInfo(
-    arg0: BigNumberish,
+    arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<
     [string, BigNumber, boolean, BigNumber, BigNumber, BigNumber, BigNumber, string] & {
@@ -653,7 +698,7 @@ export interface EvmoswapMasterchef extends BaseContract {
 
   refPercent(overrides?: CallOverrides): Promise<BigNumber>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   rewardMinter(overrides?: CallOverrides): Promise<string>;
 
@@ -662,82 +707,82 @@ export interface EvmoswapMasterchef extends BaseContract {
   safuPercent(overrides?: CallOverrides): Promise<BigNumber>;
 
   set(
-    _pid: BigNumberish,
-    _allocPoint: BigNumberish,
-    _depositFeePercent: BigNumberish,
-    _incentivesController: string,
-    _withUpdate: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pid: PromiseOrValue<BigNumberish>,
+    _allocPoint: PromiseOrValue<BigNumberish>,
+    _depositFeePercent: PromiseOrValue<BigNumberish>,
+    _incentivesController: PromiseOrValue<string>,
+    _withUpdate: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setDaoAddress(
-    _daoAddr: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _daoAddr: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setEmoPerSecond(
-    _emoPerSecond: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _emoPerSecond: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setFeeAddress(
-    _feeAddr: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _feeAddr: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setPool0Staker(
-    _users: string[],
-    _flag: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _users: PromiseOrValue<string>[],
+    _flag: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setRefAddress(
-    _refAddr: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _refAddr: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setSafuAddress(
-    _safuAddr: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _safuAddr: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setStartTime(
-    _startTime: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _startTime: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setWhitelist(
-    _users: string[],
-    _flag: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _users: PromiseOrValue<string>[],
+    _flag: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   stakingPercent(overrides?: CallOverrides): Promise<BigNumber>;
 
   startTime(overrides?: CallOverrides): Promise<BigNumber>;
 
-  toggleWhitelistable(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  toggleWhitelistable(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   totalAllocPoint(overrides?: CallOverrides): Promise<BigNumber>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateMultiplier(
-    multiplierNumber: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    multiplierNumber: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updatePool(
-    _pid: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pid: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   userInfo(
-    arg0: BigNumberish,
-    arg1: string,
+    arg0: PromiseOrValue<BigNumberish>,
+    arg1: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber, BigNumber] & {
@@ -749,17 +794,17 @@ export interface EvmoswapMasterchef extends BaseContract {
 
   votingEscrow(overrides?: CallOverrides): Promise<string>;
 
-  whitelist(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  whitelist(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   whitelistable(overrides?: CallOverrides): Promise<boolean>;
 
   withdraw(
-    _pid: BigNumberish,
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pid: PromiseOrValue<BigNumberish>,
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  withdrawDevAndRefFee(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  withdrawDevAndRefFee(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   callStatic: {
     BONUS_MULTIPLIER(overrides?: CallOverrides): Promise<BigNumber>;
@@ -769,12 +814,12 @@ export interface EvmoswapMasterchef extends BaseContract {
     TOKENLESS_PRODUCTION(overrides?: CallOverrides): Promise<BigNumber>;
 
     add(
-      _allocPoint: BigNumberish,
-      _depositFeePercent: BigNumberish,
-      _lpToken: string,
-      _incentivesController: string,
-      _boost: boolean,
-      _withUpdate: boolean,
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _depositFeePercent: PromiseOrValue<BigNumberish>,
+      _lpToken: PromiseOrValue<string>,
+      _incentivesController: PromiseOrValue<string>,
+      _boost: PromiseOrValue<boolean>,
+      _withUpdate: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -782,44 +827,57 @@ export interface EvmoswapMasterchef extends BaseContract {
 
     daoPercent(overrides?: CallOverrides): Promise<BigNumber>;
 
-    deposit(_pid: BigNumberish, _amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    deposit(
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    depositFor(_user: string, _pid: BigNumberish, _amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    depositFor(
+      _user: PromiseOrValue<string>,
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    emergencyWithdraw(_pid: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    emergencyWithdraw(_pid: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     emo(overrides?: CallOverrides): Promise<string>;
 
     emoPerSecond(overrides?: CallOverrides): Promise<BigNumber>;
 
-    enterStaking(_amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    enterStaking(_amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     feeAddr(overrides?: CallOverrides): Promise<string>;
 
-    getMultiplier(_from: BigNumberish, _to: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getMultiplier(
+      _from: PromiseOrValue<BigNumberish>,
+      _to: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    harvestAllRewards(_user: string, overrides?: CallOverrides): Promise<void>;
+    harvestAllRewards(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     lastTimeDaoWithdraw(overrides?: CallOverrides): Promise<BigNumber>;
 
-    leaveStaking(_amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    leaveStaking(_amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     massUpdatePools(overrides?: CallOverrides): Promise<void>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
     pendingTokens(
-      _pid: BigNumberish,
-      _user: string,
+      _pid: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[string[], BigNumber[]] & { tokens: string[]; amounts: BigNumber[] }>;
 
     percentDec(overrides?: CallOverrides): Promise<BigNumber>;
 
-    poolExistence(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    poolExistence(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     poolInfo(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [string, BigNumber, boolean, BigNumber, BigNumber, BigNumber, BigNumber, string] & {
@@ -849,29 +907,37 @@ export interface EvmoswapMasterchef extends BaseContract {
     safuPercent(overrides?: CallOverrides): Promise<BigNumber>;
 
     set(
-      _pid: BigNumberish,
-      _allocPoint: BigNumberish,
-      _depositFeePercent: BigNumberish,
-      _incentivesController: string,
-      _withUpdate: boolean,
+      _pid: PromiseOrValue<BigNumberish>,
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _depositFeePercent: PromiseOrValue<BigNumberish>,
+      _incentivesController: PromiseOrValue<string>,
+      _withUpdate: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    setDaoAddress(_daoAddr: string, overrides?: CallOverrides): Promise<void>;
+    setDaoAddress(_daoAddr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setEmoPerSecond(_emoPerSecond: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setEmoPerSecond(_emoPerSecond: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setFeeAddress(_feeAddr: string, overrides?: CallOverrides): Promise<void>;
+    setFeeAddress(_feeAddr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setPool0Staker(_users: string[], _flag: boolean, overrides?: CallOverrides): Promise<void>;
+    setPool0Staker(
+      _users: PromiseOrValue<string>[],
+      _flag: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setRefAddress(_refAddr: string, overrides?: CallOverrides): Promise<void>;
+    setRefAddress(_refAddr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setSafuAddress(_safuAddr: string, overrides?: CallOverrides): Promise<void>;
+    setSafuAddress(_safuAddr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setStartTime(_startTime: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setStartTime(_startTime: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setWhitelist(_users: string[], _flag: boolean, overrides?: CallOverrides): Promise<void>;
+    setWhitelist(
+      _users: PromiseOrValue<string>[],
+      _flag: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     stakingPercent(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -881,15 +947,15 @@ export interface EvmoswapMasterchef extends BaseContract {
 
     totalAllocPoint(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    updateMultiplier(multiplierNumber: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    updateMultiplier(multiplierNumber: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    updatePool(_pid: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    updatePool(_pid: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     userInfo(
-      arg0: BigNumberish,
-      arg1: string,
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber] & {
@@ -901,68 +967,92 @@ export interface EvmoswapMasterchef extends BaseContract {
 
     votingEscrow(overrides?: CallOverrides): Promise<string>;
 
-    whitelist(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    whitelist(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     whitelistable(overrides?: CallOverrides): Promise<boolean>;
 
-    withdraw(_pid: BigNumberish, _amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    withdraw(
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     withdrawDevAndRefFee(overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
     'Add(uint256,uint256,address,address,bool)'(
-      pid?: BigNumberish | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
       allocPoint?: null,
-      lpToken?: string | null,
-      incentivesController?: string | null,
+      lpToken?: PromiseOrValue<string> | null,
+      incentivesController?: PromiseOrValue<string> | null,
       boost?: null,
     ): AddEventFilter;
     Add(
-      pid?: BigNumberish | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
       allocPoint?: null,
-      lpToken?: string | null,
-      incentivesController?: string | null,
+      lpToken?: PromiseOrValue<string> | null,
+      incentivesController?: PromiseOrValue<string> | null,
       boost?: null,
     ): AddEventFilter;
 
     'Deposit(address,address,uint256,uint256)'(
-      from?: string | null,
-      to?: string | null,
-      pid?: BigNumberish | null,
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
       amount?: null,
     ): DepositEventFilter;
-    Deposit(from?: string | null, to?: string | null, pid?: BigNumberish | null, amount?: null): DepositEventFilter;
+    Deposit(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
+      amount?: null,
+    ): DepositEventFilter;
 
     'EmergencyWithdraw(address,uint256,uint256)'(
-      user?: string | null,
-      pid?: BigNumberish | null,
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
       amount?: null,
     ): EmergencyWithdrawEventFilter;
-    EmergencyWithdraw(user?: string | null, pid?: BigNumberish | null, amount?: null): EmergencyWithdrawEventFilter;
+    EmergencyWithdraw(
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
+      amount?: null,
+    ): EmergencyWithdrawEventFilter;
 
     'Error(bytes)'(error?: null): ErrorEventFilter;
     Error(error?: null): ErrorEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
 
     'Set(uint256,uint256,address)'(
-      pid?: BigNumberish | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
       allocPoint?: null,
-      incentivesController?: string | null,
+      incentivesController?: PromiseOrValue<string> | null,
     ): SetEventFilter;
-    Set(pid?: BigNumberish | null, allocPoint?: null, incentivesController?: string | null): SetEventFilter;
+    Set(
+      pid?: PromiseOrValue<BigNumberish> | null,
+      allocPoint?: null,
+      incentivesController?: PromiseOrValue<string> | null,
+    ): SetEventFilter;
 
     'Withdraw(address,uint256,uint256)'(
-      user?: string | null,
-      pid?: BigNumberish | null,
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
       amount?: null,
     ): WithdrawEventFilter;
-    Withdraw(user?: string | null, pid?: BigNumberish | null, amount?: null): WithdrawEventFilter;
+    Withdraw(
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
+      amount?: null,
+    ): WithdrawEventFilter;
   };
 
   estimateGas: {
@@ -973,13 +1063,13 @@ export interface EvmoswapMasterchef extends BaseContract {
     TOKENLESS_PRODUCTION(overrides?: CallOverrides): Promise<BigNumber>;
 
     add(
-      _allocPoint: BigNumberish,
-      _depositFeePercent: BigNumberish,
-      _lpToken: string,
-      _incentivesController: string,
-      _boost: boolean,
-      _withUpdate: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _depositFeePercent: PromiseOrValue<BigNumberish>,
+      _lpToken: PromiseOrValue<string>,
+      _incentivesController: PromiseOrValue<string>,
+      _boost: PromiseOrValue<boolean>,
+      _withUpdate: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     daoAddr(overrides?: CallOverrides): Promise<BigNumber>;
@@ -987,21 +1077,21 @@ export interface EvmoswapMasterchef extends BaseContract {
     daoPercent(overrides?: CallOverrides): Promise<BigNumber>;
 
     deposit(
-      _pid: BigNumberish,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     depositFor(
-      _user: string,
-      _pid: BigNumberish,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _user: PromiseOrValue<string>,
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     emergencyWithdraw(
-      _pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     emo(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1009,34 +1099,45 @@ export interface EvmoswapMasterchef extends BaseContract {
     emoPerSecond(overrides?: CallOverrides): Promise<BigNumber>;
 
     enterStaking(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     feeAddr(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getMultiplier(_from: BigNumberish, _to: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getMultiplier(
+      _from: PromiseOrValue<BigNumberish>,
+      _to: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    harvestAllRewards(_user: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    harvestAllRewards(
+      _user: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     lastTimeDaoWithdraw(overrides?: CallOverrides): Promise<BigNumber>;
 
     leaveStaking(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    massUpdatePools(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    massUpdatePools(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    pendingTokens(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingTokens(
+      _pid: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     percentDec(overrides?: CallOverrides): Promise<BigNumber>;
 
-    poolExistence(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    poolExistence(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    poolInfo(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    poolInfo(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     poolLength(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1044,7 +1145,7 @@ export interface EvmoswapMasterchef extends BaseContract {
 
     refPercent(overrides?: CallOverrides): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     rewardMinter(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1053,79 +1154,98 @@ export interface EvmoswapMasterchef extends BaseContract {
     safuPercent(overrides?: CallOverrides): Promise<BigNumber>;
 
     set(
-      _pid: BigNumberish,
-      _allocPoint: BigNumberish,
-      _depositFeePercent: BigNumberish,
-      _incentivesController: string,
-      _withUpdate: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _depositFeePercent: PromiseOrValue<BigNumberish>,
+      _incentivesController: PromiseOrValue<string>,
+      _withUpdate: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setDaoAddress(_daoAddr: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setDaoAddress(
+      _daoAddr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setEmoPerSecond(
-      _emoPerSecond: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _emoPerSecond: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setFeeAddress(_feeAddr: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setFeeAddress(
+      _feeAddr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setPool0Staker(
-      _users: string[],
-      _flag: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _users: PromiseOrValue<string>[],
+      _flag: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setRefAddress(_refAddr: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setRefAddress(
+      _refAddr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    setSafuAddress(_safuAddr: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setSafuAddress(
+      _safuAddr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setStartTime(
-      _startTime: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _startTime: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setWhitelist(
-      _users: string[],
-      _flag: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _users: PromiseOrValue<string>[],
+      _flag: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     stakingPercent(overrides?: CallOverrides): Promise<BigNumber>;
 
     startTime(overrides?: CallOverrides): Promise<BigNumber>;
 
-    toggleWhitelistable(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    toggleWhitelistable(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     totalAllocPoint(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     updateMultiplier(
-      multiplierNumber: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      multiplierNumber: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    updatePool(_pid: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    updatePool(
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    userInfo(arg0: BigNumberish, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    userInfo(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     votingEscrow(overrides?: CallOverrides): Promise<BigNumber>;
 
-    whitelist(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    whitelist(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     whitelistable(overrides?: CallOverrides): Promise<BigNumber>;
 
     withdraw(
-      _pid: BigNumberish,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    withdrawDevAndRefFee(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    withdrawDevAndRefFee(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -1136,13 +1256,13 @@ export interface EvmoswapMasterchef extends BaseContract {
     TOKENLESS_PRODUCTION(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     add(
-      _allocPoint: BigNumberish,
-      _depositFeePercent: BigNumberish,
-      _lpToken: string,
-      _incentivesController: string,
-      _boost: boolean,
-      _withUpdate: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _depositFeePercent: PromiseOrValue<BigNumberish>,
+      _lpToken: PromiseOrValue<string>,
+      _incentivesController: PromiseOrValue<string>,
+      _boost: PromiseOrValue<boolean>,
+      _withUpdate: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     daoAddr(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1150,21 +1270,21 @@ export interface EvmoswapMasterchef extends BaseContract {
     daoPercent(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     deposit(
-      _pid: BigNumberish,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     depositFor(
-      _user: string,
-      _pid: BigNumberish,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _user: PromiseOrValue<string>,
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     emergencyWithdraw(
-      _pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     emo(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1172,37 +1292,45 @@ export interface EvmoswapMasterchef extends BaseContract {
     emoPerSecond(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     enterStaking(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     feeAddr(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getMultiplier(_from: BigNumberish, _to: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getMultiplier(
+      _from: PromiseOrValue<BigNumberish>,
+      _to: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     harvestAllRewards(
-      _user: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _user: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     lastTimeDaoWithdraw(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     leaveStaking(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    massUpdatePools(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    massUpdatePools(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    pendingTokens(_pid: BigNumberish, _user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    pendingTokens(
+      _pid: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     percentDec(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    poolExistence(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    poolExistence(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    poolInfo(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    poolInfo(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     poolLength(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1210,7 +1338,7 @@ export interface EvmoswapMasterchef extends BaseContract {
 
     refPercent(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     rewardMinter(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1219,93 +1347,97 @@ export interface EvmoswapMasterchef extends BaseContract {
     safuPercent(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     set(
-      _pid: BigNumberish,
-      _allocPoint: BigNumberish,
-      _depositFeePercent: BigNumberish,
-      _incentivesController: string,
-      _withUpdate: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _allocPoint: PromiseOrValue<BigNumberish>,
+      _depositFeePercent: PromiseOrValue<BigNumberish>,
+      _incentivesController: PromiseOrValue<string>,
+      _withUpdate: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setDaoAddress(
-      _daoAddr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _daoAddr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setEmoPerSecond(
-      _emoPerSecond: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _emoPerSecond: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setFeeAddress(
-      _feeAddr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _feeAddr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setPool0Staker(
-      _users: string[],
-      _flag: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _users: PromiseOrValue<string>[],
+      _flag: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setRefAddress(
-      _refAddr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _refAddr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setSafuAddress(
-      _safuAddr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _safuAddr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setStartTime(
-      _startTime: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _startTime: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setWhitelist(
-      _users: string[],
-      _flag: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _users: PromiseOrValue<string>[],
+      _flag: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     stakingPercent(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     startTime(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    toggleWhitelistable(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    toggleWhitelistable(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     totalAllocPoint(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateMultiplier(
-      multiplierNumber: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      multiplierNumber: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updatePool(
-      _pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    userInfo(arg0: BigNumberish, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    userInfo(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     votingEscrow(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    whitelist(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    whitelist(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     whitelistable(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     withdraw(
-      _pid: BigNumberish,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    withdrawDevAndRefFee(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    withdrawDevAndRefFee(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
   };
 }

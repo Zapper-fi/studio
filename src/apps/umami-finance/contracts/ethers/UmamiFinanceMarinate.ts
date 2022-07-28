@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface UmamiFinanceMarinateInterface extends utils.Interface {
   functions: {
@@ -172,72 +172,120 @@ export interface UmamiFinanceMarinateInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'DEFAULT_ADMIN_ROLE', values?: undefined): string;
   encodeFunctionData(functionFragment: 'SCALE', values?: undefined): string;
   encodeFunctionData(functionFragment: 'UMAMI', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'addApprovedMultiplierToken', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'addApprovedRewardToken', values: [string]): string;
-  encodeFunctionData(functionFragment: 'addReward', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'addToContractWhitelist', values: [string]): string;
-  encodeFunctionData(functionFragment: 'allowance', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'approve', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'addApprovedMultiplierToken',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'addApprovedRewardToken', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'addReward',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'addToContractWhitelist', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'allowance', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'approve',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'claimRewards', values?: undefined): string;
   encodeFunctionData(functionFragment: 'decimals', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'decreaseAllowance', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'decreaseAllowance',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'depositLimit', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getAvailableTokenRewards', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'getRoleAdmin', values: [BytesLike]): string;
-  encodeFunctionData(functionFragment: 'grantRole', values: [BytesLike, string]): string;
-  encodeFunctionData(functionFragment: 'hasRole', values: [BytesLike, string]): string;
-  encodeFunctionData(functionFragment: 'increaseAllowance', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'isApprovedMultiplierNFT', values: [string]): string;
-  encodeFunctionData(functionFragment: 'isApprovedRewardToken', values: [string]): string;
-  encodeFunctionData(functionFragment: 'isContract', values: [string]): string;
-  encodeFunctionData(functionFragment: 'isNFTStaked', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'isWhitelisted', values: [string]): string;
-  encodeFunctionData(functionFragment: 'marinatorInfo', values: [string]): string;
-  encodeFunctionData(functionFragment: 'migrateToken', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'multiplierNFTs', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'getAvailableTokenRewards',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'getRoleAdmin', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(
+    functionFragment: 'grantRole',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'hasRole', values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'increaseAllowance',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'isApprovedMultiplierNFT', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'isApprovedRewardToken', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'isContract', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'isNFTStaked', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'isWhitelisted', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'marinatorInfo', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'migrateToken',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'multiplierNFTs', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'multiplierStakingEnabled', values?: undefined): string;
   encodeFunctionData(functionFragment: 'multiplierWithdrawEnabled', values?: undefined): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'nftMultiplier', values: [string]): string;
-  encodeFunctionData(functionFragment: 'onERC721Received', values: [string, string, BigNumberish, BytesLike]): string;
+  encodeFunctionData(functionFragment: 'nftMultiplier', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'onERC721Received',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<BytesLike>],
+  ): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'paidTokenRewardsPerStake', values: [string, string]): string;
+  encodeFunctionData(
+    functionFragment: 'paidTokenRewardsPerStake',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'payRewardsEnabled', values?: undefined): string;
   encodeFunctionData(functionFragment: 'recoverEth', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'removeApprovedMultiplierToken', values: [string]): string;
-  encodeFunctionData(functionFragment: 'removeApprovedRewardToken', values: [string]): string;
-  encodeFunctionData(functionFragment: 'removeFromContractWhitelist', values: [string]): string;
+  encodeFunctionData(functionFragment: 'removeApprovedMultiplierToken', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'removeApprovedRewardToken', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'removeFromContractWhitelist', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'renounceRole', values: [BytesLike, string]): string;
-  encodeFunctionData(functionFragment: 'revokeRole', values: [BytesLike, string]): string;
-  encodeFunctionData(functionFragment: 'rewardTokens', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setDepositLimit', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setMultiplierStakeEnabled', values: [boolean]): string;
-  encodeFunctionData(functionFragment: 'setMultiplierWithdrawEnabled', values: [boolean]): string;
-  encodeFunctionData(functionFragment: 'setPayRewardsEnabled', values: [boolean]): string;
-  encodeFunctionData(functionFragment: 'setScale', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setStakeEnabled', values: [boolean]): string;
-  encodeFunctionData(functionFragment: 'setStakingWithdrawEnabled', values: [boolean]): string;
-  encodeFunctionData(functionFragment: 'setTransferEnabled', values: [boolean]): string;
-  encodeFunctionData(functionFragment: 'stake', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'renounceRole',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'revokeRole',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'rewardTokens', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setDepositLimit', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setMultiplierStakeEnabled', values: [PromiseOrValue<boolean>]): string;
+  encodeFunctionData(functionFragment: 'setMultiplierWithdrawEnabled', values: [PromiseOrValue<boolean>]): string;
+  encodeFunctionData(functionFragment: 'setPayRewardsEnabled', values: [PromiseOrValue<boolean>]): string;
+  encodeFunctionData(functionFragment: 'setScale', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setStakeEnabled', values: [PromiseOrValue<boolean>]): string;
+  encodeFunctionData(functionFragment: 'setStakingWithdrawEnabled', values: [PromiseOrValue<boolean>]): string;
+  encodeFunctionData(functionFragment: 'setTransferEnabled', values: [PromiseOrValue<boolean>]): string;
+  encodeFunctionData(functionFragment: 'stake', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'stakeEnabled', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'stakeMultiplier', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'supportsInterface', values: [BytesLike]): string;
+  encodeFunctionData(
+    functionFragment: 'stakeMultiplier',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'supportsInterface', values: [PromiseOrValue<BytesLike>]): string;
   encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'toBePaid', values: [string, string]): string;
+  encodeFunctionData(functionFragment: 'toBePaid', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'totalMultipliedStaked', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalStaked', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'totalTokenRewardsPerStake', values: [string]): string;
-  encodeFunctionData(functionFragment: 'transfer', values: [string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'totalTokenRewardsPerStake', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'transfer',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'transferEnabled', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transferFrom', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
-  encodeFunctionData(functionFragment: 'whitelistedContracts', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'transferFrom',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'whitelistedContracts', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'withdraw', values?: undefined): string;
   encodeFunctionData(functionFragment: 'withdrawEnabled', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'withdrawMultiplier', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'withdrawMultiplier',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
 
   decodeFunctionResult(functionFragment: 'ADMIN_ROLE', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'BASE', data: BytesLike): Result;
@@ -511,83 +559,95 @@ export interface UmamiFinanceMarinate extends BaseContract {
     UMAMI(overrides?: CallOverrides): Promise<[string]>;
 
     addApprovedMultiplierToken(
-      token: string,
-      multiplier: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      multiplier: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     addApprovedRewardToken(
-      token: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     addReward(
-      token: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     addToContractWhitelist(
-      _contract: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _contract: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    claimRewards(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    claimRewards(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<[number]>;
 
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     depositLimit(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     getAvailableTokenRewards(
-      staker: string,
-      token: string,
+      staker: PromiseOrValue<string>,
+      token: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber] & { totalRewards: BigNumber }>;
 
-    getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<[string]>;
+    getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[string]>;
 
     grantRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    hasRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<[boolean]>;
+    hasRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[boolean]>;
 
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    isApprovedMultiplierNFT(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    isApprovedMultiplierNFT(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
-    isApprovedRewardToken(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    isApprovedRewardToken(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
-    isContract(addr: string, overrides?: CallOverrides): Promise<[boolean]>;
+    isContract(addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
-    isNFTStaked(arg0: string, arg1: string, overrides?: CallOverrides): Promise<[boolean]>;
+    isNFTStaked(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[boolean]>;
 
-    isWhitelisted(addr: string, overrides?: CallOverrides): Promise<[boolean]>;
+    isWhitelisted(addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     marinatorInfo(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber] & {
@@ -597,13 +657,13 @@ export interface UmamiFinanceMarinate extends BaseContract {
     >;
 
     migrateToken(
-      token: string,
-      destination: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      destination: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    multiplierNFTs(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    multiplierNFTs(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
     multiplierStakingEnabled(overrides?: CallOverrides): Promise<[boolean]>;
 
@@ -611,113 +671,121 @@ export interface UmamiFinanceMarinate extends BaseContract {
 
     name(overrides?: CallOverrides): Promise<[string]>;
 
-    nftMultiplier(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    nftMultiplier(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     onERC721Received(
-      arg0: string,
-      arg1: string,
-      arg2: BigNumberish,
-      arg3: BytesLike,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      arg2: PromiseOrValue<BigNumberish>,
+      arg3: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<[string]>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
-    paidTokenRewardsPerStake(arg0: string, arg1: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    paidTokenRewardsPerStake(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     payRewardsEnabled(overrides?: CallOverrides): Promise<[boolean]>;
 
-    recoverEth(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    recoverEth(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     removeApprovedMultiplierToken(
-      token: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     removeApprovedRewardToken(
-      token: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     removeFromContractWhitelist(
-      _contract: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _contract: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     renounceRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     revokeRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    rewardTokens(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    rewardTokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
     setDepositLimit(
-      limit: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      limit: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setMultiplierStakeEnabled(
-      enabled: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      enabled: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setMultiplierWithdrawEnabled(
-      enabled: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      enabled: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setPayRewardsEnabled(
-      enabled: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      enabled: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setScale(
-      _scale: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _scale: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setStakeEnabled(
-      enabled: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      enabled: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setStakingWithdrawEnabled(
-      enabled: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      enabled: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setTransferEnabled(
-      enabled: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      enabled: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     stake(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     stakeEnabled(overrides?: CallOverrides): Promise<[boolean]>;
 
     stakeMultiplier(
-      nft: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      nft: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<[boolean]>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[boolean]>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
 
-    toBePaid(arg0: string, arg1: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    toBePaid(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     totalMultipliedStaked(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -725,38 +793,38 @@ export interface UmamiFinanceMarinate extends BaseContract {
 
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    totalTokenRewardsPerStake(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    totalTokenRewardsPerStake(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transfer(
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferEnabled(overrides?: CallOverrides): Promise<[boolean]>;
 
     transferFrom(
-      sender: string,
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    whitelistedContracts(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    whitelistedContracts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
-    withdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    withdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     withdrawEnabled(overrides?: CallOverrides): Promise<[boolean]>;
 
     withdrawMultiplier(
-      nft: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      nft: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
@@ -771,90 +839,102 @@ export interface UmamiFinanceMarinate extends BaseContract {
   UMAMI(overrides?: CallOverrides): Promise<string>;
 
   addApprovedMultiplierToken(
-    token: string,
-    multiplier: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    token: PromiseOrValue<string>,
+    multiplier: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   addApprovedRewardToken(
-    token: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    token: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   addReward(
-    token: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    token: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   addToContractWhitelist(
-    _contract: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _contract: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+  allowance(
+    owner: PromiseOrValue<string>,
+    spender: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   approve(
-    spender: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  claimRewards(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  claimRewards(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   decimals(overrides?: CallOverrides): Promise<number>;
 
   decreaseAllowance(
-    spender: string,
-    subtractedValue: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    subtractedValue: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   depositLimit(overrides?: CallOverrides): Promise<BigNumber>;
 
-  getAvailableTokenRewards(staker: string, token: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getAvailableTokenRewards(
+    staker: PromiseOrValue<string>,
+    token: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
-  getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<string>;
+  getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
   grantRole(
-    role: BytesLike,
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    role: PromiseOrValue<BytesLike>,
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  hasRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<boolean>;
+  hasRole(
+    role: PromiseOrValue<BytesLike>,
+    account: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<boolean>;
 
   increaseAllowance(
-    spender: string,
-    addedValue: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    addedValue: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  isApprovedMultiplierNFT(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  isApprovedMultiplierNFT(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-  isApprovedRewardToken(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  isApprovedRewardToken(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-  isContract(addr: string, overrides?: CallOverrides): Promise<boolean>;
+  isContract(addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-  isNFTStaked(arg0: string, arg1: string, overrides?: CallOverrides): Promise<boolean>;
+  isNFTStaked(arg0: PromiseOrValue<string>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-  isWhitelisted(addr: string, overrides?: CallOverrides): Promise<boolean>;
+  isWhitelisted(addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   marinatorInfo(
-    arg0: string,
+    arg0: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; multipliedAmount: BigNumber }>;
 
   migrateToken(
-    token: string,
-    destination: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    token: PromiseOrValue<string>,
+    destination: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  multiplierNFTs(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  multiplierNFTs(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   multiplierStakingEnabled(overrides?: CallOverrides): Promise<boolean>;
 
@@ -862,113 +942,117 @@ export interface UmamiFinanceMarinate extends BaseContract {
 
   name(overrides?: CallOverrides): Promise<string>;
 
-  nftMultiplier(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  nftMultiplier(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   onERC721Received(
-    arg0: string,
-    arg1: string,
-    arg2: BigNumberish,
-    arg3: BytesLike,
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<string>,
+    arg2: PromiseOrValue<BigNumberish>,
+    arg3: PromiseOrValue<BytesLike>,
     overrides?: CallOverrides,
   ): Promise<string>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
-  paidTokenRewardsPerStake(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+  paidTokenRewardsPerStake(
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   payRewardsEnabled(overrides?: CallOverrides): Promise<boolean>;
 
-  recoverEth(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  recoverEth(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   removeApprovedMultiplierToken(
-    token: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    token: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   removeApprovedRewardToken(
-    token: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    token: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   removeFromContractWhitelist(
-    _contract: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _contract: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   renounceRole(
-    role: BytesLike,
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    role: PromiseOrValue<BytesLike>,
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   revokeRole(
-    role: BytesLike,
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    role: PromiseOrValue<BytesLike>,
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  rewardTokens(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  rewardTokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   setDepositLimit(
-    limit: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    limit: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setMultiplierStakeEnabled(
-    enabled: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    enabled: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setMultiplierWithdrawEnabled(
-    enabled: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    enabled: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setPayRewardsEnabled(
-    enabled: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    enabled: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setScale(
-    _scale: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _scale: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setStakeEnabled(
-    enabled: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    enabled: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setStakingWithdrawEnabled(
-    enabled: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    enabled: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setTransferEnabled(
-    enabled: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    enabled: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   stake(
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   stakeEnabled(overrides?: CallOverrides): Promise<boolean>;
 
   stakeMultiplier(
-    nft: string,
-    tokenId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    nft: PromiseOrValue<string>,
+    tokenId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<boolean>;
+  supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<boolean>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
 
-  toBePaid(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+  toBePaid(arg0: PromiseOrValue<string>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   totalMultipliedStaked(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -976,38 +1060,38 @@ export interface UmamiFinanceMarinate extends BaseContract {
 
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-  totalTokenRewardsPerStake(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  totalTokenRewardsPerStake(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   transfer(
-    recipient: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    recipient: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferEnabled(overrides?: CallOverrides): Promise<boolean>;
 
   transferFrom(
-    sender: string,
-    recipient: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    sender: PromiseOrValue<string>,
+    recipient: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  whitelistedContracts(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  whitelistedContracts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-  withdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  withdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   withdrawEnabled(overrides?: CallOverrides): Promise<boolean>;
 
   withdrawMultiplier(
-    nft: string,
-    tokenId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    nft: PromiseOrValue<string>,
+    tokenId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
@@ -1021,50 +1105,90 @@ export interface UmamiFinanceMarinate extends BaseContract {
 
     UMAMI(overrides?: CallOverrides): Promise<string>;
 
-    addApprovedMultiplierToken(token: string, multiplier: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    addApprovedMultiplierToken(
+      token: PromiseOrValue<string>,
+      multiplier: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    addApprovedRewardToken(token: string, overrides?: CallOverrides): Promise<void>;
+    addApprovedRewardToken(token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    addReward(token: string, amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    addReward(
+      token: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    addToContractWhitelist(_contract: string, overrides?: CallOverrides): Promise<boolean>;
+    addToContractWhitelist(_contract: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    approve(spender: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    approve(
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     claimRewards(overrides?: CallOverrides): Promise<void>;
 
     decimals(overrides?: CallOverrides): Promise<number>;
 
-    decreaseAllowance(spender: string, subtractedValue: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    decreaseAllowance(
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     depositLimit(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getAvailableTokenRewards(staker: string, token: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getAvailableTokenRewards(
+      staker: PromiseOrValue<string>,
+      token: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<string>;
+    getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
-    grantRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<void>;
+    grantRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    hasRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<boolean>;
+    hasRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    increaseAllowance(spender: string, addedValue: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    increaseAllowance(
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    isApprovedMultiplierNFT(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    isApprovedMultiplierNFT(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-    isApprovedRewardToken(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    isApprovedRewardToken(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-    isContract(addr: string, overrides?: CallOverrides): Promise<boolean>;
+    isContract(addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-    isNFTStaked(arg0: string, arg1: string, overrides?: CallOverrides): Promise<boolean>;
+    isNFTStaked(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    isWhitelisted(addr: string, overrides?: CallOverrides): Promise<boolean>;
+    isWhitelisted(addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     marinatorInfo(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber] & {
@@ -1073,9 +1197,14 @@ export interface UmamiFinanceMarinate extends BaseContract {
       }
     >;
 
-    migrateToken(token: string, destination: string, amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    migrateToken(
+      token: PromiseOrValue<string>,
+      destination: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    multiplierNFTs(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    multiplierNFTs(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
     multiplierStakingEnabled(overrides?: CallOverrides): Promise<boolean>;
 
@@ -1083,65 +1212,81 @@ export interface UmamiFinanceMarinate extends BaseContract {
 
     name(overrides?: CallOverrides): Promise<string>;
 
-    nftMultiplier(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    nftMultiplier(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     onERC721Received(
-      arg0: string,
-      arg1: string,
-      arg2: BigNumberish,
-      arg3: BytesLike,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      arg2: PromiseOrValue<BigNumberish>,
+      arg3: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<string>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    paidTokenRewardsPerStake(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    paidTokenRewardsPerStake(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     payRewardsEnabled(overrides?: CallOverrides): Promise<boolean>;
 
     recoverEth(overrides?: CallOverrides): Promise<void>;
 
-    removeApprovedMultiplierToken(token: string, overrides?: CallOverrides): Promise<void>;
+    removeApprovedMultiplierToken(token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    removeApprovedRewardToken(token: string, overrides?: CallOverrides): Promise<void>;
+    removeApprovedRewardToken(token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    removeFromContractWhitelist(_contract: string, overrides?: CallOverrides): Promise<boolean>;
+    removeFromContractWhitelist(_contract: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
-    renounceRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<void>;
+    renounceRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    revokeRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<void>;
+    revokeRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    rewardTokens(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    rewardTokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
-    setDepositLimit(limit: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setDepositLimit(limit: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setMultiplierStakeEnabled(enabled: boolean, overrides?: CallOverrides): Promise<void>;
+    setMultiplierStakeEnabled(enabled: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
 
-    setMultiplierWithdrawEnabled(enabled: boolean, overrides?: CallOverrides): Promise<void>;
+    setMultiplierWithdrawEnabled(enabled: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
 
-    setPayRewardsEnabled(enabled: boolean, overrides?: CallOverrides): Promise<void>;
+    setPayRewardsEnabled(enabled: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
 
-    setScale(_scale: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setScale(_scale: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setStakeEnabled(enabled: boolean, overrides?: CallOverrides): Promise<void>;
+    setStakeEnabled(enabled: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
 
-    setStakingWithdrawEnabled(enabled: boolean, overrides?: CallOverrides): Promise<void>;
+    setStakingWithdrawEnabled(enabled: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
 
-    setTransferEnabled(enabled: boolean, overrides?: CallOverrides): Promise<void>;
+    setTransferEnabled(enabled: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
 
-    stake(amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    stake(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     stakeEnabled(overrides?: CallOverrides): Promise<boolean>;
 
-    stakeMultiplier(nft: string, tokenId: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    stakeMultiplier(
+      nft: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<boolean>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<boolean>;
 
     symbol(overrides?: CallOverrides): Promise<string>;
 
-    toBePaid(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    toBePaid(arg0: PromiseOrValue<string>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     totalMultipliedStaked(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1149,44 +1294,66 @@ export interface UmamiFinanceMarinate extends BaseContract {
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    totalTokenRewardsPerStake(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    totalTokenRewardsPerStake(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    transfer(recipient: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transfer(
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     transferEnabled(overrides?: CallOverrides): Promise<boolean>;
 
-    transferFrom(sender: string, recipient: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transferFrom(
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    whitelistedContracts(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    whitelistedContracts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     withdraw(overrides?: CallOverrides): Promise<void>;
 
     withdrawEnabled(overrides?: CallOverrides): Promise<boolean>;
 
-    withdrawMultiplier(nft: string, tokenId: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    withdrawMultiplier(
+      nft: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
   };
 
   filters: {
-    'AddToContractWhitelist(address)'(_contract?: string | null): AddToContractWhitelistEventFilter;
-    AddToContractWhitelist(_contract?: string | null): AddToContractWhitelistEventFilter;
+    'AddToContractWhitelist(address)'(_contract?: PromiseOrValue<string> | null): AddToContractWhitelistEventFilter;
+    AddToContractWhitelist(_contract?: PromiseOrValue<string> | null): AddToContractWhitelistEventFilter;
 
     'Approval(address,address,uint256)'(
-      owner?: string | null,
-      spender?: string | null,
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
       value?: null,
     ): ApprovalEventFilter;
-    Approval(owner?: string | null, spender?: string | null, value?: null): ApprovalEventFilter;
+    Approval(
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
+      value?: null,
+    ): ApprovalEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
 
-    'RemoveFromContractWhitelist(address)'(_contract?: string | null): RemoveFromContractWhitelistEventFilter;
-    RemoveFromContractWhitelist(_contract?: string | null): RemoveFromContractWhitelistEventFilter;
+    'RemoveFromContractWhitelist(address)'(
+      _contract?: PromiseOrValue<string> | null,
+    ): RemoveFromContractWhitelistEventFilter;
+    RemoveFromContractWhitelist(_contract?: PromiseOrValue<string> | null): RemoveFromContractWhitelistEventFilter;
 
     'RewardAdded(address,uint256,uint256)'(token?: null, amount?: null, rps?: null): RewardAddedEventFilter;
     RewardAdded(token?: null, amount?: null, rps?: null): RewardAddedEventFilter;
@@ -1198,29 +1365,37 @@ export interface UmamiFinanceMarinate extends BaseContract {
     RewardCollection(token?: null, addr?: null, amount?: null): RewardCollectionEventFilter;
 
     'RoleAdminChanged(bytes32,bytes32,bytes32)'(
-      role?: BytesLike | null,
-      previousAdminRole?: BytesLike | null,
-      newAdminRole?: BytesLike | null,
+      role?: PromiseOrValue<BytesLike> | null,
+      previousAdminRole?: PromiseOrValue<BytesLike> | null,
+      newAdminRole?: PromiseOrValue<BytesLike> | null,
     ): RoleAdminChangedEventFilter;
     RoleAdminChanged(
-      role?: BytesLike | null,
-      previousAdminRole?: BytesLike | null,
-      newAdminRole?: BytesLike | null,
+      role?: PromiseOrValue<BytesLike> | null,
+      previousAdminRole?: PromiseOrValue<BytesLike> | null,
+      newAdminRole?: PromiseOrValue<BytesLike> | null,
     ): RoleAdminChangedEventFilter;
 
     'RoleGranted(bytes32,address,address)'(
-      role?: BytesLike | null,
-      account?: string | null,
-      sender?: string | null,
+      role?: PromiseOrValue<BytesLike> | null,
+      account?: PromiseOrValue<string> | null,
+      sender?: PromiseOrValue<string> | null,
     ): RoleGrantedEventFilter;
-    RoleGranted(role?: BytesLike | null, account?: string | null, sender?: string | null): RoleGrantedEventFilter;
+    RoleGranted(
+      role?: PromiseOrValue<BytesLike> | null,
+      account?: PromiseOrValue<string> | null,
+      sender?: PromiseOrValue<string> | null,
+    ): RoleGrantedEventFilter;
 
     'RoleRevoked(bytes32,address,address)'(
-      role?: BytesLike | null,
-      account?: string | null,
-      sender?: string | null,
+      role?: PromiseOrValue<BytesLike> | null,
+      account?: PromiseOrValue<string> | null,
+      sender?: PromiseOrValue<string> | null,
     ): RoleRevokedEventFilter;
-    RoleRevoked(role?: BytesLike | null, account?: string | null, sender?: string | null): RoleRevokedEventFilter;
+    RoleRevoked(
+      role?: PromiseOrValue<BytesLike> | null,
+      account?: PromiseOrValue<string> | null,
+      sender?: PromiseOrValue<string> | null,
+    ): RoleRevokedEventFilter;
 
     'Stake(address,uint256,uint256)'(addr?: null, amount?: null, multipliedAmount?: null): StakeEventFilter;
     Stake(addr?: null, amount?: null, multipliedAmount?: null): StakeEventFilter;
@@ -1233,8 +1408,16 @@ export interface UmamiFinanceMarinate extends BaseContract {
     ): StakeMultiplierEventFilter;
     StakeMultiplier(addr?: null, nft?: null, tokenId?: null, multipliedAmount?: null): StakeMultiplierEventFilter;
 
-    'Transfer(address,address,uint256)'(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
-    Transfer(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
+    'Transfer(address,address,uint256)'(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
+    Transfer(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
 
     'Withdraw(address,uint256)'(addr?: null, amount?: null): WithdrawEventFilter;
     Withdraw(addr?: null, amount?: null): WithdrawEventFilter;
@@ -1260,87 +1443,103 @@ export interface UmamiFinanceMarinate extends BaseContract {
     UMAMI(overrides?: CallOverrides): Promise<BigNumber>;
 
     addApprovedMultiplierToken(
-      token: string,
-      multiplier: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      multiplier: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     addApprovedRewardToken(
-      token: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     addReward(
-      token: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     addToContractWhitelist(
-      _contract: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _contract: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    claimRewards(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    claimRewards(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     depositLimit(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getAvailableTokenRewards(staker: string, token: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getAvailableTokenRewards(
+      staker: PromiseOrValue<string>,
+      token: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     grantRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    hasRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    hasRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    isApprovedMultiplierNFT(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    isApprovedMultiplierNFT(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    isApprovedRewardToken(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    isApprovedRewardToken(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    isContract(addr: string, overrides?: CallOverrides): Promise<BigNumber>;
+    isContract(addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    isNFTStaked(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    isNFTStaked(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    isWhitelisted(addr: string, overrides?: CallOverrides): Promise<BigNumber>;
+    isWhitelisted(addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    marinatorInfo(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    marinatorInfo(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     migrateToken(
-      token: string,
-      destination: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      destination: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    multiplierNFTs(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    multiplierNFTs(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     multiplierStakingEnabled(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1348,104 +1547,117 @@ export interface UmamiFinanceMarinate extends BaseContract {
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
-    nftMultiplier(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    nftMultiplier(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     onERC721Received(
-      arg0: string,
-      arg1: string,
-      arg2: BigNumberish,
-      arg3: BytesLike,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      arg2: PromiseOrValue<BigNumberish>,
+      arg3: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    paidTokenRewardsPerStake(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    paidTokenRewardsPerStake(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     payRewardsEnabled(overrides?: CallOverrides): Promise<BigNumber>;
 
-    recoverEth(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    recoverEth(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     removeApprovedMultiplierToken(
-      token: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     removeApprovedRewardToken(
-      token: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     removeFromContractWhitelist(
-      _contract: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _contract: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     renounceRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     revokeRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    rewardTokens(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    rewardTokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     setDepositLimit(
-      limit: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      limit: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setMultiplierStakeEnabled(
-      enabled: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      enabled: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setMultiplierWithdrawEnabled(
-      enabled: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      enabled: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setPayRewardsEnabled(
-      enabled: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      enabled: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setScale(_scale: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setScale(
+      _scale: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    setStakeEnabled(enabled: boolean, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setStakeEnabled(
+      enabled: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setStakingWithdrawEnabled(
-      enabled: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      enabled: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setTransferEnabled(
-      enabled: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      enabled: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    stake(amount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    stake(
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     stakeEnabled(overrides?: CallOverrides): Promise<BigNumber>;
 
     stakeMultiplier(
-      nft: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      nft: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
-    toBePaid(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    toBePaid(arg0: PromiseOrValue<string>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     totalMultipliedStaked(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1453,38 +1665,38 @@ export interface UmamiFinanceMarinate extends BaseContract {
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    totalTokenRewardsPerStake(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    totalTokenRewardsPerStake(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferEnabled(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferFrom(
-      sender: string,
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    whitelistedContracts(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    whitelistedContracts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    withdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    withdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     withdrawEnabled(overrides?: CallOverrides): Promise<BigNumber>;
 
     withdrawMultiplier(
-      nft: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      nft: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
@@ -1500,87 +1712,103 @@ export interface UmamiFinanceMarinate extends BaseContract {
     UMAMI(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     addApprovedMultiplierToken(
-      token: string,
-      multiplier: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      multiplier: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     addApprovedRewardToken(
-      token: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     addReward(
-      token: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     addToContractWhitelist(
-      _contract: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _contract: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    claimRewards(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    claimRewards(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     depositLimit(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getAvailableTokenRewards(staker: string, token: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getAvailableTokenRewards(
+      staker: PromiseOrValue<string>,
+      token: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     grantRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    hasRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    hasRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    isApprovedMultiplierNFT(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    isApprovedMultiplierNFT(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    isApprovedRewardToken(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    isApprovedRewardToken(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    isContract(addr: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    isContract(addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    isNFTStaked(arg0: string, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    isNFTStaked(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    isWhitelisted(addr: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    isWhitelisted(addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    marinatorInfo(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    marinatorInfo(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     migrateToken(
-      token: string,
-      destination: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      destination: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    multiplierNFTs(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    multiplierNFTs(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     multiplierStakingEnabled(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1588,113 +1816,121 @@ export interface UmamiFinanceMarinate extends BaseContract {
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    nftMultiplier(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    nftMultiplier(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     onERC721Received(
-      arg0: string,
-      arg1: string,
-      arg2: BigNumberish,
-      arg3: BytesLike,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      arg2: PromiseOrValue<BigNumberish>,
+      arg3: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    paidTokenRewardsPerStake(arg0: string, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    paidTokenRewardsPerStake(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     payRewardsEnabled(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    recoverEth(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    recoverEth(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     removeApprovedMultiplierToken(
-      token: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     removeApprovedRewardToken(
-      token: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     removeFromContractWhitelist(
-      _contract: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _contract: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     renounceRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     revokeRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    rewardTokens(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    rewardTokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setDepositLimit(
-      limit: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      limit: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setMultiplierStakeEnabled(
-      enabled: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      enabled: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setMultiplierWithdrawEnabled(
-      enabled: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      enabled: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setPayRewardsEnabled(
-      enabled: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      enabled: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setScale(
-      _scale: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _scale: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setStakeEnabled(
-      enabled: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      enabled: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setStakingWithdrawEnabled(
-      enabled: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      enabled: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setTransferEnabled(
-      enabled: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      enabled: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     stake(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     stakeEnabled(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     stakeMultiplier(
-      nft: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      nft: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    toBePaid(arg0: string, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    toBePaid(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     totalMultipliedStaked(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1702,38 +1938,38 @@ export interface UmamiFinanceMarinate extends BaseContract {
 
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    totalTokenRewardsPerStake(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    totalTokenRewardsPerStake(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transfer(
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferEnabled(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferFrom(
-      sender: string,
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    whitelistedContracts(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    whitelistedContracts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    withdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    withdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     withdrawEnabled(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     withdrawMultiplier(
-      nft: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      nft: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

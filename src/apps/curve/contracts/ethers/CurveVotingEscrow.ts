@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface CurveVotingEscrowInterface extends utils.Interface {
   functions: {
@@ -101,34 +101,52 @@ export interface CurveVotingEscrowInterface extends utils.Interface {
       | 'future_admin',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'commit_transfer_ownership', values: [string]): string;
+  encodeFunctionData(functionFragment: 'commit_transfer_ownership', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'apply_transfer_ownership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'commit_smart_wallet_checker', values: [string]): string;
+  encodeFunctionData(functionFragment: 'commit_smart_wallet_checker', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'apply_smart_wallet_checker', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'get_last_user_slope', values: [string]): string;
-  encodeFunctionData(functionFragment: 'user_point_history__ts', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'locked__end', values: [string]): string;
+  encodeFunctionData(functionFragment: 'get_last_user_slope', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'user_point_history__ts',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'locked__end', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'checkpoint', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'deposit_for', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'create_lock', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'increase_amount', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'increase_unlock_time', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'deposit_for',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'create_lock',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'increase_amount', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'increase_unlock_time', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'withdraw', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'balanceOf(address)', values: [string]): string;
-  encodeFunctionData(functionFragment: 'balanceOf(address,uint256)', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'balanceOfAt', values: [string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'balanceOf(address)', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'balanceOf(address,uint256)',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'balanceOfAt',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'totalSupply()', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'totalSupply(uint256)', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'totalSupplyAt', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'changeController', values: [string]): string;
+  encodeFunctionData(functionFragment: 'totalSupply(uint256)', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'totalSupplyAt', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'changeController', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'token', values?: undefined): string;
   encodeFunctionData(functionFragment: 'supply', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'locked', values: [string]): string;
+  encodeFunctionData(functionFragment: 'locked', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'epoch', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'point_history', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'user_point_history', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'user_point_epoch', values: [string]): string;
-  encodeFunctionData(functionFragment: 'slope_changes', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'point_history', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'user_point_history',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'user_point_epoch', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'slope_changes', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'controller', values?: undefined): string;
   encodeFunctionData(functionFragment: 'transfersEnabled', values?: undefined): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
@@ -260,68 +278,78 @@ export interface CurveVotingEscrow extends BaseContract {
 
   functions: {
     commit_transfer_ownership(
-      addr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      addr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    apply_transfer_ownership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    apply_transfer_ownership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     commit_smart_wallet_checker(
-      addr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      addr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    apply_smart_wallet_checker(
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
+    apply_smart_wallet_checker(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    get_last_user_slope(addr: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    get_last_user_slope(addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    user_point_history__ts(_addr: string, _idx: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    user_point_history__ts(
+      _addr: PromiseOrValue<string>,
+      _idx: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
-    locked__end(_addr: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    locked__end(_addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    checkpoint(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    checkpoint(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     deposit_for(
-      _addr: string,
-      _value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _addr: PromiseOrValue<string>,
+      _value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     create_lock(
-      _value: BigNumberish,
-      _unlock_time: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _value: PromiseOrValue<BigNumberish>,
+      _unlock_time: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     increase_amount(
-      _value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     increase_unlock_time(
-      _unlock_time: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _unlock_time: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    withdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    withdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    'balanceOf(address)'(addr: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    'balanceOf(address)'(addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    'balanceOf(address,uint256)'(addr: string, _t: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    'balanceOf(address,uint256)'(
+      addr: PromiseOrValue<string>,
+      _t: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
-    balanceOfAt(addr: string, _block: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOfAt(
+      addr: PromiseOrValue<string>,
+      _block: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     'totalSupply()'(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    'totalSupply(uint256)'(t: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    'totalSupply(uint256)'(t: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    totalSupplyAt(_block: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    totalSupplyAt(_block: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     changeController(
-      _newController: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newController: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     token(overrides?: CallOverrides): Promise<[string]>;
@@ -329,14 +357,14 @@ export interface CurveVotingEscrow extends BaseContract {
     supply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     locked(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; end: BigNumber }>;
 
     epoch(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     point_history(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -348,8 +376,8 @@ export interface CurveVotingEscrow extends BaseContract {
     >;
 
     user_point_history(
-      arg0: string,
-      arg1: BigNumberish,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -360,9 +388,9 @@ export interface CurveVotingEscrow extends BaseContract {
       }
     >;
 
-    user_point_epoch(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    user_point_epoch(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    slope_changes(arg0: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    slope_changes(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     controller(overrides?: CallOverrides): Promise<[string]>;
 
@@ -386,66 +414,78 @@ export interface CurveVotingEscrow extends BaseContract {
   };
 
   commit_transfer_ownership(
-    addr: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    addr: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  apply_transfer_ownership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  apply_transfer_ownership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   commit_smart_wallet_checker(
-    addr: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    addr: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  apply_smart_wallet_checker(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  apply_smart_wallet_checker(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  get_last_user_slope(addr: string, overrides?: CallOverrides): Promise<BigNumber>;
+  get_last_user_slope(addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  user_point_history__ts(_addr: string, _idx: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  user_point_history__ts(
+    _addr: PromiseOrValue<string>,
+    _idx: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
-  locked__end(_addr: string, overrides?: CallOverrides): Promise<BigNumber>;
+  locked__end(_addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  checkpoint(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  checkpoint(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   deposit_for(
-    _addr: string,
-    _value: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _addr: PromiseOrValue<string>,
+    _value: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   create_lock(
-    _value: BigNumberish,
-    _unlock_time: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _value: PromiseOrValue<BigNumberish>,
+    _unlock_time: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   increase_amount(
-    _value: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _value: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   increase_unlock_time(
-    _unlock_time: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _unlock_time: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  withdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  withdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  'balanceOf(address)'(addr: string, overrides?: CallOverrides): Promise<BigNumber>;
+  'balanceOf(address)'(addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  'balanceOf(address,uint256)'(addr: string, _t: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  'balanceOf(address,uint256)'(
+    addr: PromiseOrValue<string>,
+    _t: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
-  balanceOfAt(addr: string, _block: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOfAt(
+    addr: PromiseOrValue<string>,
+    _block: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   'totalSupply()'(overrides?: CallOverrides): Promise<BigNumber>;
 
-  'totalSupply(uint256)'(t: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  'totalSupply(uint256)'(t: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  totalSupplyAt(_block: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  totalSupplyAt(_block: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   changeController(
-    _newController: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _newController: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   token(overrides?: CallOverrides): Promise<string>;
@@ -453,14 +493,14 @@ export interface CurveVotingEscrow extends BaseContract {
   supply(overrides?: CallOverrides): Promise<BigNumber>;
 
   locked(
-    arg0: string,
+    arg0: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; end: BigNumber }>;
 
   epoch(overrides?: CallOverrides): Promise<BigNumber>;
 
   point_history(
-    arg0: BigNumberish,
+    arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -472,8 +512,8 @@ export interface CurveVotingEscrow extends BaseContract {
   >;
 
   user_point_history(
-    arg0: string,
-    arg1: BigNumberish,
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -484,9 +524,9 @@ export interface CurveVotingEscrow extends BaseContract {
     }
   >;
 
-  user_point_epoch(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  user_point_epoch(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  slope_changes(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  slope_changes(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   controller(overrides?: CallOverrides): Promise<string>;
 
@@ -509,59 +549,79 @@ export interface CurveVotingEscrow extends BaseContract {
   future_admin(overrides?: CallOverrides): Promise<string>;
 
   callStatic: {
-    commit_transfer_ownership(addr: string, overrides?: CallOverrides): Promise<void>;
+    commit_transfer_ownership(addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     apply_transfer_ownership(overrides?: CallOverrides): Promise<void>;
 
-    commit_smart_wallet_checker(addr: string, overrides?: CallOverrides): Promise<void>;
+    commit_smart_wallet_checker(addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     apply_smart_wallet_checker(overrides?: CallOverrides): Promise<void>;
 
-    get_last_user_slope(addr: string, overrides?: CallOverrides): Promise<BigNumber>;
+    get_last_user_slope(addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    user_point_history__ts(_addr: string, _idx: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    user_point_history__ts(
+      _addr: PromiseOrValue<string>,
+      _idx: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    locked__end(_addr: string, overrides?: CallOverrides): Promise<BigNumber>;
+    locked__end(_addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     checkpoint(overrides?: CallOverrides): Promise<void>;
 
-    deposit_for(_addr: string, _value: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    deposit_for(
+      _addr: PromiseOrValue<string>,
+      _value: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    create_lock(_value: BigNumberish, _unlock_time: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    create_lock(
+      _value: PromiseOrValue<BigNumberish>,
+      _unlock_time: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    increase_amount(_value: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    increase_amount(_value: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    increase_unlock_time(_unlock_time: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    increase_unlock_time(_unlock_time: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     withdraw(overrides?: CallOverrides): Promise<void>;
 
-    'balanceOf(address)'(addr: string, overrides?: CallOverrides): Promise<BigNumber>;
+    'balanceOf(address)'(addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    'balanceOf(address,uint256)'(addr: string, _t: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    'balanceOf(address,uint256)'(
+      addr: PromiseOrValue<string>,
+      _t: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    balanceOfAt(addr: string, _block: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOfAt(
+      addr: PromiseOrValue<string>,
+      _block: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     'totalSupply()'(overrides?: CallOverrides): Promise<BigNumber>;
 
-    'totalSupply(uint256)'(t: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    'totalSupply(uint256)'(t: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    totalSupplyAt(_block: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    totalSupplyAt(_block: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    changeController(_newController: string, overrides?: CallOverrides): Promise<void>;
+    changeController(_newController: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     token(overrides?: CallOverrides): Promise<string>;
 
     supply(overrides?: CallOverrides): Promise<BigNumber>;
 
     locked(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; end: BigNumber }>;
 
     epoch(overrides?: CallOverrides): Promise<BigNumber>;
 
     point_history(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -573,8 +633,8 @@ export interface CurveVotingEscrow extends BaseContract {
     >;
 
     user_point_history(
-      arg0: string,
-      arg1: BigNumberish,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -585,9 +645,9 @@ export interface CurveVotingEscrow extends BaseContract {
       }
     >;
 
-    user_point_epoch(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    user_point_epoch(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    slope_changes(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    slope_changes(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     controller(overrides?: CallOverrides): Promise<string>;
 
@@ -618,22 +678,26 @@ export interface CurveVotingEscrow extends BaseContract {
     ApplyOwnership(admin?: null): ApplyOwnershipEventFilter;
 
     'Deposit(address,uint256,uint256,int128,uint256)'(
-      provider?: string | null,
+      provider?: PromiseOrValue<string> | null,
       value?: null,
-      locktime?: BigNumberish | null,
+      locktime?: PromiseOrValue<BigNumberish> | null,
       type?: null,
       ts?: null,
     ): DepositEventFilter;
     Deposit(
-      provider?: string | null,
+      provider?: PromiseOrValue<string> | null,
       value?: null,
-      locktime?: BigNumberish | null,
+      locktime?: PromiseOrValue<BigNumberish> | null,
       type?: null,
       ts?: null,
     ): DepositEventFilter;
 
-    'Withdraw(address,uint256,uint256)'(provider?: string | null, value?: null, ts?: null): WithdrawEventFilter;
-    Withdraw(provider?: string | null, value?: null, ts?: null): WithdrawEventFilter;
+    'Withdraw(address,uint256,uint256)'(
+      provider?: PromiseOrValue<string> | null,
+      value?: null,
+      ts?: null,
+    ): WithdrawEventFilter;
+    Withdraw(provider?: PromiseOrValue<string> | null, value?: null, ts?: null): WithdrawEventFilter;
 
     'Supply(uint256,uint256)'(prevSupply?: null, supply?: null): SupplyEventFilter;
     Supply(prevSupply?: null, supply?: null): SupplyEventFilter;
@@ -641,83 +705,99 @@ export interface CurveVotingEscrow extends BaseContract {
 
   estimateGas: {
     commit_transfer_ownership(
-      addr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      addr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    apply_transfer_ownership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    apply_transfer_ownership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     commit_smart_wallet_checker(
-      addr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      addr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    apply_smart_wallet_checker(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    apply_smart_wallet_checker(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    get_last_user_slope(addr: string, overrides?: CallOverrides): Promise<BigNumber>;
+    get_last_user_slope(addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    user_point_history__ts(_addr: string, _idx: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    user_point_history__ts(
+      _addr: PromiseOrValue<string>,
+      _idx: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    locked__end(_addr: string, overrides?: CallOverrides): Promise<BigNumber>;
+    locked__end(_addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    checkpoint(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    checkpoint(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     deposit_for(
-      _addr: string,
-      _value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _addr: PromiseOrValue<string>,
+      _value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     create_lock(
-      _value: BigNumberish,
-      _unlock_time: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _value: PromiseOrValue<BigNumberish>,
+      _unlock_time: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     increase_amount(
-      _value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     increase_unlock_time(
-      _unlock_time: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _unlock_time: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    withdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    withdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    'balanceOf(address)'(addr: string, overrides?: CallOverrides): Promise<BigNumber>;
+    'balanceOf(address)'(addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    'balanceOf(address,uint256)'(addr: string, _t: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    'balanceOf(address,uint256)'(
+      addr: PromiseOrValue<string>,
+      _t: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    balanceOfAt(addr: string, _block: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOfAt(
+      addr: PromiseOrValue<string>,
+      _block: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     'totalSupply()'(overrides?: CallOverrides): Promise<BigNumber>;
 
-    'totalSupply(uint256)'(t: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    'totalSupply(uint256)'(t: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    totalSupplyAt(_block: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    totalSupplyAt(_block: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     changeController(
-      _newController: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newController: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     token(overrides?: CallOverrides): Promise<BigNumber>;
 
     supply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    locked(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    locked(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     epoch(overrides?: CallOverrides): Promise<BigNumber>;
 
-    point_history(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    point_history(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    user_point_history(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    user_point_history(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    user_point_epoch(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    user_point_epoch(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    slope_changes(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    slope_changes(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     controller(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -742,91 +822,101 @@ export interface CurveVotingEscrow extends BaseContract {
 
   populateTransaction: {
     commit_transfer_ownership(
-      addr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      addr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    apply_transfer_ownership(
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<PopulatedTransaction>;
+    apply_transfer_ownership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     commit_smart_wallet_checker(
-      addr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      addr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     apply_smart_wallet_checker(
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    get_last_user_slope(addr: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    get_last_user_slope(addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    user_point_history__ts(_addr: string, _idx: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    locked__end(_addr: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    checkpoint(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
-
-    deposit_for(
-      _addr: string,
-      _value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<PopulatedTransaction>;
-
-    create_lock(
-      _value: BigNumberish,
-      _unlock_time: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<PopulatedTransaction>;
-
-    increase_amount(
-      _value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<PopulatedTransaction>;
-
-    increase_unlock_time(
-      _unlock_time: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<PopulatedTransaction>;
-
-    withdraw(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
-
-    'balanceOf(address)'(addr: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    'balanceOf(address,uint256)'(
-      addr: string,
-      _t: BigNumberish,
+    user_point_history__ts(
+      _addr: PromiseOrValue<string>,
+      _idx: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    balanceOfAt(addr: string, _block: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    locked__end(_addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    checkpoint(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
+
+    deposit_for(
+      _addr: PromiseOrValue<string>,
+      _value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    create_lock(
+      _value: PromiseOrValue<BigNumberish>,
+      _unlock_time: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    increase_amount(
+      _value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    increase_unlock_time(
+      _unlock_time: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    withdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
+
+    'balanceOf(address)'(addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    'balanceOf(address,uint256)'(
+      addr: PromiseOrValue<string>,
+      _t: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
+    balanceOfAt(
+      addr: PromiseOrValue<string>,
+      _block: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     'totalSupply()'(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    'totalSupply(uint256)'(t: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    'totalSupply(uint256)'(t: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    totalSupplyAt(_block: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    totalSupplyAt(_block: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     changeController(
-      _newController: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newController: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     token(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     supply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    locked(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    locked(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     epoch(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    point_history(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    point_history(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    user_point_history(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    user_point_history(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    user_point_epoch(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    user_point_epoch(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    slope_changes(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    slope_changes(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     controller(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 

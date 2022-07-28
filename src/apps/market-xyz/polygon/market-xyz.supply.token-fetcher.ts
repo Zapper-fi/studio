@@ -26,7 +26,10 @@ export class PolygonMarketXyzSupplyTokenFetcher implements PositionFetcher<AppTo
 
   async getPositions() {
     const poolDirectoryAddress = '0xa2a1cb88d86a939a37770fe5e9530e8700dee56b';
-    const controllerContract = this.marketXyzContractFactory.poolDirectory({ address: poolDirectoryAddress, network });
+    const controllerContract = this.marketXyzContractFactory.marketXyzPoolDirectory({
+      address: poolDirectoryAddress,
+      network,
+    });
     const pools = await controllerContract.getAllPools();
 
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);

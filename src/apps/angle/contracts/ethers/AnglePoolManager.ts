@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface AnglePoolManagerInterface extends utils.Interface {
   functions: {
@@ -124,45 +124,78 @@ export interface AnglePoolManagerInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'GUARDIAN_ROLE', values?: undefined): string;
   encodeFunctionData(functionFragment: 'STABLEMASTER_ROLE', values?: undefined): string;
   encodeFunctionData(functionFragment: 'STRATEGY_ROLE', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'addGovernor', values: [string]): string;
-  encodeFunctionData(functionFragment: 'addStrategy', values: [string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'addGovernor', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'addStrategy',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'adminDebt', values?: undefined): string;
   encodeFunctionData(functionFragment: 'creditAvailable', values?: undefined): string;
   encodeFunctionData(functionFragment: 'debtOutstanding', values?: undefined): string;
   encodeFunctionData(functionFragment: 'debtRatio', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'deployCollateral', values: [string[], string, string, string, string]): string;
+  encodeFunctionData(
+    functionFragment: 'deployCollateral',
+    values: [
+      PromiseOrValue<string>[],
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+    ],
+  ): string;
   encodeFunctionData(functionFragment: 'estimatedAPR', values?: undefined): string;
   encodeFunctionData(functionFragment: 'feeManager', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getBalance', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getRoleAdmin', values: [BytesLike]): string;
+  encodeFunctionData(functionFragment: 'getRoleAdmin', values: [PromiseOrValue<BytesLike>]): string;
   encodeFunctionData(functionFragment: 'getTotalAsset', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'grantRole', values: [BytesLike, string]): string;
-  encodeFunctionData(functionFragment: 'hasRole', values: [BytesLike, string]): string;
-  encodeFunctionData(functionFragment: 'initialize', values: [string, string]): string;
+  encodeFunctionData(
+    functionFragment: 'grantRole',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'hasRole', values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'initialize', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'interestsAccumulated', values?: undefined): string;
   encodeFunctionData(functionFragment: 'interestsForSurplus', values?: undefined): string;
   encodeFunctionData(functionFragment: 'perpetualManager', values?: undefined): string;
   encodeFunctionData(functionFragment: 'pushSurplus', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'recoverERC20', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'removeGovernor', values: [string]): string;
-  encodeFunctionData(functionFragment: 'renounceRole', values: [BytesLike, string]): string;
-  encodeFunctionData(functionFragment: 'report', values: [BigNumberish, BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'revokeGuardian', values: [string]): string;
-  encodeFunctionData(functionFragment: 'revokeRole', values: [BytesLike, string]): string;
-  encodeFunctionData(functionFragment: 'revokeStrategy', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setFeeManager', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setGuardian', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'setInterestsForSurplus', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setStrategyEmergencyExit', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setSurplusConverter', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'recoverERC20',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'removeGovernor', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'renounceRole',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'report',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'revokeGuardian', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'revokeRole',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'revokeStrategy', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setFeeManager', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setGuardian', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setInterestsForSurplus', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setStrategyEmergencyExit', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setSurplusConverter', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'stableMaster', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'strategies', values: [string]): string;
-  encodeFunctionData(functionFragment: 'strategyList', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'strategies', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'strategyList', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'surplusConverter', values?: undefined): string;
   encodeFunctionData(functionFragment: 'token', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalDebt', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'updateStrategyDebtRatio', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'withdrawFromStrategy', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'updateStrategyDebtRatio',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'withdrawFromStrategy',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
 
   decodeFunctionResult(functionFragment: 'BASE_PARAMS', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'BASE_TOKENS', data: BytesLike): Result;
@@ -361,14 +394,14 @@ export interface AnglePoolManager extends BaseContract {
     STRATEGY_ROLE(overrides?: CallOverrides): Promise<[string]>;
 
     addGovernor(
-      _governor: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _governor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     addStrategy(
-      strategy: string,
-      _debtRatio: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      strategy: PromiseOrValue<string>,
+      _debtRatio: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     adminDebt(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -380,12 +413,12 @@ export interface AnglePoolManager extends BaseContract {
     debtRatio(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     deployCollateral(
-      governorList: string[],
-      guardian: string,
-      _perpetualManager: string,
-      _feeManager: string,
-      _oracle: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      governorList: PromiseOrValue<string>[],
+      guardian: PromiseOrValue<string>,
+      _perpetualManager: PromiseOrValue<string>,
+      _feeManager: PromiseOrValue<string>,
+      _oracle: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     estimatedAPR(overrides?: CallOverrides): Promise<[BigNumber] & { apr: BigNumber }>;
@@ -394,22 +427,26 @@ export interface AnglePoolManager extends BaseContract {
 
     getBalance(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<[string]>;
+    getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[string]>;
 
     getTotalAsset(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     grantRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    hasRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<[boolean]>;
+    hasRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[boolean]>;
 
     initialize(
-      _token: string,
-      _stableMaster: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      _stableMaster: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     interestsAccumulated(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -418,79 +455,79 @@ export interface AnglePoolManager extends BaseContract {
 
     perpetualManager(overrides?: CallOverrides): Promise<[string]>;
 
-    pushSurplus(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    pushSurplus(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     recoverERC20(
-      tokenAddress: string,
-      to: string,
-      amountToRecover: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tokenAddress: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      amountToRecover: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     removeGovernor(
-      _governor: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _governor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     renounceRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     report(
-      gain: BigNumberish,
-      loss: BigNumberish,
-      debtPayment: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      gain: PromiseOrValue<BigNumberish>,
+      loss: PromiseOrValue<BigNumberish>,
+      debtPayment: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     revokeGuardian(
-      guardian: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      guardian: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     revokeRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     revokeStrategy(
-      strategy: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      strategy: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setFeeManager(
-      _feeManager: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _feeManager: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setGuardian(
-      _guardian: string,
-      guardian: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _guardian: PromiseOrValue<string>,
+      guardian: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setInterestsForSurplus(
-      _interestsForSurplus: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _interestsForSurplus: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setStrategyEmergencyExit(
-      strategy: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      strategy: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setSurplusConverter(
-      newSurplusConverter: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newSurplusConverter: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     stableMaster(overrides?: CallOverrides): Promise<[string]>;
 
     strategies(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber] & {
@@ -500,7 +537,7 @@ export interface AnglePoolManager extends BaseContract {
       }
     >;
 
-    strategyList(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    strategyList(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
     surplusConverter(overrides?: CallOverrides): Promise<[string]>;
 
@@ -509,15 +546,15 @@ export interface AnglePoolManager extends BaseContract {
     totalDebt(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     updateStrategyDebtRatio(
-      strategy: string,
-      _debtRatio: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      strategy: PromiseOrValue<string>,
+      _debtRatio: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     withdrawFromStrategy(
-      strategy: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      strategy: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
@@ -536,14 +573,14 @@ export interface AnglePoolManager extends BaseContract {
   STRATEGY_ROLE(overrides?: CallOverrides): Promise<string>;
 
   addGovernor(
-    _governor: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _governor: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   addStrategy(
-    strategy: string,
-    _debtRatio: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    strategy: PromiseOrValue<string>,
+    _debtRatio: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   adminDebt(overrides?: CallOverrides): Promise<BigNumber>;
@@ -555,12 +592,12 @@ export interface AnglePoolManager extends BaseContract {
   debtRatio(overrides?: CallOverrides): Promise<BigNumber>;
 
   deployCollateral(
-    governorList: string[],
-    guardian: string,
-    _perpetualManager: string,
-    _feeManager: string,
-    _oracle: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    governorList: PromiseOrValue<string>[],
+    guardian: PromiseOrValue<string>,
+    _perpetualManager: PromiseOrValue<string>,
+    _feeManager: PromiseOrValue<string>,
+    _oracle: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   estimatedAPR(overrides?: CallOverrides): Promise<BigNumber>;
@@ -569,22 +606,26 @@ export interface AnglePoolManager extends BaseContract {
 
   getBalance(overrides?: CallOverrides): Promise<BigNumber>;
 
-  getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<string>;
+  getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
   getTotalAsset(overrides?: CallOverrides): Promise<BigNumber>;
 
   grantRole(
-    role: BytesLike,
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    role: PromiseOrValue<BytesLike>,
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  hasRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<boolean>;
+  hasRole(
+    role: PromiseOrValue<BytesLike>,
+    account: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<boolean>;
 
   initialize(
-    _token: string,
-    _stableMaster: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _token: PromiseOrValue<string>,
+    _stableMaster: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   interestsAccumulated(overrides?: CallOverrides): Promise<BigNumber>;
@@ -593,79 +634,79 @@ export interface AnglePoolManager extends BaseContract {
 
   perpetualManager(overrides?: CallOverrides): Promise<string>;
 
-  pushSurplus(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  pushSurplus(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   recoverERC20(
-    tokenAddress: string,
-    to: string,
-    amountToRecover: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    tokenAddress: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    amountToRecover: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   removeGovernor(
-    _governor: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _governor: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   renounceRole(
-    role: BytesLike,
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    role: PromiseOrValue<BytesLike>,
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   report(
-    gain: BigNumberish,
-    loss: BigNumberish,
-    debtPayment: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    gain: PromiseOrValue<BigNumberish>,
+    loss: PromiseOrValue<BigNumberish>,
+    debtPayment: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   revokeGuardian(
-    guardian: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    guardian: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   revokeRole(
-    role: BytesLike,
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    role: PromiseOrValue<BytesLike>,
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   revokeStrategy(
-    strategy: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    strategy: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setFeeManager(
-    _feeManager: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _feeManager: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setGuardian(
-    _guardian: string,
-    guardian: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _guardian: PromiseOrValue<string>,
+    guardian: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setInterestsForSurplus(
-    _interestsForSurplus: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _interestsForSurplus: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setStrategyEmergencyExit(
-    strategy: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    strategy: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setSurplusConverter(
-    newSurplusConverter: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newSurplusConverter: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   stableMaster(overrides?: CallOverrides): Promise<string>;
 
   strategies(
-    arg0: string,
+    arg0: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber, BigNumber] & {
@@ -675,7 +716,7 @@ export interface AnglePoolManager extends BaseContract {
     }
   >;
 
-  strategyList(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  strategyList(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   surplusConverter(overrides?: CallOverrides): Promise<string>;
 
@@ -684,15 +725,15 @@ export interface AnglePoolManager extends BaseContract {
   totalDebt(overrides?: CallOverrides): Promise<BigNumber>;
 
   updateStrategyDebtRatio(
-    strategy: string,
-    _debtRatio: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    strategy: PromiseOrValue<string>,
+    _debtRatio: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   withdrawFromStrategy(
-    strategy: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    strategy: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
@@ -710,9 +751,13 @@ export interface AnglePoolManager extends BaseContract {
 
     STRATEGY_ROLE(overrides?: CallOverrides): Promise<string>;
 
-    addGovernor(_governor: string, overrides?: CallOverrides): Promise<void>;
+    addGovernor(_governor: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    addStrategy(strategy: string, _debtRatio: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    addStrategy(
+      strategy: PromiseOrValue<string>,
+      _debtRatio: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     adminDebt(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -723,11 +768,11 @@ export interface AnglePoolManager extends BaseContract {
     debtRatio(overrides?: CallOverrides): Promise<BigNumber>;
 
     deployCollateral(
-      governorList: string[],
-      guardian: string,
-      _perpetualManager: string,
-      _feeManager: string,
-      _oracle: string,
+      governorList: PromiseOrValue<string>[],
+      guardian: PromiseOrValue<string>,
+      _perpetualManager: PromiseOrValue<string>,
+      _feeManager: PromiseOrValue<string>,
+      _oracle: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -737,15 +782,27 @@ export interface AnglePoolManager extends BaseContract {
 
     getBalance(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<string>;
+    getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
     getTotalAsset(overrides?: CallOverrides): Promise<BigNumber>;
 
-    grantRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<void>;
+    grantRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    hasRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<boolean>;
+    hasRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    initialize(_token: string, _stableMaster: string, overrides?: CallOverrides): Promise<void>;
+    initialize(
+      _token: PromiseOrValue<string>,
+      _stableMaster: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     interestsAccumulated(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -756,38 +813,58 @@ export interface AnglePoolManager extends BaseContract {
     pushSurplus(overrides?: CallOverrides): Promise<void>;
 
     recoverERC20(
-      tokenAddress: string,
-      to: string,
-      amountToRecover: BigNumberish,
+      tokenAddress: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      amountToRecover: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    removeGovernor(_governor: string, overrides?: CallOverrides): Promise<void>;
+    removeGovernor(_governor: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    renounceRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<void>;
+    renounceRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    report(gain: BigNumberish, loss: BigNumberish, debtPayment: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    report(
+      gain: PromiseOrValue<BigNumberish>,
+      loss: PromiseOrValue<BigNumberish>,
+      debtPayment: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    revokeGuardian(guardian: string, overrides?: CallOverrides): Promise<void>;
+    revokeGuardian(guardian: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    revokeRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<void>;
+    revokeRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    revokeStrategy(strategy: string, overrides?: CallOverrides): Promise<void>;
+    revokeStrategy(strategy: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setFeeManager(_feeManager: string, overrides?: CallOverrides): Promise<void>;
+    setFeeManager(_feeManager: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setGuardian(_guardian: string, guardian: string, overrides?: CallOverrides): Promise<void>;
+    setGuardian(
+      _guardian: PromiseOrValue<string>,
+      guardian: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setInterestsForSurplus(_interestsForSurplus: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setInterestsForSurplus(
+      _interestsForSurplus: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setStrategyEmergencyExit(strategy: string, overrides?: CallOverrides): Promise<void>;
+    setStrategyEmergencyExit(strategy: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setSurplusConverter(newSurplusConverter: string, overrides?: CallOverrides): Promise<void>;
+    setSurplusConverter(newSurplusConverter: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     stableMaster(overrides?: CallOverrides): Promise<string>;
 
     strategies(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber] & {
@@ -797,7 +874,7 @@ export interface AnglePoolManager extends BaseContract {
       }
     >;
 
-    strategyList(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    strategyList(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
     surplusConverter(overrides?: CallOverrides): Promise<string>;
 
@@ -805,9 +882,17 @@ export interface AnglePoolManager extends BaseContract {
 
     totalDebt(overrides?: CallOverrides): Promise<BigNumber>;
 
-    updateStrategyDebtRatio(strategy: string, _debtRatio: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    updateStrategyDebtRatio(
+      strategy: PromiseOrValue<string>,
+      _debtRatio: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    withdrawFromStrategy(strategy: string, amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    withdrawFromStrategy(
+      strategy: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
   };
 
   filters: {
@@ -818,65 +903,80 @@ export interface AnglePoolManager extends BaseContract {
     InterestsForSurplusUpdated(_interestsForSurplus?: null): InterestsForSurplusUpdatedEventFilter;
 
     'Recovered(address,address,uint256)'(
-      token?: string | null,
-      to?: string | null,
+      token?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
       amount?: null,
     ): RecoveredEventFilter;
-    Recovered(token?: string | null, to?: string | null, amount?: null): RecoveredEventFilter;
+    Recovered(
+      token?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      amount?: null,
+    ): RecoveredEventFilter;
 
     'RoleAdminChanged(bytes32,bytes32,bytes32)'(
-      role?: BytesLike | null,
-      previousAdminRole?: BytesLike | null,
-      newAdminRole?: BytesLike | null,
+      role?: PromiseOrValue<BytesLike> | null,
+      previousAdminRole?: PromiseOrValue<BytesLike> | null,
+      newAdminRole?: PromiseOrValue<BytesLike> | null,
     ): RoleAdminChangedEventFilter;
     RoleAdminChanged(
-      role?: BytesLike | null,
-      previousAdminRole?: BytesLike | null,
-      newAdminRole?: BytesLike | null,
+      role?: PromiseOrValue<BytesLike> | null,
+      previousAdminRole?: PromiseOrValue<BytesLike> | null,
+      newAdminRole?: PromiseOrValue<BytesLike> | null,
     ): RoleAdminChangedEventFilter;
 
     'RoleGranted(bytes32,address,address)'(
-      role?: BytesLike | null,
-      account?: string | null,
-      sender?: string | null,
+      role?: PromiseOrValue<BytesLike> | null,
+      account?: PromiseOrValue<string> | null,
+      sender?: PromiseOrValue<string> | null,
     ): RoleGrantedEventFilter;
-    RoleGranted(role?: BytesLike | null, account?: string | null, sender?: string | null): RoleGrantedEventFilter;
+    RoleGranted(
+      role?: PromiseOrValue<BytesLike> | null,
+      account?: PromiseOrValue<string> | null,
+      sender?: PromiseOrValue<string> | null,
+    ): RoleGrantedEventFilter;
 
     'RoleRevoked(bytes32,address,address)'(
-      role?: BytesLike | null,
-      account?: string | null,
-      sender?: string | null,
+      role?: PromiseOrValue<BytesLike> | null,
+      account?: PromiseOrValue<string> | null,
+      sender?: PromiseOrValue<string> | null,
     ): RoleRevokedEventFilter;
-    RoleRevoked(role?: BytesLike | null, account?: string | null, sender?: string | null): RoleRevokedEventFilter;
+    RoleRevoked(
+      role?: PromiseOrValue<BytesLike> | null,
+      account?: PromiseOrValue<string> | null,
+      sender?: PromiseOrValue<string> | null,
+    ): RoleRevokedEventFilter;
 
-    'StrategyAdded(address,uint256)'(strategy?: string | null, debtRatio?: null): StrategyAddedEventFilter;
-    StrategyAdded(strategy?: string | null, debtRatio?: null): StrategyAddedEventFilter;
+    'StrategyAdded(address,uint256)'(
+      strategy?: PromiseOrValue<string> | null,
+      debtRatio?: null,
+    ): StrategyAddedEventFilter;
+    StrategyAdded(strategy?: PromiseOrValue<string> | null, debtRatio?: null): StrategyAddedEventFilter;
 
     'StrategyReported(address,uint256,uint256,uint256,uint256)'(
-      strategy?: string | null,
+      strategy?: PromiseOrValue<string> | null,
       gain?: null,
       loss?: null,
       debtPayment?: null,
       totalDebt?: null,
     ): StrategyReportedEventFilter;
     StrategyReported(
-      strategy?: string | null,
+      strategy?: PromiseOrValue<string> | null,
       gain?: null,
       loss?: null,
       debtPayment?: null,
       totalDebt?: null,
     ): StrategyReportedEventFilter;
 
-    'StrategyRevoked(address)'(strategy?: string | null): StrategyRevokedEventFilter;
-    StrategyRevoked(strategy?: string | null): StrategyRevokedEventFilter;
+    'StrategyRevoked(address)'(strategy?: PromiseOrValue<string> | null): StrategyRevokedEventFilter;
+    StrategyRevoked(strategy?: PromiseOrValue<string> | null): StrategyRevokedEventFilter;
 
     'SurplusConverterUpdated(address,address)'(
-      newSurplusConverter?: string | null,
-      oldSurplusConverter?: string | null,
+      newSurplusConverter?: PromiseOrValue<string> | null,
+      oldSurplusConverter?: PromiseOrValue<string> | null,
     ): SurplusConverterUpdatedEventFilter;
     SurplusConverterUpdated(
-      newSurplusConverter?: string | null,
-      oldSurplusConverter?: string | null,
+      newSurplusConverter?: PromiseOrValue<string> | null,
+      oldSurplusConverter?: PromiseOrValue<string> | null,
     ): SurplusConverterUpdatedEventFilter;
   };
 
@@ -895,12 +995,15 @@ export interface AnglePoolManager extends BaseContract {
 
     STRATEGY_ROLE(overrides?: CallOverrides): Promise<BigNumber>;
 
-    addGovernor(_governor: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    addGovernor(
+      _governor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     addStrategy(
-      strategy: string,
-      _debtRatio: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      strategy: PromiseOrValue<string>,
+      _debtRatio: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     adminDebt(overrides?: CallOverrides): Promise<BigNumber>;
@@ -912,12 +1015,12 @@ export interface AnglePoolManager extends BaseContract {
     debtRatio(overrides?: CallOverrides): Promise<BigNumber>;
 
     deployCollateral(
-      governorList: string[],
-      guardian: string,
-      _perpetualManager: string,
-      _feeManager: string,
-      _oracle: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      governorList: PromiseOrValue<string>[],
+      guardian: PromiseOrValue<string>,
+      _perpetualManager: PromiseOrValue<string>,
+      _feeManager: PromiseOrValue<string>,
+      _oracle: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     estimatedAPR(overrides?: CallOverrides): Promise<BigNumber>;
@@ -926,22 +1029,26 @@ export interface AnglePoolManager extends BaseContract {
 
     getBalance(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getTotalAsset(overrides?: CallOverrides): Promise<BigNumber>;
 
     grantRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    hasRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    hasRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     initialize(
-      _token: string,
-      _stableMaster: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      _stableMaster: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     interestsAccumulated(overrides?: CallOverrides): Promise<BigNumber>;
@@ -950,68 +1057,80 @@ export interface AnglePoolManager extends BaseContract {
 
     perpetualManager(overrides?: CallOverrides): Promise<BigNumber>;
 
-    pushSurplus(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    pushSurplus(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     recoverERC20(
-      tokenAddress: string,
-      to: string,
-      amountToRecover: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tokenAddress: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      amountToRecover: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    removeGovernor(_governor: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    removeGovernor(
+      _governor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     renounceRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     report(
-      gain: BigNumberish,
-      loss: BigNumberish,
-      debtPayment: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      gain: PromiseOrValue<BigNumberish>,
+      loss: PromiseOrValue<BigNumberish>,
+      debtPayment: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    revokeGuardian(guardian: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    revokeGuardian(
+      guardian: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     revokeRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    revokeStrategy(strategy: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    revokeStrategy(
+      strategy: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    setFeeManager(_feeManager: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setFeeManager(
+      _feeManager: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setGuardian(
-      _guardian: string,
-      guardian: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _guardian: PromiseOrValue<string>,
+      guardian: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setInterestsForSurplus(
-      _interestsForSurplus: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _interestsForSurplus: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setStrategyEmergencyExit(
-      strategy: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      strategy: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setSurplusConverter(
-      newSurplusConverter: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newSurplusConverter: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     stableMaster(overrides?: CallOverrides): Promise<BigNumber>;
 
-    strategies(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    strategies(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    strategyList(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    strategyList(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     surplusConverter(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1020,15 +1139,15 @@ export interface AnglePoolManager extends BaseContract {
     totalDebt(overrides?: CallOverrides): Promise<BigNumber>;
 
     updateStrategyDebtRatio(
-      strategy: string,
-      _debtRatio: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      strategy: PromiseOrValue<string>,
+      _debtRatio: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     withdrawFromStrategy(
-      strategy: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      strategy: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
@@ -1048,14 +1167,14 @@ export interface AnglePoolManager extends BaseContract {
     STRATEGY_ROLE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     addGovernor(
-      _governor: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _governor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     addStrategy(
-      strategy: string,
-      _debtRatio: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      strategy: PromiseOrValue<string>,
+      _debtRatio: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     adminDebt(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1067,12 +1186,12 @@ export interface AnglePoolManager extends BaseContract {
     debtRatio(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     deployCollateral(
-      governorList: string[],
-      guardian: string,
-      _perpetualManager: string,
-      _feeManager: string,
-      _oracle: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      governorList: PromiseOrValue<string>[],
+      guardian: PromiseOrValue<string>,
+      _perpetualManager: PromiseOrValue<string>,
+      _feeManager: PromiseOrValue<string>,
+      _oracle: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     estimatedAPR(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1081,22 +1200,26 @@ export interface AnglePoolManager extends BaseContract {
 
     getBalance(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getTotalAsset(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     grantRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    hasRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    hasRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     initialize(
-      _token: string,
-      _stableMaster: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      _stableMaster: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     interestsAccumulated(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1105,80 +1228,80 @@ export interface AnglePoolManager extends BaseContract {
 
     perpetualManager(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    pushSurplus(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    pushSurplus(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     recoverERC20(
-      tokenAddress: string,
-      to: string,
-      amountToRecover: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tokenAddress: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      amountToRecover: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     removeGovernor(
-      _governor: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _governor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     renounceRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     report(
-      gain: BigNumberish,
-      loss: BigNumberish,
-      debtPayment: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      gain: PromiseOrValue<BigNumberish>,
+      loss: PromiseOrValue<BigNumberish>,
+      debtPayment: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     revokeGuardian(
-      guardian: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      guardian: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     revokeRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     revokeStrategy(
-      strategy: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      strategy: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setFeeManager(
-      _feeManager: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _feeManager: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setGuardian(
-      _guardian: string,
-      guardian: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _guardian: PromiseOrValue<string>,
+      guardian: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setInterestsForSurplus(
-      _interestsForSurplus: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _interestsForSurplus: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setStrategyEmergencyExit(
-      strategy: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      strategy: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setSurplusConverter(
-      newSurplusConverter: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newSurplusConverter: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     stableMaster(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    strategies(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    strategies(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    strategyList(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    strategyList(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     surplusConverter(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1187,15 +1310,15 @@ export interface AnglePoolManager extends BaseContract {
     totalDebt(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     updateStrategyDebtRatio(
-      strategy: string,
-      _debtRatio: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      strategy: PromiseOrValue<string>,
+      _debtRatio: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     withdrawFromStrategy(
-      strategy: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      strategy: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

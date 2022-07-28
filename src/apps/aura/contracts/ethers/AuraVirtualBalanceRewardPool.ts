@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface AuraVirtualBalanceRewardPoolInterface extends utils.Interface {
   functions: {
@@ -75,31 +75,34 @@ export interface AuraVirtualBalanceRewardPoolInterface extends utils.Interface {
       | 'withdraw',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'currentRewards', values?: undefined): string;
   encodeFunctionData(functionFragment: 'deposits', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'donate', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'donate', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'duration', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'earned', values: [string]): string;
+  encodeFunctionData(functionFragment: 'earned', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'getReward()', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getReward(address)', values: [string]): string;
+  encodeFunctionData(functionFragment: 'getReward(address)', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'historicalRewards', values?: undefined): string;
   encodeFunctionData(functionFragment: 'lastTimeRewardApplicable', values?: undefined): string;
   encodeFunctionData(functionFragment: 'lastUpdateTime', values?: undefined): string;
   encodeFunctionData(functionFragment: 'newRewardRatio', values?: undefined): string;
   encodeFunctionData(functionFragment: 'operator', values?: undefined): string;
   encodeFunctionData(functionFragment: 'periodFinish', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'queueNewRewards', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'queueNewRewards', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'queuedRewards', values?: undefined): string;
   encodeFunctionData(functionFragment: 'rewardPerToken', values?: undefined): string;
   encodeFunctionData(functionFragment: 'rewardPerTokenStored', values?: undefined): string;
   encodeFunctionData(functionFragment: 'rewardRate', values?: undefined): string;
   encodeFunctionData(functionFragment: 'rewardToken', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'rewards', values: [string]): string;
-  encodeFunctionData(functionFragment: 'stake', values: [string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'rewards', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'stake', values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'userRewardPerTokenPaid', values: [string]): string;
-  encodeFunctionData(functionFragment: 'withdraw', values: [string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'userRewardPerTokenPaid', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'withdraw',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
 
   decodeFunctionResult(functionFragment: 'balanceOf', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'currentRewards', data: BytesLike): Result;
@@ -194,26 +197,26 @@ export interface AuraVirtualBalanceRewardPool extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    balanceOf(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     currentRewards(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     deposits(overrides?: CallOverrides): Promise<[string]>;
 
     donate(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     duration(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    earned(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    earned(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    'getReward()'(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    'getReward()'(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     'getReward(address)'(
-      _account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     historicalRewards(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -229,8 +232,8 @@ export interface AuraVirtualBalanceRewardPool extends BaseContract {
     periodFinish(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     queueNewRewards(
-      _rewards: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewards: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     queuedRewards(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -243,45 +246,45 @@ export interface AuraVirtualBalanceRewardPool extends BaseContract {
 
     rewardToken(overrides?: CallOverrides): Promise<[string]>;
 
-    rewards(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    rewards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     stake(
-      _account: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    userRewardPerTokenPaid(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    userRewardPerTokenPaid(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     withdraw(
-      _account: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
-  balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   currentRewards(overrides?: CallOverrides): Promise<BigNumber>;
 
   deposits(overrides?: CallOverrides): Promise<string>;
 
   donate(
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   duration(overrides?: CallOverrides): Promise<BigNumber>;
 
-  earned(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  earned(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  'getReward()'(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  'getReward()'(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   'getReward(address)'(
-    _account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   historicalRewards(overrides?: CallOverrides): Promise<BigNumber>;
@@ -297,8 +300,8 @@ export interface AuraVirtualBalanceRewardPool extends BaseContract {
   periodFinish(overrides?: CallOverrides): Promise<BigNumber>;
 
   queueNewRewards(
-    _rewards: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _rewards: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   queuedRewards(overrides?: CallOverrides): Promise<BigNumber>;
@@ -311,40 +314,40 @@ export interface AuraVirtualBalanceRewardPool extends BaseContract {
 
   rewardToken(overrides?: CallOverrides): Promise<string>;
 
-  rewards(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  rewards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   stake(
-    _account: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _account: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-  userRewardPerTokenPaid(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  userRewardPerTokenPaid(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   withdraw(
-    _account: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _account: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     currentRewards(overrides?: CallOverrides): Promise<BigNumber>;
 
     deposits(overrides?: CallOverrides): Promise<string>;
 
-    donate(_amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    donate(_amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<boolean>;
 
     duration(overrides?: CallOverrides): Promise<BigNumber>;
 
-    earned(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    earned(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     'getReward()'(overrides?: CallOverrides): Promise<void>;
 
-    'getReward(address)'(_account: string, overrides?: CallOverrides): Promise<void>;
+    'getReward(address)'(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     historicalRewards(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -358,7 +361,7 @@ export interface AuraVirtualBalanceRewardPool extends BaseContract {
 
     periodFinish(overrides?: CallOverrides): Promise<BigNumber>;
 
-    queueNewRewards(_rewards: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    queueNewRewards(_rewards: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     queuedRewards(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -370,49 +373,60 @@ export interface AuraVirtualBalanceRewardPool extends BaseContract {
 
     rewardToken(overrides?: CallOverrides): Promise<string>;
 
-    rewards(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    rewards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    stake(_account: string, amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    stake(
+      _account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    userRewardPerTokenPaid(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    userRewardPerTokenPaid(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    withdraw(_account: string, amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    withdraw(
+      _account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
   };
 
   filters: {
     'RewardAdded(uint256)'(reward?: null): RewardAddedEventFilter;
     RewardAdded(reward?: null): RewardAddedEventFilter;
 
-    'RewardPaid(address,uint256)'(user?: string | null, reward?: null): RewardPaidEventFilter;
-    RewardPaid(user?: string | null, reward?: null): RewardPaidEventFilter;
+    'RewardPaid(address,uint256)'(user?: PromiseOrValue<string> | null, reward?: null): RewardPaidEventFilter;
+    RewardPaid(user?: PromiseOrValue<string> | null, reward?: null): RewardPaidEventFilter;
 
-    'Staked(address,uint256)'(user?: string | null, amount?: null): StakedEventFilter;
-    Staked(user?: string | null, amount?: null): StakedEventFilter;
+    'Staked(address,uint256)'(user?: PromiseOrValue<string> | null, amount?: null): StakedEventFilter;
+    Staked(user?: PromiseOrValue<string> | null, amount?: null): StakedEventFilter;
 
-    'Withdrawn(address,uint256)'(user?: string | null, amount?: null): WithdrawnEventFilter;
-    Withdrawn(user?: string | null, amount?: null): WithdrawnEventFilter;
+    'Withdrawn(address,uint256)'(user?: PromiseOrValue<string> | null, amount?: null): WithdrawnEventFilter;
+    Withdrawn(user?: PromiseOrValue<string> | null, amount?: null): WithdrawnEventFilter;
   };
 
   estimateGas: {
-    balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     currentRewards(overrides?: CallOverrides): Promise<BigNumber>;
 
     deposits(overrides?: CallOverrides): Promise<BigNumber>;
 
-    donate(_amount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    donate(
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     duration(overrides?: CallOverrides): Promise<BigNumber>;
 
-    earned(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    earned(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    'getReward()'(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    'getReward()'(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     'getReward(address)'(
-      _account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     historicalRewards(overrides?: CallOverrides): Promise<BigNumber>;
@@ -428,8 +442,8 @@ export interface AuraVirtualBalanceRewardPool extends BaseContract {
     periodFinish(overrides?: CallOverrides): Promise<BigNumber>;
 
     queueNewRewards(
-      _rewards: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewards: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     queuedRewards(overrides?: CallOverrides): Promise<BigNumber>;
@@ -442,46 +456,46 @@ export interface AuraVirtualBalanceRewardPool extends BaseContract {
 
     rewardToken(overrides?: CallOverrides): Promise<BigNumber>;
 
-    rewards(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    rewards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     stake(
-      _account: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    userRewardPerTokenPaid(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    userRewardPerTokenPaid(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     withdraw(
-      _account: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    balanceOf(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     currentRewards(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     deposits(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     donate(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     duration(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    earned(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    earned(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    'getReward()'(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    'getReward()'(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     'getReward(address)'(
-      _account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     historicalRewards(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -497,8 +511,8 @@ export interface AuraVirtualBalanceRewardPool extends BaseContract {
     periodFinish(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     queueNewRewards(
-      _rewards: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewards: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     queuedRewards(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -511,22 +525,22 @@ export interface AuraVirtualBalanceRewardPool extends BaseContract {
 
     rewardToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    rewards(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    rewards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     stake(
-      _account: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    userRewardPerTokenPaid(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    userRewardPerTokenPaid(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     withdraw(
-      _account: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

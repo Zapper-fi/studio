@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface SynthetixRewardsInterface extends utils.Interface {
   functions: {
@@ -73,22 +73,22 @@ export interface SynthetixRewardsInterface extends utils.Interface {
       | 'transferOwnership',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'earned', values: [string]): string;
-  encodeFunctionData(functionFragment: 'rewards', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setRewardDistribution', values: [string]): string;
+  encodeFunctionData(functionFragment: 'earned', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'rewards', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setRewardDistribution', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
   encodeFunctionData(functionFragment: 'DURATION', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'withdraw', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'notifyRewardAmount', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'withdraw', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'notifyRewardAmount', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'getReward', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
   encodeFunctionData(functionFragment: 'rewardRate', values?: undefined): string;
   encodeFunctionData(functionFragment: 'lastTimeRewardApplicable', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'userRewardPerTokenPaid', values: [string]): string;
+  encodeFunctionData(functionFragment: 'userRewardPerTokenPaid', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'isOwner', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'stake', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'stake', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'lastUpdateTime', values?: undefined): string;
   encodeFunctionData(functionFragment: 'rewardPerToken', values?: undefined): string;
   encodeFunctionData(functionFragment: 'rewardPerTokenStored', values?: undefined): string;
@@ -96,7 +96,7 @@ export interface SynthetixRewardsInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'exit', values?: undefined): string;
   encodeFunctionData(functionFragment: 'periodFinish', values?: undefined): string;
   encodeFunctionData(functionFragment: 'uni', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
 
   decodeFunctionResult(functionFragment: 'earned', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'rewards', data: BytesLike): Result;
@@ -200,13 +200,13 @@ export interface SynthetixRewards extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    earned(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    earned(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    rewards(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    rewards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     setRewardDistribution(
-      _rewardDistribution: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardDistribution: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -214,34 +214,34 @@ export interface SynthetixRewards extends BaseContract {
     DURATION(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     withdraw(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     notifyRewardAmount(
-      reward: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      reward: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    getReward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    getReward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     rewardRate(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     lastTimeRewardApplicable(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    userRewardPerTokenPaid(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    userRewardPerTokenPaid(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     isOwner(overrides?: CallOverrides): Promise<[boolean]>;
 
     stake(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     lastUpdateTime(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -252,25 +252,25 @@ export interface SynthetixRewards extends BaseContract {
 
     snx(overrides?: CallOverrides): Promise<[string]>;
 
-    exit(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    exit(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     periodFinish(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     uni(overrides?: CallOverrides): Promise<[string]>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
-  earned(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  earned(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  rewards(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  rewards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   setRewardDistribution(
-    _rewardDistribution: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _rewardDistribution: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
@@ -278,34 +278,34 @@ export interface SynthetixRewards extends BaseContract {
   DURATION(overrides?: CallOverrides): Promise<BigNumber>;
 
   withdraw(
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   notifyRewardAmount(
-    reward: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    reward: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  getReward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  getReward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   rewardRate(overrides?: CallOverrides): Promise<BigNumber>;
 
   lastTimeRewardApplicable(overrides?: CallOverrides): Promise<BigNumber>;
 
-  userRewardPerTokenPaid(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  userRewardPerTokenPaid(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
   isOwner(overrides?: CallOverrides): Promise<boolean>;
 
   stake(
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   lastUpdateTime(overrides?: CallOverrides): Promise<BigNumber>;
@@ -316,35 +316,35 @@ export interface SynthetixRewards extends BaseContract {
 
   snx(overrides?: CallOverrides): Promise<string>;
 
-  exit(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  exit(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   periodFinish(overrides?: CallOverrides): Promise<BigNumber>;
 
   uni(overrides?: CallOverrides): Promise<string>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    earned(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    earned(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    rewards(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    rewards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    setRewardDistribution(_rewardDistribution: string, overrides?: CallOverrides): Promise<void>;
+    setRewardDistribution(_rewardDistribution: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     DURATION(overrides?: CallOverrides): Promise<BigNumber>;
 
-    withdraw(amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    withdraw(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    notifyRewardAmount(reward: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    notifyRewardAmount(reward: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     getReward(overrides?: CallOverrides): Promise<void>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
@@ -352,13 +352,13 @@ export interface SynthetixRewards extends BaseContract {
 
     lastTimeRewardApplicable(overrides?: CallOverrides): Promise<BigNumber>;
 
-    userRewardPerTokenPaid(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    userRewardPerTokenPaid(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
     isOwner(overrides?: CallOverrides): Promise<boolean>;
 
-    stake(amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    stake(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     lastUpdateTime(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -374,67 +374,76 @@ export interface SynthetixRewards extends BaseContract {
 
     uni(overrides?: CallOverrides): Promise<string>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
     'RewardAdded(uint256)'(reward?: null): RewardAddedEventFilter;
     RewardAdded(reward?: null): RewardAddedEventFilter;
 
-    'Staked(address,uint256)'(user?: string | null, amount?: null): StakedEventFilter;
-    Staked(user?: string | null, amount?: null): StakedEventFilter;
+    'Staked(address,uint256)'(user?: PromiseOrValue<string> | null, amount?: null): StakedEventFilter;
+    Staked(user?: PromiseOrValue<string> | null, amount?: null): StakedEventFilter;
 
-    'Withdrawn(address,uint256)'(user?: string | null, amount?: null): WithdrawnEventFilter;
-    Withdrawn(user?: string | null, amount?: null): WithdrawnEventFilter;
+    'Withdrawn(address,uint256)'(user?: PromiseOrValue<string> | null, amount?: null): WithdrawnEventFilter;
+    Withdrawn(user?: PromiseOrValue<string> | null, amount?: null): WithdrawnEventFilter;
 
-    'RewardPaid(address,uint256)'(user?: string | null, reward?: null): RewardPaidEventFilter;
-    RewardPaid(user?: string | null, reward?: null): RewardPaidEventFilter;
+    'RewardPaid(address,uint256)'(user?: PromiseOrValue<string> | null, reward?: null): RewardPaidEventFilter;
+    RewardPaid(user?: PromiseOrValue<string> | null, reward?: null): RewardPaidEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
   };
 
   estimateGas: {
-    earned(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    earned(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    rewards(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    rewards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     setRewardDistribution(
-      _rewardDistribution: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardDistribution: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     DURATION(overrides?: CallOverrides): Promise<BigNumber>;
 
-    withdraw(amount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
-
-    notifyRewardAmount(
-      reward: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    withdraw(
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    getReward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    notifyRewardAmount(
+      reward: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getReward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     rewardRate(overrides?: CallOverrides): Promise<BigNumber>;
 
     lastTimeRewardApplicable(overrides?: CallOverrides): Promise<BigNumber>;
 
-    userRewardPerTokenPaid(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    userRewardPerTokenPaid(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     isOwner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    stake(amount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    stake(
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     lastUpdateTime(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -444,26 +453,26 @@ export interface SynthetixRewards extends BaseContract {
 
     snx(overrides?: CallOverrides): Promise<BigNumber>;
 
-    exit(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    exit(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     periodFinish(overrides?: CallOverrides): Promise<BigNumber>;
 
     uni(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    earned(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    earned(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    rewards(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    rewards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setRewardDistribution(
-      _rewardDistribution: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _rewardDistribution: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -471,34 +480,34 @@ export interface SynthetixRewards extends BaseContract {
     DURATION(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     withdraw(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     notifyRewardAmount(
-      reward: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      reward: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    getReward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    getReward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     rewardRate(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     lastTimeRewardApplicable(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    userRewardPerTokenPaid(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    userRewardPerTokenPaid(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     isOwner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     stake(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     lastUpdateTime(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -509,15 +518,15 @@ export interface SynthetixRewards extends BaseContract {
 
     snx(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    exit(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    exit(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     periodFinish(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     uni(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

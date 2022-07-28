@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface CurveAddressResolverInterface extends utils.Interface {
   functions: {
@@ -53,17 +53,20 @@ export interface CurveAddressResolverInterface extends utils.Interface {
 
   encodeFunctionData(functionFragment: 'get_registry', values?: undefined): string;
   encodeFunctionData(functionFragment: 'max_id', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'get_address', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'add_new_id', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'set_address', values: [BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'unset_address', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'commit_transfer_ownership', values: [string]): string;
+  encodeFunctionData(functionFragment: 'get_address', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'add_new_id', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'set_address',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'unset_address', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'commit_transfer_ownership', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'apply_transfer_ownership', values?: undefined): string;
   encodeFunctionData(functionFragment: 'revert_transfer_ownership', values?: undefined): string;
   encodeFunctionData(functionFragment: 'admin', values?: undefined): string;
   encodeFunctionData(functionFragment: 'transfer_ownership_deadline', values?: undefined): string;
   encodeFunctionData(functionFragment: 'future_admin', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'get_id_info', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'get_id_info', values: [PromiseOrValue<BigNumberish>]): string;
 
   decodeFunctionResult(functionFragment: 'get_registry', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'max_id', data: BytesLike): Result;
@@ -152,35 +155,33 @@ export interface CurveAddressResolver extends BaseContract {
 
     max_id(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    get_address(_id: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    get_address(_id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
     add_new_id(
-      _address: string,
-      _description: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _address: PromiseOrValue<string>,
+      _description: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     set_address(
-      _id: BigNumberish,
-      _address: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _id: PromiseOrValue<BigNumberish>,
+      _address: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     unset_address(
-      _id: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _id: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     commit_transfer_ownership(
-      _new_admin: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _new_admin: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    apply_transfer_ownership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    apply_transfer_ownership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    revert_transfer_ownership(
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
+    revert_transfer_ownership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     admin(overrides?: CallOverrides): Promise<[string]>;
 
@@ -189,7 +190,7 @@ export interface CurveAddressResolver extends BaseContract {
     future_admin(overrides?: CallOverrides): Promise<[string]>;
 
     get_id_info(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [string, boolean, BigNumber, BigNumber, string] & {
@@ -206,33 +207,33 @@ export interface CurveAddressResolver extends BaseContract {
 
   max_id(overrides?: CallOverrides): Promise<BigNumber>;
 
-  get_address(_id: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  get_address(_id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   add_new_id(
-    _address: string,
-    _description: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _address: PromiseOrValue<string>,
+    _description: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   set_address(
-    _id: BigNumberish,
-    _address: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _id: PromiseOrValue<BigNumberish>,
+    _address: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   unset_address(
-    _id: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _id: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   commit_transfer_ownership(
-    _new_admin: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _new_admin: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  apply_transfer_ownership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  apply_transfer_ownership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  revert_transfer_ownership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  revert_transfer_ownership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   admin(overrides?: CallOverrides): Promise<string>;
 
@@ -241,7 +242,7 @@ export interface CurveAddressResolver extends BaseContract {
   future_admin(overrides?: CallOverrides): Promise<string>;
 
   get_id_info(
-    arg0: BigNumberish,
+    arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<
     [string, boolean, BigNumber, BigNumber, string] & {
@@ -258,15 +259,23 @@ export interface CurveAddressResolver extends BaseContract {
 
     max_id(overrides?: CallOverrides): Promise<BigNumber>;
 
-    get_address(_id: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    get_address(_id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
-    add_new_id(_address: string, _description: string, overrides?: CallOverrides): Promise<BigNumber>;
+    add_new_id(
+      _address: PromiseOrValue<string>,
+      _description: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    set_address(_id: BigNumberish, _address: string, overrides?: CallOverrides): Promise<boolean>;
+    set_address(
+      _id: PromiseOrValue<BigNumberish>,
+      _address: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    unset_address(_id: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    unset_address(_id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<boolean>;
 
-    commit_transfer_ownership(_new_admin: string, overrides?: CallOverrides): Promise<boolean>;
+    commit_transfer_ownership(_new_admin: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     apply_transfer_ownership(overrides?: CallOverrides): Promise<boolean>;
 
@@ -279,7 +288,7 @@ export interface CurveAddressResolver extends BaseContract {
     future_admin(overrides?: CallOverrides): Promise<string>;
 
     get_id_info(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [string, boolean, BigNumber, BigNumber, string] & {
@@ -294,24 +303,38 @@ export interface CurveAddressResolver extends BaseContract {
 
   filters: {
     'NewAddressIdentifier(uint256,address,string)'(
-      id?: BigNumberish | null,
+      id?: PromiseOrValue<BigNumberish> | null,
       addr?: null,
       description?: null,
     ): NewAddressIdentifierEventFilter;
-    NewAddressIdentifier(id?: BigNumberish | null, addr?: null, description?: null): NewAddressIdentifierEventFilter;
+    NewAddressIdentifier(
+      id?: PromiseOrValue<BigNumberish> | null,
+      addr?: null,
+      description?: null,
+    ): NewAddressIdentifierEventFilter;
 
     'AddressModified(uint256,address,uint256)'(
-      id?: BigNumberish | null,
+      id?: PromiseOrValue<BigNumberish> | null,
       new_address?: null,
       version?: null,
     ): AddressModifiedEventFilter;
-    AddressModified(id?: BigNumberish | null, new_address?: null, version?: null): AddressModifiedEventFilter;
+    AddressModified(
+      id?: PromiseOrValue<BigNumberish> | null,
+      new_address?: null,
+      version?: null,
+    ): AddressModifiedEventFilter;
 
-    'CommitNewAdmin(uint256,address)'(deadline?: BigNumberish | null, admin?: string | null): CommitNewAdminEventFilter;
-    CommitNewAdmin(deadline?: BigNumberish | null, admin?: string | null): CommitNewAdminEventFilter;
+    'CommitNewAdmin(uint256,address)'(
+      deadline?: PromiseOrValue<BigNumberish> | null,
+      admin?: PromiseOrValue<string> | null,
+    ): CommitNewAdminEventFilter;
+    CommitNewAdmin(
+      deadline?: PromiseOrValue<BigNumberish> | null,
+      admin?: PromiseOrValue<string> | null,
+    ): CommitNewAdminEventFilter;
 
-    'NewAdmin(address)'(admin?: string | null): NewAdminEventFilter;
-    NewAdmin(admin?: string | null): NewAdminEventFilter;
+    'NewAdmin(address)'(admin?: PromiseOrValue<string> | null): NewAdminEventFilter;
+    NewAdmin(admin?: PromiseOrValue<string> | null): NewAdminEventFilter;
   };
 
   estimateGas: {
@@ -319,30 +342,33 @@ export interface CurveAddressResolver extends BaseContract {
 
     max_id(overrides?: CallOverrides): Promise<BigNumber>;
 
-    get_address(_id: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    get_address(_id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     add_new_id(
-      _address: string,
-      _description: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _address: PromiseOrValue<string>,
+      _description: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     set_address(
-      _id: BigNumberish,
-      _address: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _id: PromiseOrValue<BigNumberish>,
+      _address: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    unset_address(_id: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    unset_address(
+      _id: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     commit_transfer_ownership(
-      _new_admin: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _new_admin: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    apply_transfer_ownership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    apply_transfer_ownership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    revert_transfer_ownership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    revert_transfer_ownership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     admin(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -350,7 +376,7 @@ export interface CurveAddressResolver extends BaseContract {
 
     future_admin(overrides?: CallOverrides): Promise<BigNumber>;
 
-    get_id_info(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    get_id_info(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -358,37 +384,33 @@ export interface CurveAddressResolver extends BaseContract {
 
     max_id(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    get_address(_id: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    get_address(_id: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     add_new_id(
-      _address: string,
-      _description: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _address: PromiseOrValue<string>,
+      _description: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     set_address(
-      _id: BigNumberish,
-      _address: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _id: PromiseOrValue<BigNumberish>,
+      _address: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     unset_address(
-      _id: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _id: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     commit_transfer_ownership(
-      _new_admin: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _new_admin: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    apply_transfer_ownership(
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<PopulatedTransaction>;
+    apply_transfer_ownership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    revert_transfer_ownership(
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<PopulatedTransaction>;
+    revert_transfer_ownership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     admin(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -396,6 +418,6 @@ export interface CurveAddressResolver extends BaseContract {
 
     future_admin(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    get_id_info(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    get_id_info(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }

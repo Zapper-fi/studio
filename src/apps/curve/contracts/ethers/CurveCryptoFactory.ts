@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface CurveCryptoFactoryInterface extends utils.Interface {
   functions: {
@@ -78,40 +78,46 @@ export interface CurveCryptoFactoryInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: 'deploy_pool',
     values: [
-      string,
-      string,
-      [string, string],
-      BigNumberish,
-      BigNumberish,
-      BigNumberish,
-      BigNumberish,
-      BigNumberish,
-      BigNumberish,
-      BigNumberish,
-      BigNumberish,
-      BigNumberish,
-      BigNumberish,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      [PromiseOrValue<string>, PromiseOrValue<string>],
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
     ],
   ): string;
-  encodeFunctionData(functionFragment: 'deploy_gauge', values: [string]): string;
-  encodeFunctionData(functionFragment: 'set_fee_receiver', values: [string]): string;
-  encodeFunctionData(functionFragment: 'set_pool_implementation', values: [string]): string;
-  encodeFunctionData(functionFragment: 'set_token_implementation', values: [string]): string;
-  encodeFunctionData(functionFragment: 'set_gauge_implementation', values: [string]): string;
-  encodeFunctionData(functionFragment: 'commit_transfer_ownership', values: [string]): string;
+  encodeFunctionData(functionFragment: 'deploy_gauge', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'set_fee_receiver', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'set_pool_implementation', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'set_token_implementation', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'set_gauge_implementation', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'commit_transfer_ownership', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'accept_transfer_ownership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'find_pool_for_coins(address,address)', values: [string, string]): string;
+  encodeFunctionData(
+    functionFragment: 'find_pool_for_coins(address,address)',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(
     functionFragment: 'find_pool_for_coins(address,address,uint256)',
-    values: [string, string, BigNumberish],
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
-  encodeFunctionData(functionFragment: 'get_coins', values: [string]): string;
-  encodeFunctionData(functionFragment: 'get_decimals', values: [string]): string;
-  encodeFunctionData(functionFragment: 'get_balances', values: [string]): string;
-  encodeFunctionData(functionFragment: 'get_coin_indices', values: [string, string, string]): string;
-  encodeFunctionData(functionFragment: 'get_gauge', values: [string]): string;
-  encodeFunctionData(functionFragment: 'get_eth_index', values: [string]): string;
-  encodeFunctionData(functionFragment: 'get_token', values: [string]): string;
+  encodeFunctionData(functionFragment: 'get_coins', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'get_decimals', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'get_balances', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'get_coin_indices',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'get_gauge', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'get_eth_index', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'get_token', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'admin', values?: undefined): string;
   encodeFunctionData(functionFragment: 'future_admin', values?: undefined): string;
   encodeFunctionData(functionFragment: 'fee_receiver', values?: undefined): string;
@@ -119,7 +125,7 @@ export interface CurveCryptoFactoryInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'token_implementation', values?: undefined): string;
   encodeFunctionData(functionFragment: 'gauge_implementation', values?: undefined): string;
   encodeFunctionData(functionFragment: 'pool_count', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'pool_list', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'pool_list', values: [PromiseOrValue<BigNumberish>]): string;
 
   decodeFunctionResult(functionFragment: 'deploy_pool', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'deploy_gauge', data: BytesLike): Result;
@@ -275,83 +281,85 @@ export interface CurveCryptoFactory extends BaseContract {
 
   functions: {
     deploy_pool(
-      _name: string,
-      _symbol: string,
-      _coins: [string, string],
-      A: BigNumberish,
-      gamma: BigNumberish,
-      mid_fee: BigNumberish,
-      out_fee: BigNumberish,
-      allowed_extra_profit: BigNumberish,
-      fee_gamma: BigNumberish,
-      adjustment_step: BigNumberish,
-      admin_fee: BigNumberish,
-      ma_half_time: BigNumberish,
-      initial_price: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _name: PromiseOrValue<string>,
+      _symbol: PromiseOrValue<string>,
+      _coins: [PromiseOrValue<string>, PromiseOrValue<string>],
+      A: PromiseOrValue<BigNumberish>,
+      gamma: PromiseOrValue<BigNumberish>,
+      mid_fee: PromiseOrValue<BigNumberish>,
+      out_fee: PromiseOrValue<BigNumberish>,
+      allowed_extra_profit: PromiseOrValue<BigNumberish>,
+      fee_gamma: PromiseOrValue<BigNumberish>,
+      adjustment_step: PromiseOrValue<BigNumberish>,
+      admin_fee: PromiseOrValue<BigNumberish>,
+      ma_half_time: PromiseOrValue<BigNumberish>,
+      initial_price: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     deploy_gauge(
-      _pool: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pool: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     set_fee_receiver(
-      _fee_receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _fee_receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     set_pool_implementation(
-      _pool_implementation: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pool_implementation: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     set_token_implementation(
-      _token_implementation: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token_implementation: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     set_gauge_implementation(
-      _gauge_implementation: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _gauge_implementation: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     commit_transfer_ownership(
-      _addr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _addr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    accept_transfer_ownership(
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
+    accept_transfer_ownership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    'find_pool_for_coins(address,address)'(_from: string, _to: string, overrides?: CallOverrides): Promise<[string]>;
-
-    'find_pool_for_coins(address,address,uint256)'(
-      _from: string,
-      _to: string,
-      i: BigNumberish,
+    'find_pool_for_coins(address,address)'(
+      _from: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[string]>;
 
-    get_coins(_pool: string, overrides?: CallOverrides): Promise<[[string, string]]>;
+    'find_pool_for_coins(address,address,uint256)'(
+      _from: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
+      i: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[string]>;
 
-    get_decimals(_pool: string, overrides?: CallOverrides): Promise<[[BigNumber, BigNumber]]>;
+    get_coins(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[[string, string]]>;
 
-    get_balances(_pool: string, overrides?: CallOverrides): Promise<[[BigNumber, BigNumber]]>;
+    get_decimals(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[[BigNumber, BigNumber]]>;
+
+    get_balances(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[[BigNumber, BigNumber]]>;
 
     get_coin_indices(
-      _pool: string,
-      _from: string,
-      _to: string,
+      _pool: PromiseOrValue<string>,
+      _from: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber]>;
 
-    get_gauge(_pool: string, overrides?: CallOverrides): Promise<[string]>;
+    get_gauge(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[string]>;
 
-    get_eth_index(_pool: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    get_eth_index(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    get_token(_pool: string, overrides?: CallOverrides): Promise<[string]>;
+    get_token(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[string]>;
 
     admin(overrides?: CallOverrides): Promise<[string]>;
 
@@ -367,85 +375,89 @@ export interface CurveCryptoFactory extends BaseContract {
 
     pool_count(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    pool_list(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    pool_list(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
   };
 
   deploy_pool(
-    _name: string,
-    _symbol: string,
-    _coins: [string, string],
-    A: BigNumberish,
-    gamma: BigNumberish,
-    mid_fee: BigNumberish,
-    out_fee: BigNumberish,
-    allowed_extra_profit: BigNumberish,
-    fee_gamma: BigNumberish,
-    adjustment_step: BigNumberish,
-    admin_fee: BigNumberish,
-    ma_half_time: BigNumberish,
-    initial_price: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _name: PromiseOrValue<string>,
+    _symbol: PromiseOrValue<string>,
+    _coins: [PromiseOrValue<string>, PromiseOrValue<string>],
+    A: PromiseOrValue<BigNumberish>,
+    gamma: PromiseOrValue<BigNumberish>,
+    mid_fee: PromiseOrValue<BigNumberish>,
+    out_fee: PromiseOrValue<BigNumberish>,
+    allowed_extra_profit: PromiseOrValue<BigNumberish>,
+    fee_gamma: PromiseOrValue<BigNumberish>,
+    adjustment_step: PromiseOrValue<BigNumberish>,
+    admin_fee: PromiseOrValue<BigNumberish>,
+    ma_half_time: PromiseOrValue<BigNumberish>,
+    initial_price: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   deploy_gauge(
-    _pool: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pool: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   set_fee_receiver(
-    _fee_receiver: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _fee_receiver: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   set_pool_implementation(
-    _pool_implementation: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pool_implementation: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   set_token_implementation(
-    _token_implementation: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _token_implementation: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   set_gauge_implementation(
-    _gauge_implementation: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _gauge_implementation: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   commit_transfer_ownership(
-    _addr: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _addr: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  accept_transfer_ownership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  accept_transfer_ownership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  'find_pool_for_coins(address,address)'(_from: string, _to: string, overrides?: CallOverrides): Promise<string>;
-
-  'find_pool_for_coins(address,address,uint256)'(
-    _from: string,
-    _to: string,
-    i: BigNumberish,
+  'find_pool_for_coins(address,address)'(
+    _from: PromiseOrValue<string>,
+    _to: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<string>;
 
-  get_coins(_pool: string, overrides?: CallOverrides): Promise<[string, string]>;
+  'find_pool_for_coins(address,address,uint256)'(
+    _from: PromiseOrValue<string>,
+    _to: PromiseOrValue<string>,
+    i: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<string>;
 
-  get_decimals(_pool: string, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+  get_coins(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[string, string]>;
 
-  get_balances(_pool: string, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+  get_decimals(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+
+  get_balances(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
 
   get_coin_indices(
-    _pool: string,
-    _from: string,
-    _to: string,
+    _pool: PromiseOrValue<string>,
+    _from: PromiseOrValue<string>,
+    _to: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber, BigNumber]>;
 
-  get_gauge(_pool: string, overrides?: CallOverrides): Promise<string>;
+  get_gauge(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
-  get_eth_index(_pool: string, overrides?: CallOverrides): Promise<BigNumber>;
+  get_eth_index(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  get_token(_pool: string, overrides?: CallOverrides): Promise<string>;
+  get_token(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
   admin(overrides?: CallOverrides): Promise<string>;
 
@@ -461,67 +473,71 @@ export interface CurveCryptoFactory extends BaseContract {
 
   pool_count(overrides?: CallOverrides): Promise<BigNumber>;
 
-  pool_list(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  pool_list(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   callStatic: {
     deploy_pool(
-      _name: string,
-      _symbol: string,
-      _coins: [string, string],
-      A: BigNumberish,
-      gamma: BigNumberish,
-      mid_fee: BigNumberish,
-      out_fee: BigNumberish,
-      allowed_extra_profit: BigNumberish,
-      fee_gamma: BigNumberish,
-      adjustment_step: BigNumberish,
-      admin_fee: BigNumberish,
-      ma_half_time: BigNumberish,
-      initial_price: BigNumberish,
+      _name: PromiseOrValue<string>,
+      _symbol: PromiseOrValue<string>,
+      _coins: [PromiseOrValue<string>, PromiseOrValue<string>],
+      A: PromiseOrValue<BigNumberish>,
+      gamma: PromiseOrValue<BigNumberish>,
+      mid_fee: PromiseOrValue<BigNumberish>,
+      out_fee: PromiseOrValue<BigNumberish>,
+      allowed_extra_profit: PromiseOrValue<BigNumberish>,
+      fee_gamma: PromiseOrValue<BigNumberish>,
+      adjustment_step: PromiseOrValue<BigNumberish>,
+      admin_fee: PromiseOrValue<BigNumberish>,
+      ma_half_time: PromiseOrValue<BigNumberish>,
+      initial_price: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<string>;
 
-    deploy_gauge(_pool: string, overrides?: CallOverrides): Promise<string>;
+    deploy_gauge(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
-    set_fee_receiver(_fee_receiver: string, overrides?: CallOverrides): Promise<void>;
+    set_fee_receiver(_fee_receiver: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    set_pool_implementation(_pool_implementation: string, overrides?: CallOverrides): Promise<void>;
+    set_pool_implementation(_pool_implementation: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    set_token_implementation(_token_implementation: string, overrides?: CallOverrides): Promise<void>;
+    set_token_implementation(_token_implementation: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    set_gauge_implementation(_gauge_implementation: string, overrides?: CallOverrides): Promise<void>;
+    set_gauge_implementation(_gauge_implementation: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    commit_transfer_ownership(_addr: string, overrides?: CallOverrides): Promise<void>;
+    commit_transfer_ownership(_addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     accept_transfer_ownership(overrides?: CallOverrides): Promise<void>;
 
-    'find_pool_for_coins(address,address)'(_from: string, _to: string, overrides?: CallOverrides): Promise<string>;
-
-    'find_pool_for_coins(address,address,uint256)'(
-      _from: string,
-      _to: string,
-      i: BigNumberish,
+    'find_pool_for_coins(address,address)'(
+      _from: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<string>;
 
-    get_coins(_pool: string, overrides?: CallOverrides): Promise<[string, string]>;
+    'find_pool_for_coins(address,address,uint256)'(
+      _from: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
+      i: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<string>;
 
-    get_decimals(_pool: string, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+    get_coins(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[string, string]>;
 
-    get_balances(_pool: string, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+    get_decimals(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+
+    get_balances(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
 
     get_coin_indices(
-      _pool: string,
-      _from: string,
-      _to: string,
+      _pool: PromiseOrValue<string>,
+      _from: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber]>;
 
-    get_gauge(_pool: string, overrides?: CallOverrides): Promise<string>;
+    get_gauge(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
-    get_eth_index(_pool: string, overrides?: CallOverrides): Promise<BigNumber>;
+    get_eth_index(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    get_token(_pool: string, overrides?: CallOverrides): Promise<string>;
+    get_token(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
     admin(overrides?: CallOverrides): Promise<string>;
 
@@ -537,7 +553,7 @@ export interface CurveCryptoFactory extends BaseContract {
 
     pool_count(overrides?: CallOverrides): Promise<BigNumber>;
 
-    pool_list(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    pool_list(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
   };
 
   filters: {
@@ -618,73 +634,85 @@ export interface CurveCryptoFactory extends BaseContract {
 
   estimateGas: {
     deploy_pool(
-      _name: string,
-      _symbol: string,
-      _coins: [string, string],
-      A: BigNumberish,
-      gamma: BigNumberish,
-      mid_fee: BigNumberish,
-      out_fee: BigNumberish,
-      allowed_extra_profit: BigNumberish,
-      fee_gamma: BigNumberish,
-      adjustment_step: BigNumberish,
-      admin_fee: BigNumberish,
-      ma_half_time: BigNumberish,
-      initial_price: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _name: PromiseOrValue<string>,
+      _symbol: PromiseOrValue<string>,
+      _coins: [PromiseOrValue<string>, PromiseOrValue<string>],
+      A: PromiseOrValue<BigNumberish>,
+      gamma: PromiseOrValue<BigNumberish>,
+      mid_fee: PromiseOrValue<BigNumberish>,
+      out_fee: PromiseOrValue<BigNumberish>,
+      allowed_extra_profit: PromiseOrValue<BigNumberish>,
+      fee_gamma: PromiseOrValue<BigNumberish>,
+      adjustment_step: PromiseOrValue<BigNumberish>,
+      admin_fee: PromiseOrValue<BigNumberish>,
+      ma_half_time: PromiseOrValue<BigNumberish>,
+      initial_price: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    deploy_gauge(_pool: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    deploy_gauge(
+      _pool: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     set_fee_receiver(
-      _fee_receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _fee_receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     set_pool_implementation(
-      _pool_implementation: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pool_implementation: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     set_token_implementation(
-      _token_implementation: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token_implementation: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     set_gauge_implementation(
-      _gauge_implementation: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _gauge_implementation: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     commit_transfer_ownership(
-      _addr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _addr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    accept_transfer_ownership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    accept_transfer_ownership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    'find_pool_for_coins(address,address)'(_from: string, _to: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-    'find_pool_for_coins(address,address,uint256)'(
-      _from: string,
-      _to: string,
-      i: BigNumberish,
+    'find_pool_for_coins(address,address)'(
+      _from: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    get_coins(_pool: string, overrides?: CallOverrides): Promise<BigNumber>;
+    'find_pool_for_coins(address,address,uint256)'(
+      _from: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
+      i: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    get_decimals(_pool: string, overrides?: CallOverrides): Promise<BigNumber>;
+    get_coins(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    get_balances(_pool: string, overrides?: CallOverrides): Promise<BigNumber>;
+    get_decimals(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    get_coin_indices(_pool: string, _from: string, _to: string, overrides?: CallOverrides): Promise<BigNumber>;
+    get_balances(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    get_gauge(_pool: string, overrides?: CallOverrides): Promise<BigNumber>;
+    get_coin_indices(
+      _pool: PromiseOrValue<string>,
+      _from: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    get_eth_index(_pool: string, overrides?: CallOverrides): Promise<BigNumber>;
+    get_gauge(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    get_token(_pool: string, overrides?: CallOverrides): Promise<BigNumber>;
+    get_eth_index(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    get_token(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     admin(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -700,92 +728,90 @@ export interface CurveCryptoFactory extends BaseContract {
 
     pool_count(overrides?: CallOverrides): Promise<BigNumber>;
 
-    pool_list(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    pool_list(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
     deploy_pool(
-      _name: string,
-      _symbol: string,
-      _coins: [string, string],
-      A: BigNumberish,
-      gamma: BigNumberish,
-      mid_fee: BigNumberish,
-      out_fee: BigNumberish,
-      allowed_extra_profit: BigNumberish,
-      fee_gamma: BigNumberish,
-      adjustment_step: BigNumberish,
-      admin_fee: BigNumberish,
-      ma_half_time: BigNumberish,
-      initial_price: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _name: PromiseOrValue<string>,
+      _symbol: PromiseOrValue<string>,
+      _coins: [PromiseOrValue<string>, PromiseOrValue<string>],
+      A: PromiseOrValue<BigNumberish>,
+      gamma: PromiseOrValue<BigNumberish>,
+      mid_fee: PromiseOrValue<BigNumberish>,
+      out_fee: PromiseOrValue<BigNumberish>,
+      allowed_extra_profit: PromiseOrValue<BigNumberish>,
+      fee_gamma: PromiseOrValue<BigNumberish>,
+      adjustment_step: PromiseOrValue<BigNumberish>,
+      admin_fee: PromiseOrValue<BigNumberish>,
+      ma_half_time: PromiseOrValue<BigNumberish>,
+      initial_price: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     deploy_gauge(
-      _pool: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pool: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     set_fee_receiver(
-      _fee_receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _fee_receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     set_pool_implementation(
-      _pool_implementation: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pool_implementation: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     set_token_implementation(
-      _token_implementation: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token_implementation: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     set_gauge_implementation(
-      _gauge_implementation: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _gauge_implementation: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     commit_transfer_ownership(
-      _addr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _addr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    accept_transfer_ownership(
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<PopulatedTransaction>;
+    accept_transfer_ownership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     'find_pool_for_coins(address,address)'(
-      _from: string,
-      _to: string,
+      _from: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     'find_pool_for_coins(address,address,uint256)'(
-      _from: string,
-      _to: string,
-      i: BigNumberish,
+      _from: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
+      i: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    get_coins(_pool: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    get_coins(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    get_decimals(_pool: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    get_decimals(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    get_balances(_pool: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    get_balances(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     get_coin_indices(
-      _pool: string,
-      _from: string,
-      _to: string,
+      _pool: PromiseOrValue<string>,
+      _from: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    get_gauge(_pool: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    get_gauge(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    get_eth_index(_pool: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    get_eth_index(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    get_token(_pool: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    get_token(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     admin(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -801,6 +827,6 @@ export interface CurveCryptoFactory extends BaseContract {
 
     pool_count(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    pool_list(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    pool_list(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }

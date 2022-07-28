@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface BalancerGaugeInterface extends utils.Interface {
   functions: {
@@ -131,65 +131,112 @@ export interface BalancerGaugeInterface extends utils.Interface {
       | 'integrate_inv_supply',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'deposit(uint256)', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'deposit(uint256,address)', values: [BigNumberish, string]): string;
+  encodeFunctionData(functionFragment: 'deposit(uint256)', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'deposit(uint256,address)',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(
     functionFragment: 'deposit(uint256,address,bool)',
-    values: [BigNumberish, string, boolean],
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>, PromiseOrValue<boolean>],
   ): string;
-  encodeFunctionData(functionFragment: 'withdraw(uint256)', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'withdraw(uint256,bool)', values: [BigNumberish, boolean]): string;
+  encodeFunctionData(functionFragment: 'withdraw(uint256)', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'withdraw(uint256,bool)',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<boolean>],
+  ): string;
   encodeFunctionData(functionFragment: 'claim_rewards()', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'claim_rewards(address)', values: [string]): string;
-  encodeFunctionData(functionFragment: 'claim_rewards(address,address)', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'transferFrom', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transfer', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'approve', values: [string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'claim_rewards(address)', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'claim_rewards(address,address)',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'transferFrom',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'transfer',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'approve',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(
     functionFragment: 'permit',
-    values: [string, string, BigNumberish, BigNumberish, BigNumberish, BytesLike, BytesLike],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'increaseAllowance', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'decreaseAllowance', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'user_checkpoint', values: [string]): string;
-  encodeFunctionData(functionFragment: 'set_rewards_receiver', values: [string]): string;
-  encodeFunctionData(functionFragment: 'kick', values: [string]): string;
-  encodeFunctionData(functionFragment: 'deposit_reward_token', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'add_reward', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'set_reward_distributor', values: [string, string]): string;
+  encodeFunctionData(
+    functionFragment: 'increaseAllowance',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'decreaseAllowance',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'user_checkpoint', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'set_rewards_receiver', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'kick', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'deposit_reward_token',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'add_reward', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'set_reward_distributor',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'killGauge', values?: undefined): string;
   encodeFunctionData(functionFragment: 'unkillGauge', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'claimed_reward', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'claimable_reward', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'claimable_tokens', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'claimed_reward',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'claimable_reward',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'claimable_tokens', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'integrate_checkpoint', values?: undefined): string;
   encodeFunctionData(functionFragment: 'future_epoch_time', values?: undefined): string;
   encodeFunctionData(functionFragment: 'inflation_rate', values?: undefined): string;
   encodeFunctionData(functionFragment: 'decimals', values?: undefined): string;
   encodeFunctionData(functionFragment: 'version', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'allowance', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'initialize', values: [string]): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
+  encodeFunctionData(functionFragment: 'allowance', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'initialize', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
   encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
   encodeFunctionData(functionFragment: 'DOMAIN_SEPARATOR', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'nonces', values: [string]): string;
+  encodeFunctionData(functionFragment: 'nonces', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'lp_token', values?: undefined): string;
   encodeFunctionData(functionFragment: 'is_killed', values?: undefined): string;
   encodeFunctionData(functionFragment: 'reward_count', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'reward_data', values: [string]): string;
-  encodeFunctionData(functionFragment: 'rewards_receiver', values: [string]): string;
-  encodeFunctionData(functionFragment: 'reward_integral_for', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'working_balances', values: [string]): string;
+  encodeFunctionData(functionFragment: 'reward_data', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'rewards_receiver', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'reward_integral_for',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'working_balances', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'working_supply', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'integrate_inv_supply_of', values: [string]): string;
-  encodeFunctionData(functionFragment: 'integrate_checkpoint_of', values: [string]): string;
-  encodeFunctionData(functionFragment: 'integrate_fraction', values: [string]): string;
+  encodeFunctionData(functionFragment: 'integrate_inv_supply_of', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'integrate_checkpoint_of', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'integrate_fraction', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'period', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'reward_tokens', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'period_timestamp', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'integrate_inv_supply', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'reward_tokens', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'period_timestamp', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'integrate_inv_supply', values: [PromiseOrValue<BigNumberish>]): string;
 
   decodeFunctionResult(functionFragment: 'deposit(uint256)', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'deposit(uint256,address)', data: BytesLike): Result;
@@ -342,130 +389,141 @@ export interface BalancerGauge extends BaseContract {
 
   functions: {
     'deposit(uint256)'(
-      _value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     'deposit(uint256,address)'(
-      _value: BigNumberish,
-      _addr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _value: PromiseOrValue<BigNumberish>,
+      _addr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     'deposit(uint256,address,bool)'(
-      _value: BigNumberish,
-      _addr: string,
-      _claim_rewards: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _value: PromiseOrValue<BigNumberish>,
+      _addr: PromiseOrValue<string>,
+      _claim_rewards: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     'withdraw(uint256)'(
-      _value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     'withdraw(uint256,bool)'(
-      _value: BigNumberish,
-      _claim_rewards: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _value: PromiseOrValue<BigNumberish>,
+      _claim_rewards: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    'claim_rewards()'(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    'claim_rewards()'(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     'claim_rewards(address)'(
-      _addr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _addr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     'claim_rewards(address,address)'(
-      _addr: string,
-      _receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _addr: PromiseOrValue<string>,
+      _receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferFrom(
-      _from: string,
-      _to: string,
-      _value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _from: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
+      _value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transfer(
-      _to: string,
-      _value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _to: PromiseOrValue<string>,
+      _value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     approve(
-      _spender: string,
-      _value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _spender: PromiseOrValue<string>,
+      _value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     permit(
-      _owner: string,
-      _spender: string,
-      _value: BigNumberish,
-      _deadline: BigNumberish,
-      _v: BigNumberish,
-      _r: BytesLike,
-      _s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _owner: PromiseOrValue<string>,
+      _spender: PromiseOrValue<string>,
+      _value: PromiseOrValue<BigNumberish>,
+      _deadline: PromiseOrValue<BigNumberish>,
+      _v: PromiseOrValue<BigNumberish>,
+      _r: PromiseOrValue<BytesLike>,
+      _s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     increaseAllowance(
-      _spender: string,
-      _added_value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _spender: PromiseOrValue<string>,
+      _added_value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     decreaseAllowance(
-      _spender: string,
-      _subtracted_value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _spender: PromiseOrValue<string>,
+      _subtracted_value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     user_checkpoint(
-      addr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      addr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     set_rewards_receiver(
-      _receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    kick(addr: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    kick(
+      addr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     deposit_reward_token(
-      _reward_token: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _reward_token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     add_reward(
-      _reward_token: string,
-      _distributor: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _reward_token: PromiseOrValue<string>,
+      _distributor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     set_reward_distributor(
-      _reward_token: string,
-      _distributor: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _reward_token: PromiseOrValue<string>,
+      _distributor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    killGauge(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    killGauge(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    unkillGauge(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    unkillGauge(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    claimed_reward(_addr: string, _token: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    claimed_reward(
+      _addr: PromiseOrValue<string>,
+      _token: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
-    claimable_reward(_user: string, _reward_token: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    claimable_reward(
+      _user: PromiseOrValue<string>,
+      _reward_token: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     claimable_tokens(
-      addr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      addr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     integrate_checkpoint(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -478,14 +536,18 @@ export interface BalancerGauge extends BaseContract {
 
     version(overrides?: CallOverrides): Promise<[string]>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     initialize(
-      _lp_token: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _lp_token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    balanceOf(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -495,7 +557,7 @@ export interface BalancerGauge extends BaseContract {
 
     DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<[string]>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     lp_token(overrides?: CallOverrides): Promise<[string]>;
 
@@ -504,7 +566,7 @@ export interface BalancerGauge extends BaseContract {
     reward_count(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     reward_data(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [
@@ -519,154 +581,169 @@ export interface BalancerGauge extends BaseContract {
       ]
     >;
 
-    rewards_receiver(arg0: string, overrides?: CallOverrides): Promise<[string]>;
+    rewards_receiver(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[string]>;
 
-    reward_integral_for(arg0: string, arg1: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    reward_integral_for(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
-    working_balances(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    working_balances(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     working_supply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    integrate_inv_supply_of(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    integrate_inv_supply_of(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    integrate_checkpoint_of(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    integrate_checkpoint_of(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    integrate_fraction(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    integrate_fraction(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     period(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    reward_tokens(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    reward_tokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
-    period_timestamp(arg0: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    period_timestamp(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    integrate_inv_supply(arg0: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    integrate_inv_supply(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
   };
 
   'deposit(uint256)'(
-    _value: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _value: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   'deposit(uint256,address)'(
-    _value: BigNumberish,
-    _addr: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _value: PromiseOrValue<BigNumberish>,
+    _addr: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   'deposit(uint256,address,bool)'(
-    _value: BigNumberish,
-    _addr: string,
-    _claim_rewards: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _value: PromiseOrValue<BigNumberish>,
+    _addr: PromiseOrValue<string>,
+    _claim_rewards: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   'withdraw(uint256)'(
-    _value: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _value: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   'withdraw(uint256,bool)'(
-    _value: BigNumberish,
-    _claim_rewards: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _value: PromiseOrValue<BigNumberish>,
+    _claim_rewards: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  'claim_rewards()'(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  'claim_rewards()'(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   'claim_rewards(address)'(
-    _addr: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _addr: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   'claim_rewards(address,address)'(
-    _addr: string,
-    _receiver: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _addr: PromiseOrValue<string>,
+    _receiver: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferFrom(
-    _from: string,
-    _to: string,
-    _value: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _from: PromiseOrValue<string>,
+    _to: PromiseOrValue<string>,
+    _value: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transfer(
-    _to: string,
-    _value: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _to: PromiseOrValue<string>,
+    _value: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   approve(
-    _spender: string,
-    _value: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _spender: PromiseOrValue<string>,
+    _value: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   permit(
-    _owner: string,
-    _spender: string,
-    _value: BigNumberish,
-    _deadline: BigNumberish,
-    _v: BigNumberish,
-    _r: BytesLike,
-    _s: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _owner: PromiseOrValue<string>,
+    _spender: PromiseOrValue<string>,
+    _value: PromiseOrValue<BigNumberish>,
+    _deadline: PromiseOrValue<BigNumberish>,
+    _v: PromiseOrValue<BigNumberish>,
+    _r: PromiseOrValue<BytesLike>,
+    _s: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   increaseAllowance(
-    _spender: string,
-    _added_value: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _spender: PromiseOrValue<string>,
+    _added_value: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   decreaseAllowance(
-    _spender: string,
-    _subtracted_value: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _spender: PromiseOrValue<string>,
+    _subtracted_value: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   user_checkpoint(
-    addr: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    addr: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   set_rewards_receiver(
-    _receiver: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _receiver: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  kick(addr: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  kick(
+    addr: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   deposit_reward_token(
-    _reward_token: string,
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _reward_token: PromiseOrValue<string>,
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   add_reward(
-    _reward_token: string,
-    _distributor: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _reward_token: PromiseOrValue<string>,
+    _distributor: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   set_reward_distributor(
-    _reward_token: string,
-    _distributor: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _reward_token: PromiseOrValue<string>,
+    _distributor: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  killGauge(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  killGauge(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  unkillGauge(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  unkillGauge(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  claimed_reward(_addr: string, _token: string, overrides?: CallOverrides): Promise<BigNumber>;
+  claimed_reward(
+    _addr: PromiseOrValue<string>,
+    _token: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
-  claimable_reward(_user: string, _reward_token: string, overrides?: CallOverrides): Promise<BigNumber>;
+  claimable_reward(
+    _user: PromiseOrValue<string>,
+    _reward_token: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   claimable_tokens(
-    addr: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    addr: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   integrate_checkpoint(overrides?: CallOverrides): Promise<BigNumber>;
@@ -679,14 +756,18 @@ export interface BalancerGauge extends BaseContract {
 
   version(overrides?: CallOverrides): Promise<string>;
 
-  allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+  allowance(
+    owner: PromiseOrValue<string>,
+    spender: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   initialize(
-    _lp_token: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _lp_token: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  balanceOf(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -696,7 +777,7 @@ export interface BalancerGauge extends BaseContract {
 
   DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<string>;
 
-  nonces(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   lp_token(overrides?: CallOverrides): Promise<string>;
 
@@ -705,7 +786,7 @@ export interface BalancerGauge extends BaseContract {
   reward_count(overrides?: CallOverrides): Promise<BigNumber>;
 
   reward_data(
-    arg0: string,
+    arg0: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<
     [string, string, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -718,92 +799,149 @@ export interface BalancerGauge extends BaseContract {
     }
   >;
 
-  rewards_receiver(arg0: string, overrides?: CallOverrides): Promise<string>;
+  rewards_receiver(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
-  reward_integral_for(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+  reward_integral_for(
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
-  working_balances(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  working_balances(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   working_supply(overrides?: CallOverrides): Promise<BigNumber>;
 
-  integrate_inv_supply_of(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  integrate_inv_supply_of(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  integrate_checkpoint_of(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  integrate_checkpoint_of(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  integrate_fraction(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  integrate_fraction(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   period(overrides?: CallOverrides): Promise<BigNumber>;
 
-  reward_tokens(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  reward_tokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
-  period_timestamp(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  period_timestamp(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  integrate_inv_supply(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  integrate_inv_supply(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   callStatic: {
-    'deposit(uint256)'(_value: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    'deposit(uint256)'(_value: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    'deposit(uint256,address)'(_value: BigNumberish, _addr: string, overrides?: CallOverrides): Promise<void>;
-
-    'deposit(uint256,address,bool)'(
-      _value: BigNumberish,
-      _addr: string,
-      _claim_rewards: boolean,
+    'deposit(uint256,address)'(
+      _value: PromiseOrValue<BigNumberish>,
+      _addr: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    'withdraw(uint256)'(_value: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    'deposit(uint256,address,bool)'(
+      _value: PromiseOrValue<BigNumberish>,
+      _addr: PromiseOrValue<string>,
+      _claim_rewards: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    'withdraw(uint256,bool)'(_value: BigNumberish, _claim_rewards: boolean, overrides?: CallOverrides): Promise<void>;
+    'withdraw(uint256)'(_value: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
+
+    'withdraw(uint256,bool)'(
+      _value: PromiseOrValue<BigNumberish>,
+      _claim_rewards: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     'claim_rewards()'(overrides?: CallOverrides): Promise<void>;
 
-    'claim_rewards(address)'(_addr: string, overrides?: CallOverrides): Promise<void>;
+    'claim_rewards(address)'(_addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    'claim_rewards(address,address)'(_addr: string, _receiver: string, overrides?: CallOverrides): Promise<void>;
+    'claim_rewards(address,address)'(
+      _addr: PromiseOrValue<string>,
+      _receiver: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    transferFrom(_from: string, _to: string, _value: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
-
-    transfer(_to: string, _value: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
-
-    approve(_spender: string, _value: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
-
-    permit(
-      _owner: string,
-      _spender: string,
-      _value: BigNumberish,
-      _deadline: BigNumberish,
-      _v: BigNumberish,
-      _r: BytesLike,
-      _s: BytesLike,
+    transferFrom(
+      _from: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
+      _value: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<boolean>;
 
-    increaseAllowance(_spender: string, _added_value: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transfer(
+      _to: PromiseOrValue<string>,
+      _value: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    decreaseAllowance(_spender: string, _subtracted_value: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    approve(
+      _spender: PromiseOrValue<string>,
+      _value: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    user_checkpoint(addr: string, overrides?: CallOverrides): Promise<boolean>;
+    permit(
+      _owner: PromiseOrValue<string>,
+      _spender: PromiseOrValue<string>,
+      _value: PromiseOrValue<BigNumberish>,
+      _deadline: PromiseOrValue<BigNumberish>,
+      _v: PromiseOrValue<BigNumberish>,
+      _r: PromiseOrValue<BytesLike>,
+      _s: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    set_rewards_receiver(_receiver: string, overrides?: CallOverrides): Promise<void>;
+    increaseAllowance(
+      _spender: PromiseOrValue<string>,
+      _added_value: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    kick(addr: string, overrides?: CallOverrides): Promise<void>;
+    decreaseAllowance(
+      _spender: PromiseOrValue<string>,
+      _subtracted_value: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    deposit_reward_token(_reward_token: string, _amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    user_checkpoint(addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-    add_reward(_reward_token: string, _distributor: string, overrides?: CallOverrides): Promise<void>;
+    set_rewards_receiver(_receiver: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    set_reward_distributor(_reward_token: string, _distributor: string, overrides?: CallOverrides): Promise<void>;
+    kick(addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
+
+    deposit_reward_token(
+      _reward_token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    add_reward(
+      _reward_token: PromiseOrValue<string>,
+      _distributor: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    set_reward_distributor(
+      _reward_token: PromiseOrValue<string>,
+      _distributor: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     killGauge(overrides?: CallOverrides): Promise<void>;
 
     unkillGauge(overrides?: CallOverrides): Promise<void>;
 
-    claimed_reward(_addr: string, _token: string, overrides?: CallOverrides): Promise<BigNumber>;
+    claimed_reward(
+      _addr: PromiseOrValue<string>,
+      _token: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    claimable_reward(_user: string, _reward_token: string, overrides?: CallOverrides): Promise<BigNumber>;
+    claimable_reward(
+      _user: PromiseOrValue<string>,
+      _reward_token: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    claimable_tokens(addr: string, overrides?: CallOverrides): Promise<BigNumber>;
+    claimable_tokens(addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     integrate_checkpoint(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -815,11 +953,15 @@ export interface BalancerGauge extends BaseContract {
 
     version(overrides?: CallOverrides): Promise<string>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    initialize(_lp_token: string, overrides?: CallOverrides): Promise<void>;
+    initialize(_lp_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    balanceOf(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -829,7 +971,7 @@ export interface BalancerGauge extends BaseContract {
 
     DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<string>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     lp_token(overrides?: CallOverrides): Promise<string>;
 
@@ -838,7 +980,7 @@ export interface BalancerGauge extends BaseContract {
     reward_count(overrides?: CallOverrides): Promise<BigNumber>;
 
     reward_data(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [string, string, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -851,189 +993,222 @@ export interface BalancerGauge extends BaseContract {
       }
     >;
 
-    rewards_receiver(arg0: string, overrides?: CallOverrides): Promise<string>;
+    rewards_receiver(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
-    reward_integral_for(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    reward_integral_for(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    working_balances(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    working_balances(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     working_supply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    integrate_inv_supply_of(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    integrate_inv_supply_of(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    integrate_checkpoint_of(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    integrate_checkpoint_of(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    integrate_fraction(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    integrate_fraction(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     period(overrides?: CallOverrides): Promise<BigNumber>;
 
-    reward_tokens(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    reward_tokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
-    period_timestamp(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    period_timestamp(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    integrate_inv_supply(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    integrate_inv_supply(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   filters: {
-    'Deposit(address,uint256)'(provider?: string | null, value?: null): DepositEventFilter;
-    Deposit(provider?: string | null, value?: null): DepositEventFilter;
+    'Deposit(address,uint256)'(provider?: PromiseOrValue<string> | null, value?: null): DepositEventFilter;
+    Deposit(provider?: PromiseOrValue<string> | null, value?: null): DepositEventFilter;
 
-    'Withdraw(address,uint256)'(provider?: string | null, value?: null): WithdrawEventFilter;
-    Withdraw(provider?: string | null, value?: null): WithdrawEventFilter;
+    'Withdraw(address,uint256)'(provider?: PromiseOrValue<string> | null, value?: null): WithdrawEventFilter;
+    Withdraw(provider?: PromiseOrValue<string> | null, value?: null): WithdrawEventFilter;
 
     'UpdateLiquidityLimit(address,uint256,uint256,uint256,uint256)'(
-      user?: string | null,
+      user?: PromiseOrValue<string> | null,
       original_balance?: null,
       original_supply?: null,
       working_balance?: null,
       working_supply?: null,
     ): UpdateLiquidityLimitEventFilter;
     UpdateLiquidityLimit(
-      user?: string | null,
+      user?: PromiseOrValue<string> | null,
       original_balance?: null,
       original_supply?: null,
       working_balance?: null,
       working_supply?: null,
     ): UpdateLiquidityLimitEventFilter;
 
-    'Transfer(address,address,uint256)'(_from?: string | null, _to?: string | null, _value?: null): TransferEventFilter;
-    Transfer(_from?: string | null, _to?: string | null, _value?: null): TransferEventFilter;
+    'Transfer(address,address,uint256)'(
+      _from?: PromiseOrValue<string> | null,
+      _to?: PromiseOrValue<string> | null,
+      _value?: null,
+    ): TransferEventFilter;
+    Transfer(
+      _from?: PromiseOrValue<string> | null,
+      _to?: PromiseOrValue<string> | null,
+      _value?: null,
+    ): TransferEventFilter;
 
     'Approval(address,address,uint256)'(
-      _owner?: string | null,
-      _spender?: string | null,
+      _owner?: PromiseOrValue<string> | null,
+      _spender?: PromiseOrValue<string> | null,
       _value?: null,
     ): ApprovalEventFilter;
-    Approval(_owner?: string | null, _spender?: string | null, _value?: null): ApprovalEventFilter;
+    Approval(
+      _owner?: PromiseOrValue<string> | null,
+      _spender?: PromiseOrValue<string> | null,
+      _value?: null,
+    ): ApprovalEventFilter;
 
     'RewardDistributorUpdated(address,address)'(
-      reward_token?: string | null,
+      reward_token?: PromiseOrValue<string> | null,
       distributor?: null,
     ): RewardDistributorUpdatedEventFilter;
-    RewardDistributorUpdated(reward_token?: string | null, distributor?: null): RewardDistributorUpdatedEventFilter;
+    RewardDistributorUpdated(
+      reward_token?: PromiseOrValue<string> | null,
+      distributor?: null,
+    ): RewardDistributorUpdatedEventFilter;
   };
 
   estimateGas: {
     'deposit(uint256)'(
-      _value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     'deposit(uint256,address)'(
-      _value: BigNumberish,
-      _addr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _value: PromiseOrValue<BigNumberish>,
+      _addr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     'deposit(uint256,address,bool)'(
-      _value: BigNumberish,
-      _addr: string,
-      _claim_rewards: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _value: PromiseOrValue<BigNumberish>,
+      _addr: PromiseOrValue<string>,
+      _claim_rewards: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     'withdraw(uint256)'(
-      _value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     'withdraw(uint256,bool)'(
-      _value: BigNumberish,
-      _claim_rewards: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _value: PromiseOrValue<BigNumberish>,
+      _claim_rewards: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    'claim_rewards()'(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    'claim_rewards()'(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     'claim_rewards(address)'(
-      _addr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _addr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     'claim_rewards(address,address)'(
-      _addr: string,
-      _receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _addr: PromiseOrValue<string>,
+      _receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferFrom(
-      _from: string,
-      _to: string,
-      _value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _from: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
+      _value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transfer(
-      _to: string,
-      _value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _to: PromiseOrValue<string>,
+      _value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     approve(
-      _spender: string,
-      _value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _spender: PromiseOrValue<string>,
+      _value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     permit(
-      _owner: string,
-      _spender: string,
-      _value: BigNumberish,
-      _deadline: BigNumberish,
-      _v: BigNumberish,
-      _r: BytesLike,
-      _s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _owner: PromiseOrValue<string>,
+      _spender: PromiseOrValue<string>,
+      _value: PromiseOrValue<BigNumberish>,
+      _deadline: PromiseOrValue<BigNumberish>,
+      _v: PromiseOrValue<BigNumberish>,
+      _r: PromiseOrValue<BytesLike>,
+      _s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     increaseAllowance(
-      _spender: string,
-      _added_value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _spender: PromiseOrValue<string>,
+      _added_value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     decreaseAllowance(
-      _spender: string,
-      _subtracted_value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _spender: PromiseOrValue<string>,
+      _subtracted_value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    user_checkpoint(addr: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    user_checkpoint(
+      addr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     set_rewards_receiver(
-      _receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    kick(addr: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    kick(addr: PromiseOrValue<string>, overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     deposit_reward_token(
-      _reward_token: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _reward_token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     add_reward(
-      _reward_token: string,
-      _distributor: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _reward_token: PromiseOrValue<string>,
+      _distributor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     set_reward_distributor(
-      _reward_token: string,
-      _distributor: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _reward_token: PromiseOrValue<string>,
+      _distributor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    killGauge(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    killGauge(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    unkillGauge(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    unkillGauge(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    claimed_reward(_addr: string, _token: string, overrides?: CallOverrides): Promise<BigNumber>;
+    claimed_reward(
+      _addr: PromiseOrValue<string>,
+      _token: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    claimable_reward(_user: string, _reward_token: string, overrides?: CallOverrides): Promise<BigNumber>;
+    claimable_reward(
+      _user: PromiseOrValue<string>,
+      _reward_token: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    claimable_tokens(addr: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    claimable_tokens(
+      addr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     integrate_checkpoint(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1045,11 +1220,18 @@ export interface BalancerGauge extends BaseContract {
 
     version(overrides?: CallOverrides): Promise<BigNumber>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    initialize(_lp_token: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    initialize(
+      _lp_token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    balanceOf(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1059,7 +1241,7 @@ export interface BalancerGauge extends BaseContract {
 
     DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<BigNumber>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     lp_token(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1067,157 +1249,172 @@ export interface BalancerGauge extends BaseContract {
 
     reward_count(overrides?: CallOverrides): Promise<BigNumber>;
 
-    reward_data(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    reward_data(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    rewards_receiver(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    rewards_receiver(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    reward_integral_for(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    reward_integral_for(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    working_balances(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    working_balances(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     working_supply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    integrate_inv_supply_of(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    integrate_inv_supply_of(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    integrate_checkpoint_of(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    integrate_checkpoint_of(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    integrate_fraction(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    integrate_fraction(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     period(overrides?: CallOverrides): Promise<BigNumber>;
 
-    reward_tokens(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    reward_tokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    period_timestamp(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    period_timestamp(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    integrate_inv_supply(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    integrate_inv_supply(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
     'deposit(uint256)'(
-      _value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     'deposit(uint256,address)'(
-      _value: BigNumberish,
-      _addr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _value: PromiseOrValue<BigNumberish>,
+      _addr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     'deposit(uint256,address,bool)'(
-      _value: BigNumberish,
-      _addr: string,
-      _claim_rewards: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _value: PromiseOrValue<BigNumberish>,
+      _addr: PromiseOrValue<string>,
+      _claim_rewards: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     'withdraw(uint256)'(
-      _value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     'withdraw(uint256,bool)'(
-      _value: BigNumberish,
-      _claim_rewards: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _value: PromiseOrValue<BigNumberish>,
+      _claim_rewards: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    'claim_rewards()'(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    'claim_rewards()'(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     'claim_rewards(address)'(
-      _addr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _addr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     'claim_rewards(address,address)'(
-      _addr: string,
-      _receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _addr: PromiseOrValue<string>,
+      _receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferFrom(
-      _from: string,
-      _to: string,
-      _value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _from: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
+      _value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transfer(
-      _to: string,
-      _value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _to: PromiseOrValue<string>,
+      _value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     approve(
-      _spender: string,
-      _value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _spender: PromiseOrValue<string>,
+      _value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     permit(
-      _owner: string,
-      _spender: string,
-      _value: BigNumberish,
-      _deadline: BigNumberish,
-      _v: BigNumberish,
-      _r: BytesLike,
-      _s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _owner: PromiseOrValue<string>,
+      _spender: PromiseOrValue<string>,
+      _value: PromiseOrValue<BigNumberish>,
+      _deadline: PromiseOrValue<BigNumberish>,
+      _v: PromiseOrValue<BigNumberish>,
+      _r: PromiseOrValue<BytesLike>,
+      _s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     increaseAllowance(
-      _spender: string,
-      _added_value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _spender: PromiseOrValue<string>,
+      _added_value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     decreaseAllowance(
-      _spender: string,
-      _subtracted_value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _spender: PromiseOrValue<string>,
+      _subtracted_value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     user_checkpoint(
-      addr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      addr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     set_rewards_receiver(
-      _receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    kick(addr: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    kick(
+      addr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
     deposit_reward_token(
-      _reward_token: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _reward_token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     add_reward(
-      _reward_token: string,
-      _distributor: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _reward_token: PromiseOrValue<string>,
+      _distributor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     set_reward_distributor(
-      _reward_token: string,
-      _distributor: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _reward_token: PromiseOrValue<string>,
+      _distributor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    killGauge(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    killGauge(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    unkillGauge(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    unkillGauge(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    claimed_reward(_addr: string, _token: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    claimed_reward(
+      _addr: PromiseOrValue<string>,
+      _token: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    claimable_reward(_user: string, _reward_token: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    claimable_reward(
+      _user: PromiseOrValue<string>,
+      _reward_token: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     claimable_tokens(
-      addr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      addr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     integrate_checkpoint(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1230,14 +1427,18 @@ export interface BalancerGauge extends BaseContract {
 
     version(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    initialize(
-      _lp_token: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    balanceOf(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    initialize(
+      _lp_token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    balanceOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1247,7 +1448,7 @@ export interface BalancerGauge extends BaseContract {
 
     DOMAIN_SEPARATOR(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     lp_token(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1255,28 +1456,32 @@ export interface BalancerGauge extends BaseContract {
 
     reward_count(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    reward_data(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    reward_data(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    rewards_receiver(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    rewards_receiver(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    reward_integral_for(arg0: string, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    reward_integral_for(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    working_balances(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    working_balances(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     working_supply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    integrate_inv_supply_of(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    integrate_inv_supply_of(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    integrate_checkpoint_of(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    integrate_checkpoint_of(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    integrate_fraction(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    integrate_fraction(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     period(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    reward_tokens(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    reward_tokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    period_timestamp(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    period_timestamp(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    integrate_inv_supply(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    integrate_inv_supply(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }

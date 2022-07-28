@@ -16,7 +16,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface OptDepositeBoxInterface extends utils.Interface {
   functions: {
@@ -66,29 +66,45 @@ export interface OptDepositeBoxInterface extends utils.Interface {
       | 'whitelistedTokens',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'bridgeTokens', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'canBridge', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'bridgeTokens',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'canBridge', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'chainId', values?: undefined): string;
   encodeFunctionData(functionFragment: 'crossDomainAdmin', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'deposit',
-    values: [string, string, BigNumberish, BigNumberish, BigNumberish, BigNumberish],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'getCurrentTime', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'isWhitelistToken', values: [string]): string;
+  encodeFunctionData(functionFragment: 'isWhitelistToken', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'l1EthWrapper', values?: undefined): string;
   encodeFunctionData(functionFragment: 'l1Weth', values?: undefined): string;
   encodeFunctionData(functionFragment: 'l2Eth', values?: undefined): string;
   encodeFunctionData(functionFragment: 'messenger', values?: undefined): string;
   encodeFunctionData(functionFragment: 'minimumBridgingDelay', values?: undefined): string;
   encodeFunctionData(functionFragment: 'numberOfDeposits', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'setCrossDomainAdmin', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setCurrentTime', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setEnableDeposits', values: [string, boolean]): string;
-  encodeFunctionData(functionFragment: 'setMinimumBridgingDelay', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'setCrossDomainAdmin', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setCurrentTime', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'setEnableDeposits',
+    values: [PromiseOrValue<string>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(functionFragment: 'setMinimumBridgingDelay', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'timerAddress', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'whitelistToken', values: [string, string, string]): string;
-  encodeFunctionData(functionFragment: 'whitelistedTokens', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'whitelistToken',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'whitelistedTokens', values: [PromiseOrValue<string>]): string;
 
   decodeFunctionResult(functionFragment: 'bridgeTokens', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'canBridge', data: BytesLike): Result;
@@ -213,30 +229,30 @@ export interface OptDepositeBox extends BaseContract {
 
   functions: {
     bridgeTokens(
-      l2Token: string,
-      l1Gas: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      l2Token: PromiseOrValue<string>,
+      l1Gas: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    canBridge(l2Token: string, overrides?: CallOverrides): Promise<[boolean]>;
+    canBridge(l2Token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     chainId(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     crossDomainAdmin(overrides?: CallOverrides): Promise<[string]>;
 
     deposit(
-      l1Recipient: string,
-      l2Token: string,
-      amount: BigNumberish,
-      slowRelayFeePct: BigNumberish,
-      instantRelayFeePct: BigNumberish,
-      quoteTimestamp: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      l1Recipient: PromiseOrValue<string>,
+      l2Token: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      slowRelayFeePct: PromiseOrValue<BigNumberish>,
+      instantRelayFeePct: PromiseOrValue<BigNumberish>,
+      quoteTimestamp: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     getCurrentTime(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    isWhitelistToken(l2Token: string, overrides?: CallOverrides): Promise<[boolean]>;
+    isWhitelistToken(l2Token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     l1EthWrapper(overrides?: CallOverrides): Promise<[string]>;
 
@@ -251,37 +267,37 @@ export interface OptDepositeBox extends BaseContract {
     numberOfDeposits(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     setCrossDomainAdmin(
-      newCrossDomainAdmin: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newCrossDomainAdmin: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setCurrentTime(
-      time: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      time: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setEnableDeposits(
-      l2Token: string,
-      depositsEnabled: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      l2Token: PromiseOrValue<string>,
+      depositsEnabled: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setMinimumBridgingDelay(
-      newMinimumBridgingDelay: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newMinimumBridgingDelay: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     timerAddress(overrides?: CallOverrides): Promise<[string]>;
 
     whitelistToken(
-      l1Token: string,
-      l2Token: string,
-      l1BridgePool: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      l1Token: PromiseOrValue<string>,
+      l2Token: PromiseOrValue<string>,
+      l1BridgePool: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     whitelistedTokens(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [string, string, BigNumber, boolean] & {
@@ -294,30 +310,30 @@ export interface OptDepositeBox extends BaseContract {
   };
 
   bridgeTokens(
-    l2Token: string,
-    l1Gas: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    l2Token: PromiseOrValue<string>,
+    l1Gas: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  canBridge(l2Token: string, overrides?: CallOverrides): Promise<boolean>;
+  canBridge(l2Token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   chainId(overrides?: CallOverrides): Promise<BigNumber>;
 
   crossDomainAdmin(overrides?: CallOverrides): Promise<string>;
 
   deposit(
-    l1Recipient: string,
-    l2Token: string,
-    amount: BigNumberish,
-    slowRelayFeePct: BigNumberish,
-    instantRelayFeePct: BigNumberish,
-    quoteTimestamp: BigNumberish,
-    overrides?: PayableOverrides & { from?: string | Promise<string> },
+    l1Recipient: PromiseOrValue<string>,
+    l2Token: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    slowRelayFeePct: PromiseOrValue<BigNumberish>,
+    instantRelayFeePct: PromiseOrValue<BigNumberish>,
+    quoteTimestamp: PromiseOrValue<BigNumberish>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   getCurrentTime(overrides?: CallOverrides): Promise<BigNumber>;
 
-  isWhitelistToken(l2Token: string, overrides?: CallOverrides): Promise<boolean>;
+  isWhitelistToken(l2Token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   l1EthWrapper(overrides?: CallOverrides): Promise<string>;
 
@@ -332,37 +348,37 @@ export interface OptDepositeBox extends BaseContract {
   numberOfDeposits(overrides?: CallOverrides): Promise<BigNumber>;
 
   setCrossDomainAdmin(
-    newCrossDomainAdmin: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newCrossDomainAdmin: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setCurrentTime(
-    time: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    time: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setEnableDeposits(
-    l2Token: string,
-    depositsEnabled: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    l2Token: PromiseOrValue<string>,
+    depositsEnabled: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setMinimumBridgingDelay(
-    newMinimumBridgingDelay: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newMinimumBridgingDelay: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   timerAddress(overrides?: CallOverrides): Promise<string>;
 
   whitelistToken(
-    l1Token: string,
-    l2Token: string,
-    l1BridgePool: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    l1Token: PromiseOrValue<string>,
+    l2Token: PromiseOrValue<string>,
+    l1BridgePool: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   whitelistedTokens(
-    arg0: string,
+    arg0: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<
     [string, string, BigNumber, boolean] & {
@@ -374,27 +390,31 @@ export interface OptDepositeBox extends BaseContract {
   >;
 
   callStatic: {
-    bridgeTokens(l2Token: string, l1Gas: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    bridgeTokens(
+      l2Token: PromiseOrValue<string>,
+      l1Gas: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    canBridge(l2Token: string, overrides?: CallOverrides): Promise<boolean>;
+    canBridge(l2Token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     chainId(overrides?: CallOverrides): Promise<BigNumber>;
 
     crossDomainAdmin(overrides?: CallOverrides): Promise<string>;
 
     deposit(
-      l1Recipient: string,
-      l2Token: string,
-      amount: BigNumberish,
-      slowRelayFeePct: BigNumberish,
-      instantRelayFeePct: BigNumberish,
-      quoteTimestamp: BigNumberish,
+      l1Recipient: PromiseOrValue<string>,
+      l2Token: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      slowRelayFeePct: PromiseOrValue<BigNumberish>,
+      instantRelayFeePct: PromiseOrValue<BigNumberish>,
+      quoteTimestamp: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     getCurrentTime(overrides?: CallOverrides): Promise<BigNumber>;
 
-    isWhitelistToken(l2Token: string, overrides?: CallOverrides): Promise<boolean>;
+    isWhitelistToken(l2Token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     l1EthWrapper(overrides?: CallOverrides): Promise<string>;
 
@@ -408,20 +428,32 @@ export interface OptDepositeBox extends BaseContract {
 
     numberOfDeposits(overrides?: CallOverrides): Promise<BigNumber>;
 
-    setCrossDomainAdmin(newCrossDomainAdmin: string, overrides?: CallOverrides): Promise<void>;
+    setCrossDomainAdmin(newCrossDomainAdmin: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setCurrentTime(time: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setCurrentTime(time: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setEnableDeposits(l2Token: string, depositsEnabled: boolean, overrides?: CallOverrides): Promise<void>;
+    setEnableDeposits(
+      l2Token: PromiseOrValue<string>,
+      depositsEnabled: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setMinimumBridgingDelay(newMinimumBridgingDelay: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setMinimumBridgingDelay(
+      newMinimumBridgingDelay: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     timerAddress(overrides?: CallOverrides): Promise<string>;
 
-    whitelistToken(l1Token: string, l2Token: string, l1BridgePool: string, overrides?: CallOverrides): Promise<void>;
+    whitelistToken(
+      l1Token: PromiseOrValue<string>,
+      l2Token: PromiseOrValue<string>,
+      l1BridgePool: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     whitelistedTokens(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [string, string, BigNumber, boolean] & {
@@ -465,20 +497,20 @@ export interface OptDepositeBox extends BaseContract {
     'SetMinimumBridgingDelay(uint64)'(newMinimumBridgingDelay?: null): SetMinimumBridgingDelayEventFilter;
     SetMinimumBridgingDelay(newMinimumBridgingDelay?: null): SetMinimumBridgingDelayEventFilter;
 
-    'SetXDomainAdmin(address)'(newAdmin?: string | null): SetXDomainAdminEventFilter;
-    SetXDomainAdmin(newAdmin?: string | null): SetXDomainAdminEventFilter;
+    'SetXDomainAdmin(address)'(newAdmin?: PromiseOrValue<string> | null): SetXDomainAdminEventFilter;
+    SetXDomainAdmin(newAdmin?: PromiseOrValue<string> | null): SetXDomainAdminEventFilter;
 
     'TokensBridged(address,uint256,uint256,address)'(
-      l2Token?: string | null,
+      l2Token?: PromiseOrValue<string> | null,
       numberOfTokensBridged?: null,
       l1Gas?: null,
-      caller?: string | null,
+      caller?: PromiseOrValue<string> | null,
     ): TokensBridgedEventFilter;
     TokensBridged(
-      l2Token?: string | null,
+      l2Token?: PromiseOrValue<string> | null,
       numberOfTokensBridged?: null,
       l1Gas?: null,
-      caller?: string | null,
+      caller?: PromiseOrValue<string> | null,
     ): TokensBridgedEventFilter;
 
     'WhitelistToken(address,address,uint64,address)'(
@@ -492,30 +524,30 @@ export interface OptDepositeBox extends BaseContract {
 
   estimateGas: {
     bridgeTokens(
-      l2Token: string,
-      l1Gas: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      l2Token: PromiseOrValue<string>,
+      l1Gas: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    canBridge(l2Token: string, overrides?: CallOverrides): Promise<BigNumber>;
+    canBridge(l2Token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     chainId(overrides?: CallOverrides): Promise<BigNumber>;
 
     crossDomainAdmin(overrides?: CallOverrides): Promise<BigNumber>;
 
     deposit(
-      l1Recipient: string,
-      l2Token: string,
-      amount: BigNumberish,
-      slowRelayFeePct: BigNumberish,
-      instantRelayFeePct: BigNumberish,
-      quoteTimestamp: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      l1Recipient: PromiseOrValue<string>,
+      l2Token: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      slowRelayFeePct: PromiseOrValue<BigNumberish>,
+      instantRelayFeePct: PromiseOrValue<BigNumberish>,
+      quoteTimestamp: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     getCurrentTime(overrides?: CallOverrides): Promise<BigNumber>;
 
-    isWhitelistToken(l2Token: string, overrides?: CallOverrides): Promise<BigNumber>;
+    isWhitelistToken(l2Token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     l1EthWrapper(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -530,61 +562,64 @@ export interface OptDepositeBox extends BaseContract {
     numberOfDeposits(overrides?: CallOverrides): Promise<BigNumber>;
 
     setCrossDomainAdmin(
-      newCrossDomainAdmin: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newCrossDomainAdmin: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setCurrentTime(time: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setCurrentTime(
+      time: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setEnableDeposits(
-      l2Token: string,
-      depositsEnabled: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      l2Token: PromiseOrValue<string>,
+      depositsEnabled: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setMinimumBridgingDelay(
-      newMinimumBridgingDelay: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newMinimumBridgingDelay: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     timerAddress(overrides?: CallOverrides): Promise<BigNumber>;
 
     whitelistToken(
-      l1Token: string,
-      l2Token: string,
-      l1BridgePool: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      l1Token: PromiseOrValue<string>,
+      l2Token: PromiseOrValue<string>,
+      l1BridgePool: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    whitelistedTokens(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    whitelistedTokens(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
     bridgeTokens(
-      l2Token: string,
-      l1Gas: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      l2Token: PromiseOrValue<string>,
+      l1Gas: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    canBridge(l2Token: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    canBridge(l2Token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     chainId(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     crossDomainAdmin(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     deposit(
-      l1Recipient: string,
-      l2Token: string,
-      amount: BigNumberish,
-      slowRelayFeePct: BigNumberish,
-      instantRelayFeePct: BigNumberish,
-      quoteTimestamp: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      l1Recipient: PromiseOrValue<string>,
+      l2Token: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      slowRelayFeePct: PromiseOrValue<BigNumberish>,
+      instantRelayFeePct: PromiseOrValue<BigNumberish>,
+      quoteTimestamp: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     getCurrentTime(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    isWhitelistToken(l2Token: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    isWhitelistToken(l2Token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     l1EthWrapper(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -599,35 +634,35 @@ export interface OptDepositeBox extends BaseContract {
     numberOfDeposits(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setCrossDomainAdmin(
-      newCrossDomainAdmin: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newCrossDomainAdmin: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setCurrentTime(
-      time: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      time: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setEnableDeposits(
-      l2Token: string,
-      depositsEnabled: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      l2Token: PromiseOrValue<string>,
+      depositsEnabled: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setMinimumBridgingDelay(
-      newMinimumBridgingDelay: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newMinimumBridgingDelay: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     timerAddress(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     whitelistToken(
-      l1Token: string,
-      l2Token: string,
-      l1BridgePool: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      l1Token: PromiseOrValue<string>,
+      l2Token: PromiseOrValue<string>,
+      l1BridgePool: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    whitelistedTokens(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    whitelistedTokens(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }

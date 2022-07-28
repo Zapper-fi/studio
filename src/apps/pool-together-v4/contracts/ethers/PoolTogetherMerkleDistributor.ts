@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface PoolTogetherMerkleDistributorInterface extends utils.Interface {
   functions: {
@@ -27,8 +27,16 @@ export interface PoolTogetherMerkleDistributorInterface extends utils.Interface 
 
   getFunction(nameOrSignatureOrTopic: 'claim' | 'isClaimed' | 'merkleRoot' | 'token'): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'claim', values: [BigNumberish, string, BigNumberish, BytesLike[]]): string;
-  encodeFunctionData(functionFragment: 'isClaimed', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'claim',
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>[],
+    ],
+  ): string;
+  encodeFunctionData(functionFragment: 'isClaimed', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'merkleRoot', values?: undefined): string;
   encodeFunctionData(functionFragment: 'token', values?: undefined): string;
 
@@ -77,14 +85,14 @@ export interface PoolTogetherMerkleDistributor extends BaseContract {
 
   functions: {
     claim(
-      index: BigNumberish,
-      account: string,
-      amount: BigNumberish,
-      merkleProof: BytesLike[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      index: PromiseOrValue<BigNumberish>,
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      merkleProof: PromiseOrValue<BytesLike>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    isClaimed(index: BigNumberish, overrides?: CallOverrides): Promise<[boolean]>;
+    isClaimed(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[boolean]>;
 
     merkleRoot(overrides?: CallOverrides): Promise<[string]>;
 
@@ -92,14 +100,14 @@ export interface PoolTogetherMerkleDistributor extends BaseContract {
   };
 
   claim(
-    index: BigNumberish,
-    account: string,
-    amount: BigNumberish,
-    merkleProof: BytesLike[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    index: PromiseOrValue<BigNumberish>,
+    account: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    merkleProof: PromiseOrValue<BytesLike>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  isClaimed(index: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+  isClaimed(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<boolean>;
 
   merkleRoot(overrides?: CallOverrides): Promise<string>;
 
@@ -107,14 +115,14 @@ export interface PoolTogetherMerkleDistributor extends BaseContract {
 
   callStatic: {
     claim(
-      index: BigNumberish,
-      account: string,
-      amount: BigNumberish,
-      merkleProof: BytesLike[],
+      index: PromiseOrValue<BigNumberish>,
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      merkleProof: PromiseOrValue<BytesLike>[],
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    isClaimed(index: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    isClaimed(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<boolean>;
 
     merkleRoot(overrides?: CallOverrides): Promise<string>;
 
@@ -128,14 +136,14 @@ export interface PoolTogetherMerkleDistributor extends BaseContract {
 
   estimateGas: {
     claim(
-      index: BigNumberish,
-      account: string,
-      amount: BigNumberish,
-      merkleProof: BytesLike[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      index: PromiseOrValue<BigNumberish>,
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      merkleProof: PromiseOrValue<BytesLike>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    isClaimed(index: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    isClaimed(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     merkleRoot(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -144,14 +152,14 @@ export interface PoolTogetherMerkleDistributor extends BaseContract {
 
   populateTransaction: {
     claim(
-      index: BigNumberish,
-      account: string,
-      amount: BigNumberish,
-      merkleProof: BytesLike[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      index: PromiseOrValue<BigNumberish>,
+      account: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      merkleProof: PromiseOrValue<BytesLike>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    isClaimed(index: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    isClaimed(index: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     merkleRoot(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 

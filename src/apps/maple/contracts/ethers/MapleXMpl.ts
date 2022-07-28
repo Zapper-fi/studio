@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface MapleXMplInterface extends utils.Interface {
   functions: {
@@ -131,62 +131,112 @@ export interface MapleXMplInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'MINIMUM_MIGRATION_DELAY', values?: undefined): string;
   encodeFunctionData(functionFragment: 'PERMIT_TYPEHASH', values?: undefined): string;
   encodeFunctionData(functionFragment: 'acceptOwnership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'allowance', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'approve', values: [string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'allowance', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'approve',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'asset', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
-  encodeFunctionData(functionFragment: 'balanceOfAssets', values: [string]): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'balanceOfAssets', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'cancelMigration', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'convertToAssets', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'convertToShares', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'convertToAssets', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'convertToShares', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'decimals', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'decreaseAllowance', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'deposit', values: [BigNumberish, string]): string;
+  encodeFunctionData(
+    functionFragment: 'decreaseAllowance',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'deposit',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(
     functionFragment: 'depositWithPermit',
-    values: [BigNumberish, string, BigNumberish, BigNumberish, BytesLike, BytesLike],
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'freeAssets', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'increaseAllowance', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'increaseAllowance',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'issuanceRate', values?: undefined): string;
   encodeFunctionData(functionFragment: 'lastUpdated', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'maxDeposit', values: [string]): string;
-  encodeFunctionData(functionFragment: 'maxMint', values: [string]): string;
-  encodeFunctionData(functionFragment: 'maxRedeem', values: [string]): string;
-  encodeFunctionData(functionFragment: 'maxWithdraw', values: [string]): string;
-  encodeFunctionData(functionFragment: 'mint', values: [BigNumberish, string]): string;
+  encodeFunctionData(functionFragment: 'maxDeposit', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'maxMint', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'maxRedeem', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'maxWithdraw', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'mint', values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]): string;
   encodeFunctionData(
     functionFragment: 'mintWithPermit',
-    values: [BigNumberish, string, BigNumberish, BigNumberish, BigNumberish, BytesLike, BytesLike],
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'nonces', values: [string]): string;
+  encodeFunctionData(functionFragment: 'nonces', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'pendingOwner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'performMigration', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'permit',
-    values: [string, string, BigNumberish, BigNumberish, BigNumberish, BytesLike, BytesLike],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'precision', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'previewDeposit', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'previewMint', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'previewRedeem', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'previewWithdraw', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'redeem', values: [BigNumberish, string, string]): string;
-  encodeFunctionData(functionFragment: 'scheduleMigration', values: [string, string]): string;
+  encodeFunctionData(functionFragment: 'previewDeposit', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'previewMint', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'previewRedeem', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'previewWithdraw', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'redeem',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'scheduleMigration',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'scheduledMigrationTimestamp', values?: undefined): string;
   encodeFunctionData(functionFragment: 'scheduledMigrator', values?: undefined): string;
   encodeFunctionData(functionFragment: 'scheduledNewAsset', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'setPendingOwner', values: [string]): string;
+  encodeFunctionData(functionFragment: 'setPendingOwner', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalAssets', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transfer', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferFrom', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'updateVestingSchedule', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'transfer',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'transferFrom',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'updateVestingSchedule', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'vestingPeriodFinish', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'withdraw', values: [BigNumberish, string, string]): string;
+  encodeFunctionData(
+    functionFragment: 'withdraw',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
 
   decodeFunctionResult(functionFragment: 'DOMAIN_SEPARATOR', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'MINIMUM_MIGRATION_DELAY', data: BytesLike): Result;
@@ -391,134 +441,168 @@ export interface MapleXMpl extends BaseContract {
 
     PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<[string]>;
 
-    acceptOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    allowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    allowance(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     approve(
-      spender_: string,
-      amount_: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender_: PromiseOrValue<string>,
+      amount_: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     asset(overrides?: CallOverrides): Promise<[string]>;
 
-    balanceOf(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     balanceOfAssets(
-      account_: string,
+      account_: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber] & { balanceOfAssets_: BigNumber }>;
 
-    cancelMigration(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    cancelMigration(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    convertToAssets(shares_: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber] & { assets_: BigNumber }>;
+    convertToAssets(
+      shares_: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber] & { assets_: BigNumber }>;
 
-    convertToShares(assets_: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber] & { shares_: BigNumber }>;
+    convertToShares(
+      assets_: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber] & { shares_: BigNumber }>;
 
     decimals(overrides?: CallOverrides): Promise<[number]>;
 
     decreaseAllowance(
-      spender_: string,
-      subtractedAmount_: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender_: PromiseOrValue<string>,
+      subtractedAmount_: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     deposit(
-      assets_: BigNumberish,
-      receiver_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      assets_: PromiseOrValue<BigNumberish>,
+      receiver_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     depositWithPermit(
-      assets_: BigNumberish,
-      receiver_: string,
-      deadline_: BigNumberish,
-      v_: BigNumberish,
-      r_: BytesLike,
-      s_: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      assets_: PromiseOrValue<BigNumberish>,
+      receiver_: PromiseOrValue<string>,
+      deadline_: PromiseOrValue<BigNumberish>,
+      v_: PromiseOrValue<BigNumberish>,
+      r_: PromiseOrValue<BytesLike>,
+      s_: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     freeAssets(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     increaseAllowance(
-      spender_: string,
-      addedAmount_: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender_: PromiseOrValue<string>,
+      addedAmount_: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     issuanceRate(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     lastUpdated(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    maxDeposit(receiver_: string, overrides?: CallOverrides): Promise<[BigNumber] & { maxAssets_: BigNumber }>;
+    maxDeposit(
+      receiver_: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber] & { maxAssets_: BigNumber }>;
 
-    maxMint(receiver_: string, overrides?: CallOverrides): Promise<[BigNumber] & { maxShares_: BigNumber }>;
+    maxMint(
+      receiver_: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber] & { maxShares_: BigNumber }>;
 
-    maxRedeem(owner_: string, overrides?: CallOverrides): Promise<[BigNumber] & { maxShares_: BigNumber }>;
+    maxRedeem(
+      owner_: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber] & { maxShares_: BigNumber }>;
 
-    maxWithdraw(owner_: string, overrides?: CallOverrides): Promise<[BigNumber] & { maxAssets_: BigNumber }>;
+    maxWithdraw(
+      owner_: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber] & { maxAssets_: BigNumber }>;
 
     mint(
-      shares_: BigNumberish,
-      receiver_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      shares_: PromiseOrValue<BigNumberish>,
+      receiver_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     mintWithPermit(
-      shares_: BigNumberish,
-      receiver_: string,
-      maxAssets_: BigNumberish,
-      deadline_: BigNumberish,
-      v_: BigNumberish,
-      r_: BytesLike,
-      s_: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      shares_: PromiseOrValue<BigNumberish>,
+      receiver_: PromiseOrValue<string>,
+      maxAssets_: PromiseOrValue<BigNumberish>,
+      deadline_: PromiseOrValue<BigNumberish>,
+      v_: PromiseOrValue<BigNumberish>,
+      r_: PromiseOrValue<BytesLike>,
+      s_: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     pendingOwner(overrides?: CallOverrides): Promise<[string]>;
 
-    performMigration(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    performMigration(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     permit(
-      owner_: string,
-      spender_: string,
-      amount_: BigNumberish,
-      deadline_: BigNumberish,
-      v_: BigNumberish,
-      r_: BytesLike,
-      s_: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      owner_: PromiseOrValue<string>,
+      spender_: PromiseOrValue<string>,
+      amount_: PromiseOrValue<BigNumberish>,
+      deadline_: PromiseOrValue<BigNumberish>,
+      v_: PromiseOrValue<BigNumberish>,
+      r_: PromiseOrValue<BytesLike>,
+      s_: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     precision(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    previewDeposit(assets_: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber] & { shares_: BigNumber }>;
+    previewDeposit(
+      assets_: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber] & { shares_: BigNumber }>;
 
-    previewMint(shares_: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber] & { assets_: BigNumber }>;
+    previewMint(
+      shares_: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber] & { assets_: BigNumber }>;
 
-    previewRedeem(shares_: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber] & { assets_: BigNumber }>;
+    previewRedeem(
+      shares_: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber] & { assets_: BigNumber }>;
 
-    previewWithdraw(assets_: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber] & { shares_: BigNumber }>;
+    previewWithdraw(
+      assets_: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber] & { shares_: BigNumber }>;
 
     redeem(
-      shares_: BigNumberish,
-      receiver_: string,
-      owner_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      shares_: PromiseOrValue<BigNumberish>,
+      receiver_: PromiseOrValue<string>,
+      owner_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     scheduleMigration(
-      migrator_: string,
-      newAsset_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      migrator_: PromiseOrValue<string>,
+      newAsset_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     scheduledMigrationTimestamp(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -528,8 +612,8 @@ export interface MapleXMpl extends BaseContract {
     scheduledNewAsset(overrides?: CallOverrides): Promise<[string]>;
 
     setPendingOwner(
-      pendingOwner_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pendingOwner_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
@@ -539,30 +623,30 @@ export interface MapleXMpl extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transfer(
-      recipient_: string,
-      amount_: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient_: PromiseOrValue<string>,
+      amount_: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferFrom(
-      owner_: string,
-      recipient_: string,
-      amount_: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      owner_: PromiseOrValue<string>,
+      recipient_: PromiseOrValue<string>,
+      amount_: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateVestingSchedule(
-      vestingPeriod_: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vestingPeriod_: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     vestingPeriodFinish(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     withdraw(
-      assets_: BigNumberish,
-      receiver_: string,
-      owner_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      assets_: PromiseOrValue<BigNumberish>,
+      receiver_: PromiseOrValue<string>,
+      owner_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
@@ -572,131 +656,131 @@ export interface MapleXMpl extends BaseContract {
 
   PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<string>;
 
-  acceptOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  allowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+  allowance(arg0: PromiseOrValue<string>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   approve(
-    spender_: string,
-    amount_: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender_: PromiseOrValue<string>,
+    amount_: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   asset(overrides?: CallOverrides): Promise<string>;
 
-  balanceOf(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  balanceOfAssets(account_: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOfAssets(account_: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  cancelMigration(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  cancelMigration(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  convertToAssets(shares_: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  convertToAssets(shares_: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  convertToShares(assets_: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  convertToShares(assets_: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   decimals(overrides?: CallOverrides): Promise<number>;
 
   decreaseAllowance(
-    spender_: string,
-    subtractedAmount_: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender_: PromiseOrValue<string>,
+    subtractedAmount_: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   deposit(
-    assets_: BigNumberish,
-    receiver_: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    assets_: PromiseOrValue<BigNumberish>,
+    receiver_: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   depositWithPermit(
-    assets_: BigNumberish,
-    receiver_: string,
-    deadline_: BigNumberish,
-    v_: BigNumberish,
-    r_: BytesLike,
-    s_: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    assets_: PromiseOrValue<BigNumberish>,
+    receiver_: PromiseOrValue<string>,
+    deadline_: PromiseOrValue<BigNumberish>,
+    v_: PromiseOrValue<BigNumberish>,
+    r_: PromiseOrValue<BytesLike>,
+    s_: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   freeAssets(overrides?: CallOverrides): Promise<BigNumber>;
 
   increaseAllowance(
-    spender_: string,
-    addedAmount_: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender_: PromiseOrValue<string>,
+    addedAmount_: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   issuanceRate(overrides?: CallOverrides): Promise<BigNumber>;
 
   lastUpdated(overrides?: CallOverrides): Promise<BigNumber>;
 
-  maxDeposit(receiver_: string, overrides?: CallOverrides): Promise<BigNumber>;
+  maxDeposit(receiver_: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  maxMint(receiver_: string, overrides?: CallOverrides): Promise<BigNumber>;
+  maxMint(receiver_: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  maxRedeem(owner_: string, overrides?: CallOverrides): Promise<BigNumber>;
+  maxRedeem(owner_: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  maxWithdraw(owner_: string, overrides?: CallOverrides): Promise<BigNumber>;
+  maxWithdraw(owner_: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   mint(
-    shares_: BigNumberish,
-    receiver_: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    shares_: PromiseOrValue<BigNumberish>,
+    receiver_: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   mintWithPermit(
-    shares_: BigNumberish,
-    receiver_: string,
-    maxAssets_: BigNumberish,
-    deadline_: BigNumberish,
-    v_: BigNumberish,
-    r_: BytesLike,
-    s_: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    shares_: PromiseOrValue<BigNumberish>,
+    receiver_: PromiseOrValue<string>,
+    maxAssets_: PromiseOrValue<BigNumberish>,
+    deadline_: PromiseOrValue<BigNumberish>,
+    v_: PromiseOrValue<BigNumberish>,
+    r_: PromiseOrValue<BytesLike>,
+    s_: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   name(overrides?: CallOverrides): Promise<string>;
 
-  nonces(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
   pendingOwner(overrides?: CallOverrides): Promise<string>;
 
-  performMigration(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  performMigration(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   permit(
-    owner_: string,
-    spender_: string,
-    amount_: BigNumberish,
-    deadline_: BigNumberish,
-    v_: BigNumberish,
-    r_: BytesLike,
-    s_: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    owner_: PromiseOrValue<string>,
+    spender_: PromiseOrValue<string>,
+    amount_: PromiseOrValue<BigNumberish>,
+    deadline_: PromiseOrValue<BigNumberish>,
+    v_: PromiseOrValue<BigNumberish>,
+    r_: PromiseOrValue<BytesLike>,
+    s_: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   precision(overrides?: CallOverrides): Promise<BigNumber>;
 
-  previewDeposit(assets_: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  previewDeposit(assets_: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  previewMint(shares_: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  previewMint(shares_: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  previewRedeem(shares_: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  previewRedeem(shares_: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  previewWithdraw(assets_: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  previewWithdraw(assets_: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   redeem(
-    shares_: BigNumberish,
-    receiver_: string,
-    owner_: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    shares_: PromiseOrValue<BigNumberish>,
+    receiver_: PromiseOrValue<string>,
+    owner_: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   scheduleMigration(
-    migrator_: string,
-    newAsset_: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    migrator_: PromiseOrValue<string>,
+    newAsset_: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   scheduledMigrationTimestamp(overrides?: CallOverrides): Promise<BigNumber>;
@@ -706,8 +790,8 @@ export interface MapleXMpl extends BaseContract {
   scheduledNewAsset(overrides?: CallOverrides): Promise<string>;
 
   setPendingOwner(
-    pendingOwner_: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    pendingOwner_: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
@@ -717,30 +801,30 @@ export interface MapleXMpl extends BaseContract {
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   transfer(
-    recipient_: string,
-    amount_: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    recipient_: PromiseOrValue<string>,
+    amount_: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferFrom(
-    owner_: string,
-    recipient_: string,
-    amount_: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    owner_: PromiseOrValue<string>,
+    recipient_: PromiseOrValue<string>,
+    amount_: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateVestingSchedule(
-    vestingPeriod_: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    vestingPeriod_: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   vestingPeriodFinish(overrides?: CallOverrides): Promise<BigNumber>;
 
   withdraw(
-    assets_: BigNumberish,
-    receiver_: string,
-    owner_: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    assets_: PromiseOrValue<BigNumberish>,
+    receiver_: PromiseOrValue<string>,
+    owner_: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
@@ -752,70 +836,94 @@ export interface MapleXMpl extends BaseContract {
 
     acceptOwnership(overrides?: CallOverrides): Promise<void>;
 
-    allowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    approve(spender_: string, amount_: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    approve(
+      spender_: PromiseOrValue<string>,
+      amount_: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     asset(overrides?: CallOverrides): Promise<string>;
 
-    balanceOf(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    balanceOfAssets(account_: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOfAssets(account_: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     cancelMigration(overrides?: CallOverrides): Promise<void>;
 
-    convertToAssets(shares_: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    convertToAssets(shares_: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    convertToShares(assets_: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    convertToShares(assets_: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<number>;
 
-    decreaseAllowance(spender_: string, subtractedAmount_: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    decreaseAllowance(
+      spender_: PromiseOrValue<string>,
+      subtractedAmount_: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    deposit(assets_: BigNumberish, receiver_: string, overrides?: CallOverrides): Promise<BigNumber>;
+    deposit(
+      assets_: PromiseOrValue<BigNumberish>,
+      receiver_: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     depositWithPermit(
-      assets_: BigNumberish,
-      receiver_: string,
-      deadline_: BigNumberish,
-      v_: BigNumberish,
-      r_: BytesLike,
-      s_: BytesLike,
+      assets_: PromiseOrValue<BigNumberish>,
+      receiver_: PromiseOrValue<string>,
+      deadline_: PromiseOrValue<BigNumberish>,
+      v_: PromiseOrValue<BigNumberish>,
+      r_: PromiseOrValue<BytesLike>,
+      s_: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     freeAssets(overrides?: CallOverrides): Promise<BigNumber>;
 
-    increaseAllowance(spender_: string, addedAmount_: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    increaseAllowance(
+      spender_: PromiseOrValue<string>,
+      addedAmount_: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     issuanceRate(overrides?: CallOverrides): Promise<BigNumber>;
 
     lastUpdated(overrides?: CallOverrides): Promise<BigNumber>;
 
-    maxDeposit(receiver_: string, overrides?: CallOverrides): Promise<BigNumber>;
+    maxDeposit(receiver_: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    maxMint(receiver_: string, overrides?: CallOverrides): Promise<BigNumber>;
+    maxMint(receiver_: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    maxRedeem(owner_: string, overrides?: CallOverrides): Promise<BigNumber>;
+    maxRedeem(owner_: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    maxWithdraw(owner_: string, overrides?: CallOverrides): Promise<BigNumber>;
+    maxWithdraw(owner_: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    mint(shares_: BigNumberish, receiver_: string, overrides?: CallOverrides): Promise<BigNumber>;
+    mint(
+      shares_: PromiseOrValue<BigNumberish>,
+      receiver_: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     mintWithPermit(
-      shares_: BigNumberish,
-      receiver_: string,
-      maxAssets_: BigNumberish,
-      deadline_: BigNumberish,
-      v_: BigNumberish,
-      r_: BytesLike,
-      s_: BytesLike,
+      shares_: PromiseOrValue<BigNumberish>,
+      receiver_: PromiseOrValue<string>,
+      maxAssets_: PromiseOrValue<BigNumberish>,
+      deadline_: PromiseOrValue<BigNumberish>,
+      v_: PromiseOrValue<BigNumberish>,
+      r_: PromiseOrValue<BytesLike>,
+      s_: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
@@ -824,29 +932,38 @@ export interface MapleXMpl extends BaseContract {
     performMigration(overrides?: CallOverrides): Promise<void>;
 
     permit(
-      owner_: string,
-      spender_: string,
-      amount_: BigNumberish,
-      deadline_: BigNumberish,
-      v_: BigNumberish,
-      r_: BytesLike,
-      s_: BytesLike,
+      owner_: PromiseOrValue<string>,
+      spender_: PromiseOrValue<string>,
+      amount_: PromiseOrValue<BigNumberish>,
+      deadline_: PromiseOrValue<BigNumberish>,
+      v_: PromiseOrValue<BigNumberish>,
+      r_: PromiseOrValue<BytesLike>,
+      s_: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     precision(overrides?: CallOverrides): Promise<BigNumber>;
 
-    previewDeposit(assets_: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    previewDeposit(assets_: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    previewMint(shares_: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    previewMint(shares_: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    previewRedeem(shares_: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    previewRedeem(shares_: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    previewWithdraw(assets_: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    previewWithdraw(assets_: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    redeem(shares_: BigNumberish, receiver_: string, owner_: string, overrides?: CallOverrides): Promise<BigNumber>;
+    redeem(
+      shares_: PromiseOrValue<BigNumberish>,
+      receiver_: PromiseOrValue<string>,
+      owner_: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    scheduleMigration(migrator_: string, newAsset_: string, overrides?: CallOverrides): Promise<void>;
+    scheduleMigration(
+      migrator_: PromiseOrValue<string>,
+      newAsset_: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     scheduledMigrationTimestamp(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -854,7 +971,7 @@ export interface MapleXMpl extends BaseContract {
 
     scheduledNewAsset(overrides?: CallOverrides): Promise<string>;
 
-    setPendingOwner(pendingOwner_: string, overrides?: CallOverrides): Promise<void>;
+    setPendingOwner(pendingOwner_: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     symbol(overrides?: CallOverrides): Promise<string>;
 
@@ -862,17 +979,21 @@ export interface MapleXMpl extends BaseContract {
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transfer(recipient_: string, amount_: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transfer(
+      recipient_: PromiseOrValue<string>,
+      amount_: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     transferFrom(
-      owner_: string,
-      recipient_: string,
-      amount_: BigNumberish,
+      owner_: PromiseOrValue<string>,
+      recipient_: PromiseOrValue<string>,
+      amount_: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<boolean>;
 
     updateVestingSchedule(
-      vestingPeriod_: BigNumberish,
+      vestingPeriod_: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber] & {
@@ -883,24 +1004,38 @@ export interface MapleXMpl extends BaseContract {
 
     vestingPeriodFinish(overrides?: CallOverrides): Promise<BigNumber>;
 
-    withdraw(assets_: BigNumberish, receiver_: string, owner_: string, overrides?: CallOverrides): Promise<BigNumber>;
+    withdraw(
+      assets_: PromiseOrValue<BigNumberish>,
+      receiver_: PromiseOrValue<string>,
+      owner_: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
   };
 
   filters: {
     'Approval(address,address,uint256)'(
-      owner_?: string | null,
-      spender_?: string | null,
+      owner_?: PromiseOrValue<string> | null,
+      spender_?: PromiseOrValue<string> | null,
       amount_?: null,
     ): ApprovalEventFilter;
-    Approval(owner_?: string | null, spender_?: string | null, amount_?: null): ApprovalEventFilter;
+    Approval(
+      owner_?: PromiseOrValue<string> | null,
+      spender_?: PromiseOrValue<string> | null,
+      amount_?: null,
+    ): ApprovalEventFilter;
 
     'Deposit(address,address,uint256,uint256)'(
-      caller_?: string | null,
-      owner_?: string | null,
+      caller_?: PromiseOrValue<string> | null,
+      owner_?: PromiseOrValue<string> | null,
       assets_?: null,
       shares_?: null,
     ): DepositEventFilter;
-    Deposit(caller_?: string | null, owner_?: string | null, assets_?: null, shares_?: null): DepositEventFilter;
+    Deposit(
+      caller_?: PromiseOrValue<string> | null,
+      owner_?: PromiseOrValue<string> | null,
+      assets_?: null,
+      shares_?: null,
+    ): DepositEventFilter;
 
     'IssuanceParamsUpdated(uint256,uint256)'(
       freeAssets_?: null,
@@ -912,65 +1047,78 @@ export interface MapleXMpl extends BaseContract {
     MigrationCancelled(): MigrationCancelledEventFilter;
 
     'MigrationPerformed(address,address,uint256)'(
-      fromAsset_?: string | null,
-      toAsset_?: string | null,
+      fromAsset_?: PromiseOrValue<string> | null,
+      toAsset_?: PromiseOrValue<string> | null,
       amount_?: null,
     ): MigrationPerformedEventFilter;
     MigrationPerformed(
-      fromAsset_?: string | null,
-      toAsset_?: string | null,
+      fromAsset_?: PromiseOrValue<string> | null,
+      toAsset_?: PromiseOrValue<string> | null,
       amount_?: null,
     ): MigrationPerformedEventFilter;
 
     'MigrationScheduled(address,address,address,uint256)'(
-      fromAsset_?: string | null,
-      toAsset_?: string | null,
-      migrator_?: string | null,
+      fromAsset_?: PromiseOrValue<string> | null,
+      toAsset_?: PromiseOrValue<string> | null,
+      migrator_?: PromiseOrValue<string> | null,
       migrationTime_?: null,
     ): MigrationScheduledEventFilter;
     MigrationScheduled(
-      fromAsset_?: string | null,
-      toAsset_?: string | null,
-      migrator_?: string | null,
+      fromAsset_?: PromiseOrValue<string> | null,
+      toAsset_?: PromiseOrValue<string> | null,
+      migrator_?: PromiseOrValue<string> | null,
       migrationTime_?: null,
     ): MigrationScheduledEventFilter;
 
     'OwnershipAccepted(address,address)'(
-      previousOwner_?: string | null,
-      newOwner_?: string | null,
+      previousOwner_?: PromiseOrValue<string> | null,
+      newOwner_?: PromiseOrValue<string> | null,
     ): OwnershipAcceptedEventFilter;
-    OwnershipAccepted(previousOwner_?: string | null, newOwner_?: string | null): OwnershipAcceptedEventFilter;
+    OwnershipAccepted(
+      previousOwner_?: PromiseOrValue<string> | null,
+      newOwner_?: PromiseOrValue<string> | null,
+    ): OwnershipAcceptedEventFilter;
 
     'PendingOwnerSet(address,address)'(
-      owner_?: string | null,
-      pendingOwner_?: string | null,
+      owner_?: PromiseOrValue<string> | null,
+      pendingOwner_?: PromiseOrValue<string> | null,
     ): PendingOwnerSetEventFilter;
-    PendingOwnerSet(owner_?: string | null, pendingOwner_?: string | null): PendingOwnerSetEventFilter;
+    PendingOwnerSet(
+      owner_?: PromiseOrValue<string> | null,
+      pendingOwner_?: PromiseOrValue<string> | null,
+    ): PendingOwnerSetEventFilter;
 
     'Transfer(address,address,uint256)'(
-      owner_?: string | null,
-      recipient_?: string | null,
+      owner_?: PromiseOrValue<string> | null,
+      recipient_?: PromiseOrValue<string> | null,
       amount_?: null,
     ): TransferEventFilter;
-    Transfer(owner_?: string | null, recipient_?: string | null, amount_?: null): TransferEventFilter;
+    Transfer(
+      owner_?: PromiseOrValue<string> | null,
+      recipient_?: PromiseOrValue<string> | null,
+      amount_?: null,
+    ): TransferEventFilter;
 
     'VestingScheduleUpdated(address,uint256)'(
-      owner_?: string | null,
+      owner_?: PromiseOrValue<string> | null,
       vestingPeriodFinish_?: null,
     ): VestingScheduleUpdatedEventFilter;
-    VestingScheduleUpdated(owner_?: string | null, vestingPeriodFinish_?: null): VestingScheduleUpdatedEventFilter;
+    VestingScheduleUpdated(
+      owner_?: PromiseOrValue<string> | null,
+      vestingPeriodFinish_?: null,
+    ): VestingScheduleUpdatedEventFilter;
 
     'Withdraw(address,address,address,uint256,uint256)'(
-      caller_?: string | null,
-      receiver_?: string | null,
-      owner_?: string | null,
+      caller_?: PromiseOrValue<string> | null,
+      receiver_?: PromiseOrValue<string> | null,
+      owner_?: PromiseOrValue<string> | null,
       assets_?: null,
       shares_?: null,
     ): WithdrawEventFilter;
     Withdraw(
-      caller_?: string | null,
-      receiver_?: string | null,
-      owner_?: string | null,
+      caller_?: PromiseOrValue<string> | null,
+      receiver_?: PromiseOrValue<string> | null,
+      owner_?: PromiseOrValue<string> | null,
       assets_?: null,
       shares_?: null,
     ): WithdrawEventFilter;
@@ -983,131 +1131,135 @@ export interface MapleXMpl extends BaseContract {
 
     PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<BigNumber>;
 
-    acceptOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    allowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     approve(
-      spender_: string,
-      amount_: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender_: PromiseOrValue<string>,
+      amount_: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     asset(overrides?: CallOverrides): Promise<BigNumber>;
 
-    balanceOf(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    balanceOfAssets(account_: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOfAssets(account_: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    cancelMigration(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    cancelMigration(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    convertToAssets(shares_: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    convertToAssets(shares_: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    convertToShares(assets_: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    convertToShares(assets_: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
     decreaseAllowance(
-      spender_: string,
-      subtractedAmount_: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender_: PromiseOrValue<string>,
+      subtractedAmount_: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     deposit(
-      assets_: BigNumberish,
-      receiver_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      assets_: PromiseOrValue<BigNumberish>,
+      receiver_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     depositWithPermit(
-      assets_: BigNumberish,
-      receiver_: string,
-      deadline_: BigNumberish,
-      v_: BigNumberish,
-      r_: BytesLike,
-      s_: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      assets_: PromiseOrValue<BigNumberish>,
+      receiver_: PromiseOrValue<string>,
+      deadline_: PromiseOrValue<BigNumberish>,
+      v_: PromiseOrValue<BigNumberish>,
+      r_: PromiseOrValue<BytesLike>,
+      s_: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     freeAssets(overrides?: CallOverrides): Promise<BigNumber>;
 
     increaseAllowance(
-      spender_: string,
-      addedAmount_: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender_: PromiseOrValue<string>,
+      addedAmount_: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     issuanceRate(overrides?: CallOverrides): Promise<BigNumber>;
 
     lastUpdated(overrides?: CallOverrides): Promise<BigNumber>;
 
-    maxDeposit(receiver_: string, overrides?: CallOverrides): Promise<BigNumber>;
+    maxDeposit(receiver_: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    maxMint(receiver_: string, overrides?: CallOverrides): Promise<BigNumber>;
+    maxMint(receiver_: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    maxRedeem(owner_: string, overrides?: CallOverrides): Promise<BigNumber>;
+    maxRedeem(owner_: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    maxWithdraw(owner_: string, overrides?: CallOverrides): Promise<BigNumber>;
+    maxWithdraw(owner_: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     mint(
-      shares_: BigNumberish,
-      receiver_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      shares_: PromiseOrValue<BigNumberish>,
+      receiver_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     mintWithPermit(
-      shares_: BigNumberish,
-      receiver_: string,
-      maxAssets_: BigNumberish,
-      deadline_: BigNumberish,
-      v_: BigNumberish,
-      r_: BytesLike,
-      s_: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      shares_: PromiseOrValue<BigNumberish>,
+      receiver_: PromiseOrValue<string>,
+      maxAssets_: PromiseOrValue<BigNumberish>,
+      deadline_: PromiseOrValue<BigNumberish>,
+      v_: PromiseOrValue<BigNumberish>,
+      r_: PromiseOrValue<BytesLike>,
+      s_: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     pendingOwner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    performMigration(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    performMigration(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     permit(
-      owner_: string,
-      spender_: string,
-      amount_: BigNumberish,
-      deadline_: BigNumberish,
-      v_: BigNumberish,
-      r_: BytesLike,
-      s_: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      owner_: PromiseOrValue<string>,
+      spender_: PromiseOrValue<string>,
+      amount_: PromiseOrValue<BigNumberish>,
+      deadline_: PromiseOrValue<BigNumberish>,
+      v_: PromiseOrValue<BigNumberish>,
+      r_: PromiseOrValue<BytesLike>,
+      s_: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     precision(overrides?: CallOverrides): Promise<BigNumber>;
 
-    previewDeposit(assets_: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    previewDeposit(assets_: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    previewMint(shares_: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    previewMint(shares_: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    previewRedeem(shares_: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    previewRedeem(shares_: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    previewWithdraw(assets_: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    previewWithdraw(assets_: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     redeem(
-      shares_: BigNumberish,
-      receiver_: string,
-      owner_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      shares_: PromiseOrValue<BigNumberish>,
+      receiver_: PromiseOrValue<string>,
+      owner_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     scheduleMigration(
-      migrator_: string,
-      newAsset_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      migrator_: PromiseOrValue<string>,
+      newAsset_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     scheduledMigrationTimestamp(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1117,8 +1269,8 @@ export interface MapleXMpl extends BaseContract {
     scheduledNewAsset(overrides?: CallOverrides): Promise<BigNumber>;
 
     setPendingOwner(
-      pendingOwner_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pendingOwner_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1128,30 +1280,30 @@ export interface MapleXMpl extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
-      recipient_: string,
-      amount_: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient_: PromiseOrValue<string>,
+      amount_: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferFrom(
-      owner_: string,
-      recipient_: string,
-      amount_: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      owner_: PromiseOrValue<string>,
+      recipient_: PromiseOrValue<string>,
+      amount_: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     updateVestingSchedule(
-      vestingPeriod_: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vestingPeriod_: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     vestingPeriodFinish(overrides?: CallOverrides): Promise<BigNumber>;
 
     withdraw(
-      assets_: BigNumberish,
-      receiver_: string,
-      owner_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      assets_: PromiseOrValue<BigNumberish>,
+      receiver_: PromiseOrValue<string>,
+      owner_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
@@ -1162,131 +1314,135 @@ export interface MapleXMpl extends BaseContract {
 
     PERMIT_TYPEHASH(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    acceptOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    allowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    allowance(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     approve(
-      spender_: string,
-      amount_: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender_: PromiseOrValue<string>,
+      amount_: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     asset(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    balanceOf(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    balanceOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    balanceOfAssets(account_: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    balanceOfAssets(account_: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    cancelMigration(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    cancelMigration(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    convertToAssets(shares_: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    convertToAssets(shares_: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    convertToShares(assets_: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    convertToShares(assets_: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     decreaseAllowance(
-      spender_: string,
-      subtractedAmount_: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender_: PromiseOrValue<string>,
+      subtractedAmount_: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     deposit(
-      assets_: BigNumberish,
-      receiver_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      assets_: PromiseOrValue<BigNumberish>,
+      receiver_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     depositWithPermit(
-      assets_: BigNumberish,
-      receiver_: string,
-      deadline_: BigNumberish,
-      v_: BigNumberish,
-      r_: BytesLike,
-      s_: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      assets_: PromiseOrValue<BigNumberish>,
+      receiver_: PromiseOrValue<string>,
+      deadline_: PromiseOrValue<BigNumberish>,
+      v_: PromiseOrValue<BigNumberish>,
+      r_: PromiseOrValue<BytesLike>,
+      s_: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     freeAssets(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     increaseAllowance(
-      spender_: string,
-      addedAmount_: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender_: PromiseOrValue<string>,
+      addedAmount_: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     issuanceRate(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     lastUpdated(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    maxDeposit(receiver_: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    maxDeposit(receiver_: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    maxMint(receiver_: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    maxMint(receiver_: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    maxRedeem(owner_: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    maxRedeem(owner_: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    maxWithdraw(owner_: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    maxWithdraw(owner_: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     mint(
-      shares_: BigNumberish,
-      receiver_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      shares_: PromiseOrValue<BigNumberish>,
+      receiver_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     mintWithPermit(
-      shares_: BigNumberish,
-      receiver_: string,
-      maxAssets_: BigNumberish,
-      deadline_: BigNumberish,
-      v_: BigNumberish,
-      r_: BytesLike,
-      s_: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      shares_: PromiseOrValue<BigNumberish>,
+      receiver_: PromiseOrValue<string>,
+      maxAssets_: PromiseOrValue<BigNumberish>,
+      deadline_: PromiseOrValue<BigNumberish>,
+      v_: PromiseOrValue<BigNumberish>,
+      r_: PromiseOrValue<BytesLike>,
+      s_: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     pendingOwner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    performMigration(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    performMigration(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     permit(
-      owner_: string,
-      spender_: string,
-      amount_: BigNumberish,
-      deadline_: BigNumberish,
-      v_: BigNumberish,
-      r_: BytesLike,
-      s_: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      owner_: PromiseOrValue<string>,
+      spender_: PromiseOrValue<string>,
+      amount_: PromiseOrValue<BigNumberish>,
+      deadline_: PromiseOrValue<BigNumberish>,
+      v_: PromiseOrValue<BigNumberish>,
+      r_: PromiseOrValue<BytesLike>,
+      s_: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     precision(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    previewDeposit(assets_: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    previewDeposit(assets_: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    previewMint(shares_: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    previewMint(shares_: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    previewRedeem(shares_: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    previewRedeem(shares_: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    previewWithdraw(assets_: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    previewWithdraw(assets_: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     redeem(
-      shares_: BigNumberish,
-      receiver_: string,
-      owner_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      shares_: PromiseOrValue<BigNumberish>,
+      receiver_: PromiseOrValue<string>,
+      owner_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     scheduleMigration(
-      migrator_: string,
-      newAsset_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      migrator_: PromiseOrValue<string>,
+      newAsset_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     scheduledMigrationTimestamp(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1296,8 +1452,8 @@ export interface MapleXMpl extends BaseContract {
     scheduledNewAsset(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setPendingOwner(
-      pendingOwner_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pendingOwner_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1307,30 +1463,30 @@ export interface MapleXMpl extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transfer(
-      recipient_: string,
-      amount_: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient_: PromiseOrValue<string>,
+      amount_: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferFrom(
-      owner_: string,
-      recipient_: string,
-      amount_: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      owner_: PromiseOrValue<string>,
+      recipient_: PromiseOrValue<string>,
+      amount_: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateVestingSchedule(
-      vestingPeriod_: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vestingPeriod_: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     vestingPeriodFinish(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     withdraw(
-      assets_: BigNumberish,
-      receiver_: string,
-      owner_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      assets_: PromiseOrValue<BigNumberish>,
+      receiver_: PromiseOrValue<string>,
+      owner_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

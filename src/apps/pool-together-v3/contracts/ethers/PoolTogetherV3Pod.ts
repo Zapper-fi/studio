@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface PoolTogetherV3PodInterface extends utils.Interface {
   functions: {
@@ -95,41 +95,74 @@ export interface PoolTogetherV3PodInterface extends utils.Interface {
       | 'withdrawERC721',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'allowance', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'approve', values: [string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'allowance', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'approve',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'balance', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
-  encodeFunctionData(functionFragment: 'balanceOfUnderlying', values: [string]): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'balanceOfUnderlying', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'batch', values?: undefined): string;
   encodeFunctionData(functionFragment: 'decimals', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'decreaseAllowance', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'depositTo', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'decreaseAllowance',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'depositTo',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'drop', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'emergencyTokenApproveZero', values: [string, string]): string;
+  encodeFunctionData(
+    functionFragment: 'emergencyTokenApproveZero',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'faucet', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getEarlyExitFee', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'getEarlyExitFee', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'getPricePerShare', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'increaseAllowance', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'initialize', values: [string, string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'increaseAllowance',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'initialize',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'manager', values?: undefined): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'prizePool', values?: undefined): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'setManager', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setTokenDrop', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setTokenFaucet', values: [string]): string;
+  encodeFunctionData(functionFragment: 'setManager', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setTokenDrop', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setTokenFaucet', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
   encodeFunctionData(functionFragment: 'ticket', values?: undefined): string;
   encodeFunctionData(functionFragment: 'token', values?: undefined): string;
   encodeFunctionData(functionFragment: 'tokenDrop', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transfer', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferFrom', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
-  encodeFunctionData(functionFragment: 'withdraw', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'withdrawERC20', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'withdrawERC721', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'transfer',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'transferFrom',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'withdraw',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'withdrawERC20',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'withdrawERC721',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
 
   decodeFunctionResult(functionFragment: 'allowance', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'approve', data: BytesLike): Result;
@@ -325,64 +358,71 @@ export interface PoolTogetherV3Pod extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     balance(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    balanceOfUnderlying(user: string, overrides?: CallOverrides): Promise<[BigNumber] & { amount: BigNumber }>;
+    balanceOfUnderlying(
+      user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber] & { amount: BigNumber }>;
 
-    batch(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    batch(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<[number]>;
 
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     depositTo(
-      to: string,
-      tokenAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      tokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    drop(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    drop(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     emergencyTokenApproveZero(
-      _token: string,
-      _target: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      _target: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     faucet(overrides?: CallOverrides): Promise<[string]>;
 
     getEarlyExitFee(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     getPricePerShare(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     initialize(
-      _prizePoolTarget: string,
-      _ticket: string,
-      _decimals: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _prizePoolTarget: PromiseOrValue<string>,
+      _ticket: PromiseOrValue<string>,
+      _decimals: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     manager(overrides?: CallOverrides): Promise<[string]>;
@@ -393,21 +433,21 @@ export interface PoolTogetherV3Pod extends BaseContract {
 
     prizePool(overrides?: CallOverrides): Promise<[string]>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     setManager(
-      newManager: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newManager: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setTokenDrop(
-      _tokenDrop: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokenDrop: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setTokenFaucet(
-      _faucet: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _faucet: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
@@ -421,100 +461,104 @@ export interface PoolTogetherV3Pod extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transfer(
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferFrom(
-      sender: string,
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     withdraw(
-      shareAmount: BigNumberish,
-      maxFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      shareAmount: PromiseOrValue<BigNumberish>,
+      maxFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     withdrawERC20(
-      _target: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _target: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     withdrawERC721(
-      _target: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _target: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
-  allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+  allowance(
+    owner: PromiseOrValue<string>,
+    spender: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   approve(
-    spender: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   balance(overrides?: CallOverrides): Promise<BigNumber>;
 
-  balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  balanceOfUnderlying(user: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOfUnderlying(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  batch(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  batch(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   decimals(overrides?: CallOverrides): Promise<number>;
 
   decreaseAllowance(
-    spender: string,
-    subtractedValue: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    subtractedValue: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   depositTo(
-    to: string,
-    tokenAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    to: PromiseOrValue<string>,
+    tokenAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  drop(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  drop(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   emergencyTokenApproveZero(
-    _token: string,
-    _target: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _token: PromiseOrValue<string>,
+    _target: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   faucet(overrides?: CallOverrides): Promise<string>;
 
   getEarlyExitFee(
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   getPricePerShare(overrides?: CallOverrides): Promise<BigNumber>;
 
   increaseAllowance(
-    spender: string,
-    addedValue: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    addedValue: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   initialize(
-    _prizePoolTarget: string,
-    _ticket: string,
-    _decimals: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _prizePoolTarget: PromiseOrValue<string>,
+    _ticket: PromiseOrValue<string>,
+    _decimals: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   manager(overrides?: CallOverrides): Promise<string>;
@@ -525,21 +569,21 @@ export interface PoolTogetherV3Pod extends BaseContract {
 
   prizePool(overrides?: CallOverrides): Promise<string>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   setManager(
-    newManager: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newManager: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setTokenDrop(
-    _tokenDrop: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _tokenDrop: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setTokenFaucet(
-    _faucet: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _faucet: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
@@ -553,76 +597,100 @@ export interface PoolTogetherV3Pod extends BaseContract {
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   transfer(
-    recipient: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    recipient: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferFrom(
-    sender: string,
-    recipient: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    sender: PromiseOrValue<string>,
+    recipient: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   withdraw(
-    shareAmount: BigNumberish,
-    maxFee: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    shareAmount: PromiseOrValue<BigNumberish>,
+    maxFee: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   withdrawERC20(
-    _target: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _target: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   withdrawERC721(
-    _target: string,
-    tokenId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _target: PromiseOrValue<string>,
+    tokenId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    approve(spender: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    approve(
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     balance(overrides?: CallOverrides): Promise<BigNumber>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    balanceOfUnderlying(user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOfUnderlying(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     batch(overrides?: CallOverrides): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<number>;
 
-    decreaseAllowance(spender: string, subtractedValue: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    decreaseAllowance(
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    depositTo(to: string, tokenAmount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    depositTo(
+      to: PromiseOrValue<string>,
+      tokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     drop(overrides?: CallOverrides): Promise<BigNumber>;
 
-    emergencyTokenApproveZero(_token: string, _target: string, overrides?: CallOverrides): Promise<void>;
+    emergencyTokenApproveZero(
+      _token: PromiseOrValue<string>,
+      _target: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     faucet(overrides?: CallOverrides): Promise<string>;
 
-    getEarlyExitFee(amount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getEarlyExitFee(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getPricePerShare(overrides?: CallOverrides): Promise<BigNumber>;
 
-    increaseAllowance(spender: string, addedValue: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    increaseAllowance(
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     initialize(
-      _prizePoolTarget: string,
-      _ticket: string,
-      _decimals: BigNumberish,
+      _prizePoolTarget: PromiseOrValue<string>,
+      _ticket: PromiseOrValue<string>,
+      _decimals: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -636,11 +704,11 @@ export interface PoolTogetherV3Pod extends BaseContract {
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
-    setManager(newManager: string, overrides?: CallOverrides): Promise<boolean>;
+    setManager(newManager: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-    setTokenDrop(_tokenDrop: string, overrides?: CallOverrides): Promise<boolean>;
+    setTokenDrop(_tokenDrop: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-    setTokenFaucet(_faucet: string, overrides?: CallOverrides): Promise<boolean>;
+    setTokenFaucet(_faucet: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     symbol(overrides?: CallOverrides): Promise<string>;
 
@@ -652,132 +720,183 @@ export interface PoolTogetherV3Pod extends BaseContract {
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transfer(recipient: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transfer(
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    transferFrom(sender: string, recipient: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transferFrom(
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    withdraw(shareAmount: BigNumberish, maxFee: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    withdraw(
+      shareAmount: PromiseOrValue<BigNumberish>,
+      maxFee: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    withdrawERC20(_target: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    withdrawERC20(
+      _target: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    withdrawERC721(_target: string, tokenId: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    withdrawERC721(
+      _target: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
   };
 
   filters: {
     'Approval(address,address,uint256)'(
-      owner?: string | null,
-      spender?: string | null,
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
       value?: null,
     ): ApprovalEventFilter;
-    Approval(owner?: string | null, spender?: string | null, value?: null): ApprovalEventFilter;
+    Approval(
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
+      value?: null,
+    ): ApprovalEventFilter;
 
     'BatchFloat(uint256)'(amount?: null): BatchFloatEventFilter;
     BatchFloat(amount?: null): BatchFloatEventFilter;
 
-    'Claimed(address,uint256)'(user?: string | null, balance?: null): ClaimedEventFilter;
-    Claimed(user?: string | null, balance?: null): ClaimedEventFilter;
+    'Claimed(address,uint256)'(user?: PromiseOrValue<string> | null, balance?: null): ClaimedEventFilter;
+    Claimed(user?: PromiseOrValue<string> | null, balance?: null): ClaimedEventFilter;
 
-    'Deposited(address,uint256,uint256)'(user?: string | null, amount?: null, shares?: null): DepositedEventFilter;
-    Deposited(user?: string | null, amount?: null, shares?: null): DepositedEventFilter;
+    'Deposited(address,uint256,uint256)'(
+      user?: PromiseOrValue<string> | null,
+      amount?: null,
+      shares?: null,
+    ): DepositedEventFilter;
+    Deposited(user?: PromiseOrValue<string> | null, amount?: null, shares?: null): DepositedEventFilter;
 
-    'ERC20Withdrawn(address,uint256)'(target?: string | null, amount?: null): ERC20WithdrawnEventFilter;
-    ERC20Withdrawn(target?: string | null, amount?: null): ERC20WithdrawnEventFilter;
+    'ERC20Withdrawn(address,uint256)'(target?: PromiseOrValue<string> | null, amount?: null): ERC20WithdrawnEventFilter;
+    ERC20Withdrawn(target?: PromiseOrValue<string> | null, amount?: null): ERC20WithdrawnEventFilter;
 
-    'ERC721Withdrawn(address,uint256)'(target?: string | null, tokenId?: null): ERC721WithdrawnEventFilter;
-    ERC721Withdrawn(target?: string | null, tokenId?: null): ERC721WithdrawnEventFilter;
+    'ERC721Withdrawn(address,uint256)'(
+      target?: PromiseOrValue<string> | null,
+      tokenId?: null,
+    ): ERC721WithdrawnEventFilter;
+    ERC721Withdrawn(target?: PromiseOrValue<string> | null, tokenId?: null): ERC721WithdrawnEventFilter;
 
     'ManagementTransferred(address,address)'(
-      previousmanager?: string | null,
-      newmanager?: string | null,
+      previousmanager?: PromiseOrValue<string> | null,
+      newmanager?: PromiseOrValue<string> | null,
     ): ManagementTransferredEventFilter;
     ManagementTransferred(
-      previousmanager?: string | null,
-      newmanager?: string | null,
+      previousmanager?: PromiseOrValue<string> | null,
+      newmanager?: PromiseOrValue<string> | null,
     ): ManagementTransferredEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
 
     'PodClaimed(uint256)'(amount?: null): PodClaimedEventFilter;
     PodClaimed(amount?: null): PodClaimedEventFilter;
 
-    'TokenDropSet(address)'(drop?: string | null): TokenDropSetEventFilter;
-    TokenDropSet(drop?: string | null): TokenDropSetEventFilter;
+    'TokenDropSet(address)'(drop?: PromiseOrValue<string> | null): TokenDropSetEventFilter;
+    TokenDropSet(drop?: PromiseOrValue<string> | null): TokenDropSetEventFilter;
 
-    'TokenFaucetSet(address)'(drop?: string | null): TokenFaucetSetEventFilter;
-    TokenFaucetSet(drop?: string | null): TokenFaucetSetEventFilter;
+    'TokenFaucetSet(address)'(drop?: PromiseOrValue<string> | null): TokenFaucetSetEventFilter;
+    TokenFaucetSet(drop?: PromiseOrValue<string> | null): TokenFaucetSetEventFilter;
 
-    'Transfer(address,address,uint256)'(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
-    Transfer(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
+    'Transfer(address,address,uint256)'(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
+    Transfer(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
 
-    'Withdrawal(address,uint256,uint256)'(user?: string | null, amount?: null, shares?: null): WithdrawalEventFilter;
-    Withdrawal(user?: string | null, amount?: null, shares?: null): WithdrawalEventFilter;
+    'Withdrawal(address,uint256,uint256)'(
+      user?: PromiseOrValue<string> | null,
+      amount?: null,
+      shares?: null,
+    ): WithdrawalEventFilter;
+    Withdrawal(user?: PromiseOrValue<string> | null, amount?: null, shares?: null): WithdrawalEventFilter;
   };
 
   estimateGas: {
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     balance(overrides?: CallOverrides): Promise<BigNumber>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    balanceOfUnderlying(user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOfUnderlying(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    batch(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    batch(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     depositTo(
-      to: string,
-      tokenAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      tokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    drop(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    drop(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     emergencyTokenApproveZero(
-      _token: string,
-      _target: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      _target: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     faucet(overrides?: CallOverrides): Promise<BigNumber>;
 
     getEarlyExitFee(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     getPricePerShare(overrides?: CallOverrides): Promise<BigNumber>;
 
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     initialize(
-      _prizePoolTarget: string,
-      _ticket: string,
-      _decimals: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _prizePoolTarget: PromiseOrValue<string>,
+      _ticket: PromiseOrValue<string>,
+      _decimals: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     manager(overrides?: CallOverrides): Promise<BigNumber>;
@@ -788,13 +907,22 @@ export interface PoolTogetherV3Pod extends BaseContract {
 
     prizePool(overrides?: CallOverrides): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    setManager(newManager: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setManager(
+      newManager: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    setTokenDrop(_tokenDrop: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setTokenDrop(
+      _tokenDrop: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    setTokenFaucet(_faucet: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setTokenFaucet(
+      _faucet: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -807,101 +935,105 @@ export interface PoolTogetherV3Pod extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferFrom(
-      sender: string,
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     withdraw(
-      shareAmount: BigNumberish,
-      maxFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      shareAmount: PromiseOrValue<BigNumberish>,
+      maxFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     withdrawERC20(
-      _target: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _target: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     withdrawERC721(
-      _target: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _target: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     balance(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    balanceOfUnderlying(user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    balanceOfUnderlying(user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    batch(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    batch(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     depositTo(
-      to: string,
-      tokenAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      tokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    drop(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    drop(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     emergencyTokenApproveZero(
-      _token: string,
-      _target: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      _target: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     faucet(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getEarlyExitFee(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     getPricePerShare(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     initialize(
-      _prizePoolTarget: string,
-      _ticket: string,
-      _decimals: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _prizePoolTarget: PromiseOrValue<string>,
+      _ticket: PromiseOrValue<string>,
+      _decimals: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     manager(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -912,21 +1044,21 @@ export interface PoolTogetherV3Pod extends BaseContract {
 
     prizePool(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     setManager(
-      newManager: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newManager: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setTokenDrop(
-      _tokenDrop: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokenDrop: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setTokenFaucet(
-      _faucet: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _faucet: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -940,39 +1072,39 @@ export interface PoolTogetherV3Pod extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transfer(
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferFrom(
-      sender: string,
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     withdraw(
-      shareAmount: BigNumberish,
-      maxFee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      shareAmount: PromiseOrValue<BigNumberish>,
+      maxFee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     withdrawERC20(
-      _target: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _target: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     withdrawERC721(
-      _target: string,
-      tokenId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _target: PromiseOrValue<string>,
+      tokenId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

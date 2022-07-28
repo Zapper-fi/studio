@@ -16,7 +16,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface EthArbMessengerInterface extends utils.Interface {
   functions: {
@@ -35,10 +35,18 @@ export interface EthArbMessengerInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'relayMessage',
-    values: [string, string, BigNumberish, BigNumberish, BigNumberish, BigNumberish, BytesLike],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
 
   decodeFunctionResult(functionFragment: 'inbox', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
@@ -109,21 +117,21 @@ export interface EthArbMessenger extends BaseContract {
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     relayMessage(
-      target: string,
-      userToRefund: string,
-      l1CallValue: BigNumberish,
-      gasLimit: BigNumberish,
-      gasPrice: BigNumberish,
-      maxSubmissionCost: BigNumberish,
-      message: BytesLike,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      target: PromiseOrValue<string>,
+      userToRefund: PromiseOrValue<string>,
+      l1CallValue: PromiseOrValue<BigNumberish>,
+      gasLimit: PromiseOrValue<BigNumberish>,
+      gasPrice: PromiseOrValue<BigNumberish>,
+      maxSubmissionCost: PromiseOrValue<BigNumberish>,
+      message: PromiseOrValue<BytesLike>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
@@ -132,21 +140,21 @@ export interface EthArbMessenger extends BaseContract {
   owner(overrides?: CallOverrides): Promise<string>;
 
   relayMessage(
-    target: string,
-    userToRefund: string,
-    l1CallValue: BigNumberish,
-    gasLimit: BigNumberish,
-    gasPrice: BigNumberish,
-    maxSubmissionCost: BigNumberish,
-    message: BytesLike,
-    overrides?: PayableOverrides & { from?: string | Promise<string> },
+    target: PromiseOrValue<string>,
+    userToRefund: PromiseOrValue<string>,
+    l1CallValue: PromiseOrValue<BigNumberish>,
+    gasLimit: PromiseOrValue<BigNumberish>,
+    gasPrice: PromiseOrValue<BigNumberish>,
+    maxSubmissionCost: PromiseOrValue<BigNumberish>,
+    message: PromiseOrValue<BytesLike>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
@@ -155,32 +163,35 @@ export interface EthArbMessenger extends BaseContract {
     owner(overrides?: CallOverrides): Promise<string>;
 
     relayMessage(
-      target: string,
-      userToRefund: string,
-      l1CallValue: BigNumberish,
-      gasLimit: BigNumberish,
-      gasPrice: BigNumberish,
-      maxSubmissionCost: BigNumberish,
-      message: BytesLike,
+      target: PromiseOrValue<string>,
+      userToRefund: PromiseOrValue<string>,
+      l1CallValue: PromiseOrValue<BigNumberish>,
+      gasLimit: PromiseOrValue<BigNumberish>,
+      gasPrice: PromiseOrValue<BigNumberish>,
+      maxSubmissionCost: PromiseOrValue<BigNumberish>,
+      message: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
 
     'RelayedMessage(address,address,uint256,address,uint256,uint256,uint256,uint256,bytes)'(
-      from?: string | null,
-      to?: string | null,
-      seqNum?: BigNumberish | null,
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      seqNum?: PromiseOrValue<BigNumberish> | null,
       userToRefund?: null,
       l1CallValue?: null,
       gasLimit?: null,
@@ -189,9 +200,9 @@ export interface EthArbMessenger extends BaseContract {
       data?: null,
     ): RelayedMessageEventFilter;
     RelayedMessage(
-      from?: string | null,
-      to?: string | null,
-      seqNum?: BigNumberish | null,
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      seqNum?: PromiseOrValue<BigNumberish> | null,
       userToRefund?: null,
       l1CallValue?: null,
       gasLimit?: null,
@@ -207,21 +218,21 @@ export interface EthArbMessenger extends BaseContract {
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     relayMessage(
-      target: string,
-      userToRefund: string,
-      l1CallValue: BigNumberish,
-      gasLimit: BigNumberish,
-      gasPrice: BigNumberish,
-      maxSubmissionCost: BigNumberish,
-      message: BytesLike,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      target: PromiseOrValue<string>,
+      userToRefund: PromiseOrValue<string>,
+      l1CallValue: PromiseOrValue<BigNumberish>,
+      gasLimit: PromiseOrValue<BigNumberish>,
+      gasPrice: PromiseOrValue<BigNumberish>,
+      maxSubmissionCost: PromiseOrValue<BigNumberish>,
+      message: PromiseOrValue<BytesLike>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
@@ -231,21 +242,21 @@ export interface EthArbMessenger extends BaseContract {
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     relayMessage(
-      target: string,
-      userToRefund: string,
-      l1CallValue: BigNumberish,
-      gasLimit: BigNumberish,
-      gasPrice: BigNumberish,
-      maxSubmissionCost: BigNumberish,
-      message: BytesLike,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      target: PromiseOrValue<string>,
+      userToRefund: PromiseOrValue<string>,
+      l1CallValue: PromiseOrValue<BigNumberish>,
+      gasLimit: PromiseOrValue<BigNumberish>,
+      gasPrice: PromiseOrValue<BigNumberish>,
+      maxSubmissionCost: PromiseOrValue<BigNumberish>,
+      message: PromiseOrValue<BytesLike>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

@@ -16,12 +16,12 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export declare namespace BridgeAdminInterface {
   export type DepositUtilityContractsStruct = {
-    depositContract: string;
-    messengerContract: string;
+    depositContract: PromiseOrValue<string>;
+    messengerContract: PromiseOrValue<string>;
   };
 
   export type DepositUtilityContractsStructOutput = [string, string] & {
@@ -74,7 +74,7 @@ export interface EthBridgeAdminInterface extends utils.Interface {
       | 'whitelistedTokens',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'depositContracts', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'depositContracts', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'finder', values?: undefined): string;
   encodeFunctionData(functionFragment: 'identifier', values?: undefined): string;
   encodeFunctionData(functionFragment: 'optimisticOracleLiveness', values?: undefined): string;
@@ -83,27 +83,67 @@ export interface EthBridgeAdminInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'setCrossDomainAdmin',
-    values: [BigNumberish, string, BigNumberish, BigNumberish, BigNumberish, BigNumberish],
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'setDepositContract', values: [BigNumberish, string, string]): string;
+  encodeFunctionData(
+    functionFragment: 'setDepositContract',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(
     functionFragment: 'setEnableDeposits',
-    values: [BigNumberish, string, boolean, BigNumberish, BigNumberish, BigNumberish, BigNumberish],
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<boolean>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'setIdentifier', values: [BytesLike]): string;
+  encodeFunctionData(functionFragment: 'setIdentifier', values: [PromiseOrValue<BytesLike>]): string;
   encodeFunctionData(
     functionFragment: 'setMinimumBridgingDelay',
-    values: [BigNumberish, BigNumberish, BigNumberish, BigNumberish, BigNumberish, BigNumberish],
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'setOptimisticOracleLiveness', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setProposerBondPct', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferBridgePoolAdmin', values: [string[], string]): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
+  encodeFunctionData(functionFragment: 'setOptimisticOracleLiveness', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setProposerBondPct', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'transferBridgePoolAdmin',
+    values: [PromiseOrValue<string>[], PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
     functionFragment: 'whitelistToken',
-    values: [BigNumberish, string, string, string, BigNumberish, BigNumberish, BigNumberish, BigNumberish],
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'whitelistedTokens', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'whitelistedTokens',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
 
   decodeFunctionResult(functionFragment: 'depositContracts', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'finder', data: BytesLike): Result;
@@ -254,7 +294,7 @@ export interface EthBridgeAdmin extends BaseContract {
 
   functions: {
     depositContracts(
-      chainId: BigNumberish,
+      chainId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BridgeAdminInterface.DepositUtilityContractsStructOutput]>;
 
@@ -268,93 +308,93 @@ export interface EthBridgeAdmin extends BaseContract {
 
     proposerBondPct(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     setCrossDomainAdmin(
-      chainId: BigNumberish,
-      admin: string,
-      l1CallValue: BigNumberish,
-      l2Gas: BigNumberish,
-      l2GasPrice: BigNumberish,
-      maxSubmissionCost: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      chainId: PromiseOrValue<BigNumberish>,
+      admin: PromiseOrValue<string>,
+      l1CallValue: PromiseOrValue<BigNumberish>,
+      l2Gas: PromiseOrValue<BigNumberish>,
+      l2GasPrice: PromiseOrValue<BigNumberish>,
+      maxSubmissionCost: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setDepositContract(
-      chainId: BigNumberish,
-      depositContract: string,
-      messengerContract: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      chainId: PromiseOrValue<BigNumberish>,
+      depositContract: PromiseOrValue<string>,
+      messengerContract: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setEnableDeposits(
-      chainId: BigNumberish,
-      l2Token: string,
-      depositsEnabled: boolean,
-      l1CallValue: BigNumberish,
-      l2Gas: BigNumberish,
-      l2GasPrice: BigNumberish,
-      maxSubmissionCost: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      chainId: PromiseOrValue<BigNumberish>,
+      l2Token: PromiseOrValue<string>,
+      depositsEnabled: PromiseOrValue<boolean>,
+      l1CallValue: PromiseOrValue<BigNumberish>,
+      l2Gas: PromiseOrValue<BigNumberish>,
+      l2GasPrice: PromiseOrValue<BigNumberish>,
+      maxSubmissionCost: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setIdentifier(
-      _identifier: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _identifier: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setMinimumBridgingDelay(
-      chainId: BigNumberish,
-      minimumBridgingDelay: BigNumberish,
-      l1CallValue: BigNumberish,
-      l2Gas: BigNumberish,
-      l2GasPrice: BigNumberish,
-      maxSubmissionCost: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      chainId: PromiseOrValue<BigNumberish>,
+      minimumBridgingDelay: PromiseOrValue<BigNumberish>,
+      l1CallValue: PromiseOrValue<BigNumberish>,
+      l2Gas: PromiseOrValue<BigNumberish>,
+      l2GasPrice: PromiseOrValue<BigNumberish>,
+      maxSubmissionCost: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setOptimisticOracleLiveness(
-      liveness: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      liveness: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setProposerBondPct(
-      _proposerBondPct: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _proposerBondPct: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferBridgePoolAdmin(
-      bridgePools: string[],
-      newAdmin: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      bridgePools: PromiseOrValue<string>[],
+      newAdmin: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     whitelistToken(
-      chainId: BigNumberish,
-      l1Token: string,
-      l2Token: string,
-      bridgePool: string,
-      l1CallValue: BigNumberish,
-      l2Gas: BigNumberish,
-      l2GasPrice: BigNumberish,
-      maxSubmissionCost: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      chainId: PromiseOrValue<BigNumberish>,
+      l1Token: PromiseOrValue<string>,
+      l2Token: PromiseOrValue<string>,
+      bridgePool: PromiseOrValue<string>,
+      l1CallValue: PromiseOrValue<BigNumberish>,
+      l2Gas: PromiseOrValue<BigNumberish>,
+      l2GasPrice: PromiseOrValue<BigNumberish>,
+      maxSubmissionCost: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     whitelistedTokens(
-      l1Token: string,
-      chainId: BigNumberish,
+      l1Token: PromiseOrValue<string>,
+      chainId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[string, string] & { l2Token: string; bridgePool: string }>;
   };
 
   depositContracts(
-    chainId: BigNumberish,
+    chainId: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<BridgeAdminInterface.DepositUtilityContractsStructOutput>;
 
@@ -368,93 +408,93 @@ export interface EthBridgeAdmin extends BaseContract {
 
   proposerBondPct(overrides?: CallOverrides): Promise<BigNumber>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   setCrossDomainAdmin(
-    chainId: BigNumberish,
-    admin: string,
-    l1CallValue: BigNumberish,
-    l2Gas: BigNumberish,
-    l2GasPrice: BigNumberish,
-    maxSubmissionCost: BigNumberish,
-    overrides?: PayableOverrides & { from?: string | Promise<string> },
+    chainId: PromiseOrValue<BigNumberish>,
+    admin: PromiseOrValue<string>,
+    l1CallValue: PromiseOrValue<BigNumberish>,
+    l2Gas: PromiseOrValue<BigNumberish>,
+    l2GasPrice: PromiseOrValue<BigNumberish>,
+    maxSubmissionCost: PromiseOrValue<BigNumberish>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setDepositContract(
-    chainId: BigNumberish,
-    depositContract: string,
-    messengerContract: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    chainId: PromiseOrValue<BigNumberish>,
+    depositContract: PromiseOrValue<string>,
+    messengerContract: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setEnableDeposits(
-    chainId: BigNumberish,
-    l2Token: string,
-    depositsEnabled: boolean,
-    l1CallValue: BigNumberish,
-    l2Gas: BigNumberish,
-    l2GasPrice: BigNumberish,
-    maxSubmissionCost: BigNumberish,
-    overrides?: PayableOverrides & { from?: string | Promise<string> },
+    chainId: PromiseOrValue<BigNumberish>,
+    l2Token: PromiseOrValue<string>,
+    depositsEnabled: PromiseOrValue<boolean>,
+    l1CallValue: PromiseOrValue<BigNumberish>,
+    l2Gas: PromiseOrValue<BigNumberish>,
+    l2GasPrice: PromiseOrValue<BigNumberish>,
+    maxSubmissionCost: PromiseOrValue<BigNumberish>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setIdentifier(
-    _identifier: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _identifier: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setMinimumBridgingDelay(
-    chainId: BigNumberish,
-    minimumBridgingDelay: BigNumberish,
-    l1CallValue: BigNumberish,
-    l2Gas: BigNumberish,
-    l2GasPrice: BigNumberish,
-    maxSubmissionCost: BigNumberish,
-    overrides?: PayableOverrides & { from?: string | Promise<string> },
+    chainId: PromiseOrValue<BigNumberish>,
+    minimumBridgingDelay: PromiseOrValue<BigNumberish>,
+    l1CallValue: PromiseOrValue<BigNumberish>,
+    l2Gas: PromiseOrValue<BigNumberish>,
+    l2GasPrice: PromiseOrValue<BigNumberish>,
+    maxSubmissionCost: PromiseOrValue<BigNumberish>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setOptimisticOracleLiveness(
-    liveness: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    liveness: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setProposerBondPct(
-    _proposerBondPct: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _proposerBondPct: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferBridgePoolAdmin(
-    bridgePools: string[],
-    newAdmin: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    bridgePools: PromiseOrValue<string>[],
+    newAdmin: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   whitelistToken(
-    chainId: BigNumberish,
-    l1Token: string,
-    l2Token: string,
-    bridgePool: string,
-    l1CallValue: BigNumberish,
-    l2Gas: BigNumberish,
-    l2GasPrice: BigNumberish,
-    maxSubmissionCost: BigNumberish,
-    overrides?: PayableOverrides & { from?: string | Promise<string> },
+    chainId: PromiseOrValue<BigNumberish>,
+    l1Token: PromiseOrValue<string>,
+    l2Token: PromiseOrValue<string>,
+    bridgePool: PromiseOrValue<string>,
+    l1CallValue: PromiseOrValue<BigNumberish>,
+    l2Gas: PromiseOrValue<BigNumberish>,
+    l2GasPrice: PromiseOrValue<BigNumberish>,
+    maxSubmissionCost: PromiseOrValue<BigNumberish>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   whitelistedTokens(
-    l1Token: string,
-    chainId: BigNumberish,
+    l1Token: PromiseOrValue<string>,
+    chainId: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<[string, string] & { l2Token: string; bridgePool: string }>;
 
   callStatic: {
     depositContracts(
-      chainId: BigNumberish,
+      chainId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BridgeAdminInterface.DepositUtilityContractsStructOutput>;
 
@@ -471,68 +511,72 @@ export interface EthBridgeAdmin extends BaseContract {
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
     setCrossDomainAdmin(
-      chainId: BigNumberish,
-      admin: string,
-      l1CallValue: BigNumberish,
-      l2Gas: BigNumberish,
-      l2GasPrice: BigNumberish,
-      maxSubmissionCost: BigNumberish,
+      chainId: PromiseOrValue<BigNumberish>,
+      admin: PromiseOrValue<string>,
+      l1CallValue: PromiseOrValue<BigNumberish>,
+      l2Gas: PromiseOrValue<BigNumberish>,
+      l2GasPrice: PromiseOrValue<BigNumberish>,
+      maxSubmissionCost: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     setDepositContract(
-      chainId: BigNumberish,
-      depositContract: string,
-      messengerContract: string,
+      chainId: PromiseOrValue<BigNumberish>,
+      depositContract: PromiseOrValue<string>,
+      messengerContract: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     setEnableDeposits(
-      chainId: BigNumberish,
-      l2Token: string,
-      depositsEnabled: boolean,
-      l1CallValue: BigNumberish,
-      l2Gas: BigNumberish,
-      l2GasPrice: BigNumberish,
-      maxSubmissionCost: BigNumberish,
+      chainId: PromiseOrValue<BigNumberish>,
+      l2Token: PromiseOrValue<string>,
+      depositsEnabled: PromiseOrValue<boolean>,
+      l1CallValue: PromiseOrValue<BigNumberish>,
+      l2Gas: PromiseOrValue<BigNumberish>,
+      l2GasPrice: PromiseOrValue<BigNumberish>,
+      maxSubmissionCost: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    setIdentifier(_identifier: BytesLike, overrides?: CallOverrides): Promise<void>;
+    setIdentifier(_identifier: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<void>;
 
     setMinimumBridgingDelay(
-      chainId: BigNumberish,
-      minimumBridgingDelay: BigNumberish,
-      l1CallValue: BigNumberish,
-      l2Gas: BigNumberish,
-      l2GasPrice: BigNumberish,
-      maxSubmissionCost: BigNumberish,
+      chainId: PromiseOrValue<BigNumberish>,
+      minimumBridgingDelay: PromiseOrValue<BigNumberish>,
+      l1CallValue: PromiseOrValue<BigNumberish>,
+      l2Gas: PromiseOrValue<BigNumberish>,
+      l2GasPrice: PromiseOrValue<BigNumberish>,
+      maxSubmissionCost: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    setOptimisticOracleLiveness(liveness: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setOptimisticOracleLiveness(liveness: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setProposerBondPct(_proposerBondPct: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setProposerBondPct(_proposerBondPct: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    transferBridgePoolAdmin(bridgePools: string[], newAdmin: string, overrides?: CallOverrides): Promise<void>;
+    transferBridgePoolAdmin(
+      bridgePools: PromiseOrValue<string>[],
+      newAdmin: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     whitelistToken(
-      chainId: BigNumberish,
-      l1Token: string,
-      l2Token: string,
-      bridgePool: string,
-      l1CallValue: BigNumberish,
-      l2Gas: BigNumberish,
-      l2GasPrice: BigNumberish,
-      maxSubmissionCost: BigNumberish,
+      chainId: PromiseOrValue<BigNumberish>,
+      l1Token: PromiseOrValue<string>,
+      l2Token: PromiseOrValue<string>,
+      bridgePool: PromiseOrValue<string>,
+      l1CallValue: PromiseOrValue<BigNumberish>,
+      l2Gas: PromiseOrValue<BigNumberish>,
+      l2GasPrice: PromiseOrValue<BigNumberish>,
+      maxSubmissionCost: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     whitelistedTokens(
-      l1Token: string,
-      chainId: BigNumberish,
+      l1Token: PromiseOrValue<string>,
+      chainId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[string, string] & { l2Token: string; bridgePool: string }>;
   };
@@ -540,78 +584,89 @@ export interface EthBridgeAdmin extends BaseContract {
   filters: {
     'BridgePoolsAdminTransferred(address[],address)'(
       bridgePools?: null,
-      newAdmin?: string | null,
+      newAdmin?: PromiseOrValue<string> | null,
     ): BridgePoolsAdminTransferredEventFilter;
-    BridgePoolsAdminTransferred(bridgePools?: null, newAdmin?: string | null): BridgePoolsAdminTransferredEventFilter;
+    BridgePoolsAdminTransferred(
+      bridgePools?: null,
+      newAdmin?: PromiseOrValue<string> | null,
+    ): BridgePoolsAdminTransferredEventFilter;
 
     'DepositsEnabled(uint256,address,bool)'(
-      chainId?: BigNumberish | null,
-      l2Token?: string | null,
+      chainId?: PromiseOrValue<BigNumberish> | null,
+      l2Token?: PromiseOrValue<string> | null,
       depositsEnabled?: null,
     ): DepositsEnabledEventFilter;
     DepositsEnabled(
-      chainId?: BigNumberish | null,
-      l2Token?: string | null,
+      chainId?: PromiseOrValue<BigNumberish> | null,
+      l2Token?: PromiseOrValue<string> | null,
       depositsEnabled?: null,
     ): DepositsEnabledEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
 
     'SetCrossDomainAdmin(uint256,address)'(
-      chainId?: BigNumberish | null,
-      newAdmin?: string | null,
+      chainId?: PromiseOrValue<BigNumberish> | null,
+      newAdmin?: PromiseOrValue<string> | null,
     ): SetCrossDomainAdminEventFilter;
-    SetCrossDomainAdmin(chainId?: BigNumberish | null, newAdmin?: string | null): SetCrossDomainAdminEventFilter;
+    SetCrossDomainAdmin(
+      chainId?: PromiseOrValue<BigNumberish> | null,
+      newAdmin?: PromiseOrValue<string> | null,
+    ): SetCrossDomainAdminEventFilter;
 
     'SetDepositContracts(uint256,address,address)'(
-      chainId?: BigNumberish | null,
-      l2DepositContract?: string | null,
-      l2MessengerContract?: string | null,
+      chainId?: PromiseOrValue<BigNumberish> | null,
+      l2DepositContract?: PromiseOrValue<string> | null,
+      l2MessengerContract?: PromiseOrValue<string> | null,
     ): SetDepositContractsEventFilter;
     SetDepositContracts(
-      chainId?: BigNumberish | null,
-      l2DepositContract?: string | null,
-      l2MessengerContract?: string | null,
+      chainId?: PromiseOrValue<BigNumberish> | null,
+      l2DepositContract?: PromiseOrValue<string> | null,
+      l2MessengerContract?: PromiseOrValue<string> | null,
     ): SetDepositContractsEventFilter;
 
     'SetMinimumBridgingDelay(uint256,uint64)'(
-      chainId?: BigNumberish | null,
+      chainId?: PromiseOrValue<BigNumberish> | null,
       newMinimumBridgingDelay?: null,
     ): SetMinimumBridgingDelayEventFilter;
     SetMinimumBridgingDelay(
-      chainId?: BigNumberish | null,
+      chainId?: PromiseOrValue<BigNumberish> | null,
       newMinimumBridgingDelay?: null,
     ): SetMinimumBridgingDelayEventFilter;
 
-    'SetOptimisticOracleLiveness(uint32)'(liveness?: BigNumberish | null): SetOptimisticOracleLivenessEventFilter;
-    SetOptimisticOracleLiveness(liveness?: BigNumberish | null): SetOptimisticOracleLivenessEventFilter;
+    'SetOptimisticOracleLiveness(uint32)'(
+      liveness?: PromiseOrValue<BigNumberish> | null,
+    ): SetOptimisticOracleLivenessEventFilter;
+    SetOptimisticOracleLiveness(liveness?: PromiseOrValue<BigNumberish> | null): SetOptimisticOracleLivenessEventFilter;
 
-    'SetProposerBondPct(uint64)'(proposerBondPct?: BigNumberish | null): SetProposerBondPctEventFilter;
-    SetProposerBondPct(proposerBondPct?: BigNumberish | null): SetProposerBondPctEventFilter;
+    'SetProposerBondPct(uint64)'(proposerBondPct?: PromiseOrValue<BigNumberish> | null): SetProposerBondPctEventFilter;
+    SetProposerBondPct(proposerBondPct?: PromiseOrValue<BigNumberish> | null): SetProposerBondPctEventFilter;
 
-    'SetRelayIdentifier(bytes32)'(identifier?: BytesLike | null): SetRelayIdentifierEventFilter;
-    SetRelayIdentifier(identifier?: BytesLike | null): SetRelayIdentifierEventFilter;
+    'SetRelayIdentifier(bytes32)'(identifier?: PromiseOrValue<BytesLike> | null): SetRelayIdentifierEventFilter;
+    SetRelayIdentifier(identifier?: PromiseOrValue<BytesLike> | null): SetRelayIdentifierEventFilter;
 
     'WhitelistToken(uint256,address,address,address)'(
       chainId?: null,
-      l1Token?: string | null,
-      l2Token?: string | null,
-      bridgePool?: string | null,
+      l1Token?: PromiseOrValue<string> | null,
+      l2Token?: PromiseOrValue<string> | null,
+      bridgePool?: PromiseOrValue<string> | null,
     ): WhitelistTokenEventFilter;
     WhitelistToken(
       chainId?: null,
-      l1Token?: string | null,
-      l2Token?: string | null,
-      bridgePool?: string | null,
+      l1Token?: PromiseOrValue<string> | null,
+      l2Token?: PromiseOrValue<string> | null,
+      bridgePool?: PromiseOrValue<string> | null,
     ): WhitelistTokenEventFilter;
   };
 
   estimateGas: {
-    depositContracts(chainId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    depositContracts(chainId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     finder(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -623,89 +678,93 @@ export interface EthBridgeAdmin extends BaseContract {
 
     proposerBondPct(overrides?: CallOverrides): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     setCrossDomainAdmin(
-      chainId: BigNumberish,
-      admin: string,
-      l1CallValue: BigNumberish,
-      l2Gas: BigNumberish,
-      l2GasPrice: BigNumberish,
-      maxSubmissionCost: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      chainId: PromiseOrValue<BigNumberish>,
+      admin: PromiseOrValue<string>,
+      l1CallValue: PromiseOrValue<BigNumberish>,
+      l2Gas: PromiseOrValue<BigNumberish>,
+      l2GasPrice: PromiseOrValue<BigNumberish>,
+      maxSubmissionCost: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setDepositContract(
-      chainId: BigNumberish,
-      depositContract: string,
-      messengerContract: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      chainId: PromiseOrValue<BigNumberish>,
+      depositContract: PromiseOrValue<string>,
+      messengerContract: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setEnableDeposits(
-      chainId: BigNumberish,
-      l2Token: string,
-      depositsEnabled: boolean,
-      l1CallValue: BigNumberish,
-      l2Gas: BigNumberish,
-      l2GasPrice: BigNumberish,
-      maxSubmissionCost: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      chainId: PromiseOrValue<BigNumberish>,
+      l2Token: PromiseOrValue<string>,
+      depositsEnabled: PromiseOrValue<boolean>,
+      l1CallValue: PromiseOrValue<BigNumberish>,
+      l2Gas: PromiseOrValue<BigNumberish>,
+      l2GasPrice: PromiseOrValue<BigNumberish>,
+      maxSubmissionCost: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setIdentifier(
-      _identifier: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _identifier: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setMinimumBridgingDelay(
-      chainId: BigNumberish,
-      minimumBridgingDelay: BigNumberish,
-      l1CallValue: BigNumberish,
-      l2Gas: BigNumberish,
-      l2GasPrice: BigNumberish,
-      maxSubmissionCost: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      chainId: PromiseOrValue<BigNumberish>,
+      minimumBridgingDelay: PromiseOrValue<BigNumberish>,
+      l1CallValue: PromiseOrValue<BigNumberish>,
+      l2Gas: PromiseOrValue<BigNumberish>,
+      l2GasPrice: PromiseOrValue<BigNumberish>,
+      maxSubmissionCost: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setOptimisticOracleLiveness(
-      liveness: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      liveness: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setProposerBondPct(
-      _proposerBondPct: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _proposerBondPct: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferBridgePoolAdmin(
-      bridgePools: string[],
-      newAdmin: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      bridgePools: PromiseOrValue<string>[],
+      newAdmin: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     whitelistToken(
-      chainId: BigNumberish,
-      l1Token: string,
-      l2Token: string,
-      bridgePool: string,
-      l1CallValue: BigNumberish,
-      l2Gas: BigNumberish,
-      l2GasPrice: BigNumberish,
-      maxSubmissionCost: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      chainId: PromiseOrValue<BigNumberish>,
+      l1Token: PromiseOrValue<string>,
+      l2Token: PromiseOrValue<string>,
+      bridgePool: PromiseOrValue<string>,
+      l1CallValue: PromiseOrValue<BigNumberish>,
+      l2Gas: PromiseOrValue<BigNumberish>,
+      l2GasPrice: PromiseOrValue<BigNumberish>,
+      maxSubmissionCost: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    whitelistedTokens(l1Token: string, chainId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    whitelistedTokens(
+      l1Token: PromiseOrValue<string>,
+      chainId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    depositContracts(chainId: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    depositContracts(chainId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     finder(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -717,84 +776,88 @@ export interface EthBridgeAdmin extends BaseContract {
 
     proposerBondPct(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     setCrossDomainAdmin(
-      chainId: BigNumberish,
-      admin: string,
-      l1CallValue: BigNumberish,
-      l2Gas: BigNumberish,
-      l2GasPrice: BigNumberish,
-      maxSubmissionCost: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      chainId: PromiseOrValue<BigNumberish>,
+      admin: PromiseOrValue<string>,
+      l1CallValue: PromiseOrValue<BigNumberish>,
+      l2Gas: PromiseOrValue<BigNumberish>,
+      l2GasPrice: PromiseOrValue<BigNumberish>,
+      maxSubmissionCost: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setDepositContract(
-      chainId: BigNumberish,
-      depositContract: string,
-      messengerContract: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      chainId: PromiseOrValue<BigNumberish>,
+      depositContract: PromiseOrValue<string>,
+      messengerContract: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setEnableDeposits(
-      chainId: BigNumberish,
-      l2Token: string,
-      depositsEnabled: boolean,
-      l1CallValue: BigNumberish,
-      l2Gas: BigNumberish,
-      l2GasPrice: BigNumberish,
-      maxSubmissionCost: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      chainId: PromiseOrValue<BigNumberish>,
+      l2Token: PromiseOrValue<string>,
+      depositsEnabled: PromiseOrValue<boolean>,
+      l1CallValue: PromiseOrValue<BigNumberish>,
+      l2Gas: PromiseOrValue<BigNumberish>,
+      l2GasPrice: PromiseOrValue<BigNumberish>,
+      maxSubmissionCost: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setIdentifier(
-      _identifier: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _identifier: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setMinimumBridgingDelay(
-      chainId: BigNumberish,
-      minimumBridgingDelay: BigNumberish,
-      l1CallValue: BigNumberish,
-      l2Gas: BigNumberish,
-      l2GasPrice: BigNumberish,
-      maxSubmissionCost: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      chainId: PromiseOrValue<BigNumberish>,
+      minimumBridgingDelay: PromiseOrValue<BigNumberish>,
+      l1CallValue: PromiseOrValue<BigNumberish>,
+      l2Gas: PromiseOrValue<BigNumberish>,
+      l2GasPrice: PromiseOrValue<BigNumberish>,
+      maxSubmissionCost: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setOptimisticOracleLiveness(
-      liveness: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      liveness: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setProposerBondPct(
-      _proposerBondPct: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _proposerBondPct: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferBridgePoolAdmin(
-      bridgePools: string[],
-      newAdmin: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      bridgePools: PromiseOrValue<string>[],
+      newAdmin: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     whitelistToken(
-      chainId: BigNumberish,
-      l1Token: string,
-      l2Token: string,
-      bridgePool: string,
-      l1CallValue: BigNumberish,
-      l2Gas: BigNumberish,
-      l2GasPrice: BigNumberish,
-      maxSubmissionCost: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      chainId: PromiseOrValue<BigNumberish>,
+      l1Token: PromiseOrValue<string>,
+      l2Token: PromiseOrValue<string>,
+      bridgePool: PromiseOrValue<string>,
+      l1CallValue: PromiseOrValue<BigNumberish>,
+      l2Gas: PromiseOrValue<BigNumberish>,
+      l2GasPrice: PromiseOrValue<BigNumberish>,
+      maxSubmissionCost: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    whitelistedTokens(l1Token: string, chainId: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    whitelistedTokens(
+      l1Token: PromiseOrValue<string>,
+      chainId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
   };
 }

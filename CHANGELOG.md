@@ -4,6 +4,62 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.128.3](https://github.com/Zapper-fi/studio/compare/v0.128.2...v0.128.3) (2022-07-28)
+
+
+### Bug Fixes
+
+* **origin-dollar:** Fix logos and OGV staking rewards ([#956](https://github.com/Zapper-fi/studio/issues/956)) ([12f387b](https://github.com/Zapper-fi/studio/commit/12f387b8ae86d270271dbd0d4b1655185f2dad4a))
+
+## [0.128.2](https://github.com/Zapper-fi/studio/compare/v0.128.1...v0.128.2) (2022-07-28)
+
+
+### Bug Fixes
+
+* stargate - incorrect ve price ([#957](https://github.com/Zapper-fi/studio/issues/957)) ([b33ec6b](https://github.com/Zapper-fi/studio/commit/b33ec6b1f9bd299885a91ed5bf09b11ab0ccd69b))
+
+## [0.128.1](https://github.com/Zapper-fi/studio/compare/v0.128.0...v0.128.1) (2022-07-26)
+
+
+### Bug Fixes
+
+* **origin-dollar:** updating logo name ([aec6f39](https://github.com/Zapper-fi/studio/commit/aec6f399a9a07ce021f6aecea1deba0c9c0f1237))
+
+## [0.128.0](https://github.com/Zapper-fi/studio/compare/v0.127.0...v0.128.0) (2022-07-25)
+
+
+### Features
+
+* **origin-dollar:** Adds Wrapped OUSD (wOUSD) and Vote Escrowed OGV (veOGV) ([#944](https://github.com/Zapper-fi/studio/issues/944)) ([d9743c0](https://github.com/Zapper-fi/studio/commit/d9743c079806d9bf4775e37940d164859d57e786))
+
+
+### Bug Fixes
+
+* **stargate:** Fix Stargate wrapped ETH price ([#951](https://github.com/Zapper-fi/studio/issues/951)) ([0668cf0](https://github.com/Zapper-fi/studio/commit/0668cf024b520fd915e31f14b0743961a2558eb4))
+
+## [0.127.0](https://github.com/Zapper-fi/studio/compare/v0.126.0...v0.127.0) (2022-07-25)
+
+
+### Features
+
+* **biswap:** Added Biswap on BSC (pools and farms) ([#945](https://github.com/Zapper-fi/studio/issues/945)) ([b91d797](https://github.com/Zapper-fi/studio/commit/b91d797502611ccc00bb5c1662c297b3bc1cafcf))
+* **polygon:** Add claimable rewards for Polygon MATIC staking ([#948](https://github.com/Zapper-fi/studio/issues/948)) ([78e3d83](https://github.com/Zapper-fi/studio/commit/78e3d832319431511181654679e3ff03bbe25a82))
+* **stargate:** Add wrapped ETH and Voting Escrow positions ([#947](https://github.com/Zapper-fi/studio/issues/947)) ([50f83d5](https://github.com/Zapper-fi/studio/commit/50f83d536c2f758759f6a96e22c62297ebfde01a))
+
+
+### Bug Fixes
+
+* **good-ghosting:** Resolved the issue of Celo games not showing claimable tokens ([#946](https://github.com/Zapper-fi/studio/issues/946)) ([c547bef](https://github.com/Zapper-fi/studio/commit/c547bef55f8bf64adaba08a80478f628423874c3))
+
+## [0.126.0](https://github.com/Zapper-fi/studio/compare/v0.125.0...v0.126.0) (2022-07-24)
+
+
+### Features
+
+* **koyo:** Fix response since volume isn't working ([#940](https://github.com/Zapper-fi/studio/issues/940)) ([52a4384](https://github.com/Zapper-fi/studio/commit/52a438494f9efa0935f19ad585a6a0d273fb73a6))
+* **stargate:** Extract Stargate to Studio ([#943](https://github.com/Zapper-fi/studio/issues/943)) ([7bf707e](https://github.com/Zapper-fi/studio/commit/7bf707ed502bed55e5c22317228ae88374a7fc33))
+* **sushiswap-kashi:** Extract to Studio, fix Polygon ([#942](https://github.com/Zapper-fi/studio/issues/942)) ([85dce04](https://github.com/Zapper-fi/studio/commit/85dce04defc5a3777d450cae848f5289e0933792))
+
 ## [0.125.0](https://github.com/Zapper-fi/studio/compare/v0.124.0...v0.125.0) (2022-07-24)
 
 

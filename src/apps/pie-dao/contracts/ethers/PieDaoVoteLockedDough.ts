@@ -15,13 +15,13 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export declare namespace SharesTimeLock {
   export type LockStruct = {
-    amount: BigNumberish;
-    lockedAt: BigNumberish;
-    lockDuration: BigNumberish;
+    amount: PromiseOrValue<BigNumberish>;
+    lockedAt: PromiseOrValue<BigNumberish>;
+    lockDuration: PromiseOrValue<BigNumberish>;
   };
 
   export type LockStructOutput = [BigNumber, number, number] & {
@@ -31,13 +31,13 @@ export declare namespace SharesTimeLock {
   };
 
   export type StakingDataStruct = {
-    totalStaked: BigNumberish;
-    veTokenTotalSupply: BigNumberish;
-    accountVeTokenBalance: BigNumberish;
-    accountWithdrawableRewards: BigNumberish;
-    accountWithdrawnRewards: BigNumberish;
-    accountDepositTokenBalance: BigNumberish;
-    accountDepositTokenAllowance: BigNumberish;
+    totalStaked: PromiseOrValue<BigNumberish>;
+    veTokenTotalSupply: PromiseOrValue<BigNumberish>;
+    accountVeTokenBalance: PromiseOrValue<BigNumberish>;
+    accountWithdrawableRewards: PromiseOrValue<BigNumberish>;
+    accountWithdrawnRewards: PromiseOrValue<BigNumberish>;
+    accountDepositTokenBalance: PromiseOrValue<BigNumberish>;
+    accountDepositTokenAllowance: PromiseOrValue<BigNumberish>;
     accountLocks: SharesTimeLock.LockStruct[];
   };
 
@@ -122,35 +122,56 @@ export interface PieDaoVoteLockedDoughInterface extends utils.Interface {
       | 'withdraw',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'boostToMax', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'canEject', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'depositByMonths', values: [BigNumberish, BigNumberish, string]): string;
+  encodeFunctionData(functionFragment: 'boostToMax', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'canEject',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'depositByMonths',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'depositToken', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'eject', values: [string[], BigNumberish[]]): string;
+  encodeFunctionData(
+    functionFragment: 'eject',
+    values: [PromiseOrValue<string>[], PromiseOrValue<BigNumberish>[]],
+  ): string;
   encodeFunctionData(functionFragment: 'ejectBuffer', values?: undefined): string;
   encodeFunctionData(functionFragment: 'emergencyUnlockTriggered', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getLocksOfLength', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getRewardsMultiplier', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'getStakingData', values: [string]): string;
+  encodeFunctionData(functionFragment: 'getLocksOfLength', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getRewardsMultiplier', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'getStakingData', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
     functionFragment: 'initialize',
-    values: [string, string, BigNumberish, BigNumberish, BigNumberish],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'locksOf', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'locksOf',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'maxLockDuration', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'maxRatioArray', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'maxRatioArray', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'minLockAmount', values?: undefined): string;
   encodeFunctionData(functionFragment: 'minLockDuration', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
   encodeFunctionData(functionFragment: 'rewardsToken', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'setEjectBuffer', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setMinLockAmount', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setWhitelisted', values: [string, boolean]): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
+  encodeFunctionData(functionFragment: 'setEjectBuffer', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setMinLockAmount', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'setWhitelisted',
+    values: [PromiseOrValue<string>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'triggerEmergencyUnlock', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'whitelisted', values: [string]): string;
-  encodeFunctionData(functionFragment: 'withdraw', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'whitelisted', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'withdraw', values: [PromiseOrValue<BigNumberish>]): string;
 
   decodeFunctionResult(functionFragment: 'boostToMax', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'canEject', data: BytesLike): Result;
@@ -292,40 +313,44 @@ export interface PieDaoVoteLockedDough extends BaseContract {
 
   functions: {
     boostToMax(
-      lockId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      lockId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    canEject(account: string, lockId: BigNumberish, overrides?: CallOverrides): Promise<[boolean]>;
+    canEject(
+      account: PromiseOrValue<string>,
+      lockId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[boolean]>;
 
     depositByMonths(
-      amount: BigNumberish,
-      months: BigNumberish,
-      receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      months: PromiseOrValue<BigNumberish>,
+      receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     depositToken(overrides?: CallOverrides): Promise<[string]>;
 
     eject(
-      lockAccounts: string[],
-      lockIds: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      lockAccounts: PromiseOrValue<string>[],
+      lockIds: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     ejectBuffer(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     emergencyUnlockTriggered(overrides?: CallOverrides): Promise<[boolean]>;
 
-    getLocksOfLength(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getLocksOfLength(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     getRewardsMultiplier(
-      duration: BigNumberish,
+      duration: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber] & { multiplier: BigNumber }>;
 
     getStakingData(
-      account: string,
+      account: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [SharesTimeLock.StakingDataStructOutput] & {
@@ -334,17 +359,17 @@ export interface PieDaoVoteLockedDough extends BaseContract {
     >;
 
     initialize(
-      depositToken_: string,
-      rewardsToken_: string,
-      minLockDuration_: BigNumberish,
-      maxLockDuration_: BigNumberish,
-      minLockAmount_: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      depositToken_: PromiseOrValue<string>,
+      rewardsToken_: PromiseOrValue<string>,
+      minLockDuration_: PromiseOrValue<BigNumberish>,
+      maxLockDuration_: PromiseOrValue<BigNumberish>,
+      minLockAmount_: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     locksOf(
-      arg0: string,
-      arg1: BigNumberish,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, number, number] & {
@@ -356,7 +381,7 @@ export interface PieDaoVoteLockedDough extends BaseContract {
 
     maxLockDuration(overrides?: CallOverrides): Promise<[number]>;
 
-    maxRatioArray(arg0: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    maxRatioArray(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     minLockAmount(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -364,85 +389,92 @@ export interface PieDaoVoteLockedDough extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     rewardsToken(overrides?: CallOverrides): Promise<[string]>;
 
     setEjectBuffer(
-      buffer: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      buffer: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setMinLockAmount(
-      minLockAmount_: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      minLockAmount_: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setWhitelisted(
-      user: string,
-      isWhitelisted: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      user: PromiseOrValue<string>,
+      isWhitelisted: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    triggerEmergencyUnlock(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    triggerEmergencyUnlock(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    whitelisted(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    whitelisted(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     withdraw(
-      lockId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      lockId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
   boostToMax(
-    lockId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    lockId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  canEject(account: string, lockId: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+  canEject(
+    account: PromiseOrValue<string>,
+    lockId: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<boolean>;
 
   depositByMonths(
-    amount: BigNumberish,
-    months: BigNumberish,
-    receiver: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    amount: PromiseOrValue<BigNumberish>,
+    months: PromiseOrValue<BigNumberish>,
+    receiver: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   depositToken(overrides?: CallOverrides): Promise<string>;
 
   eject(
-    lockAccounts: string[],
-    lockIds: BigNumberish[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    lockAccounts: PromiseOrValue<string>[],
+    lockIds: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   ejectBuffer(overrides?: CallOverrides): Promise<BigNumber>;
 
   emergencyUnlockTriggered(overrides?: CallOverrides): Promise<boolean>;
 
-  getLocksOfLength(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getLocksOfLength(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  getRewardsMultiplier(duration: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  getRewardsMultiplier(duration: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  getStakingData(account: string, overrides?: CallOverrides): Promise<SharesTimeLock.StakingDataStructOutput>;
+  getStakingData(
+    account: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<SharesTimeLock.StakingDataStructOutput>;
 
   initialize(
-    depositToken_: string,
-    rewardsToken_: string,
-    minLockDuration_: BigNumberish,
-    maxLockDuration_: BigNumberish,
-    minLockAmount_: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    depositToken_: PromiseOrValue<string>,
+    rewardsToken_: PromiseOrValue<string>,
+    minLockDuration_: PromiseOrValue<BigNumberish>,
+    maxLockDuration_: PromiseOrValue<BigNumberish>,
+    minLockAmount_: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   locksOf(
-    arg0: string,
-    arg1: BigNumberish,
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, number, number] & {
@@ -454,7 +486,7 @@ export interface PieDaoVoteLockedDough extends BaseContract {
 
   maxLockDuration(overrides?: CallOverrides): Promise<number>;
 
-  maxRatioArray(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  maxRatioArray(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   minLockAmount(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -462,78 +494,89 @@ export interface PieDaoVoteLockedDough extends BaseContract {
 
   owner(overrides?: CallOverrides): Promise<string>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   rewardsToken(overrides?: CallOverrides): Promise<string>;
 
   setEjectBuffer(
-    buffer: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    buffer: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setMinLockAmount(
-    minLockAmount_: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    minLockAmount_: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setWhitelisted(
-    user: string,
-    isWhitelisted: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    user: PromiseOrValue<string>,
+    isWhitelisted: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  triggerEmergencyUnlock(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  triggerEmergencyUnlock(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  whitelisted(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  whitelisted(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   withdraw(
-    lockId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    lockId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    boostToMax(lockId: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    boostToMax(lockId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    canEject(account: string, lockId: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    canEject(
+      account: PromiseOrValue<string>,
+      lockId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     depositByMonths(
-      amount: BigNumberish,
-      months: BigNumberish,
-      receiver: string,
+      amount: PromiseOrValue<BigNumberish>,
+      months: PromiseOrValue<BigNumberish>,
+      receiver: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     depositToken(overrides?: CallOverrides): Promise<string>;
 
-    eject(lockAccounts: string[], lockIds: BigNumberish[], overrides?: CallOverrides): Promise<void>;
+    eject(
+      lockAccounts: PromiseOrValue<string>[],
+      lockIds: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     ejectBuffer(overrides?: CallOverrides): Promise<BigNumber>;
 
     emergencyUnlockTriggered(overrides?: CallOverrides): Promise<boolean>;
 
-    getLocksOfLength(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getLocksOfLength(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getRewardsMultiplier(duration: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getRewardsMultiplier(duration: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getStakingData(account: string, overrides?: CallOverrides): Promise<SharesTimeLock.StakingDataStructOutput>;
+    getStakingData(
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<SharesTimeLock.StakingDataStructOutput>;
 
     initialize(
-      depositToken_: string,
-      rewardsToken_: string,
-      minLockDuration_: BigNumberish,
-      maxLockDuration_: BigNumberish,
-      minLockAmount_: BigNumberish,
+      depositToken_: PromiseOrValue<string>,
+      rewardsToken_: PromiseOrValue<string>,
+      minLockDuration_: PromiseOrValue<BigNumberish>,
+      maxLockDuration_: PromiseOrValue<BigNumberish>,
+      minLockAmount_: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     locksOf(
-      arg0: string,
-      arg1: BigNumberish,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, number, number] & {
@@ -545,7 +588,7 @@ export interface PieDaoVoteLockedDough extends BaseContract {
 
     maxLockDuration(overrides?: CallOverrides): Promise<number>;
 
-    maxRatioArray(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    maxRatioArray(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     minLockAmount(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -557,125 +600,154 @@ export interface PieDaoVoteLockedDough extends BaseContract {
 
     rewardsToken(overrides?: CallOverrides): Promise<string>;
 
-    setEjectBuffer(buffer: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setEjectBuffer(buffer: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setMinLockAmount(minLockAmount_: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setMinLockAmount(minLockAmount_: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setWhitelisted(user: string, isWhitelisted: boolean, overrides?: CallOverrides): Promise<void>;
+    setWhitelisted(
+      user: PromiseOrValue<string>,
+      isWhitelisted: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     triggerEmergencyUnlock(overrides?: CallOverrides): Promise<void>;
 
-    whitelisted(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    whitelisted(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-    withdraw(lockId: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    withdraw(lockId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
     'BoostedToMax(uint256,uint256,uint256,address)'(
-      oldLockId?: BigNumberish | null,
-      newLockId?: BigNumberish | null,
+      oldLockId?: PromiseOrValue<BigNumberish> | null,
+      newLockId?: PromiseOrValue<BigNumberish> | null,
       amount?: null,
-      owner?: string | null,
+      owner?: PromiseOrValue<string> | null,
     ): BoostedToMaxEventFilter;
     BoostedToMax(
-      oldLockId?: BigNumberish | null,
-      newLockId?: BigNumberish | null,
+      oldLockId?: PromiseOrValue<BigNumberish> | null,
+      newLockId?: PromiseOrValue<BigNumberish> | null,
       amount?: null,
-      owner?: string | null,
+      owner?: PromiseOrValue<string> | null,
     ): BoostedToMaxEventFilter;
 
     'Deposited(uint256,uint256,uint32,address)'(
-      lockId?: BigNumberish | null,
+      lockId?: PromiseOrValue<BigNumberish> | null,
       amount?: null,
       lockDuration?: null,
-      owner?: string | null,
+      owner?: PromiseOrValue<string> | null,
     ): DepositedEventFilter;
     Deposited(
-      lockId?: BigNumberish | null,
+      lockId?: PromiseOrValue<BigNumberish> | null,
       amount?: null,
       lockDuration?: null,
-      owner?: string | null,
+      owner?: PromiseOrValue<string> | null,
     ): DepositedEventFilter;
 
     'EjectBufferUpdated(uint256)'(newEjectBuffer?: null): EjectBufferUpdatedEventFilter;
     EjectBufferUpdated(newEjectBuffer?: null): EjectBufferUpdatedEventFilter;
 
     'Ejected(uint256,uint256,address)'(
-      lockId?: BigNumberish | null,
+      lockId?: PromiseOrValue<BigNumberish> | null,
       amount?: null,
-      owner?: string | null,
+      owner?: PromiseOrValue<string> | null,
     ): EjectedEventFilter;
-    Ejected(lockId?: BigNumberish | null, amount?: null, owner?: string | null): EjectedEventFilter;
+    Ejected(
+      lockId?: PromiseOrValue<BigNumberish> | null,
+      amount?: null,
+      owner?: PromiseOrValue<string> | null,
+    ): EjectedEventFilter;
 
     'MinLockAmountChanged(uint256)'(newLockAmount?: null): MinLockAmountChangedEventFilter;
     MinLockAmountChanged(newLockAmount?: null): MinLockAmountChangedEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
 
     'WhitelistedChanged(address,bool)'(
-      user?: string | null,
-      whitelisted?: boolean | null,
+      user?: PromiseOrValue<string> | null,
+      whitelisted?: PromiseOrValue<boolean> | null,
     ): WhitelistedChangedEventFilter;
-    WhitelistedChanged(user?: string | null, whitelisted?: boolean | null): WhitelistedChangedEventFilter;
+    WhitelistedChanged(
+      user?: PromiseOrValue<string> | null,
+      whitelisted?: PromiseOrValue<boolean> | null,
+    ): WhitelistedChangedEventFilter;
 
     'Withdrawn(uint256,uint256,address)'(
-      lockId?: BigNumberish | null,
+      lockId?: PromiseOrValue<BigNumberish> | null,
       amount?: null,
-      owner?: string | null,
+      owner?: PromiseOrValue<string> | null,
     ): WithdrawnEventFilter;
-    Withdrawn(lockId?: BigNumberish | null, amount?: null, owner?: string | null): WithdrawnEventFilter;
+    Withdrawn(
+      lockId?: PromiseOrValue<BigNumberish> | null,
+      amount?: null,
+      owner?: PromiseOrValue<string> | null,
+    ): WithdrawnEventFilter;
   };
 
   estimateGas: {
-    boostToMax(lockId: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    boostToMax(
+      lockId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    canEject(account: string, lockId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    canEject(
+      account: PromiseOrValue<string>,
+      lockId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     depositByMonths(
-      amount: BigNumberish,
-      months: BigNumberish,
-      receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      months: PromiseOrValue<BigNumberish>,
+      receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     depositToken(overrides?: CallOverrides): Promise<BigNumber>;
 
     eject(
-      lockAccounts: string[],
-      lockIds: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      lockAccounts: PromiseOrValue<string>[],
+      lockIds: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     ejectBuffer(overrides?: CallOverrides): Promise<BigNumber>;
 
     emergencyUnlockTriggered(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getLocksOfLength(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getLocksOfLength(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getRewardsMultiplier(duration: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getRewardsMultiplier(duration: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getStakingData(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getStakingData(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     initialize(
-      depositToken_: string,
-      rewardsToken_: string,
-      minLockDuration_: BigNumberish,
-      maxLockDuration_: BigNumberish,
-      minLockAmount_: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      depositToken_: PromiseOrValue<string>,
+      rewardsToken_: PromiseOrValue<string>,
+      minLockDuration_: PromiseOrValue<BigNumberish>,
+      maxLockDuration_: PromiseOrValue<BigNumberish>,
+      minLockAmount_: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    locksOf(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    locksOf(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     maxLockDuration(overrides?: CallOverrides): Promise<BigNumber>;
 
-    maxRatioArray(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    maxRatioArray(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     minLockAmount(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -683,85 +755,99 @@ export interface PieDaoVoteLockedDough extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     rewardsToken(overrides?: CallOverrides): Promise<BigNumber>;
 
     setEjectBuffer(
-      buffer: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      buffer: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setMinLockAmount(
-      minLockAmount_: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      minLockAmount_: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setWhitelisted(
-      user: string,
-      isWhitelisted: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      user: PromiseOrValue<string>,
+      isWhitelisted: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    triggerEmergencyUnlock(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    triggerEmergencyUnlock(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    whitelisted(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    whitelisted(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    withdraw(lockId: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    withdraw(
+      lockId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     boostToMax(
-      lockId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      lockId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    canEject(account: string, lockId: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    canEject(
+      account: PromiseOrValue<string>,
+      lockId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     depositByMonths(
-      amount: BigNumberish,
-      months: BigNumberish,
-      receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      months: PromiseOrValue<BigNumberish>,
+      receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     depositToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     eject(
-      lockAccounts: string[],
-      lockIds: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      lockAccounts: PromiseOrValue<string>[],
+      lockIds: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     ejectBuffer(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     emergencyUnlockTriggered(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getLocksOfLength(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getLocksOfLength(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getRewardsMultiplier(duration: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    getStakingData(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    initialize(
-      depositToken_: string,
-      rewardsToken_: string,
-      minLockDuration_: BigNumberish,
-      maxLockDuration_: BigNumberish,
-      minLockAmount_: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    getRewardsMultiplier(
+      duration: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    locksOf(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getStakingData(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    initialize(
+      depositToken_: PromiseOrValue<string>,
+      rewardsToken_: PromiseOrValue<string>,
+      minLockDuration_: PromiseOrValue<BigNumberish>,
+      maxLockDuration_: PromiseOrValue<BigNumberish>,
+      minLockAmount_: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    locksOf(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     maxLockDuration(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    maxRatioArray(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    maxRatioArray(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     minLockAmount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -769,38 +855,38 @@ export interface PieDaoVoteLockedDough extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     rewardsToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setEjectBuffer(
-      buffer: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      buffer: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setMinLockAmount(
-      minLockAmount_: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      minLockAmount_: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setWhitelisted(
-      user: string,
-      isWhitelisted: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      user: PromiseOrValue<string>,
+      isWhitelisted: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    triggerEmergencyUnlock(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    triggerEmergencyUnlock(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    whitelisted(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    whitelisted(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     withdraw(
-      lockId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      lockId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

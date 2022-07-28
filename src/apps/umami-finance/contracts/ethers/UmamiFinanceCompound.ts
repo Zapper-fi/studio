@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface UmamiFinanceCompoundInterface extends utils.Interface {
   functions: {
@@ -124,48 +124,81 @@ export interface UmamiFinanceCompoundInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'DEFAULT_ADMIN_ROLE', values?: undefined): string;
   encodeFunctionData(functionFragment: 'MIN_TOKENS_TO_REINVEST', values?: undefined): string;
   encodeFunctionData(functionFragment: 'REINVEST_REWARD_BIPS', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'addRewardToken', values: [string, BytesLike]): string;
-  encodeFunctionData(functionFragment: 'allowance', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'approve', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'addRewardToken',
+    values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>],
+  ): string;
+  encodeFunctionData(functionFragment: 'allowance', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'approve',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'checkReward', values?: undefined): string;
   encodeFunctionData(functionFragment: 'decimals', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'decreaseAllowance', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'deposit', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'decreaseAllowance',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'deposit', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'depositToken', values?: undefined): string;
   encodeFunctionData(functionFragment: 'feeDestination', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getDepositTokensForShares', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'getRoleAdmin', values: [BytesLike]): string;
-  encodeFunctionData(functionFragment: 'getSharesForDepositTokens', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'grantRole', values: [BytesLike, string]): string;
-  encodeFunctionData(functionFragment: 'hasRole', values: [BytesLike, string]): string;
-  encodeFunctionData(functionFragment: 'increaseAllowance', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'isRewardToken', values: [string]): string;
+  encodeFunctionData(functionFragment: 'getDepositTokensForShares', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'getRoleAdmin', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(functionFragment: 'getSharesForDepositTokens', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'grantRole',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'hasRole', values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'increaseAllowance',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'isRewardToken', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'marinateContract', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'migrateToken', values: [string, string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'migrateToken',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'recoverETH', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'recoverETH', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'reinvest', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'removeRewardToken', values: [string]): string;
-  encodeFunctionData(functionFragment: 'renounceRole', values: [BytesLike, string]): string;
-  encodeFunctionData(functionFragment: 'revokeAllowance', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'revokeRole', values: [BytesLike, string]): string;
-  encodeFunctionData(functionFragment: 'rewardTokens', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'removeRewardToken', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'renounceRole',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'revokeAllowance',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'revokeRole',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'rewardTokens', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'rewardTokensLength', values?: undefined): string;
   encodeFunctionData(functionFragment: 'router', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'routes', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'routes', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'setAllowances', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'setFeeDestination', values: [string]): string;
-  encodeFunctionData(functionFragment: 'supportsInterface', values: [BytesLike]): string;
+  encodeFunctionData(functionFragment: 'setFeeDestination', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'supportsInterface', values: [PromiseOrValue<BytesLike>]): string;
   encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalDeposits', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transfer', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferFrom', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'updateAdminFee', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'updateMinTokensToReinvest', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'updateReinvestReward', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'withdraw', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'transfer',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'transferFrom',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'updateAdminFee', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'updateMinTokensToReinvest', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'updateReinvestReward', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'withdraw', values: [PromiseOrValue<BigNumberish>]): string;
 
   decodeFunctionResult(functionFragment: 'ADMIN_FEE_BIPS', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'ADMIN_ROLE', data: BytesLike): Result;
@@ -425,119 +458,127 @@ export interface UmamiFinanceCompound extends BaseContract {
     REINVEST_REWARD_BIPS(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     addRewardToken(
-      rewardToken: string,
-      swapRoute: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      rewardToken: PromiseOrValue<string>,
+      swapRoute: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    checkReward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    checkReward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<[number]>;
 
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     deposit(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     depositToken(overrides?: CallOverrides): Promise<[string]>;
 
     feeDestination(overrides?: CallOverrides): Promise<[string]>;
 
-    getDepositTokensForShares(amount: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getDepositTokensForShares(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<[string]>;
+    getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[string]>;
 
-    getSharesForDepositTokens(amount: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getSharesForDepositTokens(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     grantRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    hasRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<[boolean]>;
+    hasRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[boolean]>;
 
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    isRewardToken(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    isRewardToken(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     marinateContract(overrides?: CallOverrides): Promise<[string]>;
 
     migrateToken(
-      token: string,
-      destination: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      destination: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
 
     recoverETH(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    reinvest(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    reinvest(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     removeRewardToken(
-      rewardToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      rewardToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     renounceRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     revokeAllowance(
-      token: string,
-      spender: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     revokeRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    rewardTokens(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    rewardTokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
     rewardTokensLength(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     router(overrides?: CallOverrides): Promise<[string]>;
 
-    routes(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    routes(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
-    setAllowances(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    setAllowances(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     setFeeDestination(
-      newDestination: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newDestination: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<[boolean]>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[boolean]>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
 
@@ -546,36 +587,36 @@ export interface UmamiFinanceCompound extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transfer(
-      to: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferFrom(
-      from: string,
-      to: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateAdminFee(
-      newValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateMinTokensToReinvest(
-      newValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateReinvestReward(
-      newValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     withdraw(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
@@ -590,119 +631,127 @@ export interface UmamiFinanceCompound extends BaseContract {
   REINVEST_REWARD_BIPS(overrides?: CallOverrides): Promise<BigNumber>;
 
   addRewardToken(
-    rewardToken: string,
-    swapRoute: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    rewardToken: PromiseOrValue<string>,
+    swapRoute: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+  allowance(
+    owner: PromiseOrValue<string>,
+    spender: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   approve(
-    spender: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  checkReward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  checkReward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   decimals(overrides?: CallOverrides): Promise<number>;
 
   decreaseAllowance(
-    spender: string,
-    subtractedValue: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    subtractedValue: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   deposit(
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   depositToken(overrides?: CallOverrides): Promise<string>;
 
   feeDestination(overrides?: CallOverrides): Promise<string>;
 
-  getDepositTokensForShares(amount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  getDepositTokensForShares(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<string>;
+  getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
-  getSharesForDepositTokens(amount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  getSharesForDepositTokens(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   grantRole(
-    role: BytesLike,
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    role: PromiseOrValue<BytesLike>,
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  hasRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<boolean>;
+  hasRole(
+    role: PromiseOrValue<BytesLike>,
+    account: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<boolean>;
 
   increaseAllowance(
-    spender: string,
-    addedValue: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    addedValue: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  isRewardToken(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  isRewardToken(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   marinateContract(overrides?: CallOverrides): Promise<string>;
 
   migrateToken(
-    token: string,
-    destination: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    token: PromiseOrValue<string>,
+    destination: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   name(overrides?: CallOverrides): Promise<string>;
 
   recoverETH(
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  reinvest(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  reinvest(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   removeRewardToken(
-    rewardToken: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    rewardToken: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   renounceRole(
-    role: BytesLike,
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    role: PromiseOrValue<BytesLike>,
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   revokeAllowance(
-    token: string,
-    spender: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    token: PromiseOrValue<string>,
+    spender: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   revokeRole(
-    role: BytesLike,
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    role: PromiseOrValue<BytesLike>,
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  rewardTokens(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  rewardTokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   rewardTokensLength(overrides?: CallOverrides): Promise<BigNumber>;
 
   router(overrides?: CallOverrides): Promise<string>;
 
-  routes(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  routes(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
-  setAllowances(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  setAllowances(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   setFeeDestination(
-    newDestination: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newDestination: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<boolean>;
+  supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<boolean>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
 
@@ -711,36 +760,36 @@ export interface UmamiFinanceCompound extends BaseContract {
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   transfer(
-    to: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    to: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferFrom(
-    from: string,
-    to: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    from: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateAdminFee(
-    newValue: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newValue: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateMinTokensToReinvest(
-    newValue: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newValue: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateReinvestReward(
-    newValue: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newValue: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   withdraw(
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
@@ -754,71 +803,116 @@ export interface UmamiFinanceCompound extends BaseContract {
 
     REINVEST_REWARD_BIPS(overrides?: CallOverrides): Promise<BigNumber>;
 
-    addRewardToken(rewardToken: string, swapRoute: BytesLike, overrides?: CallOverrides): Promise<void>;
+    addRewardToken(
+      rewardToken: PromiseOrValue<string>,
+      swapRoute: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    approve(spender: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    approve(
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     checkReward(overrides?: CallOverrides): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<number>;
 
-    decreaseAllowance(spender: string, subtractedValue: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    decreaseAllowance(
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    deposit(amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    deposit(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     depositToken(overrides?: CallOverrides): Promise<string>;
 
     feeDestination(overrides?: CallOverrides): Promise<string>;
 
-    getDepositTokensForShares(amount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getDepositTokensForShares(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<string>;
+    getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
-    getSharesForDepositTokens(amount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getSharesForDepositTokens(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    grantRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<void>;
+    grantRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    hasRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<boolean>;
+    hasRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    increaseAllowance(spender: string, addedValue: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    increaseAllowance(
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    isRewardToken(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    isRewardToken(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     marinateContract(overrides?: CallOverrides): Promise<string>;
 
-    migrateToken(token: string, destination: string, amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    migrateToken(
+      token: PromiseOrValue<string>,
+      destination: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
-    recoverETH(amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    recoverETH(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     reinvest(overrides?: CallOverrides): Promise<void>;
 
-    removeRewardToken(rewardToken: string, overrides?: CallOverrides): Promise<void>;
+    removeRewardToken(rewardToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    renounceRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<void>;
+    renounceRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    revokeAllowance(token: string, spender: string, overrides?: CallOverrides): Promise<void>;
+    revokeAllowance(
+      token: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    revokeRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<void>;
+    revokeRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    rewardTokens(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    rewardTokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
     rewardTokensLength(overrides?: CallOverrides): Promise<BigNumber>;
 
     router(overrides?: CallOverrides): Promise<string>;
 
-    routes(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    routes(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
     setAllowances(overrides?: CallOverrides): Promise<void>;
 
-    setFeeDestination(newDestination: string, overrides?: CallOverrides): Promise<void>;
+    setFeeDestination(newDestination: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<boolean>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<boolean>;
 
     symbol(overrides?: CallOverrides): Promise<string>;
 
@@ -826,32 +920,45 @@ export interface UmamiFinanceCompound extends BaseContract {
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transfer(to: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transfer(
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    transferFrom(from: string, to: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transferFrom(
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    updateAdminFee(newValue: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    updateAdminFee(newValue: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    updateMinTokensToReinvest(newValue: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    updateMinTokensToReinvest(newValue: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    updateReinvestReward(newValue: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    updateReinvestReward(newValue: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    withdraw(amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    withdraw(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
     'Approval(address,address,uint256)'(
-      owner?: string | null,
-      spender?: string | null,
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
       value?: null,
     ): ApprovalEventFilter;
-    Approval(owner?: string | null, spender?: string | null, value?: null): ApprovalEventFilter;
+    Approval(
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
+      value?: null,
+    ): ApprovalEventFilter;
 
-    'Claim(address,uint256)'(account?: string | null, amount?: null): ClaimEventFilter;
-    Claim(account?: string | null, amount?: null): ClaimEventFilter;
+    'Claim(address,uint256)'(account?: PromiseOrValue<string> | null, amount?: null): ClaimEventFilter;
+    Claim(account?: PromiseOrValue<string> | null, amount?: null): ClaimEventFilter;
 
-    'Deposit(address,uint256)'(account?: string | null, amount?: null): DepositEventFilter;
-    Deposit(account?: string | null, amount?: null): DepositEventFilter;
+    'Deposit(address,uint256)'(account?: PromiseOrValue<string> | null, amount?: null): DepositEventFilter;
+    Deposit(account?: PromiseOrValue<string> | null, amount?: null): DepositEventFilter;
 
     'Recovered(address,uint256)'(token?: null, amount?: null): RecoveredEventFilter;
     Recovered(token?: null, amount?: null): RecoveredEventFilter;
@@ -860,32 +967,48 @@ export interface UmamiFinanceCompound extends BaseContract {
     Reinvest(newTotalDeposits?: null, newTotalSupply?: null): ReinvestEventFilter;
 
     'RoleAdminChanged(bytes32,bytes32,bytes32)'(
-      role?: BytesLike | null,
-      previousAdminRole?: BytesLike | null,
-      newAdminRole?: BytesLike | null,
+      role?: PromiseOrValue<BytesLike> | null,
+      previousAdminRole?: PromiseOrValue<BytesLike> | null,
+      newAdminRole?: PromiseOrValue<BytesLike> | null,
     ): RoleAdminChangedEventFilter;
     RoleAdminChanged(
-      role?: BytesLike | null,
-      previousAdminRole?: BytesLike | null,
-      newAdminRole?: BytesLike | null,
+      role?: PromiseOrValue<BytesLike> | null,
+      previousAdminRole?: PromiseOrValue<BytesLike> | null,
+      newAdminRole?: PromiseOrValue<BytesLike> | null,
     ): RoleAdminChangedEventFilter;
 
     'RoleGranted(bytes32,address,address)'(
-      role?: BytesLike | null,
-      account?: string | null,
-      sender?: string | null,
+      role?: PromiseOrValue<BytesLike> | null,
+      account?: PromiseOrValue<string> | null,
+      sender?: PromiseOrValue<string> | null,
     ): RoleGrantedEventFilter;
-    RoleGranted(role?: BytesLike | null, account?: string | null, sender?: string | null): RoleGrantedEventFilter;
+    RoleGranted(
+      role?: PromiseOrValue<BytesLike> | null,
+      account?: PromiseOrValue<string> | null,
+      sender?: PromiseOrValue<string> | null,
+    ): RoleGrantedEventFilter;
 
     'RoleRevoked(bytes32,address,address)'(
-      role?: BytesLike | null,
-      account?: string | null,
-      sender?: string | null,
+      role?: PromiseOrValue<BytesLike> | null,
+      account?: PromiseOrValue<string> | null,
+      sender?: PromiseOrValue<string> | null,
     ): RoleRevokedEventFilter;
-    RoleRevoked(role?: BytesLike | null, account?: string | null, sender?: string | null): RoleRevokedEventFilter;
+    RoleRevoked(
+      role?: PromiseOrValue<BytesLike> | null,
+      account?: PromiseOrValue<string> | null,
+      sender?: PromiseOrValue<string> | null,
+    ): RoleRevokedEventFilter;
 
-    'Transfer(address,address,uint256)'(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
-    Transfer(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
+    'Transfer(address,address,uint256)'(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
+    Transfer(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
 
     'UpdateAdminFee(uint256,uint256)'(oldValue?: null, newValue?: null): UpdateAdminFeeEventFilter;
     UpdateAdminFee(oldValue?: null, newValue?: null): UpdateAdminFeeEventFilter;
@@ -914,8 +1037,8 @@ export interface UmamiFinanceCompound extends BaseContract {
     'UpdateWithdrawFee(uint256,uint256)'(oldValue?: null, newValue?: null): UpdateWithdrawFeeEventFilter;
     UpdateWithdrawFee(oldValue?: null, newValue?: null): UpdateWithdrawFeeEventFilter;
 
-    'Withdraw(address,uint256)'(account?: string | null, amount?: null): WithdrawEventFilter;
-    Withdraw(account?: string | null, amount?: null): WithdrawEventFilter;
+    'Withdraw(address,uint256)'(account?: PromiseOrValue<string> | null, amount?: null): WithdrawEventFilter;
+    Withdraw(account?: PromiseOrValue<string> | null, amount?: null): WithdrawEventFilter;
   };
 
   estimateGas: {
@@ -930,113 +1053,127 @@ export interface UmamiFinanceCompound extends BaseContract {
     REINVEST_REWARD_BIPS(overrides?: CallOverrides): Promise<BigNumber>;
 
     addRewardToken(
-      rewardToken: string,
-      swapRoute: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      rewardToken: PromiseOrValue<string>,
+      swapRoute: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    checkReward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    checkReward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    deposit(amount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    deposit(
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     depositToken(overrides?: CallOverrides): Promise<BigNumber>;
 
     feeDestination(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getDepositTokensForShares(amount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getDepositTokensForShares(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getSharesForDepositTokens(amount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getSharesForDepositTokens(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     grantRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    hasRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    hasRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    isRewardToken(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    isRewardToken(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     marinateContract(overrides?: CallOverrides): Promise<BigNumber>;
 
     migrateToken(
-      token: string,
-      destination: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      destination: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
-    recoverETH(amount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    recoverETH(
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    reinvest(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    reinvest(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     removeRewardToken(
-      rewardToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      rewardToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     renounceRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     revokeAllowance(
-      token: string,
-      spender: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     revokeRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    rewardTokens(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    rewardTokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     rewardTokensLength(overrides?: CallOverrides): Promise<BigNumber>;
 
     router(overrides?: CallOverrides): Promise<BigNumber>;
 
-    routes(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    routes(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    setAllowances(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setAllowances(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     setFeeDestination(
-      newDestination: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newDestination: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1045,34 +1182,37 @@ export interface UmamiFinanceCompound extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
-      to: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferFrom(
-      from: string,
-      to: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     updateAdminFee(
-      newValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     updateMinTokensToReinvest(
-      newValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     updateReinvestReward(
-      newValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    withdraw(amount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    withdraw(
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -1087,119 +1227,133 @@ export interface UmamiFinanceCompound extends BaseContract {
     REINVEST_REWARD_BIPS(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     addRewardToken(
-      rewardToken: string,
-      swapRoute: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      rewardToken: PromiseOrValue<string>,
+      swapRoute: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    checkReward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    checkReward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     deposit(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     depositToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     feeDestination(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getDepositTokensForShares(amount: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getDepositTokensForShares(
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getSharesForDepositTokens(amount: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getSharesForDepositTokens(
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     grantRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    hasRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    hasRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    isRewardToken(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    isRewardToken(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     marinateContract(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     migrateToken(
-      token: string,
-      destination: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      destination: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     recoverETH(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    reinvest(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    reinvest(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     removeRewardToken(
-      rewardToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      rewardToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     renounceRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     revokeAllowance(
-      token: string,
-      spender: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     revokeRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    rewardTokens(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    rewardTokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     rewardTokensLength(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     router(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    routes(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    routes(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    setAllowances(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    setAllowances(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     setFeeDestination(
-      newDestination: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newDestination: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    supportsInterface(interfaceId: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    supportsInterface(interfaceId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1208,36 +1362,36 @@ export interface UmamiFinanceCompound extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transfer(
-      to: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferFrom(
-      from: string,
-      to: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateAdminFee(
-      newValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateMinTokensToReinvest(
-      newValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateReinvestReward(
-      newValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     withdraw(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

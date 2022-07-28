@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface TarotSupplyVaultInterface extends utils.Interface {
   functions: {
@@ -162,69 +162,115 @@ export interface TarotSupplyVaultInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'GRACE_PERIOD', values?: undefined): string;
   encodeFunctionData(functionFragment: 'MAX_DELAY', values?: undefined): string;
   encodeFunctionData(functionFragment: 'MIN_DELAY', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'addBorrowable', values: [string]): string;
-  encodeFunctionData(functionFragment: 'addBorrowables', values: [string[]]): string;
-  encodeFunctionData(functionFragment: 'allocateIntoBorrowable', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'allowance', values: [string, string]): string;
+  encodeFunctionData(functionFragment: 'addBorrowable', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'addBorrowables', values: [PromiseOrValue<string>[]]): string;
+  encodeFunctionData(
+    functionFragment: 'allocateIntoBorrowable',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'allowance', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'applyFee', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'approve', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
-  encodeFunctionData(functionFragment: 'borrowables', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'checkpoints', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'deallocateFromBorrowable', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'approve',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'borrowables', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'checkpoints',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'deallocateFromBorrowable',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'decimals', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'decreaseAllowance', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'delegate', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'decreaseAllowance',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'delegate', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
     functionFragment: 'delegateBySig',
-    values: [string, BigNumberish, BigNumberish, BigNumberish, BytesLike, BytesLike],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'delegates', values: [string]): string;
-  encodeFunctionData(functionFragment: 'disableBorrowable', values: [string]): string;
-  encodeFunctionData(functionFragment: 'enableBorrowable', values: [string]): string;
-  encodeFunctionData(functionFragment: 'enter', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'enterWithToken', values: [string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'delegates', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'disableBorrowable', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'enableBorrowable', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'enter', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'enterWithToken',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'feeBps', values?: undefined): string;
   encodeFunctionData(functionFragment: 'feeTo', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getBorrowableEnabled', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getBorrowableExists', values: [string]): string;
+  encodeFunctionData(functionFragment: 'getBorrowableEnabled', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getBorrowableExists', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'getBorrowablesLength', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getCurrentVotes', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getPriorVotes', values: [string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'getCurrentVotes', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'getPriorVotes',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'getSupplyRate', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getTotalUnderlying', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'increaseAllowance', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'indexOfBorrowable', values: [string]): string;
-  encodeFunctionData(functionFragment: 'leave', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'leaveInKind', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'increaseAllowance',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'indexOfBorrowable', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'leave', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'leaveInKind', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'nonces', values: [string]): string;
-  encodeFunctionData(functionFragment: 'numCheckpoints', values: [string]): string;
+  encodeFunctionData(functionFragment: 'nonces', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'numCheckpoints', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'pause', values?: undefined): string;
   encodeFunctionData(functionFragment: 'paused', values?: undefined): string;
   encodeFunctionData(functionFragment: 'pendingStrategy', values?: undefined): string;
   encodeFunctionData(functionFragment: 'pendingStrategyNotBefore', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'reallocate', values: [BigNumberish, BytesLike]): string;
+  encodeFunctionData(
+    functionFragment: 'reallocate',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BytesLike>],
+  ): string;
   encodeFunctionData(functionFragment: 'reallocateManager', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'removeBorrowable', values: [string]): string;
+  encodeFunctionData(functionFragment: 'removeBorrowable', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'shareValuedAsUnderlying', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'shareValuedAsUnderlying', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'strategy', values?: undefined): string;
   encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transfer', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferFrom', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'transfer',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'transferFrom',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'underlying', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'underlyingBalanceForAccount', values: [string]): string;
-  encodeFunctionData(functionFragment: 'underlyingValuedAsShare', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'underlyingBalanceForAccount', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'underlyingValuedAsShare', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'unpause', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'unwindBorrowable', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'updateFeeBps', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'updateFeeTo', values: [string]): string;
-  encodeFunctionData(functionFragment: 'updatePendingStrategy', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'updateReallocateManager', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'unwindBorrowable',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'updateFeeBps', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'updateFeeTo', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'updatePendingStrategy',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'updateReallocateManager', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'updateStrategy', values?: undefined): string;
 
   decodeFunctionResult(functionFragment: 'DELEGATION_TYPEHASH', data: BytesLike): Result;
@@ -585,138 +631,146 @@ export interface TarotSupplyVault extends BaseContract {
     MIN_DELAY(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     addBorrowable(
-      _address: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _address: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     addBorrowables(
-      _addressList: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _addressList: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     allocateIntoBorrowable(
-      borrowable: string,
-      underlyingAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      borrowable: PromiseOrValue<string>,
+      underlyingAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
-    applyFee(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    applyFee(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    borrowables(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    borrowables(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
     checkpoints(
-      arg0: string,
-      arg1: BigNumberish,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[number, BigNumber] & { fromBlock: number; votes: BigNumber }>;
 
     deallocateFromBorrowable(
-      borrowable: string,
-      borrowableAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      borrowable: PromiseOrValue<string>,
+      borrowableAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<[number]>;
 
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     delegate(
-      delegatee: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      delegatee: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     delegateBySig(
-      delegatee: string,
-      nonce: BigNumberish,
-      expiry: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      delegatee: PromiseOrValue<string>,
+      nonce: PromiseOrValue<BigNumberish>,
+      expiry: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    delegates(delegator: string, overrides?: CallOverrides): Promise<[string]>;
+    delegates(delegator: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[string]>;
 
     disableBorrowable(
-      borrowable: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      borrowable: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     enableBorrowable(
-      borrowable: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      borrowable: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     enter(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     enterWithToken(
-      _tokenAddress: string,
-      _tokenAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokenAddress: PromiseOrValue<string>,
+      _tokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     feeBps(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     feeTo(overrides?: CallOverrides): Promise<[string]>;
 
-    getBorrowableEnabled(borrowable: string, overrides?: CallOverrides): Promise<[boolean]>;
+    getBorrowableEnabled(borrowable: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
-    getBorrowableExists(borrowable: string, overrides?: CallOverrides): Promise<[boolean]>;
+    getBorrowableExists(borrowable: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     getBorrowablesLength(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getCurrentVotes(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getCurrentVotes(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getPriorVotes(account: string, blockNumber: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getPriorVotes(
+      account: PromiseOrValue<string>,
+      blockNumber: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
-    getSupplyRate(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    getSupplyRate(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     getTotalUnderlying(overrides?: CallOverrides): Promise<[BigNumber] & { totalUnderlying: BigNumber }>;
 
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    indexOfBorrowable(borrowable: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    indexOfBorrowable(borrowable: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     leave(
-      _share: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _share: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     leaveInKind(
-      _share: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _share: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    numCheckpoints(arg0: string, overrides?: CallOverrides): Promise<[number]>;
+    numCheckpoints(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[number]>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
-    pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     paused(overrides?: CallOverrides): Promise<[boolean]>;
 
@@ -725,23 +779,23 @@ export interface TarotSupplyVault extends BaseContract {
     pendingStrategyNotBefore(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     reallocate(
-      _share: BigNumberish,
-      _data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _share: PromiseOrValue<BigNumberish>,
+      _data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     reallocateManager(overrides?: CallOverrides): Promise<[string]>;
 
     removeBorrowable(
-      borrowable: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      borrowable: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     shareValuedAsUnderlying(
-      _share: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _share: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     strategy(overrides?: CallOverrides): Promise<[string]>;
@@ -751,65 +805,65 @@ export interface TarotSupplyVault extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transfer(
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferFrom(
-      sender: string,
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     underlying(overrides?: CallOverrides): Promise<[string]>;
 
     underlyingBalanceForAccount(
-      _account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     underlyingValuedAsShare(
-      _underlyingAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _underlyingAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     unwindBorrowable(
-      borrowable: string,
-      borrowableAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      borrowable: PromiseOrValue<string>,
+      borrowableAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateFeeBps(
-      _newFeeBps: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newFeeBps: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateFeeTo(
-      _newFeeTo: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newFeeTo: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updatePendingStrategy(
-      _newPendingStrategy: string,
-      _notBefore: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newPendingStrategy: PromiseOrValue<string>,
+      _notBefore: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateReallocateManager(
-      _newReallocateManager: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newReallocateManager: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    updateStrategy(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    updateStrategy(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
   };
 
   DELEGATION_TYPEHASH(overrides?: CallOverrides): Promise<string>;
@@ -823,138 +877,146 @@ export interface TarotSupplyVault extends BaseContract {
   MIN_DELAY(overrides?: CallOverrides): Promise<BigNumber>;
 
   addBorrowable(
-    _address: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _address: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   addBorrowables(
-    _addressList: string[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _addressList: PromiseOrValue<string>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   allocateIntoBorrowable(
-    borrowable: string,
-    underlyingAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    borrowable: PromiseOrValue<string>,
+    underlyingAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+  allowance(
+    owner: PromiseOrValue<string>,
+    spender: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
-  applyFee(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  applyFee(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   approve(
-    spender: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  borrowables(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  borrowables(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   checkpoints(
-    arg0: string,
-    arg1: BigNumberish,
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<[number, BigNumber] & { fromBlock: number; votes: BigNumber }>;
 
   deallocateFromBorrowable(
-    borrowable: string,
-    borrowableAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    borrowable: PromiseOrValue<string>,
+    borrowableAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   decimals(overrides?: CallOverrides): Promise<number>;
 
   decreaseAllowance(
-    spender: string,
-    subtractedValue: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    subtractedValue: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   delegate(
-    delegatee: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    delegatee: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   delegateBySig(
-    delegatee: string,
-    nonce: BigNumberish,
-    expiry: BigNumberish,
-    v: BigNumberish,
-    r: BytesLike,
-    s: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    delegatee: PromiseOrValue<string>,
+    nonce: PromiseOrValue<BigNumberish>,
+    expiry: PromiseOrValue<BigNumberish>,
+    v: PromiseOrValue<BigNumberish>,
+    r: PromiseOrValue<BytesLike>,
+    s: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  delegates(delegator: string, overrides?: CallOverrides): Promise<string>;
+  delegates(delegator: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
   disableBorrowable(
-    borrowable: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    borrowable: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   enableBorrowable(
-    borrowable: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    borrowable: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   enter(
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   enterWithToken(
-    _tokenAddress: string,
-    _tokenAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _tokenAddress: PromiseOrValue<string>,
+    _tokenAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   feeBps(overrides?: CallOverrides): Promise<BigNumber>;
 
   feeTo(overrides?: CallOverrides): Promise<string>;
 
-  getBorrowableEnabled(borrowable: string, overrides?: CallOverrides): Promise<boolean>;
+  getBorrowableEnabled(borrowable: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-  getBorrowableExists(borrowable: string, overrides?: CallOverrides): Promise<boolean>;
+  getBorrowableExists(borrowable: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   getBorrowablesLength(overrides?: CallOverrides): Promise<BigNumber>;
 
-  getCurrentVotes(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getCurrentVotes(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  getPriorVotes(account: string, blockNumber: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  getPriorVotes(
+    account: PromiseOrValue<string>,
+    blockNumber: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
-  getSupplyRate(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  getSupplyRate(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   getTotalUnderlying(overrides?: CallOverrides): Promise<BigNumber>;
 
   increaseAllowance(
-    spender: string,
-    addedValue: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    addedValue: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  indexOfBorrowable(borrowable: string, overrides?: CallOverrides): Promise<BigNumber>;
+  indexOfBorrowable(borrowable: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   leave(
-    _share: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _share: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   leaveInKind(
-    _share: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _share: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   name(overrides?: CallOverrides): Promise<string>;
 
-  nonces(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  numCheckpoints(arg0: string, overrides?: CallOverrides): Promise<number>;
+  numCheckpoints(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<number>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
-  pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   paused(overrides?: CallOverrides): Promise<boolean>;
 
@@ -963,23 +1025,23 @@ export interface TarotSupplyVault extends BaseContract {
   pendingStrategyNotBefore(overrides?: CallOverrides): Promise<BigNumber>;
 
   reallocate(
-    _share: BigNumberish,
-    _data: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _share: PromiseOrValue<BigNumberish>,
+    _data: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   reallocateManager(overrides?: CallOverrides): Promise<string>;
 
   removeBorrowable(
-    borrowable: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    borrowable: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   shareValuedAsUnderlying(
-    _share: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _share: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   strategy(overrides?: CallOverrides): Promise<string>;
@@ -989,65 +1051,65 @@ export interface TarotSupplyVault extends BaseContract {
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   transfer(
-    recipient: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    recipient: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferFrom(
-    sender: string,
-    recipient: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    sender: PromiseOrValue<string>,
+    recipient: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   underlying(overrides?: CallOverrides): Promise<string>;
 
   underlyingBalanceForAccount(
-    _account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   underlyingValuedAsShare(
-    _underlyingAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _underlyingAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   unwindBorrowable(
-    borrowable: string,
-    borrowableAmount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    borrowable: PromiseOrValue<string>,
+    borrowableAmount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateFeeBps(
-    _newFeeBps: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _newFeeBps: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateFeeTo(
-    _newFeeTo: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _newFeeTo: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updatePendingStrategy(
-    _newPendingStrategy: string,
-    _notBefore: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _newPendingStrategy: PromiseOrValue<string>,
+    _notBefore: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateReallocateManager(
-    _newReallocateManager: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _newReallocateManager: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  updateStrategy(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  updateStrategy(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   callStatic: {
     DELEGATION_TYPEHASH(overrides?: CallOverrides): Promise<string>;
@@ -1060,95 +1122,119 @@ export interface TarotSupplyVault extends BaseContract {
 
     MIN_DELAY(overrides?: CallOverrides): Promise<BigNumber>;
 
-    addBorrowable(_address: string, overrides?: CallOverrides): Promise<void>;
+    addBorrowable(_address: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    addBorrowables(_addressList: string[], overrides?: CallOverrides): Promise<void>;
+    addBorrowables(_addressList: PromiseOrValue<string>[], overrides?: CallOverrides): Promise<void>;
 
     allocateIntoBorrowable(
-      borrowable: string,
-      underlyingAmount: BigNumberish,
+      borrowable: PromiseOrValue<string>,
+      underlyingAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     applyFee(overrides?: CallOverrides): Promise<void>;
 
-    approve(spender: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    approve(
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    borrowables(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    borrowables(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
     checkpoints(
-      arg0: string,
-      arg1: BigNumberish,
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[number, BigNumber] & { fromBlock: number; votes: BigNumber }>;
 
     deallocateFromBorrowable(
-      borrowable: string,
-      borrowableAmount: BigNumberish,
+      borrowable: PromiseOrValue<string>,
+      borrowableAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     decimals(overrides?: CallOverrides): Promise<number>;
 
-    decreaseAllowance(spender: string, subtractedValue: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    decreaseAllowance(
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    delegate(delegatee: string, overrides?: CallOverrides): Promise<void>;
+    delegate(delegatee: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     delegateBySig(
-      delegatee: string,
-      nonce: BigNumberish,
-      expiry: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
+      delegatee: PromiseOrValue<string>,
+      nonce: PromiseOrValue<BigNumberish>,
+      expiry: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    delegates(delegator: string, overrides?: CallOverrides): Promise<string>;
+    delegates(delegator: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
-    disableBorrowable(borrowable: string, overrides?: CallOverrides): Promise<void>;
+    disableBorrowable(borrowable: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    enableBorrowable(borrowable: string, overrides?: CallOverrides): Promise<void>;
+    enableBorrowable(borrowable: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    enter(_amount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    enter(_amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    enterWithToken(_tokenAddress: string, _tokenAmount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    enterWithToken(
+      _tokenAddress: PromiseOrValue<string>,
+      _tokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     feeBps(overrides?: CallOverrides): Promise<BigNumber>;
 
     feeTo(overrides?: CallOverrides): Promise<string>;
 
-    getBorrowableEnabled(borrowable: string, overrides?: CallOverrides): Promise<boolean>;
+    getBorrowableEnabled(borrowable: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-    getBorrowableExists(borrowable: string, overrides?: CallOverrides): Promise<boolean>;
+    getBorrowableExists(borrowable: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     getBorrowablesLength(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getCurrentVotes(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getCurrentVotes(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getPriorVotes(account: string, blockNumber: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getPriorVotes(
+      account: PromiseOrValue<string>,
+      blockNumber: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     getSupplyRate(overrides?: CallOverrides): Promise<BigNumber>;
 
     getTotalUnderlying(overrides?: CallOverrides): Promise<BigNumber>;
 
-    increaseAllowance(spender: string, addedValue: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    increaseAllowance(
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    indexOfBorrowable(borrowable: string, overrides?: CallOverrides): Promise<BigNumber>;
+    indexOfBorrowable(borrowable: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    leave(_share: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    leave(_share: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    leaveInKind(_share: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    leaveInKind(_share: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    numCheckpoints(arg0: string, overrides?: CallOverrides): Promise<number>;
+    numCheckpoints(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<number>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
@@ -1160,15 +1246,19 @@ export interface TarotSupplyVault extends BaseContract {
 
     pendingStrategyNotBefore(overrides?: CallOverrides): Promise<BigNumber>;
 
-    reallocate(_share: BigNumberish, _data: BytesLike, overrides?: CallOverrides): Promise<void>;
+    reallocate(
+      _share: PromiseOrValue<BigNumberish>,
+      _data: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     reallocateManager(overrides?: CallOverrides): Promise<string>;
 
-    removeBorrowable(borrowable: string, overrides?: CallOverrides): Promise<void>;
+    removeBorrowable(borrowable: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
-    shareValuedAsUnderlying(_share: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    shareValuedAsUnderlying(_share: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     strategy(overrides?: CallOverrides): Promise<string>;
 
@@ -1176,155 +1266,190 @@ export interface TarotSupplyVault extends BaseContract {
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transfer(recipient: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transfer(
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    transferFrom(sender: string, recipient: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transferFrom(
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     underlying(overrides?: CallOverrides): Promise<string>;
 
-    underlyingBalanceForAccount(_account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    underlyingBalanceForAccount(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    underlyingValuedAsShare(_underlyingAmount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    underlyingValuedAsShare(
+      _underlyingAmount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     unpause(overrides?: CallOverrides): Promise<void>;
 
-    unwindBorrowable(borrowable: string, borrowableAmount: BigNumberish, overrides?: CallOverrides): Promise<void>;
-
-    updateFeeBps(_newFeeBps: BigNumberish, overrides?: CallOverrides): Promise<void>;
-
-    updateFeeTo(_newFeeTo: string, overrides?: CallOverrides): Promise<void>;
-
-    updatePendingStrategy(
-      _newPendingStrategy: string,
-      _notBefore: BigNumberish,
+    unwindBorrowable(
+      borrowable: PromiseOrValue<string>,
+      borrowableAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    updateReallocateManager(_newReallocateManager: string, overrides?: CallOverrides): Promise<void>;
+    updateFeeBps(_newFeeBps: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
+
+    updateFeeTo(_newFeeTo: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
+
+    updatePendingStrategy(
+      _newPendingStrategy: PromiseOrValue<string>,
+      _notBefore: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    updateReallocateManager(_newReallocateManager: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     updateStrategy(overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
-    'AddBorrowable(address)'(borrowable?: string | null): AddBorrowableEventFilter;
-    AddBorrowable(borrowable?: string | null): AddBorrowableEventFilter;
+    'AddBorrowable(address)'(borrowable?: PromiseOrValue<string> | null): AddBorrowableEventFilter;
+    AddBorrowable(borrowable?: PromiseOrValue<string> | null): AddBorrowableEventFilter;
 
     'AllocateBorrowable(address,uint256,uint256)'(
-      borrowable?: string | null,
+      borrowable?: PromiseOrValue<string> | null,
       underlyingAmount?: null,
       borrowableAmount?: null,
     ): AllocateBorrowableEventFilter;
     AllocateBorrowable(
-      borrowable?: string | null,
+      borrowable?: PromiseOrValue<string> | null,
       underlyingAmount?: null,
       borrowableAmount?: null,
     ): AllocateBorrowableEventFilter;
 
     'ApplyFee(address,uint256,uint256,uint256)'(
-      feeTo?: string | null,
+      feeTo?: PromiseOrValue<string> | null,
       gain?: null,
       fee?: null,
       feeShare?: null,
     ): ApplyFeeEventFilter;
-    ApplyFee(feeTo?: string | null, gain?: null, fee?: null, feeShare?: null): ApplyFeeEventFilter;
+    ApplyFee(feeTo?: PromiseOrValue<string> | null, gain?: null, fee?: null, feeShare?: null): ApplyFeeEventFilter;
 
     'Approval(address,address,uint256)'(
-      owner?: string | null,
-      spender?: string | null,
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
       value?: null,
     ): ApprovalEventFilter;
-    Approval(owner?: string | null, spender?: string | null, value?: null): ApprovalEventFilter;
+    Approval(
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
+      value?: null,
+    ): ApprovalEventFilter;
 
     'DeallocateBorrowable(address,uint256,uint256)'(
-      borrowable?: string | null,
+      borrowable?: PromiseOrValue<string> | null,
       borrowableAmount?: null,
       underlyingAmount?: null,
     ): DeallocateBorrowableEventFilter;
     DeallocateBorrowable(
-      borrowable?: string | null,
+      borrowable?: PromiseOrValue<string> | null,
       borrowableAmount?: null,
       underlyingAmount?: null,
     ): DeallocateBorrowableEventFilter;
 
     'DelegateChanged(address,address,address)'(
-      delegator?: string | null,
-      fromDelegate?: string | null,
-      toDelegate?: string | null,
+      delegator?: PromiseOrValue<string> | null,
+      fromDelegate?: PromiseOrValue<string> | null,
+      toDelegate?: PromiseOrValue<string> | null,
     ): DelegateChangedEventFilter;
     DelegateChanged(
-      delegator?: string | null,
-      fromDelegate?: string | null,
-      toDelegate?: string | null,
+      delegator?: PromiseOrValue<string> | null,
+      fromDelegate?: PromiseOrValue<string> | null,
+      toDelegate?: PromiseOrValue<string> | null,
     ): DelegateChangedEventFilter;
 
     'DelegateVotesChanged(address,uint256,uint256)'(
-      delegate?: string | null,
+      delegate?: PromiseOrValue<string> | null,
       previousBalance?: null,
       newBalance?: null,
     ): DelegateVotesChangedEventFilter;
     DelegateVotesChanged(
-      delegate?: string | null,
+      delegate?: PromiseOrValue<string> | null,
       previousBalance?: null,
       newBalance?: null,
     ): DelegateVotesChangedEventFilter;
 
-    'DisableBorrowable(address)'(borrowable?: string | null): DisableBorrowableEventFilter;
-    DisableBorrowable(borrowable?: string | null): DisableBorrowableEventFilter;
+    'DisableBorrowable(address)'(borrowable?: PromiseOrValue<string> | null): DisableBorrowableEventFilter;
+    DisableBorrowable(borrowable?: PromiseOrValue<string> | null): DisableBorrowableEventFilter;
 
-    'EnableBorrowable(address)'(borrowable?: string | null): EnableBorrowableEventFilter;
-    EnableBorrowable(borrowable?: string | null): EnableBorrowableEventFilter;
+    'EnableBorrowable(address)'(borrowable?: PromiseOrValue<string> | null): EnableBorrowableEventFilter;
+    EnableBorrowable(borrowable?: PromiseOrValue<string> | null): EnableBorrowableEventFilter;
 
     'Enter(address,address,uint256,uint256,uint256)'(
-      who?: string | null,
-      token?: string | null,
+      who?: PromiseOrValue<string> | null,
+      token?: PromiseOrValue<string> | null,
       tokenAmount?: null,
       underlyingAmount?: null,
       share?: null,
     ): EnterEventFilter;
     Enter(
-      who?: string | null,
-      token?: string | null,
+      who?: PromiseOrValue<string> | null,
+      token?: PromiseOrValue<string> | null,
       tokenAmount?: null,
       underlyingAmount?: null,
       share?: null,
     ): EnterEventFilter;
 
-    'Leave(address,uint256,uint256)'(who?: string | null, share?: null, underlyingAmount?: null): LeaveEventFilter;
-    Leave(who?: string | null, share?: null, underlyingAmount?: null): LeaveEventFilter;
+    'Leave(address,uint256,uint256)'(
+      who?: PromiseOrValue<string> | null,
+      share?: null,
+      underlyingAmount?: null,
+    ): LeaveEventFilter;
+    Leave(who?: PromiseOrValue<string> | null, share?: null, underlyingAmount?: null): LeaveEventFilter;
 
-    'LeaveInKind(address,uint256)'(who?: string | null, share?: null): LeaveInKindEventFilter;
-    LeaveInKind(who?: string | null, share?: null): LeaveInKindEventFilter;
+    'LeaveInKind(address,uint256)'(who?: PromiseOrValue<string> | null, share?: null): LeaveInKindEventFilter;
+    LeaveInKind(who?: PromiseOrValue<string> | null, share?: null): LeaveInKindEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
 
     'Paused(address)'(account?: null): PausedEventFilter;
     Paused(account?: null): PausedEventFilter;
 
-    'Reallocate(address,uint256)'(sender?: string | null, share?: null): ReallocateEventFilter;
-    Reallocate(sender?: string | null, share?: null): ReallocateEventFilter;
+    'Reallocate(address,uint256)'(sender?: PromiseOrValue<string> | null, share?: null): ReallocateEventFilter;
+    Reallocate(sender?: PromiseOrValue<string> | null, share?: null): ReallocateEventFilter;
 
-    'RemoveBorrowable(address)'(borrowable?: string | null): RemoveBorrowableEventFilter;
-    RemoveBorrowable(borrowable?: string | null): RemoveBorrowableEventFilter;
+    'RemoveBorrowable(address)'(borrowable?: PromiseOrValue<string> | null): RemoveBorrowableEventFilter;
+    RemoveBorrowable(borrowable?: PromiseOrValue<string> | null): RemoveBorrowableEventFilter;
 
-    'Transfer(address,address,uint256)'(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
-    Transfer(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
+    'Transfer(address,address,uint256)'(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
+    Transfer(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
 
     'Unpaused(address)'(account?: null): UnpausedEventFilter;
     Unpaused(account?: null): UnpausedEventFilter;
 
     'UnwindBorrowable(address,uint256,uint256)'(
-      borrowable?: string | null,
+      borrowable?: PromiseOrValue<string> | null,
       underlyingAmount?: null,
       borrowableAmount?: null,
     ): UnwindBorrowableEventFilter;
     UnwindBorrowable(
-      borrowable?: string | null,
+      borrowable?: PromiseOrValue<string> | null,
       underlyingAmount?: null,
       borrowableAmount?: null,
     ): UnwindBorrowableEventFilter;
@@ -1335,20 +1460,22 @@ export interface TarotSupplyVault extends BaseContract {
     'UpdateFeeBps(uint256)'(newFeeBps?: null): UpdateFeeBpsEventFilter;
     UpdateFeeBps(newFeeBps?: null): UpdateFeeBpsEventFilter;
 
-    'UpdateFeeTo(address)'(newFeeTo?: string | null): UpdateFeeToEventFilter;
-    UpdateFeeTo(newFeeTo?: string | null): UpdateFeeToEventFilter;
+    'UpdateFeeTo(address)'(newFeeTo?: PromiseOrValue<string> | null): UpdateFeeToEventFilter;
+    UpdateFeeTo(newFeeTo?: PromiseOrValue<string> | null): UpdateFeeToEventFilter;
 
     'UpdatePendingStrategy(address,uint256)'(
-      strategy?: string | null,
+      strategy?: PromiseOrValue<string> | null,
       notBefore?: null,
     ): UpdatePendingStrategyEventFilter;
-    UpdatePendingStrategy(strategy?: string | null, notBefore?: null): UpdatePendingStrategyEventFilter;
+    UpdatePendingStrategy(strategy?: PromiseOrValue<string> | null, notBefore?: null): UpdatePendingStrategyEventFilter;
 
-    'UpdateReallocateManager(address)'(newReallocateManager?: string | null): UpdateReallocateManagerEventFilter;
-    UpdateReallocateManager(newReallocateManager?: string | null): UpdateReallocateManagerEventFilter;
+    'UpdateReallocateManager(address)'(
+      newReallocateManager?: PromiseOrValue<string> | null,
+    ): UpdateReallocateManagerEventFilter;
+    UpdateReallocateManager(newReallocateManager?: PromiseOrValue<string> | null): UpdateReallocateManagerEventFilter;
 
-    'UpdateStrategy(address)'(strategy?: string | null): UpdateStrategyEventFilter;
-    UpdateStrategy(strategy?: string | null): UpdateStrategyEventFilter;
+    'UpdateStrategy(address)'(strategy?: PromiseOrValue<string> | null): UpdateStrategyEventFilter;
+    UpdateStrategy(strategy?: PromiseOrValue<string> | null): UpdateStrategyEventFilter;
   };
 
   estimateGas: {
@@ -1362,120 +1489,147 @@ export interface TarotSupplyVault extends BaseContract {
 
     MIN_DELAY(overrides?: CallOverrides): Promise<BigNumber>;
 
-    addBorrowable(_address: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    addBorrowable(
+      _address: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     addBorrowables(
-      _addressList: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _addressList: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     allocateIntoBorrowable(
-      borrowable: string,
-      underlyingAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      borrowable: PromiseOrValue<string>,
+      underlyingAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    applyFee(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    applyFee(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    borrowables(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    borrowables(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    checkpoints(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    checkpoints(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     deallocateFromBorrowable(
-      borrowable: string,
-      borrowableAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      borrowable: PromiseOrValue<string>,
+      borrowableAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    delegate(delegatee: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    delegate(
+      delegatee: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     delegateBySig(
-      delegatee: string,
-      nonce: BigNumberish,
-      expiry: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      delegatee: PromiseOrValue<string>,
+      nonce: PromiseOrValue<BigNumberish>,
+      expiry: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    delegates(delegator: string, overrides?: CallOverrides): Promise<BigNumber>;
+    delegates(delegator: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     disableBorrowable(
-      borrowable: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      borrowable: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     enableBorrowable(
-      borrowable: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      borrowable: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    enter(_amount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    enter(
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     enterWithToken(
-      _tokenAddress: string,
-      _tokenAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokenAddress: PromiseOrValue<string>,
+      _tokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     feeBps(overrides?: CallOverrides): Promise<BigNumber>;
 
     feeTo(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getBorrowableEnabled(borrowable: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getBorrowableEnabled(borrowable: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getBorrowableExists(borrowable: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getBorrowableExists(borrowable: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getBorrowablesLength(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getCurrentVotes(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getCurrentVotes(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getPriorVotes(account: string, blockNumber: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getPriorVotes(
+      account: PromiseOrValue<string>,
+      blockNumber: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    getSupplyRate(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    getSupplyRate(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     getTotalUnderlying(overrides?: CallOverrides): Promise<BigNumber>;
 
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    indexOfBorrowable(borrowable: string, overrides?: CallOverrides): Promise<BigNumber>;
+    indexOfBorrowable(borrowable: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    leave(_share: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    leave(
+      _share: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    leaveInKind(_share: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    leaveInKind(
+      _share: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    numCheckpoints(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    numCheckpoints(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     paused(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1484,23 +1638,23 @@ export interface TarotSupplyVault extends BaseContract {
     pendingStrategyNotBefore(overrides?: CallOverrides): Promise<BigNumber>;
 
     reallocate(
-      _share: BigNumberish,
-      _data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _share: PromiseOrValue<BigNumberish>,
+      _data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     reallocateManager(overrides?: CallOverrides): Promise<BigNumber>;
 
     removeBorrowable(
-      borrowable: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      borrowable: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     shareValuedAsUnderlying(
-      _share: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _share: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     strategy(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1510,62 +1664,65 @@ export interface TarotSupplyVault extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferFrom(
-      sender: string,
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     underlying(overrides?: CallOverrides): Promise<BigNumber>;
 
     underlyingBalanceForAccount(
-      _account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     underlyingValuedAsShare(
-      _underlyingAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _underlyingAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     unwindBorrowable(
-      borrowable: string,
-      borrowableAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      borrowable: PromiseOrValue<string>,
+      borrowableAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     updateFeeBps(
-      _newFeeBps: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newFeeBps: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    updateFeeTo(_newFeeTo: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    updateFeeTo(
+      _newFeeTo: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     updatePendingStrategy(
-      _newPendingStrategy: string,
-      _notBefore: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newPendingStrategy: PromiseOrValue<string>,
+      _notBefore: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     updateReallocateManager(
-      _newReallocateManager: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newReallocateManager: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    updateStrategy(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    updateStrategy(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -1580,134 +1737,146 @@ export interface TarotSupplyVault extends BaseContract {
     MIN_DELAY(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     addBorrowable(
-      _address: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _address: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     addBorrowables(
-      _addressList: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _addressList: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     allocateIntoBorrowable(
-      borrowable: string,
-      underlyingAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      borrowable: PromiseOrValue<string>,
+      underlyingAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    applyFee(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    applyFee(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    borrowables(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    borrowables(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    checkpoints(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    checkpoints(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     deallocateFromBorrowable(
-      borrowable: string,
-      borrowableAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      borrowable: PromiseOrValue<string>,
+      borrowableAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     delegate(
-      delegatee: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      delegatee: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     delegateBySig(
-      delegatee: string,
-      nonce: BigNumberish,
-      expiry: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      delegatee: PromiseOrValue<string>,
+      nonce: PromiseOrValue<BigNumberish>,
+      expiry: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    delegates(delegator: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    delegates(delegator: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     disableBorrowable(
-      borrowable: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      borrowable: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     enableBorrowable(
-      borrowable: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      borrowable: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     enter(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     enterWithToken(
-      _tokenAddress: string,
-      _tokenAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokenAddress: PromiseOrValue<string>,
+      _tokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     feeBps(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     feeTo(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getBorrowableEnabled(borrowable: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getBorrowableEnabled(borrowable: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getBorrowableExists(borrowable: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getBorrowableExists(borrowable: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getBorrowablesLength(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getCurrentVotes(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getCurrentVotes(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getPriorVotes(account: string, blockNumber: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getPriorVotes(
+      account: PromiseOrValue<string>,
+      blockNumber: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    getSupplyRate(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    getSupplyRate(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     getTotalUnderlying(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    indexOfBorrowable(borrowable: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    indexOfBorrowable(borrowable: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     leave(
-      _share: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _share: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     leaveInKind(
-      _share: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _share: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    numCheckpoints(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    numCheckpoints(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     paused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1716,23 +1885,23 @@ export interface TarotSupplyVault extends BaseContract {
     pendingStrategyNotBefore(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     reallocate(
-      _share: BigNumberish,
-      _data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _share: PromiseOrValue<BigNumberish>,
+      _data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     reallocateManager(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     removeBorrowable(
-      borrowable: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      borrowable: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     shareValuedAsUnderlying(
-      _share: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _share: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     strategy(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1742,64 +1911,64 @@ export interface TarotSupplyVault extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transfer(
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferFrom(
-      sender: string,
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     underlying(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     underlyingBalanceForAccount(
-      _account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     underlyingValuedAsShare(
-      _underlyingAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _underlyingAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     unwindBorrowable(
-      borrowable: string,
-      borrowableAmount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      borrowable: PromiseOrValue<string>,
+      borrowableAmount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateFeeBps(
-      _newFeeBps: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newFeeBps: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateFeeTo(
-      _newFeeTo: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newFeeTo: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updatePendingStrategy(
-      _newPendingStrategy: string,
-      _notBefore: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newPendingStrategy: PromiseOrValue<string>,
+      _notBefore: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateReallocateManager(
-      _newReallocateManager: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newReallocateManager: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    updateStrategy(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    updateStrategy(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
   };
 }

@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface CurveFactoryInterface extends utils.Interface {
   functions: {
@@ -79,39 +79,58 @@ export interface CurveFactoryInterface extends utils.Interface {
       | 'fee_receiver',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'find_pool_for_coins(address,address)', values: [string, string]): string;
+  encodeFunctionData(
+    functionFragment: 'find_pool_for_coins(address,address)',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(
     functionFragment: 'find_pool_for_coins(address,address,uint256)',
-    values: [string, string, BigNumberish],
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
-  encodeFunctionData(functionFragment: 'get_n_coins', values: [string]): string;
-  encodeFunctionData(functionFragment: 'get_coins', values: [string]): string;
-  encodeFunctionData(functionFragment: 'get_underlying_coins', values: [string]): string;
-  encodeFunctionData(functionFragment: 'get_decimals', values: [string]): string;
-  encodeFunctionData(functionFragment: 'get_underlying_decimals', values: [string]): string;
-  encodeFunctionData(functionFragment: 'get_rates', values: [string]): string;
-  encodeFunctionData(functionFragment: 'get_balances', values: [string]): string;
-  encodeFunctionData(functionFragment: 'get_underlying_balances', values: [string]): string;
-  encodeFunctionData(functionFragment: 'get_A', values: [string]): string;
-  encodeFunctionData(functionFragment: 'get_fees', values: [string]): string;
-  encodeFunctionData(functionFragment: 'get_admin_balances', values: [string]): string;
-  encodeFunctionData(functionFragment: 'get_coin_indices', values: [string, string, string]): string;
-  encodeFunctionData(functionFragment: 'add_base_pool', values: [string, string, string]): string;
+  encodeFunctionData(functionFragment: 'get_n_coins', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'get_coins', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'get_underlying_coins', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'get_decimals', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'get_underlying_decimals', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'get_rates', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'get_balances', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'get_underlying_balances', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'get_A', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'get_fees', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'get_admin_balances', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'get_coin_indices',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'add_base_pool',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(
     functionFragment: 'deploy_metapool',
-    values: [string, string, string, string, BigNumberish, BigNumberish],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'commit_transfer_ownership', values: [string]): string;
+  encodeFunctionData(functionFragment: 'commit_transfer_ownership', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'accept_transfer_ownership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'set_fee_receiver', values: [string, string]): string;
+  encodeFunctionData(
+    functionFragment: 'set_fee_receiver',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'convert_fees', values?: undefined): string;
   encodeFunctionData(functionFragment: 'admin', values?: undefined): string;
   encodeFunctionData(functionFragment: 'future_admin', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'pool_list', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'pool_list', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'pool_count', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'base_pool_list', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'base_pool_list', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'base_pool_count', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'fee_receiver', values: [string]): string;
+  encodeFunctionData(functionFragment: 'fee_receiver', values: [PromiseOrValue<string>]): string;
 
   decodeFunctionResult(functionFragment: 'find_pool_for_coins(address,address)', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'find_pool_for_coins(address,address,uint256)', data: BytesLike): Result;
@@ -195,238 +214,252 @@ export interface CurveFactory extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    'find_pool_for_coins(address,address)'(_from: string, _to: string, overrides?: CallOverrides): Promise<[string]>;
-
-    'find_pool_for_coins(address,address,uint256)'(
-      _from: string,
-      _to: string,
-      i: BigNumberish,
+    'find_pool_for_coins(address,address)'(
+      _from: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[string]>;
 
-    get_n_coins(_pool: string, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+    'find_pool_for_coins(address,address,uint256)'(
+      _from: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
+      i: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[string]>;
 
-    get_coins(_pool: string, overrides?: CallOverrides): Promise<[[string, string]]>;
+    get_n_coins(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
 
-    get_underlying_coins(_pool: string, overrides?: CallOverrides): Promise<[string[]]>;
+    get_coins(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[[string, string]]>;
 
-    get_decimals(_pool: string, overrides?: CallOverrides): Promise<[[BigNumber, BigNumber]]>;
+    get_underlying_coins(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[string[]]>;
 
-    get_underlying_decimals(_pool: string, overrides?: CallOverrides): Promise<[BigNumber[]]>;
+    get_decimals(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[[BigNumber, BigNumber]]>;
 
-    get_rates(_pool: string, overrides?: CallOverrides): Promise<[[BigNumber, BigNumber]]>;
+    get_underlying_decimals(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber[]]>;
 
-    get_balances(_pool: string, overrides?: CallOverrides): Promise<[[BigNumber, BigNumber]]>;
+    get_rates(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[[BigNumber, BigNumber]]>;
 
-    get_underlying_balances(_pool: string, overrides?: CallOverrides): Promise<[BigNumber[]]>;
+    get_balances(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[[BigNumber, BigNumber]]>;
 
-    get_A(_pool: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    get_underlying_balances(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber[]]>;
 
-    get_fees(_pool: string, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+    get_A(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    get_admin_balances(_pool: string, overrides?: CallOverrides): Promise<[[BigNumber, BigNumber]]>;
+    get_fees(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+
+    get_admin_balances(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[[BigNumber, BigNumber]]>;
 
     get_coin_indices(
-      _pool: string,
-      _from: string,
-      _to: string,
+      _pool: PromiseOrValue<string>,
+      _from: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber, boolean]>;
 
     add_base_pool(
-      _base_pool: string,
-      _metapool_implementation: string,
-      _fee_receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _base_pool: PromiseOrValue<string>,
+      _metapool_implementation: PromiseOrValue<string>,
+      _fee_receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     deploy_metapool(
-      _base_pool: string,
-      _name: string,
-      _symbol: string,
-      _coin: string,
-      _A: BigNumberish,
-      _fee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _base_pool: PromiseOrValue<string>,
+      _name: PromiseOrValue<string>,
+      _symbol: PromiseOrValue<string>,
+      _coin: PromiseOrValue<string>,
+      _A: PromiseOrValue<BigNumberish>,
+      _fee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     commit_transfer_ownership(
-      addr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      addr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    accept_transfer_ownership(
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
+    accept_transfer_ownership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     set_fee_receiver(
-      _base_pool: string,
-      _fee_receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _base_pool: PromiseOrValue<string>,
+      _fee_receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    convert_fees(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    convert_fees(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     admin(overrides?: CallOverrides): Promise<[string]>;
 
     future_admin(overrides?: CallOverrides): Promise<[string]>;
 
-    pool_list(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    pool_list(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
     pool_count(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    base_pool_list(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    base_pool_list(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
     base_pool_count(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    fee_receiver(arg0: string, overrides?: CallOverrides): Promise<[string]>;
+    fee_receiver(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[string]>;
   };
 
-  'find_pool_for_coins(address,address)'(_from: string, _to: string, overrides?: CallOverrides): Promise<string>;
-
-  'find_pool_for_coins(address,address,uint256)'(
-    _from: string,
-    _to: string,
-    i: BigNumberish,
+  'find_pool_for_coins(address,address)'(
+    _from: PromiseOrValue<string>,
+    _to: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<string>;
 
-  get_n_coins(_pool: string, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+  'find_pool_for_coins(address,address,uint256)'(
+    _from: PromiseOrValue<string>,
+    _to: PromiseOrValue<string>,
+    i: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<string>;
 
-  get_coins(_pool: string, overrides?: CallOverrides): Promise<[string, string]>;
+  get_n_coins(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
 
-  get_underlying_coins(_pool: string, overrides?: CallOverrides): Promise<string[]>;
+  get_coins(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[string, string]>;
 
-  get_decimals(_pool: string, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+  get_underlying_coins(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string[]>;
 
-  get_underlying_decimals(_pool: string, overrides?: CallOverrides): Promise<BigNumber[]>;
+  get_decimals(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
 
-  get_rates(_pool: string, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+  get_underlying_decimals(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber[]>;
 
-  get_balances(_pool: string, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+  get_rates(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
 
-  get_underlying_balances(_pool: string, overrides?: CallOverrides): Promise<BigNumber[]>;
+  get_balances(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
 
-  get_A(_pool: string, overrides?: CallOverrides): Promise<BigNumber>;
+  get_underlying_balances(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber[]>;
 
-  get_fees(_pool: string, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+  get_A(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  get_admin_balances(_pool: string, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+  get_fees(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+
+  get_admin_balances(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
 
   get_coin_indices(
-    _pool: string,
-    _from: string,
-    _to: string,
+    _pool: PromiseOrValue<string>,
+    _from: PromiseOrValue<string>,
+    _to: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber, BigNumber, boolean]>;
 
   add_base_pool(
-    _base_pool: string,
-    _metapool_implementation: string,
-    _fee_receiver: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _base_pool: PromiseOrValue<string>,
+    _metapool_implementation: PromiseOrValue<string>,
+    _fee_receiver: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   deploy_metapool(
-    _base_pool: string,
-    _name: string,
-    _symbol: string,
-    _coin: string,
-    _A: BigNumberish,
-    _fee: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _base_pool: PromiseOrValue<string>,
+    _name: PromiseOrValue<string>,
+    _symbol: PromiseOrValue<string>,
+    _coin: PromiseOrValue<string>,
+    _A: PromiseOrValue<BigNumberish>,
+    _fee: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   commit_transfer_ownership(
-    addr: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    addr: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  accept_transfer_ownership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  accept_transfer_ownership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   set_fee_receiver(
-    _base_pool: string,
-    _fee_receiver: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _base_pool: PromiseOrValue<string>,
+    _fee_receiver: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  convert_fees(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  convert_fees(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   admin(overrides?: CallOverrides): Promise<string>;
 
   future_admin(overrides?: CallOverrides): Promise<string>;
 
-  pool_list(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  pool_list(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   pool_count(overrides?: CallOverrides): Promise<BigNumber>;
 
-  base_pool_list(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  base_pool_list(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   base_pool_count(overrides?: CallOverrides): Promise<BigNumber>;
 
-  fee_receiver(arg0: string, overrides?: CallOverrides): Promise<string>;
+  fee_receiver(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
   callStatic: {
-    'find_pool_for_coins(address,address)'(_from: string, _to: string, overrides?: CallOverrides): Promise<string>;
-
-    'find_pool_for_coins(address,address,uint256)'(
-      _from: string,
-      _to: string,
-      i: BigNumberish,
+    'find_pool_for_coins(address,address)'(
+      _from: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<string>;
 
-    get_n_coins(_pool: string, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+    'find_pool_for_coins(address,address,uint256)'(
+      _from: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
+      i: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<string>;
 
-    get_coins(_pool: string, overrides?: CallOverrides): Promise<[string, string]>;
+    get_n_coins(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
 
-    get_underlying_coins(_pool: string, overrides?: CallOverrides): Promise<string[]>;
+    get_coins(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[string, string]>;
 
-    get_decimals(_pool: string, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+    get_underlying_coins(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string[]>;
 
-    get_underlying_decimals(_pool: string, overrides?: CallOverrides): Promise<BigNumber[]>;
+    get_decimals(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
 
-    get_rates(_pool: string, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+    get_underlying_decimals(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber[]>;
 
-    get_balances(_pool: string, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+    get_rates(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
 
-    get_underlying_balances(_pool: string, overrides?: CallOverrides): Promise<BigNumber[]>;
+    get_balances(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
 
-    get_A(_pool: string, overrides?: CallOverrides): Promise<BigNumber>;
+    get_underlying_balances(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber[]>;
 
-    get_fees(_pool: string, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+    get_A(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    get_admin_balances(_pool: string, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+    get_fees(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
+
+    get_admin_balances(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber, BigNumber]>;
 
     get_coin_indices(
-      _pool: string,
-      _from: string,
-      _to: string,
+      _pool: PromiseOrValue<string>,
+      _from: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber, boolean]>;
 
     add_base_pool(
-      _base_pool: string,
-      _metapool_implementation: string,
-      _fee_receiver: string,
+      _base_pool: PromiseOrValue<string>,
+      _metapool_implementation: PromiseOrValue<string>,
+      _fee_receiver: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     deploy_metapool(
-      _base_pool: string,
-      _name: string,
-      _symbol: string,
-      _coin: string,
-      _A: BigNumberish,
-      _fee: BigNumberish,
+      _base_pool: PromiseOrValue<string>,
+      _name: PromiseOrValue<string>,
+      _symbol: PromiseOrValue<string>,
+      _coin: PromiseOrValue<string>,
+      _A: PromiseOrValue<BigNumberish>,
+      _fee: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<string>;
 
-    commit_transfer_ownership(addr: string, overrides?: CallOverrides): Promise<void>;
+    commit_transfer_ownership(addr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     accept_transfer_ownership(overrides?: CallOverrides): Promise<void>;
 
-    set_fee_receiver(_base_pool: string, _fee_receiver: string, overrides?: CallOverrides): Promise<void>;
+    set_fee_receiver(
+      _base_pool: PromiseOrValue<string>,
+      _fee_receiver: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     convert_fees(overrides?: CallOverrides): Promise<boolean>;
 
@@ -434,15 +467,15 @@ export interface CurveFactory extends BaseContract {
 
     future_admin(overrides?: CallOverrides): Promise<string>;
 
-    pool_list(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    pool_list(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
     pool_count(overrides?: CallOverrides): Promise<BigNumber>;
 
-    base_pool_list(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    base_pool_list(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
     base_pool_count(overrides?: CallOverrides): Promise<BigNumber>;
 
-    fee_receiver(arg0: string, overrides?: CallOverrides): Promise<string>;
+    fee_receiver(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
   };
 
   filters: {
@@ -460,175 +493,182 @@ export interface CurveFactory extends BaseContract {
   };
 
   estimateGas: {
-    'find_pool_for_coins(address,address)'(_from: string, _to: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-    'find_pool_for_coins(address,address,uint256)'(
-      _from: string,
-      _to: string,
-      i: BigNumberish,
+    'find_pool_for_coins(address,address)'(
+      _from: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    get_n_coins(_pool: string, overrides?: CallOverrides): Promise<BigNumber>;
+    'find_pool_for_coins(address,address,uint256)'(
+      _from: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
+      i: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    get_coins(_pool: string, overrides?: CallOverrides): Promise<BigNumber>;
+    get_n_coins(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    get_underlying_coins(_pool: string, overrides?: CallOverrides): Promise<BigNumber>;
+    get_coins(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    get_decimals(_pool: string, overrides?: CallOverrides): Promise<BigNumber>;
+    get_underlying_coins(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    get_underlying_decimals(_pool: string, overrides?: CallOverrides): Promise<BigNumber>;
+    get_decimals(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    get_rates(_pool: string, overrides?: CallOverrides): Promise<BigNumber>;
+    get_underlying_decimals(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    get_balances(_pool: string, overrides?: CallOverrides): Promise<BigNumber>;
+    get_rates(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    get_underlying_balances(_pool: string, overrides?: CallOverrides): Promise<BigNumber>;
+    get_balances(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    get_A(_pool: string, overrides?: CallOverrides): Promise<BigNumber>;
+    get_underlying_balances(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    get_fees(_pool: string, overrides?: CallOverrides): Promise<BigNumber>;
+    get_A(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    get_admin_balances(_pool: string, overrides?: CallOverrides): Promise<BigNumber>;
+    get_fees(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    get_coin_indices(_pool: string, _from: string, _to: string, overrides?: CallOverrides): Promise<BigNumber>;
+    get_admin_balances(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    get_coin_indices(
+      _pool: PromiseOrValue<string>,
+      _from: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     add_base_pool(
-      _base_pool: string,
-      _metapool_implementation: string,
-      _fee_receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _base_pool: PromiseOrValue<string>,
+      _metapool_implementation: PromiseOrValue<string>,
+      _fee_receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     deploy_metapool(
-      _base_pool: string,
-      _name: string,
-      _symbol: string,
-      _coin: string,
-      _A: BigNumberish,
-      _fee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _base_pool: PromiseOrValue<string>,
+      _name: PromiseOrValue<string>,
+      _symbol: PromiseOrValue<string>,
+      _coin: PromiseOrValue<string>,
+      _A: PromiseOrValue<BigNumberish>,
+      _fee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     commit_transfer_ownership(
-      addr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      addr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    accept_transfer_ownership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    accept_transfer_ownership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     set_fee_receiver(
-      _base_pool: string,
-      _fee_receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _base_pool: PromiseOrValue<string>,
+      _fee_receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    convert_fees(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    convert_fees(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     admin(overrides?: CallOverrides): Promise<BigNumber>;
 
     future_admin(overrides?: CallOverrides): Promise<BigNumber>;
 
-    pool_list(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    pool_list(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     pool_count(overrides?: CallOverrides): Promise<BigNumber>;
 
-    base_pool_list(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    base_pool_list(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     base_pool_count(overrides?: CallOverrides): Promise<BigNumber>;
 
-    fee_receiver(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    fee_receiver(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
     'find_pool_for_coins(address,address)'(
-      _from: string,
-      _to: string,
+      _from: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     'find_pool_for_coins(address,address,uint256)'(
-      _from: string,
-      _to: string,
-      i: BigNumberish,
+      _from: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
+      i: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    get_n_coins(_pool: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    get_n_coins(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    get_coins(_pool: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    get_coins(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    get_underlying_coins(_pool: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    get_underlying_coins(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    get_decimals(_pool: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    get_decimals(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    get_underlying_decimals(_pool: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    get_underlying_decimals(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    get_rates(_pool: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    get_rates(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    get_balances(_pool: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    get_balances(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    get_underlying_balances(_pool: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    get_underlying_balances(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    get_A(_pool: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    get_A(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    get_fees(_pool: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    get_fees(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    get_admin_balances(_pool: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    get_admin_balances(_pool: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     get_coin_indices(
-      _pool: string,
-      _from: string,
-      _to: string,
+      _pool: PromiseOrValue<string>,
+      _from: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     add_base_pool(
-      _base_pool: string,
-      _metapool_implementation: string,
-      _fee_receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _base_pool: PromiseOrValue<string>,
+      _metapool_implementation: PromiseOrValue<string>,
+      _fee_receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     deploy_metapool(
-      _base_pool: string,
-      _name: string,
-      _symbol: string,
-      _coin: string,
-      _A: BigNumberish,
-      _fee: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _base_pool: PromiseOrValue<string>,
+      _name: PromiseOrValue<string>,
+      _symbol: PromiseOrValue<string>,
+      _coin: PromiseOrValue<string>,
+      _A: PromiseOrValue<BigNumberish>,
+      _fee: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     commit_transfer_ownership(
-      addr: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      addr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    accept_transfer_ownership(
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<PopulatedTransaction>;
+    accept_transfer_ownership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     set_fee_receiver(
-      _base_pool: string,
-      _fee_receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _base_pool: PromiseOrValue<string>,
+      _fee_receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    convert_fees(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    convert_fees(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     admin(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     future_admin(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    pool_list(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    pool_list(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     pool_count(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    base_pool_list(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    base_pool_list(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     base_pool_count(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    fee_receiver(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    fee_receiver(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }

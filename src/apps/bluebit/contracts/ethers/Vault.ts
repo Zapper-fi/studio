@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface VaultInterface extends utils.Interface {
   functions: {
@@ -53,15 +53,15 @@ export interface VaultInterface extends utils.Interface {
       | 'getVirtualPrice',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'deposit', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'harvest', values: [string]): string;
+  encodeFunctionData(functionFragment: 'deposit', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'harvest', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'init', values?: undefined): string;
   encodeFunctionData(functionFragment: 'pairType', values?: undefined): string;
   encodeFunctionData(functionFragment: 'swapPair', values?: undefined): string;
   encodeFunctionData(functionFragment: 'swapPath', values?: undefined): string;
   encodeFunctionData(functionFragment: 'swapRouter', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'withdraw', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'withdraw', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'withdrawFee', values?: undefined): string;
   encodeFunctionData(functionFragment: 'withdrawInterval', values?: undefined): string;
   encodeFunctionData(functionFragment: 'stableSwap', values?: undefined): string;
@@ -180,16 +180,16 @@ export interface Vault extends BaseContract {
 
   functions: {
     deposit(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     harvest(
-      feeDistributor: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      feeDistributor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    init(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    init(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     pairType(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -202,8 +202,8 @@ export interface Vault extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     withdraw(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     withdrawFee(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -218,16 +218,16 @@ export interface Vault extends BaseContract {
   };
 
   deposit(
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   harvest(
-    feeDistributor: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    feeDistributor: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  init(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  init(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   pairType(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -240,8 +240,8 @@ export interface Vault extends BaseContract {
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   withdraw(
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   withdrawFee(overrides?: CallOverrides): Promise<BigNumber>;
@@ -255,9 +255,9 @@ export interface Vault extends BaseContract {
   getVirtualPrice(overrides?: CallOverrides): Promise<BigNumber>;
 
   callStatic: {
-    deposit(amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    deposit(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    harvest(feeDistributor: string, overrides?: CallOverrides): Promise<void>;
+    harvest(feeDistributor: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     init(overrides?: CallOverrides): Promise<void>;
 
@@ -271,7 +271,7 @@ export interface Vault extends BaseContract {
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    withdraw(amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    withdraw(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     withdrawFee(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -286,54 +286,69 @@ export interface Vault extends BaseContract {
 
   filters: {
     'FeeDistributorChanged(address,address)'(
-      previousValue?: string | null,
-      newValue?: string | null,
+      previousValue?: PromiseOrValue<string> | null,
+      newValue?: PromiseOrValue<string> | null,
     ): FeeDistributorChangedEventFilter;
-    FeeDistributorChanged(previousValue?: string | null, newValue?: string | null): FeeDistributorChangedEventFilter;
+    FeeDistributorChanged(
+      previousValue?: PromiseOrValue<string> | null,
+      newValue?: PromiseOrValue<string> | null,
+    ): FeeDistributorChangedEventFilter;
 
-    'RewardTokenAdded(address)'(token?: string | null): RewardTokenAddedEventFilter;
-    RewardTokenAdded(token?: string | null): RewardTokenAddedEventFilter;
+    'RewardTokenAdded(address)'(token?: PromiseOrValue<string> | null): RewardTokenAddedEventFilter;
+    RewardTokenAdded(token?: PromiseOrValue<string> | null): RewardTokenAddedEventFilter;
 
-    'RewardTokenRemoved(address)'(token?: string | null): RewardTokenRemovedEventFilter;
-    RewardTokenRemoved(token?: string | null): RewardTokenRemovedEventFilter;
+    'RewardTokenRemoved(address)'(token?: PromiseOrValue<string> | null): RewardTokenRemovedEventFilter;
+    RewardTokenRemoved(token?: PromiseOrValue<string> | null): RewardTokenRemovedEventFilter;
 
     'RewarderChanged(address,address)'(
-      previousValue?: string | null,
-      newValue?: string | null,
+      previousValue?: PromiseOrValue<string> | null,
+      newValue?: PromiseOrValue<string> | null,
     ): RewarderChangedEventFilter;
-    RewarderChanged(previousValue?: string | null, newValue?: string | null): RewarderChangedEventFilter;
+    RewarderChanged(
+      previousValue?: PromiseOrValue<string> | null,
+      newValue?: PromiseOrValue<string> | null,
+    ): RewarderChangedEventFilter;
 
     'SwapPathChanged(address,address)'(
-      previousValue?: string | null,
-      newValue?: string | null,
+      previousValue?: PromiseOrValue<string> | null,
+      newValue?: PromiseOrValue<string> | null,
     ): SwapPathChangedEventFilter;
-    SwapPathChanged(previousValue?: string | null, newValue?: string | null): SwapPathChangedEventFilter;
+    SwapPathChanged(
+      previousValue?: PromiseOrValue<string> | null,
+      newValue?: PromiseOrValue<string> | null,
+    ): SwapPathChangedEventFilter;
 
     'WithdrawFeeChanged(uint256,uint256)'(
-      previousValue?: BigNumberish | null,
-      newValue?: BigNumberish | null,
+      previousValue?: PromiseOrValue<BigNumberish> | null,
+      newValue?: PromiseOrValue<BigNumberish> | null,
     ): WithdrawFeeChangedEventFilter;
     WithdrawFeeChanged(
-      previousValue?: BigNumberish | null,
-      newValue?: BigNumberish | null,
+      previousValue?: PromiseOrValue<BigNumberish> | null,
+      newValue?: PromiseOrValue<BigNumberish> | null,
     ): WithdrawFeeChangedEventFilter;
 
     'WithdrawIntervalChanged(uint256,uint256)'(
-      previousValue?: BigNumberish | null,
-      newValue?: BigNumberish | null,
+      previousValue?: PromiseOrValue<BigNumberish> | null,
+      newValue?: PromiseOrValue<BigNumberish> | null,
     ): WithdrawIntervalChangedEventFilter;
     WithdrawIntervalChanged(
-      previousValue?: BigNumberish | null,
-      newValue?: BigNumberish | null,
+      previousValue?: PromiseOrValue<BigNumberish> | null,
+      newValue?: PromiseOrValue<BigNumberish> | null,
     ): WithdrawIntervalChangedEventFilter;
   };
 
   estimateGas: {
-    deposit(amount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    deposit(
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    harvest(feeDistributor: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    harvest(
+      feeDistributor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    init(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    init(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     pairType(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -345,7 +360,10 @@ export interface Vault extends BaseContract {
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    withdraw(amount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    withdraw(
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     withdrawFee(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -360,16 +378,16 @@ export interface Vault extends BaseContract {
 
   populateTransaction: {
     deposit(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     harvest(
-      feeDistributor: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      feeDistributor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    init(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    init(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     pairType(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -382,8 +400,8 @@ export interface Vault extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     withdraw(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     withdrawFee(overrides?: CallOverrides): Promise<PopulatedTransaction>;

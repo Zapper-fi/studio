@@ -4,7 +4,7 @@
 import type { BaseContract, BigNumber, BytesLike, CallOverrides, PopulatedTransaction, Signer, utils } from 'ethers';
 import type { FunctionFragment, Result } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface RocketNodeStakingInterface extends utils.Interface {
   functions: {
@@ -14,8 +14,8 @@ export interface RocketNodeStakingInterface extends utils.Interface {
 
   getFunction(nameOrSignatureOrTopic: 'getNodeEffectiveRPLStake' | 'getNodeRPLStake'): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'getNodeEffectiveRPLStake', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getNodeRPLStake', values: [string]): string;
+  encodeFunctionData(functionFragment: 'getNodeEffectiveRPLStake', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getNodeRPLStake', values: [PromiseOrValue<string>]): string;
 
   decodeFunctionResult(functionFragment: 'getNodeEffectiveRPLStake', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'getNodeRPLStake', data: BytesLike): Result;
@@ -46,32 +46,35 @@ export interface RocketNodeStaking extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    getNodeEffectiveRPLStake(_nodeAddress: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getNodeEffectiveRPLStake(_nodeAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getNodeRPLStake(_nodeAddress: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getNodeRPLStake(_nodeAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
   };
 
-  getNodeEffectiveRPLStake(_nodeAddress: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getNodeEffectiveRPLStake(_nodeAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  getNodeRPLStake(_nodeAddress: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getNodeRPLStake(_nodeAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   callStatic: {
-    getNodeEffectiveRPLStake(_nodeAddress: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getNodeEffectiveRPLStake(_nodeAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getNodeRPLStake(_nodeAddress: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getNodeRPLStake(_nodeAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   filters: {};
 
   estimateGas: {
-    getNodeEffectiveRPLStake(_nodeAddress: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getNodeEffectiveRPLStake(_nodeAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getNodeRPLStake(_nodeAddress: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getNodeRPLStake(_nodeAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    getNodeEffectiveRPLStake(_nodeAddress: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getNodeEffectiveRPLStake(
+      _nodeAddress: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    getNodeRPLStake(_nodeAddress: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getNodeRPLStake(_nodeAddress: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }
