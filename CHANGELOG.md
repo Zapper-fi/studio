@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.128.3](https://github.com/Zapper-fi/studio/compare/v0.128.2...v0.128.3) (2022-07-28)
+
+
+### Bug Fixes
+
+* **origin-dollar:** Fix logos and OGV staking rewards ([#956](https://github.com/Zapper-fi/studio/issues/956)) ([12f387b](https://github.com/Zapper-fi/studio/commit/12f387b8ae86d270271dbd0d4b1655185f2dad4a))
+
 ## [0.128.2](https://github.com/Zapper-fi/studio/compare/v0.128.1...v0.128.2) (2022-07-28)
 
 
