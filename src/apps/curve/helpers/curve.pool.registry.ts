@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { BigNumberish, Contract } from 'ethers';
-import _, { range, toLower } from 'lodash';
+import { partition, range, toLower, uniqBy } from 'lodash';
 import moment from 'moment';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
@@ -57,7 +57,7 @@ export class CurvePoolRegistry {
 
   @Cache({
     instance: 'business',
-    key: (network: Network) => `studio:${CURVE_DEFINITION.id}:${network}:pool-definitions`,
+    key: (network: Network) => `studio:${CURVE_DEFINITION.id}:${network}:pool-definitions:4`,
     ttl: moment.duration(60, 'minutes').asSeconds(),
   })
   async getPoolDefinitions(network: Network) {
@@ -72,7 +72,6 @@ export class CurvePoolRegistry {
         resolveSwapAddress: ({ contract, index }) => contract.pool_list(index),
         resolveTokenAddress: ({ contract, swapAddress }) => contract.get_lp_token(swapAddress),
         resolveCoinAddresses: ({ contract, swapAddress }) => contract.get_coins(swapAddress),
-        resolveIsMetaPool: ({ contract, swapAddress }) => contract.is_meta(swapAddress),
       }),
       // Stable Swap Factory
       this.retrieveFromSource<CurveStableFactory>({
@@ -84,7 +83,6 @@ export class CurvePoolRegistry {
         resolveSwapAddress: ({ contract, index }) => contract.pool_list(index),
         resolveTokenAddress: ({ swapAddress }) => swapAddress,
         resolveCoinAddresses: ({ contract, swapAddress }) => contract.get_coins(swapAddress),
-        resolveIsMetaPool: ({ contract, swapAddress }) => contract.is_meta(swapAddress),
       }),
       // Crypto Swap Registry
       this.retrieveFromSource<CurveCryptoRegistry>({
@@ -96,7 +94,6 @@ export class CurvePoolRegistry {
         resolveSwapAddress: ({ contract, index }) => contract.pool_list(index),
         resolveTokenAddress: ({ contract, swapAddress }) => contract.get_lp_token(swapAddress),
         resolveCoinAddresses: ({ contract, swapAddress }) => contract.get_coins(swapAddress),
-        resolveIsMetaPool: () => false,
       }),
     ];
 
@@ -112,16 +109,21 @@ export class CurvePoolRegistry {
           resolveSwapAddress: ({ contract, index }) => contract.pool_list(index),
           resolveTokenAddress: ({ contract, swapAddress }) => contract.get_token(swapAddress),
           resolveCoinAddresses: ({ contract, swapAddress }) => contract.get_coins(swapAddress),
-          resolveIsMetaPool: () => false,
         }),
       );
     }
 
-    const poolDefinitions = await Promise.all(poolDefinitionPromises);
-    return _(poolDefinitions)
-      .flatten()
-      .uniqBy(v => v.swapAddress)
-      .value();
+    const poolDefinitions = await Promise.all(poolDefinitionPromises).then(v => v.flat());
+    const [metaPools, basePools] = partition(poolDefinitions, v =>
+      v.coinAddresses.some(t => poolDefinitions.find(p => p.tokenAddress === t)),
+    );
+
+    const poolDefinitionsWithMeta = [
+      ...metaPools.map(v => ({ ...v, isMetaPool: true })),
+      ...basePools.map(v => ({ ...v, isMetaPool: false })),
+    ];
+
+    return uniqBy(poolDefinitionsWithMeta, v => v.swapAddress);
   }
 
   private async retrieveFromSource<T extends Contract>({
@@ -132,7 +134,6 @@ export class CurvePoolRegistry {
     resolveSwapAddress,
     resolveTokenAddress,
     resolveCoinAddresses,
-    resolveIsMetaPool,
   }: {
     network: Network;
     poolType: CurvePoolType;
@@ -141,7 +142,6 @@ export class CurvePoolRegistry {
     resolveSwapAddress: (opts: { contract: T; index: number }) => string | Promise<string>;
     resolveTokenAddress: (opts: { contract: T; swapAddress: string }) => string | Promise<string>;
     resolveCoinAddresses: (opts: { contract: T; swapAddress: string }) => string[] | Promise<string[]>;
-    resolveIsMetaPool: (opts: { contract: T; swapAddress: string }) => boolean | Promise<boolean>;
   }) {
     const multicall = this.appToolkit.getMulticall(network);
     const gauges = await this.curveGaugeRegistry.getCachedGauges(network);
@@ -162,7 +162,6 @@ export class CurvePoolRegistry {
         const tokenAddressRaw = await resolveTokenAddress({ contract: multicallWrappedSource, swapAddress });
         const tokenAddress = tokenAddressRaw.toLowerCase();
 
-        const isMetaPool = await resolveIsMetaPool({ contract: multicallWrappedSource, swapAddress });
         const coinAddressesRaw = await resolveCoinAddresses({ contract: multicallWrappedSource, swapAddress });
         const coinAddresses = coinAddressesRaw
           .filter(v => v !== ZERO_ADDRESS)
@@ -182,7 +181,6 @@ export class CurvePoolRegistry {
           tokenAddress,
           gaugeAddress,
           coinAddresses,
-          isMetaPool,
           apy,
           volume,
         };
