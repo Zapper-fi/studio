@@ -52,17 +52,8 @@ export class AuroraBastionProtocolSwapTokenFetcher implements PositionFetcher<Ap
       poolDefinitions: poolDefinitions,
       resolvePoolContract: ({ network, definition }) =>
         this.bastionProtocolContractFactory.bastionProtocolSwap({ address: definition.swapAddress, network }),
-      resolvePoolReserves: ({ multicall, poolContract }) =>
-        Promise.all([
-          multicall
-            .wrap(poolContract)
-            .getTokenBalance(0)
-            .then(v => v.toString()),
-          multicall
-            .wrap(poolContract)
-            .getTokenBalance(1)
-            .then(v => v.toString()),
-        ]),
+      resolvePoolReserves: async ({ coinAddresses, multicall, poolContract }) =>
+        Promise.all(coinAddresses.map((_, i) => multicall.wrap(poolContract).getTokenBalance(i))),
       resolvePoolFee: ({ multicall, poolContract }) =>
         multicall
           .wrap(poolContract)
