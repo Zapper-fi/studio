@@ -20,6 +20,7 @@ export class BinanceSmartChainStargatePoolTokenFetcher implements PositionFetche
     return this.stargatePoolTokenHelper.getPositions({
       factoryAddress: '0xe7ec689f432f29383f217e36e680b5c855051f25',
       network,
+      useLocalDecimals: true,
     });
   }
 }

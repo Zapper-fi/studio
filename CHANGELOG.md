@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.129.1](https://github.com/Zapper-fi/studio/compare/v0.129.0...v0.129.1) (2022-07-28)
+
+
+### Bug Fixes
+
+* **stargate:** Fixed  Stargate pools pricePerShare on BSC ([#964](https://github.com/Zapper-fi/studio/issues/964)) ([25d64bf](https://github.com/Zapper-fi/studio/commit/25d64bf03affdbef70d2dd055dec74f73cf9a0de))
+
 ## [0.129.0](https://github.com/Zapper-fi/studio/compare/v0.128.3...v0.129.0) (2022-07-28)
 
 
