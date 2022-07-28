@@ -3,14 +3,12 @@ import { BigNumber } from 'ethers';
 import { uniqBy } from 'lodash';
 
 import { Register } from '~app-toolkit/decorators';
-import { CurvePoolTokenHelper, CurveVirtualPriceStrategy } from '~apps/curve';
+import { CurvePoolTokenHelper, CurvePoolVirtualPriceStrategy } from '~apps/curve';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
 import { KinesisLabsContractFactory, KinesisLabsPool } from '../contracts';
-import { KinesisLabsOnChainCoinStrategy } from '../helpers/kinesis-labs.on-chain.coin-strategy';
-import { KinesisLabsOnChainReserveStrategy } from '../helpers/kinesis-labs.on-chain.reserve-strategy';
 import { KINESIS_LABS_DEFINITION } from '../kinesis-labs.definition';
 
 import { KINESIS_LABS_BASEPOOL_DEFINITIONS } from './kinesis-labs.pool.definitions';
@@ -24,12 +22,8 @@ export class EvmosKinesisLabsPoolTokenFetcher implements PositionFetcher<AppToke
   constructor(
     @Inject(CurvePoolTokenHelper)
     private readonly curvePoolTokenHelper: CurvePoolTokenHelper,
-    @Inject(KinesisLabsOnChainCoinStrategy)
-    private readonly kinesisLabsOnChainCoinStrategy: KinesisLabsOnChainCoinStrategy,
-    @Inject(KinesisLabsOnChainReserveStrategy)
-    private readonly kinesisLabsOnChainReserveStrategy: KinesisLabsOnChainReserveStrategy,
-    @Inject(CurveVirtualPriceStrategy)
-    private readonly curveVirtualPriceStrategy: CurveVirtualPriceStrategy,
+    @Inject(CurvePoolVirtualPriceStrategy)
+    private readonly curvePoolVirtualPriceStrategy: CurvePoolVirtualPriceStrategy,
     @Inject(KinesisLabsContractFactory) private readonly kinesisLabsContractFactory: KinesisLabsContractFactory,
   ) {}
 
@@ -41,9 +35,12 @@ export class EvmosKinesisLabsPoolTokenFetcher implements PositionFetcher<AppToke
       poolDefinitions: KINESIS_LABS_BASEPOOL_DEFINITIONS,
       resolvePoolContract: ({ network, definition }) =>
         this.kinesisLabsContractFactory.kinesisLabsPool({ network, address: definition.swapAddress }),
-      resolvePoolReserves: this.kinesisLabsOnChainReserveStrategy.build(),
+      resolvePoolReserves: ({ coinAddresses, multicall, poolContract }) =>
+        Promise.all(coinAddresses.map((_, i) => multicall.wrap(poolContract).getTokenBalance(i))),
       resolvePoolFee: async () => BigNumber.from('4000000'),
-      resolvePoolVirtualPrice: ({ multicall, poolContract }) => multicall.wrap(poolContract).getVirtualPrice(),
+      resolvePoolTokenPrice: this.curvePoolVirtualPriceStrategy.build({
+        resolveVirtualPrice: ({ multicall, poolContract }) => multicall.wrap(poolContract).getVirtualPrice(),
+      }),
     });
 
     return uniqBy([basePools].flat(), v => v.address);

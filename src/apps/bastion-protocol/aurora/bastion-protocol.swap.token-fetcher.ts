@@ -68,7 +68,13 @@ export class AuroraBastionProtocolSwapTokenFetcher implements PositionFetcher<Ap
           .wrap(poolContract)
           .swapStorage()
           .then(r => r.swapFee),
-      resolvePoolVirtualPrice: ({ multicall, poolContract }) => multicall.wrap(poolContract).getVirtualPrice(),
+      resolvePoolTokenPrice: async ({ tokens, reserves, poolContract, multicall, supply }) => {
+        const virtualPriceRaw = await multicall.wrap(poolContract).getVirtualPrice();
+        const virtualPrice = Number(virtualPriceRaw) / 10 ** 18;
+        const reservesUSD = tokens.map((t, i) => reserves[i] * t.price);
+        const liquidity = reservesUSD.reduce((total, r) => total + r, 0);
+        return virtualPrice > 0 ? virtualPrice * (liquidity / supply) : liquidity / supply;
+      },
     });
   }
 }

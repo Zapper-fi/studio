@@ -8,7 +8,6 @@ import { CurveContractFactory } from '../contracts';
 import { CURVE_DEFINITION } from '../curve.definition';
 
 import { CurvePoolRegistry } from './curve.pool.registry';
-import { CurvePoolReserveStrategy } from './curve.pool.reserve-strategy';
 import { CurvePoolTokenHelper } from './curve.pool.token-helper';
 import { CurvePoolVirtualPriceStrategy } from './curve.pool.virtual.price-strategy';
 
@@ -22,8 +21,6 @@ export class CurvePoolDefaultTokenHelper {
   constructor(
     @Inject(CurvePoolTokenHelper)
     private readonly curvePoolTokenHelper: CurvePoolTokenHelper,
-    @Inject(CurvePoolReserveStrategy)
-    private readonly curveOnChainReserveStrategy: CurvePoolReserveStrategy,
     @Inject(CurvePoolVirtualPriceStrategy)
     private readonly curvePoolVirtualPriceStrategy: CurvePoolVirtualPriceStrategy,
     @Inject(CurveContractFactory)
@@ -41,7 +38,8 @@ export class CurvePoolDefaultTokenHelper {
       poolDefinitions: await this.curvePoolRegistry.getPoolDefinitions(network),
       resolvePoolContract: ({ network, definition }) =>
         this.curveContractFactory.curvePool({ network, address: definition.swapAddress }),
-      resolvePoolReserves: this.curveOnChainReserveStrategy.build(),
+      resolvePoolReserves: ({ coinAddresses, multicall, poolContract }) =>
+        Promise.all(coinAddresses.map((_, i) => multicall.wrap(poolContract).balances(i))),
       resolvePoolFee: ({ multicall, poolContract }) => multicall.wrap(poolContract).fee(),
       resolvePoolTokenPrice: this.curvePoolVirtualPriceStrategy.build({
         resolveVirtualPrice: ({ multicall, poolContract }) => multicall.wrap(poolContract).get_virtual_price(),

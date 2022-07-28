@@ -11,7 +11,6 @@ import { CurveGaugeIsActiveStrategy } from './helpers/curve.gauge.is-active-stra
 import { CurveGaugeRoiStrategy } from './helpers/curve.gauge.roi-strategy';
 import { CurvePoolDefaultTokenHelper } from './helpers/curve.pool.default.token-helper';
 import { CurvePoolRegistry } from './helpers/curve.pool.registry';
-import { CurvePoolReserveStrategy } from './helpers/curve.pool.reserve-strategy';
 import { CurvePoolTokenHelper } from './helpers/curve.pool.token-helper';
 import { CurvePoolVirtualPriceStrategy } from './helpers/curve.pool.virtual.price-strategy';
 import { CurveVestingEscrowContractPositionBalanceHelper } from './helpers/curve.vesting-escrow.contract-position-balance-helper';
@@ -63,7 +62,6 @@ import { CurveVotingEscrowContractPositionHelper } from './helpers/curve.voting-
     CurvePoolRegistry,
     CurvePoolTokenHelper,
     CurvePoolDefaultTokenHelper,
-    CurvePoolReserveStrategy,
     CurvePoolVirtualPriceStrategy,
     CurveGaugeDefaultContractPositionHelper,
     CurveGaugeIsActiveStrategy,
@@ -80,7 +78,6 @@ import { CurveVotingEscrowContractPositionHelper } from './helpers/curve.voting-
     CurvePoolRegistry,
     CurvePoolTokenHelper,
     CurvePoolDefaultTokenHelper,
-    CurvePoolReserveStrategy,
     CurveGaugeDefaultContractPositionHelper,
     CurveGaugeIsActiveStrategy,
     CurveGaugeRoiStrategy,

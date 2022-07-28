@@ -5,8 +5,8 @@ export { CurveContractFactory } from './contracts';
 /* Helpers */
 export { CurveGaugeIsActiveStrategy } from './helpers/curve.gauge.is-active-strategy';
 export { CurveGaugeRoiStrategy } from './helpers/curve.gauge.roi-strategy';
-export { CurvePoolReserveStrategy as CurveOnChainReserveStrategy } from './helpers/curve.pool.reserve-strategy';
 export { CurvePoolTokenHelper } from './helpers/curve.pool.token-helper';
+export { CurvePoolVirtualPriceStrategy } from './helpers/curve.pool.virtual.price-strategy';
 export { CurveVestingEscrowContractPositionBalanceHelper } from './helpers/curve.vesting-escrow.contract-position-balance-helper';
 export { CurveVestingEscrowContractPositionHelper } from './helpers/curve.vesting-escrow.contract-position-helper';
 export { CurveVotingEscrowContractPositionBalanceHelper } from './helpers/curve.voting-escrow.contract-position-balance-helper';
