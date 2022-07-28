@@ -12,6 +12,8 @@ import { PositionKeyService } from '~position/position-key.service';
 import { AppTokenPosition, ContractPosition, NonFungibleToken } from '~position/position.interface';
 import { AppGroupsDefinition, PositionService } from '~position/position.service';
 import { BaseToken } from '~position/token.interface';
+import { PriceSelectorService } from '~token/price-selector.service';
+import { Filters } from '~token/token-price-selector.interface';
 import { TokenService } from '~token/token.service';
 import { Network } from '~types/network.interface';
 
@@ -29,6 +31,7 @@ export class AppToolkit implements IAppToolkit {
     @Inject(PositionService) private readonly positionService: PositionService,
     @Inject(PositionKeyService) private readonly positionKeyService: PositionKeyService,
     @Inject(TokenService) private readonly tokenService: TokenService,
+    @Inject(PriceSelectorService) private readonly priceSelectorService: PriceSelectorService,
     @Inject(MulticallService) private readonly multicallService: MulticallService,
     @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
   ) {
@@ -62,11 +65,15 @@ export class AppToolkit implements IAppToolkit {
   // Base Tokens
 
   getBaseTokenPrices(network: Network) {
-    return this.tokenService.getTokenPrices(network);
+    return this.priceSelectorService.create().getAll({ network });
   }
 
   getBaseTokenPrice(opts: { network: Network; address: string }) {
-    return this.tokenService.getTokenPrice(opts);
+    return this.priceSelectorService.create().getOne(opts);
+  }
+
+  getBaseTokenPriceSelector(filters: Filters = {}) {
+    return this.priceSelectorService.create(filters);
   }
 
   // Positions
