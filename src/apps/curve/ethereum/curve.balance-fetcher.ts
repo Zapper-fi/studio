@@ -18,6 +18,7 @@ import {
   CurveVotingEscrowReward,
 } from '../contracts';
 import { CURVE_DEFINITION } from '../curve.definition';
+import { CurveGaugeType } from '../helpers/curve.gauge.registry';
 import { CurveVestingEscrowContractPositionBalanceHelper } from '../helpers/curve.vesting-escrow.contract-position-balance-helper';
 import { CurveVotingEscrowContractPositionBalanceHelper } from '../helpers/curve.voting-escrow.contract-position-balance-helper';
 
@@ -51,7 +52,7 @@ export class EthereumCurveBalanceFetcher implements BalanceFetcher {
         network,
         appId: CURVE_DEFINITION.id,
         groupId: CURVE_DEFINITION.groups.gauge.id,
-        farmFilter: farm => farm.dataProps.implementation === 'single-gauge',
+        farmFilter: farm => farm.dataProps.implementation === CurveGaugeType.SINGLE,
         resolveContract: ({ address, network }) => this.curveContractFactory.curveGauge({ address, network }),
         resolveStakedTokenBalance: ({ contract, address, multicall }) => multicall.wrap(contract).balanceOf(address),
         resolveRewardTokenBalances: ({ contract, address, multicall }) =>
@@ -63,7 +64,7 @@ export class EthereumCurveBalanceFetcher implements BalanceFetcher {
         network,
         appId: CURVE_DEFINITION.id,
         groupId: CURVE_DEFINITION.groups.gauge.id,
-        farmFilter: farm => farm.dataProps.implementation === 'double-gauge',
+        farmFilter: farm => farm.dataProps.implementation === CurveGaugeType.DOUBLE,
         resolveContract: ({ address, network }) => this.curveContractFactory.curveDoubleGauge({ address, network }),
         resolveStakedTokenBalance: ({ contract, address, multicall }) => multicall.wrap(contract).balanceOf(address),
         resolveRewardTokenBalances: async ({ contract, address, multicall, contractPosition }) => {
@@ -93,7 +94,7 @@ export class EthereumCurveBalanceFetcher implements BalanceFetcher {
         network,
         appId: CURVE_DEFINITION.id,
         groupId: CURVE_DEFINITION.groups.gauge.id,
-        farmFilter: farm => farm.dataProps.implementation === 'n-gauge',
+        farmFilter: farm => farm.dataProps.implementation === CurveGaugeType.N_GAUGE,
         resolveContract: ({ address, network }) => this.curveContractFactory.curveNGauge({ address, network }),
         resolveStakedTokenBalance: ({ contract, address, multicall }) => multicall.wrap(contract).balanceOf(address),
         resolveRewardTokenBalances: async ({ contract, address, multicall, contractPosition }) => {
@@ -115,7 +116,7 @@ export class EthereumCurveBalanceFetcher implements BalanceFetcher {
         network,
         appId: CURVE_DEFINITION.id,
         groupId: CURVE_DEFINITION.groups.gauge.id,
-        farmFilter: farm => farm.dataProps.implementation === 'n-gauge-v2',
+        farmFilter: farm => farm.dataProps.implementation === CurveGaugeType.GAUGE_V4,
         resolveContract: ({ address, network }) => this.curveContractFactory.curveGaugeV2({ address, network }),
         resolveStakedTokenBalance: ({ contract, address, multicall }) => multicall.wrap(contract).balanceOf(address),
         resolveRewardTokenBalances: ({ contract, address, multicall, contractPosition }) => {
