@@ -31,7 +31,7 @@ export interface IAppToolkit {
 
   // Base Tokens
 
-  getBaseTokenPriceSelector(filter?: Filters): PriceSelector;
+  getBaseTokenPriceSelector(filter?: Filters, ctx?: { appId: string }): PriceSelector;
 
   getBaseTokenPrices(network: Network): Promise<BaseToken[]>;
 

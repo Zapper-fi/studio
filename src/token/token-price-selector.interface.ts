@@ -14,5 +14,5 @@ export interface PriceSelector {
 }
 
 export interface PriceSelectorFactory {
-  create: (filters?: Filters) => PriceSelector;
+  create: (filters?: Filters, ctx?: { appId: string }) => PriceSelector;
 }
