@@ -17,9 +17,8 @@ import { CURVE_DEFINITION } from '../curve.definition';
 
 import { CurveChildLiquidityGaugeRoiStrategy } from './curve.child-liquidity-gauge.roi-strategy';
 import { CurveGaugeIsActiveStrategy } from './curve.gauge.is-active-strategy';
-import { CurveGaugeRegistry } from './curve.gauge.registry';
+import { CurveGaugeDefinition, CurveGaugeRegistry, CurveGaugeType } from './curve.gauge.registry';
 import { CurveGaugeRoiStrategy } from './curve.gauge.roi-strategy';
-import { CurveGaugeDefinition, CurveGaugeType } from './curve.pool.registry';
 
 const CONTROLLER_ADDRESS = '0x2f50d538606fa9edd2b11e2446beb18c9d5846bb';
 

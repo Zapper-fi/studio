@@ -27,13 +27,6 @@ export enum CurvePoolType {
   FACTORY_CRYPTO = 'factory-crypto',
 }
 
-export enum CurveGaugeType {
-  SINGLE = 'single',
-  DOUBLE = 'double',
-  N_GAUGE = 'n-gauge',
-  GAUGE_V4 = 'gauge-v4',
-}
-
 export const POOL_TYPE_TO_ADDRESS_RESOLVER_INDEX = {
   [CurvePoolType.STABLE]: 0,
   [CurvePoolType.CRYPTO]: 5,
@@ -49,12 +42,6 @@ export type CurvePoolDefinition = {
   isMetaPool?: boolean;
   volume?: number;
   apy?: number;
-};
-
-export type CurveGaugeDefinition = {
-  version: CurveGaugeType;
-  swapAddress: string;
-  gaugeAddress: string;
 };
 
 @Injectable()
