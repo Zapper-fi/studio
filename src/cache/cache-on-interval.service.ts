@@ -26,7 +26,7 @@ export class CacheOnIntervalService implements OnModuleInit, OnModuleDestroy {
     @Inject(Reflector) private readonly reflector: Reflector,
   ) {}
 
-  onModuleInit() {
+  async onModuleInit() {
     const instanceWrappers = this.discoveryService.getProviders();
     instanceWrappers
       .filter(wrapper => wrapper.isDependencyTreeStatic() && !!wrapper.instance)
