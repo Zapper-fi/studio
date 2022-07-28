@@ -31,7 +31,7 @@ export class PolygonStargateVeTokenFetcher implements PositionFetcher<AppTokenPo
       resolveContract: ({ address, network }) => this.contractFactory.stargateVe({ address, network }),
       resolveUnderlyingTokenAddress: ({ multicall, contract }) => multicall.wrap(contract).token(),
       resolveReserve: ({ multicall, contract }) => multicall.wrap(contract).totalSupply().then(Number),
-      resolvePricePerShare: ({ underlyingToken }) => underlyingToken.price,
+      resolvePricePerShare: () => 1,
     });
   }
 }
