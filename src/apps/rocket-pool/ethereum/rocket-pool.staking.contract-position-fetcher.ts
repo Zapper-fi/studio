@@ -13,7 +13,7 @@ import { Network } from '~types/network.interface';
 import { ROCKET_POOL_DEFINITION } from '../rocket-pool.definition';
 
 export const rocketNodeStakingAddress = '0x3019227b2b8493e45bf5d25302139c9a2713bf15';
-export const rocketMinipoolManagerAddress = '0x6293B8abC1F36aFB22406Be5f96D893072A8cF3a';
+export const rocketMinipoolManagerAddress = '0x6293b8abc1f36afb22406be5f96d893072a8cf3a';
 export const rocketTokenRPLAddress = '0xd33526068d116ce69f19a9ee46f0bd304f21a51f';
 
 const appId = ROCKET_POOL_DEFINITION.id;
