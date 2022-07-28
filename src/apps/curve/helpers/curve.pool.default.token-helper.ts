@@ -36,6 +36,7 @@ export class CurvePoolDefaultTokenHelper {
       appId: CURVE_DEFINITION.id,
       groupId: CURVE_DEFINITION.groups.pool.id,
       poolDefinitions: await this.curvePoolRegistry.getPoolDefinitions(network),
+      minLiquidity: 1000,
       resolvePoolContract: ({ network, definition }) =>
         this.curveContractFactory.curvePool({ network, address: definition.swapAddress }),
       resolvePoolReserves: ({ coinAddresses, multicall, poolContract }) =>
