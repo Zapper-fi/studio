@@ -8,6 +8,7 @@ import { CurveContractFactory } from './contracts';
 import { CurveAppDefinition, CURVE_DEFINITION } from './curve.definition';
 import { CurveApiClient } from './helpers/curve.api.client';
 import { CurveChildLiquidityGaugeRoiStrategy } from './helpers/curve.child-liquidity-gauge.roi-strategy';
+import { CurveGaugeDefaultContractPositionBalanceHelper } from './helpers/curve.gauge.default.contract-position-balance-helper';
 import { CurveGaugeDefaultContractPositionHelper } from './helpers/curve.gauge.default.contract-position-helper';
 import { CurveGaugeIsActiveStrategy } from './helpers/curve.gauge.is-active-strategy';
 import { CurveGaugeRegistry } from './helpers/curve.gauge.registry';
@@ -68,6 +69,7 @@ import { CurveVotingEscrowContractPositionHelper } from './helpers/curve.voting-
     CurvePoolVirtualPriceStrategy,
     CurveGaugeRegistry,
     CurveGaugeDefaultContractPositionHelper,
+    CurveGaugeDefaultContractPositionBalanceHelper,
     CurveGaugeIsActiveStrategy,
     CurveGaugeRoiStrategy,
     CurveChildLiquidityGaugeRoiStrategy,
@@ -84,6 +86,7 @@ import { CurveVotingEscrowContractPositionHelper } from './helpers/curve.voting-
     CurvePoolDefaultTokenHelper,
     CurveGaugeRegistry,
     CurveGaugeDefaultContractPositionHelper,
+    CurveGaugeDefaultContractPositionBalanceHelper,
     CurveGaugeIsActiveStrategy,
     CurveGaugeRoiStrategy,
     CurveChildLiquidityGaugeRoiStrategy,

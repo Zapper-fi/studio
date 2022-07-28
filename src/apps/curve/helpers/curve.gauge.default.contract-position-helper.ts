@@ -221,7 +221,10 @@ export class CurveGaugeDefaultContractPositionHelper {
     );
   }
 
-  private async getRewardOnlyGaugeContractPositions({ network, gaugeDefinitions }) {
+  private async getRewardOnlyGaugeContractPositions({
+    network,
+    gaugeDefinitions,
+  }: CurveGaugeDefaultContractPositionHelperParamsWithGauges) {
     return this.appToolkit.helpers.singleStakingFarmContractPositionHelper.getContractPositions<CurveRewardsOnlyGauge>({
       network,
       appId: CURVE_DEFINITION.id,
