@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.128.2](https://github.com/Zapper-fi/studio/compare/v0.128.1...v0.128.2) (2022-07-28)
+
+
+### Bug Fixes
+
+* stargate - incorrect ve price ([#957](https://github.com/Zapper-fi/studio/issues/957)) ([b33ec6b](https://github.com/Zapper-fi/studio/commit/b33ec6b1f9bd299885a91ed5bf09b11ab0ccd69b))
+
 ## [0.128.1](https://github.com/Zapper-fi/studio/compare/v0.128.0...v0.128.1) (2022-07-26)
 
 
