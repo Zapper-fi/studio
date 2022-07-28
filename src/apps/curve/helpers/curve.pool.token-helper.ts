@@ -1,8 +1,9 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { BigNumberish } from 'ethers';
-import { compact, minBy, partition } from 'lodash';
+import { compact, partition } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import {
   buildDollarDisplayItem,
   buildNumberDisplayItem,
@@ -11,7 +12,7 @@ import {
 import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { IMulticallWrapper } from '~multicall/multicall.interface';
 import { ContractType } from '~position/contract.interface';
-import { AppTokenPosition } from '~position/position.interface';
+import { AppTokenPosition, Token } from '~position/position.interface';
 import { AppGroupsDefinition } from '~position/position.service';
 import { Network } from '~types/network.interface';
 
@@ -20,6 +21,7 @@ import { CurvePoolDefinition, CurvePoolType } from './curve.pool.registry';
 export type CurvePoolTokenDataProps = {
   poolType: CurvePoolType;
   swapAddress: string;
+  gaugeAddress: string;
   liquidity: number;
   apy: number;
   volume: number;
@@ -39,8 +41,15 @@ export type CurvePoolTokenHelperParams<T> = {
     multicall: IMulticallWrapper;
     poolContract: T;
     coinAddresses: string[];
-  }) => Promise<string[]>;
-  resolvePoolVirtualPrice: (opts: { multicall: IMulticallWrapper; poolContract: T }) => Promise<BigNumberish>;
+  }) => Promise<BigNumberish[]>;
+  resolvePoolTokenPrice: (opts: {
+    multicall: IMulticallWrapper;
+    poolContract: T;
+    tokens: Token[];
+    reserves: number[];
+    supply: number;
+    poolType: CurvePoolType;
+  }) => Promise<number>;
   resolvePoolFee: (opts: { multicall: IMulticallWrapper; poolContract: T }) => Promise<BigNumberish>;
 };
 
@@ -58,7 +67,7 @@ export class CurvePoolTokenHelper {
     baseCurveTokens = [],
     resolvePoolContract,
     resolvePoolReserves,
-    resolvePoolVirtualPrice,
+    resolvePoolTokenPrice,
     resolvePoolFee,
   }: CurvePoolTokenHelperParams<T>) {
     const multicall = this.appToolkit.getMulticall(network);
@@ -99,29 +108,32 @@ export class CurvePoolTokenHelper {
 
         const reserves = reservesRaw.map((r, i) => Number(r) / 10 ** tokens[i].decimals);
         const underlying = tokens.flatMap(v => (v.type === ContractType.APP_TOKEN && v.tokens.length ? v.tokens : v));
-        const virtualPriceRaw = await resolvePoolVirtualPrice({ multicall, poolContract }).catch(err => {
-          // @TODO Create better error handling in Multicall. Throw either a MulticallWeb3CallError, MulticallUnderlyingCallError, MulticallDecodeError
-          if (err.message.includes('Multicall call failed')) return '0'; // underlying call failure, virtual price 0
-          throw err;
-        });
+        const price = await resolvePoolTokenPrice({ multicall, poolContract, reserves, supply, tokens, poolType });
 
-        let price: number;
-        if (poolType === CurvePoolType.STABLE || poolType === CurvePoolType.FACTORY_STABLE) {
-          const virtualPrice = Number(virtualPriceRaw) / 10 ** 18;
-          const lowestPricedToken = minBy(underlying, t => t.price)!;
-          price = virtualPrice * lowestPricedToken.price;
-        } else {
-          const virtualPrice = Number(virtualPriceRaw) / 10 ** 18;
-          const reservesUSD = tokens.map((t, i) => reserves[i] * t.price);
-          const liquidity = reservesUSD.reduce((total, r) => total + r, 0);
-          price = virtualPrice > 0 ? virtualPrice * (liquidity / supply) : liquidity / supply;
-        }
+        // const virtualPriceRaw = await resolvePoolVirtualPrice({ multicall, poolContract }).catch(err => {
+        //   // @TODO Create better error handling in Multicall. Throw either a MulticallWeb3CallError, MulticallUnderlyingCallError, MulticallDecodeError
+        //   if (err.message.includes('Multicall call failed')) return '0'; // underlying call failure, virtual price 0
+        //   throw err;
+        // });
+
+        // let price: number;
+        // if (poolType === CurvePoolType.STABLE || poolType === CurvePoolType.FACTORY_STABLE) {
+        //   const virtualPrice = Number(virtualPriceRaw) / 10 ** 18;
+        //   const lowestPricedToken = minBy(underlying, t => t.price)!;
+        //   price = virtualPrice * lowestPricedToken.price;
+        // } else {
+        //   const virtualPrice = Number(virtualPriceRaw) / 10 ** 18;
+        //   const reservesUSD = tokens.map((t, i) => reserves[i] * t.price);
+        //   const liquidity = reservesUSD.reduce((total, r) => total + r, 0);
+        //   price = virtualPrice > 0 ? virtualPrice * (liquidity / supply) : liquidity / supply;
+        // }
 
         const pricePerShare = reserves.map(r => r / supply);
         const reservesUSD = tokens.map((t, i) => reserves[i] * t.price);
         const liquidity = reservesUSD.reduce((total, r) => total + r, 0);
         const reservePercentages = reservesUSD.map(reserveUSD => reserveUSD / liquidity);
         const ratio = reservePercentages.map(p => `${Math.floor(p * 100)}%`).join(' / ');
+        const gaugeAddress = definition.gaugeAddress ?? ZERO_ADDRESS;
 
         // Display Properties
         const label = tokens.map(v => getLabelFromToken(v)).join(' / ');
@@ -144,6 +156,7 @@ export class CurvePoolTokenHelper {
           dataProps: {
             poolType,
             swapAddress,
+            gaugeAddress,
             liquidity,
             volume,
             apy,

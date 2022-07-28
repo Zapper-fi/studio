@@ -17,6 +17,7 @@ import { Cache } from '~cache/cache.decorator';
 import { Network } from '~types/network.interface';
 
 import { CurveApiClient } from './curve.api.client';
+import { CurveGaugeRegistry } from './curve.gauge.registry';
 
 const ADDRESS_RESOLVER_ADDRESS = '0x0000000022d53366457f9d5e68ec105046fc4383';
 
@@ -38,6 +39,7 @@ export type CurvePoolDefinition = {
   swapAddress: string;
   tokenAddress: string;
   coinAddresses: string[];
+  gaugeAddress?: string;
   poolType?: CurvePoolType;
   isMetaPool?: boolean;
   volume?: number;
@@ -50,6 +52,7 @@ export class CurvePoolRegistry {
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(CurveContractFactory) private readonly curveContractFactory: CurveContractFactory,
     @Inject(CurveApiClient) private readonly curveApiClient: CurveApiClient,
+    @Inject(CurveGaugeRegistry) private readonly curveGaugeRegistry: CurveGaugeRegistry,
   ) {}
 
   @Cache({
@@ -141,6 +144,7 @@ export class CurvePoolRegistry {
     resolveIsMetaPool: (opts: { contract: T; swapAddress: string }) => boolean | Promise<boolean>;
   }) {
     const multicall = this.appToolkit.getMulticall(network);
+    const gauges = await this.curveGaugeRegistry.getCachedGauges(network);
     const allPoolApyData = await this.getCachedPoolApyData(network);
 
     const resolver = this.curveContractFactory.curveAddressResolver({ address: ADDRESS_RESOLVER_ADDRESS, network });
@@ -165,6 +169,9 @@ export class CurvePoolRegistry {
           .map(v => v.replace(ETH_ADDR_ALIAS, ZERO_ADDRESS))
           .map(toLower);
 
+        const gauge = gauges.find(v => v.swapAddress === swapAddress);
+        const gaugeAddress = gauge?.gaugeAddress ?? ZERO_ADDRESS;
+
         const poolApyData = allPoolApyData.find(v => v.swapAddress === swapAddress);
         const apy = poolApyData?.apy ?? 0;
         const volume = poolApyData?.volume ?? 0;
@@ -173,6 +180,7 @@ export class CurvePoolRegistry {
           poolType,
           swapAddress,
           tokenAddress,
+          gaugeAddress,
           coinAddresses,
           isMetaPool,
           apy,

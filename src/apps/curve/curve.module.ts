@@ -13,6 +13,7 @@ import { CurvePoolDefaultTokenHelper } from './helpers/curve.pool.default.token-
 import { CurvePoolRegistry } from './helpers/curve.pool.registry';
 import { CurvePoolReserveStrategy } from './helpers/curve.pool.reserve-strategy';
 import { CurvePoolTokenHelper } from './helpers/curve.pool.token-helper';
+import { CurvePoolVirtualPriceStrategy } from './helpers/curve.pool.virtual.price-strategy';
 import { CurveVestingEscrowContractPositionBalanceHelper } from './helpers/curve.vesting-escrow.contract-position-balance-helper';
 import { CurveVestingEscrowContractPositionHelper } from './helpers/curve.vesting-escrow.contract-position-helper';
 import { CurveVotingEscrowContractPositionBalanceHelper } from './helpers/curve.voting-escrow.contract-position-balance-helper';
@@ -63,6 +64,7 @@ import { CurveVotingEscrowContractPositionHelper } from './helpers/curve.voting-
     CurvePoolTokenHelper,
     CurvePoolDefaultTokenHelper,
     CurvePoolReserveStrategy,
+    CurvePoolVirtualPriceStrategy,
     CurveGaugeDefaultContractPositionHelper,
     CurveGaugeIsActiveStrategy,
     CurveGaugeRoiStrategy,

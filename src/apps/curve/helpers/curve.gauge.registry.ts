@@ -60,7 +60,7 @@ export class CurveGaugeRegistry {
     key: (network: Network) => `studio:${CURVE_DEFINITION.id}:${network}:cached-gauges`,
     ttl: moment.duration(60, 'minutes').asSeconds(),
   })
-  private async getCachedGauges(network: Network) {
+  async getCachedGauges(network: Network) {
     return this.curveApiClient.getGauges(network);
   }
 }
