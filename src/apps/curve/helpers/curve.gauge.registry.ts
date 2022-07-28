@@ -3,18 +3,19 @@ import { ethers } from 'ethers';
 import moment from 'moment';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { CurveContractFactory } from '~apps/curve/contracts';
 import { CURVE_DEFINITION } from '~apps/curve/curve.definition';
 import { Cache } from '~cache/cache.decorator';
 import { Network } from '~types/network.interface';
 
 import { CurveApiClient } from './curve.api.client';
+import { REWARDS_ONLY_GAUGES } from './curve.gauge.rewards-only';
 
 export enum CurveGaugeType {
   SINGLE = 'single',
   DOUBLE = 'double',
   N_GAUGE = 'n-gauge',
   GAUGE_V4 = 'gauge-v4',
+  REWARDS_ONLY = 'rewards-only',
 }
 
 export type CurveGaugeDefinition = {
@@ -27,7 +28,6 @@ export type CurveGaugeDefinition = {
 export class CurveGaugeRegistry {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(CurveContractFactory) private readonly curveContractFactory: CurveContractFactory,
     @Inject(CurveApiClient) private readonly curveApiClient: CurveApiClient,
   ) {}
 
@@ -51,6 +51,11 @@ export class CurveGaugeRegistry {
         return { ...gauge, version: CurveGaugeType.SINGLE };
       }),
     );
+
+    if (network !== Network.ETHEREUM_MAINNET) {
+      // Append legacy gauges not found in the API to track their funds
+      return [...gaugesWithVersions, ...(REWARDS_ONLY_GAUGES[network] ?? [])];
+    }
 
     return gaugesWithVersions;
   }

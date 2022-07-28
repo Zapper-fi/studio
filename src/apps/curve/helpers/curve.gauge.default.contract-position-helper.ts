@@ -12,6 +12,7 @@ import {
   CurveDoubleGauge,
   CurveGauge,
   CurveNGauge,
+  CurveRewardsOnlyGauge,
 } from '../contracts';
 import { CURVE_DEFINITION } from '../curve.definition';
 
@@ -49,12 +50,14 @@ export class CurveGaugeDefaultContractPositionHelper {
 
   async getPositions(params: CurveGaugeDefaultContractPositionHelperParams) {
     const gaugeDefinitions = await this.curveGaugeRegistry.getGaugesWithType(params.network);
+    const grouped = groupBy(gaugeDefinitions, v => v.version);
 
     if (params.network !== Network.ETHEREUM_MAINNET) {
-      return this.getChildLiquidityGaugeContractPositions({ ...params, gaugeDefinitions });
+      return Promise.all([
+        this.getChildLiquidityGaugeContractPositions({ ...params, gaugeDefinitions: grouped[CurveGaugeType.GAUGE_V4] }),
+        this.getRewardOnlyGaugeContractPositions({ ...params, gaugeDefinitions: grouped[CurveGaugeType.REWARDS_ONLY] }),
+      ]).then(v => v.flat());
     }
-
-    const grouped = groupBy(gaugeDefinitions, v => v.version);
 
     return Promise.all([
       this.getSingleGaugeContractPositions({ ...params, gaugeDefinitions: grouped[CurveGaugeType.SINGLE] }),
@@ -216,5 +219,26 @@ export class CurveGaugeDefaultContractPositionHelper {
         resolveIsActive: () => true,
       },
     );
+  }
+
+  private async getRewardOnlyGaugeContractPositions({ network, gaugeDefinitions }) {
+    return this.appToolkit.helpers.singleStakingFarmContractPositionHelper.getContractPositions<CurveRewardsOnlyGauge>({
+      network,
+      appId: CURVE_DEFINITION.id,
+      groupId: CURVE_DEFINITION.groups.gauge.id,
+      dependencies: [{ appId: CURVE_DEFINITION.id, groupIds: [CURVE_DEFINITION.groups.pool.id], network }],
+      resolveImplementation: () => CurveGaugeType.REWARDS_ONLY,
+      resolveFarmAddresses: async () => gaugeDefinitions.map(v => v.gaugeAddress),
+      resolveFarmContract: ({ address, network }) =>
+        this.curveContractFactory.curveRewardsOnlyGauge({ address, network }),
+      resolveStakedTokenAddress: ({ contract, multicall }) => multicall.wrap(contract).lp_token(),
+      resolveRewardTokenAddresses: async ({ contract, multicall }) => {
+        const wrapped = multicall.wrap(contract);
+        const rewardTokenAddresses = await Promise.all(range(0, 4).map(async i => wrapped.reward_tokens(i)));
+        return rewardTokenAddresses.map(v => v.toLowerCase()).filter(v => v !== ZERO_ADDRESS);
+      },
+      resolveRois: () => ({ dailyROI: 0, weeklyROI: 0, yearlyROI: 0 }),
+      resolveIsActive: () => false,
+    });
   }
 }
