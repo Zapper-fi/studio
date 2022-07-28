@@ -8,7 +8,7 @@ import { CURVE_DEFINITION } from '~apps/curve/curve.definition';
 import { Cache } from '~cache/cache.decorator';
 import { Network } from '~types/network.interface';
 
-import { CurveApiClient } from '../api/curve.api.client';
+import { CurveApiClient } from './curve.api.client';
 
 export enum CurveGaugeType {
   SINGLE = 'single',

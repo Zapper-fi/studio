@@ -15,7 +15,7 @@ import { AppTokenPosition } from '~position/position.interface';
 import { AppGroupsDefinition } from '~position/position.service';
 import { Network } from '~types/network.interface';
 
-import { CurvePoolDefinition, CurvePoolType } from './curve.pool-token.registry';
+import { CurvePoolDefinition, CurvePoolType } from './curve.pool.registry';
 
 export type CurvePoolTokenDataProps = {
   poolType: CurvePoolType;
@@ -26,7 +26,7 @@ export type CurvePoolTokenDataProps = {
   fee: number;
 };
 
-type CurvePoolTokenHelperParams<T> = {
+export type CurvePoolTokenHelperParams<T> = {
   network: Network;
   appId: string;
   groupId: string;
@@ -35,7 +35,11 @@ type CurvePoolTokenHelperParams<T> = {
   dependencies?: AppGroupsDefinition[];
   baseCurveTokens?: AppTokenPosition[];
   resolvePoolContract: (opts: { network: Network; definition: CurvePoolDefinition }) => T;
-  resolvePoolReserves: (opts: { multicall: IMulticallWrapper; poolContract: T }) => Promise<string[]>;
+  resolvePoolReserves: (opts: {
+    multicall: IMulticallWrapper;
+    poolContract: T;
+    coinAddresses: string[];
+  }) => Promise<string[]>;
   resolvePoolVirtualPrice: (opts: { multicall: IMulticallWrapper; poolContract: T }) => Promise<BigNumberish>;
   resolvePoolFee: (opts: { multicall: IMulticallWrapper; poolContract: T }) => Promise<BigNumberish>;
 };
@@ -63,12 +67,12 @@ export class CurvePoolTokenHelper {
 
     const curvePoolTokens = await Promise.all(
       poolDefinitions.map(async definition => {
-        const { swapAddress, tokenAddress } = definition;
+        const { swapAddress, tokenAddress, coinAddresses } = definition;
         const poolContract = resolvePoolContract({ network, definition });
         const tokenContract = this.appToolkit.globalContracts.erc20({ network, address: definition.tokenAddress });
-        const reservesRaw = await resolvePoolReserves({ multicall, poolContract });
+        const reservesRaw = await resolvePoolReserves({ multicall, poolContract, coinAddresses });
 
-        const maybeTokens = definition.coinAddresses.map(tokenAddress => {
+        const maybeTokens = coinAddresses.map(tokenAddress => {
           const baseToken = baseTokens.find(price => price.address === tokenAddress);
           const appToken = appTokens.find(p => p.address === tokenAddress);
           const curveToken = baseCurveTokens.find(p => p.address === tokenAddress);

@@ -2,7 +2,7 @@ import { Inject } from '@nestjs/common';
 
 import { Register } from '~app-toolkit/decorators';
 import { CurvePoolTokenHelper } from '~apps/curve';
-import { CurvePoolDefinition } from '~apps/curve/helpers/pool/curve.pool-token.registry';
+import { CurvePoolDefinition } from '~apps/curve/helpers/curve.pool.registry';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';

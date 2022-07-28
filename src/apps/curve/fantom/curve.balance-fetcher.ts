@@ -32,7 +32,7 @@ export class FantomCurveBalanceFetcher implements BalanceFetcher {
     return this.appToolkit.helpers.singleStakingContractPositionBalanceHelper.getBalances<CurveChildLiquidityGauge>({
       address,
       appId: CURVE_DEFINITION.id,
-      groupId: CURVE_DEFINITION.groups.farm.id,
+      groupId: CURVE_DEFINITION.groups.gauge.id,
       network,
       resolveContract: ({ address, network }) =>
         this.curveContractFactory.curveChildLiquidityGauge({ address, network }),

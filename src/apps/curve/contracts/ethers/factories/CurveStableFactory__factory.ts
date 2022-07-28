@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { CurveFactoryV2, CurveFactoryV2Interface } from '../CurveFactoryV2';
+import type { CurveStableFactory, CurveStableFactoryInterface } from '../CurveStableFactory';
 
 const _abi = [
   {
@@ -1028,12 +1028,12 @@ const _abi = [
   },
 ];
 
-export class CurveFactoryV2__factory {
+export class CurveStableFactory__factory {
   static readonly abi = _abi;
-  static createInterface(): CurveFactoryV2Interface {
-    return new utils.Interface(_abi) as CurveFactoryV2Interface;
+  static createInterface(): CurveStableFactoryInterface {
+    return new utils.Interface(_abi) as CurveStableFactoryInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): CurveFactoryV2 {
-    return new Contract(address, _abi, signerOrProvider) as CurveFactoryV2;
+  static connect(address: string, signerOrProvider: Signer | Provider): CurveStableFactory {
+    return new Contract(address, _abi, signerOrProvider) as CurveStableFactory;
   }
 }

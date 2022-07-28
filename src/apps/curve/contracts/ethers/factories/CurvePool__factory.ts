@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { CurveV1Pool, CurveV1PoolInterface } from '../CurveV1Pool';
+import type { CurvePool, CurvePoolInterface } from '../CurvePool';
 
 const _abi = [
   {
@@ -845,12 +845,12 @@ const _abi = [
   },
 ];
 
-export class CurveV1Pool__factory {
+export class CurvePool__factory {
   static readonly abi = _abi;
-  static createInterface(): CurveV1PoolInterface {
-    return new utils.Interface(_abi) as CurveV1PoolInterface;
+  static createInterface(): CurvePoolInterface {
+    return new utils.Interface(_abi) as CurvePoolInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): CurveV1Pool {
-    return new Contract(address, _abi, signerOrProvider) as CurveV1Pool;
+  static connect(address: string, signerOrProvider: Signer | Provider): CurvePool {
+    return new Contract(address, _abi, signerOrProvider) as CurvePool;
   }
 }

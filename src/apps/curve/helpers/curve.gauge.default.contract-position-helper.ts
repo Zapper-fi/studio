@@ -12,28 +12,28 @@ import {
   CurveDoubleGauge,
   CurveGauge,
   CurveNGauge,
-} from '../../contracts';
-import { CURVE_DEFINITION } from '../../curve.definition';
-import { CurveChildLiquidityGaugeRoiStrategy } from '../curve.child-liquidity-gauge.roi-strategy';
-import { CurveGaugeIsActiveStrategy } from '../curve.gauge.is-active-strategy';
-import { CurveGaugeRoiStrategy } from '../curve.gauge.roi-strategy';
-import { CurveGaugeDefinition, CurveGaugeType } from '../pool/curve.pool-token.registry';
+} from '../contracts';
+import { CURVE_DEFINITION } from '../curve.definition';
 
+import { CurveChildLiquidityGaugeRoiStrategy } from './curve.child-liquidity-gauge.roi-strategy';
+import { CurveGaugeIsActiveStrategy } from './curve.gauge.is-active-strategy';
 import { CurveGaugeRegistry } from './curve.gauge.registry';
+import { CurveGaugeRoiStrategy } from './curve.gauge.roi-strategy';
+import { CurveGaugeDefinition, CurveGaugeType } from './curve.pool.registry';
 
 const CONTROLLER_ADDRESS = '0x2f50d538606fa9edd2b11e2446beb18c9d5846bb';
 
-type CurveDefaultFarmContractPositionHelperParams = {
+type CurveGaugeDefaultContractPositionHelperParams = {
   network: Network;
   crvTokenAddress: string;
 };
 
-type CurveDefaultFarmContractPositionHelperParamsWithGauges = CurveDefaultFarmContractPositionHelperParams & {
+type CurveGaugeDefaultContractPositionHelperParamsWithGauges = CurveGaugeDefaultContractPositionHelperParams & {
   gaugeDefinitions: CurveGaugeDefinition[];
 };
 
 @Injectable()
-export class CurveDefaultFarmContractPositionHelper {
+export class CurveGaugeDefaultContractPositionHelper {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(CurveContractFactory)
@@ -48,7 +48,7 @@ export class CurveDefaultFarmContractPositionHelper {
     private readonly curveGaugeRegistry: CurveGaugeRegistry,
   ) {}
 
-  async getPositions(params: CurveDefaultFarmContractPositionHelperParams) {
+  async getPositions(params: CurveGaugeDefaultContractPositionHelperParams) {
     const gaugeDefinitions = await this.curveGaugeRegistry.getGaugesWithType(params.network);
 
     if (params.network !== Network.ETHEREUM_MAINNET) {
@@ -69,11 +69,11 @@ export class CurveDefaultFarmContractPositionHelper {
     network,
     crvTokenAddress,
     gaugeDefinitions,
-  }: CurveDefaultFarmContractPositionHelperParamsWithGauges) {
+  }: CurveGaugeDefaultContractPositionHelperParamsWithGauges) {
     return this.appToolkit.helpers.singleStakingFarmContractPositionHelper.getContractPositions<CurveGauge>({
       network,
       appId: CURVE_DEFINITION.id,
-      groupId: CURVE_DEFINITION.groups.farm.id,
+      groupId: CURVE_DEFINITION.groups.gauge.id,
       dependencies: [{ appId: CURVE_DEFINITION.id, groupIds: [CURVE_DEFINITION.groups.pool.id], network }],
       resolveFarmAddresses: async () => gaugeDefinitions.map(v => v.swapAddress),
       resolveImplementation: () => CurveGaugeType.SINGLE,
@@ -98,11 +98,11 @@ export class CurveDefaultFarmContractPositionHelper {
     network,
     crvTokenAddress,
     gaugeDefinitions,
-  }: CurveDefaultFarmContractPositionHelperParamsWithGauges) {
+  }: CurveGaugeDefaultContractPositionHelperParamsWithGauges) {
     return this.appToolkit.helpers.singleStakingFarmContractPositionHelper.getContractPositions<CurveDoubleGauge>({
       network,
       appId: CURVE_DEFINITION.id,
-      groupId: CURVE_DEFINITION.groups.farm.id,
+      groupId: CURVE_DEFINITION.groups.gauge.id,
       dependencies: [{ appId: CURVE_DEFINITION.id, groupIds: [CURVE_DEFINITION.groups.pool.id], network }],
       resolveFarmAddresses: async () => gaugeDefinitions.map(v => v.swapAddress),
       resolveImplementation: () => CurveGaugeType.DOUBLE,
@@ -131,11 +131,11 @@ export class CurveDefaultFarmContractPositionHelper {
     network,
     crvTokenAddress,
     gaugeDefinitions,
-  }: CurveDefaultFarmContractPositionHelperParamsWithGauges) {
+  }: CurveGaugeDefaultContractPositionHelperParamsWithGauges) {
     return this.appToolkit.helpers.singleStakingFarmContractPositionHelper.getContractPositions<CurveNGauge>({
       network,
       appId: CURVE_DEFINITION.id,
-      groupId: CURVE_DEFINITION.groups.farm.id,
+      groupId: CURVE_DEFINITION.groups.gauge.id,
       dependencies: [{ appId: CURVE_DEFINITION.id, groupIds: [CURVE_DEFINITION.groups.pool.id], network }],
       resolveFarmAddresses: async () => gaugeDefinitions.map(v => v.swapAddress),
       resolveImplementation: () => CurveGaugeType.N_GAUGE,
@@ -164,11 +164,11 @@ export class CurveDefaultFarmContractPositionHelper {
     network,
     crvTokenAddress,
     gaugeDefinitions,
-  }: CurveDefaultFarmContractPositionHelperParamsWithGauges) {
+  }: CurveGaugeDefaultContractPositionHelperParamsWithGauges) {
     return this.appToolkit.helpers.singleStakingFarmContractPositionHelper.getContractPositions<CurveNGauge>({
       network,
       appId: CURVE_DEFINITION.id,
-      groupId: CURVE_DEFINITION.groups.farm.id,
+      groupId: CURVE_DEFINITION.groups.gauge.id,
       dependencies: [{ appId: CURVE_DEFINITION.id, groupIds: [CURVE_DEFINITION.groups.pool.id], network }],
       resolveFarmAddresses: async () => gaugeDefinitions.map(v => v.swapAddress),
       resolveImplementation: () => CurveGaugeType.GAUGE_V4,
@@ -197,12 +197,12 @@ export class CurveDefaultFarmContractPositionHelper {
     network,
     crvTokenAddress,
     gaugeDefinitions,
-  }: CurveDefaultFarmContractPositionHelperParamsWithGauges) {
+  }: CurveGaugeDefaultContractPositionHelperParamsWithGauges) {
     return this.appToolkit.helpers.singleStakingFarmContractPositionHelper.getContractPositions<CurveChildLiquidityGauge>(
       {
         network,
         appId: CURVE_DEFINITION.id,
-        groupId: CURVE_DEFINITION.groups.farm.id,
+        groupId: CURVE_DEFINITION.groups.gauge.id,
         dependencies: [{ appId: CURVE_DEFINITION.id, groupIds: [CURVE_DEFINITION.groups.pool.id], network }],
         resolveFarmAddresses: async () => gaugeDefinitions.map(v => v.swapAddress),
         resolveFarmContract: ({ address, network }) =>

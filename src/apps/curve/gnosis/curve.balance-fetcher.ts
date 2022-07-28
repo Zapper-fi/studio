@@ -32,7 +32,7 @@ export class GnosisCurveBalanceFetcher implements BalanceFetcher {
     return this.appToolkit.helpers.singleStakingContractPositionBalanceHelper.getBalances<CurveRewardsOnlyGauge>({
       address,
       appId: CURVE_DEFINITION.id,
-      groupId: CURVE_DEFINITION.groups.farm.id,
+      groupId: CURVE_DEFINITION.groups.gauge.id,
       network,
       farmFilter: v => v.dataProps.implementation === 'rewards-only-gauge',
       resolveContract: ({ address, network }) => this.curveContractFactory.curveRewardsOnlyGauge({ address, network }),
@@ -49,7 +49,7 @@ export class GnosisCurveBalanceFetcher implements BalanceFetcher {
     return this.appToolkit.helpers.singleStakingContractPositionBalanceHelper.getBalances<CurveChildLiquidityGauge>({
       address,
       appId: CURVE_DEFINITION.id,
-      groupId: CURVE_DEFINITION.groups.farm.id,
+      groupId: CURVE_DEFINITION.groups.gauge.id,
       network,
       farmFilter: v => v.dataProps.implementation === 'child-liquidity-gauge',
       resolveContract: ({ address, network }) =>

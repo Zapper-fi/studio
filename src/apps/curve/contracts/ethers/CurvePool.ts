@@ -17,7 +17,7 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
 
-export interface CurveV1PoolInterface extends utils.Interface {
+export interface CurvePoolInterface extends utils.Interface {
   functions: {
     'A()': FunctionFragment;
     'get_virtual_price()': FunctionFragment;
@@ -338,12 +338,12 @@ export type StopRampAEvent = TypedEvent<[BigNumber, BigNumber], StopRampAEventOb
 
 export type StopRampAEventFilter = TypedEventFilter<StopRampAEvent>;
 
-export interface CurveV1Pool extends BaseContract {
+export interface CurvePool extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: CurveV1PoolInterface;
+  interface: CurvePoolInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

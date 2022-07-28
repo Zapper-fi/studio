@@ -9,14 +9,14 @@ import {
   CurveContractFactory,
   CurveCryptoFactory,
   CurveCryptoRegistry,
-  CurveFactoryV2,
+  CurveStableFactory,
   CurveStableRegistry,
 } from '~apps/curve/contracts';
 import { CURVE_DEFINITION } from '~apps/curve/curve.definition';
 import { Cache } from '~cache/cache.decorator';
 import { Network } from '~types/network.interface';
 
-import { CurveApiClient } from '../api/curve.api.client';
+import { CurveApiClient } from './curve.api.client';
 
 const ADDRESS_RESOLVER_ADDRESS = '0x0000000022d53366457f9d5e68ec105046fc4383';
 
@@ -58,7 +58,7 @@ export type CurveGaugeDefinition = {
 };
 
 @Injectable()
-export class CurvePoolTokenRegistry {
+export class CurvePoolRegistry {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(CurveContractFactory) private readonly curveContractFactory: CurveContractFactory,
@@ -85,11 +85,11 @@ export class CurvePoolTokenRegistry {
         resolveIsMetaPool: ({ contract, swapAddress }) => contract.is_meta(swapAddress),
       }),
       // Stable Swap Factory
-      this.retrieveFromSource<CurveFactoryV2>({
+      this.retrieveFromSource<CurveStableFactory>({
         network,
         poolType: CurvePoolType.FACTORY_STABLE,
         resolveSourceContract: ({ address, network }) =>
-          this.curveContractFactory.curveFactoryPoolV2({ address, network }),
+          this.curveContractFactory.curveStableFactory({ address, network }),
         resolveSourceCount: ({ contract }) => contract.pool_count(),
         resolveSwapAddress: ({ contract, index }) => contract.pool_list(index),
         resolveTokenAddress: ({ swapAddress }) => swapAddress,

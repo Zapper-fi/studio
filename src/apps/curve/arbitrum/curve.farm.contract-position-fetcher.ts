@@ -6,21 +6,21 @@ import { ContractPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
 import { CURVE_DEFINITION } from '../curve.definition';
-import { CurveDefaultFarmContractPositionHelper } from '../helpers/gauge/curve.default.farm.contract-position-helper';
+import { CurveGaugeDefaultContractPositionHelper } from '../helpers/curve.gauge.default.contract-position-helper';
 
 const appId = CURVE_DEFINITION.id;
-const groupId = CURVE_DEFINITION.groups.farm.id;
+const groupId = CURVE_DEFINITION.groups.gauge.id;
 const network = Network.ARBITRUM_MAINNET;
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
 export class ArbitrumCurveFarmContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
-    @Inject(CurveDefaultFarmContractPositionHelper)
-    private readonly curveDefaultFarmContractPositionHelper: CurveDefaultFarmContractPositionHelper,
+    @Inject(CurveGaugeDefaultContractPositionHelper)
+    private readonly curveGaugeDefaultContractPositionHelper: CurveGaugeDefaultContractPositionHelper,
   ) {}
 
   async getPositions() {
-    return this.curveDefaultFarmContractPositionHelper.getPositions({
+    return this.curveGaugeDefaultContractPositionHelper.getPositions({
       network,
       crvTokenAddress: '0x11cdb42b0eb46d95f990bedd4695a6e3fa034978',
     });

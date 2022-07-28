@@ -7,8 +7,7 @@ import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
 import { CURVE_DEFINITION } from '../curve.definition';
-import { CurveDefaultPoolTokenHelper } from '../helpers/pool/curve.default.token-helper';
-import { CurvePoolTokenRegistry } from '../helpers/pool/curve.pool-token.registry';
+import { CurvePoolDefaultTokenHelper } from '../helpers/curve.pool.default.token-helper';
 
 const appId = CURVE_DEFINITION.id;
 const groupId = CURVE_DEFINITION.groups.pool.id;
@@ -17,16 +16,13 @@ const network = Network.POLYGON_MAINNET;
 @Register.TokenPositionFetcher({ appId, groupId, network })
 export class PolygonCurvePoolTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
-    @Inject(CurveDefaultPoolTokenHelper)
-    private readonly curveDefaultPoolTokenHelper: CurveDefaultPoolTokenHelper,
-    @Inject(CurvePoolTokenRegistry)
-    private readonly curvePoolTokenRegistry: CurvePoolTokenRegistry,
+    @Inject(CurvePoolDefaultTokenHelper)
+    private readonly curvePoolDefaultTokenHelper: CurvePoolDefaultTokenHelper,
   ) {}
 
   async getPositions() {
-    return this.curveDefaultPoolTokenHelper.getTokens({
+    return this.curvePoolDefaultTokenHelper.getTokens({
       network,
-      poolDefinitions: await this.curvePoolTokenRegistry.getPoolDefinitions(network),
       dependencies: [{ appId: AAVE_V2_DEFINITION.id, groupIds: [AAVE_V2_DEFINITION.groups.supply.id], network }],
     });
   }

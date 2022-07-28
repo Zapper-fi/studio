@@ -17,7 +17,7 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
 
-export interface CurveFactoryV2Interface extends utils.Interface {
+export interface CurveStableFactoryInterface extends utils.Interface {
   functions: {
     'metapool_implementations(address)': FunctionFragment;
     'find_pool_for_coins(address,address)': FunctionFragment;
@@ -311,12 +311,12 @@ export type LiquidityGaugeDeployedEvent = TypedEvent<[string, string], Liquidity
 
 export type LiquidityGaugeDeployedEventFilter = TypedEventFilter<LiquidityGaugeDeployedEvent>;
 
-export interface CurveFactoryV2 extends BaseContract {
+export interface CurveStableFactory extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: CurveFactoryV2Interface;
+  interface: CurveStableFactoryInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

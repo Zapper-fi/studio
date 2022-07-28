@@ -1,30 +1,28 @@
 import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
-import { SynthetixContractFactory } from '~apps/synthetix';
 
 import { CurveContractFactory } from './contracts';
 import { CurveAppDefinition, CURVE_DEFINITION } from './curve.definition';
 import { EthereumCurveFarmContractPositionFetcher } from './ethereum/curve.farm.contract-position-fetcher';
-import { CurveApiClient } from './helpers/api/curve.api.client';
+import { CurveApiClient } from './helpers/curve.api.client';
 import { CurveChildLiquidityGaugeRoiStrategy } from './helpers/curve.child-liquidity-gauge.roi-strategy';
+import { CurveGaugeDefaultContractPositionHelper } from './helpers/curve.gauge.default.contract-position-helper';
 import { CurveGaugeIsActiveStrategy } from './helpers/curve.gauge.is-active-strategy';
 import { CurveGaugeRoiStrategy } from './helpers/curve.gauge.roi-strategy';
-import { CurveOnChainReserveStrategy } from './helpers/curve.on-chain.reserve-strategy';
+import { CurvePoolDefaultTokenHelper } from './helpers/curve.pool.default.token-helper';
+import { CurvePoolRegistry } from './helpers/curve.pool.registry';
+import { CurvePoolReserveStrategy } from './helpers/curve.pool.reserve-strategy';
+import { CurvePoolTokenHelper } from './helpers/curve.pool.token-helper';
 import { CurveVestingEscrowContractPositionBalanceHelper } from './helpers/curve.vesting-escrow.contract-position-balance-helper';
 import { CurveVestingEscrowContractPositionHelper } from './helpers/curve.vesting-escrow.contract-position-helper';
 import { CurveVotingEscrowContractPositionBalanceHelper } from './helpers/curve.voting-escrow.contract-position-balance-helper';
 import { CurveVotingEscrowContractPositionHelper } from './helpers/curve.voting-escrow.contract-position-helper';
-import { CurveDefaultFarmContractPositionHelper } from './helpers/gauge/curve.default.farm.contract-position-helper';
-import { CurveDefaultPoolTokenHelper } from './helpers/pool/curve.default.token-helper';
-import { CurvePoolTokenRegistry } from './helpers/pool/curve.pool-token.registry';
-import { CurvePoolTokenHelper } from './helpers/pool/curve.pool.token-helper';
 
 @Register.AppModule({
   appId: CURVE_DEFINITION.id,
   providers: [
     CurveAppDefinition,
     CurveContractFactory,
-    SynthetixContractFactory,
     // Arbitrum
     // ArbitrumCurveBalanceFetcher,
     // ArbitrumCurvePoolTokenFetcher,
@@ -61,18 +59,14 @@ import { CurvePoolTokenHelper } from './helpers/pool/curve.pool.token-helper';
     // PolygonCurveFarmContractPositionFetcher,
     // Token Helpers
     CurveApiClient,
-    CurvePoolTokenRegistry,
+    CurvePoolRegistry,
     CurvePoolTokenHelper,
-    CurveDefaultPoolTokenHelper,
-    CurveDefaultFarmContractPositionHelper,
-    // Token Helper Strategies
-    CurveOnChainReserveStrategy,
-    // Gauge Helper Strategies
+    CurvePoolDefaultTokenHelper,
+    CurvePoolReserveStrategy,
+    CurveGaugeDefaultContractPositionHelper,
     CurveGaugeIsActiveStrategy,
     CurveGaugeRoiStrategy,
-    // Sidechain/L2 gauges
     CurveChildLiquidityGaugeRoiStrategy,
-    // Voting Escrow Helpers
     CurveVotingEscrowContractPositionHelper,
     CurveVotingEscrowContractPositionBalanceHelper,
     CurveVestingEscrowContractPositionHelper,
@@ -80,15 +74,15 @@ import { CurvePoolTokenHelper } from './helpers/pool/curve.pool.token-helper';
   ],
   exports: [
     CurveContractFactory,
-    // Token Helpers
+    CurveApiClient,
+    CurvePoolRegistry,
     CurvePoolTokenHelper,
-    CurveDefaultPoolTokenHelper,
-    // Token Helper Strategies
-    CurveOnChainReserveStrategy,
-    // Gauge Helper Strategies
+    CurvePoolDefaultTokenHelper,
+    CurvePoolReserveStrategy,
+    CurveGaugeDefaultContractPositionHelper,
     CurveGaugeIsActiveStrategy,
     CurveGaugeRoiStrategy,
-    // Voting Escrow Helpers
+    CurveChildLiquidityGaugeRoiStrategy,
     CurveVotingEscrowContractPositionHelper,
     CurveVotingEscrowContractPositionBalanceHelper,
     CurveVestingEscrowContractPositionHelper,
