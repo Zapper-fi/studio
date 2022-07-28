@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { BigNumberish, Contract, ethers } from 'ethers';
+import { BigNumberish, Contract } from 'ethers';
 import _, { range, toLower } from 'lodash';
 import moment from 'moment';
 
@@ -27,6 +27,13 @@ export enum CurvePoolType {
   FACTORY_CRYPTO = 'factory-crypto',
 }
 
+export enum CurveGaugeType {
+  SINGLE = 'single',
+  DOUBLE = 'double',
+  N_GAUGE = 'n-gauge',
+  GAUGE_V4 = 'gauge-v4',
+}
+
 export const POOL_TYPE_TO_ADDRESS_RESOLVER_INDEX = {
   [CurvePoolType.STABLE]: 0,
   [CurvePoolType.CRYPTO]: 5,
@@ -39,10 +46,15 @@ export type CurvePoolDefinition = {
   tokenAddress: string;
   coinAddresses: string[];
   poolType?: CurvePoolType;
-  gaugeAddress?: string;
   isMetaPool?: boolean;
   volume?: number;
   apy?: number;
+};
+
+export type CurveGaugeDefinition = {
+  version: CurveGaugeType;
+  swapAddress: string;
+  gaugeAddress: string;
 };
 
 @Injectable()
@@ -52,28 +64,6 @@ export class CurvePoolTokenRegistry {
     @Inject(CurveContractFactory) private readonly curveContractFactory: CurveContractFactory,
     @Inject(CurveApiClient) private readonly curveApiClient: CurveApiClient,
   ) {}
-
-  async getGaugesWithType(network: Network) {
-    const provider = this.appToolkit.getNetworkProvider(network);
-    const gauges = await this.getCachedGauges(network);
-
-    const gaugesWithVersions = await Promise.all(
-      gauges.map(async gauge => {
-        let bytecode = await provider.getCode(gauge.gaugeAddress);
-        const minimalProxyMatch = /0x363d3d373d3d3d363d73(.*)5af43d82803e903d91602b57fd5bf3/.exec(bytecode);
-        if (minimalProxyMatch) bytecode = await provider.getCode(`0x${minimalProxyMatch[1]}`);
-
-        const doubleGaugeMethod = ethers.utils.id('rewarded_token()').slice(2, 10);
-        const nGaugeMethod = ethers.utils.id('reward_tokens(uint256)').slice(2, 10);
-
-        if (bytecode.includes(doubleGaugeMethod)) return { ...gauge, version: 'double' };
-        if (bytecode.includes(nGaugeMethod)) return { ...gauge, version: 'n-gauge' };
-        return { ...gauge, version: 'single' };
-      }),
-    );
-
-    return gaugesWithVersions;
-  }
 
   @Cache({
     instance: 'business',
@@ -164,7 +154,6 @@ export class CurvePoolTokenRegistry {
     resolveIsMetaPool: (opts: { contract: T; swapAddress: string }) => boolean | Promise<boolean>;
   }) {
     const multicall = this.appToolkit.getMulticall(network);
-    const allGauges = await this.getCachedGauges(network);
     const allPoolApyData = await this.getCachedPoolApyData(network);
 
     const resolver = this.curveContractFactory.curveAddressResolver({ address: ADDRESS_RESOLVER_ADDRESS, network });
@@ -189,9 +178,6 @@ export class CurvePoolTokenRegistry {
           .map(v => v.replace(ETH_ADDR_ALIAS, ZERO_ADDRESS))
           .map(toLower);
 
-        const gauge = allGauges.find(v => v.swapAddress === swapAddress);
-        const gaugeAddress = gauge?.gaugeAddress ?? ZERO_ADDRESS;
-
         const poolApyData = allPoolApyData.find(v => v.swapAddress === swapAddress);
         const apy = poolApyData?.apy ?? 0;
         const volume = poolApyData?.volume ?? 0;
@@ -202,7 +188,6 @@ export class CurvePoolTokenRegistry {
           tokenAddress,
           coinAddresses,
           isMetaPool,
-          gaugeAddress,
           apy,
           volume,
         };
@@ -212,15 +197,6 @@ export class CurvePoolTokenRegistry {
     );
 
     return poolDefinitions;
-  }
-
-  @Cache({
-    instance: 'business',
-    key: (network: Network) => `studio:${CURVE_DEFINITION.id}:${network}:gauge-data`,
-    ttl: moment.duration(60, 'minutes').asSeconds(),
-  })
-  private async getCachedGauges(network: Network) {
-    return this.curveApiClient.getGauges(network);
   }
 
   @Cache({

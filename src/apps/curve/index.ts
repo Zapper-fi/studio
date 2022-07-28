@@ -3,7 +3,6 @@ export { CurveAppModule } from './curve.module';
 export { CurveContractFactory } from './contracts';
 
 /* Helpers */
-export { CurveFactoryGaugeAddressHelper } from './helpers/curve.factory-gauge.address-helper';
 export { CurveRewardsOnlyGaugeRewardTokenStrategy } from './helpers/curve.rewards-only-gauge.reward-token-strategy';
 export { CurveRewardsOnlyGaugeRoiStrategy } from './helpers/curve.rewards-only-gauge.roi-strategy';
 export { CurveGaugeIsActiveStrategy } from './helpers/curve.gauge.is-active-strategy';

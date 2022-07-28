@@ -3,7 +3,6 @@ import { BigNumberish } from 'ethers';
 import { compact, minBy, partition } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import {
   buildDollarDisplayItem,
   buildNumberDisplayItem,
@@ -20,7 +19,6 @@ import { CurvePoolDefinition, CurvePoolType } from './curve.pool-token.registry'
 
 export type CurvePoolTokenDataProps = {
   poolType: CurvePoolType;
-  gaugeAddress: string;
   swapAddress: string;
   liquidity: number;
   apy: number;
@@ -94,7 +92,6 @@ export class CurvePoolTokenHelper {
         const poolType = definition.poolType ?? CurvePoolType.STABLE;
         const volume = definition.volume ?? 0;
         const apy = definition.apy ?? 0;
-        const gaugeAddress = definition.gaugeAddress ?? ZERO_ADDRESS;
 
         const reserves = reservesRaw.map((r, i) => Number(r) / 10 ** tokens[i].decimals);
         const underlying = tokens.flatMap(v => (v.type === ContractType.APP_TOKEN && v.tokens.length ? v.tokens : v));
@@ -142,7 +139,6 @@ export class CurvePoolTokenHelper {
 
           dataProps: {
             poolType,
-            gaugeAddress,
             swapAddress,
             liquidity,
             volume,

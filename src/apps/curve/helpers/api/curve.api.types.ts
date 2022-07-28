@@ -6,6 +6,7 @@ export const TO_CURVE_NETWORK = {
   [Network.AVALANCHE_MAINNET]: 'avalanche',
   [Network.FANTOM_OPERA_MAINNET]: 'fantom',
   [Network.GNOSIS_MAINNET]: 'xdai',
+  [Network.HARMONY_MAINNET]: 'harmony',
   [Network.OPTIMISM_MAINNET]: 'optimism',
   [Network.POLYGON_MAINNET]: 'polygon',
 };
