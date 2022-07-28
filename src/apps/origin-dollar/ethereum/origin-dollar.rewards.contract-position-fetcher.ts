@@ -23,15 +23,20 @@ export class EthereumOriginDollarRewardsContractPositionFetcher implements Posit
   ) {}
 
   async getPositions() {
+    const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
+
+    const ogv = baseTokens.find(v => v.address === '0x9c354503c38481a7a7a51629142963f98ecc12d0');
+    if (!ogv) return [];
+
     const appTokens = await this.appToolkit.getAppTokenPositions({
       appId: 'origin-dollar',
       groupIds: ['veogv'],
       network,
     });
 
-    const ogv = appTokens.find(v => v.address === '0x0c4576ca1c365868e162554af8e385dc3e7c66d9');
+    const veogv = appTokens.find(v => v.address === '0x0c4576ca1c365868e162554af8e385dc3e7c66d9');
 
-    if (!ogv) {
+    if (!veogv) {
       return [];
     }
 
@@ -39,9 +44,9 @@ export class EthereumOriginDollarRewardsContractPositionFetcher implements Posit
       type: ContractType.POSITION,
       appId,
       groupId,
-      address: ogv.address,
+      address: veogv.address,
       network,
-      tokens: [...appTokens],
+      tokens: [ogv],
       dataProps: {},
       displayProps: {
         label: `${getLabelFromToken(ogv)} Staking Rewards`,
