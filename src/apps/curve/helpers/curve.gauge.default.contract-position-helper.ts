@@ -54,7 +54,7 @@ export class CurveGaugeDefaultContractPositionHelper {
 
     if (params.network !== Network.ETHEREUM_MAINNET) {
       return Promise.all([
-        this.getChildLiquidityGaugeContractPositions({ ...params, gaugeDefinitions: grouped[CurveGaugeType.GAUGE_V4] }),
+        this.getChildLiquidityGaugeContractPositions({ ...params, gaugeDefinitions: grouped[CurveGaugeType.CHILD] }),
         this.getRewardOnlyGaugeContractPositions({ ...params, gaugeDefinitions: grouped[CurveGaugeType.REWARDS_ONLY] }),
       ]).then(v => v.flat());
     }
@@ -207,6 +207,7 @@ export class CurveGaugeDefaultContractPositionHelper {
         groupId: CURVE_DEFINITION.groups.gauge.id,
         dependencies: [{ appId: CURVE_DEFINITION.id, groupIds: [CURVE_DEFINITION.groups.pool.id], network }],
         resolveFarmAddresses: async () => gaugeDefinitions.map(v => v.gaugeAddress),
+        resolveImplementation: () => CurveGaugeType.CHILD,
         resolveFarmContract: ({ address, network }) =>
           this.curveContractFactory.curveChildLiquidityGauge({ address, network }),
         resolveStakedTokenAddress: ({ contract, multicall }) => multicall.wrap(contract).lp_token(),

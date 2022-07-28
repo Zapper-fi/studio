@@ -155,7 +155,7 @@ export class CurveGaugeDefaultContractPositionBalanceHelper {
       appId: CURVE_DEFINITION.id,
       groupId: CURVE_DEFINITION.groups.gauge.id,
       network,
-      farmFilter: v => v.dataProps.implementation === CurveGaugeType.GAUGE_V4,
+      farmFilter: v => v.dataProps.implementation === CurveGaugeType.CHILD,
       resolveContract: ({ address, network }) =>
         this.curveContractFactory.curveChildLiquidityGauge({ address, network }),
       resolveStakedTokenBalance: ({ contract, address, multicall }) => multicall.wrap(contract).balanceOf(address),

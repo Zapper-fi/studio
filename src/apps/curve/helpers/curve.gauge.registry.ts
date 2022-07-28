@@ -15,6 +15,7 @@ export enum CurveGaugeType {
   DOUBLE = 'double',
   N_GAUGE = 'n-gauge',
   GAUGE_V4 = 'gauge-v4',
+  CHILD = 'child-chain',
   REWARDS_ONLY = 'rewards-only',
 }
 
@@ -54,7 +55,9 @@ export class CurveGaugeRegistry {
 
     if (network !== Network.ETHEREUM_MAINNET) {
       // Append legacy gauges not found in the API to track their funds
-      return [...gaugesWithVersions, ...(REWARDS_ONLY_GAUGES[network] ?? [])];
+      const oldGauges = (REWARDS_ONLY_GAUGES[network] ?? []).map(v => ({ ...v, version: CurveGaugeType.REWARDS_ONLY }));
+      const childGauges = gaugesWithVersions.map(v => ({ ...v, version: CurveGaugeType.CHILD }));
+      return [...childGauges, ...oldGauges];
     }
 
     return gaugesWithVersions;
