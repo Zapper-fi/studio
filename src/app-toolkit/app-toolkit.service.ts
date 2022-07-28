@@ -69,7 +69,7 @@ export class AppToolkit implements IAppToolkit {
   }
 
   getBaseTokenPrice(opts: { network: Network; address: string }) {
-    return this.tokenService.getTokenPrice(opts);
+    return this.priceSelectorService.create().getOne(opts);
   }
 
   getBaseTokenPriceSelector(filters: Filters = {}) {
