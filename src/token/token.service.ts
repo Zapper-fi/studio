@@ -9,10 +9,6 @@ import { TokenApiClient } from './token-api.client';
 export class TokenService {
   constructor(@Inject(TokenApiClient) private readonly tokenApiClient: TokenApiClient) {}
 
-  async onApplicationBootstrap() {
-    await this.getTokenPrices(Network.ETHEREUM_MAINNET);
-  }
-
   @Cache({ key: (network: Network) => `token-prices:${network}`, ttl: 60 })
   async getTokenPrices(network: Network) {
     return this.tokenApiClient.getAllBaseTokenPrices(network);
