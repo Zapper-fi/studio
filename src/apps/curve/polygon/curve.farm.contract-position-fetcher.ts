@@ -13,7 +13,7 @@ const groupId = CURVE_DEFINITION.groups.gauge.id;
 const network = Network.POLYGON_MAINNET;
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
-export class PolygonCurveFarmContractPositionFetcher implements PositionFetcher<ContractPosition> {
+export class PolygonCurveGaugeContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(CurveGaugeDefaultContractPositionHelper)
     private readonly curveGaugeDefaultContractPositionHelper: CurveGaugeDefaultContractPositionHelper,

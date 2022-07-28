@@ -1,13 +1,16 @@
 import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
 
+import { ArbitrumCurveBalanceFetcher } from './arbitrum/curve.balance-fetcher';
+import { ArbitrumCurveGaugeContractPositionFetcher } from './arbitrum/curve.farm.contract-position-fetcher';
+import { ArbitrumCurvePoolTokenFetcher } from './arbitrum/curve.pool.token-fetcher';
 import { CurveContractFactory } from './contracts';
 import { CurveAppDefinition, CURVE_DEFINITION } from './curve.definition';
-import { EthereumCurveFarmContractPositionFetcher } from './ethereum/curve.farm.contract-position-fetcher';
 import { CurveApiClient } from './helpers/curve.api.client';
 import { CurveChildLiquidityGaugeRoiStrategy } from './helpers/curve.child-liquidity-gauge.roi-strategy';
 import { CurveGaugeDefaultContractPositionHelper } from './helpers/curve.gauge.default.contract-position-helper';
 import { CurveGaugeIsActiveStrategy } from './helpers/curve.gauge.is-active-strategy';
+import { CurveGaugeRegistry } from './helpers/curve.gauge.registry';
 import { CurveGaugeRoiStrategy } from './helpers/curve.gauge.roi-strategy';
 import { CurvePoolDefaultTokenHelper } from './helpers/curve.pool.default.token-helper';
 import { CurvePoolRegistry } from './helpers/curve.pool.registry';
@@ -24,45 +27,46 @@ import { CurveVotingEscrowContractPositionHelper } from './helpers/curve.voting-
     CurveAppDefinition,
     CurveContractFactory,
     // Arbitrum
-    // ArbitrumCurveBalanceFetcher,
-    // ArbitrumCurvePoolTokenFetcher,
-    // ArbitrumCurveFarmContractPositionFetcher,
+    ArbitrumCurveBalanceFetcher,
+    ArbitrumCurvePoolTokenFetcher,
+    ArbitrumCurveGaugeContractPositionFetcher,
     // // Avalanche
     // AvalancheCurveBalanceFetcher,
     // AvalancheCurvePoolTokenFetcher,
-    // AvalancheCurveFarmContractPositionFetcher,
+    // AvalancheCurveGaugeContractPositionFetcher,
     // // Ethereum
     // EthereumCurveBalanceFetcher,
     // EthereumCurvePoolTokenFetcher,
-    EthereumCurveFarmContractPositionFetcher,
+    // EthereumCurveGaugeContractPositionFetcher,
     // EthereumCurveVotingEscrowContractPositionFetcher,
     // EthereumCurveVestingEscrowContractPositionFetcher,
     // // Fantom
     // FantomCurveBalanceFetcher,
     // FantomCurvePoolTokenFetcher,
-    // FantomCurveFarmContractPositionFetcher,
+    // FantomCurveGaugeContractPositionFetcher,
     // // Gnosis
     // GnosisCurveBalanceFetcher,
     // GnosisCurvePoolTokenFetcher,
-    // GnosisCurveFarmContractPositionFetcher,
+    // GnosisCurveGaugeContractPositionFetcher,
     // // Harmony
     // HarmonyCurveBalanceFetcher,
     // HarmonyCurvePoolTokenFetcher,
-    // HarmonyCurveFarmContractPositionFetcher,
+    // HarmonyCurveGaugeContractPositionFetcher,
     // // Optimism
     // OptimismCurveBalanceFetcher,
     // OptimismCurvePoolTokenFetcher,
-    // OptimismCurveFarmContractPositionFetcher,
+    // OptimismCurveGaugeContractPositionFetcher,
     // // Polygon
     // PolygonCurveBalanceFetcher,
     // PolygonCurvePoolTokenFetcher,
-    // PolygonCurveFarmContractPositionFetcher,
+    // PolygonCurveGaugeContractPositionFetcher,
     // Token Helpers
     CurveApiClient,
     CurvePoolRegistry,
     CurvePoolTokenHelper,
     CurvePoolDefaultTokenHelper,
     CurvePoolVirtualPriceStrategy,
+    CurveGaugeRegistry,
     CurveGaugeDefaultContractPositionHelper,
     CurveGaugeIsActiveStrategy,
     CurveGaugeRoiStrategy,
@@ -78,6 +82,7 @@ import { CurveVotingEscrowContractPositionHelper } from './helpers/curve.voting-
     CurvePoolRegistry,
     CurvePoolTokenHelper,
     CurvePoolDefaultTokenHelper,
+    CurveGaugeRegistry,
     CurveGaugeDefaultContractPositionHelper,
     CurveGaugeIsActiveStrategy,
     CurveGaugeRoiStrategy,

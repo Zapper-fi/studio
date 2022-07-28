@@ -13,7 +13,7 @@ const groupId = CURVE_DEFINITION.groups.gauge.id;
 const network = Network.GNOSIS_MAINNET;
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
-export class GnosisCurveFarmContractPositionFetcher implements PositionFetcher<ContractPosition> {
+export class GnosisCurveGaugeContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(CurveGaugeDefaultContractPositionHelper)
     private readonly curveGaugeDefaultContractPositionHelper: CurveGaugeDefaultContractPositionHelper,

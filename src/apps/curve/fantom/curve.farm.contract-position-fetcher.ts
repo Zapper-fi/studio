@@ -13,7 +13,7 @@ const groupId = CURVE_DEFINITION.groups.gauge.id;
 const network = Network.FANTOM_OPERA_MAINNET;
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
-export class FantomCurveFarmContractPositionFetcher implements PositionFetcher<ContractPosition> {
+export class FantomCurveGaugeContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(CurveGaugeDefaultContractPositionHelper)
     private readonly curveGaugeDefaultContractPositionHelper: CurveGaugeDefaultContractPositionHelper,

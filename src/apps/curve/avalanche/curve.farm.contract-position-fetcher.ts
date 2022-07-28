@@ -13,7 +13,7 @@ const groupId = CURVE_DEFINITION.groups.gauge.id;
 const network = Network.ARBITRUM_MAINNET;
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
-export class ArbitrumCurveFarmContractPositionFetcher implements PositionFetcher<ContractPosition> {
+export class ArbitrumCurveGaugeContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(CurveGaugeDefaultContractPositionHelper)
     private readonly curveGaugeDefaultContractPositionHelper: CurveGaugeDefaultContractPositionHelper,

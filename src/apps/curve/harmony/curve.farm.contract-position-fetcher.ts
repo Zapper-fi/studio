@@ -13,7 +13,7 @@ const groupId = CURVE_DEFINITION.groups.gauge.id;
 const network = Network.HARMONY_MAINNET;
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
-export class HarmonyCurveFarmContractPositionFetcher implements PositionFetcher<ContractPosition> {
+export class HarmonyCurveGaugeContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(CurveGaugeDefaultContractPositionHelper)
     private readonly curveGaugeDefaultContractPositionHelper: CurveGaugeDefaultContractPositionHelper,

@@ -13,7 +13,7 @@ const groupId = CURVE_DEFINITION.groups.gauge.id;
 const network = Network.OPTIMISM_MAINNET;
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
-export class OptimismCurveFarmContractPositionFetcher implements PositionFetcher<ContractPosition> {
+export class OptimismCurveGaugeContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(CurveGaugeDefaultContractPositionHelper)
     private readonly curveGaugeDefaultContractPositionHelper: CurveGaugeDefaultContractPositionHelper,

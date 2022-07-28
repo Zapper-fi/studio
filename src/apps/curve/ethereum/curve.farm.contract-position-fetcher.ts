@@ -13,7 +13,7 @@ const groupId = CURVE_DEFINITION.groups.gauge.id;
 const network = Network.ETHEREUM_MAINNET;
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
-export class EthereumCurveFarmContractPositionFetcher implements PositionFetcher<ContractPosition> {
+export class EthereumCurveGaugeContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(CurveGaugeDefaultContractPositionHelper)
     private readonly curveGaugeDefaultContractPositionHelper: CurveGaugeDefaultContractPositionHelper,
