@@ -3,6 +3,7 @@ import { Inject, Injectable } from '@nestjs/common';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { drillBalance } from '~app-toolkit/helpers/balance/token-balance.helper';
 import { ContractPositionBalance } from '~position/position-balance.interface';
+import { claimable } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 
 import { OriginDollarContractFactory } from '../contracts';
@@ -41,7 +42,7 @@ export class OGVRewardsBalanceHelper {
     });
 
     const balanceRaw = await multicall.wrap(veogv).previewRewards(address);
-    const tokenBalance = drillBalance(contractPosition.tokens[0], balanceRaw.toString());
+    const tokenBalance = drillBalance(claimable(contractPosition.tokens[0]), balanceRaw.toString());
 
     const contractPositionBalance: ContractPositionBalance = {
       ...contractPosition,
