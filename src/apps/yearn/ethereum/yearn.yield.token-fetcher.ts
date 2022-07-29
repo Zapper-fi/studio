@@ -62,6 +62,7 @@ export class EthereumYearnYieldTokenFetcher implements PositionFetcher<AppTokenP
 
         // Display Props
         const label = underlyingToken.symbol;
+        const labelDetailed = symbol;
         const secondaryLabel = buildDollarDisplayItem(price);
         const images = [getTokenImg(underlyingToken.address, network)];
         const statsItems = [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }];
@@ -86,6 +87,7 @@ export class EthereumYearnYieldTokenFetcher implements PositionFetcher<AppTokenP
 
           displayProps: {
             label,
+            labelDetailed,
             secondaryLabel,
             images,
             statsItems,

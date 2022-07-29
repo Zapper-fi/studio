@@ -5,7 +5,6 @@ import { BigNumber } from 'ethers';
 import { Register } from '~app-toolkit/decorators';
 import { CurvePoolTokenHelper } from '~apps/curve';
 import { CacheOnInterval } from '~cache/cache-on-interval.decorator';
-import { Erc20 } from '~contract/contracts';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
@@ -20,6 +19,8 @@ const network = Network.OPTIMISM_MAINNET;
 interface PairData {
   address: string;
   gauge_address: string;
+  token0_address: string;
+  token1_address: string;
 }
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
@@ -41,37 +42,23 @@ export class OptimismVelodromePoolsTokenFetcher implements PositionFetcher<AppTo
 
   async getPositions() {
     const { data } = await this.getDefinitions();
-    const tokens = await this.curvePoolTokenHelper.getTokens<VelodromePool, Erc20>({
+    const tokens = await this.curvePoolTokenHelper.getTokens<VelodromePool>({
       network,
       appId,
       groupId,
-      resolvePoolDefinitions: async () =>
-        data.map(pool => ({
-          swapAddress: pool.address.toLowerCase(),
-          tokenAddress: pool.address.toLowerCase(),
-          gaugeAddress: pool.gauge_address.toLowerCase(),
-        })),
+      poolDefinitions: data.map(pool => ({
+        swapAddress: pool.address.toLowerCase(),
+        tokenAddress: pool.address.toLowerCase(),
+        gaugeAddress: pool.gauge_address.toLowerCase(),
+        coinAddresses: [pool.token0_address.toLowerCase(), pool.token1_address.toLowerCase()],
+      })),
       resolvePoolContract: ({ network, definition }) =>
         this.contractFactory.velodromePool({ network, address: definition.swapAddress }),
-      resolvePoolTokenContract: ({ network, definition }) =>
-        this.contractFactory.erc20({ network, address: definition.tokenAddress }),
-      resolvePoolCoinAddresses: async ({ multicall, poolContract }) =>
-        (
-          await Promise.all([multicall.wrap(poolContract).token0(), multicall.wrap(poolContract).token1()])
-        ).map(x => x.toLowerCase()),
       resolvePoolReserves: async ({ multicall, poolContract }) =>
-        (
-          await Promise.all([multicall.wrap(poolContract).reserve0(), multicall.wrap(poolContract).reserve1()])
-        ).map(x => x.toString()),
+        Promise.all([multicall.wrap(poolContract).reserve0(), multicall.wrap(poolContract).reserve1()]),
       resolvePoolFee: async () => BigNumber.from(0), // TODO: get actual value
-      resolvePoolTokenSymbol: ({ multicall, poolTokenContract }) => multicall.wrap(poolTokenContract).symbol(),
-      resolvePoolTokenSupply: ({ multicall, poolTokenContract }) => multicall.wrap(poolTokenContract).totalSupply(),
-      resolvePoolTokenPrice: async ({ tokens, reserves, supply }) => {
-        const [token0, token1] = tokens;
-        const [reserve0, reserve1] = reserves;
-        const price = (token0.price * reserve0 + token1.price * reserve1) / supply;
-        return price;
-      },
+      resolvePoolTokenPrice: async ({ tokens, reserves, supply }) =>
+        (tokens[0].price * reserves[0] + tokens[1].price * reserves[1]) / supply,
     });
     return tokens;
   }
