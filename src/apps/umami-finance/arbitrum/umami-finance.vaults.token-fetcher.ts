@@ -13,7 +13,7 @@ const appId = UMAMI_FINANCE_DEFINITION.id;
 const groupId = UMAMI_FINANCE_DEFINITION.groups.vaults.id;
 const network = Network.ARBITRUM_MAINNET;
 const VAULTS = [
-  '0x2e2153Fd13459eBA1F277Ab9Acd624F045d676ce', // glpUSDC
+  '0x2e2153fd13459eba1f277ab9acd624f045d676ce', // glpUSDC
 ];
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
