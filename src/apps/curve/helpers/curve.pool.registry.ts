@@ -118,15 +118,16 @@ export class CurvePoolRegistry {
     const poolDefinitions = await Promise.all(poolDefinitionPromises).then(v => v.flat());
     const poolDefinitionsWithLegacy = await Promise.all(
       poolDefinitions.map(async poolDefinition => {
-        if (network !== Network.ETHEREUM_MAINNET) return poolDefinition;
         if ([CurvePoolType.FACTORY_STABLE, CurvePoolType.FACTORY_CRYPTO].includes(poolDefinition.poolType!))
           return poolDefinition;
 
         const code = await provider.getCode(poolDefinition.swapAddress);
-        const legacyMethod = ethers.utils.id('balances(int128)').slice(2, 10);
 
-        const isLegacy = code.includes(legacyMethod);
-        if (isLegacy) return { ...poolDefinition, isLegacy: true };
+        if (network === Network.ETHEREUM_MAINNET) {
+          const legacyMethod = ethers.utils.id('balances(int128)').slice(2, 10);
+          const isLegacy = code.includes(legacyMethod);
+          if (isLegacy) return { ...poolDefinition, isLegacy: true };
+        }
 
         const crypotPoolMethod = ethers.utils.id('D()').slice(2, 10);
         const realPoolType = code.includes(crypotPoolMethod) ? CurvePoolType.CRYPTO : CurvePoolType.STABLE;
