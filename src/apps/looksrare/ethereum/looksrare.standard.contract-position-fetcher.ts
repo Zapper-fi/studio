@@ -2,12 +2,8 @@ import { Inject } from '@nestjs/common';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
-import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
-import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { ContractType } from '~position/contract.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
-import { claimable, supplied } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 
 import { Feesharing, LooksrareContractFactory } from '../contracts';
@@ -29,7 +25,7 @@ export class EthereumLooksrareStandardContractPositionFetcher implements Positio
       appId,
       groupId,
       network,
-      resolveFarmAddresses: async () => ['0x3ab16Af1315dc6C95F83Cbf522fecF98D00fd9ba'],
+      resolveFarmAddresses: async () => ['0xBcD7254A1D759EFA08eC7c3291B2E85c5dCC12ce'],
       resolveStakedTokenAddress: async ({ multicall, contract }) => multicall.wrap(contract).looksRareToken(),
       resolveFarmContract: opts => this.looksrareContractFactory.feesharing(opts),
       resolveRewardTokenAddresses: async ({ multicall, contract }) => multicall.wrap(contract).rewardToken(),

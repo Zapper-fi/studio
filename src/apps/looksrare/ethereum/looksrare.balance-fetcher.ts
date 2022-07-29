@@ -1,11 +1,9 @@
 import { Inject } from '@nestjs/common';
-import { drillBalance } from '~app-toolkit';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
 import { BalanceFetcher } from '~balance/balance-fetcher.interface';
-import { isSupplied } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 import { Aggregator, Feesharing, LooksrareContractFactory } from '../contracts';
 
@@ -49,7 +47,7 @@ export class EthereumLooksrareBalanceFetcher implements BalanceFetcher {
       resolveRewardTokenBalances: ({ contract, address, multicall }) => multicall.wrap(contract).calculatePendingRewards(address),
     });
   }
-  
+
   async getAutoCompoundPosition(address: string) {
     return this.appToolkit.helpers.singleStakingContractPositionBalanceHelper.getBalances<Aggregator>({
       address,
