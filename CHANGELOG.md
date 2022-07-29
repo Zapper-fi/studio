@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.131.0](https://github.com/Zapper-fi/studio/compare/v0.130.1...v0.131.0) (2022-07-29)
+
+
+### Features
+
+* **curve:** Eliminate Curve static pool definitions ([#954](https://github.com/Zapper-fi/studio/issues/954)) ([e5866a4](https://github.com/Zapper-fi/studio/commit/e5866a453ac2bd1ecfea503278fc034d67f3586b))
+
 ## [0.130.1](https://github.com/Zapper-fi/studio/compare/v0.130.0...v0.130.1) (2022-07-29)
 
 
