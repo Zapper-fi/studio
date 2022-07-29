@@ -11,7 +11,6 @@ export type CurvePoolDefinition = {
   coinAddresses: string[];
   gaugeAddresses?: string[];
   poolType?: CurvePoolType;
-  isMetaPool?: boolean;
   volume?: number;
   apy?: number;
   isLegacy?: boolean;

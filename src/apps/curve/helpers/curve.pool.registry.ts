@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { BigNumberish, Contract, ethers } from 'ethers';
-import { partition, range, uniqBy } from 'lodash';
+import { range, uniqBy } from 'lodash';
 import moment from 'moment';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
@@ -118,16 +118,7 @@ export class CurvePoolRegistry {
       }),
     );
 
-    const [metaPools, basePools] = partition(poolDefinitionsWithLegacy, v =>
-      v.coinAddresses.some(t => poolDefinitionsWithLegacy.find(p => p.tokenAddress === t)),
-    );
-
-    const poolDefinitionsWithMeta = [
-      ...metaPools.map(v => ({ ...v, isMetaPool: true })),
-      ...basePools.map(v => ({ ...v, isMetaPool: false })),
-    ];
-
-    return uniqBy(poolDefinitionsWithMeta, v => v.swapAddress);
+    return uniqBy(poolDefinitionsWithLegacy, v => v.swapAddress);
   }
 
   private async retrieveFromSource<T extends Contract>({

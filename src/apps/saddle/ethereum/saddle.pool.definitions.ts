@@ -84,7 +84,6 @@ export const SADDLE_POOL_DEFINITIONS: CurvePoolDefinition[] = [
   {
     swapAddress: '0xf74ebe6e5586275dc4ced78f5dbef31b1efbe7a5',
     tokenAddress: '0x122eca07139eb368245a29fb702c9ff11e9693b7',
-    isMetaPool: true,
     coinAddresses: [
       '0x18084fba666a33d37592fa2633fd49a74dd93a88',
       '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599',
@@ -96,7 +95,6 @@ export const SADDLE_POOL_DEFINITIONS: CurvePoolDefinition[] = [
   {
     swapAddress: '0xa0b4a2667dd60d5cdd7ecff1084f0ceb8dd84326',
     tokenAddress: '0x3f2f811605bc6d701c3ad6e501be13461c560320',
-    isMetaPool: true,
     coinAddresses: [
       '0x18084fba666a33d37592fa2633fd49a74dd93a88',
       '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599',

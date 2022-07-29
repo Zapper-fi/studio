@@ -185,7 +185,10 @@ export class CurvePoolTokenHelper {
   }
 
   async getTokens<T>(params: CurvePoolTokenHelperParams<T>) {
-    const [basePoolDefinitions, metaPoolDefinitions] = partition(params.poolDefinitions, v => !v.isMetaPool);
+    const [metaPoolDefinitions, basePoolDefinitions] = partition(params.poolDefinitions, v =>
+      v.coinAddresses.some(t => params.poolDefinitions.find(p => p.tokenAddress === t)),
+    );
+
     const baseCurveTokens = await this._getTokens({ ...params, poolDefinitions: basePoolDefinitions });
     const metaCurveTokens = await this._getTokens({ ...params, poolDefinitions: metaPoolDefinitions, baseCurveTokens });
     return [...baseCurveTokens, ...metaCurveTokens];
