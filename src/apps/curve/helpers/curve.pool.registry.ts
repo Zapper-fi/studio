@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { BigNumberish, Contract, ethers } from 'ethers';
-import { partition, range, toLower, uniqBy } from 'lodash';
+import { partition, range, uniqBy } from 'lodash';
 import moment from 'moment';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
@@ -119,12 +119,18 @@ export class CurvePoolRegistry {
     const poolDefinitionsWithLegacy = await Promise.all(
       poolDefinitions.map(async poolDefinition => {
         if (network !== Network.ETHEREUM_MAINNET) return poolDefinition;
-        if (poolDefinition.poolType !== CurvePoolType.STABLE) return poolDefinition;
+        if ([CurvePoolType.FACTORY_STABLE, CurvePoolType.FACTORY_CRYPTO].includes(poolDefinition.poolType!))
+          return poolDefinition;
 
         const code = await provider.getCode(poolDefinition.swapAddress);
         const legacyMethod = ethers.utils.id('balances(int128)').slice(2, 10);
-        if (code.includes(legacyMethod)) return { ...poolDefinition, isLegacy: true };
-        return poolDefinition;
+
+        const isLegacy = code.includes(legacyMethod);
+        if (isLegacy) return { ...poolDefinition, isLegacy: true };
+
+        const crypotPoolMethod = ethers.utils.id('D()').slice(2, 10);
+        const realPoolType = code.includes(crypotPoolMethod) ? CurvePoolType.CRYPTO : CurvePoolType.STABLE;
+        return { ...poolDefinition, poolType: realPoolType };
       }),
     );
 
@@ -180,8 +186,8 @@ export class CurvePoolRegistry {
         const coinAddressesRaw = await resolveCoinAddresses({ contract: multicallWrappedSource, swapAddress });
         const coinAddresses = coinAddressesRaw
           .filter(v => v !== ZERO_ADDRESS)
-          .map(v => v.replace(ETH_ADDR_ALIAS, ZERO_ADDRESS))
-          .map(toLower);
+          .map(v => v.toLowerCase())
+          .map(v => v.replace(ETH_ADDR_ALIAS, ZERO_ADDRESS));
 
         const gaugeAddresses = gauges.filter(v => v.swapAddress === swapAddress).map(v => v.gaugeAddress);
         const poolApyData = allPoolApyData.find(v => v.swapAddress === swapAddress);
