@@ -5,7 +5,8 @@ import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { IMulticallWrapper } from '~multicall/multicall.interface';
 import { ContractType } from '~position/contract.interface';
 
-import { CurvePoolType } from './curve.pool.registry';
+import { CurvePoolType } from '../curve.types';
+
 import { CurvePoolTokenHelperParams } from './curve.pool.token-helper';
 
 export type CurvePoolVirtualPriceStrategyParams<T> = {
