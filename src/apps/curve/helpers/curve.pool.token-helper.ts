@@ -35,9 +35,10 @@ export type CurvePoolTokenHelperParams<T> = {
   minLiquidity?: number;
   dependencies?: AppGroupsDefinition[];
   baseCurveTokens?: AppTokenPosition[];
-  resolvePoolContract: (opts: { network: Network; definition: CurvePoolDefinition }) => T;
+  resolvePoolContract: (opts: { network: Network; address: string }) => T;
+  resolvePoolCoinAddresses: (opts: { multicall: IMulticallWrapper; poolContract: T }) => Promise<string[]>;
   resolvePoolReserves: (opts: {
-    definition: CurvePoolDefinition;
+    coinAddresses: string[];
     multicall: IMulticallWrapper;
     poolContract: T;
   }) => Promise<BigNumberish[]>;
@@ -65,6 +66,7 @@ export class CurvePoolTokenHelper {
     dependencies = [],
     baseCurveTokens = [],
     resolvePoolContract,
+    resolvePoolCoinAddresses,
     resolvePoolReserves,
     resolvePoolTokenPrice,
     resolvePoolFee,
@@ -75,10 +77,11 @@ export class CurvePoolTokenHelper {
 
     const curvePoolTokens = await Promise.all(
       poolDefinitions.map(async definition => {
-        const { swapAddress, tokenAddress, coinAddresses } = definition;
-        const poolContract = resolvePoolContract({ network, definition });
+        const { swapAddress, tokenAddress } = definition;
+        const poolContract = resolvePoolContract({ network, address: swapAddress });
         const tokenContract = this.appToolkit.globalContracts.erc20({ network, address: definition.tokenAddress });
-        const reservesRaw = await resolvePoolReserves({ multicall, poolContract, definition });
+        const coinAddresses = await resolvePoolCoinAddresses({ multicall, poolContract });
+        const reservesRaw = await resolvePoolReserves({ multicall, poolContract, coinAddresses });
 
         const maybeTokens = coinAddresses.map(tokenAddress => {
           const baseToken = baseTokens.find(price => price.address === tokenAddress);
@@ -185,7 +188,18 @@ export class CurvePoolTokenHelper {
   }
 
   async getTokens<T>(params: CurvePoolTokenHelperParams<T>) {
-    const [metaPoolDefinitions, basePoolDefinitions] = partition(params.poolDefinitions, v =>
+    const { network, poolDefinitions, resolvePoolContract, resolvePoolCoinAddresses } = params;
+    const multicall = this.appToolkit.getMulticall(network);
+
+    const definitionsWithCoinAddresses = await Promise.all(
+      poolDefinitions.map(async definition => {
+        const poolContract = resolvePoolContract({ network, address: definition.swapAddress });
+        const coinAddresses = await resolvePoolCoinAddresses({ multicall, poolContract });
+        return { ...definition, coinAddresses };
+      }),
+    );
+
+    const [metaPoolDefinitions, basePoolDefinitions] = partition(definitionsWithCoinAddresses, v =>
       v.coinAddresses.some(t => params.poolDefinitions.find(p => p.tokenAddress === t)),
     );
 

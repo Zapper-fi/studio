@@ -1,8 +1,13 @@
 import { Inject } from '@nestjs/common';
 
 import { Register } from '~app-toolkit/decorators';
-import { CurvePoolTokenHelper } from '~apps/curve';
-import { CurvePoolDefinition } from '~apps/curve/curve.types';
+import {
+  CurvePoolOnChainCoinStrategy,
+  CurvePoolOnChainReserveStrategy,
+  CurvePoolTokenHelper,
+  CurvePoolVirtualPriceStrategy,
+} from '~apps/curve';
+import { CurvePoolDefinition, CurvePoolType } from '~apps/curve/curve.types';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
@@ -17,9 +22,15 @@ const network = Network.AURORA_MAINNET;
 @Register.TokenPositionFetcher({ appId, groupId, network })
 export class AuroraBastionProtocolSwapTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
-    @Inject(CurvePoolTokenHelper) private readonly curvePoolTokenHelper: CurvePoolTokenHelper,
     @Inject(BastionProtocolContractFactory)
     private readonly bastionProtocolContractFactory: BastionProtocolContractFactory,
+    @Inject(CurvePoolTokenHelper) private readonly curvePoolTokenHelper: CurvePoolTokenHelper,
+    @Inject(CurvePoolOnChainCoinStrategy)
+    private readonly curvePoolOnChainCoinStrategy: CurvePoolOnChainCoinStrategy,
+    @Inject(CurvePoolOnChainReserveStrategy)
+    private readonly curvePoolOnChainReserveStrategy: CurvePoolOnChainReserveStrategy,
+    @Inject(CurvePoolVirtualPriceStrategy)
+    private readonly curvePoolVirtualPriceStrategy: CurvePoolVirtualPriceStrategy,
   ) {}
 
   async getPositions() {
@@ -27,7 +38,7 @@ export class AuroraBastionProtocolSwapTokenFetcher implements PositionFetcher<Ap
       {
         swapAddress: '0x6287e912a9ccd4d5874ae15d3c89556b2a05f080',
         tokenAddress: '0x0039f0641156cac478b0debab086d78b66a69a01',
-        coinAddresses: ['0x845e15a441cfc1871b7ac610b0e922019bad9826', '0xe5308dc623101508952948b141fd9eabd3337d99'],
+        poolType: CurvePoolType.CRYPTO,
       },
     ];
 
@@ -50,22 +61,22 @@ export class AuroraBastionProtocolSwapTokenFetcher implements PositionFetcher<Ap
       groupId,
       dependencies: dependencies,
       poolDefinitions: poolDefinitions,
-      resolvePoolContract: ({ network, definition }) =>
-        this.bastionProtocolContractFactory.bastionProtocolSwap({ address: definition.swapAddress, network }),
-      resolvePoolReserves: async ({ definition, multicall, poolContract }) =>
-        Promise.all(definition.coinAddresses.map((_, i) => multicall.wrap(poolContract).getTokenBalance(i))),
+      resolvePoolContract: ({ network, address }) =>
+        this.bastionProtocolContractFactory.bastionProtocolSwap({ address, network }),
+      resolvePoolCoinAddresses: this.curvePoolOnChainCoinStrategy.build({
+        resolveCoinAddress: ({ multicall, index, poolContract }) => multicall.wrap(poolContract).getToken(index),
+      }),
+      resolvePoolReserves: this.curvePoolOnChainReserveStrategy.build({
+        resolveReserve: ({ multicall, index, poolContract }) => multicall.wrap(poolContract).getTokenBalance(index),
+      }),
+      resolvePoolTokenPrice: this.curvePoolVirtualPriceStrategy.build({
+        resolveVirtualPrice: ({ multicall, poolContract }) => multicall.wrap(poolContract).getVirtualPrice(),
+      }),
       resolvePoolFee: ({ multicall, poolContract }) =>
         multicall
           .wrap(poolContract)
           .swapStorage()
           .then(r => r.swapFee),
-      resolvePoolTokenPrice: async ({ tokens, reserves, poolContract, multicall, supply }) => {
-        const virtualPriceRaw = await multicall.wrap(poolContract).getVirtualPrice();
-        const virtualPrice = Number(virtualPriceRaw) / 10 ** 18;
-        const reservesUSD = tokens.map((t, i) => reserves[i] * t.price);
-        const liquidity = reservesUSD.reduce((total, r) => total + r, 0);
-        return virtualPrice > 0 ? virtualPrice * (liquidity / supply) : liquidity / supply;
-      },
     });
   }
 }

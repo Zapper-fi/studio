@@ -8,7 +8,6 @@ export enum CurvePoolType {
 export type CurvePoolDefinition = {
   swapAddress: string;
   tokenAddress: string;
-  coinAddresses: string[];
   gaugeAddresses?: string[];
   poolType?: CurvePoolType;
   volume?: number;

@@ -1,6 +1,11 @@
 import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
-import { CurvePoolTokenHelper } from '~apps/curve';
+import {
+  CurvePoolOnChainCoinStrategy,
+  CurvePoolOnChainReserveStrategy,
+  CurvePoolTokenHelper,
+  CurvePoolVirtualPriceStrategy,
+} from '~apps/curve';
 
 import { AuroraBastionProtocolBalanceFetcher } from './aurora/bastion-protocol.balance-fetcher';
 import { AuroraBastionProtocolBorrowAuroraEcosystemContractPositionFetcher } from './aurora/bastion-protocol.borrow-aurora-ecosystem.contract-position-fetcher';
@@ -38,6 +43,9 @@ import { BastionSupplyTokenHelper } from './helper/bastion-protocol.supply.token
     BastionSupplyTokenHelper,
     BastionBorrowContractPositionHelper,
     CurvePoolTokenHelper,
+    CurvePoolOnChainCoinStrategy,
+    CurvePoolOnChainReserveStrategy,
+    CurvePoolVirtualPriceStrategy,
   ],
 })
 export class BastionProtocolAppModule extends AbstractApp() {}
