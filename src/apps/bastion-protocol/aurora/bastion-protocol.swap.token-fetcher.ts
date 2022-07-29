@@ -8,7 +8,7 @@ import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
 import { BASTION_PROTOCOL_DEFINITION } from '../bastion-protocol.definition';
-import { BastionProtocolContractFactory } from '../contracts';
+import { BastionProtocolContractFactory, BastionProtocolSwap } from '../contracts';
 
 const appId = BASTION_PROTOCOL_DEFINITION.id;
 const groupId = BASTION_PROTOCOL_DEFINITION.groups.swap.id;
@@ -22,24 +22,16 @@ export class AuroraBastionProtocolSwapTokenFetcher implements PositionFetcher<Ap
     private readonly bastionProtocolContractFactory: BastionProtocolContractFactory,
   ) {}
 
-  async getLPTokenPrice({ tokens, reserves, poolContract, multicall, supply }) {
-    const virtualPriceRaw = await multicall.wrap(poolContract).getVirtualPrice();
-    const virtualPrice = Number(virtualPriceRaw) / 10 ** 18;
-    const reservesUSD = tokens.map((t, i) => reserves[i] * t.price);
-    const liquidity = reservesUSD.reduce((total, r) => total + r, 0);
-    return virtualPrice > 0 ? virtualPrice * (liquidity / supply) : liquidity / supply;
-  }
-
   async getPositions() {
     const poolDefinitions: CurvePoolDefinition[] = [
       {
-        queryKey: 'cusdccusdt',
-        label: 'cUSDC/cUSDT Pool',
         swapAddress: '0x6287e912a9ccd4d5874ae15d3c89556b2a05f080',
         tokenAddress: '0x0039f0641156cac478b0debab086d78b66a69a01',
+        coinAddresses: ['0x845e15a441cfc1871b7ac610b0e922019bad9826', '0xe5308dc623101508952948b141fd9eabd3337d99'],
       },
     ];
-    const appTokenDefinition = [
+
+    const dependencies = [
       {
         appId,
         groupIds: [
@@ -51,38 +43,29 @@ export class AuroraBastionProtocolSwapTokenFetcher implements PositionFetcher<Ap
         network,
       },
     ];
-    return this.curvePoolTokenHelper.getTokens({
+
+    return this.curvePoolTokenHelper.getTokens<BastionProtocolSwap>({
       network,
       appId,
       groupId,
-      appTokenDependencies: appTokenDefinition,
-      resolvePoolDefinitions: async () => poolDefinitions,
+      dependencies: dependencies,
+      poolDefinitions: poolDefinitions,
       resolvePoolContract: ({ network, definition }) =>
         this.bastionProtocolContractFactory.bastionProtocolSwap({ address: definition.swapAddress, network }),
-      resolvePoolTokenContract: ({ network, definition }) =>
-        this.bastionProtocolContractFactory.erc20({ network, address: definition.tokenAddress }),
-      resolvePoolCoinAddresses: ({ multicall, poolContract }) =>
-        Promise.all([multicall.wrap(poolContract).getToken(0), multicall.wrap(poolContract).getToken(1)]),
-      resolvePoolReserves: ({ multicall, poolContract }) =>
-        Promise.all([
-          multicall
-            .wrap(poolContract)
-            .getTokenBalance(0)
-            .then(v => v.toString()),
-          multicall
-            .wrap(poolContract)
-            .getTokenBalance(1)
-            .then(v => v.toString()),
-        ]),
-      resolvePoolVolume: undefined,
+      resolvePoolReserves: async ({ definition, multicall, poolContract }) =>
+        Promise.all(definition.coinAddresses.map((_, i) => multicall.wrap(poolContract).getTokenBalance(i))),
       resolvePoolFee: ({ multicall, poolContract }) =>
         multicall
           .wrap(poolContract)
           .swapStorage()
           .then(r => r.swapFee),
-      resolvePoolTokenPrice: this.getLPTokenPrice,
-      resolvePoolTokenSymbol: ({ multicall, poolTokenContract }) => multicall.wrap(poolTokenContract).symbol(),
-      resolvePoolTokenSupply: ({ multicall, poolTokenContract }) => multicall.wrap(poolTokenContract).totalSupply(),
+      resolvePoolTokenPrice: async ({ tokens, reserves, poolContract, multicall, supply }) => {
+        const virtualPriceRaw = await multicall.wrap(poolContract).getVirtualPrice();
+        const virtualPrice = Number(virtualPriceRaw) / 10 ** 18;
+        const reservesUSD = tokens.map((t, i) => reserves[i] * t.price);
+        const liquidity = reservesUSD.reduce((total, r) => total + r, 0);
+        return virtualPrice > 0 ? virtualPrice * (liquidity / supply) : liquidity / supply;
+      },
     });
   }
 }

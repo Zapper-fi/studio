@@ -141,6 +141,7 @@ export class CompoundSupplyTokenHelper {
         const label = getDisplayLabel
           ? await getDisplayLabel({ contract, multicall, underlyingToken })
           : underlyingToken.symbol;
+        const labelDetailed = symbol;
         const secondaryLabel = buildDollarDisplayItem(underlyingToken.price);
         const tertiaryLabel = `${(supplyApy * 100).toFixed(3)}% APY`;
         const images = [getTokenImg(underlyingToken.address, network)];
@@ -174,6 +175,7 @@ export class CompoundSupplyTokenHelper {
 
           displayProps: {
             label,
+            labelDetailed,
             secondaryLabel,
             tertiaryLabel,
             images,

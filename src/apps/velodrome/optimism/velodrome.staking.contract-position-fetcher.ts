@@ -34,7 +34,7 @@ export class OptimismVelodromeStakingContractPositionFetcher implements Position
         appId,
         groupId,
         dependencies: [{ appId, groupIds: [VELODROME_DEFINITION.groups.pool.id], network }],
-        resolveFarmAddresses: async () => poolTokens.map(t => t.dataProps.gaugeAddress).filter(x => x) as string[],
+        resolveFarmAddresses: async () => poolTokens.map(t => t.dataProps.gaugeAddresses).flat(),
         resolveLiquidity: ({ contract, multicall }) => multicall.wrap(contract).totalSupply(),
         resolveFarmContract: ({ address, network }) => this.contractFactory.velodromeGauge({ address, network }),
         resolveStakedTokenAddress: ({ contract, multicall }) => multicall.wrap(contract).stake(),
