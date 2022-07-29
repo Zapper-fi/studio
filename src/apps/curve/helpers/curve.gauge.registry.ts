@@ -18,7 +18,12 @@ export class CurveGaugeRegistry {
     @Inject(CurveApiClient) private readonly curveApiClient: CurveApiClient,
   ) {}
 
-  async getGaugesWithType(network: Network): Promise<CurveGaugeDefinition[]> {
+  @Cache({
+    instance: 'business',
+    key: (network: Network) => `studio:${CURVE_DEFINITION.id}:${network}:gauge-definitions:0`,
+    ttl: moment.duration(60, 'minutes').asSeconds(),
+  })
+  async getGaugeDefinitions(network: Network): Promise<CurveGaugeDefinition[]> {
     const gauges = await this.getCachedGauges(network);
 
     const gaugesWithVersions = Promise.all(
@@ -53,7 +58,7 @@ export class CurveGaugeRegistry {
   @Cache({
     instance: 'business',
     key: (network: Network) => `studio:${CURVE_DEFINITION.id}:${network}:cached-gauges:0`,
-    ttl: moment.duration(60, 'minutes').asSeconds(),
+    ttl: moment.duration(5, 'minutes').asSeconds(),
   })
   async getCachedGauges(network: Network) {
     return this.curveApiClient.getGauges(network);

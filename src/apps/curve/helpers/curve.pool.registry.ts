@@ -198,7 +198,7 @@ export class CurvePoolRegistry {
   @Cache({
     instance: 'business',
     key: (network: Network) => `studio:${CURVE_DEFINITION.id}:${network}:pool-apy-data:2`,
-    ttl: moment.duration(60, 'minutes').asSeconds(),
+    ttl: moment.duration(5, 'minutes').asSeconds(),
   })
   private async getCachedPoolApyData(network: Network) {
     return this.curveApiClient.getPoolApyData(network);
