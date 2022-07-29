@@ -38,9 +38,9 @@ export type CurvePoolTokenHelperParams<T> = {
   baseCurveTokens?: AppTokenPosition[];
   resolvePoolContract: (opts: { network: Network; definition: CurvePoolDefinition }) => T;
   resolvePoolReserves: (opts: {
+    definition: CurvePoolDefinition;
     multicall: IMulticallWrapper;
     poolContract: T;
-    coinAddresses: string[];
   }) => Promise<BigNumberish[]>;
   resolvePoolTokenPrice: (opts: {
     multicall: IMulticallWrapper;
@@ -79,7 +79,7 @@ export class CurvePoolTokenHelper {
         const { swapAddress, tokenAddress, coinAddresses } = definition;
         const poolContract = resolvePoolContract({ network, definition });
         const tokenContract = this.appToolkit.globalContracts.erc20({ network, address: definition.tokenAddress });
-        const reservesRaw = await resolvePoolReserves({ multicall, poolContract, coinAddresses });
+        const reservesRaw = await resolvePoolReserves({ multicall, poolContract, definition });
 
         const maybeTokens = coinAddresses.map(tokenAddress => {
           const baseToken = baseTokens.find(price => price.address === tokenAddress);

@@ -16,6 +16,7 @@ import { CurveGauge__factory } from './ethers';
 import { CurveGaugeV2__factory } from './ethers';
 import { CurveNGauge__factory } from './ethers';
 import { CurvePool__factory } from './ethers';
+import { CurvePoolLegacy__factory } from './ethers';
 import { CurveRewardsOnlyGauge__factory } from './ethers';
 import { CurveStableFactory__factory } from './ethers';
 import { CurveStableRegistry__factory } from './ethers';
@@ -68,6 +69,9 @@ export class CurveContractFactory extends ContractFactory {
   curvePool({ address, network }: ContractOpts) {
     return CurvePool__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  curvePoolLegacy({ address, network }: ContractOpts) {
+    return CurvePoolLegacy__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   curveRewardsOnlyGauge({ address, network }: ContractOpts) {
     return CurveRewardsOnlyGauge__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
@@ -100,6 +104,7 @@ export type { CurveGauge } from './ethers';
 export type { CurveGaugeV2 } from './ethers';
 export type { CurveNGauge } from './ethers';
 export type { CurvePool } from './ethers';
+export type { CurvePoolLegacy } from './ethers';
 export type { CurveRewardsOnlyGauge } from './ethers';
 export type { CurveStableFactory } from './ethers';
 export type { CurveStableRegistry } from './ethers';

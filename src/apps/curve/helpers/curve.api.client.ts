@@ -4,6 +4,7 @@ import axios, { Axios } from 'axios';
 import { Network } from '~types/network.interface';
 
 import { GetFactoryGaugesResponse, GetPoolApyDataResponse, TO_CURVE_NETWORK } from './curve.api.types';
+import { REWARDS_ONLY_GAUGES } from './curve.gauge.rewards-only';
 
 @Injectable()
 export class CurveApiClient {
@@ -14,7 +15,7 @@ export class CurveApiClient {
   }
 
   async getGauges(network: Network) {
-    return this.axiosInstance.get<GetFactoryGaugesResponse>(`/getGauges`).then(res =>
+    const gauges = await this.axiosInstance.get<GetFactoryGaugesResponse>(`/getGauges`).then(res =>
       Object.entries(res.data.data.gauges)
         .filter(([id]) => {
           const curveNetwork = this.toCurveNetwork(network);
@@ -26,8 +27,11 @@ export class CurveApiClient {
         .map(([_, v]) => ({
           swapAddress: v.swap.toLowerCase(),
           gaugeAddress: v.gauge.toLowerCase(),
-        })),
+        }))
+        .concat(...(REWARDS_ONLY_GAUGES[network] ?? [])),
     );
+
+    return gauges;
   }
 
   async getPoolApyData(network: Network) {

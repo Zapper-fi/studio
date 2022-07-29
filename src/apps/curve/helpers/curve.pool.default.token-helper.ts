@@ -39,8 +39,12 @@ export class CurvePoolDefaultTokenHelper {
       minLiquidity: 1000,
       resolvePoolContract: ({ network, definition }) =>
         this.curveContractFactory.curvePool({ network, address: definition.swapAddress }),
-      resolvePoolReserves: ({ coinAddresses, multicall, poolContract }) =>
-        Promise.all(coinAddresses.map((_, i) => multicall.wrap(poolContract).balances(i))),
+      resolvePoolReserves: ({ definition, multicall }) => {
+        const contract = definition.isLegacy
+          ? this.curveContractFactory.curvePoolLegacy({ address: definition.swapAddress, network })
+          : this.curveContractFactory.curvePool({ address: definition.swapAddress, network });
+        return Promise.all(definition.coinAddresses.map((_, i) => multicall.wrap(contract).balances(i)));
+      },
       resolvePoolFee: ({ multicall, poolContract }) => multicall.wrap(poolContract).fee(),
       resolvePoolTokenPrice: this.curvePoolVirtualPriceStrategy.build({
         resolveVirtualPrice: ({ multicall, poolContract }) => multicall.wrap(poolContract).get_virtual_price(),

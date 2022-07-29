@@ -35,8 +35,8 @@ export class EvmosSaddlePoolTokenFetcher implements PositionFetcher<AppTokenPosi
       poolDefinitions: SADDLE_POOL_DEFINITIONS,
       resolvePoolContract: ({ network, definition }) =>
         this.saddleContractFactory.saddleSwap({ network, address: definition.swapAddress }),
-      resolvePoolReserves: async ({ coinAddresses, multicall, poolContract }) =>
-        Promise.all(coinAddresses.map((_, i) => multicall.wrap(poolContract).getTokenBalance(i))),
+      resolvePoolReserves: async ({ definition, multicall, poolContract }) =>
+        Promise.all(definition.coinAddresses.map((_, i) => multicall.wrap(poolContract).getTokenBalance(i))),
       resolvePoolFee: async () => BigNumber.from('4000000'),
       resolvePoolTokenPrice: this.curvePoolVirtualPriceStrategy.build({
         resolveVirtualPrice: ({ multicall, poolContract }) => multicall.wrap(poolContract).getVirtualPrice(),

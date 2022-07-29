@@ -8,7 +8,6 @@ import { Cache } from '~cache/cache.decorator';
 import { Network } from '~types/network.interface';
 
 import { CurveApiClient } from './curve.api.client';
-import { REWARDS_ONLY_GAUGES } from './curve.gauge.rewards-only';
 
 export enum CurveGaugeType {
   SINGLE = 'single',
@@ -33,39 +32,39 @@ export class CurveGaugeRegistry {
   ) {}
 
   async getGaugesWithType(network: Network): Promise<CurveGaugeDefinition[]> {
-    const provider = this.appToolkit.getNetworkProvider(network);
     const gauges = await this.getCachedGauges(network);
 
-    const gaugesWithVersions = await Promise.all(
-      gauges.map(async gauge => {
-        let bytecode = await provider.getCode(gauge.gaugeAddress);
-        const minimalProxyMatch = /0x363d3d373d3d3d363d73(.*)5af43d82803e903d91602b57fd5bf3/.exec(bytecode);
-        if (minimalProxyMatch) bytecode = await provider.getCode(`0x${minimalProxyMatch[1]}`);
-
-        const doubleGaugeMethod = ethers.utils.id('rewarded_token()').slice(2, 10);
-        const nGaugeMethod = ethers.utils.id('reward_tokens(uint256)').slice(2, 10);
-        const gaugeV4Method = ethers.utils.id('reward_data(address)').slice(2, 10);
-
-        if (bytecode.includes(gaugeV4Method)) return { ...gauge, version: CurveGaugeType.GAUGE_V4 };
-        if (bytecode.includes(nGaugeMethod)) return { ...gauge, version: CurveGaugeType.N_GAUGE };
-        if (bytecode.includes(doubleGaugeMethod)) return { ...gauge, version: CurveGaugeType.DOUBLE };
-        return { ...gauge, version: CurveGaugeType.SINGLE };
-      }),
+    const gaugesWithVersions = Promise.all(
+      gauges.map(async gauge => ({ ...gauge, version: await this.resolveGaugeType(gauge.gaugeAddress, network) })),
     );
-
-    if (network !== Network.ETHEREUM_MAINNET) {
-      // Append legacy gauges not found in the API to track their funds
-      const oldGauges = (REWARDS_ONLY_GAUGES[network] ?? []).map(v => ({ ...v, version: CurveGaugeType.REWARDS_ONLY }));
-      const childGauges = gaugesWithVersions.map(v => ({ ...v, version: CurveGaugeType.CHILD }));
-      return [...childGauges, ...oldGauges];
-    }
 
     return gaugesWithVersions;
   }
 
+  private async resolveGaugeType(gaugeAddress: string, network: Network) {
+    const provider = this.appToolkit.getNetworkProvider(network);
+    let bytecode = await provider.getCode(gaugeAddress);
+    const minimalProxyMatch = /0x363d3d373d3d3d363d73(.*)5af43d82803e903d91602b57fd5bf3/.exec(bytecode);
+    if (minimalProxyMatch) bytecode = await provider.getCode(`0x${minimalProxyMatch[1]}`);
+
+    const doubleGaugeMethod = ethers.utils.id('rewarded_token()').slice(2, 10);
+    const nGaugeMethod = ethers.utils.id('reward_tokens(uint256)').slice(2, 10);
+    const gaugeV4Method = ethers.utils.id('reward_data(address)').slice(2, 10);
+
+    if (network !== Network.ETHEREUM_MAINNET) {
+      if (bytecode.includes(gaugeV4Method)) return CurveGaugeType.CHILD;
+      return CurveGaugeType.REWARDS_ONLY;
+    }
+
+    if (bytecode.includes(gaugeV4Method)) return CurveGaugeType.GAUGE_V4;
+    if (bytecode.includes(nGaugeMethod)) return CurveGaugeType.N_GAUGE;
+    if (bytecode.includes(doubleGaugeMethod)) return CurveGaugeType.DOUBLE;
+    return CurveGaugeType.SINGLE;
+  }
+
   @Cache({
     instance: 'business',
-    key: (network: Network) => `studio:${CURVE_DEFINITION.id}:${network}:cached-gauges`,
+    key: (network: Network) => `studio:${CURVE_DEFINITION.id}:${network}:cached-gauges:0`,
     ttl: moment.duration(60, 'minutes').asSeconds(),
   })
   async getCachedGauges(network: Network) {

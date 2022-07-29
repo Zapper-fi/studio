@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { BigNumberish, Contract } from 'ethers';
+import { BigNumberish, Contract, ethers } from 'ethers';
 import { partition, range, toLower, uniqBy } from 'lodash';
 import moment from 'moment';
 
@@ -44,6 +44,7 @@ export type CurvePoolDefinition = {
   isMetaPool?: boolean;
   volume?: number;
   apy?: number;
+  isLegacy?: boolean;
 };
 
 @Injectable()
@@ -57,7 +58,7 @@ export class CurvePoolRegistry {
 
   @Cache({
     instance: 'business',
-    key: (network: Network) => `studio:${CURVE_DEFINITION.id}:${network}:pool-definitions:4`,
+    key: (network: Network) => `studio:${CURVE_DEFINITION.id}:${network}:pool-definitions:0`,
     ttl: moment.duration(60, 'minutes').asSeconds(),
   })
   async getPoolDefinitions(network: Network) {
@@ -113,9 +114,22 @@ export class CurvePoolRegistry {
       );
     }
 
+    const provider = this.appToolkit.getNetworkProvider(network);
     const poolDefinitions = await Promise.all(poolDefinitionPromises).then(v => v.flat());
-    const [metaPools, basePools] = partition(poolDefinitions, v =>
-      v.coinAddresses.some(t => poolDefinitions.find(p => p.tokenAddress === t)),
+    const poolDefinitionsWithLegacy = await Promise.all(
+      poolDefinitions.map(async poolDefinition => {
+        if (network !== Network.ETHEREUM_MAINNET) return poolDefinition;
+        if (poolDefinition.poolType !== CurvePoolType.STABLE) return poolDefinition;
+
+        const code = await provider.getCode(poolDefinition.swapAddress);
+        const legacyMethod = ethers.utils.id('balances(int128)').slice(2, 10);
+        if (code.includes(legacyMethod)) return { ...poolDefinition, isLegacy: true };
+        return poolDefinition;
+      }),
+    );
+
+    const [metaPools, basePools] = partition(poolDefinitionsWithLegacy, v =>
+      v.coinAddresses.some(t => poolDefinitionsWithLegacy.find(p => p.tokenAddress === t)),
     );
 
     const poolDefinitionsWithMeta = [
@@ -149,6 +163,7 @@ export class CurvePoolRegistry {
 
     const resolver = this.curveContractFactory.curveAddressResolver({ address: ADDRESS_RESOLVER_ADDRESS, network });
     const sourceInfo = await resolver.get_id_info(POOL_TYPE_TO_ADDRESS_RESOLVER_INDEX[poolType]);
+    if (sourceInfo.addr === ZERO_ADDRESS) return [];
 
     const source = resolveSourceContract({ address: sourceInfo.addr, network });
     const multicallWrappedSource = multicall.wrap(source);

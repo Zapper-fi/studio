@@ -19,9 +19,6 @@ import { FantomCurvePoolTokenFetcher } from './fantom/curve.pool.token-fetcher';
 import { GnosisCurveBalanceFetcher } from './gnosis/curve.balance-fetcher';
 import { GnosisCurveGaugeContractPositionFetcher } from './gnosis/curve.farm.contract-position-fetcher';
 import { GnosisCurvePoolTokenFetcher } from './gnosis/curve.pool.token-fetcher';
-import { HarmonyCurveBalanceFetcher } from './harmony/curve.balance-fetcher';
-import { HarmonyCurveGaugeContractPositionFetcher } from './harmony/curve.farm.contract-position-fetcher';
-import { HarmonyCurvePoolTokenFetcher } from './harmony/curve.pool.token-fetcher';
 import { CurveApiClient } from './helpers/curve.api.client';
 import { CurveChildLiquidityGaugeRoiStrategy } from './helpers/curve.child-liquidity-gauge.roi-strategy';
 import { CurveGaugeDefaultContractPositionBalanceHelper } from './helpers/curve.gauge.default.contract-position-balance-helper';
@@ -50,39 +47,35 @@ import { PolygonCurvePoolTokenFetcher } from './polygon/curve.pool.token-fetcher
     CurveAppDefinition,
     CurveContractFactory,
     // Arbitrum
-    ArbitrumCurveBalanceFetcher,
-    ArbitrumCurvePoolTokenFetcher,
-    ArbitrumCurveGaugeContractPositionFetcher,
+    // ArbitrumCurveBalanceFetcher,
+    // ArbitrumCurvePoolTokenFetcher,
+    // ArbitrumCurveGaugeContractPositionFetcher,
     // // Avalanche
-    AvalancheCurveBalanceFetcher,
-    AvalancheCurvePoolTokenFetcher,
-    ArbitrumCurveGaugeContractPositionFetcher,
-    // // Ethereum
+    // AvalancheCurveBalanceFetcher,
+    // AvalancheCurvePoolTokenFetcher,
+    // ArbitrumCurveGaugeContractPositionFetcher,
+    // Ethereum
     EthereumCurveBalanceFetcher,
     EthereumCurvePoolTokenFetcher,
     EthereumCurveGaugeContractPositionFetcher,
     EthereumCurveVotingEscrowContractPositionFetcher,
     EthereumCurveVestingEscrowContractPositionFetcher,
-    // // Fantom
-    FantomCurveBalanceFetcher,
-    FantomCurvePoolTokenFetcher,
-    FantomCurveGaugeContractPositionFetcher,
+    // Fantom
+    // FantomCurveBalanceFetcher,
+    // FantomCurvePoolTokenFetcher,
+    // FantomCurveGaugeContractPositionFetcher,
     // // Gnosis
-    GnosisCurveBalanceFetcher,
-    GnosisCurvePoolTokenFetcher,
-    GnosisCurveGaugeContractPositionFetcher,
-    // // Harmony
-    HarmonyCurveBalanceFetcher,
-    HarmonyCurvePoolTokenFetcher,
-    HarmonyCurveGaugeContractPositionFetcher,
+    // GnosisCurveBalanceFetcher,
+    // GnosisCurvePoolTokenFetcher,
+    // GnosisCurveGaugeContractPositionFetcher,
     // // Optimism
-    OptimismCurveBalanceFetcher,
-    OptimismCurvePoolTokenFetcher,
-    OptimismCurveGaugeContractPositionFetcher,
+    // OptimismCurveBalanceFetcher,
+    // OptimismCurvePoolTokenFetcher,
+    // OptimismCurveGaugeContractPositionFetcher,
     // // Polygon
-    PolygonCurveBalanceFetcher,
-    PolygonCurvePoolTokenFetcher,
-    PolygonCurveGaugeContractPositionFetcher,
+    // PolygonCurveBalanceFetcher,
+    // PolygonCurvePoolTokenFetcher,
+    // PolygonCurveGaugeContractPositionFetcher,
     // Token Helpers
     CurveApiClient,
     CurvePoolRegistry,

@@ -35,8 +35,8 @@ export class EvmosKinesisLabsPoolTokenFetcher implements PositionFetcher<AppToke
       poolDefinitions: KINESIS_LABS_BASEPOOL_DEFINITIONS,
       resolvePoolContract: ({ network, definition }) =>
         this.kinesisLabsContractFactory.kinesisLabsPool({ network, address: definition.swapAddress }),
-      resolvePoolReserves: ({ coinAddresses, multicall, poolContract }) =>
-        Promise.all(coinAddresses.map((_, i) => multicall.wrap(poolContract).getTokenBalance(i))),
+      resolvePoolReserves: ({ definition, multicall, poolContract }) =>
+        Promise.all(definition.coinAddresses.map((_, i) => multicall.wrap(poolContract).getTokenBalance(i))),
       resolvePoolFee: async () => BigNumber.from('4000000'),
       resolvePoolTokenPrice: this.curvePoolVirtualPriceStrategy.build({
         resolveVirtualPrice: ({ multicall, poolContract }) => multicall.wrap(poolContract).getVirtualPrice(),

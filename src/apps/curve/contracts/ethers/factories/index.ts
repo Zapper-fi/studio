@@ -13,6 +13,7 @@ export { CurveGauge__factory } from './CurveGauge__factory';
 export { CurveGaugeV2__factory } from './CurveGaugeV2__factory';
 export { CurveNGauge__factory } from './CurveNGauge__factory';
 export { CurvePool__factory } from './CurvePool__factory';
+export { CurvePoolLegacy__factory } from './CurvePoolLegacy__factory';
 export { CurveRewardsOnlyGauge__factory } from './CurveRewardsOnlyGauge__factory';
 export { CurveStableFactory__factory } from './CurveStableFactory__factory';
 export { CurveStableRegistry__factory } from './CurveStableRegistry__factory';
