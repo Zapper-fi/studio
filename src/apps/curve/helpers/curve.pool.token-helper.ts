@@ -3,7 +3,6 @@ import { BigNumberish } from 'ethers';
 import { compact, partition } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import {
   buildDollarDisplayItem,
   buildNumberDisplayItem,
@@ -21,7 +20,7 @@ import { CurvePoolDefinition, CurvePoolType } from './curve.pool.registry';
 export type CurvePoolTokenDataProps = {
   poolType: CurvePoolType;
   swapAddress: string;
-  gaugeAddress: string;
+  gaugeAddresses: string[];
   liquidity: number;
   apy: number;
   volume: number;
@@ -115,7 +114,7 @@ export class CurvePoolTokenHelper {
         const liquidity = reservesUSD.reduce((total, r) => total + r, 0);
         const reservePercentages = reservesUSD.map(reserveUSD => reserveUSD / liquidity);
         const ratio = reservePercentages.map(p => `${Math.floor(p * 100)}%`).join(' / ');
-        const gaugeAddress = definition.gaugeAddress ?? ZERO_ADDRESS;
+        const gaugeAddresses = definition.gaugeAddresses ?? [];
 
         // Display Properties
         const label = tokens.map(v => getLabelFromToken(v)).join(' / ');
@@ -138,7 +137,7 @@ export class CurvePoolTokenHelper {
           dataProps: {
             poolType,
             swapAddress,
-            gaugeAddress,
+            gaugeAddresses,
             liquidity,
             volume,
             apy,

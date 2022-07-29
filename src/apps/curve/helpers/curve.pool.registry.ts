@@ -39,7 +39,7 @@ export type CurvePoolDefinition = {
   swapAddress: string;
   tokenAddress: string;
   coinAddresses: string[];
-  gaugeAddress?: string;
+  gaugeAddresses?: string[];
   poolType?: CurvePoolType;
   isMetaPool?: boolean;
   volume?: number;
@@ -183,9 +183,7 @@ export class CurvePoolRegistry {
           .map(v => v.replace(ETH_ADDR_ALIAS, ZERO_ADDRESS))
           .map(toLower);
 
-        const gauge = gauges.find(v => v.swapAddress === swapAddress);
-        const gaugeAddress = gauge?.gaugeAddress ?? ZERO_ADDRESS;
-
+        const gaugeAddresses = gauges.filter(v => v.swapAddress === swapAddress).map(v => v.gaugeAddress);
         const poolApyData = allPoolApyData.find(v => v.swapAddress === swapAddress);
         const apy = poolApyData?.apy ?? 0;
         const volume = poolApyData?.volume ?? 0;
@@ -194,7 +192,7 @@ export class CurvePoolRegistry {
           poolType,
           swapAddress,
           tokenAddress,
-          gaugeAddress,
+          gaugeAddresses,
           coinAddresses,
           apy,
           volume,
