@@ -1,6 +1,5 @@
 import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
-import { RocketPoolAppModule } from '~apps/rocket-pool';
 
 import { EthereumContractFactory } from './contracts';
 import { ETHEREUM_DEFINITION, EthereumAppDefinition } from './ethereum.definition';

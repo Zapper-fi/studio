@@ -4,6 +4,27 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.130.1](https://github.com/Zapper-fi/studio/compare/v0.130.0...v0.130.1) (2022-07-29)
+
+
+### Bug Fixes
+
+* **price-selector:** Tweak interface a bit ([#968](https://github.com/Zapper-fi/studio/issues/968)) ([8f3546d](https://github.com/Zapper-fi/studio/commit/8f3546dd362352e15792b89197bc555fd25a4e88))
+
+## [0.130.0](https://github.com/Zapper-fi/studio/compare/v0.129.1...v0.130.0) (2022-07-28)
+
+
+### Features
+
+* **prices:** Add price selector concept to app toolkit ([#963](https://github.com/Zapper-fi/studio/issues/963)) ([2ebca19](https://github.com/Zapper-fi/studio/commit/2ebca1981bd59f90a7a1c1339e8a5f92cf14ceb1))
+
+## [0.129.1](https://github.com/Zapper-fi/studio/compare/v0.129.0...v0.129.1) (2022-07-28)
+
+
+### Bug Fixes
+
+* **stargate:** Fixed  Stargate pools pricePerShare on BSC ([#964](https://github.com/Zapper-fi/studio/issues/964)) ([25d64bf](https://github.com/Zapper-fi/studio/commit/25d64bf03affdbef70d2dd055dec74f73cf9a0de))
+
 ## [0.129.0](https://github.com/Zapper-fi/studio/compare/v0.128.3...v0.129.0) (2022-07-28)
 
 
