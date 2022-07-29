@@ -32,7 +32,7 @@ export interface IAppToolkit {
 
   // Base Tokens
 
-  getBaseTokenPriceSelector(opts: CreatePriceSelectorOptions): PriceSelector;
+  getBaseTokenPriceSelector(opts?: CreatePriceSelectorOptions): PriceSelector;
 
   getBaseTokenPrices(network: Network): Promise<BaseToken[]>;
 
