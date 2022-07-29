@@ -66,7 +66,6 @@ export class CurvePoolTokenHelper {
     dependencies = [],
     baseCurveTokens = [],
     resolvePoolContract,
-    resolvePoolCoinAddresses,
     resolvePoolReserves,
     resolvePoolTokenPrice,
     resolvePoolFee,
@@ -78,9 +77,9 @@ export class CurvePoolTokenHelper {
     const curvePoolTokens = await Promise.all(
       poolDefinitions.map(async definition => {
         const { swapAddress, tokenAddress } = definition;
+        const coinAddresses = definition.coinAddresses!;
         const poolContract = resolvePoolContract({ network, address: swapAddress });
         const tokenContract = this.appToolkit.globalContracts.erc20({ network, address: definition.tokenAddress });
-        const coinAddresses = await resolvePoolCoinAddresses({ multicall, poolContract });
         const reservesRaw = await resolvePoolReserves({ multicall, poolContract, coinAddresses });
 
         const maybeTokens = coinAddresses.map(tokenAddress => {
@@ -193,6 +192,7 @@ export class CurvePoolTokenHelper {
 
     const definitionsWithCoinAddresses = await Promise.all(
       poolDefinitions.map(async definition => {
+        if (definition.coinAddresses) return definition;
         const poolContract = resolvePoolContract({ network, address: definition.swapAddress });
         const coinAddresses = await resolvePoolCoinAddresses({ multicall, poolContract });
         return { ...definition, coinAddresses };
@@ -200,7 +200,7 @@ export class CurvePoolTokenHelper {
     );
 
     const [metaPoolDefinitions, basePoolDefinitions] = partition(definitionsWithCoinAddresses, v =>
-      v.coinAddresses.some(t => params.poolDefinitions.find(p => p.tokenAddress === t)),
+      v.coinAddresses!.some(t => params.poolDefinitions.find(p => p.tokenAddress === t)),
     );
 
     const baseCurveTokens = await this._getTokens({ ...params, poolDefinitions: basePoolDefinitions });
