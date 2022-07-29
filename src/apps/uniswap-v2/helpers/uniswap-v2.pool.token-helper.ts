@@ -15,6 +15,7 @@ import { ContractType } from '~position/contract.interface';
 import { AppTokenPosition, Token } from '~position/position.interface';
 import { AppGroupsDefinition } from '~position/position.service';
 import { BaseToken } from '~position/token.interface';
+import { BaseTokenPrice } from '~token/token-price-selector.interface';
 import { Network } from '~types/network.interface';
 
 import { UniswapFactory, UniswapPair } from '../contracts';
@@ -56,7 +57,6 @@ export type UniswapV2PoolTokenHelperParams<T = UniswapFactory, V = UniswapPair> 
     network: Network;
     factoryAddress: string;
     tokenAddress: string;
-    baseTokensByAddress: Record<string, BaseToken>;
     resolveFactoryContract(opts: { address: string; network: Network }): T;
     resolvePoolContract(opts: { address: string; network: Network }): V;
     resolvePoolUnderlyingTokenAddresses(opts: {
@@ -108,10 +108,9 @@ export class UniswapV2PoolTokenHelper {
   }: UniswapV2PoolTokenHelperParams<T, V>) {
     const multicall = this.appToolkit.getMulticall(network);
 
-    const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
+    const tokenSelector = this.appToolkit.getBaseTokenPriceSelector({ tags: { network, appId } });
 
     const appTokens = await this.appToolkit.getAppTokenPositions(...appTokenDependencies);
-    const baseTokensByAddress = keyBy(baseTokens, p => p.address);
     const appTokensByAddress = keyBy(appTokens, p => p.address);
 
     const poolAddresses: ResolvePoolTokenAddressesResponse = await resolvePoolTokenAddresses({
@@ -144,13 +143,14 @@ export class UniswapV2PoolTokenHelper {
 
         const resolvedTokens = await Promise.all(
           [token0Address, token1Address].map(async tokenAddress => {
-            const underlyingToken = appTokensByAddress[tokenAddress] ?? baseTokensByAddress[tokenAddress];
+            let underlyingToken: AppTokenPosition | BaseTokenPrice | null = appTokensByAddress[tokenAddress];
+            underlyingToken ??= await tokenSelector.getOne({ network, address: tokenAddress });
+
             if (underlyingToken) return underlyingToken;
             if (!resolveDerivedUnderlyingToken) return null;
 
             return resolveDerivedUnderlyingToken({
               appId,
-              baseTokensByAddress,
               factoryAddress,
               network,
               resolveFactoryContract,

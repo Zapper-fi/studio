@@ -33,13 +33,13 @@ export class UniswapV2OnChainTokenDerivationStrategy {
       factoryAddress,
       network,
       tokenAddress,
-      baseTokensByAddress,
       resolvePoolUnderlyingTokenAddresses,
       resolveFactoryContract,
       resolvePoolContract,
       resolvePoolReserves,
     }) => {
       const multicall = this.appToolkit.getMulticall(network);
+      const priceSelector = this.appToolkit.getBaseTokenPriceSelector({ tags: { network } });
       const factoryContract = resolveFactoryContract({ address: factoryAddress, network });
 
       const contract = this.appToolkit.globalContracts.erc20({ address: tokenAddress, network });
@@ -78,7 +78,10 @@ export class UniswapV2OnChainTokenDerivationStrategy {
         });
 
         if (poolAddress === ZERO_ADDRESS) continue;
-        const knownToken = baseTokensByAddress[knownTokenAddress];
+
+        const knownToken = await priceSelector.getOne({ network, address: knownTokenAddress });
+        if (!knownToken) continue;
+
         const poolContract = resolvePoolContract({ address: poolAddress, network });
         const tokensRaw = await resolvePoolUnderlyingTokenAddresses({ multicall, poolContract });
         const reserves = await resolvePoolReserves({ multicall, poolContract });
