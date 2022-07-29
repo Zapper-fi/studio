@@ -13,7 +13,7 @@ import { AppTokenPosition, ContractPosition, NonFungibleToken } from '~position/
 import { AppGroupsDefinition, PositionService } from '~position/position.service';
 import { BaseToken } from '~position/token.interface';
 import { PriceSelectorService } from '~token/price-selector.service';
-import { Filters } from '~token/token-price-selector.interface';
+import { CreatePriceSelectorOptions } from '~token/token-price-selector.interface';
 import { TokenService } from '~token/token.service';
 import { Network } from '~types/network.interface';
 
@@ -72,8 +72,8 @@ export class AppToolkit implements IAppToolkit {
     return this.priceSelectorService.create().getOne(opts);
   }
 
-  getBaseTokenPriceSelector(filters: Filters = {}) {
-    return this.priceSelectorService.create(filters);
+  getBaseTokenPriceSelector(opts: CreatePriceSelectorOptions = {}) {
+    return this.priceSelectorService.create(opts);
   }
 
   // Positions
