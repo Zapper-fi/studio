@@ -1,6 +1,6 @@
 import { Inject } from '@nestjs/common';
-import moment from 'moment';
 import { ethers } from 'ethers';
+import moment from 'moment';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';

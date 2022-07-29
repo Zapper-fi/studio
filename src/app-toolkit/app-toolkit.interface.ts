@@ -9,6 +9,8 @@ import { DefaultDataProps } from '~position/display.interface';
 import { AppTokenPosition, ContractPosition, NonFungibleToken } from '~position/position.interface';
 import { AppGroupsDefinition } from '~position/position.service';
 import { BaseToken } from '~position/token.interface';
+import { CreatePriceSelectorOptions } from '~token/token-price-selector.interface';
+import { PriceSelector } from '~token/token-price-selector.interface';
 import { Network } from '~types/network.interface';
 
 import { AppToolkitHelperRegistry } from './app-toolkit.helpers';
@@ -29,6 +31,8 @@ export interface IAppToolkit {
   getMulticall(network: Network): IMulticallWrapper;
 
   // Base Tokens
+
+  getBaseTokenPriceSelector(opts?: CreatePriceSelectorOptions): PriceSelector;
 
   getBaseTokenPrices(network: Network): Promise<BaseToken[]>;
 
