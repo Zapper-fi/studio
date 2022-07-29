@@ -10,6 +10,7 @@ import { Network } from '~types';
 import { TokenApiClient } from './token-api.client';
 import {
   BaseTokenPrice,
+  CreatePriceSelectorOptions,
   Filters,
   GetAll,
   GetOne,
@@ -64,7 +65,8 @@ export class PriceSelectorService implements PriceSelectorFactory {
     return match;
   }
 
-  create(filters: Filters = {}): PriceSelector {
+  create(opts: CreatePriceSelectorOptions = {}): PriceSelector {
+    const { filters = {} } = opts;
     const tokenDataLoader = new DataLoader<TokenDataLoaderKey, BaseTokenPrice | null>(async keys =>
       Promise.all(keys.map(key => this.getOneFromCache(key, filters))),
     );

@@ -14,6 +14,8 @@ export interface PriceSelector {
   getOne: GetOne;
 }
 
+export type CreatePriceSelectorOptions = { filters?: Filters; tags?: LoggingTags };
+
 export interface PriceSelectorFactory {
-  create: (filters?: Filters, tags?: LoggingTags) => PriceSelector;
+  create: (opts: CreatePriceSelectorOptions) => PriceSelector;
 }
