@@ -28,7 +28,7 @@ export class CurveGaugeDefaultContractPositionBalanceHelper {
     @Inject(CurveContractFactory) private readonly curveContractFactory: CurveContractFactory,
   ) {}
 
-  async getPositions(params: CurveGaugeDefaultContractPositionBalanceHelperParams) {
+  async getBalances(params: CurveGaugeDefaultContractPositionBalanceHelperParams) {
     if (params.network !== Network.ETHEREUM_MAINNET) {
       return Promise.all([
         this.getChildLiquidityGaugeContractPositionBalances(params),

@@ -29,7 +29,7 @@ export class ArbitrumCurveBalanceFetcher implements BalanceFetcher {
   }
 
   private async getStakedBalances(address: string) {
-    return this.curveGaugeDefaultContractPositionBalanceHelper.getPositions({
+    return this.curveGaugeDefaultContractPositionBalanceHelper.getBalances({
       address,
       network,
     });
