@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.130.0](https://github.com/Zapper-fi/studio/compare/v0.129.1...v0.130.0) (2022-07-28)
+
+
+### Features
+
+* **prices:** Add price selector concept to app toolkit ([#963](https://github.com/Zapper-fi/studio/issues/963)) ([2ebca19](https://github.com/Zapper-fi/studio/commit/2ebca1981bd59f90a7a1c1339e8a5f92cf14ceb1))
+
 ## [0.129.1](https://github.com/Zapper-fi/studio/compare/v0.129.0...v0.129.1) (2022-07-28)
 
 
