@@ -16,7 +16,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface OlympusZapperZapInterface extends utils.Interface {
   functions: {
@@ -95,41 +95,81 @@ export interface OlympusZapperZapInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'OHM', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'ZapIn',
-    values: [string, BigNumberish, string, BigNumberish, string, BytesLike, string, string, BigNumberish, boolean],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<boolean>,
+    ],
   ): string;
   encodeFunctionData(
     functionFragment: 'ZapOut',
-    values: [string, BigNumberish, string, BigNumberish, string, BytesLike, string],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<string>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'affiliateBalance', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'affiliates', values: [string]): string;
-  encodeFunctionData(functionFragment: 'affilliateWithdraw', values: [string[]]): string;
-  encodeFunctionData(functionFragment: 'approvedTargets', values: [string]): string;
-  encodeFunctionData(functionFragment: 'bondPrice', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'feeWhitelist', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'affiliateBalance',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'affiliates', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'affilliateWithdraw', values: [PromiseOrValue<string>[]]): string;
+  encodeFunctionData(functionFragment: 'approvedTargets', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'bondPrice', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'feeWhitelist', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'goodwill', values?: undefined): string;
   encodeFunctionData(functionFragment: 'olympusDAO', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'principalToDepository', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'removeLiquidityReturn', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'principalToDepository',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'removeLiquidityReturn',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
   encodeFunctionData(functionFragment: 'sOHM', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'setApprovedTargets', values: [string[], boolean[]]): string;
-  encodeFunctionData(functionFragment: 'set_affiliate', values: [string, boolean]): string;
-  encodeFunctionData(functionFragment: 'set_feeWhitelist', values: [string, boolean]): string;
-  encodeFunctionData(functionFragment: 'set_new_affiliateSplit', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'set_new_goodwill', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'setApprovedTargets',
+    values: [PromiseOrValue<string>[], PromiseOrValue<boolean>[]],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'set_affiliate',
+    values: [PromiseOrValue<string>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'set_feeWhitelist',
+    values: [PromiseOrValue<string>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(functionFragment: 'set_new_affiliateSplit', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'set_new_goodwill', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'staking', values?: undefined): string;
   encodeFunctionData(functionFragment: 'stopped', values?: undefined): string;
   encodeFunctionData(functionFragment: 'toggleContractActive', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'totalAffiliateBalance', values: [string]): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
-  encodeFunctionData(functionFragment: 'update_BondDepos', values: [string[], string[], string[]]): string;
-  encodeFunctionData(functionFragment: 'update_OlympusDAO', values: [string]): string;
-  encodeFunctionData(functionFragment: 'update_Staking', values: [string]): string;
-  encodeFunctionData(functionFragment: 'update_sOHM', values: [string]): string;
-  encodeFunctionData(functionFragment: 'update_wsOHM', values: [string]): string;
-  encodeFunctionData(functionFragment: 'withdrawTokens', values: [string[]]): string;
+  encodeFunctionData(functionFragment: 'totalAffiliateBalance', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'update_BondDepos',
+    values: [PromiseOrValue<string>[], PromiseOrValue<string>[], PromiseOrValue<string>[]],
+  ): string;
+  encodeFunctionData(functionFragment: 'update_OlympusDAO', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'update_Staking', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'update_sOHM', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'update_wsOHM', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'withdrawTokens', values: [PromiseOrValue<string>[]]): string;
   encodeFunctionData(functionFragment: 'wsOHM', values?: undefined): string;
 
   decodeFunctionResult(functionFragment: 'OHM', data: BytesLike): Result;
@@ -231,44 +271,52 @@ export interface OlympusZapperZap extends BaseContract {
     OHM(overrides?: CallOverrides): Promise<[string]>;
 
     ZapIn(
-      fromToken: string,
-      amountIn: BigNumberish,
-      toToken: string,
-      minToToken: BigNumberish,
-      swapTarget: string,
-      swapData: BytesLike,
-      affiliate: string,
-      bondPayoutToken: string,
-      maxBondPrice: BigNumberish,
-      bond: boolean,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      fromToken: PromiseOrValue<string>,
+      amountIn: PromiseOrValue<BigNumberish>,
+      toToken: PromiseOrValue<string>,
+      minToToken: PromiseOrValue<BigNumberish>,
+      swapTarget: PromiseOrValue<string>,
+      swapData: PromiseOrValue<BytesLike>,
+      affiliate: PromiseOrValue<string>,
+      bondPayoutToken: PromiseOrValue<string>,
+      maxBondPrice: PromiseOrValue<BigNumberish>,
+      bond: PromiseOrValue<boolean>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     ZapOut(
-      fromToken: string,
-      amountIn: BigNumberish,
-      toToken: string,
-      minToTokens: BigNumberish,
-      swapTarget: string,
-      swapData: BytesLike,
-      affiliate: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      fromToken: PromiseOrValue<string>,
+      amountIn: PromiseOrValue<BigNumberish>,
+      toToken: PromiseOrValue<string>,
+      minToTokens: PromiseOrValue<BigNumberish>,
+      swapTarget: PromiseOrValue<string>,
+      swapData: PromiseOrValue<BytesLike>,
+      affiliate: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    affiliateBalance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    affiliateBalance(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
-    affiliates(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    affiliates(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     affilliateWithdraw(
-      tokens: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tokens: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    approvedTargets(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    approvedTargets(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
-    bondPrice(principal: string, payoutToken: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    bondPrice(
+      principal: PromiseOrValue<string>,
+      payoutToken: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
-    feeWhitelist(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    feeWhitelist(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     goodwill(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -276,89 +324,93 @@ export interface OlympusZapperZap extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
-    principalToDepository(arg0: string, arg1: string, overrides?: CallOverrides): Promise<[string]>;
+    principalToDepository(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[string]>;
 
     removeLiquidityReturn(
-      fromToken: string,
-      fromAmount: BigNumberish,
+      fromToken: PromiseOrValue<string>,
+      fromAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber] & { ohmAmount: BigNumber }>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     sOHM(overrides?: CallOverrides): Promise<[string]>;
 
     setApprovedTargets(
-      targets: string[],
-      isApproved: boolean[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      targets: PromiseOrValue<string>[],
+      isApproved: PromiseOrValue<boolean>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     set_affiliate(
-      _affiliate: string,
-      _status: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _affiliate: PromiseOrValue<string>,
+      _status: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     set_feeWhitelist(
-      zapAddress: string,
-      status: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      zapAddress: PromiseOrValue<string>,
+      status: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     set_new_affiliateSplit(
-      _new_affiliateSplit: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _new_affiliateSplit: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     set_new_goodwill(
-      _new_goodwill: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _new_goodwill: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     staking(overrides?: CallOverrides): Promise<[string]>;
 
     stopped(overrides?: CallOverrides): Promise<[boolean]>;
 
-    toggleContractActive(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    toggleContractActive(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    totalAffiliateBalance(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    totalAffiliateBalance(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     update_BondDepos(
-      principals: string[],
-      payoutTokens: string[],
-      depos: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      principals: PromiseOrValue<string>[],
+      payoutTokens: PromiseOrValue<string>[],
+      depos: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     update_OlympusDAO(
-      _olympusDAO: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _olympusDAO: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     update_Staking(
-      _staking: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _staking: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     update_sOHM(
-      _sOHM: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _sOHM: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     update_wsOHM(
-      _wsOHM: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _wsOHM: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     withdrawTokens(
-      tokens: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tokens: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     wsOHM(overrides?: CallOverrides): Promise<[string]>;
@@ -367,44 +419,52 @@ export interface OlympusZapperZap extends BaseContract {
   OHM(overrides?: CallOverrides): Promise<string>;
 
   ZapIn(
-    fromToken: string,
-    amountIn: BigNumberish,
-    toToken: string,
-    minToToken: BigNumberish,
-    swapTarget: string,
-    swapData: BytesLike,
-    affiliate: string,
-    bondPayoutToken: string,
-    maxBondPrice: BigNumberish,
-    bond: boolean,
-    overrides?: PayableOverrides & { from?: string | Promise<string> },
+    fromToken: PromiseOrValue<string>,
+    amountIn: PromiseOrValue<BigNumberish>,
+    toToken: PromiseOrValue<string>,
+    minToToken: PromiseOrValue<BigNumberish>,
+    swapTarget: PromiseOrValue<string>,
+    swapData: PromiseOrValue<BytesLike>,
+    affiliate: PromiseOrValue<string>,
+    bondPayoutToken: PromiseOrValue<string>,
+    maxBondPrice: PromiseOrValue<BigNumberish>,
+    bond: PromiseOrValue<boolean>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   ZapOut(
-    fromToken: string,
-    amountIn: BigNumberish,
-    toToken: string,
-    minToTokens: BigNumberish,
-    swapTarget: string,
-    swapData: BytesLike,
-    affiliate: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    fromToken: PromiseOrValue<string>,
+    amountIn: PromiseOrValue<BigNumberish>,
+    toToken: PromiseOrValue<string>,
+    minToTokens: PromiseOrValue<BigNumberish>,
+    swapTarget: PromiseOrValue<string>,
+    swapData: PromiseOrValue<BytesLike>,
+    affiliate: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  affiliateBalance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+  affiliateBalance(
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
-  affiliates(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  affiliates(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   affilliateWithdraw(
-    tokens: string[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    tokens: PromiseOrValue<string>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  approvedTargets(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  approvedTargets(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-  bondPrice(principal: string, payoutToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+  bondPrice(
+    principal: PromiseOrValue<string>,
+    payoutToken: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
-  feeWhitelist(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  feeWhitelist(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   goodwill(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -412,82 +472,93 @@ export interface OlympusZapperZap extends BaseContract {
 
   owner(overrides?: CallOverrides): Promise<string>;
 
-  principalToDepository(arg0: string, arg1: string, overrides?: CallOverrides): Promise<string>;
+  principalToDepository(
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<string>;
 
-  removeLiquidityReturn(fromToken: string, fromAmount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  removeLiquidityReturn(
+    fromToken: PromiseOrValue<string>,
+    fromAmount: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   sOHM(overrides?: CallOverrides): Promise<string>;
 
   setApprovedTargets(
-    targets: string[],
-    isApproved: boolean[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    targets: PromiseOrValue<string>[],
+    isApproved: PromiseOrValue<boolean>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   set_affiliate(
-    _affiliate: string,
-    _status: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _affiliate: PromiseOrValue<string>,
+    _status: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   set_feeWhitelist(
-    zapAddress: string,
-    status: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    zapAddress: PromiseOrValue<string>,
+    status: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   set_new_affiliateSplit(
-    _new_affiliateSplit: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _new_affiliateSplit: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   set_new_goodwill(
-    _new_goodwill: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _new_goodwill: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   staking(overrides?: CallOverrides): Promise<string>;
 
   stopped(overrides?: CallOverrides): Promise<boolean>;
 
-  toggleContractActive(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  toggleContractActive(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  totalAffiliateBalance(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  totalAffiliateBalance(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   update_BondDepos(
-    principals: string[],
-    payoutTokens: string[],
-    depos: string[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    principals: PromiseOrValue<string>[],
+    payoutTokens: PromiseOrValue<string>[],
+    depos: PromiseOrValue<string>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   update_OlympusDAO(
-    _olympusDAO: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _olympusDAO: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   update_Staking(
-    _staking: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _staking: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  update_sOHM(_sOHM: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  update_sOHM(
+    _sOHM: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   update_wsOHM(
-    _wsOHM: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _wsOHM: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   withdrawTokens(
-    tokens: string[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    tokens: PromiseOrValue<string>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   wsOHM(overrides?: CallOverrides): Promise<string>;
@@ -496,41 +567,49 @@ export interface OlympusZapperZap extends BaseContract {
     OHM(overrides?: CallOverrides): Promise<string>;
 
     ZapIn(
-      fromToken: string,
-      amountIn: BigNumberish,
-      toToken: string,
-      minToToken: BigNumberish,
-      swapTarget: string,
-      swapData: BytesLike,
-      affiliate: string,
-      bondPayoutToken: string,
-      maxBondPrice: BigNumberish,
-      bond: boolean,
+      fromToken: PromiseOrValue<string>,
+      amountIn: PromiseOrValue<BigNumberish>,
+      toToken: PromiseOrValue<string>,
+      minToToken: PromiseOrValue<BigNumberish>,
+      swapTarget: PromiseOrValue<string>,
+      swapData: PromiseOrValue<BytesLike>,
+      affiliate: PromiseOrValue<string>,
+      bondPayoutToken: PromiseOrValue<string>,
+      maxBondPrice: PromiseOrValue<BigNumberish>,
+      bond: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     ZapOut(
-      fromToken: string,
-      amountIn: BigNumberish,
-      toToken: string,
-      minToTokens: BigNumberish,
-      swapTarget: string,
-      swapData: BytesLike,
-      affiliate: string,
+      fromToken: PromiseOrValue<string>,
+      amountIn: PromiseOrValue<BigNumberish>,
+      toToken: PromiseOrValue<string>,
+      minToTokens: PromiseOrValue<BigNumberish>,
+      swapTarget: PromiseOrValue<string>,
+      swapData: PromiseOrValue<BytesLike>,
+      affiliate: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    affiliateBalance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    affiliateBalance(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    affiliates(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    affiliates(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-    affilliateWithdraw(tokens: string[], overrides?: CallOverrides): Promise<void>;
+    affilliateWithdraw(tokens: PromiseOrValue<string>[], overrides?: CallOverrides): Promise<void>;
 
-    approvedTargets(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    approvedTargets(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-    bondPrice(principal: string, payoutToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+    bondPrice(
+      principal: PromiseOrValue<string>,
+      payoutToken: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    feeWhitelist(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    feeWhitelist(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     goodwill(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -538,23 +617,43 @@ export interface OlympusZapperZap extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    principalToDepository(arg0: string, arg1: string, overrides?: CallOverrides): Promise<string>;
+    principalToDepository(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<string>;
 
-    removeLiquidityReturn(fromToken: string, fromAmount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    removeLiquidityReturn(
+      fromToken: PromiseOrValue<string>,
+      fromAmount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
     sOHM(overrides?: CallOverrides): Promise<string>;
 
-    setApprovedTargets(targets: string[], isApproved: boolean[], overrides?: CallOverrides): Promise<void>;
+    setApprovedTargets(
+      targets: PromiseOrValue<string>[],
+      isApproved: PromiseOrValue<boolean>[],
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    set_affiliate(_affiliate: string, _status: boolean, overrides?: CallOverrides): Promise<void>;
+    set_affiliate(
+      _affiliate: PromiseOrValue<string>,
+      _status: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    set_feeWhitelist(zapAddress: string, status: boolean, overrides?: CallOverrides): Promise<void>;
+    set_feeWhitelist(
+      zapAddress: PromiseOrValue<string>,
+      status: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    set_new_affiliateSplit(_new_affiliateSplit: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    set_new_affiliateSplit(_new_affiliateSplit: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    set_new_goodwill(_new_goodwill: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    set_new_goodwill(_new_goodwill: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     staking(overrides?: CallOverrides): Promise<string>;
 
@@ -562,36 +661,39 @@ export interface OlympusZapperZap extends BaseContract {
 
     toggleContractActive(overrides?: CallOverrides): Promise<void>;
 
-    totalAffiliateBalance(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    totalAffiliateBalance(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     update_BondDepos(
-      principals: string[],
-      payoutTokens: string[],
-      depos: string[],
+      principals: PromiseOrValue<string>[],
+      payoutTokens: PromiseOrValue<string>[],
+      depos: PromiseOrValue<string>[],
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    update_OlympusDAO(_olympusDAO: string, overrides?: CallOverrides): Promise<void>;
+    update_OlympusDAO(_olympusDAO: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    update_Staking(_staking: string, overrides?: CallOverrides): Promise<void>;
+    update_Staking(_staking: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    update_sOHM(_sOHM: string, overrides?: CallOverrides): Promise<void>;
+    update_sOHM(_sOHM: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    update_wsOHM(_wsOHM: string, overrides?: CallOverrides): Promise<void>;
+    update_wsOHM(_wsOHM: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    withdrawTokens(tokens: string[], overrides?: CallOverrides): Promise<void>;
+    withdrawTokens(tokens: PromiseOrValue<string>[], overrides?: CallOverrides): Promise<void>;
 
     wsOHM(overrides?: CallOverrides): Promise<string>;
   };
 
   filters: {
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
 
     'zapIn(address,address,uint256,address)'(
       sender?: null,
@@ -614,44 +716,52 @@ export interface OlympusZapperZap extends BaseContract {
     OHM(overrides?: CallOverrides): Promise<BigNumber>;
 
     ZapIn(
-      fromToken: string,
-      amountIn: BigNumberish,
-      toToken: string,
-      minToToken: BigNumberish,
-      swapTarget: string,
-      swapData: BytesLike,
-      affiliate: string,
-      bondPayoutToken: string,
-      maxBondPrice: BigNumberish,
-      bond: boolean,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      fromToken: PromiseOrValue<string>,
+      amountIn: PromiseOrValue<BigNumberish>,
+      toToken: PromiseOrValue<string>,
+      minToToken: PromiseOrValue<BigNumberish>,
+      swapTarget: PromiseOrValue<string>,
+      swapData: PromiseOrValue<BytesLike>,
+      affiliate: PromiseOrValue<string>,
+      bondPayoutToken: PromiseOrValue<string>,
+      maxBondPrice: PromiseOrValue<BigNumberish>,
+      bond: PromiseOrValue<boolean>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     ZapOut(
-      fromToken: string,
-      amountIn: BigNumberish,
-      toToken: string,
-      minToTokens: BigNumberish,
-      swapTarget: string,
-      swapData: BytesLike,
-      affiliate: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      fromToken: PromiseOrValue<string>,
+      amountIn: PromiseOrValue<BigNumberish>,
+      toToken: PromiseOrValue<string>,
+      minToTokens: PromiseOrValue<BigNumberish>,
+      swapTarget: PromiseOrValue<string>,
+      swapData: PromiseOrValue<BytesLike>,
+      affiliate: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    affiliateBalance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    affiliateBalance(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    affiliates(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    affiliates(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     affilliateWithdraw(
-      tokens: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tokens: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    approvedTargets(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    approvedTargets(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    bondPrice(principal: string, payoutToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+    bondPrice(
+      principal: PromiseOrValue<string>,
+      payoutToken: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    feeWhitelist(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    feeWhitelist(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     goodwill(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -659,74 +769,94 @@ export interface OlympusZapperZap extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    principalToDepository(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    principalToDepository(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    removeLiquidityReturn(fromToken: string, fromAmount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    removeLiquidityReturn(
+      fromToken: PromiseOrValue<string>,
+      fromAmount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     sOHM(overrides?: CallOverrides): Promise<BigNumber>;
 
     setApprovedTargets(
-      targets: string[],
-      isApproved: boolean[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      targets: PromiseOrValue<string>[],
+      isApproved: PromiseOrValue<boolean>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     set_affiliate(
-      _affiliate: string,
-      _status: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _affiliate: PromiseOrValue<string>,
+      _status: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     set_feeWhitelist(
-      zapAddress: string,
-      status: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      zapAddress: PromiseOrValue<string>,
+      status: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     set_new_affiliateSplit(
-      _new_affiliateSplit: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _new_affiliateSplit: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     set_new_goodwill(
-      _new_goodwill: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _new_goodwill: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     staking(overrides?: CallOverrides): Promise<BigNumber>;
 
     stopped(overrides?: CallOverrides): Promise<BigNumber>;
 
-    toggleContractActive(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    toggleContractActive(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    totalAffiliateBalance(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    totalAffiliateBalance(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     update_BondDepos(
-      principals: string[],
-      payoutTokens: string[],
-      depos: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      principals: PromiseOrValue<string>[],
+      payoutTokens: PromiseOrValue<string>[],
+      depos: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     update_OlympusDAO(
-      _olympusDAO: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _olympusDAO: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    update_Staking(_staking: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    update_Staking(
+      _staking: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    update_sOHM(_sOHM: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    update_sOHM(
+      _sOHM: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    update_wsOHM(_wsOHM: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    update_wsOHM(
+      _wsOHM: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    withdrawTokens(tokens: string[], overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    withdrawTokens(
+      tokens: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     wsOHM(overrides?: CallOverrides): Promise<BigNumber>;
   };
@@ -735,44 +865,52 @@ export interface OlympusZapperZap extends BaseContract {
     OHM(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     ZapIn(
-      fromToken: string,
-      amountIn: BigNumberish,
-      toToken: string,
-      minToToken: BigNumberish,
-      swapTarget: string,
-      swapData: BytesLike,
-      affiliate: string,
-      bondPayoutToken: string,
-      maxBondPrice: BigNumberish,
-      bond: boolean,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      fromToken: PromiseOrValue<string>,
+      amountIn: PromiseOrValue<BigNumberish>,
+      toToken: PromiseOrValue<string>,
+      minToToken: PromiseOrValue<BigNumberish>,
+      swapTarget: PromiseOrValue<string>,
+      swapData: PromiseOrValue<BytesLike>,
+      affiliate: PromiseOrValue<string>,
+      bondPayoutToken: PromiseOrValue<string>,
+      maxBondPrice: PromiseOrValue<BigNumberish>,
+      bond: PromiseOrValue<boolean>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     ZapOut(
-      fromToken: string,
-      amountIn: BigNumberish,
-      toToken: string,
-      minToTokens: BigNumberish,
-      swapTarget: string,
-      swapData: BytesLike,
-      affiliate: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      fromToken: PromiseOrValue<string>,
+      amountIn: PromiseOrValue<BigNumberish>,
+      toToken: PromiseOrValue<string>,
+      minToTokens: PromiseOrValue<BigNumberish>,
+      swapTarget: PromiseOrValue<string>,
+      swapData: PromiseOrValue<BytesLike>,
+      affiliate: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    affiliateBalance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    affiliateBalance(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    affiliates(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    affiliates(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     affilliateWithdraw(
-      tokens: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tokens: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    approvedTargets(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    approvedTargets(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    bondPrice(principal: string, payoutToken: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    bondPrice(
+      principal: PromiseOrValue<string>,
+      payoutToken: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    feeWhitelist(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    feeWhitelist(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     goodwill(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -780,89 +918,93 @@ export interface OlympusZapperZap extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    principalToDepository(arg0: string, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    removeLiquidityReturn(
-      fromToken: string,
-      fromAmount: BigNumberish,
+    principalToDepository(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    removeLiquidityReturn(
+      fromToken: PromiseOrValue<string>,
+      fromAmount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     sOHM(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setApprovedTargets(
-      targets: string[],
-      isApproved: boolean[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      targets: PromiseOrValue<string>[],
+      isApproved: PromiseOrValue<boolean>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     set_affiliate(
-      _affiliate: string,
-      _status: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _affiliate: PromiseOrValue<string>,
+      _status: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     set_feeWhitelist(
-      zapAddress: string,
-      status: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      zapAddress: PromiseOrValue<string>,
+      status: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     set_new_affiliateSplit(
-      _new_affiliateSplit: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _new_affiliateSplit: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     set_new_goodwill(
-      _new_goodwill: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _new_goodwill: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     staking(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     stopped(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    toggleContractActive(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    toggleContractActive(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    totalAffiliateBalance(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    totalAffiliateBalance(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     update_BondDepos(
-      principals: string[],
-      payoutTokens: string[],
-      depos: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      principals: PromiseOrValue<string>[],
+      payoutTokens: PromiseOrValue<string>[],
+      depos: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     update_OlympusDAO(
-      _olympusDAO: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _olympusDAO: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     update_Staking(
-      _staking: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _staking: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     update_sOHM(
-      _sOHM: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _sOHM: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     update_wsOHM(
-      _wsOHM: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _wsOHM: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     withdrawTokens(
-      tokens: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      tokens: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     wsOHM(overrides?: CallOverrides): Promise<PopulatedTransaction>;

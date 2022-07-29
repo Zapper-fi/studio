@@ -22,7 +22,7 @@ export class PolygonBalancerV2PoolTokenFetcher implements PositionFetcher<AppTok
   ) {}
 
   getPositions() {
-    return this.poolTokensHelper.getTokenMarketData({
+    return this.poolTokensHelper.getPositions({
       network,
       appId,
       groupId,

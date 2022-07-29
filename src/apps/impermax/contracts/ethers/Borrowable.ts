@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface BorrowableInterface extends utils.Interface {
   functions: {
@@ -156,26 +156,49 @@ export interface BorrowableInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'MINIMUM_LIQUIDITY', values?: undefined): string;
   encodeFunctionData(functionFragment: 'PERMIT_TYPEHASH', values?: undefined): string;
   encodeFunctionData(functionFragment: 'RESERVE_FACTOR_MAX', values?: undefined): string;
-  encodeFunctionData(functionFragment: '_initialize', values: [string, string, string, string]): string;
-  encodeFunctionData(functionFragment: '_setAdjustSpeed', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: '_setBorrowTracker', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: '_initialize',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: '_setAdjustSpeed', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: '_setBorrowTracker', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: '_setFactory', values?: undefined): string;
-  encodeFunctionData(functionFragment: '_setKinkUtilizationRate', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: '_setReserveFactor', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: '_setKinkUtilizationRate', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: '_setReserveFactor', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'accrualTimestamp', values?: undefined): string;
   encodeFunctionData(functionFragment: 'accrueInterest', values?: undefined): string;
   encodeFunctionData(functionFragment: 'adjustSpeed', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'allowance', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'approve', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
-  encodeFunctionData(functionFragment: 'borrow', values: [string, string, BigNumberish, BytesLike]): string;
-  encodeFunctionData(functionFragment: 'borrowAllowance', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'borrowApprove', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'borrowBalance', values: [string]): string;
+  encodeFunctionData(functionFragment: 'allowance', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'approve',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'borrow',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<BytesLike>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'borrowAllowance',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'borrowApprove',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'borrowBalance', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'borrowIndex', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'borrowPermit',
-    values: [string, string, BigNumberish, BigNumberish, BigNumberish, BytesLike, BytesLike],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'borrowRate', values?: undefined): string;
   encodeFunctionData(functionFragment: 'borrowTracker', values?: undefined): string;
@@ -187,26 +210,40 @@ export interface BorrowableInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'getBlockTimestamp', values?: undefined): string;
   encodeFunctionData(functionFragment: 'kinkBorrowRate', values?: undefined): string;
   encodeFunctionData(functionFragment: 'kinkUtilizationRate', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'liquidate', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'mint', values: [string]): string;
+  encodeFunctionData(functionFragment: 'liquidate', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'mint', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'nonces', values: [string]): string;
+  encodeFunctionData(functionFragment: 'nonces', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
     functionFragment: 'permit',
-    values: [string, string, BigNumberish, BigNumberish, BigNumberish, BytesLike, BytesLike],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'rateUpdateTimestamp', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'redeem', values: [string]): string;
+  encodeFunctionData(functionFragment: 'redeem', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'reserveFactor', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'skim', values: [string]): string;
+  encodeFunctionData(functionFragment: 'skim', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
   encodeFunctionData(functionFragment: 'sync', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalBalance', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalBorrows', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'trackBorrow', values: [string]): string;
-  encodeFunctionData(functionFragment: 'transfer', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferFrom', values: [string, string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'trackBorrow', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'transfer',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'transferFrom',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'underlying', values?: undefined): string;
 
   decodeFunctionResult(functionFragment: 'ADJUST_SPEED_MAX', data: BytesLike): Result;
@@ -502,80 +539,88 @@ export interface Borrowable extends BaseContract {
     RESERVE_FACTOR_MAX(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     _initialize(
-      _name: string,
-      _symbol: string,
-      _underlying: string,
-      _collateral: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _name: PromiseOrValue<string>,
+      _symbol: PromiseOrValue<string>,
+      _underlying: PromiseOrValue<string>,
+      _collateral: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _setAdjustSpeed(
-      newAdjustSpeed: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newAdjustSpeed: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _setBorrowTracker(
-      newBorrowTracker: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newBorrowTracker: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    _setFactory(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    _setFactory(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     _setKinkUtilizationRate(
-      newKinkUtilizationRate: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newKinkUtilizationRate: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _setReserveFactor(
-      newReserveFactor: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newReserveFactor: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     accrualTimestamp(overrides?: CallOverrides): Promise<[number]>;
 
-    accrueInterest(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    accrueInterest(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     adjustSpeed(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    allowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    allowance(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     approve(
-      spender: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    balanceOf(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     borrow(
-      borrower: string,
-      receiver: string,
-      borrowAmount: BigNumberish,
-      data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      borrower: PromiseOrValue<string>,
+      receiver: PromiseOrValue<string>,
+      borrowAmount: PromiseOrValue<BigNumberish>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    borrowAllowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    borrowAllowance(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     borrowApprove(
-      spender: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    borrowBalance(borrower: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    borrowBalance(borrower: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     borrowIndex(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     borrowPermit(
-      owner: string,
-      spender: string,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     borrowRate(overrides?: CallOverrides): Promise<[number]>;
@@ -586,7 +631,7 @@ export interface Borrowable extends BaseContract {
 
     decimals(overrides?: CallOverrides): Promise<[number]>;
 
-    exchangeRate(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    exchangeRate(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     exchangeRateLast(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -599,39 +644,48 @@ export interface Borrowable extends BaseContract {
     kinkUtilizationRate(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     liquidate(
-      borrower: string,
-      liquidator: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      borrower: PromiseOrValue<string>,
+      liquidator: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    mint(minter: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    mint(
+      minter: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     permit(
-      owner: string,
-      spender: string,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     rateUpdateTimestamp(overrides?: CallOverrides): Promise<[number]>;
 
-    redeem(redeemer: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    redeem(
+      redeemer: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     reserveFactor(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    skim(to: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    skim(
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
 
-    sync(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    sync(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     totalBalance(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -640,21 +694,21 @@ export interface Borrowable extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     trackBorrow(
-      borrower: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      borrower: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transfer(
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferFrom(
-      from: string,
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     underlying(overrides?: CallOverrides): Promise<[string]>;
@@ -687,80 +741,84 @@ export interface Borrowable extends BaseContract {
   RESERVE_FACTOR_MAX(overrides?: CallOverrides): Promise<BigNumber>;
 
   _initialize(
-    _name: string,
-    _symbol: string,
-    _underlying: string,
-    _collateral: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _name: PromiseOrValue<string>,
+    _symbol: PromiseOrValue<string>,
+    _underlying: PromiseOrValue<string>,
+    _collateral: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _setAdjustSpeed(
-    newAdjustSpeed: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newAdjustSpeed: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _setBorrowTracker(
-    newBorrowTracker: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newBorrowTracker: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  _setFactory(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  _setFactory(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   _setKinkUtilizationRate(
-    newKinkUtilizationRate: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newKinkUtilizationRate: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _setReserveFactor(
-    newReserveFactor: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newReserveFactor: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   accrualTimestamp(overrides?: CallOverrides): Promise<number>;
 
-  accrueInterest(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  accrueInterest(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   adjustSpeed(overrides?: CallOverrides): Promise<BigNumber>;
 
-  allowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+  allowance(arg0: PromiseOrValue<string>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   approve(
-    spender: string,
-    value: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    value: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  balanceOf(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   borrow(
-    borrower: string,
-    receiver: string,
-    borrowAmount: BigNumberish,
-    data: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    borrower: PromiseOrValue<string>,
+    receiver: PromiseOrValue<string>,
+    borrowAmount: PromiseOrValue<BigNumberish>,
+    data: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  borrowAllowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+  borrowAllowance(
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   borrowApprove(
-    spender: string,
-    value: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    value: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  borrowBalance(borrower: string, overrides?: CallOverrides): Promise<BigNumber>;
+  borrowBalance(borrower: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   borrowIndex(overrides?: CallOverrides): Promise<BigNumber>;
 
   borrowPermit(
-    owner: string,
-    spender: string,
-    value: BigNumberish,
-    deadline: BigNumberish,
-    v: BigNumberish,
-    r: BytesLike,
-    s: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    owner: PromiseOrValue<string>,
+    spender: PromiseOrValue<string>,
+    value: PromiseOrValue<BigNumberish>,
+    deadline: PromiseOrValue<BigNumberish>,
+    v: PromiseOrValue<BigNumberish>,
+    r: PromiseOrValue<BytesLike>,
+    s: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   borrowRate(overrides?: CallOverrides): Promise<number>;
@@ -771,7 +829,7 @@ export interface Borrowable extends BaseContract {
 
   decimals(overrides?: CallOverrides): Promise<number>;
 
-  exchangeRate(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  exchangeRate(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   exchangeRateLast(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -784,39 +842,48 @@ export interface Borrowable extends BaseContract {
   kinkUtilizationRate(overrides?: CallOverrides): Promise<BigNumber>;
 
   liquidate(
-    borrower: string,
-    liquidator: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    borrower: PromiseOrValue<string>,
+    liquidator: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  mint(minter: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  mint(
+    minter: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   name(overrides?: CallOverrides): Promise<string>;
 
-  nonces(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   permit(
-    owner: string,
-    spender: string,
-    value: BigNumberish,
-    deadline: BigNumberish,
-    v: BigNumberish,
-    r: BytesLike,
-    s: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    owner: PromiseOrValue<string>,
+    spender: PromiseOrValue<string>,
+    value: PromiseOrValue<BigNumberish>,
+    deadline: PromiseOrValue<BigNumberish>,
+    v: PromiseOrValue<BigNumberish>,
+    r: PromiseOrValue<BytesLike>,
+    s: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   rateUpdateTimestamp(overrides?: CallOverrides): Promise<number>;
 
-  redeem(redeemer: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  redeem(
+    redeemer: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   reserveFactor(overrides?: CallOverrides): Promise<BigNumber>;
 
-  skim(to: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  skim(
+    to: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
 
-  sync(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  sync(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   totalBalance(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -825,21 +892,21 @@ export interface Borrowable extends BaseContract {
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   trackBorrow(
-    borrower: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    borrower: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transfer(
-    to: string,
-    value: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    to: PromiseOrValue<string>,
+    value: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferFrom(
-    from: string,
-    to: string,
-    value: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    from: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    value: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   underlying(overrides?: CallOverrides): Promise<string>;
@@ -872,22 +939,25 @@ export interface Borrowable extends BaseContract {
     RESERVE_FACTOR_MAX(overrides?: CallOverrides): Promise<BigNumber>;
 
     _initialize(
-      _name: string,
-      _symbol: string,
-      _underlying: string,
-      _collateral: string,
+      _name: PromiseOrValue<string>,
+      _symbol: PromiseOrValue<string>,
+      _underlying: PromiseOrValue<string>,
+      _collateral: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    _setAdjustSpeed(newAdjustSpeed: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    _setAdjustSpeed(newAdjustSpeed: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    _setBorrowTracker(newBorrowTracker: string, overrides?: CallOverrides): Promise<void>;
+    _setBorrowTracker(newBorrowTracker: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     _setFactory(overrides?: CallOverrides): Promise<void>;
 
-    _setKinkUtilizationRate(newKinkUtilizationRate: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    _setKinkUtilizationRate(
+      newKinkUtilizationRate: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    _setReserveFactor(newReserveFactor: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    _setReserveFactor(newReserveFactor: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     accrualTimestamp(overrides?: CallOverrides): Promise<number>;
 
@@ -895,36 +965,52 @@ export interface Borrowable extends BaseContract {
 
     adjustSpeed(overrides?: CallOverrides): Promise<BigNumber>;
 
-    allowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    approve(spender: string, value: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    approve(
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    balanceOf(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     borrow(
-      borrower: string,
-      receiver: string,
-      borrowAmount: BigNumberish,
-      data: BytesLike,
+      borrower: PromiseOrValue<string>,
+      receiver: PromiseOrValue<string>,
+      borrowAmount: PromiseOrValue<BigNumberish>,
+      data: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    borrowAllowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    borrowAllowance(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    borrowApprove(spender: string, value: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    borrowApprove(
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    borrowBalance(borrower: string, overrides?: CallOverrides): Promise<BigNumber>;
+    borrowBalance(borrower: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     borrowIndex(overrides?: CallOverrides): Promise<BigNumber>;
 
     borrowPermit(
-      owner: string,
-      spender: string,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -948,32 +1034,36 @@ export interface Borrowable extends BaseContract {
 
     kinkUtilizationRate(overrides?: CallOverrides): Promise<BigNumber>;
 
-    liquidate(borrower: string, liquidator: string, overrides?: CallOverrides): Promise<BigNumber>;
+    liquidate(
+      borrower: PromiseOrValue<string>,
+      liquidator: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    mint(minter: string, overrides?: CallOverrides): Promise<BigNumber>;
+    mint(minter: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     permit(
-      owner: string,
-      spender: string,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     rateUpdateTimestamp(overrides?: CallOverrides): Promise<number>;
 
-    redeem(redeemer: string, overrides?: CallOverrides): Promise<BigNumber>;
+    redeem(redeemer: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     reserveFactor(overrides?: CallOverrides): Promise<BigNumber>;
 
-    skim(to: string, overrides?: CallOverrides): Promise<void>;
+    skim(to: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     symbol(overrides?: CallOverrides): Promise<string>;
 
@@ -985,11 +1075,20 @@ export interface Borrowable extends BaseContract {
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    trackBorrow(borrower: string, overrides?: CallOverrides): Promise<void>;
+    trackBorrow(borrower: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    transfer(to: string, value: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transfer(
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    transferFrom(from: string, to: string, value: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transferFrom(
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     underlying(overrides?: CallOverrides): Promise<string>;
   };
@@ -1003,16 +1102,20 @@ export interface Borrowable extends BaseContract {
     AccrueInterest(interestAccumulated?: null, borrowIndex?: null, totalBorrows?: null): AccrueInterestEventFilter;
 
     'Approval(address,address,uint256)'(
-      owner?: string | null,
-      spender?: string | null,
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
       value?: null,
     ): ApprovalEventFilter;
-    Approval(owner?: string | null, spender?: string | null, value?: null): ApprovalEventFilter;
+    Approval(
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
+      value?: null,
+    ): ApprovalEventFilter;
 
     'Borrow(address,address,address,uint256,uint256,uint256,uint256,uint256)'(
-      sender?: string | null,
-      borrower?: string | null,
-      receiver?: string | null,
+      sender?: PromiseOrValue<string> | null,
+      borrower?: PromiseOrValue<string> | null,
+      receiver?: PromiseOrValue<string> | null,
       borrowAmount?: null,
       repayAmount?: null,
       accountBorrowsPrior?: null,
@@ -1020,9 +1123,9 @@ export interface Borrowable extends BaseContract {
       totalBorrows?: null,
     ): BorrowEventFilter;
     Borrow(
-      sender?: string | null,
-      borrower?: string | null,
-      receiver?: string | null,
+      sender?: PromiseOrValue<string> | null,
+      borrower?: PromiseOrValue<string> | null,
+      receiver?: PromiseOrValue<string> | null,
       borrowAmount?: null,
       repayAmount?: null,
       accountBorrowsPrior?: null,
@@ -1031,11 +1134,15 @@ export interface Borrowable extends BaseContract {
     ): BorrowEventFilter;
 
     'BorrowApproval(address,address,uint256)'(
-      owner?: string | null,
-      spender?: string | null,
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
       value?: null,
     ): BorrowApprovalEventFilter;
-    BorrowApproval(owner?: string | null, spender?: string | null, value?: null): BorrowApprovalEventFilter;
+    BorrowApproval(
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
+      value?: null,
+    ): BorrowApprovalEventFilter;
 
     'CalculateBorrowRate(uint256)'(borrowRate?: null): CalculateBorrowRateEventFilter;
     CalculateBorrowRate(borrowRate?: null): CalculateBorrowRateEventFilter;
@@ -1047,9 +1154,9 @@ export interface Borrowable extends BaseContract {
     CalculateKinkBorrowRate(kinkBorrowRate?: null): CalculateKinkBorrowRateEventFilter;
 
     'Liquidate(address,address,address,uint256,uint256,uint256,uint256,uint256)'(
-      sender?: string | null,
-      borrower?: string | null,
-      liquidator?: string | null,
+      sender?: PromiseOrValue<string> | null,
+      borrower?: PromiseOrValue<string> | null,
+      liquidator?: PromiseOrValue<string> | null,
       seizeTokens?: null,
       repayAmount?: null,
       accountBorrowsPrior?: null,
@@ -1057,9 +1164,9 @@ export interface Borrowable extends BaseContract {
       totalBorrows?: null,
     ): LiquidateEventFilter;
     Liquidate(
-      sender?: string | null,
-      borrower?: string | null,
-      liquidator?: string | null,
+      sender?: PromiseOrValue<string> | null,
+      borrower?: PromiseOrValue<string> | null,
+      liquidator?: PromiseOrValue<string> | null,
       seizeTokens?: null,
       repayAmount?: null,
       accountBorrowsPrior?: null,
@@ -1068,12 +1175,17 @@ export interface Borrowable extends BaseContract {
     ): LiquidateEventFilter;
 
     'Mint(address,address,uint256,uint256)'(
-      sender?: string | null,
-      minter?: string | null,
+      sender?: PromiseOrValue<string> | null,
+      minter?: PromiseOrValue<string> | null,
       mintAmount?: null,
       mintTokens?: null,
     ): MintEventFilter;
-    Mint(sender?: string | null, minter?: string | null, mintAmount?: null, mintTokens?: null): MintEventFilter;
+    Mint(
+      sender?: PromiseOrValue<string> | null,
+      minter?: PromiseOrValue<string> | null,
+      mintAmount?: null,
+      mintTokens?: null,
+    ): MintEventFilter;
 
     'NewAdjustSpeed(uint256)'(newAdjustSpeed?: null): NewAdjustSpeedEventFilter;
     NewAdjustSpeed(newAdjustSpeed?: null): NewAdjustSpeedEventFilter;
@@ -1088,14 +1200,14 @@ export interface Borrowable extends BaseContract {
     NewReserveFactor(newReserveFactor?: null): NewReserveFactorEventFilter;
 
     'Redeem(address,address,uint256,uint256)'(
-      sender?: string | null,
-      redeemer?: string | null,
+      sender?: PromiseOrValue<string> | null,
+      redeemer?: PromiseOrValue<string> | null,
       redeemAmount?: null,
       redeemTokens?: null,
     ): RedeemEventFilter;
     Redeem(
-      sender?: string | null,
-      redeemer?: string | null,
+      sender?: PromiseOrValue<string> | null,
+      redeemer?: PromiseOrValue<string> | null,
       redeemAmount?: null,
       redeemTokens?: null,
     ): RedeemEventFilter;
@@ -1103,8 +1215,16 @@ export interface Borrowable extends BaseContract {
     'Sync(uint256)'(totalBalance?: null): SyncEventFilter;
     Sync(totalBalance?: null): SyncEventFilter;
 
-    'Transfer(address,address,uint256)'(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
-    Transfer(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
+    'Transfer(address,address,uint256)'(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
+    Transfer(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
   };
 
   estimateGas: {
@@ -1135,80 +1255,88 @@ export interface Borrowable extends BaseContract {
     RESERVE_FACTOR_MAX(overrides?: CallOverrides): Promise<BigNumber>;
 
     _initialize(
-      _name: string,
-      _symbol: string,
-      _underlying: string,
-      _collateral: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _name: PromiseOrValue<string>,
+      _symbol: PromiseOrValue<string>,
+      _underlying: PromiseOrValue<string>,
+      _collateral: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     _setAdjustSpeed(
-      newAdjustSpeed: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newAdjustSpeed: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     _setBorrowTracker(
-      newBorrowTracker: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newBorrowTracker: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    _setFactory(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    _setFactory(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     _setKinkUtilizationRate(
-      newKinkUtilizationRate: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newKinkUtilizationRate: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     _setReserveFactor(
-      newReserveFactor: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newReserveFactor: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     accrualTimestamp(overrides?: CallOverrides): Promise<BigNumber>;
 
-    accrueInterest(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    accrueInterest(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     adjustSpeed(overrides?: CallOverrides): Promise<BigNumber>;
 
-    allowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     approve(
-      spender: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    balanceOf(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     borrow(
-      borrower: string,
-      receiver: string,
-      borrowAmount: BigNumberish,
-      data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      borrower: PromiseOrValue<string>,
+      receiver: PromiseOrValue<string>,
+      borrowAmount: PromiseOrValue<BigNumberish>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    borrowAllowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    borrowAllowance(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     borrowApprove(
-      spender: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    borrowBalance(borrower: string, overrides?: CallOverrides): Promise<BigNumber>;
+    borrowBalance(borrower: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     borrowIndex(overrides?: CallOverrides): Promise<BigNumber>;
 
     borrowPermit(
-      owner: string,
-      spender: string,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     borrowRate(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1219,7 +1347,7 @@ export interface Borrowable extends BaseContract {
 
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
-    exchangeRate(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    exchangeRate(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     exchangeRateLast(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1232,39 +1360,42 @@ export interface Borrowable extends BaseContract {
     kinkUtilizationRate(overrides?: CallOverrides): Promise<BigNumber>;
 
     liquidate(
-      borrower: string,
-      liquidator: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      borrower: PromiseOrValue<string>,
+      liquidator: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    mint(minter: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    mint(minter: PromiseOrValue<string>, overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     permit(
-      owner: string,
-      spender: string,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     rateUpdateTimestamp(overrides?: CallOverrides): Promise<BigNumber>;
 
-    redeem(redeemer: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    redeem(
+      redeemer: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     reserveFactor(overrides?: CallOverrides): Promise<BigNumber>;
 
-    skim(to: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    skim(to: PromiseOrValue<string>, overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
-    sync(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    sync(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     totalBalance(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1272,19 +1403,22 @@ export interface Borrowable extends BaseContract {
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    trackBorrow(borrower: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    trackBorrow(
+      borrower: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     transfer(
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferFrom(
-      from: string,
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     underlying(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1318,80 +1452,88 @@ export interface Borrowable extends BaseContract {
     RESERVE_FACTOR_MAX(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     _initialize(
-      _name: string,
-      _symbol: string,
-      _underlying: string,
-      _collateral: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _name: PromiseOrValue<string>,
+      _symbol: PromiseOrValue<string>,
+      _underlying: PromiseOrValue<string>,
+      _collateral: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _setAdjustSpeed(
-      newAdjustSpeed: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newAdjustSpeed: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _setBorrowTracker(
-      newBorrowTracker: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newBorrowTracker: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    _setFactory(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    _setFactory(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     _setKinkUtilizationRate(
-      newKinkUtilizationRate: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newKinkUtilizationRate: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _setReserveFactor(
-      newReserveFactor: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newReserveFactor: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     accrualTimestamp(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    accrueInterest(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    accrueInterest(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     adjustSpeed(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    allowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    allowance(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     approve(
-      spender: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    balanceOf(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    balanceOf(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     borrow(
-      borrower: string,
-      receiver: string,
-      borrowAmount: BigNumberish,
-      data: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      borrower: PromiseOrValue<string>,
+      receiver: PromiseOrValue<string>,
+      borrowAmount: PromiseOrValue<BigNumberish>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    borrowAllowance(arg0: string, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    borrowAllowance(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     borrowApprove(
-      spender: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    borrowBalance(borrower: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    borrowBalance(borrower: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     borrowIndex(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     borrowPermit(
-      owner: string,
-      spender: string,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     borrowRate(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1402,7 +1544,7 @@ export interface Borrowable extends BaseContract {
 
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    exchangeRate(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    exchangeRate(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     exchangeRateLast(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1415,42 +1557,48 @@ export interface Borrowable extends BaseContract {
     kinkUtilizationRate(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     liquidate(
-      borrower: string,
-      liquidator: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      borrower: PromiseOrValue<string>,
+      liquidator: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    mint(minter: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    mint(
+      minter: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    nonces(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    nonces(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     permit(
-      owner: string,
-      spender: string,
-      value: BigNumberish,
-      deadline: BigNumberish,
-      v: BigNumberish,
-      r: BytesLike,
-      s: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      deadline: PromiseOrValue<BigNumberish>,
+      v: PromiseOrValue<BigNumberish>,
+      r: PromiseOrValue<BytesLike>,
+      s: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     rateUpdateTimestamp(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     redeem(
-      redeemer: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      redeemer: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     reserveFactor(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    skim(to: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    skim(
+      to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    sync(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    sync(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     totalBalance(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1459,21 +1607,21 @@ export interface Borrowable extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     trackBorrow(
-      borrower: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      borrower: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transfer(
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferFrom(
-      from: string,
-      to: string,
-      value: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      value: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     underlying(overrides?: CallOverrides): Promise<PopulatedTransaction>;

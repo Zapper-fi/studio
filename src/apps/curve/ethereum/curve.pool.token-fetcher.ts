@@ -25,7 +25,7 @@ const appId = CURVE_DEFINITION.id;
 const groupId = CURVE_DEFINITION.groups.pool.id;
 const network = Network.ETHEREUM_MAINNET;
 
-@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
+@Register.TokenPositionFetcher({ appId, groupId, network })
 export class EthereumCurvePoolTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(CurveV1PoolTokenHelper)
@@ -53,6 +53,7 @@ export class EthereumCurvePoolTokenFetcher implements PositionFetcher<AppTokenPo
           { appId: 'iron-bank', groupIds: ['supply'], network },
           { appId: YEARN_DEFINITION.id, groupIds: [YEARN_DEFINITION.groups.yield.id], network },
           { appId: 'convex', groupIds: ['deposit'], network },
+          { appId: 'fixed-forex', groupIds: ['forex'], network },
         ],
       }),
     ]);

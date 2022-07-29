@@ -16,15 +16,16 @@ import { PolygonGoodGhostingGameContractPositionFetcher } from './polygon/good-g
   providers: [
     GoodGhostingAppDefinition,
     GoodGhostingContractFactory,
-    GoodGhostingGameContractPositionFetcherHelper,
-    GoodGhostingGameConfigFetcherHelper,
-    GoodGhostingBalanceFetcherHelper,
     // Polygon
     PolygonGoodGhostingBalanceFetcher,
     PolygonGoodGhostingGameContractPositionFetcher,
     // Celo
     CeloGoodGhostingBalanceFetcher,
     CeloGoodGhostingGameContractPositionFetcher,
+    // Helpers
+    GoodGhostingGameContractPositionFetcherHelper,
+    GoodGhostingGameConfigFetcherHelper,
+    GoodGhostingBalanceFetcherHelper,
   ],
 })
 export class GoodGhostingAppModule extends AbstractApp() {}

@@ -15,10 +15,13 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export declare namespace ConvexStakingWrapper {
-  export type EarnedDataStruct = { token: string; amount: BigNumberish };
+  export type EarnedDataStruct = {
+    token: PromiseOrValue<string>;
+    amount: PromiseOrValue<BigNumberish>;
+  };
 
   export type EarnedDataStructOutput = [string, BigNumber] & {
     token: string;
@@ -119,9 +122,12 @@ export interface AbracadabraConvexWrapperInterface extends utils.Interface {
   ): FunctionFragment;
 
   encodeFunctionData(functionFragment: 'addRewards', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'allowance', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'approve', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
+  encodeFunctionData(functionFragment: 'allowance', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'approve',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'cauldron', values?: undefined): string;
   encodeFunctionData(functionFragment: 'collateralVault', values?: undefined): string;
   encodeFunctionData(functionFragment: 'convexBooster', values?: undefined): string;
@@ -131,35 +137,53 @@ export interface AbracadabraConvexWrapperInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'crv', values?: undefined): string;
   encodeFunctionData(functionFragment: 'curveToken', values?: undefined): string;
   encodeFunctionData(functionFragment: 'cvx', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'cvx_claimable_reward', values: [string]): string;
+  encodeFunctionData(functionFragment: 'cvx_claimable_reward', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'cvx_reward_integral', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'cvx_reward_integral_for', values: [string]): string;
+  encodeFunctionData(functionFragment: 'cvx_reward_integral_for', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'cvx_reward_remaining', values?: undefined): string;
   encodeFunctionData(functionFragment: 'decimals', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'decreaseAllowance', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'deposit', values: [BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'earned', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getReward', values: [string]): string;
-  encodeFunctionData(functionFragment: 'increaseAllowance', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'decreaseAllowance',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'deposit',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'earned', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getReward', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'increaseAllowance',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'isShutdown', values?: undefined): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
   encodeFunctionData(functionFragment: 'rewardLength', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'rewards', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'rewards', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'setApprovals', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'setCauldron', values: [string]): string;
+  encodeFunctionData(functionFragment: 'setCauldron', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'shutdown', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'stake', values: [BigNumberish, string]): string;
+  encodeFunctionData(functionFragment: 'stake', values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'totalBalanceOf', values: [string]): string;
+  encodeFunctionData(functionFragment: 'totalBalanceOf', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transfer', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferFrom', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
-  encodeFunctionData(functionFragment: 'user_checkpoint', values: [[string, string]]): string;
-  encodeFunctionData(functionFragment: 'withdraw', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'withdrawAndUnwrap', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'transfer',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'transferFrom',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'user_checkpoint',
+    values: [[PromiseOrValue<string>, PromiseOrValue<string>]],
+  ): string;
+  encodeFunctionData(functionFragment: 'withdraw', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'withdrawAndUnwrap', values: [PromiseOrValue<BigNumberish>]): string;
 
   decodeFunctionResult(functionFragment: 'addRewards', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'allowance', data: BytesLike): Result;
@@ -287,17 +311,21 @@ export interface AbracadabraConvexWrapper extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    addRewards(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    addRewards(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     cauldron(overrides?: CallOverrides): Promise<[string]>;
 
@@ -317,30 +345,30 @@ export interface AbracadabraConvexWrapper extends BaseContract {
 
     cvx(overrides?: CallOverrides): Promise<[string]>;
 
-    cvx_claimable_reward(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    cvx_claimable_reward(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     cvx_reward_integral(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    cvx_reward_integral_for(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    cvx_reward_integral_for(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     cvx_reward_remaining(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     decimals(overrides?: CallOverrides): Promise<[number]>;
 
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     deposit(
-      _amount: BigNumberish,
-      _to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      _to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     earned(
-      _account: string,
+      _account: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [ConvexStakingWrapper.EarnedDataStructOutput[]] & {
@@ -349,14 +377,14 @@ export interface AbracadabraConvexWrapper extends BaseContract {
     >;
 
     getReward(
-      _account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     isShutdown(overrides?: CallOverrides): Promise<[boolean]>;
@@ -365,12 +393,12 @@ export interface AbracadabraConvexWrapper extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     rewardLength(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     rewards(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [string, string, BigNumber, BigNumber] & {
@@ -381,72 +409,76 @@ export interface AbracadabraConvexWrapper extends BaseContract {
       }
     >;
 
-    setApprovals(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    setApprovals(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     setCauldron(
-      _cauldron: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _cauldron: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    shutdown(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    shutdown(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     stake(
-      _amount: BigNumberish,
-      _to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      _to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
 
-    totalBalanceOf(_account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    totalBalanceOf(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transfer(
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferFrom(
-      sender: string,
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     user_checkpoint(
-      _accounts: [string, string],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _accounts: [PromiseOrValue<string>, PromiseOrValue<string>],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     withdraw(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     withdrawAndUnwrap(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
-  addRewards(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  addRewards(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+  allowance(
+    owner: PromiseOrValue<string>,
+    spender: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   approve(
-    spender: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   cauldron(overrides?: CallOverrides): Promise<string>;
 
@@ -466,39 +498,42 @@ export interface AbracadabraConvexWrapper extends BaseContract {
 
   cvx(overrides?: CallOverrides): Promise<string>;
 
-  cvx_claimable_reward(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  cvx_claimable_reward(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   cvx_reward_integral(overrides?: CallOverrides): Promise<BigNumber>;
 
-  cvx_reward_integral_for(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  cvx_reward_integral_for(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   cvx_reward_remaining(overrides?: CallOverrides): Promise<BigNumber>;
 
   decimals(overrides?: CallOverrides): Promise<number>;
 
   decreaseAllowance(
-    spender: string,
-    subtractedValue: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    subtractedValue: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   deposit(
-    _amount: BigNumberish,
-    _to: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _amount: PromiseOrValue<BigNumberish>,
+    _to: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  earned(_account: string, overrides?: CallOverrides): Promise<ConvexStakingWrapper.EarnedDataStructOutput[]>;
+  earned(
+    _account: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<ConvexStakingWrapper.EarnedDataStructOutput[]>;
 
   getReward(
-    _account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   increaseAllowance(
-    spender: string,
-    addedValue: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    addedValue: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   isShutdown(overrides?: CallOverrides): Promise<boolean>;
@@ -507,12 +542,12 @@ export interface AbracadabraConvexWrapper extends BaseContract {
 
   owner(overrides?: CallOverrides): Promise<string>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   rewardLength(overrides?: CallOverrides): Promise<BigNumber>;
 
   rewards(
-    arg0: BigNumberish,
+    arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<
     [string, string, BigNumber, BigNumber] & {
@@ -523,68 +558,76 @@ export interface AbracadabraConvexWrapper extends BaseContract {
     }
   >;
 
-  setApprovals(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  setApprovals(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   setCauldron(
-    _cauldron: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _cauldron: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  shutdown(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  shutdown(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   stake(
-    _amount: BigNumberish,
-    _to: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _amount: PromiseOrValue<BigNumberish>,
+    _to: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
 
-  totalBalanceOf(_account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  totalBalanceOf(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   transfer(
-    recipient: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    recipient: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferFrom(
-    sender: string,
-    recipient: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    sender: PromiseOrValue<string>,
+    recipient: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   user_checkpoint(
-    _accounts: [string, string],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _accounts: [PromiseOrValue<string>, PromiseOrValue<string>],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   withdraw(
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   withdrawAndUnwrap(
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
     addRewards(overrides?: CallOverrides): Promise<void>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    approve(spender: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    approve(
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     cauldron(overrides?: CallOverrides): Promise<string>;
 
@@ -604,25 +647,40 @@ export interface AbracadabraConvexWrapper extends BaseContract {
 
     cvx(overrides?: CallOverrides): Promise<string>;
 
-    cvx_claimable_reward(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    cvx_claimable_reward(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     cvx_reward_integral(overrides?: CallOverrides): Promise<BigNumber>;
 
-    cvx_reward_integral_for(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    cvx_reward_integral_for(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     cvx_reward_remaining(overrides?: CallOverrides): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<number>;
 
-    decreaseAllowance(spender: string, subtractedValue: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    decreaseAllowance(
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    deposit(_amount: BigNumberish, _to: string, overrides?: CallOverrides): Promise<void>;
+    deposit(
+      _amount: PromiseOrValue<BigNumberish>,
+      _to: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    earned(_account: string, overrides?: CallOverrides): Promise<ConvexStakingWrapper.EarnedDataStructOutput[]>;
+    earned(
+      _account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<ConvexStakingWrapper.EarnedDataStructOutput[]>;
 
-    getReward(_account: string, overrides?: CallOverrides): Promise<void>;
+    getReward(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    increaseAllowance(spender: string, addedValue: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    increaseAllowance(
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     isShutdown(overrides?: CallOverrides): Promise<boolean>;
 
@@ -635,7 +693,7 @@ export interface AbracadabraConvexWrapper extends BaseContract {
     rewardLength(overrides?: CallOverrides): Promise<BigNumber>;
 
     rewards(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [string, string, BigNumber, BigNumber] & {
@@ -648,72 +706,112 @@ export interface AbracadabraConvexWrapper extends BaseContract {
 
     setApprovals(overrides?: CallOverrides): Promise<void>;
 
-    setCauldron(_cauldron: string, overrides?: CallOverrides): Promise<void>;
+    setCauldron(_cauldron: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     shutdown(overrides?: CallOverrides): Promise<void>;
 
-    stake(_amount: BigNumberish, _to: string, overrides?: CallOverrides): Promise<void>;
+    stake(_amount: PromiseOrValue<BigNumberish>, _to: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     symbol(overrides?: CallOverrides): Promise<string>;
 
-    totalBalanceOf(_account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    totalBalanceOf(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transfer(recipient: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transfer(
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    transferFrom(sender: string, recipient: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transferFrom(
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    user_checkpoint(_accounts: [string, string], overrides?: CallOverrides): Promise<boolean>;
+    user_checkpoint(
+      _accounts: [PromiseOrValue<string>, PromiseOrValue<string>],
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    withdraw(_amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    withdraw(_amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    withdrawAndUnwrap(_amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    withdrawAndUnwrap(_amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
     'Approval(address,address,uint256)'(
-      owner?: string | null,
-      spender?: string | null,
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
       value?: null,
     ): ApprovalEventFilter;
-    Approval(owner?: string | null, spender?: string | null, value?: null): ApprovalEventFilter;
+    Approval(
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
+      value?: null,
+    ): ApprovalEventFilter;
 
     'Deposited(address,address,uint256,bool)'(
-      _user?: string | null,
-      _account?: string | null,
+      _user?: PromiseOrValue<string> | null,
+      _account?: PromiseOrValue<string> | null,
       _amount?: null,
       _wrapped?: null,
     ): DepositedEventFilter;
-    Deposited(_user?: string | null, _account?: string | null, _amount?: null, _wrapped?: null): DepositedEventFilter;
+    Deposited(
+      _user?: PromiseOrValue<string> | null,
+      _account?: PromiseOrValue<string> | null,
+      _amount?: null,
+      _wrapped?: null,
+    ): DepositedEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
 
-    'Transfer(address,address,uint256)'(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
-    Transfer(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
+    'Transfer(address,address,uint256)'(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
+    Transfer(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
 
-    'Withdrawn(address,uint256,bool)'(_user?: string | null, _amount?: null, _unwrapped?: null): WithdrawnEventFilter;
-    Withdrawn(_user?: string | null, _amount?: null, _unwrapped?: null): WithdrawnEventFilter;
+    'Withdrawn(address,uint256,bool)'(
+      _user?: PromiseOrValue<string> | null,
+      _amount?: null,
+      _unwrapped?: null,
+    ): WithdrawnEventFilter;
+    Withdrawn(_user?: PromiseOrValue<string> | null, _amount?: null, _unwrapped?: null): WithdrawnEventFilter;
   };
 
   estimateGas: {
-    addRewards(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    addRewards(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-    approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    approve(
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     cauldron(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -733,36 +831,39 @@ export interface AbracadabraConvexWrapper extends BaseContract {
 
     cvx(overrides?: CallOverrides): Promise<BigNumber>;
 
-    cvx_claimable_reward(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    cvx_claimable_reward(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     cvx_reward_integral(overrides?: CallOverrides): Promise<BigNumber>;
 
-    cvx_reward_integral_for(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    cvx_reward_integral_for(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     cvx_reward_remaining(overrides?: CallOverrides): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     deposit(
-      _amount: BigNumberish,
-      _to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      _to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    earned(_account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    earned(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getReward(_account: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    getReward(
+      _account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     isShutdown(overrides?: CallOverrides): Promise<BigNumber>;
@@ -771,73 +872,83 @@ export interface AbracadabraConvexWrapper extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     rewardLength(overrides?: CallOverrides): Promise<BigNumber>;
 
-    rewards(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    rewards(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    setApprovals(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setApprovals(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    setCauldron(_cauldron: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setCauldron(
+      _cauldron: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    shutdown(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    shutdown(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     stake(
-      _amount: BigNumberish,
-      _to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      _to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
-    totalBalanceOf(_account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    totalBalanceOf(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferFrom(
-      sender: string,
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     user_checkpoint(
-      _accounts: [string, string],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _accounts: [PromiseOrValue<string>, PromiseOrValue<string>],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    withdraw(_amount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    withdraw(
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     withdrawAndUnwrap(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    addRewards(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    addRewards(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    approve(
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
+
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     cauldron(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -857,39 +968,39 @@ export interface AbracadabraConvexWrapper extends BaseContract {
 
     cvx(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    cvx_claimable_reward(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    cvx_claimable_reward(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     cvx_reward_integral(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    cvx_reward_integral_for(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    cvx_reward_integral_for(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     cvx_reward_remaining(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     deposit(
-      _amount: BigNumberish,
-      _to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      _to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    earned(_account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    earned(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getReward(
-      _account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     isShutdown(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -898,64 +1009,64 @@ export interface AbracadabraConvexWrapper extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     rewardLength(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    rewards(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    rewards(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    setApprovals(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    setApprovals(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     setCauldron(
-      _cauldron: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _cauldron: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    shutdown(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    shutdown(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     stake(
-      _amount: BigNumberish,
-      _to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      _to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    totalBalanceOf(_account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    totalBalanceOf(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transfer(
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferFrom(
-      sender: string,
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     user_checkpoint(
-      _accounts: [string, string],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _accounts: [PromiseOrValue<string>, PromiseOrValue<string>],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     withdraw(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     withdrawAndUnwrap(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

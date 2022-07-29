@@ -16,7 +16,7 @@ const appId = CURVE_DEFINITION.id;
 const groupId = CURVE_DEFINITION.groups.pool.id;
 const network = Network.ARBITRUM_MAINNET;
 
-@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
+@Register.TokenPositionFetcher({ appId, groupId, network })
 export class ArbitrumCurvePoolTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(CurveV1PoolTokenHelper)

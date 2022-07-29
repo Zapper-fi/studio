@@ -8,6 +8,7 @@ import { PlsDpxPlutusChef__factory } from './ethers';
 import { PlsJonesPlutusChef__factory } from './ethers';
 import { PlsPlutusChef__factory } from './ethers';
 import { PlutusEpochStaking__factory } from './ethers';
+import { PlutusEpochStakingRewardsRolling__factory } from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
@@ -30,9 +31,13 @@ export class PlutusContractFactory extends ContractFactory {
   plutusEpochStaking({ address, network }: ContractOpts) {
     return PlutusEpochStaking__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  plutusEpochStakingRewardsRolling({ address, network }: ContractOpts) {
+    return PlutusEpochStakingRewardsRolling__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
 }
 
 export type { PlsDpxPlutusChef } from './ethers';
 export type { PlsJonesPlutusChef } from './ethers';
 export type { PlsPlutusChef } from './ethers';
 export type { PlutusEpochStaking } from './ethers';
+export type { PlutusEpochStakingRewardsRolling } from './ethers';

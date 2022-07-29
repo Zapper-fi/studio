@@ -24,6 +24,33 @@ export const RARI_FUSE_DEFINITION = appDefinition({
     },
   },
 
+  presentationConfig: {
+    tabs: [
+      {
+        label: 'Markets',
+        viewType: 'dropdown',
+        options: [
+          {
+            label: '{{ dataProps.marketName }}',
+            viewType: 'split',
+            views: [
+              {
+                viewType: 'list',
+                label: 'Supply',
+                groupIds: ['supply'],
+              },
+              {
+                viewType: 'list',
+                label: 'Borrow',
+                groupIds: ['borrow'],
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+
   url: 'https://rari.capital/',
   tags: [AppTag.LIQUIDITY_POOL],
   keywords: [],

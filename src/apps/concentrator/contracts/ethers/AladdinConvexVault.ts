@@ -16,7 +16,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface AladdinConvexVaultInterface extends utils.Interface {
   functions: {
@@ -92,50 +92,116 @@ export interface AladdinConvexVaultInterface extends utils.Interface {
 
   encodeFunctionData(
     functionFragment: 'addPool',
-    values: [BigNumberish, string[], BigNumberish, BigNumberish, BigNumberish],
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>[],
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'aladdinCRV', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'claim', values: [BigNumberish, BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'claimAll', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'deposit', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'depositAll', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'harvest', values: [BigNumberish, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'initialize', values: [string, string, string]): string;
+  encodeFunctionData(
+    functionFragment: 'claim',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'claimAll',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'deposit',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'depositAll', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'harvest',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'initialize',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'pausePoolDeposit', values: [BigNumberish, boolean]): string;
-  encodeFunctionData(functionFragment: 'pausePoolWithdraw', values: [BigNumberish, boolean]): string;
-  encodeFunctionData(functionFragment: 'pendingReward', values: [BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'pendingRewardAll', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'pausePoolDeposit',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'pausePoolWithdraw',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'pendingReward',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'pendingRewardAll', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'platform', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'poolInfo', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'poolInfo', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'poolLength', values?: undefined): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
-  encodeFunctionData(functionFragment: 'updateHarvestBountyPercentage', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'updatePlatform', values: [string]): string;
-  encodeFunctionData(functionFragment: 'updatePlatformFeePercentage', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'updatePoolRewardTokens', values: [BigNumberish, string[]]): string;
-  encodeFunctionData(functionFragment: 'updateWithdrawFeePercentage', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'updateZap', values: [string]): string;
-  encodeFunctionData(functionFragment: 'userInfo', values: [BigNumberish, string]): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'updateHarvestBountyPercentage',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'updatePlatform', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'updatePlatformFeePercentage',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'updatePoolRewardTokens',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>[]],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'updateWithdrawFeePercentage',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'updateZap', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'userInfo',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(
     functionFragment: 'withdrawAllAndClaim',
-    values: [BigNumberish, BigNumberish, BigNumberish],
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
   ): string;
-  encodeFunctionData(functionFragment: 'withdrawAllAndZap', values: [BigNumberish, string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'withdrawAllAndZap',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(
     functionFragment: 'withdrawAndClaim',
-    values: [BigNumberish, BigNumberish, BigNumberish, BigNumberish],
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
   encodeFunctionData(
     functionFragment: 'withdrawAndZap',
-    values: [BigNumberish, BigNumberish, string, BigNumberish],
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'zap', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'zapAllAndDeposit', values: [BigNumberish, string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'zapAllAndDeposit',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(
     functionFragment: 'zapAndDeposit',
-    values: [BigNumberish, string, BigNumberish, BigNumberish],
+    values: [
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
 
   decodeFunctionResult(functionFragment: 'addPool', data: BytesLike): Result;
@@ -353,76 +419,80 @@ export interface AladdinConvexVault extends BaseContract {
 
   functions: {
     addPool(
-      _convexPid: BigNumberish,
-      _rewardTokens: string[],
-      _withdrawFeePercentage: BigNumberish,
-      _platformFeePercentage: BigNumberish,
-      _harvestBountyPercentage: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _convexPid: PromiseOrValue<BigNumberish>,
+      _rewardTokens: PromiseOrValue<string>[],
+      _withdrawFeePercentage: PromiseOrValue<BigNumberish>,
+      _platformFeePercentage: PromiseOrValue<BigNumberish>,
+      _harvestBountyPercentage: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     aladdinCRV(overrides?: CallOverrides): Promise<[string]>;
 
     claim(
-      _pid: BigNumberish,
-      _minOut: BigNumberish,
-      _option: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _minOut: PromiseOrValue<BigNumberish>,
+      _option: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     claimAll(
-      _minOut: BigNumberish,
-      _option: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _minOut: PromiseOrValue<BigNumberish>,
+      _option: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     deposit(
-      _pid: BigNumberish,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     depositAll(
-      _pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     harvest(
-      _pid: BigNumberish,
-      _recipient: string,
-      _minimumOut: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _recipient: PromiseOrValue<string>,
+      _minimumOut: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     initialize(
-      _aladdinCRV: string,
-      _zap: string,
-      _platform: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _aladdinCRV: PromiseOrValue<string>,
+      _zap: PromiseOrValue<string>,
+      _platform: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
     pausePoolDeposit(
-      _pid: BigNumberish,
-      _status: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _status: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     pausePoolWithdraw(
-      _pid: BigNumberish,
-      _status: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _status: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    pendingReward(_pid: BigNumberish, _account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    pendingReward(
+      _pid: PromiseOrValue<BigNumberish>,
+      _account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
-    pendingRewardAll(_account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    pendingRewardAll(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     platform(overrides?: CallOverrides): Promise<[string]>;
 
     poolInfo(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [
@@ -454,47 +524,50 @@ export interface AladdinConvexVault extends BaseContract {
 
     poolLength(overrides?: CallOverrides): Promise<[BigNumber] & { pools: BigNumber }>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateHarvestBountyPercentage(
-      _pid: BigNumberish,
-      _percentage: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _percentage: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updatePlatform(
-      _platform: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _platform: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updatePlatformFeePercentage(
-      _pid: BigNumberish,
-      _feePercentage: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _feePercentage: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updatePoolRewardTokens(
-      _pid: BigNumberish,
-      _rewardTokens: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _rewardTokens: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateWithdrawFeePercentage(
-      _pid: BigNumberish,
-      _feePercentage: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _feePercentage: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    updateZap(_zap: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    updateZap(
+      _zap: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     userInfo(
-      arg0: BigNumberish,
-      arg1: string,
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber] & {
@@ -505,124 +578,128 @@ export interface AladdinConvexVault extends BaseContract {
     >;
 
     withdrawAllAndClaim(
-      _pid: BigNumberish,
-      _minOut: BigNumberish,
-      _option: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _minOut: PromiseOrValue<BigNumberish>,
+      _option: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     withdrawAllAndZap(
-      _pid: BigNumberish,
-      _token: string,
-      _minOut: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _token: PromiseOrValue<string>,
+      _minOut: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     withdrawAndClaim(
-      _pid: BigNumberish,
-      _shares: BigNumberish,
-      _minOut: BigNumberish,
-      _option: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _shares: PromiseOrValue<BigNumberish>,
+      _minOut: PromiseOrValue<BigNumberish>,
+      _option: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     withdrawAndZap(
-      _pid: BigNumberish,
-      _shares: BigNumberish,
-      _token: string,
-      _minOut: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _shares: PromiseOrValue<BigNumberish>,
+      _token: PromiseOrValue<string>,
+      _minOut: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     zap(overrides?: CallOverrides): Promise<[string]>;
 
     zapAllAndDeposit(
-      _pid: BigNumberish,
-      _token: string,
-      _minAmount: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _token: PromiseOrValue<string>,
+      _minAmount: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     zapAndDeposit(
-      _pid: BigNumberish,
-      _token: string,
-      _amount: BigNumberish,
-      _minAmount: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      _minAmount: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
   addPool(
-    _convexPid: BigNumberish,
-    _rewardTokens: string[],
-    _withdrawFeePercentage: BigNumberish,
-    _platformFeePercentage: BigNumberish,
-    _harvestBountyPercentage: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _convexPid: PromiseOrValue<BigNumberish>,
+    _rewardTokens: PromiseOrValue<string>[],
+    _withdrawFeePercentage: PromiseOrValue<BigNumberish>,
+    _platformFeePercentage: PromiseOrValue<BigNumberish>,
+    _harvestBountyPercentage: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   aladdinCRV(overrides?: CallOverrides): Promise<string>;
 
   claim(
-    _pid: BigNumberish,
-    _minOut: BigNumberish,
-    _option: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pid: PromiseOrValue<BigNumberish>,
+    _minOut: PromiseOrValue<BigNumberish>,
+    _option: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   claimAll(
-    _minOut: BigNumberish,
-    _option: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _minOut: PromiseOrValue<BigNumberish>,
+    _option: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   deposit(
-    _pid: BigNumberish,
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pid: PromiseOrValue<BigNumberish>,
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   depositAll(
-    _pid: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pid: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   harvest(
-    _pid: BigNumberish,
-    _recipient: string,
-    _minimumOut: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pid: PromiseOrValue<BigNumberish>,
+    _recipient: PromiseOrValue<string>,
+    _minimumOut: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   initialize(
-    _aladdinCRV: string,
-    _zap: string,
-    _platform: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _aladdinCRV: PromiseOrValue<string>,
+    _zap: PromiseOrValue<string>,
+    _platform: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
   pausePoolDeposit(
-    _pid: BigNumberish,
-    _status: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pid: PromiseOrValue<BigNumberish>,
+    _status: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   pausePoolWithdraw(
-    _pid: BigNumberish,
-    _status: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pid: PromiseOrValue<BigNumberish>,
+    _status: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  pendingReward(_pid: BigNumberish, _account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  pendingReward(
+    _pid: PromiseOrValue<BigNumberish>,
+    _account: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
-  pendingRewardAll(_account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  pendingRewardAll(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   platform(overrides?: CallOverrides): Promise<string>;
 
   poolInfo(
-    arg0: BigNumberish,
+    arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber, BigNumber, BigNumber, string, string, BigNumber, BigNumber, BigNumber, boolean, boolean] & {
@@ -642,47 +719,50 @@ export interface AladdinConvexVault extends BaseContract {
 
   poolLength(overrides?: CallOverrides): Promise<BigNumber>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateHarvestBountyPercentage(
-    _pid: BigNumberish,
-    _percentage: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pid: PromiseOrValue<BigNumberish>,
+    _percentage: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updatePlatform(
-    _platform: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _platform: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updatePlatformFeePercentage(
-    _pid: BigNumberish,
-    _feePercentage: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pid: PromiseOrValue<BigNumberish>,
+    _feePercentage: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updatePoolRewardTokens(
-    _pid: BigNumberish,
-    _rewardTokens: string[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pid: PromiseOrValue<BigNumberish>,
+    _rewardTokens: PromiseOrValue<string>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateWithdrawFeePercentage(
-    _pid: BigNumberish,
-    _feePercentage: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pid: PromiseOrValue<BigNumberish>,
+    _feePercentage: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  updateZap(_zap: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  updateZap(
+    _zap: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   userInfo(
-    arg0: BigNumberish,
-    arg1: string,
+    arg0: PromiseOrValue<BigNumberish>,
+    arg1: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber, BigNumber] & {
@@ -693,100 +773,125 @@ export interface AladdinConvexVault extends BaseContract {
   >;
 
   withdrawAllAndClaim(
-    _pid: BigNumberish,
-    _minOut: BigNumberish,
-    _option: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pid: PromiseOrValue<BigNumberish>,
+    _minOut: PromiseOrValue<BigNumberish>,
+    _option: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   withdrawAllAndZap(
-    _pid: BigNumberish,
-    _token: string,
-    _minOut: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pid: PromiseOrValue<BigNumberish>,
+    _token: PromiseOrValue<string>,
+    _minOut: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   withdrawAndClaim(
-    _pid: BigNumberish,
-    _shares: BigNumberish,
-    _minOut: BigNumberish,
-    _option: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pid: PromiseOrValue<BigNumberish>,
+    _shares: PromiseOrValue<BigNumberish>,
+    _minOut: PromiseOrValue<BigNumberish>,
+    _option: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   withdrawAndZap(
-    _pid: BigNumberish,
-    _shares: BigNumberish,
-    _token: string,
-    _minOut: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pid: PromiseOrValue<BigNumberish>,
+    _shares: PromiseOrValue<BigNumberish>,
+    _token: PromiseOrValue<string>,
+    _minOut: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   zap(overrides?: CallOverrides): Promise<string>;
 
   zapAllAndDeposit(
-    _pid: BigNumberish,
-    _token: string,
-    _minAmount: BigNumberish,
-    overrides?: PayableOverrides & { from?: string | Promise<string> },
+    _pid: PromiseOrValue<BigNumberish>,
+    _token: PromiseOrValue<string>,
+    _minAmount: PromiseOrValue<BigNumberish>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   zapAndDeposit(
-    _pid: BigNumberish,
-    _token: string,
-    _amount: BigNumberish,
-    _minAmount: BigNumberish,
-    overrides?: PayableOverrides & { from?: string | Promise<string> },
+    _pid: PromiseOrValue<BigNumberish>,
+    _token: PromiseOrValue<string>,
+    _amount: PromiseOrValue<BigNumberish>,
+    _minAmount: PromiseOrValue<BigNumberish>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
     addPool(
-      _convexPid: BigNumberish,
-      _rewardTokens: string[],
-      _withdrawFeePercentage: BigNumberish,
-      _platformFeePercentage: BigNumberish,
-      _harvestBountyPercentage: BigNumberish,
+      _convexPid: PromiseOrValue<BigNumberish>,
+      _rewardTokens: PromiseOrValue<string>[],
+      _withdrawFeePercentage: PromiseOrValue<BigNumberish>,
+      _platformFeePercentage: PromiseOrValue<BigNumberish>,
+      _harvestBountyPercentage: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     aladdinCRV(overrides?: CallOverrides): Promise<string>;
 
     claim(
-      _pid: BigNumberish,
-      _minOut: BigNumberish,
-      _option: BigNumberish,
+      _pid: PromiseOrValue<BigNumberish>,
+      _minOut: PromiseOrValue<BigNumberish>,
+      _option: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    claimAll(_minOut: BigNumberish, _option: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    claimAll(
+      _minOut: PromiseOrValue<BigNumberish>,
+      _option: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    deposit(_pid: BigNumberish, _amount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    deposit(
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    depositAll(_pid: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    depositAll(_pid: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     harvest(
-      _pid: BigNumberish,
-      _recipient: string,
-      _minimumOut: BigNumberish,
+      _pid: PromiseOrValue<BigNumberish>,
+      _recipient: PromiseOrValue<string>,
+      _minimumOut: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    initialize(_aladdinCRV: string, _zap: string, _platform: string, overrides?: CallOverrides): Promise<void>;
+    initialize(
+      _aladdinCRV: PromiseOrValue<string>,
+      _zap: PromiseOrValue<string>,
+      _platform: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    pausePoolDeposit(_pid: BigNumberish, _status: boolean, overrides?: CallOverrides): Promise<void>;
+    pausePoolDeposit(
+      _pid: PromiseOrValue<BigNumberish>,
+      _status: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    pausePoolWithdraw(_pid: BigNumberish, _status: boolean, overrides?: CallOverrides): Promise<void>;
+    pausePoolWithdraw(
+      _pid: PromiseOrValue<BigNumberish>,
+      _status: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    pendingReward(_pid: BigNumberish, _account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingReward(
+      _pid: PromiseOrValue<BigNumberish>,
+      _account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    pendingRewardAll(_account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingRewardAll(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     platform(overrides?: CallOverrides): Promise<string>;
 
     poolInfo(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [
@@ -820,35 +925,39 @@ export interface AladdinConvexVault extends BaseContract {
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     updateHarvestBountyPercentage(
-      _pid: BigNumberish,
-      _percentage: BigNumberish,
+      _pid: PromiseOrValue<BigNumberish>,
+      _percentage: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    updatePlatform(_platform: string, overrides?: CallOverrides): Promise<void>;
+    updatePlatform(_platform: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     updatePlatformFeePercentage(
-      _pid: BigNumberish,
-      _feePercentage: BigNumberish,
+      _pid: PromiseOrValue<BigNumberish>,
+      _feePercentage: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    updatePoolRewardTokens(_pid: BigNumberish, _rewardTokens: string[], overrides?: CallOverrides): Promise<void>;
+    updatePoolRewardTokens(
+      _pid: PromiseOrValue<BigNumberish>,
+      _rewardTokens: PromiseOrValue<string>[],
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     updateWithdrawFeePercentage(
-      _pid: BigNumberish,
-      _feePercentage: BigNumberish,
+      _pid: PromiseOrValue<BigNumberish>,
+      _feePercentage: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    updateZap(_zap: string, overrides?: CallOverrides): Promise<void>;
+    updateZap(_zap: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     userInfo(
-      arg0: BigNumberish,
-      arg1: string,
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber] & {
@@ -859,453 +968,510 @@ export interface AladdinConvexVault extends BaseContract {
     >;
 
     withdrawAllAndClaim(
-      _pid: BigNumberish,
-      _minOut: BigNumberish,
-      _option: BigNumberish,
+      _pid: PromiseOrValue<BigNumberish>,
+      _minOut: PromiseOrValue<BigNumberish>,
+      _option: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { withdrawn: BigNumber; claimed: BigNumber }>;
 
     withdrawAllAndZap(
-      _pid: BigNumberish,
-      _token: string,
-      _minOut: BigNumberish,
+      _pid: PromiseOrValue<BigNumberish>,
+      _token: PromiseOrValue<string>,
+      _minOut: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     withdrawAndClaim(
-      _pid: BigNumberish,
-      _shares: BigNumberish,
-      _minOut: BigNumberish,
-      _option: BigNumberish,
+      _pid: PromiseOrValue<BigNumberish>,
+      _shares: PromiseOrValue<BigNumberish>,
+      _minOut: PromiseOrValue<BigNumberish>,
+      _option: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { withdrawn: BigNumber; claimed: BigNumber }>;
 
     withdrawAndZap(
-      _pid: BigNumberish,
-      _shares: BigNumberish,
-      _token: string,
-      _minOut: BigNumberish,
+      _pid: PromiseOrValue<BigNumberish>,
+      _shares: PromiseOrValue<BigNumberish>,
+      _token: PromiseOrValue<string>,
+      _minOut: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     zap(overrides?: CallOverrides): Promise<string>;
 
     zapAllAndDeposit(
-      _pid: BigNumberish,
-      _token: string,
-      _minAmount: BigNumberish,
+      _pid: PromiseOrValue<BigNumberish>,
+      _token: PromiseOrValue<string>,
+      _minAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     zapAndDeposit(
-      _pid: BigNumberish,
-      _token: string,
-      _amount: BigNumberish,
-      _minAmount: BigNumberish,
+      _pid: PromiseOrValue<BigNumberish>,
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      _minAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
   };
 
   filters: {
     'AddPool(uint256,uint256,address[])'(
-      _pid?: BigNumberish | null,
+      _pid?: PromiseOrValue<BigNumberish> | null,
       _convexPid?: null,
       _rewardTokens?: null,
     ): AddPoolEventFilter;
-    AddPool(_pid?: BigNumberish | null, _convexPid?: null, _rewardTokens?: null): AddPoolEventFilter;
+    AddPool(_pid?: PromiseOrValue<BigNumberish> | null, _convexPid?: null, _rewardTokens?: null): AddPoolEventFilter;
 
-    'Claim(address,uint256,uint8)'(_sender?: string | null, _reward?: null, _option?: null): ClaimEventFilter;
-    Claim(_sender?: string | null, _reward?: null, _option?: null): ClaimEventFilter;
+    'Claim(address,uint256,uint8)'(
+      _sender?: PromiseOrValue<string> | null,
+      _reward?: null,
+      _option?: null,
+    ): ClaimEventFilter;
+    Claim(_sender?: PromiseOrValue<string> | null, _reward?: null, _option?: null): ClaimEventFilter;
 
     'Deposit(uint256,address,uint256)'(
-      _pid?: BigNumberish | null,
-      _sender?: string | null,
+      _pid?: PromiseOrValue<BigNumberish> | null,
+      _sender?: PromiseOrValue<string> | null,
       _amount?: null,
     ): DepositEventFilter;
-    Deposit(_pid?: BigNumberish | null, _sender?: string | null, _amount?: null): DepositEventFilter;
+    Deposit(
+      _pid?: PromiseOrValue<BigNumberish> | null,
+      _sender?: PromiseOrValue<string> | null,
+      _amount?: null,
+    ): DepositEventFilter;
 
     'Harvest(address,uint256,uint256,uint256)'(
-      _caller?: string | null,
+      _caller?: PromiseOrValue<string> | null,
       _reward?: null,
       _platformFee?: null,
       _harvestBounty?: null,
     ): HarvestEventFilter;
-    Harvest(_caller?: string | null, _reward?: null, _platformFee?: null, _harvestBounty?: null): HarvestEventFilter;
+    Harvest(
+      _caller?: PromiseOrValue<string> | null,
+      _reward?: null,
+      _platformFee?: null,
+      _harvestBounty?: null,
+    ): HarvestEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
 
-    'PausePoolDeposit(uint256,bool)'(_pid?: BigNumberish | null, _status?: null): PausePoolDepositEventFilter;
-    PausePoolDeposit(_pid?: BigNumberish | null, _status?: null): PausePoolDepositEventFilter;
+    'PausePoolDeposit(uint256,bool)'(
+      _pid?: PromiseOrValue<BigNumberish> | null,
+      _status?: null,
+    ): PausePoolDepositEventFilter;
+    PausePoolDeposit(_pid?: PromiseOrValue<BigNumberish> | null, _status?: null): PausePoolDepositEventFilter;
 
-    'PausePoolWithdraw(uint256,bool)'(_pid?: BigNumberish | null, _status?: null): PausePoolWithdrawEventFilter;
-    PausePoolWithdraw(_pid?: BigNumberish | null, _status?: null): PausePoolWithdrawEventFilter;
+    'PausePoolWithdraw(uint256,bool)'(
+      _pid?: PromiseOrValue<BigNumberish> | null,
+      _status?: null,
+    ): PausePoolWithdrawEventFilter;
+    PausePoolWithdraw(_pid?: PromiseOrValue<BigNumberish> | null, _status?: null): PausePoolWithdrawEventFilter;
 
     'UpdateHarvestBountyPercentage(uint256,uint256)'(
-      _pid?: BigNumberish | null,
+      _pid?: PromiseOrValue<BigNumberish> | null,
       _percentage?: null,
     ): UpdateHarvestBountyPercentageEventFilter;
     UpdateHarvestBountyPercentage(
-      _pid?: BigNumberish | null,
+      _pid?: PromiseOrValue<BigNumberish> | null,
       _percentage?: null,
     ): UpdateHarvestBountyPercentageEventFilter;
 
-    'UpdatePlatform(address)'(_platform?: string | null): UpdatePlatformEventFilter;
-    UpdatePlatform(_platform?: string | null): UpdatePlatformEventFilter;
+    'UpdatePlatform(address)'(_platform?: PromiseOrValue<string> | null): UpdatePlatformEventFilter;
+    UpdatePlatform(_platform?: PromiseOrValue<string> | null): UpdatePlatformEventFilter;
 
     'UpdatePlatformFeePercentage(uint256,uint256)'(
-      _pid?: BigNumberish | null,
+      _pid?: PromiseOrValue<BigNumberish> | null,
       _feePercentage?: null,
     ): UpdatePlatformFeePercentageEventFilter;
     UpdatePlatformFeePercentage(
-      _pid?: BigNumberish | null,
+      _pid?: PromiseOrValue<BigNumberish> | null,
       _feePercentage?: null,
     ): UpdatePlatformFeePercentageEventFilter;
 
     'UpdatePoolRewardTokens(uint256,address[])'(
-      _pid?: BigNumberish | null,
+      _pid?: PromiseOrValue<BigNumberish> | null,
       _rewardTokens?: null,
     ): UpdatePoolRewardTokensEventFilter;
-    UpdatePoolRewardTokens(_pid?: BigNumberish | null, _rewardTokens?: null): UpdatePoolRewardTokensEventFilter;
+    UpdatePoolRewardTokens(
+      _pid?: PromiseOrValue<BigNumberish> | null,
+      _rewardTokens?: null,
+    ): UpdatePoolRewardTokensEventFilter;
 
     'UpdateWithdrawalFeePercentage(uint256,uint256)'(
-      _pid?: BigNumberish | null,
+      _pid?: PromiseOrValue<BigNumberish> | null,
       _feePercentage?: null,
     ): UpdateWithdrawalFeePercentageEventFilter;
     UpdateWithdrawalFeePercentage(
-      _pid?: BigNumberish | null,
+      _pid?: PromiseOrValue<BigNumberish> | null,
       _feePercentage?: null,
     ): UpdateWithdrawalFeePercentageEventFilter;
 
-    'UpdateZap(address)'(_zap?: string | null): UpdateZapEventFilter;
-    UpdateZap(_zap?: string | null): UpdateZapEventFilter;
+    'UpdateZap(address)'(_zap?: PromiseOrValue<string> | null): UpdateZapEventFilter;
+    UpdateZap(_zap?: PromiseOrValue<string> | null): UpdateZapEventFilter;
 
     'Withdraw(uint256,address,uint256)'(
-      _pid?: BigNumberish | null,
-      _sender?: string | null,
+      _pid?: PromiseOrValue<BigNumberish> | null,
+      _sender?: PromiseOrValue<string> | null,
       _shares?: null,
     ): WithdrawEventFilter;
-    Withdraw(_pid?: BigNumberish | null, _sender?: string | null, _shares?: null): WithdrawEventFilter;
+    Withdraw(
+      _pid?: PromiseOrValue<BigNumberish> | null,
+      _sender?: PromiseOrValue<string> | null,
+      _shares?: null,
+    ): WithdrawEventFilter;
   };
 
   estimateGas: {
     addPool(
-      _convexPid: BigNumberish,
-      _rewardTokens: string[],
-      _withdrawFeePercentage: BigNumberish,
-      _platformFeePercentage: BigNumberish,
-      _harvestBountyPercentage: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _convexPid: PromiseOrValue<BigNumberish>,
+      _rewardTokens: PromiseOrValue<string>[],
+      _withdrawFeePercentage: PromiseOrValue<BigNumberish>,
+      _platformFeePercentage: PromiseOrValue<BigNumberish>,
+      _harvestBountyPercentage: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     aladdinCRV(overrides?: CallOverrides): Promise<BigNumber>;
 
     claim(
-      _pid: BigNumberish,
-      _minOut: BigNumberish,
-      _option: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _minOut: PromiseOrValue<BigNumberish>,
+      _option: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     claimAll(
-      _minOut: BigNumberish,
-      _option: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _minOut: PromiseOrValue<BigNumberish>,
+      _option: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     deposit(
-      _pid: BigNumberish,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    depositAll(_pid: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    depositAll(
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     harvest(
-      _pid: BigNumberish,
-      _recipient: string,
-      _minimumOut: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _recipient: PromiseOrValue<string>,
+      _minimumOut: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     initialize(
-      _aladdinCRV: string,
-      _zap: string,
-      _platform: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _aladdinCRV: PromiseOrValue<string>,
+      _zap: PromiseOrValue<string>,
+      _platform: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
     pausePoolDeposit(
-      _pid: BigNumberish,
-      _status: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _status: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     pausePoolWithdraw(
-      _pid: BigNumberish,
-      _status: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _status: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    pendingReward(_pid: BigNumberish, _account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingReward(
+      _pid: PromiseOrValue<BigNumberish>,
+      _account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    pendingRewardAll(_account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingRewardAll(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     platform(overrides?: CallOverrides): Promise<BigNumber>;
 
-    poolInfo(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    poolInfo(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     poolLength(overrides?: CallOverrides): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     updateHarvestBountyPercentage(
-      _pid: BigNumberish,
-      _percentage: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _percentage: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    updatePlatform(_platform: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    updatePlatform(
+      _platform: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     updatePlatformFeePercentage(
-      _pid: BigNumberish,
-      _feePercentage: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _feePercentage: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     updatePoolRewardTokens(
-      _pid: BigNumberish,
-      _rewardTokens: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _rewardTokens: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     updateWithdrawFeePercentage(
-      _pid: BigNumberish,
-      _feePercentage: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _feePercentage: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    updateZap(_zap: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    updateZap(
+      _zap: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    userInfo(arg0: BigNumberish, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    userInfo(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     withdrawAllAndClaim(
-      _pid: BigNumberish,
-      _minOut: BigNumberish,
-      _option: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _minOut: PromiseOrValue<BigNumberish>,
+      _option: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     withdrawAllAndZap(
-      _pid: BigNumberish,
-      _token: string,
-      _minOut: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _token: PromiseOrValue<string>,
+      _minOut: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     withdrawAndClaim(
-      _pid: BigNumberish,
-      _shares: BigNumberish,
-      _minOut: BigNumberish,
-      _option: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _shares: PromiseOrValue<BigNumberish>,
+      _minOut: PromiseOrValue<BigNumberish>,
+      _option: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     withdrawAndZap(
-      _pid: BigNumberish,
-      _shares: BigNumberish,
-      _token: string,
-      _minOut: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _shares: PromiseOrValue<BigNumberish>,
+      _token: PromiseOrValue<string>,
+      _minOut: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     zap(overrides?: CallOverrides): Promise<BigNumber>;
 
     zapAllAndDeposit(
-      _pid: BigNumberish,
-      _token: string,
-      _minAmount: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _token: PromiseOrValue<string>,
+      _minAmount: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     zapAndDeposit(
-      _pid: BigNumberish,
-      _token: string,
-      _amount: BigNumberish,
-      _minAmount: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      _minAmount: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     addPool(
-      _convexPid: BigNumberish,
-      _rewardTokens: string[],
-      _withdrawFeePercentage: BigNumberish,
-      _platformFeePercentage: BigNumberish,
-      _harvestBountyPercentage: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _convexPid: PromiseOrValue<BigNumberish>,
+      _rewardTokens: PromiseOrValue<string>[],
+      _withdrawFeePercentage: PromiseOrValue<BigNumberish>,
+      _platformFeePercentage: PromiseOrValue<BigNumberish>,
+      _harvestBountyPercentage: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     aladdinCRV(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     claim(
-      _pid: BigNumberish,
-      _minOut: BigNumberish,
-      _option: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _minOut: PromiseOrValue<BigNumberish>,
+      _option: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     claimAll(
-      _minOut: BigNumberish,
-      _option: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _minOut: PromiseOrValue<BigNumberish>,
+      _option: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     deposit(
-      _pid: BigNumberish,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     depositAll(
-      _pid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     harvest(
-      _pid: BigNumberish,
-      _recipient: string,
-      _minimumOut: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _recipient: PromiseOrValue<string>,
+      _minimumOut: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     initialize(
-      _aladdinCRV: string,
-      _zap: string,
-      _platform: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _aladdinCRV: PromiseOrValue<string>,
+      _zap: PromiseOrValue<string>,
+      _platform: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     pausePoolDeposit(
-      _pid: BigNumberish,
-      _status: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _status: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     pausePoolWithdraw(
-      _pid: BigNumberish,
-      _status: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _status: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    pendingReward(_pid: BigNumberish, _account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    pendingReward(
+      _pid: PromiseOrValue<BigNumberish>,
+      _account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    pendingRewardAll(_account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    pendingRewardAll(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     platform(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    poolInfo(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    poolInfo(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     poolLength(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateHarvestBountyPercentage(
-      _pid: BigNumberish,
-      _percentage: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _percentage: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updatePlatform(
-      _platform: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _platform: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updatePlatformFeePercentage(
-      _pid: BigNumberish,
-      _feePercentage: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _feePercentage: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updatePoolRewardTokens(
-      _pid: BigNumberish,
-      _rewardTokens: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _rewardTokens: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateWithdrawFeePercentage(
-      _pid: BigNumberish,
-      _feePercentage: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _feePercentage: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    updateZap(_zap: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    updateZap(
+      _zap: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
-    userInfo(arg0: BigNumberish, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    userInfo(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     withdrawAllAndClaim(
-      _pid: BigNumberish,
-      _minOut: BigNumberish,
-      _option: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _minOut: PromiseOrValue<BigNumberish>,
+      _option: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     withdrawAllAndZap(
-      _pid: BigNumberish,
-      _token: string,
-      _minOut: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _token: PromiseOrValue<string>,
+      _minOut: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     withdrawAndClaim(
-      _pid: BigNumberish,
-      _shares: BigNumberish,
-      _minOut: BigNumberish,
-      _option: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _shares: PromiseOrValue<BigNumberish>,
+      _minOut: PromiseOrValue<BigNumberish>,
+      _option: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     withdrawAndZap(
-      _pid: BigNumberish,
-      _shares: BigNumberish,
-      _token: string,
-      _minOut: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _shares: PromiseOrValue<BigNumberish>,
+      _token: PromiseOrValue<string>,
+      _minOut: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     zap(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     zapAllAndDeposit(
-      _pid: BigNumberish,
-      _token: string,
-      _minAmount: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _token: PromiseOrValue<string>,
+      _minAmount: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     zapAndDeposit(
-      _pid: BigNumberish,
-      _token: string,
-      _amount: BigNumberish,
-      _minAmount: BigNumberish,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      _minAmount: PromiseOrValue<BigNumberish>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

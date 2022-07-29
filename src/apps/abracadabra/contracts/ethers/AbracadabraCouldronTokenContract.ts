@@ -16,7 +16,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface AbracadabraCouldronTokenContractInterface extends utils.Interface {
   functions: {
@@ -86,32 +86,53 @@ export interface AbracadabraCouldronTokenContractInterface extends utils.Interfa
 
   encodeFunctionData(functionFragment: 'accrue', values?: undefined): string;
   encodeFunctionData(functionFragment: 'accrueInfo', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'addCollateral', values: [string, boolean, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'addCollateral',
+    values: [PromiseOrValue<string>, PromiseOrValue<boolean>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'bentoBox', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'borrow', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'borrow',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'claimOwnership', values?: undefined): string;
   encodeFunctionData(functionFragment: 'collateral', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'cook', values: [BigNumberish[], BigNumberish[], BytesLike[]]): string;
+  encodeFunctionData(
+    functionFragment: 'cook',
+    values: [PromiseOrValue<BigNumberish>[], PromiseOrValue<BigNumberish>[], PromiseOrValue<BytesLike>[]],
+  ): string;
   encodeFunctionData(functionFragment: 'exchangeRate', values?: undefined): string;
   encodeFunctionData(functionFragment: 'feeTo', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'init', values: [BytesLike]): string;
-  encodeFunctionData(functionFragment: 'liquidate', values: [string[], BigNumberish[], string, string]): string;
+  encodeFunctionData(functionFragment: 'init', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(
+    functionFragment: 'liquidate',
+    values: [PromiseOrValue<string>[], PromiseOrValue<BigNumberish>[], PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'magicInternetMoney', values?: undefined): string;
   encodeFunctionData(functionFragment: 'masterContract', values?: undefined): string;
   encodeFunctionData(functionFragment: 'oracle', values?: undefined): string;
   encodeFunctionData(functionFragment: 'oracleData', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'pendingOwner', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'reduceSupply', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'removeCollateral', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'repay', values: [string, boolean, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setFeeTo', values: [string]): string;
+  encodeFunctionData(functionFragment: 'reduceSupply', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'removeCollateral',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'repay',
+    values: [PromiseOrValue<string>, PromiseOrValue<boolean>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'setFeeTo', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'totalBorrow', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalCollateralShare', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string, boolean, boolean]): string;
+  encodeFunctionData(
+    functionFragment: 'transferOwnership',
+    values: [PromiseOrValue<string>, PromiseOrValue<boolean>, PromiseOrValue<boolean>],
+  ): string;
   encodeFunctionData(functionFragment: 'updateExchangeRate', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'userBorrowPart', values: [string]): string;
-  encodeFunctionData(functionFragment: 'userCollateralShare', values: [string]): string;
+  encodeFunctionData(functionFragment: 'userBorrowPart', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'userCollateralShare', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'withdrawFees', values?: undefined): string;
 
   decodeFunctionResult(functionFragment: 'accrue', data: BytesLike): Result;
@@ -265,36 +286,36 @@ export interface AbracadabraCouldronTokenContract extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    accrue(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    accrue(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     accrueInfo(
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { lastAccrued: BigNumber; feesEarned: BigNumber }>;
 
     addCollateral(
-      to: string,
-      skim: boolean,
-      share: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      skim: PromiseOrValue<boolean>,
+      share: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     bentoBox(overrides?: CallOverrides): Promise<[string]>;
 
     borrow(
-      to: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    claimOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    claimOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     collateral(overrides?: CallOverrides): Promise<[string]>;
 
     cook(
-      actions: BigNumberish[],
-      values: BigNumberish[],
-      datas: BytesLike[],
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      actions: PromiseOrValue<BigNumberish>[],
+      values: PromiseOrValue<BigNumberish>[],
+      datas: PromiseOrValue<BytesLike>[],
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     exchangeRate(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -302,16 +323,16 @@ export interface AbracadabraCouldronTokenContract extends BaseContract {
     feeTo(overrides?: CallOverrides): Promise<[string]>;
 
     init(
-      data: BytesLike,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      data: PromiseOrValue<BytesLike>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     liquidate(
-      users: string[],
-      maxBorrowParts: BigNumberish[],
-      to: string,
-      swapper: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      users: PromiseOrValue<string>[],
+      maxBorrowParts: PromiseOrValue<BigNumberish>[],
+      to: PromiseOrValue<string>,
+      swapper: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     magicInternetMoney(overrides?: CallOverrides): Promise<[string]>;
@@ -327,26 +348,26 @@ export interface AbracadabraCouldronTokenContract extends BaseContract {
     pendingOwner(overrides?: CallOverrides): Promise<[string]>;
 
     reduceSupply(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     removeCollateral(
-      to: string,
-      share: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      share: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     repay(
-      to: string,
-      skim: boolean,
-      part: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      skim: PromiseOrValue<boolean>,
+      part: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setFeeTo(
-      newFeeTo: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newFeeTo: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     totalBorrow(overrides?: CallOverrides): Promise<[BigNumber, BigNumber] & { elastic: BigNumber; base: BigNumber }>;
@@ -354,51 +375,51 @@ export interface AbracadabraCouldronTokenContract extends BaseContract {
     totalCollateralShare(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transferOwnership(
-      newOwner: string,
-      direct: boolean,
-      renounce: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      direct: PromiseOrValue<boolean>,
+      renounce: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    updateExchangeRate(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    updateExchangeRate(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    userBorrowPart(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    userBorrowPart(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    userCollateralShare(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    userCollateralShare(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    withdrawFees(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    withdrawFees(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
   };
 
-  accrue(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  accrue(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   accrueInfo(
     overrides?: CallOverrides,
   ): Promise<[BigNumber, BigNumber] & { lastAccrued: BigNumber; feesEarned: BigNumber }>;
 
   addCollateral(
-    to: string,
-    skim: boolean,
-    share: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    to: PromiseOrValue<string>,
+    skim: PromiseOrValue<boolean>,
+    share: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   bentoBox(overrides?: CallOverrides): Promise<string>;
 
   borrow(
-    to: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    to: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  claimOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  claimOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   collateral(overrides?: CallOverrides): Promise<string>;
 
   cook(
-    actions: BigNumberish[],
-    values: BigNumberish[],
-    datas: BytesLike[],
-    overrides?: PayableOverrides & { from?: string | Promise<string> },
+    actions: PromiseOrValue<BigNumberish>[],
+    values: PromiseOrValue<BigNumberish>[],
+    datas: PromiseOrValue<BytesLike>[],
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   exchangeRate(overrides?: CallOverrides): Promise<BigNumber>;
@@ -406,16 +427,16 @@ export interface AbracadabraCouldronTokenContract extends BaseContract {
   feeTo(overrides?: CallOverrides): Promise<string>;
 
   init(
-    data: BytesLike,
-    overrides?: PayableOverrides & { from?: string | Promise<string> },
+    data: PromiseOrValue<BytesLike>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   liquidate(
-    users: string[],
-    maxBorrowParts: BigNumberish[],
-    to: string,
-    swapper: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    users: PromiseOrValue<string>[],
+    maxBorrowParts: PromiseOrValue<BigNumberish>[],
+    to: PromiseOrValue<string>,
+    swapper: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   magicInternetMoney(overrides?: CallOverrides): Promise<string>;
@@ -431,43 +452,46 @@ export interface AbracadabraCouldronTokenContract extends BaseContract {
   pendingOwner(overrides?: CallOverrides): Promise<string>;
 
   reduceSupply(
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   removeCollateral(
-    to: string,
-    share: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    to: PromiseOrValue<string>,
+    share: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   repay(
-    to: string,
-    skim: boolean,
-    part: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    to: PromiseOrValue<string>,
+    skim: PromiseOrValue<boolean>,
+    part: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  setFeeTo(newFeeTo: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  setFeeTo(
+    newFeeTo: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   totalBorrow(overrides?: CallOverrides): Promise<[BigNumber, BigNumber] & { elastic: BigNumber; base: BigNumber }>;
 
   totalCollateralShare(overrides?: CallOverrides): Promise<BigNumber>;
 
   transferOwnership(
-    newOwner: string,
-    direct: boolean,
-    renounce: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    direct: PromiseOrValue<boolean>,
+    renounce: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  updateExchangeRate(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  updateExchangeRate(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  userBorrowPart(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  userBorrowPart(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  userCollateralShare(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  userCollateralShare(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  withdrawFees(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  withdrawFees(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   callStatic: {
     accrue(overrides?: CallOverrides): Promise<void>;
@@ -476,13 +500,18 @@ export interface AbracadabraCouldronTokenContract extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { lastAccrued: BigNumber; feesEarned: BigNumber }>;
 
-    addCollateral(to: string, skim: boolean, share: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    addCollateral(
+      to: PromiseOrValue<string>,
+      skim: PromiseOrValue<boolean>,
+      share: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     bentoBox(overrides?: CallOverrides): Promise<string>;
 
     borrow(
-      to: string,
-      amount: BigNumberish,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { part: BigNumber; share: BigNumber }>;
 
@@ -491,9 +520,9 @@ export interface AbracadabraCouldronTokenContract extends BaseContract {
     collateral(overrides?: CallOverrides): Promise<string>;
 
     cook(
-      actions: BigNumberish[],
-      values: BigNumberish[],
-      datas: BytesLike[],
+      actions: PromiseOrValue<BigNumberish>[],
+      values: PromiseOrValue<BigNumberish>[],
+      datas: PromiseOrValue<BytesLike>[],
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { value1: BigNumber; value2: BigNumber }>;
 
@@ -501,13 +530,13 @@ export interface AbracadabraCouldronTokenContract extends BaseContract {
 
     feeTo(overrides?: CallOverrides): Promise<string>;
 
-    init(data: BytesLike, overrides?: CallOverrides): Promise<void>;
+    init(data: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<void>;
 
     liquidate(
-      users: string[],
-      maxBorrowParts: BigNumberish[],
-      to: string,
-      swapper: string,
+      users: PromiseOrValue<string>[],
+      maxBorrowParts: PromiseOrValue<BigNumberish>[],
+      to: PromiseOrValue<string>,
+      swapper: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -523,27 +552,41 @@ export interface AbracadabraCouldronTokenContract extends BaseContract {
 
     pendingOwner(overrides?: CallOverrides): Promise<string>;
 
-    reduceSupply(amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    reduceSupply(amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    removeCollateral(to: string, share: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    removeCollateral(
+      to: PromiseOrValue<string>,
+      share: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    repay(to: string, skim: boolean, part: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    repay(
+      to: PromiseOrValue<string>,
+      skim: PromiseOrValue<boolean>,
+      part: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    setFeeTo(newFeeTo: string, overrides?: CallOverrides): Promise<void>;
+    setFeeTo(newFeeTo: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     totalBorrow(overrides?: CallOverrides): Promise<[BigNumber, BigNumber] & { elastic: BigNumber; base: BigNumber }>;
 
     totalCollateralShare(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transferOwnership(newOwner: string, direct: boolean, renounce: boolean, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(
+      newOwner: PromiseOrValue<string>,
+      direct: PromiseOrValue<boolean>,
+      renounce: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     updateExchangeRate(
       overrides?: CallOverrides,
     ): Promise<[boolean, BigNumber] & { updated: boolean; rate: BigNumber }>;
 
-    userBorrowPart(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    userBorrowPart(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    userCollateralShare(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    userCollateralShare(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     withdrawFees(overrides?: CallOverrides): Promise<void>;
   };
@@ -553,94 +596,121 @@ export interface AbracadabraCouldronTokenContract extends BaseContract {
     LogAccrue(accruedAmount?: null): LogAccrueEventFilter;
 
     'LogAddCollateral(address,address,uint256)'(
-      from?: string | null,
-      to?: string | null,
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
       share?: null,
     ): LogAddCollateralEventFilter;
-    LogAddCollateral(from?: string | null, to?: string | null, share?: null): LogAddCollateralEventFilter;
+    LogAddCollateral(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      share?: null,
+    ): LogAddCollateralEventFilter;
 
     'LogBorrow(address,address,uint256,uint256)'(
-      from?: string | null,
-      to?: string | null,
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
       amount?: null,
       part?: null,
     ): LogBorrowEventFilter;
-    LogBorrow(from?: string | null, to?: string | null, amount?: null, part?: null): LogBorrowEventFilter;
+    LogBorrow(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      amount?: null,
+      part?: null,
+    ): LogBorrowEventFilter;
 
     'LogExchangeRate(uint256)'(rate?: null): LogExchangeRateEventFilter;
     LogExchangeRate(rate?: null): LogExchangeRateEventFilter;
 
-    'LogFeeTo(address)'(newFeeTo?: string | null): LogFeeToEventFilter;
-    LogFeeTo(newFeeTo?: string | null): LogFeeToEventFilter;
+    'LogFeeTo(address)'(newFeeTo?: PromiseOrValue<string> | null): LogFeeToEventFilter;
+    LogFeeTo(newFeeTo?: PromiseOrValue<string> | null): LogFeeToEventFilter;
 
     'LogRemoveCollateral(address,address,uint256)'(
-      from?: string | null,
-      to?: string | null,
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
       share?: null,
     ): LogRemoveCollateralEventFilter;
-    LogRemoveCollateral(from?: string | null, to?: string | null, share?: null): LogRemoveCollateralEventFilter;
+    LogRemoveCollateral(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      share?: null,
+    ): LogRemoveCollateralEventFilter;
 
     'LogRepay(address,address,uint256,uint256)'(
-      from?: string | null,
-      to?: string | null,
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
       amount?: null,
       part?: null,
     ): LogRepayEventFilter;
-    LogRepay(from?: string | null, to?: string | null, amount?: null, part?: null): LogRepayEventFilter;
+    LogRepay(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      amount?: null,
+      part?: null,
+    ): LogRepayEventFilter;
 
-    'LogWithdrawFees(address,uint256)'(feeTo?: string | null, feesEarnedFraction?: null): LogWithdrawFeesEventFilter;
-    LogWithdrawFees(feeTo?: string | null, feesEarnedFraction?: null): LogWithdrawFeesEventFilter;
+    'LogWithdrawFees(address,uint256)'(
+      feeTo?: PromiseOrValue<string> | null,
+      feesEarnedFraction?: null,
+    ): LogWithdrawFeesEventFilter;
+    LogWithdrawFees(feeTo?: PromiseOrValue<string> | null, feesEarnedFraction?: null): LogWithdrawFeesEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
   };
 
   estimateGas: {
-    accrue(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    accrue(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     accrueInfo(overrides?: CallOverrides): Promise<BigNumber>;
 
     addCollateral(
-      to: string,
-      skim: boolean,
-      share: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      skim: PromiseOrValue<boolean>,
+      share: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     bentoBox(overrides?: CallOverrides): Promise<BigNumber>;
 
     borrow(
-      to: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    claimOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    claimOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     collateral(overrides?: CallOverrides): Promise<BigNumber>;
 
     cook(
-      actions: BigNumberish[],
-      values: BigNumberish[],
-      datas: BytesLike[],
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      actions: PromiseOrValue<BigNumberish>[],
+      values: PromiseOrValue<BigNumberish>[],
+      datas: PromiseOrValue<BytesLike>[],
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     exchangeRate(overrides?: CallOverrides): Promise<BigNumber>;
 
     feeTo(overrides?: CallOverrides): Promise<BigNumber>;
 
-    init(data: BytesLike, overrides?: PayableOverrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    init(
+      data: PromiseOrValue<BytesLike>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     liquidate(
-      users: string[],
-      maxBorrowParts: BigNumberish[],
-      to: string,
-      swapper: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      users: PromiseOrValue<string>[],
+      maxBorrowParts: PromiseOrValue<BigNumberish>[],
+      to: PromiseOrValue<string>,
+      swapper: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     magicInternetMoney(overrides?: CallOverrides): Promise<BigNumber>;
@@ -655,72 +725,78 @@ export interface AbracadabraCouldronTokenContract extends BaseContract {
 
     pendingOwner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    reduceSupply(amount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    reduceSupply(
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     removeCollateral(
-      to: string,
-      share: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      share: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     repay(
-      to: string,
-      skim: boolean,
-      part: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      skim: PromiseOrValue<boolean>,
+      part: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setFeeTo(newFeeTo: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setFeeTo(
+      newFeeTo: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     totalBorrow(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalCollateralShare(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      direct: boolean,
-      renounce: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      direct: PromiseOrValue<boolean>,
+      renounce: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    updateExchangeRate(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    updateExchangeRate(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    userBorrowPart(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    userBorrowPart(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    userCollateralShare(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    userCollateralShare(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    withdrawFees(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    withdrawFees(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    accrue(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    accrue(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     accrueInfo(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     addCollateral(
-      to: string,
-      skim: boolean,
-      share: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      skim: PromiseOrValue<boolean>,
+      share: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     bentoBox(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     borrow(
-      to: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    claimOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    claimOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     collateral(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     cook(
-      actions: BigNumberish[],
-      values: BigNumberish[],
-      datas: BytesLike[],
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      actions: PromiseOrValue<BigNumberish>[],
+      values: PromiseOrValue<BigNumberish>[],
+      datas: PromiseOrValue<BytesLike>[],
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     exchangeRate(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -728,16 +804,16 @@ export interface AbracadabraCouldronTokenContract extends BaseContract {
     feeTo(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     init(
-      data: BytesLike,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      data: PromiseOrValue<BytesLike>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     liquidate(
-      users: string[],
-      maxBorrowParts: BigNumberish[],
-      to: string,
-      swapper: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      users: PromiseOrValue<string>[],
+      maxBorrowParts: PromiseOrValue<BigNumberish>[],
+      to: PromiseOrValue<string>,
+      swapper: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     magicInternetMoney(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -753,26 +829,26 @@ export interface AbracadabraCouldronTokenContract extends BaseContract {
     pendingOwner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     reduceSupply(
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     removeCollateral(
-      to: string,
-      share: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      share: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     repay(
-      to: string,
-      skim: boolean,
-      part: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      skim: PromiseOrValue<boolean>,
+      part: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setFeeTo(
-      newFeeTo: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newFeeTo: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     totalBorrow(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -780,18 +856,18 @@ export interface AbracadabraCouldronTokenContract extends BaseContract {
     totalCollateralShare(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      direct: boolean,
-      renounce: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      direct: PromiseOrValue<boolean>,
+      renounce: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    updateExchangeRate(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    updateExchangeRate(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    userBorrowPart(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    userBorrowPart(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    userCollateralShare(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    userCollateralShare(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    withdrawFees(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    withdrawFees(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
   };
 }

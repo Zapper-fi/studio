@@ -3,13 +3,13 @@ import { BigNumber } from 'ethers';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
-import { TokenBalanceHelper } from '~app-toolkit/helpers/balance/token-balance.helper';
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
+import { CurveVotingEscrowContractPositionBalanceHelper } from '~apps/curve/helpers/curve.voting-escrow.contract-position-balance-helper';
 import { BalanceFetcher } from '~balance/balance-fetcher.interface';
 import { Network } from '~types/network.interface';
 
 import { BLUEBIT_DEFINITION } from '../bluebit.definition';
-import { Bluebit, BluebitContractFactory } from '../contracts';
+import { Bluebit, BluebitContractFactory, BluebitVeToken } from '../contracts';
 
 const appId = BLUEBIT_DEFINITION.id;
 const network = Network.AURORA_MAINNET;
@@ -19,16 +19,23 @@ const zero = BigNumber.from(0);
 export class AuroraBluebitBalanceFetcher implements BalanceFetcher {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(TokenBalanceHelper) private readonly tokenBalanceHelper: TokenBalanceHelper,
+    @Inject(CurveVotingEscrowContractPositionBalanceHelper)
+    private readonly curveVotingEscrowContractPositionBalanceHelper: CurveVotingEscrowContractPositionBalanceHelper,
     @Inject(BluebitContractFactory) private readonly bluebitContractFactory: BluebitContractFactory,
   ) {}
 
-  async getVaultBalances(address: string) {
-    return await this.tokenBalanceHelper.getTokenBalances({
-      network,
-      appId,
-      groupId: BLUEBIT_DEFINITION.groups.vault.id,
+  async getVotingEscrowBalances(address: string) {
+    return this.curveVotingEscrowContractPositionBalanceHelper.getBalances<BluebitVeToken>({
       address,
+      network,
+      appId: BLUEBIT_DEFINITION.id,
+      groupId: BLUEBIT_DEFINITION.groups.votingEscrow.id,
+      resolveContract: ({ address }) => this.bluebitContractFactory.bluebitVeToken({ network, address }),
+      resolveLockedTokenBalance: ({ contract, multicall }) =>
+        multicall
+          .wrap(contract)
+          .lockedOf(address)
+          .then(v => v.amount),
     });
   }
 
@@ -62,15 +69,15 @@ export class AuroraBluebitBalanceFetcher implements BalanceFetcher {
   }
 
   async getBalances(address: string) {
-    const [vaultBalances, farmBalances] = await Promise.all([
-      this.getVaultBalances(address),
+    const [votingEscrowBalances, farmBalances] = await Promise.all([
+      this.getVotingEscrowBalances(address),
       this.getFarmBalances(address),
     ]);
 
     return presentBalanceFetcherResponse([
       {
-        label: 'Vaults',
-        assets: vaultBalances,
+        label: 'Voting Escrow',
+        assets: votingEscrowBalances,
       },
       {
         label: 'Farms',

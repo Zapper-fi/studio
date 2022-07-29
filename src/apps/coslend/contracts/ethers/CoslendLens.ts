@@ -15,32 +15,32 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export declare namespace CoslendLens {
   export type MarketMetadataStruct = {
-    marketAddress: string;
-    marketDecimals: BigNumberish;
-    marketSymbol: string;
-    marketName: string;
-    underlyingAddress: string;
-    underlyingDecimals: BigNumberish;
-    underlyingSymbol: string;
-    underlyingName: string;
-    exchangeRateCurrent: BigNumberish;
-    supplyRatePerSecond: BigNumberish;
-    borrowRatePerSecond: BigNumberish;
-    reserveFactorMantissa: BigNumberish;
-    collateralFactorMantissa: BigNumberish;
-    totalBorrows: BigNumberish;
-    totalReserves: BigNumberish;
-    totalSupply: BigNumberish;
-    totalCash: BigNumberish;
-    price: BigNumberish;
-    isListed: boolean;
-    blockTime: BigNumberish;
-    accrualBlockTime: BigNumberish;
-    borrowIndex: BigNumberish;
+    marketAddress: PromiseOrValue<string>;
+    marketDecimals: PromiseOrValue<BigNumberish>;
+    marketSymbol: PromiseOrValue<string>;
+    marketName: PromiseOrValue<string>;
+    underlyingAddress: PromiseOrValue<string>;
+    underlyingDecimals: PromiseOrValue<BigNumberish>;
+    underlyingSymbol: PromiseOrValue<string>;
+    underlyingName: PromiseOrValue<string>;
+    exchangeRateCurrent: PromiseOrValue<BigNumberish>;
+    supplyRatePerSecond: PromiseOrValue<BigNumberish>;
+    borrowRatePerSecond: PromiseOrValue<BigNumberish>;
+    reserveFactorMantissa: PromiseOrValue<BigNumberish>;
+    collateralFactorMantissa: PromiseOrValue<BigNumberish>;
+    totalBorrows: PromiseOrValue<BigNumberish>;
+    totalReserves: PromiseOrValue<BigNumberish>;
+    totalSupply: PromiseOrValue<BigNumberish>;
+    totalCash: PromiseOrValue<BigNumberish>;
+    price: PromiseOrValue<BigNumberish>;
+    isListed: PromiseOrValue<boolean>;
+    blockTime: PromiseOrValue<BigNumberish>;
+    accrualBlockTime: PromiseOrValue<BigNumberish>;
+    borrowIndex: PromiseOrValue<BigNumberish>;
   };
 
   export type MarketMetadataStructOutput = [
@@ -92,12 +92,12 @@ export declare namespace CoslendLens {
   };
 
   export type InterestRateModelStruct = {
-    market: string;
-    secondsPerYear: BigNumberish;
-    multiplierPerSecond: BigNumberish;
-    baseRatePerSecond: BigNumberish;
-    jumpMultiplierPerSecond: BigNumberish;
-    kink: BigNumberish;
+    market: PromiseOrValue<string>;
+    secondsPerYear: PromiseOrValue<BigNumberish>;
+    multiplierPerSecond: PromiseOrValue<BigNumberish>;
+    baseRatePerSecond: PromiseOrValue<BigNumberish>;
+    jumpMultiplierPerSecond: PromiseOrValue<BigNumberish>;
+    kink: PromiseOrValue<BigNumberish>;
   };
 
   export type InterestRateModelStructOutput = [string, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -110,9 +110,9 @@ export declare namespace CoslendLens {
   };
 
   export type MarketRewardSpeedStruct = {
-    market: string;
-    supplySpeed: BigNumberish;
-    borrowSpeed: BigNumberish;
+    market: PromiseOrValue<string>;
+    supplySpeed: PromiseOrValue<BigNumberish>;
+    borrowSpeed: PromiseOrValue<BigNumberish>;
   };
 
   export type MarketRewardSpeedStructOutput = [string, BigNumber, BigNumber] & {
@@ -122,9 +122,9 @@ export declare namespace CoslendLens {
   };
 
   export type AccountLimitsStruct = {
-    markets: string[];
-    liquidity: BigNumberish;
-    shortfall: BigNumberish;
+    markets: PromiseOrValue<string>[];
+    liquidity: PromiseOrValue<BigNumberish>;
+    shortfall: PromiseOrValue<BigNumberish>;
   };
 
   export type AccountLimitsStructOutput = [string[], BigNumber, BigNumber] & {
@@ -134,12 +134,12 @@ export declare namespace CoslendLens {
   };
 
   export type MarketTokenBalancesStruct = {
-    marketToken: string;
-    balanceOf: BigNumberish;
-    balanceOfUnderlying: BigNumberish;
-    borrowBalanceCurrent: BigNumberish;
-    tokenBalance: BigNumberish;
-    tokenAllowance: BigNumberish;
+    marketToken: PromiseOrValue<string>;
+    balanceOf: PromiseOrValue<BigNumberish>;
+    balanceOfUnderlying: PromiseOrValue<BigNumberish>;
+    borrowBalanceCurrent: PromiseOrValue<BigNumberish>;
+    tokenBalance: PromiseOrValue<BigNumberish>;
+    tokenAllowance: PromiseOrValue<BigNumberish>;
   };
 
   export type MarketTokenBalancesStructOutput = [string, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -207,27 +207,40 @@ export interface CoslendLensInterface extends utils.Interface {
   ): FunctionFragment;
 
   encodeFunctionData(functionFragment: 'all', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'allForAccountInMarkets', values: [string]): string;
-  encodeFunctionData(functionFragment: 'allMarketsForAccount', values: [string]): string;
-  encodeFunctionData(functionFragment: 'marketBalances', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'marketBalancesAll', values: [string[], string]): string;
-  encodeFunctionData(functionFragment: 'pendingRewardAccruedI', values: [string]): string;
-  encodeFunctionData(functionFragment: 'pendingRewardAccruedII', values: [string]): string;
+  encodeFunctionData(functionFragment: 'allForAccountInMarkets', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'allMarketsForAccount', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'marketBalances',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'marketBalancesAll',
+    values: [PromiseOrValue<string>[], PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'pendingRewardAccruedI', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'pendingRewardAccruedII', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
     functionFragment: 'updateProperties',
-    values: [string, string, string, string, string, string],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'comptroller', values?: undefined): string;
   encodeFunctionData(functionFragment: 'distributionI', values?: undefined): string;
   encodeFunctionData(functionFragment: 'distributionII', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getAccountLimits', values: [string]): string;
+  encodeFunctionData(functionFragment: 'getAccountLimits', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'getAllMarkets', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getInterestRateModel', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getInterestRateModels', values: [string[]]): string;
-  encodeFunctionData(functionFragment: 'getRewardSpeed', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getRewardSpeeds', values: [string[]]): string;
-  encodeFunctionData(functionFragment: 'marketTokenMetadata', values: [string]): string;
-  encodeFunctionData(functionFragment: 'marketTokenMetadataAll', values: [string[]]): string;
+  encodeFunctionData(functionFragment: 'getInterestRateModel', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getInterestRateModels', values: [PromiseOrValue<string>[]]): string;
+  encodeFunctionData(functionFragment: 'getRewardSpeed', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getRewardSpeeds', values: [PromiseOrValue<string>[]]): string;
+  encodeFunctionData(functionFragment: 'marketTokenMetadata', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'marketTokenMetadataAll', values: [PromiseOrValue<string>[]]): string;
   encodeFunctionData(functionFragment: 'nativeMarketToken', values?: undefined): string;
   encodeFunctionData(functionFragment: 'nativeName', values?: undefined): string;
   encodeFunctionData(functionFragment: 'nativeToken', values?: undefined): string;
@@ -283,48 +296,48 @@ export interface CoslendLens extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    all(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    all(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     allForAccountInMarkets(
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     allMarketsForAccount(
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     marketBalances(
-      marketToken: string,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketToken: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     marketBalancesAll(
-      marketTokens: string[],
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketTokens: PromiseOrValue<string>[],
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     pendingRewardAccruedI(
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     pendingRewardAccruedII(
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     updateProperties(
-      _comptroller: string,
-      _distributionI: string,
-      _distributionII: string,
-      _nativeMarketToken: string,
-      _nativeToken: string,
-      _nativeName: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _comptroller: PromiseOrValue<string>,
+      _distributionI: PromiseOrValue<string>,
+      _distributionII: PromiseOrValue<string>,
+      _nativeMarketToken: PromiseOrValue<string>,
+      _nativeToken: PromiseOrValue<string>,
+      _nativeName: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     comptroller(overrides?: CallOverrides): Promise<[string]>;
@@ -333,34 +346,40 @@ export interface CoslendLens extends BaseContract {
 
     distributionII(overrides?: CallOverrides): Promise<[string]>;
 
-    getAccountLimits(account: string, overrides?: CallOverrides): Promise<[CoslendLens.AccountLimitsStructOutput]>;
+    getAccountLimits(
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[CoslendLens.AccountLimitsStructOutput]>;
 
     getAllMarkets(overrides?: CallOverrides): Promise<[string[]]>;
 
     getInterestRateModel(
-      market: string,
+      market: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[CoslendLens.InterestRateModelStructOutput]>;
 
     getInterestRateModels(
-      markets: string[],
+      markets: PromiseOrValue<string>[],
       overrides?: CallOverrides,
     ): Promise<[CoslendLens.InterestRateModelStructOutput[]]>;
 
-    getRewardSpeed(market: string, overrides?: CallOverrides): Promise<[CoslendLens.MarketRewardSpeedStructOutput]>;
+    getRewardSpeed(
+      market: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[CoslendLens.MarketRewardSpeedStructOutput]>;
 
     getRewardSpeeds(
-      mrakets: string[],
+      mrakets: PromiseOrValue<string>[],
       overrides?: CallOverrides,
     ): Promise<[CoslendLens.MarketRewardSpeedStructOutput[]]>;
 
     marketTokenMetadata(
-      marketToken: string,
+      marketToken: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[CoslendLens.MarketMetadataStructOutput]>;
 
     marketTokenMetadataAll(
-      marketTokens: string[],
+      marketTokens: PromiseOrValue<string>[],
       overrides?: CallOverrides,
     ): Promise<[CoslendLens.MarketMetadataStructOutput[]]>;
 
@@ -373,48 +392,48 @@ export interface CoslendLens extends BaseContract {
     owner(overrides?: CallOverrides): Promise<[string]>;
   };
 
-  all(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  all(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   allForAccountInMarkets(
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   allMarketsForAccount(
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   marketBalances(
-    marketToken: string,
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    marketToken: PromiseOrValue<string>,
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   marketBalancesAll(
-    marketTokens: string[],
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    marketTokens: PromiseOrValue<string>[],
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   pendingRewardAccruedI(
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   pendingRewardAccruedII(
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   updateProperties(
-    _comptroller: string,
-    _distributionI: string,
-    _distributionII: string,
-    _nativeMarketToken: string,
-    _nativeToken: string,
-    _nativeName: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _comptroller: PromiseOrValue<string>,
+    _distributionI: PromiseOrValue<string>,
+    _distributionII: PromiseOrValue<string>,
+    _nativeMarketToken: PromiseOrValue<string>,
+    _nativeToken: PromiseOrValue<string>,
+    _nativeName: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   comptroller(overrides?: CallOverrides): Promise<string>;
@@ -423,25 +442,40 @@ export interface CoslendLens extends BaseContract {
 
   distributionII(overrides?: CallOverrides): Promise<string>;
 
-  getAccountLimits(account: string, overrides?: CallOverrides): Promise<CoslendLens.AccountLimitsStructOutput>;
+  getAccountLimits(
+    account: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<CoslendLens.AccountLimitsStructOutput>;
 
   getAllMarkets(overrides?: CallOverrides): Promise<string[]>;
 
-  getInterestRateModel(market: string, overrides?: CallOverrides): Promise<CoslendLens.InterestRateModelStructOutput>;
+  getInterestRateModel(
+    market: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<CoslendLens.InterestRateModelStructOutput>;
 
   getInterestRateModels(
-    markets: string[],
+    markets: PromiseOrValue<string>[],
     overrides?: CallOverrides,
   ): Promise<CoslendLens.InterestRateModelStructOutput[]>;
 
-  getRewardSpeed(market: string, overrides?: CallOverrides): Promise<CoslendLens.MarketRewardSpeedStructOutput>;
+  getRewardSpeed(
+    market: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<CoslendLens.MarketRewardSpeedStructOutput>;
 
-  getRewardSpeeds(mrakets: string[], overrides?: CallOverrides): Promise<CoslendLens.MarketRewardSpeedStructOutput[]>;
+  getRewardSpeeds(
+    mrakets: PromiseOrValue<string>[],
+    overrides?: CallOverrides,
+  ): Promise<CoslendLens.MarketRewardSpeedStructOutput[]>;
 
-  marketTokenMetadata(marketToken: string, overrides?: CallOverrides): Promise<CoslendLens.MarketMetadataStructOutput>;
+  marketTokenMetadata(
+    marketToken: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<CoslendLens.MarketMetadataStructOutput>;
 
   marketTokenMetadataAll(
-    marketTokens: string[],
+    marketTokens: PromiseOrValue<string>[],
     overrides?: CallOverrides,
   ): Promise<CoslendLens.MarketMetadataStructOutput[]>;
 
@@ -465,7 +499,7 @@ export interface CoslendLens extends BaseContract {
     >;
 
     allForAccountInMarkets(
-      account: string,
+      account: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [
@@ -476,7 +510,7 @@ export interface CoslendLens extends BaseContract {
     >;
 
     allMarketsForAccount(
-      account: string,
+      account: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [
@@ -487,28 +521,28 @@ export interface CoslendLens extends BaseContract {
     >;
 
     marketBalances(
-      marketToken: string,
-      account: string,
+      marketToken: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<CoslendLens.MarketTokenBalancesStructOutput>;
 
     marketBalancesAll(
-      marketTokens: string[],
-      account: string,
+      marketTokens: PromiseOrValue<string>[],
+      account: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<CoslendLens.MarketTokenBalancesStructOutput[]>;
 
-    pendingRewardAccruedI(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingRewardAccruedI(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    pendingRewardAccruedII(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingRewardAccruedII(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     updateProperties(
-      _comptroller: string,
-      _distributionI: string,
-      _distributionII: string,
-      _nativeMarketToken: string,
-      _nativeToken: string,
-      _nativeName: string,
+      _comptroller: PromiseOrValue<string>,
+      _distributionI: PromiseOrValue<string>,
+      _distributionII: PromiseOrValue<string>,
+      _nativeMarketToken: PromiseOrValue<string>,
+      _nativeToken: PromiseOrValue<string>,
+      _nativeName: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -518,28 +552,40 @@ export interface CoslendLens extends BaseContract {
 
     distributionII(overrides?: CallOverrides): Promise<string>;
 
-    getAccountLimits(account: string, overrides?: CallOverrides): Promise<CoslendLens.AccountLimitsStructOutput>;
+    getAccountLimits(
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<CoslendLens.AccountLimitsStructOutput>;
 
     getAllMarkets(overrides?: CallOverrides): Promise<string[]>;
 
-    getInterestRateModel(market: string, overrides?: CallOverrides): Promise<CoslendLens.InterestRateModelStructOutput>;
+    getInterestRateModel(
+      market: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<CoslendLens.InterestRateModelStructOutput>;
 
     getInterestRateModels(
-      markets: string[],
+      markets: PromiseOrValue<string>[],
       overrides?: CallOverrides,
     ): Promise<CoslendLens.InterestRateModelStructOutput[]>;
 
-    getRewardSpeed(market: string, overrides?: CallOverrides): Promise<CoslendLens.MarketRewardSpeedStructOutput>;
+    getRewardSpeed(
+      market: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<CoslendLens.MarketRewardSpeedStructOutput>;
 
-    getRewardSpeeds(mrakets: string[], overrides?: CallOverrides): Promise<CoslendLens.MarketRewardSpeedStructOutput[]>;
+    getRewardSpeeds(
+      mrakets: PromiseOrValue<string>[],
+      overrides?: CallOverrides,
+    ): Promise<CoslendLens.MarketRewardSpeedStructOutput[]>;
 
     marketTokenMetadata(
-      marketToken: string,
+      marketToken: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<CoslendLens.MarketMetadataStructOutput>;
 
     marketTokenMetadataAll(
-      marketTokens: string[],
+      marketTokens: PromiseOrValue<string>[],
       overrides?: CallOverrides,
     ): Promise<CoslendLens.MarketMetadataStructOutput[]>;
 
@@ -555,48 +601,48 @@ export interface CoslendLens extends BaseContract {
   filters: {};
 
   estimateGas: {
-    all(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    all(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     allForAccountInMarkets(
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     allMarketsForAccount(
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     marketBalances(
-      marketToken: string,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketToken: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     marketBalancesAll(
-      marketTokens: string[],
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketTokens: PromiseOrValue<string>[],
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     pendingRewardAccruedI(
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     pendingRewardAccruedII(
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     updateProperties(
-      _comptroller: string,
-      _distributionI: string,
-      _distributionII: string,
-      _nativeMarketToken: string,
-      _nativeToken: string,
-      _nativeName: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _comptroller: PromiseOrValue<string>,
+      _distributionI: PromiseOrValue<string>,
+      _distributionII: PromiseOrValue<string>,
+      _nativeMarketToken: PromiseOrValue<string>,
+      _nativeToken: PromiseOrValue<string>,
+      _nativeName: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     comptroller(overrides?: CallOverrides): Promise<BigNumber>;
@@ -605,21 +651,21 @@ export interface CoslendLens extends BaseContract {
 
     distributionII(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getAccountLimits(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getAccountLimits(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getAllMarkets(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getInterestRateModel(market: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getInterestRateModel(market: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getInterestRateModels(markets: string[], overrides?: CallOverrides): Promise<BigNumber>;
+    getInterestRateModels(markets: PromiseOrValue<string>[], overrides?: CallOverrides): Promise<BigNumber>;
 
-    getRewardSpeed(market: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getRewardSpeed(market: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getRewardSpeeds(mrakets: string[], overrides?: CallOverrides): Promise<BigNumber>;
+    getRewardSpeeds(mrakets: PromiseOrValue<string>[], overrides?: CallOverrides): Promise<BigNumber>;
 
-    marketTokenMetadata(marketToken: string, overrides?: CallOverrides): Promise<BigNumber>;
+    marketTokenMetadata(marketToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    marketTokenMetadataAll(marketTokens: string[], overrides?: CallOverrides): Promise<BigNumber>;
+    marketTokenMetadataAll(marketTokens: PromiseOrValue<string>[], overrides?: CallOverrides): Promise<BigNumber>;
 
     nativeMarketToken(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -631,48 +677,48 @@ export interface CoslendLens extends BaseContract {
   };
 
   populateTransaction: {
-    all(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    all(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     allForAccountInMarkets(
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     allMarketsForAccount(
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     marketBalances(
-      marketToken: string,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketToken: PromiseOrValue<string>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     marketBalancesAll(
-      marketTokens: string[],
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      marketTokens: PromiseOrValue<string>[],
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     pendingRewardAccruedI(
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     pendingRewardAccruedII(
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateProperties(
-      _comptroller: string,
-      _distributionI: string,
-      _distributionII: string,
-      _nativeMarketToken: string,
-      _nativeToken: string,
-      _nativeName: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _comptroller: PromiseOrValue<string>,
+      _distributionI: PromiseOrValue<string>,
+      _distributionII: PromiseOrValue<string>,
+      _nativeMarketToken: PromiseOrValue<string>,
+      _nativeToken: PromiseOrValue<string>,
+      _nativeName: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     comptroller(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -681,21 +727,24 @@ export interface CoslendLens extends BaseContract {
 
     distributionII(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getAccountLimits(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getAccountLimits(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getAllMarkets(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getInterestRateModel(market: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getInterestRateModel(market: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getInterestRateModels(markets: string[], overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getInterestRateModels(markets: PromiseOrValue<string>[], overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getRewardSpeed(market: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getRewardSpeed(market: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getRewardSpeeds(mrakets: string[], overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getRewardSpeeds(mrakets: PromiseOrValue<string>[], overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    marketTokenMetadata(marketToken: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    marketTokenMetadata(marketToken: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    marketTokenMetadataAll(marketTokens: string[], overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    marketTokenMetadataAll(
+      marketTokens: PromiseOrValue<string>[],
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     nativeMarketToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 

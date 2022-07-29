@@ -13,7 +13,7 @@ export const TAROT_DEFINITION = appDefinition({
     collateral: { id: 'collateral', type: GroupType.TOKEN, label: 'Lending Pools', groupLabel: 'Pools' },
     supply: { id: 'supply', type: GroupType.TOKEN, label: 'Supply', groupLabel: 'Supply', isHiddenFromExplore: true },
     borrow: { id: 'borrow', type: GroupType.POSITION, label: 'Lending Pools', groupLabel: 'Borrow' },
-    supplyVault: { id: 'supply-vault', type: GroupType.TOKEN, label: 'Vaults', groupLabel: 'Vault' },
+    vault: { id: 'vault', type: GroupType.TOKEN, label: 'Vaults', groupLabel: 'Vault' },
   },
   links: {
     github: 'https://github.com/tarot-finance',

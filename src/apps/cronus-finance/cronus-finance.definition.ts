@@ -25,13 +25,17 @@ export const CRONUS_FINANCE_DEFINITION = appDefinition({
 
   tags: [AppTag.DECENTRALIZED_EXCHANGE],
   keywords: [],
-  links: {},
+  links: {
+    github: 'https://github.com/cronus-finance',
+    twitter: 'https://twitter.com/cronusfinance',
+    discord: 'https://discord.com/invite/cronusfinance',
+  },
 
   supportedNetworks: {
     [Network.EVMOS_MAINNET]: [AppAction.VIEW],
   },
 
-  primaryColor: 'rgb(255, 240, 231)',
+  primaryColor: '#fff0e7',
 });
 
 @Register.AppDefinition(CRONUS_FINANCE_DEFINITION.id)

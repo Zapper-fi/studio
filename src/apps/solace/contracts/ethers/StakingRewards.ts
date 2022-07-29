@@ -15,9 +15,12 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
-export type LockStruct = { amount: BigNumberish; end: BigNumberish };
+export type LockStruct = {
+  amount: PromiseOrValue<BigNumberish>;
+  end: PromiseOrValue<BigNumberish>;
+};
 
 export type LockStructOutput = [BigNumber, BigNumber] & {
   amount: BigNumber;
@@ -26,10 +29,10 @@ export type LockStructOutput = [BigNumber, BigNumber] & {
 
 export declare namespace IStakingRewards {
   export type StakedLockInfoStruct = {
-    value: BigNumberish;
-    rewardDebt: BigNumberish;
-    unpaidRewards: BigNumberish;
-    owner: string;
+    value: PromiseOrValue<BigNumberish>;
+    rewardDebt: PromiseOrValue<BigNumberish>;
+    unpaidRewards: PromiseOrValue<BigNumberish>;
+    owner: PromiseOrValue<string>;
   };
 
   export type StakedLockInfoStructOutput = [BigNumber, BigNumber, BigNumber, string] & {
@@ -111,29 +114,41 @@ export interface StakingRewardsInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'UNLOCKED_MULTIPLIER_BPS', values?: undefined): string;
   encodeFunctionData(functionFragment: 'accRewardPerShare', values?: undefined): string;
   encodeFunctionData(functionFragment: 'acceptGovernance', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'compoundLock', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'compoundLocks', values: [BigNumberish[], BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'compoundLock', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'compoundLocks',
+    values: [PromiseOrValue<BigNumberish>[], PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'endTime', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getRewardAmountDistributed', values: [BigNumberish, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'getRewardAmountDistributed',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'governance', values?: undefined): string;
   encodeFunctionData(functionFragment: 'governanceIsLocked', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'harvestLock', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'harvestLocks', values: [BigNumberish[]]): string;
+  encodeFunctionData(functionFragment: 'harvestLock', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'harvestLocks', values: [PromiseOrValue<BigNumberish>[]]): string;
   encodeFunctionData(functionFragment: 'lastRewardTime', values?: undefined): string;
   encodeFunctionData(functionFragment: 'lockGovernance', values?: undefined): string;
   encodeFunctionData(functionFragment: 'pendingGovernance', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'pendingRewardsOfLock', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'pendingRewardsOfLock', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(
     functionFragment: 'registerLockEvent',
-    values: [BigNumberish, string, string, LockStruct, LockStruct],
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>, PromiseOrValue<string>, LockStruct, LockStruct],
   ): string;
-  encodeFunctionData(functionFragment: 'rescueTokens', values: [string, BigNumberish, string]): string;
+  encodeFunctionData(
+    functionFragment: 'rescueTokens',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'rewardPerSecond', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'setPendingGovernance', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setRewards', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setTimes', values: [BigNumberish, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'setPendingGovernance', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setRewards', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'setTimes',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'solace', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'stakedLockInfo', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'stakedLockInfo', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'startTime', values?: undefined): string;
   encodeFunctionData(functionFragment: 'update', values?: undefined): string;
   encodeFunctionData(functionFragment: 'valueStaked', values?: undefined): string;
@@ -266,24 +281,24 @@ export interface StakingRewards extends BaseContract {
 
     accRewardPerShare(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    acceptGovernance(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    acceptGovernance(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     compoundLock(
-      xsLockID: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      xsLockID: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     compoundLocks(
-      xsLockIDs: BigNumberish[],
-      increasedLockID: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      xsLockIDs: PromiseOrValue<BigNumberish>[],
+      increasedLockID: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     endTime(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     getRewardAmountDistributed(
-      from: BigNumberish,
-      to: BigNumberish,
+      from: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber] & { amount: BigNumber }>;
 
@@ -292,70 +307,70 @@ export interface StakingRewards extends BaseContract {
     governanceIsLocked(overrides?: CallOverrides): Promise<[boolean]>;
 
     harvestLock(
-      xsLockID: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      xsLockID: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     harvestLocks(
-      xsLockIDs: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      xsLockIDs: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     lastRewardTime(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    lockGovernance(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    lockGovernance(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     pendingGovernance(overrides?: CallOverrides): Promise<[string]>;
 
     pendingRewardsOfLock(
-      xsLockID: BigNumberish,
+      xsLockID: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber] & { reward: BigNumber }>;
 
     registerLockEvent(
-      xsLockID: BigNumberish,
-      oldOwner: string,
-      newOwner: string,
+      xsLockID: PromiseOrValue<BigNumberish>,
+      oldOwner: PromiseOrValue<string>,
+      newOwner: PromiseOrValue<string>,
       oldLock: LockStruct,
       newLock: LockStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     rescueTokens(
-      token: string,
-      amount: BigNumberish,
-      receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     rewardPerSecond(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     setPendingGovernance(
-      pendingGovernance_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pendingGovernance_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setRewards(
-      rewardPerSecond_: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      rewardPerSecond_: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setTimes(
-      startTime_: BigNumberish,
-      endTime_: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      startTime_: PromiseOrValue<BigNumberish>,
+      endTime_: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     solace(overrides?: CallOverrides): Promise<[string]>;
 
     stakedLockInfo(
-      xsLockID: BigNumberish,
+      xsLockID: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[IStakingRewards.StakedLockInfoStructOutput]>;
 
     startTime(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    update(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    update(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     valueStaked(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -370,89 +385,93 @@ export interface StakingRewards extends BaseContract {
 
   accRewardPerShare(overrides?: CallOverrides): Promise<BigNumber>;
 
-  acceptGovernance(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  acceptGovernance(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   compoundLock(
-    xsLockID: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    xsLockID: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   compoundLocks(
-    xsLockIDs: BigNumberish[],
-    increasedLockID: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    xsLockIDs: PromiseOrValue<BigNumberish>[],
+    increasedLockID: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   endTime(overrides?: CallOverrides): Promise<BigNumber>;
 
-  getRewardAmountDistributed(from: BigNumberish, to: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  getRewardAmountDistributed(
+    from: PromiseOrValue<BigNumberish>,
+    to: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   governance(overrides?: CallOverrides): Promise<string>;
 
   governanceIsLocked(overrides?: CallOverrides): Promise<boolean>;
 
   harvestLock(
-    xsLockID: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    xsLockID: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   harvestLocks(
-    xsLockIDs: BigNumberish[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    xsLockIDs: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   lastRewardTime(overrides?: CallOverrides): Promise<BigNumber>;
 
-  lockGovernance(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  lockGovernance(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   pendingGovernance(overrides?: CallOverrides): Promise<string>;
 
-  pendingRewardsOfLock(xsLockID: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  pendingRewardsOfLock(xsLockID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   registerLockEvent(
-    xsLockID: BigNumberish,
-    oldOwner: string,
-    newOwner: string,
+    xsLockID: PromiseOrValue<BigNumberish>,
+    oldOwner: PromiseOrValue<string>,
+    newOwner: PromiseOrValue<string>,
     oldLock: LockStruct,
     newLock: LockStruct,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   rescueTokens(
-    token: string,
-    amount: BigNumberish,
-    receiver: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    token: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    receiver: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   rewardPerSecond(overrides?: CallOverrides): Promise<BigNumber>;
 
   setPendingGovernance(
-    pendingGovernance_: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    pendingGovernance_: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setRewards(
-    rewardPerSecond_: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    rewardPerSecond_: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setTimes(
-    startTime_: BigNumberish,
-    endTime_: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    startTime_: PromiseOrValue<BigNumberish>,
+    endTime_: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   solace(overrides?: CallOverrides): Promise<string>;
 
   stakedLockInfo(
-    xsLockID: BigNumberish,
+    xsLockID: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<IStakingRewards.StakedLockInfoStructOutput>;
 
   startTime(overrides?: CallOverrides): Promise<BigNumber>;
 
-  update(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  update(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   valueStaked(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -469,21 +488,29 @@ export interface StakingRewards extends BaseContract {
 
     acceptGovernance(overrides?: CallOverrides): Promise<void>;
 
-    compoundLock(xsLockID: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    compoundLock(xsLockID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    compoundLocks(xsLockIDs: BigNumberish[], increasedLockID: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    compoundLocks(
+      xsLockIDs: PromiseOrValue<BigNumberish>[],
+      increasedLockID: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     endTime(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getRewardAmountDistributed(from: BigNumberish, to: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getRewardAmountDistributed(
+      from: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     governance(overrides?: CallOverrides): Promise<string>;
 
     governanceIsLocked(overrides?: CallOverrides): Promise<boolean>;
 
-    harvestLock(xsLockID: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    harvestLock(xsLockID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    harvestLocks(xsLockIDs: BigNumberish[], overrides?: CallOverrides): Promise<void>;
+    harvestLocks(xsLockIDs: PromiseOrValue<BigNumberish>[], overrides?: CallOverrides): Promise<void>;
 
     lastRewardTime(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -491,31 +518,40 @@ export interface StakingRewards extends BaseContract {
 
     pendingGovernance(overrides?: CallOverrides): Promise<string>;
 
-    pendingRewardsOfLock(xsLockID: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingRewardsOfLock(xsLockID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     registerLockEvent(
-      xsLockID: BigNumberish,
-      oldOwner: string,
-      newOwner: string,
+      xsLockID: PromiseOrValue<BigNumberish>,
+      oldOwner: PromiseOrValue<string>,
+      newOwner: PromiseOrValue<string>,
       oldLock: LockStruct,
       newLock: LockStruct,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    rescueTokens(token: string, amount: BigNumberish, receiver: string, overrides?: CallOverrides): Promise<void>;
+    rescueTokens(
+      token: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      receiver: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     rewardPerSecond(overrides?: CallOverrides): Promise<BigNumber>;
 
-    setPendingGovernance(pendingGovernance_: string, overrides?: CallOverrides): Promise<void>;
+    setPendingGovernance(pendingGovernance_: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setRewards(rewardPerSecond_: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setRewards(rewardPerSecond_: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setTimes(startTime_: BigNumberish, endTime_: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setTimes(
+      startTime_: PromiseOrValue<BigNumberish>,
+      endTime_: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     solace(overrides?: CallOverrides): Promise<string>;
 
     stakedLockInfo(
-      xsLockID: BigNumberish,
+      xsLockID: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<IStakingRewards.StakedLockInfoStructOutput>;
 
@@ -544,8 +580,8 @@ export interface StakingRewards extends BaseContract {
     ): GovernanceTransferredEventFilter;
     GovernanceTransferred(oldGovernance?: null, newGovernance?: null): GovernanceTransferredEventFilter;
 
-    'LockUpdated(uint256)'(xsLockID?: BigNumberish | null): LockUpdatedEventFilter;
-    LockUpdated(xsLockID?: BigNumberish | null): LockUpdatedEventFilter;
+    'LockUpdated(uint256)'(xsLockID?: PromiseOrValue<BigNumberish> | null): LockUpdatedEventFilter;
+    LockUpdated(xsLockID?: PromiseOrValue<BigNumberish> | null): LockUpdatedEventFilter;
 
     'RewardsSet(uint256)'(rewardPerSecond?: null): RewardsSetEventFilter;
     RewardsSet(rewardPerSecond?: null): RewardsSetEventFilter;
@@ -563,86 +599,90 @@ export interface StakingRewards extends BaseContract {
 
     accRewardPerShare(overrides?: CallOverrides): Promise<BigNumber>;
 
-    acceptGovernance(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    acceptGovernance(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     compoundLock(
-      xsLockID: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      xsLockID: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     compoundLocks(
-      xsLockIDs: BigNumberish[],
-      increasedLockID: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      xsLockIDs: PromiseOrValue<BigNumberish>[],
+      increasedLockID: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     endTime(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getRewardAmountDistributed(from: BigNumberish, to: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getRewardAmountDistributed(
+      from: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     governance(overrides?: CallOverrides): Promise<BigNumber>;
 
     governanceIsLocked(overrides?: CallOverrides): Promise<BigNumber>;
 
     harvestLock(
-      xsLockID: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      xsLockID: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     harvestLocks(
-      xsLockIDs: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      xsLockIDs: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     lastRewardTime(overrides?: CallOverrides): Promise<BigNumber>;
 
-    lockGovernance(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    lockGovernance(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     pendingGovernance(overrides?: CallOverrides): Promise<BigNumber>;
 
-    pendingRewardsOfLock(xsLockID: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingRewardsOfLock(xsLockID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     registerLockEvent(
-      xsLockID: BigNumberish,
-      oldOwner: string,
-      newOwner: string,
+      xsLockID: PromiseOrValue<BigNumberish>,
+      oldOwner: PromiseOrValue<string>,
+      newOwner: PromiseOrValue<string>,
       oldLock: LockStruct,
       newLock: LockStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     rescueTokens(
-      token: string,
-      amount: BigNumberish,
-      receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     rewardPerSecond(overrides?: CallOverrides): Promise<BigNumber>;
 
     setPendingGovernance(
-      pendingGovernance_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pendingGovernance_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setRewards(
-      rewardPerSecond_: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      rewardPerSecond_: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setTimes(
-      startTime_: BigNumberish,
-      endTime_: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      startTime_: PromiseOrValue<BigNumberish>,
+      endTime_: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     solace(overrides?: CallOverrides): Promise<BigNumber>;
 
-    stakedLockInfo(xsLockID: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    stakedLockInfo(xsLockID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     startTime(overrides?: CallOverrides): Promise<BigNumber>;
 
-    update(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    update(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     valueStaked(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -658,24 +698,24 @@ export interface StakingRewards extends BaseContract {
 
     accRewardPerShare(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    acceptGovernance(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    acceptGovernance(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     compoundLock(
-      xsLockID: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      xsLockID: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     compoundLocks(
-      xsLockIDs: BigNumberish[],
-      increasedLockID: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      xsLockIDs: PromiseOrValue<BigNumberish>[],
+      increasedLockID: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     endTime(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getRewardAmountDistributed(
-      from: BigNumberish,
-      to: BigNumberish,
+      from: PromiseOrValue<BigNumberish>,
+      to: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
@@ -684,64 +724,67 @@ export interface StakingRewards extends BaseContract {
     governanceIsLocked(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     harvestLock(
-      xsLockID: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      xsLockID: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     harvestLocks(
-      xsLockIDs: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      xsLockIDs: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     lastRewardTime(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    lockGovernance(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    lockGovernance(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     pendingGovernance(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    pendingRewardsOfLock(xsLockID: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    pendingRewardsOfLock(
+      xsLockID: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     registerLockEvent(
-      xsLockID: BigNumberish,
-      oldOwner: string,
-      newOwner: string,
+      xsLockID: PromiseOrValue<BigNumberish>,
+      oldOwner: PromiseOrValue<string>,
+      newOwner: PromiseOrValue<string>,
       oldLock: LockStruct,
       newLock: LockStruct,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     rescueTokens(
-      token: string,
-      amount: BigNumberish,
-      receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      token: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     rewardPerSecond(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setPendingGovernance(
-      pendingGovernance_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      pendingGovernance_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setRewards(
-      rewardPerSecond_: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      rewardPerSecond_: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setTimes(
-      startTime_: BigNumberish,
-      endTime_: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      startTime_: PromiseOrValue<BigNumberish>,
+      endTime_: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     solace(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    stakedLockInfo(xsLockID: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    stakedLockInfo(xsLockID: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     startTime(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    update(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    update(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     valueStaked(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 

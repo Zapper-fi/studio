@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface CurvePassthroughRewardsInterface extends utils.Interface {
   functions: {
@@ -42,13 +42,16 @@ export interface CurvePassthroughRewardsInterface extends utils.Interface {
   ): FunctionFragment;
 
   encodeFunctionData(functionFragment: 'get_reward', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'set_reward_data', values: [BigNumberish, string, string]): string;
-  encodeFunctionData(functionFragment: 'commit_transfer_ownership', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'set_reward_data',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'commit_transfer_ownership', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'accept_transfer_ownership', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'future_owner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'reward_receiver', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'reward_data', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'reward_data', values: [PromiseOrValue<BigNumberish>]): string;
 
   decodeFunctionResult(functionFragment: 'get_reward', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'set_reward_data', data: BytesLike): Result;
@@ -85,23 +88,21 @@ export interface CurvePassthroughRewards extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    get_reward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    get_reward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     set_reward_data(
-      _idx: BigNumberish,
-      _claim: string,
-      _reward: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _idx: PromiseOrValue<BigNumberish>,
+      _claim: PromiseOrValue<string>,
+      _reward: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     commit_transfer_ownership(
-      _owner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    accept_transfer_ownership(
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
+    accept_transfer_ownership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
@@ -110,26 +111,26 @@ export interface CurvePassthroughRewards extends BaseContract {
     reward_receiver(overrides?: CallOverrides): Promise<[string]>;
 
     reward_data(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[string, string] & { claim: string; reward: string }>;
   };
 
-  get_reward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  get_reward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   set_reward_data(
-    _idx: BigNumberish,
-    _claim: string,
-    _reward: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _idx: PromiseOrValue<BigNumberish>,
+    _claim: PromiseOrValue<string>,
+    _reward: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   commit_transfer_ownership(
-    _owner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _owner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  accept_transfer_ownership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  accept_transfer_ownership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
@@ -138,16 +139,21 @@ export interface CurvePassthroughRewards extends BaseContract {
   reward_receiver(overrides?: CallOverrides): Promise<string>;
 
   reward_data(
-    arg0: BigNumberish,
+    arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<[string, string] & { claim: string; reward: string }>;
 
   callStatic: {
     get_reward(overrides?: CallOverrides): Promise<void>;
 
-    set_reward_data(_idx: BigNumberish, _claim: string, _reward: string, overrides?: CallOverrides): Promise<void>;
+    set_reward_data(
+      _idx: PromiseOrValue<BigNumberish>,
+      _claim: PromiseOrValue<string>,
+      _reward: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    commit_transfer_ownership(_owner: string, overrides?: CallOverrides): Promise<void>;
+    commit_transfer_ownership(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     accept_transfer_ownership(overrides?: CallOverrides): Promise<void>;
 
@@ -158,7 +164,7 @@ export interface CurvePassthroughRewards extends BaseContract {
     reward_receiver(overrides?: CallOverrides): Promise<string>;
 
     reward_data(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[string, string] & { claim: string; reward: string }>;
   };
@@ -166,21 +172,21 @@ export interface CurvePassthroughRewards extends BaseContract {
   filters: {};
 
   estimateGas: {
-    get_reward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    get_reward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     set_reward_data(
-      _idx: BigNumberish,
-      _claim: string,
-      _reward: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _idx: PromiseOrValue<BigNumberish>,
+      _claim: PromiseOrValue<string>,
+      _reward: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     commit_transfer_ownership(
-      _owner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    accept_transfer_ownership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    accept_transfer_ownership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -188,27 +194,25 @@ export interface CurvePassthroughRewards extends BaseContract {
 
     reward_receiver(overrides?: CallOverrides): Promise<BigNumber>;
 
-    reward_data(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    reward_data(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    get_reward(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    get_reward(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     set_reward_data(
-      _idx: BigNumberish,
-      _claim: string,
-      _reward: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _idx: PromiseOrValue<BigNumberish>,
+      _claim: PromiseOrValue<string>,
+      _reward: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     commit_transfer_ownership(
-      _owner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _owner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    accept_transfer_ownership(
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<PopulatedTransaction>;
+    accept_transfer_ownership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -216,6 +220,6 @@ export interface CurvePassthroughRewards extends BaseContract {
 
     reward_receiver(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    reward_data(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    reward_data(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }

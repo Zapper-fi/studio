@@ -3,6 +3,7 @@ import { Inject } from '@nestjs/common';
 import { Register } from '~app-toolkit/decorators';
 import { CURVE_DEFINITION } from '~apps/curve';
 import { OLYMPUS_DEFINITION } from '~apps/olympus';
+import { STARGATE_DEFINITION } from '~apps/stargate/stargate.definition';
 import { YEARN_DEFINITION } from '~apps/yearn/yearn.definition';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
@@ -43,7 +44,7 @@ const CAULDRONS = [
   '0x5ec47ee69bede0b6c2a2fc0d9d094df16c192498', // WBTC
   '0xf179fe36a36b32a4644587b8cdee7a23af98ed37', // yvCVXETH
   '0x7ce7d9ed62b9a6c5ace1c6ec9aeb115fa3064757', // yvDAI
-  '0xd31E19A0574dBF09310c3B06f3416661B4Dc7324', // Stargate USDC
+  '0xd31e19a0574dbf09310c3b06f3416661b4dc7324', // Stargate USDC
   '0xc6b2b3fe7c3d7a6f823d9106e22e66660709001e', // Stargate USDT
   '0x53375add9d2dfe19398ed65baaeffe622760a9a6', // yvstETH Concentrated
 ];
@@ -72,10 +73,10 @@ export class EthereumAbracadabraCauldronContractPositionFetcher implements Posit
           groupIds: [YEARN_DEFINITION.groups.v1Vault.id, YEARN_DEFINITION.groups.v2Vault.id],
           network,
         },
+        { appId: STARGATE_DEFINITION.id, groupIds: [STARGATE_DEFINITION.groups.pool.id], network },
         // @TODO: Migrate these over
         { appId: 'convex', groupIds: ['deposit'], network },
         { appId: 'sushiswap', groupIds: ['pool'], network },
-        { appId: 'stargate', groupIds: ['pool'], network },
       ],
     });
   }

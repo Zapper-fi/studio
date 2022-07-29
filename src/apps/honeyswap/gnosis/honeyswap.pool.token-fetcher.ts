@@ -14,7 +14,7 @@ const appId = HONEYSWAP_DEFINITION.id;
 const groupId = HONEYSWAP_DEFINITION.groups.pool.id;
 const network = Network.GNOSIS_MAINNET;
 
-@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
+@Register.TokenPositionFetcher({ appId, groupId, network })
 export class GnosisHoneyswapPoolTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(HoneyswapContractFactory) private readonly honeyswapContractFactory: HoneyswapContractFactory,

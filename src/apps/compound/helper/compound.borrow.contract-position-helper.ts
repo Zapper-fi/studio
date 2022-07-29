@@ -8,7 +8,7 @@ import {
   buildPercentageDisplayItem,
 } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { EthersMulticall } from '~multicall';
+import { IMulticallWrapper } from '~multicall/multicall.interface';
 import { ContractType } from '~position/contract.interface';
 import { ContractPosition } from '~position/position.interface';
 import { borrowed } from '~position/position.utils';
@@ -32,7 +32,7 @@ type CompoundBorrowContractPositionHelperParams = {
     contract: CompoundCToken;
     address: string;
     network: Network;
-    multicall: EthersMulticall;
+    multicall: IMulticallWrapper;
   }) => Promise<BigNumberish>;
 };
 
@@ -75,7 +75,9 @@ export class CompoundBorrowContractPositionHelper {
       const underlyingPrice = appToken.tokens[0].price;
       // Liquidity is the total supply of "cash" multiplied by the price of an underlying token
       const borrowedPositionliquidity = cashSupply * underlyingPrice;
-      const borrowLiquidity = underlyingLiquidity - borrowedPositionliquidity;
+
+      const borrowLiquidity =
+        borrowedPositionliquidity > underlyingLiquidity ? 0 : underlyingLiquidity - borrowedPositionliquidity;
 
       const dataProps = {
         ...appToken.dataProps,

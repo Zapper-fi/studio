@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface MakerGovernanceInterface extends utils.Interface {
   functions: {
@@ -82,32 +82,59 @@ export interface MakerGovernanceInterface extends utils.Interface {
   ): FunctionFragment;
 
   encodeFunctionData(functionFragment: 'IOU', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getUserRoles', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setOwner', values: [string]): string;
+  encodeFunctionData(functionFragment: 'getUserRoles', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setOwner', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'GOV', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getCapabilityRoles', values: [string, BytesLike]): string;
-  encodeFunctionData(functionFragment: 'isCapabilityPublic', values: [string, BytesLike]): string;
+  encodeFunctionData(
+    functionFragment: 'getCapabilityRoles',
+    values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'isCapabilityPublic',
+    values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>],
+  ): string;
   encodeFunctionData(functionFragment: 'MAX_YAYS', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'lift', values: [string]): string;
-  encodeFunctionData(functionFragment: 'etch', values: [string[]]): string;
-  encodeFunctionData(functionFragment: 'approvals', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setUserRole', values: [string, BigNumberish, boolean]): string;
-  encodeFunctionData(functionFragment: 'setAuthority', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setRoleCapability', values: [BigNumberish, string, BytesLike, boolean]): string;
+  encodeFunctionData(functionFragment: 'lift', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'etch', values: [PromiseOrValue<string>[]]): string;
+  encodeFunctionData(functionFragment: 'approvals', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'setUserRole',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(functionFragment: 'setAuthority', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'setRoleCapability',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>, PromiseOrValue<BytesLike>, PromiseOrValue<boolean>],
+  ): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'hasUserRole', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'vote(bytes32)', values: [BytesLike]): string;
-  encodeFunctionData(functionFragment: 'vote(address[])', values: [string[]]): string;
-  encodeFunctionData(functionFragment: 'canCall', values: [string, string, BytesLike]): string;
+  encodeFunctionData(
+    functionFragment: 'hasUserRole',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'vote(bytes32)', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(functionFragment: 'vote(address[])', values: [PromiseOrValue<string>[]]): string;
+  encodeFunctionData(
+    functionFragment: 'canCall',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BytesLike>],
+  ): string;
   encodeFunctionData(functionFragment: 'authority', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'slates', values: [BytesLike, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setPublicCapability', values: [string, BytesLike, boolean]): string;
-  encodeFunctionData(functionFragment: 'setRootUser', values: [string, boolean]): string;
-  encodeFunctionData(functionFragment: 'votes', values: [string]): string;
-  encodeFunctionData(functionFragment: 'free', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'lock', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'isUserRoot', values: [string]): string;
-  encodeFunctionData(functionFragment: 'deposits', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'slates',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'setPublicCapability',
+    values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'setRootUser',
+    values: [PromiseOrValue<string>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(functionFragment: 'votes', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'free', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'lock', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'isUserRoot', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'deposits', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'hat', values?: undefined): string;
 
   decodeFunctionResult(functionFragment: 'IOU', data: BytesLike): Result;
@@ -210,341 +237,487 @@ export interface MakerGovernance extends BaseContract {
   functions: {
     IOU(overrides?: CallOverrides): Promise<[string]>;
 
-    getUserRoles(who: string, overrides?: CallOverrides): Promise<[string]>;
+    getUserRoles(who: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[string]>;
 
-    setOwner(owner_: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    setOwner(
+      owner_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     GOV(overrides?: CallOverrides): Promise<[string]>;
 
-    getCapabilityRoles(code: string, sig: BytesLike, overrides?: CallOverrides): Promise<[string]>;
+    getCapabilityRoles(
+      code: PromiseOrValue<string>,
+      sig: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<[string]>;
 
-    isCapabilityPublic(code: string, sig: BytesLike, overrides?: CallOverrides): Promise<[boolean]>;
+    isCapabilityPublic(
+      code: PromiseOrValue<string>,
+      sig: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<[boolean]>;
 
     MAX_YAYS(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    lift(whom: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    lift(
+      whom: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
-    etch(yays: string[], overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    etch(
+      yays: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
-    approvals(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    approvals(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     setUserRole(
-      who: string,
-      role: BigNumberish,
-      enabled: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      who: PromiseOrValue<string>,
+      role: PromiseOrValue<BigNumberish>,
+      enabled: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setAuthority(
-      authority_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      authority_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setRoleCapability(
-      role: BigNumberish,
-      code: string,
-      sig: BytesLike,
-      enabled: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BigNumberish>,
+      code: PromiseOrValue<string>,
+      sig: PromiseOrValue<BytesLike>,
+      enabled: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
-    hasUserRole(who: string, role: BigNumberish, overrides?: CallOverrides): Promise<[boolean]>;
+    hasUserRole(
+      who: PromiseOrValue<string>,
+      role: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[boolean]>;
 
     'vote(bytes32)'(
-      slate: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      slate: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     'vote(address[])'(
-      yays: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      yays: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    canCall(caller: string, code: string, sig: BytesLike, overrides?: CallOverrides): Promise<[boolean]>;
+    canCall(
+      caller: PromiseOrValue<string>,
+      code: PromiseOrValue<string>,
+      sig: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<[boolean]>;
 
     authority(overrides?: CallOverrides): Promise<[string]>;
 
-    slates(arg0: BytesLike, arg1: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    slates(
+      arg0: PromiseOrValue<BytesLike>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[string]>;
 
     setPublicCapability(
-      code: string,
-      sig: BytesLike,
-      enabled: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      code: PromiseOrValue<string>,
+      sig: PromiseOrValue<BytesLike>,
+      enabled: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setRootUser(
-      who: string,
-      enabled: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      who: PromiseOrValue<string>,
+      enabled: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    votes(arg0: string, overrides?: CallOverrides): Promise<[string]>;
+    votes(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[string]>;
 
-    free(wad: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    free(
+      wad: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
-    lock(wad: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    lock(
+      wad: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
-    isUserRoot(who: string, overrides?: CallOverrides): Promise<[boolean]>;
+    isUserRoot(who: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
-    deposits(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    deposits(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     hat(overrides?: CallOverrides): Promise<[string]>;
   };
 
   IOU(overrides?: CallOverrides): Promise<string>;
 
-  getUserRoles(who: string, overrides?: CallOverrides): Promise<string>;
+  getUserRoles(who: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
-  setOwner(owner_: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  setOwner(
+    owner_: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   GOV(overrides?: CallOverrides): Promise<string>;
 
-  getCapabilityRoles(code: string, sig: BytesLike, overrides?: CallOverrides): Promise<string>;
+  getCapabilityRoles(
+    code: PromiseOrValue<string>,
+    sig: PromiseOrValue<BytesLike>,
+    overrides?: CallOverrides,
+  ): Promise<string>;
 
-  isCapabilityPublic(code: string, sig: BytesLike, overrides?: CallOverrides): Promise<boolean>;
+  isCapabilityPublic(
+    code: PromiseOrValue<string>,
+    sig: PromiseOrValue<BytesLike>,
+    overrides?: CallOverrides,
+  ): Promise<boolean>;
 
   MAX_YAYS(overrides?: CallOverrides): Promise<BigNumber>;
 
-  lift(whom: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  lift(
+    whom: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
-  etch(yays: string[], overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  etch(
+    yays: PromiseOrValue<string>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
-  approvals(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  approvals(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   setUserRole(
-    who: string,
-    role: BigNumberish,
-    enabled: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    who: PromiseOrValue<string>,
+    role: PromiseOrValue<BigNumberish>,
+    enabled: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setAuthority(
-    authority_: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    authority_: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setRoleCapability(
-    role: BigNumberish,
-    code: string,
-    sig: BytesLike,
-    enabled: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    role: PromiseOrValue<BigNumberish>,
+    code: PromiseOrValue<string>,
+    sig: PromiseOrValue<BytesLike>,
+    enabled: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
-  hasUserRole(who: string, role: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+  hasUserRole(
+    who: PromiseOrValue<string>,
+    role: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<boolean>;
 
   'vote(bytes32)'(
-    slate: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    slate: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   'vote(address[])'(
-    yays: string[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    yays: PromiseOrValue<string>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  canCall(caller: string, code: string, sig: BytesLike, overrides?: CallOverrides): Promise<boolean>;
+  canCall(
+    caller: PromiseOrValue<string>,
+    code: PromiseOrValue<string>,
+    sig: PromiseOrValue<BytesLike>,
+    overrides?: CallOverrides,
+  ): Promise<boolean>;
 
   authority(overrides?: CallOverrides): Promise<string>;
 
-  slates(arg0: BytesLike, arg1: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  slates(
+    arg0: PromiseOrValue<BytesLike>,
+    arg1: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<string>;
 
   setPublicCapability(
-    code: string,
-    sig: BytesLike,
-    enabled: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    code: PromiseOrValue<string>,
+    sig: PromiseOrValue<BytesLike>,
+    enabled: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setRootUser(
-    who: string,
-    enabled: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    who: PromiseOrValue<string>,
+    enabled: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  votes(arg0: string, overrides?: CallOverrides): Promise<string>;
+  votes(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
-  free(wad: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  free(
+    wad: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
-  lock(wad: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  lock(
+    wad: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
-  isUserRoot(who: string, overrides?: CallOverrides): Promise<boolean>;
+  isUserRoot(who: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-  deposits(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  deposits(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   hat(overrides?: CallOverrides): Promise<string>;
 
   callStatic: {
     IOU(overrides?: CallOverrides): Promise<string>;
 
-    getUserRoles(who: string, overrides?: CallOverrides): Promise<string>;
+    getUserRoles(who: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
-    setOwner(owner_: string, overrides?: CallOverrides): Promise<void>;
+    setOwner(owner_: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     GOV(overrides?: CallOverrides): Promise<string>;
 
-    getCapabilityRoles(code: string, sig: BytesLike, overrides?: CallOverrides): Promise<string>;
+    getCapabilityRoles(
+      code: PromiseOrValue<string>,
+      sig: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<string>;
 
-    isCapabilityPublic(code: string, sig: BytesLike, overrides?: CallOverrides): Promise<boolean>;
+    isCapabilityPublic(
+      code: PromiseOrValue<string>,
+      sig: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     MAX_YAYS(overrides?: CallOverrides): Promise<BigNumber>;
 
-    lift(whom: string, overrides?: CallOverrides): Promise<void>;
+    lift(whom: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    etch(yays: string[], overrides?: CallOverrides): Promise<string>;
+    etch(yays: PromiseOrValue<string>[], overrides?: CallOverrides): Promise<string>;
 
-    approvals(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    approvals(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    setUserRole(who: string, role: BigNumberish, enabled: boolean, overrides?: CallOverrides): Promise<void>;
+    setUserRole(
+      who: PromiseOrValue<string>,
+      role: PromiseOrValue<BigNumberish>,
+      enabled: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setAuthority(authority_: string, overrides?: CallOverrides): Promise<void>;
+    setAuthority(authority_: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     setRoleCapability(
-      role: BigNumberish,
-      code: string,
-      sig: BytesLike,
-      enabled: boolean,
+      role: PromiseOrValue<BigNumberish>,
+      code: PromiseOrValue<string>,
+      sig: PromiseOrValue<BytesLike>,
+      enabled: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    hasUserRole(who: string, role: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    hasUserRole(
+      who: PromiseOrValue<string>,
+      role: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    'vote(bytes32)'(slate: BytesLike, overrides?: CallOverrides): Promise<void>;
+    'vote(bytes32)'(slate: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<void>;
 
-    'vote(address[])'(yays: string[], overrides?: CallOverrides): Promise<string>;
+    'vote(address[])'(yays: PromiseOrValue<string>[], overrides?: CallOverrides): Promise<string>;
 
-    canCall(caller: string, code: string, sig: BytesLike, overrides?: CallOverrides): Promise<boolean>;
+    canCall(
+      caller: PromiseOrValue<string>,
+      code: PromiseOrValue<string>,
+      sig: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     authority(overrides?: CallOverrides): Promise<string>;
 
-    slates(arg0: BytesLike, arg1: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    slates(
+      arg0: PromiseOrValue<BytesLike>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<string>;
 
-    setPublicCapability(code: string, sig: BytesLike, enabled: boolean, overrides?: CallOverrides): Promise<void>;
+    setPublicCapability(
+      code: PromiseOrValue<string>,
+      sig: PromiseOrValue<BytesLike>,
+      enabled: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setRootUser(who: string, enabled: boolean, overrides?: CallOverrides): Promise<void>;
+    setRootUser(
+      who: PromiseOrValue<string>,
+      enabled: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    votes(arg0: string, overrides?: CallOverrides): Promise<string>;
+    votes(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
-    free(wad: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    free(wad: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    lock(wad: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    lock(wad: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    isUserRoot(who: string, overrides?: CallOverrides): Promise<boolean>;
+    isUserRoot(who: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-    deposits(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    deposits(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     hat(overrides?: CallOverrides): Promise<string>;
   };
 
   filters: {
-    'Etch(bytes32)'(slate?: BytesLike | null): EtchEventFilter;
-    Etch(slate?: BytesLike | null): EtchEventFilter;
+    'Etch(bytes32)'(slate?: PromiseOrValue<BytesLike> | null): EtchEventFilter;
+    Etch(slate?: PromiseOrValue<BytesLike> | null): EtchEventFilter;
 
     'LogNote(bytes4,address,bytes32,bytes32,uint256,bytes)'(
-      sig?: BytesLike | null,
-      guy?: string | null,
-      foo?: BytesLike | null,
-      bar?: BytesLike | null,
+      sig?: PromiseOrValue<BytesLike> | null,
+      guy?: PromiseOrValue<string> | null,
+      foo?: PromiseOrValue<BytesLike> | null,
+      bar?: PromiseOrValue<BytesLike> | null,
       wad?: null,
       fax?: null,
     ): LogNoteEventFilter;
     LogNote(
-      sig?: BytesLike | null,
-      guy?: string | null,
-      foo?: BytesLike | null,
-      bar?: BytesLike | null,
+      sig?: PromiseOrValue<BytesLike> | null,
+      guy?: PromiseOrValue<string> | null,
+      foo?: PromiseOrValue<BytesLike> | null,
+      bar?: PromiseOrValue<BytesLike> | null,
       wad?: null,
       fax?: null,
     ): LogNoteEventFilter;
 
-    'LogSetAuthority(address)'(authority?: string | null): LogSetAuthorityEventFilter;
-    LogSetAuthority(authority?: string | null): LogSetAuthorityEventFilter;
+    'LogSetAuthority(address)'(authority?: PromiseOrValue<string> | null): LogSetAuthorityEventFilter;
+    LogSetAuthority(authority?: PromiseOrValue<string> | null): LogSetAuthorityEventFilter;
 
-    'LogSetOwner(address)'(owner?: string | null): LogSetOwnerEventFilter;
-    LogSetOwner(owner?: string | null): LogSetOwnerEventFilter;
+    'LogSetOwner(address)'(owner?: PromiseOrValue<string> | null): LogSetOwnerEventFilter;
+    LogSetOwner(owner?: PromiseOrValue<string> | null): LogSetOwnerEventFilter;
   };
 
   estimateGas: {
     IOU(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getUserRoles(who: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getUserRoles(who: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    setOwner(owner_: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setOwner(
+      owner_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     GOV(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getCapabilityRoles(code: string, sig: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    getCapabilityRoles(
+      code: PromiseOrValue<string>,
+      sig: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    isCapabilityPublic(code: string, sig: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    isCapabilityPublic(
+      code: PromiseOrValue<string>,
+      sig: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     MAX_YAYS(overrides?: CallOverrides): Promise<BigNumber>;
 
-    lift(whom: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    lift(whom: PromiseOrValue<string>, overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    etch(yays: string[], overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    etch(yays: PromiseOrValue<string>[], overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    approvals(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    approvals(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     setUserRole(
-      who: string,
-      role: BigNumberish,
-      enabled: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      who: PromiseOrValue<string>,
+      role: PromiseOrValue<BigNumberish>,
+      enabled: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setAuthority(authority_: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setAuthority(
+      authority_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setRoleCapability(
-      role: BigNumberish,
-      code: string,
-      sig: BytesLike,
-      enabled: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BigNumberish>,
+      code: PromiseOrValue<string>,
+      sig: PromiseOrValue<BytesLike>,
+      enabled: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    hasUserRole(who: string, role: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    hasUserRole(
+      who: PromiseOrValue<string>,
+      role: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    'vote(bytes32)'(slate: BytesLike, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    'vote(bytes32)'(
+      slate: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    'vote(address[])'(yays: string[], overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    'vote(address[])'(
+      yays: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    canCall(caller: string, code: string, sig: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    canCall(
+      caller: PromiseOrValue<string>,
+      code: PromiseOrValue<string>,
+      sig: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     authority(overrides?: CallOverrides): Promise<BigNumber>;
 
-    slates(arg0: BytesLike, arg1: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    slates(
+      arg0: PromiseOrValue<BytesLike>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     setPublicCapability(
-      code: string,
-      sig: BytesLike,
-      enabled: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      code: PromiseOrValue<string>,
+      sig: PromiseOrValue<BytesLike>,
+      enabled: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setRootUser(
-      who: string,
-      enabled: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      who: PromiseOrValue<string>,
+      enabled: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    votes(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    votes(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    free(wad: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    free(
+      wad: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    lock(wad: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    lock(
+      wad: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    isUserRoot(who: string, overrides?: CallOverrides): Promise<BigNumber>;
+    isUserRoot(who: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    deposits(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    deposits(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     hat(overrides?: CallOverrides): Promise<BigNumber>;
   };
@@ -552,89 +725,122 @@ export interface MakerGovernance extends BaseContract {
   populateTransaction: {
     IOU(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getUserRoles(who: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getUserRoles(who: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setOwner(
-      owner_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      owner_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     GOV(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getCapabilityRoles(code: string, sig: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getCapabilityRoles(
+      code: PromiseOrValue<string>,
+      sig: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    isCapabilityPublic(code: string, sig: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    isCapabilityPublic(
+      code: PromiseOrValue<string>,
+      sig: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     MAX_YAYS(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    lift(whom: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    lift(
+      whom: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
-    etch(yays: string[], overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    etch(
+      yays: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
-    approvals(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    approvals(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setUserRole(
-      who: string,
-      role: BigNumberish,
-      enabled: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      who: PromiseOrValue<string>,
+      role: PromiseOrValue<BigNumberish>,
+      enabled: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setAuthority(
-      authority_: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      authority_: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setRoleCapability(
-      role: BigNumberish,
-      code: string,
-      sig: BytesLike,
-      enabled: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BigNumberish>,
+      code: PromiseOrValue<string>,
+      sig: PromiseOrValue<BytesLike>,
+      enabled: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    hasUserRole(who: string, role: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    hasUserRole(
+      who: PromiseOrValue<string>,
+      role: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     'vote(bytes32)'(
-      slate: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      slate: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     'vote(address[])'(
-      yays: string[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      yays: PromiseOrValue<string>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    canCall(caller: string, code: string, sig: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    canCall(
+      caller: PromiseOrValue<string>,
+      code: PromiseOrValue<string>,
+      sig: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     authority(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    slates(arg0: BytesLike, arg1: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    slates(
+      arg0: PromiseOrValue<BytesLike>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     setPublicCapability(
-      code: string,
-      sig: BytesLike,
-      enabled: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      code: PromiseOrValue<string>,
+      sig: PromiseOrValue<BytesLike>,
+      enabled: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setRootUser(
-      who: string,
-      enabled: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      who: PromiseOrValue<string>,
+      enabled: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    votes(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    votes(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    free(wad: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    free(
+      wad: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
-    lock(wad: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    lock(
+      wad: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
-    isUserRoot(who: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    isUserRoot(who: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    deposits(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    deposits(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     hat(overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };

@@ -12,7 +12,7 @@ const appId = AGAVE_DEFINITION.id;
 const groupId = AGAVE_DEFINITION.groups.claimable.id;
 const network = Network.GNOSIS_MAINNET;
 
-@Register.ContractPositionFetcher({ appId, groupId, network })
+@Register.ContractPositionFetcher({ appId, groupId, network, options: { excludeFromTvl: true } })
 export class GnosisAgaveClaimableContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(AaveV2ClaimableContractPositionHelper)

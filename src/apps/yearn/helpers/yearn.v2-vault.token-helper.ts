@@ -7,7 +7,7 @@ import {
   buildPercentageDisplayItem,
 } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { EthersMulticall } from '~multicall';
+import { IMulticallWrapper } from '~multicall/multicall.interface';
 import { ContractType } from '~position/contract.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { AppGroupsDefinition } from '~position/position.service';
@@ -47,7 +47,7 @@ export class YearnV2VaultTokenHelper {
   }: {
     vaultDefinition: YearnVaultData;
     network: Network;
-    multicall: EthersMulticall;
+    multicall: IMulticallWrapper;
   }) {
     const contract = this.yearnContractFactory.yearnVaultV2({ address: vaultDefinition.address, network });
     const pricePerShareRaw = await multicall
@@ -102,7 +102,7 @@ export class YearnV2VaultTokenHelper {
         const secondaryLabel = buildDollarDisplayItem(price);
         const images = getImagesFromToken(underlyingToken);
         const statsItems = [
-          { label: 'APY', value: buildPercentageDisplayItem(apy) },
+          { label: 'APY', value: buildPercentageDisplayItem(apy * 100) },
           { label: 'Liquidity', value: buildDollarDisplayItem(liquidity) },
         ];
 

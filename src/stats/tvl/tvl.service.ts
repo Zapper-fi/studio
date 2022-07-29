@@ -4,11 +4,12 @@ import Axios, { AxiosInstance } from 'axios';
 import { sumBy } from 'lodash';
 
 import { AppService } from '~app/app.service';
+import { ContractType } from '~position/contract.interface';
 import { PositionFetcherRegistry } from '~position/position-fetcher.registry';
+import { AppTokenPosition } from '~position/position.interface';
 import { PositionService } from '~position/position.service';
+import { isSupplied } from '~position/position.utils';
 import { Network } from '~types/network.interface';
-
-import { TvlFetcherRegistry } from './tvl-fetcher.registry';
 
 type AppTvl = {
   appId: string;
@@ -22,7 +23,6 @@ export class TvlService {
   private readonly axios: AxiosInstance;
 
   constructor(
-    @Inject(TvlFetcherRegistry) private readonly tvlFetcherRegistry: TvlFetcherRegistry,
     @Inject(AppService) private readonly appService: AppService,
     @Inject(ConfigService) private readonly configService: ConfigService,
     @Inject(PositionFetcherRegistry) private readonly positionRegistry: PositionFetcherRegistry,
@@ -47,13 +47,13 @@ export class TvlService {
     }
   }
 
-  private async getGroupBasedTvl({ appId, network }: { appId: string; network: Network }) {
+  private async getTvlFromGroups({ appId, network }: { appId: string; network: Network }) {
     const [{ groupIds: tokenGroupIds }, { groupIds: positionGroupIds }] = this.positionRegistry.getTvlEnabledGroupsIds({
       network,
       appId,
     });
 
-    const [appTokens, positions] = await Promise.all([
+    const [appTokens, allContractPositions] = await Promise.all([
       this.positionService.getAppTokenPositions<{ liquidity?: number }>({ appId, network, groupIds: tokenGroupIds }),
       this.positionService.getAppContractPositions<{ liquidity?: number }>({
         appId,
@@ -62,23 +62,30 @@ export class TvlService {
       }),
     ]);
 
+    // Remove contract positions that would be double counted
+    // i.e: Farms that consist of app tokens already included in the TVL
+    const contractPositions = allContractPositions.filter(position => {
+      const suppliedTokens = position.tokens.filter(isSupplied);
+      const suppliedAppTokens = suppliedTokens.filter((t): t is AppTokenPosition => t.type === ContractType.APP_TOKEN);
+      const isDoubleCountedPosition = suppliedAppTokens.find(t => t.appId === appId && t.network === network);
+      return !isDoubleCountedPosition;
+    });
+
     const appTokensTvl = sumBy(appTokens, t => t.dataProps.liquidity ?? 0);
-    const positionsTvl = sumBy(positions, p => p.dataProps.liquidity ?? 0);
+    const positionsTvl = sumBy(contractPositions, p => p.dataProps.liquidity ?? 0);
+
     return appTokensTvl + positionsTvl;
   }
 
   async getTvl({ appId, network }: { appId: string; network: Network }): Promise<AppTvl> {
     try {
-      const { name: appName } = this.appService.getApp(appId);
-      const customTvlFetcher = this.tvlFetcherRegistry.get({ network, appId });
-
-      let tvl = await customTvlFetcher?.getTvl();
-      tvl ??= await this.getGroupBasedTvl({ appId, network });
-
+      const app = await this.appService.getApp(appId);
+      const appName = app!.name;
+      const tvl = await this.getTvlFromGroups({ appId, network });
       return { appId, appName, network, tvl };
     } catch (e) {
       const apiTvl = await this.getTvlFromApi({ appId, network });
-      if (!apiTvl) throw new NotFoundException('No TVL registered on Studio and on Zapper API');
+      if (!apiTvl) throw new NotFoundException(`No TVL found for ${appId} on ${network} on Studio or on Zapper API`);
       return apiTvl;
     }
   }

@@ -3,7 +3,7 @@ import { isNull } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
-import { EthersMulticall as Multicall } from '~multicall/multicall.ethers';
+import { IMulticallWrapper } from '~multicall/multicall.interface';
 import { ContractType } from '~position/contract.interface';
 import { BaseToken } from '~position/token.interface';
 
@@ -14,7 +14,7 @@ import { UniswapV2PoolTokenHelperParams } from './uniswap-v2.pool.token-helper';
 type GetDerivedPriceParams<T = UniswapFactory> = {
   priceDerivationWhitelist: string[];
   resolvePoolAddress: (opts: {
-    multicall: Multicall;
+    multicall: IMulticallWrapper;
     factoryContract: T;
     token0: string;
     token1: string;

@@ -4,6 +4,612 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.130.1](https://github.com/Zapper-fi/studio/compare/v0.130.0...v0.130.1) (2022-07-29)
+
+
+### Bug Fixes
+
+* **price-selector:** Tweak interface a bit ([#968](https://github.com/Zapper-fi/studio/issues/968)) ([8f3546d](https://github.com/Zapper-fi/studio/commit/8f3546dd362352e15792b89197bc555fd25a4e88))
+
+## [0.130.0](https://github.com/Zapper-fi/studio/compare/v0.129.1...v0.130.0) (2022-07-28)
+
+
+### Features
+
+* **prices:** Add price selector concept to app toolkit ([#963](https://github.com/Zapper-fi/studio/issues/963)) ([2ebca19](https://github.com/Zapper-fi/studio/commit/2ebca1981bd59f90a7a1c1339e8a5f92cf14ceb1))
+
+## [0.129.1](https://github.com/Zapper-fi/studio/compare/v0.129.0...v0.129.1) (2022-07-28)
+
+
+### Bug Fixes
+
+* **stargate:** Fixed  Stargate pools pricePerShare on BSC ([#964](https://github.com/Zapper-fi/studio/issues/964)) ([25d64bf](https://github.com/Zapper-fi/studio/commit/25d64bf03affdbef70d2dd055dec74f73cf9a0de))
+
+## [0.129.0](https://github.com/Zapper-fi/studio/compare/v0.128.3...v0.129.0) (2022-07-28)
+
+
+### Features
+
+* **idle:** moved idle finance to studio ([#961](https://github.com/Zapper-fi/studio/issues/961)) ([0b0b3cb](https://github.com/Zapper-fi/studio/commit/0b0b3cba52322b06a753d34ea26c91cd826b3eca))
+
+## [0.128.3](https://github.com/Zapper-fi/studio/compare/v0.128.2...v0.128.3) (2022-07-28)
+
+
+### Bug Fixes
+
+* **origin-dollar:** Fix logos and OGV staking rewards ([#956](https://github.com/Zapper-fi/studio/issues/956)) ([12f387b](https://github.com/Zapper-fi/studio/commit/12f387b8ae86d270271dbd0d4b1655185f2dad4a))
+
+## [0.128.2](https://github.com/Zapper-fi/studio/compare/v0.128.1...v0.128.2) (2022-07-28)
+
+
+### Bug Fixes
+
+* stargate - incorrect ve price ([#957](https://github.com/Zapper-fi/studio/issues/957)) ([b33ec6b](https://github.com/Zapper-fi/studio/commit/b33ec6b1f9bd299885a91ed5bf09b11ab0ccd69b))
+
+## [0.128.1](https://github.com/Zapper-fi/studio/compare/v0.128.0...v0.128.1) (2022-07-26)
+
+
+### Bug Fixes
+
+* **origin-dollar:** updating logo name ([aec6f39](https://github.com/Zapper-fi/studio/commit/aec6f399a9a07ce021f6aecea1deba0c9c0f1237))
+
+## [0.128.0](https://github.com/Zapper-fi/studio/compare/v0.127.0...v0.128.0) (2022-07-25)
+
+
+### Features
+
+* **origin-dollar:** Adds Wrapped OUSD (wOUSD) and Vote Escrowed OGV (veOGV) ([#944](https://github.com/Zapper-fi/studio/issues/944)) ([d9743c0](https://github.com/Zapper-fi/studio/commit/d9743c079806d9bf4775e37940d164859d57e786))
+
+
+### Bug Fixes
+
+* **stargate:** Fix Stargate wrapped ETH price ([#951](https://github.com/Zapper-fi/studio/issues/951)) ([0668cf0](https://github.com/Zapper-fi/studio/commit/0668cf024b520fd915e31f14b0743961a2558eb4))
+
+## [0.127.0](https://github.com/Zapper-fi/studio/compare/v0.126.0...v0.127.0) (2022-07-25)
+
+
+### Features
+
+* **biswap:** Added Biswap on BSC (pools and farms) ([#945](https://github.com/Zapper-fi/studio/issues/945)) ([b91d797](https://github.com/Zapper-fi/studio/commit/b91d797502611ccc00bb5c1662c297b3bc1cafcf))
+* **polygon:** Add claimable rewards for Polygon MATIC staking ([#948](https://github.com/Zapper-fi/studio/issues/948)) ([78e3d83](https://github.com/Zapper-fi/studio/commit/78e3d832319431511181654679e3ff03bbe25a82))
+* **stargate:** Add wrapped ETH and Voting Escrow positions ([#947](https://github.com/Zapper-fi/studio/issues/947)) ([50f83d5](https://github.com/Zapper-fi/studio/commit/50f83d536c2f758759f6a96e22c62297ebfde01a))
+
+
+### Bug Fixes
+
+* **good-ghosting:** Resolved the issue of Celo games not showing claimable tokens ([#946](https://github.com/Zapper-fi/studio/issues/946)) ([c547bef](https://github.com/Zapper-fi/studio/commit/c547bef55f8bf64adaba08a80478f628423874c3))
+
+## [0.126.0](https://github.com/Zapper-fi/studio/compare/v0.125.0...v0.126.0) (2022-07-24)
+
+
+### Features
+
+* **koyo:** Fix response since volume isn't working ([#940](https://github.com/Zapper-fi/studio/issues/940)) ([52a4384](https://github.com/Zapper-fi/studio/commit/52a438494f9efa0935f19ad585a6a0d273fb73a6))
+* **stargate:** Extract Stargate to Studio ([#943](https://github.com/Zapper-fi/studio/issues/943)) ([7bf707e](https://github.com/Zapper-fi/studio/commit/7bf707ed502bed55e5c22317228ae88374a7fc33))
+* **sushiswap-kashi:** Extract to Studio, fix Polygon ([#942](https://github.com/Zapper-fi/studio/issues/942)) ([85dce04](https://github.com/Zapper-fi/studio/commit/85dce04defc5a3777d450cae848f5289e0933792))
+
+## [0.125.0](https://github.com/Zapper-fi/studio/compare/v0.124.0...v0.125.0) (2022-07-24)
+
+
+### Features
+
+* **mean-finance:** Use lodash to refactor positions and remove call to pairs ([#937](https://github.com/Zapper-fi/studio/issues/937)) ([016c187](https://github.com/Zapper-fi/studio/commit/016c187a2f30836c7641e7a02f63def18877d8d2))
+* **plutus:** Add new locks, split plsJONES and plsDPX groups, add claimables ([#939](https://github.com/Zapper-fi/studio/issues/939)) ([7c137e2](https://github.com/Zapper-fi/studio/commit/7c137e2fff56831339614459ee82becbd8e2e42b))
+* **polygon:** Add delegated MATIC ([#938](https://github.com/Zapper-fi/studio/issues/938)) ([615691e](https://github.com/Zapper-fi/studio/commit/615691e0563fc2bcc367505ed3172f5a9acf8d05))
+* **rubicon:** Slight clean-up ([0af15de](https://github.com/Zapper-fi/studio/commit/0af15def0add0874eab89473cce5d3d9c4711703))
+
+
+### Bug Fixes
+
+* **mean-finance:** Fix liquidity for Mean Finance positions ([#905](https://github.com/Zapper-fi/studio/issues/905)) ([f8128d8](https://github.com/Zapper-fi/studio/commit/f8128d8d9ed2e356826e374943a3c4b4fae02264))
+* **rubicon:** Correct Rubicon definition name, fix Bath Token decimal issues, and add labels ([#933](https://github.com/Zapper-fi/studio/issues/933)) ([12d2c2a](https://github.com/Zapper-fi/studio/commit/12d2c2a8d24bf1c72cf896b7b9de4b0c0048486c))
+
+## [0.124.0](https://github.com/Zapper-fi/studio/compare/v0.123.0...v0.124.0) (2022-07-22)
+
+
+### Features
+
+* **argo:** Fix address lowercasing ([#934](https://github.com/Zapper-fi/studio/issues/934)) ([2be2952](https://github.com/Zapper-fi/studio/commit/2be295298073c889dd66b8b1fabd91951cc48280))
+
+## [0.123.0](https://github.com/Zapper-fi/studio/compare/v0.122.1...v0.123.0) (2022-07-22)
+
+
+### Features
+
+* **curve:** Add missing teth, spelleth, xautusd, euroc, 2pool, 4pool, fraxusdc ([#931](https://github.com/Zapper-fi/studio/issues/931)) ([a51fad7](https://github.com/Zapper-fi/studio/commit/a51fad7c0e43046386d0b7bc400834aa228993ba))
+* **ethereum:** Extract Ethereum Staking integration, and deduct RocketPool double count ([#932](https://github.com/Zapper-fi/studio/issues/932)) ([e4db440](https://github.com/Zapper-fi/studio/commit/e4db44025af7520e6f5f251adce7060986c1644c))
+* **lint:** Add Zapper plugin ([#929](https://github.com/Zapper-fi/studio/issues/929)) ([455f566](https://github.com/Zapper-fi/studio/commit/455f566c8d9f6d8c9c3884dbaa386f4154317d0a))
+* **rocket-pool:** Add Rocket Pool staked ETH ([#930](https://github.com/Zapper-fi/studio/issues/930)) ([968e48d](https://github.com/Zapper-fi/studio/commit/968e48d8b7620909b939c3c1e66dd93d776f46ff))
+* **rubicon:** Add Rubicon.finance and Rubicon Bath Tokens ([#922](https://github.com/Zapper-fi/studio/issues/922)) ([df20875](https://github.com/Zapper-fi/studio/commit/df20875f96ffed8a7cddff9c8ed542c1966ed346))
+
+
+### Bug Fixes
+
+* **pool-together-v4:** Update logo ([#927](https://github.com/Zapper-fi/studio/issues/927)) ([14788e3](https://github.com/Zapper-fi/studio/commit/14788e39c613c4e027ce150d19221a95ca5ed0eb))
+
+## [0.122.1](https://github.com/Zapper-fi/studio/compare/v0.122.0...v0.122.1) (2022-07-21)
+
+
+### Bug Fixes
+
+* **umami-finance:** Rename umami to umami-finance to avoid ad blocker gripes ([#924](https://github.com/Zapper-fi/studio/issues/924)) ([c410456](https://github.com/Zapper-fi/studio/commit/c410456cc128d4afee17fbedd2b2725eafb66de4))
+
+## [0.122.0](https://github.com/Zapper-fi/studio/compare/v0.121.0...v0.122.0) (2022-07-20)
+
+
+### Features
+
+* **apps:** Add labelDetailed display props for nested display name ([#920](https://github.com/Zapper-fi/studio/issues/920)) ([be2629e](https://github.com/Zapper-fi/studio/commit/be2629e3889ae69b5aa46116a3be5a175d14bf74))
+
+## [0.121.0](https://github.com/Zapper-fi/studio/compare/v0.120.0...v0.121.0) (2022-07-20)
+
+
+### Features
+
+* **qi-dao:** Add missing vaults on Polygon ([#918](https://github.com/Zapper-fi/studio/issues/918)) ([e1b3d68](https://github.com/Zapper-fi/studio/commit/e1b3d684f5042485567ebb8e2692bd32618fec31))
+
+## [0.120.0](https://github.com/Zapper-fi/studio/compare/v0.119.0...v0.120.0) (2022-07-20)
+
+
+### Features
+
+* **aura:** Add Aura Finance ([#892](https://github.com/Zapper-fi/studio/issues/892)) ([efa1003](https://github.com/Zapper-fi/studio/commit/efa10034011e1386ee18659f233d4f05901ead1a))
+
+
+### Bug Fixes
+
+* **aura:** Small fixes before shipping to production ([#917](https://github.com/Zapper-fi/studio/issues/917)) ([c21e466](https://github.com/Zapper-fi/studio/commit/c21e466fd195989fc013ef5b201e81155909b672))
+* **bastion:** Fix label typo ([#914](https://github.com/Zapper-fi/studio/issues/914)) ([2f8b2b0](https://github.com/Zapper-fi/studio/commit/2f8b2b0ba7c026d8ce695a0c26dbe0be8d8b7188))
+* **coslend:** Update comptroller address ([#913](https://github.com/Zapper-fi/studio/issues/913)) ([c8edd3e](https://github.com/Zapper-fi/studio/commit/c8edd3e90907521bde8c94abc8ef7797c89d5dfc))
+* **rari-fuse:** Remove market in label, add Aave V2 as a dependency ([#916](https://github.com/Zapper-fi/studio/issues/916)) ([e881657](https://github.com/Zapper-fi/studio/commit/e881657faa2f79083252c166b0d4d0e557ccbd4d))
+
+## [0.119.0](https://github.com/Zapper-fi/studio/compare/v0.118.1...v0.119.0) (2022-07-20)
+
+
+### Features
+
+* **origin-story:** adds origin-story app (OGN staking) ([#907](https://github.com/Zapper-fi/studio/issues/907)) ([13e7a5e](https://github.com/Zapper-fi/studio/commit/13e7a5e7c31c3e780e0ce7bae841ac8058a3a37a))
+
+
+### Bug Fixes
+
+* **origin-story:** Add missing logo and use address instead of ENS ([b1c3b03](https://github.com/Zapper-fi/studio/commit/b1c3b03e6acefc07ad4e357d103ce1c7d1b18a14))
+
+## [0.118.1](https://github.com/Zapper-fi/studio/compare/v0.118.0...v0.118.1) (2022-07-20)
+
+
+### Bug Fixes
+
+* **balancer-v2:** Use filtered underlying tokens ([#911](https://github.com/Zapper-fi/studio/issues/911)) ([7a641e3](https://github.com/Zapper-fi/studio/commit/7a641e32aedbe0b6c05991a02c16556ed3e5d343))
+* **maple:** Fix APY ([#909](https://github.com/Zapper-fi/studio/issues/909)) ([04c348d](https://github.com/Zapper-fi/studio/commit/04c348d11d477f49fc8d4bc7293cb662af848388))
+
+## [0.118.0](https://github.com/Zapper-fi/studio/compare/v0.117.1...v0.118.0) (2022-07-19)
+
+
+### Features
+
+* **balancer-v2:** Fix display for Balancer V2 Aave Boosted pools ([#908](https://github.com/Zapper-fi/studio/issues/908)) ([fd68a19](https://github.com/Zapper-fi/studio/commit/fd68a195eb641d8d4233117f00952592b0c09190))
+* **balancer-v2:** Remove redundant filtering, bump cache key ([0700d9b](https://github.com/Zapper-fi/studio/commit/0700d9bf4a665db78be8bb7c362bc8144500463a))
+
+
+### Bug Fixes
+
+* **rocket-pool:** adding logo ([ea86a52](https://github.com/Zapper-fi/studio/commit/ea86a524ff1f612da18374e9ec9484e22029bbb7))
+
+## [0.117.1](https://github.com/Zapper-fi/studio/compare/v0.117.0...v0.117.1) (2022-07-19)
+
+
+### Bug Fixes
+
+* use dropdown presentation for rari-fuse ([#903](https://github.com/Zapper-fi/studio/issues/903)) ([aeb1684](https://github.com/Zapper-fi/studio/commit/aeb1684d1d71226891e15f0e8ab67706339e62a4))
+
+## [0.117.0](https://github.com/Zapper-fi/studio/compare/v0.116.0...v0.117.0) (2022-07-19)
+
+
+### Features
+
+* **steak-hut:** Add SteakHut integration ([#890](https://github.com/Zapper-fi/studio/issues/890)) ([570c51a](https://github.com/Zapper-fi/studio/commit/570c51a8795642deb6018bf266b4aa9748f51b1c))
+
+## [0.116.0](https://github.com/Zapper-fi/studio/compare/v0.115.0...v0.116.0) (2022-07-19)
+
+
+### Features
+
+* **bastion:** split markets into different Realm ([#900](https://github.com/Zapper-fi/studio/issues/900)) ([4ed3676](https://github.com/Zapper-fi/studio/commit/4ed36769d680e4531e2e8f26bb5239bad95b6b46))
+
+## [0.115.0](https://github.com/Zapper-fi/studio/compare/v0.114.0...v0.115.0) (2022-07-18)
+
+
+### Features
+
+* **concentrator:** Add IFO pools ([#891](https://github.com/Zapper-fi/studio/issues/891)) ([09f42c1](https://github.com/Zapper-fi/studio/commit/09f42c1fd5fb6b9a61b2161d79216f45572d97f9))
+* **tenderize:** Integrate Tender tokens and Swap tokens ([#882](https://github.com/Zapper-fi/studio/issues/882)) ([ce21065](https://github.com/Zapper-fi/studio/commit/ce210659e73113013483be6cdf45f9faf4693462))
+* **tenderize:** Small clean-up before merge ([#897](https://github.com/Zapper-fi/studio/issues/897)) ([d763d21](https://github.com/Zapper-fi/studio/commit/d763d21f77fbb06ae63771406136b567a19fa77e))
+
+
+### Bug Fixes
+
+* **cli:** Fix group generator for contract position groups ([#898](https://github.com/Zapper-fi/studio/issues/898)) ([3295bd3](https://github.com/Zapper-fi/studio/commit/3295bd3ad01d6796e211ebaa3257acfd43cca564))
+* **concentrator:** Small adjustments ([78f281f](https://github.com/Zapper-fi/studio/commit/78f281fc0e4716ad6cd69bfd3784c6a8bbf7f3f4))
+
+## [0.114.0](https://github.com/Zapper-fi/studio/compare/v0.113.0...v0.114.0) (2022-07-18)
+
+
+### Features
+
+* **rari-fuse:** Integrate presentation config for explore page ([#853](https://github.com/Zapper-fi/studio/issues/853)) ([2eb555f](https://github.com/Zapper-fi/studio/commit/2eb555f9ab46ffe5fb589a9aae8e6eace0d0cbe4))
+* **rocket-pool:** Integrate Rocket Pool ([#834](https://github.com/Zapper-fi/studio/issues/834)) ([cec77a1](https://github.com/Zapper-fi/studio/commit/cec77a1d677f4b519cdb26f70a29192467308ac1))
+* **rocket-pool:** Remove duplicate positions, create positions ([#894](https://github.com/Zapper-fi/studio/issues/894)) ([9079a75](https://github.com/Zapper-fi/studio/commit/9079a75589a5311ddc664e7d24ef835e8ce54d32))
+
+## [0.113.0](https://github.com/Zapper-fi/studio/compare/v0.112.1...v0.113.0) (2022-07-16)
+
+
+### Features
+
+* **mmfinance:** Integrate MM Finance ([#881](https://github.com/Zapper-fi/studio/issues/881)) ([1fcbb36](https://github.com/Zapper-fi/studio/commit/1fcbb367db0ac3fdff81af3bb789557afee54010))
+
+
+### Bug Fixes
+
+* **mm-finance:** Renames ([#889](https://github.com/Zapper-fi/studio/issues/889)) ([dc64e12](https://github.com/Zapper-fi/studio/commit/dc64e12de7ec55ca757a3d696b9c7afdb4207c61))
+* **yield-protocol:** Use new subgraph Account entity reference ([#887](https://github.com/Zapper-fi/studio/issues/887)) ([4411f79](https://github.com/Zapper-fi/studio/commit/4411f79135b4d0dca5109c84ed830462524a374d))
+
+## [0.112.1](https://github.com/Zapper-fi/studio/compare/v0.112.0...v0.112.1) (2022-07-15)
+
+
+### Bug Fixes
+
+* **multicall:** Export interface ([c94c410](https://github.com/Zapper-fi/studio/commit/c94c41067736c5e13623264fec69a742dd7c35a1))
+
+## [0.112.0](https://github.com/Zapper-fi/studio/compare/v0.111.2...v0.112.0) (2022-07-15)
+
+
+### Features
+
+* **koyo:** Support Kōyō Finance on polygon ([#883](https://github.com/Zapper-fi/studio/issues/883)) ([8e188be](https://github.com/Zapper-fi/studio/commit/8e188beb97968c26bbf140fedfdb36637e9d3b55))
+
+
+### Bug Fixes
+
+* **multicall:** Use an interface for the Multicall wrapper ([#884](https://github.com/Zapper-fi/studio/issues/884)) ([9adb6e7](https://github.com/Zapper-fi/studio/commit/9adb6e7473bdbc6fb2f1296aa676e8ca971ed931))
+* **multicall:** Wrong imports ([648d8e3](https://github.com/Zapper-fi/studio/commit/648d8e3d6bfb7a5e8d6c99f043f90b5272112c83))
+
+## [0.111.2](https://github.com/Zapper-fi/studio/compare/v0.111.1...v0.111.2) (2022-07-14)
+
+
+### Bug Fixes
+
+* **blocks:** Update average blocks per day for Moonriver ([793715a](https://github.com/Zapper-fi/studio/commit/793715ae6892229f3bfe396639219d39844e238e))
+
+## [0.111.1](https://github.com/Zapper-fi/studio/compare/v0.111.0...v0.111.1) (2022-07-14)
+
+
+### Bug Fixes
+
+* **koyo:** Add missing empty ContractFactory ([1704b4e](https://github.com/Zapper-fi/studio/commit/1704b4efb23bf0cefb1c459e0fc515e200221702))
+
+## [0.111.0](https://github.com/Zapper-fi/studio/compare/v0.110.4...v0.111.0) (2022-07-14)
+
+
+### Features
+
+* **koyo-finance:** Add support for Kōyō Finance ([#876](https://github.com/Zapper-fi/studio/issues/876)) ([0ec4763](https://github.com/Zapper-fi/studio/commit/0ec47631591720df8dffaebc56d76962c67af6ce))
+
+
+### Bug Fixes
+
+* **atlendis-v1:** Fix decimals in balance, fix checksum address ([#877](https://github.com/Zapper-fi/studio/issues/877)) ([402baab](https://github.com/Zapper-fi/studio/commit/402baab8e1a271e24815a32bc597d9796c74b5a3))
+
+## [0.110.4](https://github.com/Zapper-fi/studio/compare/v0.110.3...v0.110.4) (2022-07-13)
+
+
+### Bug Fixes
+
+* **compound:** Remove unused variable ([cd90713](https://github.com/Zapper-fi/studio/commit/cd907135eb58463307b7adfa473d54ed5ceba325))
+* **compound:** Ugly fix to find the cETH address ([1c4a54d](https://github.com/Zapper-fi/studio/commit/1c4a54dff97009505a9c218fb3a93a1d12c1e0a4))
+
+## [0.110.3](https://github.com/Zapper-fi/studio/compare/v0.110.2...v0.110.3) (2022-07-13)
+
+
+### Bug Fixes
+
+* **atlendis-v1:** Fix API query ([#874](https://github.com/Zapper-fi/studio/issues/874)) ([9653439](https://github.com/Zapper-fi/studio/commit/96534397b0d8eac2153beb1f93cbe4e8a1319e5c))
+* **balance:** Remove dependencies on Studio implementations of MulticallService and PositionService ([#873](https://github.com/Zapper-fi/studio/issues/873)) ([21aa047](https://github.com/Zapper-fi/studio/commit/21aa047cb5bec13b99669a9270cbfe309ea9e670))
+* Bunch of app fixes ([#829](https://github.com/Zapper-fi/studio/issues/829)) ([094a6e8](https://github.com/Zapper-fi/studio/commit/094a6e8ce93572c444589bf76928798fcdf10b1b))
+
+## [0.110.2](https://github.com/Zapper-fi/studio/compare/v0.110.1...v0.110.2) (2022-07-12)
+
+
+### Bug Fixes
+
+* **compound:** Remove dangerous catch statement when retrieving underlying token address ([#869](https://github.com/Zapper-fi/studio/issues/869)) ([d1d43ce](https://github.com/Zapper-fi/studio/commit/d1d43ce5a6ca1bbe5a1ee58456bf9755470b0a3f))
+
+## [0.110.1](https://github.com/Zapper-fi/studio/compare/v0.110.0...v0.110.1) (2022-07-11)
+
+
+### Bug Fixes
+
+* **symphony:** Add missing supported network in definition file ([#865](https://github.com/Zapper-fi/studio/issues/865)) ([72ea80c](https://github.com/Zapper-fi/studio/commit/72ea80c8ba02a5bd7cd2ae5bf53ffac52647b219))
+
+## [0.110.0](https://github.com/Zapper-fi/studio/compare/v0.109.0...v0.110.0) (2022-07-11)
+
+
+### Features
+
+* **atlendis:** Integrate Atlendis lending app ([#842](https://github.com/Zapper-fi/studio/issues/842)) ([b5a9e66](https://github.com/Zapper-fi/studio/commit/b5a9e6605d23dd4152649a786826fc94a967e621))
+
+
+### Bug Fixes
+
+* **angle:** Fix Angle images ([#862](https://github.com/Zapper-fi/studio/issues/862)) ([12b9367](https://github.com/Zapper-fi/studio/commit/12b9367a828273dce3351230f3fa807d19be6db7))
+* **apps:** fix display issues for Angle Protocol app ([#863](https://github.com/Zapper-fi/studio/issues/863)) ([ee81980](https://github.com/Zapper-fi/studio/commit/ee81980cd24abb7b8ea62718f0bce2a3a915a230))
+* **vaporware:** Fix linting, adjust labels and prices to use Zapper indexed images and prices ([#860](https://github.com/Zapper-fi/studio/issues/860)) ([566b97d](https://github.com/Zapper-fi/studio/commit/566b97d15be3502b740e8b43bb7489707fbabc6f))
+
+## [0.109.0](https://github.com/Zapper-fi/studio/compare/v0.108.0...v0.109.0) (2022-07-11)
+
+
+### Features
+
+* **angle:** Add Angle integration ([#831](https://github.com/Zapper-fi/studio/issues/831)) ([4d48dfc](https://github.com/Zapper-fi/studio/commit/4d48dfc3126edf14d16795d314671cc0192f00ce))
+* **symphony:** Symphony Finance Optimism Integration ([#857](https://github.com/Zapper-fi/studio/issues/857)) ([d28d2d6](https://github.com/Zapper-fi/studio/commit/d28d2d6d5535b986a20a9237cfdd5b4ff2598948))
+
+
+### Bug Fixes
+
+* **mean-finance:** Fix types, fix address in DCA positions ([#859](https://github.com/Zapper-fi/studio/issues/859)) ([856824b](https://github.com/Zapper-fi/studio/commit/856824bfb3e232acb993f4269e4e04003aac24cb))
+
+## [0.108.0](https://github.com/Zapper-fi/studio/compare/v0.107.0...v0.108.0) (2022-07-09)
+
+
+### Features
+
+* **llama-airforce:** Fix Pirex Vaults ([#852](https://github.com/Zapper-fi/studio/issues/852)) ([1b797f5](https://github.com/Zapper-fi/studio/commit/1b797f5f8cf0bed291f142a1313b5a9497b7cf91))
+* **llama-airforce:** Support uCVX pounder and claims ([#844](https://github.com/Zapper-fi/studio/issues/844)) ([78383b1](https://github.com/Zapper-fi/studio/commit/78383b1b14444e2e181681db5114fafd5b5e7651))
+
+
+### Bug Fixes
+
+* **phuture:** phuture index liquidity ([#850](https://github.com/Zapper-fi/studio/issues/850)) ([597ea2b](https://github.com/Zapper-fi/studio/commit/597ea2b95446863f50d49113c17b7a898974d908))
+
+## [0.107.0](https://github.com/Zapper-fi/studio/compare/v0.106.0...v0.107.0) (2022-07-08)
+
+
+### Features
+
+* **pooltogether:** Add Optimism support ([#848](https://github.com/Zapper-fi/studio/issues/848)) ([a7b613e](https://github.com/Zapper-fi/studio/commit/a7b613edcd44a830cae56584fd03295130afde0e))
+
+
+### Bug Fixes
+
+* **diffusion:** add missing logo ([#847](https://github.com/Zapper-fi/studio/issues/847)) ([19d858a](https://github.com/Zapper-fi/studio/commit/19d858a805b78cb57031cc3dbfc548b0ff7abbc2))
+
+## [0.106.0](https://github.com/Zapper-fi/studio/compare/v0.105.0...v0.106.0) (2022-07-08)
+
+
+### Features
+
+* **pirex:** Support pxCVX ([#845](https://github.com/Zapper-fi/studio/issues/845)) ([833c26c](https://github.com/Zapper-fi/studio/commit/833c26c39275d23349779fb4fa13ad72897b01a0))
+
+
+### Bug Fixes
+
+* **lyra-avalon:** Add unique keys on Lyra Avalon positions ([#846](https://github.com/Zapper-fi/studio/issues/846)) ([78ff09f](https://github.com/Zapper-fi/studio/commit/78ff09ffd99c7fc48d6e18075b80ae0a550d795f))
+* **phuture:** add logo ([6c5c469](https://github.com/Zapper-fi/studio/commit/6c5c469d679bdd68f55cbec8f36f7ac672ad303f))
+
+## [0.105.0](https://github.com/Zapper-fi/studio/compare/v0.104.0...v0.105.0) (2022-07-07)
+
+
+### Features
+
+* **bluebit:** Support ve token ([#840](https://github.com/Zapper-fi/studio/issues/840)) ([048f3d8](https://github.com/Zapper-fi/studio/commit/048f3d82cefdd6f4dadede02785791c7874447d9))
+* **uniswap-v2:** Added projected APY based on 24h volume ([#835](https://github.com/Zapper-fi/studio/issues/835)) ([d39175e](https://github.com/Zapper-fi/studio/commit/d39175e9d41183a185c85f97b387aec059cbceba))
+
+
+### Bug Fixes
+
+* **tectonic:** Fix supply position liquidity ([#841](https://github.com/Zapper-fi/studio/issues/841)) ([27da2d2](https://github.com/Zapper-fi/studio/commit/27da2d28c426e12ac187bdcb1a58f28b823d42a8))
+
+## [0.104.0](https://github.com/Zapper-fi/studio/compare/v0.103.0...v0.104.0) (2022-07-07)
+
+
+### Features
+
+* **tvl:** Include groups in TVL by default, exclude with override ([#837](https://github.com/Zapper-fi/studio/issues/837)) ([ae7587d](https://github.com/Zapper-fi/studio/commit/ae7587d506f120214bcd7a20e5b464153930b536))
+
+## [0.103.0](https://github.com/Zapper-fi/studio/compare/v0.102.0...v0.103.0) (2022-07-06)
+
+
+### Features
+
+* **velodrome:** Implement Velodrome ([#832](https://github.com/Zapper-fi/studio/issues/832)) ([4201d07](https://github.com/Zapper-fi/studio/commit/4201d0718bbf37f72af06e92a3205f00a47af29a))
+
+## [0.102.0](https://github.com/Zapper-fi/studio/compare/v0.101.0...v0.102.0) (2022-07-06)
+
+
+### Features
+
+* **phuture:** Phuture Finance Ethereum integration ([#828](https://github.com/Zapper-fi/studio/issues/828)) ([eff5cc9](https://github.com/Zapper-fi/studio/commit/eff5cc9e1a2d94becde84f08d66ec89e620e8515))
+* **trisolaris:** Add Trisolaris integration and fix Bluebit ([#833](https://github.com/Zapper-fi/studio/issues/833)) ([cf2d4a9](https://github.com/Zapper-fi/studio/commit/cf2d4a9ad3a94f2e6c61649c378bc807ecfc7cca))
+
+
+### Bug Fixes
+
+* disabled pool-together-v3's TVL ([#824](https://github.com/Zapper-fi/studio/issues/824)) ([9e1ac42](https://github.com/Zapper-fi/studio/commit/9e1ac42f44f95456cb4d7c109ffcbbf688555643))
+* **rari-fuse:** Fix failing RPC calls in Rari Fuse ([#830](https://github.com/Zapper-fi/studio/issues/830)) ([124853b](https://github.com/Zapper-fi/studio/commit/124853bf5766483917f17cbc4024b84dd8ba3a29))
+
+## [0.101.0](https://github.com/Zapper-fi/studio/compare/v0.100.3...v0.101.0) (2022-07-04)
+
+
+### Features
+
+* add pool ratio to statsItem ([#825](https://github.com/Zapper-fi/studio/issues/825)) ([8743b5e](https://github.com/Zapper-fi/studio/commit/8743b5eb3a301a53921186d3742054abec5a5a63))
+* **qi-dao:** add arbitrum support ([#821](https://github.com/Zapper-fi/studio/issues/821)) ([b85bf99](https://github.com/Zapper-fi/studio/commit/b85bf998933c1533b37f25c1644b180db90061b0))
+
+
+### Bug Fixes
+
+* filtered out maple pool positions without liquidity ([#823](https://github.com/Zapper-fi/studio/issues/823)) ([0ec9d67](https://github.com/Zapper-fi/studio/commit/0ec9d67ffce11bddff15397efd4514f4d8843920))
+* refactor aurora-plus's helper making it injectable ([#818](https://github.com/Zapper-fi/studio/issues/818)) ([ecb109d](https://github.com/Zapper-fi/studio/commit/ecb109ddcca20d6a5af46b3d5d0e1f45b5373718))
+* removed prefix from coslend positions label ([#822](https://github.com/Zapper-fi/studio/issues/822)) ([e08a8bc](https://github.com/Zapper-fi/studio/commit/e08a8bc11e804193102805fe1062af885d899ede))
+
+## [0.100.3](https://github.com/Zapper-fi/studio/compare/v0.100.2...v0.100.3) (2022-07-01)
+
+
+### Bug Fixes
+
+* add aurora plus logo ([#817](https://github.com/Zapper-fi/studio/issues/817)) ([1c30bd4](https://github.com/Zapper-fi/studio/commit/1c30bd44cd07ad088a570996299742dcd4688a50))
+* **global:** Roll API key ([4894859](https://github.com/Zapper-fi/studio/commit/489485930607adc5c7dd9fa3ad23b48e38838528))
+* solace fix addresses and style ([#815](https://github.com/Zapper-fi/studio/issues/815)) ([2659337](https://github.com/Zapper-fi/studio/commit/2659337aea1f2913f14147f15a3f6745357e4398))
+
+## [0.100.2](https://github.com/Zapper-fi/studio/compare/v0.100.1...v0.100.2) (2022-07-01)
+
+
+### Bug Fixes
+
+* **curve:** Fix Curve label for cases with a single app token like ibEUR / sEUR ([f95426b](https://github.com/Zapper-fi/studio/commit/f95426b9891628b7c89b3d9e9a7acf97d5bfa8fd))
+
+## [0.100.1](https://github.com/Zapper-fi/studio/compare/v0.100.0...v0.100.1) (2022-06-30)
+
+
+### Bug Fixes
+
+* **curve:** Adjust Curve labels, show Yearn yield tokens in explore ([#812](https://github.com/Zapper-fi/studio/issues/812)) ([98e8eb4](https://github.com/Zapper-fi/studio/commit/98e8eb4ddfdb37f63b87770be049d2a3f884180d))
+* **vvs-finance:** update vvs-finance name definition ([#811](https://github.com/Zapper-fi/studio/issues/811)) ([cf0fa95](https://github.com/Zapper-fi/studio/commit/cf0fa95518989a0667e5a567f18e88061bd08a02))
+* **yearn:** Fix vault displayed APY ([#809](https://github.com/Zapper-fi/studio/issues/809)) ([ada332f](https://github.com/Zapper-fi/studio/commit/ada332f923ba4ac663d4a950f54441cee16a64c5))
+
+## [0.100.0](https://github.com/Zapper-fi/studio/compare/v0.99.1...v0.100.0) (2022-06-30)
+
+
+### Features
+
+* **solace:** Update Solace Finance integration, add Aurora support ([#778](https://github.com/Zapper-fi/studio/issues/778)) ([0bbdf46](https://github.com/Zapper-fi/studio/commit/0bbdf46b4174398de49655e88ccc16066543e7bd))
+
+
+### Bug Fixes
+
+* **good-ghosting:** Removed support for inactive games ([#806](https://github.com/Zapper-fi/studio/issues/806)) ([35b4b72](https://github.com/Zapper-fi/studio/commit/35b4b72754843e6664e7cb98cb4d66978fc3cd44))
+* **pool-together:** Split PoolTogether app into v3 and v4 ([#797](https://github.com/Zapper-fi/studio/issues/797)) ([abbecd6](https://github.com/Zapper-fi/studio/commit/abbecd692e361e019c7d62c0f48f2ec67603c66a))
+* **rari-fuse:** Add missing Arrakis Finance dependency ([#808](https://github.com/Zapper-fi/studio/issues/808)) ([5e6a85e](https://github.com/Zapper-fi/studio/commit/5e6a85ec655b36fb9ee59759cf8c36256ff3c6db))
+* **tectonic:** Fix Tectonic token APY and liquidity calculation ([#805](https://github.com/Zapper-fi/studio/issues/805)) ([7b566ae](https://github.com/Zapper-fi/studio/commit/7b566ae4bf77824ae2d0866b756c9df19a4328a1))
+
+## [0.99.1](https://github.com/Zapper-fi/studio/compare/v0.99.0...v0.99.1) (2022-06-30)
+
+
+### Bug Fixes
+
+* **arrakis:** Add missing app logo ([fd285d8](https://github.com/Zapper-fi/studio/commit/fd285d85ad0635bddd3c0811f3146a851da923f6))
+* farms has been renamed to governance ([#802](https://github.com/Zapper-fi/studio/issues/802)) ([8d36159](https://github.com/Zapper-fi/studio/commit/8d361597b8a265d51872e4f9abc9721f8af327e4))
+* **tokemak:** remove hidden flag from position group ([#801](https://github.com/Zapper-fi/studio/issues/801)) ([fa885ba](https://github.com/Zapper-fi/studio/commit/fa885ba4d8ba6768800ad7f451c76fd6caffc280))
+* **yearn:** Fix governance reward token as a Curve dependency ([#804](https://github.com/Zapper-fi/studio/issues/804)) ([84ff57d](https://github.com/Zapper-fi/studio/commit/84ff57d00a4e4cd08b15494fdd0541bf614c9614))
+
+## [0.99.0](https://github.com/Zapper-fi/studio/compare/v0.98.0...v0.99.0) (2022-06-29)
+
+
+### Features
+
+* **coslend:** add prensentation config ([#798](https://github.com/Zapper-fi/studio/issues/798)) ([55574f7](https://github.com/Zapper-fi/studio/commit/55574f77aba67186aecf6aade588bf934d6078fa))
+* **euler:** add presentation config ([#800](https://github.com/Zapper-fi/studio/issues/800)) ([321c2f1](https://github.com/Zapper-fi/studio/commit/321c2f100293c4390297f29825cb99b8993623ad))
+* **sturdy:** add presentation config ([#799](https://github.com/Zapper-fi/studio/issues/799)) ([fbe966f](https://github.com/Zapper-fi/studio/commit/fbe966f2cbd7a40fe100bf5ff7adb633651b3c84))
+
+
+### Bug Fixes
+
+* Removed tvl fetchers ([#784](https://github.com/Zapper-fi/studio/issues/784)) ([92f7372](https://github.com/Zapper-fi/studio/commit/92f737228516003a74e8f24c63d9170a2f4896bc))
+
+## [0.98.0](https://github.com/Zapper-fi/studio/compare/v0.97.2...v0.98.0) (2022-06-29)
+
+
+### Features
+
+* **aurora-plus:** Support Aurora Plus Staking ([#754](https://github.com/Zapper-fi/studio/issues/754)) ([13074af](https://github.com/Zapper-fi/studio/commit/13074afcd542bae4d4743305890d48a13a5acd5b))
+* **helpers:** Add gqlFetchAll to AppToolkit ([#792](https://github.com/Zapper-fi/studio/issues/792)) ([5d81318](https://github.com/Zapper-fi/studio/commit/5d81318bd6e41dc2e7fd6c006ab7d7ee3e79d491))
+
+
+### Bug Fixes
+
+* **ease:** resolved apy should not be as a fractional value ([#793](https://github.com/Zapper-fi/studio/issues/793)) ([44a6e64](https://github.com/Zapper-fi/studio/commit/44a6e640b4fbd36336bd0828e5235c4cc8b43af7))
+
+## [0.97.2](https://github.com/Zapper-fi/studio/compare/v0.97.1...v0.97.2) (2022-06-29)
+
+
+### Bug Fixes
+
+* **cache:** Update cache decorator ([#788](https://github.com/Zapper-fi/studio/issues/788)) ([2fd74bc](https://github.com/Zapper-fi/studio/commit/2fd74bc91ce5f928394345e02bc5d597b8f0ce0f))
+
+## [0.97.1](https://github.com/Zapper-fi/studio/compare/v0.97.0...v0.97.1) (2022-06-29)
+
+
+### Bug Fixes
+
+* **pool-together:** Update pool-together.definition.ts ([bd52812](https://github.com/Zapper-fi/studio/commit/bd5281258e6260f2a508d756df4f8b2d5fc778eb))
+* **rari-fuse:** Add dependency to Harvest for iFARM ([#790](https://github.com/Zapper-fi/studio/issues/790)) ([0a503a3](https://github.com/Zapper-fi/studio/commit/0a503a396fbfa6fa4849697419e9f8cb04a90719))
+
+## [0.97.0](https://github.com/Zapper-fi/studio/compare/v0.96.0...v0.97.0) (2022-06-28)
+
+
+### Features
+
+* **mean-finance:** Improve Mean Finance label to show position info ([#781](https://github.com/Zapper-fi/studio/issues/781)) ([e042010](https://github.com/Zapper-fi/studio/commit/e042010540f672606bf5aadcce6959fdab7f01fe))
+
+
+### Bug Fixes
+
+* **positions:** Adjust signature on metatype helpers ([#786](https://github.com/Zapper-fi/studio/issues/786)) ([f395856](https://github.com/Zapper-fi/studio/commit/f395856440c21c280aed49ec1f7f7a5b9149ac68))
+
+## [0.96.0](https://github.com/Zapper-fi/studio/compare/v0.95.0...v0.96.0) (2022-06-28)
+
+
+### Features
+
+* **sushiswap:** Add xSUSHI and Meowshi dependencies on dependees ([#782](https://github.com/Zapper-fi/studio/issues/782)) ([600e10b](https://github.com/Zapper-fi/studio/commit/600e10bde7205570c4012f798b781bb2b9d07f63))
+
+## [0.95.0](https://github.com/Zapper-fi/studio/compare/v0.94.0...v0.95.0) (2022-06-28)
+
+
+### Features
+
+* **mean-finance:** Add Mean Finance integration ([#753](https://github.com/Zapper-fi/studio/issues/753)) ([516ae1a](https://github.com/Zapper-fi/studio/commit/516ae1afa623b4be9a1d63dd2409b7089d8b74ad))
+
+
+### Bug Fixes
+
+* **argo:** Add xARGO logo and fix labels ([#765](https://github.com/Zapper-fi/studio/issues/765)) ([efba3b4](https://github.com/Zapper-fi/studio/commit/efba3b4f6eb34244bb0b33ea0113bfef969a47ca))
+* borrow liquidity has to be lower then supply liquidity ([#777](https://github.com/Zapper-fi/studio/issues/777)) ([4ce52d5](https://github.com/Zapper-fi/studio/commit/4ce52d54dab0723d46e8157f67bf7979e56ff777))
+* escrowed qi-dao position should be shown in explorer ([#779](https://github.com/Zapper-fi/studio/issues/779)) ([5ffc473](https://github.com/Zapper-fi/studio/commit/5ffc473bfc681b47a1d95f9b588369d5a2037f3b))
+* remove curve suffix for harmony 3pool definition ([#780](https://github.com/Zapper-fi/studio/issues/780)) ([db1047c](https://github.com/Zapper-fi/studio/commit/db1047c8aa7b72b7b38cd5ea4f602262dab74d53))
+
+## [0.94.0](https://github.com/Zapper-fi/studio/compare/v0.93.3...v0.94.0) (2022-06-28)
+
+
+### Features
+
+* **pancakeswap:** Add missing ANTEX farm ([#774](https://github.com/Zapper-fi/studio/issues/774)) ([b4159b5](https://github.com/Zapper-fi/studio/commit/b4159b5f8333f595297acd9819403f78acf760c9))
+
+
+### Bug Fixes
+
+* **curve,iron-bank:** Add dependencies on Fixed Forex for Forex tokens ([6579e44](https://github.com/Zapper-fi/studio/commit/6579e448a52b5a06d0ed58fe0d0991d49b09c87c))
+
+## [0.93.3](https://github.com/Zapper-fi/studio/compare/v0.93.2...v0.93.3) (2022-06-28)
+
+
+### Bug Fixes
+
+* bunch of smol fixes (trader-joe, across, qiDao, maple) ([#773](https://github.com/Zapper-fi/studio/issues/773)) ([ee2e2a3](https://github.com/Zapper-fi/studio/commit/ee2e2a303040c011e4712f6c27e0b86239b8c3d1))
+* **rari-fuse:** Add dependency to mStable imUSD ([dd80ee8](https://github.com/Zapper-fi/studio/commit/dd80ee8faa8df8025b896f5b66c978d243a589a8))
+* remove curve label suffix in a non invasive manner ([#766](https://github.com/Zapper-fi/studio/issues/766)) ([59245d7](https://github.com/Zapper-fi/studio/commit/59245d7ff6f222d00b496dac93bccc568f5053ba))
+* revert rebindLabel on curve ([#771](https://github.com/Zapper-fi/studio/issues/771)) ([b142def](https://github.com/Zapper-fi/studio/commit/b142deffa67e9086ad3dece155074d1fb3b86db6))
+* split ticket and sponsorship liquidity (pool-together) ([#769](https://github.com/Zapper-fi/studio/issues/769)) ([71edf22](https://github.com/Zapper-fi/studio/commit/71edf22654c9a016fc71e7d363806430fc0422a2))
+* update curve pool definitions ([#772](https://github.com/Zapper-fi/studio/issues/772)) ([b84fa9a](https://github.com/Zapper-fi/studio/commit/b84fa9a54269596a5e4ada867584128bb5189d31))
+
+## [0.93.2](https://github.com/Zapper-fi/studio/compare/v0.93.1...v0.93.2) (2022-06-27)
+
+
+### Bug Fixes
+
+* Enabled pool together TVL ([#752](https://github.com/Zapper-fi/studio/issues/752)) ([ceb020c](https://github.com/Zapper-fi/studio/commit/ceb020c2d053e04a3d9878873e5792df21a65a07))
+* **pancakeswap:** Update Syrup pools label ([#768](https://github.com/Zapper-fi/studio/issues/768)) ([3d2216d](https://github.com/Zapper-fi/studio/commit/3d2216dcdf93f910fbcc0911a36e7fb06b680f80))
+
 ## [0.93.1](https://github.com/Zapper-fi/studio/compare/v0.93.0...v0.93.1) (2022-06-27)
 
 

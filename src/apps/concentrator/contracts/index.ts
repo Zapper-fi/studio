@@ -4,6 +4,7 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
+import { AladdinConcentratorIfoVault__factory } from './ethers';
 import { AladdinConvexVault__factory } from './ethers';
 import { AladdinCrv__factory } from './ethers';
 
@@ -16,6 +17,9 @@ export class ConcentratorContractFactory extends ContractFactory {
     super((network: Network) => appToolkit.getNetworkProvider(network));
   }
 
+  aladdinConcentratorIfoVault({ address, network }: ContractOpts) {
+    return AladdinConcentratorIfoVault__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   aladdinConvexVault({ address, network }: ContractOpts) {
     return AladdinConvexVault__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
@@ -24,5 +28,6 @@ export class ConcentratorContractFactory extends ContractFactory {
   }
 }
 
+export type { AladdinConcentratorIfoVault } from './ethers';
 export type { AladdinConvexVault } from './ethers';
 export type { AladdinCrv } from './ethers';

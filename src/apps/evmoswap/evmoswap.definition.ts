@@ -28,7 +28,7 @@ export const EVMOSWAP_DEFINITION = appDefinition({
   },
 
   token: {
-    address: '0x181C262b973B22C307C646a67f64B76410D19b6B',
+    address: '0x181c262b973b22c307c646a67f64b76410d19b6b',
     network: Network.EVMOS_MAINNET,
   },
 

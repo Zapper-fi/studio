@@ -20,7 +20,7 @@ const SCP_ADDRESS = '0x501acee83a6f269b77c167c6701843d454e2efa0';
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 const SOLACE_ADDRESS = '0x501ace9c35e60f03a2af4d484f49f9b1efde9f40';
 
-@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
+@Register.TokenPositionFetcher({ appId, groupId, network })
 export class EthereumSolaceScpTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,

@@ -10,11 +10,15 @@ export const PLUTUS_DEFINITION = appDefinition({
     'Plutus is a governance aggregator with the goal of amassing governance power in the Dopex/Jones ecosystem through the capture of veDPX and veJONES',
   url: 'https://plutusdao.io/',
   groups: {
-    ve: {
-      id: 've',
+    plsDpx: {
+      id: 'pls-dpx',
       type: GroupType.TOKEN,
-      label: 'veTokens',
-      groupLabel: 'Farms',
+      label: 'plsDPX',
+    },
+    plsJones: {
+      id: 'pls-jones',
+      type: GroupType.TOKEN,
+      label: 'plsJONES',
     },
     lock: {
       id: 'lock',
@@ -43,7 +47,10 @@ export const PLUTUS_DEFINITION = appDefinition({
   },
   tags: [AppTag.ASSET_MANAGEMENT, AppTag.FARMING],
   keywords: [],
-  links: {},
+  links: {
+    discord: 'https://discord.com/invite/plutusdao',
+    twitter: 'https://twitter.com/PlutusDAO_io',
+  },
 
   supportedNetworks: {
     [Network.ARBITRUM_MAINNET]: [AppAction.VIEW],

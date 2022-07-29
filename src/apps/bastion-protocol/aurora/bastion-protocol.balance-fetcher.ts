@@ -12,6 +12,7 @@ import { Network } from '~types/network.interface';
 
 import { BASTION_PROTOCOL_DEFINITION } from '../bastion-protocol.definition';
 import { BastionProtocolContractFactory } from '../contracts';
+import { BastionBorrowContractPositionDataProps } from '../helper/bastion-protocol.borrow.contract-position-helper';
 import { BastionSupplyTokenDataProps } from '../helper/bastion-protocol.supply.token-helper';
 
 const network = Network.AURORA_MAINNET;
@@ -33,7 +34,12 @@ export class AuroraBastionProtocolBalanceFetcher implements BalanceFetcher {
 
     const supplyTokens = await this.appToolkit.getAppTokenPositions<BastionSupplyTokenDataProps>({
       appId: BASTION_PROTOCOL_DEFINITION.id,
-      groupIds: [BASTION_PROTOCOL_DEFINITION.groups.supply.id],
+      groupIds: [
+        BASTION_PROTOCOL_DEFINITION.groups.supplyMainHub.id,
+        BASTION_PROTOCOL_DEFINITION.groups.supplyStakedNear.id,
+        BASTION_PROTOCOL_DEFINITION.groups.supplyAuroraEcosystem.id,
+        BASTION_PROTOCOL_DEFINITION.groups.supplyMultichain.id,
+      ],
       network,
     });
 
@@ -54,9 +60,14 @@ export class AuroraBastionProtocolBalanceFetcher implements BalanceFetcher {
   async getBorrowBalances(address: string) {
     const multicall = this.appToolkit.getMulticall(network);
 
-    const borrowPositions = await this.appToolkit.getAppContractPositions<BastionSupplyTokenDataProps>({
+    const borrowPositions = await this.appToolkit.getAppContractPositions<BastionBorrowContractPositionDataProps>({
       appId: BASTION_PROTOCOL_DEFINITION.id,
-      groupIds: [BASTION_PROTOCOL_DEFINITION.groups.supply.id],
+      groupIds: [
+        BASTION_PROTOCOL_DEFINITION.groups.borrowMainHub.id,
+        BASTION_PROTOCOL_DEFINITION.groups.borrowStakedNear.id,
+        BASTION_PROTOCOL_DEFINITION.groups.borrowAuroraEcosystem.id,
+        BASTION_PROTOCOL_DEFINITION.groups.borrowMultichain.id,
+      ],
       network,
     });
 

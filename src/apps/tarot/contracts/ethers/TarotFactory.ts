@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface TarotFactoryInterface extends utils.Interface {
   functions: {
@@ -67,19 +67,19 @@ export interface TarotFactoryInterface extends utils.Interface {
 
   encodeFunctionData(functionFragment: '_acceptAdmin', values?: undefined): string;
   encodeFunctionData(functionFragment: '_acceptReservesAdmin', values?: undefined): string;
-  encodeFunctionData(functionFragment: '_setPendingAdmin', values: [string]): string;
-  encodeFunctionData(functionFragment: '_setReservesManager', values: [string]): string;
-  encodeFunctionData(functionFragment: '_setReservesPendingAdmin', values: [string]): string;
+  encodeFunctionData(functionFragment: '_setPendingAdmin', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: '_setReservesManager', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: '_setReservesPendingAdmin', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'admin', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'allLendingPools', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'allLendingPools', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'allLendingPoolsLength', values?: undefined): string;
   encodeFunctionData(functionFragment: 'bDeployer', values?: undefined): string;
   encodeFunctionData(functionFragment: 'cDeployer', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'createBorrowable0', values: [string]): string;
-  encodeFunctionData(functionFragment: 'createBorrowable1', values: [string]): string;
-  encodeFunctionData(functionFragment: 'createCollateral', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getLendingPool', values: [string]): string;
-  encodeFunctionData(functionFragment: 'initializeLendingPool', values: [string]): string;
+  encodeFunctionData(functionFragment: 'createBorrowable0', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'createBorrowable1', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'createCollateral', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getLendingPool', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'initializeLendingPool', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'pendingAdmin', values?: undefined): string;
   encodeFunctionData(functionFragment: 'reservesAdmin', values?: undefined): string;
   encodeFunctionData(functionFragment: 'reservesManager', values?: undefined): string;
@@ -203,28 +203,28 @@ export interface TarotFactory extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    _acceptAdmin(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    _acceptAdmin(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    _acceptReservesAdmin(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    _acceptReservesAdmin(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     _setPendingAdmin(
-      newPendingAdmin: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newPendingAdmin: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _setReservesManager(
-      newReservesManager: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newReservesManager: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     _setReservesPendingAdmin(
-      newReservesPendingAdmin: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newReservesPendingAdmin: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     admin(overrides?: CallOverrides): Promise<[string]>;
 
-    allLendingPools(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    allLendingPools(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
     allLendingPoolsLength(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -233,22 +233,22 @@ export interface TarotFactory extends BaseContract {
     cDeployer(overrides?: CallOverrides): Promise<[string]>;
 
     createBorrowable0(
-      uniswapV2Pair: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      uniswapV2Pair: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     createBorrowable1(
-      uniswapV2Pair: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      uniswapV2Pair: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     createCollateral(
-      uniswapV2Pair: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      uniswapV2Pair: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     getLendingPool(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [boolean, number, string, string, string] & {
@@ -261,8 +261,8 @@ export interface TarotFactory extends BaseContract {
     >;
 
     initializeLendingPool(
-      uniswapV2Pair: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      uniswapV2Pair: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     pendingAdmin(overrides?: CallOverrides): Promise<[string]>;
@@ -276,28 +276,28 @@ export interface TarotFactory extends BaseContract {
     tarotPriceOracle(overrides?: CallOverrides): Promise<[string]>;
   };
 
-  _acceptAdmin(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  _acceptAdmin(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  _acceptReservesAdmin(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  _acceptReservesAdmin(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   _setPendingAdmin(
-    newPendingAdmin: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newPendingAdmin: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _setReservesManager(
-    newReservesManager: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newReservesManager: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   _setReservesPendingAdmin(
-    newReservesPendingAdmin: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newReservesPendingAdmin: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   admin(overrides?: CallOverrides): Promise<string>;
 
-  allLendingPools(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  allLendingPools(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   allLendingPoolsLength(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -306,22 +306,22 @@ export interface TarotFactory extends BaseContract {
   cDeployer(overrides?: CallOverrides): Promise<string>;
 
   createBorrowable0(
-    uniswapV2Pair: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    uniswapV2Pair: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   createBorrowable1(
-    uniswapV2Pair: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    uniswapV2Pair: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   createCollateral(
-    uniswapV2Pair: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    uniswapV2Pair: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   getLendingPool(
-    arg0: string,
+    arg0: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<
     [boolean, number, string, string, string] & {
@@ -334,8 +334,8 @@ export interface TarotFactory extends BaseContract {
   >;
 
   initializeLendingPool(
-    uniswapV2Pair: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    uniswapV2Pair: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   pendingAdmin(overrides?: CallOverrides): Promise<string>;
@@ -353,15 +353,15 @@ export interface TarotFactory extends BaseContract {
 
     _acceptReservesAdmin(overrides?: CallOverrides): Promise<void>;
 
-    _setPendingAdmin(newPendingAdmin: string, overrides?: CallOverrides): Promise<void>;
+    _setPendingAdmin(newPendingAdmin: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    _setReservesManager(newReservesManager: string, overrides?: CallOverrides): Promise<void>;
+    _setReservesManager(newReservesManager: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    _setReservesPendingAdmin(newReservesPendingAdmin: string, overrides?: CallOverrides): Promise<void>;
+    _setReservesPendingAdmin(newReservesPendingAdmin: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     admin(overrides?: CallOverrides): Promise<string>;
 
-    allLendingPools(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    allLendingPools(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
     allLendingPoolsLength(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -369,14 +369,14 @@ export interface TarotFactory extends BaseContract {
 
     cDeployer(overrides?: CallOverrides): Promise<string>;
 
-    createBorrowable0(uniswapV2Pair: string, overrides?: CallOverrides): Promise<string>;
+    createBorrowable0(uniswapV2Pair: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
-    createBorrowable1(uniswapV2Pair: string, overrides?: CallOverrides): Promise<string>;
+    createBorrowable1(uniswapV2Pair: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
-    createCollateral(uniswapV2Pair: string, overrides?: CallOverrides): Promise<string>;
+    createCollateral(uniswapV2Pair: PromiseOrValue<string>, overrides?: CallOverrides): Promise<string>;
 
     getLendingPool(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [boolean, number, string, string, string] & {
@@ -388,7 +388,7 @@ export interface TarotFactory extends BaseContract {
       }
     >;
 
-    initializeLendingPool(uniswapV2Pair: string, overrides?: CallOverrides): Promise<void>;
+    initializeLendingPool(uniswapV2Pair: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     pendingAdmin(overrides?: CallOverrides): Promise<string>;
 
@@ -403,18 +403,18 @@ export interface TarotFactory extends BaseContract {
 
   filters: {
     'LendingPoolInitialized(address,address,address,address,address,address,uint256)'(
-      uniswapV2Pair?: string | null,
-      token0?: string | null,
-      token1?: string | null,
+      uniswapV2Pair?: PromiseOrValue<string> | null,
+      token0?: PromiseOrValue<string> | null,
+      token1?: PromiseOrValue<string> | null,
       collateral?: null,
       borrowable0?: null,
       borrowable1?: null,
       lendingPoolId?: null,
     ): LendingPoolInitializedEventFilter;
     LendingPoolInitialized(
-      uniswapV2Pair?: string | null,
-      token0?: string | null,
-      token1?: string | null,
+      uniswapV2Pair?: PromiseOrValue<string> | null,
+      token0?: PromiseOrValue<string> | null,
+      token1?: PromiseOrValue<string> | null,
       collateral?: null,
       borrowable0?: null,
       borrowable1?: null,
@@ -447,28 +447,28 @@ export interface TarotFactory extends BaseContract {
   };
 
   estimateGas: {
-    _acceptAdmin(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    _acceptAdmin(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    _acceptReservesAdmin(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    _acceptReservesAdmin(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     _setPendingAdmin(
-      newPendingAdmin: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newPendingAdmin: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     _setReservesManager(
-      newReservesManager: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newReservesManager: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     _setReservesPendingAdmin(
-      newReservesPendingAdmin: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newReservesPendingAdmin: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     admin(overrides?: CallOverrides): Promise<BigNumber>;
 
-    allLendingPools(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    allLendingPools(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     allLendingPoolsLength(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -477,25 +477,25 @@ export interface TarotFactory extends BaseContract {
     cDeployer(overrides?: CallOverrides): Promise<BigNumber>;
 
     createBorrowable0(
-      uniswapV2Pair: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      uniswapV2Pair: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     createBorrowable1(
-      uniswapV2Pair: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      uniswapV2Pair: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     createCollateral(
-      uniswapV2Pair: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      uniswapV2Pair: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    getLendingPool(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getLendingPool(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     initializeLendingPool(
-      uniswapV2Pair: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      uniswapV2Pair: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     pendingAdmin(overrides?: CallOverrides): Promise<BigNumber>;
@@ -510,28 +510,28 @@ export interface TarotFactory extends BaseContract {
   };
 
   populateTransaction: {
-    _acceptAdmin(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    _acceptAdmin(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    _acceptReservesAdmin(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    _acceptReservesAdmin(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     _setPendingAdmin(
-      newPendingAdmin: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newPendingAdmin: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _setReservesManager(
-      newReservesManager: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newReservesManager: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     _setReservesPendingAdmin(
-      newReservesPendingAdmin: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newReservesPendingAdmin: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     admin(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    allLendingPools(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    allLendingPools(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     allLendingPoolsLength(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -540,25 +540,25 @@ export interface TarotFactory extends BaseContract {
     cDeployer(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     createBorrowable0(
-      uniswapV2Pair: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      uniswapV2Pair: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     createBorrowable1(
-      uniswapV2Pair: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      uniswapV2Pair: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     createCollateral(
-      uniswapV2Pair: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      uniswapV2Pair: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    getLendingPool(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getLendingPool(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     initializeLendingPool(
-      uniswapV2Pair: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      uniswapV2Pair: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     pendingAdmin(overrides?: CallOverrides): Promise<PopulatedTransaction>;

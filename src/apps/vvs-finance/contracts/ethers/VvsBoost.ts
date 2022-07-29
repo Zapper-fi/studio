@@ -16,16 +16,16 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export declare namespace VVSBoost {
   export type StakeStruct = {
-    amount: BigNumberish;
-    poolId: BigNumberish;
-    weightedAmount: BigNumberish;
-    stakeTimestamp: BigNumberish;
-    unlockTimestamp: BigNumberish;
-    active: boolean;
+    amount: PromiseOrValue<BigNumberish>;
+    poolId: PromiseOrValue<BigNumberish>;
+    weightedAmount: PromiseOrValue<BigNumberish>;
+    stakeTimestamp: PromiseOrValue<BigNumberish>;
+    unlockTimestamp: PromiseOrValue<BigNumberish>;
+    active: PromiseOrValue<boolean>;
   };
 
   export type StakeStructOutput = [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, boolean] & {
@@ -132,45 +132,93 @@ export interface VvsBoostInterface extends utils.Interface {
 
   encodeFunctionData(functionFragment: 'PRECISION', values?: undefined): string;
   encodeFunctionData(functionFragment: 'accTokenPerShare', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'activePoolMap', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'add', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'allowance', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'approve', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
-  encodeFunctionData(functionFragment: 'batchUpgrade', values: [BigNumberish[], BigNumberish[]]): string;
-  encodeFunctionData(functionFragment: 'batchWithdraw', values: [BigNumberish[]]): string;
+  encodeFunctionData(
+    functionFragment: 'activePoolMap',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'add',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'allowance', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'approve',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'batchUpgrade',
+    values: [PromiseOrValue<BigNumberish>[], PromiseOrValue<BigNumberish>[]],
+  ): string;
+  encodeFunctionData(functionFragment: 'batchWithdraw', values: [PromiseOrValue<BigNumberish>[]]): string;
   encodeFunctionData(functionFragment: 'craftsman', values?: undefined): string;
   encodeFunctionData(functionFragment: 'decimals', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'decreaseAllowance', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'deposit', values: [BigNumberish, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'decreaseAllowance',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'deposit',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'depositCraftsman', values?: undefined): string;
   encodeFunctionData(functionFragment: 'depositToken', values?: undefined): string;
   encodeFunctionData(functionFragment: 'depositTokenPid', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getUserInfo', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getUserStake', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'increaseAllowance', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'initialize', values: [string, string, string, string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'getUserInfo', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'getUserStake',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'increaseAllowance',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'initialize',
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+    ],
+  ): string;
   encodeFunctionData(functionFragment: 'lastRewardBlock', values?: undefined): string;
   encodeFunctionData(functionFragment: 'lastVVSBalance', values?: undefined): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'pendingVVS', values: [string]): string;
-  encodeFunctionData(functionFragment: 'poolInfo', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'pendingVVS', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'poolInfo', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'poolLength', values?: undefined): string;
   encodeFunctionData(functionFragment: 'proxiableUUID', values?: undefined): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'set', values: [BigNumberish, BigNumberish, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'set',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transfer', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferFrom', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
-  encodeFunctionData(functionFragment: 'upgrade', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'upgradeTo', values: [string]): string;
-  encodeFunctionData(functionFragment: 'upgradeToAndCall', values: [string, BytesLike]): string;
-  encodeFunctionData(functionFragment: 'userInfo', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'transfer',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'transferFrom',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'upgrade',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'upgradeTo', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'upgradeToAndCall',
+    values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>],
+  ): string;
+  encodeFunctionData(functionFragment: 'userInfo', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'vvs', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'withdraw', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'withdraw', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'xvvs', values?: undefined): string;
 
   decodeFunctionResult(functionFragment: 'PRECISION', data: BytesLike): Result;
@@ -372,33 +420,41 @@ export interface VvsBoost extends BaseContract {
 
     accTokenPerShare(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    activePoolMap(arg0: BigNumberish, arg1: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    activePoolMap(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     add(
-      _multiplier: BigNumberish,
-      _lockPeriod: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _multiplier: PromiseOrValue<BigNumberish>,
+      _lockPeriod: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     batchUpgrade(
-      _stakeIds: BigNumberish[],
-      _newPids: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _stakeIds: PromiseOrValue<BigNumberish>[],
+      _newPids: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     batchWithdraw(
-      _stakeIds: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _stakeIds: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     craftsman(overrides?: CallOverrides): Promise<[string]>;
@@ -406,47 +462,47 @@ export interface VvsBoost extends BaseContract {
     decimals(overrides?: CallOverrides): Promise<[number]>;
 
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     deposit(
-      _pid: BigNumberish,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    depositCraftsman(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    depositCraftsman(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     depositToken(overrides?: CallOverrides): Promise<[string]>;
 
     depositTokenPid(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     getUserInfo(
-      _user: string,
+      _user: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber, VVSBoost.StakeStructOutput[]]>;
 
     getUserStake(
-      _user: string,
-      _stakeId: BigNumberish,
+      _user: PromiseOrValue<string>,
+      _stakeId: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[VVSBoost.StakeStructOutput]>;
 
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     initialize(
-      _craftsman: string,
-      _vvs: string,
-      _xvvs: string,
-      _depositToken: string,
-      _depositTokenPid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _craftsman: PromiseOrValue<string>,
+      _vvs: PromiseOrValue<string>,
+      _xvvs: PromiseOrValue<string>,
+      _depositToken: PromiseOrValue<string>,
+      _depositTokenPid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     lastRewardBlock(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -457,10 +513,10 @@ export interface VvsBoost extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
-    pendingVVS(_user: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    pendingVVS(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     poolInfo(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber] & {
@@ -474,13 +530,13 @@ export interface VvsBoost extends BaseContract {
 
     proxiableUUID(overrides?: CallOverrides): Promise<[string]>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     set(
-      _pid: BigNumberish,
-      _multiplier: BigNumberish,
-      _lockPeriod: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _multiplier: PromiseOrValue<BigNumberish>,
+      _lockPeriod: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
@@ -488,42 +544,42 @@ export interface VvsBoost extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transfer(
-      to: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferFrom(
-      from: string,
-      to: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     upgrade(
-      _stakeId: BigNumberish,
-      _newPid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _stakeId: PromiseOrValue<BigNumberish>,
+      _newPid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     upgradeTo(
-      newImplementation: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newImplementation: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     upgradeToAndCall(
-      newImplementation: string,
-      data: BytesLike,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      newImplementation: PromiseOrValue<string>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     userInfo(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber] & {
@@ -535,8 +591,8 @@ export interface VvsBoost extends BaseContract {
     vvs(overrides?: CallOverrides): Promise<[string]>;
 
     withdraw(
-      _stakeId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _stakeId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     xvvs(overrides?: CallOverrides): Promise<[string]>;
@@ -546,33 +602,41 @@ export interface VvsBoost extends BaseContract {
 
   accTokenPerShare(overrides?: CallOverrides): Promise<BigNumber>;
 
-  activePoolMap(arg0: BigNumberish, arg1: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  activePoolMap(
+    arg0: PromiseOrValue<BigNumberish>,
+    arg1: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   add(
-    _multiplier: BigNumberish,
-    _lockPeriod: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _multiplier: PromiseOrValue<BigNumberish>,
+    _lockPeriod: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+  allowance(
+    owner: PromiseOrValue<string>,
+    spender: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   approve(
-    spender: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   batchUpgrade(
-    _stakeIds: BigNumberish[],
-    _newPids: BigNumberish[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _stakeIds: PromiseOrValue<BigNumberish>[],
+    _newPids: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   batchWithdraw(
-    _stakeIds: BigNumberish[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _stakeIds: PromiseOrValue<BigNumberish>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   craftsman(overrides?: CallOverrides): Promise<string>;
@@ -580,40 +644,47 @@ export interface VvsBoost extends BaseContract {
   decimals(overrides?: CallOverrides): Promise<number>;
 
   decreaseAllowance(
-    spender: string,
-    subtractedValue: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    subtractedValue: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   deposit(
-    _pid: BigNumberish,
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pid: PromiseOrValue<BigNumberish>,
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  depositCraftsman(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  depositCraftsman(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   depositToken(overrides?: CallOverrides): Promise<string>;
 
   depositTokenPid(overrides?: CallOverrides): Promise<BigNumber>;
 
-  getUserInfo(_user: string, overrides?: CallOverrides): Promise<[BigNumber, BigNumber, VVSBoost.StakeStructOutput[]]>;
+  getUserInfo(
+    _user: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<[BigNumber, BigNumber, VVSBoost.StakeStructOutput[]]>;
 
-  getUserStake(_user: string, _stakeId: BigNumberish, overrides?: CallOverrides): Promise<VVSBoost.StakeStructOutput>;
+  getUserStake(
+    _user: PromiseOrValue<string>,
+    _stakeId: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<VVSBoost.StakeStructOutput>;
 
   increaseAllowance(
-    spender: string,
-    addedValue: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    addedValue: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   initialize(
-    _craftsman: string,
-    _vvs: string,
-    _xvvs: string,
-    _depositToken: string,
-    _depositTokenPid: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _craftsman: PromiseOrValue<string>,
+    _vvs: PromiseOrValue<string>,
+    _xvvs: PromiseOrValue<string>,
+    _depositToken: PromiseOrValue<string>,
+    _depositTokenPid: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   lastRewardBlock(overrides?: CallOverrides): Promise<BigNumber>;
@@ -624,10 +695,10 @@ export interface VvsBoost extends BaseContract {
 
   owner(overrides?: CallOverrides): Promise<string>;
 
-  pendingVVS(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
+  pendingVVS(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   poolInfo(
-    arg0: BigNumberish,
+    arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber, BigNumber] & {
@@ -641,13 +712,13 @@ export interface VvsBoost extends BaseContract {
 
   proxiableUUID(overrides?: CallOverrides): Promise<string>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   set(
-    _pid: BigNumberish,
-    _multiplier: BigNumberish,
-    _lockPeriod: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _pid: PromiseOrValue<BigNumberish>,
+    _multiplier: PromiseOrValue<BigNumberish>,
+    _lockPeriod: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
@@ -655,42 +726,42 @@ export interface VvsBoost extends BaseContract {
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   transfer(
-    to: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    to: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferFrom(
-    from: string,
-    to: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    from: PromiseOrValue<string>,
+    to: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   upgrade(
-    _stakeId: BigNumberish,
-    _newPid: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _stakeId: PromiseOrValue<BigNumberish>,
+    _newPid: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   upgradeTo(
-    newImplementation: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newImplementation: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   upgradeToAndCall(
-    newImplementation: string,
-    data: BytesLike,
-    overrides?: PayableOverrides & { from?: string | Promise<string> },
+    newImplementation: PromiseOrValue<string>,
+    data: PromiseOrValue<BytesLike>,
+    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   userInfo(
-    arg0: string,
+    arg0: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber] & {
@@ -702,8 +773,8 @@ export interface VvsBoost extends BaseContract {
   vvs(overrides?: CallOverrides): Promise<string>;
 
   withdraw(
-    _stakeId: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _stakeId: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   xvvs(overrides?: CallOverrides): Promise<string>;
@@ -713,27 +784,55 @@ export interface VvsBoost extends BaseContract {
 
     accTokenPerShare(overrides?: CallOverrides): Promise<BigNumber>;
 
-    activePoolMap(arg0: BigNumberish, arg1: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    activePoolMap(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    add(_multiplier: BigNumberish, _lockPeriod: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    add(
+      _multiplier: PromiseOrValue<BigNumberish>,
+      _lockPeriod: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    approve(spender: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    approve(
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    batchUpgrade(_stakeIds: BigNumberish[], _newPids: BigNumberish[], overrides?: CallOverrides): Promise<void>;
+    batchUpgrade(
+      _stakeIds: PromiseOrValue<BigNumberish>[],
+      _newPids: PromiseOrValue<BigNumberish>[],
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    batchWithdraw(_stakeIds: BigNumberish[], overrides?: CallOverrides): Promise<void>;
+    batchWithdraw(_stakeIds: PromiseOrValue<BigNumberish>[], overrides?: CallOverrides): Promise<void>;
 
     craftsman(overrides?: CallOverrides): Promise<string>;
 
     decimals(overrides?: CallOverrides): Promise<number>;
 
-    decreaseAllowance(spender: string, subtractedValue: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    decreaseAllowance(
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    deposit(_pid: BigNumberish, _amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    deposit(
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     depositCraftsman(overrides?: CallOverrides): Promise<void>;
 
@@ -742,20 +841,28 @@ export interface VvsBoost extends BaseContract {
     depositTokenPid(overrides?: CallOverrides): Promise<BigNumber>;
 
     getUserInfo(
-      _user: string,
+      _user: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber, VVSBoost.StakeStructOutput[]]>;
 
-    getUserStake(_user: string, _stakeId: BigNumberish, overrides?: CallOverrides): Promise<VVSBoost.StakeStructOutput>;
+    getUserStake(
+      _user: PromiseOrValue<string>,
+      _stakeId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<VVSBoost.StakeStructOutput>;
 
-    increaseAllowance(spender: string, addedValue: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    increaseAllowance(
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     initialize(
-      _craftsman: string,
-      _vvs: string,
-      _xvvs: string,
-      _depositToken: string,
-      _depositTokenPid: BigNumberish,
+      _craftsman: PromiseOrValue<string>,
+      _vvs: PromiseOrValue<string>,
+      _xvvs: PromiseOrValue<string>,
+      _depositToken: PromiseOrValue<string>,
+      _depositTokenPid: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -767,10 +874,10 @@ export interface VvsBoost extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<string>;
 
-    pendingVVS(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingVVS(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     poolInfo(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber] & {
@@ -787,9 +894,9 @@ export interface VvsBoost extends BaseContract {
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
     set(
-      _pid: BigNumberish,
-      _multiplier: BigNumberish,
-      _lockPeriod: BigNumberish,
+      _pid: PromiseOrValue<BigNumberish>,
+      _multiplier: PromiseOrValue<BigNumberish>,
+      _lockPeriod: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -797,20 +904,37 @@ export interface VvsBoost extends BaseContract {
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transfer(to: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transfer(
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    transferFrom(from: string, to: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transferFrom(
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    upgrade(_stakeId: BigNumberish, _newPid: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    upgrade(
+      _stakeId: PromiseOrValue<BigNumberish>,
+      _newPid: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    upgradeTo(newImplementation: string, overrides?: CallOverrides): Promise<void>;
+    upgradeTo(newImplementation: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    upgradeToAndCall(newImplementation: string, data: BytesLike, overrides?: CallOverrides): Promise<void>;
+    upgradeToAndCall(
+      newImplementation: PromiseOrValue<string>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     userInfo(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber] & {
@@ -821,92 +945,107 @@ export interface VvsBoost extends BaseContract {
 
     vvs(overrides?: CallOverrides): Promise<string>;
 
-    withdraw(_stakeId: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    withdraw(_stakeId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     xvvs(overrides?: CallOverrides): Promise<string>;
   };
 
   filters: {
     'AddPool(uint256,uint256,uint256)'(
-      poolId?: BigNumberish | null,
+      poolId?: PromiseOrValue<BigNumberish> | null,
       multiplier?: null,
       lockPeriod?: null,
     ): AddPoolEventFilter;
-    AddPool(poolId?: BigNumberish | null, multiplier?: null, lockPeriod?: null): AddPoolEventFilter;
+    AddPool(poolId?: PromiseOrValue<BigNumberish> | null, multiplier?: null, lockPeriod?: null): AddPoolEventFilter;
 
     'AdminChanged(address,address)'(previousAdmin?: null, newAdmin?: null): AdminChangedEventFilter;
     AdminChanged(previousAdmin?: null, newAdmin?: null): AdminChangedEventFilter;
 
     'Approval(address,address,uint256)'(
-      owner?: string | null,
-      spender?: string | null,
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
       value?: null,
     ): ApprovalEventFilter;
-    Approval(owner?: string | null, spender?: string | null, value?: null): ApprovalEventFilter;
+    Approval(
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
+      value?: null,
+    ): ApprovalEventFilter;
 
-    'BeaconUpgraded(address)'(beacon?: string | null): BeaconUpgradedEventFilter;
-    BeaconUpgraded(beacon?: string | null): BeaconUpgradedEventFilter;
+    'BeaconUpgraded(address)'(beacon?: PromiseOrValue<string> | null): BeaconUpgradedEventFilter;
+    BeaconUpgraded(beacon?: PromiseOrValue<string> | null): BeaconUpgradedEventFilter;
 
     'Deposit(address,uint256,uint256,uint256,uint256,uint256)'(
-      user?: string | null,
-      pid?: BigNumberish | null,
-      stakeId?: BigNumberish | null,
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
+      stakeId?: PromiseOrValue<BigNumberish> | null,
       amount?: null,
       weightedAmount?: null,
       unlockTimestamp?: null,
     ): DepositEventFilter;
     Deposit(
-      user?: string | null,
-      pid?: BigNumberish | null,
-      stakeId?: BigNumberish | null,
+      user?: PromiseOrValue<string> | null,
+      pid?: PromiseOrValue<BigNumberish> | null,
+      stakeId?: PromiseOrValue<BigNumberish> | null,
       amount?: null,
       weightedAmount?: null,
       unlockTimestamp?: null,
     ): DepositEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
 
     'SetPool(uint256,uint256,uint256)'(
-      poolId?: BigNumberish | null,
+      poolId?: PromiseOrValue<BigNumberish> | null,
       multiplier?: null,
       lockPeriod?: null,
     ): SetPoolEventFilter;
-    SetPool(poolId?: BigNumberish | null, multiplier?: null, lockPeriod?: null): SetPoolEventFilter;
+    SetPool(poolId?: PromiseOrValue<BigNumberish> | null, multiplier?: null, lockPeriod?: null): SetPoolEventFilter;
 
-    'Transfer(address,address,uint256)'(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
-    Transfer(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
+    'Transfer(address,address,uint256)'(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
+    Transfer(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
 
     'Upgrade(address,uint256,uint256,uint256,uint256)'(
-      user?: string | null,
-      stakeId?: BigNumberish | null,
-      newPid?: BigNumberish | null,
+      user?: PromiseOrValue<string> | null,
+      stakeId?: PromiseOrValue<BigNumberish> | null,
+      newPid?: PromiseOrValue<BigNumberish> | null,
       newWeightedAmount?: null,
       newUnlockTimestamp?: null,
     ): UpgradeEventFilter;
     Upgrade(
-      user?: string | null,
-      stakeId?: BigNumberish | null,
-      newPid?: BigNumberish | null,
+      user?: PromiseOrValue<string> | null,
+      stakeId?: PromiseOrValue<BigNumberish> | null,
+      newPid?: PromiseOrValue<BigNumberish> | null,
       newWeightedAmount?: null,
       newUnlockTimestamp?: null,
     ): UpgradeEventFilter;
 
-    'Upgraded(address)'(implementation?: string | null): UpgradedEventFilter;
-    Upgraded(implementation?: string | null): UpgradedEventFilter;
+    'Upgraded(address)'(implementation?: PromiseOrValue<string> | null): UpgradedEventFilter;
+    Upgraded(implementation?: PromiseOrValue<string> | null): UpgradedEventFilter;
 
     'Withdraw(address,uint256,uint256,uint256)'(
-      user?: string | null,
-      stakeId?: BigNumberish | null,
+      user?: PromiseOrValue<string> | null,
+      stakeId?: PromiseOrValue<BigNumberish> | null,
       amount?: null,
       weightedAmount?: null,
     ): WithdrawEventFilter;
     Withdraw(
-      user?: string | null,
-      stakeId?: BigNumberish | null,
+      user?: PromiseOrValue<string> | null,
+      stakeId?: PromiseOrValue<BigNumberish> | null,
       amount?: null,
       weightedAmount?: null,
     ): WithdrawEventFilter;
@@ -917,33 +1056,41 @@ export interface VvsBoost extends BaseContract {
 
     accTokenPerShare(overrides?: CallOverrides): Promise<BigNumber>;
 
-    activePoolMap(arg0: BigNumberish, arg1: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    activePoolMap(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     add(
-      _multiplier: BigNumberish,
-      _lockPeriod: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _multiplier: PromiseOrValue<BigNumberish>,
+      _lockPeriod: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     batchUpgrade(
-      _stakeIds: BigNumberish[],
-      _newPids: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _stakeIds: PromiseOrValue<BigNumberish>[],
+      _newPids: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     batchWithdraw(
-      _stakeIds: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _stakeIds: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     craftsman(overrides?: CallOverrides): Promise<BigNumber>;
@@ -951,40 +1098,44 @@ export interface VvsBoost extends BaseContract {
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     deposit(
-      _pid: BigNumberish,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    depositCraftsman(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    depositCraftsman(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     depositToken(overrides?: CallOverrides): Promise<BigNumber>;
 
     depositTokenPid(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getUserInfo(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getUserInfo(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getUserStake(_user: string, _stakeId: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getUserStake(
+      _user: PromiseOrValue<string>,
+      _stakeId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     initialize(
-      _craftsman: string,
-      _vvs: string,
-      _xvvs: string,
-      _depositToken: string,
-      _depositTokenPid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _craftsman: PromiseOrValue<string>,
+      _vvs: PromiseOrValue<string>,
+      _xvvs: PromiseOrValue<string>,
+      _depositToken: PromiseOrValue<string>,
+      _depositTokenPid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     lastRewardBlock(overrides?: CallOverrides): Promise<BigNumber>;
@@ -995,21 +1146,21 @@ export interface VvsBoost extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    pendingVVS(_user: string, overrides?: CallOverrides): Promise<BigNumber>;
+    pendingVVS(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    poolInfo(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    poolInfo(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     poolLength(overrides?: CallOverrides): Promise<BigNumber>;
 
     proxiableUUID(overrides?: CallOverrides): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     set(
-      _pid: BigNumberish,
-      _multiplier: BigNumberish,
-      _lockPeriod: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _multiplier: PromiseOrValue<BigNumberish>,
+      _lockPeriod: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1017,45 +1168,48 @@ export interface VvsBoost extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
-      to: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferFrom(
-      from: string,
-      to: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     upgrade(
-      _stakeId: BigNumberish,
-      _newPid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _stakeId: PromiseOrValue<BigNumberish>,
+      _newPid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     upgradeTo(
-      newImplementation: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newImplementation: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     upgradeToAndCall(
-      newImplementation: string,
-      data: BytesLike,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      newImplementation: PromiseOrValue<string>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    userInfo(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    userInfo(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     vvs(overrides?: CallOverrides): Promise<BigNumber>;
 
-    withdraw(_stakeId: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    withdraw(
+      _stakeId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     xvvs(overrides?: CallOverrides): Promise<BigNumber>;
   };
@@ -1065,33 +1219,41 @@ export interface VvsBoost extends BaseContract {
 
     accTokenPerShare(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    activePoolMap(arg0: BigNumberish, arg1: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    activePoolMap(
+      arg0: PromiseOrValue<BigNumberish>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     add(
-      _multiplier: BigNumberish,
-      _lockPeriod: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _multiplier: PromiseOrValue<BigNumberish>,
+      _lockPeriod: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     batchUpgrade(
-      _stakeIds: BigNumberish[],
-      _newPids: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _stakeIds: PromiseOrValue<BigNumberish>[],
+      _newPids: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     batchWithdraw(
-      _stakeIds: BigNumberish[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _stakeIds: PromiseOrValue<BigNumberish>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     craftsman(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1099,40 +1261,44 @@ export interface VvsBoost extends BaseContract {
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     deposit(
-      _pid: BigNumberish,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    depositCraftsman(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    depositCraftsman(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     depositToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     depositTokenPid(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getUserInfo(_user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getUserInfo(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getUserStake(_user: string, _stakeId: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getUserStake(
+      _user: PromiseOrValue<string>,
+      _stakeId: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     initialize(
-      _craftsman: string,
-      _vvs: string,
-      _xvvs: string,
-      _depositToken: string,
-      _depositTokenPid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _craftsman: PromiseOrValue<string>,
+      _vvs: PromiseOrValue<string>,
+      _xvvs: PromiseOrValue<string>,
+      _depositToken: PromiseOrValue<string>,
+      _depositTokenPid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     lastRewardBlock(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1143,21 +1309,21 @@ export interface VvsBoost extends BaseContract {
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    pendingVVS(_user: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    pendingVVS(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    poolInfo(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    poolInfo(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     poolLength(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     proxiableUUID(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     set(
-      _pid: BigNumberish,
-      _multiplier: BigNumberish,
-      _lockPeriod: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _pid: PromiseOrValue<BigNumberish>,
+      _multiplier: PromiseOrValue<BigNumberish>,
+      _lockPeriod: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1165,47 +1331,47 @@ export interface VvsBoost extends BaseContract {
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transfer(
-      to: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferFrom(
-      from: string,
-      to: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<string>,
+      to: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     upgrade(
-      _stakeId: BigNumberish,
-      _newPid: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _stakeId: PromiseOrValue<BigNumberish>,
+      _newPid: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     upgradeTo(
-      newImplementation: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newImplementation: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     upgradeToAndCall(
-      newImplementation: string,
-      data: BytesLike,
-      overrides?: PayableOverrides & { from?: string | Promise<string> },
+      newImplementation: PromiseOrValue<string>,
+      data: PromiseOrValue<BytesLike>,
+      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    userInfo(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    userInfo(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     vvs(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     withdraw(
-      _stakeId: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _stakeId: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     xvvs(overrides?: CallOverrides): Promise<PopulatedTransaction>;

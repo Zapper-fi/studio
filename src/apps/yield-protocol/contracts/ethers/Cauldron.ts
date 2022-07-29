@@ -15,13 +15,13 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export declare namespace DataTypes {
   export type VaultStruct = {
-    owner: string;
-    seriesId: BytesLike;
-    ilkId: BytesLike;
+    owner: PromiseOrValue<string>;
+    seriesId: PromiseOrValue<BytesLike>;
+    ilkId: PromiseOrValue<BytesLike>;
   };
 
   export type VaultStructOutput = [string, string, string] & {
@@ -30,7 +30,10 @@ export declare namespace DataTypes {
     ilkId: string;
   };
 
-  export type BalancesStruct = { art: BigNumberish; ink: BigNumberish };
+  export type BalancesStruct = {
+    art: PromiseOrValue<BigNumberish>;
+    ink: PromiseOrValue<BigNumberish>;
+  };
 
   export type BalancesStructOutput = [BigNumber, BigNumber] & {
     art: BigNumber;
@@ -132,46 +135,119 @@ export interface CauldronInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'LOCK8605463013', values?: undefined): string;
   encodeFunctionData(functionFragment: 'ROOT', values?: undefined): string;
   encodeFunctionData(functionFragment: 'ROOT4146650865', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'accrual', values: [BytesLike]): string;
-  encodeFunctionData(functionFragment: 'addAsset', values: [BytesLike, string]): string;
-  encodeFunctionData(functionFragment: 'addIlks', values: [BytesLike, BytesLike[]]): string;
-  encodeFunctionData(functionFragment: 'addSeries', values: [BytesLike, BytesLike, string]): string;
-  encodeFunctionData(functionFragment: 'assets', values: [BytesLike]): string;
-  encodeFunctionData(functionFragment: 'balances', values: [BytesLike]): string;
-  encodeFunctionData(functionFragment: 'build', values: [string, BytesLike, BytesLike, BytesLike]): string;
-  encodeFunctionData(functionFragment: 'debt', values: [BytesLike, BytesLike]): string;
-  encodeFunctionData(functionFragment: 'debtFromBase', values: [BytesLike, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'debtToBase', values: [BytesLike, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'destroy', values: [BytesLike]): string;
-  encodeFunctionData(functionFragment: 'getRoleAdmin', values: [BytesLike]): string;
-  encodeFunctionData(functionFragment: 'give', values: [BytesLike, string]): string;
-  encodeFunctionData(functionFragment: 'grantRole', values: [BytesLike, string]): string;
-  encodeFunctionData(functionFragment: 'grantRoles', values: [BytesLike[], string]): string;
-  encodeFunctionData(functionFragment: 'hasRole', values: [BytesLike, string]): string;
-  encodeFunctionData(functionFragment: 'ilks', values: [BytesLike, BytesLike]): string;
-  encodeFunctionData(functionFragment: 'lendingOracles', values: [BytesLike]): string;
-  encodeFunctionData(functionFragment: 'level', values: [BytesLike]): string;
-  encodeFunctionData(functionFragment: 'lockRole', values: [BytesLike]): string;
-  encodeFunctionData(functionFragment: 'mature', values: [BytesLike]): string;
-  encodeFunctionData(functionFragment: 'pour', values: [BytesLike, BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'ratesAtMaturity', values: [BytesLike]): string;
-  encodeFunctionData(functionFragment: 'renounceRole', values: [BytesLike, string]): string;
-  encodeFunctionData(functionFragment: 'revokeRole', values: [BytesLike, string]): string;
-  encodeFunctionData(functionFragment: 'revokeRoles', values: [BytesLike[], string]): string;
-  encodeFunctionData(functionFragment: 'roll', values: [BytesLike, BytesLike, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'series', values: [BytesLike]): string;
+  encodeFunctionData(functionFragment: 'accrual', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(functionFragment: 'addAsset', values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'addIlks',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>[]],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'addSeries',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'assets', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(functionFragment: 'balances', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(
+    functionFragment: 'build',
+    values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>],
+  ): string;
+  encodeFunctionData(functionFragment: 'debt', values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(
+    functionFragment: 'debtFromBase',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'debtToBase',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'destroy', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(functionFragment: 'getRoleAdmin', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(functionFragment: 'give', values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'grantRole',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'grantRoles',
+    values: [PromiseOrValue<BytesLike>[], PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'hasRole', values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'ilks', values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(functionFragment: 'lendingOracles', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(functionFragment: 'level', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(functionFragment: 'lockRole', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(functionFragment: 'mature', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(
+    functionFragment: 'pour',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'ratesAtMaturity', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(
+    functionFragment: 'renounceRole',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'revokeRole',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'revokeRoles',
+    values: [PromiseOrValue<BytesLike>[], PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'roll',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'series', values: [PromiseOrValue<BytesLike>]): string;
   encodeFunctionData(
     functionFragment: 'setDebtLimits',
-    values: [BytesLike, BytesLike, BigNumberish, BigNumberish, BigNumberish],
+    values: [
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'setLendingOracle', values: [BytesLike, string]): string;
-  encodeFunctionData(functionFragment: 'setRoleAdmin', values: [BytesLike, BytesLike]): string;
-  encodeFunctionData(functionFragment: 'setSpotOracle', values: [BytesLike, BytesLike, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'slurp', values: [BytesLike, BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'spotOracles', values: [BytesLike, BytesLike]): string;
-  encodeFunctionData(functionFragment: 'stir', values: [BytesLike, BytesLike, BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'tweak', values: [BytesLike, BytesLike, BytesLike]): string;
-  encodeFunctionData(functionFragment: 'vaults', values: [BytesLike]): string;
+  encodeFunctionData(
+    functionFragment: 'setLendingOracle',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'setRoleAdmin',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'setSpotOracle',
+    values: [
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+    ],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'slurp',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'spotOracles',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'stir',
+    values: [
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'tweak',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>],
+  ): string;
+  encodeFunctionData(functionFragment: 'vaults', values: [PromiseOrValue<BytesLike>]): string;
 
   decodeFunctionResult(functionFragment: 'LOCK', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'LOCK8605463013', data: BytesLike): Result;
@@ -438,47 +514,47 @@ export interface Cauldron extends BaseContract {
     ROOT4146650865(overrides?: CallOverrides): Promise<[string]>;
 
     accrual(
-      seriesId: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      seriesId: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     addAsset(
-      assetId: BytesLike,
-      asset: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      assetId: PromiseOrValue<BytesLike>,
+      asset: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     addIlks(
-      seriesId: BytesLike,
-      ilkIds: BytesLike[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      seriesId: PromiseOrValue<BytesLike>,
+      ilkIds: PromiseOrValue<BytesLike>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     addSeries(
-      seriesId: BytesLike,
-      baseId: BytesLike,
-      fyToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      seriesId: PromiseOrValue<BytesLike>,
+      baseId: PromiseOrValue<BytesLike>,
+      fyToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    assets(arg0: BytesLike, overrides?: CallOverrides): Promise<[string]>;
+    assets(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[string]>;
 
     balances(
-      arg0: BytesLike,
+      arg0: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { art: BigNumber; ink: BigNumber }>;
 
     build(
-      owner: string,
-      vaultId: BytesLike,
-      seriesId: BytesLike,
-      ilkId: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      owner: PromiseOrValue<string>,
+      vaultId: PromiseOrValue<BytesLike>,
+      seriesId: PromiseOrValue<BytesLike>,
+      ilkId: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     debt(
-      arg0: BytesLike,
-      arg1: BytesLike,
+      arg0: PromiseOrValue<BytesLike>,
+      arg1: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, number, number, BigNumber] & {
@@ -490,99 +566,107 @@ export interface Cauldron extends BaseContract {
     >;
 
     debtFromBase(
-      seriesId: BytesLike,
-      base: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      seriesId: PromiseOrValue<BytesLike>,
+      base: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     debtToBase(
-      seriesId: BytesLike,
-      art: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      seriesId: PromiseOrValue<BytesLike>,
+      art: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     destroy(
-      vaultId: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vaultId: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<[string]>;
+    getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[string]>;
 
     give(
-      vaultId: BytesLike,
-      receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vaultId: PromiseOrValue<BytesLike>,
+      receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     grantRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     grantRoles(
-      roles: BytesLike[],
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      roles: PromiseOrValue<BytesLike>[],
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    hasRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<[boolean]>;
+    hasRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[boolean]>;
 
-    ilks(arg0: BytesLike, arg1: BytesLike, overrides?: CallOverrides): Promise<[boolean]>;
+    ilks(
+      arg0: PromiseOrValue<BytesLike>,
+      arg1: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<[boolean]>;
 
-    lendingOracles(arg0: BytesLike, overrides?: CallOverrides): Promise<[string]>;
+    lendingOracles(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[string]>;
 
     level(
-      vaultId: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vaultId: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     lockRole(
-      role: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     mature(
-      seriesId: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      seriesId: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     pour(
-      vaultId: BytesLike,
-      ink: BigNumberish,
-      art: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vaultId: PromiseOrValue<BytesLike>,
+      ink: PromiseOrValue<BigNumberish>,
+      art: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    ratesAtMaturity(arg0: BytesLike, overrides?: CallOverrides): Promise<[BigNumber]>;
+    ratesAtMaturity(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     renounceRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     revokeRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     revokeRoles(
-      roles: BytesLike[],
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      roles: PromiseOrValue<BytesLike>[],
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     roll(
-      vaultId: BytesLike,
-      newSeriesId: BytesLike,
-      art: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vaultId: PromiseOrValue<BytesLike>,
+      newSeriesId: PromiseOrValue<BytesLike>,
+      art: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     series(
-      arg0: BytesLike,
+      arg0: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<
       [string, string, number] & {
@@ -593,64 +677,64 @@ export interface Cauldron extends BaseContract {
     >;
 
     setDebtLimits(
-      baseId: BytesLike,
-      ilkId: BytesLike,
-      max: BigNumberish,
-      min: BigNumberish,
-      dec: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      baseId: PromiseOrValue<BytesLike>,
+      ilkId: PromiseOrValue<BytesLike>,
+      max: PromiseOrValue<BigNumberish>,
+      min: PromiseOrValue<BigNumberish>,
+      dec: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setLendingOracle(
-      baseId: BytesLike,
-      oracle: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      baseId: PromiseOrValue<BytesLike>,
+      oracle: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setRoleAdmin(
-      role: BytesLike,
-      adminRole: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      adminRole: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setSpotOracle(
-      baseId: BytesLike,
-      ilkId: BytesLike,
-      oracle: string,
-      ratio: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      baseId: PromiseOrValue<BytesLike>,
+      ilkId: PromiseOrValue<BytesLike>,
+      oracle: PromiseOrValue<string>,
+      ratio: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     slurp(
-      vaultId: BytesLike,
-      ink: BigNumberish,
-      art: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vaultId: PromiseOrValue<BytesLike>,
+      ink: PromiseOrValue<BigNumberish>,
+      art: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     spotOracles(
-      arg0: BytesLike,
-      arg1: BytesLike,
+      arg0: PromiseOrValue<BytesLike>,
+      arg1: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<[string, number] & { oracle: string; ratio: number }>;
 
     stir(
-      from: BytesLike,
-      to: BytesLike,
-      ink: BigNumberish,
-      art: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<BytesLike>,
+      to: PromiseOrValue<BytesLike>,
+      ink: PromiseOrValue<BigNumberish>,
+      art: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     tweak(
-      vaultId: BytesLike,
-      seriesId: BytesLike,
-      ilkId: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vaultId: PromiseOrValue<BytesLike>,
+      seriesId: PromiseOrValue<BytesLike>,
+      ilkId: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     vaults(
-      arg0: BytesLike,
+      arg0: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<
       [string, string, string] & {
@@ -670,47 +754,47 @@ export interface Cauldron extends BaseContract {
   ROOT4146650865(overrides?: CallOverrides): Promise<string>;
 
   accrual(
-    seriesId: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    seriesId: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   addAsset(
-    assetId: BytesLike,
-    asset: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    assetId: PromiseOrValue<BytesLike>,
+    asset: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   addIlks(
-    seriesId: BytesLike,
-    ilkIds: BytesLike[],
-    overrides?: Overrides & { from?: string | Promise<string> },
+    seriesId: PromiseOrValue<BytesLike>,
+    ilkIds: PromiseOrValue<BytesLike>[],
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   addSeries(
-    seriesId: BytesLike,
-    baseId: BytesLike,
-    fyToken: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    seriesId: PromiseOrValue<BytesLike>,
+    baseId: PromiseOrValue<BytesLike>,
+    fyToken: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  assets(arg0: BytesLike, overrides?: CallOverrides): Promise<string>;
+  assets(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
   balances(
-    arg0: BytesLike,
+    arg0: PromiseOrValue<BytesLike>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber, BigNumber] & { art: BigNumber; ink: BigNumber }>;
 
   build(
-    owner: string,
-    vaultId: BytesLike,
-    seriesId: BytesLike,
-    ilkId: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    owner: PromiseOrValue<string>,
+    vaultId: PromiseOrValue<BytesLike>,
+    seriesId: PromiseOrValue<BytesLike>,
+    ilkId: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   debt(
-    arg0: BytesLike,
-    arg1: BytesLike,
+    arg0: PromiseOrValue<BytesLike>,
+    arg1: PromiseOrValue<BytesLike>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, number, number, BigNumber] & {
@@ -722,93 +806,103 @@ export interface Cauldron extends BaseContract {
   >;
 
   debtFromBase(
-    seriesId: BytesLike,
-    base: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    seriesId: PromiseOrValue<BytesLike>,
+    base: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   debtToBase(
-    seriesId: BytesLike,
-    art: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    seriesId: PromiseOrValue<BytesLike>,
+    art: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   destroy(
-    vaultId: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    vaultId: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<string>;
+  getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
   give(
-    vaultId: BytesLike,
-    receiver: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    vaultId: PromiseOrValue<BytesLike>,
+    receiver: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   grantRole(
-    role: BytesLike,
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    role: PromiseOrValue<BytesLike>,
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   grantRoles(
-    roles: BytesLike[],
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    roles: PromiseOrValue<BytesLike>[],
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  hasRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<boolean>;
+  hasRole(
+    role: PromiseOrValue<BytesLike>,
+    account: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<boolean>;
 
-  ilks(arg0: BytesLike, arg1: BytesLike, overrides?: CallOverrides): Promise<boolean>;
+  ilks(arg0: PromiseOrValue<BytesLike>, arg1: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<boolean>;
 
-  lendingOracles(arg0: BytesLike, overrides?: CallOverrides): Promise<string>;
+  lendingOracles(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
-  level(vaultId: BytesLike, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  level(
+    vaultId: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
-  lockRole(role: BytesLike, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  lockRole(
+    role: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   mature(
-    seriesId: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    seriesId: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   pour(
-    vaultId: BytesLike,
-    ink: BigNumberish,
-    art: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    vaultId: PromiseOrValue<BytesLike>,
+    ink: PromiseOrValue<BigNumberish>,
+    art: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  ratesAtMaturity(arg0: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+  ratesAtMaturity(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
   renounceRole(
-    role: BytesLike,
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    role: PromiseOrValue<BytesLike>,
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   revokeRole(
-    role: BytesLike,
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    role: PromiseOrValue<BytesLike>,
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   revokeRoles(
-    roles: BytesLike[],
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    roles: PromiseOrValue<BytesLike>[],
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   roll(
-    vaultId: BytesLike,
-    newSeriesId: BytesLike,
-    art: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    vaultId: PromiseOrValue<BytesLike>,
+    newSeriesId: PromiseOrValue<BytesLike>,
+    art: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   series(
-    arg0: BytesLike,
+    arg0: PromiseOrValue<BytesLike>,
     overrides?: CallOverrides,
   ): Promise<
     [string, string, number] & {
@@ -819,64 +913,64 @@ export interface Cauldron extends BaseContract {
   >;
 
   setDebtLimits(
-    baseId: BytesLike,
-    ilkId: BytesLike,
-    max: BigNumberish,
-    min: BigNumberish,
-    dec: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    baseId: PromiseOrValue<BytesLike>,
+    ilkId: PromiseOrValue<BytesLike>,
+    max: PromiseOrValue<BigNumberish>,
+    min: PromiseOrValue<BigNumberish>,
+    dec: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setLendingOracle(
-    baseId: BytesLike,
-    oracle: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    baseId: PromiseOrValue<BytesLike>,
+    oracle: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setRoleAdmin(
-    role: BytesLike,
-    adminRole: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    role: PromiseOrValue<BytesLike>,
+    adminRole: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setSpotOracle(
-    baseId: BytesLike,
-    ilkId: BytesLike,
-    oracle: string,
-    ratio: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    baseId: PromiseOrValue<BytesLike>,
+    ilkId: PromiseOrValue<BytesLike>,
+    oracle: PromiseOrValue<string>,
+    ratio: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   slurp(
-    vaultId: BytesLike,
-    ink: BigNumberish,
-    art: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    vaultId: PromiseOrValue<BytesLike>,
+    ink: PromiseOrValue<BigNumberish>,
+    art: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   spotOracles(
-    arg0: BytesLike,
-    arg1: BytesLike,
+    arg0: PromiseOrValue<BytesLike>,
+    arg1: PromiseOrValue<BytesLike>,
     overrides?: CallOverrides,
   ): Promise<[string, number] & { oracle: string; ratio: number }>;
 
   stir(
-    from: BytesLike,
-    to: BytesLike,
-    ink: BigNumberish,
-    art: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    from: PromiseOrValue<BytesLike>,
+    to: PromiseOrValue<BytesLike>,
+    ink: PromiseOrValue<BigNumberish>,
+    art: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   tweak(
-    vaultId: BytesLike,
-    seriesId: BytesLike,
-    ilkId: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    vaultId: PromiseOrValue<BytesLike>,
+    seriesId: PromiseOrValue<BytesLike>,
+    ilkId: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   vaults(
-    arg0: BytesLike,
+    arg0: PromiseOrValue<BytesLike>,
     overrides?: CallOverrides,
   ): Promise<
     [string, string, string] & {
@@ -895,32 +989,45 @@ export interface Cauldron extends BaseContract {
 
     ROOT4146650865(overrides?: CallOverrides): Promise<string>;
 
-    accrual(seriesId: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    accrual(seriesId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    addAsset(assetId: BytesLike, asset: string, overrides?: CallOverrides): Promise<void>;
+    addAsset(
+      assetId: PromiseOrValue<BytesLike>,
+      asset: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    addIlks(seriesId: BytesLike, ilkIds: BytesLike[], overrides?: CallOverrides): Promise<void>;
+    addIlks(
+      seriesId: PromiseOrValue<BytesLike>,
+      ilkIds: PromiseOrValue<BytesLike>[],
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    addSeries(seriesId: BytesLike, baseId: BytesLike, fyToken: string, overrides?: CallOverrides): Promise<void>;
+    addSeries(
+      seriesId: PromiseOrValue<BytesLike>,
+      baseId: PromiseOrValue<BytesLike>,
+      fyToken: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    assets(arg0: BytesLike, overrides?: CallOverrides): Promise<string>;
+    assets(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
     balances(
-      arg0: BytesLike,
+      arg0: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { art: BigNumber; ink: BigNumber }>;
 
     build(
-      owner: string,
-      vaultId: BytesLike,
-      seriesId: BytesLike,
-      ilkId: BytesLike,
+      owner: PromiseOrValue<string>,
+      vaultId: PromiseOrValue<BytesLike>,
+      seriesId: PromiseOrValue<BytesLike>,
+      ilkId: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<DataTypes.VaultStructOutput>;
 
     debt(
-      arg0: BytesLike,
-      arg1: BytesLike,
+      arg0: PromiseOrValue<BytesLike>,
+      arg1: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, number, number, BigNumber] & {
@@ -931,56 +1038,92 @@ export interface Cauldron extends BaseContract {
       }
     >;
 
-    debtFromBase(seriesId: BytesLike, base: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    debtFromBase(
+      seriesId: PromiseOrValue<BytesLike>,
+      base: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    debtToBase(seriesId: BytesLike, art: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    debtToBase(
+      seriesId: PromiseOrValue<BytesLike>,
+      art: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    destroy(vaultId: BytesLike, overrides?: CallOverrides): Promise<void>;
+    destroy(vaultId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<void>;
 
-    getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<string>;
+    getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
-    give(vaultId: BytesLike, receiver: string, overrides?: CallOverrides): Promise<DataTypes.VaultStructOutput>;
+    give(
+      vaultId: PromiseOrValue<BytesLike>,
+      receiver: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<DataTypes.VaultStructOutput>;
 
-    grantRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<void>;
+    grantRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    grantRoles(roles: BytesLike[], account: string, overrides?: CallOverrides): Promise<void>;
+    grantRoles(
+      roles: PromiseOrValue<BytesLike>[],
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    hasRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<boolean>;
+    hasRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    ilks(arg0: BytesLike, arg1: BytesLike, overrides?: CallOverrides): Promise<boolean>;
+    ilks(arg0: PromiseOrValue<BytesLike>, arg1: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<boolean>;
 
-    lendingOracles(arg0: BytesLike, overrides?: CallOverrides): Promise<string>;
+    lendingOracles(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<string>;
 
-    level(vaultId: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    level(vaultId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    lockRole(role: BytesLike, overrides?: CallOverrides): Promise<void>;
+    lockRole(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<void>;
 
-    mature(seriesId: BytesLike, overrides?: CallOverrides): Promise<void>;
+    mature(seriesId: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<void>;
 
     pour(
-      vaultId: BytesLike,
-      ink: BigNumberish,
-      art: BigNumberish,
+      vaultId: PromiseOrValue<BytesLike>,
+      ink: PromiseOrValue<BigNumberish>,
+      art: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<DataTypes.BalancesStructOutput>;
 
-    ratesAtMaturity(arg0: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    ratesAtMaturity(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    renounceRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<void>;
+    renounceRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    revokeRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<void>;
+    revokeRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    revokeRoles(roles: BytesLike[], account: string, overrides?: CallOverrides): Promise<void>;
+    revokeRoles(
+      roles: PromiseOrValue<BytesLike>[],
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     roll(
-      vaultId: BytesLike,
-      newSeriesId: BytesLike,
-      art: BigNumberish,
+      vaultId: PromiseOrValue<BytesLike>,
+      newSeriesId: PromiseOrValue<BytesLike>,
+      art: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[DataTypes.VaultStructOutput, DataTypes.BalancesStructOutput]>;
 
     series(
-      arg0: BytesLike,
+      arg0: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<
       [string, string, number] & {
@@ -991,56 +1134,64 @@ export interface Cauldron extends BaseContract {
     >;
 
     setDebtLimits(
-      baseId: BytesLike,
-      ilkId: BytesLike,
-      max: BigNumberish,
-      min: BigNumberish,
-      dec: BigNumberish,
+      baseId: PromiseOrValue<BytesLike>,
+      ilkId: PromiseOrValue<BytesLike>,
+      max: PromiseOrValue<BigNumberish>,
+      min: PromiseOrValue<BigNumberish>,
+      dec: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    setLendingOracle(baseId: BytesLike, oracle: string, overrides?: CallOverrides): Promise<void>;
+    setLendingOracle(
+      baseId: PromiseOrValue<BytesLike>,
+      oracle: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setRoleAdmin(role: BytesLike, adminRole: BytesLike, overrides?: CallOverrides): Promise<void>;
+    setRoleAdmin(
+      role: PromiseOrValue<BytesLike>,
+      adminRole: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     setSpotOracle(
-      baseId: BytesLike,
-      ilkId: BytesLike,
-      oracle: string,
-      ratio: BigNumberish,
+      baseId: PromiseOrValue<BytesLike>,
+      ilkId: PromiseOrValue<BytesLike>,
+      oracle: PromiseOrValue<string>,
+      ratio: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     slurp(
-      vaultId: BytesLike,
-      ink: BigNumberish,
-      art: BigNumberish,
+      vaultId: PromiseOrValue<BytesLike>,
+      ink: PromiseOrValue<BigNumberish>,
+      art: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<DataTypes.BalancesStructOutput>;
 
     spotOracles(
-      arg0: BytesLike,
-      arg1: BytesLike,
+      arg0: PromiseOrValue<BytesLike>,
+      arg1: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<[string, number] & { oracle: string; ratio: number }>;
 
     stir(
-      from: BytesLike,
-      to: BytesLike,
-      ink: BigNumberish,
-      art: BigNumberish,
+      from: PromiseOrValue<BytesLike>,
+      to: PromiseOrValue<BytesLike>,
+      ink: PromiseOrValue<BigNumberish>,
+      art: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[DataTypes.BalancesStructOutput, DataTypes.BalancesStructOutput]>;
 
     tweak(
-      vaultId: BytesLike,
-      seriesId: BytesLike,
-      ilkId: BytesLike,
+      vaultId: PromiseOrValue<BytesLike>,
+      seriesId: PromiseOrValue<BytesLike>,
+      ilkId: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<DataTypes.VaultStructOutput>;
 
     vaults(
-      arg0: BytesLike,
+      arg0: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<
       [string, string, string] & {
@@ -1052,135 +1203,182 @@ export interface Cauldron extends BaseContract {
   };
 
   filters: {
-    'AssetAdded(bytes6,address)'(assetId?: BytesLike | null, asset?: string | null): AssetAddedEventFilter;
-    AssetAdded(assetId?: BytesLike | null, asset?: string | null): AssetAddedEventFilter;
+    'AssetAdded(bytes6,address)'(
+      assetId?: PromiseOrValue<BytesLike> | null,
+      asset?: PromiseOrValue<string> | null,
+    ): AssetAddedEventFilter;
+    AssetAdded(
+      assetId?: PromiseOrValue<BytesLike> | null,
+      asset?: PromiseOrValue<string> | null,
+    ): AssetAddedEventFilter;
 
     'DebtLimitsSet(bytes6,bytes6,uint96,uint24,uint8)'(
-      baseId?: BytesLike | null,
-      ilkId?: BytesLike | null,
+      baseId?: PromiseOrValue<BytesLike> | null,
+      ilkId?: PromiseOrValue<BytesLike> | null,
       max?: null,
       min?: null,
       dec?: null,
     ): DebtLimitsSetEventFilter;
     DebtLimitsSet(
-      baseId?: BytesLike | null,
-      ilkId?: BytesLike | null,
+      baseId?: PromiseOrValue<BytesLike> | null,
+      ilkId?: PromiseOrValue<BytesLike> | null,
       max?: null,
       min?: null,
       dec?: null,
     ): DebtLimitsSetEventFilter;
 
-    'IlkAdded(bytes6,bytes6)'(seriesId?: BytesLike | null, ilkId?: BytesLike | null): IlkAddedEventFilter;
-    IlkAdded(seriesId?: BytesLike | null, ilkId?: BytesLike | null): IlkAddedEventFilter;
+    'IlkAdded(bytes6,bytes6)'(
+      seriesId?: PromiseOrValue<BytesLike> | null,
+      ilkId?: PromiseOrValue<BytesLike> | null,
+    ): IlkAddedEventFilter;
+    IlkAdded(
+      seriesId?: PromiseOrValue<BytesLike> | null,
+      ilkId?: PromiseOrValue<BytesLike> | null,
+    ): IlkAddedEventFilter;
 
-    'RateOracleAdded(bytes6,address)'(baseId?: BytesLike | null, oracle?: string | null): RateOracleAddedEventFilter;
-    RateOracleAdded(baseId?: BytesLike | null, oracle?: string | null): RateOracleAddedEventFilter;
+    'RateOracleAdded(bytes6,address)'(
+      baseId?: PromiseOrValue<BytesLike> | null,
+      oracle?: PromiseOrValue<string> | null,
+    ): RateOracleAddedEventFilter;
+    RateOracleAdded(
+      baseId?: PromiseOrValue<BytesLike> | null,
+      oracle?: PromiseOrValue<string> | null,
+    ): RateOracleAddedEventFilter;
 
     'RoleAdminChanged(bytes4,bytes4)'(
-      role?: BytesLike | null,
-      newAdminRole?: BytesLike | null,
+      role?: PromiseOrValue<BytesLike> | null,
+      newAdminRole?: PromiseOrValue<BytesLike> | null,
     ): RoleAdminChangedEventFilter;
-    RoleAdminChanged(role?: BytesLike | null, newAdminRole?: BytesLike | null): RoleAdminChangedEventFilter;
+    RoleAdminChanged(
+      role?: PromiseOrValue<BytesLike> | null,
+      newAdminRole?: PromiseOrValue<BytesLike> | null,
+    ): RoleAdminChangedEventFilter;
 
     'RoleGranted(bytes4,address,address)'(
-      role?: BytesLike | null,
-      account?: string | null,
-      sender?: string | null,
+      role?: PromiseOrValue<BytesLike> | null,
+      account?: PromiseOrValue<string> | null,
+      sender?: PromiseOrValue<string> | null,
     ): RoleGrantedEventFilter;
-    RoleGranted(role?: BytesLike | null, account?: string | null, sender?: string | null): RoleGrantedEventFilter;
+    RoleGranted(
+      role?: PromiseOrValue<BytesLike> | null,
+      account?: PromiseOrValue<string> | null,
+      sender?: PromiseOrValue<string> | null,
+    ): RoleGrantedEventFilter;
 
     'RoleRevoked(bytes4,address,address)'(
-      role?: BytesLike | null,
-      account?: string | null,
-      sender?: string | null,
+      role?: PromiseOrValue<BytesLike> | null,
+      account?: PromiseOrValue<string> | null,
+      sender?: PromiseOrValue<string> | null,
     ): RoleRevokedEventFilter;
-    RoleRevoked(role?: BytesLike | null, account?: string | null, sender?: string | null): RoleRevokedEventFilter;
+    RoleRevoked(
+      role?: PromiseOrValue<BytesLike> | null,
+      account?: PromiseOrValue<string> | null,
+      sender?: PromiseOrValue<string> | null,
+    ): RoleRevokedEventFilter;
 
     'SeriesAdded(bytes6,bytes6,address)'(
-      seriesId?: BytesLike | null,
-      baseId?: BytesLike | null,
-      fyToken?: string | null,
+      seriesId?: PromiseOrValue<BytesLike> | null,
+      baseId?: PromiseOrValue<BytesLike> | null,
+      fyToken?: PromiseOrValue<string> | null,
     ): SeriesAddedEventFilter;
     SeriesAdded(
-      seriesId?: BytesLike | null,
-      baseId?: BytesLike | null,
-      fyToken?: string | null,
+      seriesId?: PromiseOrValue<BytesLike> | null,
+      baseId?: PromiseOrValue<BytesLike> | null,
+      fyToken?: PromiseOrValue<string> | null,
     ): SeriesAddedEventFilter;
 
-    'SeriesMatured(bytes6,uint256)'(seriesId?: BytesLike | null, rateAtMaturity?: null): SeriesMaturedEventFilter;
-    SeriesMatured(seriesId?: BytesLike | null, rateAtMaturity?: null): SeriesMaturedEventFilter;
+    'SeriesMatured(bytes6,uint256)'(
+      seriesId?: PromiseOrValue<BytesLike> | null,
+      rateAtMaturity?: null,
+    ): SeriesMaturedEventFilter;
+    SeriesMatured(seriesId?: PromiseOrValue<BytesLike> | null, rateAtMaturity?: null): SeriesMaturedEventFilter;
 
     'SpotOracleAdded(bytes6,bytes6,address,uint32)'(
-      baseId?: BytesLike | null,
-      ilkId?: BytesLike | null,
-      oracle?: string | null,
+      baseId?: PromiseOrValue<BytesLike> | null,
+      ilkId?: PromiseOrValue<BytesLike> | null,
+      oracle?: PromiseOrValue<string> | null,
       ratio?: null,
     ): SpotOracleAddedEventFilter;
     SpotOracleAdded(
-      baseId?: BytesLike | null,
-      ilkId?: BytesLike | null,
-      oracle?: string | null,
+      baseId?: PromiseOrValue<BytesLike> | null,
+      ilkId?: PromiseOrValue<BytesLike> | null,
+      oracle?: PromiseOrValue<string> | null,
       ratio?: null,
     ): SpotOracleAddedEventFilter;
 
     'VaultBuilt(bytes12,address,bytes6,bytes6)'(
-      vaultId?: BytesLike | null,
-      owner?: string | null,
-      seriesId?: BytesLike | null,
+      vaultId?: PromiseOrValue<BytesLike> | null,
+      owner?: PromiseOrValue<string> | null,
+      seriesId?: PromiseOrValue<BytesLike> | null,
       ilkId?: null,
     ): VaultBuiltEventFilter;
     VaultBuilt(
-      vaultId?: BytesLike | null,
-      owner?: string | null,
-      seriesId?: BytesLike | null,
+      vaultId?: PromiseOrValue<BytesLike> | null,
+      owner?: PromiseOrValue<string> | null,
+      seriesId?: PromiseOrValue<BytesLike> | null,
       ilkId?: null,
     ): VaultBuiltEventFilter;
 
-    'VaultDestroyed(bytes12)'(vaultId?: BytesLike | null): VaultDestroyedEventFilter;
-    VaultDestroyed(vaultId?: BytesLike | null): VaultDestroyedEventFilter;
+    'VaultDestroyed(bytes12)'(vaultId?: PromiseOrValue<BytesLike> | null): VaultDestroyedEventFilter;
+    VaultDestroyed(vaultId?: PromiseOrValue<BytesLike> | null): VaultDestroyedEventFilter;
 
-    'VaultGiven(bytes12,address)'(vaultId?: BytesLike | null, receiver?: string | null): VaultGivenEventFilter;
-    VaultGiven(vaultId?: BytesLike | null, receiver?: string | null): VaultGivenEventFilter;
+    'VaultGiven(bytes12,address)'(
+      vaultId?: PromiseOrValue<BytesLike> | null,
+      receiver?: PromiseOrValue<string> | null,
+    ): VaultGivenEventFilter;
+    VaultGiven(
+      vaultId?: PromiseOrValue<BytesLike> | null,
+      receiver?: PromiseOrValue<string> | null,
+    ): VaultGivenEventFilter;
 
     'VaultPoured(bytes12,bytes6,bytes6,int128,int128)'(
-      vaultId?: BytesLike | null,
-      seriesId?: BytesLike | null,
-      ilkId?: BytesLike | null,
+      vaultId?: PromiseOrValue<BytesLike> | null,
+      seriesId?: PromiseOrValue<BytesLike> | null,
+      ilkId?: PromiseOrValue<BytesLike> | null,
       ink?: null,
       art?: null,
     ): VaultPouredEventFilter;
     VaultPoured(
-      vaultId?: BytesLike | null,
-      seriesId?: BytesLike | null,
-      ilkId?: BytesLike | null,
+      vaultId?: PromiseOrValue<BytesLike> | null,
+      seriesId?: PromiseOrValue<BytesLike> | null,
+      ilkId?: PromiseOrValue<BytesLike> | null,
       ink?: null,
       art?: null,
     ): VaultPouredEventFilter;
 
     'VaultRolled(bytes12,bytes6,uint128)'(
-      vaultId?: BytesLike | null,
-      seriesId?: BytesLike | null,
+      vaultId?: PromiseOrValue<BytesLike> | null,
+      seriesId?: PromiseOrValue<BytesLike> | null,
       art?: null,
     ): VaultRolledEventFilter;
-    VaultRolled(vaultId?: BytesLike | null, seriesId?: BytesLike | null, art?: null): VaultRolledEventFilter;
+    VaultRolled(
+      vaultId?: PromiseOrValue<BytesLike> | null,
+      seriesId?: PromiseOrValue<BytesLike> | null,
+      art?: null,
+    ): VaultRolledEventFilter;
 
     'VaultStirred(bytes12,bytes12,uint128,uint128)'(
-      from?: BytesLike | null,
-      to?: BytesLike | null,
+      from?: PromiseOrValue<BytesLike> | null,
+      to?: PromiseOrValue<BytesLike> | null,
       ink?: null,
       art?: null,
     ): VaultStirredEventFilter;
-    VaultStirred(from?: BytesLike | null, to?: BytesLike | null, ink?: null, art?: null): VaultStirredEventFilter;
+    VaultStirred(
+      from?: PromiseOrValue<BytesLike> | null,
+      to?: PromiseOrValue<BytesLike> | null,
+      ink?: null,
+      art?: null,
+    ): VaultStirredEventFilter;
 
     'VaultTweaked(bytes12,bytes6,bytes6)'(
-      vaultId?: BytesLike | null,
-      seriesId?: BytesLike | null,
-      ilkId?: BytesLike | null,
+      vaultId?: PromiseOrValue<BytesLike> | null,
+      seriesId?: PromiseOrValue<BytesLike> | null,
+      ilkId?: PromiseOrValue<BytesLike> | null,
     ): VaultTweakedEventFilter;
     VaultTweaked(
-      vaultId?: BytesLike | null,
-      seriesId?: BytesLike | null,
-      ilkId?: BytesLike | null,
+      vaultId?: PromiseOrValue<BytesLike> | null,
+      seriesId?: PromiseOrValue<BytesLike> | null,
+      ilkId?: PromiseOrValue<BytesLike> | null,
     ): VaultTweakedEventFilter;
   };
 
@@ -1193,177 +1391,208 @@ export interface Cauldron extends BaseContract {
 
     ROOT4146650865(overrides?: CallOverrides): Promise<BigNumber>;
 
-    accrual(seriesId: BytesLike, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    accrual(
+      seriesId: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     addAsset(
-      assetId: BytesLike,
-      asset: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      assetId: PromiseOrValue<BytesLike>,
+      asset: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     addIlks(
-      seriesId: BytesLike,
-      ilkIds: BytesLike[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      seriesId: PromiseOrValue<BytesLike>,
+      ilkIds: PromiseOrValue<BytesLike>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     addSeries(
-      seriesId: BytesLike,
-      baseId: BytesLike,
-      fyToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      seriesId: PromiseOrValue<BytesLike>,
+      baseId: PromiseOrValue<BytesLike>,
+      fyToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    assets(arg0: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    assets(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    balances(arg0: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    balances(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     build(
-      owner: string,
-      vaultId: BytesLike,
-      seriesId: BytesLike,
-      ilkId: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      owner: PromiseOrValue<string>,
+      vaultId: PromiseOrValue<BytesLike>,
+      seriesId: PromiseOrValue<BytesLike>,
+      ilkId: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    debt(arg0: BytesLike, arg1: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    debt(
+      arg0: PromiseOrValue<BytesLike>,
+      arg1: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     debtFromBase(
-      seriesId: BytesLike,
-      base: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      seriesId: PromiseOrValue<BytesLike>,
+      base: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     debtToBase(
-      seriesId: BytesLike,
-      art: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      seriesId: PromiseOrValue<BytesLike>,
+      art: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    destroy(vaultId: BytesLike, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    destroy(
+      vaultId: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     give(
-      vaultId: BytesLike,
-      receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vaultId: PromiseOrValue<BytesLike>,
+      receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     grantRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     grantRoles(
-      roles: BytesLike[],
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      roles: PromiseOrValue<BytesLike>[],
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    hasRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    hasRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    ilks(arg0: BytesLike, arg1: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    ilks(
+      arg0: PromiseOrValue<BytesLike>,
+      arg1: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    lendingOracles(arg0: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    lendingOracles(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    level(vaultId: BytesLike, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    level(
+      vaultId: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    lockRole(role: BytesLike, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    lockRole(
+      role: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    mature(seriesId: BytesLike, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    mature(
+      seriesId: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     pour(
-      vaultId: BytesLike,
-      ink: BigNumberish,
-      art: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vaultId: PromiseOrValue<BytesLike>,
+      ink: PromiseOrValue<BigNumberish>,
+      art: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    ratesAtMaturity(arg0: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    ratesAtMaturity(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     renounceRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     revokeRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     revokeRoles(
-      roles: BytesLike[],
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      roles: PromiseOrValue<BytesLike>[],
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     roll(
-      vaultId: BytesLike,
-      newSeriesId: BytesLike,
-      art: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vaultId: PromiseOrValue<BytesLike>,
+      newSeriesId: PromiseOrValue<BytesLike>,
+      art: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    series(arg0: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    series(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     setDebtLimits(
-      baseId: BytesLike,
-      ilkId: BytesLike,
-      max: BigNumberish,
-      min: BigNumberish,
-      dec: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      baseId: PromiseOrValue<BytesLike>,
+      ilkId: PromiseOrValue<BytesLike>,
+      max: PromiseOrValue<BigNumberish>,
+      min: PromiseOrValue<BigNumberish>,
+      dec: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setLendingOracle(
-      baseId: BytesLike,
-      oracle: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      baseId: PromiseOrValue<BytesLike>,
+      oracle: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setRoleAdmin(
-      role: BytesLike,
-      adminRole: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      adminRole: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setSpotOracle(
-      baseId: BytesLike,
-      ilkId: BytesLike,
-      oracle: string,
-      ratio: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      baseId: PromiseOrValue<BytesLike>,
+      ilkId: PromiseOrValue<BytesLike>,
+      oracle: PromiseOrValue<string>,
+      ratio: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     slurp(
-      vaultId: BytesLike,
-      ink: BigNumberish,
-      art: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vaultId: PromiseOrValue<BytesLike>,
+      ink: PromiseOrValue<BigNumberish>,
+      art: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    spotOracles(arg0: BytesLike, arg1: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    spotOracles(
+      arg0: PromiseOrValue<BytesLike>,
+      arg1: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     stir(
-      from: BytesLike,
-      to: BytesLike,
-      ink: BigNumberish,
-      art: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<BytesLike>,
+      to: PromiseOrValue<BytesLike>,
+      ink: PromiseOrValue<BigNumberish>,
+      art: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     tweak(
-      vaultId: BytesLike,
-      seriesId: BytesLike,
-      ilkId: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vaultId: PromiseOrValue<BytesLike>,
+      seriesId: PromiseOrValue<BytesLike>,
+      ilkId: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    vaults(arg0: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    vaults(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -1376,190 +1605,206 @@ export interface Cauldron extends BaseContract {
     ROOT4146650865(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     accrual(
-      seriesId: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      seriesId: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     addAsset(
-      assetId: BytesLike,
-      asset: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      assetId: PromiseOrValue<BytesLike>,
+      asset: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     addIlks(
-      seriesId: BytesLike,
-      ilkIds: BytesLike[],
-      overrides?: Overrides & { from?: string | Promise<string> },
+      seriesId: PromiseOrValue<BytesLike>,
+      ilkIds: PromiseOrValue<BytesLike>[],
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     addSeries(
-      seriesId: BytesLike,
-      baseId: BytesLike,
-      fyToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      seriesId: PromiseOrValue<BytesLike>,
+      baseId: PromiseOrValue<BytesLike>,
+      fyToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    assets(arg0: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    assets(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    balances(arg0: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    balances(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     build(
-      owner: string,
-      vaultId: BytesLike,
-      seriesId: BytesLike,
-      ilkId: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      owner: PromiseOrValue<string>,
+      vaultId: PromiseOrValue<BytesLike>,
+      seriesId: PromiseOrValue<BytesLike>,
+      ilkId: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    debt(arg0: BytesLike, arg1: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    debt(
+      arg0: PromiseOrValue<BytesLike>,
+      arg1: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     debtFromBase(
-      seriesId: BytesLike,
-      base: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      seriesId: PromiseOrValue<BytesLike>,
+      base: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     debtToBase(
-      seriesId: BytesLike,
-      art: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      seriesId: PromiseOrValue<BytesLike>,
+      art: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     destroy(
-      vaultId: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vaultId: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    getRoleAdmin(role: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getRoleAdmin(role: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     give(
-      vaultId: BytesLike,
-      receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vaultId: PromiseOrValue<BytesLike>,
+      receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     grantRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     grantRoles(
-      roles: BytesLike[],
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      roles: PromiseOrValue<BytesLike>[],
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    hasRole(role: BytesLike, account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    hasRole(
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    ilks(arg0: BytesLike, arg1: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    ilks(
+      arg0: PromiseOrValue<BytesLike>,
+      arg1: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    lendingOracles(arg0: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    lendingOracles(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     level(
-      vaultId: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vaultId: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     lockRole(
-      role: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     mature(
-      seriesId: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      seriesId: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     pour(
-      vaultId: BytesLike,
-      ink: BigNumberish,
-      art: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vaultId: PromiseOrValue<BytesLike>,
+      ink: PromiseOrValue<BigNumberish>,
+      art: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    ratesAtMaturity(arg0: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    ratesAtMaturity(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     renounceRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     revokeRole(
-      role: BytesLike,
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     revokeRoles(
-      roles: BytesLike[],
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      roles: PromiseOrValue<BytesLike>[],
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     roll(
-      vaultId: BytesLike,
-      newSeriesId: BytesLike,
-      art: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vaultId: PromiseOrValue<BytesLike>,
+      newSeriesId: PromiseOrValue<BytesLike>,
+      art: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    series(arg0: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    series(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setDebtLimits(
-      baseId: BytesLike,
-      ilkId: BytesLike,
-      max: BigNumberish,
-      min: BigNumberish,
-      dec: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      baseId: PromiseOrValue<BytesLike>,
+      ilkId: PromiseOrValue<BytesLike>,
+      max: PromiseOrValue<BigNumberish>,
+      min: PromiseOrValue<BigNumberish>,
+      dec: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setLendingOracle(
-      baseId: BytesLike,
-      oracle: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      baseId: PromiseOrValue<BytesLike>,
+      oracle: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setRoleAdmin(
-      role: BytesLike,
-      adminRole: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      role: PromiseOrValue<BytesLike>,
+      adminRole: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setSpotOracle(
-      baseId: BytesLike,
-      ilkId: BytesLike,
-      oracle: string,
-      ratio: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      baseId: PromiseOrValue<BytesLike>,
+      ilkId: PromiseOrValue<BytesLike>,
+      oracle: PromiseOrValue<string>,
+      ratio: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     slurp(
-      vaultId: BytesLike,
-      ink: BigNumberish,
-      art: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vaultId: PromiseOrValue<BytesLike>,
+      ink: PromiseOrValue<BigNumberish>,
+      art: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    spotOracles(arg0: BytesLike, arg1: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    spotOracles(
+      arg0: PromiseOrValue<BytesLike>,
+      arg1: PromiseOrValue<BytesLike>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     stir(
-      from: BytesLike,
-      to: BytesLike,
-      ink: BigNumberish,
-      art: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      from: PromiseOrValue<BytesLike>,
+      to: PromiseOrValue<BytesLike>,
+      ink: PromiseOrValue<BigNumberish>,
+      art: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     tweak(
-      vaultId: BytesLike,
-      seriesId: BytesLike,
-      ilkId: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      vaultId: PromiseOrValue<BytesLike>,
+      seriesId: PromiseOrValue<BytesLike>,
+      ilkId: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    vaults(arg0: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    vaults(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }

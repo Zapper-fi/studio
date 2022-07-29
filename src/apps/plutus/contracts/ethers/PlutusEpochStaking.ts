@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface PlutusEpochStakingInterface extends utils.Interface {
   functions: {
@@ -90,13 +90,16 @@ export interface PlutusEpochStakingInterface extends utils.Interface {
   ): FunctionFragment;
 
   encodeFunctionData(functionFragment: 'advanceEpoch', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'claimRewards', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'claimRewardsFor', values: [BigNumberish, string, string]): string;
+  encodeFunctionData(functionFragment: 'claimRewards', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'claimRewardsFor',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'closeStakingWindow', values?: undefined): string;
   encodeFunctionData(functionFragment: 'currentEpoch', values?: undefined): string;
   encodeFunctionData(functionFragment: 'currentEpochStartedAt', values?: undefined): string;
   encodeFunctionData(functionFragment: 'currentTotalStaked', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'epochCheckpoints', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'epochCheckpoints', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'init', values?: undefined): string;
   encodeFunctionData(functionFragment: 'lockDuration', values?: undefined): string;
   encodeFunctionData(functionFragment: 'openStakingWindow', values?: undefined): string;
@@ -106,20 +109,26 @@ export interface PlutusEpochStakingInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'paused', values?: undefined): string;
   encodeFunctionData(functionFragment: 'pls', values?: undefined): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'setCurrentEpochStart', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setOperator', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setRewards', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setWhitelist', values: [string]): string;
-  encodeFunctionData(functionFragment: 'stake', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'stakeFor', values: [BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'stakedCheckpoints', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'stakedDetails', values: [string]): string;
+  encodeFunctionData(functionFragment: 'setCurrentEpochStart', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setOperator', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setRewards', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setWhitelist', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'stake', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'stakeFor',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'stakedCheckpoints',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'stakedDetails', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'stakingRewards', values?: undefined): string;
   encodeFunctionData(functionFragment: 'stakingWindowOpen', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transferOwnership', values: [string]): string;
+  encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'unpause', values?: undefined): string;
   encodeFunctionData(functionFragment: 'unstake', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'unstakeFor', values: [string, string]): string;
+  encodeFunctionData(functionFragment: 'unstakeFor', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'whitelist', values?: undefined): string;
 
   decodeFunctionResult(functionFragment: 'advanceEpoch', data: BytesLike): Result;
@@ -260,21 +269,21 @@ export interface PlutusEpochStaking extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    advanceEpoch(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    advanceEpoch(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     claimRewards(
-      _epoch: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _epoch: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     claimRewardsFor(
-      _epoch: BigNumberish,
-      _user: string,
-      _to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _epoch: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    closeStakingWindow(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    closeStakingWindow(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     currentEpoch(overrides?: CallOverrides): Promise<[number]>;
 
@@ -283,7 +292,7 @@ export interface PlutusEpochStaking extends BaseContract {
     currentTotalStaked(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     epochCheckpoints(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [number, number, BigNumber] & {
@@ -293,59 +302,63 @@ export interface PlutusEpochStaking extends BaseContract {
       }
     >;
 
-    init(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    init(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     lockDuration(overrides?: CallOverrides): Promise<[number]>;
 
-    openStakingWindow(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    openStakingWindow(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     operator(overrides?: CallOverrides): Promise<[string]>;
 
     owner(overrides?: CallOverrides): Promise<[string]>;
 
-    pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     paused(overrides?: CallOverrides): Promise<[boolean]>;
 
     pls(overrides?: CallOverrides): Promise<[string]>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     setCurrentEpochStart(
-      _timestamp: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _timestamp: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setOperator(
-      _operator: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _operator: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setRewards(
-      _stakingRewards: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _stakingRewards: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setWhitelist(
-      _whitelist: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _whitelist: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     stake(
-      _amt: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amt: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     stakeFor(
-      _amt: BigNumberish,
-      _user: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amt: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    stakedCheckpoints(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    stakedCheckpoints(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     stakedDetails(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, number] & { amount: BigNumber; lastCheckpoint: number }>;
 
@@ -354,38 +367,38 @@ export interface PlutusEpochStaking extends BaseContract {
     stakingWindowOpen(overrides?: CallOverrides): Promise<[boolean]>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    unstake(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    unstake(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     unstakeFor(
-      _user: string,
-      _to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _user: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     whitelist(overrides?: CallOverrides): Promise<[string]>;
   };
 
-  advanceEpoch(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  advanceEpoch(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   claimRewards(
-    _epoch: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _epoch: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   claimRewardsFor(
-    _epoch: BigNumberish,
-    _user: string,
-    _to: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _epoch: PromiseOrValue<BigNumberish>,
+    _user: PromiseOrValue<string>,
+    _to: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  closeStakingWindow(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  closeStakingWindow(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   currentEpoch(overrides?: CallOverrides): Promise<number>;
 
@@ -394,7 +407,7 @@ export interface PlutusEpochStaking extends BaseContract {
   currentTotalStaked(overrides?: CallOverrides): Promise<BigNumber>;
 
   epochCheckpoints(
-    arg0: BigNumberish,
+    arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<
     [number, number, BigNumber] & {
@@ -404,56 +417,63 @@ export interface PlutusEpochStaking extends BaseContract {
     }
   >;
 
-  init(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  init(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   lockDuration(overrides?: CallOverrides): Promise<number>;
 
-  openStakingWindow(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  openStakingWindow(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   operator(overrides?: CallOverrides): Promise<string>;
 
   owner(overrides?: CallOverrides): Promise<string>;
 
-  pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   paused(overrides?: CallOverrides): Promise<boolean>;
 
   pls(overrides?: CallOverrides): Promise<string>;
 
-  renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   setCurrentEpochStart(
-    _timestamp: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _timestamp: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setOperator(
-    _operator: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _operator: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setRewards(
-    _stakingRewards: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _stakingRewards: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setWhitelist(
-    _whitelist: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _whitelist: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  stake(_amt: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  stake(
+    _amt: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   stakeFor(
-    _amt: BigNumberish,
-    _user: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _amt: PromiseOrValue<BigNumberish>,
+    _user: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  stakedCheckpoints(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  stakedCheckpoints(
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   stakedDetails(
-    arg0: string,
+    arg0: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber, number] & { amount: BigNumber; lastCheckpoint: number }>;
 
@@ -462,18 +482,18 @@ export interface PlutusEpochStaking extends BaseContract {
   stakingWindowOpen(overrides?: CallOverrides): Promise<boolean>;
 
   transferOwnership(
-    newOwner: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    newOwner: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  unstake(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  unstake(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   unstakeFor(
-    _user: string,
-    _to: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _user: PromiseOrValue<string>,
+    _to: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   whitelist(overrides?: CallOverrides): Promise<string>;
@@ -481,9 +501,14 @@ export interface PlutusEpochStaking extends BaseContract {
   callStatic: {
     advanceEpoch(overrides?: CallOverrides): Promise<void>;
 
-    claimRewards(_epoch: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    claimRewards(_epoch: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    claimRewardsFor(_epoch: BigNumberish, _user: string, _to: string, overrides?: CallOverrides): Promise<void>;
+    claimRewardsFor(
+      _epoch: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     closeStakingWindow(overrides?: CallOverrides): Promise<void>;
 
@@ -494,7 +519,7 @@ export interface PlutusEpochStaking extends BaseContract {
     currentTotalStaked(overrides?: CallOverrides): Promise<BigNumber>;
 
     epochCheckpoints(
-      arg0: BigNumberish,
+      arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<
       [number, number, BigNumber] & {
@@ -522,22 +547,30 @@ export interface PlutusEpochStaking extends BaseContract {
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
-    setCurrentEpochStart(_timestamp: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setCurrentEpochStart(_timestamp: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setOperator(_operator: string, overrides?: CallOverrides): Promise<void>;
+    setOperator(_operator: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setRewards(_stakingRewards: string, overrides?: CallOverrides): Promise<void>;
+    setRewards(_stakingRewards: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setWhitelist(_whitelist: string, overrides?: CallOverrides): Promise<void>;
+    setWhitelist(_whitelist: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    stake(_amt: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    stake(_amt: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    stakeFor(_amt: BigNumberish, _user: string, overrides?: CallOverrides): Promise<void>;
+    stakeFor(
+      _amt: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    stakedCheckpoints(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    stakedCheckpoints(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     stakedDetails(
-      arg0: string,
+      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, number] & { amount: BigNumber; lastCheckpoint: number }>;
 
@@ -545,13 +578,13 @@ export interface PlutusEpochStaking extends BaseContract {
 
     stakingWindowOpen(overrides?: CallOverrides): Promise<boolean>;
 
-    transferOwnership(newOwner: string, overrides?: CallOverrides): Promise<void>;
+    transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     unpause(overrides?: CallOverrides): Promise<void>;
 
     unstake(overrides?: CallOverrides): Promise<void>;
 
-    unstakeFor(_user: string, _to: string, overrides?: CallOverrides): Promise<void>;
+    unstakeFor(_user: PromiseOrValue<string>, _to: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     whitelist(overrides?: CallOverrides): Promise<string>;
   };
@@ -560,44 +593,64 @@ export interface PlutusEpochStaking extends BaseContract {
     'AdvanceEpoch()'(): AdvanceEpochEventFilter;
     AdvanceEpoch(): AdvanceEpochEventFilter;
 
-    'ClaimedRewards(address,uint32)'(_user?: string | null, _epoch?: null): ClaimedRewardsEventFilter;
-    ClaimedRewards(_user?: string | null, _epoch?: null): ClaimedRewardsEventFilter;
+    'ClaimedRewards(address,uint32)'(_user?: PromiseOrValue<string> | null, _epoch?: null): ClaimedRewardsEventFilter;
+    ClaimedRewards(_user?: PromiseOrValue<string> | null, _epoch?: null): ClaimedRewardsEventFilter;
 
-    'OperatorChange(address,address)'(_to?: string | null, _from?: string | null): OperatorChangeEventFilter;
-    OperatorChange(_to?: string | null, _from?: string | null): OperatorChangeEventFilter;
+    'OperatorChange(address,address)'(
+      _to?: PromiseOrValue<string> | null,
+      _from?: PromiseOrValue<string> | null,
+    ): OperatorChangeEventFilter;
+    OperatorChange(
+      _to?: PromiseOrValue<string> | null,
+      _from?: PromiseOrValue<string> | null,
+    ): OperatorChangeEventFilter;
 
     'OwnershipTransferred(address,address)'(
-      previousOwner?: string | null,
-      newOwner?: string | null,
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
     ): OwnershipTransferredEventFilter;
-    OwnershipTransferred(previousOwner?: string | null, newOwner?: string | null): OwnershipTransferredEventFilter;
+    OwnershipTransferred(
+      previousOwner?: PromiseOrValue<string> | null,
+      newOwner?: PromiseOrValue<string> | null,
+    ): OwnershipTransferredEventFilter;
 
     'Paused(address)'(account?: null): PausedEventFilter;
     Paused(account?: null): PausedEventFilter;
 
-    'Staked(address,uint112,uint32)'(_from?: string | null, _amt?: null, _epoch?: null): StakedEventFilter;
-    Staked(_from?: string | null, _amt?: null, _epoch?: null): StakedEventFilter;
+    'Staked(address,uint112,uint32)'(
+      _from?: PromiseOrValue<string> | null,
+      _amt?: null,
+      _epoch?: null,
+    ): StakedEventFilter;
+    Staked(_from?: PromiseOrValue<string> | null, _amt?: null, _epoch?: null): StakedEventFilter;
 
     'Unpaused(address)'(account?: null): UnpausedEventFilter;
     Unpaused(account?: null): UnpausedEventFilter;
 
-    'Unstaked(address,uint112,uint32)'(_from?: string | null, _amt?: null, _epoch?: null): UnstakedEventFilter;
-    Unstaked(_from?: string | null, _amt?: null, _epoch?: null): UnstakedEventFilter;
+    'Unstaked(address,uint112,uint32)'(
+      _from?: PromiseOrValue<string> | null,
+      _amt?: null,
+      _epoch?: null,
+    ): UnstakedEventFilter;
+    Unstaked(_from?: PromiseOrValue<string> | null, _amt?: null, _epoch?: null): UnstakedEventFilter;
   };
 
   estimateGas: {
-    advanceEpoch(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    advanceEpoch(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    claimRewards(_epoch: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
-
-    claimRewardsFor(
-      _epoch: BigNumberish,
-      _user: string,
-      _to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    claimRewards(
+      _epoch: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    closeStakingWindow(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    claimRewardsFor(
+      _epoch: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
+
+    closeStakingWindow(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     currentEpoch(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -605,90 +658,103 @@ export interface PlutusEpochStaking extends BaseContract {
 
     currentTotalStaked(overrides?: CallOverrides): Promise<BigNumber>;
 
-    epochCheckpoints(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    epochCheckpoints(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    init(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    init(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     lockDuration(overrides?: CallOverrides): Promise<BigNumber>;
 
-    openStakingWindow(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    openStakingWindow(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     operator(overrides?: CallOverrides): Promise<BigNumber>;
 
     owner(overrides?: CallOverrides): Promise<BigNumber>;
 
-    pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     paused(overrides?: CallOverrides): Promise<BigNumber>;
 
     pls(overrides?: CallOverrides): Promise<BigNumber>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     setCurrentEpochStart(
-      _timestamp: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _timestamp: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setOperator(_operator: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setOperator(
+      _operator: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setRewards(
-      _stakingRewards: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _stakingRewards: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setWhitelist(_whitelist: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setWhitelist(
+      _whitelist: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    stake(_amt: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    stake(
+      _amt: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     stakeFor(
-      _amt: BigNumberish,
-      _user: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amt: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    stakedCheckpoints(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    stakedCheckpoints(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    stakedDetails(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    stakedDetails(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     stakingRewards(overrides?: CallOverrides): Promise<BigNumber>;
 
     stakingWindowOpen(overrides?: CallOverrides): Promise<BigNumber>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    unstake(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    unstake(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     unstakeFor(
-      _user: string,
-      _to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _user: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     whitelist(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    advanceEpoch(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    advanceEpoch(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     claimRewards(
-      _epoch: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _epoch: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     claimRewardsFor(
-      _epoch: BigNumberish,
-      _user: string,
-      _to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _epoch: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    closeStakingWindow(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    closeStakingWindow(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     currentEpoch(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -696,78 +762,82 @@ export interface PlutusEpochStaking extends BaseContract {
 
     currentTotalStaked(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    epochCheckpoints(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    epochCheckpoints(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    init(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    init(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     lockDuration(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    openStakingWindow(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    openStakingWindow(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     operator(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     paused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     pls(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    renounceOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     setCurrentEpochStart(
-      _timestamp: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _timestamp: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setOperator(
-      _operator: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _operator: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setRewards(
-      _stakingRewards: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _stakingRewards: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setWhitelist(
-      _whitelist: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _whitelist: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     stake(
-      _amt: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amt: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     stakeFor(
-      _amt: BigNumberish,
-      _user: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amt: PromiseOrValue<BigNumberish>,
+      _user: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    stakedCheckpoints(arg0: string, arg1: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    stakedCheckpoints(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    stakedDetails(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    stakedDetails(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     stakingRewards(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     stakingWindowOpen(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transferOwnership(
-      newOwner: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      newOwner: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    unstake(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    unstake(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     unstakeFor(
-      _user: string,
-      _to: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _user: PromiseOrValue<string>,
+      _to: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     whitelist(overrides?: CallOverrides): Promise<PopulatedTransaction>;

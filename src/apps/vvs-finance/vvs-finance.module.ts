@@ -10,7 +10,6 @@ import { CronosVvsFinanceFarmContractPositionFetcher } from './cronos/vvs-financ
 import { CronosVvsFinanceMinesContractPositionFetcher } from './cronos/vvs-finance.mines.contract-position-fetcher';
 import { CronosVvsFinancePoolAddressCacheManager } from './cronos/vvs-finance.pool.cache-manager';
 import { CronosVvsFinancePoolTokenFetcher } from './cronos/vvs-finance.pool.token-fetcher';
-import { CronosVvsFinanceTvlFetcher } from './cronos/vvs-finance.tvl-fetcher';
 import { CronosVvsFinanceXvvsVaultContractPositionFetcher } from './cronos/vvs-finance.xvvs.contract-position-fetcher';
 import { CronosVvsFinanceXvvsTokenFetcher } from './cronos/vvs-finance.xvvs.token-fetcher';
 import { VvsFinanceAppDefinition, VVS_FINANCE_DEFINITION } from './vvs-finance.definition';
@@ -28,7 +27,6 @@ import { VvsFinanceAppDefinition, VVS_FINANCE_DEFINITION } from './vvs-finance.d
     CronosVvsFinanceMinesContractPositionFetcher,
     CronosVvsFinanceXvvsVaultContractPositionFetcher,
     CronosVvsFinanceXvvsTokenFetcher,
-    CronosVvsFinanceTvlFetcher,
     VvsFinanceAppDefinition,
     VvsFinanceContractFactory,
   ],

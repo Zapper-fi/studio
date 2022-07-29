@@ -133,9 +133,8 @@ export class EthereumCurveBalanceFetcher implements BalanceFetcher {
       appId: CURVE_DEFINITION.id,
       groupId: CURVE_DEFINITION.groups.votingEscrow.id,
       network,
-      resolveContract: ({ contractFactory, address }) => contractFactory.curveVotingEscrow({ network, address }),
-      resolveRewardContract: ({ contractFactory, address }) =>
-        contractFactory.curveVotingEscrowReward({ network, address }),
+      resolveContract: ({ address }) => this.curveContractFactory.curveVotingEscrow({ network, address }),
+      resolveRewardContract: ({ address }) => this.curveContractFactory.curveVotingEscrowReward({ network, address }),
       resolveLockedTokenBalance: ({ contract, multicall }) =>
         multicall
           .wrap(contract)

@@ -10,8 +10,16 @@ export const BLUEBIT_DEFINITION = appDefinition({
     'BlueBit Finance is a yield aggregator built on Near’s Aurora EVM. The protocol allows users to earn more yield from DeFi farming in a more secure, accessible, and efficient manner.',
   url: 'https://bluebit.fi',
   groups: {
-    vault: { id: 'vault', type: GroupType.TOKEN, label: 'Vaults' },
-    farm: { id: 'farm', type: GroupType.POSITION, label: 'Farms' },
+    farm: {
+      id: 'farm',
+      type: GroupType.POSITION,
+      label: 'Farms',
+    },
+    votingEscrow: {
+      id: 'voting-escrow',
+      type: GroupType.POSITION,
+      label: 'Voting Escrow',
+    },
   },
   tags: [AppTag.YIELD_AGGREGATOR],
   keywords: [],
@@ -22,7 +30,7 @@ export const BLUEBIT_DEFINITION = appDefinition({
     medium: 'https://bluebitfinance.medium.com/',
   },
   token: {
-    address: '0x4148d2Ce7816F0AE378d98b40eB3A7211E1fcF0D',
+    address: '0x4148d2ce7816f0ae378d98b40eb3a7211e1fcf0d',
     network: Network.AURORA_MAINNET,
   },
 

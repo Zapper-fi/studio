@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface BadgerSettInterface extends utils.Interface {
   functions: {
@@ -101,46 +101,72 @@ export interface BadgerSettInterface extends utils.Interface {
       | 'withdrawAll',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'allowance', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'approve', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'approveContractAccess', values: [string]): string;
-  encodeFunctionData(functionFragment: 'approved', values: [string]): string;
+  encodeFunctionData(functionFragment: 'allowance', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'approve',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'approveContractAccess', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'approved', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'available', values?: undefined): string;
   encodeFunctionData(functionFragment: 'balance', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
-  encodeFunctionData(functionFragment: 'blockLock', values: [string]): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'blockLock', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'controller', values?: undefined): string;
   encodeFunctionData(functionFragment: 'decimals', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'decreaseAllowance', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'deposit', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'decreaseAllowance',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'deposit', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'depositAll', values?: undefined): string;
   encodeFunctionData(functionFragment: 'earn', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getPricePerFullShare', values?: undefined): string;
   encodeFunctionData(functionFragment: 'governance', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'harvest', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'increaseAllowance', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'harvest',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'increaseAllowance',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(
     functionFragment: 'initialize',
-    values: [string, string, string, string, boolean, string, string],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<boolean>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'keeper', values?: undefined): string;
   encodeFunctionData(functionFragment: 'max', values?: undefined): string;
   encodeFunctionData(functionFragment: 'min', values?: undefined): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'revokeContractAccess', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setController', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setGovernance', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setKeeper', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setMin', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setStrategist', values: [string]): string;
+  encodeFunctionData(functionFragment: 'revokeContractAccess', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setController', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setGovernance', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setKeeper', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setMin', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setStrategist', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'strategist', values?: undefined): string;
   encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
   encodeFunctionData(functionFragment: 'token', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
   encodeFunctionData(functionFragment: 'trackFullPricePerShare', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transfer', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferFrom', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'withdraw', values: [BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'transfer',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'transferFrom',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'withdraw', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'withdrawAll', values?: undefined): string;
 
   decodeFunctionResult(functionFragment: 'allowance', data: BytesLike): Result;
@@ -246,73 +272,77 @@ export interface BadgerSett extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     approveContractAccess(
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    approved(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    approved(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     available(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     balance(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    blockLock(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    blockLock(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     controller(overrides?: CallOverrides): Promise<[string]>;
 
     decimals(overrides?: CallOverrides): Promise<[number]>;
 
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     deposit(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    depositAll(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    depositAll(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    earn(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    earn(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     getPricePerFullShare(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     governance(overrides?: CallOverrides): Promise<[string]>;
 
     harvest(
-      reserve: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      reserve: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     initialize(
-      _token: string,
-      _controller: string,
-      _governance: string,
-      _keeper: string,
-      _overrideTokenName: boolean,
-      _namePrefix: string,
-      _symbolPrefix: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      _controller: PromiseOrValue<string>,
+      _governance: PromiseOrValue<string>,
+      _keeper: PromiseOrValue<string>,
+      _overrideTokenName: PromiseOrValue<boolean>,
+      _namePrefix: PromiseOrValue<string>,
+      _symbolPrefix: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     keeper(overrides?: CallOverrides): Promise<[string]>;
@@ -324,33 +354,33 @@ export interface BadgerSett extends BaseContract {
     name(overrides?: CallOverrides): Promise<[string]>;
 
     revokeContractAccess(
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setController(
-      _controller: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _controller: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setGovernance(
-      _governance: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _governance: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setKeeper(
-      _keeper: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _keeper: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setMin(
-      _min: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _min: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setStrategist(
-      _strategist: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _strategist: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     strategist(overrides?: CallOverrides): Promise<[string]>;
@@ -361,96 +391,100 @@ export interface BadgerSett extends BaseContract {
 
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    trackFullPricePerShare(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    trackFullPricePerShare(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     transfer(
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferFrom(
-      sender: string,
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     withdraw(
-      _shares: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _shares: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    withdrawAll(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    withdrawAll(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
   };
 
-  allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+  allowance(
+    owner: PromiseOrValue<string>,
+    spender: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   approve(
-    spender: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   approveContractAccess(
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  approved(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  approved(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   available(overrides?: CallOverrides): Promise<BigNumber>;
 
   balance(overrides?: CallOverrides): Promise<BigNumber>;
 
-  balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  blockLock(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  blockLock(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   controller(overrides?: CallOverrides): Promise<string>;
 
   decimals(overrides?: CallOverrides): Promise<number>;
 
   decreaseAllowance(
-    spender: string,
-    subtractedValue: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    subtractedValue: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   deposit(
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  depositAll(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  depositAll(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  earn(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  earn(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   getPricePerFullShare(overrides?: CallOverrides): Promise<BigNumber>;
 
   governance(overrides?: CallOverrides): Promise<string>;
 
   harvest(
-    reserve: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    reserve: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   increaseAllowance(
-    spender: string,
-    addedValue: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    spender: PromiseOrValue<string>,
+    addedValue: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   initialize(
-    _token: string,
-    _controller: string,
-    _governance: string,
-    _keeper: string,
-    _overrideTokenName: boolean,
-    _namePrefix: string,
-    _symbolPrefix: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _token: PromiseOrValue<string>,
+    _controller: PromiseOrValue<string>,
+    _governance: PromiseOrValue<string>,
+    _keeper: PromiseOrValue<string>,
+    _overrideTokenName: PromiseOrValue<boolean>,
+    _namePrefix: PromiseOrValue<string>,
+    _symbolPrefix: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   keeper(overrides?: CallOverrides): Promise<string>;
@@ -462,27 +496,33 @@ export interface BadgerSett extends BaseContract {
   name(overrides?: CallOverrides): Promise<string>;
 
   revokeContractAccess(
-    account: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    account: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setController(
-    _controller: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _controller: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setGovernance(
-    _governance: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _governance: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  setKeeper(_keeper: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  setKeeper(
+    _keeper: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
-  setMin(_min: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  setMin(
+    _min: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   setStrategist(
-    _strategist: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _strategist: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   strategist(overrides?: CallOverrides): Promise<string>;
@@ -493,52 +533,64 @@ export interface BadgerSett extends BaseContract {
 
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-  trackFullPricePerShare(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  trackFullPricePerShare(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   transfer(
-    recipient: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    recipient: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferFrom(
-    sender: string,
-    recipient: string,
-    amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    sender: PromiseOrValue<string>,
+    recipient: PromiseOrValue<string>,
+    amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   withdraw(
-    _shares: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _shares: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  withdrawAll(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  withdrawAll(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   callStatic: {
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    approve(spender: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    approve(
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    approveContractAccess(account: string, overrides?: CallOverrides): Promise<void>;
+    approveContractAccess(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    approved(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    approved(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     available(overrides?: CallOverrides): Promise<BigNumber>;
 
     balance(overrides?: CallOverrides): Promise<BigNumber>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    blockLock(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    blockLock(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     controller(overrides?: CallOverrides): Promise<string>;
 
     decimals(overrides?: CallOverrides): Promise<number>;
 
-    decreaseAllowance(spender: string, subtractedValue: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    decreaseAllowance(
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    deposit(_amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    deposit(_amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     depositAll(overrides?: CallOverrides): Promise<void>;
 
@@ -548,18 +600,26 @@ export interface BadgerSett extends BaseContract {
 
     governance(overrides?: CallOverrides): Promise<string>;
 
-    harvest(reserve: string, amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    harvest(
+      reserve: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    increaseAllowance(spender: string, addedValue: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    increaseAllowance(
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
     initialize(
-      _token: string,
-      _controller: string,
-      _governance: string,
-      _keeper: string,
-      _overrideTokenName: boolean,
-      _namePrefix: string,
-      _symbolPrefix: string,
+      _token: PromiseOrValue<string>,
+      _controller: PromiseOrValue<string>,
+      _governance: PromiseOrValue<string>,
+      _keeper: PromiseOrValue<string>,
+      _overrideTokenName: PromiseOrValue<boolean>,
+      _namePrefix: PromiseOrValue<string>,
+      _symbolPrefix: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -571,17 +631,17 @@ export interface BadgerSett extends BaseContract {
 
     name(overrides?: CallOverrides): Promise<string>;
 
-    revokeContractAccess(account: string, overrides?: CallOverrides): Promise<void>;
+    revokeContractAccess(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setController(_controller: string, overrides?: CallOverrides): Promise<void>;
+    setController(_controller: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setGovernance(_governance: string, overrides?: CallOverrides): Promise<void>;
+    setGovernance(_governance: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setKeeper(_keeper: string, overrides?: CallOverrides): Promise<void>;
+    setKeeper(_keeper: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setMin(_min: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setMin(_min: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setStrategist(_strategist: string, overrides?: CallOverrides): Promise<void>;
+    setStrategist(_strategist: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     strategist(overrides?: CallOverrides): Promise<string>;
 
@@ -593,103 +653,131 @@ export interface BadgerSett extends BaseContract {
 
     trackFullPricePerShare(overrides?: CallOverrides): Promise<void>;
 
-    transfer(recipient: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transfer(
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    transferFrom(sender: string, recipient: string, amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    transferFrom(
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    withdraw(_shares: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    withdraw(_shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     withdrawAll(overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
     'Approval(address,address,uint256)'(
-      owner?: string | null,
-      spender?: string | null,
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
       value?: null,
     ): ApprovalEventFilter;
-    Approval(owner?: string | null, spender?: string | null, value?: null): ApprovalEventFilter;
+    Approval(
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
+      value?: null,
+    ): ApprovalEventFilter;
 
     'FullPricePerShareUpdated(uint256,uint256,uint256)'(
       value?: null,
-      timestamp?: BigNumberish | null,
-      blockNumber?: BigNumberish | null,
+      timestamp?: PromiseOrValue<BigNumberish> | null,
+      blockNumber?: PromiseOrValue<BigNumberish> | null,
     ): FullPricePerShareUpdatedEventFilter;
     FullPricePerShareUpdated(
       value?: null,
-      timestamp?: BigNumberish | null,
-      blockNumber?: BigNumberish | null,
+      timestamp?: PromiseOrValue<BigNumberish> | null,
+      blockNumber?: PromiseOrValue<BigNumberish> | null,
     ): FullPricePerShareUpdatedEventFilter;
 
-    'Transfer(address,address,uint256)'(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
-    Transfer(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
+    'Transfer(address,address,uint256)'(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
+    Transfer(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
   };
 
   estimateGas: {
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     approveContractAccess(
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    approved(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    approved(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     available(overrides?: CallOverrides): Promise<BigNumber>;
 
     balance(overrides?: CallOverrides): Promise<BigNumber>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    blockLock(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    blockLock(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     controller(overrides?: CallOverrides): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    deposit(_amount: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    deposit(
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    depositAll(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    depositAll(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    earn(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    earn(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     getPricePerFullShare(overrides?: CallOverrides): Promise<BigNumber>;
 
     governance(overrides?: CallOverrides): Promise<BigNumber>;
 
     harvest(
-      reserve: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      reserve: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     initialize(
-      _token: string,
-      _controller: string,
-      _governance: string,
-      _keeper: string,
-      _overrideTokenName: boolean,
-      _namePrefix: string,
-      _symbolPrefix: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      _controller: PromiseOrValue<string>,
+      _governance: PromiseOrValue<string>,
+      _keeper: PromiseOrValue<string>,
+      _overrideTokenName: PromiseOrValue<boolean>,
+      _namePrefix: PromiseOrValue<string>,
+      _symbolPrefix: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     keeper(overrides?: CallOverrides): Promise<BigNumber>;
@@ -701,19 +789,34 @@ export interface BadgerSett extends BaseContract {
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
     revokeContractAccess(
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setController(_controller: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setController(
+      _controller: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    setGovernance(_governance: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setGovernance(
+      _governance: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    setKeeper(_keeper: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setKeeper(
+      _keeper: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    setMin(_min: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setMin(
+      _min: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    setStrategist(_strategist: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setStrategist(
+      _strategist: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     strategist(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -723,94 +826,101 @@ export interface BadgerSett extends BaseContract {
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    trackFullPricePerShare(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    trackFullPricePerShare(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     transfer(
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferFrom(
-      sender: string,
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    withdraw(_shares: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    withdraw(
+      _shares: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    withdrawAll(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    withdrawAll(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    allowance(owner: string, spender: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    allowance(
+      owner: PromiseOrValue<string>,
+      spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     approve(
-      spender: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     approveContractAccess(
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    approved(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    approved(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     available(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     balance(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    balanceOf(account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    balanceOf(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    blockLock(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    blockLock(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     controller(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     decreaseAllowance(
-      spender: string,
-      subtractedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      subtractedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     deposit(
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    depositAll(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    depositAll(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    earn(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    earn(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     getPricePerFullShare(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     governance(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     harvest(
-      reserve: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      reserve: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     increaseAllowance(
-      spender: string,
-      addedValue: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      spender: PromiseOrValue<string>,
+      addedValue: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     initialize(
-      _token: string,
-      _controller: string,
-      _governance: string,
-      _keeper: string,
-      _overrideTokenName: boolean,
-      _namePrefix: string,
-      _symbolPrefix: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      _controller: PromiseOrValue<string>,
+      _governance: PromiseOrValue<string>,
+      _keeper: PromiseOrValue<string>,
+      _overrideTokenName: PromiseOrValue<boolean>,
+      _namePrefix: PromiseOrValue<string>,
+      _symbolPrefix: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     keeper(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -822,33 +932,33 @@ export interface BadgerSett extends BaseContract {
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     revokeContractAccess(
-      account: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      account: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setController(
-      _controller: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _controller: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setGovernance(
-      _governance: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _governance: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setKeeper(
-      _keeper: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _keeper: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setMin(
-      _min: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _min: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setStrategist(
-      _strategist: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _strategist: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     strategist(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -859,26 +969,26 @@ export interface BadgerSett extends BaseContract {
 
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    trackFullPricePerShare(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    trackFullPricePerShare(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     transfer(
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferFrom(
-      sender: string,
-      recipient: string,
-      amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      sender: PromiseOrValue<string>,
+      recipient: PromiseOrValue<string>,
+      amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     withdraw(
-      _shares: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _shares: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    withdrawAll(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    withdrawAll(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
   };
 }

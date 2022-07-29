@@ -14,7 +14,7 @@ const network = Network.ETHEREUM_MAINNET;
 
 export const address = '0x8c3736e2fe63cc2cd89ee228d9dbcab6ce5b767b';
 
-@Register.TokenPositionFetcher({ appId, groupId, network, options: { includeInTvl: true } })
+@Register.TokenPositionFetcher({ appId, groupId, network })
 export class EthereumImpermaxLendTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(@Inject(ImpermaxLendTokenHelper) private readonly impermaxLendTokenHelper: ImpermaxLendTokenHelper) {}
 

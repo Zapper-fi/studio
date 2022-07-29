@@ -23,7 +23,7 @@ import { StatsModule } from '~stats/stats.module';
         () => ({
           zapperApi: {
             url: process.env.ZAPPER_API_URL ?? 'https://api.zapper.fi',
-            key: process.env.ZAPPER_API_KEY ?? '96e0cc51-a62e-42ca-acee-910ea7d2a241',
+            key: process.env.ZAPPER_API_KEY ?? 'ad01527e-8133-4a68-ad67-fbf8d9040ad1',
           },
           apiResolvedPositions: compact((process.env.API_RESOLVED_POSITIONS ?? '').split(',')),
         }),

@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface MakerVatInterface extends utils.Interface {
   functions: {
@@ -83,41 +83,82 @@ export interface MakerVatInterface extends utils.Interface {
 
   encodeFunctionData(functionFragment: 'Line', values?: undefined): string;
   encodeFunctionData(functionFragment: 'cage', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'can', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'dai', values: [string]): string;
+  encodeFunctionData(functionFragment: 'can', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'dai', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'debt', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'deny', values: [string]): string;
+  encodeFunctionData(functionFragment: 'deny', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
     functionFragment: 'file(bytes32,bytes32,uint256)',
-    values: [BytesLike, BytesLike, BigNumberish],
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>],
   ): string;
-  encodeFunctionData(functionFragment: 'file(bytes32,uint256)', values: [BytesLike, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'flux', values: [BytesLike, string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'fold', values: [BytesLike, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'fork', values: [BytesLike, string, string, BigNumberish, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'file(bytes32,uint256)',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'flux',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'fold',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'fork',
+    values: [
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
+  ): string;
   encodeFunctionData(
     functionFragment: 'frob',
-    values: [BytesLike, string, string, string, BigNumberish, BigNumberish],
+    values: [
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'gem', values: [BytesLike, string]): string;
+  encodeFunctionData(functionFragment: 'gem', values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]): string;
   encodeFunctionData(
     functionFragment: 'grab',
-    values: [BytesLike, string, string, string, BigNumberish, BigNumberish],
+    values: [
+      PromiseOrValue<BytesLike>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'heal', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'hope', values: [string]): string;
-  encodeFunctionData(functionFragment: 'ilks', values: [BytesLike]): string;
-  encodeFunctionData(functionFragment: 'init', values: [BytesLike]): string;
+  encodeFunctionData(functionFragment: 'heal', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'hope', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'ilks', values: [PromiseOrValue<BytesLike>]): string;
+  encodeFunctionData(functionFragment: 'init', values: [PromiseOrValue<BytesLike>]): string;
   encodeFunctionData(functionFragment: 'live', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'move', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'nope', values: [string]): string;
-  encodeFunctionData(functionFragment: 'rely', values: [string]): string;
-  encodeFunctionData(functionFragment: 'sin', values: [string]): string;
-  encodeFunctionData(functionFragment: 'slip', values: [BytesLike, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'suck', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'urns', values: [BytesLike, string]): string;
+  encodeFunctionData(
+    functionFragment: 'move',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'nope', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'rely', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'sin', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'slip',
+    values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'suck',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'urns', values: [PromiseOrValue<BytesLike>, PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'vice', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'wards', values: [string]): string;
+  encodeFunctionData(functionFragment: 'wards', values: [PromiseOrValue<string>]): string;
 
   decodeFunctionResult(functionFragment: 'Line', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'cage', data: BytesLike): Result;
@@ -191,81 +232,90 @@ export interface MakerVat extends BaseContract {
   functions: {
     Line(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    cage(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    cage(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    can(arg0: string, arg1: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    can(arg0: PromiseOrValue<string>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    dai(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    dai(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     debt(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    deny(usr: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    deny(
+      usr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     'file(bytes32,bytes32,uint256)'(
-      ilk: BytesLike,
-      what: BytesLike,
-      data: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      ilk: PromiseOrValue<BytesLike>,
+      what: PromiseOrValue<BytesLike>,
+      data: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     'file(bytes32,uint256)'(
-      what: BytesLike,
-      data: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      what: PromiseOrValue<BytesLike>,
+      data: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     flux(
-      ilk: BytesLike,
-      src: string,
-      dst: string,
-      wad: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      ilk: PromiseOrValue<BytesLike>,
+      src: PromiseOrValue<string>,
+      dst: PromiseOrValue<string>,
+      wad: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     fold(
-      i: BytesLike,
-      u: string,
-      rate: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      i: PromiseOrValue<BytesLike>,
+      u: PromiseOrValue<string>,
+      rate: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     fork(
-      ilk: BytesLike,
-      src: string,
-      dst: string,
-      dink: BigNumberish,
-      dart: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      ilk: PromiseOrValue<BytesLike>,
+      src: PromiseOrValue<string>,
+      dst: PromiseOrValue<string>,
+      dink: PromiseOrValue<BigNumberish>,
+      dart: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     frob(
-      i: BytesLike,
-      u: string,
-      v: string,
-      w: string,
-      dink: BigNumberish,
-      dart: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      i: PromiseOrValue<BytesLike>,
+      u: PromiseOrValue<string>,
+      v: PromiseOrValue<string>,
+      w: PromiseOrValue<string>,
+      dink: PromiseOrValue<BigNumberish>,
+      dart: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    gem(arg0: BytesLike, arg1: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    gem(arg0: PromiseOrValue<BytesLike>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     grab(
-      i: BytesLike,
-      u: string,
-      v: string,
-      w: string,
-      dink: BigNumberish,
-      dart: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      i: PromiseOrValue<BytesLike>,
+      u: PromiseOrValue<string>,
+      v: PromiseOrValue<string>,
+      w: PromiseOrValue<string>,
+      dink: PromiseOrValue<BigNumberish>,
+      dart: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    heal(rad: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    heal(
+      rad: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
-    hope(usr: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    hope(
+      usr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     ilks(
-      arg0: BytesLike,
+      arg0: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -277,125 +327,143 @@ export interface MakerVat extends BaseContract {
       }
     >;
 
-    init(ilk: BytesLike, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    init(
+      ilk: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     live(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     move(
-      src: string,
-      dst: string,
-      rad: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      src: PromiseOrValue<string>,
+      dst: PromiseOrValue<string>,
+      rad: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    nope(usr: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    nope(
+      usr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
-    rely(usr: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    rely(
+      usr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
-    sin(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    sin(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     slip(
-      ilk: BytesLike,
-      usr: string,
-      wad: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      ilk: PromiseOrValue<BytesLike>,
+      usr: PromiseOrValue<string>,
+      wad: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     suck(
-      u: string,
-      v: string,
-      rad: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      u: PromiseOrValue<string>,
+      v: PromiseOrValue<string>,
+      rad: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     urns(
-      arg0: BytesLike,
-      arg1: string,
+      arg0: PromiseOrValue<BytesLike>,
+      arg1: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { ink: BigNumber; art: BigNumber }>;
 
     vice(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    wards(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    wards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
   };
 
   Line(overrides?: CallOverrides): Promise<BigNumber>;
 
-  cage(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  cage(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  can(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+  can(arg0: PromiseOrValue<string>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  dai(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  dai(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   debt(overrides?: CallOverrides): Promise<BigNumber>;
 
-  deny(usr: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  deny(
+    usr: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   'file(bytes32,bytes32,uint256)'(
-    ilk: BytesLike,
-    what: BytesLike,
-    data: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    ilk: PromiseOrValue<BytesLike>,
+    what: PromiseOrValue<BytesLike>,
+    data: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   'file(bytes32,uint256)'(
-    what: BytesLike,
-    data: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    what: PromiseOrValue<BytesLike>,
+    data: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   flux(
-    ilk: BytesLike,
-    src: string,
-    dst: string,
-    wad: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    ilk: PromiseOrValue<BytesLike>,
+    src: PromiseOrValue<string>,
+    dst: PromiseOrValue<string>,
+    wad: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   fold(
-    i: BytesLike,
-    u: string,
-    rate: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    i: PromiseOrValue<BytesLike>,
+    u: PromiseOrValue<string>,
+    rate: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   fork(
-    ilk: BytesLike,
-    src: string,
-    dst: string,
-    dink: BigNumberish,
-    dart: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    ilk: PromiseOrValue<BytesLike>,
+    src: PromiseOrValue<string>,
+    dst: PromiseOrValue<string>,
+    dink: PromiseOrValue<BigNumberish>,
+    dart: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   frob(
-    i: BytesLike,
-    u: string,
-    v: string,
-    w: string,
-    dink: BigNumberish,
-    dart: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    i: PromiseOrValue<BytesLike>,
+    u: PromiseOrValue<string>,
+    v: PromiseOrValue<string>,
+    w: PromiseOrValue<string>,
+    dink: PromiseOrValue<BigNumberish>,
+    dart: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  gem(arg0: BytesLike, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+  gem(arg0: PromiseOrValue<BytesLike>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   grab(
-    i: BytesLike,
-    u: string,
-    v: string,
-    w: string,
-    dink: BigNumberish,
-    dart: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    i: PromiseOrValue<BytesLike>,
+    u: PromiseOrValue<string>,
+    v: PromiseOrValue<string>,
+    w: PromiseOrValue<string>,
+    dink: PromiseOrValue<BigNumberish>,
+    dart: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  heal(rad: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  heal(
+    rad: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
-  hope(usr: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  hope(
+    usr: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   ilks(
-    arg0: BytesLike,
+    arg0: PromiseOrValue<BytesLike>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -407,110 +475,134 @@ export interface MakerVat extends BaseContract {
     }
   >;
 
-  init(ilk: BytesLike, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  init(
+    ilk: PromiseOrValue<BytesLike>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   live(overrides?: CallOverrides): Promise<BigNumber>;
 
   move(
-    src: string,
-    dst: string,
-    rad: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    src: PromiseOrValue<string>,
+    dst: PromiseOrValue<string>,
+    rad: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  nope(usr: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  nope(
+    usr: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
-  rely(usr: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  rely(
+    usr: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
-  sin(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  sin(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   slip(
-    ilk: BytesLike,
-    usr: string,
-    wad: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    ilk: PromiseOrValue<BytesLike>,
+    usr: PromiseOrValue<string>,
+    wad: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   suck(
-    u: string,
-    v: string,
-    rad: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    u: PromiseOrValue<string>,
+    v: PromiseOrValue<string>,
+    rad: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   urns(
-    arg0: BytesLike,
-    arg1: string,
+    arg0: PromiseOrValue<BytesLike>,
+    arg1: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber, BigNumber] & { ink: BigNumber; art: BigNumber }>;
 
   vice(overrides?: CallOverrides): Promise<BigNumber>;
 
-  wards(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  wards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   callStatic: {
     Line(overrides?: CallOverrides): Promise<BigNumber>;
 
     cage(overrides?: CallOverrides): Promise<void>;
 
-    can(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    can(arg0: PromiseOrValue<string>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    dai(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    dai(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     debt(overrides?: CallOverrides): Promise<BigNumber>;
 
-    deny(usr: string, overrides?: CallOverrides): Promise<void>;
+    deny(usr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     'file(bytes32,bytes32,uint256)'(
-      ilk: BytesLike,
-      what: BytesLike,
-      data: BigNumberish,
+      ilk: PromiseOrValue<BytesLike>,
+      what: PromiseOrValue<BytesLike>,
+      data: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    'file(bytes32,uint256)'(what: BytesLike, data: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    'file(bytes32,uint256)'(
+      what: PromiseOrValue<BytesLike>,
+      data: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    flux(ilk: BytesLike, src: string, dst: string, wad: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    flux(
+      ilk: PromiseOrValue<BytesLike>,
+      src: PromiseOrValue<string>,
+      dst: PromiseOrValue<string>,
+      wad: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    fold(i: BytesLike, u: string, rate: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    fold(
+      i: PromiseOrValue<BytesLike>,
+      u: PromiseOrValue<string>,
+      rate: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     fork(
-      ilk: BytesLike,
-      src: string,
-      dst: string,
-      dink: BigNumberish,
-      dart: BigNumberish,
+      ilk: PromiseOrValue<BytesLike>,
+      src: PromiseOrValue<string>,
+      dst: PromiseOrValue<string>,
+      dink: PromiseOrValue<BigNumberish>,
+      dart: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     frob(
-      i: BytesLike,
-      u: string,
-      v: string,
-      w: string,
-      dink: BigNumberish,
-      dart: BigNumberish,
+      i: PromiseOrValue<BytesLike>,
+      u: PromiseOrValue<string>,
+      v: PromiseOrValue<string>,
+      w: PromiseOrValue<string>,
+      dink: PromiseOrValue<BigNumberish>,
+      dart: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    gem(arg0: BytesLike, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    gem(arg0: PromiseOrValue<BytesLike>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     grab(
-      i: BytesLike,
-      u: string,
-      v: string,
-      w: string,
-      dink: BigNumberish,
-      dart: BigNumberish,
+      i: PromiseOrValue<BytesLike>,
+      u: PromiseOrValue<string>,
+      v: PromiseOrValue<string>,
+      w: PromiseOrValue<string>,
+      dink: PromiseOrValue<BigNumberish>,
+      dart: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    heal(rad: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    heal(rad: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    hope(usr: string, overrides?: CallOverrides): Promise<void>;
+    hope(usr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     ilks(
-      arg0: BytesLike,
+      arg0: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -522,46 +614,61 @@ export interface MakerVat extends BaseContract {
       }
     >;
 
-    init(ilk: BytesLike, overrides?: CallOverrides): Promise<void>;
+    init(ilk: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<void>;
 
     live(overrides?: CallOverrides): Promise<BigNumber>;
 
-    move(src: string, dst: string, rad: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    move(
+      src: PromiseOrValue<string>,
+      dst: PromiseOrValue<string>,
+      rad: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    nope(usr: string, overrides?: CallOverrides): Promise<void>;
+    nope(usr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    rely(usr: string, overrides?: CallOverrides): Promise<void>;
+    rely(usr: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    sin(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    sin(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    slip(ilk: BytesLike, usr: string, wad: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    slip(
+      ilk: PromiseOrValue<BytesLike>,
+      usr: PromiseOrValue<string>,
+      wad: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    suck(u: string, v: string, rad: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    suck(
+      u: PromiseOrValue<string>,
+      v: PromiseOrValue<string>,
+      rad: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     urns(
-      arg0: BytesLike,
-      arg1: string,
+      arg0: PromiseOrValue<BytesLike>,
+      arg1: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber] & { ink: BigNumber; art: BigNumber }>;
 
     vice(overrides?: CallOverrides): Promise<BigNumber>;
 
-    wards(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    wards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   filters: {
     'LogNote(bytes4,bytes32,bytes32,bytes32,bytes)'(
-      sig?: BytesLike | null,
-      arg1?: BytesLike | null,
-      arg2?: BytesLike | null,
-      arg3?: BytesLike | null,
+      sig?: PromiseOrValue<BytesLike> | null,
+      arg1?: PromiseOrValue<BytesLike> | null,
+      arg2?: PromiseOrValue<BytesLike> | null,
+      arg3?: PromiseOrValue<BytesLike> | null,
       data?: null,
     ): LogNoteEventFilter;
     LogNote(
-      sig?: BytesLike | null,
-      arg1?: BytesLike | null,
-      arg2?: BytesLike | null,
-      arg3?: BytesLike | null,
+      sig?: PromiseOrValue<BytesLike> | null,
+      arg1?: PromiseOrValue<BytesLike> | null,
+      arg2?: PromiseOrValue<BytesLike> | null,
+      arg3?: PromiseOrValue<BytesLike> | null,
       data?: null,
     ): LogNoteEventFilter;
   };
@@ -569,232 +676,265 @@ export interface MakerVat extends BaseContract {
   estimateGas: {
     Line(overrides?: CallOverrides): Promise<BigNumber>;
 
-    cage(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    cage(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    can(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    can(arg0: PromiseOrValue<string>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    dai(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    dai(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     debt(overrides?: CallOverrides): Promise<BigNumber>;
 
-    deny(usr: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    deny(usr: PromiseOrValue<string>, overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     'file(bytes32,bytes32,uint256)'(
-      ilk: BytesLike,
-      what: BytesLike,
-      data: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      ilk: PromiseOrValue<BytesLike>,
+      what: PromiseOrValue<BytesLike>,
+      data: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     'file(bytes32,uint256)'(
-      what: BytesLike,
-      data: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      what: PromiseOrValue<BytesLike>,
+      data: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     flux(
-      ilk: BytesLike,
-      src: string,
-      dst: string,
-      wad: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      ilk: PromiseOrValue<BytesLike>,
+      src: PromiseOrValue<string>,
+      dst: PromiseOrValue<string>,
+      wad: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     fold(
-      i: BytesLike,
-      u: string,
-      rate: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      i: PromiseOrValue<BytesLike>,
+      u: PromiseOrValue<string>,
+      rate: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     fork(
-      ilk: BytesLike,
-      src: string,
-      dst: string,
-      dink: BigNumberish,
-      dart: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      ilk: PromiseOrValue<BytesLike>,
+      src: PromiseOrValue<string>,
+      dst: PromiseOrValue<string>,
+      dink: PromiseOrValue<BigNumberish>,
+      dart: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     frob(
-      i: BytesLike,
-      u: string,
-      v: string,
-      w: string,
-      dink: BigNumberish,
-      dart: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      i: PromiseOrValue<BytesLike>,
+      u: PromiseOrValue<string>,
+      v: PromiseOrValue<string>,
+      w: PromiseOrValue<string>,
+      dink: PromiseOrValue<BigNumberish>,
+      dart: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    gem(arg0: BytesLike, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    gem(arg0: PromiseOrValue<BytesLike>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     grab(
-      i: BytesLike,
-      u: string,
-      v: string,
-      w: string,
-      dink: BigNumberish,
-      dart: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      i: PromiseOrValue<BytesLike>,
+      u: PromiseOrValue<string>,
+      v: PromiseOrValue<string>,
+      w: PromiseOrValue<string>,
+      dink: PromiseOrValue<BigNumberish>,
+      dart: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    heal(rad: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    heal(
+      rad: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    hope(usr: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    hope(usr: PromiseOrValue<string>, overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    ilks(arg0: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    ilks(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    init(ilk: BytesLike, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    init(ilk: PromiseOrValue<BytesLike>, overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     live(overrides?: CallOverrides): Promise<BigNumber>;
 
     move(
-      src: string,
-      dst: string,
-      rad: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      src: PromiseOrValue<string>,
+      dst: PromiseOrValue<string>,
+      rad: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    nope(usr: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    nope(usr: PromiseOrValue<string>, overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    rely(usr: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    rely(usr: PromiseOrValue<string>, overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
-    sin(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    sin(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     slip(
-      ilk: BytesLike,
-      usr: string,
-      wad: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      ilk: PromiseOrValue<BytesLike>,
+      usr: PromiseOrValue<string>,
+      wad: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     suck(
-      u: string,
-      v: string,
-      rad: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      u: PromiseOrValue<string>,
+      v: PromiseOrValue<string>,
+      rad: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    urns(arg0: BytesLike, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    urns(arg0: PromiseOrValue<BytesLike>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     vice(overrides?: CallOverrides): Promise<BigNumber>;
 
-    wards(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    wards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
     Line(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    cage(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    cage(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
-    can(arg0: string, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    can(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    dai(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    dai(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     debt(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    deny(usr: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    deny(
+      usr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
     'file(bytes32,bytes32,uint256)'(
-      ilk: BytesLike,
-      what: BytesLike,
-      data: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      ilk: PromiseOrValue<BytesLike>,
+      what: PromiseOrValue<BytesLike>,
+      data: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     'file(bytes32,uint256)'(
-      what: BytesLike,
-      data: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      what: PromiseOrValue<BytesLike>,
+      data: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     flux(
-      ilk: BytesLike,
-      src: string,
-      dst: string,
-      wad: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      ilk: PromiseOrValue<BytesLike>,
+      src: PromiseOrValue<string>,
+      dst: PromiseOrValue<string>,
+      wad: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     fold(
-      i: BytesLike,
-      u: string,
-      rate: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      i: PromiseOrValue<BytesLike>,
+      u: PromiseOrValue<string>,
+      rate: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     fork(
-      ilk: BytesLike,
-      src: string,
-      dst: string,
-      dink: BigNumberish,
-      dart: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      ilk: PromiseOrValue<BytesLike>,
+      src: PromiseOrValue<string>,
+      dst: PromiseOrValue<string>,
+      dink: PromiseOrValue<BigNumberish>,
+      dart: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     frob(
-      i: BytesLike,
-      u: string,
-      v: string,
-      w: string,
-      dink: BigNumberish,
-      dart: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      i: PromiseOrValue<BytesLike>,
+      u: PromiseOrValue<string>,
+      v: PromiseOrValue<string>,
+      w: PromiseOrValue<string>,
+      dink: PromiseOrValue<BigNumberish>,
+      dart: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    gem(arg0: BytesLike, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    gem(
+      arg0: PromiseOrValue<BytesLike>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     grab(
-      i: BytesLike,
-      u: string,
-      v: string,
-      w: string,
-      dink: BigNumberish,
-      dart: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      i: PromiseOrValue<BytesLike>,
+      u: PromiseOrValue<string>,
+      v: PromiseOrValue<string>,
+      w: PromiseOrValue<string>,
+      dink: PromiseOrValue<BigNumberish>,
+      dart: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    heal(rad: BigNumberish, overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    heal(
+      rad: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
-    hope(usr: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    hope(
+      usr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
-    ilks(arg0: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    ilks(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    init(ilk: BytesLike, overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    init(
+      ilk: PromiseOrValue<BytesLike>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
     live(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     move(
-      src: string,
-      dst: string,
-      rad: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      src: PromiseOrValue<string>,
+      dst: PromiseOrValue<string>,
+      rad: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    nope(usr: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    nope(
+      usr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
-    rely(usr: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    rely(
+      usr: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
-    sin(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    sin(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     slip(
-      ilk: BytesLike,
-      usr: string,
-      wad: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      ilk: PromiseOrValue<BytesLike>,
+      usr: PromiseOrValue<string>,
+      wad: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     suck(
-      u: string,
-      v: string,
-      rad: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      u: PromiseOrValue<string>,
+      v: PromiseOrValue<string>,
+      rad: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    urns(arg0: BytesLike, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    urns(
+      arg0: PromiseOrValue<BytesLike>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     vice(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    wards(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    wards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }

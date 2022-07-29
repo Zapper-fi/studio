@@ -10,7 +10,7 @@ import {
   buildPercentageDisplayItem,
 } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { EthersMulticall as Multicall } from '~multicall/multicall.ethers';
+import { IMulticallWrapper } from '~multicall/multicall.interface';
 import { ContractType } from '~position/contract.interface';
 import { AppTokenPosition, Token } from '~position/position.interface';
 import { AppGroupsDefinition } from '~position/position.service';
@@ -59,8 +59,11 @@ export type UniswapV2PoolTokenHelperParams<T = UniswapFactory, V = UniswapPair> 
     baseTokensByAddress: Record<string, BaseToken>;
     resolveFactoryContract(opts: { address: string; network: Network }): T;
     resolvePoolContract(opts: { address: string; network: Network }): V;
-    resolvePoolUnderlyingTokenAddresses(opts: { multicall: Multicall; poolContract: V }): Promise<[string, string]>;
-    resolvePoolReserves(opts: { multicall: Multicall; poolContract: V }): Promise<[BigNumberish, BigNumberish]>;
+    resolvePoolUnderlyingTokenAddresses(opts: {
+      multicall: IMulticallWrapper;
+      poolContract: V;
+    }): Promise<[string, string]>;
+    resolvePoolReserves(opts: { multicall: IMulticallWrapper; poolContract: V }): Promise<[BigNumberish, BigNumberish]>;
   }): Promise<BaseToken | null>;
   resolvePoolVolumes?: (opts: {
     appId: string;
@@ -68,10 +71,13 @@ export type UniswapV2PoolTokenHelperParams<T = UniswapFactory, V = UniswapPair> 
     resolveFactoryContract(opts: { address: string; network: Network }): T;
     resolvePoolContract(opts: { address: string; network: Network }): V;
   }) => Promise<ResolvePoolVolumesResponse>;
-  resolvePoolTokenSymbol(opts: { multicall: Multicall; poolContract: V }): Promise<string>;
-  resolvePoolTokenSupply(opts: { multicall: Multicall; poolContract: V }): Promise<BigNumberish>;
-  resolvePoolUnderlyingTokenAddresses(opts: { multicall: Multicall; poolContract: V }): Promise<[string, string]>;
-  resolvePoolReserves(opts: { multicall: Multicall; poolContract: V }): Promise<[BigNumberish, BigNumberish]>;
+  resolvePoolTokenSymbol(opts: { multicall: IMulticallWrapper; poolContract: V }): Promise<string>;
+  resolvePoolTokenSupply(opts: { multicall: IMulticallWrapper; poolContract: V }): Promise<BigNumberish>;
+  resolvePoolUnderlyingTokenAddresses(opts: {
+    multicall: IMulticallWrapper;
+    poolContract: V;
+  }): Promise<[string, string]>;
+  resolvePoolReserves(opts: { multicall: IMulticallWrapper; poolContract: V }): Promise<[BigNumberish, BigNumberish]>;
   resolveTokenDisplayPrefix?: (symbol: string) => string;
   resolveTokenDisplaySymbol?: (token: Token) => string;
 };
@@ -84,7 +90,7 @@ export class UniswapV2PoolTokenHelper {
     appId,
     groupId,
     factoryAddress,
-    fee = 0.003,
+    fee = 0.3,
     minLiquidity = 0,
     hiddenTokens = [],
     blockedPools = [],
@@ -178,16 +184,21 @@ export class UniswapV2PoolTokenHelper {
         const volume = poolVolumes.find(v => v.poolAddress === address)?.volumeChangeUSD ?? 0;
         const volumeChangePercentage = poolVolumes.find(v => v.poolAddress === address)?.volumeChangePercentage ?? 0;
         const isBlocked = blockedPools.includes(address);
+        const ratio = reservePercentages.map(p => `${Math.round(p * 100)}%`).join(' / ');
+        const projectedYearlyVolume = volume * 365;
+        const apy = (projectedYearlyVolume * 100) / liquidity;
 
         // Display Props
         const label = `${resolveTokenDisplaySymbol(tokens[0])} / ${resolveTokenDisplaySymbol(tokens[1])}`;
-        const secondaryLabel = reservePercentages.map(p => `${Math.round(p * 100)}%`).join(' / ');
+        const secondaryLabel = ratio;
         const images = tokens.map(v => getImagesFromToken(v)).flat();
         const statsItems = [
           { label: 'Volume', value: buildDollarDisplayItem(volume) },
+          { label: 'APY', value: buildPercentageDisplayItem(apy) },
           { label: 'Fee', value: buildPercentageDisplayItem(fee) },
           { label: 'Reserves', value: reserves.map(v => (v < 0.01 ? '<0.01' : v.toFixed(2))).join(' / ') },
           { label: 'Liquidity', value: buildDollarDisplayItem(liquidity) },
+          { label: 'Ratio', value: ratio },
         ];
 
         const poolToken: AppTokenPosition<UniswapV2PoolTokenDataProps> = {
