@@ -49,48 +49,42 @@
     "type": "function",
     "name": "get_n_coins",
     "inputs": [{ "name": "_pool", "type": "address" }],
-    "outputs": [{ "name": "", "type": "uint256[2]" }],
-    "gas": 2764
+    "outputs": [{ "name": "", "type": "uint256[2]" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "get_coins",
     "inputs": [{ "name": "_pool", "type": "address" }],
-    "outputs": [{ "name": "", "type": "address[8]" }],
-    "gas": 22642
+    "outputs": [{ "name": "", "type": "address[8]" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "get_underlying_coins",
     "inputs": [{ "name": "_pool", "type": "address" }],
-    "outputs": [{ "name": "", "type": "address[8]" }],
-    "gas": 22734
+    "outputs": [{ "name": "", "type": "address[8]" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "get_decimals",
     "inputs": [{ "name": "_pool", "type": "address" }],
-    "outputs": [{ "name": "", "type": "uint256[8]" }],
-    "gas": 10154
+    "outputs": [{ "name": "", "type": "uint256[8]" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "get_underlying_decimals",
     "inputs": [{ "name": "_pool", "type": "address" }],
-    "outputs": [{ "name": "", "type": "uint256[8]" }],
-    "gas": 10246
+    "outputs": [{ "name": "", "type": "uint256[8]" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "get_rates",
     "inputs": [{ "name": "_pool", "type": "address" }],
-    "outputs": [{ "name": "", "type": "uint256[8]" }],
-    "gas": 89988
+    "outputs": [{ "name": "", "type": "uint256[8]" }]
   },
   {
     "stateMutability": "view",
@@ -100,40 +94,35 @@
     "outputs": [
       { "name": "", "type": "address[10]" },
       { "name": "", "type": "int128[10]" }
-    ],
-    "gas": 52730
+    ]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "get_balances",
     "inputs": [{ "name": "_pool", "type": "address" }],
-    "outputs": [{ "name": "", "type": "uint256[8]" }],
-    "gas": 43603
+    "outputs": [{ "name": "", "type": "uint256[8]" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "get_underlying_balances",
     "inputs": [{ "name": "_pool", "type": "address" }],
-    "outputs": [{ "name": "", "type": "uint256[8]" }],
-    "gas": 377350
+    "outputs": [{ "name": "", "type": "uint256[8]" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "get_virtual_price_from_lp_token",
     "inputs": [{ "name": "_token", "type": "address" }],
-    "outputs": [{ "name": "", "type": "uint256" }],
-    "gas": 5287
+    "outputs": [{ "name": "", "type": "uint256" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "get_A",
     "inputs": [{ "name": "_pool", "type": "address" }],
-    "outputs": [{ "name": "", "type": "uint256" }],
-    "gas": 3105
+    "outputs": [{ "name": "", "type": "uint256" }]
   },
   {
     "stateMutability": "view",
@@ -151,24 +140,21 @@
       { "name": "initial_A", "type": "uint256" },
       { "name": "initial_A_time", "type": "uint256" },
       { "name": "future_A_time", "type": "uint256" }
-    ],
-    "gas": 28133
+    ]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "get_fees",
     "inputs": [{ "name": "_pool", "type": "address" }],
-    "outputs": [{ "name": "", "type": "uint256[2]" }],
-    "gas": 5601
+    "outputs": [{ "name": "", "type": "uint256[2]" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "get_admin_balances",
     "inputs": [{ "name": "_pool", "type": "address" }],
-    "outputs": [{ "name": "", "type": "uint256[8]" }],
-    "gas": 87486
+    "outputs": [{ "name": "", "type": "uint256[8]" }]
   },
   {
     "stateMutability": "view",
@@ -183,8 +169,7 @@
       { "name": "", "type": "int128" },
       { "name": "", "type": "int128" },
       { "name": "", "type": "bool" }
-    ],
-    "gas": 45755
+    ]
   },
   {
     "stateMutability": "view",
@@ -195,32 +180,28 @@
       { "name": "_from", "type": "address" },
       { "name": "_to", "type": "address" }
     ],
-    "outputs": [{ "name": "", "type": "uint256" }],
-    "gas": 57665
+    "outputs": [{ "name": "", "type": "uint256" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "is_meta",
     "inputs": [{ "name": "_pool", "type": "address" }],
-    "outputs": [{ "name": "", "type": "bool" }],
-    "gas": 3128
+    "outputs": [{ "name": "", "type": "bool" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "get_pool_name",
     "inputs": [{ "name": "_pool", "type": "address" }],
-    "outputs": [{ "name": "", "type": "string" }],
-    "gas": 13379
+    "outputs": [{ "name": "", "type": "string" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "get_coin_swap_count",
     "inputs": [{ "name": "_coin", "type": "address" }],
-    "outputs": [{ "name": "", "type": "uint256" }],
-    "gas": 3179
+    "outputs": [{ "name": "", "type": "uint256" }]
   },
   {
     "stateMutability": "view",
@@ -230,16 +211,14 @@
       { "name": "_coin", "type": "address" },
       { "name": "_index", "type": "uint256" }
     ],
-    "outputs": [{ "name": "", "type": "address" }],
-    "gas": 3254
+    "outputs": [{ "name": "", "type": "address" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "get_pool_asset_type",
     "inputs": [{ "name": "_pool", "type": "address" }],
-    "outputs": [{ "name": "", "type": "uint256" }],
-    "gas": 3239
+    "outputs": [{ "name": "", "type": "uint256" }]
   },
   {
     "stateMutability": "nonpayable",
@@ -256,8 +235,7 @@
       { "name": "_is_v1", "type": "bool" },
       { "name": "_name", "type": "string" }
     ],
-    "outputs": [],
-    "gas": 63063473
+    "outputs": []
   },
   {
     "stateMutability": "nonpayable",
@@ -274,8 +252,7 @@
       { "name": "_is_v1", "type": "bool" },
       { "name": "_name", "type": "string" }
     ],
-    "outputs": [],
-    "gas": 32098992
+    "outputs": []
   },
   {
     "stateMutability": "nonpayable",
@@ -309,8 +286,7 @@
     "type": "function",
     "name": "remove_pool",
     "inputs": [{ "name": "_pool", "type": "address" }],
-    "outputs": [],
-    "gas": 799397478975
+    "outputs": []
   },
   {
     "stateMutability": "nonpayable",
@@ -320,8 +296,7 @@
       { "name": "_addr", "type": "address[5]" },
       { "name": "_amount", "type": "uint256[2][5]" }
     ],
-    "outputs": [],
-    "gas": 393460
+    "outputs": []
   },
   {
     "stateMutability": "nonpayable",
@@ -331,8 +306,7 @@
       { "name": "_addr", "type": "address[10]" },
       { "name": "_amount", "type": "uint256[10]" }
     ],
-    "outputs": [],
-    "gas": 394687
+    "outputs": []
   },
   {
     "stateMutability": "nonpayable",
@@ -342,8 +316,7 @@
       { "name": "_pool", "type": "address" },
       { "name": "_estimator", "type": "address" }
     ],
-    "outputs": [],
-    "gas": 75989
+    "outputs": []
   },
   {
     "stateMutability": "nonpayable",
@@ -353,8 +326,7 @@
       { "name": "_pool", "type": "address" },
       { "name": "_liquidity_gauges", "type": "address[10]" }
     ],
-    "outputs": [],
-    "gas": 447195
+    "outputs": []
   },
   {
     "stateMutability": "nonpayable",
@@ -364,8 +336,7 @@
       { "name": "_pool", "type": "address" },
       { "name": "_asset_type", "type": "uint256" }
     ],
-    "outputs": [],
-    "gas": 75955
+    "outputs": []
   },
   {
     "stateMutability": "nonpayable",
@@ -375,79 +346,69 @@
       { "name": "_pools", "type": "address[32]" },
       { "name": "_asset_types", "type": "uint256[32]" }
     ],
-    "outputs": [],
-    "gas": 1174503
+    "outputs": []
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "address_provider",
     "inputs": [],
-    "outputs": [{ "name": "", "type": "address" }],
-    "gas": 3348
+    "outputs": [{ "name": "", "type": "address" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "gauge_controller",
     "inputs": [],
-    "outputs": [{ "name": "", "type": "address" }],
-    "gas": 3378
+    "outputs": [{ "name": "", "type": "address" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "pool_list",
     "inputs": [{ "name": "arg0", "type": "uint256" }],
-    "outputs": [{ "name": "", "type": "address" }],
-    "gas": 3453
+    "outputs": [{ "name": "", "type": "address" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "pool_count",
     "inputs": [],
-    "outputs": [{ "name": "", "type": "uint256" }],
-    "gas": 3438
+    "outputs": [{ "name": "", "type": "uint256" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "coin_count",
     "inputs": [],
-    "outputs": [{ "name": "", "type": "uint256" }],
-    "gas": 3468
+    "outputs": [{ "name": "", "type": "uint256" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "get_coin",
     "inputs": [{ "name": "arg0", "type": "uint256" }],
-    "outputs": [{ "name": "", "type": "address" }],
-    "gas": 3543
+    "outputs": [{ "name": "", "type": "address" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "get_pool_from_lp_token",
     "inputs": [{ "name": "arg0", "type": "address" }],
-    "outputs": [{ "name": "", "type": "address" }],
-    "gas": 3743
+    "outputs": [{ "name": "", "type": "address" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "get_lp_token",
     "inputs": [{ "name": "arg0", "type": "address" }],
-    "outputs": [{ "name": "", "type": "address" }],
-    "gas": 3773
+    "outputs": [{ "name": "", "type": "address" }]
   },
   {
     "stateMutability": "view",
     "type": "function",
     "name": "last_updated",
     "inputs": [],
-    "outputs": [{ "name": "", "type": "uint256" }],
-    "gas": 3588
+    "outputs": [{ "name": "", "type": "uint256" }]
   }
 ]
