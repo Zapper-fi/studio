@@ -47,7 +47,7 @@ export class ArbitrumUmamiFinanceCompoundTokenFetcher implements PositionFetcher
   })
   async getUmamiInformations() {
     try {
-      const data = await axios.get<UmamiApiDatas>('https://horseysauce.xyz/').then(v => v.data);
+      const data = await axios.get<UmamiApiDatas>('https://api.umami.finance/api/v1/marinate').then(v => v.data);
       return parseFloat(data.marinate.apy);
     } catch (err) {
       return 0;
