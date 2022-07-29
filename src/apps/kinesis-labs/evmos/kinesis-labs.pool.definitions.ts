@@ -1,4 +1,4 @@
-import { CurvePoolDefinition } from '~apps/curve/helpers/curve.pool.registry';
+import { CurvePoolDefinition } from '~apps/curve/curve.types';
 
 export const KINESIS_LABS_BASEPOOL_DEFINITIONS: CurvePoolDefinition[] = [
   // Nomad Base Pool madUSDC/madUSDT/FRAX

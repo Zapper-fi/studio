@@ -7,22 +7,9 @@ import { CURVE_DEFINITION } from '~apps/curve/curve.definition';
 import { Cache } from '~cache/cache.decorator';
 import { Network } from '~types/network.interface';
 
+import { CurveGaugeDefinition, CurveGaugeType } from '../curve.types';
+
 import { CurveApiClient } from './curve.api.client';
-
-export enum CurveGaugeType {
-  SINGLE = 'single',
-  DOUBLE = 'double',
-  N_GAUGE = 'n-gauge',
-  GAUGE_V4 = 'gauge-v4',
-  CHILD = 'child-chain',
-  REWARDS_ONLY = 'rewards-only',
-}
-
-export type CurveGaugeDefinition = {
-  version: CurveGaugeType;
-  swapAddress: string;
-  gaugeAddress: string;
-};
 
 @Injectable()
 export class CurveGaugeRegistry {

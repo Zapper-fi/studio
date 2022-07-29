@@ -15,10 +15,11 @@ import {
   CurveRewardsOnlyGauge,
 } from '../contracts';
 import { CURVE_DEFINITION } from '../curve.definition';
+import { CurveGaugeDefinition, CurveGaugeType } from '../curve.types';
 
 import { CurveChildLiquidityGaugeRoiStrategy } from './curve.child-liquidity-gauge.roi-strategy';
 import { CurveGaugeIsActiveStrategy } from './curve.gauge.is-active-strategy';
-import { CurveGaugeDefinition, CurveGaugeRegistry, CurveGaugeType } from './curve.gauge.registry';
+import { CurveGaugeRegistry } from './curve.gauge.registry';
 import { CurveGaugeRoiStrategy } from './curve.gauge.roi-strategy';
 
 const CONTROLLER_ADDRESS = '0x2f50d538606fa9edd2b11e2446beb18c9d5846bb';

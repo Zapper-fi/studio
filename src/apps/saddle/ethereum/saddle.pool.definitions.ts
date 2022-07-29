@@ -1,4 +1,4 @@
-import { CurvePoolDefinition } from '~apps/curve/helpers/curve.pool.registry';
+import { CurvePoolDefinition } from '~apps/curve/curve.types';
 
 export const SADDLE_POOL_DEFINITIONS: CurvePoolDefinition[] = [
   // Saddle tBTC/wBTC/renBTC/sBTC (BTC Pool v1)

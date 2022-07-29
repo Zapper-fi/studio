@@ -14,8 +14,7 @@ import {
   CurveRewardsOnlyGauge,
 } from '../contracts';
 import { CURVE_DEFINITION } from '../curve.definition';
-
-import { CurveGaugeType } from './curve.gauge.registry';
+import { CurveGaugeType } from '../curve.types';
 
 type CurveGaugeDefaultContractPositionBalanceHelperParams = {
   address: string;

@@ -16,35 +16,18 @@ import { CURVE_DEFINITION } from '~apps/curve/curve.definition';
 import { Cache } from '~cache/cache.decorator';
 import { Network } from '~types/network.interface';
 
+import { CurvePoolDefinition, CurvePoolType } from '../curve.types';
+
 import { CurveApiClient } from './curve.api.client';
 import { CurveGaugeRegistry } from './curve.gauge.registry';
 
 const ADDRESS_RESOLVER_ADDRESS = '0x0000000022d53366457f9d5e68ec105046fc4383';
-
-export enum CurvePoolType {
-  STABLE = 'stable',
-  CRYPTO = 'crypto',
-  FACTORY_STABLE = 'factory-stable',
-  FACTORY_CRYPTO = 'factory-crypto',
-}
 
 export const POOL_TYPE_TO_ADDRESS_RESOLVER_INDEX = {
   [CurvePoolType.STABLE]: 0,
   [CurvePoolType.CRYPTO]: 5,
   [CurvePoolType.FACTORY_STABLE]: 3,
   [CurvePoolType.FACTORY_CRYPTO]: 6,
-};
-
-export type CurvePoolDefinition = {
-  swapAddress: string;
-  tokenAddress: string;
-  coinAddresses: string[];
-  gaugeAddresses?: string[];
-  poolType?: CurvePoolType;
-  isMetaPool?: boolean;
-  volume?: number;
-  apy?: number;
-  isLegacy?: boolean;
 };
 
 @Injectable()

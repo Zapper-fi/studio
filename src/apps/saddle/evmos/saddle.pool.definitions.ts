@@ -1,4 +1,4 @@
-import { CurvePoolDefinition } from '~apps/curve/helpers/curve.pool.registry';
+import { CurvePoolDefinition } from '~apps/curve/curve.types';
 
 export const SADDLE_POOL_DEFINITIONS: CurvePoolDefinition[] = [
   // Evmos Frax saddle3PoolFRAX/USDC/USDT
