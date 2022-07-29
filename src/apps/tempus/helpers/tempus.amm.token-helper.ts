@@ -32,10 +32,14 @@ export class TempusAmmTokenFetcher {
       poolDefinitions: data.tempusPools.map(pool => ({
         swapAddress: pool.ammAddress.toLowerCase(),
         tokenAddress: pool.ammAddress.toLowerCase(),
-        coinAddresses: [pool.principalsAddress.toLowerCase(), pool.yieldsAddress.toLowerCase()],
       })),
-      resolvePoolContract: ({ network, definition }) =>
-        this.contractFactory.tempusAmm({ network, address: definition.swapAddress }),
+      resolvePoolContract: ({ network, address }) => this.contractFactory.tempusAmm({ network, address }),
+      resolvePoolCoinAddresses: async ({ poolContract }) => {
+        const pool = data.tempusPools.find(
+          pool => pool.ammAddress.toLowerCase() === poolContract.address.toLowerCase(),
+        )!;
+        return [pool.principalsAddress.toLowerCase(), pool.yieldsAddress.toLowerCase()];
+      },
       resolvePoolReserves: async ({ multicall, poolContract }) => {
         const totalSupply = await multicall.wrap(poolContract).totalSupply();
         const [principals, yields] = await multicall.wrap(poolContract).getExpectedTokensOutGivenBPTIn(totalSupply);

@@ -174,7 +174,6 @@ export class CurvePoolRegistry {
           swapAddress,
           tokenAddress,
           gaugeAddresses,
-          coinAddresses,
           apy,
           volume,
         };

@@ -1,6 +1,11 @@
 import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
-import { CurvePoolTokenHelper, CurvePoolVirtualPriceStrategy } from '~apps/curve';
+import {
+  CurvePoolOnChainCoinStrategy,
+  CurvePoolOnChainReserveStrategy,
+  CurvePoolTokenHelper,
+  CurvePoolVirtualPriceStrategy,
+} from '~apps/curve';
 import { SynthetixAppModule } from '~apps/synthetix';
 
 import { SaddleContractFactory } from './contracts';
@@ -22,6 +27,8 @@ import { SaddleAppDefinition, SADDLE_DEFINITION } from './saddle.definition';
     // Helpers
     CurvePoolTokenHelper,
     CurvePoolVirtualPriceStrategy,
+    CurvePoolOnChainCoinStrategy,
+    CurvePoolOnChainReserveStrategy,
     // Ethereum
     EthereumSaddleBalanceFetcher,
     EthereumSaddleCommunalFarmContractPositionFetcher,
