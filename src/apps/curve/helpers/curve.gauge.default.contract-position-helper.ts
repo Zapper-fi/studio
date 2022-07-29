@@ -51,7 +51,7 @@ export class CurveGaugeDefaultContractPositionHelper {
 
   async getPositions(params: CurveGaugeDefaultContractPositionHelperParams) {
     const gaugeDefinitions = await this.curveGaugeRegistry.getGaugeDefinitions(params.network);
-    const grouped = groupBy(gaugeDefinitions, v => v.version);
+    const grouped = groupBy(gaugeDefinitions, v => v.gaugeType);
 
     if (params.network !== Network.ETHEREUM_MAINNET) {
       return Promise.all([

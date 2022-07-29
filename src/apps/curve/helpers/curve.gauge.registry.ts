@@ -26,11 +26,11 @@ export class CurveGaugeRegistry {
   async getGaugeDefinitions(network: Network): Promise<CurveGaugeDefinition[]> {
     const gauges = await this.getCachedGauges(network);
 
-    const gaugesWithVersions = Promise.all(
-      gauges.map(async gauge => ({ ...gauge, version: await this.resolveGaugeType(gauge.gaugeAddress, network) })),
+    const gaugesWithTypes = Promise.all(
+      gauges.map(async gauge => ({ ...gauge, gaugeType: await this.resolveGaugeType(gauge.gaugeAddress, network) })),
     );
 
-    return gaugesWithVersions;
+    return gaugesWithTypes;
   }
 
   private async resolveGaugeType(gaugeAddress: string, network: Network) {

@@ -27,7 +27,7 @@ export enum CurveGaugeType {
 }
 
 export type CurveGaugeDefinition = {
-  version: CurveGaugeType;
+  gaugeType: CurveGaugeType;
   swapAddress: string;
   gaugeAddress: string;
 };
