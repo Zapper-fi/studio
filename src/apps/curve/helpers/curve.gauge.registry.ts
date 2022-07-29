@@ -49,10 +49,11 @@ export class CurveGaugeRegistry {
 
     const doubleGaugeMethod = ethers.utils.id('rewarded_token()').slice(2, 10);
     const nGaugeMethod = ethers.utils.id('reward_tokens(uint256)').slice(2, 10);
-    const gaugeV4Method = ethers.utils.id('reward_data(address)').slice(2, 10);
+    const childGaugeMethod = ethers.utils.id('reward_data(address)').slice(2, 10);
+    const gaugeV4Method = ethers.utils.id('claimable_reward_write(address,address)').slice(2, 10);
 
     if (network !== Network.ETHEREUM_MAINNET) {
-      if (bytecode.includes(gaugeV4Method)) return CurveGaugeType.CHILD;
+      if (bytecode.includes(childGaugeMethod)) return CurveGaugeType.CHILD;
       return CurveGaugeType.REWARDS_ONLY;
     }
 

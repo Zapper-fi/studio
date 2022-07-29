@@ -47,13 +47,13 @@ import { PolygonCurvePoolTokenFetcher } from './polygon/curve.pool.token-fetcher
     CurveAppDefinition,
     CurveContractFactory,
     // Arbitrum
-    // ArbitrumCurveBalanceFetcher,
-    // ArbitrumCurvePoolTokenFetcher,
-    // ArbitrumCurveGaugeContractPositionFetcher,
-    // // Avalanche
-    // AvalancheCurveBalanceFetcher,
-    // AvalancheCurvePoolTokenFetcher,
-    // ArbitrumCurveGaugeContractPositionFetcher,
+    ArbitrumCurveBalanceFetcher,
+    ArbitrumCurvePoolTokenFetcher,
+    ArbitrumCurveGaugeContractPositionFetcher,
+    // Avalanche
+    AvalancheCurveBalanceFetcher,
+    AvalancheCurvePoolTokenFetcher,
+    ArbitrumCurveGaugeContractPositionFetcher,
     // Ethereum
     EthereumCurveBalanceFetcher,
     EthereumCurvePoolTokenFetcher,
@@ -61,21 +61,21 @@ import { PolygonCurvePoolTokenFetcher } from './polygon/curve.pool.token-fetcher
     EthereumCurveVotingEscrowContractPositionFetcher,
     EthereumCurveVestingEscrowContractPositionFetcher,
     // Fantom
-    // FantomCurveBalanceFetcher,
-    // FantomCurvePoolTokenFetcher,
-    // FantomCurveGaugeContractPositionFetcher,
-    // // Gnosis
-    // GnosisCurveBalanceFetcher,
-    // GnosisCurvePoolTokenFetcher,
-    // GnosisCurveGaugeContractPositionFetcher,
-    // // Optimism
-    // OptimismCurveBalanceFetcher,
-    // OptimismCurvePoolTokenFetcher,
-    // OptimismCurveGaugeContractPositionFetcher,
-    // // Polygon
-    // PolygonCurveBalanceFetcher,
-    // PolygonCurvePoolTokenFetcher,
-    // PolygonCurveGaugeContractPositionFetcher,
+    FantomCurveBalanceFetcher,
+    FantomCurvePoolTokenFetcher,
+    FantomCurveGaugeContractPositionFetcher,
+    // Gnosis
+    GnosisCurveBalanceFetcher,
+    GnosisCurvePoolTokenFetcher,
+    GnosisCurveGaugeContractPositionFetcher,
+    // Optimism
+    OptimismCurveBalanceFetcher,
+    OptimismCurvePoolTokenFetcher,
+    OptimismCurveGaugeContractPositionFetcher,
+    // Polygon
+    PolygonCurveBalanceFetcher,
+    PolygonCurvePoolTokenFetcher,
+    PolygonCurveGaugeContractPositionFetcher,
     // Token Helpers
     CurveApiClient,
     CurvePoolRegistry,

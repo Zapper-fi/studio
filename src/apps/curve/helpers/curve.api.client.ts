@@ -23,6 +23,7 @@ export class CurveApiClient {
           const otherNetworks = Object.values(TO_CURVE_NETWORK).filter(v => v !== curveNetwork);
           return !otherNetworks.some(v => id.startsWith(v));
         })
+        .filter(([_, v]) => !v.is_killed)
         .map(([_, v]) => ({
           swapAddress: v.swap.toLowerCase(),
           gaugeAddress: v.gauge.toLowerCase(),
