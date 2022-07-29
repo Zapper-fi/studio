@@ -84,22 +84,12 @@ export const SADDLE_POOL_DEFINITIONS: CurvePoolDefinition[] = [
   {
     swapAddress: '0xf74ebe6e5586275dc4ced78f5dbef31b1efbe7a5',
     tokenAddress: '0x122eca07139eb368245a29fb702c9ff11e9693b7',
-    coinAddresses: [
-      '0x18084fba666a33d37592fa2633fd49a74dd93a88',
-      '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599',
-      '0xeb4c2781e4eba804ce9a9803c67d0893436bb27d',
-      '0xfe18be6b3bd88a2d2a7f928d00292e7a9963cfc6',
-    ],
+    coinAddresses: ['0x18084fba666a33d37592fa2633fd49a74dd93a88', '0xf32e91464ca18fc156ab97a697d6f8ae66cd21a3'],
   },
   // Saddle tBTCV2/wBTC/renBTC/sBTC (tBTCv2 Metapool V2)
   {
     swapAddress: '0xa0b4a2667dd60d5cdd7ecff1084f0ceb8dd84326',
     tokenAddress: '0x3f2f811605bc6d701c3ad6e501be13461c560320',
-    coinAddresses: [
-      '0x18084fba666a33d37592fa2633fd49a74dd93a88',
-      '0x2260fac5e5542a773aa44fbcfedf7c193bc2c599',
-      '0xeb4c2781e4eba804ce9a9803c67d0893436bb27d',
-      '0xfe18be6b3bd88a2d2a7f928d00292e7a9963cfc6',
-    ],
+    coinAddresses: ['0x18084fba666a33d37592fa2633fd49a74dd93a88', '0xf32e91464ca18fc156ab97a697d6f8ae66cd21a3'],
   },
 ];
