@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.132.0](https://github.com/Zapper-fi/studio/compare/v0.131.0...v0.132.0) (2022-07-29)
+
+
+### Features
+
+* **curve:** Resolve coin addresses from on-chain again ([#976](https://github.com/Zapper-fi/studio/issues/976)) ([e882778](https://github.com/Zapper-fi/studio/commit/e8827787f5eb13ce52d56231f737220e4d5ebe53))
+* **price-selector:** Use prices selector for uni-v2 forks ([#974](https://github.com/Zapper-fi/studio/issues/974)) ([cbe7d1f](https://github.com/Zapper-fi/studio/commit/cbe7d1f5aff1a8f9e854a40fb081284ab3ef37c4))
+
 ## [0.131.0](https://github.com/Zapper-fi/studio/compare/v0.130.1...v0.131.0) (2022-07-29)
 
 
