@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.133.2](https://github.com/Zapper-fi/studio/compare/v0.133.1...v0.133.2) (2022-07-30)
+
+
+### Bug Fixes
+
+* **gmx:** balancer fetcher on avalanche was using wrong addresses ([#979](https://github.com/Zapper-fi/studio/issues/979)) ([06e54de](https://github.com/Zapper-fi/studio/commit/06e54de05d1da02b5fb63d6a032be96a2b6af366))
+
 ## [0.133.1](https://github.com/Zapper-fi/studio/compare/v0.133.0...v0.133.1) (2022-07-30)
 
 
