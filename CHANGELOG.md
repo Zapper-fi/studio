@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.133.1](https://github.com/Zapper-fi/studio/compare/v0.133.0...v0.133.1) (2022-07-30)
+
+
+### Bug Fixes
+
+* **curve:** Fix Avalanche gauge positions ([10d8745](https://github.com/Zapper-fi/studio/commit/10d874502567538af948994f22d0ebd785b42575))
+
 ## [0.133.0](https://github.com/Zapper-fi/studio/compare/v0.132.0...v0.133.0) (2022-07-30)
 
 
