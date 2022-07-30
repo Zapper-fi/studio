@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.133.0](https://github.com/Zapper-fi/studio/compare/v0.132.0...v0.133.0) (2022-07-30)
+
+
+### Features
+
+* **curve:** Export helpers ([68f67cf](https://github.com/Zapper-fi/studio/commit/68f67cfb6b2de3292b95fe9d3dee14ee421bb5e2))
+
 ## [0.132.0](https://github.com/Zapper-fi/studio/compare/v0.131.0...v0.132.0) (2022-07-29)
 
 
