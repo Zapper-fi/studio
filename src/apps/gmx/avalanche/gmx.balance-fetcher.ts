@@ -50,7 +50,7 @@ export class AvalancheGmxBalanceFetcher implements BalanceFetcher {
       resolveContract: ({ address, network }) => this.gmxContractFactory.gmxRewardTracker({ address, network }),
       resolveStakedTokenBalance: async ({ contractPosition, address, multicall, network }) => {
         const stakedToken = contractPosition.tokens.find(isSupplied)!;
-        const readerAddress = '0xe725ad0ce3ecf68a7b93d8d8091e83043ff12e9a';
+        const readerAddress = '0x956d63dd6540230487eb7e599ef8b0c6fdca4ab8';
         const readerContract = this.gmxContractFactory.gmxRewardReader({ address: readerAddress, network });
 
         const depositBalances = await multicall
@@ -60,12 +60,11 @@ export class AvalancheGmxBalanceFetcher implements BalanceFetcher {
       },
       resolveRewardTokenBalances: async ({ contractPosition, address, multicall, network }) => {
         const stakedToken = contractPosition.tokens.find(isSupplied)!;
-
         const farmDefinition = FARMS.find(v => v.stakedTokenAddress === stakedToken.address);
         const rewardTrackers = farmDefinition?.rewardTrackerAddresses ?? [];
         if (!rewardTrackers.length) return [];
 
-        const readerAddress = '0xe725ad0ce3ecf68a7b93d8d8091e83043ff12e9a';
+        const readerAddress = '0x956d63dd6540230487eb7e599ef8b0c6fdca4ab8';
         const readerContract = this.gmxContractFactory.gmxRewardReader({ address: readerAddress, network });
         const stakingInfo = await multicall.wrap(readerContract).getStakingInfo(address, rewardTrackers);
         return [stakingInfo[0].toString(), stakingInfo[5].toString()];
