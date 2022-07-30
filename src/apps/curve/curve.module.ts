@@ -5,6 +5,7 @@ import { ArbitrumCurveBalanceFetcher } from './arbitrum/curve.balance-fetcher';
 import { ArbitrumCurveGaugeContractPositionFetcher } from './arbitrum/curve.gauge.contract-position-fetcher';
 import { ArbitrumCurvePoolTokenFetcher } from './arbitrum/curve.pool.token-fetcher';
 import { AvalancheCurveBalanceFetcher } from './avalanche/curve.balance-fetcher';
+import { AvalancheCurveGaugeContractPositionFetcher } from './avalanche/curve.gauge.contract-position-fetcher';
 import { AvalancheCurvePoolTokenFetcher } from './avalanche/curve.pool.token-fetcher';
 import { CurveContractFactory } from './contracts';
 import { CurveAppDefinition, CURVE_DEFINITION } from './curve.definition';
@@ -55,7 +56,7 @@ import { PolygonCurvePoolTokenFetcher } from './polygon/curve.pool.token-fetcher
     // Avalanche
     AvalancheCurveBalanceFetcher,
     AvalancheCurvePoolTokenFetcher,
-    ArbitrumCurveGaugeContractPositionFetcher,
+    AvalancheCurveGaugeContractPositionFetcher,
     // Ethereum
     EthereumCurveBalanceFetcher,
     EthereumCurvePoolTokenFetcher,

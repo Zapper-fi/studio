@@ -10,10 +10,10 @@ import { CurveGaugeDefaultContractPositionHelper } from '../helpers/curve.gauge.
 
 const appId = CURVE_DEFINITION.id;
 const groupId = CURVE_DEFINITION.groups.gauge.id;
-const network = Network.ARBITRUM_MAINNET;
+const network = Network.AVALANCHE_MAINNET;
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
-export class ArbitrumCurveGaugeContractPositionFetcher implements PositionFetcher<ContractPosition> {
+export class AvalancheCurveGaugeContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(CurveGaugeDefaultContractPositionHelper)
     private readonly curveGaugeDefaultContractPositionHelper: CurveGaugeDefaultContractPositionHelper,
