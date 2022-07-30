@@ -102,16 +102,23 @@ import { PolygonCurvePoolTokenFetcher } from './polygon/curve.pool.token-fetcher
   ],
   exports: [
     CurveContractFactory,
+    // API Helpers
     CurveApiClient,
+    // Pool Token Helpers
     CurvePoolRegistry,
     CurvePoolTokenHelper,
     CurvePoolDefaultTokenHelper,
+    CurvePoolVirtualPriceStrategy,
+    CurvePoolOnChainCoinStrategy,
+    CurvePoolOnChainReserveStrategy,
+    // Gauge Helpers
     CurveGaugeRegistry,
     CurveGaugeDefaultContractPositionHelper,
     CurveGaugeDefaultContractPositionBalanceHelper,
     CurveGaugeIsActiveStrategy,
     CurveGaugeRoiStrategy,
     CurveChildLiquidityGaugeRoiStrategy,
+    // Escrow Helpers
     CurveVotingEscrowContractPositionHelper,
     CurveVotingEscrowContractPositionBalanceHelper,
     CurveVestingEscrowContractPositionHelper,
