@@ -9,6 +9,9 @@ import { FantomBeethovenXFBeetsTokenFetcher } from './fantom/beethoven-x.f-beets
 import { FantomBeethovenXFarmContractPositionFetcher } from './fantom/beethoven-x.farm.contract-position-fetcher';
 import { FantomBeethovenXPoolTokenFetcher } from './fantom/beethoven-x.pool.token-fetcher';
 import { BeethovenXTheGraphPoolTokenDataStrategy } from './helpers/beethoven-x.the-graph.pool-token-address-strategy';
+import { OptimismBeethovenXBalanceFetcher } from './optimism/beethoven-x.balance-fetcher';
+import { OptimismBeethovenXFarmContractPositionFetcher } from './optimism/beethoven-x.farm.contract-position-fetcher';
+import { OptimismBeethovenXPoolTokenFetcher } from './optimism/beethoven-x.pool.token-fetcher';
 
 @Register.AppModule({
   appId: BEETHOVEN_X_DEFINITION.id,
@@ -21,6 +24,10 @@ import { BeethovenXTheGraphPoolTokenDataStrategy } from './helpers/beethoven-x.t
     FantomBeethovenXPoolTokenFetcher,
     FantomBeethovenXFBeetsTokenFetcher,
     FantomBeethovenXBalanceFetcher,
+    // Optimism
+    OptimismBeethovenXFarmContractPositionFetcher,
+    OptimismBeethovenXPoolTokenFetcher,
+    OptimismBeethovenXBalanceFetcher,
     // Helpers
     BeethovenXTheGraphPoolTokenDataStrategy,
   ],
