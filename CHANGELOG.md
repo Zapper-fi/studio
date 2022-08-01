@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.136.0](https://github.com/Zapper-fi/studio/compare/v0.135.0...v0.136.0) (2022-08-01)
+
+
+### Features
+
+* **prices-selector:** Add `GetMany` support ([1222d78](https://github.com/Zapper-fi/studio/commit/1222d78ee6bc5fc9aac881633f75eb9166f7f3d4))
+
 ## [0.135.0](https://github.com/Zapper-fi/studio/compare/v0.134.0...v0.135.0) (2022-08-01)
 
 
