@@ -1,5 +1,6 @@
 import { Inject } from '@nestjs/common';
-import { SingleStakingContractPositionBalanceHelper, TokenBalanceHelper } from '~app-toolkit';
+
+import { SingleStakingContractPositionBalanceHelper } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
@@ -9,7 +10,6 @@ import { isClaimable } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 
 import { BEETHOVEN_X_DEFINITION } from '../beethoven-x.definition';
-import { BeethovenXContractFactory, BeethovenXMasterchef } from '../contracts';
 
 const appId = BEETHOVEN_X_DEFINITION.id;
 const network = Network.OPTIMISM_MAINNET;

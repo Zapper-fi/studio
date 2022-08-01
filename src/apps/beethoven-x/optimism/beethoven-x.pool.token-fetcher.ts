@@ -3,8 +3,6 @@ import { compact } from 'lodash';
 
 import { Register } from '~app-toolkit/decorators';
 import { BalancerV2PoolLabelStrategy, BalancerV2PoolTokensHelper } from '~apps/balancer-v2';
-import { OLYMPUS_DEFINITION } from '~apps/olympus';
-import { YEARN_DEFINITION } from '~apps/yearn';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
