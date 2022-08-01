@@ -50,10 +50,10 @@ export class OptimismVelodromePoolsTokenFetcher implements PositionFetcher<AppTo
         swapAddress: pool.address.toLowerCase(),
         tokenAddress: pool.address.toLowerCase(),
         gaugeAddress: pool.gauge_address.toLowerCase(),
-        coinAddresses: [pool.token0_address.toLowerCase(), pool.token1_address.toLowerCase()],
       })),
-      resolvePoolContract: ({ network, definition }) =>
-        this.contractFactory.velodromePool({ network, address: definition.swapAddress }),
+      resolvePoolContract: ({ network, address }) => this.contractFactory.velodromePool({ network, address }),
+      resolvePoolCoinAddresses: async ({ multicall, poolContract }) =>
+        Promise.all([multicall.wrap(poolContract).token0(), multicall.wrap(poolContract).token1()]),
       resolvePoolReserves: async ({ multicall, poolContract }) =>
         Promise.all([multicall.wrap(poolContract).reserve0(), multicall.wrap(poolContract).reserve1()]),
       resolvePoolFee: async () => BigNumber.from(0), // TODO: get actual value

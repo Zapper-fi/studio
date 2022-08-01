@@ -4,6 +4,35 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.133.2](https://github.com/Zapper-fi/studio/compare/v0.133.1...v0.133.2) (2022-07-30)
+
+
+### Bug Fixes
+
+* **gmx:** balancer fetcher on avalanche was using wrong addresses ([#979](https://github.com/Zapper-fi/studio/issues/979)) ([06e54de](https://github.com/Zapper-fi/studio/commit/06e54de05d1da02b5fb63d6a032be96a2b6af366))
+
+## [0.133.1](https://github.com/Zapper-fi/studio/compare/v0.133.0...v0.133.1) (2022-07-30)
+
+
+### Bug Fixes
+
+* **curve:** Fix Avalanche gauge positions ([10d8745](https://github.com/Zapper-fi/studio/commit/10d874502567538af948994f22d0ebd785b42575))
+
+## [0.133.0](https://github.com/Zapper-fi/studio/compare/v0.132.0...v0.133.0) (2022-07-30)
+
+
+### Features
+
+* **curve:** Export helpers ([68f67cf](https://github.com/Zapper-fi/studio/commit/68f67cfb6b2de3292b95fe9d3dee14ee421bb5e2))
+
+## [0.132.0](https://github.com/Zapper-fi/studio/compare/v0.131.0...v0.132.0) (2022-07-29)
+
+
+### Features
+
+* **curve:** Resolve coin addresses from on-chain again ([#976](https://github.com/Zapper-fi/studio/issues/976)) ([e882778](https://github.com/Zapper-fi/studio/commit/e8827787f5eb13ce52d56231f737220e4d5ebe53))
+* **price-selector:** Use prices selector for uni-v2 forks ([#974](https://github.com/Zapper-fi/studio/issues/974)) ([cbe7d1f](https://github.com/Zapper-fi/studio/commit/cbe7d1f5aff1a8f9e854a40fb081284ab3ef37c4))
+
 ## [0.131.0](https://github.com/Zapper-fi/studio/compare/v0.130.1...v0.131.0) (2022-07-29)
 
 
