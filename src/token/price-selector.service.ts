@@ -13,6 +13,7 @@ import {
   CreatePriceSelectorOptions,
   Filters,
   GetAll,
+  GetMany,
   GetOne,
   PriceSelector,
   PriceSelectorFactory,
@@ -73,8 +74,14 @@ export class PriceSelectorService implements PriceSelectorFactory {
 
     return {
       getAll: opts => this.getAllFromCache(opts, filters),
-      getOne: ({ network, address }: Parameters<GetOne>[0]) => {
-        return tokenDataLoader.load({ network, address });
+      getOne: ({ network, address }: Parameters<GetOne>[0]) => tokenDataLoader.load({ network, address }),
+      getMany: async (queries: Parameters<GetMany>[0]) => {
+        const docs = await tokenDataLoader.loadMany(queries);
+
+        return docs.map(doc => {
+          if (doc instanceof Error) return null;
+          return doc;
+        });
       },
     };
   }

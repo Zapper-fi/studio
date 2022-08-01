@@ -8,10 +8,12 @@ export type LoggingTags = { appId?: string; network?: Network };
 
 export type GetAll = (opts: { network: Network }) => Promise<BaseTokenPrice[]>;
 export type GetOne = (opts: Parameters<GetAll>[0] & { address: string }) => Promise<BaseTokenPrice | null>;
+export type GetMany = (opts: (Parameters<GetAll>[0] & { address: string })[]) => Promise<(BaseTokenPrice | null)[]>;
 
 export interface PriceSelector {
   getAll: GetAll;
   getOne: GetOne;
+  getMany: GetMany;
 }
 
 export type CreatePriceSelectorOptions = { filters?: Filters; tags?: LoggingTags };
