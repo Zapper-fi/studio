@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.134.0](https://github.com/Zapper-fi/studio/compare/v0.133.2...v0.134.0) (2022-08-01)
+
+
+### Features
+
+* **beethoven-x:** Add Optimism support ([#973](https://github.com/Zapper-fi/studio/issues/973)) ([ec62d36](https://github.com/Zapper-fi/studio/commit/ec62d36dda2d00215abb6cdc0b45a6c297bb5f43))
+
 ## [0.133.2](https://github.com/Zapper-fi/studio/compare/v0.133.1...v0.133.2) (2022-07-30)
 
 
