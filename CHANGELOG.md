@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.135.0](https://github.com/Zapper-fi/studio/compare/v0.134.0...v0.135.0) (2022-08-01)
+
+
+### Features
+
+* **uniswap-v2:** Adjust helper to prevent batch size bottleneck of Multicall from affecting batch size of DataLoader ([#983](https://github.com/Zapper-fi/studio/issues/983)) ([65268d9](https://github.com/Zapper-fi/studio/commit/65268d99fff427419dc44cedbb8fa64db2b380d8))
+
 ## [0.134.0](https://github.com/Zapper-fi/studio/compare/v0.133.2...v0.134.0) (2022-08-01)
 
 
