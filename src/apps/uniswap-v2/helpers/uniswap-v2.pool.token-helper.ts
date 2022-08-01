@@ -128,9 +128,10 @@ export class UniswapV2PoolTokenHelper {
       resolvePoolContract,
     }).catch(() => []);
 
-    const poolTokens = await Promise.all(
+    // NB: Token addresses are resolved first because of a Multicall batch size of 250
+    // This allows DL to use its max batch size of 1000+ in the next loop
+    const poolTokensWithAddresses = await Promise.all(
       poolAddresses.map(async address => {
-        const type = ContractType.APP_TOKEN;
         const poolContract = resolvePoolContract({ address, network });
         const [token0AddressRaw, token1AddressRaw] = await resolvePoolUnderlyingTokenAddresses({
           multicall,
@@ -140,6 +141,15 @@ export class UniswapV2PoolTokenHelper {
         const token0Address = token0AddressRaw.toLowerCase();
         const token1Address = token1AddressRaw.toLowerCase();
         if (hiddenTokens.includes(token0Address) || hiddenTokens.includes(token1Address)) return null;
+
+        return { address, token0Address, token1Address };
+      }),
+    );
+
+    const poolTokens = await Promise.all(
+      compact(poolTokensWithAddresses).map(async ({ address, token0Address, token1Address }) => {
+        const type = ContractType.APP_TOKEN;
+        const poolContract = resolvePoolContract({ address, network });
 
         const resolvedTokens = await Promise.all(
           [token0Address, token1Address].map(async tokenAddress => {
