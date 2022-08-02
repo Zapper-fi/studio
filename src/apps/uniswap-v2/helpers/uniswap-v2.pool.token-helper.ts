@@ -15,6 +15,7 @@ import { ContractType } from '~position/contract.interface';
 import { AppTokenPosition, Token } from '~position/position.interface';
 import { AppGroupsDefinition } from '~position/position.service';
 import { BaseToken } from '~position/token.interface';
+import { PriceSelector } from '~token/token-price-selector.interface';
 import { BaseTokenPrice } from '~token/token-price-selector.interface';
 import { Network } from '~types/network.interface';
 
@@ -57,6 +58,7 @@ export type UniswapV2PoolTokenHelperParams<T = UniswapFactory, V = UniswapPair> 
     network: Network;
     factoryAddress: string;
     tokenAddress: string;
+    baseTokenPriceSelector: PriceSelector;
     resolveFactoryContract(opts: { address: string; network: Network }): T;
     resolvePoolContract(opts: { address: string; network: Network }): V;
     resolvePoolUnderlyingTokenAddresses(opts: {
@@ -107,7 +109,6 @@ export class UniswapV2PoolTokenHelper {
     resolvePoolVolumes = async () => [],
   }: UniswapV2PoolTokenHelperParams<T, V>) {
     const multicall = this.appToolkit.getMulticall(network);
-
     const tokenSelector = this.appToolkit.getBaseTokenPriceSelector({ tags: { network, appId } });
 
     const appTokens = await this.appToolkit.getAppTokenPositions(...appTokenDependencies);
@@ -163,6 +164,7 @@ export class UniswapV2PoolTokenHelper {
               appId,
               factoryAddress,
               network,
+              baseTokenPriceSelector: tokenSelector,
               resolveFactoryContract,
               resolvePoolContract,
               resolvePoolReserves,
