@@ -48,11 +48,10 @@ export class PriceSelectorService implements PriceSelectorFactory {
   }
 
   create(opts: CreatePriceSelectorOptions = {}): PriceSelector {
-    const { filters = {}, tags = {} } = opts;
-    const tokenDataLoader = new DataLoader<TokenDataLoaderKey, BaseTokenPrice | null>(async keys => {
-      if (tags.appId) console.log('found', tags.appId, keys.length);
-      return Promise.all(keys.map(key => this.getOneFromCache(key, filters)));
-    });
+    const { filters = {} } = opts;
+    const tokenDataLoader = new DataLoader<TokenDataLoaderKey, BaseTokenPrice | null>(async keys =>
+      Promise.all(keys.map(key => this.getOneFromCache(key, filters))),
+    );
 
     return {
       getAll: opts => this.getAllFromCache(opts, filters),
