@@ -15,7 +15,7 @@ import { ContractType } from '~position/contract.interface';
 import { BalanceDisplayMode } from '~position/display.interface';
 import { AppTokenPosition, ExchangeableAppTokenDataProps, Token } from '~position/position.interface';
 import { AppGroupsDefinition } from '~position/position.service';
-import { BaseToken } from '~position/token.interface';
+import { PriceSelector } from '~token/token-price-selector.interface';
 import { Network } from '~types/network.interface';
 
 import { CompoundComptroller, CompoundContractFactory, CompoundCToken } from '../contracts';
@@ -33,7 +33,7 @@ type CompoundSupplyTokenHelperParams<T = CompoundComptroller, V = CompoundCToken
   appId: string;
   groupId: string;
   dependencies?: AppGroupsDefinition[];
-  allTokens?: (BaseToken | AppTokenPosition)[];
+  baseTokenPriceSelector?: PriceSelector;
   comptrollerAddress: string;
   marketName?: string;
   getComptrollerContract: (opts: { address: string; network: Network }) => T;
@@ -65,7 +65,7 @@ export class CompoundSupplyTokenHelper {
     groupId,
     exchangeable = false,
     dependencies = [],
-    allTokens = [],
+    baseTokenPriceSelector,
     getComptrollerContract,
     getTokenContract,
     getAllMarkets,
@@ -80,21 +80,18 @@ export class CompoundSupplyTokenHelper {
       Math.pow(1 + (blocksPerDay * Number(rate)) / Number(1e18), 365) - 1,
   }: CompoundSupplyTokenHelperParams<T, V>) {
     const multicall = this.appToolkit.getMulticall(network);
+    const tokenSelector =
+      baseTokenPriceSelector ?? this.appToolkit.getBaseTokenPriceSelector({ tags: { network, appId } });
 
-    if (!allTokens.length) {
-      const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
-      const appTokens = await this.appToolkit.getAppTokenPositions(...dependencies);
-      allTokens.push(...appTokens, ...baseTokens);
-    }
+    const appTokens = dependencies.length ? await this.appToolkit.getAppTokenPositions(...dependencies) : [];
 
     const comptrollerContract = getComptrollerContract({ network, address: comptrollerAddress });
     const marketTokenAddressesRaw = await getAllMarkets({ contract: comptrollerContract, multicall });
 
-    const tokens = await Promise.all(
+    const underlyings = await Promise.all(
       marketTokenAddressesRaw.map(async marketTokenAddressRaw => {
-        const address = marketTokenAddressRaw.toLowerCase();
-        const erc20TokenContract = this.contractFactory.erc20({ address, network });
-        const contract = getTokenContract({ address, network });
+        const marketTokenAddress = marketTokenAddressRaw.toLowerCase();
+        const contract = getTokenContract({ address: marketTokenAddress, network });
 
         const underlyingAddressRaw = await getUnderlyingAddress({ contract, multicall }).catch(err => {
           // if the underlying call failed, it's the compound-wrapped native token
@@ -103,8 +100,23 @@ export class CompoundSupplyTokenHelper {
           throw err;
         });
 
-        const underlyingAddress = underlyingAddressRaw.toLowerCase().replace(ETH_ADDR_ALIAS, ZERO_ADDRESS);
-        const underlyingToken = allTokens.find(v => v.address === underlyingAddress);
+        const underlyingTokenAddress = underlyingAddressRaw.toLowerCase().replace(ETH_ADDR_ALIAS, ZERO_ADDRESS);
+        return { underlyingTokenAddress, marketTokenAddress };
+      }),
+    );
+
+    const baseTokens = await tokenSelector.getMany(
+      underlyings.map(({ underlyingTokenAddress }) => ({ network, address: underlyingTokenAddress })),
+    );
+
+    const allTokens = [...baseTokens, ...appTokens];
+
+    const tokens = await Promise.all(
+      underlyings.map(async ({ underlyingTokenAddress, marketTokenAddress }) => {
+        const erc20TokenContract = this.contractFactory.erc20({ address: marketTokenAddress, network });
+        const contract = getTokenContract({ address: marketTokenAddress, network });
+
+        const underlyingToken = allTokens.find(v => v?.address === underlyingTokenAddress);
         if (!underlyingToken) return null;
 
         const [symbol, decimals, supplyRaw, rateRaw, supplyRateRaw, borrowRateRaw] = await Promise.all([
@@ -153,7 +165,7 @@ export class CompoundSupplyTokenHelper {
 
         const token: AppTokenPosition<CompoundSupplyTokenDataProps> = {
           type,
-          address,
+          address: marketTokenAddress,
           network,
           appId,
           groupId,
