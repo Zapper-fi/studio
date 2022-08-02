@@ -5,6 +5,7 @@ import { ArbitrumUmamiFinanceBalanceFetcher } from './arbitrum/umami-finance.bal
 import { ArbitrumUmamiFinanceCompoundTokenFetcher } from './arbitrum/umami-finance.compound.token-fetcher';
 import { ArbitrumUmamiFinanceMarinateContractPositionFetcher } from './arbitrum/umami-finance.marinate.contract-position-fetcher';
 import { ArbitrumUmamiMarinateTokenFetcher } from './arbitrum/umami-finance.marinate.token-fetcher';
+import { ArbitrumUmamiFinanceVaultsTokenFetcher } from './arbitrum/umami-finance.vaults.token-fetcher';
 import { UmamiFinanceContractFactory } from './contracts';
 import { UmamiFinanceAppDefinition, UMAMI_FINANCE_DEFINITION } from './umami-finance.definition';
 
@@ -14,6 +15,7 @@ import { UmamiFinanceAppDefinition, UMAMI_FINANCE_DEFINITION } from './umami-fin
     ArbitrumUmamiFinanceBalanceFetcher,
     ArbitrumUmamiFinanceCompoundTokenFetcher,
     ArbitrumUmamiFinanceMarinateContractPositionFetcher,
+    ArbitrumUmamiFinanceVaultsTokenFetcher,
     ArbitrumUmamiMarinateTokenFetcher,
     UmamiFinanceAppDefinition,
     UmamiFinanceContractFactory,

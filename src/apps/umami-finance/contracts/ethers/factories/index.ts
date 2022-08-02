@@ -3,3 +3,4 @@
 /* eslint-disable */
 export { UmamiFinanceCompound__factory } from './UmamiFinanceCompound__factory';
 export { UmamiFinanceMarinate__factory } from './UmamiFinanceMarinate__factory';
+export { UmamiFinanceVault__factory } from './UmamiFinanceVault__factory';
