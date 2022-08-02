@@ -4,6 +4,15 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.139.0](https://github.com/Zapper-fi/studio/compare/v0.138.0...v0.139.0) (2022-08-02)
+
+
+### Features
+
+* **looks-rare:** Extract LooksRare integration from Zapper API to Studio ([#1009](https://github.com/Zapper-fi/studio/issues/1009)) ([424362e](https://github.com/Zapper-fi/studio/commit/424362eb799ec67ff0f90c850c7be7eb44008655))
+* **umami:** Adds vaults tracking, fixed API source to official UMAMI API ([#971](https://github.com/Zapper-fi/studio/issues/971)) ([3bbd7dc](https://github.com/Zapper-fi/studio/commit/3bbd7dcda51b60c486e95fd86af5a7ab7ed6be41))
+* **velodrome:** Fix missing pools ([#1031](https://github.com/Zapper-fi/studio/issues/1031)) ([07c9f4e](https://github.com/Zapper-fi/studio/commit/07c9f4e1200359ee92458b0b604c97cc29df97fa))
+
 ## [0.138.0](https://github.com/Zapper-fi/studio/compare/v0.137.0...v0.138.0) (2022-08-02)
 
 
