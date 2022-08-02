@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.138.0](https://github.com/Zapper-fi/studio/compare/v0.137.0...v0.138.0) (2022-08-02)
+
+
+### Features
+
+* **votium:** Add TTL on Votium keys to allow prior claimable amounts to expire ([#999](https://github.com/Zapper-fi/studio/issues/999)) ([9748e9c](https://github.com/Zapper-fi/studio/commit/9748e9c9fc41929d6eac0fe857feccb74e305ad0))
+
 ## [0.137.0](https://github.com/Zapper-fi/studio/compare/v0.136.0...v0.137.0) (2022-08-02)
 
 
