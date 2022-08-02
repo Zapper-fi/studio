@@ -8,6 +8,7 @@ import { EthereumRariFuseBorrowContractPositionBalanceFetcher } from './ethereum
 import { EthereumRariFuseBorrowContractPositionFetcher } from './ethereum/rari-fuse.borrow.contract-position-fetcher';
 import { EthereumRariFuseSupplyTokenBalanceFetcher } from './ethereum/rari-fuse.supply.token-balance-fetcher';
 import { EthereumRariFuseSupplyTokenFetcher } from './ethereum/rari-fuse.supply.token-fetcher';
+import { RariFuseSupplyTokenHelper } from './helpers/rari-fuse.supply.token-helper';
 import { RariFuseAppDefinition, RARI_FUSE_DEFINITION } from './rari-fuse.definition';
 
 @Register.AppModule({
@@ -22,6 +23,9 @@ import { RariFuseAppDefinition, RARI_FUSE_DEFINITION } from './rari-fuse.definit
     EthereumRariFuseBorrowContractPositionBalanceFetcher,
     EthereumRariFuseSupplyTokenFetcher,
     EthereumRariFuseSupplyTokenBalanceFetcher,
+    // Helpers
+    RariFuseSupplyTokenHelper,
   ],
+  exports: [RariFuseSupplyTokenHelper, RariFuseContractFactory],
 })
 export class RariFuseAppModule extends AbstractApp() {}
