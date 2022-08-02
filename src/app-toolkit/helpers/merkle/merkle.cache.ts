@@ -41,7 +41,7 @@ export abstract class MerkleCache<T = any> {
       });
     });
 
-    await this.appToolkit.msetToCache(cacheable, moment.duration('30', 'minutes').asSeconds());
+    await this.appToolkit.setManyToCache(cacheable, moment.duration('30', 'minutes').asSeconds());
   }
 
   async getClaim(rewardTokenAddress: string, walletAddress: string) {
