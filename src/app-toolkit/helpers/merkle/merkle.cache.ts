@@ -30,7 +30,7 @@ export abstract class MerkleCache<T = any> {
   }
 
   @Schedule({
-    every: moment.duration('15', 'minutes').asMilliseconds(),
+    every: moment.duration('5', 'minutes').asMilliseconds(),
   })
   async cacheMerkleData() {
     const data = await this.resolveMerkleData();
