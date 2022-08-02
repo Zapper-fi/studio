@@ -194,7 +194,8 @@ export class CurvePoolTokenHelper {
       poolDefinitions.map(async definition => {
         if (definition.coinAddresses) return definition;
         const poolContract = resolvePoolContract({ network, address: definition.swapAddress });
-        const coinAddresses = await resolvePoolCoinAddresses({ multicall, poolContract });
+        const rawCoinAddresses = await resolvePoolCoinAddresses({ multicall, poolContract });
+        const coinAddresses = rawCoinAddresses.map(v => v.toLowerCase());
         return { ...definition, coinAddresses };
       }),
     );
