@@ -62,7 +62,10 @@ export class ArbitrumStargateBalanceFetcher implements BalanceFetcher {
       }),
       resolveClaimableTokenBalances: this.appToolkit.helpers.masterChefDefaultClaimableBalanceStrategy.build({
         resolveClaimableBalance: ({ multicall, contract, contractPosition, address }) =>
-          multicall.wrap(contract).pendingStargate(contractPosition.dataProps.poolIndex, address),
+          multicall
+            .wrap(contract)
+            .pendingStargate(contractPosition.dataProps.poolIndex, address)
+            .catch(() => 0),
       }),
     });
   }
