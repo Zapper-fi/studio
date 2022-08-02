@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.137.0](https://github.com/Zapper-fi/studio/compare/v0.136.0...v0.137.0) (2022-08-02)
+
+
+### Features
+
+* **prices-selector:** File cache is too slow, use memory cache ([#988](https://github.com/Zapper-fi/studio/issues/988)) ([b6f3205](https://github.com/Zapper-fi/studio/commit/b6f3205ebc77d73fb9de1777eb48f4c2227fd9b2))
+
+
+### Bug Fixes
+
+* **uniswap-v2:** Tweak promise execution to improve DataLoader ([#997](https://github.com/Zapper-fi/studio/issues/997)) ([38c97c6](https://github.com/Zapper-fi/studio/commit/38c97c6753b9f2688e4b0cb9864295d991aa08bd))
+
 ## [0.136.0](https://github.com/Zapper-fi/studio/compare/v0.135.0...v0.136.0) (2022-08-01)
 
 
