@@ -38,7 +38,7 @@ export class CompoundClaimableBalanceHelper {
     comptrollerAddress,
   }: CompoundBalanceHelperParams) {
     const lensContract = this.compoundContractFactory.compoundLens({ address: lensAddress, network });
-    const prices = await this.appToolkit.getBaseTokenPrices(network);
+    const tokenSelector = this.appToolkit.getBaseTokenPriceSelector({ tags: { network, appId } });
 
     // Resolve reward metadata
     const rewardMetadata = await lensContract.callStatic.getCompBalanceMetadataExt(
@@ -48,7 +48,7 @@ export class CompoundClaimableBalanceHelper {
     );
 
     // Calculate claimable COMP rewards
-    const rewardToken = prices.find(price => price.address === rewardTokenAddress);
+    const rewardToken = await tokenSelector.getOne({ network, address: rewardTokenAddress });
     if (!rewardToken) return [];
 
     const rewardBalanceRaw = rewardMetadata[3];
