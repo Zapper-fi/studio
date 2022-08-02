@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.140.1](https://github.com/Zapper-fi/studio/compare/v0.140.0...v0.140.1) (2022-08-02)
+
+
+### Bug Fixes
+
+* **stargate:** Fix balance fetcher when farm reward period is over ([#1042](https://github.com/Zapper-fi/studio/issues/1042)) ([4b5fc43](https://github.com/Zapper-fi/studio/commit/4b5fc43d45b5fe66159e629b682c3fad02fea980))
+
 ## [0.140.0](https://github.com/Zapper-fi/studio/compare/v0.139.0...v0.140.0) (2022-08-02)
 
 
