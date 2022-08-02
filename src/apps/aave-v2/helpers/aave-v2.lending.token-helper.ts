@@ -104,13 +104,18 @@ export class AaveV2LendingTokenHelper {
       multicall.wrap(contract as unknown as AaveProtocolDataProvider).getReserveConfigurationData(reserveTokenAddress),
   }: AaveV2LendingTokenHelperParams<T>): Promise<AppTokenPosition<AaveV2LendingTokenDataProps>[]> {
     const multicall = this.appToolkit.getMulticall(network);
+    const tokenSelector = this.appToolkit.getBaseTokenPriceSelector({ tags: { network, appId } });
 
-    const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
     const appTokens = await this.appToolkit.getAppTokenPositions(...dependencies);
-    const allTokens = [...appTokens, ...baseTokens];
     const contract = resolveContract({ contractFactory: this.contractFactory, address: protocolDataProviderAddress });
+
     const reserveTokens = await resolveReserveTokens({ contract: contract });
     const reserveTokenAddresses = reserveTokens.map(v => v.toLowerCase());
+    const baseTokens = await tokenSelector
+      .getMany(reserveTokenAddresses.map(address => ({ network, address })))
+      .then(tokens => compact(tokens));
+
+    const allTokens = [...appTokens, ...baseTokens];
 
     const tokens = await Promise.all(
       reserveTokenAddresses.map(async reserveTokenAddress => {
