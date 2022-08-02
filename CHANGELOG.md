@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.140.0](https://github.com/Zapper-fi/studio/compare/v0.139.0...v0.140.0) (2022-08-02)
+
+
+### Features
+
+* **meshswap:** implemented meshswap on Polygon ([#1033](https://github.com/Zapper-fi/studio/issues/1033)) ([98b6a6a](https://github.com/Zapper-fi/studio/commit/98b6a6ad25b9805b0340f80b5b8a2c8730cf572f))
+* **prices-selector:** Move Compound & Aave-V2 forks to new strategy ([#1039](https://github.com/Zapper-fi/studio/issues/1039)) ([6a28db0](https://github.com/Zapper-fi/studio/commit/6a28db09ee290d462f915170cabc9942da925ac9))
+
 ## [0.139.0](https://github.com/Zapper-fi/studio/compare/v0.138.0...v0.139.0) (2022-08-02)
 
 
