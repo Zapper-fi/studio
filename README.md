@@ -18,7 +18,7 @@
 </div>
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-61-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-66-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 ## Description
@@ -218,6 +218,13 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/0xoats"><img src="https://avatars.githubusercontent.com/u/106729827?v=4?s=64" width="64px;" alt=""/><br /><sub><b>0xoats</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/issues?q=author%3A0xoats" title="Bug reports">🐛</a></td>
     <td align="center"><a href="https://github.com/croc12344"><img src="https://avatars.githubusercontent.com/u/94607810?v=4?s=64" width="64px;" alt=""/><br /><sub><b>croc12344</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=croc12344" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/peteriscan"><img src="https://avatars.githubusercontent.com/u/104527020?v=4?s=64" width="64px;" alt=""/><br /><sub><b>peteris</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=peteriscan" title="Code">💻</a></td>
+    <td align="center"><a href="https://mikeshultz.com/"><img src="https://avatars.githubusercontent.com/u/1048089?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Mike Shultz</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=mikeshultz" title="Code">💻</a> <a href="https://github.com/Zapper-fi/studio/issues?q=author%3Amikeshultz" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://www.bghughes.com/"><img src="https://avatars.githubusercontent.com/u/32072172?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Benjamin Hughes</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=bghughes" title="Code">💻</a> <a href="https://github.com/Zapper-fi/studio/issues?q=author%3Abghughes" title="Bug reports">🐛</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/0xButterfield"><img src="https://avatars.githubusercontent.com/u/100517047?v=4?s=64" width="64px;" alt=""/><br /><sub><b>0xButterfield</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=0xButterfield" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/vmaark"><img src="https://avatars.githubusercontent.com/u/2270661?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Mark</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=vmaark" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/yuval-weiss"><img src="https://avatars.githubusercontent.com/u/43820038?v=4?s=64" width="64px;" alt=""/><br /><sub><b>yuval-weiss</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/issues?q=author%3Ayuval-weiss" title="Bug reports">🐛</a></td>
   </tr>
 </table>
 

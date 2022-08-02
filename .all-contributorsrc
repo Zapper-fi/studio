@@ -581,6 +581,53 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "mikeshultz",
+      "name": "Mike Shultz",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1048089?v=4",
+      "profile": "https://mikeshultz.com/",
+      "contributions": [
+        "code",
+        "bug"
+      ]
+    },
+    {
+      "login": "bghughes",
+      "name": "Benjamin Hughes",
+      "avatar_url": "https://avatars.githubusercontent.com/u/32072172?v=4",
+      "profile": "https://www.bghughes.com/",
+      "contributions": [
+        "code",
+        "bug"
+      ]
+    },
+    {
+      "login": "0xButterfield",
+      "name": "0xButterfield",
+      "avatar_url": "https://avatars.githubusercontent.com/u/100517047?v=4",
+      "profile": "https://github.com/0xButterfield",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "vmaark",
+      "name": "Mark",
+      "avatar_url": "https://avatars.githubusercontent.com/u/2270661?v=4",
+      "profile": "https://github.com/vmaark",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "yuval-weiss",
+      "name": "yuval-weiss",
+      "avatar_url": "https://avatars.githubusercontent.com/u/43820038?v=4",
+      "profile": "https://github.com/yuval-weiss",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7
