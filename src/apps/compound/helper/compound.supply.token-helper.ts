@@ -15,7 +15,6 @@ import { ContractType } from '~position/contract.interface';
 import { BalanceDisplayMode } from '~position/display.interface';
 import { AppTokenPosition, ExchangeableAppTokenDataProps, Token } from '~position/position.interface';
 import { AppGroupsDefinition } from '~position/position.service';
-import { PriceSelector } from '~token/token-price-selector.interface';
 import { Network } from '~types/network.interface';
 
 import { CompoundComptroller, CompoundContractFactory, CompoundCToken } from '../contracts';
@@ -33,7 +32,6 @@ type CompoundSupplyTokenHelperParams<T = CompoundComptroller, V = CompoundCToken
   appId: string;
   groupId: string;
   dependencies?: AppGroupsDefinition[];
-  baseTokenPriceSelector?: PriceSelector;
   comptrollerAddress: string;
   marketName?: string;
   getComptrollerContract: (opts: { address: string; network: Network }) => T;
@@ -65,7 +63,6 @@ export class CompoundSupplyTokenHelper {
     groupId,
     exchangeable = false,
     dependencies = [],
-    baseTokenPriceSelector,
     getComptrollerContract,
     getTokenContract,
     getAllMarkets,
@@ -80,8 +77,7 @@ export class CompoundSupplyTokenHelper {
       Math.pow(1 + (blocksPerDay * Number(rate)) / Number(1e18), 365) - 1,
   }: CompoundSupplyTokenHelperParams<T, V>) {
     const multicall = this.appToolkit.getMulticall(network);
-    const tokenSelector =
-      baseTokenPriceSelector ?? this.appToolkit.getBaseTokenPriceSelector({ tags: { network, appId } });
+    const tokenSelector = this.appToolkit.getBaseTokenPriceSelector({ tags: { network, appId } });
 
     const appTokens = dependencies.length ? await this.appToolkit.getAppTokenPositions(...dependencies) : [];
 
