@@ -11,6 +11,11 @@ export const UMAMI_FINANCE_DEFINITION = appDefinition({
   url: 'https://umami.finance/',
 
   groups: {
+    vaults: {
+      id: 'vaults',
+      type: GroupType.TOKEN,
+      label: 'Vaults',
+    },
     marinate: {
       id: 'marinate',
       type: GroupType.TOKEN,

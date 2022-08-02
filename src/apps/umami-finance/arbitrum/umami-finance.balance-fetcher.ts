@@ -52,10 +52,20 @@ export class ArbitrumUmamiFinanceBalanceFetcher implements BalanceFetcher {
     });
   }
 
+  async getVaultsBalances(address: string) {
+    return this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
+      address,
+      appId: UMAMI_FINANCE_DEFINITION.id,
+      groupId: UMAMI_FINANCE_DEFINITION.groups.vaults.id,
+      network,
+    });
+  }
+
   async getBalances(address: string) {
-    const [mUMAMI, cmUMAMI] = await Promise.all([
+    const [mUMAMI, cmUMAMI, vaults] = await Promise.all([
       this.getMarinatedBalance(address),
       this.getCompoundingBalances(address),
+      this.getVaultsBalances(address),
     ]);
 
     return presentBalanceFetcherResponse([
@@ -66,6 +76,10 @@ export class ArbitrumUmamiFinanceBalanceFetcher implements BalanceFetcher {
       {
         label: 'Compounding Marinating UMAMI',
         assets: cmUMAMI,
+      },
+      {
+        label: 'Vaults',
+        assets: vaults,
       },
     ]);
   }
