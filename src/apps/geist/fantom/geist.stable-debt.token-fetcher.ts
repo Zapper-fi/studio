@@ -1,0 +1,29 @@
+import { Register } from '~app-toolkit/decorators';
+import {
+  AaveV2LendingTemplateTokenFetcher,
+  AaveV2ReserveApyData,
+  AaveV2ReserveTokenAddressesData,
+} from '~apps/aave-v2/helpers/aave-v2.lending.template.token-fetcher';
+import { Network } from '~types/network.interface';
+
+import { GEIST_DEFINITION } from '../geist.definition';
+
+const appId = GEIST_DEFINITION.id;
+const groupId = GEIST_DEFINITION.groups.stableDebt.id;
+const network = Network.AVALANCHE_MAINNET;
+
+@Register.TokenPositionFetcher({ appId, groupId, network })
+export class FantomGeistStableDebtTokenFetcher extends AaveV2LendingTemplateTokenFetcher {
+  appId = GEIST_DEFINITION.id;
+  groupId = GEIST_DEFINITION.groups.stableDebt.id;
+  network = Network.FANTOM_OPERA_MAINNET;
+  providerAddress = '0xf3b0611e2e4d2cd6ab4bb3e01ade211c3f42a8c3';
+
+  getTokenAddress(reserveTokenAddressesData: AaveV2ReserveTokenAddressesData): string {
+    return reserveTokenAddressesData.stableDebtTokenAddress;
+  }
+
+  getApy(reserveApyData: AaveV2ReserveApyData): number {
+    return reserveApyData.stableBorrowApy;
+  }
+}

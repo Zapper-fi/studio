@@ -11,7 +11,7 @@ import {
 import { AaveV2ContractFactory } from '../contracts';
 import { AaveV2AToken } from '../contracts/ethers/AaveV2AToken';
 
-export type AaveAmmTemplateTokenDataProps = {
+export type AaveV2TemplateTokenDataProps = {
   apy: number;
   enabledAsCollateral: boolean;
   liquidity: number;
@@ -19,19 +19,19 @@ export type AaveAmmTemplateTokenDataProps = {
   isActive: boolean;
 };
 
-export type AaveAmmReserveTokenAddressesData = {
+export type AaveV2ReserveTokenAddressesData = {
   aTokenAddress: string;
   stableDebtTokenAddress: string;
   variableDebtTokenAddress: string;
 };
 
-export type AaveAmmReserveApyData = {
+export type AaveV2ReserveApyData = {
   supplyApy: number;
   stableBorrowApy: number;
   variableBorrowApy: number;
 };
 
-export type AaveAmmReserveConfigurationData = {
+export type AaveV2ReserveConfigurationData = {
   enabledAsCollateral: boolean;
   liquidationThreshold: number;
 };
@@ -55,8 +55,8 @@ export abstract class AaveV2LendingTemplateTokenFetcher extends AppTokenTemplate
   }
 
   abstract providerAddress: string;
-  abstract getTokenAddress(reserveTokenAddressesData: AaveAmmReserveTokenAddressesData): string;
-  abstract getApy(reserveApyData: AaveAmmReserveApyData): number;
+  abstract getTokenAddress(reserveTokenAddressesData: AaveV2ReserveTokenAddressesData): string;
+  abstract getApy(reserveApyData: AaveV2ReserveApyData): number;
 
   getContract(address: string): AaveV2AToken {
     return this.contractFactory.aaveV2AToken({ network: this.network, address });
@@ -75,13 +75,13 @@ export abstract class AaveV2LendingTemplateTokenFetcher extends AppTokenTemplate
     const reserveTokenAddreses = reserveTokens.map(v => v[1]);
     const reserveTokensData = await Promise.all(reserveTokenAddreses.map(r => pool.getReserveTokensAddresses(r)));
 
-    const reserveTokenAddressesData = reserveTokensData.map(v => ({
-      aTokenAddress: v.aTokenAddress.toLowerCase(),
-      stableDebtTokenAddress: v.stableDebtTokenAddress.toLowerCase(),
-      variableDebtTokenAddress: v.variableDebtTokenAddress.toLowerCase(),
-    }));
-
-    return reserveTokenAddressesData.map(v => this.getTokenAddress(v));
+    return reserveTokensData.map(v =>
+      this.getTokenAddress({
+        aTokenAddress: v.aTokenAddress.toLowerCase(),
+        stableDebtTokenAddress: v.stableDebtTokenAddress.toLowerCase(),
+        variableDebtTokenAddress: v.variableDebtTokenAddress.toLowerCase(),
+      }),
+    );
   }
 
   async getReserveApy({
@@ -107,7 +107,7 @@ export abstract class AaveV2LendingTemplateTokenFetcher extends AppTokenTemplate
   async getReserveConfigurationData({
     appToken,
     multicall,
-  }: DataPropsStageParams<AaveV2AToken, AaveAmmTemplateTokenDataProps>): Promise<AaveAmmReserveConfigurationData> {
+  }: DataPropsStageParams<AaveV2AToken, AaveV2TemplateTokenDataProps>): Promise<AaveV2ReserveConfigurationData> {
     const pool = this.contractFactory.aaveProtocolDataProvider({
       network: this.network,
       address: this.providerAddress,

@@ -3,8 +3,8 @@ import { Network } from '~types/network.interface';
 
 import { AAVE_V2_DEFINITION } from '../aave-v2.definition';
 import {
-  AaveAmmReserveApyData,
-  AaveAmmReserveTokenAddressesData,
+  AaveV2ReserveApyData,
+  AaveV2ReserveTokenAddressesData,
   AaveV2LendingTemplateTokenFetcher,
 } from '../helpers/aave-v2.lending.template.token-fetcher';
 
@@ -19,11 +19,11 @@ export class EthereumAaveV2SupplyTokenFetcher extends AaveV2LendingTemplateToken
   network = Network.ETHEREUM_MAINNET;
   providerAddress = '0x057835ad21a177dbdd3090bb1cae03eacf78fc6d';
 
-  getTokenAddress(reserveTokenAddressesData: AaveAmmReserveTokenAddressesData): string {
+  getTokenAddress(reserveTokenAddressesData: AaveV2ReserveTokenAddressesData): string {
     return reserveTokenAddressesData.aTokenAddress;
   }
 
-  getApy(reserveApyData: AaveAmmReserveApyData): number {
+  getApy(reserveApyData: AaveV2ReserveApyData): number {
     return reserveApyData.supplyApy;
   }
 }
