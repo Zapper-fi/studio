@@ -70,7 +70,7 @@ export class PolygonMeshswapSupplyTokenFetcher implements PositionFetcher<AppTok
         const tokens = baseTokens.find(x => x.address == underlyingTokenAddress);
         if (!tokens) return null;
 
-        const exchangeRate = Number(exchangeRateRaw) / 10 ** decimals;
+        const exchangeRate = Number(exchangeRateRaw) / 10 ** 18;
         const cash = Number(cashRaw) / 10 ** decimals;
         const borrowAmount = Number(borrowAmountRaw) / 10 ** decimals;
 
