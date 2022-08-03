@@ -4,6 +4,33 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.141.0](https://github.com/Zapper-fi/studio/compare/v0.140.1...v0.141.0) (2022-08-03)
+
+
+### Features
+
+* **compound:** Extract claimable COMP as its own helper ([#1044](https://github.com/Zapper-fi/studio/issues/1044)) ([066d38b](https://github.com/Zapper-fi/studio/commit/066d38ba3d90c51e24ad61b3c93261818c1f0630))
+
+
+### Bug Fixes
+
+* **meshswap:** fix exchangeRate decimals ([#1045](https://github.com/Zapper-fi/studio/issues/1045)) ([b5a0ca7](https://github.com/Zapper-fi/studio/commit/b5a0ca73736ac6c018f77c61c22ff960d61343df))
+
+## [0.140.1](https://github.com/Zapper-fi/studio/compare/v0.140.0...v0.140.1) (2022-08-02)
+
+
+### Bug Fixes
+
+* **stargate:** Fix balance fetcher when farm reward period is over ([#1042](https://github.com/Zapper-fi/studio/issues/1042)) ([4b5fc43](https://github.com/Zapper-fi/studio/commit/4b5fc43d45b5fe66159e629b682c3fad02fea980))
+
+## [0.140.0](https://github.com/Zapper-fi/studio/compare/v0.139.0...v0.140.0) (2022-08-02)
+
+
+### Features
+
+* **meshswap:** implemented meshswap on Polygon ([#1033](https://github.com/Zapper-fi/studio/issues/1033)) ([98b6a6a](https://github.com/Zapper-fi/studio/commit/98b6a6ad25b9805b0340f80b5b8a2c8730cf572f))
+* **prices-selector:** Move Compound & Aave-V2 forks to new strategy ([#1039](https://github.com/Zapper-fi/studio/issues/1039)) ([6a28db0](https://github.com/Zapper-fi/studio/commit/6a28db09ee290d462f915170cabc9942da925ac9))
+
 ## [0.139.0](https://github.com/Zapper-fi/studio/compare/v0.138.0...v0.139.0) (2022-08-02)
 
 
