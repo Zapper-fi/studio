@@ -2,6 +2,7 @@ import { Inject } from '@nestjs/common';
 
 import { Register } from '~app-toolkit/decorators';
 import { AAVE_V2_DEFINITION } from '~apps/aave-v2/aave-v2.definition';
+import BADGER_DEFINITION from '~apps/badger/badger.definition';
 import { COMPOUND_DEFINITION } from '~apps/compound';
 import { IRON_BANK_DEFINITION } from '~apps/iron-bank';
 import { SYNTHETIX_DEFINITION } from '~apps/synthetix';
@@ -35,6 +36,7 @@ export class EthereumCurvePoolTokenFetcher implements PositionFetcher<AppTokenPo
         { appId: IRON_BANK_DEFINITION.id, groupIds: [IRON_BANK_DEFINITION.groups.supply.id], network },
         { appId: TOKEMAK_DEFINITION.id, groupIds: [TOKEMAK_DEFINITION.groups.reactor.id], network },
         { appId: YEARN_DEFINITION.id, groupIds: [YEARN_DEFINITION.groups.yield.id], network },
+        { appId: BADGER_DEFINITION.id, groupIds: [BADGER_DEFINITION.groups.vault.id], network },
         { appId: 'convex', groupIds: ['deposit'], network },
         { appId: 'fixed-forex', groupIds: ['forex'], network },
       ],
