@@ -4,6 +4,18 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.141.0](https://github.com/Zapper-fi/studio/compare/v0.140.1...v0.141.0) (2022-08-03)
+
+
+### Features
+
+* **compound:** Extract claimable COMP as its own helper ([#1044](https://github.com/Zapper-fi/studio/issues/1044)) ([066d38b](https://github.com/Zapper-fi/studio/commit/066d38ba3d90c51e24ad61b3c93261818c1f0630))
+
+
+### Bug Fixes
+
+* **meshswap:** fix exchangeRate decimals ([#1045](https://github.com/Zapper-fi/studio/issues/1045)) ([b5a0ca7](https://github.com/Zapper-fi/studio/commit/b5a0ca73736ac6c018f77c61c22ff960d61343df))
+
 ## [0.140.1](https://github.com/Zapper-fi/studio/compare/v0.140.0...v0.140.1) (2022-08-02)
 
 
