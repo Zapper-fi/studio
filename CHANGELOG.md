@@ -4,6 +4,20 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.142.0](https://github.com/Zapper-fi/studio/compare/v0.141.0...v0.142.0) (2022-08-03)
+
+
+### Features
+
+* **nereus:** Add Nereus Finance ([#1029](https://github.com/Zapper-fi/studio/issues/1029)) ([bd42d0b](https://github.com/Zapper-fi/studio/commit/bd42d0b15f064b2827cb2806480a02f0e4471f00))
+* **nereus:** Remove redundant helper classes ([f34fc1a](https://github.com/Zapper-fi/studio/commit/f34fc1a8dab87ad670b31924fd84e630a92bc2b7))
+
+
+### Bug Fixes
+
+* **curve:** added badger dependency on curve pools ([#1041](https://github.com/Zapper-fi/studio/issues/1041)) ([dca4cd9](https://github.com/Zapper-fi/studio/commit/dca4cd9a66e37c888ca61fab4fd3769714b9f5d9))
+* **gmx:** Fix typo for wrong groupId ([#1048](https://github.com/Zapper-fi/studio/issues/1048)) ([fe90e28](https://github.com/Zapper-fi/studio/commit/fe90e284fc9b71b317652de8cf3305c0865957f2))
+
 ## [0.141.0](https://github.com/Zapper-fi/studio/compare/v0.140.1...v0.141.0) (2022-08-03)
 
 
