@@ -11,7 +11,6 @@ import { FantomSturdyBalanceFetcher } from './fantom/sturdy.balance-fetcher';
 import { FantomSturdyStableDebtTokenFetcher } from './fantom/sturdy.stable-debt.token-fetcher';
 import { FantomSturdySupplyTokenFetcher } from './fantom/sturdy.supply.token-fetcher';
 import { FantomSturdyVariableDebtTokenFetcher } from './fantom/sturdy.variable-debt.token-fetcher';
-import { SturdyLendingTokenHelper } from './helpers/sturdy.lending.token-helper';
 import { SturdyAppDefinition, STURDY_DEFINITION } from './sturdy.definition';
 
 @Register.AppModule({
@@ -20,7 +19,6 @@ import { SturdyAppDefinition, STURDY_DEFINITION } from './sturdy.definition';
   providers: [
     SturdyAppDefinition,
     SturdyContractFactory,
-    SturdyLendingTokenHelper,
     // Ethereum
     EthereumSturdyBalanceFetcher,
     EthereumSturdySupplyTokenFetcher,

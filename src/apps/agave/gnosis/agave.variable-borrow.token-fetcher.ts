@@ -1,36 +1,29 @@
-import { Inject } from '@nestjs/common';
-
 import { Register } from '~app-toolkit/decorators';
-import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { AaveV2LendingTokenHelper } from '~apps/aave-v2/helpers/aave-v2.lending.token-helper';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { AppTokenPosition } from '~position/position.interface';
+import {
+  AaveV2LendingTemplateTokenFetcher,
+  AaveV2ReserveApyData,
+  AaveV2ReserveTokenAddressesData,
+} from '~apps/aave-v2/helpers/aave-v2.lending.template.token-fetcher';
 import { Network } from '~types/network.interface';
 
-import { AGAVE_DEFINITION } from '../agave.definition';
+import AGAVE_DEFINITION from '../agave.definition';
 
 const appId = AGAVE_DEFINITION.id;
 const groupId = AGAVE_DEFINITION.groups.variableBorrow.id;
 const network = Network.GNOSIS_MAINNET;
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
-export class GnosisAgaveVariableBorrowTokenFetcher implements PositionFetcher<AppTokenPosition> {
-  constructor(
-    @Inject(AaveV2LendingTokenHelper)
-    private readonly aaveV2LendingTokenHelper: AaveV2LendingTokenHelper,
-  ) {}
+export class GnosisAgaveVariableBorrowTokenFetcher extends AaveV2LendingTemplateTokenFetcher {
+  appId = AGAVE_DEFINITION.id;
+  groupId = AGAVE_DEFINITION.groups.variableBorrow.id;
+  network = Network.GNOSIS_MAINNET;
+  providerAddress = '0x24dcbd376db23e4771375092344f5cbea3541fc0';
 
-  async getPositions() {
-    return this.aaveV2LendingTokenHelper.getTokens({
-      appId,
-      groupId,
-      network,
-      isDebt: true,
-      protocolDataProviderAddress: '0x24dcbd376db23e4771375092344f5cbea3541fc0',
-      resolveTokenAddress: ({ reserveTokenAddressesData }) => reserveTokenAddressesData.variableDebtTokenAddress,
-      resolveLendingRate: ({ reserveData }) => reserveData.variableBorrowRate,
-      resolveLabel: ({ reserveToken }) => getLabelFromToken(reserveToken),
-      resolveApyLabel: ({ apy }) => `${(apy * 100).toFixed(3)}% APR (variable)`,
-    });
+  getTokenAddress(reserveTokenAddressesData: AaveV2ReserveTokenAddressesData): string {
+    return reserveTokenAddressesData.variableDebtTokenAddress;
+  }
+
+  getApy(reserveApyData: AaveV2ReserveApyData): number {
+    return reserveApyData.variableBorrowApy;
   }
 }

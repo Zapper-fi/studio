@@ -1,12 +1,11 @@
-import { Inject } from '@nestjs/common';
-
 import { Register } from '~app-toolkit/decorators';
-import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { AppTokenPosition } from '~position/position.interface';
+import { AaveAmmLendingTemplateTokenFetcher } from '~apps/aave-amm/helpers/aave-amm.lending.template.token-fetcher';
+import {
+  AaveV2ReserveApyData,
+  AaveV2ReserveTokenAddressesData,
+} from '~apps/aave-v2/helpers/aave-v2.lending.template.token-fetcher';
 import { Network } from '~types/network.interface';
 
-import { SturdyLendingTokenHelper } from '../helpers/sturdy.lending.token-helper';
 import { STURDY_DEFINITION } from '../sturdy.definition';
 
 const appId = STURDY_DEFINITION.id;
@@ -14,20 +13,17 @@ const groupId = STURDY_DEFINITION.groups.stableDebt.id;
 const network = Network.ETHEREUM_MAINNET;
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
-export class EthereumSturdyStableDebtTokenFetcher implements PositionFetcher<AppTokenPosition> {
-  constructor(@Inject(SturdyLendingTokenHelper) private readonly sturdyLendingTokenHelper: SturdyLendingTokenHelper) {}
+export class EthereumSturdyStableDebtTokenFetcher extends AaveAmmLendingTemplateTokenFetcher {
+  appId = STURDY_DEFINITION.id;
+  groupId = STURDY_DEFINITION.groups.stableDebt.id;
+  network = Network.ETHEREUM_MAINNET;
+  providerAddress = '0xa422ca380bd70eef876292839222159e41aaee17';
 
-  async getPositions() {
-    return this.sturdyLendingTokenHelper.getPositions({
-      appId,
-      groupId,
-      network,
-      protocolDataProviderAddress: '0xa422ca380bd70eef876292839222159e41aaee17',
-      isDebt: true,
-      resolveTokenAddress: ({ reserveTokenAddressesData }) => reserveTokenAddressesData.stableDebtTokenAddress,
-      resolveLendingRate: ({ reserveData }) => reserveData.stableBorrowRate,
-      resolveLabel: ({ reserveToken }) => getLabelFromToken(reserveToken),
-      resolveApyLabel: ({ apy }) => `${(apy * 100).toFixed(3)}% APR (stable)`,
-    });
+  getTokenAddress(reserveTokenAddressesData: AaveV2ReserveTokenAddressesData): string {
+    return reserveTokenAddressesData.stableDebtTokenAddress;
+  }
+
+  getApy(reserveApyData: AaveV2ReserveApyData): number {
+    return reserveApyData.stableBorrowApy;
   }
 }
