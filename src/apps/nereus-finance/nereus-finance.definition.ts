@@ -48,7 +48,7 @@ export const NEREUS_FINANCE_DEFINITION = appDefinition({
   },
 
   token: {
-    address: '0xfcDe4A87b8b6FA58326BB462882f1778158B02F1',
+    address: '0xfcde4a87b8b6fa58326bb462882f1778158b02f1',
     network: Network.AVALANCHE_MAINNET,
   },
 
