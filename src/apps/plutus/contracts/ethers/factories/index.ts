@@ -6,3 +6,4 @@ export { PlsJonesPlutusChef__factory } from './PlsJonesPlutusChef__factory';
 export { PlsPlutusChef__factory } from './PlsPlutusChef__factory';
 export { PlutusEpochStaking__factory } from './PlutusEpochStaking__factory';
 export { PlutusEpochStakingRewardsRolling__factory } from './PlutusEpochStakingRewardsRolling__factory';
+export { PlutusPrivateTge__factory } from './PlutusPrivateTge__factory';

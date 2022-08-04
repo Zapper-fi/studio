@@ -8,6 +8,7 @@ import { ArbitrumPlutusLockContractPositionFetcher } from './arbitrum/plutus.loc
 import { ArbitrumPlutusPlsDpxTokenFetcher } from './arbitrum/plutus.pls-dpx.token-fetcher';
 import { ArbitrumPlutusPlsJonesTokenFetcher } from './arbitrum/plutus.pls-jones.token-fetcher';
 import { ArbitrumPlutusStakeContractPositionFetcher } from './arbitrum/plutus.stake.contract-position-fetcher';
+import { ArbitrumPlutusTgeContractPositionFetcher } from './arbitrum/plutus.tge.contract-position-fetcher';
 import { PlutusContractFactory } from './contracts';
 import { PlutusAppDefinition, PLUTUS_DEFINITION } from './plutus.definition';
 
@@ -21,6 +22,7 @@ import { PlutusAppDefinition, PLUTUS_DEFINITION } from './plutus.definition';
     ArbitrumPlutusStakeContractPositionFetcher,
     ArbitrumPlutusPlsDpxTokenFetcher,
     ArbitrumPlutusPlsJonesTokenFetcher,
+    ArbitrumPlutusTgeContractPositionFetcher,
     PlutusAppDefinition,
     PlutusContractFactory,
   ],

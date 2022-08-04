@@ -202,16 +202,38 @@ export class ArbitrumPlutusBalanceFetcher implements BalanceFetcher {
     });
   }
 
+  async getPrivateTgeBalances(address: string) {
+    return this.appToolkit.helpers.contractPositionBalanceHelper.getContractPositionBalances({
+      address,
+      network,
+      appId,
+      groupId: PLUTUS_DEFINITION.groups.tge.id,
+      resolveBalances: async ({ address, contractPosition, multicall }) => {
+        const contract = this.contractFactory.plutusPrivateTge(contractPosition);
+        const balance = multicall.wrap(contract).deposit(address);
+        return [drillBalance(contractPosition.tokens[0], balance.toString())];
+      },
+    });
+  }
+
   async getBalances(address: string) {
-    const [plsDpxTokenBalances, plsJonesTokenBalances, lockedBalances, dpxBalances, jonesBalances, plsBalances] =
-      await Promise.all([
-        this.getPlsDpxTokenBalances(address),
-        this.getPlsJonesTokenAddresses(address),
-        this.getLockedBalances(address),
-        this.getStakedDPXBalances(address),
-        this.getStakedJonesBalances(address),
-        this.getStakedPlsBalances(address),
-      ]);
+    const [
+      plsDpxTokenBalances,
+      plsJonesTokenBalances,
+      lockedBalances,
+      dpxBalances,
+      jonesBalances,
+      plsBalances,
+      privateTgeBalances,
+    ] = await Promise.all([
+      this.getPlsDpxTokenBalances(address),
+      this.getPlsJonesTokenAddresses(address),
+      this.getLockedBalances(address),
+      this.getStakedDPXBalances(address),
+      this.getStakedJonesBalances(address),
+      this.getStakedPlsBalances(address),
+      this.getPrivateTgeBalances(address),
+    ]);
 
     return presentBalanceFetcherResponse([
       {
@@ -229,6 +251,10 @@ export class ArbitrumPlutusBalanceFetcher implements BalanceFetcher {
       {
         label: 'Staked',
         assets: [...dpxBalances, ...jonesBalances, ...plsBalances],
+      },
+      {
+        label: 'Private TGE',
+        assets: [...privateTgeBalances],
       },
     ]);
   }

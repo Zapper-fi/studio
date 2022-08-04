@@ -22,7 +22,33 @@ export class ArbitrumPlutusDpxContractPositionFetcher implements PositionFetcher
     @Inject(PlutusContractFactory) private readonly contractFactory: PlutusContractFactory,
   ) {}
 
-  async getPositions() {
+  async resolveOldFarmPositions() {
+    return this.appToolkit.helpers.masterChefContractPositionHelper.getContractPositions<PlsDpxPlutusChef>({
+      address: VAULTS.OLD_DPX_VAULT,
+      appId,
+      groupId,
+      network,
+      dependencies: [
+        {
+          appId: PLUTUS_DEFINITION.id,
+          groupIds: [PLUTUS_DEFINITION.groups.plsDpx.id, PLUTUS_DEFINITION.groups.plsJones.id],
+          network,
+        },
+      ],
+      resolveContract: opts => this.contractFactory.plsDpxPlutusChef(opts),
+      resolvePoolLength: async () => 1,
+      resolveDepositTokenAddress: async ({ multicall, contract }) => multicall.wrap(contract).plsDpx(),
+      resolveRewardTokenAddresses: async () => [
+        ADDRESSES.pls,
+        ADDRESSES.plsDpx,
+        ADDRESSES.plsJones,
+        ADDRESSES.dpx,
+        ADDRESSES.rdpx,
+      ],
+    });
+  }
+
+  async resolveNewFarmPositions() {
     return this.appToolkit.helpers.masterChefContractPositionHelper.getContractPositions<PlsDpxPlutusChef>({
       address: VAULTS.DPX_VAULT,
       appId,
@@ -46,5 +72,9 @@ export class ArbitrumPlutusDpxContractPositionFetcher implements PositionFetcher
         ADDRESSES.rdpx,
       ],
     });
+  }
+
+  async getPositions() {
+    return Promise.all([this.resolveOldFarmPositions(), this.resolveNewFarmPositions()]).then(v => v.flat());
   }
 }

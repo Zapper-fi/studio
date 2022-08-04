@@ -15,34 +15,42 @@ export const PLUTUS_DEFINITION = appDefinition({
       type: GroupType.TOKEN,
       label: 'plsDPX',
     },
+
     plsJones: {
       id: 'pls-jones',
       type: GroupType.TOKEN,
       label: 'plsJONES',
     },
+
     lock: {
       id: 'lock',
       type: GroupType.POSITION,
       label: 'Locked PLS',
       groupLabel: 'Farms',
     },
+
     jones: {
       id: 'jones',
       type: GroupType.POSITION,
-      label: 'Staked PlsJones',
-      groupLabel: 'Farms',
+      label: 'Staked plsJONES',
     },
+
     dpx: {
       id: 'dpx',
       type: GroupType.POSITION,
-      label: 'Staked PlsDPX',
-      groupLabel: 'Farms',
+      label: 'Staked plsDPX',
     },
+
     stake: {
       id: 'stake',
       type: GroupType.POSITION,
       label: 'Staked PLS',
-      groupLabel: 'Farms',
+    },
+
+    tge: {
+      id: 'tge',
+      type: GroupType.POSITION,
+      label: 'Private TGE',
     },
   },
   tags: [AppTag.ASSET_MANAGEMENT, AppTag.FARMING],
