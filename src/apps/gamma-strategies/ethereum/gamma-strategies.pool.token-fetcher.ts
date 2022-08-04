@@ -14,7 +14,6 @@ import { Network } from '~types/network.interface';
 import { GammaStrategiesContractFactory } from '../contracts';
 import { GAMMA_STRATEGIES_DEFINITION } from '../gamma-strategies.definition';
 
-// https://docs.google.com/spreadsheets/d/1Mybv4wxPLfmbnGxPDPZhljV3toDXlr77R5PilY5KE5w/edit#gid=0
 const FACTORY_ADDRESSES = [
   '0xd12fa3e3b60cfb96a735ab57a071f0f324860929',
   '0xc878c38f0df509a833d10de892e1cf7d361e3a67',
