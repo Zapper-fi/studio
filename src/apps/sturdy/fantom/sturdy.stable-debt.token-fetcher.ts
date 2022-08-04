@@ -1,6 +1,6 @@
 import { Register } from '~app-toolkit/decorators';
+import { AaveAmmAToken } from '~apps/aave-amm/contracts';
 import { AaveAmmLendingTemplateTokenFetcher } from '~apps/aave-amm/helpers/aave-amm.lending.template.token-fetcher';
-import { AaveV2AToken } from '~apps/aave-v2/contracts';
 import {
   AaveV2LendingTokenDataProps,
   AaveV2ReserveApyData,
@@ -31,7 +31,7 @@ export class FantomSturdyStableDebtTokenFetcher extends AaveAmmLendingTemplateTo
     return reserveApyData.stableBorrowApy;
   }
 
-  async getTertiaryLabel({ appToken }: DisplayPropsStageParams<AaveV2AToken, AaveV2LendingTokenDataProps>) {
+  async getTertiaryLabel({ appToken }: DisplayPropsStageParams<AaveAmmAToken, AaveV2LendingTokenDataProps>) {
     return `${(appToken.dataProps.apy * 100).toFixed(3)}% APR (stable)`;
   }
 }
