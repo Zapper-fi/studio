@@ -1,7 +1,7 @@
 import { Inject } from '@nestjs/common';
 
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
-import { StakedTokenHelper } from '~app-toolkit/helpers/balance/staked.token-helper';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
@@ -14,10 +14,10 @@ const network = Network.ETHEREUM_MAINNET;
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
 export class EthereumGammaStrategiesXGammaTokenFetcher implements PositionFetcher<AppTokenPosition> {
-  constructor(@Inject(StakedTokenHelper) private readonly stakedTokenHelper: StakedTokenHelper) {}
+  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
   async getPositions() {
-    return this.stakedTokenHelper.getTokens({
+    return this.appToolkit.helpers.stakedTokenHelper.getTokens({
       address: '0x26805021988f1a45dc708b5fb75fc75f21747d8c',
       underlyingTokenAddress: '0x6bea7cfef803d1e3d5f7c0103f7ded065644e197',
       appId,
