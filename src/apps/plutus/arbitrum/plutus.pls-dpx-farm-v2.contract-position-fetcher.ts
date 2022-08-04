@@ -6,7 +6,7 @@ import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
-import { PlutusContractFactory, PlsDpxPlutusChef } from '../contracts';
+import { PlutusContractFactory, PlsDpxPlutusChefV2 } from '../contracts';
 import { PLUTUS_DEFINITION } from '../plutus.definition';
 
 import { ADDRESSES, VAULTS } from './consts';
@@ -23,7 +23,7 @@ export class ArbitrumPlutusPlsDpxFarmV2ContractPositionFetcher implements Positi
   ) {}
 
   async getPositions() {
-    return this.appToolkit.helpers.masterChefContractPositionHelper.getContractPositions<PlsDpxPlutusChef>({
+    return this.appToolkit.helpers.masterChefContractPositionHelper.getContractPositions<PlsDpxPlutusChefV2>({
       address: VAULTS.DPX_VAULT,
       appId,
       groupId,
@@ -35,7 +35,7 @@ export class ArbitrumPlutusPlsDpxFarmV2ContractPositionFetcher implements Positi
           network,
         },
       ],
-      resolveContract: opts => this.contractFactory.plsDpxPlutusChef(opts),
+      resolveContract: opts => this.contractFactory.plsDpxPlutusChefV2(opts),
       resolvePoolLength: async () => 1,
       resolveDepositTokenAddress: async ({ multicall, contract }) => multicall.wrap(contract).plsDpx(),
       resolveRewardTokenAddresses: async () => [ADDRESSES.pls, ADDRESSES.plsDpx, ADDRESSES.plsJones, ADDRESSES.dpx],
