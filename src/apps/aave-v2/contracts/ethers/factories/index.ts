@@ -3,4 +3,5 @@
 /* eslint-disable */
 export { AaveProtocolDataProvider__factory } from './AaveProtocolDataProvider__factory';
 export { AaveStakedTokenIncentivesController__factory } from './AaveStakedTokenIncentivesController__factory';
+export { AaveV2AToken__factory } from './AaveV2AToken__factory';
 export { AaveV2LendingPoolProvider__factory } from './AaveV2LendingPoolProvider__factory';

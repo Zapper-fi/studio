@@ -4,6 +4,61 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.145.0](https://github.com/Zapper-fi/studio/compare/v0.144.0...v0.145.0) (2022-08-04)
+
+
+### Features
+
+* **curve:** Fix missing steth/eth, add missing logo for nereus ([#1070](https://github.com/Zapper-fi/studio/issues/1070)) ([233576d](https://github.com/Zapper-fi/studio/commit/233576ddbb1741c6a0473c779e574c1cb5cafc0e))
+
+## [0.144.0](https://github.com/Zapper-fi/studio/compare/v0.143.0...v0.144.0) (2022-08-04)
+
+
+### Features
+
+* **geist:** Fix network ([58bd693](https://github.com/Zapper-fi/studio/commit/58bd69328562b806342dbdd9c4515797efcea3ef))
+* **plutus:** Implement new farm and private TGE ([#1066](https://github.com/Zapper-fi/studio/issues/1066)) ([a70753a](https://github.com/Zapper-fi/studio/commit/a70753a24c9642816047558fdd306f2016389fbb))
+
+## [0.143.0](https://github.com/Zapper-fi/studio/compare/v0.142.0...v0.143.0) (2022-08-04)
+
+
+### Features
+
+* **positions:** Implement AppToken template fetcher and use it in Aave V2 forks ([#1056](https://github.com/Zapper-fi/studio/issues/1056)) ([1e9ea7e](https://github.com/Zapper-fi/studio/commit/1e9ea7e89d04cc35cdfee55601213e1b3c70bfd0))
+
+## [0.142.0](https://github.com/Zapper-fi/studio/compare/v0.141.0...v0.142.0) (2022-08-03)
+
+
+### Features
+
+* **nereus:** Add Nereus Finance ([#1029](https://github.com/Zapper-fi/studio/issues/1029)) ([bd42d0b](https://github.com/Zapper-fi/studio/commit/bd42d0b15f064b2827cb2806480a02f0e4471f00))
+* **nereus:** Remove redundant helper classes ([f34fc1a](https://github.com/Zapper-fi/studio/commit/f34fc1a8dab87ad670b31924fd84e630a92bc2b7))
+
+
+### Bug Fixes
+
+* **curve:** added badger dependency on curve pools ([#1041](https://github.com/Zapper-fi/studio/issues/1041)) ([dca4cd9](https://github.com/Zapper-fi/studio/commit/dca4cd9a66e37c888ca61fab4fd3769714b9f5d9))
+* **gmx:** Fix typo for wrong groupId ([#1048](https://github.com/Zapper-fi/studio/issues/1048)) ([fe90e28](https://github.com/Zapper-fi/studio/commit/fe90e284fc9b71b317652de8cf3305c0865957f2))
+
+## [0.141.0](https://github.com/Zapper-fi/studio/compare/v0.140.1...v0.141.0) (2022-08-03)
+
+
+### Features
+
+* **compound:** Extract claimable COMP as its own helper ([#1044](https://github.com/Zapper-fi/studio/issues/1044)) ([066d38b](https://github.com/Zapper-fi/studio/commit/066d38ba3d90c51e24ad61b3c93261818c1f0630))
+
+
+### Bug Fixes
+
+* **meshswap:** fix exchangeRate decimals ([#1045](https://github.com/Zapper-fi/studio/issues/1045)) ([b5a0ca7](https://github.com/Zapper-fi/studio/commit/b5a0ca73736ac6c018f77c61c22ff960d61343df))
+
+## [0.140.1](https://github.com/Zapper-fi/studio/compare/v0.140.0...v0.140.1) (2022-08-02)
+
+
+### Bug Fixes
+
+* **stargate:** Fix balance fetcher when farm reward period is over ([#1042](https://github.com/Zapper-fi/studio/issues/1042)) ([4b5fc43](https://github.com/Zapper-fi/studio/commit/4b5fc43d45b5fe66159e629b682c3fad02fea980))
+
 ## [0.140.0](https://github.com/Zapper-fi/studio/compare/v0.139.0...v0.140.0) (2022-08-02)
 
 
