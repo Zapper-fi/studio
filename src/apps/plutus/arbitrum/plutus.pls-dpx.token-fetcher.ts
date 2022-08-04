@@ -9,13 +9,13 @@ import { PlutusContractFactory } from '../contracts';
 import PLUTUS_DEFINITION from '../plutus.definition';
 
 const appId = PLUTUS_DEFINITION.id;
-const groupId = PLUTUS_DEFINITION.groups.plsJones.id;
+const groupId = PLUTUS_DEFINITION.groups.plsDpx.id;
 const network = Network.ARBITRUM_MAINNET;
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
 export class ArbitrumPlutusPlsDpxTokenFetcher extends AppTokenTemplatePositionFetcher {
   appId = PLUTUS_DEFINITION.id;
-  groupId = PLUTUS_DEFINITION.groups.plsJones.id;
+  groupId = PLUTUS_DEFINITION.groups.plsDpx.id;
   network = Network.ARBITRUM_MAINNET;
 
   constructor(
