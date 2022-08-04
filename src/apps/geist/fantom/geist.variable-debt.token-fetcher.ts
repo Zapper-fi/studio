@@ -13,7 +13,7 @@ import { GEIST_DEFINITION } from '../geist.definition';
 
 const appId = GEIST_DEFINITION.id;
 const groupId = GEIST_DEFINITION.groups.variableDebt.id;
-const network = Network.AVALANCHE_MAINNET;
+const network = Network.FANTOM_OPERA_MAINNET;
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
 export class FantomGeistVariableDebtTokenFetcher extends AaveV2LendingTemplateTokenFetcher {
