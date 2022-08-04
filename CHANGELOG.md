@@ -4,6 +4,14 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.144.0](https://github.com/Zapper-fi/studio/compare/v0.143.0...v0.144.0) (2022-08-04)
+
+
+### Features
+
+* **geist:** Fix network ([58bd693](https://github.com/Zapper-fi/studio/commit/58bd69328562b806342dbdd9c4515797efcea3ef))
+* **plutus:** Implement new farm and private TGE ([#1066](https://github.com/Zapper-fi/studio/issues/1066)) ([a70753a](https://github.com/Zapper-fi/studio/commit/a70753a24c9642816047558fdd306f2016389fbb))
+
 ## [0.143.0](https://github.com/Zapper-fi/studio/compare/v0.142.0...v0.143.0) (2022-08-04)
 
 
