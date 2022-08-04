@@ -33,7 +33,7 @@ export const GLP_FARM = {
 export const FARMS = [GMX_FARM, ES_GMX_FARM, GLP_FARM];
 
 const appId = GMX_DEFINITION.id;
-const groupId = GMX_DEFINITION.groups.glp.id;
+const groupId = GMX_DEFINITION.groups.farm.id;
 const network = Network.ARBITRUM_MAINNET;
 
 @Register.ContractPositionFetcher({ appId, groupId, network })

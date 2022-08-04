@@ -17,7 +17,6 @@ import { AaveV2ClaimableBalanceHelper } from './helpers/aave-v2.claimable.balanc
 import { AaveV2ClaimableContractPositionHelper } from './helpers/aave-v2.claimable.contract-position-helper';
 import { AaveV2HealthFactorMetaHelper } from './helpers/aave-v2.health-factor-meta-helper';
 import { AaveV2LendingBalanceHelper } from './helpers/aave-v2.lending.balance-helper';
-import { AaveV2LendingTokenHelper } from './helpers/aave-v2.lending.token-helper';
 import { PolygonAaveV2BalanceFetcher } from './polygon/aave-v2.balance-fetcher';
 import { PolygonAaveV2ClaimableContractPositionFetcher } from './polygon/aave-v2.claimable.contract-position-fetcher';
 import { PolygonAaveV2StableDebtTokenFetcher } from './polygon/aave-v2.stable-debt.token-fetcher';
@@ -33,7 +32,6 @@ import { PolygonAaveV2VariableDebtTokenFetcher } from './polygon/aave-v2.variabl
     AaveV2ContractFactory,
     AaveV2HealthFactorMetaHelper,
     AaveV2LendingBalanceHelper,
-    AaveV2LendingTokenHelper,
     AvalancheAaveV2BalanceFetcher,
     AvalancheAaveV2ClaimableContractPositionFetcher,
     AvalancheAaveV2StableDebtTokenFetcher,
@@ -56,7 +54,6 @@ import { PolygonAaveV2VariableDebtTokenFetcher } from './polygon/aave-v2.variabl
     AaveV2ClaimableContractPositionHelper,
     AaveV2HealthFactorMetaHelper,
     AaveV2LendingBalanceHelper,
-    AaveV2LendingTokenHelper,
   ],
 })
 export class AaveV2AppModule extends AbstractApp() {}

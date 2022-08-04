@@ -13,11 +13,11 @@ import { PLUTUS_DEFINITION } from '../plutus.definition';
 import { VAULTS } from './consts';
 
 const appId = PLUTUS_DEFINITION.id;
-const groupId = PLUTUS_DEFINITION.groups.stake.id;
+const groupId = PLUTUS_DEFINITION.groups.plsFarm.id;
 const network = Network.ARBITRUM_MAINNET;
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
-export class ArbitrumPlutusStakeContractPositionFetcher implements PositionFetcher<ContractPosition> {
+export class ArbitrumPlutusPlsFarmContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(PlutusContractFactory) private readonly contractFactory: PlutusContractFactory,
