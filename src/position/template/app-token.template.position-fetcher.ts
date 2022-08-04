@@ -27,8 +27,10 @@ export type PriceStageParams<T extends Contract, V> = StageParams<T, V, 'price' 
 export type DataPropsStageParams<T extends Contract, V> = StageParams<T, V, 'dataProps' | 'displayProps'>;
 export type DisplayPropsStageParams<T extends Contract, V> = StageParams<T, V, 'displayProps'>;
 
-export abstract class AppTokenTemplatePositionFetcher<T extends Contract, V extends DefaultDataProps = DefaultDataProps>
-  implements PositionFetcher<AppTokenPosition<V>>
+export abstract class AppTokenTemplatePositionFetcher<
+  T extends Contract = Erc20,
+  V extends DefaultDataProps = DefaultDataProps,
+> implements PositionFetcher<AppTokenPosition<V>>
 {
   abstract appId: string;
   abstract groupId: string;
@@ -37,8 +39,12 @@ export abstract class AppTokenTemplatePositionFetcher<T extends Contract, V exte
 
   constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) {}
 
-  abstract getContract(address: string): T;
   abstract getAddresses(): Promise<string[]>;
+
+  // Contract
+  getContract(address: string): T {
+    return this.appToolkit.globalContracts.erc20({ address, network: this.network }) as unknown as T;
+  }
 
   // Token Props
   async getSymbol(contract: T): Promise<string> {
