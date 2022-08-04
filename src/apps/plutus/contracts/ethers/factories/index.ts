@@ -2,6 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export { PlsDpxPlutusChef__factory } from './PlsDpxPlutusChef__factory';
+export { PlsDpxPlutusChefV2__factory } from './PlsDpxPlutusChefV2__factory';
 export { PlsJonesPlutusChef__factory } from './PlsJonesPlutusChef__factory';
 export { PlsPlutusChef__factory } from './PlsPlutusChef__factory';
 export { PlutusEpochStaking__factory } from './PlutusEpochStaking__factory';

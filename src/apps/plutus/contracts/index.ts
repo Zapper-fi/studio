@@ -5,6 +5,7 @@ import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
 import { PlsDpxPlutusChef__factory } from './ethers';
+import { PlsDpxPlutusChefV2__factory } from './ethers';
 import { PlsJonesPlutusChef__factory } from './ethers';
 import { PlsPlutusChef__factory } from './ethers';
 import { PlutusEpochStaking__factory } from './ethers';
@@ -22,6 +23,9 @@ export class PlutusContractFactory extends ContractFactory {
 
   plsDpxPlutusChef({ address, network }: ContractOpts) {
     return PlsDpxPlutusChef__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
+  plsDpxPlutusChefV2({ address, network }: ContractOpts) {
+    return PlsDpxPlutusChefV2__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
   plsJonesPlutusChef({ address, network }: ContractOpts) {
     return PlsJonesPlutusChef__factory.connect(address, this.appToolkit.getNetworkProvider(network));
@@ -41,6 +45,7 @@ export class PlutusContractFactory extends ContractFactory {
 }
 
 export type { PlsDpxPlutusChef } from './ethers';
+export type { PlsDpxPlutusChefV2 } from './ethers';
 export type { PlsJonesPlutusChef } from './ethers';
 export type { PlsPlutusChef } from './ethers';
 export type { PlutusEpochStaking } from './ethers';

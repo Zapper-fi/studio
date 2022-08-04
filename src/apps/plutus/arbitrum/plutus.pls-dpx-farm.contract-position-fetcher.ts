@@ -12,17 +12,17 @@ import { PLUTUS_DEFINITION } from '../plutus.definition';
 import { ADDRESSES, VAULTS } from './consts';
 
 const appId = PLUTUS_DEFINITION.id;
-const groupId = PLUTUS_DEFINITION.groups.dpx.id;
+const groupId = PLUTUS_DEFINITION.groups.plsDpxFarm.id;
 const network = Network.ARBITRUM_MAINNET;
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
-export class ArbitrumPlutusDpxContractPositionFetcher implements PositionFetcher<ContractPosition> {
+export class ArbitrumPlutusPlsDpxFarmContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(PlutusContractFactory) private readonly contractFactory: PlutusContractFactory,
   ) {}
 
-  async resolveOldFarmPositions() {
+  async getPositions() {
     return this.appToolkit.helpers.masterChefContractPositionHelper.getContractPositions<PlsDpxPlutusChef>({
       address: VAULTS.OLD_DPX_VAULT,
       appId,
@@ -46,35 +46,5 @@ export class ArbitrumPlutusDpxContractPositionFetcher implements PositionFetcher
         ADDRESSES.rdpx,
       ],
     });
-  }
-
-  async resolveNewFarmPositions() {
-    return this.appToolkit.helpers.masterChefContractPositionHelper.getContractPositions<PlsDpxPlutusChef>({
-      address: VAULTS.DPX_VAULT,
-      appId,
-      groupId,
-      network,
-      dependencies: [
-        {
-          appId: PLUTUS_DEFINITION.id,
-          groupIds: [PLUTUS_DEFINITION.groups.plsDpx.id, PLUTUS_DEFINITION.groups.plsJones.id],
-          network,
-        },
-      ],
-      resolveContract: opts => this.contractFactory.plsDpxPlutusChef(opts),
-      resolvePoolLength: async () => 1,
-      resolveDepositTokenAddress: async ({ multicall, contract }) => multicall.wrap(contract).plsDpx(),
-      resolveRewardTokenAddresses: async () => [
-        ADDRESSES.pls,
-        ADDRESSES.plsDpx,
-        ADDRESSES.plsJones,
-        ADDRESSES.dpx,
-        ADDRESSES.rdpx,
-      ],
-    });
-  }
-
-  async getPositions() {
-    return Promise.all([this.resolveOldFarmPositions(), this.resolveNewFarmPositions()]).then(v => v.flat());
   }
 }

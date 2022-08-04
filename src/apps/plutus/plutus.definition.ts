@@ -29,20 +29,26 @@ export const PLUTUS_DEFINITION = appDefinition({
       groupLabel: 'Farms',
     },
 
-    jones: {
+    plsJonesFarm: {
       id: 'jones',
       type: GroupType.POSITION,
       label: 'Staked plsJONES',
     },
 
-    dpx: {
-      id: 'dpx',
+    plsDpxFarm: {
+      id: 'pls-dpx-farm',
       type: GroupType.POSITION,
       label: 'Staked plsDPX',
     },
 
-    stake: {
-      id: 'stake',
+    plsDpxFarmV2: {
+      id: 'pls-dpx-farm-v2',
+      type: GroupType.POSITION,
+      label: 'Staked plsDPX',
+    },
+
+    plsFarm: {
+      id: 'pls-farm',
       type: GroupType.POSITION,
       label: 'Staked PLS',
     },
