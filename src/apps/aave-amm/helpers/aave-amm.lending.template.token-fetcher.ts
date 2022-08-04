@@ -2,7 +2,6 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { AaveV2AToken } from '~apps/aave-v2/contracts';
 import {
   AaveV2LendingTokenDataProps,
   AaveV2ReserveApyData,
@@ -68,7 +67,7 @@ export abstract class AaveAmmLendingTemplateTokenFetcher extends AppTokenTemplat
   async getReserveApy({
     appToken,
     multicall,
-  }: DataPropsStageParams<AaveV2AToken, AaveV2LendingTokenDataProps>): Promise<number> {
+  }: DataPropsStageParams<AaveAmmAToken, AaveV2LendingTokenDataProps>): Promise<number> {
     const pool = multicall.wrap(
       this.contractFactory.aaveAmmLendingPool({
         network: this.network,
@@ -88,7 +87,7 @@ export abstract class AaveAmmLendingTemplateTokenFetcher extends AppTokenTemplat
   async getReserveConfigurationData({
     appToken,
     multicall,
-  }: DataPropsStageParams<AaveV2AToken, AaveV2LendingTokenDataProps>) {
+  }: DataPropsStageParams<AaveAmmAToken, AaveV2LendingTokenDataProps>) {
     const pool = multicall.wrap(
       this.contractFactory.aaveAmmLendingPool({
         network: this.network,
@@ -105,7 +104,7 @@ export abstract class AaveAmmLendingTemplateTokenFetcher extends AppTokenTemplat
     return { liquidationThreshold, enabledAsCollateral };
   }
 
-  async getDataProps(opts: DataPropsStageParams<AaveV2AToken, AaveV2LendingTokenDataProps>) {
+  async getDataProps(opts: DataPropsStageParams<AaveAmmAToken, AaveV2LendingTokenDataProps>) {
     const reserveConfigData = await this.getReserveConfigurationData(opts);
     const apy = await this.getReserveApy(opts);
 
@@ -116,13 +115,13 @@ export abstract class AaveAmmLendingTemplateTokenFetcher extends AppTokenTemplat
     return { liquidity, isActive, apy, ...reserveConfigData };
   }
 
-  async getLabel({ appToken }: DisplayPropsStageParams<AaveV2AToken, AaveV2LendingTokenDataProps>): Promise<string> {
+  async getLabel({ appToken }: DisplayPropsStageParams<AaveAmmAToken, AaveV2LendingTokenDataProps>): Promise<string> {
     return getLabelFromToken(appToken.tokens[0]);
   }
 
   async getLabelDetailed({
     appToken,
-  }: DisplayPropsStageParams<AaveV2AToken, AaveV2LendingTokenDataProps>): Promise<string> {
+  }: DisplayPropsStageParams<AaveAmmAToken, AaveV2LendingTokenDataProps>): Promise<string> {
     return appToken.symbol;
   }
 }
