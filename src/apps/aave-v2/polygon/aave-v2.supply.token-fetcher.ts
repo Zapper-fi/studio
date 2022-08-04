@@ -21,6 +21,7 @@ export class PolygonAaveV2SupplyTokenFetcher extends AaveV2LendingTemplateTokenF
   groupId = AAVE_V2_DEFINITION.groups.supply.id;
   network = Network.POLYGON_MAINNET;
   providerAddress = '0x7551b5d2763519d4e37e8b81929d336de671d46d';
+  isDebt = false;
 
   getTokenAddress(reserveTokenAddressesData: AaveV2ReserveTokenAddressesData): string {
     return reserveTokenAddressesData.aTokenAddress;

@@ -1,4 +1,5 @@
 import { Register } from '~app-toolkit/decorators';
+import { AbstractApp } from '~app/app.dynamic-module';
 import { AaveV2AppModule } from '~apps/aave-v2/aave-v2.module';
 
 import { GeistContractFactory } from './contracts';
@@ -24,4 +25,4 @@ import { GeistPlatformFeesBalanceHelper } from './helpers/geist.platform-fees.ba
     FantomGeistVariableDebtTokenFetcher,
   ],
 })
-export class GeistAppModule {}
+export class GeistAppModule extends AbstractApp() {}

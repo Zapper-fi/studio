@@ -52,7 +52,7 @@ export abstract class AppTokenTemplatePositionFetcher<T extends Contract, V exte
   }
 
   // Price Properties
-  async getUnderlyingTokenAddresses(_contract: T): Promise<string[]> {
+  async getUnderlyingTokenAddresses(_contract: T): Promise<string | string[]> {
     return [];
   }
 
@@ -113,8 +113,10 @@ export abstract class AppTokenTemplatePositionFetcher<T extends Contract, V exte
     const skeletons = await Promise.all(
       addresses.map(async address => {
         const contract = multicall.wrap(this.getContract(address));
-        const underlyingTokenAddressesRaw = await this.getUnderlyingTokenAddresses(contract);
-        const underlyingTokenAddresses = underlyingTokenAddressesRaw.map(v => v.toLowerCase());
+        const underlyingTokenAddresses = await this.getUnderlyingTokenAddresses(contract)
+          .then(v => (Array.isArray(v) ? v : [v]))
+          .then(v => v.map(t => t.toLowerCase()));
+
         return { address, underlyingTokenAddresses };
       }),
     );
@@ -141,7 +143,7 @@ export abstract class AppTokenTemplatePositionFetcher<T extends Contract, V exte
         ]);
 
         const supply = Number(totalSupplyRaw) / 10 ** decimals;
-        const pricePerShare = await this.getPricePerShare(contract);
+        const pricePerShare = await this.getPricePerShare(contract).then(v => (Array.isArray(v) ? v : [v]));
 
         const fragment: PriceStageParams<T, V>['appToken'] = {
           type: ContractType.APP_TOKEN,
@@ -168,6 +170,7 @@ export abstract class AppTokenTemplatePositionFetcher<T extends Contract, V exte
         const displayPropsStageParams = { appToken: { ...fragment, price, dataProps }, contract, multicall };
         const displayProps = {
           label: await this.getLabel(displayPropsStageParams),
+          labelDetailed: await this.getLabelDetailed(displayPropsStageParams),
           secondarylabel: await this.getSecondaryLabel(displayPropsStageParams),
           tertiaryLabel: await this.getTertiaryLabel(displayPropsStageParams),
           images: await this.getImages(displayPropsStageParams),

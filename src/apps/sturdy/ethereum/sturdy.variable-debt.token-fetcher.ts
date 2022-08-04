@@ -21,6 +21,7 @@ export class EthereumSturdyVariableDebtTokenFetcher extends AaveAmmLendingTempla
   groupId = STURDY_DEFINITION.groups.variableDebt.id;
   network = Network.ETHEREUM_MAINNET;
   providerAddress = '0xa422ca380bd70eef876292839222159e41aaee17';
+  isDebt = true;
 
   getTokenAddress(reserveTokenAddressesData: AaveV2ReserveTokenAddressesData): string {
     return reserveTokenAddressesData.variableDebtTokenAddress;

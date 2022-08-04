@@ -31,6 +31,7 @@ export abstract class AaveAmmLendingTemplateTokenFetcher extends AppTokenTemplat
     super(appToolkit);
   }
 
+  abstract isDebt: boolean;
   abstract providerAddress: string;
   abstract getTokenAddress(reserveTokenAddressesData: AaveV2ReserveTokenAddressesData): string;
   abstract getApy(reserveApyData: AaveV2ReserveApyData): number;
@@ -58,6 +59,10 @@ export abstract class AaveAmmLendingTemplateTokenFetcher extends AppTokenTemplat
         variableDebtTokenAddress: data[9].toLowerCase(),
       }),
     );
+  }
+
+  async getUnderlyingTokenAddresses(contract: AaveAmmAToken) {
+    return contract.UNDERLYING_ASSET_ADDRESS();
   }
 
   async getReserveApy({
@@ -105,8 +110,8 @@ export abstract class AaveAmmLendingTemplateTokenFetcher extends AppTokenTemplat
     const apy = await this.getReserveApy(opts);
 
     const { appToken } = opts;
-    const liquidity = -1 * appToken.price * appToken.supply;
-    const isActive = liquidity > 0;
+    const liquidity = (this.isDebt ? -1 : 1) * appToken.price * appToken.supply;
+    const isActive = Math.abs(liquidity) > 0;
 
     return { liquidity, isActive, apy, ...reserveConfigData };
   }

@@ -21,6 +21,7 @@ export class EthereumSturdySupplyTokenFetcher extends AaveAmmLendingTemplateToke
   groupId = STURDY_DEFINITION.groups.supply.id;
   network = Network.ETHEREUM_MAINNET;
   providerAddress = '0xa422ca380bd70eef876292839222159e41aaee17';
+  isDebt = false;
 
   getTokenAddress(reserveTokenAddressesData: AaveV2ReserveTokenAddressesData): string {
     return reserveTokenAddressesData.aTokenAddress;

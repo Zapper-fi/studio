@@ -21,6 +21,7 @@ export class AvalancheBlizzSupplyTokenFetcher extends AaveV2LendingTemplateToken
   groupId = BLIZZ_DEFINITION.groups.supply.id;
   network = Network.AVALANCHE_MAINNET;
   providerAddress = '0x51d1e664a3b247782ac95b30a7a3cde8c8d8ad5d';
+  isDebt = false;
 
   getTokenAddress(reserveTokenAddressesData: AaveV2ReserveTokenAddressesData): string {
     return reserveTokenAddressesData.aTokenAddress;

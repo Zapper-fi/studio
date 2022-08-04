@@ -21,6 +21,7 @@ export class AvalancheAaveV2VariableDebtTokenFetcher extends AaveV2LendingTempla
   groupId = AAVE_V2_DEFINITION.groups.variableDebt.id;
   network = Network.AVALANCHE_MAINNET;
   providerAddress = '0x65285e9dfab318f57051ab2b139cccf232945451';
+  isDebt = true;
 
   getTokenAddress(reserveTokenAddressesData: AaveV2ReserveTokenAddressesData): string {
     return reserveTokenAddressesData.variableDebtTokenAddress;

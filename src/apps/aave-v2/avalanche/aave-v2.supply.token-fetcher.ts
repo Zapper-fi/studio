@@ -21,7 +21,8 @@ export class AvalancheAaveV2SupplyTokenFetcher extends AaveV2LendingTemplateToke
   groupId = AAVE_V2_DEFINITION.groups.supply.id;
   network = Network.AVALANCHE_MAINNET;
   providerAddress = '0x65285e9dfab318f57051ab2b139cccf232945451';
-  a;
+  isDebt = false;
+
   getTokenAddress(reserveTokenAddressesData: AaveV2ReserveTokenAddressesData): string {
     return reserveTokenAddressesData.aTokenAddress;
   }

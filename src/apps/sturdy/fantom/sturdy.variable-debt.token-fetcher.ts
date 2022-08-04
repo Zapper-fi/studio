@@ -21,6 +21,7 @@ export class FantomSturdyVariableDebtTokenFetcher extends AaveAmmLendingTemplate
   groupId = STURDY_DEFINITION.groups.variableDebt.id;
   network = Network.FANTOM_OPERA_MAINNET;
   providerAddress = '0x7ff2520cd7b76e8c49b5db51505b842d665f3e9a';
+  isDebt = true;
 
   getTokenAddress(reserveTokenAddressesData: AaveV2ReserveTokenAddressesData): string {
     return reserveTokenAddressesData.variableDebtTokenAddress;

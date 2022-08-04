@@ -54,6 +54,7 @@ export abstract class AaveV2LendingTemplateTokenFetcher extends AppTokenTemplate
     super(appToolkit);
   }
 
+  abstract isDebt: boolean;
   abstract providerAddress: string;
   abstract getTokenAddress(reserveTokenAddressesData: AaveV2ReserveTokenAddressesData): string;
   abstract getApy(reserveApyData: AaveV2ReserveApyData): number;
@@ -84,6 +85,10 @@ export abstract class AaveV2LendingTemplateTokenFetcher extends AppTokenTemplate
     );
   }
 
+  async getUnderlyingTokenAddresses(contract: AaveV2AToken) {
+    return contract.UNDERLYING_ASSET_ADDRESS();
+  }
+
   async getReserveApy({
     appToken,
     multicall,
@@ -108,13 +113,14 @@ export abstract class AaveV2LendingTemplateTokenFetcher extends AppTokenTemplate
     appToken,
     multicall,
   }: DataPropsStageParams<AaveV2AToken, AaveV2TemplateTokenDataProps>): Promise<AaveV2ReserveConfigurationData> {
-    const pool = this.contractFactory.aaveProtocolDataProvider({
-      network: this.network,
-      address: this.providerAddress,
-    });
+    const pool = multicall.wrap(
+      this.contractFactory.aaveProtocolDataProvider({
+        network: this.network,
+        address: this.providerAddress,
+      }),
+    );
 
-    const mcPool = multicall.wrap(pool);
-    const reserveConfigurationData = await mcPool.getReserveConfigurationData(appToken.tokens[0].address);
+    const reserveConfigurationData = await pool.getReserveConfigurationData(appToken.tokens[0].address);
     const liquidationThreshold = Number(reserveConfigurationData.liquidationThreshold) / 10 ** 4;
     const enabledAsCollateral = reserveConfigurationData.usageAsCollateralEnabled;
 
@@ -126,8 +132,8 @@ export abstract class AaveV2LendingTemplateTokenFetcher extends AppTokenTemplate
     const apy = await this.getReserveApy(opts);
 
     const { appToken } = opts;
-    const liquidity = -1 * appToken.price * appToken.supply;
-    const isActive = liquidity > 0;
+    const liquidity = (this.isDebt ? -1 : 1) * appToken.price * appToken.supply;
+    const isActive = Math.abs(liquidity) > 0;
 
     return { liquidity, isActive, apy, ...reserveConfigData };
   }

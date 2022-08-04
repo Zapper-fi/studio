@@ -21,6 +21,7 @@ export class EthereumAaveV2StableDebtTokenFetcher extends AaveV2LendingTemplateT
   groupId = AAVE_V2_DEFINITION.groups.stableDebt.id;
   network = Network.ETHEREUM_MAINNET;
   providerAddress = '0x057835ad21a177dbdd3090bb1cae03eacf78fc6d';
+  isDebt = true;
 
   getTokenAddress(reserveTokenAddressesData: AaveV2ReserveTokenAddressesData): string {
     return reserveTokenAddressesData.stableDebtTokenAddress;

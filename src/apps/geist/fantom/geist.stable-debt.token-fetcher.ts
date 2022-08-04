@@ -21,6 +21,7 @@ export class FantomGeistStableDebtTokenFetcher extends AaveV2LendingTemplateToke
   groupId = GEIST_DEFINITION.groups.stableDebt.id;
   network = Network.FANTOM_OPERA_MAINNET;
   providerAddress = '0xf3b0611e2e4d2cd6ab4bb3e01ade211c3f42a8c3';
+  isDebt = true;
 
   getTokenAddress(reserveTokenAddressesData: AaveV2ReserveTokenAddressesData): string {
     return reserveTokenAddressesData.stableDebtTokenAddress;

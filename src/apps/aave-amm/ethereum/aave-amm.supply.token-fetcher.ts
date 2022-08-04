@@ -21,6 +21,7 @@ export class EthereumAaveAmmSupplyTokenFetcher extends AaveAmmLendingTemplateTok
   groupId = AAVE_AMM_DEFINITION.groups.supply.id;
   network = Network.ETHEREUM_MAINNET;
   providerAddress = '0x7937d4799803fbbe595ed57278bc4ca21f3bffcb';
+  isDebt = false;
 
   getTokenAddress(reserveTokenAddressesData: AaveV2ReserveTokenAddressesData): string {
     return reserveTokenAddressesData.aTokenAddress;

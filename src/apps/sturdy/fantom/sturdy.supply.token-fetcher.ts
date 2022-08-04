@@ -21,6 +21,7 @@ export class FantomSturdySupplyTokenFetcher extends AaveAmmLendingTemplateTokenF
   groupId = STURDY_DEFINITION.groups.supply.id;
   network = Network.FANTOM_OPERA_MAINNET;
   providerAddress = '0x7ff2520cd7b76e8c49b5db51505b842d665f3e9a';
+  isDebt = false;
 
   getTokenAddress(reserveTokenAddressesData: AaveV2ReserveTokenAddressesData): string {
     return reserveTokenAddressesData.aTokenAddress;

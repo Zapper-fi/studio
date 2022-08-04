@@ -21,6 +21,7 @@ export class GnosisAgaveDepositTokenFetcher extends AaveV2LendingTemplateTokenFe
   groupId = AGAVE_DEFINITION.groups.deposit.id;
   network = Network.GNOSIS_MAINNET;
   providerAddress = '0x24dcbd376db23e4771375092344f5cbea3541fc0';
+  isDebt = false;
 
   getTokenAddress(reserveTokenAddressesData: AaveV2ReserveTokenAddressesData): string {
     return reserveTokenAddressesData.aTokenAddress;
