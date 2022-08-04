@@ -14,6 +14,7 @@ import { ContractType } from '~position/contract.interface';
 import { DefaultDataProps, DisplayProps, StatsItem } from '~position/display.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
+import { AppGroupsDefinition } from '~position/position.service';
 import { Network } from '~types/network.interface';
 
 export type StageParams<T extends Contract, V, K extends keyof AppTokenPosition> = {
@@ -32,6 +33,7 @@ export abstract class AppTokenTemplatePositionFetcher<T extends Contract, V exte
   abstract appId: string;
   abstract groupId: string;
   abstract network: Network;
+  dependencies: AppGroupsDefinition[] = [];
 
   constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) {}
 
@@ -121,19 +123,23 @@ export abstract class AppTokenTemplatePositionFetcher<T extends Contract, V exte
       }),
     );
 
+    const appTokens = await this.appToolkit.getAppTokenPositions(...this.dependencies);
+    const baseTokens = skeletons
+      .flatMap(v => v.underlyingTokenAddresses)
+      .map(v => tokenLoader.getOne({ network: this.network, address: v }));
+    const allTokens = [...appTokens, ...baseTokens];
+
     const skeletonsWithResolvedTokens = await Promise.all(
       skeletons.map(async ({ address, underlyingTokenAddresses }) => {
-        const maybeTokens = await tokenLoader.getMany(
-          underlyingTokenAddresses.map(v => ({ address: v, network: this.network })),
-        );
-
+        const maybeTokens = underlyingTokenAddresses.map(v => allTokens.find(t => t.address === v));
         const tokens = compact(maybeTokens);
+
         if (maybeTokens.length !== tokens.length) return null;
         return { address, tokens };
       }),
     );
 
-    const appTokens = await Promise.all(
+    const tokens = await Promise.all(
       compact(skeletonsWithResolvedTokens).map(async ({ address, tokens }) => {
         const contract = multicall.wrap(this.getContract(address));
         const [symbol, decimals, totalSupplyRaw] = await Promise.all([
@@ -181,6 +187,6 @@ export abstract class AppTokenTemplatePositionFetcher<T extends Contract, V exte
       }),
     );
 
-    return appTokens;
+    return tokens;
   }
 }
