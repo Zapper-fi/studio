@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.143.0](https://github.com/Zapper-fi/studio/compare/v0.142.0...v0.143.0) (2022-08-04)
+
+
+### Features
+
+* **positions:** Implement AppToken template fetcher and use it in Aave V2 forks ([#1056](https://github.com/Zapper-fi/studio/issues/1056)) ([1e9ea7e](https://github.com/Zapper-fi/studio/commit/1e9ea7e89d04cc35cdfee55601213e1b3c70bfd0))
+
 ## [0.142.0](https://github.com/Zapper-fi/studio/compare/v0.141.0...v0.142.0) (2022-08-03)
 
 
