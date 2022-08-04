@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.146.0](https://github.com/Zapper-fi/studio/compare/v0.145.0...v0.146.0) (2022-08-04)
+
+
+### Features
+
+* **price-selectors:** Add `dailyVolume` to types ([054cc8d](https://github.com/Zapper-fi/studio/commit/054cc8d8e4eae8a06bb9f4b543bd0f03c2574f10))
+
 ## [0.145.0](https://github.com/Zapper-fi/studio/compare/v0.144.0...v0.145.0) (2022-08-04)
 
 
