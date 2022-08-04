@@ -1,5 +1,6 @@
 import { compact, range } from 'lodash';
 
+import { ETH_ADDR_ALIAS, ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { IMulticallWrapper } from '~multicall/multicall.interface';
 
@@ -23,7 +24,10 @@ export class CurvePoolOnChainCoinStrategy {
         ),
       );
 
-      return compact(coinAddresses).map(v => v.toLowerCase());
+      return compact(coinAddresses)
+        .filter(v => v !== ZERO_ADDRESS)
+        .map(v => v.toLowerCase())
+        .map(v => v.replace(ETH_ADDR_ALIAS, ZERO_ADDRESS));
     };
   }
 }
