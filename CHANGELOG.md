@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.145.0](https://github.com/Zapper-fi/studio/compare/v0.144.0...v0.145.0) (2022-08-04)
+
+
+### Features
+
+* **curve:** Fix missing steth/eth, add missing logo for nereus ([#1070](https://github.com/Zapper-fi/studio/issues/1070)) ([233576d](https://github.com/Zapper-fi/studio/commit/233576ddbb1741c6a0473c779e574c1cb5cafc0e))
+
 ## [0.144.0](https://github.com/Zapper-fi/studio/compare/v0.143.0...v0.144.0) (2022-08-04)
 
 
