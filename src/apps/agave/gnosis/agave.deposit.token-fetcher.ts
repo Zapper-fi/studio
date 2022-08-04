@@ -1,33 +1,37 @@
-import { Inject } from '@nestjs/common';
-
 import { Register } from '~app-toolkit/decorators';
-import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
-import { AaveV2LendingTokenHelper } from '~apps/aave-v2/helpers/aave-v2.lending.token-helper';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { AppTokenPosition } from '~position/position.interface';
+import { AaveV2AToken } from '~apps/aave-v2/contracts/ethers/AaveV2AToken';
+import {
+  AaveV2LendingTemplateTokenFetcher,
+  AaveV2LendingTokenDataProps,
+  AaveV2ReserveApyData,
+  AaveV2ReserveTokenAddressesData,
+} from '~apps/aave-v2/helpers/aave-v2.lending.template.token-fetcher';
+import { DisplayPropsStageParams } from '~position/template/app-token.template.position-fetcher';
 import { Network } from '~types/network.interface';
 
-import { AGAVE_DEFINITION } from '../agave.definition';
+import AGAVE_DEFINITION from '../agave.definition';
 
 const appId = AGAVE_DEFINITION.id;
 const groupId = AGAVE_DEFINITION.groups.deposit.id;
 const network = Network.GNOSIS_MAINNET;
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
-export class GnosisAgaveDepositTokenFetcher implements PositionFetcher<AppTokenPosition> {
-  constructor(@Inject(AaveV2LendingTokenHelper) private readonly aaveV2LendingTokenHelper: AaveV2LendingTokenHelper) {}
+export class GnosisAgaveDepositTokenFetcher extends AaveV2LendingTemplateTokenFetcher {
+  appId = AGAVE_DEFINITION.id;
+  groupId = AGAVE_DEFINITION.groups.deposit.id;
+  network = Network.GNOSIS_MAINNET;
+  providerAddress = '0x24dcbd376db23e4771375092344f5cbea3541fc0';
+  isDebt = false;
 
-  async getPositions() {
-    return this.aaveV2LendingTokenHelper.getTokens({
-      appId,
-      groupId,
-      network,
-      protocolDataProviderAddress: '0x24dcbd376db23e4771375092344f5cbea3541fc0',
-      resolveTokenAddress: ({ reserveTokenAddressesData }) => reserveTokenAddressesData.aTokenAddress,
-      resolveLendingRate: ({ reserveData }) => reserveData.liquidityRate,
-      resolveLabel: ({ reserveToken }) => getLabelFromToken(reserveToken),
-      resolveApyLabel: ({ apy }) => `${(apy * 100).toFixed(3)}% APY`,
-      exchangeable: true,
-    });
+  getTokenAddress(reserveTokenAddressesData: AaveV2ReserveTokenAddressesData): string {
+    return reserveTokenAddressesData.aTokenAddress;
+  }
+
+  getApy(reserveApyData: AaveV2ReserveApyData): number {
+    return reserveApyData.supplyApy;
+  }
+
+  async getTertiaryLabel({ appToken }: DisplayPropsStageParams<AaveV2AToken, AaveV2LendingTokenDataProps>) {
+    return `${(appToken.dataProps.apy * 100).toFixed(3)}% APY`;
   }
 }
