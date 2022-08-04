@@ -15,4 +15,5 @@ export const ADDRESSES = {
   pls: '0x51318b7d00db7acc4026c88c3952b66278b6a67f',
   plsDpx: '0xf236ea74b515ef96a9898f5a4ed4aa591f253ce1',
   plsJones: '0xe7f6c3c1f0018e4c08acc52965e5cbff99e34a44',
+  tge: '0x35cd01aaa22ccae7839dfabe8c6db2f8e5a7b2e0',
 };

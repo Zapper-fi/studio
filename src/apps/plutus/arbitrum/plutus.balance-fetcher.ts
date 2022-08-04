@@ -237,7 +237,7 @@ export class ArbitrumPlutusBalanceFetcher implements BalanceFetcher {
       groupId: PLUTUS_DEFINITION.groups.tge.id,
       resolveBalances: async ({ address, contractPosition, multicall }) => {
         const contract = this.contractFactory.plutusPrivateTge(contractPosition);
-        const balance = multicall.wrap(contract).deposit(address);
+        const balance = await multicall.wrap(contract).deposit(address);
         return [drillBalance(contractPosition.tokens[0], balance.toString())];
       },
     });
