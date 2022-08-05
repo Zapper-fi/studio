@@ -248,15 +248,17 @@ export class ArbitrumPlutusBalanceFetcher implements BalanceFetcher {
       plsDpxTokenBalances,
       plsJonesTokenBalances,
       lockedBalances,
-      dpxBalances,
-      jonesBalances,
-      plsBalances,
+      plsDpxFarmBalances,
+      plsDpxFarmV2Balances,
+      plsJonesFarmBalances,
+      plsFarmBalances,
       privateTgeBalances,
     ] = await Promise.all([
       this.getPlsDpxTokenBalances(address),
       this.getPlsJonesTokenAddresses(address),
       this.getLockedBalances(address),
       this.getPlsDpxFarmBalances(address),
+      this.getPlsDpxFarmV2Balances(address),
       this.getPlsJonesFarmBalances(address),
       this.getPlsFarmBalances(address),
       this.getPrivateTgeBalances(address),
@@ -276,8 +278,20 @@ export class ArbitrumPlutusBalanceFetcher implements BalanceFetcher {
         assets: lockedBalances,
       },
       {
-        label: 'Staked',
-        assets: [...dpxBalances, ...jonesBalances, ...plsBalances],
+        label: 'Staked plsDPX (old)',
+        assets: [...plsDpxFarmBalances],
+      },
+      {
+        label: 'Staked plsDPX',
+        assets: [...plsDpxFarmV2Balances],
+      },
+      {
+        label: 'Staked plsJONES',
+        assets: [...plsJonesFarmBalances],
+      },
+      {
+        label: 'Staked PLS',
+        assets: [...plsFarmBalances],
       },
       {
         label: 'Private TGE',
