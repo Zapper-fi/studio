@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.150.0](https://github.com/Zapper-fi/studio/compare/v0.149.0...v0.150.0) (2022-08-05)
+
+
+### Features
+
+* **dopex:** add voting escrow ([#1080](https://github.com/Zapper-fi/studio/issues/1080)) ([0fe14c8](https://github.com/Zapper-fi/studio/commit/0fe14c822e74072a3e39bb48fed02dc221cd938b))
+
 ## [0.149.0](https://github.com/Zapper-fi/studio/compare/v0.148.0...v0.149.0) (2022-08-05)
 
 
