@@ -7,6 +7,7 @@ import { Register } from '~app-toolkit/decorators';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { UNISWAP_V2_DEFINITION } from '~apps/uniswap-v2/uniswap-v2.definition';
+import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { ContractType } from '~position/contract.interface';
 import { PositionBalanceFetcher } from '~position/position-balance-fetcher.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
@@ -52,7 +53,15 @@ export class EthereumSablierStreamLegacyContractPositionBalanceFetcher
 
     const positions = await Promise.all(
       streams.map(async stream => {
-        const salaryRaw = await multicall.wrap(sablierSalary).getSalary(stream.salaryId);
+        const salaryRaw = await multicall
+          .wrap(sablierSalary)
+          .getSalary(stream.salaryId)
+          .catch(err => {
+            if (isMulticallUnderlyingError(err)) return null;
+            throw err;
+          });
+        if (!salaryRaw) return null;
+
         const isRecipient = salaryRaw.employee.toLowerCase() === address;
         const who = isRecipient ? address : sablierSalaryAddress;
         const salaryBalanceRaw = await multicall.wrap(sablierStream).balanceOf(stream.streamId, who);

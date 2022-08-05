@@ -2,7 +2,6 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
-import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import {
   ContractPositionTemplatePositionFetcher,
   DisplayPropsStageParams,
@@ -21,7 +20,7 @@ const appId = SABLIER_DEFINITION.id;
 const groupId = SABLIER_DEFINITION.groups.stream.id;
 const network = Network.ETHEREUM_MAINNET;
 
-@Register.TokenPositionFetcher({ appId, groupId, network })
+@Register.ContractPositionFetcher({ appId, groupId, network })
 export class EthereumSablierStreamContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
   SablierStream,
   SablierContractPositionDataProps
@@ -45,7 +44,7 @@ export class EthereumSablierStreamContractPositionFetcher extends ContractPositi
     return this.contractFactory.sablierStream({ address, network: this.network });
   }
 
-  async getLabel({ appToken }: DisplayPropsStageParams<SablierStream, SablierContractPositionDataProps>) {
-    return `${getLabelFromToken(appToken.tokens[0])} in Sablier`;
+  async getLabel(_params: DisplayPropsStageParams<SablierStream, SablierContractPositionDataProps>) {
+    return `Sablier Stream`;
   }
 }
