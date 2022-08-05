@@ -36,7 +36,6 @@ export const ANGLE_DEFINITION = appDefinition({
 
   supportedNetworks: {
     [Network.ETHEREUM_MAINNET]: [AppAction.VIEW],
-    [Network.POLYGON_MAINNET]: [AppAction.VIEW],
   },
 
   primaryColor: '#fff',

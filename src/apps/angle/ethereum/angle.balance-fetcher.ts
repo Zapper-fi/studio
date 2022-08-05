@@ -42,7 +42,7 @@ export class EthereumAngleBalanceFetcher implements BalanceFetcher {
           .locked(address)
           .then(v => v.amount),
       resolveRewardTokenBalance: async () => {
-        const { rewardsData } = await this.angleApiHelper.getRewardsData(address);
+        const { rewardsData } = await this.angleApiHelper.getRewardsData(address, network);
         return rewardsData.totalClaimable;
       },
     });
@@ -53,7 +53,7 @@ export class EthereumAngleBalanceFetcher implements BalanceFetcher {
       address,
       appId: ANGLE_DEFINITION.id,
       groupId: ANGLE_DEFINITION.groups.santoken.id,
-      network: Network.ETHEREUM_MAINNET,
+      network,
     });
   }
 
@@ -64,7 +64,7 @@ export class EthereumAngleBalanceFetcher implements BalanceFetcher {
       network,
     });
 
-    const { perpetuals } = await this.angleApiHelper.getUserPerpetuals(address);
+    const { perpetuals } = await this.angleApiHelper.getUserPerpetuals(address, network);
 
     const balances = perpetuals.map(perp => {
       const contractPosition = contractPositions.find(
@@ -97,7 +97,7 @@ export class EthereumAngleBalanceFetcher implements BalanceFetcher {
       network,
     });
 
-    const vaults = Object.values(await this.angleApiHelper.getUserVaults(address));
+    const vaults = Object.values(await this.angleApiHelper.getUserVaults(address, network));
 
     const balances = vaults.map(vault => {
       const contractPosition = contractPositions.find(v => v.address.toLowerCase() === vault.address.toLowerCase());
