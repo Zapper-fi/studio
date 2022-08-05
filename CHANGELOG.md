@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.148.0](https://github.com/Zapper-fi/studio/compare/v0.147.0...v0.148.0) (2022-08-05)
+
+
+### Features
+
+* **aave-safety-module:** Fix dep ([553072e](https://github.com/Zapper-fi/studio/commit/553072ebd77b47aea299dd569a928e1835fa1d98))
+
 ## [0.147.0](https://github.com/Zapper-fi/studio/compare/v0.146.0...v0.147.0) (2022-08-05)
 
 
