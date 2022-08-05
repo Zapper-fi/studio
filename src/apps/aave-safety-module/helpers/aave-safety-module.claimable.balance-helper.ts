@@ -5,7 +5,6 @@ import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
-import { MulticallService } from '~multicall/multicall.service';
 import { ContractType } from '~position/contract.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { claimable } from '~position/position.utils';
@@ -26,7 +25,6 @@ export class AaveSafetyModuleClaimableBalanceHelper {
 
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(MulticallService) private readonly multicallService: MulticallService,
     @Inject(AaveSafetyModuleContractFactory) private readonly contractFactory: AaveSafetyModuleContractFactory,
   ) {}
 
