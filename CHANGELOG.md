@@ -4,6 +4,38 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.147.0](https://github.com/Zapper-fi/studio/compare/v0.146.0...v0.147.0) (2022-08-05)
+
+
+### Features
+
+* **aave-safety-module:** Extract Aave Safety Module ([68a860b](https://github.com/Zapper-fi/studio/commit/68a860b17a9a0f3ec21cc12d86432d8ade8eb7a7))
+* **plutus:** Add TGE claimable ([6b96ca2](https://github.com/Zapper-fi/studio/commit/6b96ca2b47a0c7e3f5708f70ead1cb66e31f7236))
+* **plutus:** Fix plsDPX and plsJONES staked balances ([a3570f2](https://github.com/Zapper-fi/studio/commit/a3570f2f82e212265c357c923676408f275aa062))
+* **plutus:** Remove private TGE ([7de64a9](https://github.com/Zapper-fi/studio/commit/7de64a99b93efaf4b45362ac2e1ef7c7cf5f8bc8))
+
+## [0.146.0](https://github.com/Zapper-fi/studio/compare/v0.145.0...v0.146.0) (2022-08-04)
+
+
+### Features
+
+* **price-selectors:** Add `dailyVolume` to types ([054cc8d](https://github.com/Zapper-fi/studio/commit/054cc8d8e4eae8a06bb9f4b543bd0f03c2574f10))
+
+## [0.145.0](https://github.com/Zapper-fi/studio/compare/v0.144.0...v0.145.0) (2022-08-04)
+
+
+### Features
+
+* **curve:** Fix missing steth/eth, add missing logo for nereus ([#1070](https://github.com/Zapper-fi/studio/issues/1070)) ([233576d](https://github.com/Zapper-fi/studio/commit/233576ddbb1741c6a0473c779e574c1cb5cafc0e))
+
+## [0.144.0](https://github.com/Zapper-fi/studio/compare/v0.143.0...v0.144.0) (2022-08-04)
+
+
+### Features
+
+* **geist:** Fix network ([58bd693](https://github.com/Zapper-fi/studio/commit/58bd69328562b806342dbdd9c4515797efcea3ef))
+* **plutus:** Implement new farm and private TGE ([#1066](https://github.com/Zapper-fi/studio/issues/1066)) ([a70753a](https://github.com/Zapper-fi/studio/commit/a70753a24c9642816047558fdd306f2016389fbb))
+
 ## [0.143.0](https://github.com/Zapper-fi/studio/compare/v0.142.0...v0.143.0) (2022-08-04)
 
 
