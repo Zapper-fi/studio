@@ -16,6 +16,7 @@ export const DOPEX_DEFINITION = appDefinition({
     ethSsov: { id: 'eth-ssov', type: GroupType.POSITION, label: 'SSOVs' },
     gohmSsov: { id: 'gohm-ssov', type: GroupType.POSITION, label: 'SSOVs' },
     gmxSsov: { id: 'gmx-ssov', type: GroupType.POSITION, label: 'SSOVs' },
+    votingEscrow: { id: 'voting-escrow', type: GroupType.POSITION, label: 'Voting Escrow' },
   },
   links: {
     twitter: 'https://twitter.com/dopex_io',
