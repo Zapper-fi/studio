@@ -5,9 +5,9 @@ import { Network } from '~types/network.interface';
 
 export const HECTOR_DAO_DEFINITION = appDefinition({
   id: 'hector-dao',
-  name: 'Hector DAO',
-  description: `Hector Finance is developing a financial center on the Fantom Opera Chain and beyond, consisting of a variety of use cases supported by the $HEC token.`,
-  url: 'https://hectordao.com/',
+  name: 'Hector Network',
+  description: `Hector Network is developing an expansive web 3 ecosystem for a visionary future. The foundations of the ecosystem, supported by the HEC utility token and TOR stablecoin, are functionality, accessibility and community. In conjunction with their growing list of partners, Hector Network is expanding crosschain and is dedicated to mass adoption.`,
+  url: 'https://hector.network/',
   tags: [AppTag.ELASTIC_FINANCE],
   groups: {
     vault: { id: 'vault', type: GroupType.TOKEN, label: 'Hector DAO', groupLabel: 'Farms' },
