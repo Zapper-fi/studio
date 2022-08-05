@@ -9,7 +9,7 @@ import { FantomHectorDaoStakeBondContractPositionFetcher } from './fantom/hector
 import { FantomHectorDaoVaultTokenFetcher } from './fantom/hector-dao.vault.token-fetcher';
 import { HectorDaoAppDefinition, HECTOR_DAO_DEFINITION } from './hector-dao.definition';
 
-Register.AppModule({
+@Register.AppModule({
   appId: HECTOR_DAO_DEFINITION.id,
   imports: [OlympusAppModule],
   providers: [
@@ -20,5 +20,5 @@ Register.AppModule({
     FantomHectorDaoStakeBondContractPositionFetcher,
     FantomHectorDaoBalanceFetcher,
   ],
-});
+})
 export class HectorDaoAppModule extends AbstractApp() {}
