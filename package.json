@@ -1,6 +1,6 @@
 {
   "name": "@zapper-fi/studio",
-  "version": "0.142.0",
+  "version": "0.146.0",
   "description": "Community build apps for Zapper.fi",
   "license": "MIT",
   "main": "./index.js",
@@ -36,6 +36,7 @@
     "rimraf": "^3.0.2"
   },
   "devDependencies": {
+    "@alex_neo/jest-expect-message": "^1.0.5",
     "@ethersproject/abi": "^5.5.0",
     "@ethersproject/bytes": "^5.5.0",
     "@ethersproject/contracts": "^5.5.0",
@@ -55,6 +56,7 @@
     "@types/fs-extra": "^9.0.13",
     "@types/inquirer": "^8.2.0",
     "@types/jest": "^27.4.1",
+    "@types/jest-expect-message": "^1.0.4",
     "@types/lodash": "^4.14.180",
     "@types/murmurhash-js": "^1.0.3",
     "@types/node": "16.11.7",
