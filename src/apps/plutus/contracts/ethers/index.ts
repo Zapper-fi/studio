@@ -8,6 +8,7 @@ export type { PlsPlutusChef } from './PlsPlutusChef';
 export type { PlutusEpochStaking } from './PlutusEpochStaking';
 export type { PlutusEpochStakingRewardsRolling } from './PlutusEpochStakingRewardsRolling';
 export type { PlutusPrivateTge } from './PlutusPrivateTge';
+export type { PlutusPrivateTgeVester } from './PlutusPrivateTgeVester';
 export * as factories from './factories';
 export { PlsDpxPlutusChefV2__factory } from './factories/PlsDpxPlutusChefV2__factory';
 export { PlsDpxPlutusChef__factory } from './factories/PlsDpxPlutusChef__factory';
@@ -15,4 +16,5 @@ export { PlsJonesPlutusChef__factory } from './factories/PlsJonesPlutusChef__fac
 export { PlsPlutusChef__factory } from './factories/PlsPlutusChef__factory';
 export { PlutusEpochStakingRewardsRolling__factory } from './factories/PlutusEpochStakingRewardsRolling__factory';
 export { PlutusEpochStaking__factory } from './factories/PlutusEpochStaking__factory';
+export { PlutusPrivateTgeVester__factory } from './factories/PlutusPrivateTgeVester__factory';
 export { PlutusPrivateTge__factory } from './factories/PlutusPrivateTge__factory';

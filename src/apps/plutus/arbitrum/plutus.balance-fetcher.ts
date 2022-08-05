@@ -229,16 +229,16 @@ export class ArbitrumPlutusBalanceFetcher implements BalanceFetcher {
     });
   }
 
-  async getPrivateTgeBalances(address: string) {
+  async getTgeClaimableBalances(address: string) {
     return this.appToolkit.helpers.contractPositionBalanceHelper.getContractPositionBalances({
       address,
       network,
       appId,
-      groupId: PLUTUS_DEFINITION.groups.tge.id,
+      groupId: PLUTUS_DEFINITION.groups.tgeClaimable.id,
       resolveBalances: async ({ address, contractPosition, multicall }) => {
-        const contract = this.contractFactory.plutusPrivateTge(contractPosition);
-        const balance = await multicall.wrap(contract).deposit(address);
-        return [drillBalance(contractPosition.tokens[0], balance.toString())];
+        const contract = this.contractFactory.plutusPrivateTgeVester(contractPosition);
+        const balance = await multicall.wrap(contract).pendingClaims(address);
+        return [drillBalance(contractPosition.tokens[0], balance._claimable.toString())];
       },
     });
   }
@@ -248,18 +248,20 @@ export class ArbitrumPlutusBalanceFetcher implements BalanceFetcher {
       plsDpxTokenBalances,
       plsJonesTokenBalances,
       lockedBalances,
-      dpxBalances,
-      jonesBalances,
-      plsBalances,
-      privateTgeBalances,
+      plsDpxFarmBalances,
+      plsDpxFarmV2Balances,
+      plsJonesFarmBalances,
+      plsFarmBalances,
+      tgeClaimableBalances,
     ] = await Promise.all([
       this.getPlsDpxTokenBalances(address),
       this.getPlsJonesTokenAddresses(address),
       this.getLockedBalances(address),
       this.getPlsDpxFarmBalances(address),
+      this.getPlsDpxFarmV2Balances(address),
       this.getPlsJonesFarmBalances(address),
       this.getPlsFarmBalances(address),
-      this.getPrivateTgeBalances(address),
+      this.getTgeClaimableBalances(address),
     ]);
 
     return presentBalanceFetcherResponse([
@@ -276,12 +278,24 @@ export class ArbitrumPlutusBalanceFetcher implements BalanceFetcher {
         assets: lockedBalances,
       },
       {
-        label: 'Staked',
-        assets: [...dpxBalances, ...jonesBalances, ...plsBalances],
+        label: 'Staked plsDPX (old)',
+        assets: [...plsDpxFarmBalances],
       },
       {
-        label: 'Private TGE',
-        assets: [...privateTgeBalances],
+        label: 'Staked plsDPX',
+        assets: [...plsDpxFarmV2Balances],
+      },
+      {
+        label: 'Staked plsJONES',
+        assets: [...plsJonesFarmBalances],
+      },
+      {
+        label: 'Staked PLS',
+        assets: [...plsFarmBalances],
+      },
+      {
+        label: 'Private TGE Allocation',
+        assets: [...tgeClaimableBalances],
       },
     ]);
   }
