@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { BigNumberish } from 'ethers';
-import _ from 'lodash';
+import _, { compact } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ETH_ADDR_ALIAS, ZERO_ADDRESS } from '~app-toolkit/constants/address';
@@ -124,7 +124,7 @@ export class RariFuseSupplyTokenHelper {
     );
 
     const appTokens = dependencies.length ? await this.appToolkit.getAppTokenPositions(...dependencies) : [];
-    const allTokens = [...baseTokens, ...appTokens];
+    const allTokens = [...appTokens, ...compact(baseTokens)];
 
     const tokens = await Promise.all(
       poolData.map(async ({ marketName, underlyings, comptrollerAddress }) => {
