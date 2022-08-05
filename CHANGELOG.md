@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.149.0](https://github.com/Zapper-fi/studio/compare/v0.148.0...v0.149.0) (2022-08-05)
+
+
+### Features
+
+* **hector-dao:** Add missing at symbol ([0529c42](https://github.com/Zapper-fi/studio/commit/0529c42bf0e285775ee1df791e934f9c418b0154))
+
 ## [0.148.0](https://github.com/Zapper-fi/studio/compare/v0.147.0...v0.148.0) (2022-08-05)
 
 
