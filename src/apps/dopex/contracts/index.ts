@@ -11,6 +11,8 @@ import { DopexGmxSsov__factory } from './ethers';
 import { DopexRdpxSsov__factory } from './ethers';
 import { DopexRewardDistribution__factory } from './ethers';
 import { DopexStaking__factory } from './ethers';
+import { DopexVotingEscrow__factory } from './ethers';
+import { DopexVotingEscrowRewards__factory } from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
@@ -42,6 +44,12 @@ export class DopexContractFactory extends ContractFactory {
   dopexStaking({ address, network }: ContractOpts) {
     return DopexStaking__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  dopexVotingEscrow({ address, network }: ContractOpts) {
+    return DopexVotingEscrow__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
+  dopexVotingEscrowRewards({ address, network }: ContractOpts) {
+    return DopexVotingEscrowRewards__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
 }
 
 export type { DopexDpxSsov } from './ethers';
@@ -51,3 +59,5 @@ export type { DopexGmxSsov } from './ethers';
 export type { DopexRdpxSsov } from './ethers';
 export type { DopexRewardDistribution } from './ethers';
 export type { DopexStaking } from './ethers';
+export type { DopexVotingEscrow } from './ethers';
+export type { DopexVotingEscrowRewards } from './ethers';

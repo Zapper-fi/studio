@@ -5,6 +5,7 @@ import Web3 from 'web3';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
+import { CurveVotingEscrowContractPositionBalanceHelper } from '~apps/curve/helpers/curve.voting-escrow.contract-position-balance-helper';
 import { BalanceFetcher } from '~balance/balance-fetcher.interface';
 import { Network } from '~types/network.interface';
 
@@ -16,6 +17,8 @@ import {
   DopexGOhmSsov,
   DopexRdpxSsov,
   DopexStaking,
+  DopexVotingEscrow,
+  DopexVotingEscrowRewards,
 } from '../contracts';
 import { DOPEX_DEFINITION } from '../dopex.definition';
 import { DopexSsovClaimableBalancesStrategy } from '../helpers/dopex.ssov.claimable-balances-strategy';
@@ -23,8 +26,9 @@ import { DopexSsovContractPositionBalanceHelper } from '../helpers/dopex.ssov.co
 import { DopexSsovDepositBalanceStrategy } from '../helpers/dopex.ssov.deposit-balance-strategy';
 
 const network = Network.ARBITRUM_MAINNET;
+const appId = DOPEX_DEFINITION.id;
 
-@Register.BalanceFetcher(DOPEX_DEFINITION.id, network)
+@Register.BalanceFetcher(appId, network)
 export class ArbitrumDopexBalanceFetcher implements BalanceFetcher {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
@@ -36,13 +40,15 @@ export class ArbitrumDopexBalanceFetcher implements BalanceFetcher {
     private readonly dopexSsovDepositBalanceStrategy: DopexSsovDepositBalanceStrategy,
     @Inject(DopexSsovClaimableBalancesStrategy)
     private readonly dopexSsovClaimableBalancesStrategy: DopexSsovClaimableBalancesStrategy,
+    @Inject(CurveVotingEscrowContractPositionBalanceHelper)
+    private readonly curveVotingEscrowContractPositionBalanceHelper: CurveVotingEscrowContractPositionBalanceHelper,
   ) {}
 
   private async getSsovBalances(address: string) {
     return Promise.all([
       this.dopexSsovContractPositionBalanceHelper.getBalances<DopexDpxSsov>({
         address,
-        appId: DOPEX_DEFINITION.id,
+        appId,
         groupId: DOPEX_DEFINITION.groups.dpxSsov.id,
         network,
         resolveSsovContract: ({ address, network }) => this.dopexContractFactory.dopexDpxSsov({ address, network }),
@@ -61,7 +67,7 @@ export class ArbitrumDopexBalanceFetcher implements BalanceFetcher {
       }),
       this.dopexSsovContractPositionBalanceHelper.getBalances<DopexRdpxSsov>({
         address,
-        appId: DOPEX_DEFINITION.id,
+        appId,
         groupId: DOPEX_DEFINITION.groups.rdpxSsov.id,
         network,
         resolveSsovContract: ({ address, network }) => this.dopexContractFactory.dopexRdpxSsov({ address, network }),
@@ -80,7 +86,7 @@ export class ArbitrumDopexBalanceFetcher implements BalanceFetcher {
       }),
       this.dopexSsovContractPositionBalanceHelper.getBalances<DopexEthSsov>({
         address,
-        appId: DOPEX_DEFINITION.id,
+        appId,
         groupId: DOPEX_DEFINITION.groups.ethSsov.id,
         network,
         resolveSsovContract: ({ address, network }) => this.dopexContractFactory.dopexEthSsov({ address, network }),
@@ -109,7 +115,7 @@ export class ArbitrumDopexBalanceFetcher implements BalanceFetcher {
       }),
       this.dopexSsovContractPositionBalanceHelper.getBalances<DopexGOhmSsov>({
         address,
-        appId: DOPEX_DEFINITION.id,
+        appId,
         groupId: DOPEX_DEFINITION.groups.gohmSsov.id,
         network,
         resolveSsovContract: ({ address, network }) => this.dopexContractFactory.dopexGOhmSsov({ address, network }),
@@ -122,7 +128,7 @@ export class ArbitrumDopexBalanceFetcher implements BalanceFetcher {
       }),
       this.dopexSsovContractPositionBalanceHelper.getBalances<DopexGmxSsov>({
         address,
-        appId: DOPEX_DEFINITION.id,
+        appId,
         groupId: DOPEX_DEFINITION.groups.gmxSsov.id,
         network,
         resolveSsovContract: ({ address, network }) => this.dopexContractFactory.dopexGmxSsov({ address, network }),
@@ -157,7 +163,7 @@ export class ArbitrumDopexBalanceFetcher implements BalanceFetcher {
   private async getStakedBalances(address: string) {
     return this.appToolkit.helpers.singleStakingContractPositionBalanceHelper.getBalances<DopexStaking>({
       address,
-      appId: DOPEX_DEFINITION.id,
+      appId,
       groupId: DOPEX_DEFINITION.groups.farm.id,
       network,
       resolveContract: ({ address, network }) => this.dopexContractFactory.dopexStaking({ address, network }),
@@ -170,10 +176,31 @@ export class ArbitrumDopexBalanceFetcher implements BalanceFetcher {
     });
   }
 
+  private async getVotingEscrowBalances(address: string) {
+    return this.curveVotingEscrowContractPositionBalanceHelper.getBalances<DopexVotingEscrow, DopexVotingEscrowRewards>(
+      {
+        address,
+        appId,
+        groupId: DOPEX_DEFINITION.groups.votingEscrow.id,
+        network,
+        resolveContract: ({ address }) => this.dopexContractFactory.dopexVotingEscrow({ network, address }),
+        resolveRewardContract: ({ address }) =>
+          this.dopexContractFactory.dopexVotingEscrowRewards({ network, address }),
+        resolveLockedTokenBalance: ({ contract, multicall }) =>
+          multicall
+            .wrap(contract)
+            .locked(address)
+            .then(v => v.amount),
+        resolveRewardTokenBalance: ({ contract, multicall }) => multicall.wrap(contract).earned(address),
+      },
+    );
+  }
+
   async getBalances(address: string) {
-    const [ssovBalances, stakedBalances] = await Promise.all([
+    const [ssovBalances, stakedBalances, votingEscrowBalances] = await Promise.all([
       this.getSsovBalances(address),
       this.getStakedBalances(address),
+      this.getVotingEscrowBalances(address),
     ]);
 
     return presentBalanceFetcherResponse([
@@ -184,6 +211,10 @@ export class ArbitrumDopexBalanceFetcher implements BalanceFetcher {
       {
         label: 'Staking',
         assets: [...stakedBalances],
+      },
+      {
+        label: 'Voting Escrow',
+        assets: votingEscrowBalances,
       },
     ]);
   }

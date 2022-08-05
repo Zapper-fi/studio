@@ -1,5 +1,7 @@
 import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
+import { CurveVotingEscrowContractPositionBalanceHelper } from '~apps/curve/helpers/curve.voting-escrow.contract-position-balance-helper';
+import { CurveVotingEscrowContractPositionHelper } from '~apps/curve/helpers/curve.voting-escrow.contract-position-helper';
 import { SynthetixAppModule } from '~apps/synthetix';
 
 import { ArbitrumDopexBalanceFetcher } from './arbitrum/dopex.balance-fetcher';
@@ -9,6 +11,7 @@ import { ArbitrumDopexFarmContractPositionFetcher } from './arbitrum/dopex.farm.
 import { ArbitrumDopexGmxSsovContractPositionFetcher } from './arbitrum/dopex.gmx-ssov.contract-position-fetcher';
 import { ArbitrumDopexGOhmSsovContractPositionFetcher } from './arbitrum/dopex.gohm-ssov.contract-position-fetcher';
 import { ArbitrumDopexRdpxSsovContractPositionFetcher } from './arbitrum/dopex.rdpx-ssov.contract-position-fetcher';
+import { ArbitrumDopexVotingEscrowContractPositionFetcher } from './arbitrum/dopex.voting-escrow.contract-position-fetcher';
 import { DopexContractFactory } from './contracts';
 import { DopexAppDefinition, DOPEX_DEFINITION } from './dopex.definition';
 import { DopexDualRewardFarmRoiStrategy } from './helpers/dopex.dual-reward-farm.roi-strategy';
@@ -35,6 +38,10 @@ import { DopexSsovDepositBalanceStrategy } from './helpers/dopex.ssov.deposit-ba
     ArbitrumDopexFarmContractPositionFetcher,
     ArbitrumDopexGmxSsovContractPositionFetcher,
     ArbitrumDopexGOhmSsovContractPositionFetcher,
+    ArbitrumDopexVotingEscrowContractPositionFetcher,
+    // External Helpers
+    CurveVotingEscrowContractPositionHelper,
+    CurveVotingEscrowContractPositionBalanceHelper,
   ],
 })
 export class DopexAppModule extends AbstractApp() {}
