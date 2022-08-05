@@ -11,6 +11,7 @@ export type ContractCall = {
   fragment: FunctionFragment;
   address: string;
   params: any[];
+  stack?: string;
 };
 
 type TargetContract = Pick<Contract, 'functions' | 'interface' | 'callStatic' | 'address'>;
@@ -47,7 +48,7 @@ export class EthersMulticall implements IMulticallWrapper {
       const [success, data] = response.returnData[i];
 
       if (!success) {
-        return new Error(`Multicall call failed for ${callIdentifier}`);
+        return new Error(`Multicall call failed for ${callIdentifier}\n${call.stack}`);
       }
 
       try {
@@ -55,7 +56,7 @@ export class EthersMulticall implements IMulticallWrapper {
         const result = new Interface([]).decodeFunctionResult(call.fragment, data);
         return outputs.length === 1 ? result[0] : result;
       } catch (err) {
-        return new Error(`Multicall call failed for ${callIdentifier}`);
+        return new Error(`Multicall call failed for ${callIdentifier}\n${call.stack}`);
       }
     });
 
@@ -64,7 +65,8 @@ export class EthersMulticall implements IMulticallWrapper {
 
   wrap<T extends TargetContract>(contract: T) {
     const abi = contract.interface.fragments;
-    const multicallContract = new MulticallContract(contract.address, abi as any);
+    const stack = new Error().stack?.split('\n').slice(1).join('\n');
+    const multicallContract = new MulticallContract(contract.address, abi as any, stack);
 
     const funcs = abi.reduce((memo, frag) => {
       if (frag.type !== 'function') return memo;

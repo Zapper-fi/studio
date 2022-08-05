@@ -60,7 +60,6 @@ export class EthereumSablierStreamContractPositionFetcher extends ContractPositi
   }
 
   async getLabel({ appToken }: DisplayPropsStageParams<SablierStream, SablierStreamContractPositionDataProps>) {
-    if (!appToken.tokens[0]) return 'WTF';
     return `${getLabelFromToken(appToken.tokens[0])} Sablier Stream`;
   }
 }

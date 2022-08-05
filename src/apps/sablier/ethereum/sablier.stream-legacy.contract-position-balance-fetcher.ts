@@ -39,10 +39,12 @@ export class EthereumSablierStreamLegacyContractPositionBalanceFetcher
     if (streams.length === 0) return [];
 
     const sablierAddress = '0xa4fc358455febe425536fd1878be67ffdbdec59a';
-    const sablierStream = this.sablierContractFactory.sablierStreamLegacy({ address: sablierAddress, network });
+    const sablierStreamContract = this.sablierContractFactory.sablierStreamLegacy({ address: sablierAddress, network });
+    const sablierStream = multicall.wrap(sablierStreamContract);
 
     const sablierSalaryAddress = '0xbd6a40bb904aea5a49c59050b5395f7484a4203d';
-    const sablierSalary = this.sablierContractFactory.sablierSalary({ address: sablierSalaryAddress, network });
+    const sablierSalaryContract = this.sablierContractFactory.sablierSalary({ address: sablierSalaryAddress, network });
+    const sablierSalary = multicall.wrap(sablierSalaryContract);
 
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
     const appTokens = await this.appToolkit.getAppTokenPositions(
@@ -53,18 +55,15 @@ export class EthereumSablierStreamLegacyContractPositionBalanceFetcher
 
     const positions = await Promise.all(
       streams.map(async stream => {
-        const salaryRaw = await multicall
-          .wrap(sablierSalary)
-          .getSalary(stream.salaryId)
-          .catch(err => {
-            if (isMulticallUnderlyingError(err)) return null;
-            throw err;
-          });
+        const salaryRaw = await sablierSalary.getSalary(stream.salaryId).catch(err => {
+          if (isMulticallUnderlyingError(err)) return null;
+          throw err;
+        });
         if (!salaryRaw) return null;
 
         const isRecipient = salaryRaw.employee.toLowerCase() === address;
         const who = isRecipient ? address : sablierSalaryAddress;
-        const salaryBalanceRaw = await multicall.wrap(sablierStream).balanceOf(stream.streamId, who);
+        const salaryBalanceRaw = await sablierStream.balanceOf(stream.streamId, who);
 
         const tokenAddress = salaryRaw.tokenAddress.toLowerCase();
         const token = allTokens.find(t => t.address === tokenAddress);
