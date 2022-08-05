@@ -13,11 +13,11 @@ import { PositionBalanceFetcher } from '~position/position-balance-fetcher.inter
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { Network } from '~types/network.interface';
 
-import { SablierStreamLegacyApiClient } from '../common/sablier.stream-legacy.api-client';
+import { SablierStreamApiClient } from '../common/sablier.stream.api-client';
 import { SablierContractFactory } from '../contracts';
 import { SABLIER_DEFINITION } from '../sablier.definition';
 
-import { SablierContractPositionDataProps } from './sablier.stream.contract-position-fetcher';
+import { SablierStreamContractPositionDataProps } from './sablier.stream.contract-position-fetcher';
 
 const appId = SABLIER_DEFINITION.id;
 const groupId = SABLIER_DEFINITION.groups.streamLegacy.id;
@@ -30,7 +30,7 @@ export class EthereumSablierStreamLegacyContractPositionBalanceFetcher
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(SablierContractFactory) private readonly sablierContractFactory: SablierContractFactory,
-    @Inject(SablierStreamLegacyApiClient) private readonly apiClient: SablierStreamLegacyApiClient,
+    @Inject(SablierStreamApiClient) private readonly apiClient: SablierStreamApiClient,
   ) {}
 
   async getBalances(address: string) {
@@ -78,7 +78,7 @@ export class EthereumSablierStreamLegacyContractPositionBalanceFetcher
         const remaining = Number(remainingRaw) / 10 ** token.decimals;
         const tokenBalance = drillBalance(token, balanceRaw);
 
-        const position: ContractPositionBalance<SablierContractPositionDataProps> = {
+        const position: ContractPositionBalance<SablierStreamContractPositionDataProps> = {
           type: ContractType.POSITION,
           address: sablierAddress,
           network,

@@ -2,18 +2,25 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
+import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import {
   ContractPositionTemplatePositionFetcher,
   DisplayPropsStageParams,
 } from '~position/template/contract-position.template.position-fetcher';
 import { Network } from '~types';
 
+import { SablierStreamApiClient } from '../common/sablier.stream.api-client';
 import { SablierContractFactory, SablierStream } from '../contracts';
 import { SABLIER_DEFINITION } from '../sablier.definition';
 
-type SablierContractPositionDataProps = {
+export type SablierStreamLegacyContractPositionDataProps = {
   deposited: number;
   remaining: number;
+};
+
+export type SablierStreamLegacyContractPositionDescriptor = {
+  address: string;
+  tokenAddress: string;
 };
 
 const appId = SABLIER_DEFINITION.id;
@@ -23,7 +30,8 @@ const network = Network.ETHEREUM_MAINNET;
 @Register.ContractPositionFetcher({ appId, groupId, network })
 export class EthereumSablierStreamLegacyContractPositionFetcher extends ContractPositionTemplatePositionFetcher<
   SablierStream,
-  SablierContractPositionDataProps
+  SablierStreamLegacyContractPositionDataProps,
+  SablierStreamLegacyContractPositionDescriptor
 > {
   appId = SABLIER_DEFINITION.id;
   groupId = SABLIER_DEFINITION.groups.streamLegacy.id;
@@ -32,19 +40,27 @@ export class EthereumSablierStreamLegacyContractPositionFetcher extends Contract
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(SablierContractFactory) protected readonly contractFactory: SablierContractFactory,
+    @Inject(SablierStreamApiClient) protected readonly apiClient: SablierStreamApiClient,
   ) {
     super(appToolkit);
   }
 
-  async getAddresses() {
-    return ['0xa4fc358455febe425536fd1878be67ffdbdec59a'];
+  async getDescriptors() {
+    const tokens = await this.apiClient.getTokens();
+    const streamAddress = '0xa4fc358455febe425536fd1878be67ffdbdec59a';
+    return tokens.map(v => ({ address: streamAddress, tokenAddress: v }));
   }
 
   getContract(address: string): SablierStream {
     return this.contractFactory.sablierStream({ address, network: this.network });
   }
 
-  async getLabel(_params: DisplayPropsStageParams<SablierStream, SablierContractPositionDataProps>) {
-    return `Sablier Stream`;
+  async getTokenAddresses(_contract: SablierStream, descriptor: SablierStreamLegacyContractPositionDescriptor) {
+    return [descriptor.tokenAddress];
+  }
+
+  async getLabel({ appToken }: DisplayPropsStageParams<SablierStream, SablierStreamLegacyContractPositionDataProps>) {
+    if (!appToken.tokens[0]) return 'WTF';
+    return `${getLabelFromToken(appToken.tokens[0])} Sablier Stream`;
   }
 }

@@ -16,6 +16,10 @@ import { ContractPosition } from '~position/position.interface';
 import { AppGroupsDefinition } from '~position/position.service';
 import { Network } from '~types/network.interface';
 
+export type DefaultContractPositionDescriptor = {
+  address: string;
+};
+
 export type StageParams<T extends Contract, V, K extends keyof ContractPosition> = {
   multicall: IMulticallWrapper;
   contract: T;
@@ -28,6 +32,7 @@ export type DisplayPropsStageParams<T extends Contract, V> = StageParams<T, V, '
 export abstract class ContractPositionTemplatePositionFetcher<
   T extends Contract,
   V extends DefaultDataProps = DefaultDataProps,
+  R extends DefaultContractPositionDescriptor = DefaultContractPositionDescriptor,
 > implements PositionFetcher<ContractPosition<V>>
 {
   abstract appId: string;
@@ -37,12 +42,12 @@ export abstract class ContractPositionTemplatePositionFetcher<
 
   constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) {}
 
-  abstract getAddresses(): Promise<string[]>;
+  abstract getDescriptors(): Promise<R[]>;
   abstract getContract(address: string): T;
   abstract getLabel(params: DisplayPropsStageParams<T, V>): Promise<string>;
 
   // Tokens
-  async getUnderlyingTokenAddresses(_contract: T): Promise<string | string[]> {
+  async getTokenAddresses(_contract: T, _descriptor: R): Promise<string | string[]> {
     return [];
   }
 
@@ -61,7 +66,7 @@ export abstract class ContractPositionTemplatePositionFetcher<
 
   async getTertiaryLabel({ appToken }: DisplayPropsStageParams<T, V>): Promise<DisplayProps['tertiaryLabel']> {
     if (typeof appToken.dataProps.apy === 'number') return `${appToken.dataProps.apy.toFixed(3)}% APY`;
-    return '';
+    return undefined;
   }
 
   async getImages({ appToken }: DisplayPropsStageParams<T, V>): Promise<DisplayProps['images']> {
@@ -85,33 +90,33 @@ export abstract class ContractPositionTemplatePositionFetcher<
   async getPositions() {
     const multicall = this.appToolkit.getMulticall(this.network);
     const tokenLoader = this.appToolkit.getBaseTokenPriceSelector();
-    const addresses = await this.getAddresses();
+    const descriptors = await this.getDescriptors();
 
     const skeletons = await Promise.all(
-      addresses.map(async address => {
-        const contract = multicall.wrap(this.getContract(address));
-        const underlyingTokenAddresses = await this.getUnderlyingTokenAddresses(contract)
+      descriptors.map(async descriptor => {
+        const contract = multicall.wrap(this.getContract(descriptor.address));
+        const tokenAddresses = await this.getTokenAddresses(contract, descriptor)
           .then(v => (Array.isArray(v) ? v : [v]))
           .then(v => v.map(t => t.toLowerCase()));
 
-        return { address, underlyingTokenAddresses };
+        return { ...descriptor, tokenAddresses };
       }),
     );
 
     const baseTokensRequests = skeletons
-      .flatMap(v => v.underlyingTokenAddresses)
+      .flatMap(v => v.tokenAddresses)
       .map(v => ({ network: this.network, address: v }));
     const baseTokens = await tokenLoader.getMany(baseTokensRequests);
     const appTokens = await this.appToolkit.getAppTokenPositions(...this.dependencies);
     const allTokens = [...appTokens, ...compact(baseTokens)];
 
     const skeletonsWithResolvedTokens = await Promise.all(
-      skeletons.map(async ({ address, underlyingTokenAddresses }) => {
-        const maybeTokens = underlyingTokenAddresses.map(v => allTokens.find(t => t.address === v));
+      skeletons.map(async ({ address, tokenAddresses, ...rest }) => {
+        const maybeTokens = tokenAddresses.map(v => allTokens.find(t => t.address === v));
         const tokens = compact(maybeTokens);
 
         if (maybeTokens.length !== tokens.length) return null;
-        return { address, tokens };
+        return { address, tokens, ...rest };
       }),
     );
 

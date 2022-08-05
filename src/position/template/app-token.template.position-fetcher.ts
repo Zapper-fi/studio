@@ -92,7 +92,7 @@ export abstract class AppTokenTemplatePositionFetcher<
 
   async getTertiaryLabel({ appToken }: DisplayPropsStageParams<T, V>): Promise<DisplayProps['tertiaryLabel']> {
     if (typeof appToken.dataProps.apy === 'number') return `${appToken.dataProps.apy.toFixed(3)}% APY`;
-    return '';
+    return undefined;
   }
 
   async getImages({ appToken }: DisplayPropsStageParams<T, V>): Promise<DisplayProps['images']> {

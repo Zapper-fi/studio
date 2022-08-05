@@ -1,7 +1,6 @@
 import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
 
-import { SablierStreamLegacyApiClient } from './common/sablier.stream-legacy.api-client';
 import { SablierStreamApiClient } from './common/sablier.stream.api-client';
 import { SablierContractFactory } from './contracts';
 import { EthereumSablierStreamLegacyContractPositionBalanceFetcher } from './ethereum/sablier.stream-legacy.contract-position-balance-fetcher';
@@ -16,7 +15,6 @@ import { SablierAppDefinition, SABLIER_DEFINITION } from './sablier.definition';
     SablierAppDefinition,
     SablierContractFactory,
     SablierStreamApiClient,
-    SablierStreamLegacyApiClient,
     EthereumSablierStreamLegacyContractPositionBalanceFetcher,
     EthereumSablierStreamLegacyContractPositionFetcher,
     EthereumSablierStreamContractPositionBalanceFetcher,
