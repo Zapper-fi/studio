@@ -18,6 +18,7 @@ import {
   PlsJonesPlutusChef,
   PlutusEpochStaking,
 } from '../contracts';
+import { PlsDpxPlutusChefV2 } from '../contracts/ethers/PlsDpxPlutusChefV2';
 import { PLUTUS_DEFINITION } from '../plutus.definition';
 
 const appId = PLUTUS_DEFINITION.id;
@@ -119,12 +120,12 @@ export class ArbitrumPlutusBalanceFetcher implements BalanceFetcher {
     });
   }
 
-  async getStakedDPXBalances(address: string) {
+  async getPlsDpxFarmBalances(address: string) {
     return this.appToolkit.helpers.masterChefContractPositionBalanceHelper.getBalances<PlsDpxPlutusChef>({
       address,
       network,
       appId,
-      groupId: PLUTUS_DEFINITION.groups.dpx.id,
+      groupId: PLUTUS_DEFINITION.groups.plsDpxFarm.id,
       resolveChefContract: ({ contractAddress, network }) =>
         this.contractFactory.plsDpxPlutusChef({ address: contractAddress, network }),
       resolveStakedTokenBalance: this.appToolkit.helpers.masterChefDefaultStakedBalanceStrategy.build({
@@ -151,12 +152,38 @@ export class ArbitrumPlutusBalanceFetcher implements BalanceFetcher {
     });
   }
 
-  async getStakedJonesBalances(address: string) {
+  async getPlsDpxFarmV2Balances(address: string) {
+    return this.appToolkit.helpers.masterChefContractPositionBalanceHelper.getBalances<PlsDpxPlutusChefV2>({
+      address,
+      network,
+      appId,
+      groupId: PLUTUS_DEFINITION.groups.plsDpxFarmV2.id,
+      resolveChefContract: ({ contractAddress, network }) =>
+        this.contractFactory.plsDpxPlutusChefV2({ address: contractAddress, network }),
+      resolveStakedTokenBalance: this.appToolkit.helpers.masterChefDefaultStakedBalanceStrategy.build({
+        resolveStakedBalance: ({ contract, multicall }) =>
+          multicall
+            .wrap(contract)
+            .userInfo(address)
+            .then(info => info.amount),
+      }),
+      resolveClaimableTokenBalances: async ({ address, contract, contractPosition, multicall }) => {
+        const pendingTokens = await multicall
+          .wrap(contract)
+          .userInfo(address)
+          .then(info => [info.plsRewardDebt, info.plsDpxRewardDebt, info.plsJonesRewardDebt, info.dpxRewardDebt]);
+        const claimableTokens = contractPosition.tokens.filter(t => t.metaType === MetaType.CLAIMABLE);
+        return claimableTokens.map((v, i) => drillBalance(v, pendingTokens[i].toString()));
+      },
+    });
+  }
+
+  async getPlsJonesFarmBalances(address: string) {
     return this.appToolkit.helpers.masterChefContractPositionBalanceHelper.getBalances<PlsJonesPlutusChef>({
       address,
       network,
       appId,
-      groupId: PLUTUS_DEFINITION.groups.jones.id,
+      groupId: PLUTUS_DEFINITION.groups.plsJonesFarm.id,
       resolveChefContract: ({ contractAddress, network }) =>
         this.contractFactory.plsJonesPlutusChef({ address: contractAddress, network }),
       resolveStakedTokenBalance: this.appToolkit.helpers.masterChefDefaultStakedBalanceStrategy.build({
@@ -177,12 +204,12 @@ export class ArbitrumPlutusBalanceFetcher implements BalanceFetcher {
     });
   }
 
-  async getStakedPlsBalances(address: string) {
+  async getPlsFarmBalances(address: string) {
     return this.appToolkit.helpers.masterChefContractPositionBalanceHelper.getBalances<PlsPlutusChef>({
       address,
       network,
       appId,
-      groupId: PLUTUS_DEFINITION.groups.stake.id,
+      groupId: PLUTUS_DEFINITION.groups.plsFarm.id,
       resolveChefContract: ({ contractAddress, network }) =>
         this.contractFactory.plsPlutusChef({ address: contractAddress, network }),
       resolveStakedTokenBalance: this.appToolkit.helpers.masterChefDefaultStakedBalanceStrategy.build({
@@ -202,16 +229,40 @@ export class ArbitrumPlutusBalanceFetcher implements BalanceFetcher {
     });
   }
 
+  async getTgeClaimableBalances(address: string) {
+    return this.appToolkit.helpers.contractPositionBalanceHelper.getContractPositionBalances({
+      address,
+      network,
+      appId,
+      groupId: PLUTUS_DEFINITION.groups.tgeClaimable.id,
+      resolveBalances: async ({ address, contractPosition, multicall }) => {
+        const contract = this.contractFactory.plutusPrivateTgeVester(contractPosition);
+        const balance = await multicall.wrap(contract).pendingClaims(address);
+        return [drillBalance(contractPosition.tokens[0], balance._claimable.toString())];
+      },
+    });
+  }
+
   async getBalances(address: string) {
-    const [plsDpxTokenBalances, plsJonesTokenBalances, lockedBalances, dpxBalances, jonesBalances, plsBalances] =
-      await Promise.all([
-        this.getPlsDpxTokenBalances(address),
-        this.getPlsJonesTokenAddresses(address),
-        this.getLockedBalances(address),
-        this.getStakedDPXBalances(address),
-        this.getStakedJonesBalances(address),
-        this.getStakedPlsBalances(address),
-      ]);
+    const [
+      plsDpxTokenBalances,
+      plsJonesTokenBalances,
+      lockedBalances,
+      plsDpxFarmBalances,
+      plsDpxFarmV2Balances,
+      plsJonesFarmBalances,
+      plsFarmBalances,
+      tgeClaimableBalances,
+    ] = await Promise.all([
+      this.getPlsDpxTokenBalances(address),
+      this.getPlsJonesTokenAddresses(address),
+      this.getLockedBalances(address),
+      this.getPlsDpxFarmBalances(address),
+      this.getPlsDpxFarmV2Balances(address),
+      this.getPlsJonesFarmBalances(address),
+      this.getPlsFarmBalances(address),
+      this.getTgeClaimableBalances(address),
+    ]);
 
     return presentBalanceFetcherResponse([
       {
@@ -227,8 +278,24 @@ export class ArbitrumPlutusBalanceFetcher implements BalanceFetcher {
         assets: lockedBalances,
       },
       {
-        label: 'Staked',
-        assets: [...dpxBalances, ...jonesBalances, ...plsBalances],
+        label: 'Staked plsDPX (old)',
+        assets: [...plsDpxFarmBalances],
+      },
+      {
+        label: 'Staked plsDPX',
+        assets: [...plsDpxFarmV2Balances],
+      },
+      {
+        label: 'Staked plsJONES',
+        assets: [...plsJonesFarmBalances],
+      },
+      {
+        label: 'Staked PLS',
+        assets: [...plsFarmBalances],
+      },
+      {
+        label: 'Private TGE Allocation',
+        assets: [...tgeClaimableBalances],
       },
     ]);
   }

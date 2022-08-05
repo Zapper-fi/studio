@@ -6,6 +6,7 @@ import { Network } from '~types/network.interface';
 
 import { AaveProtocolDataProvider__factory } from './ethers';
 import { AaveStakedTokenIncentivesController__factory } from './ethers';
+import { AaveV2AToken__factory } from './ethers';
 import { AaveV2LendingPoolProvider__factory } from './ethers';
 
 // eslint-disable-next-line
@@ -23,6 +24,9 @@ export class AaveV2ContractFactory extends ContractFactory {
   aaveStakedTokenIncentivesController({ address, network }: ContractOpts) {
     return AaveStakedTokenIncentivesController__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  aaveV2AToken({ address, network }: ContractOpts) {
+    return AaveV2AToken__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   aaveV2LendingPoolProvider({ address, network }: ContractOpts) {
     return AaveV2LendingPoolProvider__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
@@ -30,4 +34,5 @@ export class AaveV2ContractFactory extends ContractFactory {
 
 export type { AaveProtocolDataProvider } from './ethers';
 export type { AaveStakedTokenIncentivesController } from './ethers';
+export type { AaveV2AToken } from './ethers';
 export type { AaveV2LendingPoolProvider } from './ethers';

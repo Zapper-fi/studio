@@ -45,15 +45,6 @@ export class AvalancheNereusFinanceBalanceFetcher implements BalanceFetcher {
     ]).then(v => v.flat());
   }
 
-  private async getClaimableBalances(address: string) {
-    return this.aaveV2ClaimableBalanceHelper.getClaimableBalances({
-      address,
-      appId: NEREUS_FINANCE_DEFINITION.id,
-      groupId: NEREUS_FINANCE_DEFINITION.groups.claimable.id,
-      network,
-    });
-  }
-
   private async getHealthFactorMeta(address: string) {
     return this.healthFactorHelper.getHealthFactor({
       address,
@@ -63,9 +54,8 @@ export class AvalancheNereusFinanceBalanceFetcher implements BalanceFetcher {
   }
 
   async getBalances(address: string) {
-    const [lendingBalances, claimable, healthFactorMeta] = await Promise.all([
+    const [lendingBalances, healthFactorMeta] = await Promise.all([
       this.getLendingBalances(address),
-      this.getClaimableBalances(address),
       this.getHealthFactorMeta(address),
     ]);
 
@@ -74,10 +64,6 @@ export class AvalancheNereusFinanceBalanceFetcher implements BalanceFetcher {
         label: 'Lending',
         assets: lendingBalances,
         meta: lendingBalances.find(v => v.balanceUSD < 0) ? [healthFactorMeta] : [],
-      },
-      {
-        label: 'Reward',
-        assets: claimable,
       },
     ]);
   }

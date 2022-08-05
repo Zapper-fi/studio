@@ -4,7 +4,7 @@ import { range, uniqBy } from 'lodash';
 import moment from 'moment';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { ETH_ADDR_ALIAS, ZERO_ADDRESS } from '~app-toolkit/constants/address';
+import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import {
   CurveContractFactory,
   CurveCryptoFactory,
@@ -55,7 +55,6 @@ export class CurvePoolRegistry {
         resolveSourceCount: ({ contract }) => contract.pool_count(),
         resolveSwapAddress: ({ contract, index }) => contract.pool_list(index),
         resolveTokenAddress: ({ contract, swapAddress }) => contract.get_lp_token(swapAddress),
-        resolveCoinAddresses: ({ contract, swapAddress }) => contract.get_coins(swapAddress),
       }),
       // Stable Swap Factory
       this.retrieveFromSource<CurveStableFactory>({
@@ -66,7 +65,6 @@ export class CurvePoolRegistry {
         resolveSourceCount: ({ contract }) => contract.pool_count(),
         resolveSwapAddress: ({ contract, index }) => contract.pool_list(index),
         resolveTokenAddress: ({ swapAddress }) => swapAddress,
-        resolveCoinAddresses: ({ contract, swapAddress }) => contract.get_coins(swapAddress),
       }),
       // Crypto Swap Registry
       this.retrieveFromSource<CurveCryptoRegistry>({
@@ -77,7 +75,6 @@ export class CurvePoolRegistry {
         resolveSourceCount: ({ contract }) => contract.pool_count(),
         resolveSwapAddress: ({ contract, index }) => contract.pool_list(index),
         resolveTokenAddress: ({ contract, swapAddress }) => contract.get_lp_token(swapAddress),
-        resolveCoinAddresses: ({ contract, swapAddress }) => contract.get_coins(swapAddress),
       }),
     ];
 
@@ -92,7 +89,6 @@ export class CurvePoolRegistry {
           resolveSourceCount: ({ contract }) => contract.pool_count(),
           resolveSwapAddress: ({ contract, index }) => contract.pool_list(index),
           resolveTokenAddress: ({ contract, swapAddress }) => contract.get_token(swapAddress),
-          resolveCoinAddresses: ({ contract, swapAddress }) => contract.get_coins(swapAddress),
         }),
       );
     }
@@ -128,7 +124,6 @@ export class CurvePoolRegistry {
     resolveSourceCount,
     resolveSwapAddress,
     resolveTokenAddress,
-    resolveCoinAddresses,
   }: {
     network: Network;
     poolType: CurvePoolType;
@@ -136,7 +131,6 @@ export class CurvePoolRegistry {
     resolveSourceCount: (opts: { contract: T }) => BigNumberish | Promise<BigNumberish>;
     resolveSwapAddress: (opts: { contract: T; index: number }) => string | Promise<string>;
     resolveTokenAddress: (opts: { contract: T; swapAddress: string }) => string | Promise<string>;
-    resolveCoinAddresses: (opts: { contract: T; swapAddress: string }) => string[] | Promise<string[]>;
   }) {
     const multicall = this.appToolkit.getMulticall(network);
     const gauges = await this.curveGaugeRegistry.getCachedGauges(network);
@@ -157,12 +151,6 @@ export class CurvePoolRegistry {
 
         const tokenAddressRaw = await resolveTokenAddress({ contract: multicallWrappedSource, swapAddress });
         const tokenAddress = tokenAddressRaw.toLowerCase();
-
-        const coinAddressesRaw = await resolveCoinAddresses({ contract: multicallWrappedSource, swapAddress });
-        const coinAddresses = coinAddressesRaw
-          .filter(v => v !== ZERO_ADDRESS)
-          .map(v => v.toLowerCase())
-          .map(v => v.replace(ETH_ADDR_ALIAS, ZERO_ADDRESS));
 
         const gaugeAddresses = gauges.filter(v => v.swapAddress === swapAddress).map(v => v.gaugeAddress);
         const poolApyData = allPoolApyData.find(v => v.swapAddress === swapAddress);
