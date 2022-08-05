@@ -78,6 +78,7 @@ export class RegistryPositionSource implements PositionSource {
     const positions = (await Promise.all(
       validFetchers.map(async fetcher => (await fetcher.getPositions()) ?? []),
     )) as T[][];
+
     return positions.flat();
   }
 }
