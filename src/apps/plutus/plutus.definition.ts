@@ -52,12 +52,6 @@ export const PLUTUS_DEFINITION = appDefinition({
       type: GroupType.POSITION,
       label: 'Staked PLS',
     },
-
-    tge: {
-      id: 'tge',
-      type: GroupType.POSITION,
-      label: 'Private TGE',
-    },
   },
   tags: [AppTag.ASSET_MANAGEMENT, AppTag.FARMING],
   keywords: [],
