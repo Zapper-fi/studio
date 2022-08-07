@@ -19,7 +19,7 @@ const network = Network.POLYGON_MAINNET;
 export class PolygonRevertFinanceBalanceFetcher implements BalanceFetcher {
   constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
-  async getAccumulatedCompoundorBalances(address: string) {
+  async getAccumulatedCompoundorRewards(address: string) {
     const graphHelper = this.appToolkit.helpers.theGraphHelper;
     const data = await graphHelper.requestGraph<CompoundorUserPosition>({
       endpoint: generateGraphUrlForNetwork(network),
@@ -39,12 +39,12 @@ export class PolygonRevertFinanceBalanceFetcher implements BalanceFetcher {
   }
 
   async getBalances(address: string) {
-    const [accumulatedCompoundorBalances] = await Promise.all([this.getAccumulatedCompoundorBalances(address)]);
+    const [accumulatedCompoundorRewards] = await Promise.all([this.getAccumulatedCompoundorRewards(address)]);
 
     return presentBalanceFetcherResponse([
       {
         label: 'Compoundor rewards',
-        assets: accumulatedCompoundorBalances,
+        assets: accumulatedCompoundorRewards,
       },
     ]);
   }
