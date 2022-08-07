@@ -43,7 +43,7 @@ export class ArbitrumRevertFinanceBalanceFetcher implements BalanceFetcher {
 
     return presentBalanceFetcherResponse([
       {
-        label: 'Compoundor bot rewards',
+        label: 'Compoundor rewards',
         assets: accumulatedCompoundorBalances,
       },
     ]);

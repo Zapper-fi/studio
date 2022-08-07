@@ -10,10 +10,10 @@ export const REVERT_FINANCE_DEFINITION = appDefinition({
   url: 'https://revert.finance/',
 
   groups: {
-    compoundorBotRewards: {
-      id: 'compoundor-bot-rewards',
+    compoundorRewards: {
+      id: 'compoundor-rewards',
       type: GroupType.POSITION,
-      label: 'Compoundor bot rewards',
+      label: 'Compoundor rewards',
     },
   },
 

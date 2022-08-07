@@ -32,7 +32,7 @@ export const getCompoundorContractPosition = (
     address: CompoundorContractAddress,
     network,
     appId: REVERT_FINANCE_DEFINITION.id,
-    groupId: REVERT_FINANCE_DEFINITION.groups.compoundorBotRewards.id,
+    groupId: REVERT_FINANCE_DEFINITION.groups.compoundorRewards.id,
     tokens: balance,
     balanceUSD: balance[0].balanceUSD,
     dataProps,
