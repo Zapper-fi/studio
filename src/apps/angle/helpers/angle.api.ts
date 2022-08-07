@@ -1,9 +1,8 @@
 import querystring from 'node:querystring';
 
-import { Injectable, Inject } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import Axios from 'axios';
 
-import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Cache } from '~cache/cache.decorator';
 import { Network } from '~types/network.interface';
 
@@ -91,7 +90,7 @@ type TVault = {
 
 @Injectable()
 export class AngleApiHelper {
-  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
+  constructor() {}
 
   private async callAngleApi<T>(endpoint: string, params?: Record<string, any>): Promise<T> {
     let url = `${BASE_URL}/${endpoint}`;
@@ -104,19 +103,19 @@ export class AngleApiHelper {
 
   @Cache({
     instance: 'business',
-    key: (network: Network) => `studio:${ANGLE_DEFINITION}:apr:${network}:angle`,
+    key: (network: Network) => `studio:${ANGLE_DEFINITION.id}:apr:${network}:angle`,
     ttl: 15 * 60,
   })
-  async getApr() {
+  async getApr(_network: Network) {
     return this.callAngleApi<Record<string, TAPR>>('apr');
   }
 
   @Cache({
     instance: 'business',
-    key: (network: Network) => `studio:${ANGLE_DEFINITION}:vaultmanagers:${network}:angle`,
+    key: (network: Network) => `studio:${ANGLE_DEFINITION.id}:vaultmanagers:${network}:angle`,
     ttl: 15 * 60,
   })
-  async getVaultManagers() {
+  async getVaultManagers(_network: Network) {
     return this.callAngleApi<Record<string, TVaultManager>>('vaultManagers', { chainId: 1 });
   }
 
@@ -125,7 +124,7 @@ export class AngleApiHelper {
     key: (network: Network) => `studio:${ANGLE_DEFINITION}:perpetuals:${network}:angle`,
     ttl: 15 * 60,
   })
-  async getUserPerpetuals(address: string) {
+  async getUserPerpetuals(address: string, _network: Network) {
     return this.callAngleApi<{ perpetuals: TPerpetual[] }>('perpetuals', {
       chainId: 1,
       user: address,
@@ -134,10 +133,10 @@ export class AngleApiHelper {
 
   @Cache({
     instance: 'user',
-    key: (network: Network) => `studio:${ANGLE_DEFINITION}:vaults:${network}:angle`,
+    key: (network: Network) => `studio:${ANGLE_DEFINITION.id}:vaults:${network}:angle`,
     ttl: 15 * 60,
   })
-  async getUserVaults(address: string) {
+  async getUserVaults(address: string, _network: Network) {
     return this.callAngleApi<Record<string, TVault>>('vaults', {
       chainId: 1,
       user: address,
@@ -146,10 +145,10 @@ export class AngleApiHelper {
 
   @Cache({
     instance: 'user',
-    key: (network: Network) => `studio:${ANGLE_DEFINITION}:rewardsdata:${network}:angle`,
+    key: (network: Network) => `studio:${ANGLE_DEFINITION.id}:rewardsdata:${network}:angle`,
     ttl: 30 * 60,
   })
-  async getRewardsData(address: string) {
+  async getRewardsData(address: string, _network: Network) {
     return this.callAngleApi<{ rewardsData: { totalClaimable: number } }>('dao', {
       chainId: 1,
       user: address,
@@ -158,10 +157,10 @@ export class AngleApiHelper {
 
   @Cache({
     instance: 'business',
-    key: (network: Network) => `studio:${ANGLE_DEFINITION}:tokenlist:${network}:angle`,
+    key: (network: Network) => `studio:${ANGLE_DEFINITION.id}:tokenlist:${network}:angle`,
     ttl: 60 * 60,
   })
-  async fetchTokenList(networkName = 'mainnet') {
+  async fetchTokenList(_network: Network, networkName = 'mainnet') {
     const tokenListEndpoint = 'https://raw.githubusercontent.com/AngleProtocol/angle-token-list/main/ERC20_LIST.json';
     const tokenList = await Axios.get<[{ [network: string]: Record<string, TokenInfo> }]>(tokenListEndpoint).then(
       v => v.data[0][networkName],
