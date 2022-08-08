@@ -74,8 +74,11 @@ export class ApiPositionSource implements PositionSource {
       networks.push(q.network);
     }
 
-    const query = qs.stringify({ addresses, networks });
-    const { data } = await this.axios.get<(AppTokenPosition | null)[]>(`/v2/app-tokens/batch?${query}`);
+    const { data } = await this.axios.post<(AppTokenPosition | null)[]>(`/v2/app-tokens/batch`, {
+      addresses,
+      networks,
+    });
+
     return data;
   }
 }
