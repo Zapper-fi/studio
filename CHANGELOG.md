@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.152.0](https://github.com/Zapper-fi/studio/compare/v0.151.0...v0.152.0) (2022-08-08)
+
+
+### Features
+
+* **template:** Use app token loader in template class ([#1097](https://github.com/Zapper-fi/studio/issues/1097)) ([f3f2276](https://github.com/Zapper-fi/studio/commit/f3f22762ca34595a2696d7ebad45d03d88a8eb93))
+
 ## [0.151.0](https://github.com/Zapper-fi/studio/compare/v0.150.0...v0.151.0) (2022-08-08)
 
 
