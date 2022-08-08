@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.155.0](https://github.com/Zapper-fi/studio/compare/v0.154.0...v0.155.0) (2022-08-08)
+
+
+### Features
+
+* **multicall:** Remove readonly clause ([1aaf107](https://github.com/Zapper-fi/studio/commit/1aaf10736291f669ce9bd084915958ec7bf69986))
+
 ## [0.154.0](https://github.com/Zapper-fi/studio/compare/v0.153.0...v0.154.0) (2022-08-08)
 
 
