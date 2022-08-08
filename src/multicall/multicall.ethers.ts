@@ -18,6 +18,10 @@ type TargetContract = Pick<Contract, 'functions' | 'interface' | 'callStatic' | 
 
 export const isMulticallUnderlyingError = (err: Error) => err.message.includes('Multicall call failed for');
 
+export type MulticallCallbackHooks = {
+  beforeCallHook?: (calls: ContractCall[], callRequests: Multicall.CallStruct[]) => void;
+};
+
 const DEFAULT_DATALOADER_OPTIONS = { cache: false, maxBatchSize: 250 };
 
 export class EthersMulticall implements IMulticallWrapper {
@@ -28,7 +32,7 @@ export class EthersMulticall implements IMulticallWrapper {
   constructor(
     multicall: Multicall,
     dataLoaderOptions: DataLoader.Options<ContractCall, any> = DEFAULT_DATALOADER_OPTIONS,
-    beforeCallHook?: (calls: ContractCall[], callRequests: Multicall.CallStruct[]) => void,
+    { beforeCallHook }: MulticallCallbackHooks = {},
   ) {
     this.multicall = multicall;
     this.dataLoader = new DataLoader(this.doCalls.bind(this), dataLoaderOptions);
