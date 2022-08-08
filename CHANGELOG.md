@@ -4,6 +4,156 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.150.0](https://github.com/Zapper-fi/studio/compare/v0.149.0...v0.150.0) (2022-08-05)
+
+
+### Features
+
+* **dopex:** add voting escrow ([#1080](https://github.com/Zapper-fi/studio/issues/1080)) ([0fe14c8](https://github.com/Zapper-fi/studio/commit/0fe14c822e74072a3e39bb48fed02dc221cd938b))
+
+## [0.149.0](https://github.com/Zapper-fi/studio/compare/v0.148.0...v0.149.0) (2022-08-05)
+
+
+### Features
+
+* **hector-dao:** Add missing at symbol ([0529c42](https://github.com/Zapper-fi/studio/commit/0529c42bf0e285775ee1df791e934f9c418b0154))
+
+## [0.148.0](https://github.com/Zapper-fi/studio/compare/v0.147.0...v0.148.0) (2022-08-05)
+
+
+### Features
+
+* **aave-safety-module:** Fix dep ([553072e](https://github.com/Zapper-fi/studio/commit/553072ebd77b47aea299dd569a928e1835fa1d98))
+
+## [0.147.0](https://github.com/Zapper-fi/studio/compare/v0.146.0...v0.147.0) (2022-08-05)
+
+
+### Features
+
+* **aave-safety-module:** Extract Aave Safety Module ([68a860b](https://github.com/Zapper-fi/studio/commit/68a860b17a9a0f3ec21cc12d86432d8ade8eb7a7))
+* **plutus:** Add TGE claimable ([6b96ca2](https://github.com/Zapper-fi/studio/commit/6b96ca2b47a0c7e3f5708f70ead1cb66e31f7236))
+* **plutus:** Fix plsDPX and plsJONES staked balances ([a3570f2](https://github.com/Zapper-fi/studio/commit/a3570f2f82e212265c357c923676408f275aa062))
+* **plutus:** Remove private TGE ([7de64a9](https://github.com/Zapper-fi/studio/commit/7de64a99b93efaf4b45362ac2e1ef7c7cf5f8bc8))
+
+## [0.146.0](https://github.com/Zapper-fi/studio/compare/v0.145.0...v0.146.0) (2022-08-04)
+
+
+### Features
+
+* **price-selectors:** Add `dailyVolume` to types ([054cc8d](https://github.com/Zapper-fi/studio/commit/054cc8d8e4eae8a06bb9f4b543bd0f03c2574f10))
+
+## [0.145.0](https://github.com/Zapper-fi/studio/compare/v0.144.0...v0.145.0) (2022-08-04)
+
+
+### Features
+
+* **curve:** Fix missing steth/eth, add missing logo for nereus ([#1070](https://github.com/Zapper-fi/studio/issues/1070)) ([233576d](https://github.com/Zapper-fi/studio/commit/233576ddbb1741c6a0473c779e574c1cb5cafc0e))
+
+## [0.144.0](https://github.com/Zapper-fi/studio/compare/v0.143.0...v0.144.0) (2022-08-04)
+
+
+### Features
+
+* **geist:** Fix network ([58bd693](https://github.com/Zapper-fi/studio/commit/58bd69328562b806342dbdd9c4515797efcea3ef))
+* **plutus:** Implement new farm and private TGE ([#1066](https://github.com/Zapper-fi/studio/issues/1066)) ([a70753a](https://github.com/Zapper-fi/studio/commit/a70753a24c9642816047558fdd306f2016389fbb))
+
+## [0.143.0](https://github.com/Zapper-fi/studio/compare/v0.142.0...v0.143.0) (2022-08-04)
+
+
+### Features
+
+* **positions:** Implement AppToken template fetcher and use it in Aave V2 forks ([#1056](https://github.com/Zapper-fi/studio/issues/1056)) ([1e9ea7e](https://github.com/Zapper-fi/studio/commit/1e9ea7e89d04cc35cdfee55601213e1b3c70bfd0))
+
+## [0.142.0](https://github.com/Zapper-fi/studio/compare/v0.141.0...v0.142.0) (2022-08-03)
+
+
+### Features
+
+* **nereus:** Add Nereus Finance ([#1029](https://github.com/Zapper-fi/studio/issues/1029)) ([bd42d0b](https://github.com/Zapper-fi/studio/commit/bd42d0b15f064b2827cb2806480a02f0e4471f00))
+* **nereus:** Remove redundant helper classes ([f34fc1a](https://github.com/Zapper-fi/studio/commit/f34fc1a8dab87ad670b31924fd84e630a92bc2b7))
+
+
+### Bug Fixes
+
+* **curve:** added badger dependency on curve pools ([#1041](https://github.com/Zapper-fi/studio/issues/1041)) ([dca4cd9](https://github.com/Zapper-fi/studio/commit/dca4cd9a66e37c888ca61fab4fd3769714b9f5d9))
+* **gmx:** Fix typo for wrong groupId ([#1048](https://github.com/Zapper-fi/studio/issues/1048)) ([fe90e28](https://github.com/Zapper-fi/studio/commit/fe90e284fc9b71b317652de8cf3305c0865957f2))
+
+## [0.141.0](https://github.com/Zapper-fi/studio/compare/v0.140.1...v0.141.0) (2022-08-03)
+
+
+### Features
+
+* **compound:** Extract claimable COMP as its own helper ([#1044](https://github.com/Zapper-fi/studio/issues/1044)) ([066d38b](https://github.com/Zapper-fi/studio/commit/066d38ba3d90c51e24ad61b3c93261818c1f0630))
+
+
+### Bug Fixes
+
+* **meshswap:** fix exchangeRate decimals ([#1045](https://github.com/Zapper-fi/studio/issues/1045)) ([b5a0ca7](https://github.com/Zapper-fi/studio/commit/b5a0ca73736ac6c018f77c61c22ff960d61343df))
+
+## [0.140.1](https://github.com/Zapper-fi/studio/compare/v0.140.0...v0.140.1) (2022-08-02)
+
+
+### Bug Fixes
+
+* **stargate:** Fix balance fetcher when farm reward period is over ([#1042](https://github.com/Zapper-fi/studio/issues/1042)) ([4b5fc43](https://github.com/Zapper-fi/studio/commit/4b5fc43d45b5fe66159e629b682c3fad02fea980))
+
+## [0.140.0](https://github.com/Zapper-fi/studio/compare/v0.139.0...v0.140.0) (2022-08-02)
+
+
+### Features
+
+* **meshswap:** implemented meshswap on Polygon ([#1033](https://github.com/Zapper-fi/studio/issues/1033)) ([98b6a6a](https://github.com/Zapper-fi/studio/commit/98b6a6ad25b9805b0340f80b5b8a2c8730cf572f))
+* **prices-selector:** Move Compound & Aave-V2 forks to new strategy ([#1039](https://github.com/Zapper-fi/studio/issues/1039)) ([6a28db0](https://github.com/Zapper-fi/studio/commit/6a28db09ee290d462f915170cabc9942da925ac9))
+
+## [0.139.0](https://github.com/Zapper-fi/studio/compare/v0.138.0...v0.139.0) (2022-08-02)
+
+
+### Features
+
+* **looks-rare:** Extract LooksRare integration from Zapper API to Studio ([#1009](https://github.com/Zapper-fi/studio/issues/1009)) ([424362e](https://github.com/Zapper-fi/studio/commit/424362eb799ec67ff0f90c850c7be7eb44008655))
+* **umami:** Adds vaults tracking, fixed API source to official UMAMI API ([#971](https://github.com/Zapper-fi/studio/issues/971)) ([3bbd7dc](https://github.com/Zapper-fi/studio/commit/3bbd7dcda51b60c486e95fd86af5a7ab7ed6be41))
+* **velodrome:** Fix missing pools ([#1031](https://github.com/Zapper-fi/studio/issues/1031)) ([07c9f4e](https://github.com/Zapper-fi/studio/commit/07c9f4e1200359ee92458b0b604c97cc29df97fa))
+
+## [0.138.0](https://github.com/Zapper-fi/studio/compare/v0.137.0...v0.138.0) (2022-08-02)
+
+
+### Features
+
+* **votium:** Add TTL on Votium keys to allow prior claimable amounts to expire ([#999](https://github.com/Zapper-fi/studio/issues/999)) ([9748e9c](https://github.com/Zapper-fi/studio/commit/9748e9c9fc41929d6eac0fe857feccb74e305ad0))
+
+## [0.137.0](https://github.com/Zapper-fi/studio/compare/v0.136.0...v0.137.0) (2022-08-02)
+
+
+### Features
+
+* **prices-selector:** File cache is too slow, use memory cache ([#988](https://github.com/Zapper-fi/studio/issues/988)) ([b6f3205](https://github.com/Zapper-fi/studio/commit/b6f3205ebc77d73fb9de1777eb48f4c2227fd9b2))
+
+
+### Bug Fixes
+
+* **uniswap-v2:** Tweak promise execution to improve DataLoader ([#997](https://github.com/Zapper-fi/studio/issues/997)) ([38c97c6](https://github.com/Zapper-fi/studio/commit/38c97c6753b9f2688e4b0cb9864295d991aa08bd))
+
+## [0.136.0](https://github.com/Zapper-fi/studio/compare/v0.135.0...v0.136.0) (2022-08-01)
+
+
+### Features
+
+* **prices-selector:** Add `GetMany` support ([1222d78](https://github.com/Zapper-fi/studio/commit/1222d78ee6bc5fc9aac881633f75eb9166f7f3d4))
+
+## [0.135.0](https://github.com/Zapper-fi/studio/compare/v0.134.0...v0.135.0) (2022-08-01)
+
+
+### Features
+
+* **uniswap-v2:** Adjust helper to prevent batch size bottleneck of Multicall from affecting batch size of DataLoader ([#983](https://github.com/Zapper-fi/studio/issues/983)) ([65268d9](https://github.com/Zapper-fi/studio/commit/65268d99fff427419dc44cedbb8fa64db2b380d8))
+
+## [0.134.0](https://github.com/Zapper-fi/studio/compare/v0.133.2...v0.134.0) (2022-08-01)
+
+
+### Features
+
+* **beethoven-x:** Add Optimism support ([#973](https://github.com/Zapper-fi/studio/issues/973)) ([ec62d36](https://github.com/Zapper-fi/studio/commit/ec62d36dda2d00215abb6cdc0b45a6c297bb5f43))
+
 ## [0.133.2](https://github.com/Zapper-fi/studio/compare/v0.133.1...v0.133.2) (2022-07-30)
 
 

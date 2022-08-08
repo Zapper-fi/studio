@@ -1,9 +1,6 @@
 import { Inject, Injectable, Logger } from '@nestjs/common';
-import { Interval } from '@nestjs/schedule';
 import DataLoader from 'dataloader';
-import Cache from 'file-system-cache';
 import { isNil, map } from 'lodash';
-import moment from 'moment';
 
 import { Network } from '~types';
 
@@ -13,6 +10,7 @@ import {
   CreatePriceSelectorOptions,
   Filters,
   GetAll,
+  GetMany,
   GetOne,
   PriceSelector,
   PriceSelectorFactory,
@@ -23,29 +21,14 @@ type TokenDataLoaderKey = { network: Network; address: string };
 @Injectable()
 export class PriceSelectorService implements PriceSelectorFactory {
   private logger = new Logger(PriceSelectorService.name);
-  private cacheManager = Cache({
-    basePath: './.cache',
-    ns: 'price-selector',
-  });
+  private tokenCache = new Map<Network, Map<string, BaseTokenPrice>>();
 
   constructor(@Inject(TokenApiClient) private readonly tokenApiClient: TokenApiClient) {}
 
-  private getCacheKey(network: Network) {
-    return `$tokens:${network}`;
-  }
-
-  private async getCachedNetworkTokens(network: Network) {
-    const tokenMap = (await this.cacheManager.get(this.getCacheKey(network))) as unknown as Record<
-      string,
-      BaseTokenPrice
-    >;
-    if (!tokenMap) throw new Error(`Could not retrieve "${network}" tokens from cache`);
-    return tokenMap;
-  }
-
   private async getAllFromCache({ network }: Parameters<GetAll>[0], filters: Filters = {}) {
-    const cacheTokenMap = await this.getCachedNetworkTokens(network);
-    const tokens = Object.values(cacheTokenMap);
+    const cacheTokenMap = this.tokenCache.get(network);
+    if (!cacheTokenMap) throw new Error(`Could not retrieve "${network}" tokens from cache`);
+    const tokens = Array.from(cacheTokenMap.values());
 
     return tokens.filter(t => {
       if (!isNil(filters.exchangeable) && filters.exchangeable !== t.canExchange) return false;
@@ -54,9 +37,8 @@ export class PriceSelectorService implements PriceSelectorFactory {
     });
   }
 
-  private async getOneFromCache({ network, address }: Parameters<GetOne>[0], filters: Filters = {}) {
-    const cacheTokenMap = await this.getCachedNetworkTokens(network);
-    const match = cacheTokenMap[address];
+  private getOneFromCache({ network, address }: Parameters<GetOne>[0], filters: Filters = {}) {
+    const match = this.tokenCache.get(network)?.get(address);
 
     if (!match) return null;
     if (!isNil(filters.exchangeable) && filters.exchangeable !== match.canExchange) return null;
@@ -73,8 +55,14 @@ export class PriceSelectorService implements PriceSelectorFactory {
 
     return {
       getAll: opts => this.getAllFromCache(opts, filters),
-      getOne: ({ network, address }: Parameters<GetOne>[0]) => {
-        return tokenDataLoader.load({ network, address });
+      getOne: ({ network, address }: Parameters<GetOne>[0]) => tokenDataLoader.load({ network, address }),
+      getMany: async (queries: Parameters<GetMany>[0]) => {
+        const docs = await tokenDataLoader.loadMany(queries);
+
+        return docs.map(doc => {
+          if (doc instanceof Error) return null;
+          return doc;
+        });
       },
     };
   }
@@ -89,20 +77,16 @@ export class PriceSelectorService implements PriceSelectorFactory {
     }
   }
 
-  @Interval(moment.duration(2, 'minutes').asMilliseconds())
   private async updateCache() {
     const networks = Object.values(Network);
 
     await Promise.all(
       map(networks, async network => {
-        const map: Record<string, BaseTokenPrice> = {};
+        const map: Map<string, BaseTokenPrice> = new Map();
         const baseTokens = await this.tokenApiClient.getAllBaseTokenPrices(network);
 
-        baseTokens.forEach(token => {
-          map[token.address] = token;
-        });
-
-        await this.cacheManager.set(this.getCacheKey(network), map as any);
+        baseTokens.forEach(token => map.set(token.address, token));
+        this.tokenCache.set(network, map);
       }),
     );
   }

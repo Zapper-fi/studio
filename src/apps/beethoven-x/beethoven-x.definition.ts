@@ -21,7 +21,7 @@ export const BEETHOVEN_X_DEFINITION = appDefinition({
     learn: 'https://docs.beets.fi',
   },
   tags: [AppTag.YIELD_AGGREGATOR],
-  supportedNetworks: { [Network.FANTOM_OPERA_MAINNET]: [AppAction.VIEW] },
+  supportedNetworks: { [Network.FANTOM_OPERA_MAINNET]: [AppAction.VIEW], [Network.OPTIMISM_MAINNET]: [AppAction.VIEW] },
   token: {
     address: '0xf24bcf4d1e507740041c9cfd2dddb29585adce1e',
     network: Network.FANTOM_OPERA_MAINNET,

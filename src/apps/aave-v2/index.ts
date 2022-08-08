@@ -7,7 +7,6 @@ export { AaveV2ClaimableBalanceHelper } from './helpers/aave-v2.claimable.balanc
 export { AaveV2ClaimableContractPositionHelper } from './helpers/aave-v2.claimable.contract-position-helper';
 export { AaveV2HealthFactorMetaHelper } from './helpers/aave-v2.health-factor-meta-helper';
 export { AaveV2LendingBalanceHelper } from './helpers/aave-v2.lending.balance-helper';
-export { AaveV2LendingTokenDataProps } from './helpers/aave-v2.lending.token-helper';
 
 /* Contracts */
 export type { AaveProtocolDataProvider } from './contracts';

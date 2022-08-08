@@ -57,6 +57,11 @@ import { PolygonBalancerV2StakedfContractPositionFetcher } from './polygon/balan
     BalancerV2GaugeAddressesGetter,
     BalancerV2GaugeRewardTokenStrategy,
   ],
-  exports: [BalancerV2SpotPriceHelper, BalancerV2PoolTokensHelper, BalancerV2ContractFactory],
+  exports: [
+    BalancerV2SpotPriceHelper,
+    BalancerV2PoolTokensHelper,
+    BalancerV2ContractFactory,
+    BalancerV2GaugeRewardTokenStrategy,
+  ],
 })
 export class BalancerV2AppModule extends AbstractApp() {}

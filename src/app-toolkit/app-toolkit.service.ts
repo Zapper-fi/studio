@@ -102,9 +102,9 @@ export class AppToolkit implements IAppToolkit {
     return this.cacheManager.get<T>(key);
   }
 
-  async msetToCache<T = any>(entries: [string, T][]) {
-    // In production, this is a Redis `mset`
-    await Promise.all(entries.map(([key, value]) => this.cacheManager.set(key, value)));
+  async setManyToCache<T = any>(entries: [string, T][], ttl = 60) {
+    // In production, this is a Redis pipeline of `set` commands
+    await Promise.all(entries.map(([key, value]) => this.cacheManager.set(key, value, { ttl })));
   }
 
   // Global Helpers

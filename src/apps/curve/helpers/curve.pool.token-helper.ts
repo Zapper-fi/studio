@@ -3,6 +3,7 @@ import { BigNumberish } from 'ethers';
 import { compact, partition } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
+import { ETH_ADDR_ALIAS, ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import {
   buildDollarDisplayItem,
   buildNumberDisplayItem,
@@ -194,7 +195,8 @@ export class CurvePoolTokenHelper {
       poolDefinitions.map(async definition => {
         if (definition.coinAddresses) return definition;
         const poolContract = resolvePoolContract({ network, address: definition.swapAddress });
-        const coinAddresses = await resolvePoolCoinAddresses({ multicall, poolContract });
+        const rawCoinAddresses = await resolvePoolCoinAddresses({ multicall, poolContract });
+        const coinAddresses = rawCoinAddresses.map(v => v.toLowerCase().replace(ETH_ADDR_ALIAS, ZERO_ADDRESS));
         return { ...definition, coinAddresses };
       }),
     );
