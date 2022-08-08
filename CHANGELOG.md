@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.154.0](https://github.com/Zapper-fi/studio/compare/v0.153.0...v0.154.0) (2022-08-08)
+
+
+### Features
+
+* **multicall:** Add calls to parameters of before call hook ([#1101](https://github.com/Zapper-fi/studio/issues/1101)) ([72a5a1b](https://github.com/Zapper-fi/studio/commit/72a5a1b3931f3aac657ca2c2ed113579088b1404))
+
 ## [0.153.0](https://github.com/Zapper-fi/studio/compare/v0.152.0...v0.153.0) (2022-08-08)
 
 
