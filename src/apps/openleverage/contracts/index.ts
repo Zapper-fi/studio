@@ -1,10 +1,11 @@
 import { Injectable, Inject } from '@nestjs/common';
+
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
+import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
 import { OpenleverageFactory__factory } from './ethers';
 import { OpenleverageLpool__factory } from './ethers';
-import { ContractFactory } from '~contract/contracts';
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
 
