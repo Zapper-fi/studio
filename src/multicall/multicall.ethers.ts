@@ -37,7 +37,7 @@ export class EthersMulticall implements IMulticallWrapper {
     return this.multicall;
   }
 
-  private async doCalls(calls: readonly ContractCall[]) {
+  private async doCalls(calls: ContractCall[]) {
     const callRequests = calls.map(call => ({
       target: call.address,
       callData: new Interface([]).encodeFunctionData(call.fragment, call.params),
