@@ -50,12 +50,16 @@ export class EthersMulticall implements IMulticallWrapper {
     }));
 
     if (this.beforeCallHook) this.beforeCallHook(calls, callRequests);
-    const response = await this.multicall.callStatic.aggregate(callRequests, false);
+    const res = await this.multicall.callStatic.aggregate(callRequests, false);
+
+    if (res.returnData.length !== callRequests.length) {
+      throw new Error(`Unexpected response length: received ${res.returnData.length}; expected ${callRequests.length}`);
+    }
 
     const result = calls.map((call, i) => {
       const signature = FunctionFragment.from(call.fragment).format();
       const callIdentifier = [call.address, signature].join(':');
-      const [success, data] = response.returnData[i];
+      const [success, data] = res.returnData[i];
 
       if (!success) {
         return new Error(`Multicall call failed for ${callIdentifier}\n${call.stack}`);
@@ -66,7 +70,7 @@ export class EthersMulticall implements IMulticallWrapper {
         const result = new Interface([]).decodeFunctionResult(call.fragment, data);
         return outputs.length === 1 ? result[0] : result;
       } catch (err) {
-        return new Error(`Multicall call failed for ${callIdentifier}\n${call.stack}`);
+        return new Error(`Multicall call failed for ${callIdentifier}: ${err.message} (decode)\n${call.stack}`);
       }
     });
 
