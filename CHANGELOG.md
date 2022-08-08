@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.156.0](https://github.com/Zapper-fi/studio/compare/v0.155.0...v0.156.0) (2022-08-08)
+
+
+### Features
+
+* **multicall:** And add call data ([2682315](https://github.com/Zapper-fi/studio/commit/26823156a2d08ba4a35ee83ea96d53c7ba7aad7a))
+
 ## [0.155.0](https://github.com/Zapper-fi/studio/compare/v0.154.0...v0.155.0) (2022-08-08)
 
 
