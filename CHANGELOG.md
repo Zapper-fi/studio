@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.159.0](https://github.com/Zapper-fi/studio/compare/v0.158.0...v0.159.0) (2022-08-08)
+
+
+### Features
+
+* **multicall:** Adjust error handling ([17776f0](https://github.com/Zapper-fi/studio/commit/17776f078c6a88b8e4004231ddc588b27abecb80))
+
 ## [0.158.0](https://github.com/Zapper-fi/studio/compare/v0.157.0...v0.158.0) (2022-08-08)
 
 
