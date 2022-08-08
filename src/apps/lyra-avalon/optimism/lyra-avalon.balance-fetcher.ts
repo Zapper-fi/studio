@@ -9,10 +9,11 @@ import { ContractPosition } from '~position/position.interface';
 import { isSupplied } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 
-import { LyraAvalonContractFactory, OptionToken, StakingRewards } from '../contracts';
+import { LyraAvalonContractFactory, OptionToken } from '../contracts';
 import { LYRA_AVALON_DEFINITION } from '../lyra-avalon.definition';
 
-import { OPTION_TYPES } from './helpers/consts';
+import { AaveSafetyModuleClaimableBalanceHelper } from './helpers/aave-safety.claimable.balance-helper';
+import { OPTION_TYPES, STAKING_ADDRESS } from './helpers/consts';
 import { LyraAvalonOptionContractPositionDataProps } from './lyra-avalon.options.contract-position-fetcher';
 
 const appId = LYRA_AVALON_DEFINITION.id;
@@ -23,17 +24,27 @@ export class OptimismLyraAvalonBalanceFetcher implements BalanceFetcher {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(LyraAvalonContractFactory) private readonly contractFactory: LyraAvalonContractFactory,
+    @Inject(AaveSafetyModuleClaimableBalanceHelper)
+    private readonly claimableBalanceHelper: AaveSafetyModuleClaimableBalanceHelper,
   ) {}
 
   async getStakingBalances(address: string) {
-    return this.appToolkit.helpers.singleStakingContractPositionBalanceHelper.getBalances<StakingRewards>({
+    return await this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
       address,
       appId,
       groupId: LYRA_AVALON_DEFINITION.groups.staking.id,
       network,
-      resolveContract: ({ address, network }) => this.contractFactory.stakingRewards({ address, network }),
-      resolveStakedTokenBalance: ({ contract, address, multicall }) => multicall.wrap(contract).balanceOf(address),
-      resolveRewardTokenBalances: ({ contract, address, multicall }) => multicall.wrap(contract).earned(address),
+    });
+  }
+
+  async getClaimableBalances(address: string) {
+    return this.claimableBalanceHelper.getBalances(address, {
+      network,
+      appId,
+      groupId: LYRA_AVALON_DEFINITION.groups.claimable.id,
+      dependencies: [{ appId, groupIds: [LYRA_AVALON_DEFINITION.groups.staking.id], network }],
+      resolveContract: ({ address }) => this.contractFactory.lyraStaking({ address, network }),
+      resolveVaultAddresses: () => [STAKING_ADDRESS],
     });
   }
 
@@ -96,8 +107,9 @@ export class OptimismLyraAvalonBalanceFetcher implements BalanceFetcher {
   }
 
   async getBalances(address: string) {
-    const [stakingBalances, tokenBalances, optionsBalances] = await Promise.all([
+    const [stakingBalances, claimableBalances, tokenBalances, optionsBalances] = await Promise.all([
       this.getStakingBalances(address),
+      this.getClaimableBalances(address),
       this.getPoolBalances(address),
       this.getOptionsBalances(address),
     ]);
@@ -114,6 +126,10 @@ export class OptimismLyraAvalonBalanceFetcher implements BalanceFetcher {
       {
         label: 'Options',
         assets: optionsBalances,
+      },
+      {
+        label: 'Rewards',
+        assets: claimableBalances,
       },
     ]);
   }
