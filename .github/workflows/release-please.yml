@@ -9,6 +9,9 @@ jobs:
   release-please:
     name: Release
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     outputs:
       published: ${{ steps.set_outputs.outputs.published }}
       release: ${{ steps.set_outputs.outputs.release }}
@@ -49,13 +52,25 @@ jobs:
           run_install: true
         if: ${{ steps.release.outputs.release_created }}
 
+      - name: Build package
+        run: pnpm build
+        if: ${{ steps.release.outputs.release_created }}
+
       - name: Publish to NPM
-        run: |
-          pnpm build
-          cd dist
-          pnpm publish --access public
+        working-directory: dist
+        run: pnpm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        if: ${{ steps.release.outputs.release_created }}
+
+      - name: Publish to Github Packages
+        working-directory: dist
+        run: |
+          echo "//npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}" > .npmrc
+          npm config set registry https://npm.pkg.github.com
+          npm publish
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         if: ${{ steps.release.outputs.release_created }}
 
       - name: Fetch Release
