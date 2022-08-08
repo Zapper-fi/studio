@@ -7,9 +7,9 @@ import { Network } from '~types/network.interface';
 import { LiquidityPool__factory } from './ethers';
 import { LiquidityToken__factory } from './ethers';
 import { LyraRegistry__factory } from './ethers';
+import { LyraStaking__factory } from './ethers';
 import { OptionMarket__factory } from './ethers';
 import { OptionToken__factory } from './ethers';
-import { StakingRewards__factory } from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
@@ -29,20 +29,20 @@ export class LyraAvalonContractFactory extends ContractFactory {
   lyraRegistry({ address, network }: ContractOpts) {
     return LyraRegistry__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  lyraStaking({ address, network }: ContractOpts) {
+    return LyraStaking__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   optionMarket({ address, network }: ContractOpts) {
     return OptionMarket__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
   optionToken({ address, network }: ContractOpts) {
     return OptionToken__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
-  stakingRewards({ address, network }: ContractOpts) {
-    return StakingRewards__factory.connect(address, this.appToolkit.getNetworkProvider(network));
-  }
 }
 
 export type { LiquidityPool } from './ethers';
 export type { LiquidityToken } from './ethers';
 export type { LyraRegistry } from './ethers';
+export type { LyraStaking } from './ethers';
 export type { OptionMarket } from './ethers';
 export type { OptionToken } from './ethers';
-export type { StakingRewards } from './ethers';

@@ -30,10 +30,17 @@ export const LYRA_AVALON_DEFINITION = appDefinition({
       label: 'Staking',
       groupLabel: 'Farms',
     },
+
+    claimable: {
+      id: 'claimable',
+      type: GroupType.POSITION,
+      label: 'Rewards',
+    },
   },
 
   tags: [AppTag.OPTIONS],
   keywords: [],
+
   links: {
     discord: 'https://discord.com/invite/P49mj6UbmC',
     github: 'https://github.com/lyra-finance',
