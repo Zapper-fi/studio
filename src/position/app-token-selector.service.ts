@@ -21,7 +21,7 @@ export class AppTokenSelectorService implements AppTokenSelectorFactory {
   create(_opts: CreateAppTokenSelectorOptions): AppTokenSelector {
     const tokenDataLoader = new DataLoader<AppTokenSelectorKey, AppTokenPosition | null>(
       keys => this.positionAPIClient.getAppTokenBatch(keys as Mutable<AppTokenSelectorKey[]>),
-      { maxBatchSize: 100 },
+      { maxBatchSize: 1000 },
     );
 
     return {
