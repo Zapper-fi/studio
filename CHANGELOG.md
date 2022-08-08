@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.153.0](https://github.com/Zapper-fi/studio/compare/v0.152.0...v0.153.0) (2022-08-08)
+
+
+### Features
+
+* **multicall:** Enable a before hook for use in production ([#1099](https://github.com/Zapper-fi/studio/issues/1099)) ([73e6f78](https://github.com/Zapper-fi/studio/commit/73e6f78a5460aaeeb9cdbc5a09468fe06cd65eb9))
+
 ## [0.152.0](https://github.com/Zapper-fi/studio/compare/v0.151.0...v0.152.0) (2022-08-08)
 
 
