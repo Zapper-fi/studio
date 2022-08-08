@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.158.0](https://github.com/Zapper-fi/studio/compare/v0.157.0...v0.158.0) (2022-08-08)
+
+
+### Features
+
+* **studio:** Make hooks an object ([289521a](https://github.com/Zapper-fi/studio/commit/289521a7ed20b9b39e03549904f08e161f5a1852))
+
 ## [0.157.0](https://github.com/Zapper-fi/studio/compare/v0.156.0...v0.157.0) (2022-08-08)
 
 
