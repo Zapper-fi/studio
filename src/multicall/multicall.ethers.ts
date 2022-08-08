@@ -21,13 +21,16 @@ export const isMulticallUnderlyingError = (err: Error) => err.message.includes('
 export class EthersMulticall implements IMulticallWrapper {
   private multicall: Multicall;
   private dataLoader: DataLoader<ContractCall, any>;
+  private beforeCallHook?: () => void;
 
   constructor(
     multicall: Multicall,
     dataLoaderOptions: DataLoader.Options<ContractCall, any> = { cache: false, maxBatchSize: 250 },
+    beforeCallHook?: () => void,
   ) {
     this.multicall = multicall;
     this.dataLoader = new DataLoader(this.doCalls.bind(this), dataLoaderOptions);
+    this.beforeCallHook = beforeCallHook;
   }
 
   get contract() {
@@ -40,6 +43,7 @@ export class EthersMulticall implements IMulticallWrapper {
       callData: new Interface([]).encodeFunctionData(call.fragment, call.params),
     }));
 
+    if (this.beforeCallHook) this.beforeCallHook();
     const response = await this.multicall.callStatic.aggregate(callRequests, false);
 
     const result = calls.map((call, i) => {
