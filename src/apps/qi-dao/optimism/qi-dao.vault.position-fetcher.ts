@@ -16,7 +16,7 @@ const network = Network.OPTIMISM_MAINNET;
 export class OptimismQiDaoVaultPositionFetcher
   implements PositionFetcher<ContractPosition<QiDaoVaultPositionDataProps>>
 {
-  constructor(@Inject(QiDaoVaultPositionHelper) private readonly qiDaoVaultPositionHelper: QiDaoVaultPositionHelper) { }
+  constructor(@Inject(QiDaoVaultPositionHelper) private readonly qiDaoVaultPositionHelper: QiDaoVaultPositionHelper) {}
 
   getPositions() {
     return this.qiDaoVaultPositionHelper.getPositions({

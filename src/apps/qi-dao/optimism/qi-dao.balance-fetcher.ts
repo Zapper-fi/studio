@@ -19,7 +19,7 @@ export class OptimismQiDaoBalanceFetcher implements BalanceFetcher {
     @Inject(QiDaoVaultPositionBalanceHelper)
     private readonly qiDaoVaultTokenBalanceHelper: QiDaoVaultPositionBalanceHelper,
     @Inject(QiDaoContractFactory) private readonly contractFactory: QiDaoContractFactory,
-  ) { }
+  ) {}
 
   async getVaultTokenBalances(address: string) {
     return this.qiDaoVaultTokenBalanceHelper.getPositionBalances({
