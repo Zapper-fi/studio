@@ -14,7 +14,6 @@ import { ContractType } from '~position/contract.interface';
 import { DefaultDataProps, DisplayProps, StatsItem } from '~position/display.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
-import { AppGroupsDefinition } from '~position/position.service';
 import { Network } from '~types/network.interface';
 
 export type StageParams<T extends Contract, V, K extends keyof AppTokenPosition> = {
@@ -47,7 +46,6 @@ export abstract class AppTokenTemplatePositionFetcher<
   abstract appId: string;
   abstract groupId: string;
   abstract network: Network;
-  dependencies: AppGroupsDefinition[] = [];
 
   constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) {}
 
@@ -127,7 +125,13 @@ export abstract class AppTokenTemplatePositionFetcher<
   // Note: This will be removed in favour of an orchestrator at a higher level once all groups are migrated
   async getPositions(): Promise<AppTokenPosition<V>[]> {
     const multicall = this.appToolkit.getMulticall(this.network);
-    const tokenLoader = this.appToolkit.getBaseTokenPriceSelector();
+    const tokenLoader = this.appToolkit.getBaseTokenPriceSelector({
+      tags: { network: this.network, appId: `${this.appId}__template` },
+    });
+    const appTokenLoader = this.appToolkit.getAppTokenSelector({
+      tags: { network: this.network, context: `${this.appId}__template` },
+    });
+
     const addresses = await this.getAddresses();
 
     const skeletons = await Promise.all(
@@ -141,12 +145,12 @@ export abstract class AppTokenTemplatePositionFetcher<
       }),
     );
 
-    const baseTokensRequests = skeletons
+    const underlyingTokenRequests = skeletons
       .flatMap(v => v.underlyingTokenAddresses)
       .map(v => ({ network: this.network, address: v }));
-    const baseTokens = await tokenLoader.getMany(baseTokensRequests);
-    const appTokens = await this.appToolkit.getAppTokenPositions(...this.dependencies);
-    const allTokens = [...appTokens, ...compact(baseTokens)];
+    const baseTokens = await tokenLoader.getMany(underlyingTokenRequests);
+    const appTokens = await appTokenLoader.getMany(underlyingTokenRequests);
+    const allTokens = [...compact(appTokens), ...compact(baseTokens)];
 
     const skeletonsWithResolvedTokens = await Promise.all(
       skeletons.map(async ({ address, underlyingTokenAddresses }) => {
