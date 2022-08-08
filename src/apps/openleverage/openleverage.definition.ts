@@ -11,7 +11,7 @@ export const OPENLEVERAGE_DEFINITION = appDefinition({
   url: 'https://openleverage.finance/',
   groups: {
     pool: { id: 'pool', type: GroupType.TOKEN, label: 'Pools' },
-    trade: { id: 'trade', type: GroupType.POSITION, label: 'Trade' }
+    trade: { id: 'trade', type: GroupType.POSITION, label: 'Trade' },
   },
   tags: [AppTag.DECENTRALIZED_EXCHANGE],
   keywords: [],

@@ -7,6 +7,8 @@ import { AppService } from '~app/app.service';
 import { ContractFactory } from '~contract';
 import { MulticallService } from '~multicall/multicall.service';
 import { NetworkProviderService } from '~network-provider/network-provider.service';
+import { CreateAppTokenSelectorOptions } from '~position/app-token-selector.interface';
+import { AppTokenSelectorService } from '~position/app-token-selector.service';
 import { DefaultDataProps } from '~position/display.interface';
 import { PositionKeyService } from '~position/position-key.service';
 import { AppTokenPosition, ContractPosition, NonFungibleToken } from '~position/position.interface';
@@ -14,7 +16,6 @@ import { AppGroupsDefinition, PositionService } from '~position/position.service
 import { BaseToken } from '~position/token.interface';
 import { PriceSelectorService } from '~token/price-selector.service';
 import { CreatePriceSelectorOptions } from '~token/token-price-selector.interface';
-import { TokenService } from '~token/token.service';
 import { Network } from '~types/network.interface';
 
 import { AppToolkitHelperRegistry } from './app-toolkit.helpers';
@@ -30,8 +31,8 @@ export class AppToolkit implements IAppToolkit {
     @Inject(NetworkProviderService) private readonly networkProviderService: NetworkProviderService,
     @Inject(PositionService) private readonly positionService: PositionService,
     @Inject(PositionKeyService) private readonly positionKeyService: PositionKeyService,
-    @Inject(TokenService) private readonly tokenService: TokenService,
     @Inject(PriceSelectorService) private readonly priceSelectorService: PriceSelectorService,
+    @Inject(AppTokenSelectorService) private readonly appTokenSelectorService: AppTokenSelectorService,
     @Inject(MulticallService) private readonly multicallService: MulticallService,
     @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
   ) {
@@ -77,6 +78,10 @@ export class AppToolkit implements IAppToolkit {
   }
 
   // Positions
+
+  getAppTokenSelector(opts: CreateAppTokenSelectorOptions = {}) {
+    return this.appTokenSelectorService.create(opts);
+  }
 
   getAppTokenPositions<T = DefaultDataProps>(...appTokenDefinitions: AppGroupsDefinition[]) {
     return this.positionService.getAppTokenPositions<T>(...appTokenDefinitions);
