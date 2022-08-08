@@ -145,11 +145,11 @@ export abstract class AppTokenTemplatePositionFetcher<
       }),
     );
 
-    const baseTokensRequests = skeletons
+    const underlyingTokenRequests = skeletons
       .flatMap(v => v.underlyingTokenAddresses)
       .map(v => ({ network: this.network, address: v }));
-    const baseTokens = await tokenLoader.getMany(baseTokensRequests);
-    const appTokens = await appTokenLoader.getMany(baseTokensRequests);
+    const baseTokens = await tokenLoader.getMany(underlyingTokenRequests);
+    const appTokens = await appTokenLoader.getMany(underlyingTokenRequests);
     const allTokens = [...compact(appTokens), ...compact(baseTokens)];
 
     const skeletonsWithResolvedTokens = await Promise.all(
