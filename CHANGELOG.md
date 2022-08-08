@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.157.0](https://github.com/Zapper-fi/studio/compare/v0.156.0...v0.157.0) (2022-08-08)
+
+
+### Features
+
+* **multicall:** Extract options, mainly triggering a release ([b990fae](https://github.com/Zapper-fi/studio/commit/b990faea403d80d7c156b685a35cea6de27dc8a0))
+
 ## [0.156.0](https://github.com/Zapper-fi/studio/compare/v0.155.0...v0.156.0) (2022-08-08)
 
 
