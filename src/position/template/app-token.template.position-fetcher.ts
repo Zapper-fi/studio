@@ -23,9 +23,21 @@ export type StageParams<T extends Contract, V, K extends keyof AppTokenPosition>
   appToken: Omit<AppTokenPosition<V>, K>;
 };
 
-export type PriceStageParams<T extends Contract, V> = StageParams<T, V, 'price' | 'dataProps' | 'displayProps'>;
-export type DataPropsStageParams<T extends Contract, V> = StageParams<T, V, 'dataProps' | 'displayProps'>;
-export type DisplayPropsStageParams<T extends Contract, V> = StageParams<T, V, 'displayProps'>;
+export type PriceStageParams<T extends Contract, V extends DefaultDataProps = DefaultDataProps> = StageParams<
+  T,
+  V,
+  'price' | 'dataProps' | 'displayProps'
+>;
+export type DataPropsStageParams<T extends Contract, V extends DefaultDataProps = DefaultDataProps> = StageParams<
+  T,
+  V,
+  'dataProps' | 'displayProps'
+>;
+export type DisplayPropsStageParams<T extends Contract, V extends DefaultDataProps = DefaultDataProps> = StageParams<
+  T,
+  V,
+  'displayProps'
+>;
 
 export abstract class AppTokenTemplatePositionFetcher<
   T extends Contract = Erc20,
@@ -194,6 +206,9 @@ export abstract class AppTokenTemplatePositionFetcher<
       }),
     );
 
-    return tokens;
+    return compact(tokens).filter(v => {
+      if (typeof v.dataProps.liquidity === 'number') return v.dataProps.liquidity > 1000;
+      return true;
+    });
   }
 }
