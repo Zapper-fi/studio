@@ -12,24 +12,24 @@ const network = Network.BINANCE_SMART_CHAIN_MAINNET;
 
 @Register.BalanceFetcher(OPENLEVERAGE_DEFINITION.id, network)
 export class BinanceSmartChainOpenleverageBalanceFetcher implements BalanceFetcher {
-  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) { }
-
+  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
   async getPoolTokenBalances(address: string) {
     return this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
       network,
       appId: OPENLEVERAGE_DEFINITION.id,
       groupId: OPENLEVERAGE_DEFINITION.groups.pool.id,
-      address
-    })
+      address,
+    });
   }
-
 
   async getBalances(address: string) {
     const [poolTokenBalances] = await Promise.all([this.getPoolTokenBalances(address)]);
-    return presentBalanceFetcherResponse([{
-      label: 'Pool',
-      assets: poolTokenBalances
-    }]);
+    return presentBalanceFetcherResponse([
+      {
+        label: 'Pool',
+        assets: poolTokenBalances,
+      },
+    ]);
   }
 }

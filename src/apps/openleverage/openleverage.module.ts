@@ -15,4 +15,4 @@ import { OpenleverageAppDefinition, OPENLEVERAGE_DEFINITION } from './openlevera
     OpenleverageContractFactory,
   ],
 })
-export class OpenleverageAppModule extends AbstractApp() { }
+export class OpenleverageAppModule extends AbstractApp() {}

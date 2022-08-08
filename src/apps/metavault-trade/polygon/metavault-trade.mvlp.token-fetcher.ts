@@ -1,6 +1,5 @@
 import { Inject } from '@nestjs/common';
 
-
 import { Register } from '~app-toolkit/decorators';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';

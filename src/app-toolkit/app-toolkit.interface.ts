@@ -5,6 +5,7 @@ import { ethers } from 'ethers';
 import { AppDefinition } from '~app/app.definition';
 import { IContractFactory } from '~contract/contracts';
 import { IMulticallWrapper } from '~multicall/multicall.interface';
+import { AppTokenSelector, CreateAppTokenSelectorOptions } from '~position/app-token-selector.interface';
 import { DefaultDataProps } from '~position/display.interface';
 import { AppTokenPosition, ContractPosition, NonFungibleToken } from '~position/position.interface';
 import { AppGroupsDefinition } from '~position/position.service';
@@ -39,6 +40,8 @@ export interface IAppToolkit {
   getBaseTokenPrice(opts: { network: Network; address: string }): Promise<BaseToken | null>;
 
   // Positions
+
+  getAppTokenSelector(opts?: CreateAppTokenSelectorOptions): AppTokenSelector;
 
   getAppTokenPositions<T = DefaultDataProps>(
     ...appTokenDefinition: AppGroupsDefinition[]
