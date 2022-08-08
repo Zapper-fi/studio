@@ -8,6 +8,7 @@ import { AaveSafetyModuleClaimableBalanceHelper } from './optimism/helpers/aave-
 import { OptimismLyraAvalonBalanceFetcher } from './optimism/lyra-avalon.balance-fetcher';
 import { OptimismLyraAvalonOptionsContractPositionFetcher } from './optimism/lyra-avalon.options.contract-position-fetcher';
 import { OptimismLyraAvalonPoolTokenFetcher } from './optimism/lyra-avalon.pool.token-fetcher';
+import { OptimismLyraAvalonStakingContractPositionFetcher } from './optimism/lyra-avalon.staking.contract-position-fetcher';
 import { OptimismLyraAvalonStakingTokenFetcher } from './optimism/lyra-avalon.staking.token-fetcher';
 
 @Register.AppModule({
@@ -20,6 +21,7 @@ import { OptimismLyraAvalonStakingTokenFetcher } from './optimism/lyra-avalon.st
     OptimismLyraAvalonBalanceFetcher,
     OptimismLyraAvalonOptionsContractPositionFetcher,
     OptimismLyraAvalonPoolTokenFetcher,
+    OptimismLyraAvalonStakingContractPositionFetcher,
     OptimismLyraAvalonStakingTokenFetcher,
   ],
 })
