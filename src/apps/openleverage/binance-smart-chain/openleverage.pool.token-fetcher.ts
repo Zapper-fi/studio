@@ -1,90 +1,75 @@
 import { Inject } from '@nestjs/common';
+import { gql } from 'graphql-request';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { AppTokenPosition } from '~position/position.interface';
+import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import {
+  AppTokenTemplatePositionFetcher,
+  DataPropsStageParams,
+  DisplayPropsStageParams,
+} from '~position/template/app-token.template.position-fetcher';
 import { Network } from '~types/network.interface';
 
-import { OpenleverageContractFactory } from '../contracts';
+import { OpenleverageContractFactory, OpenleverageLpool } from '../contracts';
 import { OPENLEVERAGE_DEFINITION } from '../openleverage.definition';
-import Axios from 'axios';
-import BigNumberJS from 'bignumber.js';
-import { ContractType } from '~position/contract.interface';
-
 
 const appId = OPENLEVERAGE_DEFINITION.id;
 const groupId = OPENLEVERAGE_DEFINITION.groups.pool.id;
 const network = Network.BINANCE_SMART_CHAIN_MAINNET;
 
-
-export type OpenleverageV0Details = {
-  poolAddr: string;
-  lendingYieldY: number;
-  lend: string;
-}
-// Define a partial of the return type from the Openleverage API
-export type OpenleverageV1Details = {
-  poolsVOList: OpenleverageV0Details,
-  data: any
+type OpenLeveragePoolsResponse = {
+  pools: {
+    id: string;
+  }[];
 };
 
+const query = gql`
+  query fetchPools {
+    pools(first: 1000) {
+      id
+    }
+  }
+`;
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
-export class BinanceSmartChainOpenleveragePoolTokenFetcher implements PositionFetcher<AppTokenPosition> {
+export class BinanceSmartChainOpenleveragePoolTokenFetcher extends AppTokenTemplatePositionFetcher<OpenleverageLpool> {
+  appId = OPENLEVERAGE_DEFINITION.id;
+  groupId = OPENLEVERAGE_DEFINITION.groups.pool.id;
+  network = Network.BINANCE_SMART_CHAIN_MAINNET;
+
   constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(OpenleverageContractFactory) private readonly openleverageContractFactory: OpenleverageContractFactory,
-  ) { }
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(OpenleverageContractFactory) protected readonly contractFactory: OpenleverageContractFactory,
+  ) {
+    super(appToolkit);
+  }
 
-  async getPositions() {
-    const endpoint = "https://bnb.openleverage.finance/api/lends/pools";
-    const { data } = await Axios.post<OpenleverageV1Details>(endpoint, {
-      size: 1000,
-      page: 1
-    }).then(
-      (v) => v.data
-    );
+  async getAddresses() {
+    const endpoint = `https://api.thegraph.com/subgraphs/name/openleveragedev/openleverage-bsc`;
+    const data = await this.appToolkit.helpers.theGraphHelper.request<OpenLeveragePoolsResponse>({ endpoint, query });
+    return data.pools.map(v => v.id);
+  }
 
-    const multicall = this.appToolkit.getMulticall(network);
-    const v0List = [] as any;
+  getContract(address: string) {
+    return this.contractFactory.openleverageLpool({ address, network });
+  }
 
-    data.forEach(({ poolsVOList }) => {
-      poolsVOList.forEach((poolModel) => {
-        v0List.push(poolModel);
-      })
-    })
+  getUnderlyingTokenAddresses(contract: OpenleverageLpool) {
+    return contract.underlying();
+  }
 
+  async getPricePerShare(contract: OpenleverageLpool) {
+    const exchangeRateCurrent = await contract.exchangeRateStored();
+    return Number(exchangeRateCurrent) / 10 ** 18;
+  }
 
-    const poolAddresses = await Promise.all(
+  async getDataProps({ appToken }: DataPropsStageParams<OpenleverageLpool>) {
+    const liquidity = appToken.supply * appToken.price;
+    return { liquidity };
+  }
 
-      v0List.map(async poolModel => {
-        const poolContract = this.openleverageContractFactory.openleverageLpool({
-          address: poolModel.poolAddr,
-          network
-        })
-
-        const [exchangeRateCurrent] = await Promise.all([multicall.wrap(poolContract).exchangeRateStored()]);
-        const pricePerShare = new BigNumberJS(exchangeRateCurrent.toString()).dividedBy(new BigNumberJS(10).pow(18));
-
-
-
-        return {
-          type: ContractType.APP_TOKEN,
-          appId,
-          groupId,
-          address: poolModel.poolAddr,
-          network,
-          symbol: poolModel.token0Icon,
-          decimals: poolModel.tokenDecimals,
-          supply: poolModel.totalLending,
-          tokens: [poolModel.token0Addr, poolModel.token1Addr],
-          pricePerShare: Number(pricePerShare.toString())
-        }
-      })
-    )
-
-    return poolAddresses;
-
+  async getLabel({ appToken }: DisplayPropsStageParams<OpenleverageLpool>) {
+    return getLabelFromToken(appToken.tokens[0]);
   }
 }
