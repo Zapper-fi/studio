@@ -8,7 +8,7 @@ import { BalanceFetcher } from '~balance/balance-fetcher.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { Network } from '~types/network.interface';
 
-import { accountBalancesQuery, CompoundorUserPosition } from '../graphql/accountBalancesQuery';
+import { accountBalancesQuery, CompoundorAccountBalances } from '../graphql/accountBalancesQuery';
 import { generateGraphUrlForNetwork } from '../graphql/graphUrlGenerator';
 import { getCompoundorContractPosition } from '../helpers/contractPositionParser';
 import { REVERT_FINANCE_DEFINITION } from '../revert-finance.definition';
@@ -19,32 +19,31 @@ const network = Network.POLYGON_MAINNET;
 export class PolygonRevertFinanceBalanceFetcher implements BalanceFetcher {
   constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
 
-  async getAccumulatedCompoundorRewards(address: string) {
+  async getCompoundorAccountBalances(address: string) {
     const graphHelper = this.appToolkit.helpers.theGraphHelper;
-    const data = await graphHelper.requestGraph<CompoundorUserPosition>({
+    const data = await graphHelper.requestGraph<CompoundorAccountBalances>({
       endpoint: generateGraphUrlForNetwork(network),
       query: accountBalancesQuery,
       variables: { address: getAddress(address) },
     });
     if (!data) return [];
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
-    const rewards: Array<ContractPositionBalance> = [];
+    const accountBalances: Array<ContractPositionBalance> = [];
     data.accountBalances.map(({ token, balance }) => {
       const existingToken = baseTokens.find(item => item.address === token)!;
       if (!token) return [];
-
-      rewards.push(getCompoundorContractPosition(network, existingToken, balance));
+      accountBalances.push(getCompoundorContractPosition(network, existingToken, balance));
     });
-    return rewards;
+    return accountBalances;
   }
 
   async getBalances(address: string) {
-    const [accumulatedCompoundorRewards] = await Promise.all([this.getAccumulatedCompoundorRewards(address)]);
+    const [compoundorAccountBalances] = await Promise.all([this.getCompoundorAccountBalances(address)]);
 
     return presentBalanceFetcherResponse([
       {
         label: 'Compoundor rewards',
-        assets: accumulatedCompoundorRewards,
+        assets: compoundorAccountBalances,
       },
     ]);
   }
