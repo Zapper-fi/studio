@@ -211,7 +211,7 @@ export abstract class AppTokenTemplatePositionFetcher<
     );
 
     return compact(tokens).filter(v => {
-      if (typeof v.dataProps.liquidity === 'number') return v.dataProps.liquidity > 1000;
+      if (typeof v.dataProps.liquidity === 'number') return Math.abs(v.dataProps.liquidity) > 1000;
       return true;
     });
   }
