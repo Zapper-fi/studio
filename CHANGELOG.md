@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.162.0](https://github.com/Zapper-fi/studio/compare/v0.161.0...v0.162.0) (2022-08-09)
+
+
+### Features
+
+* **bastion-protocol:** Fix borrow balance ([#1123](https://github.com/Zapper-fi/studio/issues/1123)) ([a510777](https://github.com/Zapper-fi/studio/commit/a510777e420ee1852e3afd492ab2fbdd418ab5c9))
+
 ## [0.161.0](https://github.com/Zapper-fi/studio/compare/v0.160.0...v0.161.0) (2022-08-09)
 
 
