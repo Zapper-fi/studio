@@ -48,6 +48,13 @@ export type DataPropsStageParams<T extends Contract, V = DefaultDataProps> = Sta
 >;
 export type DisplayPropsStageParams<T extends Contract, V = DefaultDataProps> = StageParams<T, V, 'displayProps'>;
 
+export type GetTokenBalancesPerPositionParams<T extends Contract, V extends DefaultDataProps = DefaultDataProps> = {
+  address: string;
+  contractPosition: ContractPosition<V>;
+  contract: T;
+  multicall: IMulticallWrapper;
+};
+
 export abstract class ContractPositionTemplatePositionFetcher<
   T extends Contract,
   V extends DefaultDataProps = DefaultDataProps,
@@ -187,12 +194,7 @@ export abstract class ContractPositionTemplatePositionFetcher<
     contractPosition,
     contract,
     multicall,
-  }: {
-    address: string;
-    contractPosition: ContractPosition<V>;
-    contract: T;
-    multicall: IMulticallWrapper;
-  }): Promise<BigNumberish[]>;
+  }: GetTokenBalancesPerPositionParams<T, V>): Promise<BigNumberish[]>;
 
   async getBalances(address: string): Promise<ContractPositionBalance<V>[]> {
     const multicall = this.appToolkit.getMulticall(this.network);

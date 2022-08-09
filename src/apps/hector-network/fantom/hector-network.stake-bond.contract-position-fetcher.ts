@@ -7,6 +7,7 @@ import { MetaType } from '~position/position.interface';
 import {
   ContractPositionTemplatePositionFetcher,
   DisplayPropsStageParams,
+  GetTokenBalancesPerPositionParams,
   TokensStageParams,
 } from '~position/template/contract-position.template.position-fetcher';
 import { Network } from '~types';
@@ -73,5 +74,18 @@ export class FantomHectorNetworkStakeBondContractPositionFetcher extends Contrac
 
   async getImages({ appToken }: DisplayPropsStageParams<HectorNetworkStakeBondDepository>) {
     return getImagesFromToken(appToken.tokens[2]);
+  }
+
+  async getTokenBalancesPerPosition({
+    address,
+    contract,
+    multicall,
+  }: GetTokenBalancesPerPositionParams<HectorNetworkStakeBondDepository>) {
+    const [bondInfo, claimablePayout] = await Promise.all([
+      multicall.wrap(contract).bondInfo(address),
+      multicall.wrap(contract).pendingPayoutFor(address),
+    ]);
+
+    return [bondInfo.payout.sub(claimablePayout).toString(), claimablePayout.toString()];
   }
 }
