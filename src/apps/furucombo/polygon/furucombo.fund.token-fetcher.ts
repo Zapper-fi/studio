@@ -10,6 +10,7 @@ import {
   AppTokenTemplatePositionFetcher,
   DisplayPropsStageParams,
   DataPropsStageParams,
+  PricePerShareStageParams,
 } from '~position/template/app-token.template.position-fetcher';
 import { Network, NETWORK_IDS } from '~types/network.interface';
 
@@ -89,7 +90,9 @@ export class PolygonFurucomboFundTokenFetcher extends AppTokenTemplatePositionFe
     return this.furucomboFundMap[contract.address].stakingToken.address;
   }
 
-  async getPricePerShare(contract: FurucomboFundShareToken): Promise<number | number[]> {
+  async getPricePerShare({
+    contract,
+  }: PricePerShareStageParams<FurucomboFundShareToken, FurucomboFundDataProps>): Promise<number | number[]> {
     const fund = this.furucomboFundMap[contract.address];
     return this.appToolkit
       .getBigNumber(fund.tokenPrice)

@@ -17,7 +17,7 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
-export interface HectorDaoStakedInterface extends utils.Interface {
+export interface HectorNetworkStakedInterface extends utils.Interface {
   functions: {
     'DOMAIN_SEPARATOR()': FunctionFragment;
     'INDEX()': FunctionFragment;
@@ -254,12 +254,12 @@ export type TransferEvent = TypedEvent<[string, string, BigNumber], TransferEven
 
 export type TransferEventFilter = TypedEventFilter<TransferEvent>;
 
-export interface HectorDaoStaked extends BaseContract {
+export interface HectorNetworkStaked extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: HectorDaoStakedInterface;
+  interface: HectorNetworkStakedInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

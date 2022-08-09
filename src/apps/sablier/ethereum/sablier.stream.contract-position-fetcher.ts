@@ -9,9 +9,11 @@ import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/pres
 import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { ContractType } from '~position/contract.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
+import { MetaType } from '~position/position.interface';
 import {
   ContractPositionTemplatePositionFetcher,
   DisplayPropsStageParams,
+  TokensStageParams,
 } from '~position/template/contract-position.template.position-fetcher';
 import { Network } from '~types';
 
@@ -61,8 +63,8 @@ export class EthereumSablierStreamContractPositionFetcher extends ContractPositi
     return this.contractFactory.sablierStream({ address, network: this.network });
   }
 
-  async getTokenAddresses(_contract: SablierStream, descriptor: SablierStreamContractPositionDescriptor) {
-    return [descriptor.tokenAddress];
+  async getTokenDescriptors({ descriptor }: TokensStageParams<SablierStream, SablierStreamContractPositionDescriptor>) {
+    return [{ address: descriptor.tokenAddress, metaType: MetaType.SUPPLIED }];
   }
 
   async getLabel({ appToken }: DisplayPropsStageParams<SablierStream, SablierStreamContractPositionDataProps>) {
