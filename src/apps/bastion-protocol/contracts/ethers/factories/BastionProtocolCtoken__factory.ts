@@ -730,7 +730,7 @@ const _abi = [
     type: 'function',
   },
   {
-    constant: false,
+    constant: true,
     inputs: [
       {
         internalType: 'address',
@@ -747,7 +747,7 @@ const _abi = [
       },
     ],
     payable: false,
-    stateMutability: 'nonpayable',
+    stateMutability: 'view',
     type: 'function',
   },
   {
