@@ -8,6 +8,7 @@ export const isClaimable = (token: WithMetaType<Token>) => token.metaType === Me
 export const isVesting = (token: WithMetaType<Token>) => token.metaType === MetaType.VESTING;
 export const isLocked = (token: WithMetaType<Token>) => token.metaType === MetaType.LOCKED;
 
+export const metatyped = <T extends Token>(token: T, metaType: MetaType): WithMetaType<T> => ({ metaType, ...token });
 export const wallet = <T extends Token>(token: T): WithMetaType<T> => ({ metaType: MetaType.WALLET, ...token });
 export const supplied = <T extends Token>(token: T): WithMetaType<T> => ({ metaType: MetaType.SUPPLIED, ...token });
 export const borrowed = <T extends Token>(token: T): WithMetaType<T> => ({ metaType: MetaType.BORROWED, ...token });

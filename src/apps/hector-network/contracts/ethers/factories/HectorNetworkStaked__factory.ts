@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { HectorDaoStaked, HectorDaoStakedInterface } from '../HectorDaoStaked';
+import type { HectorNetworkStaked, HectorNetworkStakedInterface } from '../HectorNetworkStaked';
 
 const _abi = [
   {
@@ -727,12 +727,12 @@ const _abi = [
   },
 ];
 
-export class HectorDaoStaked__factory {
+export class HectorNetworkStaked__factory {
   static readonly abi = _abi;
-  static createInterface(): HectorDaoStakedInterface {
-    return new utils.Interface(_abi) as HectorDaoStakedInterface;
+  static createInterface(): HectorNetworkStakedInterface {
+    return new utils.Interface(_abi) as HectorNetworkStakedInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): HectorDaoStaked {
-    return new Contract(address, _abi, signerOrProvider) as HectorDaoStaked;
+  static connect(address: string, signerOrProvider: Signer | Provider): HectorNetworkStaked {
+    return new Contract(address, _abi, signerOrProvider) as HectorNetworkStaked;
   }
 }

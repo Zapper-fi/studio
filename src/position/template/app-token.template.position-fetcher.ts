@@ -1,6 +1,6 @@
 import { Inject } from '@nestjs/common';
 import { BigNumberish, Contract } from 'ethers/lib/ethers';
-import { compact, sum } from 'lodash';
+import { compact, isArray, sum } from 'lodash';
 
 import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
@@ -24,6 +24,11 @@ export type StageParams<T extends Contract, V, K extends keyof AppTokenPosition>
   appToken: Omit<AppTokenPosition<V>, K>;
 };
 
+export type PricePerShareStageParams<T extends Contract, V extends DefaultDataProps = DefaultDataProps> = StageParams<
+  T,
+  V,
+  'pricePerShare' | 'price' | 'dataProps' | 'displayProps'
+>;
 export type PriceStageParams<T extends Contract, V extends DefaultDataProps = DefaultDataProps> = StageParams<
   T,
   V,
@@ -76,7 +81,7 @@ export abstract class AppTokenTemplatePositionFetcher<
     return [];
   }
 
-  async getPricePerShare(_contract: T): Promise<number | number[]> {
+  async getPricePerShare(_params: PricePerShareStageParams<T, V>): Promise<number | number[]> {
     return 1;
   }
 
@@ -174,9 +179,8 @@ export abstract class AppTokenTemplatePositionFetcher<
         ]);
 
         const supply = Number(totalSupplyRaw) / 10 ** decimals;
-        const pricePerShare = await this.getPricePerShare(contract).then(v => (Array.isArray(v) ? v : [v]));
 
-        const fragment: PriceStageParams<T, V>['appToken'] = {
+        const fragment: PricePerShareStageParams<T, V>['appToken'] = {
           type: ContractType.APP_TOKEN,
           appId: this.appId,
           groupId: this.groupId,
@@ -185,20 +189,26 @@ export abstract class AppTokenTemplatePositionFetcher<
           symbol,
           decimals,
           supply,
-          pricePerShare,
           tokens,
         };
 
+        // Resolve price per share stage
+        const pricePerShareStageParams = { appToken: fragment, contract, multicall };
+        const pricePerShare = await this.getPricePerShare(pricePerShareStageParams).then(v => (isArray(v) ? v : [v]));
+
         // Resolve Price Stage
-        const priceStageParams = { appToken: fragment, contract, multicall };
+        const priceStageFragment = { ...pricePerShareStageParams.appToken, pricePerShare };
+        const priceStageParams = { appToken: priceStageFragment, contract, multicall };
         const price = await this.getPrice(priceStageParams);
 
         // Resolve Data Props Stage
-        const dataPropsStageParams = { appToken: { ...fragment, price }, contract, multicall };
+        const dataPropsStageFragment = { ...priceStageParams.appToken, price };
+        const dataPropsStageParams = { appToken: dataPropsStageFragment, contract, multicall };
         const dataProps = await this.getDataProps(dataPropsStageParams);
 
         // Resolve Display Props Stage
-        const displayPropsStageParams = { appToken: { ...fragment, price, dataProps }, contract, multicall };
+        const displayPropsStageFragment = { ...dataPropsStageParams.appToken, dataProps };
+        const displayPropsStageParams = { appToken: displayPropsStageFragment, contract, multicall };
         const displayProps = {
           label: await this.getLabel(displayPropsStageParams),
           labelDetailed: await this.getLabelDetailed(displayPropsStageParams),
@@ -208,7 +218,7 @@ export abstract class AppTokenTemplatePositionFetcher<
           statsItems: await this.getStatsItems(displayPropsStageParams),
         };
 
-        return { ...fragment, price, dataProps, displayProps };
+        return { ...displayPropsStageFragment, displayProps };
       }),
     );
 

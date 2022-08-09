@@ -8,6 +8,7 @@ import {
   AppTokenTemplatePositionFetcher,
   DataPropsStageParams,
   DisplayPropsStageParams,
+  PricePerShareStageParams,
 } from '~position/template/app-token.template.position-fetcher';
 import { Network } from '~types/network.interface';
 
@@ -59,7 +60,7 @@ export class BinanceSmartChainOpenleveragePoolTokenFetcher extends AppTokenTempl
     return contract.underlying();
   }
 
-  async getPricePerShare(contract: OpenleverageLpool) {
+  async getPricePerShare({ contract }: PricePerShareStageParams<OpenleverageLpool>) {
     const exchangeRateCurrent = await contract.exchangeRateStored();
     return Number(exchangeRateCurrent) / 10 ** 18;
   }

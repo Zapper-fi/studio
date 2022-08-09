@@ -5,9 +5,9 @@
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
 import type {
-  HectorDaoStakeBondDepository,
-  HectorDaoStakeBondDepositoryInterface,
-} from '../HectorDaoStakeBondDepository';
+  HectorNetworkStakeBondDepository,
+  HectorNetworkStakeBondDepositoryInterface,
+} from '../HectorNetworkStakeBondDepository';
 
 const _abi = [
   {
@@ -865,12 +865,12 @@ const _abi = [
   },
 ];
 
-export class HectorDaoStakeBondDepository__factory {
+export class HectorNetworkStakeBondDepository__factory {
   static readonly abi = _abi;
-  static createInterface(): HectorDaoStakeBondDepositoryInterface {
-    return new utils.Interface(_abi) as HectorDaoStakeBondDepositoryInterface;
+  static createInterface(): HectorNetworkStakeBondDepositoryInterface {
+    return new utils.Interface(_abi) as HectorNetworkStakeBondDepositoryInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): HectorDaoStakeBondDepository {
-    return new Contract(address, _abi, signerOrProvider) as HectorDaoStakeBondDepository;
+  static connect(address: string, signerOrProvider: Signer | Provider): HectorNetworkStakeBondDepository {
+    return new Contract(address, _abi, signerOrProvider) as HectorNetworkStakeBondDepository;
   }
 }

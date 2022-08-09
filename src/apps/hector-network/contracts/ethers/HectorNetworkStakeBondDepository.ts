@@ -17,10 +17,11 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
-export interface HectorDaoBondDepositoryInterface extends utils.Interface {
+export interface HectorNetworkStakeBondDepositoryInterface extends utils.Interface {
   functions: {
     'DAO()': FunctionFragment;
     'HEC()': FunctionFragment;
+    '_bondInfo(address)': FunctionFragment;
     'adjustment()': FunctionFragment;
     'bondCalculator()': FunctionFragment;
     'bondInfo(address)': FunctionFragment;
@@ -34,6 +35,7 @@ export interface HectorDaoBondDepositoryInterface extends utils.Interface {
     'isLiquidityBond()': FunctionFragment;
     'lastDecay()': FunctionFragment;
     'maxPayout()': FunctionFragment;
+    'name()': FunctionFragment;
     'payoutFor(uint256)': FunctionFragment;
     'pendingPayoutFor(address)': FunctionFragment;
     'percentVestedFor(address)': FunctionFragment;
@@ -44,22 +46,23 @@ export interface HectorDaoBondDepositoryInterface extends utils.Interface {
     'recoverLostToken(address)': FunctionFragment;
     'redeem(address,bool)': FunctionFragment;
     'renounceManagement()': FunctionFragment;
+    'sHEC()': FunctionFragment;
     'setAdjustment(bool,uint256,uint256,uint256)': FunctionFragment;
     'setBondTerms(uint8,uint256)': FunctionFragment;
-    'setStaking(address,bool)': FunctionFragment;
+    'setStaking(address)': FunctionFragment;
     'staking()': FunctionFragment;
-    'stakingHelper()': FunctionFragment;
     'standardizedDebtRatio()': FunctionFragment;
     'terms()': FunctionFragment;
     'totalDebt()': FunctionFragment;
+    'totalPrinciple()': FunctionFragment;
     'treasury()': FunctionFragment;
-    'useHelper()': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
       | 'DAO'
       | 'HEC'
+      | '_bondInfo'
       | 'adjustment'
       | 'bondCalculator'
       | 'bondInfo'
@@ -73,6 +76,7 @@ export interface HectorDaoBondDepositoryInterface extends utils.Interface {
       | 'isLiquidityBond'
       | 'lastDecay'
       | 'maxPayout'
+      | 'name'
       | 'payoutFor'
       | 'pendingPayoutFor'
       | 'percentVestedFor'
@@ -83,20 +87,21 @@ export interface HectorDaoBondDepositoryInterface extends utils.Interface {
       | 'recoverLostToken'
       | 'redeem'
       | 'renounceManagement'
+      | 'sHEC'
       | 'setAdjustment'
       | 'setBondTerms'
       | 'setStaking'
       | 'staking'
-      | 'stakingHelper'
       | 'standardizedDebtRatio'
       | 'terms'
       | 'totalDebt'
-      | 'treasury'
-      | 'useHelper',
+      | 'totalPrinciple'
+      | 'treasury',
   ): FunctionFragment;
 
   encodeFunctionData(functionFragment: 'DAO', values?: undefined): string;
   encodeFunctionData(functionFragment: 'HEC', values?: undefined): string;
+  encodeFunctionData(functionFragment: '_bondInfo', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'adjustment', values?: undefined): string;
   encodeFunctionData(functionFragment: 'bondCalculator', values?: undefined): string;
   encodeFunctionData(functionFragment: 'bondInfo', values: [PromiseOrValue<string>]): string;
@@ -124,6 +129,7 @@ export interface HectorDaoBondDepositoryInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'isLiquidityBond', values?: undefined): string;
   encodeFunctionData(functionFragment: 'lastDecay', values?: undefined): string;
   encodeFunctionData(functionFragment: 'maxPayout', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'name', values?: undefined): string;
   encodeFunctionData(functionFragment: 'payoutFor', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'pendingPayoutFor', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'percentVestedFor', values: [PromiseOrValue<string>]): string;
@@ -134,6 +140,7 @@ export interface HectorDaoBondDepositoryInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'recoverLostToken', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'redeem', values: [PromiseOrValue<string>, PromiseOrValue<boolean>]): string;
   encodeFunctionData(functionFragment: 'renounceManagement', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'sHEC', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'setAdjustment',
     values: [
@@ -147,17 +154,17 @@ export interface HectorDaoBondDepositoryInterface extends utils.Interface {
     functionFragment: 'setBondTerms',
     values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
   ): string;
-  encodeFunctionData(functionFragment: 'setStaking', values: [PromiseOrValue<string>, PromiseOrValue<boolean>]): string;
+  encodeFunctionData(functionFragment: 'setStaking', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'staking', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'stakingHelper', values?: undefined): string;
   encodeFunctionData(functionFragment: 'standardizedDebtRatio', values?: undefined): string;
   encodeFunctionData(functionFragment: 'terms', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalDebt', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'totalPrinciple', values?: undefined): string;
   encodeFunctionData(functionFragment: 'treasury', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'useHelper', values?: undefined): string;
 
   decodeFunctionResult(functionFragment: 'DAO', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'HEC', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: '_bondInfo', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'adjustment', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'bondCalculator', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'bondInfo', data: BytesLike): Result;
@@ -171,6 +178,7 @@ export interface HectorDaoBondDepositoryInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'isLiquidityBond', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'lastDecay', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'maxPayout', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'name', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'payoutFor', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'pendingPayoutFor', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'percentVestedFor', data: BytesLike): Result;
@@ -181,16 +189,16 @@ export interface HectorDaoBondDepositoryInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'recoverLostToken', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'redeem', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'renounceManagement', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'sHEC', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'setAdjustment', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'setBondTerms', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'setStaking', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'staking', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'stakingHelper', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'standardizedDebtRatio', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'terms', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'totalDebt', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'totalPrinciple', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'treasury', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'useHelper', data: BytesLike): Result;
 
   events: {
     'BondCreated(uint256,uint256,uint256,uint256)': EventFragment;
@@ -266,12 +274,12 @@ export type OwnershipPushedEvent = TypedEvent<[string, string], OwnershipPushedE
 
 export type OwnershipPushedEventFilter = TypedEventFilter<OwnershipPushedEvent>;
 
-export interface HectorDaoBondDepository extends BaseContract {
+export interface HectorNetworkStakeBondDepository extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: HectorDaoBondDepositoryInterface;
+  interface: HectorNetworkStakeBondDepositoryInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -293,6 +301,19 @@ export interface HectorDaoBondDepository extends BaseContract {
 
     HEC(overrides?: CallOverrides): Promise<[string]>;
 
+    _bondInfo(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<
+      [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
+        gonsPayout: BigNumber;
+        hecPayout: BigNumber;
+        vesting: BigNumber;
+        lastBlock: BigNumber;
+        pricePaid: BigNumber;
+      }
+    >;
+
     adjustment(overrides?: CallOverrides): Promise<
       [boolean, BigNumber, BigNumber, BigNumber, BigNumber] & {
         add: boolean;
@@ -306,7 +327,7 @@ export interface HectorDaoBondDepository extends BaseContract {
     bondCalculator(overrides?: CallOverrides): Promise<[string]>;
 
     bondInfo(
-      arg0: PromiseOrValue<string>,
+      _depositor: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -351,6 +372,8 @@ export interface HectorDaoBondDepository extends BaseContract {
 
     maxPayout(overrides?: CallOverrides): Promise<[BigNumber]>;
 
+    name(overrides?: CallOverrides): Promise<[string] & { _name: string }>;
+
     payoutFor(_value: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     pendingPayoutFor(
@@ -387,6 +410,8 @@ export interface HectorDaoBondDepository extends BaseContract {
 
     renounceManagement(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
+    sHEC(overrides?: CallOverrides): Promise<[string]>;
+
     setAdjustment(
       _addition: PromiseOrValue<boolean>,
       _increment: PromiseOrValue<BigNumberish>,
@@ -403,13 +428,10 @@ export interface HectorDaoBondDepository extends BaseContract {
 
     setStaking(
       _staking: PromiseOrValue<string>,
-      _helper: PromiseOrValue<boolean>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     staking(overrides?: CallOverrides): Promise<[string]>;
-
-    stakingHelper(overrides?: CallOverrides): Promise<[string]>;
 
     standardizedDebtRatio(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -426,14 +448,27 @@ export interface HectorDaoBondDepository extends BaseContract {
 
     totalDebt(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    treasury(overrides?: CallOverrides): Promise<[string]>;
+    totalPrinciple(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    useHelper(overrides?: CallOverrides): Promise<[boolean]>;
+    treasury(overrides?: CallOverrides): Promise<[string]>;
   };
 
   DAO(overrides?: CallOverrides): Promise<string>;
 
   HEC(overrides?: CallOverrides): Promise<string>;
+
+  _bondInfo(
+    arg0: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<
+    [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
+      gonsPayout: BigNumber;
+      hecPayout: BigNumber;
+      vesting: BigNumber;
+      lastBlock: BigNumber;
+      pricePaid: BigNumber;
+    }
+  >;
 
   adjustment(overrides?: CallOverrides): Promise<
     [boolean, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -448,7 +483,7 @@ export interface HectorDaoBondDepository extends BaseContract {
   bondCalculator(overrides?: CallOverrides): Promise<string>;
 
   bondInfo(
-    arg0: PromiseOrValue<string>,
+    _depositor: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -493,6 +528,8 @@ export interface HectorDaoBondDepository extends BaseContract {
 
   maxPayout(overrides?: CallOverrides): Promise<BigNumber>;
 
+  name(overrides?: CallOverrides): Promise<string>;
+
   payoutFor(_value: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
   pendingPayoutFor(_depositor: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
@@ -523,6 +560,8 @@ export interface HectorDaoBondDepository extends BaseContract {
 
   renounceManagement(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
+  sHEC(overrides?: CallOverrides): Promise<string>;
+
   setAdjustment(
     _addition: PromiseOrValue<boolean>,
     _increment: PromiseOrValue<BigNumberish>,
@@ -539,13 +578,10 @@ export interface HectorDaoBondDepository extends BaseContract {
 
   setStaking(
     _staking: PromiseOrValue<string>,
-    _helper: PromiseOrValue<boolean>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   staking(overrides?: CallOverrides): Promise<string>;
-
-  stakingHelper(overrides?: CallOverrides): Promise<string>;
 
   standardizedDebtRatio(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -562,14 +598,27 @@ export interface HectorDaoBondDepository extends BaseContract {
 
   totalDebt(overrides?: CallOverrides): Promise<BigNumber>;
 
-  treasury(overrides?: CallOverrides): Promise<string>;
+  totalPrinciple(overrides?: CallOverrides): Promise<BigNumber>;
 
-  useHelper(overrides?: CallOverrides): Promise<boolean>;
+  treasury(overrides?: CallOverrides): Promise<string>;
 
   callStatic: {
     DAO(overrides?: CallOverrides): Promise<string>;
 
     HEC(overrides?: CallOverrides): Promise<string>;
+
+    _bondInfo(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<
+      [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
+        gonsPayout: BigNumber;
+        hecPayout: BigNumber;
+        vesting: BigNumber;
+        lastBlock: BigNumber;
+        pricePaid: BigNumber;
+      }
+    >;
 
     adjustment(overrides?: CallOverrides): Promise<
       [boolean, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -584,7 +633,7 @@ export interface HectorDaoBondDepository extends BaseContract {
     bondCalculator(overrides?: CallOverrides): Promise<string>;
 
     bondInfo(
-      arg0: PromiseOrValue<string>,
+      _depositor: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -629,6 +678,8 @@ export interface HectorDaoBondDepository extends BaseContract {
 
     maxPayout(overrides?: CallOverrides): Promise<BigNumber>;
 
+    name(overrides?: CallOverrides): Promise<string>;
+
     payoutFor(_value: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     pendingPayoutFor(_depositor: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
@@ -653,6 +704,8 @@ export interface HectorDaoBondDepository extends BaseContract {
 
     renounceManagement(overrides?: CallOverrides): Promise<void>;
 
+    sHEC(overrides?: CallOverrides): Promise<string>;
+
     setAdjustment(
       _addition: PromiseOrValue<boolean>,
       _increment: PromiseOrValue<BigNumberish>,
@@ -667,15 +720,9 @@ export interface HectorDaoBondDepository extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    setStaking(
-      _staking: PromiseOrValue<string>,
-      _helper: PromiseOrValue<boolean>,
-      overrides?: CallOverrides,
-    ): Promise<void>;
+    setStaking(_staking: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     staking(overrides?: CallOverrides): Promise<string>;
-
-    stakingHelper(overrides?: CallOverrides): Promise<string>;
 
     standardizedDebtRatio(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -692,9 +739,9 @@ export interface HectorDaoBondDepository extends BaseContract {
 
     totalDebt(overrides?: CallOverrides): Promise<BigNumber>;
 
-    treasury(overrides?: CallOverrides): Promise<string>;
+    totalPrinciple(overrides?: CallOverrides): Promise<BigNumber>;
 
-    useHelper(overrides?: CallOverrides): Promise<boolean>;
+    treasury(overrides?: CallOverrides): Promise<string>;
   };
 
   filters: {
@@ -766,11 +813,13 @@ export interface HectorDaoBondDepository extends BaseContract {
 
     HEC(overrides?: CallOverrides): Promise<BigNumber>;
 
+    _bondInfo(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
     adjustment(overrides?: CallOverrides): Promise<BigNumber>;
 
     bondCalculator(overrides?: CallOverrides): Promise<BigNumber>;
 
-    bondInfo(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+    bondInfo(_depositor: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     bondPrice(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -806,6 +855,8 @@ export interface HectorDaoBondDepository extends BaseContract {
 
     maxPayout(overrides?: CallOverrides): Promise<BigNumber>;
 
+    name(overrides?: CallOverrides): Promise<BigNumber>;
+
     payoutFor(_value: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     pendingPayoutFor(_depositor: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
@@ -836,6 +887,8 @@ export interface HectorDaoBondDepository extends BaseContract {
 
     renounceManagement(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
+    sHEC(overrides?: CallOverrides): Promise<BigNumber>;
+
     setAdjustment(
       _addition: PromiseOrValue<boolean>,
       _increment: PromiseOrValue<BigNumberish>,
@@ -852,13 +905,10 @@ export interface HectorDaoBondDepository extends BaseContract {
 
     setStaking(
       _staking: PromiseOrValue<string>,
-      _helper: PromiseOrValue<boolean>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     staking(overrides?: CallOverrides): Promise<BigNumber>;
-
-    stakingHelper(overrides?: CallOverrides): Promise<BigNumber>;
 
     standardizedDebtRatio(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -866,9 +916,9 @@ export interface HectorDaoBondDepository extends BaseContract {
 
     totalDebt(overrides?: CallOverrides): Promise<BigNumber>;
 
-    treasury(overrides?: CallOverrides): Promise<BigNumber>;
+    totalPrinciple(overrides?: CallOverrides): Promise<BigNumber>;
 
-    useHelper(overrides?: CallOverrides): Promise<BigNumber>;
+    treasury(overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -876,11 +926,13 @@ export interface HectorDaoBondDepository extends BaseContract {
 
     HEC(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    _bondInfo(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     adjustment(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     bondCalculator(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    bondInfo(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    bondInfo(_depositor: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     bondPrice(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -916,6 +968,8 @@ export interface HectorDaoBondDepository extends BaseContract {
 
     maxPayout(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     payoutFor(_value: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     pendingPayoutFor(_depositor: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -946,6 +1000,8 @@ export interface HectorDaoBondDepository extends BaseContract {
 
     renounceManagement(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
+    sHEC(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     setAdjustment(
       _addition: PromiseOrValue<boolean>,
       _increment: PromiseOrValue<BigNumberish>,
@@ -962,13 +1018,10 @@ export interface HectorDaoBondDepository extends BaseContract {
 
     setStaking(
       _staking: PromiseOrValue<string>,
-      _helper: PromiseOrValue<boolean>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     staking(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    stakingHelper(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     standardizedDebtRatio(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -976,8 +1029,8 @@ export interface HectorDaoBondDepository extends BaseContract {
 
     totalDebt(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    treasury(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    totalPrinciple(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    useHelper(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    treasury(overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }
