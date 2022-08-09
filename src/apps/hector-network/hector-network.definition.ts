@@ -3,16 +3,42 @@ import { appDefinition, AppDefinition } from '~app/app.definition';
 import { AppAction, AppTag, GroupType } from '~app/app.interface';
 import { Network } from '~types/network.interface';
 
-export const HECTOR_DAO_DEFINITION = appDefinition({
-  id: 'hector-dao',
+export const HECTOR_NETWORK_DEFINITION = appDefinition({
+  id: 'hector-network',
   name: 'Hector Network',
   description: `Hector Network is developing an expansive web 3 ecosystem for a visionary future. The foundations of the ecosystem, supported by the HEC utility token and TOR stablecoin, are functionality, accessibility and community. In conjunction with their growing list of partners, Hector Network is expanding crosschain and is dedicated to mass adoption.`,
   url: 'https://hector.network/',
   tags: [AppTag.ELASTIC_FINANCE],
   groups: {
-    vault: { id: 'vault', type: GroupType.TOKEN, label: 'Hector DAO', groupLabel: 'Farms' },
-    bond: { id: 'bond', type: GroupType.POSITION, label: 'Bonds' },
-    stakeBond: { id: 'stake-bond', type: GroupType.POSITION, label: 'Bonds' },
+    sHecV1: {
+      id: 's-hec-v1',
+      type: GroupType.TOKEN,
+      label: 'Staked HEC V1',
+    },
+
+    sHecV2: {
+      id: 's-hec-v2',
+      type: GroupType.TOKEN,
+      label: 'Staked HEC V2',
+    },
+
+    wsHec: {
+      id: 'ws-hec',
+      type: GroupType.TOKEN,
+      label: 'Wrapped sHEC V2',
+    },
+
+    bond: {
+      id: 'bond',
+      type: GroupType.POSITION,
+      label: 'Bonds',
+    },
+
+    stakeBond: {
+      id: 'stake-bond',
+      type: GroupType.POSITION,
+      label: 'Bonds',
+    },
   },
   links: {
     twitter: 'https://twitter.com/Hector_Network',
@@ -26,9 +52,9 @@ export const HECTOR_DAO_DEFINITION = appDefinition({
   },
 });
 
-@Register.AppDefinition(HECTOR_DAO_DEFINITION.id)
-export class HectorDaoAppDefinition extends AppDefinition {
+@Register.AppDefinition(HECTOR_NETWORK_DEFINITION.id)
+export class HectorNetworkAppDefinition extends AppDefinition {
   constructor() {
-    super(HECTOR_DAO_DEFINITION);
+    super(HECTOR_NETWORK_DEFINITION);
   }
 }

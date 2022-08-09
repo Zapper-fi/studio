@@ -22,6 +22,11 @@ export type StageParams<T extends Contract, V, K extends keyof AppTokenPosition>
   appToken: Omit<AppTokenPosition<V>, K>;
 };
 
+export type PricePerShareStageParams<T extends Contract, V extends DefaultDataProps = DefaultDataProps> = StageParams<
+  T,
+  V,
+  'pricePerShare' | 'price' | 'dataProps' | 'displayProps'
+>;
 export type PriceStageParams<T extends Contract, V extends DefaultDataProps = DefaultDataProps> = StageParams<
   T,
   V,
@@ -74,7 +79,7 @@ export abstract class AppTokenTemplatePositionFetcher<
     return [];
   }
 
-  async getPricePerShare(_contract: T): Promise<number | number[]> {
+  async getPricePerShare(_params: PricePerShareStageParams<T, V>): Promise<number | number[]> {
     return 1;
   }
 
