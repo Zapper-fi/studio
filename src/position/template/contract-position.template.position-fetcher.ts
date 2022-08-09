@@ -1,7 +1,8 @@
 import { Inject } from '@nestjs/common';
-import { Contract } from 'ethers/lib/ethers';
-import { compact } from 'lodash';
+import { BigNumberish, Contract } from 'ethers/lib/ethers';
+import { compact, sumBy } from 'lodash';
 
+import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import {
   buildDollarDisplayItem,
@@ -11,6 +12,7 @@ import { getImagesFromToken } from '~app-toolkit/helpers/presentation/image.pres
 import { IMulticallWrapper } from '~multicall';
 import { ContractType } from '~position/contract.interface';
 import { DefaultDataProps, DisplayProps, StatsItem } from '~position/display.interface';
+import { ContractPositionBalance } from '~position/position-balance.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
 import { AppGroupsDefinition } from '~position/position.service';
@@ -153,5 +155,40 @@ export abstract class ContractPositionTemplatePositionFetcher<
     );
 
     return tokens;
+  }
+
+  abstract getTokenBalancesPerPosition({
+    address,
+    contractPosition,
+    contract,
+    multicall,
+  }: {
+    address: string;
+    contractPosition: ContractPosition<V>;
+    contract: T;
+    multicall: IMulticallWrapper;
+  }): Promise<BigNumberish[]>;
+
+  async getBalances(address: string): Promise<ContractPositionBalance<V>[]> {
+    const multicall = this.appToolkit.getMulticall(this.network);
+    const contractPositions = await this.appToolkit.getAppContractPositions<V>({
+      appId: this.appId,
+      network: this.network,
+      groupIds: [this.groupId],
+    });
+
+    const balances = await Promise.all(
+      contractPositions.map(async contractPosition => {
+        const contract = multicall.wrap(this.getContract(contractPosition.address));
+        const balancesRaw = await this.getTokenBalancesPerPosition({ address, contract, contractPosition, multicall });
+        const tokens = contractPosition.tokens.map((cp, idx) => drillBalance(cp, balancesRaw[idx]?.toString() ?? '0'));
+        const balanceUSD = sumBy(tokens, t => t.balanceUSD);
+
+        const balance: ContractPositionBalance<V> = { ...contractPosition, tokens, balanceUSD };
+        return balance;
+      }),
+    );
+
+    return balances;
   }
 }

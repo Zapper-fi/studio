@@ -218,7 +218,7 @@ export abstract class AppTokenTemplatePositionFetcher<
     });
   }
 
-  getTokenBalance({
+  getBalancePerToken({
     address,
     appToken,
     multicall,
@@ -240,7 +240,7 @@ export abstract class AppTokenTemplatePositionFetcher<
 
     const balances = await Promise.all(
       appTokens.map(async appToken => {
-        const balanceRaw = await this.getTokenBalance({ multicall, address, appToken });
+        const balanceRaw = await this.getBalancePerToken({ multicall, address, appToken });
         const tokenBalance = drillBalance(appToken, balanceRaw.toString());
         return tokenBalance;
       }),
