@@ -31,6 +31,13 @@ export const GMX_DEFINITION = appDefinition({
       label: 'Farms',
       groupLabel: 'Farms',
     },
+
+    option: {
+      id: 'option',
+      type: GroupType.POSITION,
+      label: 'Options',
+      groupLabel: 'Options',
+    },
   },
   tags: [AppTag.MARGIN_TRADING],
   keywords: [],
