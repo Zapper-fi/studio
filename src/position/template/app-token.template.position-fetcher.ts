@@ -2,6 +2,7 @@ import { Inject } from '@nestjs/common';
 import { BigNumberish, Contract } from 'ethers/lib/ethers';
 import { compact, isArray, sum } from 'lodash';
 
+import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import {
   buildDollarDisplayItem,
@@ -12,6 +13,7 @@ import { Erc20 } from '~contract/contracts';
 import { IMulticallWrapper } from '~multicall';
 import { ContractType } from '~position/contract.interface';
 import { DefaultDataProps, DisplayProps, StatsItem } from '~position/display.interface';
+import { AppTokenPositionBalance } from '~position/position-balance.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
@@ -224,5 +226,36 @@ export abstract class AppTokenTemplatePositionFetcher<
       if (typeof v.dataProps.liquidity === 'number') return Math.abs(v.dataProps.liquidity) > 1000;
       return true;
     });
+  }
+
+  getBalancePerToken({
+    address,
+    appToken,
+    multicall,
+  }: {
+    address: string;
+    appToken: AppTokenPosition<V>;
+    multicall: IMulticallWrapper;
+  }): Promise<BigNumberish> {
+    return multicall.wrap(this.getContract(appToken.address)).balanceOf(address);
+  }
+
+  async getBalances(address: string): Promise<AppTokenPositionBalance<V>[]> {
+    const multicall = this.appToolkit.getMulticall(this.network);
+    const appTokens = await this.appToolkit.getAppTokenPositions<V>({
+      appId: this.appId,
+      network: this.network,
+      groupIds: [this.groupId],
+    });
+
+    const balances = await Promise.all(
+      appTokens.map(async appToken => {
+        const balanceRaw = await this.getBalancePerToken({ multicall, address, appToken });
+        const tokenBalance = drillBalance(appToken, balanceRaw.toString());
+        return tokenBalance;
+      }),
+    );
+
+    return balances as AppTokenPositionBalance<V>[];
   }
 }
