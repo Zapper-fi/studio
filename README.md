@@ -18,7 +18,7 @@
 </div>
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-67-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-71-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 ## Description
@@ -226,6 +226,12 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/vmaark"><img src="https://avatars.githubusercontent.com/u/2270661?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Mark</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=vmaark" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/yuval-weiss"><img src="https://avatars.githubusercontent.com/u/43820038?v=4?s=64" width="64px;" alt=""/><br /><sub><b>yuval-weiss</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/issues?q=author%3Ayuval-weiss" title="Bug reports">🐛</a></td>
     <td align="center"><a href="https://github.com/volt62"><img src="https://avatars.githubusercontent.com/u/95225490?v=4?s=64" width="64px;" alt=""/><br /><sub><b>volt62</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=volt62" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/procanzzc"><img src="https://avatars.githubusercontent.com/u/20929050?v=4?s=64" width="64px;" alt=""/><br /><sub><b>0xNeo</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=procanzzc" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/0xrmvdao"><img src="https://avatars.githubusercontent.com/u/99395193?v=4?s=64" width="64px;" alt=""/><br /><sub><b>0xR</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=0xrmvdao" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/dinngodev"><img src="https://avatars.githubusercontent.com/u/44598084?v=4?s=64" width="64px;" alt=""/><br /><sub><b>DINNGO Dev</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=dinngodev" title="Code">💻</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/rekt0x"><img src="https://avatars.githubusercontent.com/u/6087393?v=4?s=64" width="64px;" alt=""/><br /><sub><b>rekt0x</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=rekt0x" title="Code">💻</a></td>
   </tr>
 </table>
 
