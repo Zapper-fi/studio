@@ -117,7 +117,7 @@ export abstract class ContractPositionTemplatePositionFetcher<
     const skeletons = await Promise.all(
       descriptors.map(async descriptor => {
         const contract = multicall.wrap(this.getContract(descriptor.address));
-        const tokenDescriptors = await this.getTokenDescriptors(contract, descriptor)
+        const tokenDescriptors = await this.getTokenDescriptors({ contract, descriptor })
           .then(v => (Array.isArray(v) ? v : [v]))
           .then(v => v.map(t => ({ ...t, address: t.address.toLowerCase() })));
 
