@@ -25,6 +25,8 @@
     "@golevelup/nestjs-modules": "^0.5.0",
     "@nestjs/platform-express": "8.4.2",
     "@nestjs/schedule": "^2.1.0",
+    "@uniswap/sdk-core": "^3.0.1",
+    "@uniswap/v3-sdk": "^3.9.0",
     "bitcoin-address-validation": "^2.2.1",
     "esbuild": "^0.14.27",
     "esbuild-runner": "^2.2.1",
