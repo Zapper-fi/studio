@@ -2,6 +2,7 @@ import { Inject } from '@nestjs/common';
 import { BigNumberish, Contract } from 'ethers/lib/ethers';
 import { compact, sum } from 'lodash';
 
+import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import {
   buildDollarDisplayItem,
@@ -12,9 +13,9 @@ import { Erc20 } from '~contract/contracts';
 import { IMulticallWrapper } from '~multicall';
 import { ContractType } from '~position/contract.interface';
 import { DefaultDataProps, DisplayProps, StatsItem } from '~position/display.interface';
+import { AppTokenPositionBalance } from '~position/position-balance.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
-import { AppGroupsDefinition } from '~position/position.service';
 import { Network } from '~types/network.interface';
 
 export type StageParams<T extends Contract, V, K extends keyof AppTokenPosition> = {
@@ -23,9 +24,21 @@ export type StageParams<T extends Contract, V, K extends keyof AppTokenPosition>
   appToken: Omit<AppTokenPosition<V>, K>;
 };
 
-export type PriceStageParams<T extends Contract, V> = StageParams<T, V, 'price' | 'dataProps' | 'displayProps'>;
-export type DataPropsStageParams<T extends Contract, V> = StageParams<T, V, 'dataProps' | 'displayProps'>;
-export type DisplayPropsStageParams<T extends Contract, V> = StageParams<T, V, 'displayProps'>;
+export type PriceStageParams<T extends Contract, V extends DefaultDataProps = DefaultDataProps> = StageParams<
+  T,
+  V,
+  'price' | 'dataProps' | 'displayProps'
+>;
+export type DataPropsStageParams<T extends Contract, V extends DefaultDataProps = DefaultDataProps> = StageParams<
+  T,
+  V,
+  'dataProps' | 'displayProps'
+>;
+export type DisplayPropsStageParams<T extends Contract, V extends DefaultDataProps = DefaultDataProps> = StageParams<
+  T,
+  V,
+  'displayProps'
+>;
 
 export abstract class AppTokenTemplatePositionFetcher<
   T extends Contract = Erc20,
@@ -35,7 +48,6 @@ export abstract class AppTokenTemplatePositionFetcher<
   abstract appId: string;
   abstract groupId: string;
   abstract network: Network;
-  dependencies: AppGroupsDefinition[] = [];
 
   constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) {}
 
@@ -92,7 +104,7 @@ export abstract class AppTokenTemplatePositionFetcher<
 
   async getTertiaryLabel({ appToken }: DisplayPropsStageParams<T, V>): Promise<DisplayProps['tertiaryLabel']> {
     if (typeof appToken.dataProps.apy === 'number') return `${appToken.dataProps.apy.toFixed(3)}% APY`;
-    return '';
+    return undefined;
   }
 
   async getImages({ appToken }: DisplayPropsStageParams<T, V>): Promise<DisplayProps['images']> {
@@ -115,7 +127,13 @@ export abstract class AppTokenTemplatePositionFetcher<
   // Note: This will be removed in favour of an orchestrator at a higher level once all groups are migrated
   async getPositions(): Promise<AppTokenPosition<V>[]> {
     const multicall = this.appToolkit.getMulticall(this.network);
-    const tokenLoader = this.appToolkit.getBaseTokenPriceSelector();
+    const tokenLoader = this.appToolkit.getBaseTokenPriceSelector({
+      tags: { network: this.network, appId: `${this.appId}__template` },
+    });
+    const appTokenLoader = this.appToolkit.getAppTokenSelector({
+      tags: { network: this.network, context: `${this.appId}__template` },
+    });
+
     const addresses = await this.getAddresses();
 
     const skeletons = await Promise.all(
@@ -129,12 +147,12 @@ export abstract class AppTokenTemplatePositionFetcher<
       }),
     );
 
-    const baseTokensRequests = skeletons
+    const underlyingTokenRequests = skeletons
       .flatMap(v => v.underlyingTokenAddresses)
       .map(v => ({ network: this.network, address: v }));
-    const baseTokens = await tokenLoader.getMany(baseTokensRequests);
-    const appTokens = await this.appToolkit.getAppTokenPositions(...this.dependencies);
-    const allTokens = [...appTokens, ...compact(baseTokens)];
+    const baseTokens = await tokenLoader.getMany(underlyingTokenRequests);
+    const appTokens = await appTokenLoader.getMany(underlyingTokenRequests);
+    const allTokens = [...compact(appTokens), ...compact(baseTokens)];
 
     const skeletonsWithResolvedTokens = await Promise.all(
       skeletons.map(async ({ address, underlyingTokenAddresses }) => {
@@ -194,6 +212,40 @@ export abstract class AppTokenTemplatePositionFetcher<
       }),
     );
 
-    return tokens;
+    return compact(tokens).filter(v => {
+      if (typeof v.dataProps.liquidity === 'number') return Math.abs(v.dataProps.liquidity) > 1000;
+      return true;
+    });
+  }
+
+  getBalancePerToken({
+    address,
+    appToken,
+    multicall,
+  }: {
+    address: string;
+    appToken: AppTokenPosition<V>;
+    multicall: IMulticallWrapper;
+  }): Promise<BigNumberish> {
+    return multicall.wrap(this.getContract(appToken.address)).balanceOf(address);
+  }
+
+  async getBalances(address: string): Promise<AppTokenPositionBalance<V>[]> {
+    const multicall = this.appToolkit.getMulticall(this.network);
+    const appTokens = await this.appToolkit.getAppTokenPositions<V>({
+      appId: this.appId,
+      network: this.network,
+      groupIds: [this.groupId],
+    });
+
+    const balances = await Promise.all(
+      appTokens.map(async appToken => {
+        const balanceRaw = await this.getBalancePerToken({ multicall, address, appToken });
+        const tokenBalance = drillBalance(appToken, balanceRaw.toString());
+        return tokenBalance;
+      }),
+    );
+
+    return balances as AppTokenPositionBalance<V>[];
   }
 }

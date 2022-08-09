@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { StakingRewards, StakingRewardsInterface } from '../StakingRewards';
+import type { LyraLpStaking, LyraLpStakingInterface } from '../LyraLpStaking';
 
 const _abi = [
   {
@@ -659,12 +659,12 @@ const _abi = [
   },
 ];
 
-export class StakingRewards__factory {
+export class LyraLpStaking__factory {
   static readonly abi = _abi;
-  static createInterface(): StakingRewardsInterface {
-    return new utils.Interface(_abi) as StakingRewardsInterface;
+  static createInterface(): LyraLpStakingInterface {
+    return new utils.Interface(_abi) as LyraLpStakingInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): StakingRewards {
-    return new Contract(address, _abi, signerOrProvider) as StakingRewards;
+  static connect(address: string, signerOrProvider: Signer | Provider): LyraLpStaking {
+    return new Contract(address, _abi, signerOrProvider) as LyraLpStaking;
   }
 }

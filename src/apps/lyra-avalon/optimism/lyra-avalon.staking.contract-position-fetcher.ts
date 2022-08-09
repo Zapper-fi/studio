@@ -8,7 +8,7 @@ import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
-import { LyraAvalonContractFactory, StakingRewards } from '../contracts';
+import { LyraAvalonContractFactory, LyraLpStaking } from '../contracts';
 import { LYRA_AVALON_DEFINITION } from '../lyra-avalon.definition';
 
 const appId = LYRA_AVALON_DEFINITION.id;
@@ -33,12 +33,12 @@ export class OptimismLyraAvalonStakingContractPositionFetcher implements Positio
   ) {}
 
   async getPositions() {
-    return await this.appToolkit.helpers.singleStakingFarmContractPositionHelper.getContractPositions<StakingRewards>({
+    return await this.appToolkit.helpers.singleStakingFarmContractPositionHelper.getContractPositions<LyraLpStaking>({
       network,
       appId,
       groupId,
       dependencies: [{ appId: ARRAKIS_DEFINITION.id, groupIds: [ARRAKIS_DEFINITION.groups.pool.id], network }],
-      resolveFarmContract: ({ network, address }) => this.lyraContractFactory.stakingRewards({ network, address }),
+      resolveFarmContract: ({ network, address }) => this.lyraContractFactory.lyraLpStaking({ network, address }),
       resolveIsActive: this.synthetixSingleStakingIsActiveStrategy.build({
         resolvePeriodFinish: ({ contract, multicall }) => multicall.wrap(contract).periodFinish(),
       }),

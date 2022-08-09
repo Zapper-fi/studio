@@ -4,9 +4,11 @@ import Axios, { AxiosInstance } from 'axios';
 import DataLoader from 'dataloader';
 import qs from 'qs';
 
+import { AppTokenSelectorKey } from '~position/app-token-selector.interface';
 import { ContractType } from '~position/contract.interface';
 import { AbstractPosition, AppTokenPosition, ContractPosition } from '~position/position.interface';
 import { AppGroupsDefinition } from '~position/position.service';
+import { Network } from '~types';
 
 import { PositionSource } from './position-source.interface';
 
@@ -61,5 +63,22 @@ export class ApiPositionSource implements PositionSource {
     const loader = contractType === ContractType.APP_TOKEN ? this.tokensDataLoader : this.positionsDataLoader;
     const results = await Promise.all(definitions.map(v => loader.load(v))).then(v => v.flat());
     return results as any as T[];
+  }
+
+  async getAppTokenBatch(queries: AppTokenSelectorKey[]) {
+    const addresses: string[] = [];
+    const networks: Network[] = [];
+
+    for (const q of queries) {
+      addresses.push(q.address);
+      networks.push(q.network);
+    }
+
+    const { data } = await this.axios.post<(AppTokenPosition | null)[]>(`/v2/app-tokens/batch`, {
+      addresses,
+      networks,
+    });
+
+    return data;
   }
 }

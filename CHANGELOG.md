@@ -4,6 +4,94 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.160.0](https://github.com/Zapper-fi/studio/compare/v0.159.0...v0.160.0) (2022-08-09)
+
+
+### Features
+
+* **aave:** Fix missing debt positions ([b97ee71](https://github.com/Zapper-fi/studio/commit/b97ee71dc882a0efdb10b1b856177a2eb1f1c933))
+
+## [0.159.0](https://github.com/Zapper-fi/studio/compare/v0.158.0...v0.159.0) (2022-08-08)
+
+
+### Features
+
+* **multicall:** Adjust error handling ([17776f0](https://github.com/Zapper-fi/studio/commit/17776f078c6a88b8e4004231ddc588b27abecb80))
+
+## [0.158.0](https://github.com/Zapper-fi/studio/compare/v0.157.0...v0.158.0) (2022-08-08)
+
+
+### Features
+
+* **studio:** Make hooks an object ([289521a](https://github.com/Zapper-fi/studio/commit/289521a7ed20b9b39e03549904f08e161f5a1852))
+
+## [0.157.0](https://github.com/Zapper-fi/studio/compare/v0.156.0...v0.157.0) (2022-08-08)
+
+
+### Features
+
+* **multicall:** Extract options, mainly triggering a release ([b990fae](https://github.com/Zapper-fi/studio/commit/b990faea403d80d7c156b685a35cea6de27dc8a0))
+
+## [0.156.0](https://github.com/Zapper-fi/studio/compare/v0.155.0...v0.156.0) (2022-08-08)
+
+
+### Features
+
+* **multicall:** And add call data ([2682315](https://github.com/Zapper-fi/studio/commit/26823156a2d08ba4a35ee83ea96d53c7ba7aad7a))
+
+## [0.155.0](https://github.com/Zapper-fi/studio/compare/v0.154.0...v0.155.0) (2022-08-08)
+
+
+### Features
+
+* **multicall:** Remove readonly clause ([1aaf107](https://github.com/Zapper-fi/studio/commit/1aaf10736291f669ce9bd084915958ec7bf69986))
+
+## [0.154.0](https://github.com/Zapper-fi/studio/compare/v0.153.0...v0.154.0) (2022-08-08)
+
+
+### Features
+
+* **multicall:** Add calls to parameters of before call hook ([#1101](https://github.com/Zapper-fi/studio/issues/1101)) ([72a5a1b](https://github.com/Zapper-fi/studio/commit/72a5a1b3931f3aac657ca2c2ed113579088b1404))
+
+## [0.153.0](https://github.com/Zapper-fi/studio/compare/v0.152.0...v0.153.0) (2022-08-08)
+
+
+### Features
+
+* **multicall:** Enable a before hook for use in production ([#1099](https://github.com/Zapper-fi/studio/issues/1099)) ([73e6f78](https://github.com/Zapper-fi/studio/commit/73e6f78a5460aaeeb9cdbc5a09468fe06cd65eb9))
+
+## [0.152.0](https://github.com/Zapper-fi/studio/compare/v0.151.0...v0.152.0) (2022-08-08)
+
+
+### Features
+
+* **template:** Use app token loader in template class ([#1097](https://github.com/Zapper-fi/studio/issues/1097)) ([f3f2276](https://github.com/Zapper-fi/studio/commit/f3f22762ca34595a2696d7ebad45d03d88a8eb93))
+
+## [0.151.0](https://github.com/Zapper-fi/studio/compare/v0.150.0...v0.151.0) (2022-08-08)
+
+
+### Features
+
+* Add Openleverage Finance ([#899](https://github.com/Zapper-fi/studio/issues/899)) ([bbe4fdf](https://github.com/Zapper-fi/studio/commit/bbe4fdf02d2cc05767d8214985eecd3d04d6b391))
+* **app-tokens:** Add app token dataloader selector ([#1093](https://github.com/Zapper-fi/studio/issues/1093)) ([920d0f1](https://github.com/Zapper-fi/studio/commit/920d0f1e15a857cef59549bc3554b43320193d2f))
+* **app-tokens:** Use POST route for getting app token batch ([#1095](https://github.com/Zapper-fi/studio/issues/1095)) ([98f802c](https://github.com/Zapper-fi/studio/commit/98f802ceea3e2073a2e75cabd59534be768da15c))
+* **clearpool:** Add token position fetchers for Clearpool ([#1075](https://github.com/Zapper-fi/studio/issues/1075)) ([db4a614](https://github.com/Zapper-fi/studio/commit/db4a6149e2eddb082c0446cb923b939ffaeed889))
+* **clearpool:** Migrate fetchers to new template, add logo ([0400565](https://github.com/Zapper-fi/studio/commit/04005658e206288b97f043f184e0fa30184aecf4))
+* **furucombo:** Add Furucombo app module ([#1090](https://github.com/Zapper-fi/studio/issues/1090)) ([bc98940](https://github.com/Zapper-fi/studio/commit/bc989409fa84c494465ca9f1b471b15f3b0b40b5))
+* **furucombo:** Remove balance fetcher ([8ae191e](https://github.com/Zapper-fi/studio/commit/8ae191ec560c1b3f44c7e30ebb885ef4cf203030))
+* **lyra-avalon:** update staking to v2 ([#1078](https://github.com/Zapper-fi/studio/issues/1078)) ([f0767da](https://github.com/Zapper-fi/studio/commit/f0767da86260a3063def7009df2d39a82b94636b))
+* **openleverage:** Fix and narrow down positions ([9e7b529](https://github.com/Zapper-fi/studio/commit/9e7b529b3342867d7b3a255273c213630873751b))
+* **qi-dao:** Add optimism support ([#1074](https://github.com/Zapper-fi/studio/issues/1074)) ([033c398](https://github.com/Zapper-fi/studio/commit/033c398414c035b65e01d526fda9235fd450ba6c))
+* **revert-fi:** Add logo ([cf04d44](https://github.com/Zapper-fi/studio/commit/cf04d444b02538c003dfee5d889552e9dbe5f158))
+* **revert-fi:** Track compoundor claimable fees ([#1087](https://github.com/Zapper-fi/studio/issues/1087)) ([e1b6c7a](https://github.com/Zapper-fi/studio/commit/e1b6c7a9914bec0c6c8221d6c6770a5258347b01))
+* **sablier:** Migrate Sablier to Studio ([#1082](https://github.com/Zapper-fi/studio/issues/1082)) ([8fe72a3](https://github.com/Zapper-fi/studio/commit/8fe72a35b88e90834e29a122eebc817b6f56fe39))
+
+
+### Bug Fixes
+
+* **angle:** fixed angle's helper cache keys ([#1086](https://github.com/Zapper-fi/studio/issues/1086)) ([e341029](https://github.com/Zapper-fi/studio/commit/e3410296e5dda9059a7ac121173dda17df195cfc))
+* **hector-dao:** updating logo, name ([636b0ba](https://github.com/Zapper-fi/studio/commit/636b0bad7536a9ca64d37e349090042d58c58f07))
+
 ## [0.150.0](https://github.com/Zapper-fi/studio/compare/v0.149.0...v0.150.0) (2022-08-05)
 
 

@@ -23,8 +23,7 @@ export class EthereumAngleSantokenTokenFetcher implements PositionFetcher<AppTok
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(AngleContractFactory) private readonly angleContractFactory: AngleContractFactory,
-    @Inject(AngleApiHelper)
-    private readonly angleApiHelper: AngleApiHelper,
+    @Inject(AngleApiHelper) private readonly angleApiHelper: AngleApiHelper,
   ) {}
 
   async getPositions() {
@@ -32,8 +31,8 @@ export class EthereumAngleSantokenTokenFetcher implements PositionFetcher<AppTok
 
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
 
-    const tokenList = await this.angleApiHelper.fetchTokenList();
-    const APR = await this.angleApiHelper.getApr();
+    const tokenList = await this.angleApiHelper.fetchTokenList(network);
+    const APR = await this.angleApiHelper.getApr(network);
 
     const sanTokens = Object.entries(tokenList).filter(v => v[1].name.startsWith('sanToken'));
 

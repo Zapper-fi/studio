@@ -38,7 +38,6 @@ export class AaveSafetyModuleClaimableBalanceHelper {
 
     const stkAaveContract = this.contractFactory.stakedAave({ address: this.stkAaveAddress, network });
     const stkAbptContract = this.contractFactory.balancerStkAbpt({ address: this.stkAbptAddress, network });
-
     const [stkAaveRewardBalanceRaw, stkAbptRewardBalanceRaw] = await Promise.all([
       multicall.wrap(stkAaveContract).getTotalRewardsBalance(address),
       multicall.wrap(stkAbptContract).getTotalRewardsBalance(address),

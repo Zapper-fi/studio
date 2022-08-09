@@ -15,24 +15,24 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
 
 export declare namespace LiquidityPool {
   export type LiquidityPoolParametersStruct = {
-    minDepositWithdraw: PromiseOrValue<BigNumberish>;
-    depositDelay: PromiseOrValue<BigNumberish>;
-    withdrawalDelay: PromiseOrValue<BigNumberish>;
-    withdrawalFee: PromiseOrValue<BigNumberish>;
-    liquidityCBThreshold: PromiseOrValue<BigNumberish>;
-    liquidityCBTimeout: PromiseOrValue<BigNumberish>;
-    ivVarianceCBThreshold: PromiseOrValue<BigNumberish>;
-    skewVarianceCBThreshold: PromiseOrValue<BigNumberish>;
-    ivVarianceCBTimeout: PromiseOrValue<BigNumberish>;
-    skewVarianceCBTimeout: PromiseOrValue<BigNumberish>;
-    guardianMultisig: PromiseOrValue<string>;
-    guardianDelay: PromiseOrValue<BigNumberish>;
-    boardSettlementCBTimeout: PromiseOrValue<BigNumberish>;
-    maxFeePaid: PromiseOrValue<BigNumberish>;
+    minDepositWithdraw: BigNumberish;
+    depositDelay: BigNumberish;
+    withdrawalDelay: BigNumberish;
+    withdrawalFee: BigNumberish;
+    liquidityCBThreshold: BigNumberish;
+    liquidityCBTimeout: BigNumberish;
+    ivVarianceCBThreshold: BigNumberish;
+    skewVarianceCBThreshold: BigNumberish;
+    ivVarianceCBTimeout: BigNumberish;
+    skewVarianceCBTimeout: BigNumberish;
+    guardianMultisig: string;
+    guardianDelay: BigNumberish;
+    boardSettlementCBTimeout: BigNumberish;
+    maxFeePaid: BigNumberish;
   };
 
   export type LiquidityPoolParametersStructOutput = [
@@ -68,12 +68,12 @@ export declare namespace LiquidityPool {
   };
 
   export type LiquidityStruct = {
-    freeLiquidity: PromiseOrValue<BigNumberish>;
-    burnableLiquidity: PromiseOrValue<BigNumberish>;
-    usedCollatLiquidity: PromiseOrValue<BigNumberish>;
-    pendingDeltaLiquidity: PromiseOrValue<BigNumberish>;
-    usedDeltaLiquidity: PromiseOrValue<BigNumberish>;
-    NAV: PromiseOrValue<BigNumberish>;
+    freeLiquidity: BigNumberish;
+    burnableLiquidity: BigNumberish;
+    usedCollatLiquidity: BigNumberish;
+    pendingDeltaLiquidity: BigNumberish;
+    usedDeltaLiquidity: BigNumberish;
+    NAV: BigNumberish;
   };
 
   export type LiquidityStructOutput = [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -88,12 +88,12 @@ export declare namespace LiquidityPool {
 
 export declare namespace SynthetixAdapter {
   export type ExchangeParamsStruct = {
-    spotPrice: PromiseOrValue<BigNumberish>;
-    quoteKey: PromiseOrValue<BytesLike>;
-    baseKey: PromiseOrValue<BytesLike>;
-    short: PromiseOrValue<string>;
-    quoteBaseFeeRate: PromiseOrValue<BigNumberish>;
-    baseQuoteFeeRate: PromiseOrValue<BigNumberish>;
+    spotPrice: BigNumberish;
+    quoteKey: BytesLike;
+    baseKey: BytesLike;
+    short: string;
+    quoteBaseFeeRate: BigNumberish;
+    baseQuoteFeeRate: BigNumberish;
   };
 
   export type ExchangeParamsStructOutput = [BigNumber, string, string, string, BigNumber, BigNumber] & {
@@ -208,27 +208,14 @@ export interface LiquidityPoolInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'acceptOwnership', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'boardSettlement',
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-    ],
+    values: [BigNumberish, BigNumberish, BigNumberish, BigNumberish],
   ): string;
   encodeFunctionData(functionFragment: 'exchangeBase', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'freeQuoteCollateralAndSendPremium',
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-    ],
+    values: [BigNumberish, string, BigNumberish, BigNumberish],
   ): string;
-  encodeFunctionData(
-    functionFragment: 'getLiquidity',
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
-  ): string;
+  encodeFunctionData(functionFragment: 'getLiquidity', values: [BigNumberish, string]): string;
   encodeFunctionData(functionFragment: 'getLiquidityParams', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getLpParams', values?: undefined): string;
   encodeFunctionData(functionFragment: 'getTokenPrice', values?: undefined): string;
@@ -236,93 +223,62 @@ export interface LiquidityPoolInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'getTotalTokenSupply', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'init',
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-      PromiseOrValue<string>,
-    ],
+    values: [string, string, string, string, string, string, string, string],
   ): string;
-  encodeFunctionData(
-    functionFragment: 'initiateDeposit',
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
-  ): string;
-  encodeFunctionData(
-    functionFragment: 'initiateWithdraw',
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
-  ): string;
+  encodeFunctionData(functionFragment: 'initiateDeposit', values: [string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'initiateWithdraw', values: [string, BigNumberish]): string;
   encodeFunctionData(functionFragment: 'insolventSettlementAmount', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'liquidateBaseAndSendPremium',
-    values: [
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-    ],
+    values: [BigNumberish, string, BigNumberish, BigNumberish],
   ): string;
   encodeFunctionData(functionFragment: 'liquidationInsolventAmount', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'lockBase',
-    values: [PromiseOrValue<BigNumberish>, SynthetixAdapter.ExchangeParamsStruct, PromiseOrValue<BigNumberish>],
+    values: [BigNumberish, SynthetixAdapter.ExchangeParamsStruct, BigNumberish],
   ): string;
-  encodeFunctionData(
-    functionFragment: 'lockQuote',
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
-  ): string;
+  encodeFunctionData(functionFragment: 'lockQuote', values: [BigNumberish, BigNumberish]): string;
   encodeFunctionData(functionFragment: 'lockedCollateral', values?: undefined): string;
   encodeFunctionData(functionFragment: 'lpParams', values?: undefined): string;
   encodeFunctionData(functionFragment: 'nextQueuedDepositId', values?: undefined): string;
   encodeFunctionData(functionFragment: 'nextQueuedWithdrawalId', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'nominateNewOwner', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'nominateNewOwner', values: [string]): string;
   encodeFunctionData(functionFragment: 'nominatedOwner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'poolHedger', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'processDepositQueue', values: [PromiseOrValue<BigNumberish>]): string;
-  encodeFunctionData(functionFragment: 'processWithdrawalQueue', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'processDepositQueue', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'processWithdrawalQueue', values: [BigNumberish]): string;
   encodeFunctionData(functionFragment: 'queuedDepositHead', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'queuedDeposits', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'queuedDeposits', values: [BigNumberish]): string;
   encodeFunctionData(functionFragment: 'queuedWithdrawalHead', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'queuedWithdrawals', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'queuedWithdrawals', values: [BigNumberish]): string;
   encodeFunctionData(
     functionFragment: 'reclaimInsolventBase',
-    values: [SynthetixAdapter.ExchangeParamsStruct, PromiseOrValue<BigNumberish>],
+    values: [SynthetixAdapter.ExchangeParamsStruct, BigNumberish],
   ): string;
   encodeFunctionData(
     functionFragment: 'reclaimInsolventQuote',
-    values: [SynthetixAdapter.ExchangeParamsStruct, PromiseOrValue<BigNumberish>],
+    values: [SynthetixAdapter.ExchangeParamsStruct, BigNumberish],
   ): string;
-  encodeFunctionData(
-    functionFragment: 'sendSettlementValue',
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
-  ): string;
+  encodeFunctionData(functionFragment: 'sendSettlementValue', values: [string, BigNumberish]): string;
   encodeFunctionData(
     functionFragment: 'sendShortPremium',
-    values: [
-      PromiseOrValue<string>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-      PromiseOrValue<BigNumberish>,
-    ],
+    values: [string, BigNumberish, BigNumberish, BigNumberish],
   ): string;
   encodeFunctionData(
     functionFragment: 'setLiquidityPoolParameters',
     values: [LiquidityPool.LiquidityPoolParametersStruct],
   ): string;
-  encodeFunctionData(functionFragment: 'setPoolHedger', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setPoolHedger', values: [string]): string;
   encodeFunctionData(functionFragment: 'totalOutstandingSettlements', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalQueuedDeposits', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalQueuedWithdrawals', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'transferQuoteToHedge',
-    values: [SynthetixAdapter.ExchangeParamsStruct, PromiseOrValue<BigNumberish>],
+    values: [SynthetixAdapter.ExchangeParamsStruct, BigNumberish],
   ): string;
   encodeFunctionData(functionFragment: 'updateCBs', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'updateLiquidationInsolvency', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'updateLiquidationInsolvency', values: [BigNumberish]): string;
 
   decodeFunctionResult(functionFragment: 'CBTimestamp', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'acceptOwnership', data: BytesLike): Result;
@@ -692,29 +648,29 @@ export interface LiquidityPool extends BaseContract {
   functions: {
     CBTimestamp(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+    acceptOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
 
     boardSettlement(
-      insolventSettlements: PromiseOrValue<BigNumberish>,
-      amountQuoteFreed: PromiseOrValue<BigNumberish>,
-      amountQuoteReserved: PromiseOrValue<BigNumberish>,
-      amountBaseFreed: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      insolventSettlements: BigNumberish,
+      amountQuoteFreed: BigNumberish,
+      amountQuoteReserved: BigNumberish,
+      amountBaseFreed: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
 
-    exchangeBase(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+    exchangeBase(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
 
     freeQuoteCollateralAndSendPremium(
-      amountQuoteFreed: PromiseOrValue<BigNumberish>,
-      recipient: PromiseOrValue<string>,
-      totalCost: PromiseOrValue<BigNumberish>,
-      reservedFee: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      amountQuoteFreed: BigNumberish,
+      recipient: string,
+      totalCost: BigNumberish,
+      reservedFee: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
 
     getLiquidity(
-      basePrice: PromiseOrValue<BigNumberish>,
-      short: PromiseOrValue<string>,
+      basePrice: BigNumberish,
+      short: string,
       overrides?: CallOverrides,
     ): Promise<[LiquidityPool.LiquidityStructOutput]>;
 
@@ -729,52 +685,52 @@ export interface LiquidityPool extends BaseContract {
     getTotalTokenSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     init(
-      _synthetixAdapter: PromiseOrValue<string>,
-      _optionMarket: PromiseOrValue<string>,
-      _liquidityTokens: PromiseOrValue<string>,
-      _greekCache: PromiseOrValue<string>,
-      _poolHedger: PromiseOrValue<string>,
-      _shortCollateral: PromiseOrValue<string>,
-      _quoteAsset: PromiseOrValue<string>,
-      _baseAsset: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      _synthetixAdapter: string,
+      _optionMarket: string,
+      _liquidityTokens: string,
+      _greekCache: string,
+      _poolHedger: string,
+      _shortCollateral: string,
+      _quoteAsset: string,
+      _baseAsset: string,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
 
     initiateDeposit(
-      beneficiary: PromiseOrValue<string>,
-      amountQuote: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      beneficiary: string,
+      amountQuote: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
 
     initiateWithdraw(
-      beneficiary: PromiseOrValue<string>,
-      amountLiquidityTokens: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      beneficiary: string,
+      amountLiquidityTokens: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
 
     insolventSettlementAmount(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     liquidateBaseAndSendPremium(
-      amountBase: PromiseOrValue<BigNumberish>,
-      recipient: PromiseOrValue<string>,
-      totalCost: PromiseOrValue<BigNumberish>,
-      reservedFee: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      amountBase: BigNumberish,
+      recipient: string,
+      totalCost: BigNumberish,
+      reservedFee: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
 
     liquidationInsolventAmount(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     lockBase(
-      amount: PromiseOrValue<BigNumberish>,
+      amount: BigNumberish,
       exchangeParams: SynthetixAdapter.ExchangeParamsStruct,
-      freeLiquidity: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      freeLiquidity: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
 
     lockQuote(
-      amount: PromiseOrValue<BigNumberish>,
-      freeLiquidity: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      amount: BigNumberish,
+      freeLiquidity: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
 
     lockedCollateral(
@@ -820,8 +776,8 @@ export interface LiquidityPool extends BaseContract {
     nextQueuedWithdrawalId(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     nominateNewOwner(
-      _owner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      _owner: string,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<[string]>;
@@ -831,19 +787,19 @@ export interface LiquidityPool extends BaseContract {
     poolHedger(overrides?: CallOverrides): Promise<[string]>;
 
     processDepositQueue(
-      limit: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      limit: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
 
     processWithdrawalQueue(
-      limit: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      limit: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
 
     queuedDepositHead(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     queuedDeposits(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, string, BigNumber, BigNumber, BigNumber] & {
@@ -858,7 +814,7 @@ export interface LiquidityPool extends BaseContract {
     queuedWithdrawalHead(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     queuedWithdrawals(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, string, BigNumber, BigNumber, BigNumber] & {
@@ -872,38 +828,38 @@ export interface LiquidityPool extends BaseContract {
 
     reclaimInsolventBase(
       exchangeParams: SynthetixAdapter.ExchangeParamsStruct,
-      amountBase: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      amountBase: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
 
     reclaimInsolventQuote(
       exchangeParams: SynthetixAdapter.ExchangeParamsStruct,
-      amountQuote: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      amountQuote: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
 
     sendSettlementValue(
-      user: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      user: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
 
     sendShortPremium(
-      recipient: PromiseOrValue<string>,
-      premium: PromiseOrValue<BigNumberish>,
-      freeLiquidity: PromiseOrValue<BigNumberish>,
-      reservedFee: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      recipient: string,
+      premium: BigNumberish,
+      freeLiquidity: BigNumberish,
+      reservedFee: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
 
     setLiquidityPoolParameters(
       _lpParams: LiquidityPool.LiquidityPoolParametersStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
 
     setPoolHedger(
-      newPoolHedger: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      newPoolHedger: string,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
 
     totalOutstandingSettlements(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -914,43 +870,43 @@ export interface LiquidityPool extends BaseContract {
 
     transferQuoteToHedge(
       exchangeParams: SynthetixAdapter.ExchangeParamsStruct,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
 
-    updateCBs(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+    updateCBs(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
 
     updateLiquidationInsolvency(
-      insolvencyAmountInQuote: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      insolvencyAmountInQuote: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
   };
 
   CBTimestamp(overrides?: CallOverrides): Promise<BigNumber>;
 
-  acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+  acceptOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
 
   boardSettlement(
-    insolventSettlements: PromiseOrValue<BigNumberish>,
-    amountQuoteFreed: PromiseOrValue<BigNumberish>,
-    amountQuoteReserved: PromiseOrValue<BigNumberish>,
-    amountBaseFreed: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
+    insolventSettlements: BigNumberish,
+    amountQuoteFreed: BigNumberish,
+    amountQuoteReserved: BigNumberish,
+    amountBaseFreed: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
-  exchangeBase(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+  exchangeBase(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
 
   freeQuoteCollateralAndSendPremium(
-    amountQuoteFreed: PromiseOrValue<BigNumberish>,
-    recipient: PromiseOrValue<string>,
-    totalCost: PromiseOrValue<BigNumberish>,
-    reservedFee: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
+    amountQuoteFreed: BigNumberish,
+    recipient: string,
+    totalCost: BigNumberish,
+    reservedFee: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
   getLiquidity(
-    basePrice: PromiseOrValue<BigNumberish>,
-    short: PromiseOrValue<string>,
+    basePrice: BigNumberish,
+    short: string,
     overrides?: CallOverrides,
   ): Promise<LiquidityPool.LiquidityStructOutput>;
 
@@ -965,52 +921,52 @@ export interface LiquidityPool extends BaseContract {
   getTotalTokenSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   init(
-    _synthetixAdapter: PromiseOrValue<string>,
-    _optionMarket: PromiseOrValue<string>,
-    _liquidityTokens: PromiseOrValue<string>,
-    _greekCache: PromiseOrValue<string>,
-    _poolHedger: PromiseOrValue<string>,
-    _shortCollateral: PromiseOrValue<string>,
-    _quoteAsset: PromiseOrValue<string>,
-    _baseAsset: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
+    _synthetixAdapter: string,
+    _optionMarket: string,
+    _liquidityTokens: string,
+    _greekCache: string,
+    _poolHedger: string,
+    _shortCollateral: string,
+    _quoteAsset: string,
+    _baseAsset: string,
+    overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
   initiateDeposit(
-    beneficiary: PromiseOrValue<string>,
-    amountQuote: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
+    beneficiary: string,
+    amountQuote: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
   initiateWithdraw(
-    beneficiary: PromiseOrValue<string>,
-    amountLiquidityTokens: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
+    beneficiary: string,
+    amountLiquidityTokens: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
   insolventSettlementAmount(overrides?: CallOverrides): Promise<BigNumber>;
 
   liquidateBaseAndSendPremium(
-    amountBase: PromiseOrValue<BigNumberish>,
-    recipient: PromiseOrValue<string>,
-    totalCost: PromiseOrValue<BigNumberish>,
-    reservedFee: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
+    amountBase: BigNumberish,
+    recipient: string,
+    totalCost: BigNumberish,
+    reservedFee: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
   liquidationInsolventAmount(overrides?: CallOverrides): Promise<BigNumber>;
 
   lockBase(
-    amount: PromiseOrValue<BigNumberish>,
+    amount: BigNumberish,
     exchangeParams: SynthetixAdapter.ExchangeParamsStruct,
-    freeLiquidity: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
+    freeLiquidity: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
   lockQuote(
-    amount: PromiseOrValue<BigNumberish>,
-    freeLiquidity: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
+    amount: BigNumberish,
+    freeLiquidity: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
   lockedCollateral(overrides?: CallOverrides): Promise<[BigNumber, BigNumber] & { quote: BigNumber; base: BigNumber }>;
@@ -1054,8 +1010,8 @@ export interface LiquidityPool extends BaseContract {
   nextQueuedWithdrawalId(overrides?: CallOverrides): Promise<BigNumber>;
 
   nominateNewOwner(
-    _owner: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
+    _owner: string,
+    overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
   nominatedOwner(overrides?: CallOverrides): Promise<string>;
@@ -1065,19 +1021,19 @@ export interface LiquidityPool extends BaseContract {
   poolHedger(overrides?: CallOverrides): Promise<string>;
 
   processDepositQueue(
-    limit: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
+    limit: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
   processWithdrawalQueue(
-    limit: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
+    limit: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
   queuedDepositHead(overrides?: CallOverrides): Promise<BigNumber>;
 
   queuedDeposits(
-    arg0: PromiseOrValue<BigNumberish>,
+    arg0: BigNumberish,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, string, BigNumber, BigNumber, BigNumber] & {
@@ -1092,7 +1048,7 @@ export interface LiquidityPool extends BaseContract {
   queuedWithdrawalHead(overrides?: CallOverrides): Promise<BigNumber>;
 
   queuedWithdrawals(
-    arg0: PromiseOrValue<BigNumberish>,
+    arg0: BigNumberish,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, string, BigNumber, BigNumber, BigNumber] & {
@@ -1106,38 +1062,38 @@ export interface LiquidityPool extends BaseContract {
 
   reclaimInsolventBase(
     exchangeParams: SynthetixAdapter.ExchangeParamsStruct,
-    amountBase: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
+    amountBase: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
   reclaimInsolventQuote(
     exchangeParams: SynthetixAdapter.ExchangeParamsStruct,
-    amountQuote: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
+    amountQuote: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
   sendSettlementValue(
-    user: PromiseOrValue<string>,
-    amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
+    user: string,
+    amount: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
   sendShortPremium(
-    recipient: PromiseOrValue<string>,
-    premium: PromiseOrValue<BigNumberish>,
-    freeLiquidity: PromiseOrValue<BigNumberish>,
-    reservedFee: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
+    recipient: string,
+    premium: BigNumberish,
+    freeLiquidity: BigNumberish,
+    reservedFee: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
   setLiquidityPoolParameters(
     _lpParams: LiquidityPool.LiquidityPoolParametersStruct,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
+    overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
   setPoolHedger(
-    newPoolHedger: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
+    newPoolHedger: string,
+    overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
   totalOutstandingSettlements(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1148,15 +1104,15 @@ export interface LiquidityPool extends BaseContract {
 
   transferQuoteToHedge(
     exchangeParams: SynthetixAdapter.ExchangeParamsStruct,
-    amount: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
+    amount: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
-  updateCBs(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
+  updateCBs(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
 
   updateLiquidationInsolvency(
-    insolvencyAmountInQuote: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
+    insolvencyAmountInQuote: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
@@ -1165,26 +1121,26 @@ export interface LiquidityPool extends BaseContract {
     acceptOwnership(overrides?: CallOverrides): Promise<void>;
 
     boardSettlement(
-      insolventSettlements: PromiseOrValue<BigNumberish>,
-      amountQuoteFreed: PromiseOrValue<BigNumberish>,
-      amountQuoteReserved: PromiseOrValue<BigNumberish>,
-      amountBaseFreed: PromiseOrValue<BigNumberish>,
+      insolventSettlements: BigNumberish,
+      amountQuoteFreed: BigNumberish,
+      amountQuoteReserved: BigNumberish,
+      amountBaseFreed: BigNumberish,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     exchangeBase(overrides?: CallOverrides): Promise<void>;
 
     freeQuoteCollateralAndSendPremium(
-      amountQuoteFreed: PromiseOrValue<BigNumberish>,
-      recipient: PromiseOrValue<string>,
-      totalCost: PromiseOrValue<BigNumberish>,
-      reservedFee: PromiseOrValue<BigNumberish>,
+      amountQuoteFreed: BigNumberish,
+      recipient: string,
+      totalCost: BigNumberish,
+      reservedFee: BigNumberish,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     getLiquidity(
-      basePrice: PromiseOrValue<BigNumberish>,
-      short: PromiseOrValue<string>,
+      basePrice: BigNumberish,
+      short: string,
       overrides?: CallOverrides,
     ): Promise<LiquidityPool.LiquidityStructOutput>;
 
@@ -1199,53 +1155,45 @@ export interface LiquidityPool extends BaseContract {
     getTotalTokenSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     init(
-      _synthetixAdapter: PromiseOrValue<string>,
-      _optionMarket: PromiseOrValue<string>,
-      _liquidityTokens: PromiseOrValue<string>,
-      _greekCache: PromiseOrValue<string>,
-      _poolHedger: PromiseOrValue<string>,
-      _shortCollateral: PromiseOrValue<string>,
-      _quoteAsset: PromiseOrValue<string>,
-      _baseAsset: PromiseOrValue<string>,
+      _synthetixAdapter: string,
+      _optionMarket: string,
+      _liquidityTokens: string,
+      _greekCache: string,
+      _poolHedger: string,
+      _shortCollateral: string,
+      _quoteAsset: string,
+      _baseAsset: string,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    initiateDeposit(
-      beneficiary: PromiseOrValue<string>,
-      amountQuote: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
-    ): Promise<void>;
+    initiateDeposit(beneficiary: string, amountQuote: BigNumberish, overrides?: CallOverrides): Promise<void>;
 
     initiateWithdraw(
-      beneficiary: PromiseOrValue<string>,
-      amountLiquidityTokens: PromiseOrValue<BigNumberish>,
+      beneficiary: string,
+      amountLiquidityTokens: BigNumberish,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     insolventSettlementAmount(overrides?: CallOverrides): Promise<BigNumber>;
 
     liquidateBaseAndSendPremium(
-      amountBase: PromiseOrValue<BigNumberish>,
-      recipient: PromiseOrValue<string>,
-      totalCost: PromiseOrValue<BigNumberish>,
-      reservedFee: PromiseOrValue<BigNumberish>,
+      amountBase: BigNumberish,
+      recipient: string,
+      totalCost: BigNumberish,
+      reservedFee: BigNumberish,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     liquidationInsolventAmount(overrides?: CallOverrides): Promise<BigNumber>;
 
     lockBase(
-      amount: PromiseOrValue<BigNumberish>,
+      amount: BigNumberish,
       exchangeParams: SynthetixAdapter.ExchangeParamsStruct,
-      freeLiquidity: PromiseOrValue<BigNumberish>,
+      freeLiquidity: BigNumberish,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    lockQuote(
-      amount: PromiseOrValue<BigNumberish>,
-      freeLiquidity: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
-    ): Promise<void>;
+    lockQuote(amount: BigNumberish, freeLiquidity: BigNumberish, overrides?: CallOverrides): Promise<void>;
 
     lockedCollateral(
       overrides?: CallOverrides,
@@ -1289,7 +1237,7 @@ export interface LiquidityPool extends BaseContract {
 
     nextQueuedWithdrawalId(overrides?: CallOverrides): Promise<BigNumber>;
 
-    nominateNewOwner(_owner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
+    nominateNewOwner(_owner: string, overrides?: CallOverrides): Promise<void>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<string>;
 
@@ -1297,14 +1245,14 @@ export interface LiquidityPool extends BaseContract {
 
     poolHedger(overrides?: CallOverrides): Promise<string>;
 
-    processDepositQueue(limit: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
+    processDepositQueue(limit: BigNumberish, overrides?: CallOverrides): Promise<void>;
 
-    processWithdrawalQueue(limit: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
+    processWithdrawalQueue(limit: BigNumberish, overrides?: CallOverrides): Promise<void>;
 
     queuedDepositHead(overrides?: CallOverrides): Promise<BigNumber>;
 
     queuedDeposits(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, string, BigNumber, BigNumber, BigNumber] & {
@@ -1319,7 +1267,7 @@ export interface LiquidityPool extends BaseContract {
     queuedWithdrawalHead(overrides?: CallOverrides): Promise<BigNumber>;
 
     queuedWithdrawals(
-      arg0: PromiseOrValue<BigNumberish>,
+      arg0: BigNumberish,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, string, BigNumber, BigNumber, BigNumber] & {
@@ -1333,27 +1281,23 @@ export interface LiquidityPool extends BaseContract {
 
     reclaimInsolventBase(
       exchangeParams: SynthetixAdapter.ExchangeParamsStruct,
-      amountBase: PromiseOrValue<BigNumberish>,
+      amountBase: BigNumberish,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     reclaimInsolventQuote(
       exchangeParams: SynthetixAdapter.ExchangeParamsStruct,
-      amountQuote: PromiseOrValue<BigNumberish>,
+      amountQuote: BigNumberish,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    sendSettlementValue(
-      user: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
-    ): Promise<void>;
+    sendSettlementValue(user: string, amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
 
     sendShortPremium(
-      recipient: PromiseOrValue<string>,
-      premium: PromiseOrValue<BigNumberish>,
-      freeLiquidity: PromiseOrValue<BigNumberish>,
-      reservedFee: PromiseOrValue<BigNumberish>,
+      recipient: string,
+      premium: BigNumberish,
+      freeLiquidity: BigNumberish,
+      reservedFee: BigNumberish,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -1362,7 +1306,7 @@ export interface LiquidityPool extends BaseContract {
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    setPoolHedger(newPoolHedger: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
+    setPoolHedger(newPoolHedger: string, overrides?: CallOverrides): Promise<void>;
 
     totalOutstandingSettlements(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1372,16 +1316,13 @@ export interface LiquidityPool extends BaseContract {
 
     transferQuoteToHedge(
       exchangeParams: SynthetixAdapter.ExchangeParamsStruct,
-      amount: PromiseOrValue<BigNumberish>,
+      amount: BigNumberish,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     updateCBs(overrides?: CallOverrides): Promise<void>;
 
-    updateLiquidationInsolvency(
-      insolvencyAmountInQuote: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
-    ): Promise<void>;
+    updateLiquidationInsolvency(insolvencyAmountInQuote: BigNumberish, overrides?: CallOverrides): Promise<void>;
   };
 
   filters: {
@@ -1442,18 +1383,18 @@ export interface LiquidityPool extends BaseContract {
     ): CircuitBreakerUpdatedEventFilter;
 
     'DepositProcessed(address,address,uint256,uint256,uint256,uint256,uint256)'(
-      caller?: PromiseOrValue<string> | null,
-      beneficiary?: PromiseOrValue<string> | null,
-      depositQueueId?: PromiseOrValue<BigNumberish> | null,
+      caller?: string | null,
+      beneficiary?: string | null,
+      depositQueueId?: BigNumberish | null,
       amountDeposited?: null,
       tokenPrice?: null,
       tokensReceived?: null,
       timestamp?: null,
     ): DepositProcessedEventFilter;
     DepositProcessed(
-      caller?: PromiseOrValue<string> | null,
-      beneficiary?: PromiseOrValue<string> | null,
-      depositQueueId?: PromiseOrValue<BigNumberish> | null,
+      caller?: string | null,
+      beneficiary?: string | null,
+      depositQueueId?: BigNumberish | null,
       amountDeposited?: null,
       tokenPrice?: null,
       tokensReceived?: null,
@@ -1461,17 +1402,17 @@ export interface LiquidityPool extends BaseContract {
     ): DepositProcessedEventFilter;
 
     'DepositQueued(address,address,uint256,uint256,uint256,uint256)'(
-      depositor?: PromiseOrValue<string> | null,
-      beneficiary?: PromiseOrValue<string> | null,
-      depositQueueId?: PromiseOrValue<BigNumberish> | null,
+      depositor?: string | null,
+      beneficiary?: string | null,
+      depositQueueId?: BigNumberish | null,
       amountDeposited?: null,
       totalQueuedDeposits?: null,
       timestamp?: null,
     ): DepositQueuedEventFilter;
     DepositQueued(
-      depositor?: PromiseOrValue<string> | null,
-      beneficiary?: PromiseOrValue<string> | null,
-      depositQueueId?: PromiseOrValue<BigNumberish> | null,
+      depositor?: string | null,
+      beneficiary?: string | null,
+      depositQueueId?: BigNumberish | null,
       amountDeposited?: null,
       totalQueuedDeposits?: null,
       timestamp?: null,
@@ -1490,12 +1431,12 @@ export interface LiquidityPool extends BaseContract {
     LiquidityPoolParametersUpdated(lpParams?: null): LiquidityPoolParametersUpdatedEventFilter;
 
     'OutstandingSettlementSent(address,uint256,uint256)'(
-      user?: PromiseOrValue<string> | null,
+      user?: string | null,
       amount?: null,
       totalOutstandingSettlements?: null,
     ): OutstandingSettlementSentEventFilter;
     OutstandingSettlementSent(
-      user?: PromiseOrValue<string> | null,
+      user?: string | null,
       amount?: null,
       totalOutstandingSettlements?: null,
     ): OutstandingSettlementSentEventFilter;
@@ -1510,12 +1451,12 @@ export interface LiquidityPool extends BaseContract {
     PoolHedgerUpdated(poolHedger?: null): PoolHedgerUpdatedEventFilter;
 
     'PremiumTransferred(address,uint256,uint256)'(
-      recipient?: PromiseOrValue<string> | null,
+      recipient?: string | null,
       recipientPortion?: null,
       optionMarketPortion?: null,
     ): PremiumTransferredEventFilter;
     PremiumTransferred(
-      recipient?: PromiseOrValue<string> | null,
+      recipient?: string | null,
       recipientPortion?: null,
       optionMarketPortion?: null,
     ): PremiumTransferredEventFilter;
@@ -1530,9 +1471,9 @@ export interface LiquidityPool extends BaseContract {
     QuoteTransferredToPoolHedger(amountQuote?: null): QuoteTransferredToPoolHedgerEventFilter;
 
     'WithdrawPartiallyProcessed(address,address,uint256,uint256,uint256,uint256,uint256,uint256)'(
-      caller?: PromiseOrValue<string> | null,
-      beneficiary?: PromiseOrValue<string> | null,
-      withdrawalQueueId?: PromiseOrValue<BigNumberish> | null,
+      caller?: string | null,
+      beneficiary?: string | null,
+      withdrawalQueueId?: BigNumberish | null,
       amountWithdrawn?: null,
       tokenPrice?: null,
       quoteReceived?: null,
@@ -1540,9 +1481,9 @@ export interface LiquidityPool extends BaseContract {
       timestamp?: null,
     ): WithdrawPartiallyProcessedEventFilter;
     WithdrawPartiallyProcessed(
-      caller?: PromiseOrValue<string> | null,
-      beneficiary?: PromiseOrValue<string> | null,
-      withdrawalQueueId?: PromiseOrValue<BigNumberish> | null,
+      caller?: string | null,
+      beneficiary?: string | null,
+      withdrawalQueueId?: BigNumberish | null,
       amountWithdrawn?: null,
       tokenPrice?: null,
       quoteReceived?: null,
@@ -1551,9 +1492,9 @@ export interface LiquidityPool extends BaseContract {
     ): WithdrawPartiallyProcessedEventFilter;
 
     'WithdrawProcessed(address,address,uint256,uint256,uint256,uint256,uint256,uint256)'(
-      caller?: PromiseOrValue<string> | null,
-      beneficiary?: PromiseOrValue<string> | null,
-      withdrawalQueueId?: PromiseOrValue<BigNumberish> | null,
+      caller?: string | null,
+      beneficiary?: string | null,
+      withdrawalQueueId?: BigNumberish | null,
       amountWithdrawn?: null,
       tokenPrice?: null,
       quoteReceived?: null,
@@ -1561,9 +1502,9 @@ export interface LiquidityPool extends BaseContract {
       timestamp?: null,
     ): WithdrawProcessedEventFilter;
     WithdrawProcessed(
-      caller?: PromiseOrValue<string> | null,
-      beneficiary?: PromiseOrValue<string> | null,
-      withdrawalQueueId?: PromiseOrValue<BigNumberish> | null,
+      caller?: string | null,
+      beneficiary?: string | null,
+      withdrawalQueueId?: BigNumberish | null,
       amountWithdrawn?: null,
       tokenPrice?: null,
       quoteReceived?: null,
@@ -1572,17 +1513,17 @@ export interface LiquidityPool extends BaseContract {
     ): WithdrawProcessedEventFilter;
 
     'WithdrawQueued(address,address,uint256,uint256,uint256,uint256)'(
-      withdrawer?: PromiseOrValue<string> | null,
-      beneficiary?: PromiseOrValue<string> | null,
-      withdrawalQueueId?: PromiseOrValue<BigNumberish> | null,
+      withdrawer?: string | null,
+      beneficiary?: string | null,
+      withdrawalQueueId?: BigNumberish | null,
       amountWithdrawn?: null,
       totalQueuedWithdrawals?: null,
       timestamp?: null,
     ): WithdrawQueuedEventFilter;
     WithdrawQueued(
-      withdrawer?: PromiseOrValue<string> | null,
-      beneficiary?: PromiseOrValue<string> | null,
-      withdrawalQueueId?: PromiseOrValue<BigNumberish> | null,
+      withdrawer?: string | null,
+      beneficiary?: string | null,
+      withdrawalQueueId?: BigNumberish | null,
       amountWithdrawn?: null,
       totalQueuedWithdrawals?: null,
       timestamp?: null,
@@ -1592,31 +1533,27 @@ export interface LiquidityPool extends BaseContract {
   estimateGas: {
     CBTimestamp(overrides?: CallOverrides): Promise<BigNumber>;
 
-    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
+    acceptOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
 
     boardSettlement(
-      insolventSettlements: PromiseOrValue<BigNumberish>,
-      amountQuoteFreed: PromiseOrValue<BigNumberish>,
-      amountQuoteReserved: PromiseOrValue<BigNumberish>,
-      amountBaseFreed: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      insolventSettlements: BigNumberish,
+      amountQuoteFreed: BigNumberish,
+      amountQuoteReserved: BigNumberish,
+      amountBaseFreed: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
 
-    exchangeBase(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
+    exchangeBase(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
 
     freeQuoteCollateralAndSendPremium(
-      amountQuoteFreed: PromiseOrValue<BigNumberish>,
-      recipient: PromiseOrValue<string>,
-      totalCost: PromiseOrValue<BigNumberish>,
-      reservedFee: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      amountQuoteFreed: BigNumberish,
+      recipient: string,
+      totalCost: BigNumberish,
+      reservedFee: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
 
-    getLiquidity(
-      basePrice: PromiseOrValue<BigNumberish>,
-      short: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<BigNumber>;
+    getLiquidity(basePrice: BigNumberish, short: string, overrides?: CallOverrides): Promise<BigNumber>;
 
     getLiquidityParams(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1629,52 +1566,52 @@ export interface LiquidityPool extends BaseContract {
     getTotalTokenSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     init(
-      _synthetixAdapter: PromiseOrValue<string>,
-      _optionMarket: PromiseOrValue<string>,
-      _liquidityTokens: PromiseOrValue<string>,
-      _greekCache: PromiseOrValue<string>,
-      _poolHedger: PromiseOrValue<string>,
-      _shortCollateral: PromiseOrValue<string>,
-      _quoteAsset: PromiseOrValue<string>,
-      _baseAsset: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      _synthetixAdapter: string,
+      _optionMarket: string,
+      _liquidityTokens: string,
+      _greekCache: string,
+      _poolHedger: string,
+      _shortCollateral: string,
+      _quoteAsset: string,
+      _baseAsset: string,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
 
     initiateDeposit(
-      beneficiary: PromiseOrValue<string>,
-      amountQuote: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      beneficiary: string,
+      amountQuote: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
 
     initiateWithdraw(
-      beneficiary: PromiseOrValue<string>,
-      amountLiquidityTokens: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      beneficiary: string,
+      amountLiquidityTokens: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
 
     insolventSettlementAmount(overrides?: CallOverrides): Promise<BigNumber>;
 
     liquidateBaseAndSendPremium(
-      amountBase: PromiseOrValue<BigNumberish>,
-      recipient: PromiseOrValue<string>,
-      totalCost: PromiseOrValue<BigNumberish>,
-      reservedFee: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      amountBase: BigNumberish,
+      recipient: string,
+      totalCost: BigNumberish,
+      reservedFee: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
 
     liquidationInsolventAmount(overrides?: CallOverrides): Promise<BigNumber>;
 
     lockBase(
-      amount: PromiseOrValue<BigNumberish>,
+      amount: BigNumberish,
       exchangeParams: SynthetixAdapter.ExchangeParamsStruct,
-      freeLiquidity: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      freeLiquidity: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
 
     lockQuote(
-      amount: PromiseOrValue<BigNumberish>,
-      freeLiquidity: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      amount: BigNumberish,
+      freeLiquidity: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
 
     lockedCollateral(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1685,10 +1622,7 @@ export interface LiquidityPool extends BaseContract {
 
     nextQueuedWithdrawalId(overrides?: CallOverrides): Promise<BigNumber>;
 
-    nominateNewOwner(
-      _owner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
+    nominateNewOwner(_owner: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1697,57 +1631,57 @@ export interface LiquidityPool extends BaseContract {
     poolHedger(overrides?: CallOverrides): Promise<BigNumber>;
 
     processDepositQueue(
-      limit: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      limit: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
 
     processWithdrawalQueue(
-      limit: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      limit: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
 
     queuedDepositHead(overrides?: CallOverrides): Promise<BigNumber>;
 
-    queuedDeposits(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
+    queuedDeposits(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
 
     queuedWithdrawalHead(overrides?: CallOverrides): Promise<BigNumber>;
 
-    queuedWithdrawals(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
+    queuedWithdrawals(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
 
     reclaimInsolventBase(
       exchangeParams: SynthetixAdapter.ExchangeParamsStruct,
-      amountBase: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      amountBase: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
 
     reclaimInsolventQuote(
       exchangeParams: SynthetixAdapter.ExchangeParamsStruct,
-      amountQuote: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      amountQuote: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
 
     sendSettlementValue(
-      user: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      user: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
 
     sendShortPremium(
-      recipient: PromiseOrValue<string>,
-      premium: PromiseOrValue<BigNumberish>,
-      freeLiquidity: PromiseOrValue<BigNumberish>,
-      reservedFee: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      recipient: string,
+      premium: BigNumberish,
+      freeLiquidity: BigNumberish,
+      reservedFee: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
 
     setLiquidityPoolParameters(
       _lpParams: LiquidityPool.LiquidityPoolParametersStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
 
     setPoolHedger(
-      newPoolHedger: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      newPoolHedger: string,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
 
     totalOutstandingSettlements(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1758,46 +1692,42 @@ export interface LiquidityPool extends BaseContract {
 
     transferQuoteToHedge(
       exchangeParams: SynthetixAdapter.ExchangeParamsStruct,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
 
-    updateCBs(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
+    updateCBs(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
 
     updateLiquidationInsolvency(
-      insolvencyAmountInQuote: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      insolvencyAmountInQuote: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
   };
 
   populateTransaction: {
     CBTimestamp(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    acceptOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
+    acceptOwnership(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
 
     boardSettlement(
-      insolventSettlements: PromiseOrValue<BigNumberish>,
-      amountQuoteFreed: PromiseOrValue<BigNumberish>,
-      amountQuoteReserved: PromiseOrValue<BigNumberish>,
-      amountBaseFreed: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      insolventSettlements: BigNumberish,
+      amountQuoteFreed: BigNumberish,
+      amountQuoteReserved: BigNumberish,
+      amountBaseFreed: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
-    exchangeBase(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
+    exchangeBase(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
 
     freeQuoteCollateralAndSendPremium(
-      amountQuoteFreed: PromiseOrValue<BigNumberish>,
-      recipient: PromiseOrValue<string>,
-      totalCost: PromiseOrValue<BigNumberish>,
-      reservedFee: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      amountQuoteFreed: BigNumberish,
+      recipient: string,
+      totalCost: BigNumberish,
+      reservedFee: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
-    getLiquidity(
-      basePrice: PromiseOrValue<BigNumberish>,
-      short: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<PopulatedTransaction>;
+    getLiquidity(basePrice: BigNumberish, short: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getLiquidityParams(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1810,52 +1740,52 @@ export interface LiquidityPool extends BaseContract {
     getTotalTokenSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     init(
-      _synthetixAdapter: PromiseOrValue<string>,
-      _optionMarket: PromiseOrValue<string>,
-      _liquidityTokens: PromiseOrValue<string>,
-      _greekCache: PromiseOrValue<string>,
-      _poolHedger: PromiseOrValue<string>,
-      _shortCollateral: PromiseOrValue<string>,
-      _quoteAsset: PromiseOrValue<string>,
-      _baseAsset: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      _synthetixAdapter: string,
+      _optionMarket: string,
+      _liquidityTokens: string,
+      _greekCache: string,
+      _poolHedger: string,
+      _shortCollateral: string,
+      _quoteAsset: string,
+      _baseAsset: string,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
     initiateDeposit(
-      beneficiary: PromiseOrValue<string>,
-      amountQuote: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      beneficiary: string,
+      amountQuote: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
     initiateWithdraw(
-      beneficiary: PromiseOrValue<string>,
-      amountLiquidityTokens: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      beneficiary: string,
+      amountLiquidityTokens: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
     insolventSettlementAmount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     liquidateBaseAndSendPremium(
-      amountBase: PromiseOrValue<BigNumberish>,
-      recipient: PromiseOrValue<string>,
-      totalCost: PromiseOrValue<BigNumberish>,
-      reservedFee: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      amountBase: BigNumberish,
+      recipient: string,
+      totalCost: BigNumberish,
+      reservedFee: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
     liquidationInsolventAmount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     lockBase(
-      amount: PromiseOrValue<BigNumberish>,
+      amount: BigNumberish,
       exchangeParams: SynthetixAdapter.ExchangeParamsStruct,
-      freeLiquidity: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      freeLiquidity: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
     lockQuote(
-      amount: PromiseOrValue<BigNumberish>,
-      freeLiquidity: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      amount: BigNumberish,
+      freeLiquidity: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
     lockedCollateral(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1867,8 +1797,8 @@ export interface LiquidityPool extends BaseContract {
     nextQueuedWithdrawalId(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     nominateNewOwner(
-      _owner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      _owner: string,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
     nominatedOwner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1878,57 +1808,57 @@ export interface LiquidityPool extends BaseContract {
     poolHedger(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     processDepositQueue(
-      limit: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      limit: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
     processWithdrawalQueue(
-      limit: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      limit: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
     queuedDepositHead(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    queuedDeposits(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    queuedDeposits(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     queuedWithdrawalHead(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    queuedWithdrawals(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    queuedWithdrawals(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     reclaimInsolventBase(
       exchangeParams: SynthetixAdapter.ExchangeParamsStruct,
-      amountBase: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      amountBase: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
     reclaimInsolventQuote(
       exchangeParams: SynthetixAdapter.ExchangeParamsStruct,
-      amountQuote: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      amountQuote: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
     sendSettlementValue(
-      user: PromiseOrValue<string>,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      user: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
     sendShortPremium(
-      recipient: PromiseOrValue<string>,
-      premium: PromiseOrValue<BigNumberish>,
-      freeLiquidity: PromiseOrValue<BigNumberish>,
-      reservedFee: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      recipient: string,
+      premium: BigNumberish,
+      freeLiquidity: BigNumberish,
+      reservedFee: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
     setLiquidityPoolParameters(
       _lpParams: LiquidityPool.LiquidityPoolParametersStruct,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
     setPoolHedger(
-      newPoolHedger: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      newPoolHedger: string,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
     totalOutstandingSettlements(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -1939,15 +1869,15 @@ export interface LiquidityPool extends BaseContract {
 
     transferQuoteToHedge(
       exchangeParams: SynthetixAdapter.ExchangeParamsStruct,
-      amount: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
-    updateCBs(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
+    updateCBs(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
 
     updateLiquidationInsolvency(
-      insolvencyAmountInQuote: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      insolvencyAmountInQuote: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
   };
 }
