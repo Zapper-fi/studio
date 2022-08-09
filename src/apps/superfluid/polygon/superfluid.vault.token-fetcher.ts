@@ -1,18 +1,16 @@
 import { Inject } from '@nestjs/common';
 import { gql } from 'graphql-request';
-import _ from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
-import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
-import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
-import { AAVE_V2_DEFINITION } from '~apps/aave-v2';
-import { Cache } from '~cache/cache.decorator';
-import { ContractType } from '~position/contract.interface';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { AppTokenPosition } from '~position/position.interface';
+import { DefaultDataProps } from '~position/display.interface';
+import {
+  AppTokenTemplatePositionFetcher,
+  DataPropsStageParams,
+} from '~position/template/app-token.template.position-fetcher';
 import { Network } from '~types/network.interface';
 
+import { SuperfluidContractFactory, VaultToken } from '../contracts';
 import { SUPERFLUID_DEFINITION } from '../superfluid.definition';
 
 const ALL_TOKENS_QUERY = gql`
@@ -38,94 +36,47 @@ const groupId = SUPERFLUID_DEFINITION.groups.vault.id;
 const network = Network.POLYGON_MAINNET;
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
-export class PolygonSuperfluidVaultTokenFetcher implements PositionFetcher<AppTokenPosition> {
-  readonly brokenAddresses = ['0x263026e7e53dbfdce5ae55ade22493f828922965'];
+export class PolygonSuperfluidVaultTokenFetcher extends AppTokenTemplatePositionFetcher<VaultToken> {
+  appId = SUPERFLUID_DEFINITION.id;
+  groupId = SUPERFLUID_DEFINITION.groups.vault.id;
+  network = Network.POLYGON_MAINNET;
 
-  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
+  readonly brokenAddresses = [
+    '0x263026e7e53dbfdce5ae55ade22493f828922965',
+    '0x3cf4866cd82a527d1a81438a9b132fae7f04732e',
+    '0x73e454ad4526b2bd86c25fa4af756ab63865faef',
+    '0x9f688d6857ebdf924a724180a2f3a2a1c6b47f22',
+  ];
 
-  @Cache({
-    instance: 'business',
-    key: `studio:${SUPERFLUID_DEFINITION.id}:${SUPERFLUID_DEFINITION.groups.vault.id}:${network}:data`,
-    ttl: 60 * 60,
-  })
-  async getTokensInfo() {
+  constructor(
+    @Inject(SuperfluidContractFactory) private readonly contractFactory: SuperfluidContractFactory,
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+  ) {
+    super(appToolkit);
+  }
+
+  getContract(address: string): VaultToken {
+    return this.contractFactory.vaultToken({ network: this.network, address });
+  }
+
+  async getAddresses(): Promise<string[]> {
     const subgraphUrl = 'https://api.thegraph.com/subgraphs/name/superfluid-finance/superfluid-matic';
     const tokenData = await this.appToolkit.helpers.theGraphHelper.request<TokensResponse>({
       endpoint: subgraphUrl,
       query: ALL_TOKENS_QUERY,
     });
-    return tokenData.tokens ?? [];
+
+    return tokenData.tokens?.filter(x => !this.brokenAddresses.includes(x.id)).map(v => v.id) ?? [];
   }
 
-  async getPositions() {
-    const multicall = this.appToolkit.getMulticall(network);
+  async getUnderlyingTokenAddresses(contract: VaultToken) {
+    return await contract.getUnderlyingToken();
+  }
 
-    const tokensInfo = await this.getTokensInfo();
-    const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
-    const appTokens = await this.appToolkit.getAppTokenPositions({
-      appId: AAVE_V2_DEFINITION.id,
-      groupIds: [AAVE_V2_DEFINITION.groups.supply.id],
-      network,
-    });
+  async getDataProps(opts: DataPropsStageParams<VaultToken, DefaultDataProps>): Promise<DefaultDataProps> {
+    const { appToken } = opts;
+    const liquidity = appToken.price * appToken.supply;
 
-    const tokens = await Promise.all(
-      tokensInfo.map(async tokenInfo => {
-        if (this.brokenAddresses.includes(tokenInfo.id)) return null;
-        const underlyingAddress = tokenInfo.underlyingAddress.toLowerCase();
-        const underlyingToken = [...appTokens, ...baseTokens].find(v => v.address === underlyingAddress);
-        if (!underlyingToken) return null;
-
-        const contractAddress = tokenInfo.id.toLowerCase();
-        const contract = this.appToolkit.globalContracts.erc20({ address: contractAddress, network });
-        const [symbol, decimals, supplyRaw] = await Promise.all([
-          multicall.wrap(contract).symbol(),
-          multicall.wrap(contract).decimals(),
-          multicall.wrap(contract).totalSupply(),
-        ]);
-
-        const pricePerShare = 1; // minted 1:1
-        const price = underlyingToken.price * pricePerShare;
-        const supply = Number(supplyRaw) / 10 ** decimals;
-        const liquidity = supply * price;
-
-        // Display Props
-        const label = `${underlyingToken.symbol} in Superfluid`;
-        const secondaryLabel = buildDollarDisplayItem(price);
-        const images =
-          underlyingToken.type === ContractType.BASE_TOKEN
-            ? [getTokenImg(underlyingToken.address, network)]
-            : [...underlyingToken.displayProps.images];
-        const statsItems = [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }];
-
-        const result: AppTokenPosition = {
-          type: ContractType.APP_TOKEN,
-          network,
-          address: contractAddress,
-          appId,
-          groupId: SUPERFLUID_DEFINITION.groups.vault.id,
-          symbol,
-          decimals,
-          supply,
-          price,
-          pricePerShare,
-          tokens: [underlyingToken],
-
-          dataProps: {
-            liquidity,
-          },
-
-          displayProps: {
-            label,
-            secondaryLabel,
-            images,
-            statsItems,
-          },
-        };
-
-        return result;
-      }),
-    );
-
-    return _.compact(tokens);
+    return { liquidity };
   }
 }
