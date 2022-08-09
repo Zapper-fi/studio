@@ -5,6 +5,7 @@ import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
 import { BathToken__factory } from './ethers';
+import { Ierc20__factory } from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
@@ -18,6 +19,10 @@ export class RubiconContractFactory extends ContractFactory {
   bathToken({ address, network }: ContractOpts) {
     return BathToken__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  ierc20({ address, network }: ContractOpts) {
+    return Ierc20__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
 }
 
 export type { BathToken } from './ethers';
+export type { Ierc20 } from './ethers';

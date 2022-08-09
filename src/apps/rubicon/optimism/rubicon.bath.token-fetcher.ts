@@ -26,7 +26,7 @@ export class OptimismRubiconBathTokenFetcher implements PositionFetcher<AppToken
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(RubiconContractFactory) private readonly rubiconContractFactory: RubiconContractFactory,
-  ) {}
+  ) { }
 
   async getPositions() {
     // For now, hardcoded in docs
@@ -60,12 +60,23 @@ export class OptimismRubiconBathTokenFetcher implements PositionFetcher<AppToken
           multicall.wrap(contract).convertToAssets(BigNumber.from((1e18).toString())),
         ]);
 
+        // console.log('query this ERC20', underlyingTokenAddressRaw);
+
+        const underlyingAssetContract = this.rubiconContractFactory.bathToken({
+          address: underlyingTokenAddressRaw,
+          network,
+        });
+        const trueDecimals = await underlyingAssetContract.decimals();
+
         // Request the symbol, decimals, ands supply for the Bath Token
         const [symbol, decimals, supplyRaw] = await Promise.all([
           multicall.wrap(contract).symbol(),
-          multicall.wrap(contract).decimals(),
+          trueDecimals,
           multicall.wrap(contract).totalSupply(),
         ]);
+
+        // console.log('Got these decimals', decimals, 'from multicall', symbol);
+        // console.log('Got this decimals from the contract', await contract.decimals());
 
         // Denormalize the supply
         const supply = Number(supplyRaw) / 10 ** decimals;
