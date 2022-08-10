@@ -11,6 +11,9 @@ import { EthereumBadgerClaimableContractPositionFetcher } from './ethereum/badge
 import { EthereumBadgerVaultTokenFetcher } from './ethereum/badger.vault.token-fetcher';
 import { BadgerClaimableContractPositionBalanceHelper } from './helpers/badger.claimable.balance-helper';
 import { BadgerVaultTokenHelper } from './helpers/badger.vault.token-helper';
+import { PolygonBadgerClaimableContractPositionBalanceFetcher } from './polygon/badger.claimable.contract-position-balance-fetcher';
+import { PolygonBadgerClaimableContractPositionFetcher } from './polygon/badger.claimable.contract-position-fetcher';
+import { PolygonBadgerVaultTokenFetcher } from './polygon/badger.vault.token-fetcher';
 
 @Register.AppModule({
   appId: BADGER_DEFINITION.id,
@@ -27,6 +30,10 @@ import { BadgerVaultTokenHelper } from './helpers/badger.vault.token-helper';
     EthereumBadgerVaultTokenFetcher,
     EthereumBadgerClaimableContractPositionFetcher,
     EthereumBadgerClaimableContractPositionBalanceFetcher,
+    // Polygon
+    PolygonBadgerVaultTokenFetcher,
+    PolygonBadgerClaimableContractPositionFetcher,
+    PolygonBadgerClaimableContractPositionBalanceFetcher,
   ],
 })
 export class BadgerAppModule extends AbstractApp() {}
