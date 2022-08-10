@@ -22,6 +22,12 @@ const labels = {
   [VAULTS.PLS_LOCK_6_MONTH]: 'PLS 6 Month Lock',
 };
 
+export const PLUTUS_LOCK_REWARDS_ADDRESSES = {
+  [VAULTS.PLS_LOCK_1_MONTH]: '0x50b3091b4188edfa3589b341adfb078edb93addd',
+  [VAULTS.PLS_LOCK_3_MONTH]: '0x29640422bb775917102079cf259cc8f5ca7dbce8',
+  [VAULTS.PLS_LOCK_6_MONTH]: '0x6e1954da37fad279114035a45da49ca30ea5a988',
+};
+
 @Register.ContractPositionFetcher({ appId, groupId, network })
 export class ArbitrumPlutusLockContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
@@ -48,7 +54,7 @@ export class ArbitrumPlutusLockContractPositionFetcher implements PositionFetche
           this.plutusContractFactory.plutusEpochStaking({ address, network }),
         resolveStakedTokenAddress: ({ contract, multicall }) => multicall.wrap(contract).pls(),
         resolveRewardTokenAddresses: async ({ contract, multicall }) => {
-          const stakingRewardsAddress = await multicall.wrap(contract).stakingRewards();
+          const stakingRewardsAddress = PLUTUS_LOCK_REWARDS_ADDRESSES[contract.address];
           if (stakingRewardsAddress === ZERO_ADDRESS) return [];
 
           const stakingRewardsContract = this.plutusContractFactory.plutusEpochStakingRewardsRolling({
