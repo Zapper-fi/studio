@@ -3,7 +3,6 @@ import { BigNumberish, Contract } from 'ethers';
 import { range } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { BLOCKS_PER_DAY } from '~app-toolkit/constants/blocks';
 import { RewardRateUnit } from '~app-toolkit/helpers/master-chef/master-chef.contract-position-helper';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
@@ -34,12 +33,8 @@ export type MasterChefContractPositionDescriptor = {
 
 export abstract class MasterChefTemplateContractPositionFetcher<
   T extends Contract,
-  V extends Contract = never,
-> extends ContractPositionTemplatePositionFetcher<
-  T,
-  MasterChefContractPositionDataProps,
-  MasterChefContractPositionDescriptor
-> {
+  V extends MasterChefContractPositionDataProps = MasterChefContractPositionDataProps,
+> extends ContractPositionTemplatePositionFetcher<T, V, MasterChefContractPositionDescriptor> {
   constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) {
     super(appToolkit);
   }
@@ -48,11 +43,6 @@ export abstract class MasterChefTemplateContractPositionFetcher<
   abstract getPoolLength(contract: T): Promise<BigNumberish>;
   abstract getStakedTokenAddress(contract: T, poolIndex: number): Promise<string>;
   abstract getRewardTokenAddress(contract: T, poolIndex: number): Promise<string>;
-
-  // Chef V2
-  abstract getExtraRewarder?(contract: T, poolIndex: number): Promise<string>;
-  abstract getExtraRewarderContract?(address: string): V;
-  abstract getExtraRewardTokenAddress?(contract: V, poolIndex: number): Promise<string>;
 
   // APY
   rewardRateUnit: RewardRateUnit = RewardRateUnit.BLOCK;
@@ -63,7 +53,6 @@ export abstract class MasterChefTemplateContractPositionFetcher<
   // Balances
   abstract getStakedTokenBalance(address: string, contract: T, poolIndex: number): Promise<BigNumberish>;
   abstract getRewardTokenBalance(address: string, contract: T, poolIndex: number): Promise<BigNumberish>;
-  abstract getExtraRewardTokenBalance?(address: string, contract: V, poolIndex: number): Promise<BigNumberish>;
 
   async getDescriptors() {
     const poolLength = await this.getContract(this.chefAddress).poolLength();
@@ -73,25 +62,14 @@ export abstract class MasterChefTemplateContractPositionFetcher<
   async getTokenDescriptors({
     contract,
     descriptor,
-    multicall,
   }: TokenStageParams<T, MasterChefContractPositionDataProps, MasterChefContractPositionDescriptor>) {
     const tokens: UnderlyingTokenDescriptor[] = [];
 
     const stakedTokenAddress = await this.getStakedTokenAddress(contract, descriptor.poolIndex);
     const rewardTokenAddress = await this.getRewardTokenAddress(contract, descriptor.poolIndex);
+
     tokens.push({ metaType: MetaType.SUPPLIED, address: stakedTokenAddress });
     tokens.push({ metaType: MetaType.CLAIMABLE, address: rewardTokenAddress });
-
-    // Resolve extra rewards for Master Chef V2
-    if (this.getExtraRewarder && this.getExtraRewarderContract && this.getExtraRewardTokenAddress) {
-      const extraRewarderAddress = await this.getExtraRewarder(contract, descriptor.poolIndex);
-      if (extraRewarderAddress !== ZERO_ADDRESS) {
-        const rewarderContract = multicall.wrap(this.getExtraRewarderContract(extraRewarderAddress));
-        const extraRewardTokenAddress = await this.getExtraRewardTokenAddress(rewarderContract, descriptor.poolIndex);
-        tokens.push({ metaType: MetaType.CLAIMABLE, address: extraRewardTokenAddress });
-      }
-    }
-
     return tokens;
   }
 
@@ -100,11 +78,7 @@ export abstract class MasterChefTemplateContractPositionFetcher<
     contractPosition,
     descriptor,
     multicall,
-  }: DataPropsStageParams<
-    T,
-    MasterChefContractPositionDataProps,
-    MasterChefContractPositionDescriptor
-  >): Promise<MasterChefContractPositionDataProps> {
+  }: DataPropsStageParams<T, V, MasterChefContractPositionDescriptor>): Promise<V> {
     const poolIndex = descriptor.poolIndex;
     const stakedToken = contractPosition.tokens.find(isSupplied)!;
     const primaryClaimableToken = contractPosition.tokens.filter(isClaimable)[0];
@@ -132,7 +106,7 @@ export abstract class MasterChefTemplateContractPositionFetcher<
     const yearlyROI = dailyROI * 365;
     const isActive = yearlyROI > 0;
 
-    return { poolIndex, liquidity, dailyROI, weeklyROI, yearlyROI, isActive };
+    return { poolIndex, liquidity, dailyROI, weeklyROI, yearlyROI, isActive } as V;
   }
 
   async getLabel({ contractPosition }: DisplayPropsStageParams<T>) {
@@ -144,26 +118,17 @@ export abstract class MasterChefTemplateContractPositionFetcher<
     address,
     contractPosition,
     contract,
-    multicall,
   }: GetTokenBalancesPerPositionParams<T, MasterChefContractPositionDataProps>) {
     const tokenBalances: BigNumberish[] = [];
+    const poolIndex = contractPosition.dataProps.poolIndex;
 
     const [stakedBalanceRaw, rewardTokenBalanceRaw] = await Promise.all([
-      this.getStakedTokenBalance(address, contract, contractPosition.dataProps.poolIndex),
-      this.getRewardTokenBalance(address, contract, contractPosition.dataProps.poolIndex),
+      this.getStakedTokenBalance(address, contract, poolIndex),
+      this.getRewardTokenBalance(address, contract, poolIndex),
     ]);
-
-    if (this.getExtraRewarder && this.getExtraRewarderContract && this.getExtraRewardTokenBalance) {
-      const extraRewarderAddress = await this.getExtraRewarder(contract, descriptor.poolIndex);
-      if (extraRewarderAddress !== ZERO_ADDRESS) {
-        const rewarderContract = multicall.wrap(this.getExtraRewarderContract(extraRewarderAddress));
-      }
-      // this.getExtraRewardTokenBalance()
-    }
 
     tokenBalances.push(stakedBalanceRaw);
     tokenBalances.push(rewardTokenBalanceRaw);
-
     return tokenBalances;
   }
 }

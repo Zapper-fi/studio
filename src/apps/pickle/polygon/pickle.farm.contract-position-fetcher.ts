@@ -5,9 +5,9 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ZERO_ADDRESS } from '~app-toolkit/constants/address';
 import { Register } from '~app-toolkit/decorators';
 import { RewardRateUnit } from '~app-toolkit/helpers/master-chef/master-chef.contract-position-helper';
+import { MasterChefV2TemplateContractPositionFetcher } from '~position/template/master-chef-v2.template.contract-position-fetcher';
 import { Network } from '~types/network.interface';
 
-import { MasterChefTemplateContractPositionFetcher } from '../arbitrum/master-chef.template.contract-position-fetcher';
 import { PickleContractFactory, PickleMiniChefV2, PickleRewarder } from '../contracts';
 import { PICKLE_DEFINITION } from '../pickle.definition';
 
@@ -21,7 +21,7 @@ export type PickleFarmContractPositionDescriptor = {
 };
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
-export class PolygonPickleFarmContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<
+export class PolygonPickleFarmContractPositionFetcher extends MasterChefV2TemplateContractPositionFetcher<
   PickleMiniChefV2,
   PickleRewarder
 > {
@@ -82,11 +82,7 @@ export class PolygonPickleFarmContractPositionFetcher extends MasterChefTemplate
     return contract.userInfo(poolIndex, address).then(v => v.amount);
   }
 
-  async getPrimaryRewardTokenBalance(
-    address: string,
-    contract: PickleMiniChefV2,
-    poolIndex: number,
-  ): Promise<BigNumberish> {
+  async getRewardTokenBalance(address: string, contract: PickleMiniChefV2, poolIndex: number): Promise<BigNumberish> {
     return contract.pendingPickle(poolIndex, address);
   }
 
