@@ -21,6 +21,8 @@ import {
 import { PlsDpxPlutusChefV2 } from '../contracts/ethers/PlsDpxPlutusChefV2';
 import { PLUTUS_DEFINITION } from '../plutus.definition';
 
+import { PLUTUS_LOCK_REWARDS_ADDRESSES } from './plutus.lock.contract-position-fetcher';
+
 const appId = PLUTUS_DEFINITION.id;
 const network = Network.ARBITRUM_MAINNET;
 
@@ -66,7 +68,7 @@ export class ArbitrumPlutusBalanceFetcher implements BalanceFetcher {
         const plsJones = contractPosition.tokens.find(v => v.symbol === 'plsJONES');
         if (!plsDpx || !plsJones) return [];
 
-        const rewardsAddress = await multicall.wrap(contract).stakingRewards();
+        const rewardsAddress = PLUTUS_LOCK_REWARDS_ADDRESSES[contractPosition.address];
         if (rewardsAddress === ZERO_ADDRESS) return [];
 
         const rewardsContract = this.contractFactory.plutusEpochStakingRewardsRolling({
@@ -75,13 +77,14 @@ export class ArbitrumPlutusBalanceFetcher implements BalanceFetcher {
         });
 
         const currentEpoch = await multicall.wrap(contract).currentEpoch();
-        const epochsToClaim = range(0, Number(currentEpoch) - 1); // 1 based
+        const epochsToClaim = range(0, Number(currentEpoch));
         const claimAmounts = await Promise.all(
           epochsToClaim.map(async epoch => {
             const EPOCH_DURATION = 2_628_000; // seconds
 
             const rewardsForEpoch = await multicall.wrap(rewardsContract).epochRewards(epoch);
             const claimDetails = await multicall.wrap(rewardsContract).claimDetails(address, epoch);
+
             const userPlsDpxShare = await multicall
               .wrap(rewardsContract)
               .calculateShare(address, epoch, rewardsForEpoch.plsDpx);
