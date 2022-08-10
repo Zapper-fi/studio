@@ -4,6 +4,20 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.163.0](https://github.com/Zapper-fi/studio/compare/v0.162.0...v0.163.0) (2022-08-10)
+
+
+### Features
+
+* **badger:** add badger on polygon ([#1127](https://github.com/Zapper-fi/studio/issues/1127)) ([a23c39f](https://github.com/Zapper-fi/studio/commit/a23c39f0f823a8148184de1fd233279714d46aa8))
+* **master-chef:** Create Master Chef contract position template ([#1125](https://github.com/Zapper-fi/studio/issues/1125)) ([770b508](https://github.com/Zapper-fi/studio/commit/770b508b5e2f7ac91735fc9c697900014ae091df))
+* **plutus:** Fix claimable amounts on lock contracts ([#1129](https://github.com/Zapper-fi/studio/issues/1129)) ([ff4ffeb](https://github.com/Zapper-fi/studio/commit/ff4ffebaf107ae85bb4f8d02ec942c7fa65863ad))
+
+
+### Bug Fixes
+
+* **b-protocol:** fix b-protocol (liquity adapter) ([#1122](https://github.com/Zapper-fi/studio/issues/1122)) ([e64609e](https://github.com/Zapper-fi/studio/commit/e64609e0ed60d202b032ab0ff5bdc6c889642a64))
+
 ## [0.162.0](https://github.com/Zapper-fi/studio/compare/v0.161.0...v0.162.0) (2022-08-09)
 
 
