@@ -8,22 +8,12 @@ import {
   ContractPositionTemplatePositionFetcher,
   DisplayPropsStageParams,
   GetTokenBalancesPerPositionParams,
-  TokensStageParams,
+  TokenStageParams,
 } from '~position/template/contract-position.template.position-fetcher';
 import { Network } from '~types';
 
 import { HectorNetworkContractFactory, HectorNetworkStakeBondDepository } from '../contracts';
 import { HECTOR_NETWORK_DEFINITION } from '../hector-network.definition';
-
-export type SablierStreamContractPositionDataProps = {
-  deposited: number;
-  remaining: number;
-};
-
-export type SablierStreamContractPositionDescriptor = {
-  address: string;
-  principleLabel: string;
-};
 
 const appId = HECTOR_NETWORK_DEFINITION.id;
 const groupId = HECTOR_NETWORK_DEFINITION.groups.stakeBond.id;
@@ -58,7 +48,7 @@ export class FantomHectorNetworkStakeBondContractPositionFetcher extends Contrac
     return this.contractFactory.hectorNetworkStakeBondDepository({ address, network: this.network });
   }
 
-  async getTokenDescriptors({ contract }: TokensStageParams<HectorNetworkStakeBondDepository>) {
+  async getTokenDescriptors({ contract }: TokenStageParams<HectorNetworkStakeBondDepository>) {
     const [principle, claimable] = await Promise.all([contract.principle(), contract.sHEC()]);
 
     return [
@@ -68,12 +58,12 @@ export class FantomHectorNetworkStakeBondContractPositionFetcher extends Contrac
     ];
   }
 
-  async getLabel({ appToken }: DisplayPropsStageParams<HectorNetworkStakeBondDepository>) {
-    return `${getLabelFromToken(appToken.tokens[2])} Bond`;
+  async getLabel({ contractPosition }: DisplayPropsStageParams<HectorNetworkStakeBondDepository>) {
+    return `${getLabelFromToken(contractPosition.tokens[2])} Bond`;
   }
 
-  async getImages({ appToken }: DisplayPropsStageParams<HectorNetworkStakeBondDepository>) {
-    return getImagesFromToken(appToken.tokens[2]);
+  async getImages({ contractPosition }: DisplayPropsStageParams<HectorNetworkStakeBondDepository>) {
+    return getImagesFromToken(contractPosition.tokens[2]);
   }
 
   async getTokenBalancesPerPosition({
