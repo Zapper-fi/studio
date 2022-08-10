@@ -28,10 +28,11 @@ export type UnderlyingTokenDescriptor = {
   metaType: MetaType;
 };
 
-export type StageParams<T extends Contract, V, K extends keyof ContractPosition> = {
+export type StageParams<T extends Contract, V, R, K extends keyof ContractPosition> = {
   multicall: IMulticallWrapper;
   contract: T;
-  appToken: Omit<ContractPosition<V>, K>;
+  contractPosition: Omit<ContractPosition<V>, K>;
+  descriptor: R;
 };
 
 export type TokensStageParams<
@@ -40,13 +41,20 @@ export type TokensStageParams<
 > = {
   contract: T;
   descriptor: R;
+  multicall: IMulticallWrapper;
 };
-export type DataPropsStageParams<T extends Contract, V = DefaultDataProps> = StageParams<
-  T,
-  V,
-  'dataProps' | 'displayProps'
->;
-export type DisplayPropsStageParams<T extends Contract, V = DefaultDataProps> = StageParams<T, V, 'displayProps'>;
+
+export type DataPropsStageParams<
+  T extends Contract,
+  V = DefaultDataProps,
+  R = DefaultContractPositionDescriptor,
+> = StageParams<T, V, R, 'dataProps' | 'displayProps'>;
+
+export type DisplayPropsStageParams<
+  T extends Contract,
+  V = DefaultDataProps,
+  R = DefaultContractPositionDescriptor,
+> = StageParams<T, V, R, 'displayProps'>;
 
 export type GetTokenBalancesPerPositionParams<T extends Contract, V extends DefaultDataProps = DefaultDataProps> = {
   address: string;
@@ -90,23 +98,23 @@ export abstract class ContractPositionTemplatePositionFetcher<
     return undefined;
   }
 
-  async getTertiaryLabel({ appToken }: DisplayPropsStageParams<T, V>): Promise<DisplayProps['tertiaryLabel']> {
-    if (typeof appToken.dataProps.apy === 'number') return `${appToken.dataProps.apy.toFixed(3)}% APY`;
+  async getTertiaryLabel({ contractPosition }: DisplayPropsStageParams<T, V>): Promise<DisplayProps['tertiaryLabel']> {
+    if (typeof contractPosition.dataProps.apy === 'number') return `${contractPosition.dataProps.apy.toFixed(3)}% APY`;
     return undefined;
   }
 
-  async getImages({ appToken }: DisplayPropsStageParams<T, V>): Promise<DisplayProps['images']> {
-    return appToken.tokens.flatMap(v => getImagesFromToken(v));
+  async getImages({ contractPosition }: DisplayPropsStageParams<T, V>): Promise<DisplayProps['images']> {
+    return contractPosition.tokens.flatMap(v => getImagesFromToken(v));
   }
 
-  async getStatsItems({ appToken }: DisplayPropsStageParams<T, V>): Promise<DisplayProps['statsItems']> {
+  async getStatsItems({ contractPosition }: DisplayPropsStageParams<T, V>): Promise<DisplayProps['statsItems']> {
     const statsItems: StatsItem[] = [];
 
     // Standardized Fields
-    if (typeof appToken.dataProps.liquidity === 'number')
-      statsItems.push({ label: 'Liquidity', value: buildDollarDisplayItem(appToken.dataProps.liquidity) });
-    if (typeof appToken.dataProps.apy === 'number')
-      statsItems.push({ label: 'APY', value: buildPercentageDisplayItem(appToken.dataProps.apy) });
+    if (typeof contractPosition.dataProps.liquidity === 'number')
+      statsItems.push({ label: 'Liquidity', value: buildDollarDisplayItem(contractPosition.dataProps.liquidity) });
+    if (typeof contractPosition.dataProps.apy === 'number')
+      statsItems.push({ label: 'APY', value: buildPercentageDisplayItem(contractPosition.dataProps.apy) });
 
     return statsItems;
   }
@@ -126,23 +134,23 @@ export abstract class ContractPositionTemplatePositionFetcher<
     const skeletons = await Promise.all(
       descriptors.map(async descriptor => {
         const contract = multicall.wrap(this.getContract(descriptor.address));
-        const tokenDescriptors = await this.getTokenDescriptors({ contract, descriptor })
+        const tokenDescriptors = await this.getTokenDescriptors({ contract, descriptor, multicall })
           .then(v => (Array.isArray(v) ? v : [v]))
           .then(v => v.map(t => ({ ...t, address: t.address.toLowerCase() })));
 
-        return { ...descriptor, tokenDescriptors };
+        return { address: descriptor.address, descriptor, tokenDescriptors };
       }),
     );
 
     const underlyingTokenRequests = skeletons
-      .flatMap(v => v.tokenDescriptors.map(v => v.address))
+      .flatMap(v => v.tokenDescriptors.map(v => v.address.toLowerCase()))
       .map(v => ({ network: this.network, address: v }));
     const baseTokens = await tokenLoader.getMany(underlyingTokenRequests);
     const appTokens = await appTokenLoader.getMany(underlyingTokenRequests);
     const allTokens = [...compact(appTokens), ...compact(baseTokens)];
 
     const skeletonsWithResolvedTokens = await Promise.all(
-      skeletons.map(async ({ address, tokenDescriptors, ...rest }) => {
+      skeletons.map(async ({ address, tokenDescriptors, descriptor }) => {
         const maybeTokens = tokenDescriptors.map(v => {
           const match = allTokens.find(t => t.address === v.address);
           return match ? metatyped(match, v.metaType) : null;
@@ -150,15 +158,15 @@ export abstract class ContractPositionTemplatePositionFetcher<
 
         const tokens = compact(maybeTokens);
         if (maybeTokens.length !== tokens.length) return null;
-        return { address, tokens, ...rest };
+        return { address, tokens, descriptor };
       }),
     );
 
     const tokens = await Promise.all(
-      compact(skeletonsWithResolvedTokens).map(async ({ address, tokens }) => {
+      compact(skeletonsWithResolvedTokens).map(async ({ address, tokens, descriptor }) => {
         const contract = multicall.wrap(this.getContract(address));
 
-        const fragment: DataPropsStageParams<T, V>['appToken'] = {
+        const fragment: DataPropsStageParams<T, V>['contractPosition'] = {
           type: ContractType.POSITION,
           appId: this.appId,
           groupId: this.groupId,
@@ -168,11 +176,11 @@ export abstract class ContractPositionTemplatePositionFetcher<
         };
 
         // Resolve Data Props Stage
-        const dataPropsStageParams = { appToken: { ...fragment }, contract, multicall };
+        const dataPropsStageParams = { contractPosition: { ...fragment }, contract, multicall, descriptor };
         const dataProps = await this.getDataProps(dataPropsStageParams);
 
         // Resolve Display Props Stage
-        const displayPropsStageParams = { appToken: { ...fragment, dataProps }, contract, multicall };
+        const displayPropsStageParams = { ...dataPropsStageParams, contractPosition: { ...fragment, dataProps } };
         const displayProps = {
           label: await this.getLabel(displayPropsStageParams),
           labelDetailed: await this.getLabelDetailed(displayPropsStageParams),
