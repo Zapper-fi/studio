@@ -56,7 +56,7 @@ export class EthereumLiquityBalanceFetcher implements BalanceFetcher {
       this.appToolkit.helpers.singleStakingContractPositionBalanceHelper.getBalances<LiquityStaking>({
         address,
         appId,
-        groupId: LIQUITY_DEFINITION.groups.farm.id,
+        groupId: LIQUITY_DEFINITION.groups.staking.id,
         network,
         resolveContract: () =>
           this.liquityContractFactory.liquityStaking({

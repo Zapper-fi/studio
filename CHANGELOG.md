@@ -4,6 +4,31 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.162.0](https://github.com/Zapper-fi/studio/compare/v0.161.0...v0.162.0) (2022-08-09)
+
+
+### Features
+
+* **bastion-protocol:** Fix borrow balance ([#1123](https://github.com/Zapper-fi/studio/issues/1123)) ([a510777](https://github.com/Zapper-fi/studio/commit/a510777e420ee1852e3afd492ab2fbdd418ab5c9))
+
+## [0.161.0](https://github.com/Zapper-fi/studio/compare/v0.160.0...v0.161.0) (2022-08-09)
+
+
+### Features
+
+* **gmx:** added short/long positions ([#1119](https://github.com/Zapper-fi/studio/issues/1119)) ([f7a302f](https://github.com/Zapper-fi/studio/commit/f7a302f189ae75109e43c6db2367f525c72c48c5))
+* **hector-network:** Refactor and rename Hector DAO to Hector Network ([#1117](https://github.com/Zapper-fi/studio/issues/1117)) ([c14b669](https://github.com/Zapper-fi/studio/commit/c14b669be32e5bd6272087cb3762f94b474c8b7c))
+* **lyra-avalon:** Re-add LP staking ([#1108](https://github.com/Zapper-fi/studio/issues/1108)) ([0b09fdb](https://github.com/Zapper-fi/studio/commit/0b09fdb89d5f4f2e985143558d93290685d954de))
+* **template:** Add get balances support to app tokens ([#1114](https://github.com/Zapper-fi/studio/issues/1114)) ([f24c978](https://github.com/Zapper-fi/studio/commit/f24c978751527f108a89fe91ec8014a386e1fa79))
+* **template:** Add get balances support to contract positions ([#1115](https://github.com/Zapper-fi/studio/issues/1115)) ([0c65e76](https://github.com/Zapper-fi/studio/commit/0c65e76dc0776056d03c835c3a6a2972a6a4c5d6))
+* **uniswap-v3:** Add Uni V3 position helper ([#1110](https://github.com/Zapper-fi/studio/issues/1110)) ([39730f5](https://github.com/Zapper-fi/studio/commit/39730f544e766d698a2c3ca56c1280c9d369e151))
+
+
+### Bug Fixes
+
+* **ci:** Dispatch action to zapper-api to trigger studio bump ([#1118](https://github.com/Zapper-fi/studio/issues/1118)) ([15dc446](https://github.com/Zapper-fi/studio/commit/15dc4463c93855482b8ea26f4c3982bf99139007))
+* **ci:** Remove open PR job ([#1116](https://github.com/Zapper-fi/studio/issues/1116)) ([199ccbb](https://github.com/Zapper-fi/studio/commit/199ccbb54f50dd961a55e52720b40c626cbe9254))
+
 ## [0.160.0](https://github.com/Zapper-fi/studio/compare/v0.159.0...v0.160.0) (2022-08-09)
 
 
