@@ -4,7 +4,10 @@ import { range } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
-import { GetTokenBalancesPerPositionParams } from '~position/template/contract-position.template.position-fetcher';
+import {
+  DisplayPropsStageParams,
+  GetTokenBalancesPerPositionParams,
+} from '~position/template/contract-position.template.position-fetcher';
 import {
   SingleStakingFarmDefinition,
   SingleStakingFarmTemplateContractPositionFetcher,
@@ -20,6 +23,7 @@ const network = Network.ARBITRUM_MAINNET;
 
 const PLUTUS_LOCKS = [
   {
+    lockDuration: 1,
     address: '0x27aaa9d562237bf8e024f9b21de177e20ae50c05',
     stakedTokenAddress: '0x51318b7d00db7acc4026c88c3952b66278b6a67f',
     rewardsDistributor: '0x50b3091b4188edfa3589b341adfb078edb93addd',
@@ -29,6 +33,7 @@ const PLUTUS_LOCKS = [
     ],
   },
   {
+    lockDuration: 3,
     address: '0xe59dadf5f7a9decb8337402ccdf06abe5c0b2b3e',
     stakedTokenAddress: '0x51318b7d00db7acc4026c88c3952b66278b6a67f',
     rewardsDistributor: '0x29640422bb775917102079cf259cc8f5ca7dbce8',
@@ -38,6 +43,7 @@ const PLUTUS_LOCKS = [
     ],
   },
   {
+    lockDuration: 6,
     address: '0xbeb981021ed9c85aa51d96c0c2eda10ee4404a2e',
     stakedTokenAddress: '0x51318b7d00db7acc4026c88c3952b66278b6a67f',
     rewardsDistributor: '0x6e1954da37fad279114035a45da49ca30ea5a988',
@@ -70,8 +76,12 @@ export class ArbitrumPlutusLockContractPositionFetcher extends SingleStakingFarm
   }
 
   async getRewardRates(_contract: PlutusLock) {
-    // @TODO
     return [0, 0];
+  }
+
+  async getLabel({ contractPosition }: DisplayPropsStageParams<PlutusLock>) {
+    const lockDuration = PLUTUS_LOCKS.find(v => v.address === contractPosition.address)!.lockDuration;
+    return `PLS ${lockDuration} Month Lock`;
   }
 
   async getStakedTokenBalance({ contract, address }: GetTokenBalancesPerPositionParams<PlutusLock>) {
@@ -84,9 +94,9 @@ export class ArbitrumPlutusLockContractPositionFetcher extends SingleStakingFarm
     address,
     multicall,
   }: GetTokenBalancesPerPositionParams<PlutusLock>) {
-    const rewardsDistributorAddress = PLUTUS_LOCKS.find(v => v.address === contractPosition.address)!.address;
+    const rewardsAddress = PLUTUS_LOCKS.find(v => v.address === contractPosition.address)!.rewardsDistributor;
     const rewardsContract = this.contractFactory.plutusEpochStakingRewardsRolling({
-      address: rewardsDistributorAddress,
+      address: rewardsAddress,
       network,
     });
 

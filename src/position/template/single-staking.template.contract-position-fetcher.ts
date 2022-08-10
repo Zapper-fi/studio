@@ -3,7 +3,7 @@ import { BigNumberish, Contract } from 'ethers';
 import { isArray, sum } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { MetaType } from '~position/position.interface';
 import { isClaimable, isSupplied } from '~position/position.utils';
 import {
@@ -53,7 +53,7 @@ export abstract class SingleStakingFarmTemplateContractPositionFetcher<
 
   async getTokenDescriptors({ descriptor }: TokenStageParams<T, V, SingleStakingFarmDefinition>) {
     const tokens: UnderlyingTokenDescriptor[] = [];
-    tokens.push({ metaType: MetaType.SUPPLIED, address: descriptor.address });
+    tokens.push({ metaType: MetaType.SUPPLIED, address: descriptor.stakedTokenAddress });
     tokens.push(...descriptor.rewardTokenAddresses.map(v => ({ metaType: MetaType.CLAIMABLE, address: v })));
     return tokens;
   }
@@ -87,6 +87,10 @@ export abstract class SingleStakingFarmTemplateContractPositionFetcher<
   async getLabel({ contractPosition }: DisplayPropsStageParams<T>) {
     const stakedToken = contractPosition.tokens.find(isSupplied)!;
     return getLabelFromToken(stakedToken);
+  }
+
+  async getImages({ contractPosition }: DisplayPropsStageParams<T, V>) {
+    return contractPosition.tokens.filter(isSupplied).flatMap(v => getImagesFromToken(v));
   }
 
   async getTokenBalancesPerPosition(params: GetTokenBalancesPerPositionParams<T, SingleStakingFarmDataProps>) {

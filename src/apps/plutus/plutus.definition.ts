@@ -30,7 +30,7 @@ export const PLUTUS_DEFINITION = appDefinition({
     },
 
     farmPlsDpxLp: {
-      id: 'farm-pls-dpx',
+      id: 'farm-pls-dpx-lp',
       type: GroupType.POSITION,
       label: 'plsDPX Farm',
     },

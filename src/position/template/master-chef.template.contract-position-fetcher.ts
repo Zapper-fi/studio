@@ -5,7 +5,7 @@ import { range } from 'lodash';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { BLOCKS_PER_DAY } from '~app-toolkit/constants/blocks';
 import { RewardRateUnit } from '~app-toolkit/helpers/master-chef/master-chef.contract-position-helper';
-import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { MetaType } from '~position/position.interface';
 import { isClaimable, isSupplied } from '~position/position.utils';
 import {
@@ -112,6 +112,10 @@ export abstract class MasterChefTemplateContractPositionFetcher<
   async getLabel({ contractPosition }: DisplayPropsStageParams<T>) {
     const stakedToken = contractPosition.tokens.find(isSupplied)!;
     return getLabelFromToken(stakedToken);
+  }
+
+  async getImages({ contractPosition }: DisplayPropsStageParams<T, V>) {
+    return contractPosition.tokens.filter(isSupplied).flatMap(v => getImagesFromToken(v));
   }
 
   async getTokenBalancesPerPosition({
