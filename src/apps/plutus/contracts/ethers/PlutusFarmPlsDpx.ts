@@ -17,12 +17,13 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
-export interface PlsJonesPlutusChefInterface extends utils.Interface {
+export interface PlutusFarmPlsDpxInterface extends utils.Interface {
   functions: {
-    'accJonesPerShare()': FunctionFragment;
+    'accDpxPerShare()': FunctionFragment;
     'accPlsDpxPerShare()': FunctionFragment;
     'accPlsJonesPerShare()': FunctionFragment;
     'accPlsPerShare()': FunctionFragment;
+    'accRdpxPerShare()': FunctionFragment;
     'deposit(uint96)': FunctionFragment;
     'depositFor(address,uint88)': FunctionFragment;
     'emergencyWithdraw()': FunctionFragment;
@@ -32,7 +33,7 @@ export interface PlsJonesPlutusChefInterface extends utils.Interface {
     'operator()': FunctionFragment;
     'owner()': FunctionFragment;
     'pendingRewards(address)': FunctionFragment;
-    'plsJones()': FunctionFragment;
+    'plsDpx()': FunctionFragment;
     'renounceOwnership()': FunctionFragment;
     'rewardPerShare(uint80)': FunctionFragment;
     'rewardsDistro()': FunctionFragment;
@@ -49,10 +50,11 @@ export interface PlsJonesPlutusChefInterface extends utils.Interface {
 
   getFunction(
     nameOrSignatureOrTopic:
-      | 'accJonesPerShare'
+      | 'accDpxPerShare'
       | 'accPlsDpxPerShare'
       | 'accPlsJonesPerShare'
       | 'accPlsPerShare'
+      | 'accRdpxPerShare'
       | 'deposit'
       | 'depositFor'
       | 'emergencyWithdraw'
@@ -62,7 +64,7 @@ export interface PlsJonesPlutusChefInterface extends utils.Interface {
       | 'operator'
       | 'owner'
       | 'pendingRewards'
-      | 'plsJones'
+      | 'plsDpx'
       | 'renounceOwnership'
       | 'rewardPerShare'
       | 'rewardsDistro'
@@ -77,10 +79,11 @@ export interface PlsJonesPlutusChefInterface extends utils.Interface {
       | 'withdrawFor',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'accJonesPerShare', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'accDpxPerShare', values?: undefined): string;
   encodeFunctionData(functionFragment: 'accPlsDpxPerShare', values?: undefined): string;
   encodeFunctionData(functionFragment: 'accPlsJonesPerShare', values?: undefined): string;
   encodeFunctionData(functionFragment: 'accPlsPerShare', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'accRdpxPerShare', values?: undefined): string;
   encodeFunctionData(functionFragment: 'deposit', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(
     functionFragment: 'depositFor',
@@ -93,7 +96,7 @@ export interface PlsJonesPlutusChefInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'operator', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'pendingRewards', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'plsJones', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'plsDpx', values?: undefined): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
   encodeFunctionData(functionFragment: 'rewardPerShare', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'rewardsDistro', values?: undefined): string;
@@ -110,10 +113,11 @@ export interface PlsJonesPlutusChefInterface extends utils.Interface {
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
 
-  decodeFunctionResult(functionFragment: 'accJonesPerShare', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'accDpxPerShare', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'accPlsDpxPerShare', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'accPlsJonesPerShare', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'accPlsPerShare', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'accRdpxPerShare', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'deposit', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'depositFor', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'emergencyWithdraw', data: BytesLike): Result;
@@ -123,7 +127,7 @@ export interface PlsJonesPlutusChefInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'operator', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'pendingRewards', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'plsJones', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'plsDpx', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'renounceOwnership', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'rewardPerShare', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'rewardsDistro', data: BytesLike): Result;
@@ -182,12 +186,12 @@ export type WithdrawEvent = TypedEvent<[string, BigNumber], WithdrawEventObject>
 
 export type WithdrawEventFilter = TypedEventFilter<WithdrawEvent>;
 
-export interface PlsJonesPlutusChef extends BaseContract {
+export interface PlutusFarmPlsDpx extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: PlsJonesPlutusChefInterface;
+  interface: PlutusFarmPlsDpxInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -205,13 +209,15 @@ export interface PlsJonesPlutusChef extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    accJonesPerShare(overrides?: CallOverrides): Promise<[BigNumber]>;
+    accDpxPerShare(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     accPlsDpxPerShare(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     accPlsJonesPerShare(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     accPlsPerShare(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    accRdpxPerShare(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     deposit(
       _amount: PromiseOrValue<BigNumberish>,
@@ -243,15 +249,16 @@ export interface PlsJonesPlutusChef extends BaseContract {
       _user: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
-      [BigNumber, BigNumber, BigNumber, BigNumber] & {
+      [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
         _pendingPls: BigNumber;
         _pendingPlsDpx: BigNumber;
         _pendingPlsJones: BigNumber;
-        _pendingJones: BigNumber;
+        _pendingDpx: BigNumber;
+        _pendingRdpx: BigNumber;
       }
     >;
 
-    plsJones(overrides?: CallOverrides): Promise<[string]>;
+    plsDpx(overrides?: CallOverrides): Promise<[string]>;
 
     renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
@@ -285,12 +292,13 @@ export interface PlsJonesPlutusChef extends BaseContract {
       arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
-      [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
+      [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
         amount: BigNumber;
         plsRewardDebt: BigNumber;
         plsDpxRewardDebt: BigNumber;
         plsJonesRewardDebt: BigNumber;
-        jonesRewardDebt: BigNumber;
+        dpxRewardDebt: BigNumber;
+        rdpxRewardDebt: BigNumber;
       }
     >;
 
@@ -308,13 +316,15 @@ export interface PlsJonesPlutusChef extends BaseContract {
     ): Promise<ContractTransaction>;
   };
 
-  accJonesPerShare(overrides?: CallOverrides): Promise<BigNumber>;
+  accDpxPerShare(overrides?: CallOverrides): Promise<BigNumber>;
 
   accPlsDpxPerShare(overrides?: CallOverrides): Promise<BigNumber>;
 
   accPlsJonesPerShare(overrides?: CallOverrides): Promise<BigNumber>;
 
   accPlsPerShare(overrides?: CallOverrides): Promise<BigNumber>;
+
+  accRdpxPerShare(overrides?: CallOverrides): Promise<BigNumber>;
 
   deposit(
     _amount: PromiseOrValue<BigNumberish>,
@@ -346,15 +356,16 @@ export interface PlsJonesPlutusChef extends BaseContract {
     _user: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<
-    [BigNumber, BigNumber, BigNumber, BigNumber] & {
+    [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
       _pendingPls: BigNumber;
       _pendingPlsDpx: BigNumber;
       _pendingPlsJones: BigNumber;
-      _pendingJones: BigNumber;
+      _pendingDpx: BigNumber;
+      _pendingRdpx: BigNumber;
     }
   >;
 
-  plsJones(overrides?: CallOverrides): Promise<string>;
+  plsDpx(overrides?: CallOverrides): Promise<string>;
 
   renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
@@ -388,12 +399,13 @@ export interface PlsJonesPlutusChef extends BaseContract {
     arg0: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<
-    [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
+    [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
       amount: BigNumber;
       plsRewardDebt: BigNumber;
       plsDpxRewardDebt: BigNumber;
       plsJonesRewardDebt: BigNumber;
-      jonesRewardDebt: BigNumber;
+      dpxRewardDebt: BigNumber;
+      rdpxRewardDebt: BigNumber;
     }
   >;
 
@@ -411,13 +423,15 @@ export interface PlsJonesPlutusChef extends BaseContract {
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    accJonesPerShare(overrides?: CallOverrides): Promise<BigNumber>;
+    accDpxPerShare(overrides?: CallOverrides): Promise<BigNumber>;
 
     accPlsDpxPerShare(overrides?: CallOverrides): Promise<BigNumber>;
 
     accPlsJonesPerShare(overrides?: CallOverrides): Promise<BigNumber>;
 
     accPlsPerShare(overrides?: CallOverrides): Promise<BigNumber>;
+
+    accRdpxPerShare(overrides?: CallOverrides): Promise<BigNumber>;
 
     deposit(_amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
@@ -443,15 +457,16 @@ export interface PlsJonesPlutusChef extends BaseContract {
       _user: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
-      [BigNumber, BigNumber, BigNumber, BigNumber] & {
+      [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
         _pendingPls: BigNumber;
         _pendingPlsDpx: BigNumber;
         _pendingPlsJones: BigNumber;
-        _pendingJones: BigNumber;
+        _pendingDpx: BigNumber;
+        _pendingRdpx: BigNumber;
       }
     >;
 
-    plsJones(overrides?: CallOverrides): Promise<string>;
+    plsDpx(overrides?: CallOverrides): Promise<string>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
@@ -473,12 +488,13 @@ export interface PlsJonesPlutusChef extends BaseContract {
       arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<
-      [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
+      [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
         amount: BigNumber;
         plsRewardDebt: BigNumber;
         plsDpxRewardDebt: BigNumber;
         plsJonesRewardDebt: BigNumber;
-        jonesRewardDebt: BigNumber;
+        dpxRewardDebt: BigNumber;
+        rdpxRewardDebt: BigNumber;
       }
     >;
 
@@ -517,13 +533,15 @@ export interface PlsJonesPlutusChef extends BaseContract {
   };
 
   estimateGas: {
-    accJonesPerShare(overrides?: CallOverrides): Promise<BigNumber>;
+    accDpxPerShare(overrides?: CallOverrides): Promise<BigNumber>;
 
     accPlsDpxPerShare(overrides?: CallOverrides): Promise<BigNumber>;
 
     accPlsJonesPerShare(overrides?: CallOverrides): Promise<BigNumber>;
 
     accPlsPerShare(overrides?: CallOverrides): Promise<BigNumber>;
+
+    accRdpxPerShare(overrides?: CallOverrides): Promise<BigNumber>;
 
     deposit(
       _amount: PromiseOrValue<BigNumberish>,
@@ -553,7 +571,7 @@ export interface PlsJonesPlutusChef extends BaseContract {
 
     pendingRewards(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    plsJones(overrides?: CallOverrides): Promise<BigNumber>;
+    plsDpx(overrides?: CallOverrides): Promise<BigNumber>;
 
     renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
@@ -600,13 +618,15 @@ export interface PlsJonesPlutusChef extends BaseContract {
   };
 
   populateTransaction: {
-    accJonesPerShare(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    accDpxPerShare(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     accPlsDpxPerShare(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     accPlsJonesPerShare(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     accPlsPerShare(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    accRdpxPerShare(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     deposit(
       _amount: PromiseOrValue<BigNumberish>,
@@ -636,7 +656,7 @@ export interface PlsJonesPlutusChef extends BaseContract {
 
     pendingRewards(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    plsJones(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    plsDpx(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 

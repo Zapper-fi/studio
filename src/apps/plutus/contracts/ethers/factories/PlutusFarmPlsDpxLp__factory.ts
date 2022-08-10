@@ -4,19 +4,19 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { PlsJonesPlutusChef, PlsJonesPlutusChefInterface } from '../PlsJonesPlutusChef';
+import type { PlutusFarmPlsDpxLp, PlutusFarmPlsDpxLpInterface } from '../PlutusFarmPlsDpxLp';
 
 const _abi = [
   {
     inputs: [
       {
         internalType: 'address',
-        name: '_rewardsDistro',
+        name: '_stakingToken',
         type: 'address',
       },
       {
         internalType: 'address',
-        name: '_plsJones',
+        name: '_pls',
         type: 'address',
       },
     ],
@@ -82,6 +82,25 @@ const _abi = [
       {
         indexed: true,
         internalType: 'address',
+        name: '_user',
+        type: 'address',
+      },
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: '_amount',
+        type: 'uint256',
+      },
+    ],
+    name: 'Harvest',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'address',
         name: 'previousOwner',
         type: 'address',
       },
@@ -93,6 +112,32 @@ const _abi = [
       },
     ],
     name: 'OwnershipTransferred',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: 'address',
+        name: 'account',
+        type: 'address',
+      },
+    ],
+    name: 'Paused',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: 'address',
+        name: 'account',
+        type: 'address',
+      },
+    ],
+    name: 'Unpaused',
     type: 'event',
   },
   {
@@ -113,45 +158,6 @@ const _abi = [
     ],
     name: 'Withdraw',
     type: 'event',
-  },
-  {
-    inputs: [],
-    name: 'accJonesPerShare',
-    outputs: [
-      {
-        internalType: 'uint128',
-        name: '',
-        type: 'uint128',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'accPlsDpxPerShare',
-    outputs: [
-      {
-        internalType: 'uint128',
-        name: '',
-        type: 'uint128',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'accPlsJonesPerShare',
-    outputs: [
-      {
-        internalType: 'uint128',
-        name: '',
-        type: 'uint128',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
   },
   {
     inputs: [],
@@ -264,6 +270,19 @@ const _abi = [
     type: 'function',
   },
   {
+    inputs: [],
+    name: 'paused',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
     inputs: [
       {
         internalType: 'address',
@@ -278,20 +297,18 @@ const _abi = [
         name: '_pendingPls',
         type: 'uint256',
       },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'pls',
+    outputs: [
       {
-        internalType: 'uint256',
-        name: '_pendingPlsDpx',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: '_pendingPlsJones',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: '_pendingJones',
-        type: 'uint256',
+        internalType: 'contract IERC20',
+        name: '',
+        type: 'address',
       },
     ],
     stateMutability: 'view',
@@ -299,12 +316,12 @@ const _abi = [
   },
   {
     inputs: [],
-    name: 'plsJones',
+    name: 'plsPerSecond',
     outputs: [
       {
-        internalType: 'contract IERC20',
+        internalType: 'uint256',
         name: '',
-        type: 'address',
+        type: 'uint256',
       },
     ],
     stateMutability: 'view',
@@ -320,9 +337,9 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: 'uint80',
+        internalType: 'uint256',
         name: '_rewardRatePerSecond',
-        type: 'uint80',
+        type: 'uint256',
       },
     ],
     name: 'rewardPerShare',
@@ -337,16 +354,16 @@ const _abi = [
     type: 'function',
   },
   {
-    inputs: [],
-    name: 'rewardsDistro',
-    outputs: [
+    inputs: [
       {
-        internalType: 'contract IRewardsDistro',
-        name: '',
-        type: 'address',
+        internalType: 'uint256',
+        name: '_plsPerSecond',
+        type: 'uint256',
       },
     ],
-    stateMutability: 'view',
+    name: 'setEmission',
+    outputs: [],
+    stateMutability: 'nonpayable',
     type: 'function',
   },
   {
@@ -358,6 +375,19 @@ const _abi = [
       },
     ],
     name: 'setOperator',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'bool',
+        name: '_pauseContract',
+        type: 'bool',
+      },
+    ],
+    name: 'setPaused',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -386,6 +416,19 @@ const _abi = [
     name: 'setWhitelist',
     outputs: [],
     stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'stakingToken',
+    outputs: [
+      {
+        internalType: 'contract IERC20',
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
     type: 'function',
   },
   {
@@ -426,21 +469,6 @@ const _abi = [
       {
         internalType: 'int128',
         name: 'plsRewardDebt',
-        type: 'int128',
-      },
-      {
-        internalType: 'int128',
-        name: 'plsDpxRewardDebt',
-        type: 'int128',
-      },
-      {
-        internalType: 'int128',
-        name: 'plsJonesRewardDebt',
-        type: 'int128',
-      },
-      {
-        internalType: 'int128',
-        name: 'jonesRewardDebt',
         type: 'int128',
       },
     ],
@@ -493,12 +521,12 @@ const _abi = [
   },
 ];
 
-export class PlsJonesPlutusChef__factory {
+export class PlutusFarmPlsDpxLp__factory {
   static readonly abi = _abi;
-  static createInterface(): PlsJonesPlutusChefInterface {
-    return new utils.Interface(_abi) as PlsJonesPlutusChefInterface;
+  static createInterface(): PlutusFarmPlsDpxLpInterface {
+    return new utils.Interface(_abi) as PlutusFarmPlsDpxLpInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): PlsJonesPlutusChef {
-    return new Contract(address, _abi, signerOrProvider) as PlsJonesPlutusChef;
+  static connect(address: string, signerOrProvider: Signer | Provider): PlutusFarmPlsDpxLp {
+    return new Contract(address, _abi, signerOrProvider) as PlutusFarmPlsDpxLp;
   }
 }

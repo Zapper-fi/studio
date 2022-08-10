@@ -9,7 +9,6 @@ import type {
   CallOverrides,
   ContractTransaction,
   Overrides,
-  PayableOverrides,
   PopulatedTransaction,
   Signer,
   utils,
@@ -18,36 +17,31 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
-export interface PlsDpxPlutusChefV2Interface extends utils.Interface {
+export interface PlutusFarmPlsDpxLpInterface extends utils.Interface {
   functions: {
-    'REWARDS_DISTRO()': FunctionFragment;
-    'accDpxPerShare()': FunctionFragment;
-    'accPlsDpxPerShare()': FunctionFragment;
-    'accPlsJonesPerShare()': FunctionFragment;
     'accPlsPerShare()': FunctionFragment;
     'deposit(uint96)': FunctionFragment;
     'depositFor(address,uint88)': FunctionFragment;
     'emergencyWithdraw()': FunctionFragment;
     'harvest()': FunctionFragment;
     'harvestFor(address)': FunctionFragment;
-    'initialize()': FunctionFragment;
     'lastRewardSecond()': FunctionFragment;
     'operator()': FunctionFragment;
     'owner()': FunctionFragment;
     'paused()': FunctionFragment;
     'pendingRewards(address)': FunctionFragment;
-    'plsDpx()': FunctionFragment;
-    'proxiableUUID()': FunctionFragment;
+    'pls()': FunctionFragment;
+    'plsPerSecond()': FunctionFragment;
     'renounceOwnership()': FunctionFragment;
-    'rewardPerShare(uint80)': FunctionFragment;
+    'rewardPerShare(uint256)': FunctionFragment;
+    'setEmission(uint256)': FunctionFragment;
     'setOperator(address)': FunctionFragment;
     'setPaused(bool)': FunctionFragment;
     'setStartTime(uint32)': FunctionFragment;
     'setWhitelist(address)': FunctionFragment;
+    'stakingToken()': FunctionFragment;
     'transferOwnership(address)': FunctionFragment;
     'updateShares()': FunctionFragment;
-    'upgradeTo(address)': FunctionFragment;
-    'upgradeToAndCall(address,bytes)': FunctionFragment;
     'userInfo(address)': FunctionFragment;
     'whitelist()': FunctionFragment;
     'withdraw(uint96)': FunctionFragment;
@@ -56,44 +50,35 @@ export interface PlsDpxPlutusChefV2Interface extends utils.Interface {
 
   getFunction(
     nameOrSignatureOrTopic:
-      | 'REWARDS_DISTRO'
-      | 'accDpxPerShare'
-      | 'accPlsDpxPerShare'
-      | 'accPlsJonesPerShare'
       | 'accPlsPerShare'
       | 'deposit'
       | 'depositFor'
       | 'emergencyWithdraw'
       | 'harvest'
       | 'harvestFor'
-      | 'initialize'
       | 'lastRewardSecond'
       | 'operator'
       | 'owner'
       | 'paused'
       | 'pendingRewards'
-      | 'plsDpx'
-      | 'proxiableUUID'
+      | 'pls'
+      | 'plsPerSecond'
       | 'renounceOwnership'
       | 'rewardPerShare'
+      | 'setEmission'
       | 'setOperator'
       | 'setPaused'
       | 'setStartTime'
       | 'setWhitelist'
+      | 'stakingToken'
       | 'transferOwnership'
       | 'updateShares'
-      | 'upgradeTo'
-      | 'upgradeToAndCall'
       | 'userInfo'
       | 'whitelist'
       | 'withdraw'
       | 'withdrawFor',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'REWARDS_DISTRO', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'accDpxPerShare', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'accPlsDpxPerShare', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'accPlsJonesPerShare', values?: undefined): string;
   encodeFunctionData(functionFragment: 'accPlsPerShare', values?: undefined): string;
   encodeFunctionData(functionFragment: 'deposit', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(
@@ -103,27 +88,23 @@ export interface PlsDpxPlutusChefV2Interface extends utils.Interface {
   encodeFunctionData(functionFragment: 'emergencyWithdraw', values?: undefined): string;
   encodeFunctionData(functionFragment: 'harvest', values?: undefined): string;
   encodeFunctionData(functionFragment: 'harvestFor', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'initialize', values?: undefined): string;
   encodeFunctionData(functionFragment: 'lastRewardSecond', values?: undefined): string;
   encodeFunctionData(functionFragment: 'operator', values?: undefined): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'paused', values?: undefined): string;
   encodeFunctionData(functionFragment: 'pendingRewards', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'plsDpx', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'proxiableUUID', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'pls', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'plsPerSecond', values?: undefined): string;
   encodeFunctionData(functionFragment: 'renounceOwnership', values?: undefined): string;
   encodeFunctionData(functionFragment: 'rewardPerShare', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setEmission', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'setOperator', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'setPaused', values: [PromiseOrValue<boolean>]): string;
   encodeFunctionData(functionFragment: 'setStartTime', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'setWhitelist', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'stakingToken', values?: undefined): string;
   encodeFunctionData(functionFragment: 'transferOwnership', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'updateShares', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'upgradeTo', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(
-    functionFragment: 'upgradeToAndCall',
-    values: [PromiseOrValue<string>, PromiseOrValue<BytesLike>],
-  ): string;
   encodeFunctionData(functionFragment: 'userInfo', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'whitelist', values?: undefined): string;
   encodeFunctionData(functionFragment: 'withdraw', values: [PromiseOrValue<BigNumberish>]): string;
@@ -132,78 +113,52 @@ export interface PlsDpxPlutusChefV2Interface extends utils.Interface {
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
   ): string;
 
-  decodeFunctionResult(functionFragment: 'REWARDS_DISTRO', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'accDpxPerShare', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'accPlsDpxPerShare', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'accPlsJonesPerShare', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'accPlsPerShare', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'deposit', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'depositFor', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'emergencyWithdraw', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'harvest', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'harvestFor', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'initialize', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'lastRewardSecond', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'operator', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'paused', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'pendingRewards', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'plsDpx', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'proxiableUUID', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'pls', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'plsPerSecond', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'renounceOwnership', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'rewardPerShare', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setEmission', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'setOperator', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'setPaused', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'setStartTime', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'setWhitelist', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'stakingToken', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'transferOwnership', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'updateShares', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'upgradeTo', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'upgradeToAndCall', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'userInfo', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'whitelist', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'withdraw', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'withdrawFor', data: BytesLike): Result;
 
   events: {
-    'AdminChanged(address,address)': EventFragment;
-    'BeaconUpgraded(address)': EventFragment;
     'Deposit(address,uint256)': EventFragment;
     'EmergencyWithdraw(address,uint256)': EventFragment;
-    'Initialized(uint8)': EventFragment;
+    'Harvest(address,uint256)': EventFragment;
     'OwnershipTransferred(address,address)': EventFragment;
     'Paused(address)': EventFragment;
     'Unpaused(address)': EventFragment;
-    'Upgraded(address)': EventFragment;
     'Withdraw(address,uint256)': EventFragment;
   };
 
-  getEvent(nameOrSignatureOrTopic: 'AdminChanged'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'BeaconUpgraded'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Deposit'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'EmergencyWithdraw'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'Initialized'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'Harvest'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'OwnershipTransferred'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Paused'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Unpaused'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'Upgraded'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'Withdraw'): EventFragment;
 }
-
-export interface AdminChangedEventObject {
-  previousAdmin: string;
-  newAdmin: string;
-}
-export type AdminChangedEvent = TypedEvent<[string, string], AdminChangedEventObject>;
-
-export type AdminChangedEventFilter = TypedEventFilter<AdminChangedEvent>;
-
-export interface BeaconUpgradedEventObject {
-  beacon: string;
-}
-export type BeaconUpgradedEvent = TypedEvent<[string], BeaconUpgradedEventObject>;
-
-export type BeaconUpgradedEventFilter = TypedEventFilter<BeaconUpgradedEvent>;
 
 export interface DepositEventObject {
   _user: string;
@@ -221,12 +176,13 @@ export type EmergencyWithdrawEvent = TypedEvent<[string, BigNumber], EmergencyWi
 
 export type EmergencyWithdrawEventFilter = TypedEventFilter<EmergencyWithdrawEvent>;
 
-export interface InitializedEventObject {
-  version: number;
+export interface HarvestEventObject {
+  _user: string;
+  _amount: BigNumber;
 }
-export type InitializedEvent = TypedEvent<[number], InitializedEventObject>;
+export type HarvestEvent = TypedEvent<[string, BigNumber], HarvestEventObject>;
 
-export type InitializedEventFilter = TypedEventFilter<InitializedEvent>;
+export type HarvestEventFilter = TypedEventFilter<HarvestEvent>;
 
 export interface OwnershipTransferredEventObject {
   previousOwner: string;
@@ -250,13 +206,6 @@ export type UnpausedEvent = TypedEvent<[string], UnpausedEventObject>;
 
 export type UnpausedEventFilter = TypedEventFilter<UnpausedEvent>;
 
-export interface UpgradedEventObject {
-  implementation: string;
-}
-export type UpgradedEvent = TypedEvent<[string], UpgradedEventObject>;
-
-export type UpgradedEventFilter = TypedEventFilter<UpgradedEvent>;
-
 export interface WithdrawEventObject {
   _user: string;
   _amount: BigNumber;
@@ -265,12 +214,12 @@ export type WithdrawEvent = TypedEvent<[string, BigNumber], WithdrawEventObject>
 
 export type WithdrawEventFilter = TypedEventFilter<WithdrawEvent>;
 
-export interface PlsDpxPlutusChefV2 extends BaseContract {
+export interface PlutusFarmPlsDpxLp extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: PlsDpxPlutusChefV2Interface;
+  interface: PlutusFarmPlsDpxLpInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -288,14 +237,6 @@ export interface PlsDpxPlutusChefV2 extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    REWARDS_DISTRO(overrides?: CallOverrides): Promise<[string]>;
-
-    accDpxPerShare(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    accPlsDpxPerShare(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    accPlsJonesPerShare(overrides?: CallOverrides): Promise<[BigNumber]>;
-
     accPlsPerShare(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     deposit(
@@ -318,8 +259,6 @@ export interface PlsDpxPlutusChefV2 extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    initialize(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
-
     lastRewardSecond(overrides?: CallOverrides): Promise<[number]>;
 
     operator(overrides?: CallOverrides): Promise<[string]>;
@@ -331,22 +270,20 @@ export interface PlsDpxPlutusChefV2 extends BaseContract {
     pendingRewards(
       _user: PromiseOrValue<string>,
       overrides?: CallOverrides,
-    ): Promise<
-      [BigNumber, BigNumber, BigNumber, BigNumber] & {
-        _pendingPls: BigNumber;
-        _pendingPlsDpx: BigNumber;
-        _pendingPlsJones: BigNumber;
-        _pendingDpx: BigNumber;
-      }
-    >;
+    ): Promise<[BigNumber] & { _pendingPls: BigNumber }>;
 
-    plsDpx(overrides?: CallOverrides): Promise<[string]>;
+    pls(overrides?: CallOverrides): Promise<[string]>;
 
-    proxiableUUID(overrides?: CallOverrides): Promise<[string]>;
+    plsPerSecond(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     rewardPerShare(_rewardRatePerSecond: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    setEmission(
+      _plsPerSecond: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     setOperator(
       _operator: PromiseOrValue<string>,
@@ -368,6 +305,8 @@ export interface PlsDpxPlutusChefV2 extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
+    stakingToken(overrides?: CallOverrides): Promise<[string]>;
+
     transferOwnership(
       newOwner: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
@@ -375,29 +314,10 @@ export interface PlsDpxPlutusChefV2 extends BaseContract {
 
     updateShares(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-    upgradeTo(
-      newImplementation: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    upgradeToAndCall(
-      newImplementation: PromiseOrValue<string>,
-      data: PromiseOrValue<BytesLike>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
     userInfo(
       arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
-    ): Promise<
-      [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
-        amount: BigNumber;
-        plsRewardDebt: BigNumber;
-        plsDpxRewardDebt: BigNumber;
-        plsJonesRewardDebt: BigNumber;
-        dpxRewardDebt: BigNumber;
-      }
-    >;
+    ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; plsRewardDebt: BigNumber }>;
 
     whitelist(overrides?: CallOverrides): Promise<[string]>;
 
@@ -412,14 +332,6 @@ export interface PlsDpxPlutusChefV2 extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
-
-  REWARDS_DISTRO(overrides?: CallOverrides): Promise<string>;
-
-  accDpxPerShare(overrides?: CallOverrides): Promise<BigNumber>;
-
-  accPlsDpxPerShare(overrides?: CallOverrides): Promise<BigNumber>;
-
-  accPlsJonesPerShare(overrides?: CallOverrides): Promise<BigNumber>;
 
   accPlsPerShare(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -443,8 +355,6 @@ export interface PlsDpxPlutusChefV2 extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  initialize(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
-
   lastRewardSecond(overrides?: CallOverrides): Promise<number>;
 
   operator(overrides?: CallOverrides): Promise<string>;
@@ -453,25 +363,20 @@ export interface PlsDpxPlutusChefV2 extends BaseContract {
 
   paused(overrides?: CallOverrides): Promise<boolean>;
 
-  pendingRewards(
-    _user: PromiseOrValue<string>,
-    overrides?: CallOverrides,
-  ): Promise<
-    [BigNumber, BigNumber, BigNumber, BigNumber] & {
-      _pendingPls: BigNumber;
-      _pendingPlsDpx: BigNumber;
-      _pendingPlsJones: BigNumber;
-      _pendingDpx: BigNumber;
-    }
-  >;
+  pendingRewards(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  plsDpx(overrides?: CallOverrides): Promise<string>;
+  pls(overrides?: CallOverrides): Promise<string>;
 
-  proxiableUUID(overrides?: CallOverrides): Promise<string>;
+  plsPerSecond(overrides?: CallOverrides): Promise<BigNumber>;
 
   renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   rewardPerShare(_rewardRatePerSecond: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
+
+  setEmission(
+    _plsPerSecond: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   setOperator(
     _operator: PromiseOrValue<string>,
@@ -493,6 +398,8 @@ export interface PlsDpxPlutusChefV2 extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
+  stakingToken(overrides?: CallOverrides): Promise<string>;
+
   transferOwnership(
     newOwner: PromiseOrValue<string>,
     overrides?: Overrides & { from?: PromiseOrValue<string> },
@@ -500,29 +407,10 @@ export interface PlsDpxPlutusChefV2 extends BaseContract {
 
   updateShares(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
-  upgradeTo(
-    newImplementation: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  upgradeToAndCall(
-    newImplementation: PromiseOrValue<string>,
-    data: PromiseOrValue<BytesLike>,
-    overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
   userInfo(
     arg0: PromiseOrValue<string>,
     overrides?: CallOverrides,
-  ): Promise<
-    [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
-      amount: BigNumber;
-      plsRewardDebt: BigNumber;
-      plsDpxRewardDebt: BigNumber;
-      plsJonesRewardDebt: BigNumber;
-      dpxRewardDebt: BigNumber;
-    }
-  >;
+  ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; plsRewardDebt: BigNumber }>;
 
   whitelist(overrides?: CallOverrides): Promise<string>;
 
@@ -538,14 +426,6 @@ export interface PlsDpxPlutusChefV2 extends BaseContract {
   ): Promise<ContractTransaction>;
 
   callStatic: {
-    REWARDS_DISTRO(overrides?: CallOverrides): Promise<string>;
-
-    accDpxPerShare(overrides?: CallOverrides): Promise<BigNumber>;
-
-    accPlsDpxPerShare(overrides?: CallOverrides): Promise<BigNumber>;
-
-    accPlsJonesPerShare(overrides?: CallOverrides): Promise<BigNumber>;
-
     accPlsPerShare(overrides?: CallOverrides): Promise<BigNumber>;
 
     deposit(_amount: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
@@ -562,8 +442,6 @@ export interface PlsDpxPlutusChefV2 extends BaseContract {
 
     harvestFor(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    initialize(overrides?: CallOverrides): Promise<void>;
-
     lastRewardSecond(overrides?: CallOverrides): Promise<number>;
 
     operator(overrides?: CallOverrides): Promise<string>;
@@ -572,25 +450,17 @@ export interface PlsDpxPlutusChefV2 extends BaseContract {
 
     paused(overrides?: CallOverrides): Promise<boolean>;
 
-    pendingRewards(
-      _user: PromiseOrValue<string>,
-      overrides?: CallOverrides,
-    ): Promise<
-      [BigNumber, BigNumber, BigNumber, BigNumber] & {
-        _pendingPls: BigNumber;
-        _pendingPlsDpx: BigNumber;
-        _pendingPlsJones: BigNumber;
-        _pendingDpx: BigNumber;
-      }
-    >;
+    pendingRewards(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    plsDpx(overrides?: CallOverrides): Promise<string>;
+    pls(overrides?: CallOverrides): Promise<string>;
 
-    proxiableUUID(overrides?: CallOverrides): Promise<string>;
+    plsPerSecond(overrides?: CallOverrides): Promise<BigNumber>;
 
     renounceOwnership(overrides?: CallOverrides): Promise<void>;
 
     rewardPerShare(_rewardRatePerSecond: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    setEmission(_plsPerSecond: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
     setOperator(_operator: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
@@ -600,30 +470,16 @@ export interface PlsDpxPlutusChefV2 extends BaseContract {
 
     setWhitelist(_whitelist: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
+    stakingToken(overrides?: CallOverrides): Promise<string>;
+
     transferOwnership(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     updateShares(overrides?: CallOverrides): Promise<void>;
 
-    upgradeTo(newImplementation: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
-
-    upgradeToAndCall(
-      newImplementation: PromiseOrValue<string>,
-      data: PromiseOrValue<BytesLike>,
-      overrides?: CallOverrides,
-    ): Promise<void>;
-
     userInfo(
       arg0: PromiseOrValue<string>,
       overrides?: CallOverrides,
-    ): Promise<
-      [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
-        amount: BigNumber;
-        plsRewardDebt: BigNumber;
-        plsDpxRewardDebt: BigNumber;
-        plsJonesRewardDebt: BigNumber;
-        dpxRewardDebt: BigNumber;
-      }
-    >;
+    ): Promise<[BigNumber, BigNumber] & { amount: BigNumber; plsRewardDebt: BigNumber }>;
 
     whitelist(overrides?: CallOverrides): Promise<string>;
 
@@ -637,12 +493,6 @@ export interface PlsDpxPlutusChefV2 extends BaseContract {
   };
 
   filters: {
-    'AdminChanged(address,address)'(previousAdmin?: null, newAdmin?: null): AdminChangedEventFilter;
-    AdminChanged(previousAdmin?: null, newAdmin?: null): AdminChangedEventFilter;
-
-    'BeaconUpgraded(address)'(beacon?: PromiseOrValue<string> | null): BeaconUpgradedEventFilter;
-    BeaconUpgraded(beacon?: PromiseOrValue<string> | null): BeaconUpgradedEventFilter;
-
     'Deposit(address,uint256)'(_user?: PromiseOrValue<string> | null, _amount?: null): DepositEventFilter;
     Deposit(_user?: PromiseOrValue<string> | null, _amount?: null): DepositEventFilter;
 
@@ -652,8 +502,8 @@ export interface PlsDpxPlutusChefV2 extends BaseContract {
     ): EmergencyWithdrawEventFilter;
     EmergencyWithdraw(_user?: PromiseOrValue<string> | null, _amount?: null): EmergencyWithdrawEventFilter;
 
-    'Initialized(uint8)'(version?: null): InitializedEventFilter;
-    Initialized(version?: null): InitializedEventFilter;
+    'Harvest(address,uint256)'(_user?: PromiseOrValue<string> | null, _amount?: null): HarvestEventFilter;
+    Harvest(_user?: PromiseOrValue<string> | null, _amount?: null): HarvestEventFilter;
 
     'OwnershipTransferred(address,address)'(
       previousOwner?: PromiseOrValue<string> | null,
@@ -670,22 +520,11 @@ export interface PlsDpxPlutusChefV2 extends BaseContract {
     'Unpaused(address)'(account?: null): UnpausedEventFilter;
     Unpaused(account?: null): UnpausedEventFilter;
 
-    'Upgraded(address)'(implementation?: PromiseOrValue<string> | null): UpgradedEventFilter;
-    Upgraded(implementation?: PromiseOrValue<string> | null): UpgradedEventFilter;
-
     'Withdraw(address,uint256)'(_user?: PromiseOrValue<string> | null, _amount?: null): WithdrawEventFilter;
     Withdraw(_user?: PromiseOrValue<string> | null, _amount?: null): WithdrawEventFilter;
   };
 
   estimateGas: {
-    REWARDS_DISTRO(overrides?: CallOverrides): Promise<BigNumber>;
-
-    accDpxPerShare(overrides?: CallOverrides): Promise<BigNumber>;
-
-    accPlsDpxPerShare(overrides?: CallOverrides): Promise<BigNumber>;
-
-    accPlsJonesPerShare(overrides?: CallOverrides): Promise<BigNumber>;
-
     accPlsPerShare(overrides?: CallOverrides): Promise<BigNumber>;
 
     deposit(
@@ -708,8 +547,6 @@ export interface PlsDpxPlutusChefV2 extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    initialize(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
-
     lastRewardSecond(overrides?: CallOverrides): Promise<BigNumber>;
 
     operator(overrides?: CallOverrides): Promise<BigNumber>;
@@ -720,13 +557,18 @@ export interface PlsDpxPlutusChefV2 extends BaseContract {
 
     pendingRewards(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    plsDpx(overrides?: CallOverrides): Promise<BigNumber>;
+    pls(overrides?: CallOverrides): Promise<BigNumber>;
 
-    proxiableUUID(overrides?: CallOverrides): Promise<BigNumber>;
+    plsPerSecond(overrides?: CallOverrides): Promise<BigNumber>;
 
     renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     rewardPerShare(_rewardRatePerSecond: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    setEmission(
+      _plsPerSecond: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setOperator(
       _operator: PromiseOrValue<string>,
@@ -748,23 +590,14 @@ export interface PlsDpxPlutusChefV2 extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
+    stakingToken(overrides?: CallOverrides): Promise<BigNumber>;
+
     transferOwnership(
       newOwner: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     updateShares(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
-
-    upgradeTo(
-      newImplementation: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    upgradeToAndCall(
-      newImplementation: PromiseOrValue<string>,
-      data: PromiseOrValue<BytesLike>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
 
     userInfo(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -783,14 +616,6 @@ export interface PlsDpxPlutusChefV2 extends BaseContract {
   };
 
   populateTransaction: {
-    REWARDS_DISTRO(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    accDpxPerShare(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    accPlsDpxPerShare(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    accPlsJonesPerShare(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
     accPlsPerShare(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     deposit(
@@ -813,8 +638,6 @@ export interface PlsDpxPlutusChefV2 extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    initialize(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
-
     lastRewardSecond(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     operator(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -825,15 +648,20 @@ export interface PlsDpxPlutusChefV2 extends BaseContract {
 
     pendingRewards(_user: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    plsDpx(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    pls(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    proxiableUUID(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    plsPerSecond(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     renounceOwnership(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     rewardPerShare(
       _rewardRatePerSecond: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
+
+    setEmission(
+      _plsPerSecond: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setOperator(
@@ -856,23 +684,14 @@ export interface PlsDpxPlutusChefV2 extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
+    stakingToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     transferOwnership(
       newOwner: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     updateShares(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
-
-    upgradeTo(
-      newImplementation: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
-
-    upgradeToAndCall(
-      newImplementation: PromiseOrValue<string>,
-      data: PromiseOrValue<BytesLike>,
-      overrides?: PayableOverrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
 
     userInfo(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 

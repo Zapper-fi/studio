@@ -15,11 +15,6 @@ const appId = PICKLE_DEFINITION.id;
 const groupId = PICKLE_DEFINITION.groups.masterchefV2Farm.id;
 const network = Network.ARBITRUM_MAINNET;
 
-export type PickleFarmContractPositionDescriptor = {
-  address: string;
-  poolIndex: number;
-};
-
 @Register.ContractPositionFetcher({ appId, groupId, network })
 export class ArbitrumPickleFarmContractPositionFetcher extends MasterChefV2TemplateContractPositionFetcher<
   PickleMiniChefV2,
