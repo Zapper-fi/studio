@@ -28,25 +28,6 @@ export class PolygonRevertFinanceBalanceFetcher implements BalanceFetcher {
     private readonly uniswapV3LiquidityTokenHelper: UniswapV3LiquidityTokenHelper,
   ) {}
 
-  async getCompoundingAccountTokens(address: string) {
-    const graphHelper = this.appToolkit.helpers.theGraphHelper;
-    const data = await graphHelper.requestGraph<CompoundingAccountTokens>({
-      endpoint: generateGraphUrlForNetwork(network),
-      query: accountCompoundingTokensQuery,
-      variables: { address: getAddress(address) },
-    });
-    if (!data) return [];
-    const compoundingBalances: Array<AppTokenPositionBalance> = [];
-    await Promise.all(
-      data.tokens.map(async ({ id }) => {
-        const uniV3Token = await this.uniswapV3LiquidityTokenHelper.getLiquidityToken({ positionId: id, network });
-        if (!uniV3Token) return;
-        return drillBalance(uniV3Token, '1');
-      }),
-    );
-    return compoundingBalances;
-  }
-
   async getCompoundorAccountBalances(address: string) {
     const graphHelper = this.appToolkit.helpers.theGraphHelper;
     const data = await graphHelper.requestGraph<CompoundorAccountBalances>({
@@ -63,6 +44,25 @@ export class PolygonRevertFinanceBalanceFetcher implements BalanceFetcher {
       accountBalances.push(getCompoundorContractPosition(network, existingToken, balance));
     });
     return accountBalances;
+  }
+
+  async getCompoundingAccountTokens(address: string) {
+    const graphHelper = this.appToolkit.helpers.theGraphHelper;
+    const data = await graphHelper.requestGraph<CompoundingAccountTokens>({
+      endpoint: generateGraphUrlForNetwork(network),
+      query: accountCompoundingTokensQuery,
+      variables: { address: getAddress(address) },
+    });
+    if (!data) return [];
+    const compoundingBalances: Array<AppTokenPositionBalance> = [];
+    await Promise.all(
+      data.tokens.map(async ({ id }) => {
+        const uniV3Token = await this.uniswapV3LiquidityTokenHelper.getLiquidityToken({ positionId: id, network });
+        if (!uniV3Token) return;
+        compoundingBalances.push(drillBalance(uniV3Token, '1'));
+      }),
+    );
+    return compoundingBalances;
   }
 
   async getBalances(address: string) {

@@ -59,7 +59,7 @@ export class EthereumRevertFinanceBalanceFetcher implements BalanceFetcher {
       data.tokens.map(async ({ id }) => {
         const uniV3Token = await this.uniswapV3LiquidityTokenHelper.getLiquidityToken({ positionId: id, network });
         if (!uniV3Token) return;
-        return drillBalance(uniV3Token, '1');
+        compoundingBalances.push(drillBalance(uniV3Token, '1'));
       }),
     );
     return compoundingBalances;

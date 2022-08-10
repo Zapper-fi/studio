@@ -10,15 +10,15 @@ export const REVERT_FINANCE_DEFINITION = appDefinition({
   url: 'https://revert.finance/',
 
   groups: {
-    compoundingPositions: {
-      id: 'compounding-positions',
-      type: GroupType.TOKEN,
-      label: 'Compounding positions',
-    },
     compoundorRewards: {
       id: 'compoundor-rewards',
       type: GroupType.POSITION,
       label: 'Compoundor rewards',
+    },
+    compoundingPositions: {
+      id: 'compounding-positions',
+      type: GroupType.TOKEN,
+      label: 'Compounding positions',
     },
   },
 

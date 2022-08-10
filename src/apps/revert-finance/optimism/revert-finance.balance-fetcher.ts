@@ -28,6 +28,24 @@ export class OptimismRevertFinanceBalanceFetcher implements BalanceFetcher {
     private readonly uniswapV3LiquidityTokenHelper: UniswapV3LiquidityTokenHelper,
   ) {}
 
+  async getCompoundorAccountBalances(address: string) {
+    const graphHelper = this.appToolkit.helpers.theGraphHelper;
+    const data = await graphHelper.requestGraph<CompoundorAccountBalances>({
+      endpoint: generateGraphUrlForNetwork(network),
+      query: accountBalancesQuery,
+      variables: { address: getAddress(address) },
+    });
+    if (!data) return [];
+    const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
+    const accountBalances: Array<ContractPositionBalance> = [];
+    data.accountBalances.map(({ token, balance }) => {
+      const existingToken = baseTokens.find(item => item.address === token)!;
+      if (!token) return;
+      accountBalances.push(getCompoundorContractPosition(network, existingToken, balance));
+    });
+    return accountBalances;
+  }
+
   async getCompoundingAccountTokens(address: string) {
     const graphHelper = this.appToolkit.helpers.theGraphHelper;
     const data = await graphHelper.requestGraph<CompoundingAccountTokens>({
@@ -41,28 +59,10 @@ export class OptimismRevertFinanceBalanceFetcher implements BalanceFetcher {
       data.tokens.map(async ({ id }) => {
         const uniV3Token = await this.uniswapV3LiquidityTokenHelper.getLiquidityToken({ positionId: id, network });
         if (!uniV3Token) return;
-        return drillBalance(uniV3Token, '1');
+        compoundingBalances.push(drillBalance(uniV3Token, '1'));
       }),
     );
     return compoundingBalances;
-  }
-
-  async getCompoundorAccountBalances(address: string) {
-    const graphHelper = this.appToolkit.helpers.theGraphHelper;
-    const data = await graphHelper.requestGraph<CompoundorAccountBalances>({
-      endpoint: generateGraphUrlForNetwork(network),
-      query: accountBalancesQuery,
-      variables: { address: getAddress(address) },
-    });
-    if (!data) return [];
-    const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
-    const accountBalances: Array<ContractPositionBalance> = [];
-    data.accountBalances.map(({ token, balance }) => {
-      const existingToken = baseTokens.find(item => item.address === token)!;
-      if (!token) return [];
-      accountBalances.push(getCompoundorContractPosition(network, existingToken, balance));
-    });
-    return accountBalances;
   }
 
   async getBalances(address: string) {
