@@ -1,11 +1,19 @@
-import { Inject } from '@nestjs/common';
+import { Inject, NotImplementedException } from '@nestjs/common';
+import { compact } from 'lodash';
 
+import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
-import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
+import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
+import { ContractType } from '~position/contract.interface';
+import { ContractPositionBalance } from '~position/position-balance.interface';
+import { MetaType } from '~position/position.interface';
 import {
   ContractPositionTemplatePositionFetcher,
   DisplayPropsStageParams,
+  TokensStageParams,
 } from '~position/template/contract-position.template.position-fetcher';
 import { Network } from '~types';
 
@@ -55,11 +63,94 @@ export class EthereumSablierStreamContractPositionFetcher extends ContractPositi
     return this.contractFactory.sablierStream({ address, network: this.network });
   }
 
-  async getTokenAddresses(_contract: SablierStream, descriptor: SablierStreamContractPositionDescriptor) {
-    return [descriptor.tokenAddress];
+  async getTokenDescriptors({ descriptor }: TokensStageParams<SablierStream, SablierStreamContractPositionDescriptor>) {
+    return [{ address: descriptor.tokenAddress, metaType: MetaType.SUPPLIED }];
   }
 
   async getLabel({ appToken }: DisplayPropsStageParams<SablierStream, SablierStreamContractPositionDataProps>) {
     return `${getLabelFromToken(appToken.tokens[0])} Sablier Stream`;
+  }
+
+  getTokenBalancesPerPosition(): never {
+    throw new NotImplementedException();
+  }
+
+  async getBalances(address: string) {
+    const multicall = this.appToolkit.getMulticall(network);
+    const streams = await this.apiClient.getStreams(address, network);
+    if (streams.length === 0) return [];
+
+    const tokenLoader = this.appToolkit.getBaseTokenPriceSelector({ tags: { network, appId } });
+    const appTokenLoader = this.appToolkit.getAppTokenSelector({ tags: { network, context: appId } });
+
+    const sablierAddress = '0xcd18eaa163733da39c232722cbc4e8940b1d8888';
+    const sablierStreamContract = this.contractFactory.sablierStream({ address: sablierAddress, network });
+    const sablierStream = multicall.wrap(sablierStreamContract);
+
+    const rawStreams = await Promise.all(
+      streams.map(async ({ streamId }) => {
+        const rawStream = await sablierStream.getStream(streamId);
+        return {
+          ...rawStream,
+          streamId,
+        };
+      }),
+    );
+
+    const underlyingAddresses = rawStreams.map(({ tokenAddress }) => ({
+      network,
+      address: tokenAddress.toLowerCase(),
+    }));
+
+    const baseTokens = await tokenLoader.getMany(underlyingAddresses);
+    const appTokens = await appTokenLoader.getMany(underlyingAddresses);
+    const allTokens = [...compact(appTokens), ...compact(baseTokens)];
+
+    const positions = await Promise.all(
+      rawStreams.map(async stream => {
+        const streamBalanceRaw = await sablierStream.balanceOf(stream.streamId, address).catch(err => {
+          if (isMulticallUnderlyingError(err)) return null;
+          throw err;
+        });
+        if (!streamBalanceRaw) return null;
+
+        const token = allTokens.find(t => t.address === stream.tokenAddress.toLowerCase());
+        if (!token) return null;
+
+        const remainingRaw = stream.remainingBalance.toString();
+        const depositRaw = stream.deposit.toString();
+        const balanceRaw = streamBalanceRaw.toString();
+
+        const deposited = Number(depositRaw) / 10 ** token.decimals;
+        const remaining = Number(remainingRaw) / 10 ** token.decimals;
+        const tokenBalance = drillBalance(token, balanceRaw);
+        const isRecipient = stream.recipient.toLowerCase() === address;
+
+        const position: ContractPositionBalance<SablierStreamContractPositionDataProps> = {
+          type: ContractType.POSITION,
+          address: sablierAddress,
+          network,
+          appId,
+          groupId,
+          tokens: [tokenBalance],
+          balanceUSD: tokenBalance.balanceUSD,
+
+          dataProps: {
+            deposited,
+            remaining,
+          },
+
+          displayProps: {
+            label: `${isRecipient ? 'Available' : 'Deposited'} ${token.symbol} on Sablier`,
+            secondaryLabel: buildDollarDisplayItem(token.price),
+            images: getImagesFromToken(token),
+          },
+        };
+
+        return position;
+      }),
+    );
+
+    return compact(positions);
   }
 }

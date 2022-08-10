@@ -7,6 +7,7 @@ import {
   AppTokenTemplatePositionFetcher,
   DataPropsStageParams,
   DisplayPropsStageParams,
+  PricePerShareStageParams,
 } from '~position/template/app-token.template.position-fetcher';
 import { Network, NETWORK_IDS } from '~types';
 
@@ -51,7 +52,9 @@ export class EthereumClearpoolPoolTokenFetcher extends AppTokenTemplatePositionF
     return contract.currency();
   }
 
-  getPricePerShare(contract: ClearpoolPool): Promise<number | number[]> {
+  getPricePerShare({
+    contract,
+  }: PricePerShareStageParams<ClearpoolPool, ClearpoolPoolTokenDataProps>): Promise<number | number[]> {
     return contract.getCurrentExchangeRate().then(v => Number(v) / 10 ** 18);
   }
 

@@ -551,10 +551,7 @@ export interface BastionProtocolCtoken extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    borrowBalanceCurrent(
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
+    borrowBalanceCurrent(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     borrowBalanceStored(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -750,10 +747,7 @@ export interface BastionProtocolCtoken extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  borrowBalanceCurrent(
-    account: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
+  borrowBalanceCurrent(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   borrowBalanceStored(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1229,10 +1223,7 @@ export interface BastionProtocolCtoken extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    borrowBalanceCurrent(
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
+    borrowBalanceCurrent(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     borrowBalanceStored(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1426,10 +1417,7 @@ export interface BastionProtocolCtoken extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    borrowBalanceCurrent(
-      account: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
+    borrowBalanceCurrent(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     borrowBalanceStored(account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 

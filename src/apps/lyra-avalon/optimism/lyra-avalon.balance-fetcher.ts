@@ -9,7 +9,7 @@ import { ContractPosition } from '~position/position.interface';
 import { isSupplied } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 
-import { LyraAvalonContractFactory, OptionToken } from '../contracts';
+import { LyraAvalonContractFactory, OptionToken, LyraLpStaking } from '../contracts';
 import { LYRA_AVALON_DEFINITION } from '../lyra-avalon.definition';
 
 import { AaveSafetyModuleClaimableBalanceHelper } from './helpers/aave-safety.claimable.balance-helper';
@@ -29,10 +29,22 @@ export class OptimismLyraAvalonBalanceFetcher implements BalanceFetcher {
   ) {}
 
   async getStakingBalances(address: string) {
-    return await this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
+    return this.appToolkit.helpers.singleStakingContractPositionBalanceHelper.getBalances<LyraLpStaking>({
       address,
       appId,
       groupId: LYRA_AVALON_DEFINITION.groups.staking.id,
+      network,
+      resolveContract: ({ address, network }) => this.contractFactory.lyraLpStaking({ address, network }),
+      resolveStakedTokenBalance: ({ contract, address, multicall }) => multicall.wrap(contract).balanceOf(address),
+      resolveRewardTokenBalances: ({ contract, address, multicall }) => multicall.wrap(contract).earned(address),
+    });
+  }
+
+  async getVotedEscrowBalances(address: string) {
+    return await this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
+      address,
+      appId,
+      groupId: LYRA_AVALON_DEFINITION.groups.ve.id,
       network,
     });
   }
@@ -107,17 +119,24 @@ export class OptimismLyraAvalonBalanceFetcher implements BalanceFetcher {
   }
 
   async getBalances(address: string) {
-    const [stakingBalances, claimableBalances, tokenBalances, optionsBalances] = await Promise.all([
-      this.getStakingBalances(address),
-      this.getClaimableBalances(address),
-      this.getPoolBalances(address),
-      this.getOptionsBalances(address),
-    ]);
+    const [stakingBalances, votedEscrowBalances, claimableBalances, tokenBalances, optionsBalances] = await Promise.all(
+      [
+        this.getStakingBalances(address),
+        this.getVotedEscrowBalances(address),
+        this.getClaimableBalances(address),
+        this.getPoolBalances(address),
+        this.getOptionsBalances(address),
+      ],
+    );
 
     return presentBalanceFetcherResponse([
       {
         label: 'Staking',
         assets: stakingBalances,
+      },
+      {
+        label: 'VotedEscrow',
+        assets: votedEscrowBalances,
       },
       {
         label: 'Pools',
