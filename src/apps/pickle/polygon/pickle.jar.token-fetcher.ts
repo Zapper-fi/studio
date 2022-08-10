@@ -4,12 +4,13 @@ import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { CURVE_DEFINITION } from '~apps/curve';
+import { STARGATE_DEFINITION } from '~apps/stargate/stargate.definition';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
 
 import { PickleContractFactory, PickleJar } from '../contracts';
-import { PickleOnChainJarRegistry } from '../helpers/pickle.on-chain.jar-registry';
+import { PickleApiJarRegistry } from '../helpers/pickle.api.jar-registry';
 import { PICKLE_DEFINITION } from '../pickle.definition';
 
 const appId = PICKLE_DEFINITION.id;
@@ -22,7 +23,7 @@ export class PolygonPickleJarTokenFetcher implements PositionFetcher<AppTokenPos
     @Inject(PickleContractFactory)
     private readonly pickleContractFactory: PickleContractFactory,
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(PickleOnChainJarRegistry) private readonly jarRegistry: PickleOnChainJarRegistry,
+    @Inject(PickleApiJarRegistry) private readonly jarRegistry: PickleApiJarRegistry,
   ) {}
 
   async getPositions() {
@@ -34,6 +35,7 @@ export class PolygonPickleJarTokenFetcher implements PositionFetcher<AppTokenPos
       network,
       dependencies: [
         { appId: CURVE_DEFINITION.id, groupIds: [CURVE_DEFINITION.groups.pool.id], network },
+        { appId: STARGATE_DEFINITION.id, groupIds: [STARGATE_DEFINITION.groups.pool.id], network },
         { appId: 'quickswap', groupIds: ['pool'], network },
         { appId: 'sushiswap', groupIds: ['pool'], network },
       ],

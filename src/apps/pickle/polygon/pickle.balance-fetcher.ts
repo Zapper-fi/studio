@@ -20,7 +20,7 @@ export class PolygonPickleBalanceFetcher implements BalanceFetcher {
 
   private async getJarBalances(address: string) {
     return await this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
-      network: Network.POLYGON_MAINNET,
+      network,
       appId: PICKLE_DEFINITION.id,
       groupId: PICKLE_DEFINITION.groups.jar.id,
       address,
