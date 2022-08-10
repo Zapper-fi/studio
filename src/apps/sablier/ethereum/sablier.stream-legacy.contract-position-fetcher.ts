@@ -13,7 +13,7 @@ import { MetaType } from '~position/position.interface';
 import {
   ContractPositionTemplatePositionFetcher,
   DisplayPropsStageParams,
-  TokensStageParams,
+  TokenStageParams,
 } from '~position/template/contract-position.template.position-fetcher';
 import { Network } from '~types';
 
@@ -65,12 +65,18 @@ export class EthereumSablierStreamLegacyContractPositionFetcher extends Contract
 
   async getTokenDescriptors({
     descriptor,
-  }: TokensStageParams<SablierStream, SablierStreamLegacyContractPositionDescriptor>) {
+  }: TokenStageParams<
+    SablierStream,
+    SablierStreamLegacyContractPositionDataProps,
+    SablierStreamLegacyContractPositionDescriptor
+  >) {
     return [{ address: descriptor.tokenAddress, metaType: MetaType.SUPPLIED }];
   }
 
-  async getLabel({ appToken }: DisplayPropsStageParams<SablierStream, SablierStreamLegacyContractPositionDataProps>) {
-    return `${getLabelFromToken(appToken.tokens[0])} Sablier Stream`;
+  async getLabel({
+    contractPosition,
+  }: DisplayPropsStageParams<SablierStream, SablierStreamLegacyContractPositionDataProps>) {
+    return `${getLabelFromToken(contractPosition.tokens[0])} Sablier Stream`;
   }
 
   getTokenBalancesPerPosition(): never {

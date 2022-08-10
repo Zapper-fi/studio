@@ -14,7 +14,7 @@ import {
   DataPropsStageParams,
   DisplayPropsStageParams,
   GetTokenBalancesPerPositionParams,
-  TokensStageParams,
+  TokenStageParams,
   UnderlyingTokenDescriptor,
 } from '~position/template/contract-position.template.position-fetcher';
 
@@ -62,7 +62,7 @@ export abstract class MasterChefTemplateContractPositionFetcher<
 
   // Balances
   abstract getStakedTokenBalance(address: string, contract: T, poolIndex: number): Promise<BigNumberish>;
-  abstract getPrimaryRewardTokenBalance(address: string, contract: T, poolIndex: number): Promise<BigNumberish>;
+  abstract getRewardTokenBalance(address: string, contract: T, poolIndex: number): Promise<BigNumberish>;
   abstract getExtraRewardTokenBalance?(address: string, contract: V, poolIndex: number): Promise<BigNumberish>;
 
   async getDescriptors() {
@@ -74,7 +74,7 @@ export abstract class MasterChefTemplateContractPositionFetcher<
     contract,
     descriptor,
     multicall,
-  }: TokensStageParams<T, MasterChefContractPositionDescriptor>) {
+  }: TokenStageParams<T, MasterChefContractPositionDataProps, MasterChefContractPositionDescriptor>) {
     const tokens: UnderlyingTokenDescriptor[] = [];
 
     const stakedTokenAddress = await this.getStakedTokenAddress(contract, descriptor.poolIndex);
@@ -146,10 +146,24 @@ export abstract class MasterChefTemplateContractPositionFetcher<
     contract,
     multicall,
   }: GetTokenBalancesPerPositionParams<T, MasterChefContractPositionDataProps>) {
-    const [stakedBalanceRaw] = await Promise.all([
+    const tokenBalances: BigNumberish[] = [];
+
+    const [stakedBalanceRaw, rewardTokenBalanceRaw] = await Promise.all([
       this.getStakedTokenBalance(address, contract, contractPosition.dataProps.poolIndex),
+      this.getRewardTokenBalance(address, contract, contractPosition.dataProps.poolIndex),
     ]);
 
-    return [stakedBalanceRaw];
+    if (this.getExtraRewarder && this.getExtraRewarderContract && this.getExtraRewardTokenBalance) {
+      const extraRewarderAddress = await this.getExtraRewarder(contract, descriptor.poolIndex);
+      if (extraRewarderAddress !== ZERO_ADDRESS) {
+        const rewarderContract = multicall.wrap(this.getExtraRewarderContract(extraRewarderAddress));
+      }
+      // this.getExtraRewardTokenBalance()
+    }
+
+    tokenBalances.push(stakedBalanceRaw);
+    tokenBalances.push(rewardTokenBalanceRaw);
+
+    return tokenBalances;
   }
 }

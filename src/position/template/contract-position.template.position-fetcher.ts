@@ -28,33 +28,35 @@ export type UnderlyingTokenDescriptor = {
   metaType: MetaType;
 };
 
-export type StageParams<T extends Contract, V, R, K extends keyof ContractPosition> = {
-  multicall: IMulticallWrapper;
-  contract: T;
-  contractPosition: Omit<ContractPosition<V>, K>;
-  descriptor: R;
-};
-
-export type TokensStageParams<
+export type ContractPositionFetcherContext<
   T extends Contract,
+  V extends DefaultDataProps = DefaultDataProps,
   R extends DefaultContractPositionDescriptor = DefaultContractPositionDescriptor,
+  K extends keyof ContractPosition = never,
 > = {
   contract: T;
   descriptor: R;
   multicall: IMulticallWrapper;
+  contractPosition: Omit<ContractPosition<V>, K>;
 };
+
+export type TokenStageParams<
+  T extends Contract,
+  V extends DefaultDataProps = DefaultDataProps,
+  R extends DefaultContractPositionDescriptor = DefaultContractPositionDescriptor,
+> = Omit<ContractPositionFetcherContext<T, V, R>, 'contractPosition'>;
 
 export type DataPropsStageParams<
   T extends Contract,
-  V = DefaultDataProps,
-  R = DefaultContractPositionDescriptor,
-> = StageParams<T, V, R, 'dataProps' | 'displayProps'>;
+  V extends DefaultDataProps = DefaultDataProps,
+  R extends DefaultContractPositionDescriptor = DefaultContractPositionDescriptor,
+> = ContractPositionFetcherContext<T, V, R, 'dataProps' | 'displayProps'>;
 
 export type DisplayPropsStageParams<
   T extends Contract,
-  V = DefaultDataProps,
-  R = DefaultContractPositionDescriptor,
-> = StageParams<T, V, R, 'displayProps'>;
+  V extends DefaultDataProps = DefaultDataProps,
+  R extends DefaultContractPositionDescriptor = DefaultContractPositionDescriptor,
+> = ContractPositionFetcherContext<T, V, R, 'displayProps'>;
 
 export type GetTokenBalancesPerPositionParams<T extends Contract, V extends DefaultDataProps = DefaultDataProps> = {
   address: string;
@@ -81,7 +83,7 @@ export abstract class ContractPositionTemplatePositionFetcher<
   abstract getLabel(params: DisplayPropsStageParams<T, V>): Promise<string>;
 
   // Tokens
-  async getTokenDescriptors(_params: TokensStageParams<T, R>): Promise<UnderlyingTokenDescriptor[]> {
+  async getTokenDescriptors(_params: TokenStageParams<T, R>): Promise<UnderlyingTokenDescriptor[]> {
     return [];
   }
 
