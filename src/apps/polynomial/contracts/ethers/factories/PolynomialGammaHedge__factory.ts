@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { PolynomialPutSelling, PolynomialPutSellingInterface } from '../PolynomialPutSelling';
+import type { PolynomialGammaHedge, PolynomialGammaHedgeInterface } from '../PolynomialGammaHedge';
 
 const _abi = [
   {
@@ -1614,12 +1614,12 @@ const _abi = [
   },
 ];
 
-export class PolynomialPutSelling__factory {
+export class PolynomialGammaHedge__factory {
   static readonly abi = _abi;
-  static createInterface(): PolynomialPutSellingInterface {
-    return new utils.Interface(_abi) as PolynomialPutSellingInterface;
+  static createInterface(): PolynomialGammaHedgeInterface {
+    return new utils.Interface(_abi) as PolynomialGammaHedgeInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): PolynomialPutSelling {
-    return new Contract(address, _abi, signerOrProvider) as PolynomialPutSelling;
+  static connect(address: string, signerOrProvider: Signer | Provider): PolynomialGammaHedge {
+    return new Contract(address, _abi, signerOrProvider) as PolynomialGammaHedge;
   }
 }

@@ -17,16 +17,15 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
 
-export interface PolynomialCoveredCallInterface extends utils.Interface {
+export interface PolynomialGammaHedgeInterface extends utils.Interface {
   functions: {
     'GREEKS()': FunctionFragment;
     'MARKET()': FunctionFragment;
     'MARKET_WRAPPER()': FunctionFragment;
     'OPTION_TOKEN()': FunctionFragment;
+    'OPTION_TYPE()': FunctionFragment;
     'RATES()': FunctionFragment;
     'SUSD()': FunctionFragment;
-    'SYNTHETIX()': FunctionFragment;
-    'UNDERLYING()': FunctionFragment;
     'UNDERLYING_SYNTH_KEY()': FunctionFragment;
     'VAULT_TOKEN()': FunctionFragment;
     'addCollateral(uint256,uint256)': FunctionFragment;
@@ -67,9 +66,7 @@ export interface PolynomialCoveredCallInterface extends utils.Interface {
     'setFees(uint256,uint256)': FunctionFragment;
     'setMinDepositAmount(uint256)': FunctionFragment;
     'setOwner(address)': FunctionFragment;
-    'setSynthetixTracking(bytes32)': FunctionFragment;
     'settleOptions(uint256[])': FunctionFragment;
-    'synthetixTrackingCode()': FunctionFragment;
     'totalFunds()': FunctionFragment;
     'totalPremiumCollected()': FunctionFragment;
     'totalQueuedDeposits()': FunctionFragment;
@@ -87,10 +84,9 @@ export interface PolynomialCoveredCallInterface extends utils.Interface {
       | 'MARKET'
       | 'MARKET_WRAPPER'
       | 'OPTION_TOKEN'
+      | 'OPTION_TYPE'
       | 'RATES'
       | 'SUSD'
-      | 'SYNTHETIX'
-      | 'UNDERLYING'
       | 'UNDERLYING_SYNTH_KEY'
       | 'VAULT_TOKEN'
       | 'addCollateral'
@@ -131,9 +127,7 @@ export interface PolynomialCoveredCallInterface extends utils.Interface {
       | 'setFees'
       | 'setMinDepositAmount'
       | 'setOwner'
-      | 'setSynthetixTracking'
       | 'settleOptions'
-      | 'synthetixTrackingCode'
       | 'totalFunds'
       | 'totalPremiumCollected'
       | 'totalQueuedDeposits'
@@ -149,10 +143,9 @@ export interface PolynomialCoveredCallInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'MARKET', values?: undefined): string;
   encodeFunctionData(functionFragment: 'MARKET_WRAPPER', values?: undefined): string;
   encodeFunctionData(functionFragment: 'OPTION_TOKEN', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'OPTION_TYPE', values?: undefined): string;
   encodeFunctionData(functionFragment: 'RATES', values?: undefined): string;
   encodeFunctionData(functionFragment: 'SUSD', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'SYNTHETIX', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'UNDERLYING', values?: undefined): string;
   encodeFunctionData(functionFragment: 'UNDERLYING_SYNTH_KEY', values?: undefined): string;
   encodeFunctionData(functionFragment: 'VAULT_TOKEN', values?: undefined): string;
   encodeFunctionData(functionFragment: 'addCollateral', values: [BigNumberish, BigNumberish]): string;
@@ -193,9 +186,7 @@ export interface PolynomialCoveredCallInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'setFees', values: [BigNumberish, BigNumberish]): string;
   encodeFunctionData(functionFragment: 'setMinDepositAmount', values: [BigNumberish]): string;
   encodeFunctionData(functionFragment: 'setOwner', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setSynthetixTracking', values: [BytesLike]): string;
   encodeFunctionData(functionFragment: 'settleOptions', values: [BigNumberish[]]): string;
-  encodeFunctionData(functionFragment: 'synthetixTrackingCode', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalFunds', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalPremiumCollected', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalQueuedDeposits', values?: undefined): string;
@@ -210,10 +201,9 @@ export interface PolynomialCoveredCallInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'MARKET', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'MARKET_WRAPPER', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'OPTION_TOKEN', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'OPTION_TYPE', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'RATES', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'SUSD', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'SYNTHETIX', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'UNDERLYING', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'UNDERLYING_SYNTH_KEY', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'VAULT_TOKEN', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'addCollateral', data: BytesLike): Result;
@@ -254,9 +244,7 @@ export interface PolynomialCoveredCallInterface extends utils.Interface {
   decodeFunctionResult(functionFragment: 'setFees', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'setMinDepositAmount', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'setOwner', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'setSynthetixTracking', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'settleOptions', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'synthetixTrackingCode', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'totalFunds', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'totalPremiumCollected', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'totalQueuedDeposits', data: BytesLike): Result;
@@ -273,7 +261,7 @@ export interface PolynomialCoveredCallInterface extends utils.Interface {
     'ClosePosition(uint256,uint256,uint256,uint256,uint256)': EventFragment;
     'InitiateDeposit(uint256,address,address,uint256)': EventFragment;
     'InitiateWithdrawal(uint256,address,address,uint256)': EventFragment;
-    'OpenPosition(uint256,uint256,uint256,uint256,uint256,uint256)': EventFragment;
+    'OpenPosition(uint256,uint256,uint256,uint256,uint256,int256)': EventFragment;
     'OwnerUpdated(address,address)': EventFragment;
     'ProcessDeposit(uint256,address,uint256,uint256,uint256)': EventFragment;
     'ProcessWithdrawal(uint256,address,uint256,uint256,uint256)': EventFragment;
@@ -288,7 +276,6 @@ export interface PolynomialCoveredCallInterface extends utils.Interface {
     'UpdateFeeReceipient(address,address)': EventFragment;
     'UpdateFees(uint256,uint256,uint256,uint256)': EventFragment;
     'UpdateMinDeposit(uint256,uint256)': EventFragment;
-    'UpdateSynthetixTrackingCode(bytes32,bytes32)': EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: 'AddCollateral'): EventFragment;
@@ -311,7 +298,6 @@ export interface PolynomialCoveredCallInterface extends utils.Interface {
   getEvent(nameOrSignatureOrTopic: 'UpdateFeeReceipient'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'UpdateFees'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'UpdateMinDeposit'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'UpdateSynthetixTrackingCode'): EventFragment;
 }
 
 export interface AddCollateralEventObject {
@@ -371,7 +357,7 @@ export interface OpenPositionEventObject {
   amount: BigNumber;
   collateral: BigNumber;
   premiumCollected: BigNumber;
-  callDelta: BigNumber;
+  putDelta: BigNumber;
 }
 export type OpenPositionEvent = TypedEvent<
   [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber],
@@ -517,20 +503,12 @@ export type UpdateMinDepositEvent = TypedEvent<[BigNumber, BigNumber], UpdateMin
 
 export type UpdateMinDepositEventFilter = TypedEventFilter<UpdateMinDepositEvent>;
 
-export interface UpdateSynthetixTrackingCodeEventObject {
-  oldCode: string;
-  newCode: string;
-}
-export type UpdateSynthetixTrackingCodeEvent = TypedEvent<[string, string], UpdateSynthetixTrackingCodeEventObject>;
-
-export type UpdateSynthetixTrackingCodeEventFilter = TypedEventFilter<UpdateSynthetixTrackingCodeEvent>;
-
-export interface PolynomialCoveredCall extends BaseContract {
+export interface PolynomialGammaHedge extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: PolynomialCoveredCallInterface;
+  interface: PolynomialGammaHedgeInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
@@ -556,13 +534,11 @@ export interface PolynomialCoveredCall extends BaseContract {
 
     OPTION_TOKEN(overrides?: CallOverrides): Promise<[string]>;
 
+    OPTION_TYPE(overrides?: CallOverrides): Promise<[number]>;
+
     RATES(overrides?: CallOverrides): Promise<[string]>;
 
     SUSD(overrides?: CallOverrides): Promise<[string]>;
-
-    SYNTHETIX(overrides?: CallOverrides): Promise<[string]>;
-
-    UNDERLYING(overrides?: CallOverrides): Promise<[string]>;
 
     UNDERLYING_SYNTH_KEY(overrides?: CallOverrides): Promise<[string]>;
 
@@ -720,17 +696,10 @@ export interface PolynomialCoveredCall extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
 
-    setSynthetixTracking(
-      _code: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<ContractTransaction>;
-
     settleOptions(
       strikeIds: BigNumberish[],
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
-
-    synthetixTrackingCode(overrides?: CallOverrides): Promise<[string]>;
 
     totalFunds(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -770,13 +739,11 @@ export interface PolynomialCoveredCall extends BaseContract {
 
   OPTION_TOKEN(overrides?: CallOverrides): Promise<string>;
 
+  OPTION_TYPE(overrides?: CallOverrides): Promise<number>;
+
   RATES(overrides?: CallOverrides): Promise<string>;
 
   SUSD(overrides?: CallOverrides): Promise<string>;
-
-  SYNTHETIX(overrides?: CallOverrides): Promise<string>;
-
-  UNDERLYING(overrides?: CallOverrides): Promise<string>;
 
   UNDERLYING_SYNTH_KEY(overrides?: CallOverrides): Promise<string>;
 
@@ -931,17 +898,10 @@ export interface PolynomialCoveredCall extends BaseContract {
 
   setOwner(newOwner: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
 
-  setSynthetixTracking(
-    _code: BytesLike,
-    overrides?: Overrides & { from?: string | Promise<string> },
-  ): Promise<ContractTransaction>;
-
   settleOptions(
     strikeIds: BigNumberish[],
     overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
-
-  synthetixTrackingCode(overrides?: CallOverrides): Promise<string>;
 
   totalFunds(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -981,13 +941,11 @@ export interface PolynomialCoveredCall extends BaseContract {
 
     OPTION_TOKEN(overrides?: CallOverrides): Promise<string>;
 
+    OPTION_TYPE(overrides?: CallOverrides): Promise<number>;
+
     RATES(overrides?: CallOverrides): Promise<string>;
 
     SUSD(overrides?: CallOverrides): Promise<string>;
-
-    SYNTHETIX(overrides?: CallOverrides): Promise<string>;
-
-    UNDERLYING(overrides?: CallOverrides): Promise<string>;
 
     UNDERLYING_SYNTH_KEY(overrides?: CallOverrides): Promise<string>;
 
@@ -1095,11 +1053,7 @@ export interface PolynomialCoveredCall extends BaseContract {
 
     setOwner(newOwner: string, overrides?: CallOverrides): Promise<void>;
 
-    setSynthetixTracking(_code: BytesLike, overrides?: CallOverrides): Promise<void>;
-
     settleOptions(strikeIds: BigNumberish[], overrides?: CallOverrides): Promise<void>;
-
-    synthetixTrackingCode(overrides?: CallOverrides): Promise<string>;
 
     totalFunds(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1181,13 +1135,13 @@ export interface PolynomialCoveredCall extends BaseContract {
       tokens?: null,
     ): InitiateWithdrawalEventFilter;
 
-    'OpenPosition(uint256,uint256,uint256,uint256,uint256,uint256)'(
+    'OpenPosition(uint256,uint256,uint256,uint256,uint256,int256)'(
       strikeId?: null,
       positionId?: null,
       amount?: null,
       collateral?: null,
       premiumCollected?: null,
-      callDelta?: null,
+      putDelta?: null,
     ): OpenPositionEventFilter;
     OpenPosition(
       strikeId?: null,
@@ -1195,7 +1149,7 @@ export interface PolynomialCoveredCall extends BaseContract {
       amount?: null,
       collateral?: null,
       premiumCollected?: null,
-      callDelta?: null,
+      putDelta?: null,
     ): OpenPositionEventFilter;
 
     'OwnerUpdated(address,address)'(user?: string | null, newOwner?: string | null): OwnerUpdatedEventFilter;
@@ -1313,12 +1267,6 @@ export interface PolynomialCoveredCall extends BaseContract {
 
     'UpdateMinDeposit(uint256,uint256)'(oldMinimum?: null, newMinimum?: null): UpdateMinDepositEventFilter;
     UpdateMinDeposit(oldMinimum?: null, newMinimum?: null): UpdateMinDepositEventFilter;
-
-    'UpdateSynthetixTrackingCode(bytes32,bytes32)'(
-      oldCode?: null,
-      newCode?: null,
-    ): UpdateSynthetixTrackingCodeEventFilter;
-    UpdateSynthetixTrackingCode(oldCode?: null, newCode?: null): UpdateSynthetixTrackingCodeEventFilter;
   };
 
   estimateGas: {
@@ -1330,13 +1278,11 @@ export interface PolynomialCoveredCall extends BaseContract {
 
     OPTION_TOKEN(overrides?: CallOverrides): Promise<BigNumber>;
 
+    OPTION_TYPE(overrides?: CallOverrides): Promise<BigNumber>;
+
     RATES(overrides?: CallOverrides): Promise<BigNumber>;
 
     SUSD(overrides?: CallOverrides): Promise<BigNumber>;
-
-    SYNTHETIX(overrides?: CallOverrides): Promise<BigNumber>;
-
-    UNDERLYING(overrides?: CallOverrides): Promise<BigNumber>;
 
     UNDERLYING_SYNTH_KEY(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1467,17 +1413,10 @@ export interface PolynomialCoveredCall extends BaseContract {
 
     setOwner(newOwner: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
 
-    setSynthetixTracking(
-      _code: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<BigNumber>;
-
     settleOptions(
       strikeIds: BigNumberish[],
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<BigNumber>;
-
-    synthetixTrackingCode(overrides?: CallOverrides): Promise<BigNumber>;
 
     totalFunds(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1507,13 +1446,11 @@ export interface PolynomialCoveredCall extends BaseContract {
 
     OPTION_TOKEN(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    OPTION_TYPE(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
     RATES(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     SUSD(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    SYNTHETIX(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    UNDERLYING(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     UNDERLYING_SYNTH_KEY(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -1650,17 +1587,10 @@ export interface PolynomialCoveredCall extends BaseContract {
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
-    setSynthetixTracking(
-      _code: BytesLike,
-      overrides?: Overrides & { from?: string | Promise<string> },
-    ): Promise<PopulatedTransaction>;
-
     settleOptions(
       strikeIds: BigNumberish[],
       overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
-
-    synthetixTrackingCode(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalFunds(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
