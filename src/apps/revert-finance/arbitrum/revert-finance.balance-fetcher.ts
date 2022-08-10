@@ -1,12 +1,14 @@
 import { Inject } from '@nestjs/common';
 import { getAddress } from 'ethers/lib/utils';
 
+import { drillBalance } from '~app-toolkit';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
+import { UniswapV2ContractFactory } from '~apps/uniswap-v2';
 import { UniswapV3LiquidityTokenHelper } from '~apps/uniswap-v2/helpers/uniswap-v3.liquidity.token-helper';
 import { BalanceFetcher } from '~balance/balance-fetcher.interface';
-import { ContractPositionBalance } from '~position/position-balance.interface';
+import { AppTokenPositionBalance, ContractPositionBalance } from '~position/position-balance.interface';
 import { Network } from '~types/network.interface';
 
 import { accountBalancesQuery, CompoundorAccountBalances } from '../graphql/accountBalancesQuery';
@@ -21,6 +23,7 @@ const network = Network.ARBITRUM_MAINNET;
 export class ArbitrumRevertFinanceBalanceFetcher implements BalanceFetcher {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
+    @Inject(UniswapV2ContractFactory) protected readonly uniswapV2ContractFactory: UniswapV2ContractFactory,
     @Inject(UniswapV3LiquidityTokenHelper)
     private readonly uniswapV3LiquidityTokenHelper: UniswapV3LiquidityTokenHelper,
   ) {}
@@ -51,11 +54,14 @@ export class ArbitrumRevertFinanceBalanceFetcher implements BalanceFetcher {
       variables: { address: getAddress(address) },
     });
     if (!data) return [];
-    const compoundingBalances: Array<ContractPositionBalance> = [];
-    data.tokens.map(async ({ id }) => {
-      const UniV3Token = await this.uniswapV3LiquidityTokenHelper.getLiquidityToken({ positionId: id, network });
-      console.log('uni token : ', UniV3Token);
-    });
+    const compoundingBalances: Array<AppTokenPositionBalance> = [];
+    await Promise.all(
+      data.tokens.map(async ({ id }) => {
+        const uniV3Token = await this.uniswapV3LiquidityTokenHelper.getLiquidityToken({ positionId: id, network });
+        if (!uniV3Token) return;
+        return drillBalance(uniV3Token, '1');
+      }),
+    );
     return compoundingBalances;
   }
 
