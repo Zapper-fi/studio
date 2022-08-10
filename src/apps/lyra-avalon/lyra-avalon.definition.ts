@@ -26,8 +26,15 @@ export const LYRA_AVALON_DEFINITION = appDefinition({
 
     staking: {
       id: 'staking',
-      type: GroupType.TOKEN,
+      type: GroupType.POSITION,
       label: 'Staking',
+      groupLabel: 'Farms',
+    },
+
+    ve: {
+      id: 've',
+      type: GroupType.TOKEN,
+      label: 'VotedEscrow',
       groupLabel: 'Farms',
     },
 

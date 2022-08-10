@@ -12,7 +12,7 @@ import { LYRA_AVALON_DEFINITION } from '../lyra-avalon.definition';
 import { STAKING_ADDRESS } from './helpers/consts';
 
 const appId = LYRA_AVALON_DEFINITION.id;
-const groupId = LYRA_AVALON_DEFINITION.groups.staking.id;
+const groupId = LYRA_AVALON_DEFINITION.groups.ve.id;
 const network = Network.OPTIMISM_MAINNET;
 
 // Note: Should be a base-token
