@@ -3,7 +3,7 @@ import { AbstractApp } from '~app/app.dynamic-module';
 
 import { LiquityContractFactory } from './contracts';
 import { EthereumLiquityBalanceFetcher } from './ethereum/liquity.balance-fetcher';
-import { EthereumLiquityFarmContractPositionFetcher } from './ethereum/liquity.farm.contract-position-fetcher';
+import { EthereumLiquityStakingContractPositionFetcher } from './ethereum/liquity.staking.contract-position-fetcher';
 import { LiquityStabilityPoolBalanceHelper } from './helpers/liquity.stability-pool.balance-helper';
 import { LiquityTroveBalanceHelper } from './helpers/liquity.trove.balance-helper';
 import LIQUITY_DEFINITION, { LiquityAppDefinition } from './liquity.definition';
@@ -14,7 +14,7 @@ import LIQUITY_DEFINITION, { LiquityAppDefinition } from './liquity.definition';
     LiquityAppDefinition,
     LiquityContractFactory,
     EthereumLiquityBalanceFetcher,
-    EthereumLiquityFarmContractPositionFetcher,
+    EthereumLiquityStakingContractPositionFetcher,
     LiquityTroveBalanceHelper,
     LiquityStabilityPoolBalanceHelper,
   ],

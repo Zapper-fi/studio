@@ -19,15 +19,14 @@ const FARMS = [
 ];
 
 const appId = LIQUITY_DEFINITION.id;
-const groupId = LIQUITY_DEFINITION.groups.farm.id;
+const groupId = LIQUITY_DEFINITION.groups.staking.id;
 const network = Network.ETHEREUM_MAINNET;
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
-export class EthereumLiquityFarmContractPositionFetcher implements PositionFetcher<ContractPosition> {
+export class EthereumLiquityStakingContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(LiquityContractFactory)
-    private readonly liquityContractFactory: LiquityContractFactory,
+    @Inject(LiquityContractFactory) private readonly liquityContractFactory: LiquityContractFactory,
   ) {}
 
   async getPositions() {
