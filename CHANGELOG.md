@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.169.0](https://github.com/Zapper-fi/studio/compare/v0.168.0...v0.169.0) (2022-08-11)
+
+
+### Features
+
+* **token-deps:** Exclusively use `getTokenDependencySelector` as a selector ([#1144](https://github.com/Zapper-fi/studio/issues/1144)) ([828d69b](https://github.com/Zapper-fi/studio/commit/828d69b8f9905f40fe74373a18b66731763bff1b))
+
 ## [0.168.0](https://github.com/Zapper-fi/studio/compare/v0.167.0...v0.168.0) (2022-08-11)
 
 
