@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.166.0](https://github.com/Zapper-fi/studio/compare/v0.165.0...v0.166.0) (2022-08-11)
+
+
+### Features
+
+* **multicall:** Return error do not throw ([00ecfda](https://github.com/Zapper-fi/studio/commit/00ecfdaee6a88d4566a9930222c20939c6a63ceb))
+
 ## [0.165.0](https://github.com/Zapper-fi/studio/compare/v0.164.0...v0.165.0) (2022-08-11)
 
 
