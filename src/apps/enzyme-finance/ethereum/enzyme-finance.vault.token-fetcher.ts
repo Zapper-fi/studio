@@ -73,9 +73,12 @@ export class EthereumEnzymeFinanceVaultTokenFetcher extends AppTokenTemplatePosi
     return (await contract.getTrackedAssets()).map(x => x.toLowerCase());
   }
 
-  async getPrice({ appToken, contract }: PriceStageParams<EnzymeFinanceVault, DefaultDataProps>): Promise<number> {
+  async getPrice({
+    appToken,
+    contract,
+    tokenLoader,
+  }: PriceStageParams<EnzymeFinanceVault, DefaultDataProps>): Promise<number> {
     const multicall = this.appToolkit.getMulticall(this.network);
-    const tokenSelector = this.appToolkit.getTokenDependencySelector({ tags: { network, context: appId } });
 
     const decimalsRaw = await this.getDecimals(contract);
     const supplyRaw = await this.getSupply(contract);
@@ -83,7 +86,7 @@ export class EthereumEnzymeFinanceVaultTokenFetcher extends AppTokenTemplatePosi
     const supply = new BigNumber(supplyRaw.toString()).div(decimals);
     const underlying = await this.getUnderlyingTokenAddresses(contract);
 
-    const tokenDependencies = await tokenSelector
+    const tokenDependencies = await tokenLoader
       .getMany(underlying.map(tokenAddressRaw => ({ network, address: tokenAddressRaw.toLowerCase() })))
       .then(deps => compact(deps));
 
