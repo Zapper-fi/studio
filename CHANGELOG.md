@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.170.0](https://github.com/Zapper-fi/studio/compare/v0.169.0...v0.170.0) (2022-08-11)
+
+
+### Features
+
+* **template:** Add token loader as stage param ([#1146](https://github.com/Zapper-fi/studio/issues/1146)) ([70ef238](https://github.com/Zapper-fi/studio/commit/70ef23859d0d740f97cdce7c2f5f1189674fefc0))
+
 ## [0.169.0](https://github.com/Zapper-fi/studio/compare/v0.168.0...v0.169.0) (2022-08-11)
 
 
