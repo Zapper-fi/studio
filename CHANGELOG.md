@@ -4,6 +4,21 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.165.0](https://github.com/Zapper-fi/studio/compare/v0.164.0...v0.165.0) (2022-08-11)
+
+
+### Features
+
+* **plutus:** Fix labels ([f1a9d9d](https://github.com/Zapper-fi/studio/commit/f1a9d9d2be30199a5fcac038ce1d4012fbc6528e))
+* **plutus:** Refactor Plutus to use templates and add new farms ([#1132](https://github.com/Zapper-fi/studio/issues/1132)) ([9bc6c0a](https://github.com/Zapper-fi/studio/commit/9bc6c0ac241308222b74a46f5f5dd8d7d0d37005))
+* **rubicon:** Clean-up unused contracts ([dfab021](https://github.com/Zapper-fi/studio/commit/dfab021f6aef61f89b96f696f5988a4f4d28202f))
+
+
+### Bug Fixes
+
+* **pickle:** Missing jars on polygon ([#1130](https://github.com/Zapper-fi/studio/issues/1130)) ([646d3da](https://github.com/Zapper-fi/studio/commit/646d3da3bbddc38001475363cd56473899d26ebf))
+* **rubicon:** Fix decimal issues on non-18 decimal coins ([#1121](https://github.com/Zapper-fi/studio/issues/1121)) ([f7a4896](https://github.com/Zapper-fi/studio/commit/f7a4896c246b73b5c4d2c61876fb0186e5bc5e8f))
+
 ## [0.164.0](https://github.com/Zapper-fi/studio/compare/v0.163.0...v0.164.0) (2022-08-11)
 
 
