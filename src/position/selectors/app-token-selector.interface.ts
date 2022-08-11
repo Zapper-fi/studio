@@ -1,6 +1,6 @@
 import { Network } from '~types';
 
-import { AppTokenPosition } from './position.interface';
+import { AppTokenPosition } from '../position.interface';
 
 export type LoggingTags = { network?: Network; context?: string };
 export type AppTokenSelectorKey = { network: Network; address: string };
