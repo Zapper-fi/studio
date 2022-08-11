@@ -4,10 +4,11 @@ import Axios, { AxiosInstance } from 'axios';
 import DataLoader from 'dataloader';
 import qs from 'qs';
 
-import { AppTokenSelectorKey } from '~position/app-token-selector.interface';
 import { ContractType } from '~position/contract.interface';
 import { AbstractPosition, AppTokenPosition, ContractPosition } from '~position/position.interface';
 import { AppGroupsDefinition } from '~position/position.service';
+import { AppTokenSelectorKey } from '~position/selectors/app-token-selector.interface';
+import { TokenDependency } from '~position/selectors/token-dependency-selector.interface';
 import { Network } from '~types';
 
 import { PositionSource } from './position-source.interface';
@@ -65,7 +66,7 @@ export class ApiPositionSource implements PositionSource {
     return results as any as T[];
   }
 
-  async getAppTokenBatch(queries: AppTokenSelectorKey[]) {
+  async getAppTokensBatch(queries: AppTokenSelectorKey[]) {
     const addresses: string[] = [];
     const networks: Network[] = [];
 
@@ -75,6 +76,23 @@ export class ApiPositionSource implements PositionSource {
     }
 
     const { data } = await this.axios.post<(AppTokenPosition | null)[]>(`/v2/app-tokens/batch`, {
+      addresses,
+      networks,
+    });
+
+    return data;
+  }
+
+  async getTokenDependenciesBatch(queries: AppTokenSelectorKey[]) {
+    const addresses: string[] = [];
+    const networks: Network[] = [];
+
+    for (const q of queries) {
+      addresses.push(q.address);
+      networks.push(q.network);
+    }
+
+    const { data } = await this.axios.post<(TokenDependency | null)[]>(`/v2/token-dependencies/batch`, {
       addresses,
       networks,
     });

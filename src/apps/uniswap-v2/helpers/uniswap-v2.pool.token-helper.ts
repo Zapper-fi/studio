@@ -15,8 +15,8 @@ import { ContractType } from '~position/contract.interface';
 import { AppTokenPosition, Token } from '~position/position.interface';
 import { AppGroupsDefinition } from '~position/position.service';
 import { BaseToken } from '~position/token.interface';
-import { PriceSelector } from '~token/token-price-selector.interface';
-import { BaseTokenPrice } from '~token/token-price-selector.interface';
+import { PriceSelector } from '~token/selectors/token-price-selector.interface';
+import { BaseTokenPrice } from '~token/selectors/token-price-selector.interface';
 import { Network } from '~types/network.interface';
 
 import { UniswapFactory, UniswapPair } from '../contracts';
