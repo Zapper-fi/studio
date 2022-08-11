@@ -9,7 +9,9 @@ import { Network } from '~types/network.interface';
 import { PickleContractFactory, PickleMiniChefV2, PickleRewarder } from '../contracts';
 import { PICKLE_DEFINITION } from '../pickle.definition';
 
-@Register.BalanceFetcher(PICKLE_DEFINITION.id, Network.POLYGON_MAINNET)
+const network = Network.POLYGON_MAINNET;
+
+@Register.BalanceFetcher(PICKLE_DEFINITION.id, network)
 export class PolygonPickleBalanceFetcher implements BalanceFetcher {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
@@ -18,7 +20,7 @@ export class PolygonPickleBalanceFetcher implements BalanceFetcher {
 
   private async getJarBalances(address: string) {
     return await this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
-      network: Network.POLYGON_MAINNET,
+      network,
       appId: PICKLE_DEFINITION.id,
       groupId: PICKLE_DEFINITION.groups.jar.id,
       address,
@@ -26,8 +28,6 @@ export class PolygonPickleBalanceFetcher implements BalanceFetcher {
   }
 
   private async getFarmBalances(address: string) {
-    const network = Network.POLYGON_MAINNET;
-
     return this.appToolkit.helpers.masterChefContractPositionBalanceHelper.getBalances<PickleMiniChefV2>({
       address,
       appId: PICKLE_DEFINITION.id,

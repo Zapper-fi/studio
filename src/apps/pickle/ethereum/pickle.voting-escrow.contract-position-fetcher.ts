@@ -9,11 +9,11 @@ import { Network } from '~types/network.interface';
 import { PickleContractFactory, PickleVotingEscrow, PickleVotingEscrowReward } from '../contracts';
 import { PICKLE_DEFINITION } from '../pickle.definition';
 
-@Register.ContractPositionFetcher({
-  appId: PICKLE_DEFINITION.id,
-  groupId: PICKLE_DEFINITION.groups.votingEscrow.id,
-  network: Network.ETHEREUM_MAINNET,
-})
+const appId = PICKLE_DEFINITION.id;
+const groupId = PICKLE_DEFINITION.groups.votingEscrow.id;
+const network = Network.ETHEREUM_MAINNET;
+
+@Register.ContractPositionFetcher({ appId, groupId, network })
 export class EthereumPickleVotingEscrowContractPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(CurveVotingEscrowContractPositionHelper)
@@ -23,7 +23,6 @@ export class EthereumPickleVotingEscrowContractPositionFetcher implements Positi
   ) {}
 
   async getPositions() {
-    const network = Network.ETHEREUM_MAINNET;
     return this.curveVotingEscrowContractPositionHelper.getContractPositions<
       PickleVotingEscrow,
       PickleVotingEscrowReward
