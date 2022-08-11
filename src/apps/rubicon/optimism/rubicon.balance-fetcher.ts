@@ -10,9 +10,10 @@ import { RUBICON_DEFINITION } from '../rubicon.definition';
 
 const network = Network.OPTIMISM_MAINNET;
 
+// Test via http://localhost:5001/apps/rubicon/balances?addresses[]=<ADDRESS>&network=optimism
 @Register.BalanceFetcher(RUBICON_DEFINITION.id, network)
 export class OptimismRubiconBalanceFetcher implements BalanceFetcher {
-  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) {}
+  constructor(@Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit) { }
 
   async getBathTokenBalances(address: string) {
     return this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({

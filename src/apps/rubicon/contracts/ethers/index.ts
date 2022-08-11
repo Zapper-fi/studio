@@ -2,5 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { BathToken } from './BathToken';
+export type { Ierc20 } from './Ierc20';
 export * as factories from './factories';
 export { BathToken__factory } from './factories/BathToken__factory';
+export { Ierc20__factory } from './factories/Ierc20__factory';
