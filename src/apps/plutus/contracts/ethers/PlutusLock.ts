@@ -17,7 +17,7 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
-export interface PlutusEpochStakingInterface extends utils.Interface {
+export interface PlutusLockInterface extends utils.Interface {
   functions: {
     'advanceEpoch()': FunctionFragment;
     'claimRewards(uint32)': FunctionFragment;
@@ -246,12 +246,12 @@ export type UnstakedEvent = TypedEvent<[string, BigNumber, number], UnstakedEven
 
 export type UnstakedEventFilter = TypedEventFilter<UnstakedEvent>;
 
-export interface PlutusEpochStaking extends BaseContract {
+export interface PlutusLock extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: PlutusEpochStakingInterface;
+  interface: PlutusLockInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

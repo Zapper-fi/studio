@@ -4,11 +4,22 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { PlsDpxPlutusChefV2, PlsDpxPlutusChefV2Interface } from '../PlsDpxPlutusChefV2';
+import type { PlutusFarmPlsJonesLp, PlutusFarmPlsJonesLpInterface } from '../PlutusFarmPlsJonesLp';
 
 const _abi = [
   {
-    inputs: [],
+    inputs: [
+      {
+        internalType: 'address',
+        name: '_stakingToken',
+        type: 'address',
+      },
+      {
+        internalType: 'address',
+        name: '_pls',
+        type: 'address',
+      },
+    ],
     stateMutability: 'nonpayable',
     type: 'constructor',
   },
@@ -26,38 +37,6 @@ const _abi = [
     inputs: [],
     name: 'WITHDRAW_ERROR',
     type: 'error',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: false,
-        internalType: 'address',
-        name: 'previousAdmin',
-        type: 'address',
-      },
-      {
-        indexed: false,
-        internalType: 'address',
-        name: 'newAdmin',
-        type: 'address',
-      },
-    ],
-    name: 'AdminChanged',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
-        name: 'beacon',
-        type: 'address',
-      },
-    ],
-    name: 'BeaconUpgraded',
-    type: 'event',
   },
   {
     anonymous: false,
@@ -101,13 +80,19 @@ const _abi = [
     anonymous: false,
     inputs: [
       {
+        indexed: true,
+        internalType: 'address',
+        name: '_user',
+        type: 'address',
+      },
+      {
         indexed: false,
-        internalType: 'uint8',
-        name: 'version',
-        type: 'uint8',
+        internalType: 'uint256',
+        name: '_amount',
+        type: 'uint256',
       },
     ],
-    name: 'Initialized',
+    name: 'Harvest',
     type: 'event',
   },
   {
@@ -161,19 +146,6 @@ const _abi = [
       {
         indexed: true,
         internalType: 'address',
-        name: 'implementation',
-        type: 'address',
-      },
-    ],
-    name: 'Upgraded',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
-        indexed: true,
-        internalType: 'address',
         name: '_user',
         type: 'address',
       },
@@ -186,58 +158,6 @@ const _abi = [
     ],
     name: 'Withdraw',
     type: 'event',
-  },
-  {
-    inputs: [],
-    name: 'REWARDS_DISTRO',
-    outputs: [
-      {
-        internalType: 'contract IPlsDpxRewardsDistroV2',
-        name: '',
-        type: 'address',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'accDpxPerShare',
-    outputs: [
-      {
-        internalType: 'uint128',
-        name: '',
-        type: 'uint128',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'accPlsDpxPerShare',
-    outputs: [
-      {
-        internalType: 'uint128',
-        name: '',
-        type: 'uint128',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'accPlsJonesPerShare',
-    outputs: [
-      {
-        internalType: 'uint128',
-        name: '',
-        type: 'uint128',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
   },
   {
     inputs: [],
@@ -312,13 +232,6 @@ const _abi = [
   },
   {
     inputs: [],
-    name: 'initialize',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [],
     name: 'lastRewardSecond',
     outputs: [
       {
@@ -384,28 +297,13 @@ const _abi = [
         name: '_pendingPls',
         type: 'uint256',
       },
-      {
-        internalType: 'uint256',
-        name: '_pendingPlsDpx',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: '_pendingPlsJones',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: '_pendingDpx',
-        type: 'uint256',
-      },
     ],
     stateMutability: 'view',
     type: 'function',
   },
   {
     inputs: [],
-    name: 'plsDpx',
+    name: 'pls',
     outputs: [
       {
         internalType: 'contract IERC20',
@@ -418,12 +316,12 @@ const _abi = [
   },
   {
     inputs: [],
-    name: 'proxiableUUID',
+    name: 'plsPerSecond',
     outputs: [
       {
-        internalType: 'bytes32',
+        internalType: 'uint256',
         name: '',
-        type: 'bytes32',
+        type: 'uint256',
       },
     ],
     stateMutability: 'view',
@@ -439,9 +337,9 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: 'uint80',
+        internalType: 'uint256',
         name: '_rewardRatePerSecond',
-        type: 'uint80',
+        type: 'uint256',
       },
     ],
     name: 'rewardPerShare',
@@ -453,6 +351,19 @@ const _abi = [
       },
     ],
     stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '_plsPerSecond',
+        type: 'uint256',
+      },
+    ],
+    name: 'setEmission',
+    outputs: [],
+    stateMutability: 'nonpayable',
     type: 'function',
   },
   {
@@ -508,6 +419,19 @@ const _abi = [
     type: 'function',
   },
   {
+    inputs: [],
+    name: 'stakingToken',
+    outputs: [
+      {
+        internalType: 'contract IERC20',
+        name: '',
+        type: 'address',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
     inputs: [
       {
         internalType: 'address',
@@ -531,37 +455,6 @@ const _abi = [
     inputs: [
       {
         internalType: 'address',
-        name: 'newImplementation',
-        type: 'address',
-      },
-    ],
-    name: 'upgradeTo',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: 'newImplementation',
-        type: 'address',
-      },
-      {
-        internalType: 'bytes',
-        name: 'data',
-        type: 'bytes',
-      },
-    ],
-    name: 'upgradeToAndCall',
-    outputs: [],
-    stateMutability: 'payable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
         name: '',
         type: 'address',
       },
@@ -576,21 +469,6 @@ const _abi = [
       {
         internalType: 'int128',
         name: 'plsRewardDebt',
-        type: 'int128',
-      },
-      {
-        internalType: 'int128',
-        name: 'plsDpxRewardDebt',
-        type: 'int128',
-      },
-      {
-        internalType: 'int128',
-        name: 'plsJonesRewardDebt',
-        type: 'int128',
-      },
-      {
-        internalType: 'int128',
-        name: 'dpxRewardDebt',
         type: 'int128',
       },
     ],
@@ -643,12 +521,12 @@ const _abi = [
   },
 ];
 
-export class PlsDpxPlutusChefV2__factory {
+export class PlutusFarmPlsJonesLp__factory {
   static readonly abi = _abi;
-  static createInterface(): PlsDpxPlutusChefV2Interface {
-    return new utils.Interface(_abi) as PlsDpxPlutusChefV2Interface;
+  static createInterface(): PlutusFarmPlsJonesLpInterface {
+    return new utils.Interface(_abi) as PlutusFarmPlsJonesLpInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): PlsDpxPlutusChefV2 {
-    return new Contract(address, _abi, signerOrProvider) as PlsDpxPlutusChefV2;
+  static connect(address: string, signerOrProvider: Signer | Provider): PlutusFarmPlsJonesLp {
+    return new Contract(address, _abi, signerOrProvider) as PlutusFarmPlsJonesLp;
   }
 }

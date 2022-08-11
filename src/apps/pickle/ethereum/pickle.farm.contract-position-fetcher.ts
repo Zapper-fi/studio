@@ -14,11 +14,6 @@ const appId = PICKLE_DEFINITION.id;
 const groupId = PICKLE_DEFINITION.groups.masterchefFarm.id;
 const network = Network.ETHEREUM_MAINNET;
 
-export type PickleFarmContractPositionDescriptor = {
-  address: string;
-  poolIndex: number;
-};
-
 @Register.ContractPositionFetcher({ appId, groupId, network })
 export class EthereumPickleFarmContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<PickleJarMasterchef> {
   appId = PICKLE_DEFINITION.id;

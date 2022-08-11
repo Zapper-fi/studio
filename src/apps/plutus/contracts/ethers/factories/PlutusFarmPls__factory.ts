@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { PlsPlutusChef, PlsPlutusChefInterface } from '../PlsPlutusChef';
+import type { PlutusFarmPls, PlutusFarmPlsInterface } from '../PlutusFarmPls';
 
 const _abi = [
   {
@@ -485,12 +485,12 @@ const _abi = [
   },
 ];
 
-export class PlsPlutusChef__factory {
+export class PlutusFarmPls__factory {
   static readonly abi = _abi;
-  static createInterface(): PlsPlutusChefInterface {
-    return new utils.Interface(_abi) as PlsPlutusChefInterface;
+  static createInterface(): PlutusFarmPlsInterface {
+    return new utils.Interface(_abi) as PlutusFarmPlsInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): PlsPlutusChef {
-    return new Contract(address, _abi, signerOrProvider) as PlsPlutusChef;
+  static connect(address: string, signerOrProvider: Signer | Provider): PlutusFarmPls {
+    return new Contract(address, _abi, signerOrProvider) as PlutusFarmPls;
   }
 }

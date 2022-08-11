@@ -6,6 +6,8 @@ import { NetworkProviderService } from '~network-provider/network-provider.servi
 import { ContractType } from '~position/contract.interface';
 import { PositionBalanceFetcherRegistry } from '~position/position-balance-fetcher.registry';
 import { PositionFetcherRegistry } from '~position/position-fetcher.registry';
+import { AppTokenTemplatePositionFetcher } from '~position/template/app-token.template.position-fetcher';
+import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
 import { Network } from '~types/network.interface';
 
 import { TokenBalanceResponse } from './balance-fetcher.interface';
@@ -24,9 +26,9 @@ export class BalanceService {
 
   constructor(
     @Inject(BalanceFetcherRegistry) private readonly balanceFetcherRegistry: BalanceFetcherRegistry,
-    @Inject(PositionFetcherRegistry) private readonly pfRegistry: PositionFetcherRegistry,
+    @Inject(PositionFetcherRegistry) private readonly positionFetcherRegistry: PositionFetcherRegistry,
     @Inject(PositionBalanceFetcherRegistry)
-    private readonly positionBalanceFetcherRegistry: PositionBalanceFetcherRegistry,
+    private readonly positionFetcherBalanceFetcherRegistry: PositionBalanceFetcherRegistry,
     @Inject(BalancePresenterRegistry) private readonly balancePresenterRegistry: BalancePresenterRegistry,
     @Inject(NetworkProviderService) private readonly networkProviderService: NetworkProviderService,
     @Inject(DefaultBalancePresenterFactory)
@@ -57,8 +59,16 @@ export class BalanceService {
   }
 
   private async getBalancesGeneralizedStrategy({ appId, addresses, network }: GetBalancesQuery & GetBalancesParams) {
-    const tokenGroupIds = this.pfRegistry.getGroupIdsForApp({ type: ContractType.APP_TOKEN, network, appId });
-    const positionGroupIds = this.pfRegistry.getGroupIdsForApp({ type: ContractType.POSITION, network, appId });
+    const tokenGroupIds = this.positionFetcherRegistry.getGroupIdsForApp({
+      type: ContractType.APP_TOKEN,
+      network,
+      appId,
+    });
+    const positionGroupIds = this.positionFetcherRegistry.getGroupIdsForApp({
+      type: ContractType.POSITION,
+      network,
+      appId,
+    });
 
     // If there is no custom fetcher defined, and there are no token/contract position groups defined, declare 404
     if (!tokenGroupIds.length && !positionGroupIds.length)
@@ -69,18 +79,31 @@ export class BalanceService {
         const [tokenBalances, contractPositionBalances] = await Promise.all([
           await Promise.all(
             tokenGroupIds.map(async groupId => {
-              const balanceFetcher =
-                this.positionBalanceFetcherRegistry.get({ type: ContractType.APP_TOKEN, appId, groupId, network }) ??
-                this.defaultTokenBalanceFetcherFactory.build({ appId, groupId, network });
-              return balanceFetcher.getBalances(address);
+              const fetcherSelector = { type: ContractType.APP_TOKEN, appId, groupId, network };
+
+              const templateFetcher = this.positionFetcherRegistry.get(fetcherSelector);
+              if (templateFetcher instanceof AppTokenTemplatePositionFetcher)
+                return templateFetcher.getBalances(address);
+
+              const balanceFetcher = this.positionFetcherBalanceFetcherRegistry.get(fetcherSelector);
+              if (balanceFetcher) return balanceFetcher.getBalances(address);
+
+              const defaultBalanceFetcher = this.defaultTokenBalanceFetcherFactory.build(fetcherSelector);
+              return defaultBalanceFetcher.getBalances(address);
             }),
           ),
           await Promise.all(
             positionGroupIds.map(async groupId => {
-              const balanceFetcher =
-                this.positionBalanceFetcherRegistry.get({ type: ContractType.POSITION, appId, groupId, network }) ??
-                this.defaultContractPositionBalanceFetcherFactory.build({ appId, groupId, network });
-              return balanceFetcher.getBalances(address);
+              const fetcherSelector = { type: ContractType.POSITION, appId, groupId, network };
+              const templateFetcher = this.positionFetcherRegistry.get(fetcherSelector);
+              if (templateFetcher instanceof ContractPositionTemplatePositionFetcher)
+                return templateFetcher.getBalances(address);
+
+              const balanceFetcher = this.positionFetcherBalanceFetcherRegistry.get(fetcherSelector);
+              if (balanceFetcher) return balanceFetcher.getBalances(address);
+
+              const defaultBalanceFetcher = this.defaultContractPositionBalanceFetcherFactory.build(fetcherSelector);
+              return defaultBalanceFetcher.getBalances(address);
             }),
           ),
         ]);
