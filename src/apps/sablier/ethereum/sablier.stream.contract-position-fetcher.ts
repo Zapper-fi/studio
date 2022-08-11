@@ -93,16 +93,19 @@ export class EthereumSablierStreamContractPositionFetcher extends ContractPositi
     const sablierStreamContract = this.contractFactory.sablierStream({ address: sablierAddress, network });
     const sablierStream = multicall.wrap(sablierStreamContract);
 
-    const rawStreams = await Promise.all(
+    const maybeRawStreams = await Promise.all(
       streams.map(async ({ streamId }) => {
-        const rawStream = await sablierStream.getStream(streamId);
-        return {
-          ...rawStream,
-          streamId,
-        };
+        const rawStream = await sablierStream.getStream(streamId).catch(err => {
+          if (isMulticallUnderlyingError(err)) return null;
+          throw err;
+        });
+
+        if (!rawStream) return null;
+        return { ...rawStream, streamId };
       }),
     );
 
+    const rawStreams = compact(maybeRawStreams);
     const underlyingAddresses = rawStreams.map(({ tokenAddress }) => ({
       network,
       address: tokenAddress.toLowerCase(),
