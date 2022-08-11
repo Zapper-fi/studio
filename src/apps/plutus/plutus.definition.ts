@@ -26,13 +26,12 @@ export const PLUTUS_DEFINITION = appDefinition({
       id: 'lock',
       type: GroupType.POSITION,
       label: 'Locked PLS',
-      groupLabel: 'Farms',
     },
 
     farmPlsDpxLp: {
       id: 'farm-pls-dpx-lp',
       type: GroupType.POSITION,
-      label: 'plsDPX Farm',
+      label: 'plsDPX LP Farm',
     },
 
     farmPlsDpx: {
