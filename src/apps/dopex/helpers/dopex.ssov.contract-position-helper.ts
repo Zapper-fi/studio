@@ -42,7 +42,7 @@ export class DopexSsovContractPositionHelper {
 
     const tokenDepRequests = definitions.flatMap(({ depositTokenAddress, extraRewardTokenAddresses = [] }) => {
       const deposit = { network, address: depositTokenAddress };
-      const extraRewards = extraRewardTokenAddresses.map(address => ({ network, address }));
+      const extraRewards = extraRewardTokenAddresses.map(address => ({ network, address: address.toLowerCase() }));
       return [deposit, ...extraRewards];
     });
 
@@ -61,9 +61,7 @@ export class DopexSsovContractPositionHelper {
         const epochs = range(1, lastValidEpoch + 1);
 
         const depositToken = tokenDependencies.find(v => v.address === depositTokenAddress);
-        const rewardTokens = extraRewardTokenAddresses.map(v =>
-          tokenDependencies.find(t => t.address === v.toLowerCase()),
-        );
+        const rewardTokens = extraRewardTokenAddresses.map(v => tokenDependencies.find(t => t.address === v));
         if (!depositToken || rewardTokens.some(isUndefined)) return [];
 
         const positions = await Promise.all(
