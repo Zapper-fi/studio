@@ -64,7 +64,7 @@ export class EthersMulticall implements IMulticallWrapper {
       if (!success) {
         const error = new Error(`Multicall call failed for ${callIdentifier}`);
         error.stack = call.stack;
-        throw error;
+        return error;
       }
 
       try {
@@ -74,7 +74,7 @@ export class EthersMulticall implements IMulticallWrapper {
       } catch (err) {
         const error = new Error(`Multicall call failed for ${callIdentifier}: ${err.message} (decode)`);
         error.stack = call.stack;
-        throw error;
+        return error;
       }
     });
 
