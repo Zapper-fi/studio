@@ -42,7 +42,9 @@ export class SynthetixTransferrableSnxTokenHelper {
       pricePerShare: 1,
       tokens: [],
 
-      dataProps: {},
+      dataProps: {
+        exchangeable: true,
+      },
 
       displayProps: {
         label: snxToken.symbol,

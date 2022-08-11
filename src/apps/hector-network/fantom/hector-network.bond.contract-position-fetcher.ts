@@ -8,22 +8,12 @@ import {
   ContractPositionTemplatePositionFetcher,
   DisplayPropsStageParams,
   GetTokenBalancesPerPositionParams,
-  TokensStageParams,
+  TokenStageParams,
 } from '~position/template/contract-position.template.position-fetcher';
 import { Network } from '~types';
 
 import { HectorNetworkBondDepository, HectorNetworkContractFactory } from '../contracts';
 import { HECTOR_NETWORK_DEFINITION } from '../hector-network.definition';
-
-export type SablierStreamContractPositionDataProps = {
-  deposited: number;
-  remaining: number;
-};
-
-export type SablierStreamContractPositionDescriptor = {
-  address: string;
-  principleLabel: string;
-};
 
 const appId = HECTOR_NETWORK_DEFINITION.id;
 const groupId = HECTOR_NETWORK_DEFINITION.groups.bond.id;
@@ -59,7 +49,7 @@ export class FantomHectorNetworkBondContractPositionFetcher extends ContractPosi
     return this.contractFactory.hectorNetworkBondDepository({ address, network: this.network });
   }
 
-  async getTokenDescriptors({ contract }: TokensStageParams<HectorNetworkBondDepository>) {
+  async getTokenDescriptors({ contract }: TokenStageParams<HectorNetworkBondDepository>) {
     const [principle, claimable] = await Promise.all([contract.principle(), contract.HEC()]);
 
     return [
@@ -69,12 +59,12 @@ export class FantomHectorNetworkBondContractPositionFetcher extends ContractPosi
     ];
   }
 
-  async getLabel({ appToken }: DisplayPropsStageParams<HectorNetworkBondDepository>) {
-    return `${getLabelFromToken(appToken.tokens[2])} Bond`;
+  async getLabel({ contractPosition }: DisplayPropsStageParams<HectorNetworkBondDepository>) {
+    return `${getLabelFromToken(contractPosition.tokens[2])} Bond`;
   }
 
-  async getImages({ appToken }: DisplayPropsStageParams<HectorNetworkBondDepository>) {
-    return getImagesFromToken(appToken.tokens[2]);
+  async getImages({ contractPosition }: DisplayPropsStageParams<HectorNetworkBondDepository>) {
+    return getImagesFromToken(contractPosition.tokens[2]);
   }
 
   async getTokenBalancesPerPosition({

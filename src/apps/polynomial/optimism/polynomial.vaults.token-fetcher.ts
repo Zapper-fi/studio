@@ -50,7 +50,7 @@ export class OptimismPolynomialVaultsTokenFetcher implements PositionFetcher<App
         const vaultAddress = await multicall.wrap(contract).vault();
         const vaultContract = this.contractFactory.polynomialCoveredCall({ address: vaultAddress, network });
         const price = Number(await multicall.wrap(vaultContract).getTokenPrice());
-        return price / 10 ** underlyingToken.decimals / underlyingToken.price;
+        return price / 10 ** underlyingToken.decimals;
       },
     });
 

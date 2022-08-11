@@ -1,6 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import Axios from 'axios';
 
+import { Cache } from '~cache/cache.decorator';
+
 import { POLYNOMIAL_DEFINITION } from '../polynomial.definition';
 
 export interface VaultObject {
