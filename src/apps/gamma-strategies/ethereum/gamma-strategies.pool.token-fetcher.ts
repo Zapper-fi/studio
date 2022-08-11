@@ -39,8 +39,7 @@ export class EthereumGammaStrategiesPoolTokenFetcher implements PositionFetcher<
 
   async getPositions() {
     const multicall = this.appToolkit.getMulticall(network);
-    const tokenSelector = this.appToolkit.getBaseTokenPriceSelector({ tags: { network, appId } });
-    const baseTokens = await tokenSelector.getAll({ network });
+    const tokenSelector = this.appToolkit.getTokenDependencySelector({ tags: { network, context: appId } });
 
     const hypervisorAddresses = await Promise.all(
       FACTORY_ADDRESSES.map(async factoryAddress => {
@@ -79,8 +78,10 @@ export class EthereumGammaStrategiesPoolTokenFetcher implements PositionFetcher<
           multicall.wrap(hypervisorContract).name(),
         ]);
 
-        const token0 = baseTokens.find(p => p.address == token0AddressRaw.toLowerCase());
-        const token1 = baseTokens.find(p => p.address == token1AddressRaw.toLowerCase());
+        const [token0, token1] = await tokenSelector.getMany([
+          { network, address: token0AddressRaw.toLowerCase() },
+          { network, address: token1AddressRaw.toLowerCase() },
+        ]);
         if (!token0 || !token1) return null;
 
         const token0Reserve = Number(totalAmountInfo.total0) / 10 ** token0.decimals;

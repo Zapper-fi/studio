@@ -34,7 +34,7 @@ export class AaveV2ClaimableContractPositionHelper {
     protocolDataProviderAddress,
     rewardTokenAddress,
   }: AaveV2VariableDebtTokenHelperParams) {
-    const tokenSelector = this.appToolkit.getBaseTokenPriceSelector({ tags: { network, appId } });
+    const tokenSelector = this.appToolkit.getTokenDependencySelector({ tags: { network, context: appId } });
     const rewardToken = (await tokenSelector.getOne({ network, address: rewardTokenAddress }))!;
     const tokens = [claimable(rewardToken)];
 
