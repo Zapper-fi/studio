@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.164.0](https://github.com/Zapper-fi/studio/compare/v0.163.0...v0.164.0) (2022-08-11)
+
+
+### Features
+
+* **synthetix:** Add missing exchangeable property to SNX token ([#1134](https://github.com/Zapper-fi/studio/issues/1134)) ([bd3db83](https://github.com/Zapper-fi/studio/commit/bd3db8334449c344da96eca7389214726da1a3e4))
+
 ## [0.163.0](https://github.com/Zapper-fi/studio/compare/v0.162.0...v0.163.0) (2022-08-10)
 
 
