@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.168.0](https://github.com/Zapper-fi/studio/compare/v0.167.0...v0.168.0) (2022-08-11)
+
+
+### Features
+
+* **template:** Use token dependency resolution ([#1142](https://github.com/Zapper-fi/studio/issues/1142)) ([42d7c90](https://github.com/Zapper-fi/studio/commit/42d7c908f69177a13d0e59894db6622d43b4c322))
+
 ## [0.167.0](https://github.com/Zapper-fi/studio/compare/v0.166.0...v0.167.0) (2022-08-11)
 
 
