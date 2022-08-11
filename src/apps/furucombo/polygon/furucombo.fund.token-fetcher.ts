@@ -11,6 +11,7 @@ import {
   DisplayPropsStageParams,
   DataPropsStageParams,
   PricePerShareStageParams,
+  UnderlyingTokensStageParams,
 } from '~position/template/app-token.template.position-fetcher';
 import { Network, NETWORK_IDS } from '~types/network.interface';
 
@@ -86,7 +87,9 @@ export class PolygonFurucomboFundTokenFetcher extends AppTokenTemplatePositionFe
     return addresses;
   }
 
-  async getUnderlyingTokenAddresses(contract: FurucomboFundShareToken): Promise<string | string[]> {
+  async getUnderlyingTokenAddresses({
+    contract,
+  }: UnderlyingTokensStageParams<FurucomboFundShareToken>): Promise<string | string[]> {
     return this.furucomboFundMap[contract.address].stakingToken.address;
   }
 

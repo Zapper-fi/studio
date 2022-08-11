@@ -9,6 +9,7 @@ import {
   DisplayPropsStageParams,
   DataPropsStageParams,
   PricePerShareStageParams,
+  UnderlyingTokensStageParams,
 } from '~position/template/app-token.template.position-fetcher';
 import { Network } from '~types/network.interface';
 
@@ -43,7 +44,7 @@ export class FantomHectorNetworkWsHecTokenFetcher extends AppTokenTemplatePositi
     return ['0x94ccf60f700146bea8ef7832820800e2dfa92eda'];
   }
 
-  async getUnderlyingTokenAddresses(_contract: Erc20) {
+  async getUnderlyingTokenAddresses(_params: UnderlyingTokensStageParams<Erc20>) {
     return '0x75bdef24285013387a47775828bec90b91ca9a5f';
   }
 

@@ -7,6 +7,7 @@ import {
   AppTokenTemplatePositionFetcher,
   DisplayPropsStageParams,
   DataPropsStageParams,
+  UnderlyingTokensStageParams,
 } from '~position/template/app-token.template.position-fetcher';
 import { Network } from '~types/network.interface';
 
@@ -41,7 +42,7 @@ export class FantomHectorNetworkSHecV2TokenFetcher extends AppTokenTemplatePosit
     return ['0x75bdef24285013387a47775828bec90b91ca9a5f'];
   }
 
-  async getUnderlyingTokenAddresses(_contract: HectorNetworkStaked) {
+  async getUnderlyingTokenAddresses(_params: UnderlyingTokensStageParams<HectorNetworkStaked>) {
     return '0x5c4fdfc5233f935f20d2adba572f770c2e377ab0';
   }
 

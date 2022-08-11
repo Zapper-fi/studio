@@ -15,28 +15,23 @@ import {
   UnderlyingTokenDescriptor,
 } from '~position/template/contract-position.template.position-fetcher';
 
-export type SingleStakingFarmDefinition = {
-  address: string;
-  reserveAddress?: string;
-  stakedTokenAddress: string;
-  rewardTokenAddresses: string[];
-};
-
 export type SingleStakingFarmDataProps = {
   liquidity: number;
   apy: number;
   isActive: boolean;
 };
 
-export abstract class SingleStakingFarmTemplateContractPositionFetcher<
+export abstract class SingleStakingFarmDynamicTemplateContractPositionFetcher<
   T extends Contract,
   V extends SingleStakingFarmDataProps = SingleStakingFarmDataProps,
-> extends ContractPositionTemplatePositionFetcher<T, V, SingleStakingFarmDefinition> {
+> extends ContractPositionTemplatePositionFetcher<T, V> {
   constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) {
     super(appToolkit);
   }
 
-  abstract getFarmDefinitions(): Promise<SingleStakingFarmDefinition[]>;
+  abstract getFarmAddresses(): Promise<string[]>;
+  abstract getStakedTokenAddress(contract: T): Promise<string>;
+  abstract getRewardTokenAddresses(contract: T): Promise<string[]>;
   abstract getRewardRates(params: DataPropsStageParams<T, V>): Promise<BigNumberish | BigNumberish[]>;
   abstract getStakedTokenBalance(
     params: GetTokenBalancesPerPositionParams<T, SingleStakingFarmDataProps>,
@@ -46,17 +41,21 @@ export abstract class SingleStakingFarmTemplateContractPositionFetcher<
   ): Promise<BigNumberish | BigNumberish[]>;
 
   async getDescriptors() {
-    return this.getFarmDefinitions();
+    const farmAddresses = await this.getFarmAddresses();
+    return farmAddresses.map(address => ({ address }));
   }
 
-  async getTokenDescriptors({ descriptor }: TokenStageParams<T, V, SingleStakingFarmDefinition>) {
+  async getTokenDescriptors({ contract }: TokenStageParams<T, V>) {
+    const stakedTokenAddress = await this.getStakedTokenAddress(contract);
+    const rewardTokenAddresses = await this.getRewardTokenAddresses(contract);
+
     const tokens: UnderlyingTokenDescriptor[] = [];
-    tokens.push({ metaType: MetaType.SUPPLIED, address: descriptor.stakedTokenAddress });
-    tokens.push(...descriptor.rewardTokenAddresses.map(v => ({ metaType: MetaType.CLAIMABLE, address: v })));
+    tokens.push({ metaType: MetaType.SUPPLIED, address: stakedTokenAddress.toLowerCase() });
+    tokens.push(...rewardTokenAddresses.map(v => ({ metaType: MetaType.CLAIMABLE, address: v.toLowerCase() })));
     return tokens;
   }
 
-  async getDataProps(params: DataPropsStageParams<T, V, SingleStakingFarmDefinition>): Promise<V> {
+  async getDataProps(params: DataPropsStageParams<T, V>): Promise<V> {
     const { contractPosition, multicall } = params;
     const stakedToken = contractPosition.tokens.find(isSupplied)!;
     const rewardTokens = contractPosition.tokens.filter(isClaimable);

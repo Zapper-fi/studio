@@ -75,7 +75,7 @@ export class ArbitrumPlutusLockContractPositionFetcher extends SingleStakingFarm
     return PLUTUS_LOCKS;
   }
 
-  async getRewardRates(_contract: PlutusLock) {
+  async getRewardRates() {
     return [0, 0];
   }
 
