@@ -2,4 +2,3 @@
 /* tslint:disable */
 /* eslint-disable */
 export { BathToken__factory } from './BathToken__factory';
-export { Ierc20__factory } from './Ierc20__factory';

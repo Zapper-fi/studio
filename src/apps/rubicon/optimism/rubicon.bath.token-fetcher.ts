@@ -25,7 +25,7 @@ export class OptimismRubiconBathTokenFetcher implements PositionFetcher<AppToken
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(RubiconContractFactory) private readonly rubiconContractFactory: RubiconContractFactory,
-  ) { }
+  ) {}
 
   async getPositions() {
     // For now, hardcoded in docs
@@ -65,12 +65,11 @@ export class OptimismRubiconBathTokenFetcher implements PositionFetcher<AppToken
           address: underlyingTokenAddressRaw,
           network,
         });
-        const trueDecimals = await underlyingAssetContract.decimals();
 
         // Request the symbol, decimals, ands supply for the Bath Token
         const [symbol, decimals, supplyRaw] = await Promise.all([
           multicall.wrap(contract).symbol(),
-          trueDecimals,
+          underlyingAssetContract.decimals(),
           multicall.wrap(contract).totalSupply(),
         ]);
 
@@ -114,8 +113,8 @@ export class OptimismRubiconBathTokenFetcher implements PositionFetcher<AppToken
           dataProps: {},
           displayProps: {
             label,
-            images,
             secondaryLabel,
+            images,
           },
         };
 
