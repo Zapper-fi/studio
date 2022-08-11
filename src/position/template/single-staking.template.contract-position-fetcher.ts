@@ -24,10 +24,8 @@ export type SingleStakingFarmDefinition = {
 
 export type SingleStakingFarmDataProps = {
   liquidity: number;
+  apy: number;
   isActive: boolean;
-  dailyROI: number;
-  weeklyROI: number;
-  yearlyROI: number;
 };
 
 export abstract class SingleStakingFarmTemplateContractPositionFetcher<
@@ -75,13 +73,11 @@ export abstract class SingleStakingFarmTemplateContractPositionFetcher<
     const rewardRates = rewardTokens.map((v, i) => Number(rewardRatesRaw[i] ?? 0) / 10 ** v.decimals);
     const rewardRatesUSD = sum(rewardRates.map((v, i) => v * rewardTokens[i].price));
     const dailyRewardRateUSD = rewardRatesUSD * 86_400;
+    const dailyReturn = (dailyRewardRateUSD + liquidity) / liquidity - 1;
+    const apy = dailyReturn * 365 * 100;
+    const isActive = apy > 0;
 
-    const dailyROI = (dailyRewardRateUSD + liquidity) / liquidity - 1;
-    const weeklyROI = Number(dailyROI * 7);
-    const yearlyROI = dailyROI * 365;
-    const isActive = yearlyROI > 0;
-
-    return { liquidity, dailyROI, weeklyROI, yearlyROI, isActive } as V;
+    return { liquidity, apy, isActive } as V;
   }
 
   async getLabel({ contractPosition }: DisplayPropsStageParams<T>) {

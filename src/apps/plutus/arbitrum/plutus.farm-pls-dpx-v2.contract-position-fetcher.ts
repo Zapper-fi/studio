@@ -56,7 +56,10 @@ export class ArbitrumPlutusFarmPlsDpxV2ContractPositionFetcher extends SingleSta
     });
 
     const emissions = await rewardsDistroContract.getEmissions();
-    return [emissions.pls_, emissions.plsDpx_, emissions.plsJones_, emissions.pendingDpxLessFee_];
+    const lastRewardSecond = await contract.lastRewardSecond();
+    const duration = Date.now() / 1000 - lastRewardSecond;
+    const dpxEmissions = Number(emissions.pendingDpxLessFee_) / duration;
+    return [emissions.pls_, emissions.plsDpx_, emissions.plsJones_, dpxEmissions];
   }
 
   async getStakedTokenBalance({ contract, address }: GetTokenBalancesPerPositionParams<PlutusFarmPlsDpxV2>) {
