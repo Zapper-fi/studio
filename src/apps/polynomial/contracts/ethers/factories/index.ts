@@ -2,7 +2,6 @@
 /* tslint:disable */
 /* eslint-disable */
 export { PolynomialCoveredCall__factory } from './PolynomialCoveredCall__factory';
-export { PolynomialGammaHedge__factory } from './PolynomialGammaHedge__factory';
 export { PolynomialPutSelling__factory } from './PolynomialPutSelling__factory';
 export { PolynomialResolver__factory } from './PolynomialResolver__factory';
 export { PolynomialVaultToken__factory } from './PolynomialVaultToken__factory';

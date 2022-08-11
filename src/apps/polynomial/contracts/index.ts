@@ -5,7 +5,6 @@ import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
 import { PolynomialCoveredCall__factory } from './ethers';
-import { PolynomialGammaHedge__factory } from './ethers';
 import { PolynomialPutSelling__factory } from './ethers';
 import { PolynomialResolver__factory } from './ethers';
 import { PolynomialVaultToken__factory } from './ethers';
@@ -22,9 +21,6 @@ export class PolynomialContractFactory extends ContractFactory {
   polynomialCoveredCall({ address, network }: ContractOpts) {
     return PolynomialCoveredCall__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
-  polynomialGammaHedge({ address, network }: ContractOpts) {
-    return PolynomialGammaHedge__factory.connect(address, this.appToolkit.getNetworkProvider(network));
-  }
   polynomialPutSelling({ address, network }: ContractOpts) {
     return PolynomialPutSelling__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
@@ -37,7 +33,6 @@ export class PolynomialContractFactory extends ContractFactory {
 }
 
 export type { PolynomialCoveredCall } from './ethers';
-export type { PolynomialGammaHedge } from './ethers';
 export type { PolynomialPutSelling } from './ethers';
 export type { PolynomialResolver } from './ethers';
 export type { PolynomialVaultToken } from './ethers';
