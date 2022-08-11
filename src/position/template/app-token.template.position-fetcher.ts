@@ -132,10 +132,7 @@ export abstract class AppTokenTemplatePositionFetcher<
   // Note: This will be removed in favour of an orchestrator at a higher level once all groups are migrated
   async getPositions(): Promise<AppTokenPosition<V>[]> {
     const multicall = this.appToolkit.getMulticall(this.network);
-    const tokenLoader = this.appToolkit.getBaseTokenPriceSelector({
-      tags: { network: this.network, appId: `${this.appId}__template` },
-    });
-    const appTokenLoader = this.appToolkit.getAppTokenSelector({
+    const tokenLoader = this.appToolkit.getTokenDependencySelector({
       tags: { network: this.network, context: `${this.appId}__template` },
     });
 
@@ -155,13 +152,11 @@ export abstract class AppTokenTemplatePositionFetcher<
     const underlyingTokenRequests = skeletons
       .flatMap(v => v.underlyingTokenAddresses)
       .map(v => ({ network: this.network, address: v }));
-    const baseTokens = await tokenLoader.getMany(underlyingTokenRequests);
-    const appTokens = await appTokenLoader.getMany(underlyingTokenRequests);
-    const allTokens = [...compact(appTokens), ...compact(baseTokens)];
+    const tokenDependencies = await tokenLoader.getMany(underlyingTokenRequests).then(tokenDeps => compact(tokenDeps));
 
     const skeletonsWithResolvedTokens = await Promise.all(
       skeletons.map(async ({ address, underlyingTokenAddresses }) => {
-        const maybeTokens = underlyingTokenAddresses.map(v => allTokens.find(t => t.address === v));
+        const maybeTokens = underlyingTokenAddresses.map(v => tokenDependencies.find(t => t.address === v));
         const tokens = compact(maybeTokens);
 
         if (maybeTokens.length !== tokens.length) return null;
