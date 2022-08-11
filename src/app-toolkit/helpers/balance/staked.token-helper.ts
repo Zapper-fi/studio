@@ -3,7 +3,6 @@ import { Inject, Injectable } from '@nestjs/common';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { ContractType } from '~position/contract.interface';
 import { AppTokenPosition, ExchangeableAppTokenDataProps } from '~position/position.interface';
-import { AppGroupsDefinition } from '~position/position.service';
 import { Network } from '~types/network.interface';
 
 import { buildDollarDisplayItem } from '../presentation/display-item.present';
@@ -15,7 +14,6 @@ type StakedTokenHelperParams = {
   appId: string;
   groupId: string;
   underlyingTokenAddress: string;
-  dependencies?: AppGroupsDefinition[];
   exchangeable?: boolean;
   reserveAddress?: string;
   resolvePricePerShare?: (opts: {
@@ -43,7 +41,6 @@ export class StakedTokenHelper {
     groupId,
     underlyingTokenAddress,
     reserveAddress,
-    dependencies = [],
     exchangeable = false,
     resolvePricePerShare = ({ reserve, supply }) => reserve / supply,
     resolveLiquidity = ({ supply, price }) => supply * price,
@@ -53,12 +50,9 @@ export class StakedTokenHelper {
     const type = ContractType.APP_TOKEN;
     const contractFactory = this.appToolkit.globalContracts;
     const multicall = this.appToolkit.getMulticall(network);
-    const tokenSelector = this.appToolkit.getBaseTokenPriceSelector({ tags: { network, appId } });
-    const baseTokens = await tokenSelector.getAll({ network });
-    const appTokens = await this.appToolkit.getAppTokenPositions(...dependencies);
-    const allTokens = [...appTokens, ...baseTokens];
+    const tokenSelector = this.appToolkit.getTokenDependencySelector({ tags: { network, context: appId } });
 
-    const underlyingToken = allTokens.find(p => p.address === underlyingTokenAddress);
+    const underlyingToken = await tokenSelector.getOne({ network, address: underlyingTokenAddress });
     if (!underlyingToken) return [];
 
     const underlyingTokenContract = contractFactory.erc20({ network, address: underlyingToken.address });

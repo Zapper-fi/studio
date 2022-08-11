@@ -1,7 +1,7 @@
 import { Inject } from '@nestjs/common';
 import BigNumber from 'bignumber.js';
 import { gql } from 'graphql-request';
-import _ from 'lodash';
+import _, { compact } from 'lodash';
 
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
@@ -75,14 +75,17 @@ export class EthereumEnzymeFinanceVaultTokenFetcher extends AppTokenTemplatePosi
 
   async getPrice({ appToken, contract }: PriceStageParams<EnzymeFinanceVault, DefaultDataProps>): Promise<number> {
     const multicall = this.appToolkit.getMulticall(this.network);
-    const tokenSelector = this.appToolkit.getBaseTokenPriceSelector({ tags: { network, appId } });
-    const baseTokens = await tokenSelector.getAll({ network });
+    const tokenSelector = this.appToolkit.getTokenDependencySelector({ tags: { network, context: appId } });
 
     const decimalsRaw = await this.getDecimals(contract);
     const supplyRaw = await this.getSupply(contract);
     const decimals = new BigNumber(10).exponentiatedBy(decimalsRaw);
     const supply = new BigNumber(supplyRaw.toString()).div(decimals);
     const underlying = await this.getUnderlyingTokenAddresses(contract);
+
+    const tokenDependencies = await tokenSelector
+      .getMany(underlying.map(tokenAddressRaw => ({ network, address: tokenAddressRaw.toLowerCase() })))
+      .then(deps => compact(deps));
 
     const totalAssetUnderManagement = _.sum(
       await Promise.all(
@@ -95,7 +98,7 @@ export class EthereumEnzymeFinanceVaultTokenFetcher extends AppTokenTemplatePosi
           ]);
 
           const amount = Number(tokenAmountRaw) / 10 ** decimals;
-          const baseToken = baseTokens.find(v => v.address === tokenAddress);
+          const baseToken = tokenDependencies.find(v => v.address === tokenAddress);
           if (!baseToken) return 0;
 
           return baseToken.price * amount;
