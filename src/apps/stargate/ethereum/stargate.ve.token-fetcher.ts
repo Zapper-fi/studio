@@ -13,7 +13,7 @@ const appId = STARGATE_DEFINITION.id;
 const groupId = STARGATE_DEFINITION.groups.ve.id;
 const network = Network.ETHEREUM_MAINNET;
 
-const address = '0x0e42acbd23faee03249daff896b78d7e79fbd58e'.toLowerCase();
+const address = '0x0e42acbd23faee03249daff896b78d7e79fbd58e';
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
 export class EthereumStargateVeTokenFetcher implements PositionFetcher<AppTokenPosition> {

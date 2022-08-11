@@ -15,6 +15,7 @@ import { BinanceSmartChainStargateFarmContractPositionFetcher } from './binance-
 import { BinanceSmartChainStargatePoolTokenFetcher } from './binance-smart-chain/stargate.pool.token-fetcher';
 import { BinanceSmartChainStargateVeTokenFetcher } from './binance-smart-chain/stargate.ve.token-fetcher';
 import { StargateContractFactory } from './contracts';
+import { EthereumStargateAuctionLockedTokenFetcher } from './ethereum/stargate.auction-lock.token-fetcher';
 import { EthereumStargateBalanceFetcher } from './ethereum/stargate.balance-fetcher';
 import { EthereumStargateEthTokenFetcher } from './ethereum/stargate.eth.token-fetcher';
 import { EthereumStargateFarmContractPositionFetcher } from './ethereum/stargate.farm.contract-position-fetcher';
@@ -39,40 +40,48 @@ import { StargateAppDefinition, STARGATE_DEFINITION } from './stargate.definitio
 @Register.AppModule({
   appId: STARGATE_DEFINITION.id,
   providers: [
+    StargateAppDefinition,
+    StargateContractFactory,
+    StargatePoolTokenHelper,
+    // Arbitrum
     ArbitrumStargateBalanceFetcher,
     ArbitrumStargateEthTokenFetcher,
     ArbitrumStargateFarmContractPositionFetcher,
     ArbitrumStargatePoolTokenFetcher,
     ArbitrumStargateVeTokenFetcher,
+    // Avalanche
     AvalancheStargateBalanceFetcher,
     AvalancheStargateFarmContractPositionFetcher,
     AvalancheStargatePoolTokenFetcher,
     AvalancheStargateVeTokenFetcher,
+    // Binance-smart-chain
     BinanceSmartChainStargateBalanceFetcher,
     BinanceSmartChainStargateFarmContractPositionFetcher,
     BinanceSmartChainStargatePoolTokenFetcher,
     BinanceSmartChainStargateVeTokenFetcher,
+    // Ethereum
     EthereumStargateBalanceFetcher,
     EthereumStargateEthTokenFetcher,
     EthereumStargateFarmContractPositionFetcher,
     EthereumStargatePoolTokenFetcher,
     EthereumStargateVeTokenFetcher,
+    EthereumStargateAuctionLockedTokenFetcher,
+    // Fantom
     FantomStargateBalanceFetcher,
     FantomStargateFarmContractPositionFetcher,
     FantomStargatePoolTokenFetcher,
     FantomStargateVeTokenFetcher,
+    // Optimism
     OptimismStargateBalanceFetcher,
     OptimismStargateEthTokenFetcher,
     OptimismStargateFarmContractPositionFetcher,
     OptimismStargatePoolTokenFetcher,
     OptimismStargateVeTokenFetcher,
+    // Polygon
     PolygonStargateBalanceFetcher,
     PolygonStargateFarmContractPositionFetcher,
     PolygonStargatePoolTokenFetcher,
     PolygonStargateVeTokenFetcher,
-    StargateAppDefinition,
-    StargateContractFactory,
-    StargatePoolTokenHelper,
   ],
 })
 export class StargateAppModule extends AbstractApp() {}

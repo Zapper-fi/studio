@@ -33,6 +33,12 @@ export const STARGATE_DEFINITION = appDefinition({
       type: GroupType.TOKEN,
       label: 'Wrapper',
     },
+
+    auctionLocked: {
+      id: 'auction-locked',
+      type: GroupType.TOKEN,
+      label: 'Auction Locked',
+    },
   },
 
   tags: [AppTag.INFRASTRUCTURE],
