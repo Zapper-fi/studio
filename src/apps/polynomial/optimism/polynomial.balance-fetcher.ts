@@ -6,7 +6,7 @@ import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
 import { BalanceFetcher } from '~balance/balance-fetcher.interface';
-import { isSupplied } from '~position/position.utils';
+import { isSupplied, isClaimable } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 
 import { PolynomialContractFactory } from '../contracts';
@@ -31,7 +31,7 @@ export class OptimismPolynomialBalanceFetcher implements BalanceFetcher {
     });
   }
 
-  async getPendingBalances(address: string) {
+  async getPendingDepositBalances(address: string) {
     return this.appToolkit.helpers.contractPositionBalanceHelper.getContractPositionBalances({
       address,
       appId: POLYNOMIAL_DEFINITION.id,
@@ -40,14 +40,10 @@ export class OptimismPolynomialBalanceFetcher implements BalanceFetcher {
       resolveBalances: async ({ address, multicall, contractPosition: position }) => {
         const contract = this.contractFactory.polynomialCoveredCall(position);
 
-        const [withdrawalHead, depositHead] = await Promise.all([
-          multicall.wrap(contract).queuedWithdrawalHead(),
-          multicall.wrap(contract).queuedDepositHead(),
-        ]);
-
+        const depositHead = Number(await multicall.wrap(contract).queuedDepositHead());
         // Note: ignores pending deposits when deposit queue is large. Consider checking if the last user is ZERO_ADDRESS and recursing
         const pendingDeposits = await Promise.all(
-          map(range(250), async i => multicall.wrap(contract).depositQueue(Number(depositHead) + Number(i))),
+          map(range(250), async i => multicall.wrap(contract).depositQueue(depositHead + Number(i))),
         );
         const pendingDepositBalance = sumBy(pendingDeposits, deposit => {
           // Note: ignores partial deposits
@@ -57,44 +53,57 @@ export class OptimismPolynomialBalanceFetcher implements BalanceFetcher {
           return 0;
         });
 
+        return [drillBalance(position.tokens.find(isSupplied)!, pendingDepositBalance.toString())];
+      },
+    });
+  }
+
+  async getPendingWithdrawalBalances(address: string) {
+    return this.appToolkit.helpers.contractPositionBalanceHelper.getContractPositionBalances({
+      address,
+      appId: POLYNOMIAL_DEFINITION.id,
+      groupId: POLYNOMIAL_DEFINITION.groups.vaults.id,
+      network,
+      resolveBalances: async ({ address, multicall, contractPosition: position }) => {
+        const contract = this.contractFactory.polynomialCoveredCall(position);
+
+        const withdrawalHead = Number(await multicall.wrap(contract).queuedWithdrawalHead());
         // Note: ignores pending withdrawals when withdrawal queue is large
         const pendingWithdrawals = await Promise.all(
-          map(range(250), async i => multicall.wrap(contract).withdrawalQueue(Number(withdrawalHead) + Number(i))),
+          map(range(250), async i => multicall.wrap(contract).withdrawalQueue(withdrawalHead + Number(i))),
         );
-        const pendingWithdrawalTokens = sumBy(pendingWithdrawals, withdrawal => {
+        const pendingWithdrawalBalance = sumBy(pendingWithdrawals, withdrawal => {
           // Note: ignores partial withdrawals
           if (withdrawal.user.toLowerCase() === address.toLowerCase() && !Number(withdrawal.returnedAmount)) {
             return Number(withdrawal.withdrawnTokens);
           }
           return 0;
         });
-        // Note: note strictly correct, should return position tokens directly
-        const tokenPrice = Number(await multicall.wrap(contract).getTokenPrice());
-        const pendingWithdrawalBalance = pendingWithdrawalTokens * tokenPrice;
 
-        return [
-          drillBalance(
-            position.tokens.find(isSupplied)!,
-            (pendingDepositBalance + pendingWithdrawalBalance).toString(),
-          ),
-        ];
+        return [drillBalance(position.tokens.find(isClaimable)!, pendingWithdrawalBalance.toString())];
       },
     });
   }
 
   async getBalances(address: string) {
-    const [poolTokenBalances, pendingVaultBalances] = await Promise.all([
+    const [poolTokenBalances, pendingDepositBalances, pendingWithdrawalBalances] = await Promise.all([
       this.getPoolTokenBalances(address),
-      this.getPendingBalances(address),
+      this.getPendingDepositBalances(address),
+      this.getPendingWithdrawalBalances(address),
     ]);
+
     return presentBalanceFetcherResponse([
       {
         label: 'Pools',
         assets: poolTokenBalances,
       },
       {
-        label: 'Pending',
-        assets: pendingVaultBalances,
+        label: 'Pending Deposits',
+        assets: pendingDepositBalances,
+      },
+      {
+        label: 'Pending Withdrawals',
+        assets: pendingWithdrawalBalances,
       },
     ]);
   }

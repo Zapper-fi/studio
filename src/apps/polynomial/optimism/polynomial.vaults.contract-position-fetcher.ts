@@ -32,9 +32,13 @@ export class OptimismPolynomialVaultsContractPositionFetcher implements Position
           appId,
           groupId,
           network,
+          dependencies: [
+            { appId: POLYNOMIAL_DEFINITION.id, groupIds: [POLYNOMIAL_DEFINITION.groups.vaults.id], network },
+          ],
           resolveFarmAddresses: () =>
             vaults.filter(vault => vault.vaultId.includes('CALL')).map(vault => vault.vaultAddress.toLowerCase()),
           resolveStakedTokenAddress: async ({ multicall, contract }) => multicall.wrap(contract).UNDERLYING(),
+          resolveRewardTokenAddresses: ({ multicall, contract }) => multicall.wrap(contract).VAULT_TOKEN(),
           resolveFarmContract: ({ address }) => this.contractFactory.polynomialCoveredCall({ address, network }),
           resolveLiquidity: ({ multicall, contract }) => multicall.wrap(contract).totalFunds(),
           resolveLabel: (address: string) => resolveTitle(getVault(vaults, address).vaultId),
@@ -61,9 +65,13 @@ export class OptimismPolynomialVaultsContractPositionFetcher implements Position
         appId,
         groupId,
         network,
+        dependencies: [
+          { appId: POLYNOMIAL_DEFINITION.id, groupIds: [POLYNOMIAL_DEFINITION.groups.vaults.id], network },
+        ],
         resolveFarmAddresses: () =>
           vaults.filter(vault => !vault.vaultId.includes('CALL')).map(vault => vault.vaultAddress.toLowerCase()), // Put and Gamma positions
         resolveStakedTokenAddress: async ({ multicall, contract }) => multicall.wrap(contract).SUSD(),
+        resolveRewardTokenAddresses: ({ multicall, contract }) => multicall.wrap(contract).VAULT_TOKEN(),
         resolveFarmContract: ({ address }) => this.contractFactory.polynomialPutSelling({ address, network }),
         resolveLiquidity: ({ multicall, contract }) => multicall.wrap(contract).totalFunds(),
         resolveLabel: (address: string) => resolveTitle(getVault(vaults, address).vaultId),
