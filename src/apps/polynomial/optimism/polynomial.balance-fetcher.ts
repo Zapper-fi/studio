@@ -40,10 +40,13 @@ export class OptimismPolynomialBalanceFetcher implements BalanceFetcher {
       resolveBalances: async ({ address, multicall, contractPosition: position }) => {
         const contract = this.contractFactory.polynomialCoveredCall(position);
 
-        const depositHead = Number(await multicall.wrap(contract).queuedDepositHead());
+        const [depositHead, depositTail] = await Promise.all([
+          multicall.wrap(contract).queuedDepositHead(),
+          multicall.wrap(contract).nextQueuedDepositId(),
+        ]);
         // Note: ignores pending deposits when deposit queue is large. Consider checking if the last user is ZERO_ADDRESS and recursing
         const pendingDeposits = await Promise.all(
-          map(range(250), async i => multicall.wrap(contract).depositQueue(depositHead + Number(i))),
+          map(range(Number(depositHead), Number(depositTail)), async i => multicall.wrap(contract).depositQueue(i)),
         );
         const pendingDepositBalance = sumBy(pendingDeposits, deposit => {
           // Note: ignores partial deposits
@@ -67,10 +70,15 @@ export class OptimismPolynomialBalanceFetcher implements BalanceFetcher {
       resolveBalances: async ({ address, multicall, contractPosition: position }) => {
         const contract = this.contractFactory.polynomialCoveredCall(position);
 
-        const withdrawalHead = Number(await multicall.wrap(contract).queuedWithdrawalHead());
+        const [withdrawalHead, withdrawalTail] = await Promise.all([
+          multicall.wrap(contract).queuedWithdrawalHead(),
+          multicall.wrap(contract).nextQueuedWithdrawalId(),
+        ]);
         // Note: ignores pending withdrawals when withdrawal queue is large
         const pendingWithdrawals = await Promise.all(
-          map(range(250), async i => multicall.wrap(contract).withdrawalQueue(withdrawalHead + Number(i))),
+          map(range(Number(withdrawalHead), Number(withdrawalTail)), async i =>
+            multicall.wrap(contract).withdrawalQueue(i),
+          ),
         );
         const pendingWithdrawalBalance = sumBy(pendingWithdrawals, withdrawal => {
           // Note: ignores partial withdrawals
