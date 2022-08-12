@@ -2,4 +2,5 @@
 /* tslint:disable */
 /* eslint-disable */
 export { BeethovenXBeetsBar__factory } from './BeethovenXBeetsBar__factory';
+export { BeethovenXGauge__factory } from './BeethovenXGauge__factory';
 export { BeethovenXMasterchef__factory } from './BeethovenXMasterchef__factory';

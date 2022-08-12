@@ -11,6 +11,7 @@ import {
   DisplayPropsStageParams,
   DataPropsStageParams,
   PricePerShareStageParams,
+  UnderlyingTokensStageParams,
 } from '~position/template/app-token.template.position-fetcher';
 import { Network, NETWORK_IDS } from '~types/network.interface';
 
@@ -64,6 +65,10 @@ export class PolygonFurucomboFundTokenFetcher extends AppTokenTemplatePositionFe
     super(appToolkit);
   }
 
+  getContract(address: string): FurucomboFundShareToken {
+    return this.contractFactory.furucomboFundShareToken({ address, network: this.network });
+  }
+
   @CacheOnInterval({
     key: `studio:${appId}:${groupId}:${network}:funds`,
     timeout: 15 * 60 * 1000,
@@ -86,8 +91,8 @@ export class PolygonFurucomboFundTokenFetcher extends AppTokenTemplatePositionFe
     return addresses;
   }
 
-  async getUnderlyingTokenAddresses(contract: FurucomboFundShareToken): Promise<string | string[]> {
-    return this.furucomboFundMap[contract.address].stakingToken.address;
+  async getUnderlyingTokenAddresses({ address }: UnderlyingTokensStageParams<FurucomboFundShareToken>) {
+    return this.furucomboFundMap[address].stakingToken.address;
   }
 
   async getPricePerShare({

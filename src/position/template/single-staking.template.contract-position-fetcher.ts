@@ -37,7 +37,7 @@ export abstract class SingleStakingFarmTemplateContractPositionFetcher<
   }
 
   abstract getFarmDefinitions(): Promise<SingleStakingFarmDefinition[]>;
-  abstract getRewardRates(contract: T): Promise<BigNumberish | BigNumberish[]>;
+  abstract getRewardRates(params: DataPropsStageParams<T, V>): Promise<BigNumberish | BigNumberish[]>;
   abstract getStakedTokenBalance(
     params: GetTokenBalancesPerPositionParams<T, SingleStakingFarmDataProps>,
   ): Promise<BigNumberish>;
@@ -56,14 +56,11 @@ export abstract class SingleStakingFarmTemplateContractPositionFetcher<
     return tokens;
   }
 
-  async getDataProps({
-    contract,
-    contractPosition,
-    multicall,
-  }: DataPropsStageParams<T, V, SingleStakingFarmDefinition>): Promise<V> {
+  async getDataProps(params: DataPropsStageParams<T, V, SingleStakingFarmDefinition>): Promise<V> {
+    const { contractPosition, multicall } = params;
     const stakedToken = contractPosition.tokens.find(isSupplied)!;
     const rewardTokens = contractPosition.tokens.filter(isClaimable);
-    const rewardRatesRaw = await this.getRewardRates(contract).then(v => (isArray(v) ? v : [v]));
+    const rewardRatesRaw = await this.getRewardRates(params).then(v => (isArray(v) ? v : [v]));
 
     const stakedTokenContract = this.appToolkit.globalContracts.erc20(stakedToken);
     const reserveRaw = await multicall.wrap(stakedTokenContract).balanceOf(contractPosition.address);

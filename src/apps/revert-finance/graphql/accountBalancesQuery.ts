@@ -7,12 +7,12 @@ type AccountBalance = {
   balance: string;
 };
 
-export type CompoundorUserPosition = {
+export type CompoundorAccountBalances = {
   accountBalances: Array<AccountBalance>;
 };
 
 export const accountBalancesQuery = gql`
-  query getUserPositions($address: String!) {
+  query getAccountBalances($address: String) {
     accountBalances(where: { account: $address }) {
       id
       account
