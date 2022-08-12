@@ -65,6 +65,10 @@ export class PolygonFurucomboFundTokenFetcher extends AppTokenTemplatePositionFe
     super(appToolkit);
   }
 
+  getContract(address: string): FurucomboFundShareToken {
+    return this.contractFactory.furucomboFundShareToken({ address, network: this.network });
+  }
+
   @CacheOnInterval({
     key: `studio:${appId}:${groupId}:${network}:funds`,
     timeout: 15 * 60 * 1000,

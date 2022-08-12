@@ -8,6 +8,7 @@ import {
   DataPropsStageParams,
   DisplayPropsStageParams,
   PricePerShareStageParams,
+  UnderlyingTokensStageParams,
 } from '~position/template/app-token.template.position-fetcher';
 import { Network, NETWORK_IDS } from '~types';
 
@@ -48,7 +49,7 @@ export class PolygonClearpoolPoolTokenFetcher extends AppTokenTemplatePositionFe
     return this.clearpoolContractFactory.clearpoolPool({ address, network });
   }
 
-  getUnderlyingTokenAddresses(contract: ClearpoolPool) {
+  async getUnderlyingTokenAddresses({ contract }: UnderlyingTokensStageParams<ClearpoolPool>) {
     return contract.currency();
   }
 
