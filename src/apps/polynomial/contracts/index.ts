@@ -6,7 +6,8 @@ import { Network } from '~types/network.interface';
 
 import { PolynomialCoveredCall__factory } from './ethers';
 import { PolynomialPutSelling__factory } from './ethers';
-import { Vaults__factory } from './ethers';
+import { PolynomialResolver__factory } from './ethers';
+import { PolynomialVaultToken__factory } from './ethers';
 
 // eslint-disable-next-line
 type ContractOpts = { address: string; network: Network };
@@ -23,11 +24,15 @@ export class PolynomialContractFactory extends ContractFactory {
   polynomialPutSelling({ address, network }: ContractOpts) {
     return PolynomialPutSelling__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
-  vaults({ address, network }: ContractOpts) {
-    return Vaults__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  polynomialResolver({ address, network }: ContractOpts) {
+    return PolynomialResolver__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
+  polynomialVaultToken({ address, network }: ContractOpts) {
+    return PolynomialVaultToken__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
 }
 
 export type { PolynomialCoveredCall } from './ethers';
 export type { PolynomialPutSelling } from './ethers';
-export type { Vaults } from './ethers';
+export type { PolynomialResolver } from './ethers';
+export type { PolynomialVaultToken } from './ethers';

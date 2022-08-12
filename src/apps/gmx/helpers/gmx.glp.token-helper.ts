@@ -16,6 +16,7 @@ type GetGmxGlpTokenParams = {
   network: Network;
   glmManagerAddress: string;
   glpTokenAddress: string;
+  blockedTokenAddresses: string[];
 };
 
 @Injectable()
@@ -25,7 +26,7 @@ export class GmxGlpTokenHelper {
     @Inject(GmxContractFactory) private readonly contractFactory: GmxContractFactory,
   ) {}
 
-  async getTokens({ network, glmManagerAddress, glpTokenAddress }: GetGmxGlpTokenParams) {
+  async getTokens({ network, glmManagerAddress, glpTokenAddress, blockedTokenAddresses }: GetGmxGlpTokenParams) {
     const multicall = this.appToolkit.getMulticall(network);
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
 
@@ -45,7 +46,8 @@ export class GmxGlpTokenHelper {
     const numTokens = await mcVault.allWhitelistedTokensLength();
     const tokenAddressesRaw = await Promise.all(range(0, Number(numTokens)).map(i => mcVault.allWhitelistedTokens(i)));
     const tokensRaw = tokenAddressesRaw.map(t1 => baseTokens.find(t2 => t2.address === t1.toLowerCase()));
-    const tokens = _.compact(tokensRaw);
+    const tokensUnfiltered = _.compact(tokensRaw);
+    const tokens = tokensUnfiltered.filter(x => !blockedTokenAddresses.includes(x.address));
 
     // Reserves
     const reserves = await Promise.all(
