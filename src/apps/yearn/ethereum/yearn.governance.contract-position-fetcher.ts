@@ -1,5 +1,3 @@
-import fs from 'fs';
-
 import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
@@ -23,11 +21,6 @@ export class EthereumYearnGovernanceContractPositionFetcher extends SingleStakin
   appId = appId;
   groupId = groupId;
   network = network;
-
-  async onApplicationBootstrap() {
-    const bb = await this.getPositions();
-    fs.writeFileSync('farm2.json', JSON.stringify(bb, null, 2));
-  }
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
