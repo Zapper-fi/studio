@@ -57,7 +57,7 @@ export declare namespace RightsManager {
   };
 }
 
-export interface BalancerAbptInterface extends utils.Interface {
+export interface AaveAbptInterface extends utils.Interface {
   functions: {
     'DECIMALS()': FunctionFragment;
     'DEFAULT_ADD_TOKEN_TIME_LOCK_IN_BLOCKS()': FunctionFragment;
@@ -441,12 +441,12 @@ export type TransferEvent = TypedEvent<[string, string, BigNumber], TransferEven
 
 export type TransferEventFilter = TypedEventFilter<TransferEvent>;
 
-export interface BalancerAbpt extends BaseContract {
+export interface AaveAbpt extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: BalancerAbptInterface;
+  interface: AaveAbptInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,

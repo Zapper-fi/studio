@@ -20,10 +20,35 @@ export const AAVE_SAFETY_MODULE_DEFINITION = appDefinition({
   },
 
   groups: {
-    stkAave: { id: 'stk-aave', type: GroupType.TOKEN, label: 'stkAAVE' },
-    stkAbpt: { id: 'stk-abpt', type: GroupType.TOKEN, label: 'stkABPT' },
-    abpt: { id: 'abpt', type: GroupType.TOKEN, label: 'ABPT' },
-    claimable: { id: 'claimable', type: GroupType.TOKEN, label: 'Rewards' },
+    stkAave: {
+      id: 'stk-aave',
+      type: GroupType.TOKEN,
+      label: 'stkAAVE',
+    },
+
+    stkAbpt: {
+      id: 'stk-abpt',
+      type: GroupType.TOKEN,
+      label: 'stkABPT',
+    },
+
+    abpt: {
+      id: 'abpt',
+      type: GroupType.TOKEN,
+      label: 'ABPT',
+    },
+
+    stkAbptClaimable: {
+      id: 'claimable',
+      type: GroupType.POSITION,
+      label: 'stkABPT Rewards',
+    },
+
+    stkAaveClaimable: {
+      id: 'claimable',
+      type: GroupType.POSITION,
+      label: 'stkAAVE Rewards',
+    },
   },
 
   supportedNetworks: {

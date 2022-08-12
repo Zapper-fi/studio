@@ -1,19 +1,23 @@
 import { Inject } from '@nestjs/common';
+import { sum } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
-import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
-import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
-import { ContractType } from '~position/contract.interface';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { AppTokenPosition } from '~position/position.interface';
+import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import {
+  AppTokenTemplatePositionFetcher,
+  DataPropsStageParams,
+  DisplayPropsStageParams,
+  PricePerShareStageParams,
+  UnderlyingTokensStageParams,
+} from '~position/template/app-token.template.position-fetcher';
 import { Network } from '~types/network.interface';
 
 import { AAVE_SAFETY_MODULE_DEFINITION } from '../aave-safety-module.definition';
-import { AaveSafetyModuleContractFactory } from '../contracts';
+import { AaveAbpt, AaveSafetyModuleContractFactory } from '../contracts';
 
 type AaveSafetyModuleAbptTokenDataProps = {
-  supply: number;
+  reserves: number[];
   liquidity: number;
   fee: number;
 };
@@ -23,9 +27,14 @@ const groupId = AAVE_SAFETY_MODULE_DEFINITION.groups.abpt.id;
 const network = Network.ETHEREUM_MAINNET;
 
 @Register.TokenPositionFetcher({ appId, groupId, network })
-export class EthereumAaveSafetyModuleAbptTokenFetcher
-  implements PositionFetcher<AppTokenPosition<AaveSafetyModuleAbptTokenDataProps>>
-{
+export class EthereumAaveSafetyModuleAbptTokenFetcher extends AppTokenTemplatePositionFetcher<
+  AaveAbpt,
+  AaveSafetyModuleAbptTokenDataProps
+> {
+  appId = AAVE_SAFETY_MODULE_DEFINITION.id;
+  groupId = AAVE_SAFETY_MODULE_DEFINITION.groups.abpt.id;
+  network = Network.ETHEREUM_MAINNET;
+
   readonly bptAddress = '0xc697051d1c6296c24ae3bcef39aca743861d9a81';
   readonly abptAddress = '0x41a08648c3766f9f9d85598ff102a08f4ef84f84';
   readonly aaveAddress = '0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9';
@@ -33,74 +42,64 @@ export class EthereumAaveSafetyModuleAbptTokenFetcher
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
-    @Inject(AaveSafetyModuleContractFactory) private readonly contractFactory: AaveSafetyModuleContractFactory,
-  ) {}
+    @Inject(AaveSafetyModuleContractFactory) protected readonly contractFactory: AaveSafetyModuleContractFactory,
+  ) {
+    super(appToolkit);
+  }
 
-  async getPositions() {
-    const contractFactory = this.contractFactory;
-    const multicall = this.appToolkit.getMulticall(network);
+  getContract(address: string): AaveAbpt {
+    return this.contractFactory.aaveAbpt({ address, network: this.network });
+  }
 
-    const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
-    const aaveToken = baseTokens.find(p => p.address === this.aaveAddress);
-    const wethToken = baseTokens.find(p => p.address === this.wethAddress);
-    if (!aaveToken || !wethToken) return [];
+  async getAddresses(): Promise<string[]> {
+    return ['0x41a08648c3766f9f9d85598ff102a08f4ef84f84'];
+  }
 
-    const abptContract = contractFactory.balancerAbpt({ network, address: this.abptAddress });
-    const bptContract = contractFactory.balancerPoolToken({ network, address: this.bptAddress });
+  async getUnderlyingTokenAddresses(_params: UnderlyingTokensStageParams<AaveAbpt>): Promise<string | string[]> {
+    return ['0xc697051d1c6296c24ae3bcef39aca743861d9a81'];
+  }
 
-    const [symbol, decimals, supplyRaw, wethReserveRaw, aaveReserveRaw] = await Promise.all([
-      multicall.wrap(abptContract).symbol(),
-      multicall.wrap(abptContract).decimals(),
-      multicall.wrap(abptContract).totalSupply(),
-      multicall.wrap(bptContract).getBalance(wethToken.address),
-      multicall.wrap(bptContract).getBalance(aaveToken.address),
+  async getPricePerShare({
+    appToken,
+    multicall,
+    tokenLoader,
+  }: PricePerShareStageParams<AaveAbpt, AaveSafetyModuleAbptTokenDataProps>) {
+    const wethAddress = '0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2';
+    const aaveAddress = '0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9';
+
+    const tokenRequests = [wethAddress, aaveAddress].map(v => ({ address: v, network: this.network }));
+    const [wethToken, aaveToken] = await tokenLoader.getMany(tokenRequests);
+    if (!wethToken || !aaveToken) return null as any; // force throw
+
+    const poolToken = this.contractFactory.aaveBpt({
+      address: appToken.tokens[0].address,
+      network: this.network,
+    });
+
+    const [wethReserveRaw, aaveReserveRaw] = await Promise.all([
+      multicall.wrap(poolToken).getBalance(wethAddress),
+      multicall.wrap(poolToken).getBalance(aaveAddress),
     ]);
 
-    // Data Props
-    const supply = Number(supplyRaw) / 10 ** decimals;
     const aaveReserve = Number(aaveReserveRaw) / 10 ** aaveToken.decimals;
     const wethReserve = Number(wethReserveRaw) / 10 ** wethToken.decimals;
-    const reserves = [aaveReserve, wethReserve];
-    const liquidity = wethReserve * wethToken.price + aaveReserve * aaveToken.price;
-    const price = liquidity / supply;
-    const pricePerShare = [aaveReserve / supply, wethReserve / supply];
-    const tokens = [aaveToken, wethToken];
-    const reservePercentages = tokens.map((t, i) => reserves[i] * (t.price / liquidity));
+    return [aaveReserve / appToken.supply, wethReserve / appToken.supply];
+  }
+
+  async getDataProps({ appToken }: DataPropsStageParams<AaveAbpt, AaveSafetyModuleAbptTokenDataProps>) {
     const fee = 0.03;
+    const reserves = (appToken.pricePerShare as number[]).map(v => v * appToken.supply);
+    const liquidity = sum(reserves.map((v, i) => v * appToken.tokens[i].price));
+    return { fee, reserves, liquidity };
+  }
 
-    // Display Properties
-    const label = `AAVE / ETH`;
-    const secondaryLabel = reservePercentages.map(p => `${Math.round(p * 100)}%`).join(' / ');
-    const images = [getTokenImg(aaveToken.address, network), getTokenImg(wethToken.address, network)];
-    const statsItems = [{ label: 'Liquidity', value: buildDollarDisplayItem(liquidity) }];
+  async getLabel({ appToken }: DisplayPropsStageParams<AaveAbpt, AaveSafetyModuleAbptTokenDataProps>) {
+    return appToken.tokens.map(v => getLabelFromToken(v)).join(' / ');
+  }
 
-    const poolToken: AppTokenPosition<AaveSafetyModuleAbptTokenDataProps> = {
-      type: ContractType.APP_TOKEN,
-      network,
-      address: this.abptAddress,
-      appId,
-      groupId,
-      decimals,
-      symbol,
-      supply,
-      tokens,
-      price,
-      pricePerShare,
-
-      dataProps: {
-        supply,
-        liquidity,
-        fee,
-      },
-
-      displayProps: {
-        label,
-        secondaryLabel,
-        images,
-        statsItems,
-      },
-    };
-
-    return [poolToken];
+  async getSecondaryLabel({ appToken }: DisplayPropsStageParams<AaveAbpt, AaveSafetyModuleAbptTokenDataProps>) {
+    const { reserves, liquidity } = appToken.dataProps;
+    const reservePercentages = appToken.tokens.map((t, i) => reserves[i] * (t.price / liquidity));
+    return reservePercentages.map(p => `${Math.round(p * 100)}%`).join(' / ');
   }
 }

@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { BalancerPoolToken, BalancerPoolTokenInterface } from '../BalancerPoolToken';
+import type { AaveBpt, AaveBptInterface } from '../AaveBpt';
 
 const _abi = [
   {
@@ -1637,12 +1637,12 @@ const _abi = [
   },
 ];
 
-export class BalancerPoolToken__factory {
+export class AaveBpt__factory {
   static readonly abi = _abi;
-  static createInterface(): BalancerPoolTokenInterface {
-    return new utils.Interface(_abi) as BalancerPoolTokenInterface;
+  static createInterface(): AaveBptInterface {
+    return new utils.Interface(_abi) as AaveBptInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): BalancerPoolToken {
-    return new Contract(address, _abi, signerOrProvider) as BalancerPoolToken;
+  static connect(address: string, signerOrProvider: Signer | Provider): AaveBpt {
+    return new Contract(address, _abi, signerOrProvider) as AaveBpt;
   }
 }
