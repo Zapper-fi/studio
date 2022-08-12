@@ -4,6 +4,16 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.172.0](https://github.com/Zapper-fi/studio/compare/v0.171.1...v0.172.0) (2022-08-12)
+
+
+### Features
+
+* **polynomial:** Update vaults to v2 ([#1137](https://github.com/Zapper-fi/studio/issues/1137)) ([377a769](https://github.com/Zapper-fi/studio/commit/377a76949f0c69ce11f3fe144139b14852fe68bc))
+* **revert-fi:** Add compounding Uniswap v3 LP positions ([#1112](https://github.com/Zapper-fi/studio/issues/1112)) ([2c83174](https://github.com/Zapper-fi/studio/commit/2c831744cf193d5acd9e4055deca62ba9027f427))
+* **spool-fi:** Add Spool.fi app with simple vault positions and user balance ([#1151](https://github.com/Zapper-fi/studio/issues/1151)) ([2b61cc3](https://github.com/Zapper-fi/studio/commit/2b61cc31db4691205d14550bcc3e13ff5f25d377))
+* **spool:** Add missing logo and fix lint in Polynomial ([f0fa0bf](https://github.com/Zapper-fi/studio/commit/f0fa0bf801f650d38cf22a3ac5384215fd522182))
+
 ## [0.171.1](https://github.com/Zapper-fi/studio/compare/v0.171.0...v0.171.1) (2022-08-12)
 
 
