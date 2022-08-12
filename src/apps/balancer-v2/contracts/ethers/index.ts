@@ -2,24 +2,20 @@
 /* tslint:disable */
 /* eslint-disable */
 export type { BalancerAaveLinearPool } from './BalancerAaveLinearPool';
-export type { BalancerAaveLinearPoolFactory } from './BalancerAaveLinearPoolFactory';
 export type { BalancerChildChainGaugeFactory } from './BalancerChildChainGaugeFactory';
 export type { BalancerGauge } from './BalancerGauge';
 export type { BalancerMerkleOrchard } from './BalancerMerkleOrchard';
 export type { BalancerMerkleRedeem } from './BalancerMerkleRedeem';
-export type { BalancerPhantomPoolFactory } from './BalancerPhantomPoolFactory';
 export type { BalancerPool } from './BalancerPool';
 export type { BalancerVault } from './BalancerVault';
 export type { BalancerVeBal } from './BalancerVeBal';
 export type { BalancerWrappedAaveToken } from './BalancerWrappedAaveToken';
 export * as factories from './factories';
-export { BalancerAaveLinearPoolFactory__factory } from './factories/BalancerAaveLinearPoolFactory__factory';
 export { BalancerAaveLinearPool__factory } from './factories/BalancerAaveLinearPool__factory';
 export { BalancerChildChainGaugeFactory__factory } from './factories/BalancerChildChainGaugeFactory__factory';
 export { BalancerGauge__factory } from './factories/BalancerGauge__factory';
 export { BalancerMerkleOrchard__factory } from './factories/BalancerMerkleOrchard__factory';
 export { BalancerMerkleRedeem__factory } from './factories/BalancerMerkleRedeem__factory';
-export { BalancerPhantomPoolFactory__factory } from './factories/BalancerPhantomPoolFactory__factory';
 export { BalancerPool__factory } from './factories/BalancerPool__factory';
 export { BalancerVault__factory } from './factories/BalancerVault__factory';
 export { BalancerVeBal__factory } from './factories/BalancerVeBal__factory';
