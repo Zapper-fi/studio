@@ -13,11 +13,11 @@ import { PickleContractFactory, PickleJar } from '../contracts';
 import { PickleApiJarRegistry } from '../helpers/pickle.api.jar-registry';
 import { PICKLE_DEFINITION } from '../pickle.definition';
 
-@Register.TokenPositionFetcher({
-  appId: PICKLE_DEFINITION.id,
-  groupId: PICKLE_DEFINITION.groups.jar.id,
-  network: Network.ARBITRUM_MAINNET,
-})
+const appId = PICKLE_DEFINITION.id;
+const groupId = PICKLE_DEFINITION.groups.jar.id;
+const network = Network.ARBITRUM_MAINNET;
+
+@Register.TokenPositionFetcher({ appId, groupId, network })
 export class ArbitrumPickleJarTokenFetcher implements PositionFetcher<AppTokenPosition> {
   constructor(
     @Inject(PickleContractFactory)
@@ -27,7 +27,6 @@ export class ArbitrumPickleJarTokenFetcher implements PositionFetcher<AppTokenPo
   ) {}
 
   async getPositions() {
-    const network = Network.ARBITRUM_MAINNET;
     const vaults = await this.jarRegistry.getJarDefinitions({ network });
 
     return this.appToolkit.helpers.vaultTokenHelper.getTokens<PickleJar>({

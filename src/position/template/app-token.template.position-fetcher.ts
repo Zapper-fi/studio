@@ -16,9 +16,11 @@ import { DefaultDataProps, DisplayProps, StatsItem } from '~position/display.int
 import { AppTokenPositionBalance } from '~position/position-balance.interface';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
+import { TokenDependencySelector } from '~position/selectors/token-dependency-selector.interface';
 import { Network } from '~types/network.interface';
 
 export type StageParams<T extends Contract, V, K extends keyof AppTokenPosition> = {
+  tokenLoader: TokenDependencySelector;
   multicall: IMulticallWrapper;
   contract: T;
   appToken: Omit<AppTokenPosition<V>, K>;
@@ -132,10 +134,7 @@ export abstract class AppTokenTemplatePositionFetcher<
   // Note: This will be removed in favour of an orchestrator at a higher level once all groups are migrated
   async getPositions(): Promise<AppTokenPosition<V>[]> {
     const multicall = this.appToolkit.getMulticall(this.network);
-    const tokenLoader = this.appToolkit.getBaseTokenPriceSelector({
-      tags: { network: this.network, appId: `${this.appId}__template` },
-    });
-    const appTokenLoader = this.appToolkit.getAppTokenSelector({
+    const tokenLoader = this.appToolkit.getTokenDependencySelector({
       tags: { network: this.network, context: `${this.appId}__template` },
     });
 
@@ -155,13 +154,11 @@ export abstract class AppTokenTemplatePositionFetcher<
     const underlyingTokenRequests = skeletons
       .flatMap(v => v.underlyingTokenAddresses)
       .map(v => ({ network: this.network, address: v }));
-    const baseTokens = await tokenLoader.getMany(underlyingTokenRequests);
-    const appTokens = await appTokenLoader.getMany(underlyingTokenRequests);
-    const allTokens = [...compact(appTokens), ...compact(baseTokens)];
+    const tokenDependencies = await tokenLoader.getMany(underlyingTokenRequests).then(tokenDeps => compact(tokenDeps));
 
     const skeletonsWithResolvedTokens = await Promise.all(
       skeletons.map(async ({ address, underlyingTokenAddresses }) => {
-        const maybeTokens = underlyingTokenAddresses.map(v => allTokens.find(t => t.address === v));
+        const maybeTokens = underlyingTokenAddresses.map(v => tokenDependencies.find(t => t.address === v));
         const tokens = compact(maybeTokens);
 
         if (maybeTokens.length !== tokens.length) return null;
@@ -193,22 +190,22 @@ export abstract class AppTokenTemplatePositionFetcher<
         };
 
         // Resolve price per share stage
-        const pricePerShareStageParams = { appToken: fragment, contract, multicall };
+        const pricePerShareStageParams = { appToken: fragment, contract, multicall, tokenLoader };
         const pricePerShare = await this.getPricePerShare(pricePerShareStageParams).then(v => (isArray(v) ? v : [v]));
 
         // Resolve Price Stage
         const priceStageFragment = { ...pricePerShareStageParams.appToken, pricePerShare };
-        const priceStageParams = { appToken: priceStageFragment, contract, multicall };
+        const priceStageParams = { appToken: priceStageFragment, contract, multicall, tokenLoader };
         const price = await this.getPrice(priceStageParams);
 
         // Resolve Data Props Stage
         const dataPropsStageFragment = { ...priceStageParams.appToken, price };
-        const dataPropsStageParams = { appToken: dataPropsStageFragment, contract, multicall };
+        const dataPropsStageParams = { appToken: dataPropsStageFragment, contract, multicall, tokenLoader };
         const dataProps = await this.getDataProps(dataPropsStageParams);
 
         // Resolve Display Props Stage
         const displayPropsStageFragment = { ...dataPropsStageParams.appToken, dataProps };
-        const displayPropsStageParams = { appToken: displayPropsStageFragment, contract, multicall };
+        const displayPropsStageParams = { appToken: displayPropsStageFragment, contract, multicall, tokenLoader };
         const displayProps = {
           label: await this.getLabel(displayPropsStageParams),
           labelDetailed: await this.getLabelDetailed(displayPropsStageParams),

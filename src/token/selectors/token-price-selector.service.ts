@@ -4,7 +4,8 @@ import { isNil, map } from 'lodash';
 
 import { Network } from '~types';
 
-import { TokenApiClient } from './token-api.client';
+import { TokenApiClient } from '../token-api.client';
+
 import {
   BaseTokenPrice,
   CreatePriceSelectorOptions,

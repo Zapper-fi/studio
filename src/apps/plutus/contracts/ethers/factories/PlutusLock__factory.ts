@@ -4,7 +4,7 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { PlutusEpochStaking, PlutusEpochStakingInterface } from '../PlutusEpochStaking';
+import type { PlutusLock, PlutusLockInterface } from '../PlutusLock';
 
 const _abi = [
   {
@@ -600,12 +600,12 @@ const _abi = [
   },
 ];
 
-export class PlutusEpochStaking__factory {
+export class PlutusLock__factory {
   static readonly abi = _abi;
-  static createInterface(): PlutusEpochStakingInterface {
-    return new utils.Interface(_abi) as PlutusEpochStakingInterface;
+  static createInterface(): PlutusLockInterface {
+    return new utils.Interface(_abi) as PlutusLockInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): PlutusEpochStaking {
-    return new Contract(address, _abi, signerOrProvider) as PlutusEpochStaking;
+  static connect(address: string, signerOrProvider: Signer | Provider): PlutusLock {
+    return new Contract(address, _abi, signerOrProvider) as PlutusLock;
   }
 }

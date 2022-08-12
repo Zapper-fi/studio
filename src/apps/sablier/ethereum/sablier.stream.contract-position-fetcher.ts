@@ -86,31 +86,31 @@ export class EthereumSablierStreamContractPositionFetcher extends ContractPositi
     const streams = await this.apiClient.getStreams(address, network);
     if (streams.length === 0) return [];
 
-    const tokenLoader = this.appToolkit.getBaseTokenPriceSelector({ tags: { network, appId } });
-    const appTokenLoader = this.appToolkit.getAppTokenSelector({ tags: { network, context: appId } });
+    const tokenLoader = this.appToolkit.getTokenDependencySelector({ tags: { network, context: appId } });
 
     const sablierAddress = '0xcd18eaa163733da39c232722cbc4e8940b1d8888';
     const sablierStreamContract = this.contractFactory.sablierStream({ address: sablierAddress, network });
     const sablierStream = multicall.wrap(sablierStreamContract);
 
-    const rawStreams = await Promise.all(
+    const maybeRawStreams = await Promise.all(
       streams.map(async ({ streamId }) => {
-        const rawStream = await sablierStream.getStream(streamId);
-        return {
-          ...rawStream,
-          streamId,
-        };
+        const rawStream = await sablierStream.getStream(streamId).catch(err => {
+          if (isMulticallUnderlyingError(err)) return null;
+          throw err;
+        });
+
+        if (!rawStream) return null;
+        return { ...rawStream, streamId };
       }),
     );
 
+    const rawStreams = compact(maybeRawStreams);
     const underlyingAddresses = rawStreams.map(({ tokenAddress }) => ({
       network,
       address: tokenAddress.toLowerCase(),
     }));
 
-    const baseTokens = await tokenLoader.getMany(underlyingAddresses);
-    const appTokens = await appTokenLoader.getMany(underlyingAddresses);
-    const allTokens = [...compact(appTokens), ...compact(baseTokens)];
+    const tokenDependencies = await tokenLoader.getMany(underlyingAddresses).then(deps => compact(deps));
 
     const positions = await Promise.all(
       rawStreams.map(async stream => {
@@ -120,7 +120,7 @@ export class EthereumSablierStreamContractPositionFetcher extends ContractPositi
         });
         if (!streamBalanceRaw) return null;
 
-        const token = allTokens.find(t => t.address === stream.tokenAddress.toLowerCase());
+        const token = tokenDependencies.find(t => t.address === stream.tokenAddress.toLowerCase());
         if (!token) return null;
 
         const remainingRaw = stream.remainingBalance.toString();

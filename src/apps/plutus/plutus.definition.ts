@@ -26,31 +26,42 @@ export const PLUTUS_DEFINITION = appDefinition({
       id: 'lock',
       type: GroupType.POSITION,
       label: 'Locked PLS',
-      groupLabel: 'Farms',
     },
 
-    plsJonesFarm: {
-      id: 'jones',
+    farmPlsDpxLp: {
+      id: 'farm-pls-dpx-lp',
       type: GroupType.POSITION,
-      label: 'Staked plsJONES',
+      label: 'plsDPX LP Farm',
     },
 
-    plsDpxFarm: {
-      id: 'pls-dpx-farm',
+    farmPlsDpx: {
+      id: 'farm-pls-dpx',
       type: GroupType.POSITION,
-      label: 'Staked plsDPX',
+      label: 'plsDPX Farm',
     },
 
-    plsDpxFarmV2: {
-      id: 'pls-dpx-farm-v2',
+    farmPlsDpxV2: {
+      id: 'farm-pls-dpx-v2',
       type: GroupType.POSITION,
-      label: 'Staked plsDPX',
+      label: 'plsDPX Farm V2',
     },
 
-    plsFarm: {
-      id: 'pls-farm',
+    farmPlsJonesLp: {
+      id: 'farm-pls-jones-lp',
       type: GroupType.POSITION,
-      label: 'Staked PLS',
+      label: 'plsJONES LP Farm',
+    },
+
+    farmPlsJones: {
+      id: 'farm-pls-jones',
+      type: GroupType.POSITION,
+      label: 'plsJONES Farm',
+    },
+
+    farmPls: {
+      id: 'farm-pls',
+      type: GroupType.POSITION,
+      label: 'PLS Farm',
     },
 
     tgeClaimable: {

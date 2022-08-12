@@ -7,15 +7,17 @@ import { AppService } from '~app/app.service';
 import { ContractFactory } from '~contract';
 import { MulticallService } from '~multicall/multicall.service';
 import { NetworkProviderService } from '~network-provider/network-provider.service';
-import { CreateAppTokenSelectorOptions } from '~position/app-token-selector.interface';
-import { AppTokenSelectorService } from '~position/app-token-selector.service';
 import { DefaultDataProps } from '~position/display.interface';
 import { PositionKeyService } from '~position/position-key.service';
 import { AppTokenPosition, ContractPosition, NonFungibleToken } from '~position/position.interface';
 import { AppGroupsDefinition, PositionService } from '~position/position.service';
+import { CreateAppTokenSelectorOptions } from '~position/selectors/app-token-selector.interface';
+import { AppTokenSelectorService } from '~position/selectors/app-token-selector.service';
+import { CreateTokenDependencySelectorOptions } from '~position/selectors/token-dependency-selector.interface';
+import { TokenDependencySelectorService } from '~position/selectors/token-dependency-selector.service';
 import { BaseToken } from '~position/token.interface';
-import { PriceSelectorService } from '~token/price-selector.service';
-import { CreatePriceSelectorOptions } from '~token/token-price-selector.interface';
+import { CreatePriceSelectorOptions } from '~token/selectors/token-price-selector.interface';
+import { PriceSelectorService } from '~token/selectors/token-price-selector.service';
 import { Network } from '~types/network.interface';
 
 import { AppToolkitHelperRegistry } from './app-toolkit.helpers';
@@ -33,6 +35,8 @@ export class AppToolkit implements IAppToolkit {
     @Inject(PositionKeyService) private readonly positionKeyService: PositionKeyService,
     @Inject(PriceSelectorService) private readonly priceSelectorService: PriceSelectorService,
     @Inject(AppTokenSelectorService) private readonly appTokenSelectorService: AppTokenSelectorService,
+    @Inject(TokenDependencySelectorService)
+    private readonly tokenDependencySelectorService: TokenDependencySelectorService,
     @Inject(MulticallService) private readonly multicallService: MulticallService,
     @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
   ) {
@@ -78,6 +82,10 @@ export class AppToolkit implements IAppToolkit {
   }
 
   // Positions
+
+  getTokenDependencySelector(opts: CreateTokenDependencySelectorOptions = {}) {
+    return this.tokenDependencySelectorService.create(opts);
+  }
 
   getAppTokenSelector(opts: CreateAppTokenSelectorOptions = {}) {
     return this.appTokenSelectorService.create(opts);

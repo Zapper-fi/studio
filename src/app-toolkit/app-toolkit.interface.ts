@@ -5,13 +5,17 @@ import { ethers } from 'ethers';
 import { AppDefinition } from '~app/app.definition';
 import { IContractFactory } from '~contract/contracts';
 import { IMulticallWrapper } from '~multicall/multicall.interface';
-import { AppTokenSelector, CreateAppTokenSelectorOptions } from '~position/app-token-selector.interface';
 import { DefaultDataProps } from '~position/display.interface';
 import { AppTokenPosition, ContractPosition, NonFungibleToken } from '~position/position.interface';
 import { AppGroupsDefinition } from '~position/position.service';
+import { AppTokenSelector, CreateAppTokenSelectorOptions } from '~position/selectors/app-token-selector.interface';
+import {
+  CreateTokenDependencySelectorOptions,
+  TokenDependencySelector,
+} from '~position/selectors/token-dependency-selector.interface';
 import { BaseToken } from '~position/token.interface';
-import { CreatePriceSelectorOptions } from '~token/token-price-selector.interface';
-import { PriceSelector } from '~token/token-price-selector.interface';
+import { CreatePriceSelectorOptions } from '~token/selectors/token-price-selector.interface';
+import { PriceSelector } from '~token/selectors/token-price-selector.interface';
 import { Network } from '~types/network.interface';
 
 import { AppToolkitHelperRegistry } from './app-toolkit.helpers';
@@ -40,6 +44,8 @@ export interface IAppToolkit {
   getBaseTokenPrice(opts: { network: Network; address: string }): Promise<BaseToken | null>;
 
   // Positions
+
+  getTokenDependencySelector(opts?: CreateTokenDependencySelectorOptions): TokenDependencySelector;
 
   getAppTokenSelector(opts?: CreateAppTokenSelectorOptions): AppTokenSelector;
 

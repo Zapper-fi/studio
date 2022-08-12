@@ -26,7 +26,6 @@ export class FantomMarketXyzSupplyTokenFetcher implements PositionFetcher<AppTok
       network,
       appId,
       groupId,
-      dependencies: [{ appId: 'spookyswap', groupIds: ['pool'], network }],
       poolDirectoryAddress: '0x0e7d754a8d1a82220432148c10715497a0569bd7',
       getRariFusePoolsDirectory: ({ address, network }) =>
         this.contractFactory.rariFusePoolsDirectory({ address, network }),

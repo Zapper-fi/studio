@@ -2,7 +2,6 @@ import { Inject } from '@nestjs/common';
 
 import { Register } from '~app-toolkit/decorators';
 import { CompoundContractFactory } from '~apps/compound';
-import { OLYMPUS_DEFINITION } from '~apps/olympus';
 import { RariFuseContractFactory, RariFuseSupplyTokenHelper } from '~apps/rari-fuse';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { AppTokenPosition } from '~position/position.interface';
@@ -27,13 +26,6 @@ export class AvalancheMarketXyzSupplyTokenFetcher implements PositionFetcher<App
       network,
       appId,
       groupId,
-      dependencies: [
-        {
-          appId: OLYMPUS_DEFINITION.id,
-          groupIds: [OLYMPUS_DEFINITION.groups.gOhm.id],
-          network,
-        },
-      ],
       poolDirectoryAddress: '0x1c4d63bda492d69f2d6b02fb622fb6c49cc401d2',
       getRariFusePoolsDirectory: ({ address, network }) =>
         this.contractFactory.rariFusePoolsDirectory({ address, network }),

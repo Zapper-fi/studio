@@ -32,7 +32,7 @@ export class EthereumLooksRareCompounderContractPositionFetcher implements Posit
   async getPositions() {
     const network = Network.ETHEREUM_MAINNET;
     const multicall = this.appToolkit.getMulticall(network);
-    const tokenSelector = this.appToolkit.getBaseTokenPriceSelector({ tags: { network, appId } });
+    const tokenSelector = this.appToolkit.getTokenDependencySelector({ tags: { network, context: appId } });
 
     const compounderAddress = '0x3ab16af1315dc6c95f83cbf522fecf98d00fd9ba';
     const compounderContract = this.looksRareContractFactory.looksRareFeeSharing({

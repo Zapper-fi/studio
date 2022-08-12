@@ -1,7 +1,6 @@
 import { Inject } from '@nestjs/common';
 
 import { Register } from '~app-toolkit/decorators';
-import { OLYMPUS_DEFINITION } from '~apps/olympus';
 import { PositionFetcher } from '~position/position-fetcher.interface';
 import { ContractPosition } from '~position/position.interface';
 import { Network } from '~types/network.interface';
@@ -25,13 +24,6 @@ export class ArbitrumDopexGOhmSsovContractPositionFetcher implements PositionFet
       network,
       appId,
       groupId,
-      dependencies: [
-        {
-          appId: OLYMPUS_DEFINITION.id,
-          groupIds: [OLYMPUS_DEFINITION.groups.gOhm.id],
-          network,
-        },
-      ],
       definitions: [
         // gOHM December Epoch (Legacy)
         {
