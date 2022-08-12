@@ -26,7 +26,7 @@ type GetPoolsResponse = {
   }[];
 };
 
-const DEFAULT_GET_CURRENT_POOLS_QUERY = gql`
+const GET_POOLS_QUERY = gql`
   query getPools($minLiquidity: Int) {
     pools(first: 250, skip: 0, orderBy: totalLiquidity, orderDirection: desc, where: { totalShares_gt: 0.01 }) {
       address
@@ -58,45 +58,28 @@ export abstract class BalancerV2PoolTokenFetcher extends AppTokenTemplatePositio
 
   abstract subgraphUrl: string;
   abstract vaultAddress: string;
-  abstract phantomPoolFactoryAddress?: string;
-  abstract aaveLinearPoolFactoryAddress?: string;
 
   getContract(address: string) {
     return this.contractFactory.balancerPool({ address, network: this.network });
   }
 
   async getAddresses() {
-    const currentPoolsResponse = await this.appToolkit.helpers.theGraphHelper.requestGraph<GetPoolsResponse>({
+    const poolsResponse = await this.appToolkit.helpers.theGraphHelper.requestGraph<GetPoolsResponse>({
       endpoint: this.subgraphUrl,
-      query: DEFAULT_GET_CURRENT_POOLS_QUERY,
+      query: GET_POOLS_QUERY,
     });
 
-    return currentPoolsResponse.pools.map(v => v.address);
+    return poolsResponse.pools.map(v => v.address);
   }
 
   async getSupply({ address, contract, multicall }: TokenPropsStageParams<BalancerPool>) {
-    if (!this.phantomPoolFactoryAddress || !this.aaveLinearPoolFactoryAddress) return contract.totalSupply();
+    const supply = await contract.totalSupply();
+    if (supply.toHexString() !== '0xffffffffffffffffffffffffffff') return supply;
 
-    const phantomPoolFactory = this.contractFactory.balancerPhantomPoolFactory({
-      address: this.phantomPoolFactoryAddress,
-      network: this.network,
-    });
-
-    const aaveLinearPoolFactory = this.contractFactory.balancerAaveLinearPoolFactory({
-      address: this.aaveLinearPoolFactoryAddress,
-      network: this.network,
-    });
-
-    const [isPhantomPool, isAaveLinearPool] = await Promise.all([
-      multicall.wrap(phantomPoolFactory).isPoolFromFactory(address),
-      multicall.wrap(aaveLinearPoolFactory).isPoolFromFactory(address),
-    ]);
-
+    // Linear and Phantom pools are minted with maximum supply; use the virtual supply instead
     const _phantomPoolContract = this.contractFactory.balancerAaveLinearPool({ address, network: this.network });
     const phantomPoolContract = multicall.wrap(_phantomPoolContract);
-    return isPhantomPool || isAaveLinearPool
-      ? await phantomPoolContract.getVirtualSupply()
-      : await contract.totalSupply();
+    return phantomPoolContract.getVirtualSupply();
   }
 
   async getUnderlyingTokenAddresses({ address, contract, multicall }: UnderlyingTokensStageParams<BalancerPool>) {

@@ -169,8 +169,6 @@ export abstract class AppTokenTemplatePositionFetcher<
       return intersection(t.underlyingTokenAddresses, tokenAddresses).length === 0;
     });
 
-    console.log('HELLO: ', JSON.stringify(meta, null, 2));
-
     const currentTokens: AppTokenPosition<V>[] = [];
     for (const skeletonsSubset of [base, meta]) {
       const underlyingTokenRequests = skeletonsSubset
