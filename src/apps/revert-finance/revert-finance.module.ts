@@ -1,5 +1,7 @@
 import { Register } from '~app-toolkit/decorators';
 import { AbstractApp } from '~app/app.dynamic-module';
+import { UniswapV2ContractFactory } from '~apps/uniswap-v2';
+import { UniswapV3LiquidityTokenHelper } from '~apps/uniswap-v2/helpers/uniswap-v3.liquidity.token-helper';
 
 import { ArbitrumRevertFinanceBalanceFetcher } from './arbitrum/revert-finance.balance-fetcher';
 import { RevertFinanceContractFactory } from './contracts';
@@ -15,6 +17,8 @@ import { RevertFinanceAppDefinition, REVERT_FINANCE_DEFINITION } from './revert-
     EthereumRevertFinanceBalanceFetcher,
     OptimismRevertFinanceBalanceFetcher,
     PolygonRevertFinanceBalanceFetcher,
+    UniswapV3LiquidityTokenHelper,
+    UniswapV2ContractFactory,
     RevertFinanceAppDefinition,
     RevertFinanceContractFactory,
   ],

@@ -39,3 +39,15 @@ export const getCompoundorContractPosition = (
     displayProps,
   };
 };
+
+// export const getCompoundingContractPosition = (network: Network, uniV3Lp: AppTokenPosition): TokenBalance => ({
+//   ...uniV3Lp,
+//   network,
+//   type: ContractType.APP_TOKEN,
+//   appId: REVERT_FINANCE_DEFINITION.id,
+//   groupId: REVERT_FINANCE_DEFINITION.groups.compoundorRewards.id,
+//   tokens: [...uniV3Lp.tokens],
+//   balanceUSD: uniV3Lp.balanceUSD,
+//   dataProps: uniV3Lp.dataProps,
+//   displayProps: uniV3Lp.displayProps,
+// });
