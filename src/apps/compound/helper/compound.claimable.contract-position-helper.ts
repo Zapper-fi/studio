@@ -32,7 +32,7 @@ export class CompoundClaimableContractPositionHelper {
     rewardTokenAddress,
     comptrollerAddress,
   }: CompoundBalanceHelperParams) {
-    const tokenSelector = this.appToolkit.getBaseTokenPriceSelector({ tags: { network, appId } });
+    const tokenSelector = this.appToolkit.getTokenDependencySelector({ tags: { network, context: appId } });
 
     // Calculate claimable COMP rewards
     const rewardToken = (await tokenSelector.getOne({ network, address: rewardTokenAddress }))!;

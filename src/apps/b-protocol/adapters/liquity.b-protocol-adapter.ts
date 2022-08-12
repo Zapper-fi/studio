@@ -19,6 +19,7 @@ const network = Network.ETHEREUM_MAINNET;
 
 export class LiquityBProtocolAdapter {
   private readonly bammPools = [
+    '0x00ff66ab8699aafa050ee5ef5041d1503aa0849a',
     '0x0d3abaa7e088c2c82f54b2f47613da438ea8c598',
     '0x54bc9113f1f55cdbdf221daf798dc73614f6d972',
   ];

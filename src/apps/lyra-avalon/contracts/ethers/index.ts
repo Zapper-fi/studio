@@ -3,14 +3,16 @@
 /* eslint-disable */
 export type { LiquidityPool } from './LiquidityPool';
 export type { LiquidityToken } from './LiquidityToken';
+export type { LyraLpStaking } from './LyraLpStaking';
 export type { LyraRegistry } from './LyraRegistry';
+export type { LyraStaking } from './LyraStaking';
 export type { OptionMarket } from './OptionMarket';
 export type { OptionToken } from './OptionToken';
-export type { StakingRewards } from './StakingRewards';
 export * as factories from './factories';
 export { LiquidityPool__factory } from './factories/LiquidityPool__factory';
 export { LiquidityToken__factory } from './factories/LiquidityToken__factory';
+export { LyraLpStaking__factory } from './factories/LyraLpStaking__factory';
 export { LyraRegistry__factory } from './factories/LyraRegistry__factory';
+export { LyraStaking__factory } from './factories/LyraStaking__factory';
 export { OptionMarket__factory } from './factories/OptionMarket__factory';
 export { OptionToken__factory } from './factories/OptionToken__factory';
-export { StakingRewards__factory } from './factories/StakingRewards__factory';

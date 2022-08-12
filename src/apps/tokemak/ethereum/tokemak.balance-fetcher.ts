@@ -61,7 +61,7 @@ export class EthereumTokemakBalanceFetcher implements BalanceFetcher {
   }
 
   @CacheOnInterval({
-    key: `studio:${TOKEMAK_DEFINITION.id}:${TOKEMAK_DEFINITION.groups.farm}:${network}:cycle-rewards-hash`,
+    key: `studio:${TOKEMAK_DEFINITION.id}:${TOKEMAK_DEFINITION.groups.farm.id}:${network}:cycle-rewards-hash`,
     timeout: 15 * 60 * 1000, // 15 min
   })
   async getCycleRewardsHash() {

@@ -1,62 +1,75 @@
 import { Inject } from '@nestjs/common';
+import { BigNumberish } from 'ethers';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
-import { DefaultDataProps } from '~position/display.interface';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition } from '~position/position.interface';
+import { RewardRateUnit } from '~app-toolkit/helpers/master-chef/master-chef.contract-position-helper';
+import { MasterChefTemplateContractPositionFetcher } from '~position/template/master-chef.template.contract-position-fetcher';
 import { Network } from '~types/network.interface';
 
 import { PickleContractFactory, PickleJarMasterchef } from '../contracts';
 import { PICKLE_DEFINITION } from '../pickle.definition';
 
-@Register.ContractPositionFetcher({
-  appId: PICKLE_DEFINITION.id,
-  groupId: PICKLE_DEFINITION.groups.masterchefFarm.id,
-  network: Network.ETHEREUM_MAINNET,
-})
-export class EthereumPickleFarmContractPositionFetcher implements PositionFetcher<ContractPosition> {
+const appId = PICKLE_DEFINITION.id;
+const groupId = PICKLE_DEFINITION.groups.masterchefFarm.id;
+const network = Network.ETHEREUM_MAINNET;
+
+@Register.ContractPositionFetcher({ appId, groupId, network })
+export class EthereumPickleFarmContractPositionFetcher extends MasterChefTemplateContractPositionFetcher<PickleJarMasterchef> {
+  appId = PICKLE_DEFINITION.id;
+  groupId = PICKLE_DEFINITION.groups.masterchefV2Farm.id;
+  network = Network.ETHEREUM_MAINNET;
+  chefAddress = '0xbd17b1ce622d73bd438b9e658aca5996dc394b0d';
+  rewardRateUnit = RewardRateUnit.BLOCK;
+
   constructor(
-    @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
-    @Inject(PickleContractFactory) private readonly contractFactory: PickleContractFactory,
-  ) {}
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(PickleContractFactory) protected readonly contractFactory: PickleContractFactory,
+  ) {
+    super(appToolkit);
+  }
 
-  async getPositions(): Promise<ContractPosition<DefaultDataProps>[]> {
-    const network = Network.ETHEREUM_MAINNET;
+  getContract(address: string): PickleJarMasterchef {
+    return this.contractFactory.pickleJarMasterchef({ address, network: this.network });
+  }
 
-    return this.appToolkit.helpers.masterChefContractPositionHelper.getContractPositions<PickleJarMasterchef>({
-      address: '0xbd17b1ce622d73bd438b9e658aca5996dc394b0d',
-      appId: PICKLE_DEFINITION.id,
-      groupId: PICKLE_DEFINITION.groups.masterchefFarm.id,
-      network,
-      dependencies: [
-        {
-          appId: PICKLE_DEFINITION.id,
-          groupIds: [PICKLE_DEFINITION.groups.jar.id],
-          network,
-        },
-      ],
-      resolveContract: ({ address, network }) =>
-        this.contractFactory.pickleJarMasterchef({
-          network,
-          address,
-        }),
-      resolvePoolLength: ({ multicall, contract }) => multicall.wrap(contract).poolLength(),
-      resolveDepositTokenAddress: ({ poolIndex, contract, multicall }) =>
-        multicall
-          .wrap(contract)
-          .poolInfo(poolIndex)
-          .then(v => v.lpToken),
-      resolveRewardTokenAddresses: ({ multicall, contract }) => multicall.wrap(contract).pickle(),
-      resolveRewardRate: this.appToolkit.helpers.masterChefDefaultRewardsPerBlockStrategy.build({
-        resolveTotalRewardRate: ({ multicall, contract }) => multicall.wrap(contract).picklePerBlock(),
-        resolvePoolAllocPoints: async ({ poolIndex, contract, multicall }) =>
-          multicall
-            .wrap(contract)
-            .poolInfo(poolIndex)
-            .then(v => v.allocPoint),
-        resolveTotalAllocPoints: ({ multicall, contract }) => multicall.wrap(contract).totalAllocPoint(),
-      }),
-    });
+  async getPoolLength(contract: PickleJarMasterchef) {
+    return contract.poolLength();
+  }
+
+  async getStakedTokenAddress(contract: PickleJarMasterchef, poolIndex: number) {
+    return contract.poolInfo(poolIndex).then(v => v.lpToken);
+  }
+
+  async getRewardTokenAddress(contract: PickleJarMasterchef) {
+    return contract.pickle();
+  }
+
+  async getTotalAllocPoints(contract: PickleJarMasterchef) {
+    return contract.totalAllocPoint();
+  }
+
+  async getTotalRewardRate(contract: PickleJarMasterchef) {
+    return contract.picklePerBlock();
+  }
+
+  async getPoolAllocPoints(contract: PickleJarMasterchef, poolIndex: number) {
+    return contract.poolInfo(poolIndex).then(v => v.allocPoint);
+  }
+
+  async getStakedTokenBalance(
+    address: string,
+    contract: PickleJarMasterchef,
+    poolIndex: number,
+  ): Promise<BigNumberish> {
+    return contract.userInfo(poolIndex, address).then(v => v.amount);
+  }
+
+  async getRewardTokenBalance(
+    address: string,
+    contract: PickleJarMasterchef,
+    poolIndex: number,
+  ): Promise<BigNumberish> {
+    return contract.pendingPickle(poolIndex, address);
   }
 }

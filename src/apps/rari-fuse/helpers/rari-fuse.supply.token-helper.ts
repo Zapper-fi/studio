@@ -15,7 +15,6 @@ import { IMulticallWrapper } from '~multicall/multicall.interface';
 import { ContractType } from '~position/contract.interface';
 import { BalanceDisplayMode } from '~position/display.interface';
 import { AppTokenPosition, ExchangeableAppTokenDataProps, Token } from '~position/position.interface';
-import { AppGroupsDefinition } from '~position/position.service';
 import { Network } from '~types/network.interface';
 
 import { RariFusePoolsDirectory } from '../contracts';
@@ -32,7 +31,6 @@ type RariFuseSupplyTokenHelperParams<T = CompoundComptroller, V = CompoundCToken
   network: Network;
   appId: string;
   groupId: string;
-  dependencies?: AppGroupsDefinition[];
   poolDirectoryAddress: string;
   getComptrollerContract: (opts: { address: string; network: Network }) => T;
   getRariFusePoolsDirectory: (opts: { address: string; network: Network }) => R;
@@ -67,7 +65,6 @@ export class RariFuseSupplyTokenHelper {
     appId,
     groupId,
     exchangeable = false,
-    dependencies = [],
     getComptrollerContract,
     getRariFusePoolsDirectory,
     getTokenContract,
@@ -83,7 +80,7 @@ export class RariFuseSupplyTokenHelper {
       Math.pow(1 + (blocksPerDay * Number(rate)) / Number(1e18), 365) - 1,
   }: RariFuseSupplyTokenHelperParams<T, V>) {
     const multicall = this.appToolkit.getMulticall(network);
-    const tokenSelector = this.appToolkit.getBaseTokenPriceSelector({ tags: { network, appId } });
+    const tokenSelector = this.appToolkit.getTokenDependencySelector({ tags: { network, context: appId } });
 
     const poolDirectoryContract = getRariFusePoolsDirectory({ address: poolDirectoryAddress, network });
     const pools = await poolDirectoryContract.getAllPools();
@@ -119,12 +116,9 @@ export class RariFuseSupplyTokenHelper {
     );
 
     const allUnderlyingTokens = poolData.flatMap(pool => pool.underlyings.map(u => u.underlyingTokenAddress));
-    const baseTokens = await tokenSelector.getMany(
-      allUnderlyingTokens.map(underlyingTokenAddress => ({ network, address: underlyingTokenAddress })),
-    );
-
-    const appTokens = dependencies.length ? await this.appToolkit.getAppTokenPositions(...dependencies) : [];
-    const allTokens = [...appTokens, ...compact(baseTokens)];
+    const tokenDependencies = await tokenSelector
+      .getMany(allUnderlyingTokens.map(underlyingTokenAddress => ({ network, address: underlyingTokenAddress })))
+      .then(deps => compact(deps));
 
     const tokens = await Promise.all(
       poolData.map(async ({ marketName, underlyings, comptrollerAddress }) => {
@@ -133,7 +127,7 @@ export class RariFuseSupplyTokenHelper {
             const erc20TokenContract = this.contractFactory.erc20({ address: marketTokenAddress, network });
             const contract = getTokenContract({ address: marketTokenAddress, network });
 
-            const underlyingToken = allTokens.find(v => v?.address === underlyingTokenAddress);
+            const underlyingToken = tokenDependencies.find(v => v?.address === underlyingTokenAddress);
             if (!underlyingToken) return null;
 
             const [symbol, decimals, supplyRaw, rateRaw, supplyRateRaw, borrowRateRaw] = await Promise.all([

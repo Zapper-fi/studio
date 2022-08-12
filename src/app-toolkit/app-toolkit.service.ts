@@ -11,10 +11,13 @@ import { DefaultDataProps } from '~position/display.interface';
 import { PositionKeyService } from '~position/position-key.service';
 import { AppTokenPosition, ContractPosition, NonFungibleToken } from '~position/position.interface';
 import { AppGroupsDefinition, PositionService } from '~position/position.service';
+import { CreateAppTokenSelectorOptions } from '~position/selectors/app-token-selector.interface';
+import { AppTokenSelectorService } from '~position/selectors/app-token-selector.service';
+import { CreateTokenDependencySelectorOptions } from '~position/selectors/token-dependency-selector.interface';
+import { TokenDependencySelectorService } from '~position/selectors/token-dependency-selector.service';
 import { BaseToken } from '~position/token.interface';
-import { PriceSelectorService } from '~token/price-selector.service';
-import { CreatePriceSelectorOptions } from '~token/token-price-selector.interface';
-import { TokenService } from '~token/token.service';
+import { CreatePriceSelectorOptions } from '~token/selectors/token-price-selector.interface';
+import { PriceSelectorService } from '~token/selectors/token-price-selector.service';
 import { Network } from '~types/network.interface';
 
 import { AppToolkitHelperRegistry } from './app-toolkit.helpers';
@@ -30,8 +33,10 @@ export class AppToolkit implements IAppToolkit {
     @Inject(NetworkProviderService) private readonly networkProviderService: NetworkProviderService,
     @Inject(PositionService) private readonly positionService: PositionService,
     @Inject(PositionKeyService) private readonly positionKeyService: PositionKeyService,
-    @Inject(TokenService) private readonly tokenService: TokenService,
     @Inject(PriceSelectorService) private readonly priceSelectorService: PriceSelectorService,
+    @Inject(AppTokenSelectorService) private readonly appTokenSelectorService: AppTokenSelectorService,
+    @Inject(TokenDependencySelectorService)
+    private readonly tokenDependencySelectorService: TokenDependencySelectorService,
     @Inject(MulticallService) private readonly multicallService: MulticallService,
     @Inject(CACHE_MANAGER) private readonly cacheManager: Cache,
   ) {
@@ -77,6 +82,14 @@ export class AppToolkit implements IAppToolkit {
   }
 
   // Positions
+
+  getTokenDependencySelector(opts: CreateTokenDependencySelectorOptions = {}) {
+    return this.tokenDependencySelectorService.create(opts);
+  }
+
+  getAppTokenSelector(opts: CreateAppTokenSelectorOptions = {}) {
+    return this.appTokenSelectorService.create(opts);
+  }
 
   getAppTokenPositions<T = DefaultDataProps>(...appTokenDefinitions: AppGroupsDefinition[]) {
     return this.positionService.getAppTokenPositions<T>(...appTokenDefinitions);

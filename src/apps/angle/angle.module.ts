@@ -17,15 +17,16 @@ import { AngleApiHelper } from './helpers/angle.api';
   providers: [
     AngleAppDefinition,
     AngleContractFactory,
+    // Helpers
+    AngleApiHelper,
+    CurveVotingEscrowContractPositionHelper,
+    CurveVotingEscrowContractPositionBalanceHelper,
+    // Ethereum
     EthereumAngleSantokenTokenFetcher,
     EthereumAngleVeAngleContractPositionFetcher,
     EthereumAngleBalanceFetcher,
     EthereumAnglePerpetualsContractPositionFetcher,
     EthereumAngleVaultsContractPositionFetcher,
-    AngleApiHelper,
-
-    CurveVotingEscrowContractPositionHelper,
-    CurveVotingEscrowContractPositionBalanceHelper,
   ],
 })
 export class AngleAppModule extends AbstractApp() {}

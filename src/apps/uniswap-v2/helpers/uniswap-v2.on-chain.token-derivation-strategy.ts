@@ -37,9 +37,9 @@ export class UniswapV2OnChainTokenDerivationStrategy {
       resolveFactoryContract,
       resolvePoolContract,
       resolvePoolReserves,
-      baseTokenPriceSelector,
+      tokenDependencySelector,
     }) => {
-      const baseTokenMatches = await baseTokenPriceSelector
+      const baseTokenMatches = await tokenDependencySelector
         .getMany(priceDerivationWhitelist.map(address => ({ network, address })))
         .then(tokens => compact(tokens))
         .then(tokens => keyBy(tokens, ({ address }) => address));

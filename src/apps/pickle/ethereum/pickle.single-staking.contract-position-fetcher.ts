@@ -12,11 +12,11 @@ import { PickleJarSingleRewardStaking } from '../contracts/ethers/PickleJarSingl
 import { PickleApiJarRegistry } from '../helpers/pickle.api.jar-registry';
 import { PICKLE_DEFINITION } from '../pickle.definition';
 
-@Register.ContractPositionFetcher({
-  appId: PICKLE_DEFINITION.id,
-  groupId: PICKLE_DEFINITION.groups.singleStakingFarm.id,
-  network: Network.ETHEREUM_MAINNET,
-})
+const appId = PICKLE_DEFINITION.id;
+const groupId = PICKLE_DEFINITION.groups.singleStakingFarm.id;
+const network = Network.ETHEREUM_MAINNET;
+
+@Register.ContractPositionFetcher({ appId, groupId, network })
 export class EthereumPickleSingleRewardPositionFetcher implements PositionFetcher<ContractPosition> {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
@@ -27,7 +27,6 @@ export class EthereumPickleSingleRewardPositionFetcher implements PositionFetche
   ) {}
 
   async getPositions() {
-    const network = Network.ETHEREUM_MAINNET;
     const vaults = await this.jarCacheManager.getJarDefinitions({ network });
 
     return this.appToolkit.helpers.singleStakingFarmContractPositionHelper.getContractPositions<PickleJarSingleRewardStaking>(
