@@ -6,12 +6,12 @@ import { BalancerV2StakedContractPositionFetcher } from '../common/balancer-v2.s
 
 const appId = BALANCER_V2_DEFINITION.id;
 const groupId = BALANCER_V2_DEFINITION.groups.farm.id;
-const network = Network.ETHEREUM_MAINNET;
+const network = Network.ARBITRUM_MAINNET;
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
-export class EthereumBalancerV2StakedContractPositionFetcher extends BalancerV2StakedContractPositionFetcher {
+export class ArbitrumBalancerV2FarmContractPositionFetcher extends BalancerV2StakedContractPositionFetcher {
   appId = BALANCER_V2_DEFINITION.id;
   groupId = BALANCER_V2_DEFINITION.groups.farm.id;
-  network = Network.ETHEREUM_MAINNET;
-  subgraphUrl = 'https://api.thegraph.com/subgraphs/name/balancer-labs/balancer-gauges';
+  network = Network.ARBITRUM_MAINNET;
+  subgraphUrl = 'https://api.thegraph.com/subgraphs/name/balancer-labs/balancer-gauges-arbitrum';
 }

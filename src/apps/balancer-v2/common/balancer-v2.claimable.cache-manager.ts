@@ -10,7 +10,7 @@ type Opts = {
 };
 
 @Injectable()
-export class BalancerV2CacheManager {
+export class BalancerV2ClaimableCacheManager {
   constructor() {}
 
   async getCachedClaimableAmounts(opts: Opts): Promise<number[]> {

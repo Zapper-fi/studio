@@ -16,7 +16,8 @@ import {
 } from '~position/template/app-token.template.position-fetcher';
 
 import { BalancerPool, BalancerV2ContractFactory } from '../contracts';
-import { PoolType } from '../helpers/balancer-v2.pool-types';
+
+import { PoolType } from './balancer-v2.pool-types';
 
 type GetPoolsResponse = {
   pools: {
