@@ -39,13 +39,13 @@ export const AAVE_SAFETY_MODULE_DEFINITION = appDefinition({
     },
 
     stkAbptClaimable: {
-      id: 'claimable',
+      id: 'stk-abpt-claimable',
       type: GroupType.POSITION,
       label: 'stkABPT Rewards',
     },
 
     stkAaveClaimable: {
-      id: 'claimable',
+      id: 'stk-aave-claimable',
       type: GroupType.POSITION,
       label: 'stkAAVE Rewards',
     },
