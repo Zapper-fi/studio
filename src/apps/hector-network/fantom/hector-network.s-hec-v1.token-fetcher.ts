@@ -38,6 +38,10 @@ export class FantomHectorNetworkSHecV1TokenFetcher extends AppTokenTemplatePosit
     super(appToolkit);
   }
 
+  getContract(address: string): HectorNetworkStaked {
+    return this.contractFactory.hectorNetworkStaked({ address, network: this.network });
+  }
+
   async getAddresses(): Promise<string[]> {
     return ['0x36f26880c6406b967bdb9901cde43abc9d53f106'];
   }

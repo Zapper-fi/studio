@@ -40,6 +40,10 @@ export class FantomHectorNetworkWsHecTokenFetcher extends AppTokenTemplatePositi
     super(appToolkit);
   }
 
+  getContract(address: string): Erc20 {
+    return this.contractFactory.erc20({ address, network: this.network });
+  }
+
   async getAddresses(): Promise<string[]> {
     return ['0x94ccf60f700146bea8ef7832820800e2dfa92eda'];
   }
