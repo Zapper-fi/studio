@@ -63,6 +63,7 @@ export abstract class AppTokenTemplatePositionFetcher<T extends Contract, V exte
   abstract appId: string;
   abstract groupId: string;
   abstract network: Network;
+  minLiquidity = 1000;
 
   constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) {}
 
@@ -236,7 +237,7 @@ export abstract class AppTokenTemplatePositionFetcher<T extends Contract, V exte
       );
 
       const positionsSubset = compact(tokens).filter(v => {
-        if (typeof v.dataProps.liquidity === 'number') return Math.abs(v.dataProps.liquidity) > 1000;
+        if (typeof v.dataProps.liquidity === 'number') return Math.abs(v.dataProps.liquidity) > this.minLiquidity;
         return true;
       });
 

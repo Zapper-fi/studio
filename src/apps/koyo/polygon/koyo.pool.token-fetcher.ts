@@ -15,4 +15,5 @@ export class PolygonKoyoPoolTokenFetcher extends BalancerV2PoolTokenFetcher {
   network = Network.POLYGON_MAINNET;
   subgraphUrl = 'https://api.thegraph.com/subgraphs/name/koyo-finance/exchange-subgraph-matic';
   vaultAddress = '0xacf8489ccb47da2d7306d827bbede05bfa6fea1b';
+  minLiquidity = 0;
 }

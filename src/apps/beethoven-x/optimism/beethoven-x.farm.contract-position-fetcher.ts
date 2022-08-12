@@ -6,7 +6,7 @@ import { BeethovenXFarmContractPositionFetcher } from '../common/beethoven-x.far
 
 const appId = BEETHOVEN_X_DEFINITION.id;
 const groupId = BEETHOVEN_X_DEFINITION.groups.farm.id;
-const network = Network.ETHEREUM_MAINNET;
+const network = Network.OPTIMISM_MAINNET;
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
 export class OptimismBeethovenXFarmContractPositionFetcher extends BeethovenXFarmContractPositionFetcher {

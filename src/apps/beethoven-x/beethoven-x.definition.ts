@@ -21,7 +21,7 @@ export const BEETHOVEN_X_DEFINITION = appDefinition({
     },
 
     chef: {
-      id: 'Chef',
+      id: 'chef',
       type: GroupType.POSITION,
       label: 'Chef Farms',
     },

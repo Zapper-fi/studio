@@ -34,6 +34,10 @@ export class FantomBeethovenXFBeetsTokenFetcher extends AppTokenTemplatePosition
     return ['0xfcef8a994209d6916eb2c86cdd2afd60aa6f54b1'];
   }
 
+  getContract(address: string): BeethovenXBeetsBar {
+    return this.contractFactory.beethovenXBeetsBar({ address, network: this.network });
+  }
+
   async getUnderlyingTokenAddresses({ contract }: UnderlyingTokensStageParams<BeethovenXBeetsBar>) {
     return contract.vestingToken();
   }

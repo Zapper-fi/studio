@@ -15,4 +15,5 @@ export class MoonriverKoyoPoolTokenFetcher extends BalancerV2PoolTokenFetcher {
   network = Network.MOONRIVER_MAINNET;
   subgraphUrl = 'https://api.thegraph.com/subgraphs/name/koyo-finance/exchange-subgraph-moonriver';
   vaultAddress = '0xea1e627c12df4e054d61fd408ff7186353ac6ca1';
+  minLiquidity = 0;
 }
