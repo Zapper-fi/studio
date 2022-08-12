@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.171.1](https://github.com/Zapper-fi/studio/compare/v0.171.0...v0.171.1) (2022-08-12)
+
+
+### Bug Fixes
+
+* **gmx:** remove MIM from GLP index ([#1128](https://github.com/Zapper-fi/studio/issues/1128)) ([4f63ef7](https://github.com/Zapper-fi/studio/commit/4f63ef7c4451e08e4bdf3de5ed5e40028d9bb8a1))
+
 ## [0.171.0](https://github.com/Zapper-fi/studio/compare/v0.170.0...v0.171.0) (2022-08-12)
 
 
