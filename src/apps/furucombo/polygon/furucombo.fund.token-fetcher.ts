@@ -91,10 +91,8 @@ export class PolygonFurucomboFundTokenFetcher extends AppTokenTemplatePositionFe
     return addresses;
   }
 
-  async getUnderlyingTokenAddresses({
-    contract,
-  }: UnderlyingTokensStageParams<FurucomboFundShareToken>): Promise<string | string[]> {
-    return this.furucomboFundMap[contract.address].stakingToken.address;
+  async getUnderlyingTokenAddresses({ address }: UnderlyingTokensStageParams<FurucomboFundShareToken>) {
+    return this.furucomboFundMap[address].stakingToken.address;
   }
 
   async getPricePerShare({
