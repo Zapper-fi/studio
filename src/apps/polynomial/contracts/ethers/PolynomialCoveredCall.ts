@@ -15,258 +15,313 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
 
 export interface PolynomialCoveredCallInterface extends utils.Interface {
   functions: {
-    'LYRA_CLAIMER()': FunctionFragment;
-    'LYRA_MARKET()': FunctionFragment;
-    'LYRA_TOKEN()': FunctionFragment;
+    'GREEKS()': FunctionFragment;
+    'MARKET()': FunctionFragment;
+    'MARKET_WRAPPER()': FunctionFragment;
+    'OPTION_TOKEN()': FunctionFragment;
+    'RATES()': FunctionFragment;
+    'SUSD()': FunctionFragment;
     'SYNTHETIX()': FunctionFragment;
-    'SYNTH_KEY_PREMIUM()': FunctionFragment;
-    'SYNTH_KEY_UNDERLYING()': FunctionFragment;
     'UNDERLYING()': FunctionFragment;
+    'UNDERLYING_SYNTH_KEY()': FunctionFragment;
+    'VAULT_TOKEN()': FunctionFragment;
+    'addCollateral(uint256,uint256)': FunctionFragment;
     'authority()': FunctionFragment;
-    'cancelDeposit(uint256)': FunctionFragment;
-    'cancelWithdraw(uint256)': FunctionFragment;
-    'claimLyra(address)': FunctionFragment;
-    'completeWithdraw()': FunctionFragment;
-    'currentExpiry()': FunctionFragment;
-    'currentListingId()': FunctionFragment;
-    'currentRound()': FunctionFragment;
-    'currentStrike()': FunctionFragment;
-    'deposit(address,uint256)': FunctionFragment;
-    'deposit(uint256)': FunctionFragment;
-    'feeReciepient()': FunctionFragment;
-    'ivLimit()': FunctionFragment;
-    'keeper()': FunctionFragment;
-    'managementFee()': FunctionFragment;
+    'closePosition(uint256,uint256,uint256)': FunctionFragment;
+    'collateralization()': FunctionFragment;
+    'depositQueue(uint256)': FunctionFragment;
+    'depositsPaused()': FunctionFragment;
+    'feeReceipient()': FunctionFragment;
+    'getLiveStrikes()': FunctionFragment;
+    'getTokenPrice()': FunctionFragment;
+    'getTotalSupply()': FunctionFragment;
+    'initiateDeposit(address,uint256)': FunctionFragment;
+    'initiateWithdrawal(address,uint256)': FunctionFragment;
+    'liveStrikes(uint256)': FunctionFragment;
+    'minDepositAmount()': FunctionFragment;
+    'minDepositDelay()': FunctionFragment;
+    'minWithdrawDelay()': FunctionFragment;
     'name()': FunctionFragment;
+    'nextQueuedDepositId()': FunctionFragment;
+    'nextQueuedWithdrawalId()': FunctionFragment;
+    'openPosition(uint256,uint256)': FunctionFragment;
     'owner()': FunctionFragment;
     'pause()': FunctionFragment;
+    'pauseDeposits()': FunctionFragment;
     'paused()': FunctionFragment;
-    'pendingDeposits()': FunctionFragment;
-    'pendingWithdraws()': FunctionFragment;
     'performanceFee()': FunctionFragment;
-    'performanceIndices(uint256)': FunctionFragment;
-    'premiumCollected()': FunctionFragment;
-    'requestWithdraw(uint256)': FunctionFragment;
-    'sellOptions(uint256)': FunctionFragment;
+    'positionDatas(uint256)': FunctionFragment;
+    'processDepositQueue(uint256)': FunctionFragment;
+    'processWithdrawalQueue(uint256)': FunctionFragment;
+    'queuedDepositHead()': FunctionFragment;
+    'queuedWithdrawalHead()': FunctionFragment;
+    'saveToken(address,address,uint256)': FunctionFragment;
     'setAuthority(address)': FunctionFragment;
-    'setCap(uint256)': FunctionFragment;
-    'setFeeReciepient(address)': FunctionFragment;
+    'setCollateralization(uint256)': FunctionFragment;
+    'setDelays(uint256,uint256)': FunctionFragment;
+    'setFeeReceipient(address)': FunctionFragment;
     'setFees(uint256,uint256)': FunctionFragment;
-    'setIvLimit(uint256)': FunctionFragment;
-    'setKeeper(address)': FunctionFragment;
+    'setMinDepositAmount(uint256)': FunctionFragment;
     'setOwner(address)': FunctionFragment;
-    'setUserDepositLimit(uint256)': FunctionFragment;
-    'startNewRound(uint256)': FunctionFragment;
+    'setSynthetixTracking(bytes32)': FunctionFragment;
+    'settleOptions(uint256[])': FunctionFragment;
+    'synthetixTrackingCode()': FunctionFragment;
     'totalFunds()': FunctionFragment;
-    'totalShares()': FunctionFragment;
+    'totalPremiumCollected()': FunctionFragment;
+    'totalQueuedDeposits()': FunctionFragment;
+    'totalQueuedWithdrawals()': FunctionFragment;
     'unpause()': FunctionFragment;
+    'unpauseDeposits()': FunctionFragment;
     'usedFunds()': FunctionFragment;
-    'userDepositLimit()': FunctionFragment;
-    'userInfos(address)': FunctionFragment;
-    'vaultCapacity()': FunctionFragment;
+    'withdrawalFee()': FunctionFragment;
+    'withdrawalQueue(uint256)': FunctionFragment;
   };
 
   getFunction(
     nameOrSignatureOrTopic:
-      | 'LYRA_CLAIMER'
-      | 'LYRA_MARKET'
-      | 'LYRA_TOKEN'
+      | 'GREEKS'
+      | 'MARKET'
+      | 'MARKET_WRAPPER'
+      | 'OPTION_TOKEN'
+      | 'RATES'
+      | 'SUSD'
       | 'SYNTHETIX'
-      | 'SYNTH_KEY_PREMIUM'
-      | 'SYNTH_KEY_UNDERLYING'
       | 'UNDERLYING'
+      | 'UNDERLYING_SYNTH_KEY'
+      | 'VAULT_TOKEN'
+      | 'addCollateral'
       | 'authority'
-      | 'cancelDeposit'
-      | 'cancelWithdraw'
-      | 'claimLyra'
-      | 'completeWithdraw'
-      | 'currentExpiry'
-      | 'currentListingId'
-      | 'currentRound'
-      | 'currentStrike'
-      | 'deposit(address,uint256)'
-      | 'deposit(uint256)'
-      | 'feeReciepient'
-      | 'ivLimit'
-      | 'keeper'
-      | 'managementFee'
+      | 'closePosition'
+      | 'collateralization'
+      | 'depositQueue'
+      | 'depositsPaused'
+      | 'feeReceipient'
+      | 'getLiveStrikes'
+      | 'getTokenPrice'
+      | 'getTotalSupply'
+      | 'initiateDeposit'
+      | 'initiateWithdrawal'
+      | 'liveStrikes'
+      | 'minDepositAmount'
+      | 'minDepositDelay'
+      | 'minWithdrawDelay'
       | 'name'
+      | 'nextQueuedDepositId'
+      | 'nextQueuedWithdrawalId'
+      | 'openPosition'
       | 'owner'
       | 'pause'
+      | 'pauseDeposits'
       | 'paused'
-      | 'pendingDeposits'
-      | 'pendingWithdraws'
       | 'performanceFee'
-      | 'performanceIndices'
-      | 'premiumCollected'
-      | 'requestWithdraw'
-      | 'sellOptions'
+      | 'positionDatas'
+      | 'processDepositQueue'
+      | 'processWithdrawalQueue'
+      | 'queuedDepositHead'
+      | 'queuedWithdrawalHead'
+      | 'saveToken'
       | 'setAuthority'
-      | 'setCap'
-      | 'setFeeReciepient'
+      | 'setCollateralization'
+      | 'setDelays'
+      | 'setFeeReceipient'
       | 'setFees'
-      | 'setIvLimit'
-      | 'setKeeper'
+      | 'setMinDepositAmount'
       | 'setOwner'
-      | 'setUserDepositLimit'
-      | 'startNewRound'
+      | 'setSynthetixTracking'
+      | 'settleOptions'
+      | 'synthetixTrackingCode'
       | 'totalFunds'
-      | 'totalShares'
+      | 'totalPremiumCollected'
+      | 'totalQueuedDeposits'
+      | 'totalQueuedWithdrawals'
       | 'unpause'
+      | 'unpauseDeposits'
       | 'usedFunds'
-      | 'userDepositLimit'
-      | 'userInfos'
-      | 'vaultCapacity',
+      | 'withdrawalFee'
+      | 'withdrawalQueue',
   ): FunctionFragment;
 
-  encodeFunctionData(functionFragment: 'LYRA_CLAIMER', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'LYRA_MARKET', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'LYRA_TOKEN', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'GREEKS', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'MARKET', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'MARKET_WRAPPER', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'OPTION_TOKEN', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'RATES', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'SUSD', values?: undefined): string;
   encodeFunctionData(functionFragment: 'SYNTHETIX', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'SYNTH_KEY_PREMIUM', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'SYNTH_KEY_UNDERLYING', values?: undefined): string;
   encodeFunctionData(functionFragment: 'UNDERLYING', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'UNDERLYING_SYNTH_KEY', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'VAULT_TOKEN', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'addCollateral', values: [BigNumberish, BigNumberish]): string;
   encodeFunctionData(functionFragment: 'authority', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'cancelDeposit', values: [PromiseOrValue<BigNumberish>]): string;
-  encodeFunctionData(functionFragment: 'cancelWithdraw', values: [PromiseOrValue<BigNumberish>]): string;
-  encodeFunctionData(functionFragment: 'claimLyra', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'completeWithdraw', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'currentExpiry', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'currentListingId', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'currentRound', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'currentStrike', values?: undefined): string;
-  encodeFunctionData(
-    functionFragment: 'deposit(address,uint256)',
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
-  ): string;
-  encodeFunctionData(functionFragment: 'deposit(uint256)', values: [PromiseOrValue<BigNumberish>]): string;
-  encodeFunctionData(functionFragment: 'feeReciepient', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'ivLimit', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'keeper', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'managementFee', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'closePosition', values: [BigNumberish, BigNumberish, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'collateralization', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'depositQueue', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'depositsPaused', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'feeReceipient', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'getLiveStrikes', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'getTokenPrice', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'getTotalSupply', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'initiateDeposit', values: [string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'initiateWithdrawal', values: [string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'liveStrikes', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'minDepositAmount', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'minDepositDelay', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'minWithdrawDelay', values?: undefined): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'nextQueuedDepositId', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'nextQueuedWithdrawalId', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'openPosition', values: [BigNumberish, BigNumberish]): string;
   encodeFunctionData(functionFragment: 'owner', values?: undefined): string;
   encodeFunctionData(functionFragment: 'pause', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'pauseDeposits', values?: undefined): string;
   encodeFunctionData(functionFragment: 'paused', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'pendingDeposits', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'pendingWithdraws', values?: undefined): string;
   encodeFunctionData(functionFragment: 'performanceFee', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'performanceIndices', values: [PromiseOrValue<BigNumberish>]): string;
-  encodeFunctionData(functionFragment: 'premiumCollected', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'requestWithdraw', values: [PromiseOrValue<BigNumberish>]): string;
-  encodeFunctionData(functionFragment: 'sellOptions', values: [PromiseOrValue<BigNumberish>]): string;
-  encodeFunctionData(functionFragment: 'setAuthority', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'setCap', values: [PromiseOrValue<BigNumberish>]): string;
-  encodeFunctionData(functionFragment: 'setFeeReciepient', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(
-    functionFragment: 'setFees',
-    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
-  ): string;
-  encodeFunctionData(functionFragment: 'setIvLimit', values: [PromiseOrValue<BigNumberish>]): string;
-  encodeFunctionData(functionFragment: 'setKeeper', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'setOwner', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'setUserDepositLimit', values: [PromiseOrValue<BigNumberish>]): string;
-  encodeFunctionData(functionFragment: 'startNewRound', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'positionDatas', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'processDepositQueue', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'processWithdrawalQueue', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'queuedDepositHead', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'queuedWithdrawalHead', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'saveToken', values: [string, string, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'setAuthority', values: [string]): string;
+  encodeFunctionData(functionFragment: 'setCollateralization', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'setDelays', values: [BigNumberish, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'setFeeReceipient', values: [string]): string;
+  encodeFunctionData(functionFragment: 'setFees', values: [BigNumberish, BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'setMinDepositAmount', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'setOwner', values: [string]): string;
+  encodeFunctionData(functionFragment: 'setSynthetixTracking', values: [BytesLike]): string;
+  encodeFunctionData(functionFragment: 'settleOptions', values: [BigNumberish[]]): string;
+  encodeFunctionData(functionFragment: 'synthetixTrackingCode', values?: undefined): string;
   encodeFunctionData(functionFragment: 'totalFunds', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'totalShares', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'totalPremiumCollected', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'totalQueuedDeposits', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'totalQueuedWithdrawals', values?: undefined): string;
   encodeFunctionData(functionFragment: 'unpause', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'unpauseDeposits', values?: undefined): string;
   encodeFunctionData(functionFragment: 'usedFunds', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'userDepositLimit', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'userInfos', values: [PromiseOrValue<string>]): string;
-  encodeFunctionData(functionFragment: 'vaultCapacity', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'withdrawalFee', values?: undefined): string;
+  encodeFunctionData(functionFragment: 'withdrawalQueue', values: [BigNumberish]): string;
 
-  decodeFunctionResult(functionFragment: 'LYRA_CLAIMER', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'LYRA_MARKET', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'LYRA_TOKEN', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'GREEKS', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'MARKET', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'MARKET_WRAPPER', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'OPTION_TOKEN', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'RATES', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'SUSD', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'SYNTHETIX', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'SYNTH_KEY_PREMIUM', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'SYNTH_KEY_UNDERLYING', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'UNDERLYING', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'UNDERLYING_SYNTH_KEY', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'VAULT_TOKEN', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'addCollateral', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'authority', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'cancelDeposit', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'cancelWithdraw', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'claimLyra', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'completeWithdraw', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'currentExpiry', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'currentListingId', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'currentRound', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'currentStrike', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'deposit(address,uint256)', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'deposit(uint256)', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'feeReciepient', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'ivLimit', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'keeper', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'managementFee', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'closePosition', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'collateralization', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'depositQueue', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'depositsPaused', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'feeReceipient', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getLiveStrikes', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getTokenPrice', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'getTotalSupply', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'initiateDeposit', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'initiateWithdrawal', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'liveStrikes', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'minDepositAmount', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'minDepositDelay', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'minWithdrawDelay', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'name', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nextQueuedDepositId', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'nextQueuedWithdrawalId', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'openPosition', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'owner', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'pause', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'pauseDeposits', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'paused', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'pendingDeposits', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'pendingWithdraws', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'performanceFee', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'performanceIndices', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'premiumCollected', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'requestWithdraw', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'sellOptions', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'positionDatas', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'processDepositQueue', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'processWithdrawalQueue', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'queuedDepositHead', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'queuedWithdrawalHead', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'saveToken', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'setAuthority', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'setCap', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'setFeeReciepient', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setCollateralization', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setDelays', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setFeeReceipient', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'setFees', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'setIvLimit', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'setKeeper', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setMinDepositAmount', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'setOwner', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'setUserDepositLimit', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'startNewRound', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'setSynthetixTracking', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'settleOptions', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'synthetixTrackingCode', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'totalFunds', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'totalShares', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'totalPremiumCollected', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'totalQueuedDeposits', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'totalQueuedWithdrawals', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'unpause', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'unpauseDeposits', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'usedFunds', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'userDepositLimit', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'userInfos', data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: 'vaultCapacity', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'withdrawalFee', data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: 'withdrawalQueue', data: BytesLike): Result;
 
   events: {
+    'AddCollateral(uint256,uint256,uint256)': EventFragment;
     'AuthorityUpdated(address,address)': EventFragment;
-    'CancelDeposit(address,uint256,uint256)': EventFragment;
-    'CancelWithdraw(address,uint256,uint256)': EventFragment;
-    'CompleteWithdraw(address,uint256,uint256,uint256)': EventFragment;
-    'Deposit(address,uint256,uint256)': EventFragment;
+    'ClosePosition(uint256,uint256,uint256,uint256,uint256)': EventFragment;
+    'InitiateDeposit(uint256,address,address,uint256)': EventFragment;
+    'InitiateWithdrawal(uint256,address,address,uint256)': EventFragment;
+    'OpenPosition(uint256,uint256,uint256,uint256,uint256,uint256)': EventFragment;
     'OwnerUpdated(address,address)': EventFragment;
-    'Paused(address)': EventFragment;
-    'RequestWithdraw(address,uint256,uint256)': EventFragment;
-    'SellOptions(uint256,uint256,uint256,uint256,uint256)': EventFragment;
-    'SetCap(address,uint256,uint256)': EventFragment;
-    'SetFeeReciepient(address,address,address)': EventFragment;
-    'SetFees(address,uint256,uint256,uint256,uint256)': EventFragment;
-    'SetIvLimit(address,uint256,uint256)': EventFragment;
-    'SetKeeper(address,address,address)': EventFragment;
-    'SetUserDepositLimit(address,uint256,uint256)': EventFragment;
-    'StartNewRound(uint256,uint256,uint256,uint256,uint256,uint256,uint256)': EventFragment;
-    'Unpaused(address)': EventFragment;
+    'ProcessDeposit(uint256,address,uint256,uint256,uint256)': EventFragment;
+    'ProcessWithdrawal(uint256,address,uint256,uint256,uint256)': EventFragment;
+    'ProcessWithdrawalPartially(uint256,address,uint256,uint256,uint256)': EventFragment;
+    'SetDepositsPaused(address)': EventFragment;
+    'SetDepositsUnpaused(address)': EventFragment;
+    'SetPaused(address)': EventFragment;
+    'SetUnpaused(address)': EventFragment;
+    'SettleOption(uint256,uint256,uint256,uint256,int256,uint256)': EventFragment;
+    'UpdateCollateralization(uint256,uint256)': EventFragment;
+    'UpdateDelays(uint256,uint256,uint256,uint256)': EventFragment;
+    'UpdateFeeReceipient(address,address)': EventFragment;
+    'UpdateFees(uint256,uint256,uint256,uint256)': EventFragment;
+    'UpdateMinDeposit(uint256,uint256)': EventFragment;
+    'UpdateSynthetixTrackingCode(bytes32,bytes32)': EventFragment;
   };
 
+  getEvent(nameOrSignatureOrTopic: 'AddCollateral'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'AuthorityUpdated'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'CancelDeposit'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'CancelWithdraw'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'CompleteWithdraw'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'Deposit'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'ClosePosition'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'InitiateDeposit'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'InitiateWithdrawal'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'OpenPosition'): EventFragment;
   getEvent(nameOrSignatureOrTopic: 'OwnerUpdated'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'Paused'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'RequestWithdraw'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'SellOptions'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'SetCap'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'SetFeeReciepient'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'SetFees'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'SetIvLimit'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'SetKeeper'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'SetUserDepositLimit'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'StartNewRound'): EventFragment;
-  getEvent(nameOrSignatureOrTopic: 'Unpaused'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'ProcessDeposit'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'ProcessWithdrawal'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'ProcessWithdrawalPartially'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'SetDepositsPaused'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'SetDepositsUnpaused'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'SetPaused'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'SetUnpaused'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'SettleOption'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'UpdateCollateralization'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'UpdateDelays'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'UpdateFeeReceipient'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'UpdateFees'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'UpdateMinDeposit'): EventFragment;
+  getEvent(nameOrSignatureOrTopic: 'UpdateSynthetixTrackingCode'): EventFragment;
 }
+
+export interface AddCollateralEventObject {
+  strikeId: BigNumber;
+  positionId: BigNumber;
+  amount: BigNumber;
+}
+export type AddCollateralEvent = TypedEvent<[BigNumber, BigNumber, BigNumber], AddCollateralEventObject>;
+
+export type AddCollateralEventFilter = TypedEventFilter<AddCollateralEvent>;
 
 export interface AuthorityUpdatedEventObject {
   user: string;
@@ -276,42 +331,54 @@ export type AuthorityUpdatedEvent = TypedEvent<[string, string], AuthorityUpdate
 
 export type AuthorityUpdatedEventFilter = TypedEventFilter<AuthorityUpdatedEvent>;
 
-export interface CancelDepositEventObject {
-  user: string;
-  depositRound: BigNumber;
-  amt: BigNumber;
+export interface ClosePositionEventObject {
+  strikeId: BigNumber;
+  positionId: BigNumber;
+  amount: BigNumber;
+  collateralWithdrawn: BigNumber;
+  premiumPaid: BigNumber;
 }
-export type CancelDepositEvent = TypedEvent<[string, BigNumber, BigNumber], CancelDepositEventObject>;
+export type ClosePositionEvent = TypedEvent<
+  [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber],
+  ClosePositionEventObject
+>;
 
-export type CancelDepositEventFilter = TypedEventFilter<CancelDepositEvent>;
+export type ClosePositionEventFilter = TypedEventFilter<ClosePositionEvent>;
 
-export interface CancelWithdrawEventObject {
+export interface InitiateDepositEventObject {
+  depositId: BigNumber;
+  depositor: string;
   user: string;
-  withdrawnRound: BigNumber;
-  shares: BigNumber;
+  amount: BigNumber;
 }
-export type CancelWithdrawEvent = TypedEvent<[string, BigNumber, BigNumber], CancelWithdrawEventObject>;
+export type InitiateDepositEvent = TypedEvent<[BigNumber, string, string, BigNumber], InitiateDepositEventObject>;
 
-export type CancelWithdrawEventFilter = TypedEventFilter<CancelWithdrawEvent>;
+export type InitiateDepositEventFilter = TypedEventFilter<InitiateDepositEvent>;
 
-export interface CompleteWithdrawEventObject {
+export interface InitiateWithdrawalEventObject {
+  withdrawalId: BigNumber;
+  withdrawer: string;
   user: string;
-  withdrawnRound: BigNumber;
-  shares: BigNumber;
-  funds: BigNumber;
+  tokens: BigNumber;
 }
-export type CompleteWithdrawEvent = TypedEvent<[string, BigNumber, BigNumber, BigNumber], CompleteWithdrawEventObject>;
+export type InitiateWithdrawalEvent = TypedEvent<[BigNumber, string, string, BigNumber], InitiateWithdrawalEventObject>;
 
-export type CompleteWithdrawEventFilter = TypedEventFilter<CompleteWithdrawEvent>;
+export type InitiateWithdrawalEventFilter = TypedEventFilter<InitiateWithdrawalEvent>;
 
-export interface DepositEventObject {
-  user: string;
-  depositRound: BigNumber;
-  amt: BigNumber;
+export interface OpenPositionEventObject {
+  strikeId: BigNumber;
+  positionId: BigNumber;
+  amount: BigNumber;
+  collateral: BigNumber;
+  premiumCollected: BigNumber;
+  callDelta: BigNumber;
 }
-export type DepositEvent = TypedEvent<[string, BigNumber, BigNumber], DepositEventObject>;
+export type OpenPositionEvent = TypedEvent<
+  [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber],
+  OpenPositionEventObject
+>;
 
-export type DepositEventFilter = TypedEventFilter<DepositEvent>;
+export type OpenPositionEventFilter = TypedEventFilter<OpenPositionEvent>;
 
 export interface OwnerUpdatedEventObject {
   user: string;
@@ -321,114 +388,142 @@ export type OwnerUpdatedEvent = TypedEvent<[string, string], OwnerUpdatedEventOb
 
 export type OwnerUpdatedEventFilter = TypedEventFilter<OwnerUpdatedEvent>;
 
-export interface PausedEventObject {
-  account: string;
-}
-export type PausedEvent = TypedEvent<[string], PausedEventObject>;
-
-export type PausedEventFilter = TypedEventFilter<PausedEvent>;
-
-export interface RequestWithdrawEventObject {
+export interface ProcessDepositEventObject {
+  depositId: BigNumber;
   user: string;
-  withdrawnRound: BigNumber;
-  shares: BigNumber;
+  amount: BigNumber;
+  tokens: BigNumber;
+  requestedTime: BigNumber;
 }
-export type RequestWithdrawEvent = TypedEvent<[string, BigNumber, BigNumber], RequestWithdrawEventObject>;
-
-export type RequestWithdrawEventFilter = TypedEventFilter<RequestWithdrawEvent>;
-
-export interface SellOptionsEventObject {
-  round: BigNumber;
-  optionsSold: BigNumber;
-  totalCost: BigNumber;
-  expiry: BigNumber;
-  strikePrice: BigNumber;
-}
-export type SellOptionsEvent = TypedEvent<
-  [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber],
-  SellOptionsEventObject
+export type ProcessDepositEvent = TypedEvent<
+  [BigNumber, string, BigNumber, BigNumber, BigNumber],
+  ProcessDepositEventObject
 >;
 
-export type SellOptionsEventFilter = TypedEventFilter<SellOptionsEvent>;
+export type ProcessDepositEventFilter = TypedEventFilter<ProcessDepositEvent>;
 
-export interface SetCapEventObject {
-  auth: string;
-  oldCap: BigNumber;
-  newCap: BigNumber;
+export interface ProcessWithdrawalEventObject {
+  withdrawalId: BigNumber;
+  user: string;
+  tokens: BigNumber;
+  amount: BigNumber;
+  requestedTime: BigNumber;
 }
-export type SetCapEvent = TypedEvent<[string, BigNumber, BigNumber], SetCapEventObject>;
-
-export type SetCapEventFilter = TypedEventFilter<SetCapEvent>;
-
-export interface SetFeeReciepientEventObject {
-  auth: string;
-  oldReceipient: string;
-  newReceipient: string;
-}
-export type SetFeeReciepientEvent = TypedEvent<[string, string, string], SetFeeReciepientEventObject>;
-
-export type SetFeeReciepientEventFilter = TypedEventFilter<SetFeeReciepientEvent>;
-
-export interface SetFeesEventObject {
-  auth: string;
-  oldManageFee: BigNumber;
-  oldPerfFee: BigNumber;
-  newManageFee: BigNumber;
-  newPerfFee: BigNumber;
-}
-export type SetFeesEvent = TypedEvent<[string, BigNumber, BigNumber, BigNumber, BigNumber], SetFeesEventObject>;
-
-export type SetFeesEventFilter = TypedEventFilter<SetFeesEvent>;
-
-export interface SetIvLimitEventObject {
-  auth: string;
-  oldLimit: BigNumber;
-  newLimit: BigNumber;
-}
-export type SetIvLimitEvent = TypedEvent<[string, BigNumber, BigNumber], SetIvLimitEventObject>;
-
-export type SetIvLimitEventFilter = TypedEventFilter<SetIvLimitEvent>;
-
-export interface SetKeeperEventObject {
-  auth: string;
-  oldKeeper: string;
-  newKeeper: string;
-}
-export type SetKeeperEvent = TypedEvent<[string, string, string], SetKeeperEventObject>;
-
-export type SetKeeperEventFilter = TypedEventFilter<SetKeeperEvent>;
-
-export interface SetUserDepositLimitEventObject {
-  auth: string;
-  oldDepositLimit: BigNumber;
-  newDepositLimit: BigNumber;
-}
-export type SetUserDepositLimitEvent = TypedEvent<[string, BigNumber, BigNumber], SetUserDepositLimitEventObject>;
-
-export type SetUserDepositLimitEventFilter = TypedEventFilter<SetUserDepositLimitEvent>;
-
-export interface StartNewRoundEventObject {
-  round: BigNumber;
-  listingId: BigNumber;
-  newIndex: BigNumber;
-  expiry: BigNumber;
-  strikePrice: BigNumber;
-  lostColl: BigNumber;
-  qty: BigNumber;
-}
-export type StartNewRoundEvent = TypedEvent<
-  [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber],
-  StartNewRoundEventObject
+export type ProcessWithdrawalEvent = TypedEvent<
+  [BigNumber, string, BigNumber, BigNumber, BigNumber],
+  ProcessWithdrawalEventObject
 >;
 
-export type StartNewRoundEventFilter = TypedEventFilter<StartNewRoundEvent>;
+export type ProcessWithdrawalEventFilter = TypedEventFilter<ProcessWithdrawalEvent>;
 
-export interface UnpausedEventObject {
+export interface ProcessWithdrawalPartiallyEventObject {
+  withdrawalId: BigNumber;
+  user: string;
+  tokens: BigNumber;
+  amount: BigNumber;
+  requestedTime: BigNumber;
+}
+export type ProcessWithdrawalPartiallyEvent = TypedEvent<
+  [BigNumber, string, BigNumber, BigNumber, BigNumber],
+  ProcessWithdrawalPartiallyEventObject
+>;
+
+export type ProcessWithdrawalPartiallyEventFilter = TypedEventFilter<ProcessWithdrawalPartiallyEvent>;
+
+export interface SetDepositsPausedEventObject {
   account: string;
 }
-export type UnpausedEvent = TypedEvent<[string], UnpausedEventObject>;
+export type SetDepositsPausedEvent = TypedEvent<[string], SetDepositsPausedEventObject>;
 
-export type UnpausedEventFilter = TypedEventFilter<UnpausedEvent>;
+export type SetDepositsPausedEventFilter = TypedEventFilter<SetDepositsPausedEvent>;
+
+export interface SetDepositsUnpausedEventObject {
+  account: string;
+}
+export type SetDepositsUnpausedEvent = TypedEvent<[string], SetDepositsUnpausedEventObject>;
+
+export type SetDepositsUnpausedEventFilter = TypedEventFilter<SetDepositsUnpausedEvent>;
+
+export interface SetPausedEventObject {
+  account: string;
+}
+export type SetPausedEvent = TypedEvent<[string], SetPausedEventObject>;
+
+export type SetPausedEventFilter = TypedEventFilter<SetPausedEvent>;
+
+export interface SetUnpausedEventObject {
+  account: string;
+}
+export type SetUnpausedEvent = TypedEvent<[string], SetUnpausedEventObject>;
+
+export type SetUnpausedEventFilter = TypedEventFilter<SetUnpausedEvent>;
+
+export interface SettleOptionEventObject {
+  strikeId: BigNumber;
+  positionId: BigNumber;
+  amount: BigNumber;
+  totalCollateral: BigNumber;
+  totalPremium: BigNumber;
+  loss: BigNumber;
+}
+export type SettleOptionEvent = TypedEvent<
+  [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber],
+  SettleOptionEventObject
+>;
+
+export type SettleOptionEventFilter = TypedEventFilter<SettleOptionEvent>;
+
+export interface UpdateCollateralizationEventObject {
+  oldCollateralization: BigNumber;
+  newCollateralization: BigNumber;
+}
+export type UpdateCollateralizationEvent = TypedEvent<[BigNumber, BigNumber], UpdateCollateralizationEventObject>;
+
+export type UpdateCollateralizationEventFilter = TypedEventFilter<UpdateCollateralizationEvent>;
+
+export interface UpdateDelaysEventObject {
+  oldDepositDelay: BigNumber;
+  newDepositDelay: BigNumber;
+  oldWithdrawDelay: BigNumber;
+  newWithdrawDelay: BigNumber;
+}
+export type UpdateDelaysEvent = TypedEvent<[BigNumber, BigNumber, BigNumber, BigNumber], UpdateDelaysEventObject>;
+
+export type UpdateDelaysEventFilter = TypedEventFilter<UpdateDelaysEvent>;
+
+export interface UpdateFeeReceipientEventObject {
+  oldFeeReceipient: string;
+  newFeeReceipient: string;
+}
+export type UpdateFeeReceipientEvent = TypedEvent<[string, string], UpdateFeeReceipientEventObject>;
+
+export type UpdateFeeReceipientEventFilter = TypedEventFilter<UpdateFeeReceipientEvent>;
+
+export interface UpdateFeesEventObject {
+  oldPerf: BigNumber;
+  oldWithdraw: BigNumber;
+  newPerf: BigNumber;
+  newWithdraw: BigNumber;
+}
+export type UpdateFeesEvent = TypedEvent<[BigNumber, BigNumber, BigNumber, BigNumber], UpdateFeesEventObject>;
+
+export type UpdateFeesEventFilter = TypedEventFilter<UpdateFeesEvent>;
+
+export interface UpdateMinDepositEventObject {
+  oldMinimum: BigNumber;
+  newMinimum: BigNumber;
+}
+export type UpdateMinDepositEvent = TypedEvent<[BigNumber, BigNumber], UpdateMinDepositEventObject>;
+
+export type UpdateMinDepositEventFilter = TypedEventFilter<UpdateMinDepositEvent>;
+
+export interface UpdateSynthetixTrackingCodeEventObject {
+  oldCode: string;
+  newCode: string;
+}
+export type UpdateSynthetixTrackingCodeEvent = TypedEvent<[string, string], UpdateSynthetixTrackingCodeEventObject>;
+
+export type UpdateSynthetixTrackingCodeEventFilter = TypedEventFilter<UpdateSynthetixTrackingCodeEvent>;
 
 export interface PolynomialCoveredCall extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -453,916 +548,1136 @@ export interface PolynomialCoveredCall extends BaseContract {
   removeListener: OnEvent<this>;
 
   functions: {
-    LYRA_CLAIMER(overrides?: CallOverrides): Promise<[string]>;
+    GREEKS(overrides?: CallOverrides): Promise<[string]>;
 
-    LYRA_MARKET(overrides?: CallOverrides): Promise<[string]>;
+    MARKET(overrides?: CallOverrides): Promise<[string]>;
 
-    LYRA_TOKEN(overrides?: CallOverrides): Promise<[string]>;
+    MARKET_WRAPPER(overrides?: CallOverrides): Promise<[string]>;
+
+    OPTION_TOKEN(overrides?: CallOverrides): Promise<[string]>;
+
+    RATES(overrides?: CallOverrides): Promise<[string]>;
+
+    SUSD(overrides?: CallOverrides): Promise<[string]>;
 
     SYNTHETIX(overrides?: CallOverrides): Promise<[string]>;
 
-    SYNTH_KEY_PREMIUM(overrides?: CallOverrides): Promise<[string]>;
-
-    SYNTH_KEY_UNDERLYING(overrides?: CallOverrides): Promise<[string]>;
-
     UNDERLYING(overrides?: CallOverrides): Promise<[string]>;
+
+    UNDERLYING_SYNTH_KEY(overrides?: CallOverrides): Promise<[string]>;
+
+    VAULT_TOKEN(overrides?: CallOverrides): Promise<[string]>;
+
+    addCollateral(
+      strikeId: BigNumberish,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<ContractTransaction>;
 
     authority(overrides?: CallOverrides): Promise<[string]>;
 
-    cancelDeposit(
-      _amt: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    closePosition(
+      strikeId: BigNumberish,
+      amount: BigNumberish,
+      premiumAmount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<ContractTransaction>;
 
-    cancelWithdraw(
-      _shares: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
+    collateralization(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    claimLyra(
-      _receiver: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    completeWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
-
-    currentExpiry(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    currentListingId(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    currentRound(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    currentStrike(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    'deposit(address,uint256)'(
-      _user: PromiseOrValue<string>,
-      _amt: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    'deposit(uint256)'(
-      _amt: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    feeReciepient(overrides?: CallOverrides): Promise<[string]>;
-
-    ivLimit(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    keeper(overrides?: CallOverrides): Promise<[string]>;
-
-    managementFee(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    name(overrides?: CallOverrides): Promise<[string]>;
-
-    owner(overrides?: CallOverrides): Promise<[string]>;
-
-    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
-
-    paused(overrides?: CallOverrides): Promise<[boolean]>;
-
-    pendingDeposits(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    pendingWithdraws(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    performanceFee(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    performanceIndices(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    premiumCollected(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    requestWithdraw(
-      _shares: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    sellOptions(
-      _amt: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    setAuthority(
-      newAuthority: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    setCap(
-      _newCap: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    setFeeReciepient(
-      _feeReciepient: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    setFees(
-      _perfomanceFee: PromiseOrValue<BigNumberish>,
-      _managementFee: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    setIvLimit(
-      _ivLimit: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    setKeeper(
-      _keeper: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    setOwner(
-      newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    setUserDepositLimit(
-      _depositLimit: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    startNewRound(
-      _listingId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<ContractTransaction>;
-
-    totalFunds(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    totalShares(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
-
-    usedFunds(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    userDepositLimit(overrides?: CallOverrides): Promise<[BigNumber]>;
-
-    userInfos(
-      arg0: PromiseOrValue<string>,
+    depositQueue(
+      arg0: BigNumberish,
       overrides?: CallOverrides,
     ): Promise<
-      [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
-        depositRound: BigNumber;
-        pendingDeposit: BigNumber;
-        withdrawRound: BigNumber;
-        withdrawnShares: BigNumber;
-        totalShares: BigNumber;
+      [BigNumber, string, BigNumber, BigNumber, BigNumber] & {
+        id: BigNumber;
+        user: string;
+        depositedAmount: BigNumber;
+        mintedTokens: BigNumber;
+        requestedTime: BigNumber;
       }
     >;
 
-    vaultCapacity(overrides?: CallOverrides): Promise<[BigNumber]>;
+    depositsPaused(overrides?: CallOverrides): Promise<[boolean]>;
+
+    feeReceipient(overrides?: CallOverrides): Promise<[string]>;
+
+    getLiveStrikes(overrides?: CallOverrides): Promise<[BigNumber[]]>;
+
+    getTokenPrice(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    getTotalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    initiateDeposit(
+      user: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<ContractTransaction>;
+
+    initiateWithdrawal(
+      user: string,
+      tokens: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<ContractTransaction>;
+
+    liveStrikes(arg0: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    minDepositAmount(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    minDepositDelay(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    minWithdrawDelay(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    name(overrides?: CallOverrides): Promise<[string]>;
+
+    nextQueuedDepositId(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    nextQueuedWithdrawalId(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    openPosition(
+      strikeId: BigNumberish,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<ContractTransaction>;
+
+    owner(overrides?: CallOverrides): Promise<[string]>;
+
+    pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+
+    pauseDeposits(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+
+    paused(overrides?: CallOverrides): Promise<[boolean]>;
+
+    performanceFee(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    positionDatas(
+      arg0: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<
+      [BigNumber, BigNumber, BigNumber, BigNumber] & {
+        positionId: BigNumber;
+        amount: BigNumber;
+        collateral: BigNumber;
+        premiumCollected: BigNumber;
+      }
+    >;
+
+    processDepositQueue(
+      idCount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<ContractTransaction>;
+
+    processWithdrawalQueue(
+      idCount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<ContractTransaction>;
+
+    queuedDepositHead(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    queuedWithdrawalHead(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    saveToken(
+      token: string,
+      receiver: string,
+      amt: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<ContractTransaction>;
+
+    setAuthority(
+      newAuthority: string,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<ContractTransaction>;
+
+    setCollateralization(
+      _ratio: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<ContractTransaction>;
+
+    setDelays(
+      _depositDelay: BigNumberish,
+      _withdrawDelay: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<ContractTransaction>;
+
+    setFeeReceipient(
+      _feeReceipient: string,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<ContractTransaction>;
+
+    setFees(
+      _performanceFee: BigNumberish,
+      _withdrawalFee: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<ContractTransaction>;
+
+    setMinDepositAmount(
+      _minAmt: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<ContractTransaction>;
+
+    setOwner(
+      newOwner: string,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<ContractTransaction>;
+
+    setSynthetixTracking(
+      _code: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<ContractTransaction>;
+
+    settleOptions(
+      strikeIds: BigNumberish[],
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<ContractTransaction>;
+
+    synthetixTrackingCode(overrides?: CallOverrides): Promise<[string]>;
+
+    totalFunds(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    totalPremiumCollected(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    totalQueuedDeposits(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    totalQueuedWithdrawals(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+
+    unpauseDeposits(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+
+    usedFunds(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    withdrawalFee(overrides?: CallOverrides): Promise<[BigNumber]>;
+
+    withdrawalQueue(
+      arg0: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<
+      [BigNumber, string, BigNumber, BigNumber, BigNumber] & {
+        id: BigNumber;
+        user: string;
+        withdrawnTokens: BigNumber;
+        returnedAmount: BigNumber;
+        requestedTime: BigNumber;
+      }
+    >;
   };
 
-  LYRA_CLAIMER(overrides?: CallOverrides): Promise<string>;
+  GREEKS(overrides?: CallOverrides): Promise<string>;
 
-  LYRA_MARKET(overrides?: CallOverrides): Promise<string>;
+  MARKET(overrides?: CallOverrides): Promise<string>;
 
-  LYRA_TOKEN(overrides?: CallOverrides): Promise<string>;
+  MARKET_WRAPPER(overrides?: CallOverrides): Promise<string>;
+
+  OPTION_TOKEN(overrides?: CallOverrides): Promise<string>;
+
+  RATES(overrides?: CallOverrides): Promise<string>;
+
+  SUSD(overrides?: CallOverrides): Promise<string>;
 
   SYNTHETIX(overrides?: CallOverrides): Promise<string>;
 
-  SYNTH_KEY_PREMIUM(overrides?: CallOverrides): Promise<string>;
-
-  SYNTH_KEY_UNDERLYING(overrides?: CallOverrides): Promise<string>;
-
   UNDERLYING(overrides?: CallOverrides): Promise<string>;
+
+  UNDERLYING_SYNTH_KEY(overrides?: CallOverrides): Promise<string>;
+
+  VAULT_TOKEN(overrides?: CallOverrides): Promise<string>;
+
+  addCollateral(
+    strikeId: BigNumberish,
+    amount: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> },
+  ): Promise<ContractTransaction>;
 
   authority(overrides?: CallOverrides): Promise<string>;
 
-  cancelDeposit(
-    _amt: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  closePosition(
+    strikeId: BigNumberish,
+    amount: BigNumberish,
+    premiumAmount: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> },
   ): Promise<ContractTransaction>;
 
-  cancelWithdraw(
-    _shares: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
+  collateralization(overrides?: CallOverrides): Promise<BigNumber>;
 
-  claimLyra(
-    _receiver: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  completeWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
-
-  currentExpiry(overrides?: CallOverrides): Promise<BigNumber>;
-
-  currentListingId(overrides?: CallOverrides): Promise<BigNumber>;
-
-  currentRound(overrides?: CallOverrides): Promise<BigNumber>;
-
-  currentStrike(overrides?: CallOverrides): Promise<BigNumber>;
-
-  'deposit(address,uint256)'(
-    _user: PromiseOrValue<string>,
-    _amt: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  'deposit(uint256)'(
-    _amt: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  feeReciepient(overrides?: CallOverrides): Promise<string>;
-
-  ivLimit(overrides?: CallOverrides): Promise<BigNumber>;
-
-  keeper(overrides?: CallOverrides): Promise<string>;
-
-  managementFee(overrides?: CallOverrides): Promise<BigNumber>;
-
-  name(overrides?: CallOverrides): Promise<string>;
-
-  owner(overrides?: CallOverrides): Promise<string>;
-
-  pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
-
-  paused(overrides?: CallOverrides): Promise<boolean>;
-
-  pendingDeposits(overrides?: CallOverrides): Promise<BigNumber>;
-
-  pendingWithdraws(overrides?: CallOverrides): Promise<BigNumber>;
-
-  performanceFee(overrides?: CallOverrides): Promise<BigNumber>;
-
-  performanceIndices(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
-
-  premiumCollected(overrides?: CallOverrides): Promise<BigNumber>;
-
-  requestWithdraw(
-    _shares: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  sellOptions(
-    _amt: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  setAuthority(
-    newAuthority: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  setCap(
-    _newCap: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  setFeeReciepient(
-    _feeReciepient: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  setFees(
-    _perfomanceFee: PromiseOrValue<BigNumberish>,
-    _managementFee: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  setIvLimit(
-    _ivLimit: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  setKeeper(
-    _keeper: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  setOwner(
-    newOwner: PromiseOrValue<string>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  setUserDepositLimit(
-    _depositLimit: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  startNewRound(
-    _listingId: PromiseOrValue<BigNumberish>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> },
-  ): Promise<ContractTransaction>;
-
-  totalFunds(overrides?: CallOverrides): Promise<BigNumber>;
-
-  totalShares(overrides?: CallOverrides): Promise<BigNumber>;
-
-  unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
-
-  usedFunds(overrides?: CallOverrides): Promise<BigNumber>;
-
-  userDepositLimit(overrides?: CallOverrides): Promise<BigNumber>;
-
-  userInfos(
-    arg0: PromiseOrValue<string>,
+  depositQueue(
+    arg0: BigNumberish,
     overrides?: CallOverrides,
   ): Promise<
-    [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
-      depositRound: BigNumber;
-      pendingDeposit: BigNumber;
-      withdrawRound: BigNumber;
-      withdrawnShares: BigNumber;
-      totalShares: BigNumber;
+    [BigNumber, string, BigNumber, BigNumber, BigNumber] & {
+      id: BigNumber;
+      user: string;
+      depositedAmount: BigNumber;
+      mintedTokens: BigNumber;
+      requestedTime: BigNumber;
     }
   >;
 
-  vaultCapacity(overrides?: CallOverrides): Promise<BigNumber>;
+  depositsPaused(overrides?: CallOverrides): Promise<boolean>;
+
+  feeReceipient(overrides?: CallOverrides): Promise<string>;
+
+  getLiveStrikes(overrides?: CallOverrides): Promise<BigNumber[]>;
+
+  getTokenPrice(overrides?: CallOverrides): Promise<BigNumber>;
+
+  getTotalSupply(overrides?: CallOverrides): Promise<BigNumber>;
+
+  initiateDeposit(
+    user: string,
+    amount: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> },
+  ): Promise<ContractTransaction>;
+
+  initiateWithdrawal(
+    user: string,
+    tokens: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> },
+  ): Promise<ContractTransaction>;
+
+  liveStrikes(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+
+  minDepositAmount(overrides?: CallOverrides): Promise<BigNumber>;
+
+  minDepositDelay(overrides?: CallOverrides): Promise<BigNumber>;
+
+  minWithdrawDelay(overrides?: CallOverrides): Promise<BigNumber>;
+
+  name(overrides?: CallOverrides): Promise<string>;
+
+  nextQueuedDepositId(overrides?: CallOverrides): Promise<BigNumber>;
+
+  nextQueuedWithdrawalId(overrides?: CallOverrides): Promise<BigNumber>;
+
+  openPosition(
+    strikeId: BigNumberish,
+    amount: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> },
+  ): Promise<ContractTransaction>;
+
+  owner(overrides?: CallOverrides): Promise<string>;
+
+  pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+
+  pauseDeposits(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+
+  paused(overrides?: CallOverrides): Promise<boolean>;
+
+  performanceFee(overrides?: CallOverrides): Promise<BigNumber>;
+
+  positionDatas(
+    arg0: BigNumberish,
+    overrides?: CallOverrides,
+  ): Promise<
+    [BigNumber, BigNumber, BigNumber, BigNumber] & {
+      positionId: BigNumber;
+      amount: BigNumber;
+      collateral: BigNumber;
+      premiumCollected: BigNumber;
+    }
+  >;
+
+  processDepositQueue(
+    idCount: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> },
+  ): Promise<ContractTransaction>;
+
+  processWithdrawalQueue(
+    idCount: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> },
+  ): Promise<ContractTransaction>;
+
+  queuedDepositHead(overrides?: CallOverrides): Promise<BigNumber>;
+
+  queuedWithdrawalHead(overrides?: CallOverrides): Promise<BigNumber>;
+
+  saveToken(
+    token: string,
+    receiver: string,
+    amt: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> },
+  ): Promise<ContractTransaction>;
+
+  setAuthority(
+    newAuthority: string,
+    overrides?: Overrides & { from?: string | Promise<string> },
+  ): Promise<ContractTransaction>;
+
+  setCollateralization(
+    _ratio: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> },
+  ): Promise<ContractTransaction>;
+
+  setDelays(
+    _depositDelay: BigNumberish,
+    _withdrawDelay: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> },
+  ): Promise<ContractTransaction>;
+
+  setFeeReceipient(
+    _feeReceipient: string,
+    overrides?: Overrides & { from?: string | Promise<string> },
+  ): Promise<ContractTransaction>;
+
+  setFees(
+    _performanceFee: BigNumberish,
+    _withdrawalFee: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> },
+  ): Promise<ContractTransaction>;
+
+  setMinDepositAmount(
+    _minAmt: BigNumberish,
+    overrides?: Overrides & { from?: string | Promise<string> },
+  ): Promise<ContractTransaction>;
+
+  setOwner(newOwner: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+
+  setSynthetixTracking(
+    _code: BytesLike,
+    overrides?: Overrides & { from?: string | Promise<string> },
+  ): Promise<ContractTransaction>;
+
+  settleOptions(
+    strikeIds: BigNumberish[],
+    overrides?: Overrides & { from?: string | Promise<string> },
+  ): Promise<ContractTransaction>;
+
+  synthetixTrackingCode(overrides?: CallOverrides): Promise<string>;
+
+  totalFunds(overrides?: CallOverrides): Promise<BigNumber>;
+
+  totalPremiumCollected(overrides?: CallOverrides): Promise<BigNumber>;
+
+  totalQueuedDeposits(overrides?: CallOverrides): Promise<BigNumber>;
+
+  totalQueuedWithdrawals(overrides?: CallOverrides): Promise<BigNumber>;
+
+  unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+
+  unpauseDeposits(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+
+  usedFunds(overrides?: CallOverrides): Promise<BigNumber>;
+
+  withdrawalFee(overrides?: CallOverrides): Promise<BigNumber>;
+
+  withdrawalQueue(
+    arg0: BigNumberish,
+    overrides?: CallOverrides,
+  ): Promise<
+    [BigNumber, string, BigNumber, BigNumber, BigNumber] & {
+      id: BigNumber;
+      user: string;
+      withdrawnTokens: BigNumber;
+      returnedAmount: BigNumber;
+      requestedTime: BigNumber;
+    }
+  >;
 
   callStatic: {
-    LYRA_CLAIMER(overrides?: CallOverrides): Promise<string>;
+    GREEKS(overrides?: CallOverrides): Promise<string>;
 
-    LYRA_MARKET(overrides?: CallOverrides): Promise<string>;
+    MARKET(overrides?: CallOverrides): Promise<string>;
 
-    LYRA_TOKEN(overrides?: CallOverrides): Promise<string>;
+    MARKET_WRAPPER(overrides?: CallOverrides): Promise<string>;
+
+    OPTION_TOKEN(overrides?: CallOverrides): Promise<string>;
+
+    RATES(overrides?: CallOverrides): Promise<string>;
+
+    SUSD(overrides?: CallOverrides): Promise<string>;
 
     SYNTHETIX(overrides?: CallOverrides): Promise<string>;
 
-    SYNTH_KEY_PREMIUM(overrides?: CallOverrides): Promise<string>;
-
-    SYNTH_KEY_UNDERLYING(overrides?: CallOverrides): Promise<string>;
-
     UNDERLYING(overrides?: CallOverrides): Promise<string>;
+
+    UNDERLYING_SYNTH_KEY(overrides?: CallOverrides): Promise<string>;
+
+    VAULT_TOKEN(overrides?: CallOverrides): Promise<string>;
+
+    addCollateral(strikeId: BigNumberish, amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
 
     authority(overrides?: CallOverrides): Promise<string>;
 
-    cancelDeposit(_amt: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
-
-    cancelWithdraw(_shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
-
-    claimLyra(_receiver: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
-
-    completeWithdraw(overrides?: CallOverrides): Promise<void>;
-
-    currentExpiry(overrides?: CallOverrides): Promise<BigNumber>;
-
-    currentListingId(overrides?: CallOverrides): Promise<BigNumber>;
-
-    currentRound(overrides?: CallOverrides): Promise<BigNumber>;
-
-    currentStrike(overrides?: CallOverrides): Promise<BigNumber>;
-
-    'deposit(address,uint256)'(
-      _user: PromiseOrValue<string>,
-      _amt: PromiseOrValue<BigNumberish>,
+    closePosition(
+      strikeId: BigNumberish,
+      amount: BigNumberish,
+      premiumAmount: BigNumberish,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    'deposit(uint256)'(_amt: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
+    collateralization(overrides?: CallOverrides): Promise<BigNumber>;
 
-    feeReciepient(overrides?: CallOverrides): Promise<string>;
+    depositQueue(
+      arg0: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<
+      [BigNumber, string, BigNumber, BigNumber, BigNumber] & {
+        id: BigNumber;
+        user: string;
+        depositedAmount: BigNumber;
+        mintedTokens: BigNumber;
+        requestedTime: BigNumber;
+      }
+    >;
 
-    ivLimit(overrides?: CallOverrides): Promise<BigNumber>;
+    depositsPaused(overrides?: CallOverrides): Promise<boolean>;
 
-    keeper(overrides?: CallOverrides): Promise<string>;
+    feeReceipient(overrides?: CallOverrides): Promise<string>;
 
-    managementFee(overrides?: CallOverrides): Promise<BigNumber>;
+    getLiveStrikes(overrides?: CallOverrides): Promise<BigNumber[]>;
+
+    getTokenPrice(overrides?: CallOverrides): Promise<BigNumber>;
+
+    getTotalSupply(overrides?: CallOverrides): Promise<BigNumber>;
+
+    initiateDeposit(user: string, amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+
+    initiateWithdrawal(user: string, tokens: BigNumberish, overrides?: CallOverrides): Promise<void>;
+
+    liveStrikes(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+
+    minDepositAmount(overrides?: CallOverrides): Promise<BigNumber>;
+
+    minDepositDelay(overrides?: CallOverrides): Promise<BigNumber>;
+
+    minWithdrawDelay(overrides?: CallOverrides): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<string>;
+
+    nextQueuedDepositId(overrides?: CallOverrides): Promise<BigNumber>;
+
+    nextQueuedWithdrawalId(overrides?: CallOverrides): Promise<BigNumber>;
+
+    openPosition(strikeId: BigNumberish, amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
 
     owner(overrides?: CallOverrides): Promise<string>;
 
     pause(overrides?: CallOverrides): Promise<void>;
 
+    pauseDeposits(overrides?: CallOverrides): Promise<void>;
+
     paused(overrides?: CallOverrides): Promise<boolean>;
-
-    pendingDeposits(overrides?: CallOverrides): Promise<BigNumber>;
-
-    pendingWithdraws(overrides?: CallOverrides): Promise<BigNumber>;
 
     performanceFee(overrides?: CallOverrides): Promise<BigNumber>;
 
-    performanceIndices(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    premiumCollected(overrides?: CallOverrides): Promise<BigNumber>;
-
-    requestWithdraw(_shares: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
-
-    sellOptions(_amt: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
-
-    setAuthority(newAuthority: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
-
-    setCap(_newCap: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
-
-    setFeeReciepient(_feeReciepient: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
-
-    setFees(
-      _perfomanceFee: PromiseOrValue<BigNumberish>,
-      _managementFee: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides,
-    ): Promise<void>;
-
-    setIvLimit(_ivLimit: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
-
-    setKeeper(_keeper: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
-
-    setOwner(newOwner: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
-
-    setUserDepositLimit(_depositLimit: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
-
-    startNewRound(_listingId: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
-
-    totalFunds(overrides?: CallOverrides): Promise<BigNumber>;
-
-    totalShares(overrides?: CallOverrides): Promise<BigNumber>;
-
-    unpause(overrides?: CallOverrides): Promise<void>;
-
-    usedFunds(overrides?: CallOverrides): Promise<BigNumber>;
-
-    userDepositLimit(overrides?: CallOverrides): Promise<BigNumber>;
-
-    userInfos(
-      arg0: PromiseOrValue<string>,
+    positionDatas(
+      arg0: BigNumberish,
       overrides?: CallOverrides,
     ): Promise<
-      [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
-        depositRound: BigNumber;
-        pendingDeposit: BigNumber;
-        withdrawRound: BigNumber;
-        withdrawnShares: BigNumber;
-        totalShares: BigNumber;
+      [BigNumber, BigNumber, BigNumber, BigNumber] & {
+        positionId: BigNumber;
+        amount: BigNumber;
+        collateral: BigNumber;
+        premiumCollected: BigNumber;
       }
     >;
 
-    vaultCapacity(overrides?: CallOverrides): Promise<BigNumber>;
-  };
+    processDepositQueue(idCount: BigNumberish, overrides?: CallOverrides): Promise<void>;
 
-  filters: {
-    'AuthorityUpdated(address,address)'(
-      user?: PromiseOrValue<string> | null,
-      newAuthority?: PromiseOrValue<string> | null,
-    ): AuthorityUpdatedEventFilter;
-    AuthorityUpdated(
-      user?: PromiseOrValue<string> | null,
-      newAuthority?: PromiseOrValue<string> | null,
-    ): AuthorityUpdatedEventFilter;
+    processWithdrawalQueue(idCount: BigNumberish, overrides?: CallOverrides): Promise<void>;
 
-    'CancelDeposit(address,uint256,uint256)'(
-      user?: PromiseOrValue<string> | null,
-      depositRound?: PromiseOrValue<BigNumberish> | null,
-      amt?: null,
-    ): CancelDepositEventFilter;
-    CancelDeposit(
-      user?: PromiseOrValue<string> | null,
-      depositRound?: PromiseOrValue<BigNumberish> | null,
-      amt?: null,
-    ): CancelDepositEventFilter;
+    queuedDepositHead(overrides?: CallOverrides): Promise<BigNumber>;
 
-    'CancelWithdraw(address,uint256,uint256)'(
-      user?: PromiseOrValue<string> | null,
-      withdrawnRound?: PromiseOrValue<BigNumberish> | null,
-      shares?: null,
-    ): CancelWithdrawEventFilter;
-    CancelWithdraw(
-      user?: PromiseOrValue<string> | null,
-      withdrawnRound?: PromiseOrValue<BigNumberish> | null,
-      shares?: null,
-    ): CancelWithdrawEventFilter;
+    queuedWithdrawalHead(overrides?: CallOverrides): Promise<BigNumber>;
 
-    'CompleteWithdraw(address,uint256,uint256,uint256)'(
-      user?: PromiseOrValue<string> | null,
-      withdrawnRound?: PromiseOrValue<BigNumberish> | null,
-      shares?: null,
-      funds?: null,
-    ): CompleteWithdrawEventFilter;
-    CompleteWithdraw(
-      user?: PromiseOrValue<string> | null,
-      withdrawnRound?: PromiseOrValue<BigNumberish> | null,
-      shares?: null,
-      funds?: null,
-    ): CompleteWithdrawEventFilter;
+    saveToken(token: string, receiver: string, amt: BigNumberish, overrides?: CallOverrides): Promise<void>;
 
-    'Deposit(address,uint256,uint256)'(
-      user?: PromiseOrValue<string> | null,
-      depositRound?: PromiseOrValue<BigNumberish> | null,
-      amt?: null,
-    ): DepositEventFilter;
-    Deposit(
-      user?: PromiseOrValue<string> | null,
-      depositRound?: PromiseOrValue<BigNumberish> | null,
-      amt?: null,
-    ): DepositEventFilter;
+    setAuthority(newAuthority: string, overrides?: CallOverrides): Promise<void>;
 
-    'OwnerUpdated(address,address)'(
-      user?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null,
-    ): OwnerUpdatedEventFilter;
-    OwnerUpdated(
-      user?: PromiseOrValue<string> | null,
-      newOwner?: PromiseOrValue<string> | null,
-    ): OwnerUpdatedEventFilter;
+    setCollateralization(_ratio: BigNumberish, overrides?: CallOverrides): Promise<void>;
 
-    'Paused(address)'(account?: null): PausedEventFilter;
-    Paused(account?: null): PausedEventFilter;
+    setDelays(_depositDelay: BigNumberish, _withdrawDelay: BigNumberish, overrides?: CallOverrides): Promise<void>;
 
-    'RequestWithdraw(address,uint256,uint256)'(
-      user?: PromiseOrValue<string> | null,
-      withdrawnRound?: PromiseOrValue<BigNumberish> | null,
-      shares?: null,
-    ): RequestWithdrawEventFilter;
-    RequestWithdraw(
-      user?: PromiseOrValue<string> | null,
-      withdrawnRound?: PromiseOrValue<BigNumberish> | null,
-      shares?: null,
-    ): RequestWithdrawEventFilter;
+    setFeeReceipient(_feeReceipient: string, overrides?: CallOverrides): Promise<void>;
 
-    'SellOptions(uint256,uint256,uint256,uint256,uint256)'(
-      round?: PromiseOrValue<BigNumberish> | null,
-      optionsSold?: null,
-      totalCost?: null,
-      expiry?: null,
-      strikePrice?: null,
-    ): SellOptionsEventFilter;
-    SellOptions(
-      round?: PromiseOrValue<BigNumberish> | null,
-      optionsSold?: null,
-      totalCost?: null,
-      expiry?: null,
-      strikePrice?: null,
-    ): SellOptionsEventFilter;
+    setFees(_performanceFee: BigNumberish, _withdrawalFee: BigNumberish, overrides?: CallOverrides): Promise<void>;
 
-    'SetCap(address,uint256,uint256)'(
-      auth?: PromiseOrValue<string> | null,
-      oldCap?: null,
-      newCap?: null,
-    ): SetCapEventFilter;
-    SetCap(auth?: PromiseOrValue<string> | null, oldCap?: null, newCap?: null): SetCapEventFilter;
+    setMinDepositAmount(_minAmt: BigNumberish, overrides?: CallOverrides): Promise<void>;
 
-    'SetFeeReciepient(address,address,address)'(
-      auth?: PromiseOrValue<string> | null,
-      oldReceipient?: null,
-      newReceipient?: null,
-    ): SetFeeReciepientEventFilter;
-    SetFeeReciepient(
-      auth?: PromiseOrValue<string> | null,
-      oldReceipient?: null,
-      newReceipient?: null,
-    ): SetFeeReciepientEventFilter;
+    setOwner(newOwner: string, overrides?: CallOverrides): Promise<void>;
 
-    'SetFees(address,uint256,uint256,uint256,uint256)'(
-      auth?: PromiseOrValue<string> | null,
-      oldManageFee?: null,
-      oldPerfFee?: null,
-      newManageFee?: null,
-      newPerfFee?: null,
-    ): SetFeesEventFilter;
-    SetFees(
-      auth?: PromiseOrValue<string> | null,
-      oldManageFee?: null,
-      oldPerfFee?: null,
-      newManageFee?: null,
-      newPerfFee?: null,
-    ): SetFeesEventFilter;
+    setSynthetixTracking(_code: BytesLike, overrides?: CallOverrides): Promise<void>;
 
-    'SetIvLimit(address,uint256,uint256)'(
-      auth?: PromiseOrValue<string> | null,
-      oldLimit?: null,
-      newLimit?: null,
-    ): SetIvLimitEventFilter;
-    SetIvLimit(auth?: PromiseOrValue<string> | null, oldLimit?: null, newLimit?: null): SetIvLimitEventFilter;
+    settleOptions(strikeIds: BigNumberish[], overrides?: CallOverrides): Promise<void>;
 
-    'SetKeeper(address,address,address)'(
-      auth?: PromiseOrValue<string> | null,
-      oldKeeper?: null,
-      newKeeper?: null,
-    ): SetKeeperEventFilter;
-    SetKeeper(auth?: PromiseOrValue<string> | null, oldKeeper?: null, newKeeper?: null): SetKeeperEventFilter;
-
-    'SetUserDepositLimit(address,uint256,uint256)'(
-      auth?: PromiseOrValue<string> | null,
-      oldDepositLimit?: null,
-      newDepositLimit?: null,
-    ): SetUserDepositLimitEventFilter;
-    SetUserDepositLimit(
-      auth?: PromiseOrValue<string> | null,
-      oldDepositLimit?: null,
-      newDepositLimit?: null,
-    ): SetUserDepositLimitEventFilter;
-
-    'StartNewRound(uint256,uint256,uint256,uint256,uint256,uint256,uint256)'(
-      round?: PromiseOrValue<BigNumberish> | null,
-      listingId?: PromiseOrValue<BigNumberish> | null,
-      newIndex?: null,
-      expiry?: null,
-      strikePrice?: null,
-      lostColl?: null,
-      qty?: null,
-    ): StartNewRoundEventFilter;
-    StartNewRound(
-      round?: PromiseOrValue<BigNumberish> | null,
-      listingId?: PromiseOrValue<BigNumberish> | null,
-      newIndex?: null,
-      expiry?: null,
-      strikePrice?: null,
-      lostColl?: null,
-      qty?: null,
-    ): StartNewRoundEventFilter;
-
-    'Unpaused(address)'(account?: null): UnpausedEventFilter;
-    Unpaused(account?: null): UnpausedEventFilter;
-  };
-
-  estimateGas: {
-    LYRA_CLAIMER(overrides?: CallOverrides): Promise<BigNumber>;
-
-    LYRA_MARKET(overrides?: CallOverrides): Promise<BigNumber>;
-
-    LYRA_TOKEN(overrides?: CallOverrides): Promise<BigNumber>;
-
-    SYNTHETIX(overrides?: CallOverrides): Promise<BigNumber>;
-
-    SYNTH_KEY_PREMIUM(overrides?: CallOverrides): Promise<BigNumber>;
-
-    SYNTH_KEY_UNDERLYING(overrides?: CallOverrides): Promise<BigNumber>;
-
-    UNDERLYING(overrides?: CallOverrides): Promise<BigNumber>;
-
-    authority(overrides?: CallOverrides): Promise<BigNumber>;
-
-    cancelDeposit(
-      _amt: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    cancelWithdraw(
-      _shares: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    claimLyra(
-      _receiver: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    completeWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
-
-    currentExpiry(overrides?: CallOverrides): Promise<BigNumber>;
-
-    currentListingId(overrides?: CallOverrides): Promise<BigNumber>;
-
-    currentRound(overrides?: CallOverrides): Promise<BigNumber>;
-
-    currentStrike(overrides?: CallOverrides): Promise<BigNumber>;
-
-    'deposit(address,uint256)'(
-      _user: PromiseOrValue<string>,
-      _amt: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    'deposit(uint256)'(
-      _amt: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    feeReciepient(overrides?: CallOverrides): Promise<BigNumber>;
-
-    ivLimit(overrides?: CallOverrides): Promise<BigNumber>;
-
-    keeper(overrides?: CallOverrides): Promise<BigNumber>;
-
-    managementFee(overrides?: CallOverrides): Promise<BigNumber>;
-
-    name(overrides?: CallOverrides): Promise<BigNumber>;
-
-    owner(overrides?: CallOverrides): Promise<BigNumber>;
-
-    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
-
-    paused(overrides?: CallOverrides): Promise<BigNumber>;
-
-    pendingDeposits(overrides?: CallOverrides): Promise<BigNumber>;
-
-    pendingWithdraws(overrides?: CallOverrides): Promise<BigNumber>;
-
-    performanceFee(overrides?: CallOverrides): Promise<BigNumber>;
-
-    performanceIndices(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
-
-    premiumCollected(overrides?: CallOverrides): Promise<BigNumber>;
-
-    requestWithdraw(
-      _shares: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    sellOptions(
-      _amt: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    setAuthority(
-      newAuthority: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    setCap(
-      _newCap: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    setFeeReciepient(
-      _feeReciepient: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    setFees(
-      _perfomanceFee: PromiseOrValue<BigNumberish>,
-      _managementFee: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    setIvLimit(
-      _ivLimit: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    setKeeper(
-      _keeper: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    setOwner(
-      newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    setUserDepositLimit(
-      _depositLimit: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
-
-    startNewRound(
-      _listingId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<BigNumber>;
+    synthetixTrackingCode(overrides?: CallOverrides): Promise<string>;
 
     totalFunds(overrides?: CallOverrides): Promise<BigNumber>;
 
-    totalShares(overrides?: CallOverrides): Promise<BigNumber>;
+    totalPremiumCollected(overrides?: CallOverrides): Promise<BigNumber>;
 
-    unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
+    totalQueuedDeposits(overrides?: CallOverrides): Promise<BigNumber>;
+
+    totalQueuedWithdrawals(overrides?: CallOverrides): Promise<BigNumber>;
+
+    unpause(overrides?: CallOverrides): Promise<void>;
+
+    unpauseDeposits(overrides?: CallOverrides): Promise<void>;
 
     usedFunds(overrides?: CallOverrides): Promise<BigNumber>;
 
-    userDepositLimit(overrides?: CallOverrides): Promise<BigNumber>;
+    withdrawalFee(overrides?: CallOverrides): Promise<BigNumber>;
 
-    userInfos(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+    withdrawalQueue(
+      arg0: BigNumberish,
+      overrides?: CallOverrides,
+    ): Promise<
+      [BigNumber, string, BigNumber, BigNumber, BigNumber] & {
+        id: BigNumber;
+        user: string;
+        withdrawnTokens: BigNumber;
+        returnedAmount: BigNumber;
+        requestedTime: BigNumber;
+      }
+    >;
+  };
 
-    vaultCapacity(overrides?: CallOverrides): Promise<BigNumber>;
+  filters: {
+    'AddCollateral(uint256,uint256,uint256)'(
+      strikeId?: null,
+      positionId?: null,
+      amount?: null,
+    ): AddCollateralEventFilter;
+    AddCollateral(strikeId?: null, positionId?: null, amount?: null): AddCollateralEventFilter;
+
+    'AuthorityUpdated(address,address)'(
+      user?: string | null,
+      newAuthority?: string | null,
+    ): AuthorityUpdatedEventFilter;
+    AuthorityUpdated(user?: string | null, newAuthority?: string | null): AuthorityUpdatedEventFilter;
+
+    'ClosePosition(uint256,uint256,uint256,uint256,uint256)'(
+      strikeId?: null,
+      positionId?: null,
+      amount?: null,
+      collateralWithdrawn?: null,
+      premiumPaid?: null,
+    ): ClosePositionEventFilter;
+    ClosePosition(
+      strikeId?: null,
+      positionId?: null,
+      amount?: null,
+      collateralWithdrawn?: null,
+      premiumPaid?: null,
+    ): ClosePositionEventFilter;
+
+    'InitiateDeposit(uint256,address,address,uint256)'(
+      depositId?: null,
+      depositor?: null,
+      user?: null,
+      amount?: null,
+    ): InitiateDepositEventFilter;
+    InitiateDeposit(depositId?: null, depositor?: null, user?: null, amount?: null): InitiateDepositEventFilter;
+
+    'InitiateWithdrawal(uint256,address,address,uint256)'(
+      withdrawalId?: null,
+      withdrawer?: null,
+      user?: null,
+      tokens?: null,
+    ): InitiateWithdrawalEventFilter;
+    InitiateWithdrawal(
+      withdrawalId?: null,
+      withdrawer?: null,
+      user?: null,
+      tokens?: null,
+    ): InitiateWithdrawalEventFilter;
+
+    'OpenPosition(uint256,uint256,uint256,uint256,uint256,uint256)'(
+      strikeId?: null,
+      positionId?: null,
+      amount?: null,
+      collateral?: null,
+      premiumCollected?: null,
+      callDelta?: null,
+    ): OpenPositionEventFilter;
+    OpenPosition(
+      strikeId?: null,
+      positionId?: null,
+      amount?: null,
+      collateral?: null,
+      premiumCollected?: null,
+      callDelta?: null,
+    ): OpenPositionEventFilter;
+
+    'OwnerUpdated(address,address)'(user?: string | null, newOwner?: string | null): OwnerUpdatedEventFilter;
+    OwnerUpdated(user?: string | null, newOwner?: string | null): OwnerUpdatedEventFilter;
+
+    'ProcessDeposit(uint256,address,uint256,uint256,uint256)'(
+      depositId?: null,
+      user?: null,
+      amount?: null,
+      tokens?: null,
+      requestedTime?: null,
+    ): ProcessDepositEventFilter;
+    ProcessDeposit(
+      depositId?: null,
+      user?: null,
+      amount?: null,
+      tokens?: null,
+      requestedTime?: null,
+    ): ProcessDepositEventFilter;
+
+    'ProcessWithdrawal(uint256,address,uint256,uint256,uint256)'(
+      withdrawalId?: null,
+      user?: null,
+      tokens?: null,
+      amount?: null,
+      requestedTime?: null,
+    ): ProcessWithdrawalEventFilter;
+    ProcessWithdrawal(
+      withdrawalId?: null,
+      user?: null,
+      tokens?: null,
+      amount?: null,
+      requestedTime?: null,
+    ): ProcessWithdrawalEventFilter;
+
+    'ProcessWithdrawalPartially(uint256,address,uint256,uint256,uint256)'(
+      withdrawalId?: null,
+      user?: null,
+      tokens?: null,
+      amount?: null,
+      requestedTime?: null,
+    ): ProcessWithdrawalPartiallyEventFilter;
+    ProcessWithdrawalPartially(
+      withdrawalId?: null,
+      user?: null,
+      tokens?: null,
+      amount?: null,
+      requestedTime?: null,
+    ): ProcessWithdrawalPartiallyEventFilter;
+
+    'SetDepositsPaused(address)'(account?: null): SetDepositsPausedEventFilter;
+    SetDepositsPaused(account?: null): SetDepositsPausedEventFilter;
+
+    'SetDepositsUnpaused(address)'(account?: null): SetDepositsUnpausedEventFilter;
+    SetDepositsUnpaused(account?: null): SetDepositsUnpausedEventFilter;
+
+    'SetPaused(address)'(account?: null): SetPausedEventFilter;
+    SetPaused(account?: null): SetPausedEventFilter;
+
+    'SetUnpaused(address)'(account?: null): SetUnpausedEventFilter;
+    SetUnpaused(account?: null): SetUnpausedEventFilter;
+
+    'SettleOption(uint256,uint256,uint256,uint256,int256,uint256)'(
+      strikeId?: null,
+      positionId?: null,
+      amount?: null,
+      totalCollateral?: null,
+      totalPremium?: null,
+      loss?: null,
+    ): SettleOptionEventFilter;
+    SettleOption(
+      strikeId?: null,
+      positionId?: null,
+      amount?: null,
+      totalCollateral?: null,
+      totalPremium?: null,
+      loss?: null,
+    ): SettleOptionEventFilter;
+
+    'UpdateCollateralization(uint256,uint256)'(
+      oldCollateralization?: null,
+      newCollateralization?: null,
+    ): UpdateCollateralizationEventFilter;
+    UpdateCollateralization(
+      oldCollateralization?: null,
+      newCollateralization?: null,
+    ): UpdateCollateralizationEventFilter;
+
+    'UpdateDelays(uint256,uint256,uint256,uint256)'(
+      oldDepositDelay?: null,
+      newDepositDelay?: null,
+      oldWithdrawDelay?: null,
+      newWithdrawDelay?: null,
+    ): UpdateDelaysEventFilter;
+    UpdateDelays(
+      oldDepositDelay?: null,
+      newDepositDelay?: null,
+      oldWithdrawDelay?: null,
+      newWithdrawDelay?: null,
+    ): UpdateDelaysEventFilter;
+
+    'UpdateFeeReceipient(address,address)'(
+      oldFeeReceipient?: null,
+      newFeeReceipient?: null,
+    ): UpdateFeeReceipientEventFilter;
+    UpdateFeeReceipient(oldFeeReceipient?: null, newFeeReceipient?: null): UpdateFeeReceipientEventFilter;
+
+    'UpdateFees(uint256,uint256,uint256,uint256)'(
+      oldPerf?: null,
+      oldWithdraw?: null,
+      newPerf?: null,
+      newWithdraw?: null,
+    ): UpdateFeesEventFilter;
+    UpdateFees(oldPerf?: null, oldWithdraw?: null, newPerf?: null, newWithdraw?: null): UpdateFeesEventFilter;
+
+    'UpdateMinDeposit(uint256,uint256)'(oldMinimum?: null, newMinimum?: null): UpdateMinDepositEventFilter;
+    UpdateMinDeposit(oldMinimum?: null, newMinimum?: null): UpdateMinDepositEventFilter;
+
+    'UpdateSynthetixTrackingCode(bytes32,bytes32)'(
+      oldCode?: null,
+      newCode?: null,
+    ): UpdateSynthetixTrackingCodeEventFilter;
+    UpdateSynthetixTrackingCode(oldCode?: null, newCode?: null): UpdateSynthetixTrackingCodeEventFilter;
+  };
+
+  estimateGas: {
+    GREEKS(overrides?: CallOverrides): Promise<BigNumber>;
+
+    MARKET(overrides?: CallOverrides): Promise<BigNumber>;
+
+    MARKET_WRAPPER(overrides?: CallOverrides): Promise<BigNumber>;
+
+    OPTION_TOKEN(overrides?: CallOverrides): Promise<BigNumber>;
+
+    RATES(overrides?: CallOverrides): Promise<BigNumber>;
+
+    SUSD(overrides?: CallOverrides): Promise<BigNumber>;
+
+    SYNTHETIX(overrides?: CallOverrides): Promise<BigNumber>;
+
+    UNDERLYING(overrides?: CallOverrides): Promise<BigNumber>;
+
+    UNDERLYING_SYNTH_KEY(overrides?: CallOverrides): Promise<BigNumber>;
+
+    VAULT_TOKEN(overrides?: CallOverrides): Promise<BigNumber>;
+
+    addCollateral(
+      strikeId: BigNumberish,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<BigNumber>;
+
+    authority(overrides?: CallOverrides): Promise<BigNumber>;
+
+    closePosition(
+      strikeId: BigNumberish,
+      amount: BigNumberish,
+      premiumAmount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<BigNumber>;
+
+    collateralization(overrides?: CallOverrides): Promise<BigNumber>;
+
+    depositQueue(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+
+    depositsPaused(overrides?: CallOverrides): Promise<BigNumber>;
+
+    feeReceipient(overrides?: CallOverrides): Promise<BigNumber>;
+
+    getLiveStrikes(overrides?: CallOverrides): Promise<BigNumber>;
+
+    getTokenPrice(overrides?: CallOverrides): Promise<BigNumber>;
+
+    getTotalSupply(overrides?: CallOverrides): Promise<BigNumber>;
+
+    initiateDeposit(
+      user: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<BigNumber>;
+
+    initiateWithdrawal(
+      user: string,
+      tokens: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<BigNumber>;
+
+    liveStrikes(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+
+    minDepositAmount(overrides?: CallOverrides): Promise<BigNumber>;
+
+    minDepositDelay(overrides?: CallOverrides): Promise<BigNumber>;
+
+    minWithdrawDelay(overrides?: CallOverrides): Promise<BigNumber>;
+
+    name(overrides?: CallOverrides): Promise<BigNumber>;
+
+    nextQueuedDepositId(overrides?: CallOverrides): Promise<BigNumber>;
+
+    nextQueuedWithdrawalId(overrides?: CallOverrides): Promise<BigNumber>;
+
+    openPosition(
+      strikeId: BigNumberish,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<BigNumber>;
+
+    owner(overrides?: CallOverrides): Promise<BigNumber>;
+
+    pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+
+    pauseDeposits(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+
+    paused(overrides?: CallOverrides): Promise<BigNumber>;
+
+    performanceFee(overrides?: CallOverrides): Promise<BigNumber>;
+
+    positionDatas(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+
+    processDepositQueue(
+      idCount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<BigNumber>;
+
+    processWithdrawalQueue(
+      idCount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<BigNumber>;
+
+    queuedDepositHead(overrides?: CallOverrides): Promise<BigNumber>;
+
+    queuedWithdrawalHead(overrides?: CallOverrides): Promise<BigNumber>;
+
+    saveToken(
+      token: string,
+      receiver: string,
+      amt: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<BigNumber>;
+
+    setAuthority(newAuthority: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+
+    setCollateralization(
+      _ratio: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<BigNumber>;
+
+    setDelays(
+      _depositDelay: BigNumberish,
+      _withdrawDelay: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<BigNumber>;
+
+    setFeeReceipient(
+      _feeReceipient: string,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<BigNumber>;
+
+    setFees(
+      _performanceFee: BigNumberish,
+      _withdrawalFee: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<BigNumber>;
+
+    setMinDepositAmount(
+      _minAmt: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<BigNumber>;
+
+    setOwner(newOwner: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+
+    setSynthetixTracking(
+      _code: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<BigNumber>;
+
+    settleOptions(
+      strikeIds: BigNumberish[],
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<BigNumber>;
+
+    synthetixTrackingCode(overrides?: CallOverrides): Promise<BigNumber>;
+
+    totalFunds(overrides?: CallOverrides): Promise<BigNumber>;
+
+    totalPremiumCollected(overrides?: CallOverrides): Promise<BigNumber>;
+
+    totalQueuedDeposits(overrides?: CallOverrides): Promise<BigNumber>;
+
+    totalQueuedWithdrawals(overrides?: CallOverrides): Promise<BigNumber>;
+
+    unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+
+    unpauseDeposits(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+
+    usedFunds(overrides?: CallOverrides): Promise<BigNumber>;
+
+    withdrawalFee(overrides?: CallOverrides): Promise<BigNumber>;
+
+    withdrawalQueue(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
   };
 
   populateTransaction: {
-    LYRA_CLAIMER(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    GREEKS(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    LYRA_MARKET(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    MARKET(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    LYRA_TOKEN(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    MARKET_WRAPPER(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    OPTION_TOKEN(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    RATES(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    SUSD(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     SYNTHETIX(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    SYNTH_KEY_PREMIUM(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    SYNTH_KEY_UNDERLYING(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
     UNDERLYING(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    UNDERLYING_SYNTH_KEY(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    VAULT_TOKEN(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    addCollateral(
+      strikeId: BigNumberish,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<PopulatedTransaction>;
 
     authority(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    cancelDeposit(
-      _amt: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    closePosition(
+      strikeId: BigNumberish,
+      amount: BigNumberish,
+      premiumAmount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
-    cancelWithdraw(
-      _shares: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    collateralization(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    depositQueue(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    depositsPaused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    feeReceipient(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    getLiveStrikes(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    getTokenPrice(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    getTotalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    initiateDeposit(
+      user: string,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
-    claimLyra(
-      _receiver: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    initiateWithdrawal(
+      user: string,
+      tokens: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
-    completeWithdraw(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
+    liveStrikes(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    currentExpiry(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    minDepositAmount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    currentListingId(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    minDepositDelay(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    currentRound(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    currentStrike(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    'deposit(address,uint256)'(
-      _user: PromiseOrValue<string>,
-      _amt: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
-
-    'deposit(uint256)'(
-      _amt: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
-
-    feeReciepient(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    ivLimit(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    keeper(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    managementFee(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    minWithdrawDelay(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
+    nextQueuedDepositId(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    nextQueuedWithdrawalId(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    openPosition(
+      strikeId: BigNumberish,
+      amount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<PopulatedTransaction>;
+
     owner(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    pause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
+    pause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+
+    pauseDeposits(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
 
     paused(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    pendingDeposits(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    pendingWithdraws(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
     performanceFee(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    performanceIndices(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    positionDatas(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    premiumCollected(overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    requestWithdraw(
-      _shares: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    processDepositQueue(
+      idCount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
-    sellOptions(
-      _amt: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    processWithdrawalQueue(
+      idCount: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<PopulatedTransaction>;
+
+    queuedDepositHead(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    queuedWithdrawalHead(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    saveToken(
+      token: string,
+      receiver: string,
+      amt: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
     setAuthority(
-      newAuthority: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      newAuthority: string,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
-    setCap(
-      _newCap: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    setCollateralization(
+      _ratio: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
-    setFeeReciepient(
-      _feeReciepient: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    setDelays(
+      _depositDelay: BigNumberish,
+      _withdrawDelay: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
+    ): Promise<PopulatedTransaction>;
+
+    setFeeReceipient(
+      _feeReceipient: string,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
     setFees(
-      _perfomanceFee: PromiseOrValue<BigNumberish>,
-      _managementFee: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      _performanceFee: BigNumberish,
+      _withdrawalFee: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
-    setIvLimit(
-      _ivLimit: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
-    ): Promise<PopulatedTransaction>;
-
-    setKeeper(
-      _keeper: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    setMinDepositAmount(
+      _minAmt: BigNumberish,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
     setOwner(
-      newOwner: PromiseOrValue<string>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+      newOwner: string,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
-    setUserDepositLimit(
-      _depositLimit: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    setSynthetixTracking(
+      _code: BytesLike,
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
 
-    startNewRound(
-      _listingId: PromiseOrValue<BigNumberish>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    settleOptions(
+      strikeIds: BigNumberish[],
+      overrides?: Overrides & { from?: string | Promise<string> },
     ): Promise<PopulatedTransaction>;
+
+    synthetixTrackingCode(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalFunds(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    totalShares(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    totalPremiumCollected(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    unpause(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
+    totalQueuedDeposits(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    totalQueuedWithdrawals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    unpause(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+
+    unpauseDeposits(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
 
     usedFunds(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    userDepositLimit(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    withdrawalFee(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    userInfos(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    vaultCapacity(overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    withdrawalQueue(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
   };
 }
