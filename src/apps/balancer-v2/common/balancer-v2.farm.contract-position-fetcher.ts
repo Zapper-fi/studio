@@ -31,7 +31,7 @@ export type GaugesResponse = {
   }[];
 };
 
-export abstract class BalancerV2StakedContractPositionFetcher extends SingleStakingFarmDynamicTemplateContractPositionFetcher<BalancerGauge> {
+export abstract class BalancerV2FarmContractPositionFetcher extends SingleStakingFarmDynamicTemplateContractPositionFetcher<BalancerGauge> {
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
     @Inject(BalancerV2ContractFactory) protected readonly contractFactory: BalancerV2ContractFactory,
