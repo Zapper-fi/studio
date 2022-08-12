@@ -1,0 +1,4000 @@
+[
+  {
+    "type": "app-token",
+    "appId": "yearn",
+    "groupId": "v1-vault",
+    "network": "ethereum",
+    "address": "0x597ad1e0c13bfe8025993d9e79c69e1c0233522e",
+    "symbol": "yUSDC",
+    "decimals": 6,
+    "supply": 670389.06586,
+    "tokens": [
+      {
+        "id": "2956",
+        "address": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+        "name": "USD Coin",
+        "symbol": "USDC",
+        "decimals": 6,
+        "coingeckoId": "usd-coin",
+        "hide": false,
+        "canExchange": true,
+        "updatedAt": "2022-08-12T15:43:40.707Z",
+        "createdAt": "2022-05-18T12:54:47.695Z",
+        "price": 1.002,
+        "networkId": 1,
+        "status": "approved",
+        "totalSupply": "45009329863.78955",
+        "dailyVolume": 6168748661.865215,
+        "apt_address": null,
+        "apt_networkId": null,
+        "networkEnumValue": "ethereum",
+        "type": "base-token",
+        "network": "ethereum"
+      }
+    ],
+    "pricePerShare": [
+      1.110341388696587
+    ],
+    "price": 1.1125620714739801,
+    "dataProps": {
+      "liquidity": 745849.447806708,
+      "apy": 8.950973295895892e-11,
+      "isBlocked": true,
+      "reserve": 744360.726354
+    },
+    "displayProps": {
+      "label": "yUSDC",
+      "secondarylabel": {
+        "type": "dollar",
+        "value": 1.1125620714739801
+      },
+      "tertiaryLabel": "0.000% APY",
+      "images": [
+        "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48.png"
+      ],
+      "statsItems": [
+        {
+          "label": "Liquidity",
+          "value": {
+            "type": "dollar",
+            "value": 745849.447806708
+          }
+        },
+        {
+          "label": "APY",
+          "value": {
+            "type": "pct",
+            "value": 8.950973295895892e-11
+          }
+        }
+      ]
+    }
+  },
+  {
+    "type": "app-token",
+    "appId": "yearn",
+    "groupId": "v1-vault",
+    "network": "ethereum",
+    "address": "0x5dbcf33d8c2e976c6b560249878e6f1491bca25c",
+    "symbol": "yyDAI+yUSDC+yUSDT+yTUSD",
+    "decimals": 18,
+    "supply": 1098405.4075710985,
+    "tokens": [
+      {
+        "type": "app-token",
+        "appId": "curve",
+        "price": 1.139355152392649,
+        "supply": 9547191.16085122,
+        "symbol": "yDAI+yUSDC+yUSDT+yTUSD",
+        "tokens": [
+          {
+            "type": "app-token",
+            "appId": "yearn",
+            "price": 1.1286163028376284,
+            "supply": 3149837.3605360873,
+            "symbol": "yDAI",
+            "tokens": [
+              {
+                "id": "1250",
+                "hide": false,
+                "name": "Dai Stablecoin",
+                "type": "base-token",
+                "price": 0.999085,
+                "status": "approved",
+                "symbol": "DAI",
+                "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
+                "network": "ethereum",
+                "decimals": 18,
+                "createdAt": "2022-05-18T12:54:47.695Z",
+                "networkId": 1,
+                "updatedAt": "2022-08-12T15:40:31.739Z",
+                "canExchange": true,
+                "coingeckoId": "dai",
+                "dailyVolume": 755499429.2517419,
+                "totalSupply": "6899045442.878717353655245997",
+                "networkEnumValue": "ethereum"
+              }
+            ],
+            "address": "0x16de59092dae5ccf4a1e6439d611fd0653f0bd01",
+            "groupId": "yield",
+            "network": "ethereum",
+            "decimals": 18,
+            "dataProps": {
+              "reserve": 3558213.561797117,
+              "liquidity": 3554957.7963880724
+            },
+            "displayProps": {
+              "label": "DAI",
+              "images": [
+                "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0x6b175474e89094c44da98b954eedeac495271d0f.png"
+              ],
+              "statsItems": [
+                {
+                  "label": "Liquidity",
+                  "value": {
+                    "type": "dollar",
+                    "value": 3554957.7963880724
+                  }
+                }
+              ],
+              "labelDetailed": "yDAI",
+              "secondaryLabel": {
+                "type": "dollar",
+                "value": 1.1286163028376284
+              }
+            },
+            "pricePerShare": 1.1296499325258895
+          },
+          {
+            "type": "app-token",
+            "appId": "yearn",
+            "price": 1.2457302399799346,
+            "supply": 4937428.95723,
+            "symbol": "yUSDC",
+            "tokens": [
+              {
+                "id": "2956",
+                "hide": false,
+                "name": "USD Coin",
+                "type": "base-token",
+                "price": 0.999951,
+                "status": "approved",
+                "symbol": "USDC",
+                "address": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+                "network": "ethereum",
+                "decimals": 6,
+                "createdAt": "2022-05-18T12:54:47.695Z",
+                "networkId": 1,
+                "updatedAt": "2022-08-12T15:40:31.739Z",
+                "canExchange": true,
+                "coingeckoId": "usd-coin",
+                "dailyVolume": 6156564963.298498,
+                "totalSupply": "45009329863.78955",
+                "networkEnumValue": "ethereum"
+              }
+            ],
+            "address": "0xd6ad7a6750a7593e092a9b218d66c0a814a3436e",
+            "groupId": "yield",
+            "network": "ethereum",
+            "decimals": 6,
+            "dataProps": {
+              "reserve": 6151005.959066,
+              "liquidity": 6150704.559774006
+            },
+            "displayProps": {
+              "label": "USDC",
+              "images": [
+                "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48.png"
+              ],
+              "statsItems": [
+                {
+                  "label": "Liquidity",
+                  "value": {
+                    "type": "dollar",
+                    "value": 6150704.559774006
+                  }
+                }
+              ],
+              "labelDetailed": "yUSDC",
+              "secondaryLabel": {
+                "type": "dollar",
+                "value": 1.2457302399799346
+              }
+            },
+            "pricePerShare": 1.2457912837528384
+          },
+          {
+            "type": "app-token",
+            "appId": "yearn",
+            "price": 1.0908737105080122,
+            "supply": 2680377.049428,
+            "symbol": "yUSDT",
+            "tokens": [
+              {
+                "id": "2966",
+                "hide": false,
+                "name": "Tether USD",
+                "type": "base-token",
+                "price": 0.999609,
+                "status": "approved",
+                "symbol": "USDT",
+                "address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+                "network": "ethereum",
+                "decimals": 6,
+                "createdAt": "2022-05-18T12:54:47.695Z",
+                "networkId": 1,
+                "updatedAt": "2022-08-12T15:40:31.739Z",
+                "canExchange": true,
+                "coingeckoId": "tether",
+                "dailyVolume": 48123717974.6425,
+                "totalSupply": "32313908246.384776",
+                "networkEnumValue": "ethereum"
+              }
+            ],
+            "address": "0x83f798e925bcd4017eb265844fddabb448f1707d",
+            "groupId": "yield",
+            "network": "ethereum",
+            "decimals": 6,
+            "dataProps": {
+              "reserve": 2925096.570229,
+              "liquidity": 2923952.85747004
+            },
+            "displayProps": {
+              "label": "USDT",
+              "images": [
+                "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xdac17f958d2ee523a2206206994597c13d831ec7.png"
+              ],
+              "statsItems": [
+                {
+                  "label": "Liquidity",
+                  "value": {
+                    "type": "dollar",
+                    "value": 2923952.85747004
+                  }
+                }
+              ],
+              "labelDetailed": "yUSDT",
+              "secondaryLabel": {
+                "type": "dollar",
+                "value": 1.0908737105080122
+              }
+            },
+            "pricePerShare": 1.0913004089679188
+          },
+          {
+            "type": "app-token",
+            "appId": "yearn",
+            "price": 1.1009951516985184,
+            "supply": 2669049.91681788,
+            "symbol": "yTUSD",
+            "tokens": [
+              {
+                "id": "2883",
+                "hide": false,
+                "name": "TrueUSD",
+                "type": "base-token",
+                "price": 0.998522,
+                "status": "approved",
+                "symbol": "TUSD",
+                "address": "0x0000000000085d4780b73119b644ae5ecd22b376",
+                "network": "ethereum",
+                "decimals": 18,
+                "createdAt": "2022-05-18T12:54:47.695Z",
+                "networkId": 1,
+                "updatedAt": "2022-08-12T15:40:31.739Z",
+                "canExchange": true,
+                "coingeckoId": "true-usd",
+                "dailyVolume": 273798998.054771,
+                "totalSupply": "885401443.75",
+                "networkEnumValue": "ethereum"
+              }
+            ],
+            "address": "0x73a052500105205d34daf004eab301916da8190f",
+            "groupId": "yield",
+            "network": "ethereum",
+            "decimals": 18,
+            "dataProps": {
+              "reserve": 2942960.7139931014,
+              "liquidity": 2938611.0180578195
+            },
+            "displayProps": {
+              "label": "TUSD",
+              "images": [
+                "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0x0000000000085d4780b73119b644ae5ecd22b376.png"
+              ],
+              "statsItems": [
+                {
+                  "label": "Liquidity",
+                  "value": {
+                    "type": "dollar",
+                    "value": 2938611.0180578195
+                  }
+                }
+              ],
+              "labelDetailed": "yTUSD",
+              "secondaryLabel": {
+                "type": "dollar",
+                "value": 1.1009951516985184
+              }
+            },
+            "pricePerShare": 1.1026248311990305
+          }
+        ],
+        "address": "0xdf5e0e81dff6faf3a7e52ba697820c5e32d806a8",
+        "groupId": "pool",
+        "network": "ethereum",
+        "decimals": 18,
+        "dataProps": {
+          "apy": 0.2045058477564643,
+          "fee": 0.0004,
+          "volume": 230654.78107859724,
+          "poolType": "stable",
+          "liquidity": 10886341.41596803,
+          "swapAddress": "0x45f783cce6b7ff23b2ab2d70e416cdb7d6055f51",
+          "gaugeAddresses": [
+            "0xfa712ee4788c042e2b7bb55e6cb8ec569c4530c1"
+          ]
+        },
+        "displayProps": {
+          "label": "yDAI / yUSDC / yUSDT / yTUSD",
+          "images": [
+            "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0x6b175474e89094c44da98b954eedeac495271d0f.png",
+            "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48.png",
+            "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xdac17f958d2ee523a2206206994597c13d831ec7.png",
+            "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0x0000000000085d4780b73119b644ae5ecd22b376.png"
+          ],
+          "statsItems": [
+            {
+              "label": "Liquidity",
+              "value": {
+                "type": "dollar",
+                "value": 10886341.41596803
+              }
+            },
+            {
+              "label": "Supply",
+              "value": {
+                "type": "number",
+                "value": 9547191.16085122
+              }
+            },
+            {
+              "label": "Volume",
+              "value": {
+                "type": "dollar",
+                "value": 230654.78107859724
+              }
+            },
+            {
+              "label": "APY",
+              "value": {
+                "type": "pct",
+                "value": 0.2045058477564643
+              }
+            },
+            {
+              "label": "Fee",
+              "value": {
+                "type": "pct",
+                "value": 0.0004
+              }
+            },
+            {
+              "label": "Ratio",
+              "value": "25% / 28% / 23% / 23%"
+            }
+          ],
+          "secondaryLabel": "25% / 28% / 23% / 23%"
+        },
+        "pricePerShare": [
+          0.254104666158259,
+          0.2577934649948458,
+          0.24367210442967413,
+          0.24207475907250198
+        ]
+      }
+    ],
+    "pricePerShare": [
+      1.173186183069336
+    ],
+    "price": 1.3366757223959136,
+    "dataProps": {
+      "liquidity": 1468211.841648676,
+      "apy": 0.007753530821152488,
+      "isBlocked": true,
+      "reserve": 1288634.0475710554
+    },
+    "displayProps": {
+      "label": "yyDAI+yUSDC+yUSDT+yTUSD",
+      "secondarylabel": {
+        "type": "dollar",
+        "value": 1.3366757223959136
+      },
+      "tertiaryLabel": "0.008% APY",
+      "images": [
+        "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0x6b175474e89094c44da98b954eedeac495271d0f.png",
+        "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48.png",
+        "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xdac17f958d2ee523a2206206994597c13d831ec7.png",
+        "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0x0000000000085d4780b73119b644ae5ecd22b376.png"
+      ],
+      "statsItems": [
+        {
+          "label": "Liquidity",
+          "value": {
+            "type": "dollar",
+            "value": 1468211.841648676
+          }
+        },
+        {
+          "label": "APY",
+          "value": {
+            "type": "pct",
+            "value": 0.007753530821152488
+          }
+        }
+      ]
+    }
+  },
+  {
+    "type": "app-token",
+    "appId": "yearn",
+    "groupId": "v1-vault",
+    "network": "ethereum",
+    "address": "0x37d19d1c4e1fa9dc47bd1ea12f742a0887eda74a",
+    "symbol": "yTUSD",
+    "decimals": 18,
+    "supply": 72026.46446005117,
+    "tokens": [
+      {
+        "id": "2883",
+        "address": "0x0000000000085d4780b73119b644ae5ecd22b376",
+        "name": "TrueUSD",
+        "symbol": "TUSD",
+        "decimals": 18,
+        "coingeckoId": "true-usd",
+        "hide": false,
+        "canExchange": true,
+        "updatedAt": "2022-08-12T15:43:40.707Z",
+        "createdAt": "2022-05-18T12:54:47.695Z",
+        "price": 1.001,
+        "networkId": 1,
+        "status": "approved",
+        "totalSupply": "885401443.75",
+        "dailyVolume": 274949448.53571606,
+        "apt_address": null,
+        "apt_networkId": null,
+        "networkEnumValue": "ethereum",
+        "type": "base-token",
+        "network": "ethereum"
+      }
+    ],
+    "pricePerShare": [
+      1.1425164948381743
+    ],
+    "price": 1.1436590113330123,
+    "dataProps": {
+      "liquidity": 82373.71513419447,
+      "apy": 0.0678866088833665,
+      "isBlocked": true,
+      "reserve": 82291.423710484
+    },
+    "displayProps": {
+      "label": "yTUSD",
+      "secondarylabel": {
+        "type": "dollar",
+        "value": 1.1436590113330123
+      },
+      "tertiaryLabel": "0.068% APY",
+      "images": [
+        "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0x0000000000085d4780b73119b644ae5ecd22b376.png"
+      ],
+      "statsItems": [
+        {
+          "label": "Liquidity",
+          "value": {
+            "type": "dollar",
+            "value": 82373.71513419447
+          }
+        },
+        {
+          "label": "APY",
+          "value": {
+            "type": "pct",
+            "value": 0.0678866088833665
+          }
+        }
+      ]
+    }
+  },
+  {
+    "type": "app-token",
+    "appId": "yearn",
+    "groupId": "v1-vault",
+    "network": "ethereum",
+    "address": "0xacd43e627e64355f1861cec6d3a6688b31a6f952",
+    "symbol": "yDAI",
+    "decimals": 18,
+    "supply": 593072.3678137754,
+    "tokens": [
+      {
+        "id": "1250",
+        "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
+        "name": "Dai Stablecoin",
+        "symbol": "DAI",
+        "decimals": 18,
+        "coingeckoId": "dai",
+        "hide": false,
+        "canExchange": true,
+        "updatedAt": "2022-08-12T15:43:40.707Z",
+        "createdAt": "2022-05-18T12:54:47.695Z",
+        "price": 0.99854,
+        "networkId": 1,
+        "status": "approved",
+        "totalSupply": "6899045442.878717353655245997",
+        "dailyVolume": 754759120.0173726,
+        "apt_address": null,
+        "apt_networkId": null,
+        "networkEnumValue": "ethereum",
+        "type": "base-token",
+        "network": "ethereum"
+      }
+    ],
+    "pricePerShare": [
+      1.1550221449078677
+    ],
+    "price": 1.1533358125763022,
+    "dataProps": {
+      "liquidity": 684011.6012490523,
+      "apy": 0.07439574564243334,
+      "isBlocked": true,
+      "reserve": 685011.7183578548
+    },
+    "displayProps": {
+      "label": "yDAI",
+      "secondarylabel": {
+        "type": "dollar",
+        "value": 1.1533358125763022
+      },
+      "tertiaryLabel": "0.074% APY",
+      "images": [
+        "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0x6b175474e89094c44da98b954eedeac495271d0f.png"
+      ],
+      "statsItems": [
+        {
+          "label": "Liquidity",
+          "value": {
+            "type": "dollar",
+            "value": 684011.6012490523
+          }
+        },
+        {
+          "label": "APY",
+          "value": {
+            "type": "pct",
+            "value": 0.07439574564243334
+          }
+        }
+      ]
+    }
+  },
+  {
+    "type": "app-token",
+    "appId": "yearn",
+    "groupId": "v1-vault",
+    "network": "ethereum",
+    "address": "0x2f08119c6f07c006695e079aafc638b8789faf18",
+    "symbol": "yUSDT",
+    "decimals": 6,
+    "supply": 582176.661649,
+    "tokens": [
+      {
+        "id": "2966",
+        "address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+        "name": "Tether USD",
+        "symbol": "USDT",
+        "decimals": 6,
+        "coingeckoId": "tether",
+        "hide": false,
+        "canExchange": true,
+        "updatedAt": "2022-08-12T15:43:40.707Z",
+        "createdAt": "2022-05-18T12:54:47.695Z",
+        "price": 0.999366,
+        "networkId": 1,
+        "status": "approved",
+        "totalSupply": "32313908246.384776",
+        "dailyVolume": 48267609371.47909,
+        "apt_address": null,
+        "apt_networkId": null,
+        "networkEnumValue": "ethereum",
+        "type": "base-token",
+        "network": "ethereum"
+      }
+    ],
+    "pricePerShare": [
+      1.1021812477152606
+    ],
+    "price": 1.1014824648042092,
+    "dataProps": {
+      "liquidity": 641257.3842246267,
+      "apy": 4.283862153897644e-11,
+      "isBlocked": true,
+      "reserve": 641664.199327
+    },
+    "displayProps": {
+      "label": "yUSDT",
+      "secondarylabel": {
+        "type": "dollar",
+        "value": 1.1014824648042092
+      },
+      "tertiaryLabel": "0.000% APY",
+      "images": [
+        "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xdac17f958d2ee523a2206206994597c13d831ec7.png"
+      ],
+      "statsItems": [
+        {
+          "label": "Liquidity",
+          "value": {
+            "type": "dollar",
+            "value": 641257.3842246267
+          }
+        },
+        {
+          "label": "APY",
+          "value": {
+            "type": "pct",
+            "value": 4.283862153897644e-11
+          }
+        }
+      ]
+    }
+  },
+  {
+    "type": "app-token",
+    "appId": "yearn",
+    "groupId": "v1-vault",
+    "network": "ethereum",
+    "address": "0xba2e7fed597fd0e3e70f5130bcdbbfe06bb94fe1",
+    "symbol": "yYFI",
+    "decimals": 18,
+    "supply": 22.006285365466123,
+    "tokens": [
+      {
+        "id": "3224",
+        "address": "0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e",
+        "name": "yearn.finance",
+        "symbol": "YFI",
+        "decimals": 18,
+        "coingeckoId": "yearn-finance",
+        "hide": false,
+        "canExchange": true,
+        "updatedAt": "2022-08-12T15:43:40.707Z",
+        "createdAt": "2022-05-18T12:54:47.695Z",
+        "price": 11291.75,
+        "networkId": 1,
+        "status": "approved",
+        "totalSupply": "36666",
+        "dailyVolume": 58219048.83170538,
+        "apt_address": null,
+        "apt_networkId": null,
+        "networkEnumValue": "ethereum",
+        "type": "base-token",
+        "network": "ethereum"
+      }
+    ],
+    "pricePerShare": [
+      1.0151372414142512
+    ],
+    "price": 11462.675945739371,
+    "dataProps": {
+      "liquidity": 252250.91791380488,
+      "apy": 0.007574953010267116,
+      "isBlocked": true,
+      "reserve": 22.33939981967409
+    },
+    "displayProps": {
+      "label": "yYFI",
+      "secondarylabel": {
+        "type": "dollar",
+        "value": 11462.675945739371
+      },
+      "tertiaryLabel": "0.008% APY",
+      "images": [
+        "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e.png"
+      ],
+      "statsItems": [
+        {
+          "label": "Liquidity",
+          "value": {
+            "type": "dollar",
+            "value": 252250.91791380488
+          }
+        },
+        {
+          "label": "APY",
+          "value": {
+            "type": "pct",
+            "value": 0.007574953010267116
+          }
+        }
+      ]
+    }
+  },
+  {
+    "type": "app-token",
+    "appId": "yearn",
+    "groupId": "v1-vault",
+    "network": "ethereum",
+    "address": "0x2994529c0652d127b7842094103715ec5299bbed",
+    "symbol": "yyDAI+yUSDC+yUSDT+yBUSD",
+    "decimals": 18,
+    "supply": 97782.34612149303,
+    "tokens": [
+      {
+        "type": "app-token",
+        "appId": "curve",
+        "price": 1.1348590619944992,
+        "supply": 7782778.979602576,
+        "symbol": "yDAI+yUSDC+yUSDT+yBUSD",
+        "tokens": [
+          {
+            "type": "app-token",
+            "appId": "yearn",
+            "price": 1.1253163038787029,
+            "supply": 2056465.0437392364,
+            "symbol": "yDAI",
+            "tokens": [
+              {
+                "id": "1250",
+                "hide": false,
+                "name": "Dai Stablecoin",
+                "type": "base-token",
+                "price": 0.999085,
+                "status": "approved",
+                "symbol": "DAI",
+                "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
+                "network": "ethereum",
+                "decimals": 18,
+                "createdAt": "2022-05-18T12:54:47.695Z",
+                "networkId": 1,
+                "updatedAt": "2022-08-12T15:40:31.739Z",
+                "canExchange": true,
+                "coingeckoId": "dai",
+                "dailyVolume": 755499429.2517419,
+                "totalSupply": "6899045442.878717353655245997",
+                "networkEnumValue": "ethereum"
+              }
+            ],
+            "address": "0xc2cb1040220768554cf699b0d863a3cd4324ce32",
+            "groupId": "yield",
+            "network": "ethereum",
+            "decimals": 18,
+            "dataProps": {
+              "reserve": 2316293.0502173416,
+              "liquidity": 2314173.6420763927
+            },
+            "displayProps": {
+              "label": "DAI",
+              "images": [
+                "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0x6b175474e89094c44da98b954eedeac495271d0f.png"
+              ],
+              "statsItems": [
+                {
+                  "label": "Liquidity",
+                  "value": {
+                    "type": "dollar",
+                    "value": 2314173.6420763927
+                  }
+                }
+              ],
+              "labelDetailed": "yDAI",
+              "secondaryLabel": {
+                "type": "dollar",
+                "value": 1.1253163038787029
+              }
+            },
+            "pricePerShare": 1.1263469113025448
+          },
+          {
+            "type": "app-token",
+            "appId": "yearn",
+            "price": 1.0889645583944088,
+            "supply": 2118436.375111,
+            "symbol": "yUSDC",
+            "tokens": [
+              {
+                "id": "2956",
+                "hide": false,
+                "name": "USD Coin",
+                "type": "base-token",
+                "price": 0.999951,
+                "status": "approved",
+                "symbol": "USDC",
+                "address": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+                "network": "ethereum",
+                "decimals": 6,
+                "createdAt": "2022-05-18T12:54:47.695Z",
+                "networkId": 1,
+                "updatedAt": "2022-08-12T15:40:31.739Z",
+                "canExchange": true,
+                "coingeckoId": "usd-coin",
+                "dailyVolume": 6156564963.298498,
+                "totalSupply": "45009329863.78955",
+                "networkEnumValue": "ethereum"
+              }
+            ],
+            "address": "0x26ea744e5b887e5205727f55dfbe8685e3b21951",
+            "groupId": "yield",
+            "network": "ethereum",
+            "decimals": 6,
+            "dataProps": {
+              "reserve": 2307015.175453,
+              "liquidity": 2306902.1317094024
+            },
+            "displayProps": {
+              "label": "USDC",
+              "images": [
+                "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48.png"
+              ],
+              "statsItems": [
+                {
+                  "label": "Liquidity",
+                  "value": {
+                    "type": "dollar",
+                    "value": 2306902.1317094024
+                  }
+                }
+              ],
+              "labelDetailed": "yUSDC",
+              "secondaryLabel": {
+                "type": "dollar",
+                "value": 1.0889645583944088
+              }
+            },
+            "pricePerShare": 1.0890179202725023
+          },
+          {
+            "type": "app-token",
+            "appId": "yearn",
+            "price": 1.0770491613952804,
+            "supply": 2089846.723238,
+            "symbol": "yUSDT",
+            "tokens": [
+              {
+                "id": "2966",
+                "hide": false,
+                "name": "Tether USD",
+                "type": "base-token",
+                "price": 0.999609,
+                "status": "approved",
+                "symbol": "USDT",
+                "address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+                "network": "ethereum",
+                "decimals": 6,
+                "createdAt": "2022-05-18T12:54:47.695Z",
+                "networkId": 1,
+                "updatedAt": "2022-08-12T15:40:31.739Z",
+                "canExchange": true,
+                "coingeckoId": "tether",
+                "dailyVolume": 48123717974.6425,
+                "totalSupply": "32313908246.384776",
+                "networkEnumValue": "ethereum"
+              }
+            ],
+            "address": "0xe6354ed5bc4b393a5aad09f21c46e101e692d447",
+            "groupId": "yield",
+            "network": "ethereum",
+            "decimals": 6,
+            "dataProps": {
+              "reserve": 2251748.094213,
+              "liquidity": 2250867.6607081625
+            },
+            "displayProps": {
+              "label": "USDT",
+              "images": [
+                "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xdac17f958d2ee523a2206206994597c13d831ec7.png"
+              ],
+              "statsItems": [
+                {
+                  "label": "Liquidity",
+                  "value": {
+                    "type": "dollar",
+                    "value": 2250867.6607081625
+                  }
+                }
+              ],
+              "labelDetailed": "yUSDT",
+              "secondaryLabel": {
+                "type": "dollar",
+                "value": 1.0770491613952804
+              }
+            },
+            "pricePerShare": 1.0774704523421463
+          },
+          {
+            "type": "app-token",
+            "appId": "yearn",
+            "price": 1.0794924626629405,
+            "supply": 1859136.0847485706,
+            "symbol": "yBUSD",
+            "tokens": [
+              {
+                "id": "1079",
+                "hide": false,
+                "name": "Binance USD",
+                "type": "base-token",
+                "price": 1.002,
+                "status": "approved",
+                "symbol": "BUSD",
+                "address": "0x4fabb145d64652a948d72533023f6e7a623c7c53",
+                "network": "ethereum",
+                "decimals": 18,
+                "createdAt": "2022-05-18T12:54:47.695Z",
+                "networkId": 1,
+                "updatedAt": "2022-08-12T15:40:31.739Z",
+                "canExchange": true,
+                "coingeckoId": "binance-usd",
+                "dailyVolume": 5198778067.689321,
+                "totalSupply": "17827334736.21",
+                "networkEnumValue": "ethereum"
+              }
+            ],
+            "address": "0x04bc0ab673d88ae9dbc9da2380cb6b79c4bca9ae",
+            "groupId": "yield",
+            "network": "ethereum",
+            "decimals": 18,
+            "dataProps": {
+              "reserve": 2002917.555439892,
+              "liquidity": 2006923.3905507717
+            },
+            "displayProps": {
+              "label": "BUSD",
+              "images": [
+                "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0x4fabb145d64652a948d72533023f6e7a623c7c53.png"
+              ],
+              "statsItems": [
+                {
+                  "label": "Liquidity",
+                  "value": {
+                    "type": "dollar",
+                    "value": 2006923.3905507717
+                  }
+                }
+              ],
+              "labelDetailed": "yBUSD",
+              "secondaryLabel": {
+                "type": "dollar",
+                "value": 1.0794924626629405
+              }
+            },
+            "pricePerShare": 1.077337787088763
+          }
+        ],
+        "address": "0x3b3ac5386837dc563660fb6a0937dfaa5924333b",
+        "groupId": "pool",
+        "network": "ethereum",
+        "decimals": 18,
+        "dataProps": {
+          "apy": 0.13023580673363622,
+          "fee": 0.0004,
+          "volume": 3999.710149,
+          "poolType": "stable",
+          "liquidity": 8841373.63456638,
+          "swapAddress": "0x79a8c46dea5ada233abaffd40f3a0a2b1e5a4f27",
+          "gaugeAddresses": [
+            "0x69fb7c45726cfe2badee8317005d3f94be838840"
+          ]
+        },
+        "displayProps": {
+          "label": "yDAI / yUSDC / yUSDT / yBUSD",
+          "images": [
+            "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0x6b175474e89094c44da98b954eedeac495271d0f.png",
+            "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48.png",
+            "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xdac17f958d2ee523a2206206994597c13d831ec7.png",
+            "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0x4fabb145d64652a948d72533023f6e7a623c7c53.png"
+          ],
+          "statsItems": [
+            {
+              "label": "Liquidity",
+              "value": {
+                "type": "dollar",
+                "value": 8841373.63456638
+              }
+            },
+            {
+              "label": "Supply",
+              "value": {
+                "type": "number",
+                "value": 7782778.979602576
+              }
+            },
+            {
+              "label": "Volume",
+              "value": {
+                "type": "dollar",
+                "value": 3999.710149
+              }
+            },
+            {
+              "label": "APY",
+              "value": {
+                "type": "pct",
+                "value": 0.13023580673363622
+              }
+            },
+            {
+              "label": "Fee",
+              "value": {
+                "type": "pct",
+                "value": 0.0004
+              }
+            },
+            {
+              "label": "Ratio",
+              "value": "25% / 26% / 25% / 22%"
+            }
+          ],
+          "secondaryLabel": "25% / 26% / 25% / 22%"
+        },
+        "pricePerShare": [
+          0.2618454602192431,
+          0.27161283893108135,
+          0.2681123884143186,
+          0.23790033861681992
+        ]
+      }
+    ],
+    "pricePerShare": [
+      1.1586549187560882
+    ],
+    "price": 1.3149100342748468,
+    "dataProps": {
+      "liquidity": 128574.98809008732,
+      "apy": 0.015575145617496622,
+      "isBlocked": true,
+      "reserve": 113295.9963011782
+    },
+    "displayProps": {
+      "label": "yyDAI+yUSDC+yUSDT+yBUSD",
+      "secondarylabel": {
+        "type": "dollar",
+        "value": 1.3149100342748468
+      },
+      "tertiaryLabel": "0.016% APY",
+      "images": [
+        "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0x6b175474e89094c44da98b954eedeac495271d0f.png",
+        "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48.png",
+        "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xdac17f958d2ee523a2206206994597c13d831ec7.png",
+        "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0x4fabb145d64652a948d72533023f6e7a623c7c53.png"
+      ],
+      "statsItems": [
+        {
+          "label": "Liquidity",
+          "value": {
+            "type": "dollar",
+            "value": 128574.98809008732
+          }
+        },
+        {
+          "label": "APY",
+          "value": {
+            "type": "pct",
+            "value": 0.015575145617496622
+          }
+        }
+      ]
+    }
+  },
+  {
+    "type": "app-token",
+    "appId": "yearn",
+    "groupId": "v1-vault",
+    "network": "ethereum",
+    "address": "0x7ff566e1d69deff32a7b244ae7276b9f90e9d0f6",
+    "symbol": "ycrvRenWSBTC",
+    "decimals": 18,
+    "supply": 8.432076991570963,
+    "tokens": [
+      {
+        "type": "app-token",
+        "appId": "curve",
+        "price": 24250.980363514573,
+        "supply": 2030.0189817633316,
+        "symbol": "crvRenWSBTC",
+        "tokens": [
+          {
+            "id": "2504",
+            "hide": false,
+            "name": "renBTC",
+            "type": "base-token",
+            "price": 23932,
+            "status": "approved",
+            "symbol": "renBTC",
+            "address": "0xeb4c2781e4eba804ce9a9803c67d0893436bb27d",
+            "network": "ethereum",
+            "decimals": 8,
+            "createdAt": "2022-05-18T12:54:47.695Z",
+            "networkId": 1,
+            "updatedAt": "2022-08-12T15:40:31.739Z",
+            "canExchange": true,
+            "coingeckoId": "renbtc",
+            "dailyVolume": 45897.08456137112,
+            "totalSupply": "3365.86507156",
+            "networkEnumValue": "ethereum"
+          },
+          {
+            "id": "3057",
+            "hide": false,
+            "name": "Wrapped BTC",
+            "type": "base-token",
+            "price": 23933,
+            "status": "approved",
+            "symbol": "WBTC",
+            "address": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+            "network": "ethereum",
+            "decimals": 8,
+            "createdAt": "2022-05-18T12:54:47.695Z",
+            "networkId": 1,
+            "updatedAt": "2022-08-12T15:40:31.739Z",
+            "canExchange": true,
+            "coingeckoId": "wrapped-bitcoin",
+            "dailyVolume": 188870954.96941024,
+            "totalSupply": "246842.50477772",
+            "networkEnumValue": "ethereum"
+          },
+          {
+            "type": "app-token",
+            "appId": "synthetix",
+            "price": 23935.29658491,
+            "supply": 650.4398542055535,
+            "symbol": "sBTC",
+            "tokens": [],
+            "address": "0xfe18be6b3bd88a2d2a7f928d00292e7a9963cfc6",
+            "groupId": "synth",
+            "network": "ethereum",
+            "decimals": 18,
+            "dataProps": {
+              "liquidity": 15568470.821055543,
+              "exchangeable": true
+            },
+            "displayProps": {
+              "label": "sBTC",
+              "images": [
+                "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xfe18be6b3bd88a2d2a7f928d00292e7a9963cfc6.png"
+              ],
+              "statsItems": [
+                {
+                  "label": "Liquidity",
+                  "value": {
+                    "type": "dollar",
+                    "value": 15568470.821055543
+                  }
+                }
+              ],
+              "secondaryLabel": {
+                "type": "dollar",
+                "value": 23935.29658491
+              }
+            },
+            "pricePerShare": 1
+          }
+        ],
+        "address": "0x075b1bb99792c9e1041ba13afef80c91a1e70fb3",
+        "groupId": "pool",
+        "network": "ethereum",
+        "decimals": 18,
+        "dataProps": {
+          "apy": 0.9893596119963544,
+          "fee": 0.0004,
+          "volume": 9135083.514150945,
+          "poolType": "stable",
+          "liquidity": 49251246.378225796,
+          "swapAddress": "0x7fc77b5c7614e1533320ea6ddc2eb61fa00a9714",
+          "gaugeAddresses": [
+            "0x705350c4bcd35c9441419ddd5d2f097d7a55410f"
+          ]
+        },
+        "displayProps": {
+          "label": "renBTC / WBTC / sBTC",
+          "images": [
+            "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xeb4c2781e4eba804ce9a9803c67d0893436bb27d.png",
+            "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0x2260fac5e5542a773aa44fbcfedf7c193bc2c599.png",
+            "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xfe18be6b3bd88a2d2a7f928d00292e7a9963cfc6.png"
+          ],
+          "statsItems": [
+            {
+              "label": "Liquidity",
+              "value": {
+                "type": "dollar",
+                "value": 49251246.378225796
+              }
+            },
+            {
+              "label": "Supply",
+              "value": {
+                "type": "number",
+                "value": 2030.0189817633316
+              }
+            },
+            {
+              "label": "Volume",
+              "value": {
+                "type": "dollar",
+                "value": 9135083.514150945
+              }
+            },
+            {
+              "label": "APY",
+              "value": {
+                "type": "pct",
+                "value": 0.9893596119963544
+              }
+            },
+            {
+              "label": "Fee",
+              "value": {
+                "type": "pct",
+                "value": 0.0004
+              }
+            },
+            {
+              "label": "Ratio",
+              "value": "32% / 44% / 22%"
+            }
+          ],
+          "secondaryLabel": "32% / 44% / 22%"
+        },
+        "pricePerShare": [
+          0.3289778053010633,
+          0.4524910491684705,
+          0.2322472056061033
+        ]
+      }
+    ],
+    "pricePerShare": [
+      1.0589004446729073
+    ],
+    "price": 25679.373890679526,
+    "dataProps": {
+      "liquidity": 216530.45774154694,
+      "apy": 0.04834457551998206,
+      "isBlocked": true,
+      "reserve": 8.928730075890684
+    },
+    "displayProps": {
+      "label": "ycrvRenWSBTC",
+      "secondarylabel": {
+        "type": "dollar",
+        "value": 25679.373890679526
+      },
+      "tertiaryLabel": "0.048% APY",
+      "images": [
+        "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xeb4c2781e4eba804ce9a9803c67d0893436bb27d.png",
+        "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0x2260fac5e5542a773aa44fbcfedf7c193bc2c599.png",
+        "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xfe18be6b3bd88a2d2a7f928d00292e7a9963cfc6.png"
+      ],
+      "statsItems": [
+        {
+          "label": "Liquidity",
+          "value": {
+            "type": "dollar",
+            "value": 216530.45774154694
+          }
+        },
+        {
+          "label": "APY",
+          "value": {
+            "type": "pct",
+            "value": 0.04834457551998206
+          }
+        }
+      ]
+    }
+  },
+  {
+    "type": "app-token",
+    "appId": "yearn",
+    "groupId": "v1-vault",
+    "network": "ethereum",
+    "address": "0xe1237aa7f535b0cc33fd973d66cbf830354d16c7",
+    "symbol": "yWETH",
+    "decimals": 18,
+    "supply": 654.2832034307174,
+    "tokens": [
+      {
+        "id": "3067",
+        "address": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+        "name": "Wrapped Ether",
+        "symbol": "WETH",
+        "decimals": 18,
+        "coingeckoId": "weth",
+        "hide": false,
+        "canExchange": true,
+        "updatedAt": "2022-08-12T15:43:40.707Z",
+        "createdAt": "2022-05-18T12:54:47.695Z",
+        "price": 1897.35,
+        "networkId": 1,
+        "status": "approved",
+        "totalSupply": "4017398.857488553381468068",
+        "dailyVolume": 1084327082.3894794,
+        "apt_address": null,
+        "apt_networkId": null,
+        "networkEnumValue": "ethereum",
+        "type": "base-token",
+        "network": "ethereum"
+      }
+    ],
+    "pricePerShare": [
+      1.0139378234208567
+    ],
+    "price": 1923.7949292675623,
+    "dataProps": {
+      "liquidity": 1258706.7090649512,
+      "apy": 0.007105246002504284,
+      "isBlocked": true,
+      "reserve": 663.4024871873672
+    },
+    "displayProps": {
+      "label": "yWETH",
+      "secondarylabel": {
+        "type": "dollar",
+        "value": 1923.7949292675623
+      },
+      "tertiaryLabel": "0.007% APY",
+      "images": [
+        "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2.png"
+      ],
+      "statsItems": [
+        {
+          "label": "Liquidity",
+          "value": {
+            "type": "dollar",
+            "value": 1258706.7090649512
+          }
+        },
+        {
+          "label": "APY",
+          "value": {
+            "type": "pct",
+            "value": 0.007105246002504284
+          }
+        }
+      ]
+    }
+  },
+  {
+    "type": "app-token",
+    "appId": "yearn",
+    "groupId": "v1-vault",
+    "network": "ethereum",
+    "address": "0x9ca85572e6a3ebf24dedd195623f188735a5179f",
+    "symbol": "y3Crv",
+    "decimals": 18,
+    "supply": 1255696.100804341,
+    "tokens": [
+      {
+        "type": "app-token",
+        "appId": "curve",
+        "price": 1.0209228927703387,
+        "supply": 958333555.2193366,
+        "symbol": "3Crv",
+        "tokens": [
+          {
+            "id": "1250",
+            "hide": false,
+            "name": "Dai Stablecoin",
+            "type": "base-token",
+            "price": 0.999085,
+            "status": "approved",
+            "symbol": "DAI",
+            "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
+            "network": "ethereum",
+            "decimals": 18,
+            "createdAt": "2022-05-18T12:54:47.695Z",
+            "networkId": 1,
+            "updatedAt": "2022-08-12T15:40:31.739Z",
+            "canExchange": true,
+            "coingeckoId": "dai",
+            "dailyVolume": 755499429.2517419,
+            "totalSupply": "6899045442.878717353655245997",
+            "networkEnumValue": "ethereum"
+          },
+          {
+            "id": "2956",
+            "hide": false,
+            "name": "USD Coin",
+            "type": "base-token",
+            "price": 0.999951,
+            "status": "approved",
+            "symbol": "USDC",
+            "address": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+            "network": "ethereum",
+            "decimals": 6,
+            "createdAt": "2022-05-18T12:54:47.695Z",
+            "networkId": 1,
+            "updatedAt": "2022-08-12T15:40:31.739Z",
+            "canExchange": true,
+            "coingeckoId": "usd-coin",
+            "dailyVolume": 6156564963.298498,
+            "totalSupply": "45009329863.78955",
+            "networkEnumValue": "ethereum"
+          },
+          {
+            "id": "2966",
+            "hide": false,
+            "name": "Tether USD",
+            "type": "base-token",
+            "price": 0.999609,
+            "status": "approved",
+            "symbol": "USDT",
+            "address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+            "network": "ethereum",
+            "decimals": 6,
+            "createdAt": "2022-05-18T12:54:47.695Z",
+            "networkId": 1,
+            "updatedAt": "2022-08-12T15:40:31.739Z",
+            "canExchange": true,
+            "coingeckoId": "tether",
+            "dailyVolume": 48123717974.6425,
+            "totalSupply": "32313908246.384776",
+            "networkEnumValue": "ethereum"
+          }
+        ],
+        "address": "0x6c3f90f043a72fa612cbac8115ee7e52bde6e490",
+        "groupId": "pool",
+        "network": "ethereum",
+        "decimals": 18,
+        "dataProps": {
+          "apy": 0.19168855703504128,
+          "fee": 0.0001,
+          "volume": 52990389.54951408,
+          "poolType": "stable",
+          "liquidity": 978835499.6188821,
+          "swapAddress": "0xbebc44782c7db0a1a60cb6fe97d0b483032ff1c7",
+          "gaugeAddresses": [
+            "0xbfcf63294ad7105dea65aa58f8ae5be2d9d0952a"
+          ]
+        },
+        "displayProps": {
+          "label": "DAI / USDC / USDT",
+          "images": [
+            "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0x6b175474e89094c44da98b954eedeac495271d0f.png",
+            "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48.png",
+            "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xdac17f958d2ee523a2206206994597c13d831ec7.png"
+          ],
+          "statsItems": [
+            {
+              "label": "Liquidity",
+              "value": {
+                "type": "dollar",
+                "value": 978835499.6188821
+              }
+            },
+            {
+              "label": "Supply",
+              "value": {
+                "type": "number",
+                "value": 958333555.2193366
+              }
+            },
+            {
+              "label": "Volume",
+              "value": {
+                "type": "dollar",
+                "value": 52990389.54951408
+              }
+            },
+            {
+              "label": "APY",
+              "value": {
+                "type": "pct",
+                "value": 0.19168855703504128
+              }
+            },
+            {
+              "label": "Fee",
+              "value": {
+                "type": "pct",
+                "value": 0.0001
+              }
+            },
+            {
+              "label": "Ratio",
+              "value": "41% / 37% / 20%"
+            }
+          ],
+          "secondaryLabel": "41% / 37% / 20%"
+        },
+        "pricePerShare": [
+          0.42029568358196484,
+          0.3874681833259643,
+          0.21411673756113378
+        ]
+      }
+    ],
+    "pricePerShare": [
+      1.1004958432049239
+    ],
+    "price": 1.1235213997265039,
+    "dataProps": {
+      "liquidity": 1410801.4408068063,
+      "apy": 0.012609571477895543,
+      "isBlocked": true,
+      "reserve": 1381888.3392638084
+    },
+    "displayProps": {
+      "label": "y3Crv",
+      "secondarylabel": {
+        "type": "dollar",
+        "value": 1.1235213997265039
+      },
+      "tertiaryLabel": "0.013% APY",
+      "images": [
+        "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0x6b175474e89094c44da98b954eedeac495271d0f.png",
+        "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48.png",
+        "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xdac17f958d2ee523a2206206994597c13d831ec7.png"
+      ],
+      "statsItems": [
+        {
+          "label": "Liquidity",
+          "value": {
+            "type": "dollar",
+            "value": 1410801.4408068063
+          }
+        },
+        {
+          "label": "APY",
+          "value": {
+            "type": "pct",
+            "value": 0.012609571477895543
+          }
+        }
+      ]
+    }
+  },
+  {
+    "type": "app-token",
+    "appId": "yearn",
+    "groupId": "v1-vault",
+    "network": "ethereum",
+    "address": "0x629c759d1e83efbf63d84eb3868b564d9521c129",
+    "symbol": "yvcDAI+cUSDC",
+    "decimals": 18,
+    "supply": 299320.9734487215,
+    "tokens": [
+      {
+        "type": "app-token",
+        "appId": "curve",
+        "price": 1.106794551250114,
+        "supply": 59698203.31812984,
+        "symbol": "cDAI+cUSDC",
+        "tokens": [
+          {
+            "type": "app-token",
+            "appId": "compound",
+            "price": 0.022014788770848084,
+            "supply": 36550923389.67514,
+            "symbol": "cDAI",
+            "tokens": [
+              {
+                "id": "1250",
+                "hide": false,
+                "name": "Dai Stablecoin",
+                "type": "base-token",
+                "price": 0.99854,
+                "status": "approved",
+                "symbol": "DAI",
+                "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
+                "network": "ethereum",
+                "decimals": 18,
+                "createdAt": "2022-05-18T12:54:47.695Z",
+                "networkId": 1,
+                "updatedAt": "2022-08-12T15:43:40.707Z",
+                "apt_address": null,
+                "canExchange": true,
+                "coingeckoId": "dai",
+                "dailyVolume": 754759120.0173726,
+                "totalSupply": "6899045442.878717353655245997",
+                "apt_networkId": null,
+                "networkEnumValue": "ethereum"
+              }
+            ],
+            "address": "0x5d3a536e4d6dbd6114cc1ead35777bab948e3643",
+            "groupId": "supply",
+            "network": "ethereum",
+            "decimals": 8,
+            "dataProps": {
+              "borrowApy": 0.01862276782368255,
+              "liquidity": 804660857.8031489,
+              "supplyApy": 0.005804805179884909,
+              "exchangeable": false,
+              "comptrollerAddress": "0x3d9819210a31b4961b30ef54be2aed79b9c9cd3b"
+            },
+            "displayProps": {
+              "label": "DAI",
+              "images": [
+                "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0x6b175474e89094c44da98b954eedeac495271d0f.png"
+              ],
+              "statsItems": [
+                {
+                  "label": "APY",
+                  "value": {
+                    "type": "pct",
+                    "value": 0.5804805179884909
+                  }
+                },
+                {
+                  "label": "Liquidity",
+                  "value": {
+                    "type": "dollar",
+                    "value": 804660857.8031489
+                  }
+                }
+              ],
+              "labelDetailed": "cDAI",
+              "tertiaryLabel": "0.580% APY",
+              "secondaryLabel": {
+                "type": "dollar",
+                "value": 0.99854
+              },
+              "balanceDisplayMode": "underlying"
+            },
+            "pricePerShare": 0.02204697735779046
+          },
+          {
+            "type": "app-token",
+            "appId": "compound",
+            "price": 0.0226779284811092,
+            "supply": 45275105841.45044,
+            "symbol": "cUSDC",
+            "tokens": [
+              {
+                "id": "2956",
+                "hide": false,
+                "name": "USD Coin",
+                "type": "base-token",
+                "price": 1.002,
+                "status": "approved",
+                "symbol": "USDC",
+                "address": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+                "network": "ethereum",
+                "decimals": 6,
+                "createdAt": "2022-05-18T12:54:47.695Z",
+                "networkId": 1,
+                "updatedAt": "2022-08-12T15:43:40.707Z",
+                "apt_address": null,
+                "canExchange": true,
+                "coingeckoId": "usd-coin",
+                "dailyVolume": 6168748661.865215,
+                "totalSupply": "45009329863.78955",
+                "apt_networkId": null,
+                "networkEnumValue": "ethereum"
+              }
+            ],
+            "address": "0x39aa39c021dfbae8fac545936693ac917d5e7563",
+            "groupId": "supply",
+            "network": "ethereum",
+            "decimals": 8,
+            "dataProps": {
+              "borrowApy": 0.017235985948166332,
+              "liquidity": 1026745612.2470624,
+              "supplyApy": 0.005417545704595961,
+              "exchangeable": false,
+              "comptrollerAddress": "0x3d9819210a31b4961b30ef54be2aed79b9c9cd3b"
+            },
+            "displayProps": {
+              "label": "USDC",
+              "images": [
+                "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48.png"
+              ],
+              "statsItems": [
+                {
+                  "label": "APY",
+                  "value": {
+                    "type": "pct",
+                    "value": 0.5417545704595961
+                  }
+                },
+                {
+                  "label": "Liquidity",
+                  "value": {
+                    "type": "dollar",
+                    "value": 1026745612.2470624
+                  }
+                }
+              ],
+              "labelDetailed": "cUSDC",
+              "tertiaryLabel": "0.542% APY",
+              "secondaryLabel": {
+                "type": "dollar",
+                "value": 1.002
+              },
+              "balanceDisplayMode": "underlying"
+            },
+            "pricePerShare": 0.0226326631547996
+          }
+        ],
+        "address": "0x845838df265dcd2c412a1dc9e959c7d08537f8a2",
+        "groupId": "pool",
+        "network": "ethereum",
+        "decimals": 18,
+        "dataProps": {
+          "apy": 0.6990065720842153,
+          "fee": 0.0004,
+          "volume": 445215.4906525197,
+          "poolType": "stable",
+          "liquidity": 66151529.654963404,
+          "swapAddress": "0xa2b47e3d5c44877cca798226b7b8118f9bfb7a56",
+          "gaugeAddresses": [
+            "0x7ca5b0a2910b33e9759dc7ddb0413949071d7575"
+          ]
+        },
+        "displayProps": {
+          "label": "cDAI / cUSDC",
+          "images": [
+            "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0x6b175474e89094c44da98b954eedeac495271d0f.png",
+            "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48.png"
+          ],
+          "statsItems": [
+            {
+              "label": "Liquidity",
+              "value": {
+                "type": "dollar",
+                "value": 66151529.654963404
+              }
+            },
+            {
+              "label": "Supply",
+              "value": {
+                "type": "number",
+                "value": 59698203.31812984
+              }
+            },
+            {
+              "label": "Volume",
+              "value": {
+                "type": "dollar",
+                "value": 445215.4906525197
+              }
+            },
+            {
+              "label": "APY",
+              "value": {
+                "type": "pct",
+                "value": 0.6990065720842153
+              }
+            },
+            {
+              "label": "Fee",
+              "value": {
+                "type": "pct",
+                "value": 0.0004
+              }
+            },
+            {
+              "label": "Ratio",
+              "value": "66% / 33%"
+            }
+          ],
+          "secondaryLabel": "66% / 33%"
+        },
+        "pricePerShare": [
+          33.36667340369514,
+          16.47147380089035
+        ]
+      }
+    ],
+    "pricePerShare": [
+      1.1314139065423006
+    ],
+    "price": 1.252242746969624,
+    "dataProps": {
+      "liquidity": 374822.51801704895,
+      "apy": 0.014624300026679915,
+      "isBlocked": true,
+      "reserve": 338655.91187966225
+    },
+    "displayProps": {
+      "label": "yvcDAI+cUSDC",
+      "secondarylabel": {
+        "type": "dollar",
+        "value": 1.252242746969624
+      },
+      "tertiaryLabel": "0.015% APY",
+      "images": [
+        "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0x6b175474e89094c44da98b954eedeac495271d0f.png",
+        "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48.png"
+      ],
+      "statsItems": [
+        {
+          "label": "Liquidity",
+          "value": {
+            "type": "dollar",
+            "value": 374822.51801704895
+          }
+        },
+        {
+          "label": "APY",
+          "value": {
+            "type": "pct",
+            "value": 0.014624300026679915
+          }
+        }
+      ]
+    }
+  },
+  {
+    "type": "app-token",
+    "appId": "yearn",
+    "groupId": "v1-vault",
+    "network": "ethereum",
+    "address": "0xcc7e70a958917cce67b4b87a8c30e6297451ae98",
+    "symbol": "yvgusd3CRV",
+    "decimals": 18,
+    "supply": 31487.96820124499,
+    "tokens": [
+      {
+        "type": "app-token",
+        "appId": "curve",
+        "price": 1.0136602502488175,
+        "supply": 28143657.20955073,
+        "symbol": "gusd3CRV",
+        "tokens": [
+          {
+            "id": "1709",
+            "hide": false,
+            "name": "Gemini dollar",
+            "type": "base-token",
+            "price": 0.986242,
+            "status": "approved",
+            "symbol": "GUSD",
+            "address": "0x056fd409e1d7a124bd7017459dfea2f387b6d5cd",
+            "network": "ethereum",
+            "decimals": 2,
+            "createdAt": "2022-05-18T12:54:47.695Z",
+            "networkId": 1,
+            "updatedAt": "2022-08-12T15:40:31.739Z",
+            "canExchange": true,
+            "coingeckoId": "gemini-dollar",
+            "dailyVolume": 2692539.1404977553,
+            "totalSupply": "323787756.58",
+            "networkEnumValue": "ethereum"
+          },
+          {
+            "type": "app-token",
+            "appId": "curve",
+            "price": 1.0209228927703387,
+            "supply": 958333555.2193366,
+            "symbol": "3Crv",
+            "tokens": [
+              {
+                "id": "1250",
+                "hide": false,
+                "name": "Dai Stablecoin",
+                "type": "base-token",
+                "price": 0.999085,
+                "status": "approved",
+                "symbol": "DAI",
+                "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
+                "network": "ethereum",
+                "decimals": 18,
+                "createdAt": "2022-05-18T12:54:47.695Z",
+                "networkId": 1,
+                "updatedAt": "2022-08-12T15:40:31.739Z",
+                "canExchange": true,
+                "coingeckoId": "dai",
+                "dailyVolume": 755499429.2517419,
+                "totalSupply": "6899045442.878717353655245997",
+                "networkEnumValue": "ethereum"
+              },
+              {
+                "id": "2956",
+                "hide": false,
+                "name": "USD Coin",
+                "type": "base-token",
+                "price": 0.999951,
+                "status": "approved",
+                "symbol": "USDC",
+                "address": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+                "network": "ethereum",
+                "decimals": 6,
+                "createdAt": "2022-05-18T12:54:47.695Z",
+                "networkId": 1,
+                "updatedAt": "2022-08-12T15:40:31.739Z",
+                "canExchange": true,
+                "coingeckoId": "usd-coin",
+                "dailyVolume": 6156564963.298498,
+                "totalSupply": "45009329863.78955",
+                "networkEnumValue": "ethereum"
+              },
+              {
+                "id": "2966",
+                "hide": false,
+                "name": "Tether USD",
+                "type": "base-token",
+                "price": 0.999609,
+                "status": "approved",
+                "symbol": "USDT",
+                "address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+                "network": "ethereum",
+                "decimals": 6,
+                "createdAt": "2022-05-18T12:54:47.695Z",
+                "networkId": 1,
+                "updatedAt": "2022-08-12T15:40:31.739Z",
+                "canExchange": true,
+                "coingeckoId": "tether",
+                "dailyVolume": 48123717974.6425,
+                "totalSupply": "32313908246.384776",
+                "networkEnumValue": "ethereum"
+              }
+            ],
+            "address": "0x6c3f90f043a72fa612cbac8115ee7e52bde6e490",
+            "groupId": "pool",
+            "network": "ethereum",
+            "decimals": 18,
+            "dataProps": {
+              "apy": 0.19168855703504128,
+              "fee": 0.0001,
+              "volume": 52990389.54951408,
+              "poolType": "stable",
+              "liquidity": 978835499.6188821,
+              "swapAddress": "0xbebc44782c7db0a1a60cb6fe97d0b483032ff1c7",
+              "gaugeAddresses": [
+                "0xbfcf63294ad7105dea65aa58f8ae5be2d9d0952a"
+              ]
+            },
+            "displayProps": {
+              "label": "DAI / USDC / USDT",
+              "images": [
+                "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0x6b175474e89094c44da98b954eedeac495271d0f.png",
+                "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48.png",
+                "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xdac17f958d2ee523a2206206994597c13d831ec7.png"
+              ],
+              "statsItems": [
+                {
+                  "label": "Liquidity",
+                  "value": {
+                    "type": "dollar",
+                    "value": 978835499.6188821
+                  }
+                },
+                {
+                  "label": "Supply",
+                  "value": {
+                    "type": "number",
+                    "value": 958333555.2193366
+                  }
+                },
+                {
+                  "label": "Volume",
+                  "value": {
+                    "type": "dollar",
+                    "value": 52990389.54951408
+                  }
+                },
+                {
+                  "label": "APY",
+                  "value": {
+                    "type": "pct",
+                    "value": 0.19168855703504128
+                  }
+                },
+                {
+                  "label": "Fee",
+                  "value": {
+                    "type": "pct",
+                    "value": 0.0001
+                  }
+                },
+                {
+                  "label": "Ratio",
+                  "value": "41% / 37% / 20%"
+                }
+              ],
+              "secondaryLabel": "41% / 37% / 20%"
+            },
+            "pricePerShare": [
+              0.42029568358196484,
+              0.3874681833259643,
+              0.21411673756113378
+            ]
+          }
+        ],
+        "address": "0xd2967f45c4f384deea880f807be904762a3dea07",
+        "groupId": "pool",
+        "network": "ethereum",
+        "decimals": 18,
+        "dataProps": {
+          "apy": 1.3861240129563912,
+          "fee": 0.0004,
+          "volume": 1831816.7336386805,
+          "poolType": "stable",
+          "liquidity": 28704686.80290848,
+          "swapAddress": "0x4f062658eaaf2c1ccf8c8e36d6824cdf41167956",
+          "gaugeAddresses": [
+            "0xc5cfada84e902ad92dd40194f0883ad49639b023"
+          ]
+        },
+        "displayProps": {
+          "label": "GUSD / DAI / USDC / USDT",
+          "images": [
+            "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0x056fd409e1d7a124bd7017459dfea2f387b6d5cd.png",
+            "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0x6b175474e89094c44da98b954eedeac495271d0f.png",
+            "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48.png",
+            "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xdac17f958d2ee523a2206206994597c13d831ec7.png"
+          ],
+          "statsItems": [
+            {
+              "label": "Liquidity",
+              "value": {
+                "type": "dollar",
+                "value": 28704686.80290848
+              }
+            },
+            {
+              "label": "Supply",
+              "value": {
+                "type": "number",
+                "value": 28143657.20955073
+              }
+            },
+            {
+              "label": "Volume",
+              "value": {
+                "type": "dollar",
+                "value": 1831816.7336386805
+              }
+            },
+            {
+              "label": "APY",
+              "value": {
+                "type": "pct",
+                "value": 1.3861240129563912
+              }
+            },
+            {
+              "label": "Fee",
+              "value": {
+                "type": "pct",
+                "value": 0.0004
+              }
+            },
+            {
+              "label": "Ratio",
+              "value": "52% / 47%"
+            }
+          ],
+          "secondaryLabel": "52% / 47%"
+        },
+        "pricePerShare": [
+          0.5393648287063656,
+          0.47798932812899414
+        ]
+      }
+    ],
+    "pricePerShare": [
+      1.2318081054503844
+    ],
+    "price": 1.2486349124293583,
+    "dataProps": {
+      "liquidity": 39316.976417539954,
+      "apy": 0.04406349376886509,
+      "isBlocked": true,
+      "reserve": 38787.13445445754
+    },
+    "displayProps": {
+      "label": "yvgusd3CRV",
+      "secondarylabel": {
+        "type": "dollar",
+        "value": 1.2486349124293583
+      },
+      "tertiaryLabel": "0.044% APY",
+      "images": [
+        "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0x056fd409e1d7a124bd7017459dfea2f387b6d5cd.png",
+        "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0x6b175474e89094c44da98b954eedeac495271d0f.png",
+        "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48.png",
+        "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xdac17f958d2ee523a2206206994597c13d831ec7.png"
+      ],
+      "statsItems": [
+        {
+          "label": "Liquidity",
+          "value": {
+            "type": "dollar",
+            "value": 39316.976417539954
+          }
+        },
+        {
+          "label": "APY",
+          "value": {
+            "type": "pct",
+            "value": 0.04406349376886509
+          }
+        }
+      ]
+    }
+  },
+  {
+    "type": "app-token",
+    "appId": "yearn",
+    "groupId": "v1-vault",
+    "network": "ethereum",
+    "address": "0x98b058b2cbacf5e99bc7012df757ea7cfebd35bc",
+    "symbol": "yveursCRV",
+    "decimals": 18,
+    "supply": 183366.53853747438,
+    "tokens": [
+      {
+        "type": "app-token",
+        "appId": "curve",
+        "price": 1.0204123849694418,
+        "supply": 7643648.491419268,
+        "symbol": "eursCRV",
+        "tokens": [
+          {
+            "id": "1511",
+            "hide": false,
+            "name": "STASIS EURS Token",
+            "type": "base-token",
+            "price": 1.016,
+            "status": "approved",
+            "symbol": "EURS",
+            "address": "0xdb25f211ab05b1c97d595516f45794528a807ad8",
+            "network": "ethereum",
+            "decimals": 2,
+            "createdAt": "2022-05-18T12:54:47.695Z",
+            "networkId": 1,
+            "updatedAt": "2022-08-12T15:40:31.739Z",
+            "canExchange": true,
+            "coingeckoId": "stasis-eurs",
+            "dailyVolume": 25209862.776910968,
+            "totalSupply": "124125940",
+            "networkEnumValue": "ethereum"
+          },
+          {
+            "type": "app-token",
+            "appId": "synthetix",
+            "price": 1.02562,
+            "supply": 6878495.433975522,
+            "symbol": "sEUR",
+            "tokens": [],
+            "address": "0xd71ecff9342a5ced620049e616c5035f1db98620",
+            "groupId": "synth",
+            "network": "ethereum",
+            "decimals": 18,
+            "dataProps": {
+              "liquidity": 7054722.486993975,
+              "exchangeable": true
+            },
+            "displayProps": {
+              "label": "sEUR",
+              "images": [
+                "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xd71ecff9342a5ced620049e616c5035f1db98620.png"
+              ],
+              "statsItems": [
+                {
+                  "label": "Liquidity",
+                  "value": {
+                    "type": "dollar",
+                    "value": 7054722.486993975
+                  }
+                }
+              ],
+              "secondaryLabel": {
+                "type": "dollar",
+                "value": 1.02562
+              }
+            },
+            "pricePerShare": 1
+          }
+        ],
+        "address": "0x194ebd173f6cdace046c53eacce9b953f28411d1",
+        "groupId": "pool",
+        "network": "ethereum",
+        "decimals": 18,
+        "dataProps": {
+          "apy": 0.05241798459956204,
+          "fee": 0.0004,
+          "volume": 67888.5964796939,
+          "poolType": "stable",
+          "liquidity": 7829245.215914129,
+          "swapAddress": "0x0ce6a5ff5217e38315f87032cf90686c96627caa",
+          "gaugeAddresses": [
+            "0x90bb609649e0451e5ad952683d64bd2d1f245840"
+          ]
+        },
+        "displayProps": {
+          "label": "EURS / sEUR",
+          "images": [
+            "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xdb25f211ab05b1c97d595516f45794528a807ad8.png",
+            "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xd71ecff9342a5ced620049e616c5035f1db98620.png"
+          ],
+          "statsItems": [
+            {
+              "label": "Liquidity",
+              "value": {
+                "type": "dollar",
+                "value": 7829245.215914129
+              }
+            },
+            {
+              "label": "Supply",
+              "value": {
+                "type": "number",
+                "value": 7643648.491419268
+              }
+            },
+            {
+              "label": "Volume",
+              "value": {
+                "type": "dollar",
+                "value": 67888.5964796939
+              }
+            },
+            {
+              "label": "APY",
+              "value": {
+                "type": "pct",
+                "value": 0.05241798459956204
+              }
+            },
+            {
+              "label": "Fee",
+              "value": {
+                "type": "pct",
+                "value": 0.0004
+              }
+            },
+            {
+              "label": "Ratio",
+              "value": "70% / 29%"
+            }
+          ],
+          "secondaryLabel": "70% / 29%"
+        },
+        "pricePerShare": [
+          0.707386631668096,
+          0.2979430507488445
+        ]
+      }
+    ],
+    "pricePerShare": [
+      1.1621245449092565
+    ],
+    "price": 1.1858462785023816,
+    "dataProps": {
+      "liquidity": 217444.52732652752,
+      "apy": 0.011116129663217844,
+      "isBlocked": true,
+      "reserve": 213094.75514944806
+    },
+    "displayProps": {
+      "label": "yveursCRV",
+      "secondarylabel": {
+        "type": "dollar",
+        "value": 1.1858462785023816
+      },
+      "tertiaryLabel": "0.011% APY",
+      "images": [
+        "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xdb25f211ab05b1c97d595516f45794528a807ad8.png",
+        "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xd71ecff9342a5ced620049e616c5035f1db98620.png"
+      ],
+      "statsItems": [
+        {
+          "label": "Liquidity",
+          "value": {
+            "type": "dollar",
+            "value": 217444.52732652752
+          }
+        },
+        {
+          "label": "APY",
+          "value": {
+            "type": "pct",
+            "value": 0.011116129663217844
+          }
+        }
+      ]
+    }
+  },
+  {
+    "type": "app-token",
+    "appId": "yearn",
+    "groupId": "v1-vault",
+    "network": "ethereum",
+    "address": "0xe0db48b4f71752c4bef16de1dbd042b82976b8c7",
+    "symbol": "yvmUSD",
+    "decimals": 18,
+    "supply": 787.8600646558175,
+    "tokens": [
+      {
+        "id": "2136",
+        "address": "0xe2f2a5c287993345a840db3b0845fbc70f5935a5",
+        "name": "mStable USD",
+        "symbol": "mUSD",
+        "decimals": 18,
+        "coingeckoId": "musd",
+        "hide": false,
+        "canExchange": true,
+        "updatedAt": "2022-08-12T15:43:40.707Z",
+        "createdAt": "2022-05-18T12:54:47.695Z",
+        "price": 0.978228,
+        "networkId": 1,
+        "status": "approved",
+        "totalSupply": "37463034.087294254730800707",
+        "dailyVolume": 142488.35139501002,
+        "apt_address": null,
+        "apt_networkId": null,
+        "networkEnumValue": "ethereum",
+        "type": "base-token",
+        "network": "ethereum"
+      }
+    ],
+    "pricePerShare": [
+      1.6491387733804337
+    ],
+    "price": 1.6132337240063948,
+    "dataProps": {
+      "liquidity": 1271.0024261006233,
+      "apy": 0.3628694573148017,
+      "isBlocked": true,
+      "reserve": 1299.290580621924
+    },
+    "displayProps": {
+      "label": "yvmUSD",
+      "secondarylabel": {
+        "type": "dollar",
+        "value": 1.6132337240063948
+      },
+      "tertiaryLabel": "0.363% APY",
+      "images": [
+        "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xe2f2a5c287993345a840db3b0845fbc70f5935a5.png"
+      ],
+      "statsItems": [
+        {
+          "label": "Liquidity",
+          "value": {
+            "type": "dollar",
+            "value": 1271.0024261006233
+          }
+        },
+        {
+          "label": "APY",
+          "value": {
+            "type": "pct",
+            "value": 0.3628694573148017
+          }
+        }
+      ]
+    }
+  },
+  {
+    "type": "app-token",
+    "appId": "yearn",
+    "groupId": "v1-vault",
+    "network": "ethereum",
+    "address": "0xfe39ce91437c76178665d64d7a2694b0f6f17fe3",
+    "symbol": "yvusdn3CRV",
+    "decimals": 18,
+    "supply": 4841.653243297972,
+    "tokens": [
+      {
+        "type": "app-token",
+        "appId": "curve",
+        "price": 1.050871666051287,
+        "supply": 23661293.386136405,
+        "symbol": "usdn3CRV",
+        "tokens": [
+          {
+            "id": "2962",
+            "hide": false,
+            "name": "Neutrino USD",
+            "type": "base-token",
+            "price": 0.988448,
+            "status": "approved",
+            "symbol": "USDN",
+            "address": "0x674c6ad92fd080e4004b2312b45f796a192d27a0",
+            "network": "ethereum",
+            "decimals": 18,
+            "createdAt": "2022-05-18T12:54:47.695Z",
+            "networkId": 1,
+            "updatedAt": "2022-08-12T15:40:31.739Z",
+            "canExchange": true,
+            "coingeckoId": "neutrino",
+            "dailyVolume": 2059157.2264131727,
+            "totalSupply": "29306686.901367656048695115",
+            "networkEnumValue": "ethereum"
+          },
+          {
+            "type": "app-token",
+            "appId": "curve",
+            "price": 1.0209228927703387,
+            "supply": 958333555.2193366,
+            "symbol": "3Crv",
+            "tokens": [
+              {
+                "id": "1250",
+                "hide": false,
+                "name": "Dai Stablecoin",
+                "type": "base-token",
+                "price": 0.999085,
+                "status": "approved",
+                "symbol": "DAI",
+                "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
+                "network": "ethereum",
+                "decimals": 18,
+                "createdAt": "2022-05-18T12:54:47.695Z",
+                "networkId": 1,
+                "updatedAt": "2022-08-12T15:40:31.739Z",
+                "canExchange": true,
+                "coingeckoId": "dai",
+                "dailyVolume": 755499429.2517419,
+                "totalSupply": "6899045442.878717353655245997",
+                "networkEnumValue": "ethereum"
+              },
+              {
+                "id": "2956",
+                "hide": false,
+                "name": "USD Coin",
+                "type": "base-token",
+                "price": 0.999951,
+                "status": "approved",
+                "symbol": "USDC",
+                "address": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+                "network": "ethereum",
+                "decimals": 6,
+                "createdAt": "2022-05-18T12:54:47.695Z",
+                "networkId": 1,
+                "updatedAt": "2022-08-12T15:40:31.739Z",
+                "canExchange": true,
+                "coingeckoId": "usd-coin",
+                "dailyVolume": 6156564963.298498,
+                "totalSupply": "45009329863.78955",
+                "networkEnumValue": "ethereum"
+              },
+              {
+                "id": "2966",
+                "hide": false,
+                "name": "Tether USD",
+                "type": "base-token",
+                "price": 0.999609,
+                "status": "approved",
+                "symbol": "USDT",
+                "address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+                "network": "ethereum",
+                "decimals": 6,
+                "createdAt": "2022-05-18T12:54:47.695Z",
+                "networkId": 1,
+                "updatedAt": "2022-08-12T15:40:31.739Z",
+                "canExchange": true,
+                "coingeckoId": "tether",
+                "dailyVolume": 48123717974.6425,
+                "totalSupply": "32313908246.384776",
+                "networkEnumValue": "ethereum"
+              }
+            ],
+            "address": "0x6c3f90f043a72fa612cbac8115ee7e52bde6e490",
+            "groupId": "pool",
+            "network": "ethereum",
+            "decimals": 18,
+            "dataProps": {
+              "apy": 0.19168855703504128,
+              "fee": 0.0001,
+              "volume": 52990389.54951408,
+              "poolType": "stable",
+              "liquidity": 978835499.6188821,
+              "swapAddress": "0xbebc44782c7db0a1a60cb6fe97d0b483032ff1c7",
+              "gaugeAddresses": [
+                "0xbfcf63294ad7105dea65aa58f8ae5be2d9d0952a"
+              ]
+            },
+            "displayProps": {
+              "label": "DAI / USDC / USDT",
+              "images": [
+                "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0x6b175474e89094c44da98b954eedeac495271d0f.png",
+                "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48.png",
+                "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xdac17f958d2ee523a2206206994597c13d831ec7.png"
+              ],
+              "statsItems": [
+                {
+                  "label": "Liquidity",
+                  "value": {
+                    "type": "dollar",
+                    "value": 978835499.6188821
+                  }
+                },
+                {
+                  "label": "Supply",
+                  "value": {
+                    "type": "number",
+                    "value": 958333555.2193366
+                  }
+                },
+                {
+                  "label": "Volume",
+                  "value": {
+                    "type": "dollar",
+                    "value": 52990389.54951408
+                  }
+                },
+                {
+                  "label": "APY",
+                  "value": {
+                    "type": "pct",
+                    "value": 0.19168855703504128
+                  }
+                },
+                {
+                  "label": "Fee",
+                  "value": {
+                    "type": "pct",
+                    "value": 0.0001
+                  }
+                },
+                {
+                  "label": "Ratio",
+                  "value": "41% / 37% / 20%"
+                }
+              ],
+              "secondaryLabel": "41% / 37% / 20%"
+            },
+            "pricePerShare": [
+              0.42029568358196484,
+              0.3874681833259643,
+              0.21411673756113378
+            ]
+          }
+        ],
+        "address": "0x4f3e8f405cf5afc05d68142f3783bdfe13811522",
+        "groupId": "pool",
+        "network": "ethereum",
+        "decimals": 18,
+        "dataProps": {
+          "apy": 0.08173278423497798,
+          "fee": 0.0004,
+          "volume": 550.2602439200441,
+          "poolType": "stable",
+          "liquidity": 24950259.44069019,
+          "swapAddress": "0x0f9cb53ebe405d49a0bbdbd291a65ff571bc83e1",
+          "gaugeAddresses": [
+            "0xf98450b5602fa59cc66e1379dffb6fddc724cfc4"
+          ]
+        },
+        "displayProps": {
+          "label": "USDN / DAI / USDC / USDT",
+          "images": [
+            "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0x674c6ad92fd080e4004b2312b45f796a192d27a0.png",
+            "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0x6b175474e89094c44da98b954eedeac495271d0f.png",
+            "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48.png",
+            "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xdac17f958d2ee523a2206206994597c13d831ec7.png"
+          ],
+          "statsItems": [
+            {
+              "label": "Liquidity",
+              "value": {
+                "type": "dollar",
+                "value": 24950259.44069019
+              }
+            },
+            {
+              "label": "Supply",
+              "value": {
+                "type": "number",
+                "value": 23661293.386136405
+              }
+            },
+            {
+              "label": "Volume",
+              "value": {
+                "type": "dollar",
+                "value": 550.2602439200441
+              }
+            },
+            {
+              "label": "APY",
+              "value": {
+                "type": "pct",
+                "value": 0.08173278423497798
+              }
+            },
+            {
+              "label": "Fee",
+              "value": {
+                "type": "pct",
+                "value": 0.0004
+              }
+            },
+            {
+              "label": "Ratio",
+              "value": "73% / 26%"
+            }
+          ],
+          "secondaryLabel": "73% / 26%"
+        },
+        "pricePerShare": [
+          0.7790964298531554,
+          0.27855131538863726
+        ]
+      }
+    ],
+    "pricePerShare": [
+      1.1262484858142183
+    ],
+    "price": 1.1835426226753267,
+    "dataProps": {
+      "liquidity": 5730.302977657384,
+      "apy": 0.17828441644784787,
+      "isBlocked": true,
+      "reserve": 5452.90463410184
+    },
+    "displayProps": {
+      "label": "yvusdn3CRV",
+      "secondarylabel": {
+        "type": "dollar",
+        "value": 1.1835426226753267
+      },
+      "tertiaryLabel": "0.178% APY",
+      "images": [
+        "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0x674c6ad92fd080e4004b2312b45f796a192d27a0.png",
+        "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0x6b175474e89094c44da98b954eedeac495271d0f.png",
+        "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48.png",
+        "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xdac17f958d2ee523a2206206994597c13d831ec7.png"
+      ],
+      "statsItems": [
+        {
+          "label": "Liquidity",
+          "value": {
+            "type": "dollar",
+            "value": 5730.302977657384
+          }
+        },
+        {
+          "label": "APY",
+          "value": {
+            "type": "pct",
+            "value": 0.17828441644784787
+          }
+        }
+      ]
+    }
+  },
+  {
+    "type": "app-token",
+    "appId": "yearn",
+    "groupId": "v1-vault",
+    "network": "ethereum",
+    "address": "0x5533ed0a3b83f70c3c4a1f69ef5546d3d4713e44",
+    "symbol": "yvcrvPlain3andSUSD",
+    "decimals": 18,
+    "supply": 16797.006479580185,
+    "tokens": [
+      {
+        "type": "app-token",
+        "appId": "curve",
+        "price": 1.0558600245245262,
+        "supply": 121001914.67211674,
+        "symbol": "crvPlain3andSUSD",
+        "tokens": [
+          {
+            "id": "1250",
+            "hide": false,
+            "name": "Dai Stablecoin",
+            "type": "base-token",
+            "price": 0.999085,
+            "status": "approved",
+            "symbol": "DAI",
+            "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
+            "network": "ethereum",
+            "decimals": 18,
+            "createdAt": "2022-05-18T12:54:47.695Z",
+            "networkId": 1,
+            "updatedAt": "2022-08-12T15:40:31.739Z",
+            "canExchange": true,
+            "coingeckoId": "dai",
+            "dailyVolume": 755499429.2517419,
+            "totalSupply": "6899045442.878717353655245997",
+            "networkEnumValue": "ethereum"
+          },
+          {
+            "id": "2956",
+            "hide": false,
+            "name": "USD Coin",
+            "type": "base-token",
+            "price": 0.999951,
+            "status": "approved",
+            "symbol": "USDC",
+            "address": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+            "network": "ethereum",
+            "decimals": 6,
+            "createdAt": "2022-05-18T12:54:47.695Z",
+            "networkId": 1,
+            "updatedAt": "2022-08-12T15:40:31.739Z",
+            "canExchange": true,
+            "coingeckoId": "usd-coin",
+            "dailyVolume": 6156564963.298498,
+            "totalSupply": "45009329863.78955",
+            "networkEnumValue": "ethereum"
+          },
+          {
+            "id": "2966",
+            "hide": false,
+            "name": "Tether USD",
+            "type": "base-token",
+            "price": 0.999609,
+            "status": "approved",
+            "symbol": "USDT",
+            "address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+            "network": "ethereum",
+            "decimals": 6,
+            "createdAt": "2022-05-18T12:54:47.695Z",
+            "networkId": 1,
+            "updatedAt": "2022-08-12T15:40:31.739Z",
+            "canExchange": true,
+            "coingeckoId": "tether",
+            "dailyVolume": 48123717974.6425,
+            "totalSupply": "32313908246.384776",
+            "networkEnumValue": "ethereum"
+          },
+          {
+            "type": "app-token",
+            "appId": "synthetix",
+            "price": 1,
+            "supply": 117185469.04419722,
+            "symbol": "sUSD",
+            "tokens": [],
+            "address": "0x57ab1ec28d129707052df4df418d58a2d46d5f51",
+            "groupId": "synth",
+            "network": "ethereum",
+            "decimals": 18,
+            "dataProps": {
+              "liquidity": 117185469.04419722,
+              "exchangeable": true
+            },
+            "displayProps": {
+              "label": "sUSD",
+              "images": [
+                "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0x57ab1ec28d129707052df4df418d58a2d46d5f51.png"
+              ],
+              "statsItems": [
+                {
+                  "label": "Liquidity",
+                  "value": {
+                    "type": "dollar",
+                    "value": 117185469.04419722
+                  }
+                }
+              ],
+              "secondaryLabel": {
+                "type": "dollar",
+                "value": 1
+              }
+            },
+            "pricePerShare": 1
+          }
+        ],
+        "address": "0xc25a3a3b969415c80451098fa907ec722572917f",
+        "groupId": "pool",
+        "network": "ethereum",
+        "decimals": 18,
+        "dataProps": {
+          "apy": 0.2644868868546979,
+          "fee": 0.0004,
+          "volume": 2911109.833051154,
+          "poolType": "stable",
+          "liquidity": 127854916.90316434,
+          "swapAddress": "0xa5407eae9ba41422680e2e00537571bcc53efbfd",
+          "gaugeAddresses": [
+            "0xa90996896660decc6e997655e065b23788857849"
+          ]
+        },
+        "displayProps": {
+          "label": "DAI / USDC / USDT / sUSD",
+          "images": [
+            "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0x6b175474e89094c44da98b954eedeac495271d0f.png",
+            "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48.png",
+            "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xdac17f958d2ee523a2206206994597c13d831ec7.png",
+            "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0x57ab1ec28d129707052df4df418d58a2d46d5f51.png"
+          ],
+          "statsItems": [
+            {
+              "label": "Liquidity",
+              "value": {
+                "type": "dollar",
+                "value": 127854916.90316434
+              }
+            },
+            {
+              "label": "Supply",
+              "value": {
+                "type": "number",
+                "value": 121001914.67211674
+              }
+            },
+            {
+              "label": "Volume",
+              "value": {
+                "type": "dollar",
+                "value": 2911109.833051154
+              }
+            },
+            {
+              "label": "APY",
+              "value": {
+                "type": "pct",
+                "value": 0.2644868868546979
+              }
+            },
+            {
+              "label": "Fee",
+              "value": {
+                "type": "pct",
+                "value": 0.0004
+              }
+            },
+            {
+              "label": "Ratio",
+              "value": "27% / 28% / 26% / 17%"
+            }
+          ],
+          "secondaryLabel": "27% / 28% / 26% / 17%"
+        },
+        "pricePerShare": [
+          0.2918105881943812,
+          0.29763145404487495,
+          0.28402668999054764,
+          0.18355939872519664
+        ]
+      }
+    ],
+    "pricePerShare": [
+      1.0970573142036295
+    ],
+    "price": 1.158338962679855,
+    "dataProps": {
+      "liquidity": 19456.627061683714,
+      "apy": 0.04923051379415644,
+      "isBlocked": true,
+      "reserve": 18427.2788151492
+    },
+    "displayProps": {
+      "label": "yvcrvPlain3andSUSD",
+      "secondarylabel": {
+        "type": "dollar",
+        "value": 1.158338962679855
+      },
+      "tertiaryLabel": "0.049% APY",
+      "images": [
+        "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0x6b175474e89094c44da98b954eedeac495271d0f.png",
+        "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48.png",
+        "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xdac17f958d2ee523a2206206994597c13d831ec7.png",
+        "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0x57ab1ec28d129707052df4df418d58a2d46d5f51.png"
+      ],
+      "statsItems": [
+        {
+          "label": "Liquidity",
+          "value": {
+            "type": "dollar",
+            "value": 19456.627061683714
+          }
+        },
+        {
+          "label": "APY",
+          "value": {
+            "type": "pct",
+            "value": 0.04923051379415644
+          }
+        }
+      ]
+    }
+  },
+  {
+    "type": "app-token",
+    "appId": "yearn",
+    "groupId": "v1-vault",
+    "network": "ethereum",
+    "address": "0x8e6741b456a074f0bc45b8b82a755d4af7e965df",
+    "symbol": "yvdusd3CRV",
+    "decimals": 18,
+    "supply": 957.0945111292323,
+    "tokens": [
+      {
+        "type": "app-token",
+        "appId": "curve",
+        "price": 1.0107428711482134,
+        "supply": 405472.1596302866,
+        "symbol": "dusd3CRV",
+        "tokens": [
+          {
+            "id": "1409",
+            "hide": false,
+            "name": "DefiDollar",
+            "type": "base-token",
+            "price": 0.996527,
+            "status": "approved",
+            "symbol": "DUSD",
+            "address": "0x5bc25f649fc4e26069ddf4cf4010f9f706c23831",
+            "network": "ethereum",
+            "decimals": 18,
+            "createdAt": "2022-05-18T12:54:47.695Z",
+            "networkId": 1,
+            "updatedAt": "2022-08-12T15:40:31.739Z",
+            "canExchange": false,
+            "coingeckoId": "defidollar",
+            "dailyVolume": 287.8684435803111,
+            "totalSupply": "1506309.875138885391127281",
+            "networkEnumValue": "ethereum"
+          },
+          {
+            "type": "app-token",
+            "appId": "curve",
+            "price": 1.0209228927703387,
+            "supply": 958333555.2193366,
+            "symbol": "3Crv",
+            "tokens": [
+              {
+                "id": "1250",
+                "hide": false,
+                "name": "Dai Stablecoin",
+                "type": "base-token",
+                "price": 0.999085,
+                "status": "approved",
+                "symbol": "DAI",
+                "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
+                "network": "ethereum",
+                "decimals": 18,
+                "createdAt": "2022-05-18T12:54:47.695Z",
+                "networkId": 1,
+                "updatedAt": "2022-08-12T15:40:31.739Z",
+                "canExchange": true,
+                "coingeckoId": "dai",
+                "dailyVolume": 755499429.2517419,
+                "totalSupply": "6899045442.878717353655245997",
+                "networkEnumValue": "ethereum"
+              },
+              {
+                "id": "2956",
+                "hide": false,
+                "name": "USD Coin",
+                "type": "base-token",
+                "price": 0.999951,
+                "status": "approved",
+                "symbol": "USDC",
+                "address": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+                "network": "ethereum",
+                "decimals": 6,
+                "createdAt": "2022-05-18T12:54:47.695Z",
+                "networkId": 1,
+                "updatedAt": "2022-08-12T15:40:31.739Z",
+                "canExchange": true,
+                "coingeckoId": "usd-coin",
+                "dailyVolume": 6156564963.298498,
+                "totalSupply": "45009329863.78955",
+                "networkEnumValue": "ethereum"
+              },
+              {
+                "id": "2966",
+                "hide": false,
+                "name": "Tether USD",
+                "type": "base-token",
+                "price": 0.999609,
+                "status": "approved",
+                "symbol": "USDT",
+                "address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+                "network": "ethereum",
+                "decimals": 6,
+                "createdAt": "2022-05-18T12:54:47.695Z",
+                "networkId": 1,
+                "updatedAt": "2022-08-12T15:40:31.739Z",
+                "canExchange": true,
+                "coingeckoId": "tether",
+                "dailyVolume": 48123717974.6425,
+                "totalSupply": "32313908246.384776",
+                "networkEnumValue": "ethereum"
+              }
+            ],
+            "address": "0x6c3f90f043a72fa612cbac8115ee7e52bde6e490",
+            "groupId": "pool",
+            "network": "ethereum",
+            "decimals": 18,
+            "dataProps": {
+              "apy": 0.19168855703504128,
+              "fee": 0.0001,
+              "volume": 52990389.54951408,
+              "poolType": "stable",
+              "liquidity": 978835499.6188821,
+              "swapAddress": "0xbebc44782c7db0a1a60cb6fe97d0b483032ff1c7",
+              "gaugeAddresses": [
+                "0xbfcf63294ad7105dea65aa58f8ae5be2d9d0952a"
+              ]
+            },
+            "displayProps": {
+              "label": "DAI / USDC / USDT",
+              "images": [
+                "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0x6b175474e89094c44da98b954eedeac495271d0f.png",
+                "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48.png",
+                "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xdac17f958d2ee523a2206206994597c13d831ec7.png"
+              ],
+              "statsItems": [
+                {
+                  "label": "Liquidity",
+                  "value": {
+                    "type": "dollar",
+                    "value": 978835499.6188821
+                  }
+                },
+                {
+                  "label": "Supply",
+                  "value": {
+                    "type": "number",
+                    "value": 958333555.2193366
+                  }
+                },
+                {
+                  "label": "Volume",
+                  "value": {
+                    "type": "dollar",
+                    "value": 52990389.54951408
+                  }
+                },
+                {
+                  "label": "APY",
+                  "value": {
+                    "type": "pct",
+                    "value": 0.19168855703504128
+                  }
+                },
+                {
+                  "label": "Fee",
+                  "value": {
+                    "type": "pct",
+                    "value": 0.0001
+                  }
+                },
+                {
+                  "label": "Ratio",
+                  "value": "41% / 37% / 20%"
+                }
+              ],
+              "secondaryLabel": "41% / 37% / 20%"
+            },
+            "pricePerShare": [
+              0.42029568358196484,
+              0.3874681833259643,
+              0.21411673756113378
+            ]
+          }
+        ],
+        "address": "0x3a664ab939fd8482048609f652f9a0b0677337b9",
+        "groupId": "pool",
+        "network": "ethereum",
+        "decimals": 18,
+        "dataProps": {
+          "apy": 0.07400390003684532,
+          "fee": 0.0004,
+          "volume": 1187.1550250658397,
+          "poolType": "stable",
+          "liquidity": 410372.2245890922,
+          "swapAddress": "0x8038c01a0390a8c547446a0b2c18fc9aefecc10c",
+          "gaugeAddresses": [
+            "0xaea6c312f4b3e04d752946d329693f7293bc2e6d"
+          ]
+        },
+        "displayProps": {
+          "label": "DUSD / DAI / USDC / USDT",
+          "images": [
+            "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0x5bc25f649fc4e26069ddf4cf4010f9f706c23831.png",
+            "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0x6b175474e89094c44da98b954eedeac495271d0f.png",
+            "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48.png",
+            "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xdac17f958d2ee523a2206206994597c13d831ec7.png"
+          ],
+          "statsItems": [
+            {
+              "label": "Liquidity",
+              "value": {
+                "type": "dollar",
+                "value": 410372.2245890922
+              }
+            },
+            {
+              "label": "Supply",
+              "value": {
+                "type": "number",
+                "value": 405472.1596302866
+              }
+            },
+            {
+              "label": "Volume",
+              "value": {
+                "type": "dollar",
+                "value": 1187.1550250658397
+              }
+            },
+            {
+              "label": "APY",
+              "value": {
+                "type": "pct",
+                "value": 0.07400390003684532
+              }
+            },
+            {
+              "label": "Fee",
+              "value": {
+                "type": "pct",
+                "value": 0.0004
+              }
+            },
+            {
+              "label": "Ratio",
+              "value": "72% / 27%"
+            }
+          ],
+          "secondaryLabel": "72% / 27%"
+        },
+        "pricePerShare": [
+          0.7336023620535576,
+          0.2752708142250537
+        ]
+      }
+    ],
+    "pricePerShare": [
+      1.093648120891845
+    ],
+    "price": 1.1053970417360717,
+    "dataProps": {
+      "liquidity": 1057.9694412640852,
+      "apy": 0.03654007502350809,
+      "isBlocked": true,
+      "reserve": 1046.7246136123838
+    },
+    "displayProps": {
+      "label": "yvdusd3CRV",
+      "secondarylabel": {
+        "type": "dollar",
+        "value": 1.1053970417360717
+      },
+      "tertiaryLabel": "0.037% APY",
+      "images": [
+        "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0x5bc25f649fc4e26069ddf4cf4010f9f706c23831.png",
+        "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0x6b175474e89094c44da98b954eedeac495271d0f.png",
+        "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48.png",
+        "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xdac17f958d2ee523a2206206994597c13d831ec7.png"
+      ],
+      "statsItems": [
+        {
+          "label": "Liquidity",
+          "value": {
+            "type": "dollar",
+            "value": 1057.9694412640852
+          }
+        },
+        {
+          "label": "APY",
+          "value": {
+            "type": "pct",
+            "value": 0.03654007502350809
+          }
+        }
+      ]
+    }
+  },
+  {
+    "type": "app-token",
+    "appId": "yearn",
+    "groupId": "v1-vault",
+    "network": "ethereum",
+    "address": "0x03403154afc09ce8e44c3b185c82c6ad5f86b9ab",
+    "symbol": "yva3CRV",
+    "decimals": 18,
+    "supply": 84244.95879295787,
+    "tokens": [
+      {
+        "type": "app-token",
+        "appId": "curve",
+        "price": 1.0933724094263961,
+        "supply": 29901556.09806993,
+        "symbol": "a3CRV",
+        "tokens": [
+          {
+            "type": "app-token",
+            "appId": "aave-v2",
+            "price": 0.99854,
+            "supply": 316395787.0481176,
+            "symbol": "aDAI",
+            "tokens": [
+              {
+                "id": "1250",
+                "hide": false,
+                "name": "Dai Stablecoin",
+                "type": "base-token",
+                "price": 0.99854,
+                "status": "approved",
+                "symbol": "DAI",
+                "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
+                "network": "ethereum",
+                "decimals": 18,
+                "createdAt": "2022-05-18T12:54:47.695Z",
+                "networkId": 1,
+                "updatedAt": "2022-08-12T15:43:40.707Z",
+                "apt_address": null,
+                "canExchange": true,
+                "coingeckoId": "dai",
+                "dailyVolume": 754759120.0173726,
+                "totalSupply": "6899045442.878717353655245997",
+                "apt_networkId": null,
+                "networkEnumValue": "ethereum"
+              }
+            ],
+            "address": "0x028171bca77440897b824ca71d1c56cac55b68a3",
+            "groupId": "supply",
+            "network": "ethereum",
+            "decimals": 18,
+            "dataProps": {
+              "apy": 0.009543447224718508,
+              "isActive": true,
+              "liquidity": 315933849.1990273,
+              "enabledAsCollateral": true,
+              "liquidationThreshold": 0.8
+            },
+            "displayProps": {
+              "label": "DAI",
+              "images": [
+                "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0x6b175474e89094c44da98b954eedeac495271d0f.png"
+              ],
+              "statsItems": [
+                {
+                  "label": "Liquidity",
+                  "value": {
+                    "type": "dollar",
+                    "value": 315933849.1990273
+                  }
+                },
+                {
+                  "label": "APY",
+                  "value": {
+                    "type": "pct",
+                    "value": 0.009543447224718508
+                  }
+                }
+              ],
+              "labelDetailed": "aDAI",
+              "tertiaryLabel": "0.954% APY",
+              "secondarylabel": {
+                "type": "dollar",
+                "value": 0.99854
+              }
+            },
+            "pricePerShare": [
+              1
+            ]
+          },
+          {
+            "type": "app-token",
+            "appId": "aave-v2",
+            "price": 1.002,
+            "supply": 1415022100.338053,
+            "symbol": "aUSDC",
+            "tokens": [
+              {
+                "id": "2956",
+                "hide": false,
+                "name": "USD Coin",
+                "type": "base-token",
+                "price": 1.002,
+                "status": "approved",
+                "symbol": "USDC",
+                "address": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+                "network": "ethereum",
+                "decimals": 6,
+                "createdAt": "2022-05-18T12:54:47.695Z",
+                "networkId": 1,
+                "updatedAt": "2022-08-12T15:43:40.707Z",
+                "apt_address": null,
+                "canExchange": true,
+                "coingeckoId": "usd-coin",
+                "dailyVolume": 6168748661.865215,
+                "totalSupply": "45009329863.78955",
+                "apt_networkId": null,
+                "networkEnumValue": "ethereum"
+              }
+            ],
+            "address": "0xbcca60bb61934080951369a648fb03df4f96263c",
+            "groupId": "supply",
+            "network": "ethereum",
+            "decimals": 6,
+            "dataProps": {
+              "apy": 0.004759779280596253,
+              "isActive": true,
+              "liquidity": 1417852144.5387292,
+              "enabledAsCollateral": true,
+              "liquidationThreshold": 0.88
+            },
+            "displayProps": {
+              "label": "USDC",
+              "images": [
+                "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48.png"
+              ],
+              "statsItems": [
+                {
+                  "label": "Liquidity",
+                  "value": {
+                    "type": "dollar",
+                    "value": 1417852144.5387292
+                  }
+                },
+                {
+                  "label": "APY",
+                  "value": {
+                    "type": "pct",
+                    "value": 0.004759779280596253
+                  }
+                }
+              ],
+              "labelDetailed": "aUSDC",
+              "tertiaryLabel": "0.476% APY",
+              "secondarylabel": {
+                "type": "dollar",
+                "value": 1.002
+              }
+            },
+            "pricePerShare": [
+              1
+            ]
+          },
+          {
+            "type": "app-token",
+            "appId": "aave-v2",
+            "price": 0.999366,
+            "supply": 554456263.433068,
+            "symbol": "aUSDT",
+            "tokens": [
+              {
+                "id": "2966",
+                "hide": false,
+                "name": "Tether USD",
+                "type": "base-token",
+                "price": 0.999366,
+                "status": "approved",
+                "symbol": "USDT",
+                "address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+                "network": "ethereum",
+                "decimals": 6,
+                "createdAt": "2022-05-18T12:54:47.695Z",
+                "networkId": 1,
+                "updatedAt": "2022-08-12T15:43:40.707Z",
+                "apt_address": null,
+                "canExchange": true,
+                "coingeckoId": "tether",
+                "dailyVolume": 48267609371.47909,
+                "totalSupply": "32313908246.384776",
+                "apt_networkId": null,
+                "networkEnumValue": "ethereum"
+              }
+            ],
+            "address": "0x3ed3b47dd13ec9a98b44e6204a523e766b225811",
+            "groupId": "supply",
+            "network": "ethereum",
+            "decimals": 6,
+            "dataProps": {
+              "apy": 0.013863405040720785,
+              "isActive": true,
+              "liquidity": 554104738.1620514,
+              "enabledAsCollateral": false,
+              "liquidationThreshold": 0
+            },
+            "displayProps": {
+              "label": "USDT",
+              "images": [
+                "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xdac17f958d2ee523a2206206994597c13d831ec7.png"
+              ],
+              "statsItems": [
+                {
+                  "label": "Liquidity",
+                  "value": {
+                    "type": "dollar",
+                    "value": 554104738.1620514
+                  }
+                },
+                {
+                  "label": "APY",
+                  "value": {
+                    "type": "pct",
+                    "value": 0.013863405040720785
+                  }
+                }
+              ],
+              "labelDetailed": "aUSDT",
+              "tertiaryLabel": "1.386% APY",
+              "secondarylabel": {
+                "type": "dollar",
+                "value": 0.999366
+              }
+            },
+            "pricePerShare": [
+              1
+            ]
+          }
+        ],
+        "address": "0xfd2a8fa60abd58efe3eee34dd494cd491dc14900",
+        "groupId": "pool",
+        "network": "ethereum",
+        "decimals": 18,
+        "dataProps": {
+          "apy": 0.8162053759598109,
+          "fee": 0.0004,
+          "volume": 0,
+          "poolType": "stable",
+          "liquidity": 32743468.743723817,
+          "swapAddress": "0xdebf20617708857ebe4f679508e7b7863a8a8eee",
+          "gaugeAddresses": [
+            "0xd662908ada2ea1916b3318327a97eb18ad588b5d"
+          ]
+        },
+        "displayProps": {
+          "label": "aDAI / aUSDC / aUSDT",
+          "images": [
+            "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0x6b175474e89094c44da98b954eedeac495271d0f.png",
+            "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48.png",
+            "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xdac17f958d2ee523a2206206994597c13d831ec7.png"
+          ],
+          "statsItems": [
+            {
+              "label": "Liquidity",
+              "value": {
+                "type": "dollar",
+                "value": 32743468.743723817
+              }
+            },
+            {
+              "label": "Supply",
+              "value": {
+                "type": "number",
+                "value": 29901556.09806993
+              }
+            },
+            {
+              "label": "Volume",
+              "value": {
+                "type": "dollar",
+                "value": 0
+              }
+            },
+            {
+              "label": "APY",
+              "value": {
+                "type": "pct",
+                "value": 0.8162053759598109
+              }
+            },
+            {
+              "label": "Fee",
+              "value": {
+                "type": "pct",
+                "value": 0.0004
+              }
+            },
+            {
+              "label": "Ratio",
+              "value": "36% / 37% / 26%"
+            }
+          ],
+          "secondaryLabel": "36% / 37% / 26%"
+        },
+        "pricePerShare": [
+          0.3967181474136446,
+          0.4122727260680161,
+          0.2859874049244874
+        ]
+      }
+    ],
+    "pricePerShare": [
+      1.0613091319346855
+    ],
+    "price": 1.160406122729664,
+    "dataProps": {
+      "liquidity": 97758.36599245656,
+      "apy": 0.008517252717858081,
+      "isBlocked": true,
+      "reserve": 89409.94408642747
+    },
+    "displayProps": {
+      "label": "yva3CRV",
+      "secondarylabel": {
+        "type": "dollar",
+        "value": 1.160406122729664
+      },
+      "tertiaryLabel": "0.009% APY",
+      "images": [
+        "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0x6b175474e89094c44da98b954eedeac495271d0f.png",
+        "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48.png",
+        "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xdac17f958d2ee523a2206206994597c13d831ec7.png"
+      ],
+      "statsItems": [
+        {
+          "label": "Liquidity",
+          "value": {
+            "type": "dollar",
+            "value": 97758.36599245656
+          }
+        },
+        {
+          "label": "APY",
+          "value": {
+            "type": "pct",
+            "value": 0.008517252717858081
+          }
+        }
+      ]
+    }
+  },
+  {
+    "type": "app-token",
+    "appId": "yearn",
+    "groupId": "v1-vault",
+    "network": "ethereum",
+    "address": "0x1b5eb1173d2bf770e50f10410c9a96f7a8eb6e75",
+    "symbol": "yvusdp3CRV",
+    "decimals": 18,
+    "supply": 109861.68918922605,
+    "tokens": [
+      {
+        "type": "app-token",
+        "appId": "curve",
+        "price": 1.005699131864425,
+        "supply": 6784008.244002544,
+        "symbol": "usdp3CRV",
+        "tokens": [
+          {
+            "id": "2963",
+            "hide": false,
+            "name": "USDP Stablecoin",
+            "type": "base-token",
+            "price": 0.996975,
+            "status": "approved",
+            "symbol": "USDP",
+            "address": "0x1456688345527be1f37e9e627da0837d6f08c925",
+            "network": "ethereum",
+            "decimals": 18,
+            "createdAt": "2022-05-18T12:54:47.695Z",
+            "networkId": 1,
+            "updatedAt": "2022-08-12T15:40:31.739Z",
+            "canExchange": true,
+            "coingeckoId": "usdp",
+            "dailyVolume": 33363.48007547653,
+            "totalSupply": "4538245.297593155775061385",
+            "networkEnumValue": "ethereum"
+          },
+          {
+            "type": "app-token",
+            "appId": "curve",
+            "price": 1.0209228927703387,
+            "supply": 958333555.2193366,
+            "symbol": "3Crv",
+            "tokens": [
+              {
+                "id": "1250",
+                "hide": false,
+                "name": "Dai Stablecoin",
+                "type": "base-token",
+                "price": 0.999085,
+                "status": "approved",
+                "symbol": "DAI",
+                "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
+                "network": "ethereum",
+                "decimals": 18,
+                "createdAt": "2022-05-18T12:54:47.695Z",
+                "networkId": 1,
+                "updatedAt": "2022-08-12T15:40:31.739Z",
+                "canExchange": true,
+                "coingeckoId": "dai",
+                "dailyVolume": 755499429.2517419,
+                "totalSupply": "6899045442.878717353655245997",
+                "networkEnumValue": "ethereum"
+              },
+              {
+                "id": "2956",
+                "hide": false,
+                "name": "USD Coin",
+                "type": "base-token",
+                "price": 0.999951,
+                "status": "approved",
+                "symbol": "USDC",
+                "address": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+                "network": "ethereum",
+                "decimals": 6,
+                "createdAt": "2022-05-18T12:54:47.695Z",
+                "networkId": 1,
+                "updatedAt": "2022-08-12T15:40:31.739Z",
+                "canExchange": true,
+                "coingeckoId": "usd-coin",
+                "dailyVolume": 6156564963.298498,
+                "totalSupply": "45009329863.78955",
+                "networkEnumValue": "ethereum"
+              },
+              {
+                "id": "2966",
+                "hide": false,
+                "name": "Tether USD",
+                "type": "base-token",
+                "price": 0.999609,
+                "status": "approved",
+                "symbol": "USDT",
+                "address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+                "network": "ethereum",
+                "decimals": 6,
+                "createdAt": "2022-05-18T12:54:47.695Z",
+                "networkId": 1,
+                "updatedAt": "2022-08-12T15:40:31.739Z",
+                "canExchange": true,
+                "coingeckoId": "tether",
+                "dailyVolume": 48123717974.6425,
+                "totalSupply": "32313908246.384776",
+                "networkEnumValue": "ethereum"
+              }
+            ],
+            "address": "0x6c3f90f043a72fa612cbac8115ee7e52bde6e490",
+            "groupId": "pool",
+            "network": "ethereum",
+            "decimals": 18,
+            "dataProps": {
+              "apy": 0.19168855703504128,
+              "fee": 0.0001,
+              "volume": 52990389.54951408,
+              "poolType": "stable",
+              "liquidity": 978835499.6188821,
+              "swapAddress": "0xbebc44782c7db0a1a60cb6fe97d0b483032ff1c7",
+              "gaugeAddresses": [
+                "0xbfcf63294ad7105dea65aa58f8ae5be2d9d0952a"
+              ]
+            },
+            "displayProps": {
+              "label": "DAI / USDC / USDT",
+              "images": [
+                "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0x6b175474e89094c44da98b954eedeac495271d0f.png",
+                "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48.png",
+                "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xdac17f958d2ee523a2206206994597c13d831ec7.png"
+              ],
+              "statsItems": [
+                {
+                  "label": "Liquidity",
+                  "value": {
+                    "type": "dollar",
+                    "value": 978835499.6188821
+                  }
+                },
+                {
+                  "label": "Supply",
+                  "value": {
+                    "type": "number",
+                    "value": 958333555.2193366
+                  }
+                },
+                {
+                  "label": "Volume",
+                  "value": {
+                    "type": "dollar",
+                    "value": 52990389.54951408
+                  }
+                },
+                {
+                  "label": "APY",
+                  "value": {
+                    "type": "pct",
+                    "value": 0.19168855703504128
+                  }
+                },
+                {
+                  "label": "Fee",
+                  "value": {
+                    "type": "pct",
+                    "value": 0.0001
+                  }
+                },
+                {
+                  "label": "Ratio",
+                  "value": "41% / 37% / 20%"
+                }
+              ],
+              "secondaryLabel": "41% / 37% / 20%"
+            },
+            "pricePerShare": [
+              0.42029568358196484,
+              0.3874681833259643,
+              0.21411673756113378
+            ]
+          }
+        ],
+        "address": "0x7eb40e450b9655f4b3cc4259bcc731c63ff55ae6",
+        "groupId": "pool",
+        "network": "ethereum",
+        "decimals": 18,
+        "dataProps": {
+          "apy": 0.08320688564924517,
+          "fee": 0.0004,
+          "volume": 0,
+          "poolType": "stable",
+          "liquidity": 6829540.872279125,
+          "swapAddress": "0x42d7025938bec20b69cbae5a77421082407f053a",
+          "gaugeAddresses": [
+            "0x055be5ddb7a925bfef3417fc157f53ca77ca7222"
+          ]
+        },
+        "displayProps": {
+          "label": "USDP / DAI / USDC / USDT",
+          "images": [
+            "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0x1456688345527be1f37e9e627da0837d6f08c925.png",
+            "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0x6b175474e89094c44da98b954eedeac495271d0f.png",
+            "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48.png",
+            "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xdac17f958d2ee523a2206206994597c13d831ec7.png"
+          ],
+          "statsItems": [
+            {
+              "label": "Liquidity",
+              "value": {
+                "type": "dollar",
+                "value": 6829540.872279125
+              }
+            },
+            {
+              "label": "Supply",
+              "value": {
+                "type": "number",
+                "value": 6784008.244002544
+              }
+            },
+            {
+              "label": "Volume",
+              "value": {
+                "type": "dollar",
+                "value": 0
+              }
+            },
+            {
+              "label": "APY",
+              "value": {
+                "type": "pct",
+                "value": 0.08320688564924517
+              }
+            },
+            {
+              "label": "Fee",
+              "value": {
+                "type": "pct",
+                "value": 0.0004
+              }
+            },
+            {
+              "label": "Ratio",
+              "value": "56% / 43%"
+            }
+          ],
+          "secondaryLabel": "56% / 43%"
+        },
+        "pricePerShare": [
+          0.57185936574547,
+          0.4276349084844482
+        ]
+      }
+    ],
+    "pricePerShare": [
+      1.1192599567866048
+    ],
+    "price": 1.1256387668709025,
+    "dataProps": {
+      "liquidity": 123664.57634531477,
+      "apy": 0.008236475705233115,
+      "isBlocked": true,
+      "reserve": 122963.78949443655
+    },
+    "displayProps": {
+      "label": "yvusdp3CRV",
+      "secondarylabel": {
+        "type": "dollar",
+        "value": 1.1256387668709025
+      },
+      "tertiaryLabel": "0.008% APY",
+      "images": [
+        "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0x1456688345527be1f37e9e627da0837d6f08c925.png",
+        "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0x6b175474e89094c44da98b954eedeac495271d0f.png",
+        "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48.png",
+        "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xdac17f958d2ee523a2206206994597c13d831ec7.png"
+      ],
+      "statsItems": [
+        {
+          "label": "Liquidity",
+          "value": {
+            "type": "dollar",
+            "value": 123664.57634531477
+          }
+        },
+        {
+          "label": "APY",
+          "value": {
+            "type": "pct",
+            "value": 0.008236475705233115
+          }
+        }
+      ]
+    }
+  },
+  {
+    "type": "app-token",
+    "appId": "yearn",
+    "groupId": "v1-vault",
+    "network": "ethereum",
+    "address": "0x96ea6af74af09522fcb4c28c269c26f59a31ced6",
+    "symbol": "yvlinkCRV",
+    "decimals": 18,
+    "supply": 19319.560060572185,
+    "tokens": [
+      {
+        "type": "app-token",
+        "appId": "curve",
+        "price": 9.330277505206254,
+        "supply": 454085.71933196415,
+        "symbol": "linkCRV",
+        "tokens": [
+          {
+            "id": "1959",
+            "hide": false,
+            "name": "ChainLink Token",
+            "type": "base-token",
+            "price": 9.34,
+            "status": "approved",
+            "symbol": "LINK",
+            "address": "0x514910771af9ca656af840dff83e8264ecf986ca",
+            "network": "ethereum",
+            "decimals": 18,
+            "createdAt": "2022-05-18T12:54:47.695Z",
+            "networkId": 1,
+            "updatedAt": "2022-08-12T15:40:31.739Z",
+            "canExchange": true,
+            "coingeckoId": "chainlink",
+            "dailyVolume": 733771392.5628102,
+            "totalSupply": "1000000000",
+            "networkEnumValue": "ethereum"
+          },
+          {
+            "type": "app-token",
+            "appId": "synthetix",
+            "price": 9.30590658,
+            "supply": 217642.96606917397,
+            "symbol": "sLINK",
+            "tokens": [],
+            "address": "0xbbc455cb4f1b9e4bfc4b73970d360c8f032efee6",
+            "groupId": "synth",
+            "network": "ethereum",
+            "decimals": 18,
+            "dataProps": {
+              "liquidity": 2025365.1100338427,
+              "exchangeable": true
+            },
+            "displayProps": {
+              "label": "sLINK",
+              "images": [
+                "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xbbc455cb4f1b9e4bfc4b73970d360c8f032efee6.png"
+              ],
+              "statsItems": [
+                {
+                  "label": "Liquidity",
+                  "value": {
+                    "type": "dollar",
+                    "value": 2025365.1100338427
+                  }
+                }
+              ],
+              "secondaryLabel": {
+                "type": "dollar",
+                "value": 9.30590658
+              }
+            },
+            "pricePerShare": 1
+          }
+        ],
+        "address": "0xcee60cfa923170e4f8204ae08b4fa6a3f5656f3a",
+        "groupId": "pool",
+        "network": "ethereum",
+        "decimals": 18,
+        "dataProps": {
+          "apy": 0,
+          "fee": 0.0004,
+          "volume": 0,
+          "poolType": "stable",
+          "liquidity": 4245571.487123879,
+          "swapAddress": "0xf178c0b5bb7e7abf4e12a4838c7b7c5ba2c623c0",
+          "gaugeAddresses": [
+            "0xfd4d8a17df4c27c1dd245d153ccf4499e806c87d"
+          ]
+        },
+        "displayProps": {
+          "label": "LINK / sLINK",
+          "images": [
+            "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0x514910771af9ca656af840dff83e8264ecf986ca.png",
+            "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xbbc455cb4f1b9e4bfc4b73970d360c8f032efee6.png"
+          ],
+          "statsItems": [
+            {
+              "label": "Liquidity",
+              "value": {
+                "type": "dollar",
+                "value": 4245571.487123879
+              }
+            },
+            {
+              "label": "Supply",
+              "value": {
+                "type": "number",
+                "value": 454085.71933196415
+              }
+            },
+            {
+              "label": "Volume",
+              "value": {
+                "type": "dollar",
+                "value": 0
+              }
+            },
+            {
+              "label": "APY",
+              "value": {
+                "type": "pct",
+                "value": 0
+              }
+            },
+            {
+              "label": "Fee",
+              "value": {
+                "type": "pct",
+                "value": 0.0004
+              }
+            },
+            {
+              "label": "Ratio",
+              "value": "55% / 44%"
+            }
+          ],
+          "secondaryLabel": "55% / 44%"
+        },
+        "pricePerShare": [
+          0.5546145483413903,
+          0.4480610049249504
+        ]
+      }
+    ],
+    "pricePerShare": [
+      1.0603356493674456
+    ],
+    "price": 9.893225857261344,
+    "dataProps": {
+      "liquidity": 191132.77114216628,
+      "apy": 0.004104702029089635,
+      "isBlocked": true,
+      "reserve": 20485.218262320173
+    },
+    "displayProps": {
+      "label": "yvlinkCRV",
+      "secondarylabel": {
+        "type": "dollar",
+        "value": 9.893225857261344
+      },
+      "tertiaryLabel": "0.004% APY",
+      "images": [
+        "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0x514910771af9ca656af840dff83e8264ecf986ca.png",
+        "https://storage.googleapis.com/zapper-fi-assets/tokens/ethereum/0xbbc455cb4f1b9e4bfc4b73970d360c8f032efee6.png"
+      ],
+      "statsItems": [
+        {
+          "label": "Liquidity",
+          "value": {
+            "type": "dollar",
+            "value": 191132.77114216628
+          }
+        },
+        {
+          "label": "APY",
+          "value": {
+            "type": "pct",
+            "value": 0.004104702029089635
+          }
+        }
+      ]
+    }
+  }
+]
