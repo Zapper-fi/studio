@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.171.0](https://github.com/Zapper-fi/studio/compare/v0.170.0...v0.171.0) (2022-08-12)
+
+
+### Features
+
+* **balancer-v2:** Refactor Balancer V2 to templates ([#1150](https://github.com/Zapper-fi/studio/issues/1150)) ([0248472](https://github.com/Zapper-fi/studio/commit/024847264ffcd24223ee343e5f202470f0ed1cf4))
+
 ## [0.170.0](https://github.com/Zapper-fi/studio/compare/v0.169.0...v0.170.0) (2022-08-11)
 
 
