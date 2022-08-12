@@ -54,10 +54,16 @@ export class ArbitrumRevertFinanceBalanceFetcher implements BalanceFetcher {
       variables: { address: getAddress(address) },
     });
     if (!data) return [];
+    const multicall = this.appToolkit.getMulticall(network);
     const compoundingBalances: Array<AppTokenPositionBalance> = [];
+    const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
     await Promise.all(
       data.tokens.map(async ({ id }) => {
-        const uniV3Token = await this.uniswapV3LiquidityTokenHelper.getLiquidityToken({ positionId: id, network });
+        const uniV3Token = await this.uniswapV3LiquidityTokenHelper.getLiquidityToken({
+          positionId: id,
+          network,
+          context: { multicall, baseTokens },
+        });
         if (!uniV3Token) return;
         compoundingBalances.push(drillBalance(uniV3Token, '1'));
       }),
