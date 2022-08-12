@@ -18,7 +18,7 @@
 </div>
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-71-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-73-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 ## Description
@@ -232,6 +232,8 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   </tr>
   <tr>
     <td align="center"><a href="https://github.com/rekt0x"><img src="https://avatars.githubusercontent.com/u/6087393?v=4?s=64" width="64px;" alt=""/><br /><sub><b>rekt0x</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=rekt0x" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/amikec"><img src="https://avatars.githubusercontent.com/u/91593430?v=4?s=64" width="64px;" alt=""/><br /><sub><b>Mickey</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=amikec" title="Code">💻</a> <a href="https://github.com/Zapper-fi/studio/issues?q=author%3Aamikec" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://github.com/crypslato"><img src="https://avatars.githubusercontent.com/u/77345286?v=4?s=64" width="64px;" alt=""/><br /><sub><b>crypslato</b></sub></a><br /><a href="https://github.com/Zapper-fi/studio/commits?author=crypslato" title="Code">💻</a></td>
   </tr>
 </table>
 
