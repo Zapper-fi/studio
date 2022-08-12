@@ -4,6 +4,41 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.170.0](https://github.com/Zapper-fi/studio/compare/v0.169.0...v0.170.0) (2022-08-11)
+
+
+### Features
+
+* **template:** Add token loader as stage param ([#1146](https://github.com/Zapper-fi/studio/issues/1146)) ([70ef238](https://github.com/Zapper-fi/studio/commit/70ef23859d0d740f97cdce7c2f5f1189674fefc0))
+
+## [0.169.0](https://github.com/Zapper-fi/studio/compare/v0.168.0...v0.169.0) (2022-08-11)
+
+
+### Features
+
+* **token-deps:** Exclusively use `getTokenDependencySelector` as a selector ([#1144](https://github.com/Zapper-fi/studio/issues/1144)) ([828d69b](https://github.com/Zapper-fi/studio/commit/828d69b8f9905f40fe74373a18b66731763bff1b))
+
+## [0.168.0](https://github.com/Zapper-fi/studio/compare/v0.167.0...v0.168.0) (2022-08-11)
+
+
+### Features
+
+* **template:** Use token dependency resolution ([#1142](https://github.com/Zapper-fi/studio/issues/1142)) ([42d7c90](https://github.com/Zapper-fi/studio/commit/42d7c908f69177a13d0e59894db6622d43b4c322))
+
+## [0.167.0](https://github.com/Zapper-fi/studio/compare/v0.166.0...v0.167.0) (2022-08-11)
+
+
+### Features
+
+* **app-toolkit:** Add support for token dependency selection ([#1140](https://github.com/Zapper-fi/studio/issues/1140)) ([f278b1f](https://github.com/Zapper-fi/studio/commit/f278b1fc881aa4ce859838a24464a0b466853bcd))
+
+## [0.166.0](https://github.com/Zapper-fi/studio/compare/v0.165.0...v0.166.0) (2022-08-11)
+
+
+### Features
+
+* **multicall:** Return error do not throw ([00ecfda](https://github.com/Zapper-fi/studio/commit/00ecfdaee6a88d4566a9930222c20939c6a63ceb))
+
 ## [0.165.0](https://github.com/Zapper-fi/studio/compare/v0.164.0...v0.165.0) (2022-08-11)
 
 

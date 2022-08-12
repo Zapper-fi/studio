@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 
-import { PriceSelectorService } from './price-selector.service';
+import { PriceSelectorService } from './selectors/token-price-selector.service';
 import { TokenApiClient } from './token-api.client';
 import { TokenService } from './token.service';
 

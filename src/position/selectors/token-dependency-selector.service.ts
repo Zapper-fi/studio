@@ -2,25 +2,25 @@ import { Inject, Injectable } from '@nestjs/common';
 import DataLoader from 'dataloader';
 import { Mutable } from 'type-fest';
 
-import { AppTokenPosition } from '~position/position.interface';
+import { ApiPositionSource } from '../position-source/position-source.api';
 
 import {
-  AppTokenSelector,
-  AppTokenSelectorFactory,
-  AppTokenSelectorKey,
-  CreateAppTokenSelectorOptions,
+  TokenDependencySelector,
+  TokenDependencySelectorFactory,
+  TokenDependencySelectorKey,
+  CreateTokenDependencySelectorOptions,
   GetMany,
   GetOne,
-} from './app-token-selector.interface';
-import { ApiPositionSource } from './position-source/position-source.api';
+  TokenDependency,
+} from './token-dependency-selector.interface';
 
 @Injectable()
-export class AppTokenSelectorService implements AppTokenSelectorFactory {
+export class TokenDependencySelectorService implements TokenDependencySelectorFactory {
   constructor(@Inject(ApiPositionSource) private readonly positionAPIClient: ApiPositionSource) {}
 
-  create(_opts: CreateAppTokenSelectorOptions): AppTokenSelector {
-    const tokenDataLoader = new DataLoader<AppTokenSelectorKey, AppTokenPosition | null>(
-      keys => this.positionAPIClient.getAppTokenBatch(keys as Mutable<AppTokenSelectorKey[]>),
+  create(_opts: CreateTokenDependencySelectorOptions): TokenDependencySelector {
+    const tokenDataLoader = new DataLoader<TokenDependencySelectorKey, TokenDependency | null>(
+      keys => this.positionAPIClient.getTokenDependenciesBatch(keys as Mutable<TokenDependencySelectorKey[]>),
       { maxBatchSize: 1000 },
     );
 

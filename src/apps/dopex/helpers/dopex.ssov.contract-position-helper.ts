@@ -1,12 +1,11 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { isUndefined, range } from 'lodash';
+import { compact, isUndefined, range, uniqBy } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
 import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
 import { ContractPosition } from '~position/position.interface';
-import { AppGroupsDefinition } from '~position/position.service';
 import { claimable, supplied } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 
@@ -28,7 +27,6 @@ type DopexSsovContractPositionHelperParams = {
   groupId: string;
   definitions: DopexSsovDefinition[];
   network: Network;
-  dependencies?: AppGroupsDefinition[];
 };
 
 @Injectable()
@@ -38,22 +36,19 @@ export class DopexSsovContractPositionHelper {
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
   ) {}
 
-  async getPositions({
-    appId,
-    groupId,
-    definitions,
-    network,
-    dependencies = [],
-  }: DopexSsovContractPositionHelperParams) {
+  async getPositions({ appId, groupId, definitions, network }: DopexSsovContractPositionHelperParams) {
     const multicall = this.appToolkit.getMulticall(network);
-    const tokenSelector = this.appToolkit.getBaseTokenPriceSelector({ tags: { network, appId } });
+    const tokenSelector = this.appToolkit.getTokenDependencySelector({ tags: { network, context: appId } });
 
-    const [baseTokens, appTokens] = await Promise.all([
-      await tokenSelector.getAll({ network }),
-      await this.appToolkit.getAppTokenPositions(...dependencies),
-    ]);
+    const tokenDepRequests = definitions.flatMap(({ depositTokenAddress, extraRewardTokenAddresses = [] }) => {
+      const deposit = { network, address: depositTokenAddress };
+      const extraRewards = extraRewardTokenAddresses.map(address => ({ network, address: address.toLowerCase() }));
+      return [deposit, ...extraRewards];
+    });
 
-    const allTokens = [...appTokens, ...baseTokens];
+    const uniqueTokenDepReqs = uniqBy(tokenDepRequests, ({ address, network }) => `${network}:${address}`);
+    const tokenDependencies = await tokenSelector.getMany(uniqueTokenDepReqs).then(deps => compact(deps));
+
     const ssovContractPositions = await Promise.all(
       definitions.map(async ({ address, depositTokenAddress, extraRewardTokenAddresses = [] }) => {
         // Determine valid epochs to retrieve balances
@@ -65,8 +60,8 @@ export class DopexSsovContractPositionHelper {
         const lastValidEpoch = nextEpochStartTime > 0 ? nextEpoch : currentEpoch;
         const epochs = range(1, lastValidEpoch + 1);
 
-        const depositToken = allTokens.find(v => v.address === depositTokenAddress);
-        const rewardTokens = extraRewardTokenAddresses.map(v => allTokens.find(t => t.address === v.toLowerCase()));
+        const depositToken = tokenDependencies.find(v => v.address === depositTokenAddress);
+        const rewardTokens = extraRewardTokenAddresses.map(v => tokenDependencies.find(t => t.address === v));
         if (!depositToken || rewardTokens.some(isUndefined)) return [];
 
         const positions = await Promise.all(

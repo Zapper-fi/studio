@@ -75,9 +75,6 @@ export class EthereumEnzymeFinanceVaultTokenFetcher extends AppTokenTemplatePosi
   }
 
   async getPrice({ appToken, multicall }: PriceStageParams<EnzymeFinanceVault, DefaultDataProps>): Promise<number> {
-    const tokenSelector = this.appToolkit.getBaseTokenPriceSelector({ tags: { network, appId } });
-    const baseTokens = await tokenSelector.getAll({ network });
-
     const totalAssetUnderManagement = _.sum(
       await Promise.all(
         appToken.tokens.map(async token => {
@@ -88,10 +85,7 @@ export class EthereumEnzymeFinanceVaultTokenFetcher extends AppTokenTemplatePosi
           ]);
 
           const amount = Number(tokenAmountRaw) / 10 ** decimals;
-          const baseToken = baseTokens.find(v => v.address === token.address);
-          if (!baseToken) return 0;
-
-          return baseToken.price * amount;
+          return token.price * amount;
         }),
       ),
     );
