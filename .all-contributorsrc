@@ -673,6 +673,25 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "amikec",
+      "name": "Mickey",
+      "avatar_url": "https://avatars.githubusercontent.com/u/91593430?v=4",
+      "profile": "https://github.com/amikec",
+      "contributions": [
+        "code",
+        "bug"
+      ]
+    },
+    {
+      "login": "crypslato",
+      "name": "crypslato",
+      "avatar_url": "https://avatars.githubusercontent.com/u/77345286?v=4",
+      "profile": "https://github.com/crypslato",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7
