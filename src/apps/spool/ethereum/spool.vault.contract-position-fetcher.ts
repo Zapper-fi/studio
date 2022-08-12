@@ -189,7 +189,7 @@ export class EthereumSpoolVaultContractPositionFetcher implements PositionFetche
             secondaryLabel: vault.underlying.symbol,
             images: [],
             statsItems: [
-              { label: 'APY', value: buildPercentageDisplayItem(stats.adjustedApy) },
+              { label: 'APY', value: buildPercentageDisplayItem(stats.adjustedApy * 100) },
               { label: 'TVR', value: buildDollarDisplayItem(stats.tvr) },
               { label: 'Risk Model', value: buildStringDisplayItem(riskModels[vault.riskProvider.id] || '') },
               { label: 'Asset', value: buildStringDisplayItem(vault.underlying.symbol) },
