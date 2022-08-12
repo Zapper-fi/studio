@@ -2,6 +2,7 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
+import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import { DataPropsStageParams, PricePerShareStageParams } from '~position/template/app-token.template.position-fetcher';
 import { Network } from '~types/network.interface';
 
@@ -37,7 +38,10 @@ export class FantomYearnV2VaultTokenFetcher extends YearnVaultTokenFetcher<Yearn
   }
 
   async getPricePerShare({ contract, appToken }: PricePerShareStageParams<YearnVaultV2>) {
-    const pricePerShareRaw = await contract.pricePerShare().catch(() => 0);
+    const pricePerShareRaw = await contract.pricePerShare().catch(err => {
+      if (isMulticallUnderlyingError(err)) return 0;
+      throw err;
+    });
     return Number(pricePerShareRaw) / 10 ** appToken.decimals;
   }
 

@@ -2,6 +2,7 @@ import { Inject } from '@nestjs/common';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
+import { isMulticallUnderlyingError } from '~multicall/multicall.ethers';
 import {
   AppTokenTemplatePositionFetcher,
   DataPropsStageParams,
@@ -60,7 +61,10 @@ export class EthereumYearnYieldTokenFetcher extends AppTokenTemplatePositionFetc
   }: PricePerShareStageParams<YearnVault, YearnYieldTokenDataProps>): Promise<number> {
     return contract
       .getPricePerFullShare()
-      .catch(() => 0)
+      .catch(err => {
+        if (isMulticallUnderlyingError(err)) return 0;
+        throw err;
+      })
       .then(pps => Number(pps) / 10 ** appToken.decimals);
   }
 
