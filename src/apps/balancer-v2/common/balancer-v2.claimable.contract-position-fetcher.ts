@@ -5,11 +5,15 @@ import { compact, range, sum, sumBy } from 'lodash';
 import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { buildDollarDisplayItem } from '~app-toolkit/helpers/presentation/display-item.present';
-import { getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
+import { getLabelFromToken, getTokenImg } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractType } from '~position/contract.interface';
 import { ContractPositionBalance } from '~position/position-balance.interface';
 import { claimable } from '~position/position.utils';
-import { ContractPositionTemplatePositionFetcher } from '~position/template/contract-position.template.position-fetcher';
+import {
+  ContractPositionTemplatePositionFetcher,
+  DefaultContractPositionDescriptor,
+  DisplayPropsStageParams,
+} from '~position/template/contract-position.template.position-fetcher';
 
 import { BalancerMerkleOrchard, BalancerV2ContractFactory } from '../contracts';
 
@@ -25,20 +29,20 @@ export abstract class BalancerV2ClaimableContractPositionFetcher extends Contrac
     super(appToolkit);
   }
 
-  getDescriptors(): never {
-    throw new NotImplementedException();
+  getContract(address: string): BalancerMerkleOrchard {
+    return this.contractFactory.balancerMerkleOrchard({ address, network: this.network });
   }
 
-  getContract(): never {
-    throw new NotImplementedException();
+  async getDescriptors(): Promise<DefaultContractPositionDescriptor[]> {
+    return [];
+  }
+
+  async getLabel({ contractPosition }: DisplayPropsStageParams<BalancerMerkleOrchard>): Promise<string> {
+    return `Claimable ${getLabelFromToken(contractPosition.tokens[0])}`;
   }
 
   getTokenBalancesPerPosition(): never {
     throw new NotImplementedException();
-  }
-
-  getLabel(): never {
-    throw new Error('Method not implemented.');
   }
 
   async getBalances(address: string) {
