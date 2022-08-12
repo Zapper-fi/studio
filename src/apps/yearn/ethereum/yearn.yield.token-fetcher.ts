@@ -7,6 +7,7 @@ import {
   AppTokenTemplatePositionFetcher,
   DataPropsStageParams,
   PricePerShareStageParams,
+  UnderlyingTokensStageParams,
 } from '~position/template/app-token.template.position-fetcher';
 import { Network } from '~types/network.interface';
 
@@ -49,7 +50,7 @@ export class EthereumYearnYieldTokenFetcher extends AppTokenTemplatePositionFetc
     return Y_TOKENS.map(yToken => yToken.address);
   }
 
-  async getUnderlyingTokenAddresses(contract: YearnVault): Promise<string[]> {
+  async getUnderlyingTokenAddresses({ contract }: UnderlyingTokensStageParams<YearnVault>): Promise<string[]> {
     const match = Y_TOKENS.find(yToken => yToken.address === contract.address.toLowerCase());
     if (!match) throw new Error('Cannot find specified Y token');
     return [match.underlyingAddress];
