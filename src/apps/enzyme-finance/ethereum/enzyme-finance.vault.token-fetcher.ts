@@ -79,12 +79,8 @@ export class EthereumEnzymeFinanceVaultTokenFetcher extends AppTokenTemplatePosi
       await Promise.all(
         appToken.tokens.map(async token => {
           const uTokenContract = this.contractFactory.erc20({ address: token.address, network });
-          const [tokenAmountRaw, decimals] = await Promise.all([
-            multicall.wrap(uTokenContract).balanceOf(appToken.address),
-            multicall.wrap(uTokenContract).decimals(),
-          ]);
-
-          const amount = Number(tokenAmountRaw) / 10 ** decimals;
+          const tokenAmountRaw = await multicall.wrap(uTokenContract).balanceOf(appToken.address);
+          const amount = Number(tokenAmountRaw) / 10 ** token.decimals;
           return token.price * amount;
         }),
       ),
