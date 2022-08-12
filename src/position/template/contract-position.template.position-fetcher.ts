@@ -113,9 +113,9 @@ export abstract class ContractPositionTemplatePositionFetcher<
     const statsItems: StatsItem[] = [];
 
     // Standardized Fields
-    if (typeof contractPosition.dataProps.liquidity === 'number')
+    if (typeof contractPosition.dataProps.liquidity === 'number' && contractPosition.dataProps.liquidity > 0)
       statsItems.push({ label: 'Liquidity', value: buildDollarDisplayItem(contractPosition.dataProps.liquidity) });
-    if (typeof contractPosition.dataProps.apy === 'number')
+    if (typeof contractPosition.dataProps.apy === 'number' && contractPosition.dataProps.apy > 0)
       statsItems.push({ label: 'APY', value: buildPercentageDisplayItem(contractPosition.dataProps.apy) });
 
     return statsItems;

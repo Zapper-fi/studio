@@ -7,6 +7,7 @@ import { DefaultDataProps } from '~position/display.interface';
 import {
   AppTokenTemplatePositionFetcher,
   DataPropsStageParams,
+  UnderlyingTokensStageParams,
 } from '~position/template/app-token.template.position-fetcher';
 import { Network } from '~types/network.interface';
 
@@ -69,7 +70,7 @@ export class PolygonSuperfluidVaultTokenFetcher extends AppTokenTemplatePosition
     return tokenData.tokens?.filter(x => !this.brokenAddresses.includes(x.id)).map(v => v.id) ?? [];
   }
 
-  async getUnderlyingTokenAddresses(contract: VaultToken) {
+  async getUnderlyingTokenAddresses({ contract }: UnderlyingTokensStageParams<VaultToken>) {
     return await contract.getUnderlyingToken();
   }
 

@@ -6,6 +6,7 @@ import {
   AppTokenTemplatePositionFetcher,
   DataPropsStageParams,
   DisplayPropsStageParams,
+  UnderlyingTokensStageParams,
 } from '~position/template/app-token.template.position-fetcher';
 
 import { AaveV2ContractFactory } from '../contracts';
@@ -85,7 +86,7 @@ export abstract class AaveV2LendingTemplateTokenFetcher extends AppTokenTemplate
     );
   }
 
-  async getUnderlyingTokenAddresses(contract: AaveV2AToken) {
+  async getUnderlyingTokenAddresses({ contract }: UnderlyingTokensStageParams<AaveV2AToken>) {
     return contract.UNDERLYING_ASSET_ADDRESS();
   }
 

@@ -9,6 +9,7 @@ import {
   DataPropsStageParams,
   DisplayPropsStageParams,
   PricePerShareStageParams,
+  UnderlyingTokensStageParams,
 } from '~position/template/app-token.template.position-fetcher';
 import { Network } from '~types/network.interface';
 
@@ -56,7 +57,7 @@ export class BinanceSmartChainOpenleveragePoolTokenFetcher extends AppTokenTempl
     return this.contractFactory.openleverageLpool({ address, network });
   }
 
-  getUnderlyingTokenAddresses(contract: OpenleverageLpool) {
+  getUnderlyingTokenAddresses({ contract }: UnderlyingTokensStageParams<OpenleverageLpool>) {
     return contract.underlying();
   }
 

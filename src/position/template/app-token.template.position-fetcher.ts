@@ -1,6 +1,6 @@
 import { Inject } from '@nestjs/common';
 import { BigNumberish, Contract } from 'ethers/lib/ethers';
-import { compact, isArray, sum } from 'lodash';
+import { compact, intersection, isArray, partition, sum } from 'lodash';
 
 import { drillBalance } from '~app-toolkit';
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
@@ -26,6 +26,18 @@ export type StageParams<T extends Contract, V, K extends keyof AppTokenPosition>
   appToken: Omit<AppTokenPosition<V>, K>;
 };
 
+export type TokenPropsStageParams<T> = {
+  address: string;
+  contract: T;
+  multicall: IMulticallWrapper;
+};
+
+export type UnderlyingTokensStageParams<T> = {
+  address: string;
+  contract: T;
+  multicall: IMulticallWrapper;
+};
+
 export type PricePerShareStageParams<T extends Contract, V extends DefaultDataProps = DefaultDataProps> = StageParams<
   T,
   V,
@@ -47,39 +59,34 @@ export type DisplayPropsStageParams<T extends Contract, V extends DefaultDataPro
   'displayProps'
 >;
 
-export abstract class AppTokenTemplatePositionFetcher<
-  T extends Contract = Erc20,
-  V extends DefaultDataProps = DefaultDataProps,
-> implements PositionFetcher<AppTokenPosition<V>>
+export abstract class AppTokenTemplatePositionFetcher<T extends Contract, V extends DefaultDataProps = DefaultDataProps>
+  implements PositionFetcher<AppTokenPosition<V>>
 {
   abstract appId: string;
   abstract groupId: string;
   abstract network: Network;
+  minLiquidity = 1000;
 
   constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) {}
 
+  abstract getContract(address: string): T;
   abstract getAddresses(): Promise<string[]>;
 
-  // Contract
-  getContract(address: string): T {
-    return this.appToolkit.globalContracts.erc20({ address, network: this.network }) as unknown as T;
-  }
-
   // Token Props
-  async getSymbol(contract: T): Promise<string> {
+  async getSymbol({ contract }: TokenPropsStageParams<T>): Promise<string> {
     return (contract as unknown as Erc20).symbol();
   }
 
-  async getDecimals(contract: T): Promise<number> {
+  async getDecimals({ contract }: TokenPropsStageParams<T>): Promise<number> {
     return (contract as unknown as Erc20).decimals();
   }
 
-  async getSupply(contract: T): Promise<BigNumberish> {
+  async getSupply({ contract }: TokenPropsStageParams<T>): Promise<BigNumberish> {
     return (contract as unknown as Erc20).totalSupply();
   }
 
   // Price Properties
-  async getUnderlyingTokenAddresses(_contract: T): Promise<string | string[]> {
+  async getUnderlyingTokenAddresses(_params: UnderlyingTokensStageParams<T>): Promise<string | string[]> {
     return [];
   }
 
@@ -143,7 +150,7 @@ export abstract class AppTokenTemplatePositionFetcher<
     const skeletons = await Promise.all(
       addresses.map(async address => {
         const contract = multicall.wrap(this.getContract(address));
-        const underlyingTokenAddresses = await this.getUnderlyingTokenAddresses(contract)
+        const underlyingTokenAddresses = await this.getUnderlyingTokenAddresses({ address, contract, multicall })
           .then(v => (Array.isArray(v) ? v : [v]))
           .then(v => v.map(t => t.toLowerCase()));
 
@@ -151,78 +158,93 @@ export abstract class AppTokenTemplatePositionFetcher<
       }),
     );
 
-    const underlyingTokenRequests = skeletons
-      .flatMap(v => v.underlyingTokenAddresses)
-      .map(v => ({ network: this.network, address: v }));
-    const tokenDependencies = await tokenLoader.getMany(underlyingTokenRequests).then(tokenDeps => compact(tokenDeps));
-
-    const skeletonsWithResolvedTokens = await Promise.all(
-      skeletons.map(async ({ address, underlyingTokenAddresses }) => {
-        const maybeTokens = underlyingTokenAddresses.map(v => tokenDependencies.find(t => t.address === v));
-        const tokens = compact(maybeTokens);
-
-        if (maybeTokens.length !== tokens.length) return null;
-        return { address, tokens };
-      }),
-    );
-
-    const tokens = await Promise.all(
-      compact(skeletonsWithResolvedTokens).map(async ({ address, tokens }) => {
-        const contract = multicall.wrap(this.getContract(address));
-        const [symbol, decimals, totalSupplyRaw] = await Promise.all([
-          this.getSymbol(contract),
-          this.getDecimals(contract),
-          this.getSupply(contract),
-        ]);
-
-        const supply = Number(totalSupplyRaw) / 10 ** decimals;
-
-        const fragment: PricePerShareStageParams<T, V>['appToken'] = {
-          type: ContractType.APP_TOKEN,
-          appId: this.appId,
-          groupId: this.groupId,
-          network: this.network,
-          address,
-          symbol,
-          decimals,
-          supply,
-          tokens,
-        };
-
-        // Resolve price per share stage
-        const pricePerShareStageParams = { appToken: fragment, contract, multicall, tokenLoader };
-        const pricePerShare = await this.getPricePerShare(pricePerShareStageParams).then(v => (isArray(v) ? v : [v]));
-
-        // Resolve Price Stage
-        const priceStageFragment = { ...pricePerShareStageParams.appToken, pricePerShare };
-        const priceStageParams = { appToken: priceStageFragment, contract, multicall, tokenLoader };
-        const price = await this.getPrice(priceStageParams);
-
-        // Resolve Data Props Stage
-        const dataPropsStageFragment = { ...priceStageParams.appToken, price };
-        const dataPropsStageParams = { appToken: dataPropsStageFragment, contract, multicall, tokenLoader };
-        const dataProps = await this.getDataProps(dataPropsStageParams);
-
-        // Resolve Display Props Stage
-        const displayPropsStageFragment = { ...dataPropsStageParams.appToken, dataProps };
-        const displayPropsStageParams = { appToken: displayPropsStageFragment, contract, multicall, tokenLoader };
-        const displayProps = {
-          label: await this.getLabel(displayPropsStageParams),
-          labelDetailed: await this.getLabelDetailed(displayPropsStageParams),
-          secondarylabel: await this.getSecondaryLabel(displayPropsStageParams),
-          tertiaryLabel: await this.getTertiaryLabel(displayPropsStageParams),
-          images: await this.getImages(displayPropsStageParams),
-          statsItems: await this.getStatsItems(displayPropsStageParams),
-        };
-
-        return { ...displayPropsStageFragment, displayProps };
-      }),
-    );
-
-    return compact(tokens).filter(v => {
-      if (typeof v.dataProps.liquidity === 'number') return Math.abs(v.dataProps.liquidity) > 1000;
-      return true;
+    const [base, meta] = partition(skeletons, t => {
+      const tokenAddresses = skeletons.map(v => v.address);
+      return intersection(t.underlyingTokenAddresses, tokenAddresses).length === 0;
     });
+
+    const currentTokens: AppTokenPosition<V>[] = [];
+    for (const skeletonsSubset of [base, meta]) {
+      const underlyingTokenRequests = skeletons
+        .flatMap(v => v.underlyingTokenAddresses)
+        .map(v => ({ network: this.network, address: v }));
+      const tokenDependencies = await tokenLoader
+        .getMany(underlyingTokenRequests)
+        .then(tokenDeps => compact(tokenDeps));
+      const allTokens = [...currentTokens, ...tokenDependencies];
+
+      const skeletonsWithResolvedTokens = await Promise.all(
+        skeletonsSubset.map(async ({ address, underlyingTokenAddresses }) => {
+          const maybeTokens = underlyingTokenAddresses.map(v => allTokens.find(t => t.address === v));
+          const tokens = compact(maybeTokens);
+
+          if (maybeTokens.length !== tokens.length) return null;
+          return { address, tokens };
+        }),
+      );
+
+      const tokens = await Promise.all(
+        compact(skeletonsWithResolvedTokens).map(async ({ address, tokens }) => {
+          const contract = multicall.wrap(this.getContract(address));
+          const [symbol, decimals, totalSupplyRaw] = await Promise.all([
+            this.getSymbol({ address, contract, multicall }),
+            this.getDecimals({ address, contract, multicall }),
+            this.getSupply({ address, contract, multicall }),
+          ]);
+
+          const supply = Number(totalSupplyRaw) / 10 ** decimals;
+
+          const fragment: PricePerShareStageParams<T, V>['appToken'] = {
+            type: ContractType.APP_TOKEN,
+            appId: this.appId,
+            groupId: this.groupId,
+            network: this.network,
+            address,
+            symbol,
+            decimals,
+            supply,
+            tokens,
+          };
+
+          // Resolve price per share stage
+          const pricePerShareStageParams = { appToken: fragment, contract, multicall, tokenLoader };
+          const pricePerShare = await this.getPricePerShare(pricePerShareStageParams).then(v => (isArray(v) ? v : [v]));
+
+          // Resolve Price Stage
+          const priceStageFragment = { ...pricePerShareStageParams.appToken, pricePerShare };
+          const priceStageParams = { appToken: priceStageFragment, contract, multicall, tokenLoader };
+          const price = await this.getPrice(priceStageParams);
+
+          // Resolve Data Props Stage
+          const dataPropsStageFragment = { ...priceStageParams.appToken, price };
+          const dataPropsStageParams = { appToken: dataPropsStageFragment, contract, multicall, tokenLoader };
+          const dataProps = await this.getDataProps(dataPropsStageParams);
+
+          // Resolve Display Props Stage
+          const displayPropsStageFragment = { ...dataPropsStageParams.appToken, dataProps };
+          const displayPropsStageParams = { appToken: displayPropsStageFragment, contract, multicall, tokenLoader };
+          const displayProps = {
+            label: await this.getLabel(displayPropsStageParams),
+            labelDetailed: await this.getLabelDetailed(displayPropsStageParams),
+            secondarylabel: await this.getSecondaryLabel(displayPropsStageParams),
+            tertiaryLabel: await this.getTertiaryLabel(displayPropsStageParams),
+            images: await this.getImages(displayPropsStageParams),
+            statsItems: await this.getStatsItems(displayPropsStageParams),
+          };
+
+          return { ...displayPropsStageFragment, displayProps };
+        }),
+      );
+
+      const positionsSubset = compact(tokens).filter(v => {
+        if (typeof v.dataProps.liquidity === 'number') return Math.abs(v.dataProps.liquidity) > this.minLiquidity;
+        return true;
+      });
+
+      currentTokens.push(...positionsSubset);
+    }
+
+    return currentTokens;
   }
 
   getBalancePerToken({

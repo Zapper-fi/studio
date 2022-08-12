@@ -21,9 +21,7 @@ export type MasterChefContractPositionDataProps = {
   poolIndex: number;
   liquidity: number;
   isActive: boolean;
-  dailyROI: number;
-  weeklyROI: number;
-  yearlyROI: number;
+  apy: number;
 };
 
 export type MasterChefContractPositionDescriptor = {
@@ -55,7 +53,8 @@ export abstract class MasterChefTemplateContractPositionFetcher<
   abstract getRewardTokenBalance(address: string, contract: T, poolIndex: number): Promise<BigNumberish>;
 
   async getDescriptors() {
-    const poolLength = await this.getContract(this.chefAddress).poolLength();
+    const contract = this.getContract(this.chefAddress);
+    const poolLength = await this.getPoolLength(contract);
     return range(0, Number(poolLength)).map(poolIndex => ({ address: this.chefAddress, poolIndex }));
   }
 
@@ -81,14 +80,15 @@ export abstract class MasterChefTemplateContractPositionFetcher<
   }: DataPropsStageParams<T, V, MasterChefContractPositionDescriptor>): Promise<V> {
     const poolIndex = descriptor.poolIndex;
     const stakedToken = contractPosition.tokens.find(isSupplied)!;
-    const primaryClaimableToken = contractPosition.tokens.filter(isClaimable)[0];
+    const rewardToken = contractPosition.tokens.filter(isClaimable)[0];
 
-    const [totalAllocPoints, totalRewardRate, poolAllocPoints] = await Promise.all([
+    const [totalAllocPoints, totalRewardRateRaw, poolAllocPoints] = await Promise.all([
       this.getTotalAllocPoints(contract, poolIndex),
       this.getTotalRewardRate(contract, poolIndex),
       this.getPoolAllocPoints(contract, poolIndex),
     ]);
 
+    const totalRewardRate = Number(totalRewardRateRaw) / 10 ** rewardToken.decimals;
     const poolShare = Number(poolAllocPoints) / Number(totalAllocPoints);
     const rewardRate = poolShare * Number(totalRewardRate);
 
@@ -99,14 +99,13 @@ export abstract class MasterChefTemplateContractPositionFetcher<
 
     const multiplier = this.rewardRateUnit === RewardRateUnit.BLOCK ? BLOCKS_PER_DAY[this.network] : 86400;
     const dailyRewardRate = rewardRate * multiplier;
-    const dailyRewardRateUSD = dailyRewardRate * primaryClaimableToken.price;
+    const dailyRewardRateUSD = dailyRewardRate * rewardToken.price;
 
-    const dailyROI = (dailyRewardRateUSD + liquidity) / liquidity - 1;
-    const weeklyROI = Number(dailyROI * 7);
-    const yearlyROI = dailyROI * 365;
-    const isActive = yearlyROI > 0;
+    const dailyReturn = (dailyRewardRateUSD + liquidity) / liquidity - 1;
+    const apy = dailyReturn * 365 * 100;
+    const isActive = apy > 0;
 
-    return { poolIndex, liquidity, dailyROI, weeklyROI, yearlyROI, isActive } as V;
+    return { poolIndex, liquidity, apy, isActive } as V;
   }
 
   async getLabel({ contractPosition }: DisplayPropsStageParams<T>) {

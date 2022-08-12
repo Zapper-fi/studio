@@ -5,6 +5,7 @@ import { ContractFactory } from '~contract/contracts';
 import { Network } from '~types/network.interface';
 
 import { BeethovenXBeetsBar__factory } from './ethers';
+import { BeethovenXGauge__factory } from './ethers';
 import { BeethovenXMasterchef__factory } from './ethers';
 
 // eslint-disable-next-line
@@ -19,10 +20,14 @@ export class BeethovenXContractFactory extends ContractFactory {
   beethovenXBeetsBar({ address, network }: ContractOpts) {
     return BeethovenXBeetsBar__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
+  beethovenXGauge({ address, network }: ContractOpts) {
+    return BeethovenXGauge__factory.connect(address, this.appToolkit.getNetworkProvider(network));
+  }
   beethovenXMasterchef({ address, network }: ContractOpts) {
     return BeethovenXMasterchef__factory.connect(address, this.appToolkit.getNetworkProvider(network));
   }
 }
 
 export type { BeethovenXBeetsBar } from './ethers';
+export type { BeethovenXGauge } from './ethers';
 export type { BeethovenXMasterchef } from './ethers';
