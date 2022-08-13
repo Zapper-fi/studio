@@ -1,3 +1,5 @@
+import path from 'path';
+
 import { ConfigModule } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
 
@@ -8,6 +10,8 @@ import { PositionFetcherRegistry } from '~position/position-fetcher.registry';
 import { PriceSelectorService } from '~token/selectors/token-price-selector.service';
 
 import { getAllAppTokenFetchers } from './common';
+
+require('jest-specific-snapshot');
 
 describe.only('App Token Fetchers', () => {
   let moduleRef: TestingModule;
@@ -41,9 +45,13 @@ describe.only('App Token Fetchers', () => {
     await moduleRef.close();
   });
 
-  it.each(getAllAppTokenFetchers())(`builds tokens for (%s, %s, %s)`, async (appId, network, groupId) => {
+  it.each(getAllAppTokenFetchers().slice(0, 3))(`builds tokens for (%s, %s, %s)`, async (appId, network, groupId) => {
     const positionFetcherRegistry = moduleRef.get(PositionFetcherRegistry);
     const fetcher = positionFetcherRegistry.get({ type: ContractType.APP_TOKEN, appId, groupId, network });
     expect(fetcher).toBeDefined();
+
+    const result = await fetcher.getPositions();
+    const pathToSnap = path.resolve(__dirname, `./__snapshots__/${appId}_${network}_${groupId}.app-tokens.shot`);
+    expect(result).toMatchSpecificSnapshot(pathToSnap);
   });
 });

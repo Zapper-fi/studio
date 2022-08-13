@@ -1,0 +1,3 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App Token Fetchers builds tokens for (aave-amm, ethereum, stable-debt) 1`] = `Array []`;
