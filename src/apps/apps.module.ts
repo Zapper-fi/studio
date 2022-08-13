@@ -89,18 +89,18 @@ export class AppsModule {
   static async resolveAppModules() {
     // Find all apps available to be registered
     const allAppIds = readdirSync(__dirname, { withFileTypes: true })
-      .filter(dirent => dirent.isDirectory())
+      .filter(dirent => dirent.isDirectory() && dirent.name !== '__tests__')
       .map(dirent => dirent.name);
 
     // If we're in prod, or if there is no enabled apps subset configured, enable everything
-    const isProd = process.env.NODE_ENV === 'production';
-    const configuredAppIds = compact((process.env.ENABLED_APPS ?? '').split(','));
-
-    if (isProd) {
+    const loadAllApps = process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'test';
+    if (loadAllApps) {
       const appModules = await this.resolveModulesByAppIds(allAppIds);
       return this.externalizeAppModuleDependencies(appModules);
     }
 
+    // Otherwise, load a subset of the apps
+    const configuredAppIds = compact((process.env.ENABLED_APPS ?? '').split(','));
     if (!configuredAppIds.length) {
       const message = chalk`{red No apps have been configured! Set {yellow ENABLED_APPS} in your {yellow .env} file, then restart. Example: {yellow ENABLED_APPS=synthetix,uniswap-v2}}`;
       this.logger.error(message);

@@ -38,7 +38,7 @@ export class PolygonDfxStakingContractPositionFetcher implements PositionFetcher
     // Staked tokens are DFX LPs so resolve these
     const appTokens = await this.appToolkit.getAppTokenPositions({
       appId: DFX_DEFINITION.id,
-      groupIds: [DFX_DEFINITION.groups.dfxCurve.id],
+      groupIds: [DFX_DEFINITION.groups.curve.id],
       network,
     });
     const allTokens = [...baseTokens, ...appTokens];

@@ -24,7 +24,7 @@ export class EthereumDfxBalanceFetcher implements BalanceFetcher {
     return this.appToolkit.helpers.tokenBalanceHelper.getTokenBalances({
       address,
       appId: DFX_DEFINITION.id,
-      groupId: DFX_DEFINITION.groups.dfxCurve.id,
+      groupId: DFX_DEFINITION.groups.curve.id,
       network,
     });
   }

@@ -8,9 +8,23 @@ export const KLIMA_DEFINITION = appDefinition({
   name: 'Klima',
   description: `As a matter of course, Klima DAO will solve the critical problems of the carbon markets: illiquidity, opacity and inefficiency.`,
   groups: {
-    bond: { id: 'bond', type: GroupType.POSITION, label: 'Bonds' },
-    sKlima: { id: 'sKlima', type: GroupType.TOKEN, label: 'Staked' },
-    wsKlima: { id: 'wsKlima', type: GroupType.TOKEN, label: 'Staked' },
+    bond: {
+      id: 'bond',
+      type: GroupType.POSITION,
+      label: 'Bonds',
+    },
+
+    sKlima: {
+      id: 's-klima',
+      type: GroupType.TOKEN,
+      label: 'Staked',
+    },
+
+    wsKlima: {
+      id: 'ws-klima',
+      type: GroupType.TOKEN,
+      label: 'Staked',
+    },
   },
   url: 'https://www.klimadao.finance/',
   links: {

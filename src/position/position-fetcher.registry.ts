@@ -61,7 +61,10 @@ export class PositionFetcherRegistry implements OnApplicationBootstrap {
         const cacheKey = buildAppPositionsCacheKey({ type, network, appId, groupId });
         Reflect.defineMetadata(CACHE_ON_INTERVAL_KEY, cacheKey, wrapper.instance['getPositions']);
         Reflect.defineMetadata(CACHE_ON_INTERVAL_TIMEOUT, 45 * 1000, wrapper.instance['getPositions']);
-        this.cacheOnIntervalService.registerCache(wrapper.instance, 'getPositions');
+
+        if (process.env.NODE_ENV !== 'test') {
+          this.cacheOnIntervalService.registerCache(wrapper.instance, 'getPositions');
+        }
 
         if (!this.registry.get(type)) this.registry.set(type, new Map());
         if (!this.registry.get(type)!.get(network)) this.registry.get(type)!.set(network, new Map());

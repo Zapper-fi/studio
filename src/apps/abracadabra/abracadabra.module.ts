@@ -24,9 +24,9 @@ import { EthereumAbracadabraMspellContractPositionFetcher } from './ethereum/abr
 import { EthereumAbracadabraStakedSpellTokenFetcher } from './ethereum/abracadabra.staked-spell.token-fetcher';
 import { FantomAbracadabraBalanceFetcher } from './fantom/abracadabra.balance-fetcher';
 import { FantomAbracadabraCauldronContractPositionFetcher } from './fantom/abracadabra.cauldron.contract-position-fetcher';
+import { FantomAbracadabraFarmContractPositionFetcher } from './fantom/abracadabra.farm.contract-position-fetcher';
 import { FantomAbracadabraMspellContractPositionFetcher } from './fantom/abracadabra.m-spell.contract-position-fetcher';
-import { FantomAbracadabraFarmContractPositionFetcher } from './fantom/abracadbra.farm.contract-position-fetcher';
-import { FantomAbracadabraStakedSpellTokenFetcher } from './fantom/abracadbra.staked-spell.token-fetcher';
+import { FantomAbracadabraStakedSpellTokenFetcher } from './fantom/abracadabra.staked-spell.token-fetcher';
 import { AbracadabraCauldronBalanceHelper } from './helpers/abracadabra.cauldron.balance-helper';
 import { AbracadabraCauldronContractPositionHelper } from './helpers/abracadabra.cauldron.contract-position-helper';
 

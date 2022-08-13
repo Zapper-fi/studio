@@ -9,7 +9,7 @@ import { OptimismLyraAvalonBalanceFetcher } from './optimism/lyra-avalon.balance
 import { OptimismLyraAvalonOptionsContractPositionFetcher } from './optimism/lyra-avalon.options.contract-position-fetcher';
 import { OptimismLyraAvalonPoolTokenFetcher } from './optimism/lyra-avalon.pool.token-fetcher';
 import { OptimismLyraAvalonStakingContractPositionFetcher } from './optimism/lyra-avalon.staking.contract-position-fetcher';
-import { OptimismLyraAvalonStakingTokenFetcher } from './optimism/lyra-avalon.staking.token-fetcher';
+import { OptimismLyraAvalonStakingTokenFetcher } from './optimism/lyra-avalon.ve.token-fetcher';
 
 @Register.AppModule({
   appId: LYRA_AVALON_DEFINITION.id,
