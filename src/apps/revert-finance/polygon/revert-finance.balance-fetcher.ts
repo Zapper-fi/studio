@@ -65,7 +65,10 @@ export class PolygonRevertFinanceBalanceFetcher implements BalanceFetcher {
           context: { multicall, baseTokens },
         });
         if (!uniV3Token) return;
-        compoundingBalances.push(drillBalance(uniV3Token, '1'));
+        compoundingBalances.push({
+          ...drillBalance(uniV3Token, '1'),
+          key: this.appToolkit.getPositionKey(uniV3Token, ['supply']),
+        });
       }),
     );
     return compoundingBalances;
