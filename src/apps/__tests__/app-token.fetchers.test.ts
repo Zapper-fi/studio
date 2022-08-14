@@ -7,6 +7,7 @@ import { AppToolkitModule } from '~app-toolkit/app-toolkit.module';
 import { AppsModule } from '~apps/apps.module';
 import { ContractType } from '~position/contract.interface';
 import { PositionFetcherRegistry } from '~position/position-fetcher.registry';
+import { AppTokenPosition } from '~position/position.interface';
 import { PriceSelectorService } from '~token/selectors/token-price-selector.service';
 
 import { getAllAppTokenFetchers } from './common';
@@ -45,13 +46,36 @@ describe.only('App Token Fetchers', () => {
     await moduleRef.close();
   });
 
-  it.each(getAllAppTokenFetchers().slice(0, 3))(`builds tokens for (%s, %s, %s)`, async (appId, network, groupId) => {
-    const positionFetcherRegistry = moduleRef.get(PositionFetcherRegistry);
-    const fetcher = positionFetcherRegistry.get({ type: ContractType.APP_TOKEN, appId, groupId, network });
-    expect(fetcher).toBeDefined();
+  describe.each(getAllAppTokenFetchers().slice(0, 3))(`(%s, %s, %s) positions`, (appId, network, groupId) => {
+    let results: AppTokenPosition[];
 
-    const result = await fetcher.getPositions();
-    const pathToSnap = path.resolve(__dirname, `./__snapshots__/${appId}_${network}_${groupId}.app-tokens.shot`);
-    expect(result).toMatchSpecificSnapshot(pathToSnap);
+    beforeAll(async () => {
+      const type = ContractType.APP_TOKEN;
+      const positionFetcherRegistry = moduleRef.get(PositionFetcherRegistry);
+      const fetcher = positionFetcherRegistry.get<AppTokenPosition>({ type, appId, groupId, network });
+      results = await fetcher.getPositions();
+    });
+
+    it('should all have the same appId, groupId, and network', () => {
+      expect(results.every(v => v.appId === appId)).toBe(true);
+      expect(results.every(v => v.groupId === groupId)).toBe(true);
+      expect(results.every(v => v.network === network)).toBe(true);
+    });
+
+    it('should have structure', () => {
+      const id = [appId, network, groupId].join('_');
+      const pathToSnap = path.resolve(__dirname, `./__snapshots__/${id}.app-token.shot`);
+
+      // Extract static part of the tokens structure
+      const structures = results.map(v => ({
+        key: v.key,
+        address: v.address,
+        tokens: v.tokens.map(t => t.address),
+        symbol: v.symbol,
+        decimals: v.decimals,
+      }));
+
+      expect(structures).toMatchSpecificSnapshot(pathToSnap);
+    });
   });
 });
