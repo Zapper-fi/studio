@@ -137,6 +137,10 @@ export abstract class AppTokenTemplatePositionFetcher<T extends Contract, V exte
     return statsItems;
   }
 
+  getKey({ appToken }: { appToken: AppTokenPosition }): string {
+    return this.appToolkit.getPositionKey(appToken, ['validatorId']);
+  }
+
   // Default (adapted) Template Runner
   // Note: This will be removed in favour of an orchestrator at a higher level once all groups are migrated
   async getPositions(): Promise<AppTokenPosition<V>[]> {
@@ -232,7 +236,9 @@ export abstract class AppTokenTemplatePositionFetcher<T extends Contract, V exte
             statsItems: await this.getStatsItems(displayPropsStageParams),
           };
 
-          return { ...displayPropsStageFragment, displayProps };
+          const appToken = { ...displayPropsStageFragment, displayProps };
+          const key = this.getKey({ appToken });
+          return { key, ...appToken };
         }),
       );
 

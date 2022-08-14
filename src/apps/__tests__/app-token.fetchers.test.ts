@@ -46,7 +46,7 @@ describe.only('App Token Fetchers', () => {
     await moduleRef.close();
   });
 
-  describe.each(getAllAppTokenFetchers().slice(0, 3))(`(%s, %s, %s) positions`, (appId, network, groupId) => {
+  describe.each(getAllAppTokenFetchers().slice(0, 50))(`(%s, %s, %s) positions`, (appId, network, groupId) => {
     let results: AppTokenPosition[];
 
     beforeAll(async () => {
