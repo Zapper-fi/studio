@@ -1,14 +1,13 @@
 import path from 'path';
 
+import { INestApplication } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { Test, TestingModule } from '@nestjs/testing';
+import supertest from 'supertest';
 
 import { AppToolkitModule } from '~app-toolkit/app-toolkit.module';
 import { AppsModule } from '~apps/apps.module';
-import { ContractType } from '~position/contract.interface';
-import { PositionFetcherRegistry } from '~position/position-fetcher.registry';
 import { AppTokenPosition } from '~position/position.interface';
-import { PriceSelectorService } from '~token/selectors/token-price-selector.service';
 
 import { getAllAppTokenFetchers } from './common';
 
@@ -16,8 +15,15 @@ require('jest-specific-snapshot');
 
 describe.only('App Token Fetchers', () => {
   let moduleRef: TestingModule;
+  let app: INestApplication;
+  let request: supertest.SuperTest<supertest.Test>;
 
   beforeAll(async () => {
+    if (process.env.APP_BASE_URL) {
+      request = supertest(process.env.APP_BASE_URL);
+      return;
+    }
+
     moduleRef = await Test.createTestingModule({
       imports: [
         ConfigModule.forRoot({
@@ -36,24 +42,27 @@ describe.only('App Token Fetchers', () => {
       ],
     }).compile();
 
-    const positionFetcherRegistry = moduleRef.get(PositionFetcherRegistry);
-    const priceSelectorService = moduleRef.get(PriceSelectorService);
-    positionFetcherRegistry.onApplicationBootstrap();
-    await priceSelectorService.onApplicationBootstrap();
+    app = moduleRef.createNestApplication();
+    await app.init();
+
+    request = supertest(app.getHttpServer());
   }, 30 * 1000);
 
   afterAll(async () => {
     await moduleRef.close();
   });
 
-  describe.each(getAllAppTokenFetchers().slice(0, 50))(`(%s, %s, %s) positions`, (appId, network, groupId) => {
+  describe.each(getAllAppTokenFetchers().slice(0, 3))(`(%s, %s, %s) positions`, (appId, network, groupId) => {
     let results: AppTokenPosition[];
 
     beforeAll(async () => {
-      const type = ContractType.APP_TOKEN;
-      const positionFetcherRegistry = moduleRef.get(PositionFetcherRegistry);
-      const fetcher = positionFetcherRegistry.get<AppTokenPosition>({ type, appId, groupId, network });
-      results = await fetcher.getPositions();
+      const prodUrl = `/v2/apps/${appId}/tokens?groupId=${groupId}&network=${network}`;
+      const localUrl = `/apps/${appId}/tokens?groupIds[]=${groupId}&network=${network}`;
+
+      const response = await request
+        .get(prodUrl)
+        .set('Authorization', `Basic ${Buffer.from('ad01527e-8133-4a68-ad67-fbf8d9040ad1:').toString('base64')}`);
+      results = response.body;
     });
 
     it('should all have the same appId, groupId, and network', () => {

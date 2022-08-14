@@ -93,7 +93,7 @@ export class AppsModule {
       .map(dirent => dirent.name);
 
     // If we're in prod, or if there is no enabled apps subset configured, enable everything
-    const loadAllApps = process.env.NODE_ENV === 'production' || process.env.NODE_ENV === 'test';
+    const loadAllApps = process.env.NODE_ENV === 'production';
     if (loadAllApps) {
       const appModules = await this.resolveModulesByAppIds(allAppIds);
       return this.externalizeAppModuleDependencies(appModules);

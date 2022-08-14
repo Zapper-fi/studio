@@ -5,7 +5,7 @@ Array [
   Object {
     "address": "0xa4c273d9a0c1fe2674f0e845160d6232768a3064",
     "decimals": 18,
-    "key": undefined,
+    "key": "3189877258",
     "symbol": "variableDebtAmmWETH",
     "tokens": Array [
       "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
@@ -14,7 +14,7 @@ Array [
   Object {
     "address": "0x3f4fa4937e72991367dc32687bc3278f095e7eaa",
     "decimals": 18,
-    "key": undefined,
+    "key": "1994592265",
     "symbol": "variableDebtAmmDAI",
     "tokens": Array [
       "0x6b175474e89094c44da98b954eedeac495271d0f",
@@ -23,7 +23,7 @@ Array [
   Object {
     "address": "0xcfdc74b97b69319683fec2a4ef95c4ab739f1b12",
     "decimals": 6,
-    "key": undefined,
+    "key": "505466967",
     "symbol": "variableDebtAmmUSDC",
     "tokens": Array [
       "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
@@ -32,7 +32,7 @@ Array [
   Object {
     "address": "0xdcfe9bfc246b02da384de757464a35efca402797",
     "decimals": 6,
-    "key": undefined,
+    "key": "46548658",
     "symbol": "variableDebtAmmUSDT",
     "tokens": Array [
       "0xdac17f958d2ee523a2206206994597c13d831ec7",
@@ -41,7 +41,7 @@ Array [
   Object {
     "address": "0x3b99fdafdfe70d65101a4ba8cdc35dafbd26375f",
     "decimals": 8,
-    "key": undefined,
+    "key": "3149996881",
     "symbol": "variableDebtAmmWBTC",
     "tokens": Array [
       "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
