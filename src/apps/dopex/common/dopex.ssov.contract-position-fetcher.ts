@@ -4,11 +4,12 @@ import { BigNumberish, Contract, ethers } from 'ethers';
 import { isArray, range } from 'lodash';
 
 import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
-import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { getImagesFromToken, getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
 import { ContractPosition, MetaType } from '~position/position.interface';
 import { isClaimable, isSupplied } from '~position/position.utils';
 import {
   ContractPositionTemplatePositionFetcher,
+  DataPropsStageParams,
   DescriptorsStageParams,
   DisplayPropsStageParams,
   GetTokenBalancesPerPositionParams,
@@ -88,11 +89,22 @@ export abstract class DopexSsovContractPositionFetcher<
     return descriptorsBySsov.flat();
   }
 
+  async getDataProps({ descriptor }: DataPropsStageParams<T, DopexSsovDataProps, DopexSsovDescriptor>) {
+    return { epoch: descriptor.epoch, strike: descriptor.strike };
+  }
+
   async getLabel({ contractPosition }: DisplayPropsStageParams<T, DopexSsovDataProps>) {
     const depositToken = contractPosition.tokens.find(isSupplied)!;
     const { epoch, strike } = contractPosition.dataProps;
     const strikeLabel = Number(strike) / 10 ** 8; // Price in USDC
     return `${getLabelFromToken(depositToken)} SSOV - Epoch ${epoch}, Strike ${strikeLabel}`;
+  }
+
+  async getImages({ contractPosition }: DisplayPropsStageParams<T, DopexSsovDataProps>) {
+    return contractPosition.tokens
+      .filter(isSupplied)
+      .map(v => getImagesFromToken(v))
+      .flat();
   }
 
   async getTokenDescriptors({ descriptor }: TokenStageParams<T, DopexSsovDataProps, DopexSsovDescriptor>) {

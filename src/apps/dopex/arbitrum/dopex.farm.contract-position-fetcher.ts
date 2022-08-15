@@ -13,12 +13,6 @@ import { DopexContractFactory, DopexDualRewardStaking } from '../contracts';
 import { DOPEX_DEFINITION } from '../dopex.definition';
 
 const FARMS = [
-  // DPX
-  {
-    address: '0xc6d714170fe766691670f12c2b45c1f34405aab6',
-    stakedTokenAddress: '0x6c2c06790b3e3e3c38e12ee22f8183b37a13ee55',
-    rewardTokenAddresses: ['0x6c2c06790b3e3e3c38e12ee22f8183b37a13ee55', '0x32eb7902d4134bf98a28b963d26de779af92a212'],
-  },
   // rDPX v1
   {
     address: '0x8d481245801907b45823fb032e6848d0d3c29ae5',

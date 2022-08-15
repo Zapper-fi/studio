@@ -6,6 +6,7 @@ import { ArbitrumDopexEthSsovContractPositionFetcher } from './arbitrum/dopex.et
 import { ArbitrumDopexFarmContractPositionFetcher } from './arbitrum/dopex.farm.contract-position-fetcher';
 import { ArbitrumDopexGmxSsovContractPositionFetcher } from './arbitrum/dopex.gmx-ssov.contract-position-fetcher';
 import { ArbitrumDopexGOhmSsovContractPositionFetcher } from './arbitrum/dopex.gohm-ssov.contract-position-fetcher';
+import { ArbitrumDopexLpFarmContractPositionFetcher } from './arbitrum/dopex.lp-farm.contract-position-fetcher';
 import { ArbitrumDopexRdpxSsovContractPositionFetcher } from './arbitrum/dopex.rdpx-ssov.contract-position-fetcher';
 import { ArbitrumDopexVotingEscrowRewardsContractPositionFetcher } from './arbitrum/dopex.voting-escrow-rewards.contract-position-fetcher';
 import { ArbitrumDopexVotingEscrowContractPositionFetcher } from './arbitrum/dopex.voting-escrow.contract-position-fetcher';
@@ -18,10 +19,11 @@ import { DopexAppDefinition, DOPEX_DEFINITION } from './dopex.definition';
     DopexAppDefinition,
     DopexContractFactory,
     // Arbitrum
+    ArbitrumDopexFarmContractPositionFetcher,
+    ArbitrumDopexLpFarmContractPositionFetcher,
     ArbitrumDopexDpxSsovContractPositionFetcher,
     ArbitrumDopexRdpxSsovContractPositionFetcher,
     ArbitrumDopexEthSsovContractPositionFetcher,
-    ArbitrumDopexFarmContractPositionFetcher,
     ArbitrumDopexGmxSsovContractPositionFetcher,
     ArbitrumDopexGOhmSsovContractPositionFetcher,
     ArbitrumDopexVotingEscrowContractPositionFetcher,
