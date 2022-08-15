@@ -137,7 +137,7 @@ export abstract class AppTokenTemplatePositionFetcher<T extends Contract, V exte
     return statsItems;
   }
 
-  getKey({ appToken }: { appToken: AppTokenPosition }): string {
+  getKey({ appToken }: { appToken: AppTokenPosition<V> }): string {
     return this.appToolkit.getPositionKey(appToken);
   }
 
