@@ -4,6 +4,13 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.173.1](https://github.com/Zapper-fi/studio/compare/v0.173.0...v0.173.1) (2022-08-15)
+
+
+### Bug Fixes
+
+* **metavault-trade:** Display naming fixes. Positions list added. ([#1172](https://github.com/Zapper-fi/studio/issues/1172)) ([3a57c52](https://github.com/Zapper-fi/studio/commit/3a57c524386c8d2a7468954129435414c1001811))
+
 ## [0.173.0](https://github.com/Zapper-fi/studio/compare/v0.172.0...v0.173.0) (2022-08-12)
 
 
