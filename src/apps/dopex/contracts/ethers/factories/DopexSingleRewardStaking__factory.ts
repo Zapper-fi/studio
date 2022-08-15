@@ -4,54 +4,65 @@
 
 import { Contract, Signer, utils } from 'ethers';
 import type { Provider } from '@ethersproject/providers';
-import type { DopexStaking, DopexStakingInterface } from '../DopexStaking';
+import type { DopexSingleRewardStaking, DopexSingleRewardStakingInterface } from '../DopexSingleRewardStaking';
 
 const _abi = [
   {
+    inputs: [],
+    stateMutability: 'nonpayable',
+    type: 'constructor',
+  },
+  {
+    anonymous: false,
     inputs: [
       {
+        indexed: true,
         internalType: 'address',
-        name: '_rewardsDistribution',
+        name: '_contract',
         type: 'address',
       },
+    ],
+    name: 'AddToContractWhitelist',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
       {
-        internalType: 'address',
-        name: '_rewardsTokenDPX',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: '_rewardsTokenRDPX',
-        type: 'address',
-      },
-      {
-        internalType: 'address',
-        name: '_stakingToken',
-        type: 'address',
-      },
-      {
+        indexed: false,
         internalType: 'uint256',
-        name: '_rewardsDuration',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: '_boostedTimePeriod',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: '_boost',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: '_id',
+        name: 'boost',
         type: 'uint256',
       },
     ],
-    stateMutability: 'nonpayable',
-    type: 'constructor',
+    name: 'BoostUpdated',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: 'uint256',
+        name: 'boostedTimePeriod',
+        type: 'uint256',
+      },
+    ],
+    name: 'BoostedTimePeriodUpdated',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: false,
+        internalType: 'address',
+        name: 'sender',
+        type: 'address',
+      },
+    ],
+    name: 'EmergencyWithdraw',
+    type: 'event',
   },
   {
     anonymous: false,
@@ -77,14 +88,34 @@ const _abi = [
     inputs: [
       {
         indexed: false,
-        internalType: 'uint256',
-        name: 'rewardDPX',
-        type: 'uint256',
+        internalType: 'address',
+        name: 'account',
+        type: 'address',
       },
+    ],
+    name: 'Paused',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
+        indexed: true,
+        internalType: 'address',
+        name: '_contract',
+        type: 'address',
+      },
+    ],
+    name: 'RemoveFromContractWhitelist',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
       {
         indexed: false,
         internalType: 'uint256',
-        name: 'rewardRDPX',
+        name: 'rewardAmount',
         type: 'uint256',
       },
     ],
@@ -95,19 +126,13 @@ const _abi = [
     anonymous: false,
     inputs: [
       {
-        indexed: true,
-        internalType: 'address',
-        name: 'user',
-        type: 'address',
-      },
-      {
         indexed: false,
         internalType: 'uint256',
-        name: 'rewardDPX',
+        name: 'rewardDuration',
         type: 'uint256',
       },
     ],
-    name: 'RewardCompounded',
+    name: 'RewardDurationUpdated',
     type: 'event',
   },
   {
@@ -133,25 +158,6 @@ const _abi = [
     anonymous: false,
     inputs: [
       {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'rewardDPX',
-        type: 'uint256',
-      },
-      {
-        indexed: false,
-        internalType: 'uint256',
-        name: 'rewardRDPX',
-        type: 'uint256',
-      },
-    ],
-    name: 'RewardUpdated',
-    type: 'event',
-  },
-  {
-    anonymous: false,
-    inputs: [
-      {
         indexed: true,
         internalType: 'address',
         name: 'user',
@@ -171,6 +177,19 @@ const _abi = [
     anonymous: false,
     inputs: [
       {
+        indexed: false,
+        internalType: 'address',
+        name: 'account',
+        type: 'address',
+      },
+    ],
+    name: 'Unpaused',
+    type: 'event',
+  },
+  {
+    anonymous: false,
+    inputs: [
+      {
         indexed: true,
         internalType: 'address',
         name: 'user',
@@ -183,8 +202,21 @@ const _abi = [
         type: 'uint256',
       },
     ],
-    name: 'Withdrawn',
+    name: 'Unstaked',
     type: 'event',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: '_contract',
+        type: 'address',
+      },
+    ],
+    name: 'addToContractWhitelist',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
   },
   {
     inputs: [
@@ -246,7 +278,7 @@ const _abi = [
   },
   {
     inputs: [],
-    name: 'compound',
+    name: 'claim',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -263,16 +295,48 @@ const _abi = [
     outputs: [
       {
         internalType: 'uint256',
-        name: 'DPXtokensEarned',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'RDPXtokensEarned',
+        name: 'tokensEarned',
         type: 'uint256',
       },
     ],
     stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address[]',
+        name: 'tokens',
+        type: 'address[]',
+      },
+      {
+        internalType: 'bool',
+        name: 'transferNative',
+        type: 'bool',
+      },
+    ],
+    name: 'emergencyWithdraw',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'endRewards',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'nonpayable',
     type: 'function',
   },
   {
@@ -285,24 +349,17 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: 'uint256',
-        name: 'rewardsTokenID',
-        type: 'uint256',
+        internalType: 'address',
+        name: 'addr',
+        type: 'address',
       },
     ],
-    name: 'getReward',
-    outputs: [],
-    stateMutability: 'nonpayable',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'id',
+    name: 'isContract',
     outputs: [
       {
-        internalType: 'uint256',
+        internalType: 'bool',
         name: '',
-        type: 'uint256',
+        type: 'bool',
       },
     ],
     stateMutability: 'view',
@@ -338,12 +395,7 @@ const _abi = [
     inputs: [
       {
         internalType: 'uint256',
-        name: 'rewardDPX',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'rewardRDPX',
+        name: 'rewardAmount',
         type: 'uint256',
       },
     ],
@@ -367,6 +419,26 @@ const _abi = [
   },
   {
     inputs: [],
+    name: 'pause',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [],
+    name: 'paused',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
     name: 'periodFinish',
     outputs: [
       {
@@ -379,6 +451,19 @@ const _abi = [
     type: 'function',
   },
   {
+    inputs: [
+      {
+        internalType: 'address',
+        name: '_contract',
+        type: 'address',
+      },
+    ],
+    name: 'removeFromContractWhitelist',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
     inputs: [],
     name: 'renounceOwnership',
     outputs: [],
@@ -387,16 +472,43 @@ const _abi = [
   },
   {
     inputs: [],
+    name: 'rewardDuration',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
+    name: 'rewardEarned',
+    outputs: [
+      {
+        internalType: 'uint256',
+        name: '',
+        type: 'uint256',
+      },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [],
     name: 'rewardPerToken',
     outputs: [
       {
         internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: '',
+        name: 'perTokenRate',
         type: 'uint256',
       },
     ],
@@ -405,20 +517,7 @@ const _abi = [
   },
   {
     inputs: [],
-    name: 'rewardPerTokenStoredDPX',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'rewardPerTokenStoredRDPX',
+    name: 'rewardPerTokenStored',
     outputs: [
       {
         internalType: 'uint256',
@@ -431,7 +530,7 @@ const _abi = [
   },
   {
     inputs: [],
-    name: 'rewardRateDPX',
+    name: 'rewardRate',
     outputs: [
       {
         internalType: 'uint256',
@@ -444,97 +543,7 @@ const _abi = [
   },
   {
     inputs: [],
-    name: 'rewardRateRDPX',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
-    ],
-    name: 'rewardsDPX',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'rewardsDistribution',
-    outputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'rewardsDuration',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
-    ],
-    name: 'rewardsRDPX',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'rewardsTokenDPX',
-    outputs: [
-      {
-        internalType: 'contract IERC20',
-        name: '',
-        type: 'address',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [],
-    name: 'rewardsTokenRDPX',
+    name: 'rewardToken',
     outputs: [
       {
         internalType: 'contract IERC20',
@@ -555,40 +564,7 @@ const _abi = [
     ],
     name: 'stake',
     outputs: [],
-    stateMutability: 'payable',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'uint256',
-        name: 'amount',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'deadline',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint8',
-        name: 'v',
-        type: 'uint8',
-      },
-      {
-        internalType: 'bytes32',
-        name: 'r',
-        type: 'bytes32',
-      },
-      {
-        internalType: 'bytes32',
-        name: 's',
-        type: 'bytes32',
-      },
-    ],
-    name: 'stakeWithPermit',
-    outputs: [],
-    stateMutability: 'payable',
+    stateMutability: 'nonpayable',
     type: 'function',
   },
   {
@@ -631,41 +607,10 @@ const _abi = [
     type: 'function',
   },
   {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
-    ],
-    name: 'userDPXRewardPerTokenPaid',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
-    type: 'function',
-  },
-  {
-    inputs: [
-      {
-        internalType: 'address',
-        name: '',
-        type: 'address',
-      },
-    ],
-    name: 'userRDPXRewardPerTokenPaid',
-    outputs: [
-      {
-        internalType: 'uint256',
-        name: '',
-        type: 'uint256',
-      },
-    ],
-    stateMutability: 'view',
+    inputs: [],
+    name: 'unpause',
+    outputs: [],
+    stateMutability: 'nonpayable',
     type: 'function',
   },
   {
@@ -676,7 +621,7 @@ const _abi = [
         type: 'uint256',
       },
     ],
-    name: 'withdraw',
+    name: 'unstake',
     outputs: [],
     stateMutability: 'nonpayable',
     type: 'function',
@@ -685,39 +630,87 @@ const _abi = [
     inputs: [
       {
         internalType: 'uint256',
-        name: 'amountDPX',
-        type: 'uint256',
-      },
-      {
-        internalType: 'uint256',
-        name: 'amountRDPX',
+        name: '_boost',
         type: 'uint256',
       },
     ],
-    name: 'withdrawRewardTokens',
+    name: 'updateBoost',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '_boostedTimePeriod',
+        type: 'uint256',
+      },
+    ],
+    name: 'updateBoostedTimePeriod',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'uint256',
+        name: '_rewardDuration',
+        type: 'uint256',
+      },
+    ],
+    name: 'updateRewardDuration',
+    outputs: [],
+    stateMutability: 'nonpayable',
+    type: 'function',
+  },
+  {
+    inputs: [
+      {
+        internalType: 'address',
+        name: '',
+        type: 'address',
+      },
+    ],
+    name: 'userRewardPerTokenPaid',
     outputs: [
       {
         internalType: 'uint256',
         name: '',
         type: 'uint256',
       },
+    ],
+    stateMutability: 'view',
+    type: 'function',
+  },
+  {
+    inputs: [
       {
-        internalType: 'uint256',
+        internalType: 'address',
         name: '',
-        type: 'uint256',
+        type: 'address',
       },
     ],
-    stateMutability: 'nonpayable',
+    name: 'whitelistedContracts',
+    outputs: [
+      {
+        internalType: 'bool',
+        name: '',
+        type: 'bool',
+      },
+    ],
+    stateMutability: 'view',
     type: 'function',
   },
 ];
 
-export class DopexStaking__factory {
+export class DopexSingleRewardStaking__factory {
   static readonly abi = _abi;
-  static createInterface(): DopexStakingInterface {
-    return new utils.Interface(_abi) as DopexStakingInterface;
+  static createInterface(): DopexSingleRewardStakingInterface {
+    return new utils.Interface(_abi) as DopexSingleRewardStakingInterface;
   }
-  static connect(address: string, signerOrProvider: Signer | Provider): DopexStaking {
-    return new Contract(address, _abi, signerOrProvider) as DopexStaking;
+  static connect(address: string, signerOrProvider: Signer | Provider): DopexSingleRewardStaking {
+    return new Contract(address, _abi, signerOrProvider) as DopexSingleRewardStaking;
   }
 }

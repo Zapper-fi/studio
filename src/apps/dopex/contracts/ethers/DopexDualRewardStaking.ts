@@ -18,7 +18,7 @@ import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi
 import type { Listener, Provider } from '@ethersproject/providers';
 import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
-export interface DopexStakingInterface extends utils.Interface {
+export interface DopexDualRewardStakingInterface extends utils.Interface {
   functions: {
     'balanceOf(address)': FunctionFragment;
     'boost()': FunctionFragment;
@@ -258,12 +258,12 @@ export type WithdrawnEvent = TypedEvent<[string, BigNumber], WithdrawnEventObjec
 
 export type WithdrawnEventFilter = TypedEventFilter<WithdrawnEvent>;
 
-export interface DopexStaking extends BaseContract {
+export interface DopexDualRewardStaking extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
   attach(addressOrName: string): this;
   deployed(): Promise<this>;
 
-  interface: DopexStakingInterface;
+  interface: DopexDualRewardStakingInterface;
 
   queryFilter<TEvent extends TypedEvent>(
     event: TypedEventFilter<TEvent>,
