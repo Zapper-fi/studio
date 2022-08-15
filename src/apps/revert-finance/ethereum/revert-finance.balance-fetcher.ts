@@ -1,19 +1,24 @@
 import { Inject } from '@nestjs/common';
 import { getAddress } from 'ethers/lib/utils';
 
+import { drillBalance } from '~app-toolkit';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
 import { UniswapV2ContractFactory } from '~apps/uniswap-v2';
 import { UniswapV3LiquidityTokenHelper } from '~apps/uniswap-v2/helpers/uniswap-v3.liquidity.token-helper';
 import { BalanceFetcher } from '~balance/balance-fetcher.interface';
-import { ContractPositionBalance } from '~position/position-balance.interface';
+import { ContractPositionBalance, TokenBalance } from '~position/position-balance.interface';
+import { claimable } from '~position/position.utils';
 import { Network } from '~types/network.interface';
 
 import { accountBalancesQuery, CompoundorAccountBalances } from '../graphql/accountBalancesQuery';
 import { accountCompoundingTokensQuery, CompoundingAccountTokens } from '../graphql/accountCompoundingTokensQuery';
 import { generateGraphUrlForNetwork } from '../graphql/graphUrlGenerator';
-import { getCompoundingContractPosition, getCompoundorContractPosition } from '../helpers/contractPositionParser';
+import {
+  getCompoundingContractPosition,
+  getCompoundorRewardsContractPosition,
+} from '../helpers/contractPositionParser';
 import { REVERT_FINANCE_DEFINITION } from '../revert-finance.definition';
 
 const network = Network.ETHEREUM_MAINNET;
@@ -27,7 +32,7 @@ export class EthereumRevertFinanceBalanceFetcher implements BalanceFetcher {
     private readonly uniswapV3LiquidityTokenHelper: UniswapV3LiquidityTokenHelper,
   ) {}
 
-  async getCompoundorAccountBalances(address: string) {
+  async getCompoundorRewardBalances(address: string) {
     const graphHelper = this.appToolkit.helpers.theGraphHelper;
     const data = await graphHelper.requestGraph<CompoundorAccountBalances>({
       endpoint: generateGraphUrlForNetwork(network),
@@ -36,13 +41,13 @@ export class EthereumRevertFinanceBalanceFetcher implements BalanceFetcher {
     });
     if (!data) return [];
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
-    const accountBalances: Array<ContractPositionBalance> = [];
-    data.accountBalances.map(({ token, balance }) => {
+    const accountRewardsBalances: Array<TokenBalance> = [];
+    data.accountBalances.forEach(({ token, balance }) => {
       const existingToken = baseTokens.find(item => item.address === token)!;
       if (!token) return [];
-      accountBalances.push(getCompoundorContractPosition(network, existingToken, balance));
+      accountRewardsBalances.push({ ...existingToken, ...drillBalance(claimable(existingToken), balance) });
     });
-    return accountBalances;
+    return [getCompoundorRewardsContractPosition(network, accountRewardsBalances)];
   }
 
   async getCompoundingAccountTokens(address: string) {
@@ -71,15 +76,15 @@ export class EthereumRevertFinanceBalanceFetcher implements BalanceFetcher {
   }
 
   async getBalances(address: string) {
-    const [compoundorAccountBalances, compoundingAccountBalances] = await Promise.all([
-      this.getCompoundorAccountBalances(address),
+    const [compoundorRewardsBalances, compoundingAccountBalances] = await Promise.all([
+      this.getCompoundorRewardBalances(address),
       this.getCompoundingAccountTokens(address),
     ]);
 
     return presentBalanceFetcherResponse([
       {
         label: 'Compoundor rewards',
-        assets: compoundorAccountBalances,
+        assets: compoundorRewardsBalances,
       },
       {
         label: 'Compounding positions',
