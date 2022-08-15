@@ -1,12 +1,19 @@
 import { Inject } from '@nestjs/common';
 
+import { APP_TOOLKIT, IAppToolkit } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
-import { CurveVotingEscrowContractPositionHelper } from '~apps/curve/helpers/curve.voting-escrow.contract-position-helper';
-import { PositionFetcher } from '~position/position-fetcher.interface';
-import { ContractPosition } from '~position/position.interface';
+import { getLabelFromToken } from '~app-toolkit/helpers/presentation/image.present';
+import { MetaType } from '~position/position.interface';
+import { isSupplied } from '~position/position.utils';
+import {
+  ContractPositionTemplatePositionFetcher,
+  DisplayPropsStageParams,
+  GetTokenBalancesPerPositionParams,
+  TokenStageParams,
+} from '~position/template/contract-position.template.position-fetcher';
 import { Network } from '~types/network.interface';
 
-import { DopexContractFactory, DopexVotingEscrow, DopexVotingEscrowRewards } from '../contracts';
+import { DopexContractFactory, DopexVotingEscrow } from '../contracts';
 import { DOPEX_DEFINITION } from '../dopex.definition';
 
 const appId = DOPEX_DEFINITION.id;
@@ -14,28 +21,37 @@ const groupId = DOPEX_DEFINITION.groups.votingEscrow.id;
 const network = Network.ARBITRUM_MAINNET;
 
 @Register.ContractPositionFetcher({ appId, groupId, network })
-export class ArbitrumDopexVotingEscrowContractPositionFetcher implements PositionFetcher<ContractPosition> {
-  constructor(
-    @Inject(DopexContractFactory)
-    private readonly dopexContractFactory: DopexContractFactory,
-    @Inject(CurveVotingEscrowContractPositionHelper)
-    private readonly curveVotingEscrowContractPositionHelper: CurveVotingEscrowContractPositionHelper,
-  ) {}
+export class ArbitrumDopexVotingEscrowContractPositionFetcher extends ContractPositionTemplatePositionFetcher<DopexVotingEscrow> {
+  appId = appId;
+  groupId = groupId;
+  network = network;
 
-  async getPositions() {
-    return this.curveVotingEscrowContractPositionHelper.getContractPositions<
-      DopexVotingEscrow,
-      DopexVotingEscrowRewards
-    >({
-      votingEscrowAddress: '0x80789d252a288e93b01d82373d767d71a75d9f16',
-      votingEscrowRewardAddress: '0xcbbfb7e0e6782df0d3e91f8d785a5bf9e8d9775f',
-      appId,
-      groupId,
-      network,
-      resolveContract: ({ address }) => this.dopexContractFactory.dopexVotingEscrow({ network, address }),
-      resolveRewardContract: ({ address }) => this.dopexContractFactory.dopexVotingEscrowRewards({ network, address }),
-      resolveLockedTokenAddress: ({ contract, multicall }) => multicall.wrap(contract).token(),
-      resolveRewardTokenAddress: ({ contract, multicall }) => multicall.wrap(contract).emittedToken(),
-    });
+  constructor(
+    @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
+    @Inject(DopexContractFactory) protected readonly contractFactory: DopexContractFactory,
+  ) {
+    super(appToolkit);
+  }
+
+  getContract(address: string): DopexVotingEscrow {
+    return this.contractFactory.dopexVotingEscrow({ address, network: this.network });
+  }
+
+  async getDescriptors() {
+    return [{ address: '0x80789d252a288e93b01d82373d767d71a75d9f16' }];
+  }
+
+  async getTokenDescriptors({ contract }: TokenStageParams<DopexVotingEscrow>) {
+    return [{ metaType: MetaType.SUPPLIED, address: await contract.token() }];
+  }
+
+  async getLabel({ contractPosition }: DisplayPropsStageParams<DopexVotingEscrow>) {
+    const suppliedToken = contractPosition.tokens.find(isSupplied)!;
+    return `Voting Escrow ${getLabelFromToken(suppliedToken)}`;
+  }
+
+  async getTokenBalancesPerPosition({ address, contract }: GetTokenBalancesPerPositionParams<DopexVotingEscrow>) {
+    const lockedBalance = await contract.locked(address);
+    return [lockedBalance.amount];
   }
 }

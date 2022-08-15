@@ -40,6 +40,10 @@ export type ContractPositionFetcherContext<
   contractPosition: Omit<ContractPosition<V>, K>;
 };
 
+export type DescriptorsStageParams = {
+  multicall: IMulticallWrapper;
+};
+
 export type TokenStageParams<
   T extends Contract,
   V extends DefaultDataProps = DefaultDataProps,
@@ -79,7 +83,7 @@ export abstract class ContractPositionTemplatePositionFetcher<
 
   constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) {}
 
-  abstract getDescriptors(): Promise<R[]>;
+  abstract getDescriptors(params: { multicall: IMulticallWrapper }): Promise<R[]>;
   abstract getContract(address: string): T;
   abstract getLabel(params: DisplayPropsStageParams<T, V>): Promise<string>;
 
@@ -122,6 +126,10 @@ export abstract class ContractPositionTemplatePositionFetcher<
     return statsItems;
   }
 
+  getKey({ contractPosition }: { contractPosition: ContractPosition<V> }): string {
+    return this.appToolkit.getPositionKey(contractPosition);
+  }
+
   // Default (adapted) Template Runner
   // Note: This will be removed in favour of an orchestrator at a higher level once all groups are migrated
   async getPositions() {
@@ -130,7 +138,7 @@ export abstract class ContractPositionTemplatePositionFetcher<
       tags: { network: this.network, context: `${this.appId}__template` },
     });
 
-    const descriptors = await this.getDescriptors();
+    const descriptors = await this.getDescriptors({ multicall });
     const skeletons = await Promise.all(
       descriptors.map(async descriptor => {
         const contract = multicall.wrap(this.getContract(descriptor.address));
@@ -189,7 +197,9 @@ export abstract class ContractPositionTemplatePositionFetcher<
           statsItems: await this.getStatsItems(displayPropsStageParams),
         };
 
-        return { ...fragment, dataProps, displayProps };
+        const contractPosition = { ...fragment, dataProps, displayProps };
+        const key = this.getKey({ contractPosition });
+        return { key, ...contractPosition };
       }),
     );
 
