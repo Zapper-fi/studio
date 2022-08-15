@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface VaultInterface extends utils.Interface {
   functions: {
@@ -280,166 +280,309 @@ export interface VaultInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'MIN_LEVERAGE', values?: undefined): string;
   encodeFunctionData(functionFragment: 'PRICE_PRECISION', values?: undefined): string;
   encodeFunctionData(functionFragment: 'USDM_DECIMALS', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'addRouter', values: [string]): string;
-  encodeFunctionData(functionFragment: 'adjustForDecimals', values: [BigNumberish, string, string]): string;
-  encodeFunctionData(functionFragment: 'allWhitelistedTokens', values: [BigNumberish]): string;
+  encodeFunctionData(functionFragment: 'addRouter', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'adjustForDecimals',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'allWhitelistedTokens', values: [PromiseOrValue<BigNumberish>]): string;
   encodeFunctionData(functionFragment: 'allWhitelistedTokensLength', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'approvedRouters', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'bufferAmounts', values: [string]): string;
-  encodeFunctionData(functionFragment: 'buyUSDM', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'clearTokenConfig', values: [string]): string;
-  encodeFunctionData(functionFragment: 'cumulativeFundingRates', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'approvedRouters',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'bufferAmounts', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'buyUSDM', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'clearTokenConfig', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'cumulativeFundingRates', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
     functionFragment: 'decreasePosition',
-    values: [string, string, string, BigNumberish, BigNumberish, boolean, string],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<boolean>,
+      PromiseOrValue<string>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'directPoolDeposit', values: [string]): string;
+  encodeFunctionData(functionFragment: 'directPoolDeposit', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'errorController', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'errors', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'feeReserves', values: [string]): string;
+  encodeFunctionData(functionFragment: 'errors', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'feeReserves', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'fundingInterval', values?: undefined): string;
   encodeFunctionData(functionFragment: 'fundingRateFactor', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'getDelta',
-    values: [string, BigNumberish, BigNumberish, boolean, BigNumberish],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<boolean>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'getEntryFundingRate', values: [string, string, boolean]): string;
+  encodeFunctionData(
+    functionFragment: 'getEntryFundingRate',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<boolean>],
+  ): string;
   encodeFunctionData(
     functionFragment: 'getFeeBasisPoints',
-    values: [string, BigNumberish, BigNumberish, BigNumberish, boolean],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<boolean>,
+    ],
   ): string;
   encodeFunctionData(
     functionFragment: 'getFundingFee',
-    values: [string, string, string, boolean, BigNumberish, BigNumberish],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<boolean>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'getGlobalShortDelta', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getMaxPrice', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getMinPrice', values: [string]): string;
+  encodeFunctionData(functionFragment: 'getGlobalShortDelta', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getMaxPrice', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getMinPrice', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
     functionFragment: 'getNextAveragePrice',
-    values: [string, BigNumberish, BigNumberish, boolean, BigNumberish, BigNumberish, BigNumberish],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<boolean>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'getNextFundingRate', values: [string]): string;
+  encodeFunctionData(functionFragment: 'getNextFundingRate', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
     functionFragment: 'getNextGlobalShortAveragePrice',
-    values: [string, BigNumberish, BigNumberish],
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
   ): string;
-  encodeFunctionData(functionFragment: 'getPosition', values: [string, string, string, boolean]): string;
-  encodeFunctionData(functionFragment: 'getPositionDelta', values: [string, string, string, boolean]): string;
+  encodeFunctionData(
+    functionFragment: 'getPosition',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'getPositionDelta',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<boolean>],
+  ): string;
   encodeFunctionData(
     functionFragment: 'getPositionFee',
-    values: [string, string, string, boolean, BigNumberish],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<boolean>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'getPositionKey', values: [string, string, string, boolean]): string;
-  encodeFunctionData(functionFragment: 'getPositionLeverage', values: [string, string, string, boolean]): string;
-  encodeFunctionData(functionFragment: 'getRedemptionAmount', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'getRedemptionCollateral', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getRedemptionCollateralUsd', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getTargetUsdmAmount', values: [string]): string;
-  encodeFunctionData(functionFragment: 'getUtilisation', values: [string]): string;
-  encodeFunctionData(functionFragment: 'globalShortAveragePrices', values: [string]): string;
-  encodeFunctionData(functionFragment: 'globalShortSizes', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'getPositionKey',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'getPositionLeverage',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'getRedemptionAmount',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'getRedemptionCollateral', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getRedemptionCollateralUsd', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getTargetUsdmAmount', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'getUtilisation', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'globalShortAveragePrices', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'globalShortSizes', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'gov', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'guaranteedUsd', values: [string]): string;
+  encodeFunctionData(functionFragment: 'guaranteedUsd', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'hasDynamicFees', values?: undefined): string;
   encodeFunctionData(functionFragment: 'inManagerMode', values?: undefined): string;
   encodeFunctionData(functionFragment: 'inPrivateLiquidationMode', values?: undefined): string;
   encodeFunctionData(functionFragment: 'includeAmmPrice', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'increasePosition',
-    values: [string, string, string, BigNumberish, boolean],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<boolean>,
+    ],
   ): string;
   encodeFunctionData(
     functionFragment: 'initialize',
-    values: [string, string, string, BigNumberish, BigNumberish, BigNumberish],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'isInitialized', values?: undefined): string;
   encodeFunctionData(functionFragment: 'isLeverageEnabled', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'isLiquidator', values: [string]): string;
-  encodeFunctionData(functionFragment: 'isManager', values: [string]): string;
+  encodeFunctionData(functionFragment: 'isLiquidator', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'isManager', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'isSwapEnabled', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'lastFundingTimes', values: [string]): string;
-  encodeFunctionData(functionFragment: 'liquidatePosition', values: [string, string, string, boolean, string]): string;
+  encodeFunctionData(functionFragment: 'lastFundingTimes', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'liquidatePosition',
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<boolean>,
+      PromiseOrValue<string>,
+    ],
+  ): string;
   encodeFunctionData(functionFragment: 'liquidationFeeUsd', values?: undefined): string;
   encodeFunctionData(functionFragment: 'marginFeeBasisPoints', values?: undefined): string;
   encodeFunctionData(functionFragment: 'maxGasPrice', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'maxGlobalShortSizes', values: [string]): string;
+  encodeFunctionData(functionFragment: 'maxGlobalShortSizes', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'maxLeverage', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'maxUsdmAmounts', values: [string]): string;
-  encodeFunctionData(functionFragment: 'minProfitBasisPoints', values: [string]): string;
+  encodeFunctionData(functionFragment: 'maxUsdmAmounts', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'minProfitBasisPoints', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'minProfitTime', values?: undefined): string;
   encodeFunctionData(functionFragment: 'mintBurnFeeBasisPoints', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'poolAmounts', values: [string]): string;
-  encodeFunctionData(functionFragment: 'positions', values: [BytesLike]): string;
+  encodeFunctionData(functionFragment: 'poolAmounts', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'positions', values: [PromiseOrValue<BytesLike>]): string;
   encodeFunctionData(functionFragment: 'priceFeed', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'removeRouter', values: [string]): string;
-  encodeFunctionData(functionFragment: 'reservedAmounts', values: [string]): string;
+  encodeFunctionData(functionFragment: 'removeRouter', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'reservedAmounts', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'router', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'sellUSDM', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'setBufferAmount', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setError', values: [BigNumberish, string]): string;
-  encodeFunctionData(functionFragment: 'setErrorController', values: [string]): string;
+  encodeFunctionData(functionFragment: 'sellUSDM', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'setBufferAmount',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'setError',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'setErrorController', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
     functionFragment: 'setFees',
     values: [
-      BigNumberish,
-      BigNumberish,
-      BigNumberish,
-      BigNumberish,
-      BigNumberish,
-      BigNumberish,
-      BigNumberish,
-      BigNumberish,
-      boolean,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<boolean>,
     ],
   ): string;
-  encodeFunctionData(functionFragment: 'setFundingRate', values: [BigNumberish, BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setGov', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setInManagerMode', values: [boolean]): string;
-  encodeFunctionData(functionFragment: 'setInPrivateLiquidationMode', values: [boolean]): string;
-  encodeFunctionData(functionFragment: 'setIsLeverageEnabled', values: [boolean]): string;
-  encodeFunctionData(functionFragment: 'setIsSwapEnabled', values: [boolean]): string;
-  encodeFunctionData(functionFragment: 'setLiquidator', values: [string, boolean]): string;
-  encodeFunctionData(functionFragment: 'setManager', values: [string, boolean]): string;
-  encodeFunctionData(functionFragment: 'setMaxGasPrice', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setMaxGlobalShortSize', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setMaxLeverage', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setPriceFeed', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'setFundingRate',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'setGov', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setInManagerMode', values: [PromiseOrValue<boolean>]): string;
+  encodeFunctionData(functionFragment: 'setInPrivateLiquidationMode', values: [PromiseOrValue<boolean>]): string;
+  encodeFunctionData(functionFragment: 'setIsLeverageEnabled', values: [PromiseOrValue<boolean>]): string;
+  encodeFunctionData(functionFragment: 'setIsSwapEnabled', values: [PromiseOrValue<boolean>]): string;
+  encodeFunctionData(
+    functionFragment: 'setLiquidator',
+    values: [PromiseOrValue<string>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(functionFragment: 'setManager', values: [PromiseOrValue<string>, PromiseOrValue<boolean>]): string;
+  encodeFunctionData(functionFragment: 'setMaxGasPrice', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'setMaxGlobalShortSize',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'setMaxLeverage', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setPriceFeed', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(
     functionFragment: 'setTokenConfig',
-    values: [string, BigNumberish, BigNumberish, BigNumberish, BigNumberish, boolean, boolean],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<boolean>,
+      PromiseOrValue<boolean>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'setUsdmAmount', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setVaultUtils', values: [string]): string;
-  encodeFunctionData(functionFragment: 'shortableTokens', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'setUsdmAmount',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'setVaultUtils', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'shortableTokens', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'stableFundingRateFactor', values?: undefined): string;
   encodeFunctionData(functionFragment: 'stableSwapFeeBasisPoints', values?: undefined): string;
   encodeFunctionData(functionFragment: 'stableTaxBasisPoints', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'stableTokens', values: [string]): string;
-  encodeFunctionData(functionFragment: 'swap', values: [string, string, string]): string;
+  encodeFunctionData(functionFragment: 'stableTokens', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'swap',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'swapFeeBasisPoints', values?: undefined): string;
   encodeFunctionData(functionFragment: 'taxBasisPoints', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'tokenBalances', values: [string]): string;
-  encodeFunctionData(functionFragment: 'tokenDecimals', values: [string]): string;
-  encodeFunctionData(functionFragment: 'tokenToUsdMin', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'tokenWeights', values: [string]): string;
+  encodeFunctionData(functionFragment: 'tokenBalances', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'tokenDecimals', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'tokenToUsdMin',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'tokenWeights', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'totalTokenWeights', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'updateCumulativeFundingRate', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'upgradeVault', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'usdToToken', values: [string, BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'usdToTokenMax', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'usdToTokenMin', values: [string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'updateCumulativeFundingRate',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'upgradeVault',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'usdToToken',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'usdToTokenMax',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'usdToTokenMin',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
   encodeFunctionData(functionFragment: 'usdm', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'usdmAmounts', values: [string]): string;
+  encodeFunctionData(functionFragment: 'usdmAmounts', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'useSwapPricing', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'validateLiquidation',
-    values: [string, string, string, boolean, boolean],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<boolean>,
+      PromiseOrValue<boolean>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'vaultUtils', values?: undefined): string;
   encodeFunctionData(functionFragment: 'whitelistedTokenCount', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'whitelistedTokens', values: [string]): string;
-  encodeFunctionData(functionFragment: 'withdrawFees', values: [string, string]): string;
+  encodeFunctionData(functionFragment: 'whitelistedTokens', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'withdrawFees',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
 
   decodeFunctionResult(functionFragment: 'BASIS_POINTS_DIVISOR', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'FUNDING_RATE_PRECISION', data: BytesLike): Result;
@@ -887,183 +1030,191 @@ export interface Vault extends BaseContract {
     USDM_DECIMALS(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     addRouter(
-      _router: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _router: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     adjustForDecimals(
-      _amount: BigNumberish,
-      _tokenDiv: string,
-      _tokenMul: string,
+      _amount: PromiseOrValue<BigNumberish>,
+      _tokenDiv: PromiseOrValue<string>,
+      _tokenMul: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
-    allWhitelistedTokens(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    allWhitelistedTokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
     allWhitelistedTokensLength(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    approvedRouters(arg0: string, arg1: string, overrides?: CallOverrides): Promise<[boolean]>;
+    approvedRouters(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[boolean]>;
 
-    bufferAmounts(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    bufferAmounts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     buyUSDM(
-      _token: string,
-      _receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      _receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     clearTokenConfig(
-      _token: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    cumulativeFundingRates(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    cumulativeFundingRates(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     decreasePosition(
-      _account: string,
-      _collateralToken: string,
-      _indexToken: string,
-      _collateralDelta: BigNumberish,
-      _sizeDelta: BigNumberish,
-      _isLong: boolean,
-      _receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _account: PromiseOrValue<string>,
+      _collateralToken: PromiseOrValue<string>,
+      _indexToken: PromiseOrValue<string>,
+      _collateralDelta: PromiseOrValue<BigNumberish>,
+      _sizeDelta: PromiseOrValue<BigNumberish>,
+      _isLong: PromiseOrValue<boolean>,
+      _receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     directPoolDeposit(
-      _token: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     errorController(overrides?: CallOverrides): Promise<[string]>;
 
-    errors(arg0: BigNumberish, overrides?: CallOverrides): Promise<[string]>;
+    errors(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<[string]>;
 
-    feeReserves(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    feeReserves(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     fundingInterval(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     fundingRateFactor(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     getDelta(
-      _indexToken: string,
-      _size: BigNumberish,
-      _averagePrice: BigNumberish,
-      _isLong: boolean,
-      _lastIncreasedTime: BigNumberish,
+      _indexToken: PromiseOrValue<string>,
+      _size: PromiseOrValue<BigNumberish>,
+      _averagePrice: PromiseOrValue<BigNumberish>,
+      _isLong: PromiseOrValue<boolean>,
+      _lastIncreasedTime: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[boolean, BigNumber]>;
 
     getEntryFundingRate(
-      _collateralToken: string,
-      _indexToken: string,
-      _isLong: boolean,
+      _collateralToken: PromiseOrValue<string>,
+      _indexToken: PromiseOrValue<string>,
+      _isLong: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
     getFeeBasisPoints(
-      _token: string,
-      _usdmDelta: BigNumberish,
-      _feeBasisPoints: BigNumberish,
-      _taxBasisPoints: BigNumberish,
-      _increment: boolean,
+      _token: PromiseOrValue<string>,
+      _usdmDelta: PromiseOrValue<BigNumberish>,
+      _feeBasisPoints: PromiseOrValue<BigNumberish>,
+      _taxBasisPoints: PromiseOrValue<BigNumberish>,
+      _increment: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
     getFundingFee(
-      _account: string,
-      _collateralToken: string,
-      _indexToken: string,
-      _isLong: boolean,
-      _size: BigNumberish,
-      _entryFundingRate: BigNumberish,
+      _account: PromiseOrValue<string>,
+      _collateralToken: PromiseOrValue<string>,
+      _indexToken: PromiseOrValue<string>,
+      _isLong: PromiseOrValue<boolean>,
+      _size: PromiseOrValue<BigNumberish>,
+      _entryFundingRate: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
-    getGlobalShortDelta(_token: string, overrides?: CallOverrides): Promise<[boolean, BigNumber]>;
+    getGlobalShortDelta(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean, BigNumber]>;
 
-    getMaxPrice(_token: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getMaxPrice(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getMinPrice(_token: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getMinPrice(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     getNextAveragePrice(
-      _indexToken: string,
-      _size: BigNumberish,
-      _averagePrice: BigNumberish,
-      _isLong: boolean,
-      _nextPrice: BigNumberish,
-      _sizeDelta: BigNumberish,
-      _lastIncreasedTime: BigNumberish,
+      _indexToken: PromiseOrValue<string>,
+      _size: PromiseOrValue<BigNumberish>,
+      _averagePrice: PromiseOrValue<BigNumberish>,
+      _isLong: PromiseOrValue<boolean>,
+      _nextPrice: PromiseOrValue<BigNumberish>,
+      _sizeDelta: PromiseOrValue<BigNumberish>,
+      _lastIncreasedTime: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
-    getNextFundingRate(_token: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getNextFundingRate(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     getNextGlobalShortAveragePrice(
-      _indexToken: string,
-      _nextPrice: BigNumberish,
-      _sizeDelta: BigNumberish,
+      _indexToken: PromiseOrValue<string>,
+      _nextPrice: PromiseOrValue<BigNumberish>,
+      _sizeDelta: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
     getPosition(
-      _account: string,
-      _collateralToken: string,
-      _indexToken: string,
-      _isLong: boolean,
+      _account: PromiseOrValue<string>,
+      _collateralToken: PromiseOrValue<string>,
+      _indexToken: PromiseOrValue<string>,
+      _isLong: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, boolean, BigNumber]>;
 
     getPositionDelta(
-      _account: string,
-      _collateralToken: string,
-      _indexToken: string,
-      _isLong: boolean,
+      _account: PromiseOrValue<string>,
+      _collateralToken: PromiseOrValue<string>,
+      _indexToken: PromiseOrValue<string>,
+      _isLong: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<[boolean, BigNumber]>;
 
     getPositionFee(
-      _account: string,
-      _collateralToken: string,
-      _indexToken: string,
-      _isLong: boolean,
-      _sizeDelta: BigNumberish,
+      _account: PromiseOrValue<string>,
+      _collateralToken: PromiseOrValue<string>,
+      _indexToken: PromiseOrValue<string>,
+      _isLong: PromiseOrValue<boolean>,
+      _sizeDelta: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
     getPositionKey(
-      _account: string,
-      _collateralToken: string,
-      _indexToken: string,
-      _isLong: boolean,
+      _account: PromiseOrValue<string>,
+      _collateralToken: PromiseOrValue<string>,
+      _indexToken: PromiseOrValue<string>,
+      _isLong: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<[string]>;
 
     getPositionLeverage(
-      _account: string,
-      _collateralToken: string,
-      _indexToken: string,
-      _isLong: boolean,
+      _account: PromiseOrValue<string>,
+      _collateralToken: PromiseOrValue<string>,
+      _indexToken: PromiseOrValue<string>,
+      _isLong: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
-    getRedemptionAmount(_token: string, _usdmAmount: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getRedemptionAmount(
+      _token: PromiseOrValue<string>,
+      _usdmAmount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
-    getRedemptionCollateral(_token: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getRedemptionCollateral(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getRedemptionCollateralUsd(_token: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getRedemptionCollateralUsd(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getTargetUsdmAmount(_token: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getTargetUsdmAmount(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getUtilisation(_token: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getUtilisation(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    globalShortAveragePrices(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    globalShortAveragePrices(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    globalShortSizes(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    globalShortSizes(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     gov(overrides?: CallOverrides): Promise<[string]>;
 
-    guaranteedUsd(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    guaranteedUsd(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     hasDynamicFees(overrides?: CallOverrides): Promise<[boolean]>;
 
@@ -1074,43 +1225,43 @@ export interface Vault extends BaseContract {
     includeAmmPrice(overrides?: CallOverrides): Promise<[boolean]>;
 
     increasePosition(
-      _account: string,
-      _collateralToken: string,
-      _indexToken: string,
-      _sizeDelta: BigNumberish,
-      _isLong: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _account: PromiseOrValue<string>,
+      _collateralToken: PromiseOrValue<string>,
+      _indexToken: PromiseOrValue<string>,
+      _sizeDelta: PromiseOrValue<BigNumberish>,
+      _isLong: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     initialize(
-      _router: string,
-      _usdm: string,
-      _priceFeed: string,
-      _liquidationFeeUsd: BigNumberish,
-      _fundingRateFactor: BigNumberish,
-      _stableFundingRateFactor: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _router: PromiseOrValue<string>,
+      _usdm: PromiseOrValue<string>,
+      _priceFeed: PromiseOrValue<string>,
+      _liquidationFeeUsd: PromiseOrValue<BigNumberish>,
+      _fundingRateFactor: PromiseOrValue<BigNumberish>,
+      _stableFundingRateFactor: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     isInitialized(overrides?: CallOverrides): Promise<[boolean]>;
 
     isLeverageEnabled(overrides?: CallOverrides): Promise<[boolean]>;
 
-    isLiquidator(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    isLiquidator(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
-    isManager(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    isManager(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     isSwapEnabled(overrides?: CallOverrides): Promise<[boolean]>;
 
-    lastFundingTimes(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    lastFundingTimes(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     liquidatePosition(
-      _account: string,
-      _collateralToken: string,
-      _indexToken: string,
-      _isLong: boolean,
-      _feeReceiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _account: PromiseOrValue<string>,
+      _collateralToken: PromiseOrValue<string>,
+      _indexToken: PromiseOrValue<string>,
+      _isLong: PromiseOrValue<boolean>,
+      _feeReceiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     liquidationFeeUsd(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -1119,22 +1270,22 @@ export interface Vault extends BaseContract {
 
     maxGasPrice(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    maxGlobalShortSizes(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    maxGlobalShortSizes(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     maxLeverage(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    maxUsdmAmounts(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    maxUsdmAmounts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    minProfitBasisPoints(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    minProfitBasisPoints(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     minProfitTime(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     mintBurnFeeBasisPoints(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    poolAmounts(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    poolAmounts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     positions(
-      arg0: BytesLike,
+      arg0: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -1151,135 +1302,138 @@ export interface Vault extends BaseContract {
     priceFeed(overrides?: CallOverrides): Promise<[string]>;
 
     removeRouter(
-      _router: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _router: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    reservedAmounts(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    reservedAmounts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     router(overrides?: CallOverrides): Promise<[string]>;
 
     sellUSDM(
-      _token: string,
-      _receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      _receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setBufferAmount(
-      _token: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setError(
-      _errorCode: BigNumberish,
-      _error: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _errorCode: PromiseOrValue<BigNumberish>,
+      _error: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setErrorController(
-      _errorController: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _errorController: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setFees(
-      _taxBasisPoints: BigNumberish,
-      _stableTaxBasisPoints: BigNumberish,
-      _mintBurnFeeBasisPoints: BigNumberish,
-      _swapFeeBasisPoints: BigNumberish,
-      _stableSwapFeeBasisPoints: BigNumberish,
-      _marginFeeBasisPoints: BigNumberish,
-      _liquidationFeeUsd: BigNumberish,
-      _minProfitTime: BigNumberish,
-      _hasDynamicFees: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _taxBasisPoints: PromiseOrValue<BigNumberish>,
+      _stableTaxBasisPoints: PromiseOrValue<BigNumberish>,
+      _mintBurnFeeBasisPoints: PromiseOrValue<BigNumberish>,
+      _swapFeeBasisPoints: PromiseOrValue<BigNumberish>,
+      _stableSwapFeeBasisPoints: PromiseOrValue<BigNumberish>,
+      _marginFeeBasisPoints: PromiseOrValue<BigNumberish>,
+      _liquidationFeeUsd: PromiseOrValue<BigNumberish>,
+      _minProfitTime: PromiseOrValue<BigNumberish>,
+      _hasDynamicFees: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setFundingRate(
-      _fundingInterval: BigNumberish,
-      _fundingRateFactor: BigNumberish,
-      _stableFundingRateFactor: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _fundingInterval: PromiseOrValue<BigNumberish>,
+      _fundingRateFactor: PromiseOrValue<BigNumberish>,
+      _stableFundingRateFactor: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    setGov(_gov: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    setGov(
+      _gov: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     setInManagerMode(
-      _inManagerMode: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _inManagerMode: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setInPrivateLiquidationMode(
-      _inPrivateLiquidationMode: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _inPrivateLiquidationMode: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setIsLeverageEnabled(
-      _isLeverageEnabled: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _isLeverageEnabled: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setIsSwapEnabled(
-      _isSwapEnabled: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _isSwapEnabled: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setLiquidator(
-      _liquidator: string,
-      _isActive: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _liquidator: PromiseOrValue<string>,
+      _isActive: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setManager(
-      _manager: string,
-      _isManager: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _manager: PromiseOrValue<string>,
+      _isManager: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setMaxGasPrice(
-      _maxGasPrice: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _maxGasPrice: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setMaxGlobalShortSize(
-      _token: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setMaxLeverage(
-      _maxLeverage: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _maxLeverage: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setPriceFeed(
-      _priceFeed: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _priceFeed: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setTokenConfig(
-      _token: string,
-      _tokenDecimals: BigNumberish,
-      _tokenWeight: BigNumberish,
-      _minProfitBps: BigNumberish,
-      _maxUsdmAmount: BigNumberish,
-      _isStable: boolean,
-      _isShortable: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      _tokenDecimals: PromiseOrValue<BigNumberish>,
+      _tokenWeight: PromiseOrValue<BigNumberish>,
+      _minProfitBps: PromiseOrValue<BigNumberish>,
+      _maxUsdmAmount: PromiseOrValue<BigNumberish>,
+      _isStable: PromiseOrValue<boolean>,
+      _isShortable: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setUsdmAmount(
-      _token: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setVaultUtils(
-      _vaultUtils: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _vaultUtils: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    shortableTokens(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    shortableTokens(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     stableFundingRateFactor(overrides?: CallOverrides): Promise<[BigNumber]>;
 
@@ -1287,65 +1441,77 @@ export interface Vault extends BaseContract {
 
     stableTaxBasisPoints(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    stableTokens(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    stableTokens(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     swap(
-      _tokenIn: string,
-      _tokenOut: string,
-      _receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokenIn: PromiseOrValue<string>,
+      _tokenOut: PromiseOrValue<string>,
+      _receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     swapFeeBasisPoints(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     taxBasisPoints(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    tokenBalances(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    tokenBalances(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    tokenDecimals(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    tokenDecimals(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    tokenToUsdMin(_token: string, _tokenAmount: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    tokenToUsdMin(
+      _token: PromiseOrValue<string>,
+      _tokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
-    tokenWeights(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    tokenWeights(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     totalTokenWeights(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     updateCumulativeFundingRate(
-      _collateralToken: string,
-      _indexToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _collateralToken: PromiseOrValue<string>,
+      _indexToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     upgradeVault(
-      _newVault: string,
-      _token: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newVault: PromiseOrValue<string>,
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     usdToToken(
-      _token: string,
-      _usdAmount: BigNumberish,
-      _price: BigNumberish,
+      _token: PromiseOrValue<string>,
+      _usdAmount: PromiseOrValue<BigNumberish>,
+      _price: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber]>;
 
-    usdToTokenMax(_token: string, _usdAmount: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    usdToTokenMax(
+      _token: PromiseOrValue<string>,
+      _usdAmount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
-    usdToTokenMin(_token: string, _usdAmount: BigNumberish, overrides?: CallOverrides): Promise<[BigNumber]>;
+    usdToTokenMin(
+      _token: PromiseOrValue<string>,
+      _usdAmount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     usdm(overrides?: CallOverrides): Promise<[string]>;
 
-    usdmAmounts(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    usdmAmounts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     useSwapPricing(overrides?: CallOverrides): Promise<[boolean]>;
 
     validateLiquidation(
-      _account: string,
-      _collateralToken: string,
-      _indexToken: string,
-      _isLong: boolean,
-      _raise: boolean,
+      _account: PromiseOrValue<string>,
+      _collateralToken: PromiseOrValue<string>,
+      _indexToken: PromiseOrValue<string>,
+      _isLong: PromiseOrValue<boolean>,
+      _raise: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber]>;
 
@@ -1353,12 +1519,12 @@ export interface Vault extends BaseContract {
 
     whitelistedTokenCount(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    whitelistedTokens(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    whitelistedTokens(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     withdrawFees(
-      _token: string,
-      _receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      _receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
@@ -1380,181 +1546,192 @@ export interface Vault extends BaseContract {
 
   USDM_DECIMALS(overrides?: CallOverrides): Promise<BigNumber>;
 
-  addRouter(_router: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  addRouter(
+    _router: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   adjustForDecimals(
-    _amount: BigNumberish,
-    _tokenDiv: string,
-    _tokenMul: string,
+    _amount: PromiseOrValue<BigNumberish>,
+    _tokenDiv: PromiseOrValue<string>,
+    _tokenMul: PromiseOrValue<string>,
     overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
-  allWhitelistedTokens(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  allWhitelistedTokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
   allWhitelistedTokensLength(overrides?: CallOverrides): Promise<BigNumber>;
 
-  approvedRouters(arg0: string, arg1: string, overrides?: CallOverrides): Promise<boolean>;
+  approvedRouters(
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<boolean>;
 
-  bufferAmounts(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  bufferAmounts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   buyUSDM(
-    _token: string,
-    _receiver: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _token: PromiseOrValue<string>,
+    _receiver: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   clearTokenConfig(
-    _token: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _token: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  cumulativeFundingRates(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  cumulativeFundingRates(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   decreasePosition(
-    _account: string,
-    _collateralToken: string,
-    _indexToken: string,
-    _collateralDelta: BigNumberish,
-    _sizeDelta: BigNumberish,
-    _isLong: boolean,
-    _receiver: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _account: PromiseOrValue<string>,
+    _collateralToken: PromiseOrValue<string>,
+    _indexToken: PromiseOrValue<string>,
+    _collateralDelta: PromiseOrValue<BigNumberish>,
+    _sizeDelta: PromiseOrValue<BigNumberish>,
+    _isLong: PromiseOrValue<boolean>,
+    _receiver: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   directPoolDeposit(
-    _token: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _token: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   errorController(overrides?: CallOverrides): Promise<string>;
 
-  errors(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+  errors(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
-  feeReserves(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  feeReserves(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   fundingInterval(overrides?: CallOverrides): Promise<BigNumber>;
 
   fundingRateFactor(overrides?: CallOverrides): Promise<BigNumber>;
 
   getDelta(
-    _indexToken: string,
-    _size: BigNumberish,
-    _averagePrice: BigNumberish,
-    _isLong: boolean,
-    _lastIncreasedTime: BigNumberish,
+    _indexToken: PromiseOrValue<string>,
+    _size: PromiseOrValue<BigNumberish>,
+    _averagePrice: PromiseOrValue<BigNumberish>,
+    _isLong: PromiseOrValue<boolean>,
+    _lastIncreasedTime: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<[boolean, BigNumber]>;
 
   getEntryFundingRate(
-    _collateralToken: string,
-    _indexToken: string,
-    _isLong: boolean,
+    _collateralToken: PromiseOrValue<string>,
+    _indexToken: PromiseOrValue<string>,
+    _isLong: PromiseOrValue<boolean>,
     overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
   getFeeBasisPoints(
-    _token: string,
-    _usdmDelta: BigNumberish,
-    _feeBasisPoints: BigNumberish,
-    _taxBasisPoints: BigNumberish,
-    _increment: boolean,
+    _token: PromiseOrValue<string>,
+    _usdmDelta: PromiseOrValue<BigNumberish>,
+    _feeBasisPoints: PromiseOrValue<BigNumberish>,
+    _taxBasisPoints: PromiseOrValue<BigNumberish>,
+    _increment: PromiseOrValue<boolean>,
     overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
   getFundingFee(
-    _account: string,
-    _collateralToken: string,
-    _indexToken: string,
-    _isLong: boolean,
-    _size: BigNumberish,
-    _entryFundingRate: BigNumberish,
+    _account: PromiseOrValue<string>,
+    _collateralToken: PromiseOrValue<string>,
+    _indexToken: PromiseOrValue<string>,
+    _isLong: PromiseOrValue<boolean>,
+    _size: PromiseOrValue<BigNumberish>,
+    _entryFundingRate: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
-  getGlobalShortDelta(_token: string, overrides?: CallOverrides): Promise<[boolean, BigNumber]>;
+  getGlobalShortDelta(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean, BigNumber]>;
 
-  getMaxPrice(_token: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getMaxPrice(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  getMinPrice(_token: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getMinPrice(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   getNextAveragePrice(
-    _indexToken: string,
-    _size: BigNumberish,
-    _averagePrice: BigNumberish,
-    _isLong: boolean,
-    _nextPrice: BigNumberish,
-    _sizeDelta: BigNumberish,
-    _lastIncreasedTime: BigNumberish,
+    _indexToken: PromiseOrValue<string>,
+    _size: PromiseOrValue<BigNumberish>,
+    _averagePrice: PromiseOrValue<BigNumberish>,
+    _isLong: PromiseOrValue<boolean>,
+    _nextPrice: PromiseOrValue<BigNumberish>,
+    _sizeDelta: PromiseOrValue<BigNumberish>,
+    _lastIncreasedTime: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
-  getNextFundingRate(_token: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getNextFundingRate(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   getNextGlobalShortAveragePrice(
-    _indexToken: string,
-    _nextPrice: BigNumberish,
-    _sizeDelta: BigNumberish,
+    _indexToken: PromiseOrValue<string>,
+    _nextPrice: PromiseOrValue<BigNumberish>,
+    _sizeDelta: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
   getPosition(
-    _account: string,
-    _collateralToken: string,
-    _indexToken: string,
-    _isLong: boolean,
+    _account: PromiseOrValue<string>,
+    _collateralToken: PromiseOrValue<string>,
+    _indexToken: PromiseOrValue<string>,
+    _isLong: PromiseOrValue<boolean>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, boolean, BigNumber]>;
 
   getPositionDelta(
-    _account: string,
-    _collateralToken: string,
-    _indexToken: string,
-    _isLong: boolean,
+    _account: PromiseOrValue<string>,
+    _collateralToken: PromiseOrValue<string>,
+    _indexToken: PromiseOrValue<string>,
+    _isLong: PromiseOrValue<boolean>,
     overrides?: CallOverrides,
   ): Promise<[boolean, BigNumber]>;
 
   getPositionFee(
-    _account: string,
-    _collateralToken: string,
-    _indexToken: string,
-    _isLong: boolean,
-    _sizeDelta: BigNumberish,
+    _account: PromiseOrValue<string>,
+    _collateralToken: PromiseOrValue<string>,
+    _indexToken: PromiseOrValue<string>,
+    _isLong: PromiseOrValue<boolean>,
+    _sizeDelta: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
   getPositionKey(
-    _account: string,
-    _collateralToken: string,
-    _indexToken: string,
-    _isLong: boolean,
+    _account: PromiseOrValue<string>,
+    _collateralToken: PromiseOrValue<string>,
+    _indexToken: PromiseOrValue<string>,
+    _isLong: PromiseOrValue<boolean>,
     overrides?: CallOverrides,
   ): Promise<string>;
 
   getPositionLeverage(
-    _account: string,
-    _collateralToken: string,
-    _indexToken: string,
-    _isLong: boolean,
+    _account: PromiseOrValue<string>,
+    _collateralToken: PromiseOrValue<string>,
+    _indexToken: PromiseOrValue<string>,
+    _isLong: PromiseOrValue<boolean>,
     overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
-  getRedemptionAmount(_token: string, _usdmAmount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  getRedemptionAmount(
+    _token: PromiseOrValue<string>,
+    _usdmAmount: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
-  getRedemptionCollateral(_token: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getRedemptionCollateral(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  getRedemptionCollateralUsd(_token: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getRedemptionCollateralUsd(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  getTargetUsdmAmount(_token: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getTargetUsdmAmount(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  getUtilisation(_token: string, overrides?: CallOverrides): Promise<BigNumber>;
+  getUtilisation(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  globalShortAveragePrices(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  globalShortAveragePrices(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  globalShortSizes(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  globalShortSizes(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   gov(overrides?: CallOverrides): Promise<string>;
 
-  guaranteedUsd(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  guaranteedUsd(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   hasDynamicFees(overrides?: CallOverrides): Promise<boolean>;
 
@@ -1565,43 +1742,43 @@ export interface Vault extends BaseContract {
   includeAmmPrice(overrides?: CallOverrides): Promise<boolean>;
 
   increasePosition(
-    _account: string,
-    _collateralToken: string,
-    _indexToken: string,
-    _sizeDelta: BigNumberish,
-    _isLong: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _account: PromiseOrValue<string>,
+    _collateralToken: PromiseOrValue<string>,
+    _indexToken: PromiseOrValue<string>,
+    _sizeDelta: PromiseOrValue<BigNumberish>,
+    _isLong: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   initialize(
-    _router: string,
-    _usdm: string,
-    _priceFeed: string,
-    _liquidationFeeUsd: BigNumberish,
-    _fundingRateFactor: BigNumberish,
-    _stableFundingRateFactor: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _router: PromiseOrValue<string>,
+    _usdm: PromiseOrValue<string>,
+    _priceFeed: PromiseOrValue<string>,
+    _liquidationFeeUsd: PromiseOrValue<BigNumberish>,
+    _fundingRateFactor: PromiseOrValue<BigNumberish>,
+    _stableFundingRateFactor: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   isInitialized(overrides?: CallOverrides): Promise<boolean>;
 
   isLeverageEnabled(overrides?: CallOverrides): Promise<boolean>;
 
-  isLiquidator(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  isLiquidator(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-  isManager(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  isManager(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   isSwapEnabled(overrides?: CallOverrides): Promise<boolean>;
 
-  lastFundingTimes(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  lastFundingTimes(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   liquidatePosition(
-    _account: string,
-    _collateralToken: string,
-    _indexToken: string,
-    _isLong: boolean,
-    _feeReceiver: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _account: PromiseOrValue<string>,
+    _collateralToken: PromiseOrValue<string>,
+    _indexToken: PromiseOrValue<string>,
+    _isLong: PromiseOrValue<boolean>,
+    _feeReceiver: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   liquidationFeeUsd(overrides?: CallOverrides): Promise<BigNumber>;
@@ -1610,22 +1787,22 @@ export interface Vault extends BaseContract {
 
   maxGasPrice(overrides?: CallOverrides): Promise<BigNumber>;
 
-  maxGlobalShortSizes(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  maxGlobalShortSizes(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   maxLeverage(overrides?: CallOverrides): Promise<BigNumber>;
 
-  maxUsdmAmounts(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  maxUsdmAmounts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  minProfitBasisPoints(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  minProfitBasisPoints(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   minProfitTime(overrides?: CallOverrides): Promise<BigNumber>;
 
   mintBurnFeeBasisPoints(overrides?: CallOverrides): Promise<BigNumber>;
 
-  poolAmounts(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  poolAmounts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   positions(
-    arg0: BytesLike,
+    arg0: PromiseOrValue<BytesLike>,
     overrides?: CallOverrides,
   ): Promise<
     [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -1642,135 +1819,138 @@ export interface Vault extends BaseContract {
   priceFeed(overrides?: CallOverrides): Promise<string>;
 
   removeRouter(
-    _router: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _router: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  reservedAmounts(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  reservedAmounts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   router(overrides?: CallOverrides): Promise<string>;
 
   sellUSDM(
-    _token: string,
-    _receiver: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _token: PromiseOrValue<string>,
+    _receiver: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setBufferAmount(
-    _token: string,
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _token: PromiseOrValue<string>,
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setError(
-    _errorCode: BigNumberish,
-    _error: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _errorCode: PromiseOrValue<BigNumberish>,
+    _error: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setErrorController(
-    _errorController: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _errorController: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setFees(
-    _taxBasisPoints: BigNumberish,
-    _stableTaxBasisPoints: BigNumberish,
-    _mintBurnFeeBasisPoints: BigNumberish,
-    _swapFeeBasisPoints: BigNumberish,
-    _stableSwapFeeBasisPoints: BigNumberish,
-    _marginFeeBasisPoints: BigNumberish,
-    _liquidationFeeUsd: BigNumberish,
-    _minProfitTime: BigNumberish,
-    _hasDynamicFees: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _taxBasisPoints: PromiseOrValue<BigNumberish>,
+    _stableTaxBasisPoints: PromiseOrValue<BigNumberish>,
+    _mintBurnFeeBasisPoints: PromiseOrValue<BigNumberish>,
+    _swapFeeBasisPoints: PromiseOrValue<BigNumberish>,
+    _stableSwapFeeBasisPoints: PromiseOrValue<BigNumberish>,
+    _marginFeeBasisPoints: PromiseOrValue<BigNumberish>,
+    _liquidationFeeUsd: PromiseOrValue<BigNumberish>,
+    _minProfitTime: PromiseOrValue<BigNumberish>,
+    _hasDynamicFees: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setFundingRate(
-    _fundingInterval: BigNumberish,
-    _fundingRateFactor: BigNumberish,
-    _stableFundingRateFactor: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _fundingInterval: PromiseOrValue<BigNumberish>,
+    _fundingRateFactor: PromiseOrValue<BigNumberish>,
+    _stableFundingRateFactor: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  setGov(_gov: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  setGov(
+    _gov: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   setInManagerMode(
-    _inManagerMode: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _inManagerMode: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setInPrivateLiquidationMode(
-    _inPrivateLiquidationMode: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _inPrivateLiquidationMode: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setIsLeverageEnabled(
-    _isLeverageEnabled: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _isLeverageEnabled: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setIsSwapEnabled(
-    _isSwapEnabled: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _isSwapEnabled: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setLiquidator(
-    _liquidator: string,
-    _isActive: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _liquidator: PromiseOrValue<string>,
+    _isActive: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setManager(
-    _manager: string,
-    _isManager: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _manager: PromiseOrValue<string>,
+    _isManager: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setMaxGasPrice(
-    _maxGasPrice: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _maxGasPrice: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setMaxGlobalShortSize(
-    _token: string,
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _token: PromiseOrValue<string>,
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setMaxLeverage(
-    _maxLeverage: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _maxLeverage: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setPriceFeed(
-    _priceFeed: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _priceFeed: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setTokenConfig(
-    _token: string,
-    _tokenDecimals: BigNumberish,
-    _tokenWeight: BigNumberish,
-    _minProfitBps: BigNumberish,
-    _maxUsdmAmount: BigNumberish,
-    _isStable: boolean,
-    _isShortable: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _token: PromiseOrValue<string>,
+    _tokenDecimals: PromiseOrValue<BigNumberish>,
+    _tokenWeight: PromiseOrValue<BigNumberish>,
+    _minProfitBps: PromiseOrValue<BigNumberish>,
+    _maxUsdmAmount: PromiseOrValue<BigNumberish>,
+    _isStable: PromiseOrValue<boolean>,
+    _isShortable: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setUsdmAmount(
-    _token: string,
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _token: PromiseOrValue<string>,
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setVaultUtils(
-    _vaultUtils: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _vaultUtils: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  shortableTokens(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  shortableTokens(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   stableFundingRateFactor(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -1778,65 +1958,77 @@ export interface Vault extends BaseContract {
 
   stableTaxBasisPoints(overrides?: CallOverrides): Promise<BigNumber>;
 
-  stableTokens(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  stableTokens(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   swap(
-    _tokenIn: string,
-    _tokenOut: string,
-    _receiver: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _tokenIn: PromiseOrValue<string>,
+    _tokenOut: PromiseOrValue<string>,
+    _receiver: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   swapFeeBasisPoints(overrides?: CallOverrides): Promise<BigNumber>;
 
   taxBasisPoints(overrides?: CallOverrides): Promise<BigNumber>;
 
-  tokenBalances(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  tokenBalances(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  tokenDecimals(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  tokenDecimals(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  tokenToUsdMin(_token: string, _tokenAmount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  tokenToUsdMin(
+    _token: PromiseOrValue<string>,
+    _tokenAmount: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
-  tokenWeights(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  tokenWeights(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   totalTokenWeights(overrides?: CallOverrides): Promise<BigNumber>;
 
   updateCumulativeFundingRate(
-    _collateralToken: string,
-    _indexToken: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _collateralToken: PromiseOrValue<string>,
+    _indexToken: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   upgradeVault(
-    _newVault: string,
-    _token: string,
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _newVault: PromiseOrValue<string>,
+    _token: PromiseOrValue<string>,
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   usdToToken(
-    _token: string,
-    _usdAmount: BigNumberish,
-    _price: BigNumberish,
+    _token: PromiseOrValue<string>,
+    _usdAmount: PromiseOrValue<BigNumberish>,
+    _price: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides,
   ): Promise<BigNumber>;
 
-  usdToTokenMax(_token: string, _usdAmount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  usdToTokenMax(
+    _token: PromiseOrValue<string>,
+    _usdAmount: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
-  usdToTokenMin(_token: string, _usdAmount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+  usdToTokenMin(
+    _token: PromiseOrValue<string>,
+    _usdAmount: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   usdm(overrides?: CallOverrides): Promise<string>;
 
-  usdmAmounts(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  usdmAmounts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   useSwapPricing(overrides?: CallOverrides): Promise<boolean>;
 
   validateLiquidation(
-    _account: string,
-    _collateralToken: string,
-    _indexToken: string,
-    _isLong: boolean,
-    _raise: boolean,
+    _account: PromiseOrValue<string>,
+    _collateralToken: PromiseOrValue<string>,
+    _indexToken: PromiseOrValue<string>,
+    _isLong: PromiseOrValue<boolean>,
+    _raise: PromiseOrValue<boolean>,
     overrides?: CallOverrides,
   ): Promise<[BigNumber, BigNumber]>;
 
@@ -1844,12 +2036,12 @@ export interface Vault extends BaseContract {
 
   whitelistedTokenCount(overrides?: CallOverrides): Promise<BigNumber>;
 
-  whitelistedTokens(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  whitelistedTokens(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   withdrawFees(
-    _token: string,
-    _receiver: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _token: PromiseOrValue<string>,
+    _receiver: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
@@ -1871,171 +2063,183 @@ export interface Vault extends BaseContract {
 
     USDM_DECIMALS(overrides?: CallOverrides): Promise<BigNumber>;
 
-    addRouter(_router: string, overrides?: CallOverrides): Promise<void>;
+    addRouter(_router: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     adjustForDecimals(
-      _amount: BigNumberish,
-      _tokenDiv: string,
-      _tokenMul: string,
+      _amount: PromiseOrValue<BigNumberish>,
+      _tokenDiv: PromiseOrValue<string>,
+      _tokenMul: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    allWhitelistedTokens(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    allWhitelistedTokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
     allWhitelistedTokensLength(overrides?: CallOverrides): Promise<BigNumber>;
 
-    approvedRouters(arg0: string, arg1: string, overrides?: CallOverrides): Promise<boolean>;
+    approvedRouters(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    bufferAmounts(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    bufferAmounts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    buyUSDM(_token: string, _receiver: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-    clearTokenConfig(_token: string, overrides?: CallOverrides): Promise<void>;
-
-    cumulativeFundingRates(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
-
-    decreasePosition(
-      _account: string,
-      _collateralToken: string,
-      _indexToken: string,
-      _collateralDelta: BigNumberish,
-      _sizeDelta: BigNumberish,
-      _isLong: boolean,
-      _receiver: string,
+    buyUSDM(
+      _token: PromiseOrValue<string>,
+      _receiver: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    directPoolDeposit(_token: string, overrides?: CallOverrides): Promise<void>;
+    clearTokenConfig(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
+
+    cumulativeFundingRates(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
+
+    decreasePosition(
+      _account: PromiseOrValue<string>,
+      _collateralToken: PromiseOrValue<string>,
+      _indexToken: PromiseOrValue<string>,
+      _collateralDelta: PromiseOrValue<BigNumberish>,
+      _sizeDelta: PromiseOrValue<BigNumberish>,
+      _isLong: PromiseOrValue<boolean>,
+      _receiver: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
+
+    directPoolDeposit(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     errorController(overrides?: CallOverrides): Promise<string>;
 
-    errors(arg0: BigNumberish, overrides?: CallOverrides): Promise<string>;
+    errors(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<string>;
 
-    feeReserves(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    feeReserves(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     fundingInterval(overrides?: CallOverrides): Promise<BigNumber>;
 
     fundingRateFactor(overrides?: CallOverrides): Promise<BigNumber>;
 
     getDelta(
-      _indexToken: string,
-      _size: BigNumberish,
-      _averagePrice: BigNumberish,
-      _isLong: boolean,
-      _lastIncreasedTime: BigNumberish,
+      _indexToken: PromiseOrValue<string>,
+      _size: PromiseOrValue<BigNumberish>,
+      _averagePrice: PromiseOrValue<BigNumberish>,
+      _isLong: PromiseOrValue<boolean>,
+      _lastIncreasedTime: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<[boolean, BigNumber]>;
 
     getEntryFundingRate(
-      _collateralToken: string,
-      _indexToken: string,
-      _isLong: boolean,
+      _collateralToken: PromiseOrValue<string>,
+      _indexToken: PromiseOrValue<string>,
+      _isLong: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     getFeeBasisPoints(
-      _token: string,
-      _usdmDelta: BigNumberish,
-      _feeBasisPoints: BigNumberish,
-      _taxBasisPoints: BigNumberish,
-      _increment: boolean,
+      _token: PromiseOrValue<string>,
+      _usdmDelta: PromiseOrValue<BigNumberish>,
+      _feeBasisPoints: PromiseOrValue<BigNumberish>,
+      _taxBasisPoints: PromiseOrValue<BigNumberish>,
+      _increment: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     getFundingFee(
-      _account: string,
-      _collateralToken: string,
-      _indexToken: string,
-      _isLong: boolean,
-      _size: BigNumberish,
-      _entryFundingRate: BigNumberish,
+      _account: PromiseOrValue<string>,
+      _collateralToken: PromiseOrValue<string>,
+      _indexToken: PromiseOrValue<string>,
+      _isLong: PromiseOrValue<boolean>,
+      _size: PromiseOrValue<BigNumberish>,
+      _entryFundingRate: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    getGlobalShortDelta(_token: string, overrides?: CallOverrides): Promise<[boolean, BigNumber]>;
+    getGlobalShortDelta(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean, BigNumber]>;
 
-    getMaxPrice(_token: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getMaxPrice(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getMinPrice(_token: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getMinPrice(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getNextAveragePrice(
-      _indexToken: string,
-      _size: BigNumberish,
-      _averagePrice: BigNumberish,
-      _isLong: boolean,
-      _nextPrice: BigNumberish,
-      _sizeDelta: BigNumberish,
-      _lastIncreasedTime: BigNumberish,
+      _indexToken: PromiseOrValue<string>,
+      _size: PromiseOrValue<BigNumberish>,
+      _averagePrice: PromiseOrValue<BigNumberish>,
+      _isLong: PromiseOrValue<boolean>,
+      _nextPrice: PromiseOrValue<BigNumberish>,
+      _sizeDelta: PromiseOrValue<BigNumberish>,
+      _lastIncreasedTime: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    getNextFundingRate(_token: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getNextFundingRate(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getNextGlobalShortAveragePrice(
-      _indexToken: string,
-      _nextPrice: BigNumberish,
-      _sizeDelta: BigNumberish,
+      _indexToken: PromiseOrValue<string>,
+      _nextPrice: PromiseOrValue<BigNumberish>,
+      _sizeDelta: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     getPosition(
-      _account: string,
-      _collateralToken: string,
-      _indexToken: string,
-      _isLong: boolean,
+      _account: PromiseOrValue<string>,
+      _collateralToken: PromiseOrValue<string>,
+      _indexToken: PromiseOrValue<string>,
+      _isLong: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, boolean, BigNumber]>;
 
     getPositionDelta(
-      _account: string,
-      _collateralToken: string,
-      _indexToken: string,
-      _isLong: boolean,
+      _account: PromiseOrValue<string>,
+      _collateralToken: PromiseOrValue<string>,
+      _indexToken: PromiseOrValue<string>,
+      _isLong: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<[boolean, BigNumber]>;
 
     getPositionFee(
-      _account: string,
-      _collateralToken: string,
-      _indexToken: string,
-      _isLong: boolean,
-      _sizeDelta: BigNumberish,
+      _account: PromiseOrValue<string>,
+      _collateralToken: PromiseOrValue<string>,
+      _indexToken: PromiseOrValue<string>,
+      _isLong: PromiseOrValue<boolean>,
+      _sizeDelta: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     getPositionKey(
-      _account: string,
-      _collateralToken: string,
-      _indexToken: string,
-      _isLong: boolean,
+      _account: PromiseOrValue<string>,
+      _collateralToken: PromiseOrValue<string>,
+      _indexToken: PromiseOrValue<string>,
+      _isLong: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<string>;
 
     getPositionLeverage(
-      _account: string,
-      _collateralToken: string,
-      _indexToken: string,
-      _isLong: boolean,
+      _account: PromiseOrValue<string>,
+      _collateralToken: PromiseOrValue<string>,
+      _indexToken: PromiseOrValue<string>,
+      _isLong: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    getRedemptionAmount(_token: string, _usdmAmount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getRedemptionAmount(
+      _token: PromiseOrValue<string>,
+      _usdmAmount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    getRedemptionCollateral(_token: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getRedemptionCollateral(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getRedemptionCollateralUsd(_token: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getRedemptionCollateralUsd(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getTargetUsdmAmount(_token: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getTargetUsdmAmount(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getUtilisation(_token: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getUtilisation(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    globalShortAveragePrices(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    globalShortAveragePrices(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    globalShortSizes(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    globalShortSizes(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     gov(overrides?: CallOverrides): Promise<string>;
 
-    guaranteedUsd(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    guaranteedUsd(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     hasDynamicFees(overrides?: CallOverrides): Promise<boolean>;
 
@@ -2046,21 +2250,21 @@ export interface Vault extends BaseContract {
     includeAmmPrice(overrides?: CallOverrides): Promise<boolean>;
 
     increasePosition(
-      _account: string,
-      _collateralToken: string,
-      _indexToken: string,
-      _sizeDelta: BigNumberish,
-      _isLong: boolean,
+      _account: PromiseOrValue<string>,
+      _collateralToken: PromiseOrValue<string>,
+      _indexToken: PromiseOrValue<string>,
+      _sizeDelta: PromiseOrValue<BigNumberish>,
+      _isLong: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     initialize(
-      _router: string,
-      _usdm: string,
-      _priceFeed: string,
-      _liquidationFeeUsd: BigNumberish,
-      _fundingRateFactor: BigNumberish,
-      _stableFundingRateFactor: BigNumberish,
+      _router: PromiseOrValue<string>,
+      _usdm: PromiseOrValue<string>,
+      _priceFeed: PromiseOrValue<string>,
+      _liquidationFeeUsd: PromiseOrValue<BigNumberish>,
+      _fundingRateFactor: PromiseOrValue<BigNumberish>,
+      _stableFundingRateFactor: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -2068,20 +2272,20 @@ export interface Vault extends BaseContract {
 
     isLeverageEnabled(overrides?: CallOverrides): Promise<boolean>;
 
-    isLiquidator(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    isLiquidator(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-    isManager(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    isManager(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     isSwapEnabled(overrides?: CallOverrides): Promise<boolean>;
 
-    lastFundingTimes(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    lastFundingTimes(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     liquidatePosition(
-      _account: string,
-      _collateralToken: string,
-      _indexToken: string,
-      _isLong: boolean,
-      _feeReceiver: string,
+      _account: PromiseOrValue<string>,
+      _collateralToken: PromiseOrValue<string>,
+      _indexToken: PromiseOrValue<string>,
+      _isLong: PromiseOrValue<boolean>,
+      _feeReceiver: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
@@ -2091,22 +2295,22 @@ export interface Vault extends BaseContract {
 
     maxGasPrice(overrides?: CallOverrides): Promise<BigNumber>;
 
-    maxGlobalShortSizes(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    maxGlobalShortSizes(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     maxLeverage(overrides?: CallOverrides): Promise<BigNumber>;
 
-    maxUsdmAmounts(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    maxUsdmAmounts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    minProfitBasisPoints(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    minProfitBasisPoints(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     minProfitTime(overrides?: CallOverrides): Promise<BigNumber>;
 
     mintBurnFeeBasisPoints(overrides?: CallOverrides): Promise<BigNumber>;
 
-    poolAmounts(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    poolAmounts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     positions(
-      arg0: BytesLike,
+      arg0: PromiseOrValue<BytesLike>,
       overrides?: CallOverrides,
     ): Promise<
       [BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber, BigNumber] & {
@@ -2122,78 +2326,109 @@ export interface Vault extends BaseContract {
 
     priceFeed(overrides?: CallOverrides): Promise<string>;
 
-    removeRouter(_router: string, overrides?: CallOverrides): Promise<void>;
+    removeRouter(_router: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    reservedAmounts(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    reservedAmounts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     router(overrides?: CallOverrides): Promise<string>;
 
-    sellUSDM(_token: string, _receiver: string, overrides?: CallOverrides): Promise<BigNumber>;
+    sellUSDM(
+      _token: PromiseOrValue<string>,
+      _receiver: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    setBufferAmount(_token: string, _amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setBufferAmount(
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setError(_errorCode: BigNumberish, _error: string, overrides?: CallOverrides): Promise<void>;
+    setError(
+      _errorCode: PromiseOrValue<BigNumberish>,
+      _error: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setErrorController(_errorController: string, overrides?: CallOverrides): Promise<void>;
+    setErrorController(_errorController: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     setFees(
-      _taxBasisPoints: BigNumberish,
-      _stableTaxBasisPoints: BigNumberish,
-      _mintBurnFeeBasisPoints: BigNumberish,
-      _swapFeeBasisPoints: BigNumberish,
-      _stableSwapFeeBasisPoints: BigNumberish,
-      _marginFeeBasisPoints: BigNumberish,
-      _liquidationFeeUsd: BigNumberish,
-      _minProfitTime: BigNumberish,
-      _hasDynamicFees: boolean,
+      _taxBasisPoints: PromiseOrValue<BigNumberish>,
+      _stableTaxBasisPoints: PromiseOrValue<BigNumberish>,
+      _mintBurnFeeBasisPoints: PromiseOrValue<BigNumberish>,
+      _swapFeeBasisPoints: PromiseOrValue<BigNumberish>,
+      _stableSwapFeeBasisPoints: PromiseOrValue<BigNumberish>,
+      _marginFeeBasisPoints: PromiseOrValue<BigNumberish>,
+      _liquidationFeeUsd: PromiseOrValue<BigNumberish>,
+      _minProfitTime: PromiseOrValue<BigNumberish>,
+      _hasDynamicFees: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     setFundingRate(
-      _fundingInterval: BigNumberish,
-      _fundingRateFactor: BigNumberish,
-      _stableFundingRateFactor: BigNumberish,
+      _fundingInterval: PromiseOrValue<BigNumberish>,
+      _fundingRateFactor: PromiseOrValue<BigNumberish>,
+      _stableFundingRateFactor: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    setGov(_gov: string, overrides?: CallOverrides): Promise<void>;
+    setGov(_gov: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setInManagerMode(_inManagerMode: boolean, overrides?: CallOverrides): Promise<void>;
+    setInManagerMode(_inManagerMode: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
 
-    setInPrivateLiquidationMode(_inPrivateLiquidationMode: boolean, overrides?: CallOverrides): Promise<void>;
+    setInPrivateLiquidationMode(
+      _inPrivateLiquidationMode: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setIsLeverageEnabled(_isLeverageEnabled: boolean, overrides?: CallOverrides): Promise<void>;
+    setIsLeverageEnabled(_isLeverageEnabled: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
 
-    setIsSwapEnabled(_isSwapEnabled: boolean, overrides?: CallOverrides): Promise<void>;
+    setIsSwapEnabled(_isSwapEnabled: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
 
-    setLiquidator(_liquidator: string, _isActive: boolean, overrides?: CallOverrides): Promise<void>;
+    setLiquidator(
+      _liquidator: PromiseOrValue<string>,
+      _isActive: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setManager(_manager: string, _isManager: boolean, overrides?: CallOverrides): Promise<void>;
+    setManager(
+      _manager: PromiseOrValue<string>,
+      _isManager: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setMaxGasPrice(_maxGasPrice: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setMaxGasPrice(_maxGasPrice: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setMaxGlobalShortSize(_token: string, _amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setMaxGlobalShortSize(
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setMaxLeverage(_maxLeverage: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setMaxLeverage(_maxLeverage: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setPriceFeed(_priceFeed: string, overrides?: CallOverrides): Promise<void>;
+    setPriceFeed(_priceFeed: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
     setTokenConfig(
-      _token: string,
-      _tokenDecimals: BigNumberish,
-      _tokenWeight: BigNumberish,
-      _minProfitBps: BigNumberish,
-      _maxUsdmAmount: BigNumberish,
-      _isStable: boolean,
-      _isShortable: boolean,
+      _token: PromiseOrValue<string>,
+      _tokenDecimals: PromiseOrValue<BigNumberish>,
+      _tokenWeight: PromiseOrValue<BigNumberish>,
+      _minProfitBps: PromiseOrValue<BigNumberish>,
+      _maxUsdmAmount: PromiseOrValue<BigNumberish>,
+      _isStable: PromiseOrValue<boolean>,
+      _isShortable: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    setUsdmAmount(_token: string, _amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setUsdmAmount(
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setVaultUtils(_vaultUtils: string, overrides?: CallOverrides): Promise<void>;
+    setVaultUtils(_vaultUtils: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    shortableTokens(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    shortableTokens(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     stableFundingRateFactor(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -2201,55 +2436,77 @@ export interface Vault extends BaseContract {
 
     stableTaxBasisPoints(overrides?: CallOverrides): Promise<BigNumber>;
 
-    stableTokens(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    stableTokens(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-    swap(_tokenIn: string, _tokenOut: string, _receiver: string, overrides?: CallOverrides): Promise<BigNumber>;
+    swap(
+      _tokenIn: PromiseOrValue<string>,
+      _tokenOut: PromiseOrValue<string>,
+      _receiver: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     swapFeeBasisPoints(overrides?: CallOverrides): Promise<BigNumber>;
 
     taxBasisPoints(overrides?: CallOverrides): Promise<BigNumber>;
 
-    tokenBalances(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    tokenBalances(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    tokenDecimals(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    tokenDecimals(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    tokenToUsdMin(_token: string, _tokenAmount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    tokenToUsdMin(
+      _token: PromiseOrValue<string>,
+      _tokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    tokenWeights(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    tokenWeights(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     totalTokenWeights(overrides?: CallOverrides): Promise<BigNumber>;
 
     updateCumulativeFundingRate(
-      _collateralToken: string,
-      _indexToken: string,
+      _collateralToken: PromiseOrValue<string>,
+      _indexToken: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    upgradeVault(_newVault: string, _token: string, _amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    upgradeVault(
+      _newVault: PromiseOrValue<string>,
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     usdToToken(
-      _token: string,
-      _usdAmount: BigNumberish,
-      _price: BigNumberish,
+      _token: PromiseOrValue<string>,
+      _usdAmount: PromiseOrValue<BigNumberish>,
+      _price: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    usdToTokenMax(_token: string, _usdAmount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    usdToTokenMax(
+      _token: PromiseOrValue<string>,
+      _usdAmount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    usdToTokenMin(_token: string, _usdAmount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    usdToTokenMin(
+      _token: PromiseOrValue<string>,
+      _usdAmount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     usdm(overrides?: CallOverrides): Promise<string>;
 
-    usdmAmounts(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    usdmAmounts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     useSwapPricing(overrides?: CallOverrides): Promise<boolean>;
 
     validateLiquidation(
-      _account: string,
-      _collateralToken: string,
-      _indexToken: string,
-      _isLong: boolean,
-      _raise: boolean,
+      _account: PromiseOrValue<string>,
+      _collateralToken: PromiseOrValue<string>,
+      _indexToken: PromiseOrValue<string>,
+      _isLong: PromiseOrValue<boolean>,
+      _raise: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<[BigNumber, BigNumber]>;
 
@@ -2257,9 +2514,13 @@ export interface Vault extends BaseContract {
 
     whitelistedTokenCount(overrides?: CallOverrides): Promise<BigNumber>;
 
-    whitelistedTokens(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    whitelistedTokens(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-    withdrawFees(_token: string, _receiver: string, overrides?: CallOverrides): Promise<BigNumber>;
+    withdrawFees(
+      _token: PromiseOrValue<string>,
+      _receiver: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
   };
 
   filters: {
@@ -2490,175 +2751,192 @@ export interface Vault extends BaseContract {
 
     USDM_DECIMALS(overrides?: CallOverrides): Promise<BigNumber>;
 
-    addRouter(_router: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    addRouter(
+      _router: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     adjustForDecimals(
-      _amount: BigNumberish,
-      _tokenDiv: string,
-      _tokenMul: string,
+      _amount: PromiseOrValue<BigNumberish>,
+      _tokenDiv: PromiseOrValue<string>,
+      _tokenMul: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    allWhitelistedTokens(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    allWhitelistedTokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
     allWhitelistedTokensLength(overrides?: CallOverrides): Promise<BigNumber>;
 
-    approvedRouters(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    approvedRouters(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    bufferAmounts(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    bufferAmounts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     buyUSDM(
-      _token: string,
-      _receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      _receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    clearTokenConfig(_token: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    clearTokenConfig(
+      _token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    cumulativeFundingRates(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    cumulativeFundingRates(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     decreasePosition(
-      _account: string,
-      _collateralToken: string,
-      _indexToken: string,
-      _collateralDelta: BigNumberish,
-      _sizeDelta: BigNumberish,
-      _isLong: boolean,
-      _receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _account: PromiseOrValue<string>,
+      _collateralToken: PromiseOrValue<string>,
+      _indexToken: PromiseOrValue<string>,
+      _collateralDelta: PromiseOrValue<BigNumberish>,
+      _sizeDelta: PromiseOrValue<BigNumberish>,
+      _isLong: PromiseOrValue<boolean>,
+      _receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    directPoolDeposit(_token: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    directPoolDeposit(
+      _token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     errorController(overrides?: CallOverrides): Promise<BigNumber>;
 
-    errors(arg0: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    errors(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    feeReserves(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    feeReserves(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     fundingInterval(overrides?: CallOverrides): Promise<BigNumber>;
 
     fundingRateFactor(overrides?: CallOverrides): Promise<BigNumber>;
 
     getDelta(
-      _indexToken: string,
-      _size: BigNumberish,
-      _averagePrice: BigNumberish,
-      _isLong: boolean,
-      _lastIncreasedTime: BigNumberish,
+      _indexToken: PromiseOrValue<string>,
+      _size: PromiseOrValue<BigNumberish>,
+      _averagePrice: PromiseOrValue<BigNumberish>,
+      _isLong: PromiseOrValue<boolean>,
+      _lastIncreasedTime: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     getEntryFundingRate(
-      _collateralToken: string,
-      _indexToken: string,
-      _isLong: boolean,
+      _collateralToken: PromiseOrValue<string>,
+      _indexToken: PromiseOrValue<string>,
+      _isLong: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     getFeeBasisPoints(
-      _token: string,
-      _usdmDelta: BigNumberish,
-      _feeBasisPoints: BigNumberish,
-      _taxBasisPoints: BigNumberish,
-      _increment: boolean,
+      _token: PromiseOrValue<string>,
+      _usdmDelta: PromiseOrValue<BigNumberish>,
+      _feeBasisPoints: PromiseOrValue<BigNumberish>,
+      _taxBasisPoints: PromiseOrValue<BigNumberish>,
+      _increment: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     getFundingFee(
-      _account: string,
-      _collateralToken: string,
-      _indexToken: string,
-      _isLong: boolean,
-      _size: BigNumberish,
-      _entryFundingRate: BigNumberish,
+      _account: PromiseOrValue<string>,
+      _collateralToken: PromiseOrValue<string>,
+      _indexToken: PromiseOrValue<string>,
+      _isLong: PromiseOrValue<boolean>,
+      _size: PromiseOrValue<BigNumberish>,
+      _entryFundingRate: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    getGlobalShortDelta(_token: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getGlobalShortDelta(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getMaxPrice(_token: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getMaxPrice(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getMinPrice(_token: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getMinPrice(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getNextAveragePrice(
-      _indexToken: string,
-      _size: BigNumberish,
-      _averagePrice: BigNumberish,
-      _isLong: boolean,
-      _nextPrice: BigNumberish,
-      _sizeDelta: BigNumberish,
-      _lastIncreasedTime: BigNumberish,
+      _indexToken: PromiseOrValue<string>,
+      _size: PromiseOrValue<BigNumberish>,
+      _averagePrice: PromiseOrValue<BigNumberish>,
+      _isLong: PromiseOrValue<boolean>,
+      _nextPrice: PromiseOrValue<BigNumberish>,
+      _sizeDelta: PromiseOrValue<BigNumberish>,
+      _lastIncreasedTime: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    getNextFundingRate(_token: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getNextFundingRate(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getNextGlobalShortAveragePrice(
-      _indexToken: string,
-      _nextPrice: BigNumberish,
-      _sizeDelta: BigNumberish,
+      _indexToken: PromiseOrValue<string>,
+      _nextPrice: PromiseOrValue<BigNumberish>,
+      _sizeDelta: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     getPosition(
-      _account: string,
-      _collateralToken: string,
-      _indexToken: string,
-      _isLong: boolean,
+      _account: PromiseOrValue<string>,
+      _collateralToken: PromiseOrValue<string>,
+      _indexToken: PromiseOrValue<string>,
+      _isLong: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     getPositionDelta(
-      _account: string,
-      _collateralToken: string,
-      _indexToken: string,
-      _isLong: boolean,
+      _account: PromiseOrValue<string>,
+      _collateralToken: PromiseOrValue<string>,
+      _indexToken: PromiseOrValue<string>,
+      _isLong: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     getPositionFee(
-      _account: string,
-      _collateralToken: string,
-      _indexToken: string,
-      _isLong: boolean,
-      _sizeDelta: BigNumberish,
+      _account: PromiseOrValue<string>,
+      _collateralToken: PromiseOrValue<string>,
+      _indexToken: PromiseOrValue<string>,
+      _isLong: PromiseOrValue<boolean>,
+      _sizeDelta: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     getPositionKey(
-      _account: string,
-      _collateralToken: string,
-      _indexToken: string,
-      _isLong: boolean,
+      _account: PromiseOrValue<string>,
+      _collateralToken: PromiseOrValue<string>,
+      _indexToken: PromiseOrValue<string>,
+      _isLong: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     getPositionLeverage(
-      _account: string,
-      _collateralToken: string,
-      _indexToken: string,
-      _isLong: boolean,
+      _account: PromiseOrValue<string>,
+      _collateralToken: PromiseOrValue<string>,
+      _indexToken: PromiseOrValue<string>,
+      _isLong: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    getRedemptionAmount(_token: string, _usdmAmount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    getRedemptionAmount(
+      _token: PromiseOrValue<string>,
+      _usdmAmount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    getRedemptionCollateral(_token: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getRedemptionCollateral(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getRedemptionCollateralUsd(_token: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getRedemptionCollateralUsd(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getTargetUsdmAmount(_token: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getTargetUsdmAmount(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getUtilisation(_token: string, overrides?: CallOverrides): Promise<BigNumber>;
+    getUtilisation(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    globalShortAveragePrices(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    globalShortAveragePrices(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    globalShortSizes(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    globalShortSizes(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     gov(overrides?: CallOverrides): Promise<BigNumber>;
 
-    guaranteedUsd(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    guaranteedUsd(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     hasDynamicFees(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -2669,43 +2947,43 @@ export interface Vault extends BaseContract {
     includeAmmPrice(overrides?: CallOverrides): Promise<BigNumber>;
 
     increasePosition(
-      _account: string,
-      _collateralToken: string,
-      _indexToken: string,
-      _sizeDelta: BigNumberish,
-      _isLong: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _account: PromiseOrValue<string>,
+      _collateralToken: PromiseOrValue<string>,
+      _indexToken: PromiseOrValue<string>,
+      _sizeDelta: PromiseOrValue<BigNumberish>,
+      _isLong: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     initialize(
-      _router: string,
-      _usdm: string,
-      _priceFeed: string,
-      _liquidationFeeUsd: BigNumberish,
-      _fundingRateFactor: BigNumberish,
-      _stableFundingRateFactor: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _router: PromiseOrValue<string>,
+      _usdm: PromiseOrValue<string>,
+      _priceFeed: PromiseOrValue<string>,
+      _liquidationFeeUsd: PromiseOrValue<BigNumberish>,
+      _fundingRateFactor: PromiseOrValue<BigNumberish>,
+      _stableFundingRateFactor: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     isInitialized(overrides?: CallOverrides): Promise<BigNumber>;
 
     isLeverageEnabled(overrides?: CallOverrides): Promise<BigNumber>;
 
-    isLiquidator(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    isLiquidator(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    isManager(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    isManager(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     isSwapEnabled(overrides?: CallOverrides): Promise<BigNumber>;
 
-    lastFundingTimes(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    lastFundingTimes(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     liquidatePosition(
-      _account: string,
-      _collateralToken: string,
-      _indexToken: string,
-      _isLong: boolean,
-      _feeReceiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _account: PromiseOrValue<string>,
+      _collateralToken: PromiseOrValue<string>,
+      _indexToken: PromiseOrValue<string>,
+      _isLong: PromiseOrValue<boolean>,
+      _feeReceiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     liquidationFeeUsd(overrides?: CallOverrides): Promise<BigNumber>;
@@ -2714,145 +2992,154 @@ export interface Vault extends BaseContract {
 
     maxGasPrice(overrides?: CallOverrides): Promise<BigNumber>;
 
-    maxGlobalShortSizes(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    maxGlobalShortSizes(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     maxLeverage(overrides?: CallOverrides): Promise<BigNumber>;
 
-    maxUsdmAmounts(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    maxUsdmAmounts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    minProfitBasisPoints(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    minProfitBasisPoints(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     minProfitTime(overrides?: CallOverrides): Promise<BigNumber>;
 
     mintBurnFeeBasisPoints(overrides?: CallOverrides): Promise<BigNumber>;
 
-    poolAmounts(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    poolAmounts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    positions(arg0: BytesLike, overrides?: CallOverrides): Promise<BigNumber>;
+    positions(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<BigNumber>;
 
     priceFeed(overrides?: CallOverrides): Promise<BigNumber>;
 
-    removeRouter(_router: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    removeRouter(
+      _router: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    reservedAmounts(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    reservedAmounts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     router(overrides?: CallOverrides): Promise<BigNumber>;
 
     sellUSDM(
-      _token: string,
-      _receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      _receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setBufferAmount(
-      _token: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setError(
-      _errorCode: BigNumberish,
-      _error: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _errorCode: PromiseOrValue<BigNumberish>,
+      _error: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setErrorController(
-      _errorController: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _errorController: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setFees(
-      _taxBasisPoints: BigNumberish,
-      _stableTaxBasisPoints: BigNumberish,
-      _mintBurnFeeBasisPoints: BigNumberish,
-      _swapFeeBasisPoints: BigNumberish,
-      _stableSwapFeeBasisPoints: BigNumberish,
-      _marginFeeBasisPoints: BigNumberish,
-      _liquidationFeeUsd: BigNumberish,
-      _minProfitTime: BigNumberish,
-      _hasDynamicFees: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _taxBasisPoints: PromiseOrValue<BigNumberish>,
+      _stableTaxBasisPoints: PromiseOrValue<BigNumberish>,
+      _mintBurnFeeBasisPoints: PromiseOrValue<BigNumberish>,
+      _swapFeeBasisPoints: PromiseOrValue<BigNumberish>,
+      _stableSwapFeeBasisPoints: PromiseOrValue<BigNumberish>,
+      _marginFeeBasisPoints: PromiseOrValue<BigNumberish>,
+      _liquidationFeeUsd: PromiseOrValue<BigNumberish>,
+      _minProfitTime: PromiseOrValue<BigNumberish>,
+      _hasDynamicFees: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setFundingRate(
-      _fundingInterval: BigNumberish,
-      _fundingRateFactor: BigNumberish,
-      _stableFundingRateFactor: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _fundingInterval: PromiseOrValue<BigNumberish>,
+      _fundingRateFactor: PromiseOrValue<BigNumberish>,
+      _stableFundingRateFactor: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setGov(_gov: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setGov(_gov: PromiseOrValue<string>, overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     setInManagerMode(
-      _inManagerMode: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _inManagerMode: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setInPrivateLiquidationMode(
-      _inPrivateLiquidationMode: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _inPrivateLiquidationMode: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setIsLeverageEnabled(
-      _isLeverageEnabled: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _isLeverageEnabled: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setIsSwapEnabled(
-      _isSwapEnabled: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _isSwapEnabled: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setLiquidator(
-      _liquidator: string,
-      _isActive: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _liquidator: PromiseOrValue<string>,
+      _isActive: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setManager(
-      _manager: string,
-      _isManager: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _manager: PromiseOrValue<string>,
+      _isManager: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setMaxGasPrice(
-      _maxGasPrice: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _maxGasPrice: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setMaxGlobalShortSize(
-      _token: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setMaxLeverage(
-      _maxLeverage: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _maxLeverage: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setPriceFeed(_priceFeed: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setPriceFeed(
+      _priceFeed: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     setTokenConfig(
-      _token: string,
-      _tokenDecimals: BigNumberish,
-      _tokenWeight: BigNumberish,
-      _minProfitBps: BigNumberish,
-      _maxUsdmAmount: BigNumberish,
-      _isStable: boolean,
-      _isShortable: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      _tokenDecimals: PromiseOrValue<BigNumberish>,
+      _tokenWeight: PromiseOrValue<BigNumberish>,
+      _minProfitBps: PromiseOrValue<BigNumberish>,
+      _maxUsdmAmount: PromiseOrValue<BigNumberish>,
+      _isStable: PromiseOrValue<boolean>,
+      _isShortable: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setUsdmAmount(
-      _token: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setVaultUtils(_vaultUtils: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setVaultUtils(
+      _vaultUtils: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
-    shortableTokens(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    shortableTokens(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     stableFundingRateFactor(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -2860,65 +3147,77 @@ export interface Vault extends BaseContract {
 
     stableTaxBasisPoints(overrides?: CallOverrides): Promise<BigNumber>;
 
-    stableTokens(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    stableTokens(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     swap(
-      _tokenIn: string,
-      _tokenOut: string,
-      _receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokenIn: PromiseOrValue<string>,
+      _tokenOut: PromiseOrValue<string>,
+      _receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     swapFeeBasisPoints(overrides?: CallOverrides): Promise<BigNumber>;
 
     taxBasisPoints(overrides?: CallOverrides): Promise<BigNumber>;
 
-    tokenBalances(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    tokenBalances(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    tokenDecimals(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    tokenDecimals(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    tokenToUsdMin(_token: string, _tokenAmount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    tokenToUsdMin(
+      _token: PromiseOrValue<string>,
+      _tokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    tokenWeights(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    tokenWeights(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     totalTokenWeights(overrides?: CallOverrides): Promise<BigNumber>;
 
     updateCumulativeFundingRate(
-      _collateralToken: string,
-      _indexToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _collateralToken: PromiseOrValue<string>,
+      _indexToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     upgradeVault(
-      _newVault: string,
-      _token: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newVault: PromiseOrValue<string>,
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     usdToToken(
-      _token: string,
-      _usdAmount: BigNumberish,
-      _price: BigNumberish,
+      _token: PromiseOrValue<string>,
+      _usdAmount: PromiseOrValue<BigNumberish>,
+      _price: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    usdToTokenMax(_token: string, _usdAmount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    usdToTokenMax(
+      _token: PromiseOrValue<string>,
+      _usdAmount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    usdToTokenMin(_token: string, _usdAmount: BigNumberish, overrides?: CallOverrides): Promise<BigNumber>;
+    usdToTokenMin(
+      _token: PromiseOrValue<string>,
+      _usdAmount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     usdm(overrides?: CallOverrides): Promise<BigNumber>;
 
-    usdmAmounts(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    usdmAmounts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     useSwapPricing(overrides?: CallOverrides): Promise<BigNumber>;
 
     validateLiquidation(
-      _account: string,
-      _collateralToken: string,
-      _indexToken: string,
-      _isLong: boolean,
-      _raise: boolean,
+      _account: PromiseOrValue<string>,
+      _collateralToken: PromiseOrValue<string>,
+      _indexToken: PromiseOrValue<string>,
+      _isLong: PromiseOrValue<boolean>,
+      _raise: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
@@ -2926,12 +3225,12 @@ export interface Vault extends BaseContract {
 
     whitelistedTokenCount(overrides?: CallOverrides): Promise<BigNumber>;
 
-    whitelistedTokens(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    whitelistedTokens(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     withdrawFees(
-      _token: string,
-      _receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      _receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
@@ -2955,187 +3254,194 @@ export interface Vault extends BaseContract {
     USDM_DECIMALS(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     addRouter(
-      _router: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _router: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     adjustForDecimals(
-      _amount: BigNumberish,
-      _tokenDiv: string,
-      _tokenMul: string,
+      _amount: PromiseOrValue<BigNumberish>,
+      _tokenDiv: PromiseOrValue<string>,
+      _tokenMul: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    allWhitelistedTokens(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    allWhitelistedTokens(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     allWhitelistedTokensLength(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    approvedRouters(arg0: string, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    approvedRouters(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    bufferAmounts(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    bufferAmounts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     buyUSDM(
-      _token: string,
-      _receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      _receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     clearTokenConfig(
-      _token: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    cumulativeFundingRates(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    cumulativeFundingRates(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     decreasePosition(
-      _account: string,
-      _collateralToken: string,
-      _indexToken: string,
-      _collateralDelta: BigNumberish,
-      _sizeDelta: BigNumberish,
-      _isLong: boolean,
-      _receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _account: PromiseOrValue<string>,
+      _collateralToken: PromiseOrValue<string>,
+      _indexToken: PromiseOrValue<string>,
+      _collateralDelta: PromiseOrValue<BigNumberish>,
+      _sizeDelta: PromiseOrValue<BigNumberish>,
+      _isLong: PromiseOrValue<boolean>,
+      _receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     directPoolDeposit(
-      _token: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     errorController(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    errors(arg0: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    errors(arg0: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    feeReserves(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    feeReserves(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     fundingInterval(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     fundingRateFactor(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getDelta(
-      _indexToken: string,
-      _size: BigNumberish,
-      _averagePrice: BigNumberish,
-      _isLong: boolean,
-      _lastIncreasedTime: BigNumberish,
+      _indexToken: PromiseOrValue<string>,
+      _size: PromiseOrValue<BigNumberish>,
+      _averagePrice: PromiseOrValue<BigNumberish>,
+      _isLong: PromiseOrValue<boolean>,
+      _lastIncreasedTime: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     getEntryFundingRate(
-      _collateralToken: string,
-      _indexToken: string,
-      _isLong: boolean,
+      _collateralToken: PromiseOrValue<string>,
+      _indexToken: PromiseOrValue<string>,
+      _isLong: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     getFeeBasisPoints(
-      _token: string,
-      _usdmDelta: BigNumberish,
-      _feeBasisPoints: BigNumberish,
-      _taxBasisPoints: BigNumberish,
-      _increment: boolean,
+      _token: PromiseOrValue<string>,
+      _usdmDelta: PromiseOrValue<BigNumberish>,
+      _feeBasisPoints: PromiseOrValue<BigNumberish>,
+      _taxBasisPoints: PromiseOrValue<BigNumberish>,
+      _increment: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     getFundingFee(
-      _account: string,
-      _collateralToken: string,
-      _indexToken: string,
-      _isLong: boolean,
-      _size: BigNumberish,
-      _entryFundingRate: BigNumberish,
+      _account: PromiseOrValue<string>,
+      _collateralToken: PromiseOrValue<string>,
+      _indexToken: PromiseOrValue<string>,
+      _isLong: PromiseOrValue<boolean>,
+      _size: PromiseOrValue<BigNumberish>,
+      _entryFundingRate: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    getGlobalShortDelta(_token: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getGlobalShortDelta(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getMaxPrice(_token: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getMaxPrice(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getMinPrice(_token: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getMinPrice(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getNextAveragePrice(
-      _indexToken: string,
-      _size: BigNumberish,
-      _averagePrice: BigNumberish,
-      _isLong: boolean,
-      _nextPrice: BigNumberish,
-      _sizeDelta: BigNumberish,
-      _lastIncreasedTime: BigNumberish,
+      _indexToken: PromiseOrValue<string>,
+      _size: PromiseOrValue<BigNumberish>,
+      _averagePrice: PromiseOrValue<BigNumberish>,
+      _isLong: PromiseOrValue<boolean>,
+      _nextPrice: PromiseOrValue<BigNumberish>,
+      _sizeDelta: PromiseOrValue<BigNumberish>,
+      _lastIncreasedTime: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    getNextFundingRate(_token: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getNextFundingRate(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getNextGlobalShortAveragePrice(
-      _indexToken: string,
-      _nextPrice: BigNumberish,
-      _sizeDelta: BigNumberish,
+      _indexToken: PromiseOrValue<string>,
+      _nextPrice: PromiseOrValue<BigNumberish>,
+      _sizeDelta: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     getPosition(
-      _account: string,
-      _collateralToken: string,
-      _indexToken: string,
-      _isLong: boolean,
+      _account: PromiseOrValue<string>,
+      _collateralToken: PromiseOrValue<string>,
+      _indexToken: PromiseOrValue<string>,
+      _isLong: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     getPositionDelta(
-      _account: string,
-      _collateralToken: string,
-      _indexToken: string,
-      _isLong: boolean,
+      _account: PromiseOrValue<string>,
+      _collateralToken: PromiseOrValue<string>,
+      _indexToken: PromiseOrValue<string>,
+      _isLong: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     getPositionFee(
-      _account: string,
-      _collateralToken: string,
-      _indexToken: string,
-      _isLong: boolean,
-      _sizeDelta: BigNumberish,
+      _account: PromiseOrValue<string>,
+      _collateralToken: PromiseOrValue<string>,
+      _indexToken: PromiseOrValue<string>,
+      _isLong: PromiseOrValue<boolean>,
+      _sizeDelta: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     getPositionKey(
-      _account: string,
-      _collateralToken: string,
-      _indexToken: string,
-      _isLong: boolean,
+      _account: PromiseOrValue<string>,
+      _collateralToken: PromiseOrValue<string>,
+      _indexToken: PromiseOrValue<string>,
+      _isLong: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     getPositionLeverage(
-      _account: string,
-      _collateralToken: string,
-      _indexToken: string,
-      _isLong: boolean,
+      _account: PromiseOrValue<string>,
+      _collateralToken: PromiseOrValue<string>,
+      _indexToken: PromiseOrValue<string>,
+      _isLong: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
     getRedemptionAmount(
-      _token: string,
-      _usdmAmount: BigNumberish,
+      _token: PromiseOrValue<string>,
+      _usdmAmount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    getRedemptionCollateral(_token: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getRedemptionCollateral(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getRedemptionCollateralUsd(_token: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getRedemptionCollateralUsd(
+      _token: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    getTargetUsdmAmount(_token: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getTargetUsdmAmount(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getUtilisation(_token: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getUtilisation(_token: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    globalShortAveragePrices(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    globalShortAveragePrices(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    globalShortSizes(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    globalShortSizes(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     gov(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    guaranteedUsd(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    guaranteedUsd(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     hasDynamicFees(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -3146,43 +3452,43 @@ export interface Vault extends BaseContract {
     includeAmmPrice(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     increasePosition(
-      _account: string,
-      _collateralToken: string,
-      _indexToken: string,
-      _sizeDelta: BigNumberish,
-      _isLong: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _account: PromiseOrValue<string>,
+      _collateralToken: PromiseOrValue<string>,
+      _indexToken: PromiseOrValue<string>,
+      _sizeDelta: PromiseOrValue<BigNumberish>,
+      _isLong: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     initialize(
-      _router: string,
-      _usdm: string,
-      _priceFeed: string,
-      _liquidationFeeUsd: BigNumberish,
-      _fundingRateFactor: BigNumberish,
-      _stableFundingRateFactor: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _router: PromiseOrValue<string>,
+      _usdm: PromiseOrValue<string>,
+      _priceFeed: PromiseOrValue<string>,
+      _liquidationFeeUsd: PromiseOrValue<BigNumberish>,
+      _fundingRateFactor: PromiseOrValue<BigNumberish>,
+      _stableFundingRateFactor: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     isInitialized(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     isLeverageEnabled(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    isLiquidator(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    isLiquidator(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    isManager(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    isManager(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     isSwapEnabled(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    lastFundingTimes(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    lastFundingTimes(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     liquidatePosition(
-      _account: string,
-      _collateralToken: string,
-      _indexToken: string,
-      _isLong: boolean,
-      _feeReceiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _account: PromiseOrValue<string>,
+      _collateralToken: PromiseOrValue<string>,
+      _indexToken: PromiseOrValue<string>,
+      _isLong: PromiseOrValue<boolean>,
+      _feeReceiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     liquidationFeeUsd(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -3191,154 +3497,157 @@ export interface Vault extends BaseContract {
 
     maxGasPrice(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    maxGlobalShortSizes(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    maxGlobalShortSizes(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     maxLeverage(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    maxUsdmAmounts(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    maxUsdmAmounts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    minProfitBasisPoints(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    minProfitBasisPoints(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     minProfitTime(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     mintBurnFeeBasisPoints(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    poolAmounts(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    poolAmounts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    positions(arg0: BytesLike, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    positions(arg0: PromiseOrValue<BytesLike>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     priceFeed(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     removeRouter(
-      _router: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _router: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    reservedAmounts(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    reservedAmounts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     router(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     sellUSDM(
-      _token: string,
-      _receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      _receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setBufferAmount(
-      _token: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setError(
-      _errorCode: BigNumberish,
-      _error: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _errorCode: PromiseOrValue<BigNumberish>,
+      _error: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setErrorController(
-      _errorController: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _errorController: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setFees(
-      _taxBasisPoints: BigNumberish,
-      _stableTaxBasisPoints: BigNumberish,
-      _mintBurnFeeBasisPoints: BigNumberish,
-      _swapFeeBasisPoints: BigNumberish,
-      _stableSwapFeeBasisPoints: BigNumberish,
-      _marginFeeBasisPoints: BigNumberish,
-      _liquidationFeeUsd: BigNumberish,
-      _minProfitTime: BigNumberish,
-      _hasDynamicFees: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _taxBasisPoints: PromiseOrValue<BigNumberish>,
+      _stableTaxBasisPoints: PromiseOrValue<BigNumberish>,
+      _mintBurnFeeBasisPoints: PromiseOrValue<BigNumberish>,
+      _swapFeeBasisPoints: PromiseOrValue<BigNumberish>,
+      _stableSwapFeeBasisPoints: PromiseOrValue<BigNumberish>,
+      _marginFeeBasisPoints: PromiseOrValue<BigNumberish>,
+      _liquidationFeeUsd: PromiseOrValue<BigNumberish>,
+      _minProfitTime: PromiseOrValue<BigNumberish>,
+      _hasDynamicFees: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setFundingRate(
-      _fundingInterval: BigNumberish,
-      _fundingRateFactor: BigNumberish,
-      _stableFundingRateFactor: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _fundingInterval: PromiseOrValue<BigNumberish>,
+      _fundingRateFactor: PromiseOrValue<BigNumberish>,
+      _stableFundingRateFactor: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    setGov(_gov: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    setGov(
+      _gov: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
     setInManagerMode(
-      _inManagerMode: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _inManagerMode: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setInPrivateLiquidationMode(
-      _inPrivateLiquidationMode: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _inPrivateLiquidationMode: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setIsLeverageEnabled(
-      _isLeverageEnabled: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _isLeverageEnabled: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setIsSwapEnabled(
-      _isSwapEnabled: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _isSwapEnabled: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setLiquidator(
-      _liquidator: string,
-      _isActive: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _liquidator: PromiseOrValue<string>,
+      _isActive: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setManager(
-      _manager: string,
-      _isManager: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _manager: PromiseOrValue<string>,
+      _isManager: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setMaxGasPrice(
-      _maxGasPrice: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _maxGasPrice: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setMaxGlobalShortSize(
-      _token: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setMaxLeverage(
-      _maxLeverage: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _maxLeverage: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setPriceFeed(
-      _priceFeed: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _priceFeed: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setTokenConfig(
-      _token: string,
-      _tokenDecimals: BigNumberish,
-      _tokenWeight: BigNumberish,
-      _minProfitBps: BigNumberish,
-      _maxUsdmAmount: BigNumberish,
-      _isStable: boolean,
-      _isShortable: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      _tokenDecimals: PromiseOrValue<BigNumberish>,
+      _tokenWeight: PromiseOrValue<BigNumberish>,
+      _minProfitBps: PromiseOrValue<BigNumberish>,
+      _maxUsdmAmount: PromiseOrValue<BigNumberish>,
+      _isStable: PromiseOrValue<boolean>,
+      _isShortable: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setUsdmAmount(
-      _token: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setVaultUtils(
-      _vaultUtils: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _vaultUtils: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    shortableTokens(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    shortableTokens(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     stableFundingRateFactor(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -3346,65 +3655,77 @@ export interface Vault extends BaseContract {
 
     stableTaxBasisPoints(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    stableTokens(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    stableTokens(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     swap(
-      _tokenIn: string,
-      _tokenOut: string,
-      _receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokenIn: PromiseOrValue<string>,
+      _tokenOut: PromiseOrValue<string>,
+      _receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     swapFeeBasisPoints(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     taxBasisPoints(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    tokenBalances(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    tokenBalances(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    tokenDecimals(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    tokenDecimals(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    tokenToUsdMin(_token: string, _tokenAmount: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    tokenToUsdMin(
+      _token: PromiseOrValue<string>,
+      _tokenAmount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    tokenWeights(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    tokenWeights(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalTokenWeights(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     updateCumulativeFundingRate(
-      _collateralToken: string,
-      _indexToken: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _collateralToken: PromiseOrValue<string>,
+      _indexToken: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     upgradeVault(
-      _newVault: string,
-      _token: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _newVault: PromiseOrValue<string>,
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     usdToToken(
-      _token: string,
-      _usdAmount: BigNumberish,
-      _price: BigNumberish,
+      _token: PromiseOrValue<string>,
+      _usdAmount: PromiseOrValue<BigNumberish>,
+      _price: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    usdToTokenMax(_token: string, _usdAmount: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    usdToTokenMax(
+      _token: PromiseOrValue<string>,
+      _usdAmount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    usdToTokenMin(_token: string, _usdAmount: BigNumberish, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    usdToTokenMin(
+      _token: PromiseOrValue<string>,
+      _usdAmount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     usdm(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    usdmAmounts(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    usdmAmounts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     useSwapPricing(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     validateLiquidation(
-      _account: string,
-      _collateralToken: string,
-      _indexToken: string,
-      _isLong: boolean,
-      _raise: boolean,
+      _account: PromiseOrValue<string>,
+      _collateralToken: PromiseOrValue<string>,
+      _indexToken: PromiseOrValue<string>,
+      _isLong: PromiseOrValue<boolean>,
+      _raise: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
@@ -3412,12 +3733,12 @@ export interface Vault extends BaseContract {
 
     whitelistedTokenCount(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    whitelistedTokens(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    whitelistedTokens(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     withdrawFees(
-      _token: string,
-      _receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      _receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

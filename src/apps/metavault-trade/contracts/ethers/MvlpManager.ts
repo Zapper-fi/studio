@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface MvlpManagerInterface extends utils.Interface {
   functions: {
@@ -80,33 +80,62 @@ export interface MvlpManagerInterface extends utils.Interface {
   encodeFunctionData(functionFragment: 'USDM_DECIMALS', values?: undefined): string;
   encodeFunctionData(
     functionFragment: 'addLiquidity',
-    values: [string, BigNumberish, BigNumberish, BigNumberish],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
   encodeFunctionData(
     functionFragment: 'addLiquidityForAccount',
-    values: [string, string, string, BigNumberish, BigNumberish, BigNumberish],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+    ],
   ): string;
   encodeFunctionData(functionFragment: 'aumAddition', values?: undefined): string;
   encodeFunctionData(functionFragment: 'aumDeduction', values?: undefined): string;
   encodeFunctionData(functionFragment: 'cooldownDuration', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'getAum', values: [boolean]): string;
-  encodeFunctionData(functionFragment: 'getAumInUsdm', values: [boolean]): string;
+  encodeFunctionData(functionFragment: 'getAum', values: [PromiseOrValue<boolean>]): string;
+  encodeFunctionData(functionFragment: 'getAumInUsdm', values: [PromiseOrValue<boolean>]): string;
   encodeFunctionData(functionFragment: 'getAums', values?: undefined): string;
   encodeFunctionData(functionFragment: 'gov', values?: undefined): string;
   encodeFunctionData(functionFragment: 'inPrivateMode', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'isHandler', values: [string]): string;
-  encodeFunctionData(functionFragment: 'lastAddedAt', values: [string]): string;
+  encodeFunctionData(functionFragment: 'isHandler', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'lastAddedAt', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'mvlp', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'removeLiquidity', values: [string, BigNumberish, BigNumberish, string]): string;
+  encodeFunctionData(
+    functionFragment: 'removeLiquidity',
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+    ],
+  ): string;
   encodeFunctionData(
     functionFragment: 'removeLiquidityForAccount',
-    values: [string, string, BigNumberish, BigNumberish, string],
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<string>,
+    ],
   ): string;
-  encodeFunctionData(functionFragment: 'setAumAdjustment', values: [BigNumberish, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setCooldownDuration', values: [BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'setGov', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setHandler', values: [string, boolean]): string;
-  encodeFunctionData(functionFragment: 'setInPrivateMode', values: [boolean]): string;
+  encodeFunctionData(
+    functionFragment: 'setAumAdjustment',
+    values: [PromiseOrValue<BigNumberish>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'setCooldownDuration', values: [PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(functionFragment: 'setGov', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setHandler', values: [PromiseOrValue<string>, PromiseOrValue<boolean>]): string;
+  encodeFunctionData(functionFragment: 'setInPrivateMode', values: [PromiseOrValue<boolean>]): string;
   encodeFunctionData(functionFragment: 'usdm', values?: undefined): string;
   encodeFunctionData(functionFragment: 'vault', values?: undefined): string;
 
@@ -207,21 +236,21 @@ export interface MvlpManager extends BaseContract {
     USDM_DECIMALS(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     addLiquidity(
-      _token: string,
-      _amount: BigNumberish,
-      _minUsdm: BigNumberish,
-      _minMvlp: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      _minUsdm: PromiseOrValue<BigNumberish>,
+      _minMvlp: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     addLiquidityForAccount(
-      _fundingAccount: string,
-      _account: string,
-      _token: string,
-      _amount: BigNumberish,
-      _minUsdm: BigNumberish,
-      _minMvlp: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _fundingAccount: PromiseOrValue<string>,
+      _account: PromiseOrValue<string>,
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      _minUsdm: PromiseOrValue<BigNumberish>,
+      _minMvlp: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     aumAddition(overrides?: CallOverrides): Promise<[BigNumber]>;
@@ -230,9 +259,9 @@ export interface MvlpManager extends BaseContract {
 
     cooldownDuration(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getAum(maximise: boolean, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getAum(maximise: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    getAumInUsdm(maximise: boolean, overrides?: CallOverrides): Promise<[BigNumber]>;
+    getAumInUsdm(maximise: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     getAums(overrides?: CallOverrides): Promise<[BigNumber[]]>;
 
@@ -240,51 +269,54 @@ export interface MvlpManager extends BaseContract {
 
     inPrivateMode(overrides?: CallOverrides): Promise<[boolean]>;
 
-    isHandler(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    isHandler(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
-    lastAddedAt(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    lastAddedAt(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     mvlp(overrides?: CallOverrides): Promise<[string]>;
 
     removeLiquidity(
-      _tokenOut: string,
-      _mvlpAmount: BigNumberish,
-      _minOut: BigNumberish,
-      _receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokenOut: PromiseOrValue<string>,
+      _mvlpAmount: PromiseOrValue<BigNumberish>,
+      _minOut: PromiseOrValue<BigNumberish>,
+      _receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     removeLiquidityForAccount(
-      _account: string,
-      _tokenOut: string,
-      _mvlpAmount: BigNumberish,
-      _minOut: BigNumberish,
-      _receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _account: PromiseOrValue<string>,
+      _tokenOut: PromiseOrValue<string>,
+      _mvlpAmount: PromiseOrValue<BigNumberish>,
+      _minOut: PromiseOrValue<BigNumberish>,
+      _receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setAumAdjustment(
-      _aumAddition: BigNumberish,
-      _aumDeduction: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _aumAddition: PromiseOrValue<BigNumberish>,
+      _aumDeduction: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setCooldownDuration(
-      _cooldownDuration: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _cooldownDuration: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    setGov(_gov: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    setGov(
+      _gov: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     setHandler(
-      _handler: string,
-      _isActive: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _handler: PromiseOrValue<string>,
+      _isActive: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setInPrivateMode(
-      _inPrivateMode: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _inPrivateMode: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     usdm(overrides?: CallOverrides): Promise<[string]>;
@@ -299,21 +331,21 @@ export interface MvlpManager extends BaseContract {
   USDM_DECIMALS(overrides?: CallOverrides): Promise<BigNumber>;
 
   addLiquidity(
-    _token: string,
-    _amount: BigNumberish,
-    _minUsdm: BigNumberish,
-    _minMvlp: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _token: PromiseOrValue<string>,
+    _amount: PromiseOrValue<BigNumberish>,
+    _minUsdm: PromiseOrValue<BigNumberish>,
+    _minMvlp: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   addLiquidityForAccount(
-    _fundingAccount: string,
-    _account: string,
-    _token: string,
-    _amount: BigNumberish,
-    _minUsdm: BigNumberish,
-    _minMvlp: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _fundingAccount: PromiseOrValue<string>,
+    _account: PromiseOrValue<string>,
+    _token: PromiseOrValue<string>,
+    _amount: PromiseOrValue<BigNumberish>,
+    _minUsdm: PromiseOrValue<BigNumberish>,
+    _minMvlp: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   aumAddition(overrides?: CallOverrides): Promise<BigNumber>;
@@ -322,9 +354,9 @@ export interface MvlpManager extends BaseContract {
 
   cooldownDuration(overrides?: CallOverrides): Promise<BigNumber>;
 
-  getAum(maximise: boolean, overrides?: CallOverrides): Promise<BigNumber>;
+  getAum(maximise: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  getAumInUsdm(maximise: boolean, overrides?: CallOverrides): Promise<BigNumber>;
+  getAumInUsdm(maximise: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<BigNumber>;
 
   getAums(overrides?: CallOverrides): Promise<BigNumber[]>;
 
@@ -332,51 +364,54 @@ export interface MvlpManager extends BaseContract {
 
   inPrivateMode(overrides?: CallOverrides): Promise<boolean>;
 
-  isHandler(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  isHandler(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-  lastAddedAt(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  lastAddedAt(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   mvlp(overrides?: CallOverrides): Promise<string>;
 
   removeLiquidity(
-    _tokenOut: string,
-    _mvlpAmount: BigNumberish,
-    _minOut: BigNumberish,
-    _receiver: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _tokenOut: PromiseOrValue<string>,
+    _mvlpAmount: PromiseOrValue<BigNumberish>,
+    _minOut: PromiseOrValue<BigNumberish>,
+    _receiver: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   removeLiquidityForAccount(
-    _account: string,
-    _tokenOut: string,
-    _mvlpAmount: BigNumberish,
-    _minOut: BigNumberish,
-    _receiver: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _account: PromiseOrValue<string>,
+    _tokenOut: PromiseOrValue<string>,
+    _mvlpAmount: PromiseOrValue<BigNumberish>,
+    _minOut: PromiseOrValue<BigNumberish>,
+    _receiver: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setAumAdjustment(
-    _aumAddition: BigNumberish,
-    _aumDeduction: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _aumAddition: PromiseOrValue<BigNumberish>,
+    _aumDeduction: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setCooldownDuration(
-    _cooldownDuration: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _cooldownDuration: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  setGov(_gov: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  setGov(
+    _gov: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   setHandler(
-    _handler: string,
-    _isActive: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _handler: PromiseOrValue<string>,
+    _isActive: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setInPrivateMode(
-    _inPrivateMode: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _inPrivateMode: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   usdm(overrides?: CallOverrides): Promise<string>;
@@ -391,20 +426,20 @@ export interface MvlpManager extends BaseContract {
     USDM_DECIMALS(overrides?: CallOverrides): Promise<BigNumber>;
 
     addLiquidity(
-      _token: string,
-      _amount: BigNumberish,
-      _minUsdm: BigNumberish,
-      _minMvlp: BigNumberish,
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      _minUsdm: PromiseOrValue<BigNumberish>,
+      _minMvlp: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     addLiquidityForAccount(
-      _fundingAccount: string,
-      _account: string,
-      _token: string,
-      _amount: BigNumberish,
-      _minUsdm: BigNumberish,
-      _minMvlp: BigNumberish,
+      _fundingAccount: PromiseOrValue<string>,
+      _account: PromiseOrValue<string>,
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      _minUsdm: PromiseOrValue<BigNumberish>,
+      _minMvlp: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
@@ -414,9 +449,9 @@ export interface MvlpManager extends BaseContract {
 
     cooldownDuration(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getAum(maximise: boolean, overrides?: CallOverrides): Promise<BigNumber>;
+    getAum(maximise: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getAumInUsdm(maximise: boolean, overrides?: CallOverrides): Promise<BigNumber>;
+    getAumInUsdm(maximise: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getAums(overrides?: CallOverrides): Promise<BigNumber[]>;
 
@@ -424,38 +459,46 @@ export interface MvlpManager extends BaseContract {
 
     inPrivateMode(overrides?: CallOverrides): Promise<boolean>;
 
-    isHandler(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    isHandler(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-    lastAddedAt(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    lastAddedAt(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     mvlp(overrides?: CallOverrides): Promise<string>;
 
     removeLiquidity(
-      _tokenOut: string,
-      _mvlpAmount: BigNumberish,
-      _minOut: BigNumberish,
-      _receiver: string,
+      _tokenOut: PromiseOrValue<string>,
+      _mvlpAmount: PromiseOrValue<BigNumberish>,
+      _minOut: PromiseOrValue<BigNumberish>,
+      _receiver: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
     removeLiquidityForAccount(
-      _account: string,
-      _tokenOut: string,
-      _mvlpAmount: BigNumberish,
-      _minOut: BigNumberish,
-      _receiver: string,
+      _account: PromiseOrValue<string>,
+      _tokenOut: PromiseOrValue<string>,
+      _mvlpAmount: PromiseOrValue<BigNumberish>,
+      _minOut: PromiseOrValue<BigNumberish>,
+      _receiver: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<BigNumber>;
 
-    setAumAdjustment(_aumAddition: BigNumberish, _aumDeduction: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setAumAdjustment(
+      _aumAddition: PromiseOrValue<BigNumberish>,
+      _aumDeduction: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setCooldownDuration(_cooldownDuration: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    setCooldownDuration(_cooldownDuration: PromiseOrValue<BigNumberish>, overrides?: CallOverrides): Promise<void>;
 
-    setGov(_gov: string, overrides?: CallOverrides): Promise<void>;
+    setGov(_gov: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
 
-    setHandler(_handler: string, _isActive: boolean, overrides?: CallOverrides): Promise<void>;
+    setHandler(
+      _handler: PromiseOrValue<string>,
+      _isActive: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    setInPrivateMode(_inPrivateMode: boolean, overrides?: CallOverrides): Promise<void>;
+    setInPrivateMode(_inPrivateMode: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
 
     usdm(overrides?: CallOverrides): Promise<string>;
 
@@ -510,21 +553,21 @@ export interface MvlpManager extends BaseContract {
     USDM_DECIMALS(overrides?: CallOverrides): Promise<BigNumber>;
 
     addLiquidity(
-      _token: string,
-      _amount: BigNumberish,
-      _minUsdm: BigNumberish,
-      _minMvlp: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      _minUsdm: PromiseOrValue<BigNumberish>,
+      _minMvlp: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     addLiquidityForAccount(
-      _fundingAccount: string,
-      _account: string,
-      _token: string,
-      _amount: BigNumberish,
-      _minUsdm: BigNumberish,
-      _minMvlp: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _fundingAccount: PromiseOrValue<string>,
+      _account: PromiseOrValue<string>,
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      _minUsdm: PromiseOrValue<BigNumberish>,
+      _minMvlp: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     aumAddition(overrides?: CallOverrides): Promise<BigNumber>;
@@ -533,9 +576,9 @@ export interface MvlpManager extends BaseContract {
 
     cooldownDuration(overrides?: CallOverrides): Promise<BigNumber>;
 
-    getAum(maximise: boolean, overrides?: CallOverrides): Promise<BigNumber>;
+    getAum(maximise: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    getAumInUsdm(maximise: boolean, overrides?: CallOverrides): Promise<BigNumber>;
+    getAumInUsdm(maximise: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<BigNumber>;
 
     getAums(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -543,51 +586,51 @@ export interface MvlpManager extends BaseContract {
 
     inPrivateMode(overrides?: CallOverrides): Promise<BigNumber>;
 
-    isHandler(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    isHandler(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    lastAddedAt(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    lastAddedAt(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     mvlp(overrides?: CallOverrides): Promise<BigNumber>;
 
     removeLiquidity(
-      _tokenOut: string,
-      _mvlpAmount: BigNumberish,
-      _minOut: BigNumberish,
-      _receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokenOut: PromiseOrValue<string>,
+      _mvlpAmount: PromiseOrValue<BigNumberish>,
+      _minOut: PromiseOrValue<BigNumberish>,
+      _receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     removeLiquidityForAccount(
-      _account: string,
-      _tokenOut: string,
-      _mvlpAmount: BigNumberish,
-      _minOut: BigNumberish,
-      _receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _account: PromiseOrValue<string>,
+      _tokenOut: PromiseOrValue<string>,
+      _mvlpAmount: PromiseOrValue<BigNumberish>,
+      _minOut: PromiseOrValue<BigNumberish>,
+      _receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setAumAdjustment(
-      _aumAddition: BigNumberish,
-      _aumDeduction: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _aumAddition: PromiseOrValue<BigNumberish>,
+      _aumDeduction: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setCooldownDuration(
-      _cooldownDuration: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _cooldownDuration: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setGov(_gov: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setGov(_gov: PromiseOrValue<string>, overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     setHandler(
-      _handler: string,
-      _isActive: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _handler: PromiseOrValue<string>,
+      _isActive: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setInPrivateMode(
-      _inPrivateMode: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _inPrivateMode: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     usdm(overrides?: CallOverrides): Promise<BigNumber>;
@@ -603,21 +646,21 @@ export interface MvlpManager extends BaseContract {
     USDM_DECIMALS(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     addLiquidity(
-      _token: string,
-      _amount: BigNumberish,
-      _minUsdm: BigNumberish,
-      _minMvlp: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      _minUsdm: PromiseOrValue<BigNumberish>,
+      _minMvlp: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     addLiquidityForAccount(
-      _fundingAccount: string,
-      _account: string,
-      _token: string,
-      _amount: BigNumberish,
-      _minUsdm: BigNumberish,
-      _minMvlp: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _fundingAccount: PromiseOrValue<string>,
+      _account: PromiseOrValue<string>,
+      _token: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      _minUsdm: PromiseOrValue<BigNumberish>,
+      _minMvlp: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     aumAddition(overrides?: CallOverrides): Promise<PopulatedTransaction>;
@@ -626,9 +669,9 @@ export interface MvlpManager extends BaseContract {
 
     cooldownDuration(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getAum(maximise: boolean, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getAum(maximise: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    getAumInUsdm(maximise: boolean, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    getAumInUsdm(maximise: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     getAums(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -636,51 +679,54 @@ export interface MvlpManager extends BaseContract {
 
     inPrivateMode(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    isHandler(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    isHandler(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    lastAddedAt(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    lastAddedAt(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     mvlp(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     removeLiquidity(
-      _tokenOut: string,
-      _mvlpAmount: BigNumberish,
-      _minOut: BigNumberish,
-      _receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _tokenOut: PromiseOrValue<string>,
+      _mvlpAmount: PromiseOrValue<BigNumberish>,
+      _minOut: PromiseOrValue<BigNumberish>,
+      _receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     removeLiquidityForAccount(
-      _account: string,
-      _tokenOut: string,
-      _mvlpAmount: BigNumberish,
-      _minOut: BigNumberish,
-      _receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _account: PromiseOrValue<string>,
+      _tokenOut: PromiseOrValue<string>,
+      _mvlpAmount: PromiseOrValue<BigNumberish>,
+      _minOut: PromiseOrValue<BigNumberish>,
+      _receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setAumAdjustment(
-      _aumAddition: BigNumberish,
-      _aumDeduction: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _aumAddition: PromiseOrValue<BigNumberish>,
+      _aumDeduction: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setCooldownDuration(
-      _cooldownDuration: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _cooldownDuration: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    setGov(_gov: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    setGov(
+      _gov: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
     setHandler(
-      _handler: string,
-      _isActive: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _handler: PromiseOrValue<string>,
+      _isActive: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setInPrivateMode(
-      _inPrivateMode: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _inPrivateMode: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     usdm(overrides?: CallOverrides): Promise<PopulatedTransaction>;

@@ -10,19 +10,19 @@ import { Network } from '~types/network.interface';
 import { MetavaultTradeContractFactory } from '../contracts';
 import { METAVAULT_TRADE_DEFINITION } from '../metavault-trade.definition';
 
-type GetMvxEsMvxTokenParams = {
+type GetMetavaultTradeEsMvxTokenParams = {
   network: Network;
   esMvxTokenAddress: string;
 };
 
 @Injectable()
-export class MvxEsMvxTokenHelper {
+export class MetavaultTradeEsMvxTokenHelper {
   constructor(
     @Inject(MetavaultTradeContractFactory) private readonly contractFactory: MetavaultTradeContractFactory,
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
   ) {}
 
-  async getTokens({ network, esMvxTokenAddress }: GetMvxEsMvxTokenParams) {
+  async getTokens({ network, esMvxTokenAddress }: GetMetavaultTradeEsMvxTokenParams) {
     const multicall = this.appToolkit.getMulticall(network);
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
     const underlyingToken = baseTokens.find(p => p.symbol === 'MVX')!;
