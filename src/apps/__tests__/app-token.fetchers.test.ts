@@ -9,9 +9,14 @@ import { AppToolkitModule } from '~app-toolkit/app-toolkit.module';
 import { AppsModule } from '~apps/apps.module';
 import { AppTokenPosition } from '~position/position.interface';
 
-import { getAllAppTokenFetchers } from './common';
+import { getAllAppTokenFetchers, getChangedAppIds, getChangedAppTokenFetchers } from './common';
 
 require('jest-specific-snapshot');
+
+const apiUrl = process.env.ZAPPER_API_URL ?? 'https://api.zapper.fi';
+const apiKey = process.env.ZAPPER_API_KEY ?? 'ad01527e-8133-4a68-ad67-fbf8d9040ad1';
+const recordMode = process.env.MODE === 'record';
+const fetchersUnderTest = recordMode ? getAllAppTokenFetchers() : getChangedAppTokenFetchers();
 
 describe.only('App Token Fetchers', () => {
   let moduleRef: TestingModule;
@@ -19,40 +24,28 @@ describe.only('App Token Fetchers', () => {
   let request: supertest.SuperTest<supertest.Test>;
 
   beforeAll(async () => {
-    if (process.env.APP_BASE_URL) {
-      request = supertest(process.env.APP_BASE_URL);
+    if (recordMode) {
+      request = supertest(apiUrl);
       return;
     }
 
+    process.env.ENABLED_APPS = getChangedAppIds().join(',');
     moduleRef = await Test.createTestingModule({
       imports: [
-        ConfigModule.forRoot({
-          isGlobal: true,
-          load: [
-            () => ({
-              zapperApi: {
-                url: process.env.ZAPPER_API_URL ?? 'https://api.zapper.fi',
-                key: process.env.ZAPPER_API_KEY ?? 'ad01527e-8133-4a68-ad67-fbf8d9040ad1',
-              },
-            }),
-          ],
-        }),
-        // @TODO: Pass in the files changed according to Git
         AppsModule.registerAsync({ appToolkitModule: AppToolkitModule }),
+        ConfigModule.forRoot({ isGlobal: true, load: [() => ({ zapperApi: { url: apiUrl, key: apiKey } })] }),
       ],
     }).compile();
 
-    app = moduleRef.createNestApplication();
-    await app.init();
-
+    app = await moduleRef.createNestApplication().init();
     request = supertest(app.getHttpServer());
   }, 30 * 1000);
 
   afterAll(async () => {
-    await moduleRef.close();
+    if (app) await app.close();
   });
 
-  describe.each(getAllAppTokenFetchers().slice(0, 3))(`(%s, %s, %s) positions`, (appId, network, groupId) => {
+  describe.each(fetchersUnderTest)(`(%s, %s, %s) positions`, (appId, network, groupId) => {
     let results: AppTokenPosition[];
 
     beforeAll(async () => {
@@ -60,8 +53,8 @@ describe.only('App Token Fetchers', () => {
       const localUrl = `/apps/${appId}/tokens?groupIds[]=${groupId}&network=${network}`;
 
       const response = await request
-        .get(prodUrl)
-        .set('Authorization', `Basic ${Buffer.from('ad01527e-8133-4a68-ad67-fbf8d9040ad1:').toString('base64')}`);
+        .get(recordMode ? prodUrl : localUrl)
+        .set('Authorization', `Basic ${Buffer.from(`${apiKey}:`).toString('base64')}`);
       results = response.body;
     });
 
