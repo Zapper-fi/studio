@@ -32,9 +32,16 @@ export const METAVAULT_TRADE_DEFINITION = appDefinition({
       label: 'Farms',
       groupLabel: 'Farms',
     },
+
+    option: {
+      id: 'option',
+      type: GroupType.POSITION,
+      label: 'Options',
+      groupLabel: 'Options',
+    },
   },
 
-  tags: [AppTag.DECENTRALIZED_EXCHANGE, AppTag.MARGIN_TRADING],
+  tags: [AppTag.MARGIN_TRADING],
   keywords: [],
   links: {
     github: 'https://github.com/metavaultorg/',

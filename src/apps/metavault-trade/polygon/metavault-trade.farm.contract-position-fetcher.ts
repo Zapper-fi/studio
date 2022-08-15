@@ -33,7 +33,7 @@ export const MVLP_FARM = {
 export const FARMS = [MVX_FARM, ES_MVX_FARM, MVLP_FARM];
 
 const appId = METAVAULT_TRADE_DEFINITION.id;
-const groupId = METAVAULT_TRADE_DEFINITION.groups.mvlp.id;
+const groupId = METAVAULT_TRADE_DEFINITION.groups.farm.id;
 const network = Network.POLYGON_MAINNET;
 
 @Register.ContractPositionFetcher({ appId, groupId, network })

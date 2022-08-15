@@ -4,6 +4,29 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.173.1](https://github.com/Zapper-fi/studio/compare/v0.173.0...v0.173.1) (2022-08-15)
+
+
+### Bug Fixes
+
+* **metavault-trade:** Display naming fixes. Positions list added. ([#1172](https://github.com/Zapper-fi/studio/issues/1172)) ([3a57c52](https://github.com/Zapper-fi/studio/commit/3a57c524386c8d2a7468954129435414c1001811))
+
+## [0.173.0](https://github.com/Zapper-fi/studio/compare/v0.172.0...v0.173.0) (2022-08-12)
+
+
+### Features
+
+* **app-toolkit:** Sunset other token selectors in favor of token deps ([#1163](https://github.com/Zapper-fi/studio/issues/1163)) ([95d36d4](https://github.com/Zapper-fi/studio/commit/95d36d44fdedf39efe127156e6b5e0be5d5ceda2))
+* **hakuswap:** Integrate Hakuswap ([#1155](https://github.com/Zapper-fi/studio/issues/1155)) ([3431579](https://github.com/Zapper-fi/studio/commit/3431579a735bb6f3d106acfa138ec1962e79b29f))
+* **yearn:** Migrate to template pattern ([#1156](https://github.com/Zapper-fi/studio/issues/1156)) ([3d400ce](https://github.com/Zapper-fi/studio/commit/3d400ce8414cec0bbd9a6d0b56deebfc3c35dcb8))
+
+
+### Bug Fixes
+
+* **hakuswap:** Add missing logo ([#1160](https://github.com/Zapper-fi/studio/issues/1160)) ([626bcb8](https://github.com/Zapper-fi/studio/commit/626bcb8c0a9fc938e5393885791639ee2eb56ab7))
+* **polynomial:** Get correct range for deposit/withdrawal queue ([#1157](https://github.com/Zapper-fi/studio/issues/1157)) ([594230f](https://github.com/Zapper-fi/studio/commit/594230fa2bb976aa4facbc7806856e0089db1d46))
+* **spool:** Transform percentage values when displaying APY ([#1158](https://github.com/Zapper-fi/studio/issues/1158)) ([6f5cd84](https://github.com/Zapper-fi/studio/commit/6f5cd8436d417c2d8c9aeae673e4b621fadeba1e))
+
 ## [0.172.0](https://github.com/Zapper-fi/studio/compare/v0.171.1...v0.172.0) (2022-08-12)
 
 

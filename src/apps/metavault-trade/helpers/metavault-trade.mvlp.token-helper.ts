@@ -12,20 +12,26 @@ import { Network } from '~types/network.interface';
 import { MetavaultTradeContractFactory } from '../contracts';
 import { METAVAULT_TRADE_DEFINITION } from '../metavault-trade.definition';
 
-type GetMvxMvlpTokenParams = {
+type GetMetavaultTradeMvlpTokenParams = {
   network: Network;
   mvlpManagerAddress: string;
   mvlpTokenAddress: string;
+  blockedTokenAddresses: string[];
 };
 
 @Injectable()
-export class MvxMvlpTokenHelper {
+export class MetavaultTradeMvlpTokenHelper {
   constructor(
     @Inject(APP_TOOLKIT) private readonly appToolkit: IAppToolkit,
     @Inject(MetavaultTradeContractFactory) private readonly contractFactory: MetavaultTradeContractFactory,
   ) {}
 
-  async getTokens({ network, mvlpManagerAddress, mvlpTokenAddress }: GetMvxMvlpTokenParams) {
+  async getTokens({
+    network,
+    mvlpManagerAddress,
+    mvlpTokenAddress,
+    blockedTokenAddresses,
+  }: GetMetavaultTradeMvlpTokenParams) {
     const multicall = this.appToolkit.getMulticall(network);
     const baseTokens = await this.appToolkit.getBaseTokenPrices(network);
 
@@ -45,7 +51,8 @@ export class MvxMvlpTokenHelper {
     const numTokens = await mcVault.allWhitelistedTokensLength();
     const tokenAddressesRaw = await Promise.all(range(0, Number(numTokens)).map(i => mcVault.allWhitelistedTokens(i)));
     const tokensRaw = tokenAddressesRaw.map(t1 => baseTokens.find(t2 => t2.address === t1.toLowerCase()));
-    const tokens = _.compact(tokensRaw);
+    const tokensUnfiltered = _.compact(tokensRaw);
+    const tokens = tokensUnfiltered.filter(x => !blockedTokenAddresses.includes(x.address));
 
     // Reserves
     const reserves = await Promise.all(

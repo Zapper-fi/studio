@@ -15,7 +15,7 @@ import type {
 } from 'ethers';
 import type { FunctionFragment, Result, EventFragment } from '@ethersproject/abi';
 import type { Listener, Provider } from '@ethersproject/providers';
-import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent } from './common';
+import type { TypedEventFilter, TypedEvent, TypedListener, OnEvent, PromiseOrValue } from './common';
 
 export interface RewardTrackerInterface extends utils.Interface {
   functions: {
@@ -121,51 +121,84 @@ export interface RewardTrackerInterface extends utils.Interface {
 
   encodeFunctionData(functionFragment: 'BASIS_POINTS_DIVISOR', values?: undefined): string;
   encodeFunctionData(functionFragment: 'PRECISION', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'allowance', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'allowances', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'approve', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'averageStakedAmounts', values: [string]): string;
-  encodeFunctionData(functionFragment: 'balanceOf', values: [string]): string;
-  encodeFunctionData(functionFragment: 'balances', values: [string]): string;
-  encodeFunctionData(functionFragment: 'claim', values: [string]): string;
-  encodeFunctionData(functionFragment: 'claimForAccount', values: [string, string]): string;
-  encodeFunctionData(functionFragment: 'claimable', values: [string]): string;
-  encodeFunctionData(functionFragment: 'claimableReward', values: [string]): string;
+  encodeFunctionData(functionFragment: 'allowance', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'allowances', values: [PromiseOrValue<string>, PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'approve',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'averageStakedAmounts', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'balanceOf', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'balances', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'claim', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(
+    functionFragment: 'claimForAccount',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'claimable', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'claimableReward', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'cumulativeRewardPerToken', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'cumulativeRewards', values: [string]): string;
+  encodeFunctionData(functionFragment: 'cumulativeRewards', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'decimals', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'depositBalances', values: [string, string]): string;
+  encodeFunctionData(
+    functionFragment: 'depositBalances',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'distributor', values?: undefined): string;
   encodeFunctionData(functionFragment: 'gov', values?: undefined): string;
   encodeFunctionData(functionFragment: 'inPrivateClaimingMode', values?: undefined): string;
   encodeFunctionData(functionFragment: 'inPrivateStakingMode', values?: undefined): string;
   encodeFunctionData(functionFragment: 'inPrivateTransferMode', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'initialize', values: [string[], string]): string;
-  encodeFunctionData(functionFragment: 'isDepositToken', values: [string]): string;
-  encodeFunctionData(functionFragment: 'isHandler', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'initialize',
+    values: [PromiseOrValue<string>[], PromiseOrValue<string>],
+  ): string;
+  encodeFunctionData(functionFragment: 'isDepositToken', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'isHandler', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'isInitialized', values?: undefined): string;
   encodeFunctionData(functionFragment: 'name', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'previousCumulatedRewardPerToken', values: [string]): string;
+  encodeFunctionData(functionFragment: 'previousCumulatedRewardPerToken', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'rewardToken', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'setDepositToken', values: [string, boolean]): string;
-  encodeFunctionData(functionFragment: 'setGov', values: [string]): string;
-  encodeFunctionData(functionFragment: 'setHandler', values: [string, boolean]): string;
-  encodeFunctionData(functionFragment: 'setInPrivateClaimingMode', values: [boolean]): string;
-  encodeFunctionData(functionFragment: 'setInPrivateStakingMode', values: [boolean]): string;
-  encodeFunctionData(functionFragment: 'setInPrivateTransferMode', values: [boolean]): string;
-  encodeFunctionData(functionFragment: 'stake', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'stakeForAccount', values: [string, string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'stakedAmounts', values: [string]): string;
+  encodeFunctionData(
+    functionFragment: 'setDepositToken',
+    values: [PromiseOrValue<string>, PromiseOrValue<boolean>],
+  ): string;
+  encodeFunctionData(functionFragment: 'setGov', values: [PromiseOrValue<string>]): string;
+  encodeFunctionData(functionFragment: 'setHandler', values: [PromiseOrValue<string>, PromiseOrValue<boolean>]): string;
+  encodeFunctionData(functionFragment: 'setInPrivateClaimingMode', values: [PromiseOrValue<boolean>]): string;
+  encodeFunctionData(functionFragment: 'setInPrivateStakingMode', values: [PromiseOrValue<boolean>]): string;
+  encodeFunctionData(functionFragment: 'setInPrivateTransferMode', values: [PromiseOrValue<boolean>]): string;
+  encodeFunctionData(functionFragment: 'stake', values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]): string;
+  encodeFunctionData(
+    functionFragment: 'stakeForAccount',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(functionFragment: 'stakedAmounts', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'symbol', values?: undefined): string;
   encodeFunctionData(functionFragment: 'tokensPerInterval', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'totalDepositSupply', values: [string]): string;
+  encodeFunctionData(functionFragment: 'totalDepositSupply', values: [PromiseOrValue<string>]): string;
   encodeFunctionData(functionFragment: 'totalSupply', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'transfer', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'transferFrom', values: [string, string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'unstake', values: [string, BigNumberish]): string;
-  encodeFunctionData(functionFragment: 'unstakeForAccount', values: [string, string, BigNumberish, string]): string;
+  encodeFunctionData(
+    functionFragment: 'transfer',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'transferFrom',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'unstake',
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
+  encodeFunctionData(
+    functionFragment: 'unstakeForAccount',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>, PromiseOrValue<string>],
+  ): string;
   encodeFunctionData(functionFragment: 'updateRewards', values?: undefined): string;
-  encodeFunctionData(functionFragment: 'withdrawToken', values: [string, string, BigNumberish]): string;
+  encodeFunctionData(
+    functionFragment: 'withdrawToken',
+    values: [PromiseOrValue<string>, PromiseOrValue<string>, PromiseOrValue<BigNumberish>],
+  ): string;
 
   decodeFunctionResult(functionFragment: 'BASIS_POINTS_DIVISOR', data: BytesLike): Result;
   decodeFunctionResult(functionFragment: 'PRECISION', data: BytesLike): Result;
@@ -279,41 +312,56 @@ export interface RewardTracker extends BaseContract {
 
     PRECISION(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    allowance(_owner: string, _spender: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    allowance(
+      _owner: PromiseOrValue<string>,
+      _spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
-    allowances(arg0: string, arg1: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    allowances(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     approve(
-      _spender: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _spender: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    averageStakedAmounts(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    averageStakedAmounts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    balanceOf(_account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balanceOf(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    balances(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    balances(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    claim(_receiver: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    claim(
+      _receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     claimForAccount(
-      _account: string,
-      _receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _account: PromiseOrValue<string>,
+      _receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    claimable(_account: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    claimable(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    claimableReward(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    claimableReward(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     cumulativeRewardPerToken(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    cumulativeRewards(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    cumulativeRewards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     decimals(overrides?: CallOverrides): Promise<[number]>;
 
-    depositBalances(arg0: string, arg1: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    depositBalances(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<[BigNumber]>;
 
     distributor(overrides?: CallOverrides): Promise<[string]>;
 
@@ -326,110 +374,113 @@ export interface RewardTracker extends BaseContract {
     inPrivateTransferMode(overrides?: CallOverrides): Promise<[boolean]>;
 
     initialize(
-      _depositTokens: string[],
-      _distributor: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _depositTokens: PromiseOrValue<string>[],
+      _distributor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    isDepositToken(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    isDepositToken(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
-    isHandler(arg0: string, overrides?: CallOverrides): Promise<[boolean]>;
+    isHandler(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[boolean]>;
 
     isInitialized(overrides?: CallOverrides): Promise<[boolean]>;
 
     name(overrides?: CallOverrides): Promise<[string]>;
 
-    previousCumulatedRewardPerToken(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    previousCumulatedRewardPerToken(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     rewardToken(overrides?: CallOverrides): Promise<[string]>;
 
     setDepositToken(
-      _depositToken: string,
-      _isDepositToken: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _depositToken: PromiseOrValue<string>,
+      _isDepositToken: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    setGov(_gov: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    setGov(
+      _gov: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<ContractTransaction>;
 
     setHandler(
-      _handler: string,
-      _isActive: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _handler: PromiseOrValue<string>,
+      _isActive: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setInPrivateClaimingMode(
-      _inPrivateClaimingMode: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _inPrivateClaimingMode: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setInPrivateStakingMode(
-      _inPrivateStakingMode: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _inPrivateStakingMode: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     setInPrivateTransferMode(
-      _inPrivateTransferMode: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _inPrivateTransferMode: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     stake(
-      _depositToken: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _depositToken: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     stakeForAccount(
-      _fundingAccount: string,
-      _account: string,
-      _depositToken: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _fundingAccount: PromiseOrValue<string>,
+      _account: PromiseOrValue<string>,
+      _depositToken: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    stakedAmounts(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    stakedAmounts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     symbol(overrides?: CallOverrides): Promise<[string]>;
 
     tokensPerInterval(overrides?: CallOverrides): Promise<[BigNumber]>;
 
-    totalDepositSupply(arg0: string, overrides?: CallOverrides): Promise<[BigNumber]>;
+    totalDepositSupply(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<[BigNumber]>;
 
     totalSupply(overrides?: CallOverrides): Promise<[BigNumber]>;
 
     transfer(
-      _recipient: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _recipient: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     transferFrom(
-      _sender: string,
-      _recipient: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _sender: PromiseOrValue<string>,
+      _recipient: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     unstake(
-      _depositToken: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _depositToken: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
     unstakeForAccount(
-      _account: string,
-      _depositToken: string,
-      _amount: BigNumberish,
-      _receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _account: PromiseOrValue<string>,
+      _depositToken: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      _receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
 
-    updateRewards(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+    updateRewards(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
     withdrawToken(
-      _token: string,
-      _account: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      _account: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<ContractTransaction>;
   };
 
@@ -437,41 +488,52 @@ export interface RewardTracker extends BaseContract {
 
   PRECISION(overrides?: CallOverrides): Promise<BigNumber>;
 
-  allowance(_owner: string, _spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+  allowance(
+    _owner: PromiseOrValue<string>,
+    _spender: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
-  allowances(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+  allowances(arg0: PromiseOrValue<string>, arg1: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   approve(
-    _spender: string,
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _spender: PromiseOrValue<string>,
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  averageStakedAmounts(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  averageStakedAmounts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  balanceOf(_account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balanceOf(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  balances(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  balances(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  claim(_receiver: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  claim(
+    _receiver: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   claimForAccount(
-    _account: string,
-    _receiver: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _account: PromiseOrValue<string>,
+    _receiver: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  claimable(_account: string, overrides?: CallOverrides): Promise<BigNumber>;
+  claimable(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-  claimableReward(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  claimableReward(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   cumulativeRewardPerToken(overrides?: CallOverrides): Promise<BigNumber>;
 
-  cumulativeRewards(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  cumulativeRewards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   decimals(overrides?: CallOverrides): Promise<number>;
 
-  depositBalances(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+  depositBalances(
+    arg0: PromiseOrValue<string>,
+    arg1: PromiseOrValue<string>,
+    overrides?: CallOverrides,
+  ): Promise<BigNumber>;
 
   distributor(overrides?: CallOverrides): Promise<string>;
 
@@ -484,110 +546,113 @@ export interface RewardTracker extends BaseContract {
   inPrivateTransferMode(overrides?: CallOverrides): Promise<boolean>;
 
   initialize(
-    _depositTokens: string[],
-    _distributor: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _depositTokens: PromiseOrValue<string>[],
+    _distributor: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  isDepositToken(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  isDepositToken(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-  isHandler(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+  isHandler(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
   isInitialized(overrides?: CallOverrides): Promise<boolean>;
 
   name(overrides?: CallOverrides): Promise<string>;
 
-  previousCumulatedRewardPerToken(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  previousCumulatedRewardPerToken(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   rewardToken(overrides?: CallOverrides): Promise<string>;
 
   setDepositToken(
-    _depositToken: string,
-    _isDepositToken: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _depositToken: PromiseOrValue<string>,
+    _isDepositToken: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  setGov(_gov: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  setGov(
+    _gov: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
+  ): Promise<ContractTransaction>;
 
   setHandler(
-    _handler: string,
-    _isActive: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _handler: PromiseOrValue<string>,
+    _isActive: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setInPrivateClaimingMode(
-    _inPrivateClaimingMode: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _inPrivateClaimingMode: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setInPrivateStakingMode(
-    _inPrivateStakingMode: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _inPrivateStakingMode: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   setInPrivateTransferMode(
-    _inPrivateTransferMode: boolean,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _inPrivateTransferMode: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   stake(
-    _depositToken: string,
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _depositToken: PromiseOrValue<string>,
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   stakeForAccount(
-    _fundingAccount: string,
-    _account: string,
-    _depositToken: string,
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _fundingAccount: PromiseOrValue<string>,
+    _account: PromiseOrValue<string>,
+    _depositToken: PromiseOrValue<string>,
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  stakedAmounts(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  stakedAmounts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   symbol(overrides?: CallOverrides): Promise<string>;
 
   tokensPerInterval(overrides?: CallOverrides): Promise<BigNumber>;
 
-  totalDepositSupply(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+  totalDepositSupply(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
   totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
   transfer(
-    _recipient: string,
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _recipient: PromiseOrValue<string>,
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   transferFrom(
-    _sender: string,
-    _recipient: string,
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _sender: PromiseOrValue<string>,
+    _recipient: PromiseOrValue<string>,
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   unstake(
-    _depositToken: string,
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _depositToken: PromiseOrValue<string>,
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   unstakeForAccount(
-    _account: string,
-    _depositToken: string,
-    _amount: BigNumberish,
-    _receiver: string,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _account: PromiseOrValue<string>,
+    _depositToken: PromiseOrValue<string>,
+    _amount: PromiseOrValue<BigNumberish>,
+    _receiver: PromiseOrValue<string>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
-  updateRewards(overrides?: Overrides & { from?: string | Promise<string> }): Promise<ContractTransaction>;
+  updateRewards(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<ContractTransaction>;
 
   withdrawToken(
-    _token: string,
-    _account: string,
-    _amount: BigNumberish,
-    overrides?: Overrides & { from?: string | Promise<string> },
+    _token: PromiseOrValue<string>,
+    _account: PromiseOrValue<string>,
+    _amount: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> },
   ): Promise<ContractTransaction>;
 
   callStatic: {
@@ -595,33 +660,53 @@ export interface RewardTracker extends BaseContract {
 
     PRECISION(overrides?: CallOverrides): Promise<BigNumber>;
 
-    allowance(_owner: string, _spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      _owner: PromiseOrValue<string>,
+      _spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    allowances(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowances(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    approve(_spender: string, _amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
+    approve(
+      _spender: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
 
-    averageStakedAmounts(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    averageStakedAmounts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    balanceOf(_account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    balances(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balances(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    claim(_receiver: string, overrides?: CallOverrides): Promise<BigNumber>;
+    claim(_receiver: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    claimForAccount(_account: string, _receiver: string, overrides?: CallOverrides): Promise<BigNumber>;
+    claimForAccount(
+      _account: PromiseOrValue<string>,
+      _receiver: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    claimable(_account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    claimable(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    claimableReward(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    claimableReward(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     cumulativeRewardPerToken(overrides?: CallOverrides): Promise<BigNumber>;
 
-    cumulativeRewards(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    cumulativeRewards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<number>;
 
-    depositBalances(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    depositBalances(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     distributor(overrides?: CallOverrides): Promise<string>;
 
@@ -633,89 +718,130 @@ export interface RewardTracker extends BaseContract {
 
     inPrivateTransferMode(overrides?: CallOverrides): Promise<boolean>;
 
-    initialize(_depositTokens: string[], _distributor: string, overrides?: CallOverrides): Promise<void>;
+    initialize(
+      _depositTokens: PromiseOrValue<string>[],
+      _distributor: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
-    isDepositToken(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    isDepositToken(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
-    isHandler(arg0: string, overrides?: CallOverrides): Promise<boolean>;
+    isHandler(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<boolean>;
 
     isInitialized(overrides?: CallOverrides): Promise<boolean>;
 
     name(overrides?: CallOverrides): Promise<string>;
 
-    previousCumulatedRewardPerToken(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    previousCumulatedRewardPerToken(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     rewardToken(overrides?: CallOverrides): Promise<string>;
 
-    setDepositToken(_depositToken: string, _isDepositToken: boolean, overrides?: CallOverrides): Promise<void>;
-
-    setGov(_gov: string, overrides?: CallOverrides): Promise<void>;
-
-    setHandler(_handler: string, _isActive: boolean, overrides?: CallOverrides): Promise<void>;
-
-    setInPrivateClaimingMode(_inPrivateClaimingMode: boolean, overrides?: CallOverrides): Promise<void>;
-
-    setInPrivateStakingMode(_inPrivateStakingMode: boolean, overrides?: CallOverrides): Promise<void>;
-
-    setInPrivateTransferMode(_inPrivateTransferMode: boolean, overrides?: CallOverrides): Promise<void>;
-
-    stake(_depositToken: string, _amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
-
-    stakeForAccount(
-      _fundingAccount: string,
-      _account: string,
-      _depositToken: string,
-      _amount: BigNumberish,
+    setDepositToken(
+      _depositToken: PromiseOrValue<string>,
+      _isDepositToken: PromiseOrValue<boolean>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
-    stakedAmounts(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    setGov(_gov: PromiseOrValue<string>, overrides?: CallOverrides): Promise<void>;
+
+    setHandler(
+      _handler: PromiseOrValue<string>,
+      _isActive: PromiseOrValue<boolean>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    setInPrivateClaimingMode(_inPrivateClaimingMode: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
+
+    setInPrivateStakingMode(_inPrivateStakingMode: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
+
+    setInPrivateTransferMode(_inPrivateTransferMode: PromiseOrValue<boolean>, overrides?: CallOverrides): Promise<void>;
+
+    stake(
+      _depositToken: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    stakeForAccount(
+      _fundingAccount: PromiseOrValue<string>,
+      _account: PromiseOrValue<string>,
+      _depositToken: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
+
+    stakedAmounts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<string>;
 
     tokensPerInterval(overrides?: CallOverrides): Promise<BigNumber>;
 
-    totalDepositSupply(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    totalDepositSupply(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
-    transfer(_recipient: string, _amount: BigNumberish, overrides?: CallOverrides): Promise<boolean>;
-
-    transferFrom(
-      _sender: string,
-      _recipient: string,
-      _amount: BigNumberish,
+    transfer(
+      _recipient: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides,
     ): Promise<boolean>;
 
-    unstake(_depositToken: string, _amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    transferFrom(
+      _sender: PromiseOrValue<string>,
+      _recipient: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<boolean>;
+
+    unstake(
+      _depositToken: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
 
     unstakeForAccount(
-      _account: string,
-      _depositToken: string,
-      _amount: BigNumberish,
-      _receiver: string,
+      _account: PromiseOrValue<string>,
+      _depositToken: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      _receiver: PromiseOrValue<string>,
       overrides?: CallOverrides,
     ): Promise<void>;
 
     updateRewards(overrides?: CallOverrides): Promise<void>;
 
-    withdrawToken(_token: string, _account: string, _amount: BigNumberish, overrides?: CallOverrides): Promise<void>;
+    withdrawToken(
+      _token: PromiseOrValue<string>,
+      _account: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides,
+    ): Promise<void>;
   };
 
   filters: {
     'Approval(address,address,uint256)'(
-      owner?: string | null,
-      spender?: string | null,
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
       value?: null,
     ): ApprovalEventFilter;
-    Approval(owner?: string | null, spender?: string | null, value?: null): ApprovalEventFilter;
+    Approval(
+      owner?: PromiseOrValue<string> | null,
+      spender?: PromiseOrValue<string> | null,
+      value?: null,
+    ): ApprovalEventFilter;
 
     'Claim(address,uint256)'(receiver?: null, amount?: null): ClaimEventFilter;
     Claim(receiver?: null, amount?: null): ClaimEventFilter;
 
-    'Transfer(address,address,uint256)'(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
-    Transfer(from?: string | null, to?: string | null, value?: null): TransferEventFilter;
+    'Transfer(address,address,uint256)'(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
+    Transfer(
+      from?: PromiseOrValue<string> | null,
+      to?: PromiseOrValue<string> | null,
+      value?: null,
+    ): TransferEventFilter;
   };
 
   estimateGas: {
@@ -723,41 +849,56 @@ export interface RewardTracker extends BaseContract {
 
     PRECISION(overrides?: CallOverrides): Promise<BigNumber>;
 
-    allowance(_owner: string, _spender: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowance(
+      _owner: PromiseOrValue<string>,
+      _spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
-    allowances(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    allowances(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     approve(
-      _spender: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _spender: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    averageStakedAmounts(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    averageStakedAmounts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    balanceOf(_account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balanceOf(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    balances(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    balances(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    claim(_receiver: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    claim(
+      _receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<BigNumber>;
 
     claimForAccount(
-      _account: string,
-      _receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _account: PromiseOrValue<string>,
+      _receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    claimable(_account: string, overrides?: CallOverrides): Promise<BigNumber>;
+    claimable(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    claimableReward(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    claimableReward(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     cumulativeRewardPerToken(overrides?: CallOverrides): Promise<BigNumber>;
 
-    cumulativeRewards(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    cumulativeRewards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     decimals(overrides?: CallOverrides): Promise<BigNumber>;
 
-    depositBalances(arg0: string, arg1: string, overrides?: CallOverrides): Promise<BigNumber>;
+    depositBalances(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<BigNumber>;
 
     distributor(overrides?: CallOverrides): Promise<BigNumber>;
 
@@ -770,110 +911,110 @@ export interface RewardTracker extends BaseContract {
     inPrivateTransferMode(overrides?: CallOverrides): Promise<BigNumber>;
 
     initialize(
-      _depositTokens: string[],
-      _distributor: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _depositTokens: PromiseOrValue<string>[],
+      _distributor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    isDepositToken(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    isDepositToken(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
-    isHandler(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    isHandler(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     isInitialized(overrides?: CallOverrides): Promise<BigNumber>;
 
     name(overrides?: CallOverrides): Promise<BigNumber>;
 
-    previousCumulatedRewardPerToken(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    previousCumulatedRewardPerToken(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     rewardToken(overrides?: CallOverrides): Promise<BigNumber>;
 
     setDepositToken(
-      _depositToken: string,
-      _isDepositToken: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _depositToken: PromiseOrValue<string>,
+      _isDepositToken: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    setGov(_gov: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    setGov(_gov: PromiseOrValue<string>, overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     setHandler(
-      _handler: string,
-      _isActive: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _handler: PromiseOrValue<string>,
+      _isActive: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setInPrivateClaimingMode(
-      _inPrivateClaimingMode: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _inPrivateClaimingMode: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setInPrivateStakingMode(
-      _inPrivateStakingMode: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _inPrivateStakingMode: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     setInPrivateTransferMode(
-      _inPrivateTransferMode: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _inPrivateTransferMode: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     stake(
-      _depositToken: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _depositToken: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     stakeForAccount(
-      _fundingAccount: string,
-      _account: string,
-      _depositToken: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _fundingAccount: PromiseOrValue<string>,
+      _account: PromiseOrValue<string>,
+      _depositToken: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    stakedAmounts(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    stakedAmounts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     symbol(overrides?: CallOverrides): Promise<BigNumber>;
 
     tokensPerInterval(overrides?: CallOverrides): Promise<BigNumber>;
 
-    totalDepositSupply(arg0: string, overrides?: CallOverrides): Promise<BigNumber>;
+    totalDepositSupply(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<BigNumber>;
 
     totalSupply(overrides?: CallOverrides): Promise<BigNumber>;
 
     transfer(
-      _recipient: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _recipient: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     transferFrom(
-      _sender: string,
-      _recipient: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _sender: PromiseOrValue<string>,
+      _recipient: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     unstake(
-      _depositToken: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _depositToken: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
     unstakeForAccount(
-      _account: string,
-      _depositToken: string,
-      _amount: BigNumberish,
-      _receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _account: PromiseOrValue<string>,
+      _depositToken: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      _receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
 
-    updateRewards(overrides?: Overrides & { from?: string | Promise<string> }): Promise<BigNumber>;
+    updateRewards(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<BigNumber>;
 
     withdrawToken(
-      _token: string,
-      _account: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      _account: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<BigNumber>;
   };
 
@@ -882,44 +1023,56 @@ export interface RewardTracker extends BaseContract {
 
     PRECISION(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    allowance(_owner: string, _spender: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    allowances(arg0: string, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
-
-    approve(
-      _spender: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+    allowance(
+      _owner: PromiseOrValue<string>,
+      _spender: PromiseOrValue<string>,
+      overrides?: CallOverrides,
     ): Promise<PopulatedTransaction>;
 
-    averageStakedAmounts(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    allowances(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
-    balanceOf(_account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    approve(
+      _spender: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
-    balances(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    averageStakedAmounts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    balanceOf(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+
+    balances(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     claim(
-      _receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     claimForAccount(
-      _account: string,
-      _receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _account: PromiseOrValue<string>,
+      _receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    claimable(_account: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    claimable(_account: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    claimableReward(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    claimableReward(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     cumulativeRewardPerToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    cumulativeRewards(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    cumulativeRewards(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     decimals(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    depositBalances(arg0: string, arg1: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    depositBalances(
+      arg0: PromiseOrValue<string>,
+      arg1: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     distributor(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
@@ -932,110 +1085,116 @@ export interface RewardTracker extends BaseContract {
     inPrivateTransferMode(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     initialize(
-      _depositTokens: string[],
-      _distributor: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _depositTokens: PromiseOrValue<string>[],
+      _distributor: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    isDepositToken(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    isDepositToken(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    isHandler(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    isHandler(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     isInitialized(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     name(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    previousCumulatedRewardPerToken(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    previousCumulatedRewardPerToken(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides,
+    ): Promise<PopulatedTransaction>;
 
     rewardToken(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     setDepositToken(
-      _depositToken: string,
-      _isDepositToken: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _depositToken: PromiseOrValue<string>,
+      _isDepositToken: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    setGov(_gov: string, overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    setGov(
+      _gov: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
+    ): Promise<PopulatedTransaction>;
 
     setHandler(
-      _handler: string,
-      _isActive: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _handler: PromiseOrValue<string>,
+      _isActive: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setInPrivateClaimingMode(
-      _inPrivateClaimingMode: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _inPrivateClaimingMode: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setInPrivateStakingMode(
-      _inPrivateStakingMode: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _inPrivateStakingMode: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     setInPrivateTransferMode(
-      _inPrivateTransferMode: boolean,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _inPrivateTransferMode: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     stake(
-      _depositToken: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _depositToken: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     stakeForAccount(
-      _fundingAccount: string,
-      _account: string,
-      _depositToken: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _fundingAccount: PromiseOrValue<string>,
+      _account: PromiseOrValue<string>,
+      _depositToken: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    stakedAmounts(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    stakedAmounts(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     symbol(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     tokensPerInterval(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
-    totalDepositSupply(arg0: string, overrides?: CallOverrides): Promise<PopulatedTransaction>;
+    totalDepositSupply(arg0: PromiseOrValue<string>, overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     totalSupply(overrides?: CallOverrides): Promise<PopulatedTransaction>;
 
     transfer(
-      _recipient: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _recipient: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     transferFrom(
-      _sender: string,
-      _recipient: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _sender: PromiseOrValue<string>,
+      _recipient: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     unstake(
-      _depositToken: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _depositToken: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
     unstakeForAccount(
-      _account: string,
-      _depositToken: string,
-      _amount: BigNumberish,
-      _receiver: string,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _account: PromiseOrValue<string>,
+      _depositToken: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      _receiver: PromiseOrValue<string>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
 
-    updateRewards(overrides?: Overrides & { from?: string | Promise<string> }): Promise<PopulatedTransaction>;
+    updateRewards(overrides?: Overrides & { from?: PromiseOrValue<string> }): Promise<PopulatedTransaction>;
 
     withdrawToken(
-      _token: string,
-      _account: string,
-      _amount: BigNumberish,
-      overrides?: Overrides & { from?: string | Promise<string> },
+      _token: PromiseOrValue<string>,
+      _account: PromiseOrValue<string>,
+      _amount: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> },
     ): Promise<PopulatedTransaction>;
   };
 }

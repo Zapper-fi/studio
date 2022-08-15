@@ -1,5 +1,5 @@
 import { Inject } from '@nestjs/common';
-import { map, range, sumBy } from 'lodash';
+import { map, min, range, sumBy } from 'lodash';
 
 import { drillBalance } from '~app-toolkit';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
@@ -40,13 +40,17 @@ export class OptimismPolynomialBalanceFetcher implements BalanceFetcher {
       resolveBalances: async ({ address, multicall, contractPosition: position }) => {
         const contract = this.contractFactory.polynomialCoveredCall(position);
 
-        const [depositHead, depositTail] = await Promise.all([
-          multicall.wrap(contract).queuedDepositHead(),
-          multicall.wrap(contract).nextQueuedDepositId(),
-        ]);
-        // Note: ignores pending deposits when deposit queue is large. Consider checking if the last user is ZERO_ADDRESS and recursing
+        const [depositHead, depositTail] = (
+          await Promise.all([
+            multicall.wrap(contract).queuedDepositHead(),
+            multicall.wrap(contract).nextQueuedDepositId(),
+          ])
+        ).map(Number);
+        // Note: ignores pending deposits when deposit queue is large.
         const pendingDeposits = await Promise.all(
-          map(range(Number(depositHead), Number(depositTail)), async i => multicall.wrap(contract).depositQueue(i)),
+          map(range(depositHead, min([depositHead + 250, depositTail])), async i =>
+            multicall.wrap(contract).depositQueue(i),
+          ),
         );
         const pendingDepositBalance = sumBy(pendingDeposits, deposit => {
           // Note: ignores partial deposits
@@ -70,13 +74,15 @@ export class OptimismPolynomialBalanceFetcher implements BalanceFetcher {
       resolveBalances: async ({ address, multicall, contractPosition: position }) => {
         const contract = this.contractFactory.polynomialCoveredCall(position);
 
-        const [withdrawalHead, withdrawalTail] = await Promise.all([
-          multicall.wrap(contract).queuedWithdrawalHead(),
-          multicall.wrap(contract).nextQueuedWithdrawalId(),
-        ]);
+        const [withdrawalHead, withdrawalTail] = (
+          await Promise.all([
+            multicall.wrap(contract).queuedWithdrawalHead(),
+            multicall.wrap(contract).nextQueuedWithdrawalId(),
+          ])
+        ).map(Number);
         // Note: ignores pending withdrawals when withdrawal queue is large
         const pendingWithdrawals = await Promise.all(
-          map(range(Number(withdrawalHead), Number(withdrawalTail)), async i =>
+          map(range(withdrawalHead, min([withdrawalHead + 250, withdrawalTail])), async i =>
             multicall.wrap(contract).withdrawalQueue(i),
           ),
         );
