@@ -4,6 +4,54 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.174.0](https://github.com/Zapper-fi/studio/compare/v0.173.1...v0.174.0) (2022-08-15)
+
+
+### Features
+
+* **apps:** Add key to template fetcher ([#1175](https://github.com/Zapper-fi/studio/issues/1175)) ([a428f57](https://github.com/Zapper-fi/studio/commit/a428f57485761a34ced7d71849d460896b912b66))
+
+
+### Bug Fixes
+
+* **polynomial:** Fix incorrect comment ([#1164](https://github.com/Zapper-fi/studio/issues/1164)) ([2f7d079](https://github.com/Zapper-fi/studio/commit/2f7d079aa3d36c495b1af97f5e137ccd95167260))
+* **revert-fi:** Consolidate rewards display ([#1171](https://github.com/Zapper-fi/studio/issues/1171)) ([839b071](https://github.com/Zapper-fi/studio/commit/839b071bb0c9facaede1b3c9bd635e99a7993a6d))
+* **revert-fi:** organize compounding positions as ContractPositions ([#1167](https://github.com/Zapper-fi/studio/issues/1167)) ([65e087b](https://github.com/Zapper-fi/studio/commit/65e087bbeec0f2a3e8ceb9660538d30b52e88e36))
+* **synthetix:** Enable SNX to be exchangeable on optimism ([#1176](https://github.com/Zapper-fi/studio/issues/1176)) ([fd07cfa](https://github.com/Zapper-fi/studio/commit/fd07cfa32fb97a523980c8698f8f24b9d5bcbd69))
+
+## [0.173.1](https://github.com/Zapper-fi/studio/compare/v0.173.0...v0.173.1) (2022-08-15)
+
+
+### Bug Fixes
+
+* **metavault-trade:** Display naming fixes. Positions list added. ([#1172](https://github.com/Zapper-fi/studio/issues/1172)) ([3a57c52](https://github.com/Zapper-fi/studio/commit/3a57c524386c8d2a7468954129435414c1001811))
+
+## [0.173.0](https://github.com/Zapper-fi/studio/compare/v0.172.0...v0.173.0) (2022-08-12)
+
+
+### Features
+
+* **app-toolkit:** Sunset other token selectors in favor of token deps ([#1163](https://github.com/Zapper-fi/studio/issues/1163)) ([95d36d4](https://github.com/Zapper-fi/studio/commit/95d36d44fdedf39efe127156e6b5e0be5d5ceda2))
+* **hakuswap:** Integrate Hakuswap ([#1155](https://github.com/Zapper-fi/studio/issues/1155)) ([3431579](https://github.com/Zapper-fi/studio/commit/3431579a735bb6f3d106acfa138ec1962e79b29f))
+* **yearn:** Migrate to template pattern ([#1156](https://github.com/Zapper-fi/studio/issues/1156)) ([3d400ce](https://github.com/Zapper-fi/studio/commit/3d400ce8414cec0bbd9a6d0b56deebfc3c35dcb8))
+
+
+### Bug Fixes
+
+* **hakuswap:** Add missing logo ([#1160](https://github.com/Zapper-fi/studio/issues/1160)) ([626bcb8](https://github.com/Zapper-fi/studio/commit/626bcb8c0a9fc938e5393885791639ee2eb56ab7))
+* **polynomial:** Get correct range for deposit/withdrawal queue ([#1157](https://github.com/Zapper-fi/studio/issues/1157)) ([594230f](https://github.com/Zapper-fi/studio/commit/594230fa2bb976aa4facbc7806856e0089db1d46))
+* **spool:** Transform percentage values when displaying APY ([#1158](https://github.com/Zapper-fi/studio/issues/1158)) ([6f5cd84](https://github.com/Zapper-fi/studio/commit/6f5cd8436d417c2d8c9aeae673e4b621fadeba1e))
+
+## [0.172.0](https://github.com/Zapper-fi/studio/compare/v0.171.1...v0.172.0) (2022-08-12)
+
+
+### Features
+
+* **polynomial:** Update vaults to v2 ([#1137](https://github.com/Zapper-fi/studio/issues/1137)) ([377a769](https://github.com/Zapper-fi/studio/commit/377a76949f0c69ce11f3fe144139b14852fe68bc))
+* **revert-fi:** Add compounding Uniswap v3 LP positions ([#1112](https://github.com/Zapper-fi/studio/issues/1112)) ([2c83174](https://github.com/Zapper-fi/studio/commit/2c831744cf193d5acd9e4055deca62ba9027f427))
+* **spool-fi:** Add Spool.fi app with simple vault positions and user balance ([#1151](https://github.com/Zapper-fi/studio/issues/1151)) ([2b61cc3](https://github.com/Zapper-fi/studio/commit/2b61cc31db4691205d14550bcc3e13ff5f25d377))
+* **spool:** Add missing logo and fix lint in Polynomial ([f0fa0bf](https://github.com/Zapper-fi/studio/commit/f0fa0bf801f650d38cf22a3ac5384215fd522182))
+
 ## [0.171.1](https://github.com/Zapper-fi/studio/compare/v0.171.0...v0.171.1) (2022-08-12)
 
 

@@ -137,8 +137,8 @@ export abstract class AppTokenTemplatePositionFetcher<T extends Contract, V exte
     return statsItems;
   }
 
-  getKey({ appToken }: { appToken: AppTokenPosition }): string {
-    return this.appToolkit.getPositionKey(appToken, ['validatorId']);
+  getKey({ appToken }: { appToken: AppTokenPosition<V> }): string {
+    return this.appToolkit.getPositionKey(appToken);
   }
 
   // Default (adapted) Template Runner
