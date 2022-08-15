@@ -65,6 +65,8 @@ export abstract class AppTokenTemplatePositionFetcher<T extends Contract, V exte
   abstract appId: string;
   abstract groupId: string;
   abstract network: Network;
+  groupLabel?: string;
+
   minLiquidity = 1000;
 
   constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) {}
@@ -203,6 +205,7 @@ export abstract class AppTokenTemplatePositionFetcher<T extends Contract, V exte
             appId: this.appId,
             groupId: this.groupId,
             network: this.network,
+            groupLabel: this.groupLabel,
             address,
             symbol,
             decimals,

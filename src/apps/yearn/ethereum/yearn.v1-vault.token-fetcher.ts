@@ -20,6 +20,7 @@ export class EthereumYearnV1VaultTokenFetcher extends YearnVaultTokenFetcher<Yea
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'les vaults v1';
 
   vaultType = 'v1' as const;
   vaultsToIgnore = ['0xc5bddf9843308380375a611c18b50fb9341f502a'];

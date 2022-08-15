@@ -74,6 +74,7 @@ export abstract class ContractPositionTemplatePositionFetcher<
   abstract appId: string;
   abstract groupId: string;
   abstract network: Network;
+  groupLabel?: string;
   dependencies: AppGroupsDefinition[] = [];
 
   constructor(@Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit) {}
@@ -168,6 +169,7 @@ export abstract class ContractPositionTemplatePositionFetcher<
           appId: this.appId,
           groupId: this.groupId,
           network: this.network,
+          groupLabel: this.groupLabel,
           address,
           tokens,
         };

@@ -24,6 +24,7 @@ export class EthereumYearnGovernanceContractPositionFetcher extends SingleStakin
   appId = appId;
   groupId = groupId;
   network = network;
+  groupLabel = 'ti gov contract position';
 
   constructor(
     @Inject(APP_TOOLKIT) protected readonly appToolkit: IAppToolkit,
