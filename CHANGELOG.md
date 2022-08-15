@@ -4,6 +4,21 @@
 
 [1]: https://www.npmjs.com/package/@zapper-fi/studio?activeTab=versions
 
+## [0.174.0](https://github.com/Zapper-fi/studio/compare/v0.173.1...v0.174.0) (2022-08-15)
+
+
+### Features
+
+* **apps:** Add key to template fetcher ([#1175](https://github.com/Zapper-fi/studio/issues/1175)) ([a428f57](https://github.com/Zapper-fi/studio/commit/a428f57485761a34ced7d71849d460896b912b66))
+
+
+### Bug Fixes
+
+* **polynomial:** Fix incorrect comment ([#1164](https://github.com/Zapper-fi/studio/issues/1164)) ([2f7d079](https://github.com/Zapper-fi/studio/commit/2f7d079aa3d36c495b1af97f5e137ccd95167260))
+* **revert-fi:** Consolidate rewards display ([#1171](https://github.com/Zapper-fi/studio/issues/1171)) ([839b071](https://github.com/Zapper-fi/studio/commit/839b071bb0c9facaede1b3c9bd635e99a7993a6d))
+* **revert-fi:** organize compounding positions as ContractPositions ([#1167](https://github.com/Zapper-fi/studio/issues/1167)) ([65e087b](https://github.com/Zapper-fi/studio/commit/65e087bbeec0f2a3e8ceb9660538d30b52e88e36))
+* **synthetix:** Enable SNX to be exchangeable on optimism ([#1176](https://github.com/Zapper-fi/studio/issues/1176)) ([fd07cfa](https://github.com/Zapper-fi/studio/commit/fd07cfa32fb97a523980c8698f8f24b9d5bcbd69))
+
 ## [0.173.1](https://github.com/Zapper-fi/studio/compare/v0.173.0...v0.173.1) (2022-08-15)
 
 
