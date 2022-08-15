@@ -1,6 +1,7 @@
 import { Inject } from '@nestjs/common';
 import { getAddress } from 'ethers/lib/utils';
 
+import { drillBalance } from '~app-toolkit';
 import { IAppToolkit, APP_TOOLKIT } from '~app-toolkit/app-toolkit.interface';
 import { Register } from '~app-toolkit/decorators';
 import { presentBalanceFetcherResponse } from '~app-toolkit/helpers/presentation/balance-fetcher-response.present';
